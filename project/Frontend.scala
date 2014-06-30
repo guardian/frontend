@@ -45,11 +45,6 @@ object Frontend extends Build with Prototypes {
   
   val sanityTest = application("sanity-tests")
 
-  val scalaSelenium = application("scala-selenium", Option("integration-tests/scala-selenium")).settings(
-    libraryDependencies ++= Seq(
-      "org.seleniumhq.selenium" % "selenium-java" % "2.42.0"
-    ))
-
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
@@ -141,6 +136,23 @@ object Frontend extends Build with Prototypes {
     unmanagedResourceDirectories in Test <+= baseDirectory(_ / "src" / "main" / "resources"),
     unmanagedResourceDirectories in Test <+= baseDirectory(_ / "src" / "test" / "resources"),
     unmanagedResourceDirectories in Runtime <+= baseDirectory(_ / "src" / "test" / "resources")
+  )
+
+  val integrationTestLib = application("integration-test-lib", Option("integration-tests/integration-test-lib")).settings(
+    libraryDependencies ++= Seq(
+      "org.seleniumhq.selenium" % "selenium-java" % "2.42.0",
+      "com.google.code.findbugs" % "jsr305" % "1.3.+"//not sure why you need this but package wont compile without it
+    )
+  )
+
+  val scalaSelenium = application("scala-selenium", Option("integration-tests/scala-selenium")).dependsOn(integrationTestLib).settings(
+    libraryDependencies ++= Seq(
+      "org.seleniumhq.selenium" % "selenium-java" % "2.42.0",
+      "com.google.code.findbugs" % "jsr305" % "1.3.+"//not sure why you need this but package wont compile without it
+    ),
+    unmanagedResourceDirectories in Compile <+= baseDirectory(_ / "app" / "resources"),
+    unmanagedResourceDirectories in Test <+= baseDirectory(_ / "app" / "resources"),
+    unmanagedResourceDirectories in Runtime <+= baseDirectory(_ / "app" / "resources")
   )
 
   val dev = application("dev-build")
