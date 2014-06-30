@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'bean',
     'common/utils/storage',
     'common/modules/userPrefs',

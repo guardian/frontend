@@ -31,7 +31,7 @@ define([
                 return require(['js!' + url + '!exports=asiPlacements'])
                     .then(function(asiPlacements) {
                         for (var placement in asiPlacements) {
-                            segments['pq_' + placement] = asiPlacements[placement].defaults ? 'T' : '';
+                            segments['pq_' + placement] = asiPlacements[placement]['default'] ? 'T' : '';
                         }
                     });
             }

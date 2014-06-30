@@ -1,7 +1,6 @@
 @(item: model.MetaData)(implicit request: RequestHeader)
 @import common._
 @import conf._
-@import Switches._
 @import play.api.Play
 @import play.api.Play.current
 @import views.support._
@@ -21,10 +20,8 @@
 <link rel="apple-touch-icon" sizes="72x72" href="@Static("images/favicons/72x72.png")" />
 <link rel="apple-touch-icon-precomposed" href="@Static("images/favicons/57x57.png")" />
 
-@if(RssLinkSwitch.isSwitchedOn) {
-    @item.rssPath.map { path =>
-      <link href="@{LinkTo(path)}" rel="alternate" type="application/rss+xml" title="@views.support.Title(item) RSS feed" />
-    }
+@item.rssPath.map { path =>
+  <link href="@{LinkTo(path)}" rel="alternate" type="application/rss+xml" title="@views.support.Title(item) RSS feed" />
 }
 
 <link rel="canonical" href="@CanonicalLink(request)" />
