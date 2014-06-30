@@ -3,7 +3,7 @@
 */
 .stars {
     display: block;
-    width: 65px;
+    width: 70px;
     position: relative;
     text-indent: 100%;
     white-space: nowrap;
@@ -17,7 +17,7 @@
 
     &:after {
         content: '';
-        background-position: 0 -13px;
+        background-position: 0 -14px;
         position: absolute;
         top: 0;
         bottom: 0;
@@ -25,8 +25,9 @@
     }
 }
 
-.s-1:after { width: 13px; }
-.s-2:after { width: 26px; }
-.s-3:after { width: 39px; }
-.s-4:after { width: 52px; }
-.s-5:after { width: 65px; }
+
+.s-1:after { width: 14px; }
+.s-2:after { width: 28px; }
+.s-3:after { width: 42px; }
+.s-4:after { width: 56px; }
+.s-5:after { width: 70px; }
