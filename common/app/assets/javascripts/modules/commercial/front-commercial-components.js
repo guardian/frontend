@@ -16,10 +16,10 @@ define([
             if (config.page.isFront && !config.page.hasPageSkin) {
                 var $adSlot = bonzo(dfp.createAdSlot('merchandising-high', 'commercial-component-high')),
                     $containers = $('.container');
-                if ($containers.length < 4) {
+                if ($containers.length >= 4) {
+                    return $adSlot.insertAfter($containers[1]);
+                } else if ($containers.length >= 2) {
                     return $adSlot.insertAfter($containers[0]);
-                } else {
-                    return $adSlot.insertAfter($containers[2]);
                 }
             }
         })
