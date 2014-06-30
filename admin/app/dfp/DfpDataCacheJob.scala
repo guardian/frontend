@@ -30,8 +30,8 @@ object DfpDataCacheJob extends ExecutionContexts with Dates{
     }
   }
 
-  private implicit val lineItemWrites = new Writes[LineItem] {
-    def writes(lineItem: LineItem ): JsValue = {
+  private implicit val lineItemWrites = new Writes[GuLineItem] {
+    def writes(lineItem: GuLineItem ): JsValue = {
       Json.obj(
         "id" -> lineItem.id,
         "sponsor" -> lineItem.sponsor,
