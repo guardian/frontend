@@ -14,7 +14,7 @@ object FaciaGalleryItem {
 
   val GALLERY_ITEM_CONTAINER_ID = "gallery-item-container"
 
-  private val GALLERY_PICTURE_ID = "gallery-picture"
+  val GALLERY_PICTURE_ID = "gallery-picture"
 }
 
 class FaciaGalleryItem(webDriver: WebDriver, containerTopElement: WebElement) extends FrontsParentPage(webDriver) {

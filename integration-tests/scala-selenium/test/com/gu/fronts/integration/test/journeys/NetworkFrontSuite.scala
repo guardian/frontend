@@ -11,6 +11,14 @@ class NetworkFrontSuite extends FrontsSeleniumTestSuite {
     
     val picContainer = nwFront.containers.containerWithId(NetworkFrontPage.IN_PICTURES_CONTAINER_ID)
     picContainer.isDisplayed should be(true)
-    picContainer.galleryAt(0).isDisplayed should be(true)
+    
+    //select the first valid picture gallery item
+    val firstGallery = picContainer.firstGalleryItem
+    firstGallery.isDisplayed should be(true)
+    val picOverlay = firstGallery.clickPicture
+    picOverlay.isDisplayed should be(true)
+    
+    //check that nw front is still in the background
+    nwFront.isDisplayed should be(true)
   }
 }

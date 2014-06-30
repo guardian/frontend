@@ -1,7 +1,9 @@
 package com.gu.fronts.integration.test.page.util;
 
 import static com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.TEST_ATTR_NAME;
+import static com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.byTestAttribute;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
+import static org.openqa.selenium.By.cssSelector;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
@@ -86,5 +88,20 @@ public class PageElementHelper {
             LOG.warn(e);
             errors.add(e.getMessage());
         }
+    }
+
+    /**
+     * The purpose of this method is to check that the element identified by the test attribute id, exists and is
+     * displayed
+     */
+    public static boolean existsAndDisplayed(WebElement rootElement, String testAttributeId) {
+        try {
+            WebElement element = rootElement.findElement(cssSelector(byTestAttribute(testAttributeId)));
+            return element.isDisplayed();
+        } catch (Exception e) {
+            LOG.warn("Could not find element by test attribute id: " + testAttributeId + " starting from element: "
+                    + rootElement);
+        }
+        return false;
     }
 }
