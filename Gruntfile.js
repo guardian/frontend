@@ -75,12 +75,19 @@ module.exports = function (grunt) {
                             exports: 's'
                         }
                     },
-                    modules: [{
-                        name: 'core'
-                    }, {
-                        name: 'bootstraps/app',
-                        exclude: ['core']
-                    }]
+                    modules: [
+                        {
+                            name: 'core'
+                        },
+                        {
+                            name: 'bootstraps/app',
+                            exclude: ['core']
+                        },
+                        {
+                            name: 'bootstraps/commercial',
+                            exclude: ['core', 'bootstraps/app']
+                        }
+                    ]
                 }
             },
             facia: {
@@ -440,6 +447,8 @@ module.exports = function (grunt) {
                         src: [
                             'bootstraps/app.js',
                             'bootstraps/app.js.map',
+                            'bootstraps/commercial.js',
+                            'bootstraps/commercial.js.map',
                             'core.js',
                             'core.js.map',
                             'components/curl/curl-domReady.js'

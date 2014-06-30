@@ -12,7 +12,6 @@ define([
     'bean',
     'qwery',
     'enhancer',
-    'lodash/objects/assign',
     'lodash/functions/debounce',
     //Modules
     'common/utils/storage',
@@ -40,21 +39,13 @@ define([
     'common/modules/onward/sequence',
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
-    'common/modules/adverts/article-body-adverts',
-    'common/modules/adverts/article-aside-adverts',
-    'common/modules/adverts/slice-adverts',
-    'common/modules/adverts/front-commercial-components',
-    'common/modules/adverts/dfp',
-    'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
     'common/modules/onward/geo-most-popular',
     'common/modules/analytics/register',
-    'common/modules/commercial/loader',
     'common/modules/onward/tonal',
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
-    'common/modules/adverts/badges',
     'common/modules/discussion/loader'
 ], function (
     $,
@@ -67,7 +58,6 @@ define([
     bean,
     qwery,
     enhancer,
-    extend,
     debounce,
 
     storage,
@@ -96,21 +86,13 @@ define([
     sequence,
     Message,
     AutoSignin,
-    ArticleBodyAdverts,
-    ArticleAsideAdverts,
-    SliceAdverts,
-    frontCommercialComponents,
-    dfp,
-    tagContainer,
     Foresee,
     GeoMostPopular,
     register,
-    CommercialLoader,
     TonalComponent,
     id,
     MoreTags,
     smartAppBanner,
-    badges,
     DiscussionLoader
 ) {
 
@@ -251,45 +233,6 @@ define([
             }
         },
 
-        loadAdverts: function (config) {
-
-            var showAds =
-                !userPrefs.isOff('adverts') &&
-                !config.page.shouldHideAdverts &&
-                !config.page.isSSL &&
-                (
-                    config.switches.standardAdverts || config.switches.commercialComponents
-                );
-
-            if (showAds) {
-
-
-                // if it's an article, excluding live blogs, create our inline adverts
-                if (config.switches.standardAdverts && config.page.contentType === 'Article') {
-                    new ArticleAsideAdverts(config).init();
-                    // no inline adverts on live
-                    if (!config.page.isLiveBlog) {
-                        new ArticleBodyAdverts().init();
-                    }
-                }
-
-                new SliceAdverts(config).init();
-
-                frontCommercialComponents.init(config);
-
-                badges.init();
-
-                var options = {};
-
-                if (!config.switches.standardAdverts) {
-                    options.adSlotSelector = '.ad-slot--commercial-component';
-                } else if (!config.switches.commercialComponents) {
-                    options.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
-                }
-                dfp.init(extend(config, options));
-            }
-        },
-
         cleanupCookies: function() {
             Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
             Cookies.cleanUpDuplicates(['GU_VIEW']);
@@ -394,14 +337,6 @@ define([
             });
         },
 
-        loadTags : function() {
-            mediator.on('page:common:ready', function(config) {
-                if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
-                    tagContainer.init(config);
-                }
-            });
-        },
-
         windowEventListeners: function() {
             var events = {
                     resize: 'window:resize',
@@ -446,26 +381,6 @@ define([
             }
         },
 
-        loadCommercialComponent: function(config) {
-            [
-                ['commercial-component', 'merchandising'],
-                ['commercial-component-high', 'merchandising-high']
-            ].forEach(function(data) {
-                var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
-                    slot = qwery('[data-name="' + data[1] + '"]').shift();
-                if (commercialComponent && slot) {
-                    bonzo(slot).removeClass('ad-slot--dfp');
-                    var loader = new CommercialLoader({ config: config }),
-                        postLoadEvents = {};
-                        postLoadEvents[commercialComponent[1]] = function() {
-                            bonzo(slot).css('display', 'block');
-                        };
-                    loader.postLoadEvents = postLoadEvents;
-                    loader.init(commercialComponent[1], slot);
-                }
-            });
-        },
-
         repositionComments: function() {
             mediator.on('page:common:ready', function() {
                 if(!id.isUserLoggedIn()) {
@@ -505,8 +420,6 @@ define([
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
                 modules.transcludePopular(config);
-                modules.loadCommercialComponent(config, context);
-                modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
                 modules.transcludeOnwardContent(config, context);
                 modules.initRightHandComponent(config, context);
@@ -518,7 +431,6 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.loadTags(config);
             modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
