@@ -1,24 +1,23 @@
 package com.gu.fronts.integration.test.page.common
 
-import com.gu.fronts.integration.test.page.util.PageElementHelper.getLinkFrom
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import com.gu.fronts.integration.test.page.util.AbstractParentPage
-import com.gu.fronts.integration.test.page.util.CustomPageFactory
-import FaciaArticle._
+
+import com.gu.fronts.integration.test.page.util.FrontsParentPage
+import com.gu.fronts.integration.test.page.util.PageElementHelper.existsAndDisplayed
+import com.gu.fronts.integration.test.page.util.PageElementHelper.getLinkFrom
 
 object FaciaArticle {
 
   val ARTICLE_CONTAINER_ID = "article-container"
 }
 
-class FaciaArticle(webDriver: WebDriver, containerTopElement: WebElement) extends AbstractParentPage(webDriver) {
+class FaciaArticle(webDriver: WebDriver, containerTopElement: WebElement) extends FrontsParentPage(webDriver) {
 
   private var rootElement: WebElement = containerTopElement
 
-  override def isDisplayed(): FaciaArticle = {
-    assertExistsAndDisplayed(rootElement)
-    this
+  override def isDisplayed(): Boolean = {
+    existsAndDisplayed(rootElement)
   }
 
   def headlineLinkText(): String = getLinkFrom(rootElement).getText

@@ -1,11 +1,11 @@
 package com.gu.fronts.integration.test.page.nwfront
 
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
+import org.openqa.selenium.{ WebDriver, WebElement }
+
 import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute
 import com.gu.fronts.integration.test.page.common.AllFaciaContainersPage
-import com.gu.fronts.integration.test.page.util.AbstractParentPage
-import NetworkFrontPage._
+import com.gu.fronts.integration.test.page.util.FrontsParentPage
+import com.gu.fronts.integration.test.page.util.PageElementHelper.existsAndDisplayed
 
 object NetworkFrontPage {
 
@@ -16,14 +16,13 @@ object NetworkFrontPage {
   val SPORT_CONTAINER_ID = "sport"
 }
 
-class NetworkFrontPage(webDriver: WebDriver) extends AbstractParentPage(webDriver) {
+class NetworkFrontPage(webDriver: WebDriver) extends FrontsParentPage(webDriver) {
 
   @FindByTestAttribute(using = "network-front-date-title")
   private var dateTitle: WebElement = _
 
-  def isDisplayed(): NetworkFrontPage = {
-    assertExistsAndDisplayed(dateTitle)
-    this
+  def isDisplayed(): Boolean = {
+    existsAndDisplayed(dateTitle)
   }
 
   def dateBox(): NetworkFrontDateBox = loadPage(classOf[NetworkFrontDateBox])

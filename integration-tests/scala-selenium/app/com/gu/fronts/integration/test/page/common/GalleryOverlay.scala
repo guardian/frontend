@@ -10,9 +10,10 @@ import org.openqa.selenium.WebElement
 import com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.TEST_ATTR_NAME
 import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute
 import com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage
-import com.gu.fronts.integration.test.page.util.AbstractParentPage
+import com.gu.fronts.integration.test.page.util.FrontsParentPage
+import com.gu.fronts.integration.test.page.util.PageElementHelper.existsAndDisplayed
 
-class GalleryOverlay(webDriver: WebDriver) extends AbstractParentPage(webDriver) {
+class GalleryOverlay(webDriver: WebDriver) extends FrontsParentPage(webDriver) {
 
   @FindByTestAttribute(using = "gallery-grid")
   private var galleryGridButton: WebElement = _
@@ -29,27 +30,26 @@ class GalleryOverlay(webDriver: WebDriver) extends AbstractParentPage(webDriver)
   @FindByTestAttribute(using = "close-overlay")
   private var closeOverlayButton: WebElement = _
 
-  override def isDisplayed(): GalleryOverlay = {
-    assertExistsAndDisplayed(galleryGridButton)
-    this
+  override def isDisplayed(): Boolean = {
+    existsAndDisplayed(galleryGridButton)
   }
 
   def clickGalleryGridMode(): GalleryOverlay = {
-    assertExistsAndDisplayed(galleryGridButton)
+    existsAndDisplayed(galleryGridButton)
     galleryGridButton.click()
-    assertExistsAndDisplayed(galleryFullButton)
+    existsAndDisplayed(galleryFullButton)
     this
   }
 
   def clickGalleryFullMode(): GalleryOverlay = {
-    assertExistsAndDisplayed(galleryFullButton)
+    existsAndDisplayed(galleryFullButton)
     galleryFullButton.click()
-    assertExistsAndDisplayed(galleryGridButton)
+    existsAndDisplayed(galleryGridButton)
     this
   }
 
   def clickNextGallery(): GalleryOverlay = {
-    assertExistsAndDisplayed(galleryNextButton)
+    existsAndDisplayed(galleryNextButton)
     galleryNextButton.click()
     this
   }
@@ -67,7 +67,7 @@ class GalleryOverlay(webDriver: WebDriver) extends AbstractParentPage(webDriver)
   }
 
   def close(): NetworkFrontPage = {
-    assertExistsAndDisplayed(closeOverlayButton)
+    existsAndDisplayed(closeOverlayButton)
     closeOverlayButton.click()
     pageFactory.initPage(webDriver, classOf[NetworkFrontPage])
   }

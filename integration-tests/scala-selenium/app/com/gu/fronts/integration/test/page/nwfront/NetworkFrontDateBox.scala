@@ -1,13 +1,14 @@
 package com.gu.fronts.integration.test.page.nwfront
 
 import java.util.Date
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
-import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute
-import com.gu.fronts.integration.test.page.util.AbstractParentPage
-import com.gu.fronts.integration.test.page.util.NetworkFrontDate
 
-class NetworkFrontDateBox(webDriver: WebDriver) extends AbstractParentPage(webDriver) {
+import org.openqa.selenium.{WebDriver, WebElement}
+
+import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute
+import com.gu.fronts.integration.test.page.util.{FrontsParentPage, NetworkFrontDate}
+import com.gu.fronts.integration.test.page.util.PageElementHelper.existsAndDisplayed
+
+class NetworkFrontDateBox(webDriver: WebDriver) extends FrontsParentPage(webDriver) {
 
   @FindByTestAttribute(using = "network-front-date-title")
   private var dateTitle: WebElement = _
@@ -15,9 +16,8 @@ class NetworkFrontDateBox(webDriver: WebDriver) extends AbstractParentPage(webDr
   @FindByTestAttribute(using = "network-front-day-month")
   private var dayOfMonth: WebElement = _
 
-  override def isDisplayed(): NetworkFrontDateBox = {
-    assertExistsAndDisplayed(dateTitle)
-    this
+  override def isDisplayed(): Boolean = {
+    existsAndDisplayed(dateTitle)
   }
 
   def getDate(): Date = {

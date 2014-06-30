@@ -1,15 +1,18 @@
 package com.gu.fronts.integration.test.page.common
 
-import com.gu.fronts.integration.test.page.util.PageElementHelper.elementIsALink
 import java.lang.String.format
+
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+
 import com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector
 import com.gu.fronts.integration.test.fw.selenium.FindByTestAttribute
 import com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage
-import com.gu.fronts.integration.test.page.util.AbstractParentPage
+import com.gu.fronts.integration.test.page.util.FrontsParentPage
+import com.gu.fronts.integration.test.page.util.PageElementHelper.elementIsALink
+import com.gu.fronts.integration.test.page.util.PageElementHelper.existsAndDisplayed
 
-class Editions(webDriver: WebDriver) extends AbstractParentPage(webDriver) {
+class Editions(webDriver: WebDriver) extends FrontsParentPage(webDriver) {
 
   @FindByTestAttribute(using = "editions")
   private var editions: WebElement = _
@@ -23,9 +26,8 @@ class Editions(webDriver: WebDriver) extends AbstractParentPage(webDriver) {
   @FindByTestAttribute(using = "edition-AU")
   private var editionAU: WebElement = _
 
-  override def isDisplayed(): Editions = {
-    super.assertExistsAndDisplayed(editions, editionUK, editionUS, editionAU)
-    this
+  override def isDisplayed(): Boolean = {
+    existsAndDisplayed(editions, editionUK, editionUS, editionAU)
   }
 
   def selectUSEdition(): NetworkFrontPage = {
@@ -57,12 +59,12 @@ class Editions(webDriver: WebDriver) extends AbstractParentPage(webDriver) {
   }
 
   def isUsEditionPresent(): Editions = {
-    super.assertExistsAndDisplayed(editionUS)
+    existsAndDisplayed(editionUS)
     this
   }
 
   def isAuEditionPresent(): Editions = {
-    super.assertExistsAndDisplayed(editionAU)
+    existsAndDisplayed(editionAU)
     this
   }
 }

@@ -1,14 +1,14 @@
 package com.gu.fronts.integration.test.page.common
 
-import com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.byTestAttribute
-import com.gu.fronts.integration.test.page.util.PageElementHelper.findElementBy
 import org.openqa.selenium.By.cssSelector
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
-import com.gu.fronts.integration.test.page.util.AbstractParentPage
-import FaciaGalleryItem._
-//remove if not needed
-import scala.collection.JavaConversions._
+
+import com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.byTestAttribute
+import com.gu.fronts.integration.test.page.util.FrontsParentPage
+import com.gu.fronts.integration.test.page.util.PageElementHelper.existsAndDisplayed
+import com.gu.fronts.integration.test.page.util.PageElementHelper.findElementBy
+import com.gu.fronts.integration.test.page.common.FaciaGalleryItem.GALLERY_PICTURE_ID
 
 object FaciaGalleryItem {
 
@@ -17,13 +17,12 @@ object FaciaGalleryItem {
   private val GALLERY_PICTURE_ID = "gallery-picture"
 }
 
-class FaciaGalleryItem(webDriver: WebDriver, containerTopElement: WebElement) extends AbstractParentPage(webDriver) {
+class FaciaGalleryItem(webDriver: WebDriver, containerTopElement: WebElement) extends FrontsParentPage(webDriver) {
 
   private var rootElement: WebElement = containerTopElement
 
-  override def isDisplayed(): FaciaGalleryItem = {
-    assertExistsAndDisplayed(rootElement)
-    this
+  override def isDisplayed(): Boolean = {
+    existsAndDisplayed(rootElement)
   }
 
   def clickPicture(): GalleryOverlay = {
