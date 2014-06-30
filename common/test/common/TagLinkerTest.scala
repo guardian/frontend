@@ -9,10 +9,12 @@ import org.joda.time.DateTime
 import common.editions.Uk
 import scala.collection.JavaConversions._
 import org.jsoup.nodes.Document
+import play.api.test.FakeRequest
 
 class TagLinkerTest extends FlatSpec with Matchers {
 
   implicit val edition = Uk
+  implicit val request = FakeRequest("GET", "/")
 
   private implicit class Document2FirstPara(d: Document) {
     val firstPara = d.select("p").head.html

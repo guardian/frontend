@@ -5,12 +5,14 @@ import org.scalatest.Matchers
 import play.api.Play
 import common.editions.Uk
 import test.TestRequest
+import play.api.test.FakeRequest
 
 class LinkToTest extends FlatSpec with Matchers with implicits.FakeRequests {
 
   Play.unsafeApplication
 
   implicit val edition = Uk
+  implicit val request = FakeRequest("GET", "/")
 
   object TestLinkTo extends LinkTo {
     override lazy val host = "http://www.foo.com"

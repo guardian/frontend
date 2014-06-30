@@ -7,6 +7,7 @@ import xml.XML
 import common.editions.Uk
 import conf.Configuration
 import org.jsoup.Jsoup
+import play.api.test.FakeRequest
 
 class TemplatesTest extends FlatSpec with Matchers {
 
@@ -98,7 +99,10 @@ class TemplatesTest extends FlatSpec with Matchers {
   }
 
   "InBodyLinkCleaner" should "clean links" in {
-    val body = XML.loadString(withJsoup(bodyTextWithLinks)(InBodyLinkCleaner("in body link")(Uk)).body.trim)
+    implicit val edition = Uk
+    implicit val request = FakeRequest("GET", "/")
+
+    val body = XML.loadString(withJsoup(bodyTextWithLinks)(InBodyLinkCleaner("in body link")).body.trim)
 
     val link = (body \\ "a").head
 
