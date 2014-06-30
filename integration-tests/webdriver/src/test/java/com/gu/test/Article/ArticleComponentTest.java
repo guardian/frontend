@@ -28,13 +28,18 @@ public class ArticleComponentTest {
 
     @Test
     public void articleHasMostPopularSidebar() {
-        Assert.assertTrue("Failure: Related content container missing", testArticle.hasMostPopularRight());
+        Assert.assertTrue("Failure: Most popular container in sidebar missing", testArticle.hasMostPopularRight());
     }
 
     @Test
     public void articleHasRelatedContentContainer() {
         Assert.assertTrue("Failure: Related content container missing",
                 testArticle.hasRelatedContentContainer());
+    }
+
+    @Test
+    public void articleHasPopularContainerBelow(){
+        Assert.assertTrue("Failure: Popular container below article is missing", testArticle.hasMostPopularBelow());
     }
 
     @Test
