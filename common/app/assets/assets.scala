@@ -98,4 +98,14 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
       }
     }
   }
+
+  object js {
+
+    def curl: String = {
+      val url = Play.classloader(Play.current).getResource(s"assets/curl-domReady.js")
+      IOUtils.toString(url)
+    }
+
+  }
+
 }

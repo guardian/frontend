@@ -450,8 +450,7 @@ module.exports = function (grunt) {
                             'bootstraps/commercial.js',
                             'bootstraps/commercial.js.map',
                             'core.js',
-                            'core.js.map',
-                            'components/curl/curl-domReady.js'
+                            'core.js.map'
                         ],
                         dest: staticTargetDir + 'javascripts'
                     }
@@ -486,6 +485,14 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'static/target/stylesheets',
                     src: ['**/head*.css'],
+                    dest: 'common/conf/assets'
+                }]
+            },
+            headJs: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/javascripts/components/curl',
+                    src: ['curl-domReady.js'],
                     dest: 'common/conf/assets'
                 }]
             },
@@ -803,7 +810,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:js', ['requirejs', 'copy:javascript', 'concat', 'uglify:javascript']);
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
-    grunt.registerTask('compile:conf', ['copy:headCss', 'copy:assetMap']);
+    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap']);
     grunt.registerTask('compile', [
         'compile:images',
         'compile:css',

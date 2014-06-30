@@ -1,4 +1,4 @@
-define([
+require([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/atob',

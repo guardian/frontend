@@ -1,6 +1,7 @@
 /*global guardian:true */
 define([
     'qwery',
+
     'common/utils/mediator',
     'common/utils/ajax',
     'common/utils/detect',
@@ -25,6 +26,7 @@ define([
     'common/bootstraps/profile'
 ], function (
     qwery,
+
     mediator,
     ajax,
     detect,
