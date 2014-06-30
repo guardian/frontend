@@ -88,6 +88,10 @@ define([
 
             opts = opts || {};
 
+            if (!vars.model.switches()['facia-tool-draft-content']) {
+                self.showingDrafts(false);
+            }
+
             clearTimeout(deBounced);
             deBounced = setTimeout(function(){
 

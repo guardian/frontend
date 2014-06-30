@@ -39,8 +39,8 @@ define([
         capiBatchSize:         10,
 
         collectionsPollMs:     10000,
-        latestArticlesPollMs:  20000,
-        configSettingsPollMs:  5000,
+        latestArticlesPollMs:  30000,
+        configSettingsPollMs:  30000,
         cacheExpiryMs:         60000,
         sparksRefreshMs:       300000,
         pubTimeRefreshMs:      30000,

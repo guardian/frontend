@@ -54,13 +54,14 @@
 
         <div data-bind="with: latestArticles">
             <div class="search-tools">
-                <a class="tool tool-draft-content tool-left-half" data-bind="
-                    click: showDrafts,
-                    css: {active: showingDrafts}">Draft content</a
-               ><a class="tool tool-live-content tool-right-half" data-bind="
-                    click: showLive,
-                    css: {active: !showingDrafts()}">Live content</a>
-
+                <!-- ko if: $root.switches()['facia-tool-draft-content'] -->
+                    <a class="tool tool-draft-content tool-left-half" data-bind="
+                        click: showDrafts,
+                        css: {active: showingDrafts}">Draft content</a
+                   ><a class="tool tool-live-content tool-right-half" data-bind="
+                        click: showLive,
+                        css: {active: !showingDrafts()}">Live content</a>
+                <!-- /ko -->
                 <a class="tool"><i class="icon-refresh icon-white" data-bind="click: refresh"></i></a>
                 <a class="tool"><i class="icon-remove icon-white" data-bind="click: reset"></i></a>
             </div>
