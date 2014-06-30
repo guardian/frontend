@@ -569,7 +569,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'common/app/assets/javascripts/',
-                    src: ['**/*.js', '!components/**', '!utils/atob.js']
+                    src: ['**/*.js', '!components/**', '!bower_components/**', '!utils/atob.js']
                 }]
             },
             facia: {
