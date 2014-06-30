@@ -1,6 +1,6 @@
 /* global videojs */
 define([
-    'common/$',
+    'common/utils/$',
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',

@@ -1,1 +1,0 @@
-bar({ "boosh": "boosh" });

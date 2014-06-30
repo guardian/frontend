@@ -1,6 +1,6 @@
 /* global googletag: false */
 define([
-    'common/$',
+    'common/utils/$',
     'bonzo',
     'qwery',
     'lodash/functions/debounce',

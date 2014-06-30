@@ -1,12 +1,11 @@
 define([
-    'common/common',
+    'common/utils/common',
     'common/utils/mediator',
-    'common/$',
+    'common/utils/$',
     'fence',
     'common/modules/ui/rhc',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/discussion/loader',
     'common/modules/open/cta',
     'common/bootstraps/liveblog',
     'common/modules/article/world-cup',
@@ -20,7 +19,6 @@ define([
     rhc,
     truncate,
     twitter,
-    DiscussionLoader,
     OpenCta,
     LiveBlog,
     worldCup,
@@ -32,15 +30,6 @@ define([
             if (config.page.isLiveBlog) {
                 LiveBlog.init();
             }
-        },
-
-        initDiscussion: function() {
-            common.mediator.on('page:article:ready', function(config, context) {
-                if (config.page.commentable && config.switches.discussion) {
-                    var discussionLoader = new DiscussionLoader(context, common.mediator, { 'switches': config.switches });
-                    discussionLoader.attachTo($('.discussion')[0]);
-                }
-            });
         },
 
         initOpen: function() {
@@ -88,7 +77,6 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.initLiveBlogging(config);
-            modules.initDiscussion();
             modules.initOpen(config);
             modules.initFence();
             modules.initTruncateAndTwitter();

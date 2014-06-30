@@ -1,0 +1,34 @@
+@(env: String, pageSkinnedAdUnits: dfp.PageSkinSponsorshipReport)
+@import tools.DfpLink
+
+@admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
+
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+
+    <h1>Pageskins</h1>
+<p>Pages will squish to accommodate pageskins according to this <a href="#criteria">criteria</a></p>
+<p>Some of these are not targetting fronts. They are just here so you can work it out.</p>
+
+<h3>Pageskinned Ad Units</h3>
+    <p>Last updated: @pageSkinnedAdUnits.updatedTimeStamp</p>
+
+    <ol>
+        @for(sponsorship <- pageSkinnedAdUnits.sponsorships) {
+            <li>@sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+            <ul>
+                @for(adunit <- sponsorship.adUnits) {
+                <li>@adunit</li>
+                }
+            </ul>
+            </li>
+        }
+    </ol>
+
+<h3><a name="criteria">Criteria:</a></h3>
+<p>All of these must be true for a page to squish itself for a pageskin:</p>
+<ol>
+    <li>The Ad Unit must be a <em>front</em></li>
+    <li>The Line Item must have a Roadblocking type of <em>Creative Set</em></li>
+    <li>The Line Item Placeholder should target the <em>Out of Page (1x1 pixel)</em> slot.</li>
+</ol>
+}

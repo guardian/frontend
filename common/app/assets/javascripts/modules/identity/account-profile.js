@@ -5,7 +5,7 @@
  *  forms.
  */
 define([
-    'common/$',
+    'common/utils/$',
     'bean',
     'bonzo',
     'common/utils/url'
