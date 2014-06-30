@@ -1,5 +1,5 @@
 define([
-    'common/common',
+    'common/utils/common',
     'common/modules/analytics/register',
     'common/modules/ui/images',
     'lodash/objects/assign',

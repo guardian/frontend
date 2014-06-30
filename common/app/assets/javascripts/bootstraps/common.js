@@ -2,7 +2,7 @@
 /* TODO - fix module constructors so we can remove the above jshint override */
 define([
     //Commmon libraries
-    'common/$',
+    'common/utils/$',
     'common/utils/mediator',
     'common/utils/deferToLoad',
     'common/utils/ajax',
@@ -55,7 +55,8 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
-    'common/modules/adverts/badges'
+    'common/modules/adverts/badges',
+    'common/modules/discussion/loader'
 ], function (
     $,
     mediator,
@@ -111,7 +112,8 @@ define([
     id,
     MoreTags,
     smartAppBanner,
-    badges
+    badges,
+    DiscussionLoader
 ) {
 
     var modules = {
@@ -300,8 +302,8 @@ define([
         },
 
         cleanupCookies: function() {
-            Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA']);
-            Cookies.cleanUpDuplicates(['GU_ALPHA','GU_VIEW']);
+            Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
+            Cookies.cleanUpDuplicates(['GU_VIEW']);
         },
 
         // opt-in to the responsive alpha
@@ -345,11 +347,9 @@ define([
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
                 bean.on(document, 'click', '.js-site-message-close', function() {
                     Cookies.add('GU_VIEW', 'responsive', 365);
-                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 bean.on(document, 'click', '.js-site-message', function() {
                     Cookies.add('GU_VIEW', 'responsive', 365);
-                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 var message = new Message('onboard', { type: 'modal' }),
                     path = (document.location.pathname) ? document.location.pathname : '/',
@@ -493,6 +493,15 @@ define([
             if(config.switches.smartBanner) {
                 smartAppBanner.init();
             }
+        },
+
+        initDiscussion: function() {
+            mediator.on('page:common:ready', function(config, context) {
+                if (config.page.commentable && config.switches.discussion) {
+                    var discussionLoader = new DiscussionLoader(context, mediator, { 'switches': config.switches });
+                    discussionLoader.attachTo($('.discussion')[0]);
+                }
+            });
         }
     };
 
@@ -543,6 +552,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
+            modules.initDiscussion();
         }
         mediator.emit('page:common:ready', config, context);
     };

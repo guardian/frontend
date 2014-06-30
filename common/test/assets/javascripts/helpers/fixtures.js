@@ -5,7 +5,7 @@
  *
  */
 define([
-    'common/$'
+    'common/utils/$'
 ], function(
     $
 ) {
