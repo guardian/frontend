@@ -58,7 +58,8 @@ module.exports = function (grunt) {
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
-                preserveLicenseComments: false
+                preserveLicenseComments: false,
+                fileExclusionRegExp: /^bower_components$/
             },
             common: {
                 options: {
