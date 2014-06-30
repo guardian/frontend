@@ -320,6 +320,17 @@ $c-commercial-travel-dark: #002b6c;
                 width: gs-span(2) + $gs-gutter
             ));
         }
+        .has-page-skin & {
+            .commercial__home-link {
+                width: auto;
+                @include rem((
+                    top: $gs-baseline
+                ));
+                right: 0;
+                left: auto;
+                bottom: auto;
+            }
+        }
     }
     &.commercial--high {
         @include mq(desktop) {

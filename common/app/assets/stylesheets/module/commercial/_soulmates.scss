@@ -329,6 +329,41 @@ $c-soulmates-high: $c-neutral1;
                 padding-left: $gs-gutter
             ));
         }
+        .has-page-skin & {
+            .commercial__head {
+                position: relative;
+                width: auto;
+                float: none;
+            }
+            .container__title__wrapper {
+                height: auto;
+                @include rem((
+                    width: gs-span(2),
+                    padding: $gs-baseline*2 0 $gs-baseline/2,
+                    margin: 0 0 $gs-baseline*2.5
+                ));
+            }
+            .commercial__explainer {
+                color: $c-soulmates-high;
+                position: absolute;
+                bottom: 0;
+                width: auto;
+                padding: 0;
+                @include fs-header(1);
+                @include rem((
+                    margin: $gs-baseline 0 0
+                ));
+            }
+            .commercial__buy-now-button {
+                display: none;
+            }
+            .i-soulmates-logo-2014 {
+                @include rem((
+                    width: 86px,
+                    height: 18px
+                ));
+            }
+        }
     }
 }
 /* article */

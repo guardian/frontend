@@ -28,6 +28,13 @@ $commercial-cta-diameter: (
             ));
         }
     }
+    @include mq(wide) {
+        .has-page-skin & {
+            .container__title {
+                margin-bottom: 0;
+            }
+        }
+    }
     &.commercial--high {
         @include mq(tablet) {
             .commercial__relevance-high,
