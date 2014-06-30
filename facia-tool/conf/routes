@@ -16,8 +16,13 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 #######################################################
 
 # Fronts
-GET           /                          controllers.FaciaToolController.collectionsEditor()
-GET           /configuration             controllers.FaciaToolController.configEditor()
+GET           /                          controllers.FaciaToolController.priorities()
+GET           /editorial                 controllers.FaciaToolController.collectionEditor(priority="editorial")
+GET           /commercial                controllers.FaciaToolController.collectionEditor(priority="commercial")
+
+GET           /editorial/config          controllers.FaciaToolController.configEditor(priority="editorial")
+GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
+
 GET           /publish-all               controllers.FaciaToolController.publishAll()
 GET           /publish-all/comet         controllers.FaciaToolController.publishAllStream()
 
@@ -31,7 +36,6 @@ GET           /collection/*id            controllers.FaciaToolController.readBlo
 POST          /edits                     controllers.FaciaToolController.collectionEdits
 GET           /collection                controllers.FaciaToolController.listCollections
 GET           /config                    controllers.FaciaToolController.getConfig
-POST          /config                    controllers.FaciaToolController.updateConfig
 
 POST          /collectionmeta/*id        controllers.FaciaToolController.updateCollectionMeta(id)
 
@@ -39,3 +43,11 @@ POST          /collectionmeta/*id        controllers.FaciaToolController.updateC
 GET           /switches                  controllers.SwitchesProxy.getSwitches()
 GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
+
+# Updating config
+
+POST          /config/fronts             controllers.FrontController.create()
+POST          /config/fronts/*path       controllers.FrontController.update(path)
+
+POST          /config/collections        controllers.CollectionController.create()
+POST          /config/collections/*id    controllers.CollectionController.update(id)

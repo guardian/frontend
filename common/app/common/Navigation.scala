@@ -6,27 +6,35 @@ case class SectionLink(zone: String, title: String, breadcumbTitle: String, href
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
     page.url == href ||
-    page.tags.exists(t => s"/${t.id}" == href) ||
     (Edition.all.exists(_.id.toLowerCase == page.id.toLowerCase) && href == "/")
+
+  def currentForIncludingAllTags(page: MetaData): Boolean = page.tags.exists(t => s"/${t.id}" == href)
 }
 
 case class Zone(name: SectionLink, sections: Seq[SectionLink])
 
-case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil, current: Boolean = false) {
+case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
   def currentFor(page: MetaData): Boolean = name.currentFor(page) ||
     links.exists(_.currentFor(page)) || exactFor(page)
+
+  def currentForIncludingAllTags(page: MetaData): Boolean = name.currentForIncludingAllTags(page) ||
+    links.exists(_.currentForIncludingAllTags(page))
+
+  def searchForCurrentSublink(page: MetaData): Option[SectionLink] =
+    links.find(_.currentFor(page))
+      .orElse(links.find(_.currentForIncludingAllTags(page)))
 
   def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
 }
 
-trait Navigation  {
+trait Navigation {
 
   //News
   val home = SectionLink("news", "home", "Home", "/")
-  val news  = SectionLink("news", "news","News", "/")
+  val news = SectionLink("news", "news", "News", "/")
   val world = SectionLink("world", "world", "World", "/world")
-  val uk    = SectionLink("uk-news", "UK", "UK News", "/uk-news")
-  val us    = SectionLink("world", "US", "US News", "/world/usa")
+  val uk = SectionLink("uk-news", "UK", "UK News", "/uk-news")
+  val us = SectionLink("world", "US", "US News", "/world/usa")
   val politics = SectionLink("politics", "politics", "Politics", "/politics")
   val technology = SectionLink("technology", "tech", "Technology", "/technology")
   val environment = SectionLink("environment", "environment", "Environment", "/environment")
@@ -43,7 +51,7 @@ trait Navigation  {
   val americas = SectionLink("world", "americas", "Americas", "/world/americas")
   val australia = SectionLink("world", "australia", "Australia", "/world/australia")
   val asia = SectionLink("world", "asia", "Asia", "/world/asia")
-  val africa = SectionLink("world", "africa","Africa", "/world/africa")
+  val africa = SectionLink("world", "africa", "Africa", "/world/africa")
   val middleEast = SectionLink("world", "middle east", "Middle east", "/world/middleeast")
 
   val health = SectionLink("society", "health", "Health", "/society/health")
@@ -68,13 +76,15 @@ trait Navigation  {
   val golf = SectionLink("sport", "golf", "Golf", "/sport/golf")
   val horseracing = SectionLink("sport", "horse racing", "Horse racing", "/sport/horse-racing")
   val boxing = SectionLink("sport", "boxing", "Boxing", "/sport/boxing")
-  val formulaOne = SectionLink("sport", "formula one", "Formula one", "/sport/formula-one-2014")
+  val formulaOne = SectionLink("sport", "formula one", "Formula one", "/sport/formulaone")
 
-  val nfl = SectionLink("sport", "NFL","NFL", "/sport/nfl")
+  val nfl = SectionLink("sport", "NFL", "NFL", "/sport/nfl")
   val mlb = SectionLink("sport", "MLB", "MLB", "/sport/mlb")
   val nba = SectionLink("sport", "NBA", "NBA", "/sport/nba")
   val mls = SectionLink("football", "MLS", "MLS", "/football/mls")
   val nhl = SectionLink("sport", "NHL", "NHL", "/sport/nhl")
+
+  val worldCup = SectionLink("football", "world cup", "World Cup", "/football/world-cup-2014")
 
   //Cif
   val cif = SectionLink("commentisfree", "comment", "Comment", "/commentisfree")
@@ -103,14 +113,14 @@ trait Navigation  {
   val gadgets = SectionLink("technology", "gadgets", "Gadgets", "/technology/gadgets")
 
   //Business
-  val economy =  SectionLink("business", "economy", "Economy", "/business")
-  val business =  economy.copy(title = "business", breadcumbTitle = "Business")
-  val companies =  SectionLink("business", "companies", "Companies", "/business/companies")
+  val economy = SectionLink("business", "economy", "Economy", "/business")
+  val business = economy.copy(title = "business", breadcumbTitle = "Business")
+  val companies = SectionLink("business", "companies", "Companies", "/business/companies")
   val economics = SectionLink("business", "economics", "Economics", "/business/economics")
   val markets = SectionLink("business", "markets", "Markets", "/business/stock-markets")
   val useconomy = SectionLink("business", "US economy", "US economy", "/business/useconomy")
   val recession = SectionLink("business", "recession", "Recession", "/business/recession")
-  val  investing = SectionLink("business", "investing", "Investing", "/business/investing")
+  val investing = SectionLink("business", "investing", "Investing", "/business/investing")
   val banking = SectionLink("business", "banking", "Banking", "/business/banking")
   val marketforceslive = SectionLink("business", "market forces live", "Market Forces live", "/business/marketforceslive")
   val businessblog = SectionLink("business", "business blog", "Business blog", "/business/blog")
@@ -161,6 +171,7 @@ trait Navigation  {
   val globalDevelopment = SectionLink("environment", "development", "Development", "/global-development")
 
   val footballNav = Seq(
+    worldCup,
     SectionLink("football", "live scores", "Live scores", "/football/live"),
     SectionLink("football", "tables", "Tables", "/football/tables"),
     SectionLink("football", "competitions", "Competitions", "/football/competitions"),
@@ -182,22 +193,33 @@ object Breadcrumbs {
 }
 
 
-  // helper for the views
-  object Navigation {
+// helper for the views
+object Navigation {
 
-    def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
-    .orElse(navigation.find(_.currentFor(page)))
+  def topLevelItem(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = navigation.find(_.exactFor(page))
+    .orElse(navigation.find(_.currentFor(page))) //This includes a search on the HEAD of Tags for (page: MetaData)
+    .orElse(navigation.find(_.currentForIncludingAllTags(page))) //This is the search for ALL tags
 
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
-  def localNav(navigation: Seq[NavItem], page: MetaData): Option[Seq[SectionLink]] = topLevelItem(navigation, page)
-    .map(_.links).filter(_.nonEmpty)
+  def localNav(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = topLevelItem(navigation, page)
+    .filter(_.links.nonEmpty)
 
   def sectionOverride(localNav: NavItem, currentSublink: Option[SectionLink]): String = currentSublink.map(_.title).getOrElse(localNav.name.title)
+
+  def localNavWithoutCurrent(localNav: NavItem, currentSublink: Option[SectionLink]) =
+    localNav.links.filter(_.href != currentSublink.map(_.href).getOrElse(""))
+
+  def rotateByOmittingCurrent(localNav: NavItem, currentSublink: Option[SectionLink]) = currentSublink match {
+    case Some(currentSection) =>
+      val navSlices = localNav.links.span(_.href != currentSection.href)
+      navSlices._2.drop(1) ++ navSlices._1
+    case None =>
+      localNav.links
+  }
 }
 
 trait Zones extends Navigation {
-
 
   val newsZone = Zone(news,
     Seq(world, uk, us, politics, technology, environment, media, education, society, development,
@@ -221,11 +243,11 @@ trait Zones extends Navigation {
   )
 
   val technologyZone = Zone(technology,
-    Seq(technologyblog, games, gamesblog, appsblog, askjack, internet, mobilephones, gadgets )
+    Seq(technologyblog, games, gamesblog, appsblog, askjack, internet, mobilephones, gadgets)
   )
 
   val businessZone = Zone(economy,
-    Seq(economics, useconomy, recession, investing, banking, marketforceslive, businessblog )
+    Seq(economics, useconomy, recession, investing, banking, marketforceslive, businessblog)
   )
 
   val moneyZone = Zone(money,

@@ -1,5 +1,5 @@
 define([
-    'common/common',
+    'common/utils/common',
     'common/modules/identity/api',
     'common/utils/ajax',
     'common/utils/context',
@@ -56,6 +56,10 @@ define([
                             '<div class="d-comment-box__error d-comment-box__premod">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</div>'+
                             '<textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>'+
                             '<button type="submit" class="submit-input d-comment-box__submit">Post comment</button>'+
+                        '</div>'+
+                        '<div class="d-comment-box__preview-wrapper">'+
+                            '<div class="d-comment-box__preview-body"></div>'+
+                            '<button type="submit" class="submit-input d-comment-box__submit d-comment-box__preview-submit">Post your comment</button>'+
                         '</div>'+
                     '</form>'
                 ]

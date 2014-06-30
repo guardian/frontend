@@ -6,7 +6,7 @@ import play.api.mvc.{ RequestHeader, Controller, Action }
 import services._
 import play.api.libs.json.{Json, JsArray}
 import scala.concurrent.Future
-import conf.ContentApi
+import conf.LiveContentApi
 import com.gu.openplatform.contentapi.ApiError
 
 object TaggedContentController extends Controller with Related with Logging with ExecutionContexts {
@@ -43,7 +43,7 @@ object TaggedContentController extends Controller with Related with Logging with
 
   private def lookup(tag: String, edition: Edition)(implicit request: RequestHeader): Future[Seq[Content]] = {
     log.info(s"Fetching tagged stories for edition ${edition.id}")
-    ContentApi.search(edition)
+    LiveContentApi.search(edition)
       .tag(tag)
       .pageSize(3)
       .response

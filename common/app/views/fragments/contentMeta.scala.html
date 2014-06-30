@@ -12,7 +12,9 @@
     @if(!content.hasTonalHeaderByline) {
         @byline(content)
     }
-    @fragments.meta.dateline(content.webPublicationDate, secondary=true)
+    @if(!content.shouldHidePublicationDate) {
+        @fragments.meta.dateline(content.webPublicationDate, secondary = true)
+    }
     <div class="js-comment-count"></div>
     <div class="social-wrapper social-wrapper--aside" data-component="share">
         <h2 class="social__head">Share this article</h2>
@@ -26,15 +28,9 @@
     @if(content.hasShowcaseMainPicture){ content__meta-container--showcase}
     @if(!content.hasMainPicture && !content.hasMainVideo && !content.hasMainEmbed){ content__meta-container--float}">
 
-    @if(content.isSponsored) {
-        @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
-    } else {
-        @if(content.isAdvertisementFeature) {
-            @fragments.commercial.badge(name="adbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
-        }
-    }
+    @fragments.commercial.badge(content)
 
-    @if(content.hasLargeContributorImage && !content.hasTonalHeaderByline) {
+    @if(content.hasLargeContributorImage && content.contributors.length == 1 && !content.hasTonalHeaderByline) {
         <div class="media__img meta__image">
             @fragments.meta.bylineImage(content)
         </div>

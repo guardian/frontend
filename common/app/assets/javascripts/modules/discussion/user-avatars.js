@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'bonzo',
     'common/modules/discussion/api'
 ], function($, bonzo, discussionApi){

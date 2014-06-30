@@ -1,6 +1,6 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
-<header class="content__head tone-accent-border">
+<header class="content__head tone-accent-border u-cf">
 
     <div class="gs-container">
         <div class="content__head__border-top"></div>
@@ -11,10 +11,6 @@
             </div>
 
             @fragments.meta.metaInline(content)
-
-            @if(content.delegate.isInteractive) {
-                @fragments.dateline(content.webPublicationDate)
-            }
 
             <h1 itemprop="headline" class="content__headline js-score">@Html(content.headline)</h1>
 

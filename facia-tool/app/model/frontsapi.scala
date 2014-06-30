@@ -8,19 +8,25 @@ import scala.util.{Success, Failure, Try}
 import common.Logging
 import conf.Configuration
 
-case class Config(
-  fronts: Map[String, Front],
-  collections: Map[String, Collection]
-)
+object Front {
+  implicit val jsonFormat = Json.format[Front]
+}
 
 case class Front(
                   collections: List[String],
-                  section: Option[String],
+                  navSection: Option[String],
                   webTitle: Option[String],
                   title: Option[String],
                   description: Option[String],
                   priority: Option[String]
                   )
+
+object Collection {
+  implicit val jsonFormat = Json.format[Collection]
+
+  /** TODO emulate the current IDs as generated in the JavaScript */
+  def nextId = java.util.UUID.randomUUID().toString
+}
 
 case class Collection(
                   displayName: Option[String],
@@ -33,6 +39,31 @@ case class Collection(
                   showSections: Option[Boolean]
                   )
 
+object Config {
+  implicit val jsonFormat = Json.format[Config]
+
+  def empty = Config(Map.empty, Map.empty)
+}
+
+case class Config(
+  fronts: Map[String, Front],
+  collections: Map[String, Collection]
+)
+
+object Trail {
+  implicit val jsonFormat = Json.format[Trail]
+}
+
+case class Trail(
+  id: String,
+  frontPublicationDate: Option[DateTime],
+  meta: Option[Map[String, JsValue]]
+)
+
+object Block {
+  implicit val jsonFormat = Json.format[Block]
+}
+
 case class Block(
                   name: Option[String],
                   live: List[Trail],
@@ -43,16 +74,38 @@ case class Block(
                   displayName: Option[String],
                   href: Option[String],
                   diff: Option[JsValue]
-                  )
+                  ) {
 
-case class Trail(
-                  id: String,
-                  frontPublicationDate: Option[DateTime],
-                  meta: Option[Map[String, JsValue]]
-                  )
+  def sortByGroup: Block = this.copy(
+    live = sortTrailsByGroup(this.live),
+    draft = this.draft.map(sortTrailsByGroup)
+  )
 
+  private def sortTrailsByGroup(trails: List[Trail]): List[Trail] = {
+    val trailGroups = trails.groupBy(_.meta.getOrElse(Map.empty).get("group").flatMap(_.asOpt[String]).map(_.toInt).getOrElse(0))
+    trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
+  }
 
-case class UpdateList(id: String, item: String, position: Option[String], after: Option[Boolean], itemMeta: Option[Map[String, JsValue]], live: Boolean, draft: Boolean)
+}
+
+object UpdateList {
+  implicit val jsonFormat = Json.format[UpdateList]
+}
+
+case class UpdateList(
+  id: String,
+  item: String,
+  position: Option[String],
+  after: Option[Boolean],
+  itemMeta: Option[Map[String, JsValue]],
+  live: Boolean,
+  draft: Boolean
+)
+
+object CollectionMetaUpdate {
+  implicit val jsonFormat = Json.format[CollectionMetaUpdate]
+}
+
 case class CollectionMetaUpdate(
   displayName: Option[String],
   href: Option[String]
@@ -151,6 +204,7 @@ trait UpdateActions extends Logging {
     getBlock(id)
     .map(insertIntoLive(update, _))
     .map(insertIntoDraft(update, _))
+    .map(_.sortByGroup)
     .map(capCollection)
     .map(putBlock(id, _, identity))
     .map(archiveUpdateBlock(id, _, updateJson, identity))
@@ -162,6 +216,7 @@ trait UpdateActions extends Logging {
     getBlock(id)
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
+      .map(_.sortByGroup)
       .map(archiveDeleteBlock(id, _, updateJson, identity))
       .map(putBlock(id, _, identity))
   }
@@ -169,6 +224,7 @@ trait UpdateActions extends Logging {
   def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
     getBlock(id)
       .map(updateCollectionMeta(_, update, identity))
+      .map(_.sortByGroup)
       .map(putBlock(id, _, identity))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {

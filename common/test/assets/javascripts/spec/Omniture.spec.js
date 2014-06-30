@@ -1,4 +1,4 @@
-define(['fixtures/config', 'analytics/omniture', 'common/common'], function(testConfigData, Omniture, common) {
+define(['fixtures/config', 'analytics/omniture', 'common/utils/common'], function(testConfigData, Omniture, common) {
 
     describe("Omniture", function() {
 
@@ -16,7 +16,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
             };
             config.switches = {};
 
-            s = { t: function(){}, tl: function(){}, apl: function(){}, getQueryParam: function(){ return 'test'; }, getValOnce: function(){ return 'test'; } };
+            s = { t: function(){}, tl: function(){}, apl: function(){}, getQueryParam: function(){ return 'test'; }, getValOnce: function(){ return 'test'; }, getTimeParting: function(){ return ["4:03PM", "4:00PM", "Thursday", "Weekday"]; } };
             sinon.spy(s, "t");
             sinon.spy(s, "tl");
             sinon.spy(s, "apl");
@@ -71,6 +71,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
 
             expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com");
             expect(s.pageName).toBe("GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long");
+            expect(s.eVar1).toMatch("\\d\\d\\d\\d/\\d\\d/\\d\\d");  // in reality todays date e.g. 2014/05/21
             expect(s.prop9).toBe("Article");
             expect(s.channel).toBe("theworld");
             expect(s.prop4).toBe("Syria,Yemen,Egypt,Bahrain");

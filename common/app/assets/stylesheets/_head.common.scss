@@ -31,7 +31,18 @@
 @import 'layout/_header';
 @import 'layout/_helpers';
 @include guss-row-utility;
-@include guss-columns-utility;
+@include guss-columns(
+    $base-class: $guss-columns-utility-class,
+    $css3-columns-support: false, // Because buggy in some versions of WebKit
+    $columns-fallback-width: (
+        tablet: gs-span(9),
+        desktop: gs-span(12)
+    ),
+    $columns-fallback-columns: (
+        tablet: 2,
+        desktop: 3
+    )
+);
 
 
 /* ==========================================================================
@@ -50,11 +61,11 @@
    Facia
    ========================================================================== */
 
-@import 'module/facia/_extends';
 @import 'module/facia/_items';
 @import 'module/facia/_row-pattern';
-@import 'module/facia/_facia-container';
 @import 'module/facia/_linkslist';
+@import 'module/facia/_facia-container';
+@include facia-container-head-common;
 
 
 /* ==========================================================================
@@ -76,11 +87,4 @@
    Icons
    ========================================================================== */
 
-@import 'theme/_global-icons-sprite';
-
-
-/* ==========================================================================
-   Misc
-   ========================================================================== */
-
-@import 'module/_release-message';
+@import 'icons/_global-icons-sprite';

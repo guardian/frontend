@@ -82,10 +82,12 @@
    ========================================================================== */
 
 .gallery-launch-cta {
-    @extend %type-7;
-    line-height: 16px;
+    @include fs-bodyCopy(1);
+    @include rem((
+        line-height: 16px
+    ));
     background-color: #ffffff;
-    color: $c-body !important;
+    color: $c-neutral1 !important;
     position: absolute;
     top: 0;
     left: 0;
@@ -99,10 +101,4 @@
         float: right;
         margin-right: 8px;
     }
-}
-
-.gallery-launch-cta--dark {
-    @include transparent-background(#000000, .9);
-    color: #f9af41 !important;
-    padding-left: $gutter;
 }

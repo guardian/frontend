@@ -1,7 +1,9 @@
 define([
+    'lodash/objects/pairs',
     'common/utils/detect',
-    'common/common'
+    'common/utils/common'
 ], function(
+    pairs,
     detect,
     common
 ) {
@@ -47,6 +49,13 @@ define([
             }
         },
 
+        // take an object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
+        constructQuery: function (query) {
+            return pairs(query).map(function(queryPart) {
+                    return queryPart.join('=');
+                }).join('&');
+        },
+
         pushUrl: function (state, title, url, replace) {
             if (supportsPushState) {
                 window.history[replace? 'replaceState' : 'pushState'](state, title, url);
@@ -60,7 +69,8 @@ define([
     // not exposing all the methods here
     return {
         getUrlVars: model.getUrlVars,
-        pushUrl: model.pushUrl
+        pushUrl: model.pushUrl,
+        constructQuery: model.constructQuery
     };
 
 });

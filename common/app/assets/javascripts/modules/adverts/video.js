@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'common/utils/mediator',
     'common/utils/to-array',
     'bean',
@@ -61,7 +61,6 @@ define([
             bean.off(self.video, 'ended error');
             bean.off(self.video, 'click.ct touchstart.ct');
 
-            bean.fire(self.video, 'play:content');
             self.video.src = source;
             self.video.play();
 
@@ -76,7 +75,6 @@ define([
         // Prevent different size ads from making the video jump around
         this.video.style.height = this.video.offsetHeight+'px';
 
-        bean.fire(this.video, 'play:advert');
         this.video.src = this.vastData.file;
         this.video.play();
 
@@ -178,8 +176,6 @@ define([
     Video.prototype.getVastData = function(url) {
 
         var self = this;
-
-        this.video.advertWasRequested = true;
 
         ajax({
             url: url,

@@ -1,17 +1,18 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Content => ApiContent, Element => ApiElement, Asset, Tag => ApiTag}
+import com.gu.openplatform.contentapi.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
+import common.{LinkCounts, LinkTo, Reference}
+import conf.Configuration.facebook
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import common.{Sponsor, Sponsors}
 import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
-import collection.JavaConversions._
-import views.support.{Naked, ImgSrc, StripHtmlTagsAndUnescapeEntities}
+import org.scala_tools.time.Imports._
 import play.api.libs.json.JsValue
-import conf.Configuration.facebook
-import dfp.DfpAgent
+import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
+
+import scala.collection.JavaConversions._
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -55,20 +56,15 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .getOrElse(facebook.imageFallback)
   }
 
-  lazy val sponsor: Option[Sponsor] = {
-    if (isSponsored) {
-      Sponsors.find(tags.filter(_.tagType == "keyword").head.id)
-    } else {
-      None
-    }
-  }
-
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
 
   lazy val cricketMatch: Option[String] = delegate.references.find(_.`type` == "esa-cricket-match")
+    .map(_.id).map(Reference(_)).map(_._2)
+
+  lazy val isbn: Option[String] = delegate.references.find(_.`type` == "isbn")
     .map(_.id).map(Reference(_)).map(_._2)
 
   lazy val seriesMeta = {
@@ -183,6 +179,12 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     width <- imageSrcWidth
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height)
+
+  override lazy val adUnitSuffix: String = {
+    val prioritisedTagList: List[Tag] = blogs.toList ::: primaryKeyWordTag.toList
+    val prioritisedPossibleAdUnits: List[String] = prioritisedTagList.map{_.id} ::: section :: Nil
+    prioritisedPossibleAdUnits.headOption.getOrElse("")
+  }
 }
 
 object Content {
@@ -219,7 +221,8 @@ object Content {
           snapSupporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
             .flatMap(Content.fromPressedJson),
           (json \ "webPublicationDate").asOpt[DateTime].getOrElse(DateTime.now),
-          snapMeta = snapMeta
+          snapMeta = snapMeta,
+          snapElements = parseElements(json)
         )
       )
     }
@@ -289,41 +292,43 @@ object Content {
 
 private object ArticleSchemas {
   def apply(article: Article): String = {
-    // http://schema.org/Article
+    // http://schema.org/NewsArticle
     // http://schema.org/Review
     if (article.isReview)
       "http://schema.org/Review"
-    else if (article.isBlog)
-      "http://schema.org/BlogPosting"
-    else if (article.visualTone == Tags.VisualTone.News)
-      "http://schema.org/NewsArticle"
     else
-      "http://schema.org/Article"
+      "http://schema.org/NewsArticle"
   }
 }
 
-object SnapApiContent extends ApiContent(
- id                           = "",
-  sectionId                   = None,
-  sectionName                 = None,
-  webPublicationDateOption    = Some(DateTime.now),
-  webTitle                    = "",
-  webUrl                      = "http://www.theguardian.com/",
-  apiUrl                      = "",
-  fields                      = None,
-  tags                        = Nil,
-  factboxes                   = Nil,
-  mediaAssets                 = Nil,
-  elements                    = None,
-  references                  = Nil,
-  isExpired                   = None
-)
+object SnapApiContent {
+
+  def apply(): ApiContent = ApiContent(
+    id                           = "",
+    sectionId                   = None,
+    sectionName                 = None,
+    webPublicationDateOption    = Some(DateTime.now),
+    webTitle                    = "",
+    webUrl                      = "http://www.theguardian.com/",
+    apiUrl                      = "",
+    fields                      = None,
+    tags                        = Nil,
+    factboxes                   = Nil,
+    mediaAssets                 = Nil,
+    elements                    = Option(Nil),
+    references                  = Nil,
+    isExpired                   = None
+  )
+
+  def apply(snapElements: List[ApiElement]): ApiContent = apply().copy(elements = Some(snapElements))
+}
 
 class Snap(snapId: String,
            snapSupporting: List[Content],
            snapWebPublicationDate: DateTime,
-           snapMeta: Map[String, JsValue]
-            ) extends Content(new ApiContentWithMeta(SnapApiContent, supporting = snapSupporting, metaData = snapMeta)) {
+           snapMeta: Map[String, JsValue],
+           snapElements: List[ApiElement] = Nil
+            ) extends Content(new ApiContentWithMeta(SnapApiContent(snapElements), supporting = snapSupporting, metaData = snapMeta)) {
 
   val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
   val snapCss: Option[String] = snapMeta.get("snapCss").flatMap(_.asOpt[String])
@@ -348,7 +353,7 @@ class Snap(snapId: String,
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
-  lazy val contentType = "Article"
+  override lazy val contentType = "Article"
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -361,13 +366,17 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     .orElse(mainPicture).orElse(videos.headOption)
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
-  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-    ("content-type", contentType),
-    ("isLiveBlog", isLiveBlog),
-    ("inBodyInternalLinkCount", linkCounts.internal),
-    ("inBodyExternalLinkCount", linkCounts.external),
-    ("shouldHideAdverts", shouldHideAdverts)
-  )
+  override lazy val metaData: Map[String, Any] = {
+    val bookReviewIsbns = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
+
+    super.metaData ++ Map(
+      ("content-type", contentType),
+      ("isLiveBlog", isLiveBlog),
+      ("inBodyInternalLinkCount", linkCounts.internal),
+      ("inBodyExternalLinkCount", linkCounts.external),
+      ("shouldHideAdverts", shouldHideAdverts)
+    ) ++ bookReviewIsbns
+  }
 
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     ("og:type", "article"),
@@ -407,8 +416,9 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
   override def mainPicture: Option[ImageContainer] = (images ++ videos).find(_.isMain)
 
   lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
+  lazy val mediaId: Option[String] = mainVideo.map(_.id)
 
-  lazy val contentType = "Video"
+  override lazy val contentType = "Video"
   lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
 
   // I know its not too pretty
@@ -425,6 +435,7 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
 
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "video",
+    "og:type" -> "video",
     "og:video:type" -> "text/html",
     "og:video:url" -> webUrl,
     "video:tag" -> keywords.map(_.name).mkString(",")
@@ -440,7 +451,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   def apply(index: Int): ImageAsset = galleryImages(index).largestImage.get
 
   lazy val size = galleryImages.size
-  lazy val contentType = "Gallery"
+  override lazy val contentType = "Gallery"
   lazy val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   lazy val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
@@ -477,7 +488,7 @@ object Gallery {
 }
 
 class Interactive(content: ApiContentWithMeta) extends Content(content) {
-  lazy val contentType = "Interactive"
+  override lazy val contentType = "Interactive"
   lazy val body: Option[String] = delegate.safeFields.get("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
@@ -489,7 +500,7 @@ object Interactive {
 
 class ImageContent(content: ApiContentWithMeta) extends Content(content) {
 
-  lazy val contentType = "ImageContent"
+  override lazy val contentType = "ImageContent"
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 

@@ -1,7 +1,7 @@
 package services
 
 import model._
-import conf.ContentApi
+import conf.LiveContentApi
 import model.Section
 import common._
 import com.gu.openplatform.contentapi.model.{SearchResponse, ItemResponse}
@@ -58,7 +58,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
       }
     )
 
-    val promiseOfResponse = ContentApi.search(edition)
+    val promiseOfResponse = LiveContentApi.search(edition)
       .tag(s"$firstTag,$secondTag")
       .page(page)
       .pageSize(IndexPagePagination.pageSize)
@@ -98,7 +98,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
   def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
 
-    val promiseOfResponse = ContentApi.item(path.replace("/rss", ""), edition)
+    val promiseOfResponse = LiveContentApi.item(path, edition)
       .page(pageNum)
       .pageSize(IndexPagePagination.pageSize)
       .showEditorsPicks(pageNum == 1) //only show ed pics on first page
@@ -149,7 +149,7 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
 
   def image(edition: Edition, path: String): Future[Either[ImageContentPage, SimpleResult]]= {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
-    val response = ContentApi.item(path, edition)
+    val response = LiveContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
       .response.map { response =>

@@ -1,4 +1,4 @@
-@(collection: Collection, style: SeriesContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
@@ -6,14 +6,15 @@
         @if(items.nonEmpty) {
             <section
                 class="@RenderClasses(Map(
-                    "container" -> true,
-                    "container--row-pattern" -> true,
-                    s"container--${style.containerType}" -> true,
-                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
-                    "container--first" -> (containerIndex == 0)))"
-                data-link-name="block | @config.id"
+                    ("container", true),
+                    (s"container--${style.containerType}", true),
+                    ("js-container--toggle", (containerIndex > 0 && title.nonEmpty))))"
+                data-link-name="@FaciaComponentName(config, collection)"
                 data-id="@config.id"
                 data-type="@style.containerType"
+                @config.sponsorshipKeyword.map { keyword =>
+                    data-keywords="@keyword"
+                }
                 data-component="@style.containerType">
                 <div class="facia-container__inner">
                     <div class="container__border"></div>

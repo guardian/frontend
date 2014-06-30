@@ -16,7 +16,7 @@
             options = {
                 config: {
                     page: {
-                        keywords: 'a,b,c',
+                        keywordIds: 's/a,s/b,s/c',
                         section: 's',
                         ajaxUrl: '',
                         ab_commercialInArticleDesktop: 'inline'
@@ -93,7 +93,7 @@
             // a repeat user
             localStorage.setItem('gu.history', history);
 
-            server.respondWith("/commercial/masterclasses.json?seg=repeat&s=s", [200, {}, '{ "html": "<b>advert</b>" }']);
+            server.respondWith("/commercial/masterclasses.json?seg=repeat&s=s&k=a&k=b&k=c", [200, {}, '{ "html": "<b>advert</b>" }']);
             runs(function() {
                 new CommercialComponent(options).init('masterclasses', adSlot);
             });

@@ -1,6 +1,6 @@
 define([
     'modules/ui/container-toggle',
-    'common/$',
+    'common/utils/$',
     'bonzo',
     'bean',
     'common/modules/userPrefs',
@@ -53,6 +53,11 @@ define([
         it('should remove "js-container--toggle" class from container', function() {
             new ContainerDisplayToggle(container).addToggle();
             expect($container.hasClass('js-container--toggle')).toBeFalsy();
+        });
+
+        it('should add "container--has-toggle" class to container', function() {
+            new ContainerDisplayToggle(container).addToggle();
+            expect($container.hasClass('container--has-toggle')).toBeTruthy();
         });
 
         it('should delete old storage key', function() {

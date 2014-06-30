@@ -13,9 +13,12 @@ package object money {
     protected val path: String
 
     final protected val url = {
-      val slotCode = "GU6"
+
+      // this tracking code appears in the links to products
+      val trackingCode = "GU15"
+
       CommercialConfiguration.getProperty("moneysupermarket.api.url") map {
-        base => s"$base/bestbuys/$path/$slotCode"
+        base => s"$base/bestbuys/$path/$trackingCode"
       }
     }
 

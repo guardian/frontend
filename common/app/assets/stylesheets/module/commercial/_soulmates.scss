@@ -2,68 +2,81 @@
    Soulmates component
    ========================================================================== */
 
-$c-soulmates-red: #d70851;
+$c-soulmates-high: $c-neutral1;
 .commercial--soulmates {
     .commercial__head {
         height: auto;
-        overflow: auto;
         border: 0;
+        position: relative;
+    }
+    .container__title {
+        margin-bottom: 0;
+        padding: 0;
+    }
+    .container__title__wrapper {
+        height: auto;
+        @include rem((
+            width: gs-span(2),
+            padding: $gs-baseline*2 0 $gs-baseline/2,
+            margin: 0 0 $gs-baseline*2.5
+        ));
+        
+        .svg & {
+            background-size: cover;            
+        }
     }
     .commercial__title {
         float: none;
         margin-bottom: 0;
+        text-align: center;
+        line-height: 1;
     }
-    .i-soulmates-logo {
-        width: auto;
-        display: block;
-        background-size: contain;
+    .i-soulmates-logo-2014 {
+        @include rem((
+            width: 86px,
+            height: 18px
+        ));
+        .svg & {
+            background-size: contain;
+        }
     }
     @include mq(tablet) {
         .commercial__header {
             float: left;
+            margin-bottom: 0;
             @include rem((
                 width: gs-span(3)
             ));
         }
     }
     .commercial__explainer {
-        color: $c-neutral1;
-        @include fs-headline(1);
+        color: $c-soulmates-high;
+        position: absolute;
+        bottom: 0;
+        @include fs-header(1);
         @include rem((
             margin: $gs-baseline 0 0
         ));
     }
     .commercial__buy-now-button {
         display: none;
-
-        @include mq(tablet) {
-            position: absolute;
-            display: inline-block;
-            background-color: $c-soulmates-red;
-            border: 0;
-            color: #ffffff;
-            @include fs-headline(1, $size-only: true);
-            right: 0;
-            @include rem((
-                top: $gs-gutter/2,
-                padding: $gs-baseline/3 $gs-baseline*2
-            ));
+        border: 0;
+        color: #ffffff;
+        @include fs-headline(1, $size-only: true);
+        
+        .search__submit__cta {
+            background-color: #68b8cb;
         }
     }
     .commercial__body {
         @include rem((
-            padding: $gs-gutter/2 0
+            padding: $gs-baseline 0
         ));
         position: relative;
     }
     .lineitems {
-        @include rem((
-            margin-top: $gs-baseline
-        ));
-
         @include mq(tablet) {
             float: left;
-            margin: 0;
         }
     }
     .lineitem {
@@ -76,12 +89,6 @@ $c-soulmates-red: #d70851;
 
         &:nth-child(n+3) {
             display: none;
-        }
-        &:nth-child(2n) .lineitem__link:before {
-            background-color: #5994dd;
-        }
-        &:nth-child(3n) .lineitem__link:before {
-            background-color: #039763;
         }
         @include mq(mobileLandscape) {
             width: 25%;
@@ -110,33 +117,11 @@ $c-soulmates-red: #d70851;
         margin: 0 auto;
         position: relative;
         float: none;
-
-        &:before {
-            content: ' ';
-            background-color: #d80457;
-            margin-left: -44px;
-            padding: 1px;
-            width: 88px;
-            height: 108px;
-            position: absolute;
-            left: 50%;
-            z-index: 1;
-            @include transform(rotate(-4deg));
-        }
-    }
-    .lineitem__image {
-        background-color: #ffffff;
-        position: relative;
-        z-index: 2;
-        @include box-shadow(2px 2px 0 0 rgba(#000000, .15));
-        @include rem((
-            padding: $gs-baseline/3 $gs-gutter/5
-        ));
     }
     .lineitem__title {
-        @include fs-bodyHeading(1, $size-only: true);
+        @include fs-header(1);
         @include rem((
-            margin-top: $gs-baseline/3
+            font-size: 14px
         ));
 
         &:hover {
@@ -178,15 +163,12 @@ $c-soulmates-red: #d70851;
     }
     .search__dropdown__options {
         float: right;
-        @include mq($to: tablet) {
-            min-width: 54%;
-        }
+        min-width: 50%;
     }
     $search-submit-cta-diameter: 20px;
     .search__submit {
         border: 0;
         background: transparent;
-        color: $c-soulmates-red;
         float: right;
         position: relative;
         padding: 0;
@@ -203,7 +185,7 @@ $c-soulmates-red: #d70851;
         width: $search-submit-cta-diameter;
         height: $search-submit-cta-diameter;
         margin-top: -($search-submit-cta-diameter/2);
-        background-color: $c-soulmates-red;
+        background-color: $c-soulmates-high;
         @include border-radius(50%);
 
         .i {
@@ -227,6 +209,18 @@ $c-soulmates-red: #d70851;
             }
         }
     }
+    @include mq(wide) {
+        .commercial__explainer {
+            @include rem((
+                padding-left: $gs-gutter*2
+            ));
+        }
+        .commercial__buy-now-button {
+            @include rem((
+                margin-left: $gs-gutter
+            ));
+        }
+    }
 }
 
 /* fronts */
@@ -240,27 +234,136 @@ $c-soulmates-red: #d70851;
         }
     }
     @include mq(desktop) {
+        .commercial__body {
+            padding-left: 0;
+        }
         .commercial__search {
             @include rem((
                 padding-left: $gs-gutter/2
             ));
+        }
+        .commercial__head {
+            width: auto;
         }
     }
     @include mq(faciaLeftCol) {
         .commercial__head {
             position: static;
             @include rem((
-                width: gs-span(2) + $gs-gutter
+                width: gs-span(2) + $gs-gutter,
+                margin-top: 8px
+            ));
+        }
+        .container__title__wrapper {
+            width: auto;
+            height: auto;
+            margin: 0;
+            @include rem((
+                padding-top: $gs-baseline*2.5
+            ));
+            padding-bottom: 0;
+            
+            .svg & {
+                background-size: contain;
+            }
+        }
+        .commercial__explainer {
+            position: static;
+            color: #ffffff;
+            @include rem((
+                width: gs-span(2)-$gs-gutter,
+                padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5,
+                margin-top: $gs-baseline
+            ));
+        }
+        .i-soulmates-logo-2014 {
+            
+            .svg & {
+                @include rem((
+                    width: 100px,
+                    height: 21px
+                ));
+                background-size: contain;
+            }
+        }
+        .commercial__buy-now-button {
+            display: inline-block;
+            @include rem((
+                padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5
+            ));
+            position: relative;
+        }
+        .commercial__body {
+            @include rem((
+                padding: $gs-baseline 0
+            ));
+        }
+    }
+    @include mq(wide) {
+        .container__title__wrapper {
+            @include rem((
+                padding-top: 40px
+            ));
+            
+            .svg & {
+                background-size: cover;
+            }
+        }
+        .i-soulmates-logo-2014 {
+            
+            .svg & {
+                @include rem((
+                    width: 136px,
+                    height: 28px
+                ));
+            }
+        }
+        .commercial__explainer {
+            @include rem((
+                padding-left: $gs-gutter*2,
+                padding-top: 0
             ));
         }
         .commercial__buy-now-button {
-            left: auto;
-            right: auto;
-            top: auto;
             @include rem((
-                bottom: $gs-gutter/2
+                padding-left: $gs-gutter
             ));
-        }  
+        }
+        .has-page-skin & {
+            .commercial__head {
+                position: relative;
+                width: auto;
+                float: none;
+            }
+            .container__title__wrapper {
+                height: auto;
+                @include rem((
+                    width: gs-span(2),
+                    padding: $gs-baseline*2 0 $gs-baseline/2,
+                    margin: 0 0 $gs-baseline*2.5
+                ));
+            }
+            .commercial__explainer {
+                color: $c-soulmates-high;
+                position: absolute;
+                bottom: 0;
+                width: auto;
+                padding: 0;
+                @include fs-header(1);
+                @include rem((
+                    margin: $gs-baseline 0 0
+                ));
+            }
+            .commercial__buy-now-button {
+                display: none;
+            }
+            .i-soulmates-logo-2014 {
+                @include rem((
+                    width: 86px,
+                    height: 18px
+                ));
+            }
+        }
     }
 }
 /* article */
@@ -292,17 +395,53 @@ $c-soulmates-red: #d70851;
         }
         .commercial__head {
             position: static;
-        }
-        .commercial__buy-now-button {
-            left: auto;
-            right: auto;
-            top: auto;
             @include rem((
-                bottom: $gs-gutter/2
+                width: gs-span(2)+$gs-gutter !important,
+                margin-top: 8px
+            ));
+            margin-right: 0;
+        }
+        .commercial__body {
+            @include rem((
+                padding: $gs-baseline 0
             ));
         }
+        .container__title__wrapper {
+            width: auto;
+            height: auto;
+            margin: 0;
+            @include rem((
+                padding-top: $gs-baseline*2.5
+            ));
+            
+            .svg & {
+                background-size: contain;                
+            }
+        }
         .commercial__explainer {
-            margin-top: 0;
+            position: static;
+            color: #ffffff;
+            @include rem((
+                width: gs-span(2)-$gs-gutter,
+                padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5,
+                margin-top: $gs-baseline
+            ));
+        }
+        .i-soulmates-logo-2014 {
+            .svg & {
+                @include rem((
+                    width: 100px,
+                    height: 21px
+                ));
+                background-size: contain;
+            }
+        }
+        .commercial__buy-now-button {
+            display: inline-block;
+            @include rem((
+                padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5
+            ));
+            position: relative;
         }
     }
     @include mq(faciaLeftCol) {
@@ -318,6 +457,42 @@ $c-soulmates-red: #d70851;
         .commercial__search {
             @include rem((
                 width: gs-span(3)
+            ));
+        }
+    }
+    @include mq(wide) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(3) !important,
+                margin-right: $gs-gutter
+            ));
+        }
+        .i-soulmates-logo-2014 {
+            .svg & {            
+                @include rem((
+                    width: 136px,
+                    height: 28px
+                ));
+            }
+        }
+        .container__title__wrapper {
+            @include rem((
+                padding-top: 40px
+            ));
+            
+            .svg & {
+                background-size: cover;                
+            }
+        }
+        .commercial__explainer {
+            @include rem((
+                padding-left: $gs-gutter*2,
+                margin-top: $gs-baseline
+            ));
+        }
+        .commercial__buy-now-button {
+            @include rem((
+                padding-left: $gs-gutter
             ));
         }
     }

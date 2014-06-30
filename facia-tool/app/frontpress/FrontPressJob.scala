@@ -8,16 +8,14 @@ import com.amazonaws.regions.{Regions, Region}
 import scala.collection.JavaConversions._
 import services.{ConfigAgent, S3FrontsApi}
 import play.api.libs.json.{JsObject, Json}
-import scala.concurrent.duration._
-import scala.concurrent.{Future, Await}
-import frontpress.FrontPress
-import common.FaciaToolMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
+import scala.concurrent.Future
+import frontpress.{PressResult, PressCommand, FrontPress}
+import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure, FrontPressCronFailure, FrontPressCronSuccess}
 import play.api.libs.concurrent.Akka
 import scala.util.{Failure, Success}
 import conf.Switches.FrontPressJobSwitch
 
 object FrontPressJob extends Logging with implicits.Collections {
-
   val queueUrl: Option[String] = Configuration.faciatool.frontPressQueueUrl
 
   import play.api.Play.current
@@ -35,27 +33,24 @@ object FrontPressJob extends Logging with implicits.Collections {
         val client = newClient
         try {
           val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(10))
-          receiveMessageResult.getMessages
-            .map(getConfigFromMessage)
-            .distinct
-            .map { path =>
-              val f = pressByPathId(path)
-              f.onComplete {
-                case Success(_) =>
-                  deleteMessage(receiveMessageResult, queueUrl)
-                  FrontPressCronSuccess.increment()
-                case Failure(t) =>
-                  deleteMessage(receiveMessageResult, queueUrl)
-                  log.warn(t.toString)
-                  FrontPressCronFailure.increment()
-              }
-              Await.ready(f, 20.seconds) //Block until ready!
+          Future.traverse(receiveMessageResult.getMessages.map(getConfigFromMessage).distinct) { path =>
+            val f = FrontPress.pressByPathId(path)
+            f onComplete {
+              case Success(_) =>
+                deleteMessage(receiveMessageResult, queueUrl)
+                FrontPressCronSuccess.increment()
+              case Failure(error) =>
+                deleteMessage(receiveMessageResult, queueUrl)
+                log.warn("Error updating collection via cron", error)
+                FrontPressCronFailure.increment()
+            }
+
+            f
           }
         } catch {
-          case t: Throwable => {
-            log.warn(t.toString)
+          case error: Throwable =>
+            log.error("Error updating collection via cron", error)
             FrontPressCronFailure.increment()
-          }
         }
       }
     }
@@ -71,25 +66,6 @@ object FrontPressJob extends Logging with implicits.Collections {
     )
   }
 
-  def pressByCollectionIds(ids: Set[String]): Future[Set[JsObject]] = {
-    //Give it one second to update
-    Await.ready(ConfigAgent.refreshAndReturn(), Configuration.faciatool.configBeforePressTimeout.millis)
-    val paths: Set[String] = for {
-      id <- ids
-      path <- ConfigAgent.getConfigsUsingCollectionId(id)
-    } yield path
-    val setOfFutureJson: Set[Future[JsObject]] = paths.map(pressByPathId)
-    Future.sequence(setOfFutureJson) //To a Future of Set Json
-  }
-
-  def pressByPathId(path: String): Future[JsObject] = {
-    FrontPress.generateJson(path).map { json =>
-      (json \ "id").asOpt[String].foreach(S3FrontsApi.putPressedJson(_, Json.stringify(json)))
-      json
-    }
-  }
-
   def getConfigFromMessage(message: Message): String =
     (Json.parse(message.getBody) \ "Message").as[String]
-
 }

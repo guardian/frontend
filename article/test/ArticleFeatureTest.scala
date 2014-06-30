@@ -46,6 +46,21 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Include organisation metadata", ArticleComponents) {
+
+      Given("I am on an article entitled 'Liu Xiang pulls up in opening race at second consecutive Olympics'")
+      HtmlUnit("/sport/2012/aug/07/liu-xiang-injured-olympics") { browser =>
+        import browser._
+
+        Then("there should be organisation metadata")
+
+        val org = findFirst("span[itemtype='http://schema.org/Organization']")
+
+        org.findFirst("[itemprop=name]").getText should be("The Guardian")
+        org.findFirst("meta[itemprop=logo]").getAttribute("content") should be("https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png")
+      }
+    }
+
     scenario("Display a short description of the article", ArticleComponents) {
 
       Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
@@ -131,7 +146,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         Then("I should see the article's image")
         findFirst("[itemprop='contentURL representativeOfPage']").getAttribute("src") should
-          endWith("Gunnerside-village-Swaled-007.jpg?width=300&height=-&quality=95")
+          include("Gunnerside-village-Swaled")
 
         And("I should see the image caption")
         findFirst("[itemprop='associatedMedia image'] [itemprop=description]").getText should
@@ -334,17 +349,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         System.out.println(adPlaceholder);
 
         And("the placeholder has the correct data attributes")
-        adPlaceholder.getAttribute("data-name") should be("top")
+        adPlaceholder.getAttribute("data-name") should be("top-above-nav")
         adPlaceholder.getAttribute("data-tabletportrait") should be("728,90")
-        adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|900,250")
-        adPlaceholder.getAttribute("data-desktop") should be("728,90|900,250")
-        adPlaceholder.getAttribute("data-wide") should be("728,90|900,250|970,250")
+        adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|940,230|900,250")
+        adPlaceholder.getAttribute("data-wide") should be("728,90|940,230|900,250|970,250")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-banner-ad")
+        adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-above-nav ad-slot--top-banner-ad")
 
         And("the placeholder has the correct analytics name")
-        adPlaceholder.getAttribute("data-link-name") should be("ad slot top")
+        adPlaceholder.getAttribute("data-link-name") should be("ad slot top-above-nav")
       }
 
       // put it back in the state we found it
@@ -394,6 +408,16 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
         findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309869688/Jeremy-Hunt-announcing-ch-016.jpg?width=640&height=-&quality=95")
+      }
+    }
+
+    scenario("SEO Thumbnail") {
+      HtmlUnit("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
+        import browser._
+        Then("the main picture should be hidden")
+        $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
+
+        findFirst("meta[name=thumbnail]").getAttribute("content") should include("sys-images/Guardian/Pix/pictures/2013/3/26/1364302888446/Jeremy-Hunt-005.jpg")
       }
     }
 
@@ -564,7 +588,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    scenario("Health check"){
+    ignore("Health check"){
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (503)
         HealthcheckPage.get(com.gu.management.HttpRequest(com.gu.management.GET, "/management/healthcheck", "http://localhost:10808", Map.empty))

@@ -10,7 +10,6 @@ import com.gu.test.pages.LiveBlog;
 
 public class PageHelper {
     private WebDriver driver;
-
     protected final String BASE_URL = getProperty("baseUrl");
     protected final String TEST_CARD = getProperty("testCard");
     protected final String liveSite = "http://www.theguardian.com/uk?view=mobile";

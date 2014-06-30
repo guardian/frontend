@@ -1,0 +1,25 @@
+@(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
+<div id="comments" class="discussion discussion--@if(discussionClosed){closed} else {open} u-cf"
+    data-discussion-key="@discussionId"
+    data-discussion-closed="@discussionClosed">
+
+    <div class="discussion__comments--top-comments">
+        <h2 id="top-comments" class="js-top-comments page-sub-header discussion__heading">Comments <span class="u-h discussion__comment-count"></span></h2>
+        <div class="discussion__comments__top">
+        </div>
+    </div>
+
+    <div class="discussion__comments__container js-hidden">
+        <h2 class="page-sub-header discussion__heading js-visible">All Comments</h2>
+        <button class="u-button-reset u-fauxlink js-visible discussion__show-threaded js-show-threaded">
+            View <span class="discussion__show-threaded-state">un</span>threaded
+        </button>
+
+        <div class="discussion-container js-discussion-container">
+            <div class="discussion__comment-box discussion__comment-box--top u-cf"></div>
+            <div class="discussion__comments"></div>
+            <div class="discussion__comment-box discussion__comment-box--bottom u-cf"></div>
+        </div>
+        <div class="discussion__non-threaded js-discussion__non-threaded u-h"></div>
+    </div>
+</div>

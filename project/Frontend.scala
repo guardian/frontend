@@ -32,14 +32,18 @@ object Frontend extends Build with Prototypes {
       "rome" % "rome" % "1.0",
       "org.rometools" % "rome-modules" % "1.0",
 
+      "org.xerial.snappy" % "snappy-java" % "1.0.5.1",
+
       filters
     )
   )
-  val paVersion = "4.9"
+  val paVersion = "5.0.0"
 
   def withTests(project: Project) = project % "test->test;compile->compile"
 
   val commonWithTests = withTests(common)
+  
+  val sanityTest = application("sanity-tests")
 
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
@@ -89,11 +93,11 @@ object Frontend extends Build with Prototypes {
       "com.gu.identity" %% "identity-cookie" % identityLibVersion,
       "com.tzavellas" % "sse-guice" % "0.7.1",
       "com.google.inject" % "guice" % "3.0",
-      "joda-time" % "joda-time" % "1.6",
       "net.liftweb" %% "lift-json" % "2.5",
       "commons-httpclient" % "commons-httpclient" % "3.1",
       "org.slf4j" % "slf4j-ext" % "1.7.5",
-      "com.gu" %% "exact-target-client" % "2.23"
+      "com.gu" %% "exact-target-client" % "2.23",
+      "com.github.nscala-time" %% "nscala-time" % "1.2.0"
     )
   )
 
@@ -177,6 +181,7 @@ object Frontend extends Build with Prototypes {
     identity,
     commercial,
     onward,
-    archive
+    archive,
+    preview
   )
 }

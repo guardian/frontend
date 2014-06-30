@@ -3,13 +3,13 @@ package services
 import common.Edition
 import model.{Trail, Content}
 import scala.concurrent.Future
-import conf.ContentApi
+import conf.LiveContentApi
 import feed.MostReadAgent
 
 trait Related extends ConciergeRepository {
   def related(edition: Edition, path: String): Future[Seq[Trail]] = {
 
-    val response = ContentApi.item(path, edition)
+    val response = LiveContentApi.item(path, edition)
       .showRelated(true)
       .response
 
@@ -22,10 +22,9 @@ trait Related extends ConciergeRepository {
 
   def getPopularInTag(edition: Edition, tag: String): Future[Seq[Trail]] = {
 
-    val response = ContentApi.search(edition)
+    val response = LiveContentApi.search(edition)
       .tag(tag)
       .pageSize(50)
-      .dateId("date/last7days")
       .response
 
     val trails: Future[Seq[Content]] = response.map { response =>

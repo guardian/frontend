@@ -50,7 +50,7 @@ define([
                                 var nameAndCacheKey = getNameAndCacheKey(style);
 
                                 that.clearFont(nameAndCacheKey[0]);
-                                storage.local.set(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1], json.css);
+                                storage.local.set(storagePrefix + nameAndCacheKey[1] + '.' + nameAndCacheKey[0], json.css);
                                 mediator.emit('modules:fonts:loaded', [json.name]);
                             };
                         }(style))
@@ -77,7 +77,7 @@ define([
         };
 
         function getNameAndCacheKey(style) {
-            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/(.*)\.woff(?:\.(.*))?\.json$/);
+            var nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/([^/]*?)\/?([^/]*)\.woff.json$/);
             nameAndCacheKey.shift();
             return nameAndCacheKey;
         }
@@ -87,7 +87,14 @@ define([
             // Because it would be horrible if people downloaded fonts and then couldn't cache them.
             if (storage.local.isAvailable()) {
                 var nameAndCacheKey =  getNameAndCacheKey(style);
-                var cachedValue = storage.local.get(storagePrefix + nameAndCacheKey[0] + '.' + nameAndCacheKey[1]);
+                var cachedValue = storage.local.get(storagePrefix + nameAndCacheKey[1] + '.' + nameAndCacheKey[0]);
+
+                // NOTE: needed for a while, due to erroneously storing fonts against the wrong key
+                storage.local.remove('gu.fonts.17c5ce231fe8d2e6b2d4f6e429fa8d72.WebAgateSans');
+                storage.local.remove('gu.fonts.d46b85fe29c76aa14f620a5e67b1d720.WebHeadlineSans');
+                storage.local.remove('gu.fonts.085af4a5fff2c8f22c02bdcd86104251.WebEgyptian');
+                storage.local.remove('gu.fonts.bcb2f9b361c905a71d2894f46b51ce4c.WebTextSans');
+
 
                 var widthMatches = true;
                 var minWidth = style.getAttribute('data-min-width');

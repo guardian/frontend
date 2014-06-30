@@ -6,42 +6,50 @@ define([
     'modules/content-api',
     'models/group',
     'models/config/collection',
+    'models/config/persistence',
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/find-first-by-id'
 ], function(
     ko,
-    config,
+    pageConfig,
     vars,
     contentApi,
     Group,
     Collection,
+    persistence,
     asObservableProps,
     populateObservables,
     findFirstById
 ) {
     function Front(opts) {
-        var self = this,
-            props = [
-                'section',
-                'webTitle',
-                'title',
-                'description',
-                'priority'];
+        var self = this;
 
         opts = opts || {};
 
         this.id = ko.observable(opts.id);
 
-        this.props  = asObservableProps(props);
+        this.props  = asObservableProps([
+            'navSection',
+            'webTitle',
+            'title',
+            'description',
+            'priority']);
 
-        populateObservables(this.props,  opts);
+        populateObservables(this.props, opts);
 
-        this.capiProps = asObservableProps(props);
+        this.capiProps = asObservableProps([
+            'section',
+            'webTitle',
+            'description']);
 
         this.state = asObservableProps([
             'isOpen',
             'isOpenProps']);
+
+        this.state.withinPriority = ko.computed(function() {
+            return this.props.priority() === vars.priority || this.state.isOpenProps(); // last clause allows priority change
+        }, this);
 
         this.collections = new Group({
             parent: self,
@@ -68,11 +76,11 @@ define([
 
         this.placeholders = {};
 
-        this.placeholders.section = ko.computed(function() {
+        this.placeholders.navSection = ko.computed(function() {
             var path = asPath(this.id()),
-                isEditionalised = vars.CONST.editions.some(function(edition) { return edition === path[0]; });
+                isEditionalised = [].concat(pageConfig.editions).some(function(edition) { return edition === path[0]; });
 
-            return this.props.section() || this.capiProps.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]);
+            return this.capiProps.section() || (isEditionalised ? path.length === 1 ? undefined : path[1] : path[0]);
         }, this);
 
         this.placeholders.webTitle = ko.computed(function() {
@@ -82,7 +90,9 @@ define([
         }, this);
 
         this.placeholders.title = ko.computed(function() {
-            return this.props.title() || this.capiProps.title() || (this.placeholders.webTitle() + (this.placeholders.section() ? ' | ' + toTitleCase(this.placeholders.section()) : ''));
+            var section = this.props.navSection() || this.placeholders.navSection();
+
+            return this.props.title() || (this.placeholders.webTitle() + (section ? ' | ' + toTitleCase(section) : ''));
         }, this);
 
         this.placeholders.description  = ko.computed(function() {
@@ -95,8 +105,12 @@ define([
 
         this.id((this.id() || '')
             .toLowerCase()
+            .replace(/\/+/g, '/')
             .replace(/^\/|\/$/g, '')
             .replace(/[^a-z0-9\/\-]*/g, '')
+            .split('/')
+            .slice(0,3)
+            .join('/')
         );
 
         if (!this.id()) { return; }
@@ -132,7 +146,7 @@ define([
     };
 
     Front.prototype.saveProps = function() {
-        vars.model.save();
+        persistence.front.update(this);
         this.state.isOpenProps(false);
     };
 
@@ -149,15 +163,17 @@ define([
         collection.state.isOpen(false);
         collection.parents.remove(this);
         this.collections.items.remove(collection);
-        vars.model.save(collection);
+        this.saveProps();
     };
 
     function toTitleCase(str) {
-        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        return (str + '').replace(/\w\S*/g, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
     }
 
     function asPath(str) {
-       return (str || '').split('/');
+       return (str + '').split('/');
     }
 
     return Front;

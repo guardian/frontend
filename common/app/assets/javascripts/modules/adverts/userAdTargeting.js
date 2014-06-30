@@ -31,7 +31,7 @@ define([
             if(id.getUserFromCookie()) {
                 id.getUserFromApi(
                     function(user) {
-                        if(user.adData) {
+                        if(user && user.adData) {
                             var userSegments = [];
                             for(var key in user.adData) {
                                 userSegments.push(key + user.adData[key]);

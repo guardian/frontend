@@ -16,7 +16,7 @@ define([
     'models/collections/article',
     'models/collections/latest-articles'
 ], function(
-    config,
+    pageConfig,
     ko,
     vars,
     fetchSettings,
@@ -87,7 +87,10 @@ define([
         };
 
         model.previewUrl = ko.computed(function() {
-            return vars.CONST.viewer + '#env=' + config.env + '&url=' + model.front() + encodeURIComponent('?view=mobile');
+            return vars.CONST.viewer +
+                '#env=' + pageConfig.env +
+                '&mode=' + (model.liveMode() ? 'live' : 'draft' ) +
+                '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
         function detectPressFailure() {
@@ -207,6 +210,8 @@ define([
             droppable.init();
 
             fetchSettings(function (config, switches) {
+                var fronts;
+
                 if (switches['facia-tool-disable']) {
                     terminate();
                     return;
@@ -215,13 +220,19 @@ define([
 
                 vars.state.config = config;
 
-                model.fronts(
-                    getFront() === 'testcard' ? ['testcard'] :
-                       _.chain(_.keys(config.fronts))
-                        .without('testcard')
-                        .sortBy(function(id) { return id; })
-                        .value()
-                );
+                fronts = getFront() === 'testcard' ? ['testcard'] :
+                   _.chain(config.fronts)
+                    .map(function(front, path) {
+                        return front.priority === vars.priority ? path : undefined;
+                    })
+                    .without(undefined)
+                    .without('testcard')
+                    .sortBy(function(path) { return path; })
+                    .value();
+
+                if (!_.isEqual(model.fronts(), fronts)) {
+                   model.fronts(fronts);
+                }
             }, vars.CONST.configSettingsPollMs, true)
             .done(function() {
                 var wasPopstate = false;

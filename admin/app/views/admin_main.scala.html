@@ -26,6 +26,10 @@
         <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet" />
         <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap-responsive.css")" rel="stylesheet" />
         <link href="@routes.Assets.at("css/admin.css")" rel="stylesheet">
+        <style>
+            .ajax-loading { background-image: url('@routes.Assets.at("images/ajax-loader.gif")'); }
+            .ajax-failed { background-image: url('@routes.Assets.at("images/ajax-failed.png")'); }
+        </style>
 
         @if(hasCharts){
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -69,20 +73,22 @@
         <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
         <link href='//fonts.googleapis.com/css?family=Open+Sans:800' rel='stylesheet' type='text/css'>
 
+        <script type="text/javascript">
+            var curl = {
+                baseUrl: 'assets/javascripts',
+                apiName: 'require'
+            };
+        </script>
+        <script type="text/javascript" src="@Static("javascripts/components/curl/curl-domReady.js")"></script>
+        <script type="text/javascript">
+            var script = document.createElement('script');
+            script.async = 'async';
+            script.src = '@Static("javascripts/bootstraps/admin.js")';
+
+            document.getElementsByTagName("head")[0].appendChild(script);
+        </script>
+
+        <script src="//code.jquery.com/jquery.js"></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/components/bootstrap.css/js/bootstrap.js")"></script>
     </body>
-
-    <script type="text/javascript">
-        var curl = {
-            baseUrl: 'assets/javascripts',
-            apiName: 'require'
-        }
-
-        var script = document.createElement('script');
-        script.async = 'async';
-        script.src = '@Static("javascripts/bootstraps/admin.js")';
-
-        document.getElementsByTagName("head")[0].appendChild(script);
-    </script>
 </html>
-
-

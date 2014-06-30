@@ -2,7 +2,7 @@
 /* TODO - fix module constructors so we can remove the above jshint override */
 define([
     //Commmon libraries
-    'common/$',
+    'common/utils/$',
     'common/utils/mediator',
     'common/utils/deferToLoad',
     'common/utils/ajax',
@@ -17,7 +17,7 @@ define([
     //Modules
     'common/utils/storage',
     'common/utils/detect',
-    'common/modules/onward/popular',
+    'common/modules/onward/most-popular-factory',
     'common/modules/onward/related',
     'common/modules/onward/onward-content',
     'common/modules/ui/images',
@@ -35,7 +35,6 @@ define([
     'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
-    'common/modules/adverts/video',
     'common/modules/discussion/comment-count',
     'common/modules/gallery/lightbox',
     'common/modules/onward/history',
@@ -55,7 +54,9 @@ define([
     'common/modules/onward/tonal',
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
-    'common/modules/ui/smartAppBanner'
+    'common/modules/ui/smartAppBanner',
+    'common/modules/adverts/badges',
+    'common/modules/discussion/loader'
 ], function (
     $,
     mediator,
@@ -72,7 +73,7 @@ define([
 
     storage,
     detect,
-    popular,
+    MostPopularFactory,
     Related,
     Onward,
     images,
@@ -91,7 +92,6 @@ define([
     OmnitureMedia,
     liveStats,
     ab,
-    VideoAdvert,
     CommentCount,
     LightboxGallery,
     History,
@@ -103,7 +103,7 @@ define([
     SliceAdverts,
     frontCommercialComponents,
     dfp,
-    TagContainer,
+    tagContainer,
     Foresee,
     GeoMostPopular,
     register,
@@ -111,7 +111,9 @@ define([
     TonalComponent,
     id,
     MoreTags,
-    smartAppBanner
+    smartAppBanner,
+    badges,
+    DiscussionLoader
 ) {
 
     var modules = {
@@ -144,10 +146,8 @@ define([
             r.renderRelatedComponent(config, context);
         },
 
-        transcludePopular: function () {
-            mediator.on('page:common:ready', function(config, context) {
-                popular(config, context);
-            });
+        transcludePopular: function (config) {
+            new MostPopularFactory(config);
         },
 
         transcludeOnwardContent: function(config, context){
@@ -242,10 +242,7 @@ define([
                 Array.prototype.forEach.call(context.getElementsByTagName('video'), function(video){
                     if (!bonzo(video).hasClass('tracking-applied')) {
                         bonzo(video).addClass('tracking-applied');
-                        new OmnitureMedia({
-                            el: video,
-                            config: config
-                        }).init();
+                        new OmnitureMedia(video).init();
                     }
                 });
             });
@@ -291,6 +288,8 @@ define([
 
                 frontCommercialComponents.init(config);
 
+                badges.init();
+
                 var options = {};
 
                 if (!config.switches.standardAdverts) {
@@ -302,27 +301,9 @@ define([
             }
         },
 
-        loadVideoAdverts: function() {
-            mediator.on('page:common:ready', function(config, context) {
-                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
-                    Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
-                        var support = detect.getVideoFormatSupport();
-                        new VideoAdvert({
-                            el: el,
-                            support: support,
-                            config: config,
-                            context: context
-                        }).init(config.page);
-                    });
-                } else {
-                    mediator.emit('video:ads:finished', config, context);
-                }
-            });
-        },
-
         cleanupCookies: function() {
-            Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA']);
-            Cookies.cleanUpDuplicates(['GU_ALPHA','GU_VIEW']);
+            Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
+            Cookies.cleanUpDuplicates(['GU_VIEW']);
         },
 
         // opt-in to the responsive alpha
@@ -366,11 +347,9 @@ define([
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
                 bean.on(document, 'click', '.js-site-message-close', function() {
                     Cookies.add('GU_VIEW', 'responsive', 365);
-                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 bean.on(document, 'click', '.js-site-message', function() {
                     Cookies.add('GU_VIEW', 'responsive', 365);
-                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 var message = new Message('onboard', { type: 'modal' }),
                     path = (document.location.pathname) ? document.location.pathname : '/',
@@ -429,7 +408,7 @@ define([
         loadTags : function() {
             mediator.on('page:common:ready', function(config) {
                 if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
-                    TagContainer.init(config);
+                    tagContainer.init(config);
                 }
             });
         },
@@ -486,8 +465,14 @@ define([
                 var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
                     slot = qwery('[data-name="' + data[1] + '"]').shift();
                 if (commercialComponent && slot) {
-                    new CommercialLoader({ config: config })
-                        .init(commercialComponent[1], slot);
+                    bonzo(slot).removeClass('ad-slot--dfp');
+                    var loader = new CommercialLoader({ config: config }),
+                        postLoadEvents = {};
+                        postLoadEvents[commercialComponent[1]] = function() {
+                            bonzo(slot).css('display', 'block');
+                        };
+                    loader.postLoadEvents = postLoadEvents;
+                    loader.init(commercialComponent[1], slot);
                 }
             });
         },
@@ -508,6 +493,15 @@ define([
             if(config.switches.smartBanner) {
                 smartAppBanner.init();
             }
+        },
+
+        initDiscussion: function() {
+            mediator.on('page:common:ready', function(config, context) {
+                if (config.page.commentable && config.switches.discussion) {
+                    var discussionLoader = new DiscussionLoader(context, mediator, { 'switches': config.switches });
+                    discussionLoader.attachTo($('.discussion')[0]);
+                }
+            });
         }
     };
 
@@ -521,11 +515,12 @@ define([
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
+                modules.transcludePopular(config);
+                modules.loadCommercialComponent(config, context);
                 modules.loadAdverts(config);
                 modules.transcludeRelated(config, context);
                 modules.transcludeOnwardContent(config, context);
                 modules.initRightHandComponent(config, context);
-                modules.loadCommercialComponent(config, context);
             }
             mediator.emit('page:common:deferred:loaded', config, context);
         });
@@ -534,6 +529,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.loadTags(config);
             modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
@@ -542,8 +538,6 @@ define([
             modules.initialiseNavigation(config);
             modules.showToggles();
             modules.showRelativeDates();
-            modules.transcludePopular();
-            modules.loadVideoAdverts(config);
             modules.initClickstream();
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
@@ -552,13 +546,13 @@ define([
             modules.logReadingHistory();
             modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
-            modules.loadTags(config);
             modules.augmentInteractive();
             modules.runForseeSurvey(config);
             modules.startRegister(config);
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
+            modules.initDiscussion();
         }
         mediator.emit('page:common:ready', config, context);
     };

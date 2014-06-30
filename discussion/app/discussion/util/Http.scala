@@ -8,7 +8,6 @@ import common.Logging
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 
-
 trait Http extends Logging {
 
   protected def getJsonOrError(url: String, onError: (Response) => String, headers: (String, String)*): Future[JsValue] = {

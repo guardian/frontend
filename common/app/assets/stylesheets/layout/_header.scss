@@ -7,7 +7,14 @@
 
     @include mq(tablet) {
         background: $c-neutral8;
-        margin-bottom: $gs-row-height*.5;
+        border-bottom: 2px solid $c-brandBlue;
+    }
+    @include mq(wide) {
+        .has-page-skin & .gs-container {
+            @include rem((
+                width: gs-span(12) + ($gs-gutter*2)
+            ));
+        }
     }
 }
 

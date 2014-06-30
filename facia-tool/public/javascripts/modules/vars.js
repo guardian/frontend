@@ -1,5 +1,11 @@
 /* global _: true */
-define(['knockout'], function(ko) {
+define([
+    'knockout',
+    'config'
+], function(
+    ko,
+    pageConfig
+){
     var CONST = {
         editions: ['uk', 'us', 'au'],
 
@@ -8,21 +14,16 @@ define(['knockout'], function(ko) {
             {name: 'news/auto'},
             {name: 'news/most-popular'},
             {name: 'news/people'},
-            {name: 'news/section'},
             {name: 'news/special'},
-            {name: 'news/sport'},
             {name: 'features'},
-            {name: 'features/auto'}, // Behind FeaturesAutoContainerSwitch
+            {name: 'features/auto'},
             {name: 'features/multimedia'},
-            {name: 'features/section'},
-            {name: 'comment'},
-            {name: 'comment/comment-and-debate'},
-            {name: 'comment/section'}
+            {name: 'comment/comment-and-debate'}
         ],
 
         detectPressFailureMs: 10000,
 
-        maxFronts: 100,
+        maxFronts: 200,
 
         imageCdnDomain: 'guim.co.uk',
 
@@ -39,13 +40,15 @@ define(['knockout'], function(ko) {
 
         collectionsPollMs:     10000,
         latestArticlesPollMs:  20000,
-        configSettingsPollMs:  30000,
+        configSettingsPollMs:  5000,
         cacheExpiryMs:         60000,
         sparksRefreshMs:       300000,
         pubTimeRefreshMs:      30000,
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
+
+        ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
 
         sparksServer:          'http://sparklines.ophan.co.uk',
         sparksParams: {
@@ -73,6 +76,7 @@ define(['knockout'], function(ko) {
         model: undefined,
         sparksBase:      sparksBaseUrl(CONST.sparksParams),
         sparksBaseFront: sparksBaseUrl(CONST.sparksFrontParams),
+        priority: pageConfig.priority === 'editorial' ? undefined : pageConfig.priority,
         state: {
             config: {},
             liveMode: ko.observable(false),
@@ -81,5 +85,3 @@ define(['knockout'], function(ko) {
         }
     };
 });
-
-

@@ -49,13 +49,11 @@ trait CommentsController extends DiscussionController {
         Cached(60) {
           if (request.isJson)
             JsonComponent(
-              "html" -> views.html.fragments.commentsBody(page, BlankComment(), isTopComments).toString,
-              "hasMore" -> page.hasMore,
-              "currentPage" -> page.currentPage,
+              "html" -> views.html.discussionComments.discussionComponent(page, BlankComment(), isTopComments).toString,
               "currentCommentCount" -> page.comments.length
             )
           else
-            Ok(views.html.comments(page))
+            Ok(views.html.discussionComments.discussionPage(page))
         }
     }
   }

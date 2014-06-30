@@ -26,20 +26,15 @@ public class ArticleComponentTest {
         testArticle = pageHelper.goToArticle(ARTICLE_WITH_TWEETS);
     }
 
-
     @Test
     public void articleHasMostPopularSidebar() {
         Assert.assertTrue("Failure: Related content container missing", testArticle.hasMostPopularRight());
     }
 
     @Test
-    public void articleHasPopularContainerBelow() {
-        Assert.assertTrue("Failure: Most Popular In Bottom Hand Bar is Missing", testArticle.hasMostPopularBelow());
-    }
-
-    @Test
     public void articleHasRelatedContentContainer() {
-        Assert.assertTrue("Failure: Related content container missing", testArticle.hasRelatedContentContainer());
+        Assert.assertTrue("Failure: Related content container missing",
+                testArticle.hasRelatedContentContainer());
     }
 
     @Test

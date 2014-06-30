@@ -12,7 +12,7 @@
 
 $old-ie:      false !default;
 $svg-support: true !default;
-$browser-supports-columns: true !default;
+$browser-supports-columns: true;
 $browser-supports-flexbox: true !default;
 
 
@@ -22,16 +22,10 @@ $browser-supports-flexbox: true !default;
 $gutter: 16px;
 $unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
-$trailblockImgWidth: 100%;
-$trailblockImgWidthLarge: 140px;
 $headerHeight: 46px;
 
-
-// Guss defaults overrides
-// =============================================================================
-
-$guss-column-rule: none;
-
+@import 'components/guss-colours/helpers';
+@import 'components/guss-colours/colours';
 @import 'components/guss-grid-system/_grid-system';
 
 
@@ -71,26 +65,29 @@ $mq-breakpoints: (
     faciaLeftCol: $facia-leftCol-trigger
 );
 
+// Guss defaults overrides
+// =============================================================================
+
+$guss-column-rule: none;
+
 
 // Colours
 // =============================================================================
 
-$c-brandBlue: #214583;
-$c-brandLightBlue: #94b1ca;
-$c-error: #d61d00;
+$c-brandBlue: guss-colour(guardian-brand);
+$c-brandLightBlue: guss-colour(guardian-brand-light);
+$c-error: guss-colour(error);
 
-$c-body: #545454;
-
-$c-neutral1: #333333;
-$c-neutral2: #767676;
+$c-neutral1: guss-colour(neutral-1);
+$c-neutral2: guss-colour(neutral-2);
 // Enhance contrast of grey text on light grey background
 $c-neutral2-contrasted: darken($c-neutral2, 3%);
-$c-neutral3: #bdbdbd;
-$c-neutral4: #dcdcdc;
-$c-neutral5: #dfdfdf;
-$c-neutral6: #eaeaea;
-$c-neutral7: #f1f1f1;
-$c-neutral8: #f6f6f6;
+$c-neutral3: guss-colour(neutral-3);
+$c-neutral4: guss-colour(neutral-4);
+$c-neutral5: guss-colour(neutral-5);
+$c-neutral6: guss-colour(neutral-6);
+$c-neutral7: guss-colour(neutral-7);
+$c-neutral8: guss-colour(neutral-8);
 
 $c-media-icon: #fbba0f;
 
@@ -98,21 +95,22 @@ $c-media-icon: #fbba0f;
 // Tones
 // =============================================================================
 
-$c-newsDefault: #005689;
-$c-newsAccent: #4bc6df;
+$c-newsDefault: guss-colour(tone-news-1);
+$c-newsAccent: guss-colour(tone-news-2);
 
-$c-featureDefault: #951c55;
-$c-featureAccent: #f66980;
+$c-featureDefault: guss-colour(tone-features-1);
+$c-featureAccent: guss-colour(tone-features-2);
 $c-featureAccent2: #b62766;
 $c-featuresVariant: #7d0068;
 
-$c-commentDefault: #e6711b;
-$c-commentAccent: #ffbb00;
+$c-commentDefault: guss-colour(tone-comment-1);
+$c-commentAccent: guss-colour(tone-comment-2);
 $c-commentAccent2: #ffce4b;
+$c-commentDark: #d3a034;
 
 $c-live: #c0031b;
-$c-liveDefault: #b51800;
-$c-liveAccent: #cc2b12;
+$c-liveDefault: guss-colour(tone-live-1);
+$c-liveAccent: guss-colour(tone-live-2);
 
 $c-mediaDefault: $c-commentAccent;
 
@@ -159,11 +157,6 @@ $mpu-original-width: 300px;
 $mpu-original-height: 250px;
 $mpu-align-offset: 20px; // Align bottom of ad with text on desktop
 $mpu-ad-label-height: 34px;
-
-// Scale the ad down on tablet
-$mpu-target-width: gs-span(3) + $gs-gutter/2;
-$mpu-scale-ratio: $mpu-target-width/$mpu-original-width;
-$mpu-resulting-height: ceil($mpu-original-height*$mpu-scale-ratio);
 
 
 // Dimensions

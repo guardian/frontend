@@ -2,6 +2,19 @@
 
 @import conf.Switches._
 
+
+@* any images in head need to go here (or they'll be relative to the page)} *@
+<style>
+    .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(@Static("images/global/sprite.png")); }
+    .svg .i,.svg .caption:before,.svg figcaption:before,.svg blockquote.quoted:before { background-image: none; }
+    .is-updating { background-image: url(@Static("images/auto-update-activity.gif")); }
+    .is-updating--dark { background-image: url(@Static("images/auto-update-activity-dark.gif")); }
+    .tweet { background-image: url(@Static("images/twitter/bird.png")); }
+    .svg .tweet { background-image: url(@Static("images/twitter/bird.svg")); }
+    .svg .stars, .svg .stars:after { background-image: url(@Static("images/star-sprite.svg")); }
+    .stars, .stars:after { background-image: url(@Static("images/star-sprite.png")); }
+</style>
+
 @*
   - Include all browsers [<!-->]
   - Exclude IE < 10 [(gt IE 9)]
@@ -32,16 +45,6 @@
     <link rel="stylesheet" type="text/css" href="@Static(Static.css.headIE9(projectName))" />
 <![endif]-->
 
-@* any images in head need to go here (or they'll be relative to the page)} *@
-<style>
-    .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(@Static("images/global/sprite.png")); }
-    .is-updating { background-image: url(@Static("images/auto-update-activity.gif")); }
-    .is-updating--dark { background-image: url(@Static("images/auto-update-activity-dark.gif")); }
-    .tweet { background-image: url(@Static("images/twitter/bird.png")); }
-    .svg .tweet { background-image: url(@Static("images/twitter/bird.svg")); }
-    .stars, .stars:after { background-image: url(@Static("images/star-sprite.png")); }
-</style>
-
 @*
   - Include IE 9 [(IE 9)]
   - Exclude IE Mobile [&(!IEMobile)]
@@ -65,8 +68,3 @@
 <!--[if IEMobile]>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/global.css")" />
 <![endif]-->
-
-<style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff="@Static("fonts/WebEgyptian.woff.json")" data-cache-file-ttf="@Static("fonts/WebEgyptian.ttf.json")"></style>
-<style class="initial" data-cache-name="WebAgateSans" data-min-width="980" data-cache-file-woff="@Static("fonts/WebAgateSans.woff.json")" data-cache-file-ttf="@Static("fonts/WebAgateSans.ttf.json")"></style>
-<style class="initial" data-cache-name="TextSans" data-min-width="980" data-cache-file-woff="@Static("fonts/WebTextSans.woff.json")" data-cache-file-ttf="@Static("fonts/WebTextSans.ttf.json")"></style>
-<style class="initial" data-cache-name="WebHeadlineSans" data-min-width="980" data-advertisement-feature data-cache-file-woff="@Static("fonts/WebHeadlineSans.woff.json")" data-cache-file-ttf="@Static("fonts/WebHeadlineSans.ttf.json")"></style>

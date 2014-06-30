@@ -113,6 +113,17 @@
     }
 }
 
+@mixin icon($name) {
+    @extend %i;
+    @extend %i-#{$name};
+
+    @if ($svg-support) {
+        .svg & {
+            @extend %svg-i-#{$name};
+        }
+    }
+}
+
 // Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
 @mixin clearfix {
     &:after,

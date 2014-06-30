@@ -5,12 +5,28 @@ import common.editions.Uk
 import scala.concurrent.Future
 import common.Logging
 import play.api.libs.json._
-import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure}
+import common.FaciaToolMetrics._
 import play.api.libs.concurrent.Akka
-import play.api.libs.json.JsObject
-import com.gu.openplatform.contentapi.model.Asset
 import conf.Switches
-import services.ConfigAgent
+import services.{S3FrontsApi, DraftCollections, LiveCollections, ConfigAgent}
+import scala.util.Success
+import conf.Switches.FaciaToolDraftPressSwitch
+import scala.util.Failure
+import scala.util.Success
+import com.gu.openplatform.contentapi.model.Asset
+import model.Tag
+import play.api.libs.json.JsObject
+
+case class PressCommand(ids: Set[String], live: Boolean = false, draft: Boolean = false) {
+  def withPressLive(b: Boolean = true): PressCommand = this.copy(live=b)
+  def withPressDraft(b: Boolean = true): PressCommand = this.copy(draft=b)
+}
+
+object PressCommand {
+  def forOneId(id: String): PressCommand = PressCommand(Set(id))
+}
+
+case class PressResult(liveJson: Map[String, JsObject], draftJson: Map[String, JsObject])
 
 trait FrontPress extends Logging {
 
@@ -55,39 +71,113 @@ trait FrontPress extends Logging {
   import play.api.Play.current
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
-  def generateJson(id: String): Future[JsObject] = {
+  def pressByPathId(path: String): Future[JsValue] = {
+    val live: Future[JsObject] = pressLiveByPathId(path)
+    if (FaciaToolDraftPressSwitch.isSwitchedOn)
+      live.onComplete{ case _ => pressDraftByPathId(path) }
+    live
+  }
+
+  private def pressDraftByPathId(path: String): Future[JsObject] =
+    FrontPress.generateDraftJson(path).map { json =>
+      (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
+      json
+    }
+
+  private def pressLiveByPathId(path: String): Future[JsObject] =
+    FrontPress.generateLiveJson(path).map { json =>
+      (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
+      json
+    }
+
+  def press(pressCommand: PressCommand): Future[PressResult] = {
+    ConfigAgent.refreshAndReturn() flatMap { _ =>
+      val paths: Set[String] = for {
+        id <- pressCommand.ids
+        path <- ConfigAgent.getConfigsUsingCollectionId(id)
+      } yield path
+
+      lazy val livePress: Future[Map[String, JsObject]]  =
+        if (pressCommand.live) {
+          val fut = Future.traverse(paths){ path => pressLiveByPathId(path).map{ json => path -> json} }.map(_.toMap)
+          fut.onComplete {
+            case Failure(error) =>
+              FrontPressLiveFailure.increment()
+              log.error("Error manually pressing live collection through update from tool", error)
+            case Success(_) =>
+              FrontPressLiveFailure.increment()
+          }
+          fut
+        }
+        else
+          Future.successful(Map.empty)
+
+      lazy val draftPress: Future[Map[String, JsObject]]  =
+        if (FaciaToolDraftPressSwitch.isSwitchedOn && pressCommand.draft) {
+          val fut = Future.traverse(paths){ path => pressDraftByPathId(path).map{ json => path -> json} }.map(_.toMap)
+          fut.onComplete {
+            case Failure(error) =>
+              FrontPressDraftFailure.increment()
+              log.error("Error manually pressing live collection through update from tool", error)
+            case Success(_) =>
+              FrontPressDraftSuccess.increment()
+          }
+          fut
+        }
+        else
+          Future.successful(Map.empty)
+
+      for {
+        live <- livePress
+        draft <-  draftPress
+      } yield PressResult(live, draft)
+    }
+  }
+
+  def generateLiveJson(id: String): Future[JsObject] = {
     val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
     futureSeoData.flatMap { seoData =>
-        retrieveFrontByPath(id).map(_.map {
-          case (config, collection) =>
+        retrieveFrontByPath(id)
+          .map(_.map { case (config, collection) =>
             Json.obj(
               config.id -> generateCollectionJson(config, collection)
-            )
-        })
-          .map(_.foldLeft(Json.arr()) {
-          case (l, jsObject) => l :+ jsObject
-        })
+            )})
+          .map(_.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject})
           .map(c =>
+            Json.obj("id" -> id) ++
+              Json.obj("seoData" -> seoData) ++
+              Json.obj("collections" -> c)
+          )
+    }
+  }
+
+  def generateDraftJson(id: String): Future[JsObject] = {
+    val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
+    futureSeoData.flatMap { seoData =>
+      retrieveDraftFrontByPath(id)
+        .map(_.map { case (config, collection) =>
+          Json.obj(
+            config.id -> generateCollectionJson(config, collection)
+          )})
+        .map(_.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject})
+        .map(c =>
           Json.obj("id" -> id) ++
             Json.obj("seoData" -> seoData) ++
             Json.obj("collections" -> c)
-          )
+        )
     }
   }
 
   private def retrieveFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
     val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
-    val collections = collectionIds.map(config => FaciaToolCollectionParser.getCollection(config.id, config, Uk, isWarmedUp=true).map((config, _)))
-    val futureSequence = Future.sequence(collections)
-    futureSequence.onFailure{case t: Throwable =>
-      FrontPressFailure.increment()
-      log.warn(t.toString)
-    }
-    futureSequence.onSuccess{case _ =>
-      FrontPressSuccess.increment()
-      log.info(s"Successful press of $id")
-    }
-    futureSequence
+    val collections = collectionIds.map(config => LiveCollections.getCollection(config.id, config, Uk).map((config, _)))
+    Future.sequence(collections)
+  }
+
+  private def retrieveDraftFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
+    val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
+    val collections = collectionIds.map(config => DraftCollections.getCollection(config.id, config, Uk).map((config, _)))
+    Future.sequence(collections)
   }
 
   private def generateCollectionJson(config: Config, collection: Collection): JsValue =

@@ -1,7 +1,7 @@
 @(page: VideoPage)(implicit request: RequestHeader)
 @import conf.Switches._
 
-@defining(page.video){ video =>
+@defining(page.video, page.storyPackage){ case (video, storyPackage) =>
 <article class="content content--video tone-@video.visualTone"
     itemprop="mainContentOfPage" itemscope itemtype="@video.schemaType" role="main">
 
@@ -14,9 +14,10 @@
 
                 <div class="gu-video-wrapper">
                     <div class="u-responsive-ratio u-responsive-ratio--hd">
-                        <video controls="controls" class="gu-video" @video.mainPicture.map{ img => poster="@Item620.bestFor(img)" }>
+                        <video controls="controls" class="gu-video" @video.mainPicture.map{ img => poster="@Item620.bestFor(img)" }
+                                data-title="@video.headline" data-duration="@video.duration.toString()" @video.mediaId.map{ id=> data-media-id="@id"}>
                         @video.encodings.map{ encoding =>
-                            <source src="@encoding.url" />
+                            <source src="@encoding.url" type="@encoding.format" />
                         }
 
                         @video.encodings.find(_.format == "video/mp4").map{ encoding =>
@@ -53,18 +54,6 @@
     </div>
 </article>
 
-@fragments.storyPackagePlaceholder(page.storyPackage)
-
-@fragments.onwardPlaceholder(video.visualTone)
-
-<div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder(video.section, video.visualTone)
-</div>
-
-<div class="gs-container">
-    <div class="content__main-column" data-link-name="article breadcrumbs">
-        @fragments.breadcrumb(video)
-    </div>
-</div>
+@fragments.contentFooter(video, storyPackage)
 
 }

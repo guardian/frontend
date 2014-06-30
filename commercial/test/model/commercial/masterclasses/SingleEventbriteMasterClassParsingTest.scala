@@ -36,7 +36,7 @@ class SingleEventbriteMasterClassParsingTest extends FlatSpec with Matchers {
     result.venue should be {
       Venue(None, Some("Kings Place"), Some("90 York Way"), Some("London"), Some("United Kingdom"), Some("N1 9GU"))
     }
-    result.venue.description should be("Kings Place, 90 York Way, London, United Kingdom, N1 9GU")
+    result.venue.description should be("London")
   }
 
   "MasterClass companion object" should "handle classes with 2 tickets as a range" in {
@@ -50,6 +50,13 @@ class SingleEventbriteMasterClassParsingTest extends FlatSpec with Matchers {
     result.name should be("Travel writing weekend")
     result.isOpen should be (true)
     result.displayPrice should be ("£400.00 to £2,600.00")
+  }
+
+  "MasterClass companion object" should "handle tags" in {
+    val event = Json.parse(json)
+    val tags = EventbriteMasterClass(event).get.tags
+
+    tags should be(Seq("travel", "travel writing"))
   }
 
   "Generated masterclass object" should "have a desription text that is truncated to 250 chars" in {

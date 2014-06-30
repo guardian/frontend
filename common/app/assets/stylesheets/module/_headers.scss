@@ -34,20 +34,6 @@
     }
 }
 
-.release {
-    display: none;
-
-    @include mq(tablet) {
-        float: left;
-        display: block;
-        color: #95b1ca;
-        @include rem((
-            margin: 18px 0 0,
-            font-size: 10px
-        ));
-    }
-}
-
 .message {
     @include rem((
         padding: 11px

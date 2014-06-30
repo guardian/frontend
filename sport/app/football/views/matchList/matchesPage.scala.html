@@ -1,5 +1,6 @@
 @(page: model.Page, matchesList: football.model.MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader)
 
+@import conf.Switches
 @import football.model._
 
 @main(page, "football"){
@@ -40,7 +41,8 @@
                                                 date,
                                                 responsiveFont = true,
                                                 matchType = matchesList.pageType,
-                                                heading = Some((competition.fullName, Option(competition.url)))
+                                                // this is a special case for the world cup, remove it afterwards
+                                                heading = Some(competition.fullName, Option(competition.url))
                                             )
                                         </div>
                                     </div>
@@ -83,10 +85,7 @@
                         }
                     </div>
 
-                    <div class="article__secondary-column" aria-hidden="true">
-                        <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
-                        </div>
-                    </div>
+                    <div class="article__secondary-column" aria-hidden="true"></div>
                 </div>
             </article>
             @football.views.html.fragments.footballCompetitionNav(matchesList match {

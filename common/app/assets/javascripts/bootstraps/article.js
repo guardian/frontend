@@ -1,15 +1,15 @@
 define([
-    'common/common',
+    'common/utils/common',
     'common/utils/mediator',
-    'common/$',
+    'common/utils/$',
     'fence',
     'common/modules/ui/rhc',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/discussion/loader',
     'common/modules/open/cta',
-    'common/modules/experiments/layoutHints',
-    'common/bootstraps/liveblog'
+    'common/bootstraps/liveblog',
+    'common/modules/article/world-cup',
+    'lodash/collections/contains'
 
 ], function (
     common,
@@ -19,10 +19,10 @@ define([
     rhc,
     truncate,
     twitter,
-    DiscussionLoader,
     OpenCta,
-    Layout,
-    LiveBlog
+    LiveBlog,
+    worldCup,
+    _contains
 ) {
 
     var modules = {
@@ -32,21 +32,12 @@ define([
             }
         },
 
-        initDiscussion: function() {
-            common.mediator.on('page:article:ready', function(config, context) {
-                if (config.page.commentable && config.switches.discussion) {
-                    var discussionLoader = new DiscussionLoader(context, common.mediator, { 'switches': config.switches });
-                    discussionLoader.attachTo($('.discussion')[0]);
-                }
-            });
-        },
-
         initOpen: function() {
             common.mediator.on('page:article:ready', function(config, context) {
                 if (config.switches.openCta && config.page.commentable) {
                     var openCta = new OpenCta(context, common.mediator, {
-                            discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
-                        });
+                        discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
+                    });
 
                     $.create('<div class="open-cta"></div>').each(function(el) {
                         openCta.fetch(el);
@@ -64,21 +55,21 @@ define([
             });
         },
 
-        initLayoutHints: function(config) {
-            /* jshint nonew: false */
-            /* TODO - fix module constructors so we can remove the above jshint override */
-            if(config.switches.layoutHints && /\/-sp-/g.test(config.page.pageId)) {
-                new Layout(config);
-            }
-        },
-
-
         initTruncateAndTwitter: function() {
             mediator.on('page:article:ready', function() {
                 // Ensure that truncation occurs before the tweet upgrading.
                 truncate();
                 twitter.enhanceTweets();
             });
+        },
+
+        initWorldCup: function(config) {
+            // Only add the world cup container on pages with the world cup keyword.
+            var pageTags = config.page.keywordIds.split(',');
+
+            if (config.switches.worldcupArticleContainer && _contains(pageTags,'football/world-cup-2014')) {
+                worldCup();
+            }
         }
     };
 
@@ -86,11 +77,10 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.initLiveBlogging(config);
-            modules.initDiscussion();
             modules.initOpen(config);
             modules.initFence();
-            modules.initLayoutHints(config);
             modules.initTruncateAndTwitter();
+            modules.initWorldCup(config);
         }
         common.mediator.emit('page:article:ready', config, context);
     };

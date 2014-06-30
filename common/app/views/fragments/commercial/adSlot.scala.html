@@ -1,12 +1,13 @@
-@(name: String, adType: String, sizeMapping: Map[String, Seq[String]], showLabel: Boolean = true, refresh: Boolean = true)
+@(name: String, adTypes: Seq[String], sizeMapping: Map[String, Seq[String]], showLabel: Boolean = true, refresh: Boolean = true, outOfPage: Boolean = false)
 
 <div
     id="dfp-ad--@name"
-    class="ad-slot ad-slot--dfp ad-slot--@adType"
+    class="ad-slot ad-slot--dfp ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ")"
     data-link-name="ad slot @name"
     data-name="@name"
     @if(!showLabel){ data-label="false" }
     @if(!refresh){ data-refresh="false" }
+    @if(outOfPage){ data-out-of-page="true" }
     @sizeMapping.map{ case(breakpoint, sizes) =>
         data-@breakpoint="@sizes.mkString("|")"
     }></div>

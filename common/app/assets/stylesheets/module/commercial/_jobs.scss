@@ -4,10 +4,6 @@
 
 /* remove top margin on the footer to make component sit on top of it as per design */
 
-.l-footer {
-    margin-top: 0 !important;
-}
-
 .commercial--jobs {
     .commercial__head {
         background-color: transparent;
@@ -199,11 +195,6 @@
             width: 25%;
             float: left;
         }
-        .commercial--jobs__sectors {
-            @include rem((
-                width: gs-span(6) + $gs-gutter/2
-            ));
-        }
         .commercial--jobs__jobs {
             @include rem((
                 width: gs-span(3)
@@ -225,9 +216,9 @@
         }
         .commercial__home-link {
             @include rem((
-                left: $gs-gutter/2,
                 bottom: $comercial-comp-baseline
             ));
+            left: 0;
             top: auto;
             right: auto;
         }
@@ -237,19 +228,6 @@
             @include rem((
                 width: gs-span(2) + $gs-gutter/2
             ));
-        }
-        .commercial__home-link {
-            top: auto;
-            right: auto;
-            @include rem((
-                bottom: $gs-gutter/2,
-                left: $gs-gutter/2
-            ));    
-        }
-        .commercial__body {
-            @include rem((
-                margin-left: gs-span(2) + $gs-gutter/2
-            ));            
         }
         .commercial--jobs__sectors,
         .commercial--jobs__jobs,
@@ -265,6 +243,15 @@
             @include rem((
                 margin-right: $gs-gutter/2
             ));
+        }
+        .has-page-skin & {
+            .commercial__home-link {
+                width: auto;
+                top: auto;
+                right: 0;
+                left: auto;
+                bottom: auto;
+            }
         }
     }
 }

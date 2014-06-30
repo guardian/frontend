@@ -3,6 +3,7 @@ package model
 import common.{Pagination, ManifestData}
 import conf.Configuration
 import dfp.DfpAgent
+import conf.Switches._
 
 trait MetaData extends Tags {
   def id: String
@@ -24,13 +25,22 @@ trait MetaData extends Tags {
   //must be one of... http://schema.org/docs/schemas.html
   def schemaType: Option[String] = None
 
+  lazy val isFront = false
+  lazy val contentType = ""
+
+  def adUnitSuffix = section
+
+  lazy val hasPageSkin = false
+
   def metaData: Map[String, Any] = Map(
-    "page-id" -> id,
-    "section" -> section,
-    "web-title" -> webTitle,
-    "build-number" -> buildNumber,
-    "analytics-name" -> analyticsName,
-    "blockVideoAds" -> false
+    ("page-id", id),
+    ("section", section),
+    ("web-title", webTitle),
+    ("build-number", buildNumber),
+    ("analytics-name", analyticsName),
+    ("blockVideoAds", false),
+    ("is-front", isFront),
+    ("ad-unit-suffix", adUnitSuffix)
   )
 
   def openGraph: Map[String, Any] = Map(
@@ -158,8 +168,8 @@ trait Tags {
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
 
-  def isSponsored = DfpAgent.isSponsored(keywords)
-  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(keywords)
+  def isSponsored = DfpAgent.isSponsored(tags)
+  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   lazy val visualTone: String =

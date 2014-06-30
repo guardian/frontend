@@ -29,29 +29,8 @@
     width: 100%;
 }
 
-.collapsible {
-    // padding top/bottom looks like it should be 12, but this forces height to 42px which is desired
-    padding: 9px $gutter*2 9px $gutter/2; // double space on right to avoid icon
-    position: relative;
-    cursor: pointer;
-}
 
-.collapsible i {
-    position: absolute;
-    right: 14px;
-    display: inline-block;
-    top: 40%;
-}
-
-//These should be refactored to is-shut/is-open
-.trailblock .panel,
-.rolled-out {
-    height: auto;
-    margin-bottom: 0;
-}
-
-.shut > .panel,
-.rolled-up {
+.shut > .panel {
     overflow: hidden;
     position: relative;
     max-height: 0;

@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'bonzo',
     'bean',
     'common/utils/ajax',
@@ -7,6 +7,7 @@ define([
     'common/utils/config',
     'common/utils/page',
     'common/utils/mediator',
+    'common/utils/detect',
     'common/modules/ui/rhc',
     'common/modules/charts/table-doughnut',
     'common/modules/sport/football/match-list-live',
@@ -22,6 +23,7 @@ define([
     config,
     page,
     mediator,
+    detect,
     rhc,
     Doughnut,
     MatchListLive,
@@ -31,15 +33,20 @@ define([
 ) {
 
     function renderNav(match, callback) {
-        return (new MatchInfo(match, config.page.pageId)).fetch().then(function(resp) {
-            var $nav = $.create(resp.nav).first().each(function(nav) {
-                if (match.id || $('.tabs__tab', nav).length > 2) {
-                    $('.js-football-tabs', context).append(nav);
-                }
-            });
+        var matchInfo;
+
+        return (matchInfo = new MatchInfo(match, config.page.pageId)).fetch().then(function(resp) {
+            var $nav;
+            if (resp.nav && resp.nav.trim().length > 0) {
+                $nav = $.create(resp.nav).first().each(function (nav) {
+                    if (match.id || $('.tabs__tab', nav).length > 2) {
+                        $('.js-football-tabs', context).append(nav);
+                    }
+                });
+            }
 
             if (callback) {
-                callback(resp, $nav);
+                callback(resp, $nav, matchInfo.endpoint);
             } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
         }, function() {
             $('.score-container', context).remove();
@@ -130,7 +137,6 @@ define([
 
         page.isMatch(function(match) {
             extras[0] = { ready: false };
-            extras[1] = { ready: false };
             if (match.pageType === 'stats') {
                 renderNav(match);
             } else {
@@ -151,12 +157,16 @@ define([
                     $h.addClass('u-h').before(scoreContainer);
                 }
 
-                renderNav(match, function(resp, $nav) {
+                renderNav(match, function(resp, $nav, endpoint) {
                     dropdownTemplate = resp.dropdown;
                     scoreContainer.innerHTML = '';
                     scoreBoard.template = resp.matchSummary;
 
                     if(!/^\s+$/.test(scoreBoard.template)) {
+                        scoreBoard.endpoint = endpoint;
+                        scoreBoard.updateEvery = /desktop|wide/.test(detect.getBreakpoint()) ? 30 : 60;
+                        scoreBoard.autoupdated = match.isLive;
+
                         scoreBoard.render(scoreContainer);
                         scoreBoard.setState(match.pageType);
                     } else {
@@ -164,7 +174,7 @@ define([
                     }
 
                     // match stats
-                    if (resp.hasStarted) {
+                    if (resp.hasStarted && $nav) {
                         var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, '');
 
                         $.create('<div class="match-stats__container"></div>').each(function(container) {
@@ -188,6 +198,7 @@ define([
 
                     // Group table & Match day
                     page.isCompetition(function(competition) {
+                        extras[1] = { ready: false };
                         // Group table
                         if (resp.group !== '') {
                             renderTable(competition +'/'+ resp.group, extras, dropdownTemplate);

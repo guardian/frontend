@@ -2,13 +2,21 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
+import org.scalatest.{BeforeAndAfterAll, Matchers, FlatSpec}
+import conf.Switches.MemcachedSwitch
 
-class IndexControllerTest extends FlatSpec with Matchers {
+class IndexControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll {
 
   val section = "books"
   val callbackName = "aFunction"
+
+  override def beforeAll(): Unit = {
+    MemcachedSwitch.switchOff()
+  }
+
+  override def afterAll(): Unit = {
+    MemcachedSwitch.switchOn()
+  }
 
   "Index Controller" should "200 when content type is front" in Fake {
     val result = controllers.IndexController.render(section)(TestRequest(s"/$section"))
@@ -119,4 +127,12 @@ class IndexControllerTest extends FlatSpec with Matchers {
       result should be (tag)
     }
   }
+
+  it should "serve RSS for a section" in Fake {
+    val result = controllers.IndexController.render("film")(TestRequest("/film/rss"))
+    status(result) should be(200)
+    contentType(result) should be(Some("text/xml"))
+    contentAsString(result) should startWith("<?xml")
+  }
+
 }

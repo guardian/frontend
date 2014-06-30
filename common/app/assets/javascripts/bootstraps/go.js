@@ -1,10 +1,12 @@
 /*global guardian:true */
 require([
-    'common/bootstraps/app'
-], function(
-    bootstrap
-) {
-    if (guardian.isModernBrowser) {
-        bootstrap.go();
-    }
+    'core',
+    'domReady!'
+], function () {
+
+    require(['bootstraps/app'], function(bootstrap) {
+        if (guardian.isModernBrowser) {
+            bootstrap.go();
+        }
+    });
 });

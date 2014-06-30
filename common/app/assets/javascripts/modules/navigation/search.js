@@ -1,6 +1,6 @@
 define([
-    'common/$',
-    'common/common',
+    'common/utils/$',
+    'common/utils/common',
     'bean'
 ], function (
     $,
@@ -21,7 +21,7 @@ define([
             enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
-            var searchLoader = common.rateLimit(function() {
+            var searchLoader = common.throttle(function() {
                 self.load();
             });
 

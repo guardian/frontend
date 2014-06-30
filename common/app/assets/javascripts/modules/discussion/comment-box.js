@@ -1,4 +1,5 @@
 define([
+    'common/utils/$',
     'bean',
     'bonzo',
     'common/utils/context',
@@ -9,6 +10,7 @@ define([
     'common/modules/discussion/user-avatars',
     'common/modules/identity/validation-email'
 ], function(
+    $,
     bean,
     bonzo,
     context,
@@ -153,9 +155,16 @@ CommentBox.prototype.ready = function() {
     bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
     bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
+    this.on('click', this.getClass('preview'), this.previewComment);
+    this.on('click', this.getClass('hide-preview'), this.resetPreviewComment);
     this.on('click', this.getClass('cancel'), this.cancelComment);
     this.on('click', this.getClass('show-parent'), this.setState.bind(this, 'parent-visible', false));
     this.on('click', this.getClass('hide-parent'), this.removeState.bind(this, 'parent-visible', false));
+
+    this.on('click', this.getClass('formatting-bold'), this.formatComment.bind(this, 'bold'));
+    this.on('click', this.getClass('formatting-italic'), this.formatComment.bind(this, 'italic'));
+    this.on('click', this.getClass('formatting-quote'), this.formatComment.bind(this, 'quote'));
+    this.on('click', this.getClass('formatting-link'), this.formatComment.bind(this, 'link'));
 
     this.setState(this.options.state);
 
@@ -194,7 +203,7 @@ CommentBox.prototype.postComment = function(e) {
             self.setFormState(true);
             DiscussionApi
                 .postComment(self.getDiscussionId(), comment)
-                .then(self.success.bind(self, comment), self.fail.bind(self));
+                .then(self.postCommentSuccess.bind(self, comment), self.fail.bind(self));
         }
     };
 
@@ -245,9 +254,10 @@ CommentBox.prototype.error = function(type, message) {
  * @param {Object} comment
  * @param {Object} resp
  */
-CommentBox.prototype.success = function(comment, resp) {
+CommentBox.prototype.postCommentSuccess = function(comment, resp) {
     comment.id = parseInt(resp.message, 10);
     this.getElem('body').value = '';
+    this.resetPreviewComment();
     this.setFormState();
     this.emit('post:success', comment);
     this.mediator.emit('discussion:commentbox:post:success', comment);
@@ -273,6 +283,15 @@ CommentBox.prototype.fail = function(xhr) {
     } else {
         this.error('API_ERROR');
     }
+};
+
+/**
+ * @param {Object} comment
+ * @param {Object} resp
+ */
+CommentBox.prototype.previewCommentSuccess = function(comment, resp) {
+    this.getElem('preview-body').innerHTML = resp.commentBody;
+    this.setState('preview-visible');
 };
 
 /**
@@ -332,13 +351,105 @@ CommentBox.prototype.verificationEmailFail = function() {
 /**
  * @param {Event=} e (optional)
  */
+CommentBox.prototype.previewComment = function(e) {
+    var self = this,
+        comment = {
+            body: this.getElem('body').value
+        };
+
+    e.preventDefault();
+    self.clearErrors();
+
+    if (comment.body === '') {
+        this.resetPreviewComment();
+        self.error('EMPTY_COMMENT_BODY');
+    }
+
+    if (comment.body.length > self.options.maxLength) {
+        self.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ self.options.maxLength +' characters.</b>'+
+            'Yours is currently '+ (comment.body.length-self.options.maxLength) +' characters too long.');
+    }
+
+    if (self.errors.length === 0) {
+        DiscussionApi
+            .previewComment(comment)
+            .then(self.previewCommentSuccess.bind(self, comment), self.fail.bind(self));
+    }
+};
+
+/**
+ * @param {Event=} e (optional)
+ */
 CommentBox.prototype.cancelComment = function() {
     if (this.options.state === 'response') {
         this.destroy();
     } else {
+        this.resetPreviewComment();
         this.getElem('body').value = '';
         this.setFormState();
         this.removeState('expanded');
+    }
+};
+
+
+
+CommentBox.prototype.resetPreviewComment = function() {
+    this.removeState('preview-visible');
+    this.getElem('preview-body').innerHTML = '';
+};
+
+/**
+ *
+ * @param {String=} formatStyle
+ */
+CommentBox.prototype.formatComment = function(formatStyle) {
+
+    var commentBody = this.getElem('body');
+    var cursorPositionStart = commentBody.selectionStart;
+    var selectedText = commentBody.value.substring(commentBody.selectionStart,commentBody.selectionEnd);
+
+    var formatSelection = function(startTag,endTag) {
+        var newText = startTag + selectedText + endTag;
+
+        commentBody.value = commentBody.value.substring(0, commentBody.selectionStart)+
+            newText + commentBody.value.substring(commentBody.selectionEnd);
+
+        selectNewText(newText);
+    };
+
+    var formatSelectionLink = function() {
+        var href;
+
+        if (/^https?:\/\//i.test(selectedText)) {
+            href = selectedText;
+        } else {
+            href = 'http://';
+        }
+        var newText = '<a href="' + href + '">' + selectedText + '</a>';
+
+        commentBody.value = commentBody.value.substring(0, commentBody.selectionStart) +
+            newText + commentBody.value.substring(commentBody.selectionEnd);
+
+        selectNewText(newText);
+    };
+
+    var selectNewText = function(newText) {
+        commentBody.setSelectionRange(cursorPositionStart,cursorPositionStart+newText.length);
+    };
+
+    switch(formatStyle) {
+        case 'bold':
+            formatSelection('<b>','</b>');
+            break;
+        case 'italic':
+            formatSelection('<i>','</i>');
+            break;
+        case 'quote':
+            formatSelection('<blockquote>','</blockquote>');
+            break;
+        case 'link':
+            formatSelectionLink();
+            break;
     }
 };
 

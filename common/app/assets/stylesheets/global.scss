@@ -16,7 +16,10 @@
    ========================================================================== */
 
 @import 'base/_tables';
-@import 'base/_forms';
+@import 'components/guss-forms/_forms';
+@if $old-ie {
+    @include fix-ie8-password-field-webfonts-display;
+}
 @import 'base/_buttons';
 
 
@@ -38,11 +41,15 @@
 @import 'module/nav/_aside';
 @import 'module/_search';
 
+@import 'module/_video';
+@import 'module/_loader';
+
 @import 'module/_live-blog';
 @import 'module/_live-filter';
 @import 'module/_circular-progress';
 
 @import 'module/_discussion';
+@import 'module/_disc';
 @import 'module/_interactive';
 
 @import 'module/_overlay';
@@ -52,6 +59,7 @@
 @import 'module/onward/_right-hand-most-popular';
 @import 'module/onward/_popular';
 @import 'module/_clamp';
+
 
 /* ==========================================================================
    External modules
@@ -83,13 +91,17 @@
    Facia
    ========================================================================== */
 
-@import 'module/facia/_extends';
-@import 'module/containers/_sport';
+@import 'module/facia/_facia-container';
+@include facia-container--layout-article;
+@include facia-container--layout-discussion;
+@include facia-container--default-heading;
+
+@import 'module/facia/_show-more';
+@import 'module/facia/_pagination';
+
 @import 'module/containers/_features';
 @import 'module/containers/_featuresauto';
-@import 'module/containers/_comment';
 @import 'module/containers/_special';
-@import 'module/containers/_section';
 @import 'module/containers/_commentanddebate';
 @import 'module/containers/_people';
 @import 'module/containers/_misc';
@@ -97,7 +109,7 @@
 @import 'module/containers/_related';
 @import 'module/containers/_multimedia';
 @import 'module/containers/_series';
-@import 'module/facia/_pagination';
+
 @import 'module/facia/snaps/_football';
 
 
@@ -105,15 +117,14 @@
    Experiments
    ========================================================================== */
 
-@import 'module/experiments/_layout-hints';
 @import 'module/experiments/_affix';
 
 /* ==========================================================================
    Icons
    ========================================================================== */
 
-@import 'theme/_global-icons-sprite';
-@import 'theme/_global-icons-svg';
+@import 'icons/_global-icons-sprite';
+@import 'icons/_global-icons-svg';
 @import 'theme/_icons';
 
 
@@ -122,3 +133,17 @@
    ========================================================================== */
 
 @import 'theme/_tones-global';
+
+
+/* ==========================================================================
+   Misc
+   ========================================================================== */
+
+@import 'module/_release-message';
+
+
+/* ==========================================================================
+   Commercial modules
+   ========================================================================== */
+
+@import 'module/commercial/_commercial';

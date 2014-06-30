@@ -1,0 +1,24 @@
+{
+  "name": "guss-rem",
+  "version": "1.1.0",
+  "main": "_rem.scss",
+  "ignore": [
+    "CHANGELOG.md",
+    "specs",
+    "Gruntfile.js",
+    "tests.scss"
+  ],
+  "devDependencies": {
+    "bootcamp": "~1.1.4"
+  },
+  "homepage": "https://github.com/guardian/guss-rem",
+  "_release": "1.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.0",
+    "commit": "84f861a00afc5c21ec979f09ad6960e6175ba42f"
+  },
+  "_source": "git://github.com/guardian/guss-rem.git",
+  "_target": "~1",
+  "_originalSource": "guss-rem"
+}

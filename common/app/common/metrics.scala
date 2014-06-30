@@ -267,10 +267,18 @@ object FaciaMetrics {
     "Number of requests to S3 by facia that have resulted in a 403"
   )
 
+  object FaciaToApplicationRedirectMetric extends SimpleCountMetric(
+    "facia-front",
+    "facia-applications-redirects",
+    "Facia to Applications X-Accel-Redirect count",
+    "Number of requests to facia that have been redirected to Applications via X-Accel-Redirect"
+  )
+
   val all: Seq[Metric] = Seq(
     JsonParsingErrorCount,
     S3AuthorizationError,
-    InvalidContentExceptionMetric
+    InvalidContentExceptionMetric,
+    FaciaToApplicationRedirectMetric
   )
 }
 
@@ -325,25 +333,53 @@ object FaciaToolMetrics {
     "Number of times facia-tool has successfully pressed"
   )
 
+  object FrontPressLiveSuccess extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-live-success",
+    "Facia front press live success count",
+    "Number of times facia-tool has successfully pressed live"
+  )
+
+  object FrontPressLiveFailure extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-live-failure",
+    "Facia front press live success count",
+    "Number of times facia-tool has had a failure in pressing live"
+  )
+
   object FrontPressFailure extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-failure",
     "Facia front press failue count",
-    "Number of times facia-tool has has a failure in pressing"
+    "Number of times facia-tool has had a failure in pressing"
+  )
+
+  object FrontPressDraftSuccess extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-draft-success",
+    "Facia front press draft success count",
+    "Number of times facia-tool has successfully pressed draft"
+  )
+
+  object FrontPressDraftFailure extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-draft-failure",
+    "Facia front press draft failure count",
+    "Number of times facia-tool has had a failure in pressing draft"
   )
 
   object FrontPressCronSuccess extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-cron-success",
     "Facia front press cron success count",
-    "Number of times facia-tool has successfully pressed"
+    "Number of times facia-tool cron job has successfully pressed"
   )
 
   object FrontPressCronFailure extends SimpleCountMetric(
     "facia-front-press",
     "facia-front-press-cron-failure",
-    "Facia front press cron failue count",
-    "Number of times facia-tool has has a failure in pressing"
+    "Facia front press cron failure count",
+    "Number of times facia-tool cron job has had a failure in pressing"
   )
 
   object InvalidContentExceptionMetric extends SimpleCountMetric(
@@ -367,12 +403,20 @@ object FaciaToolMetrics {
     "Number of times facia-tool has failed to made the request for SEO purposes of webTitle and section"
   )
 
+  object MemcachedFallbackMetric extends SimpleCountMetric(
+    "facia-press-content-api",
+    "facia-press-memcached-fallbacks",
+    "Facia Tool Memcached Fall Backs",
+    "Number of times the Memcached Fallback was used"
+  )
+
   val all: Seq[Metric] = Seq(
     ApiUsageCount, ProxyCount, ExpiredRequestCount,
     DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
     FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
+    FrontPressLiveSuccess, FrontPressDraftFailure,
     FrontPressCronFailure, InvalidContentExceptionMetric,
-    ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure
+    ContentApiSeoRequestSuccess, ContentApiSeoRequestFailure, MemcachedFallbackMetric
   ) ++ ContentApiMetrics.all ++ S3Metrics.all
 }
 
@@ -448,15 +492,27 @@ case class SimpleCountMetric(
   val currentCount = new AtomicLong(0)
   val `type` = "counter"
 
-  def increment() {
+  def increment(): Long = {
     count.incrementAndGet()
     currentCount.incrementAndGet()
   }
 
+  def add(value: Long): Long = {
+    count.addAndGet(value)
+    currentCount.getAndAdd(value)
+  }
+
+
   def getAndReset = currentCount.getAndSet(0)
   val getValue: () => Long = count.get
+  val getResettingValue: () => Long = currentCount.get
 
   override def asJson: StatusMetric = super.asJson.copy(count = Some(getValue().toString))
+
+}
+
+object SimpleCountMetric {
+  def apply(group: String, name: String, title: String): SimpleCountMetric = SimpleCountMetric(group, name, title, title)
 }
 
 class FrontendTimingMetric(
@@ -534,9 +590,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     val systemMetrics  = this.systemMetrics
     val applicationMetrics  = this.applicationMetrics
     CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
-    if (applicationMetrics.nonEmpty) {
-      CloudWatch.putWithDimensions(applicationMetricsNamespace, applicationMetrics, Seq(applicationDimension))
-    }
+    for (metrics <- applicationMetrics.grouped(20))
+      CloudWatch.putWithDimensions(applicationMetricsNamespace, metrics, Seq(applicationDimension))
   }
 
   override def onStart(app: PlayApp) {
