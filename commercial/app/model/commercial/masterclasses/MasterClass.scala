@@ -127,5 +127,5 @@ case class Venue(name: Option[String] = None,
                  country: Option[String] = None,
                  postcode: Option[String] = None) {
 
-  val description = Seq(name, address, address2, city, country, postcode).flatten.mkString(", ")
+  val description = Seq(name, city orElse country).flatten mkString ", "
 }

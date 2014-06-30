@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'common/utils/mediator',
     'lodash/objects/assign',
     'lodash/functions/debounce',

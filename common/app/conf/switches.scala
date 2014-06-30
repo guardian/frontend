@@ -123,7 +123,7 @@ object Switches extends Collections {
 
   val SmartBannerSwitch = Switch("Advertising", "smart-banner",
     "Display smart app banner onboarding message to iOS and Android users",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 31)
   )
 
   // Ad Targeting
@@ -215,7 +215,7 @@ object Switches extends Collections {
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 31)
   )
 
   val GeoMostPopular = Switch("Feature Switches", "geo-most-popular",
@@ -260,7 +260,7 @@ object Switches extends Collections {
 
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 31)
   )
 
   val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
@@ -269,16 +269,6 @@ object Switches extends Collections {
     // I know this is far away, but this will lie dormant for a while (other than testing) while
     // the planets align for the rest of the project
     sellByDate = new DateMidnight(2014, 10, 30)
-  )
-
-  val RssLinkSwitch = Switch("Feature Switches", "rss-link",
-    "If this switch is on a link to the RSS is rendered in the HTML",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
-  )
-
-  val TagLinkingSwitch = Switch("Feature Switches", "tag-linking",
-    "If this switch is turned on then tags will be 'auto' linked to where possible in article bodies",
-    safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
   )
 
   val ResponsiveNavSwitch = Switch("Feature Switches", "responsive-nav",
@@ -463,7 +453,6 @@ object Switches extends Collections {
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
     FaciaToolContainerTagsSwitch,
-    RssLinkSwitch,
     EnhanceTweetsSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
@@ -474,7 +463,6 @@ object Switches extends Collections {
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     ResponsiveNavSwitch,
-    TagLinkingSwitch,
     ABLargerMobileMpu,
     SmartBannerSwitch,
     ParameterlessImagesSwitch,
