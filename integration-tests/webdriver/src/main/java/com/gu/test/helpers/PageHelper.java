@@ -12,6 +12,7 @@ public class PageHelper {
     private WebDriver driver;
     protected final String BASE_URL = getProperty("baseUrl");
     protected final String TEST_CARD = getProperty("testCard");
+    protected final String FORCE_BETA = "?view=responsive";
     protected final String liveSite = "http://www.theguardian.com/uk?view=mobile";
 
     public PageHelper(WebDriver driver) {
@@ -23,13 +24,13 @@ public class PageHelper {
     }
 
     public FrontPage goToFronts() {
-        String frontPageURL = BASE_URL + TEST_CARD;
+        String frontPageURL = BASE_URL + TEST_CARD + FORCE_BETA;
         driver.get(frontPageURL);
         return new FrontPage(driver);
     }
 
     public Article goToArticle(String article) {
-        driver.get(BASE_URL + article);
+        driver.get(BASE_URL + article + FORCE_BETA);
         WaitHelper.waitForPageLoad(driver);
         return new Article(driver);
     }
