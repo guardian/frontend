@@ -233,7 +233,8 @@ define([
             }
             s.eVar50 = s.getValOnce(s.eVar50,'s_intcampaign', 0);
 
-            s.eVar58 = detect.getOperatingSystem();
+            // the operating system
+            s.eVar58 = navigator.platform || 'unknown';
 
             // the number of Guardian links inside the body
             if (config.page.inBodyInternalLinkCount) {
