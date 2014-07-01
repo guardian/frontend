@@ -17,7 +17,7 @@ rbenv rehash
 
 export PATH=dev/gems/bin:$PATH
 
-bundle install --binstubs dev/gems/bin --path dev/gems --without development
+bundle install --binstubs dev/gems/bin --path dev/gems
 npm install
 
 grunt "$@"
