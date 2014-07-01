@@ -11,6 +11,10 @@ rbenv local 2.1.2
 
 ruby --version
 
+# Add bundler to the local ruby and rehash paths to pick it up
+gem install bundler
+rbenv rehash
+
 export PATH=dev/gems/bin:$PATH
 
 bundle install --binstubs dev/gems/bin --path dev/gems --without development
