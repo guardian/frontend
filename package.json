@@ -36,6 +36,7 @@
         "karma-script-launcher": "~0.1.0",
         "mkdirp": "^0.5.0",
         "moment": "^2.7.0",
+        "open": "0.0.5",
         "phantomjs": "~1.9.1",
         "svgo": "^0.4.4"
     },
