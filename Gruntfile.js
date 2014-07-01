@@ -58,7 +58,8 @@ module.exports = function (grunt) {
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
-                preserveLicenseComments: false
+                preserveLicenseComments: false,
+                fileExclusionRegExp: /^bower_components$/
             },
             common: {
                 options: {
@@ -568,7 +569,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'common/app/assets/javascripts/',
-                    src: ['**/*.js', '!components/**', '!utils/atob.js']
+                    src: ['**/*.js', '!components/**', '!bower_components/**', '!utils/atob.js']
                 }]
             },
             facia: {
