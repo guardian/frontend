@@ -3,7 +3,7 @@
    ========================================================================== */
 
 @mixin commercial-double-item {
-    &.commercial--dfp-2 {
+    &.commercial--items-dfp-2 {
         .lineitem {
             @include rem((
                 padding-bottom: $gs-baseline
@@ -162,7 +162,7 @@
         }
     }
     @include mq(tablet) {
-        &.commercial--dfp-2 .lineitem {
+        &.commercial--items-dfp-2 .lineitem {
             width: 50%;
             
             &:nth-child(n+3) {
@@ -171,7 +171,7 @@
         }
     }
     @include mq(rightCol) {
-        &.commercial--dfp-3 .lineitem {
+        &.commercial--items-dfp-3 .lineitem {
             width: 33%;
             
             &:nth-child(n+4) {

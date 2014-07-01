@@ -28,7 +28,7 @@
         });
         
         $("#dfp-number").on('change', function() {
-            $('.commercial--dfp-multiple').removeClass("commercial--dfp-2 commercial--dfp-3 commercial--dfp-4").addClass("commercial--dfp-" + this.value);
+            $('.commercial--dfp-multiple').removeClass("commercial--items-dfp-2 commercial--items-dfp-3 commercial--items-dfp-4").addClass("commercial--items-dfp-" + this.value);
             return false;
         });        
         
@@ -185,7 +185,7 @@
 
 
     <div class="facia-container facia-container--layout-article facia-container--commercial">
-        <div class="commercial commercial--dfp commercial--dfp-1234567890 commercial--dfp-multiple commercial--dfp-4" role="complementary">
+        <div class="commercial commercial--dfp commercial--dfp-1234567890 commercial--dfp-multiple commercial--items-dfp-4" role="complementary">
                 <div class="facia-container__inner">
                     <div class="commercial__head container__title">
                         <h3 class="commercial__title"><a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-title">Guardian Vintage Motoring</a></h3>
@@ -269,7 +269,7 @@
                     &lt;style type="text/css"&gt;
                         [%commercial__css%]
                     &lt;/style&gt;
-                    &lt;div class="commercial commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--dfp-[%commercial__offeramount%]" role="complementary"&gt;
+                    &lt;div class="commercial commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
                         &lt;div class="facia-container__inner"&gt;
                             &lt;div class="commercial__head container__title"&gt;
                                 &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
