@@ -52,6 +52,5 @@ require([
     'common/modules/adverts/dfp',
     'common/modules/component',
     'common/modules/lazyload',
-    'common/modules/onward/history',
     'common/modules/ui/tabs'
 ], function() {});
