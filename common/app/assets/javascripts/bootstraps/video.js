@@ -4,8 +4,10 @@ define([
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',
+    'common/utils/deferToAnalytics',
     'common/modules/adverts/query-string',
     'common/modules/adverts/dfp',
+    'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
     'bean'
 ], function(
@@ -13,8 +15,10 @@ define([
     ajax,
     detect,
     config,
+    deferToAnalytics,
     queryString,
     dfp,
+    OmnitureMedia,
     _throttle,
     bean
 ) {
@@ -54,6 +58,13 @@ define([
                 bean.one(playerEl, event, function(event) {
                     modules.ophanRecord(playerEl, event);
                 });
+            });
+        },
+
+        initOmnitureTracking: function(playerEl) {
+            deferToAnalytics(function(){
+                new OmnitureMedia(playerEl).init();
+                $(playerEl).addClass('tracking-applied');
             });
         },
 
@@ -195,7 +206,7 @@ define([
 
                     vjs.ready(function () {
                         var player = this;
-
+                        modules.initOmnitureTracking(el);
                         modules.initOphanTracking(el);
                         modules.bindPrerollEvents(player, el);
 

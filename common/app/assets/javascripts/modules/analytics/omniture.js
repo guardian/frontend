@@ -9,7 +9,9 @@ define([
     'omniture',
     'common/modules/analytics/mvt-cookie',
     'common/modules/analytics/beacon',
-    'common/utils/pad'
+    'common/utils/pad',
+    'common/utils/mediator',
+    'common/utils/deferToAnalytics' // Ensure that 'analytics:ready' is handled.
 ], function(
     common,
     detect,
@@ -20,7 +22,9 @@ define([
     s,
     mvtCookie,
     beacon,
-    pad
+    pad,
+    mediator,
+    analytics
     ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -254,16 +258,7 @@ define([
             s.eVar75 = config.page.wordCount || 0;
         };
 
-        this.loaded = function(callback) {
-            this.populatePageProperties();
-            this.logView();
-            if (typeof callback === 'function') {
-                callback();
-            }
-        };
-
-        this.go = function(c, callback) {
-            var that = this;
+        this.go = function(c) {
 
             config = c; // update the module-wide config
 
@@ -271,7 +266,9 @@ define([
             window.s_account = config.page.omnitureAccount;
 
             s = window.s;
-            that.loaded(callback);
+            this.populatePageProperties();
+            this.logView();
+            mediator.emit('analytics:ready');
         };
 
         this.confirmPageView = function() {
