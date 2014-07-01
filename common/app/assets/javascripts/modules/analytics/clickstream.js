@@ -1,5 +1,5 @@
 define([
-    'common/common',
+    'common/utils/common',
     'common/utils/detect',
     'bean',
     'common/modules/experiments/ab'

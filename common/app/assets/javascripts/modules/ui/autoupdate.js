@@ -5,7 +5,7 @@
 define([
     'common/utils/mediator',
     'common/utils/ajax',
-    'common/$',
+    'common/utils/$',
     'bonzo',
     'bean',
     'common/modules/userPrefs',

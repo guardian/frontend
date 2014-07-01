@@ -5,14 +5,17 @@ import common.editions.Uk
 import scala.concurrent.Future
 import common.Logging
 import play.api.libs.json._
-import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure}
+import common.FaciaToolMetrics._
 import play.api.libs.concurrent.Akka
-import play.api.libs.json.JsObject
-import com.gu.openplatform.contentapi.model.Asset
 import conf.Switches
 import services.{S3FrontsApi, DraftCollections, LiveCollections, ConfigAgent}
-import scala.util.{Success, Failure}
+import scala.util.Success
 import conf.Switches.FaciaToolDraftPressSwitch
+import scala.util.Failure
+import scala.util.Success
+import com.gu.openplatform.contentapi.model.Asset
+import model.Tag
+import play.api.libs.json.JsObject
 
 case class PressCommand(ids: Set[String], live: Boolean = false, draft: Boolean = false) {
   def withPressLive(b: Boolean = true): PressCommand = this.copy(live=b)
@@ -95,33 +98,39 @@ trait FrontPress extends Logging {
       } yield path
 
       lazy val livePress: Future[Map[String, JsObject]]  =
-        if (pressCommand.live)
-          Future.traverse(paths){ path => pressLiveByPathId(path).map{ json => path -> json} }.map(_.toMap)
+        if (pressCommand.live) {
+          val fut = Future.traverse(paths){ path => pressLiveByPathId(path).map{ json => path -> json} }.map(_.toMap)
+          fut.onComplete {
+            case Failure(error) =>
+              FrontPressLiveFailure.increment()
+              log.error("Error manually pressing live collection through update from tool", error)
+            case Success(_) =>
+              FrontPressLiveFailure.increment()
+          }
+          fut
+        }
         else
           Future.successful(Map.empty)
 
       lazy val draftPress: Future[Map[String, JsObject]]  =
-        if (FaciaToolDraftPressSwitch.isSwitchedOn && pressCommand.draft)
-          Future.traverse(paths){ path => pressDraftByPathId(path).map{ json => path -> json} }.map(_.toMap)
+        if (FaciaToolDraftPressSwitch.isSwitchedOn && pressCommand.draft) {
+          val fut = Future.traverse(paths){ path => pressDraftByPathId(path).map{ json => path -> json} }.map(_.toMap)
+          fut.onComplete {
+            case Failure(error) =>
+              FrontPressDraftFailure.increment()
+              log.error("Error manually pressing live collection through update from tool", error)
+            case Success(_) =>
+              FrontPressDraftSuccess.increment()
+          }
+          fut
+        }
         else
           Future.successful(Map.empty)
 
-
-      val ftr: Future[PressResult] = for {
+      for {
         live <- livePress
         draft <-  draftPress
       } yield PressResult(live, draft)
-
-      ftr onComplete {
-        case Failure(error) =>
-          FrontPressFailure.increment()
-          log.error("Error manually pressing collection through update from tool", error)
-
-        case Success(_) =>
-          FrontPressSuccess.increment()
-      }
-
-      ftr
     }
   }
 

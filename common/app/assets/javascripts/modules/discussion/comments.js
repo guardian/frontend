@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'bonzo',
     'qwery',
     'bean',
@@ -46,14 +46,9 @@ var Comments = function(context, mediator, options) {
         this.options.order = userPrefs.get('discussion.order');
     }
 
-
-    if (this.options.commentId) {
-        this.endpoint = '/discussion/comment-permalink/' + this.options.order + '/' + this.options.commentId + '.json';
-    }
-
-    else {
-        this.endpoint = '/discussion/' + this.options.order + this.options.discussionId + '.json';
-    }
+    this.endpoint = this.options.commentId ?
+        '/discussion/comment-permalink/' + this.options.order + '/' + this.options.commentId + '.json' :
+        '/discussion/' + this.options.order + this.options.discussionId + '.json';
 };
 Component.define(Comments);
 
@@ -77,7 +72,7 @@ Comments.prototype.classes = {
     showMoreNewer: 'd-discussion__show-more--newer',
     showMoreOlder: 'd-discussion__show-more--older',
     showMoreLoading: 'd-discussion__show-more-loading',
-    showHidden: 'd-discussion__show-hidden',
+    showHidden: 'd-discussion__show-all-comments',
     showAllComments: 'd-discussion__show-all-comments',
     reply: 'd-comment--response',
     showReplies: 'd-show-more-replies',
@@ -149,10 +144,6 @@ Comments.prototype.prerender = function() {
             this.removeState('not-staff');
             this.setState('is-staff');
         }
-    }
-
-    if(commentCount>2) {
-        $(this.getClass('showAllComments')).addClass('d-discussion__show-all-comments-visible');
     }
 
     if (this.options.state) {

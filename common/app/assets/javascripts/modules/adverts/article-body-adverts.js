@@ -1,12 +1,11 @@
 define([
     'common/modules/component',
-    'common/$',
+    'common/utils/$',
     'lodash/objects/assign',
     'common/utils/detect',
     'common/modules/adverts/dfp',
     'common/modules/article/spacefinder',
-    'common/utils/deferToLoad',
-    'common/modules/experiments/ab'
+    'common/utils/deferToLoad'
 ], function (
     Component,
     $,
@@ -14,8 +13,7 @@ define([
     detect,
     dfp,
     spacefinder,
-    deferToLoad,
-    ab
+    deferToLoad
 ) {
 
     function ArticleBodyAdverts(config) {
@@ -38,12 +36,6 @@ define([
     ArticleBodyAdverts.prototype.generateAdElement = function() {
         var adIndex = this.ads.length + 1,
             $ad = $.create(dfp.createAdSlot('inline' + adIndex, 'inline'));
-        if (['articles', 'fronts-and-articles'].indexOf(ab.getTestVariant('LargerMobileMpu')) > -1 && adIndex === 1) {
-            $ad
-                .removeAttr('data-mobilelandscape')
-                .removeAttr('data-tabletportrait')
-                .data('mobile', '300,250');
-        }
         this.ads.push($ad);
         return $ad;
     };

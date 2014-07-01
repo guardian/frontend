@@ -81,8 +81,9 @@
         }
         .lineitem__offer {
             @include rem((
-                margin-left: gs-span(2) + $gs-gutter/2
+                padding-left: $gs-gutter/2
             ));
+            margin-left: 50%;
         }
         .commercial--masterclasses__class__link {
             float: left;
@@ -116,6 +117,16 @@
                 display: none;
             }
         }
+        .lineitem__image {
+            margin-right: $gs-gutter/5;
+            outline: 1px solid $c-neutral7;
+            }    
+        .highitem .commercial--masterclasses__class__link {
+            width: 50%;
+            @include rem((
+                margin: 0 $gs-gutter/2 $gs-baseline 0
+            ));
+        }
     }
     @include mq(tablet) {
         .commercial--masterclasses__class {
@@ -148,8 +159,7 @@
         }
     }
     .lineitem__image {
-        margin-right: $gs-gutter/5;
-        outline: 1px solid $c-neutral7;
+        width: 100%;
     }
     .lineitem__link {
         display: block;
@@ -208,6 +218,19 @@
         .commercial__home-link {
             width: gs-span(2);
             line-height: 1.2;
+        }
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            .commercial__home-link {
+                width: auto;
+                @include rem((
+                    top: $gs-baseline
+                ));
+                right: 0;
+                left: auto;
+                bottom: auto;
+            }
         }
     }
     

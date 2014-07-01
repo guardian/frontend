@@ -39,6 +39,9 @@ POST        /dev/switchboard              controllers.admin.SwitchboardControlle
 GET         /analytics/abtests            controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence         controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /analytics/commercial         controllers.admin.CommercialController.renderCommercial()
+GET         /analytics/commercial/sponsorships   controllers.admin.CommercialController.renderSponsorships()
+GET         /analytics/commercial/pageskins     controllers.admin.CommercialController.renderPageskins()
+
 
 # Metrics
 GET         /metrics/loadbalancers        controllers.admin.DashboardController.renderDashboard()

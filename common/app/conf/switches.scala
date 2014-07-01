@@ -123,7 +123,7 @@ object Switches extends Collections {
 
   val SmartBannerSwitch = Switch("Advertising", "smart-banner",
     "Display smart app banner onboarding message to iOS and Android users",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 31)
   )
 
   // Ad Targeting
@@ -206,11 +206,6 @@ object Switches extends Collections {
     safeState = Off, never
   )
 
-  val FreshnessLoggingSwitch = Switch("Diagnostics", "freshness",
-    "If this switch is on, page freshness will be logged.",
-    safeState = On, new DateMidnight(2014, 6, 30)
-  )
-
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off, never
@@ -220,7 +215,7 @@ object Switches extends Collections {
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 31)
   )
 
   val GeoMostPopular = Switch("Feature Switches", "geo-most-popular",
@@ -265,7 +260,7 @@ object Switches extends Collections {
 
   val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
     "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 31)
   )
 
   val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
@@ -276,14 +271,9 @@ object Switches extends Collections {
     sellByDate = new DateMidnight(2014, 10, 30)
   )
 
-  val RssLinkSwitch = Switch("Feature Switches", "rss-link",
-    "If this switch is on a link to the RSS is rendered in the HTML",
-    safeState = Off, sellByDate = new DateMidnight(2014, 6, 30)
-  )
-
-  val TagLinkingSwitch = Switch("Feature Switches", "tag-linking",
-    "If this switch is turned on then tags will be 'auto' linked to where possible in article bodies",
-    safeState = On, sellByDate = new DateMidnight(2014, 6, 30)
+  val ResponsiveNavSwitch = Switch("Feature Switches", "responsive-nav",
+    "If this switch is turned on then the new responsive navigation will be displayed.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 22)
   )
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
@@ -307,11 +297,6 @@ object Switches extends Collections {
   )
 
   // A/B Tests
-
-  val ABLargerMobileMpu = Switch("A/B Tests", "ab-larger-mobile-mpu",
-    "If this switch is turned on, run the LargerMobileMpu A/B test",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
-  )
 
   // Dummy Switches
 
@@ -463,7 +448,6 @@ object Switches extends Collections {
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
     FaciaToolContainerTagsSwitch,
-    RssLinkSwitch,
     EnhanceTweetsSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
@@ -473,11 +457,9 @@ object Switches extends Collections {
     MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
-    TagLinkingSwitch,
-    ABLargerMobileMpu,
+    ResponsiveNavSwitch,
     SmartBannerSwitch,
     ParameterlessImagesSwitch,
-    FreshnessLoggingSwitch,
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,

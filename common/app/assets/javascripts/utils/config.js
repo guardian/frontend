@@ -3,17 +3,13 @@
 /*
  Common functions to simplify access to page data
  */
-define(['lodash/objects/assign'], function (extend) {
-
-    // thank you http://www.electrictoolbox.com/pad-number-zeroes-javascript/
-    var pad = function (number, length) {
-        var str = '' + number;
-        while (str.length < length) {
-            str = '0' + str;
-        }
-        return str;
-    };
-
+define([
+    'lodash/objects/assign',
+    'common/utils/pad'
+], function (
+    extend,
+    pad
+) {
     var config = guardian.config;
 
     return extend({

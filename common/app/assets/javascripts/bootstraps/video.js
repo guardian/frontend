@@ -1,6 +1,6 @@
 /* global videojs */
 define([
-    'common/$',
+    'common/utils/$',
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',
@@ -33,28 +33,27 @@ define([
 
     var modules = {
 
-        ophanRecord: function(playerEl) {
+        ophanRecord: function(playerEl, event) {
             var id = playerEl.getAttribute('data-media-id');
-            return function(event) {
-                if(id) {
-                    require('ophan/ng', function (ophan) {
-                        ophan.record({
-                            'video': {
-                                id: id,
-                                eventType: event.type
-                            }
-                        });
+            if(id) {
+                require('ophan/ng', function (ophan) {
+                    ophan.record({
+                        'video': {
+                            id: id,
+                            eventType: event.type
+                        }
                     });
-                }
-            };
+                });
+            }
         },
 
         initOphanTracking: function(playerEl) {
-            modules.ophanRecord = modules.ophanRecord(playerEl);
             EVENTS.concat(QUARTILES.map(function(q) {
                 return 'video:play:' + q;
             })).forEach(function(event) {
-                bean.one(playerEl, event, modules.ophanRecord);
+                bean.one(playerEl, event, function(event) {
+                    modules.ophanRecord(playerEl, event);
+                });
             });
         },
 
@@ -187,7 +186,7 @@ define([
 
                 videojs.plugin('adCountDown', modules.countDown);
 
-                $('video').each(function (el) {
+                $('.gu-video').each(function (el) {
                     var vjs = videojs(el, {
                         controls: true,
                         autoplay: false,

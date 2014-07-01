@@ -9,7 +9,7 @@ i.gallery__watermark {
     display: none;
     position: absolute;
     top: ($gs-baseline/3)*2;
-    left: $gutter;
+    left: $gs-gutter;
 
     @include mq(tablet) {
         display: block;
@@ -181,7 +181,7 @@ i.gallery__watermark {
     width: 20%;
 
     .gallery__arrow-cta {
-        left: $gutter;
+        left: $gs-gutter;
     }
 }
 
@@ -190,7 +190,7 @@ i.gallery__watermark {
     width: 80%;
 
     .gallery__arrow-cta {
-        right: $gutter;
+        right: $gs-gutter;
     }
 }
 
@@ -252,7 +252,7 @@ i.gallery__watermark {
 
 .gallerycaption__inner {
     @include transparent-background(rgb(34, 34, 34), .9);
-    padding: ($gs-baseline/3)*4 $gutter;
+    padding: ($gs-baseline/3)*4 $gs-gutter;
 }
 
 .gallerycaption__text {

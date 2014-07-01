@@ -1,6 +1,6 @@
 {
   "name": "guss-typography",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "main": [
     "_helpers.scss",
     "_font-scale.scss"
@@ -9,14 +9,14 @@
     "CHANGELOG.md"
   ],
   "dependencies": {
-    "guss-rem": "~1.0.0"
+    "guss-rem": "~1.1.0"
   },
   "homepage": "https://github.com/guardian/guss-typography",
-  "_release": "1.3.0",
+  "_release": "1.4.0",
   "_resolution": {
     "type": "version",
-    "tag": "v1.3.0",
-    "commit": "767d577a31c1617f7efd33750cbba5b5dfb992a0"
+    "tag": "v1.4.0",
+    "commit": "81f418551d52529e1c9bca4f1daffa3b5862ba92"
   },
   "_source": "git://github.com/guardian/guss-typography.git",
   "_target": "~1",
