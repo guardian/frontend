@@ -18,8 +18,8 @@ abstract class FrontsSeleniumTestSuite extends FunSuite with BeforeAndAfter with
   lazy val pageFactory: CustomPageFactory = new CustomPageFactory()
 
   before {
-    webDriver = WebdriverFactory.getDefaultWebDriver
     System.setProperty(PropertyLoader.PROP_FILE_PATH_ENV_KEY, System.getProperty("user.home") + "/fronts-test-override.properties");
+    webDriver = WebdriverFactory.getFirefoxWebdriver()
   }
 
   after {
