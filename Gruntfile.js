@@ -95,7 +95,10 @@ module.exports = function (grunt) {
                     baseUrl: 'facia/app/assets/javascripts',
                     name: 'bootstraps/facia',
                     out: staticTargetDir + 'javascripts/bootstraps/facia.js',
-                    exclude: ['../../../../common/app/assets/javascripts/core']
+                    exclude: [
+                        '../../../../common/app/assets/javascripts/core',
+                        '../../../../common/app/assets/javascripts/bootstraps/app'
+                    ]
                 }
             },
             identity: {
@@ -103,7 +106,10 @@ module.exports = function (grunt) {
                     baseUrl: 'identity/app/assets/javascripts',
                     name: 'bootstraps/membership',
                     out: staticTargetDir + 'javascripts/bootstraps/membership.js',
-                    exclude: ['../../../../common/app/assets/javascripts/core']
+                    exclude: [
+                        '../../../../common/app/assets/javascripts/core',
+                        '../../../../common/app/assets/javascripts/bootstraps/app'
+                    ]
                 }
             },
             ophan: {
@@ -843,7 +849,7 @@ module.exports = function (grunt) {
         if (target === 'js') {
             // compile just the project
             var project = filepath.split('/').shift();
-            grunt.task.run(['requirejs:' + project, 'copy:javascript', 'asset_hash', 'copy:assetMap']);
+            grunt.task.run(['requirejs:' + project, 'copy:javascript', 'asset_hash']);
         }
     });
 
