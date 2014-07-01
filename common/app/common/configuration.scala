@@ -4,7 +4,7 @@ import com.amazonaws.auth._
 import com.amazonaws.internal.StaticCredentialsProvider
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
-import conf.Configuration
+import conf.{Switches, Configuration}
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
 import play.api.Play
@@ -65,7 +65,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object contentApi {
     val defaultContentApi: String = "http://content.guardianapis.com"
     lazy val contentApiLiveHost: String = configuration.getStringProperty("content.api.elastic.host").getOrElse(defaultContentApi)
-    lazy val contentApiDraftHost: String = configuration.getStringProperty("content.api.draft.host").getOrElse(contentApiLiveHost)
+    def contentApiDraftHost: String =
+        configuration.getStringProperty("content.api.draft.host")
+          .filter(_ => Switches.FaciaToolDraftContent.isSwitchedOn)
+          .getOrElse(contentApiLiveHost)
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
