@@ -147,6 +147,11 @@ define([
 
             s.prop13    = config.page.series || '';
 
+            // see http://blogs.adobe.com/digitalmarketing/mobile/responsive-web-design-and-web-analytics/
+            s.eVar18    = detect.getBreakpoint();
+            s.eVar21    = document.documentElement.clientWidth + 'x' + document.documentElement.clientHeight;
+            s.eVar32    = detect.getOrientation();
+
             /* Set Time Parting Day and Hour Combination - 0 = GMT */
             var tpA = s.getTimeParting('n','+0');
             s.prop20 = tpA[2] + ':' + tpA[1];
