@@ -28,7 +28,7 @@ public class PageHelper {
     }
 
     private String forceBetaUrl(String originalUrl) {
-        return originalUrl + "/preference/platform/mobile?page=" + originalUrl + "&view=mobile";
+        return BASE_URL + "/preference/platform/mobile?page=" + originalUrl + "&view=mobile";
     }
 
     public Article goToArticle(String article) {
