@@ -12,8 +12,7 @@ public class PageHelper {
     private WebDriver driver;
     protected final String BASE_URL = getProperty("baseUrl");
     protected final String TEST_CARD = getProperty("testCard");
-    protected final String FORCE_BETA = "?view=responsive";
-    protected final String liveSite = "http://www.theguardian.com/uk?view=mobile";
+    protected final String liveSite = "http://www.theguardian.com/uk";
 
     public PageHelper(WebDriver driver) {
         this.driver = driver;
@@ -24,13 +23,17 @@ public class PageHelper {
     }
 
     public FrontPage goToFronts() {
-        String frontPageURL = BASE_URL + TEST_CARD + FORCE_BETA;
+        String frontPageURL = forceBetaUrl(BASE_URL + TEST_CARD);
         driver.get(frontPageURL);
         return new FrontPage(driver);
     }
 
+    private String forceBetaUrl(String originalUrl) {
+        return originalUrl + "/preference/platform/mobile?page=" + originalUrl + "&view=mobile";
+    }
+
     public Article goToArticle(String article) {
-        driver.get(BASE_URL + article + FORCE_BETA);
+        driver.get(forceBetaUrl(BASE_URL + article));
         WaitHelper.waitForPageLoad(driver);
         return new Article(driver);
     }
@@ -42,7 +45,7 @@ public class PageHelper {
     }
 
     public FrontPage goToFrontsForTracking() {
-        driver.get(liveSite);
+        driver.get(forceBetaUrl(liveSite));
         return new FrontPage(driver);
     }
 
