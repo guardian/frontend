@@ -26,6 +26,12 @@
             $(this).children().slideToggle();
             return false;
         });
+        
+        $("#dfp-number").on('change', function() {
+            $('.commercial--dfp-multiple').removeClass("commercial--items-dfp-2 commercial--items-dfp-3 commercial--items-dfp-4").addClass("commercial--items-dfp-" + this.value);
+            return false;
+        });        
+        
     });
     </script>
 <link rel="stylesheet" type="text/css" href="/assets/stylesheets/head.facia.css" />
@@ -62,7 +68,13 @@
         <div class="facia-switch-wrapper">
             <a id="switchFronts" href="#">Fronts</a>
             <a id="switchArticles" href="#" class="current">Articles</a>
-            <a id="pageSkin" href="#">Page skin?</a>
+            <a id="pageSkin" href="#">Page skin?</a><br>
+            Number of items for DFP multiple template
+            <select id="dfp-number">
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+            </select>
         </div>
 
         <h2>DFP Templates</h2>
@@ -173,7 +185,7 @@
 
 
     <div class="facia-container facia-container--layout-article facia-container--commercial">
-        <div class="commercial commercial--dfp commercial--dfp-1234567890" role="complementary">
+        <div class="commercial commercial--dfp commercial--dfp-1234567890 commercial--dfp-multiple commercial--items-dfp-4" role="complementary">
                 <div class="facia-container__inner">
                     <div class="commercial__head container__title">
                         <h3 class="commercial__title"><a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-title">Guardian Vintage Motoring</a></h3>
@@ -193,11 +205,11 @@
                                         <div class="lineitem__offer">
                                             <h4 class="lineitem__title">Austin 7 Chummy</h4>
                                             <p class="lineitem__meta">Lovely 1930 car<br/>in blue</p>
+                                            <p class="lineitem__description commercial--generic__item__description">
+                                                <i class="i i-arrow-white-down"></i>Buy now
+                                            </p>
                                         </div>
                                     </a>
-                                    <p class="lineitem__description commercial--generic__item__description">
-                                        <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer1" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin 7 Chummy-link"><i class="i i-arrow-white-down"></i>Buy now</a>
-                                    </p>
                                 </div>
                             </li>
                             <li class="lineitem">
@@ -207,11 +219,11 @@
                                         <div class="lineitem__offer">
                                             <h4 class="lineitem__title">Austin 7 Ulster</h4>
                                             <p class="lineitem__meta">Fast and noisy, no roof!</p>
+                                            <p class="lineitem__description commercial--generic__item__description">
+                                                <i class="i i-arrow-white-down"></i>Buy now
+                                            </p>
                                         </div>
                                     </a>
-                                    <p class="lineitem__description commercial--generic__item__description">
-                                        <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer2" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin 7 Ulster-link"><i class="i i-arrow-white-down"></i>Buy now</a>
-                                    </p>
                                 </div>
                             </li>
                             <li class="lineitem">
@@ -221,11 +233,11 @@
                                         <div class="lineitem__offer">
                                             <h4 class="lineitem__title">Austin 7 trials saloon</h4>
                                             <p class="lineitem__meta">Goes up muddy hills with ease</p>
+                                            <p class="lineitem__description commercial--generic__item__description">
+                                                <i class="i i-arrow-white-down"></i>Buy now
+                                            </p>
                                         </div>
                                     </a>
-                                    <p class="lineitem__description commercial--generic__item__description">
-                                        <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer3" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin 7 trials saloon-link"><i class="i i-arrow-white-down"></i>Buy now</a>
-                                    </p>
                                 </div>
                             </li>
                             <li class="lineitem">
@@ -235,11 +247,11 @@
                                         <div class="lineitem__offer">
                                             <h4 class="lineitem__title">Austin 7 racing slaoon</h4>
                                             <p class="lineitem__meta">Supercharged and not for the feint hearted</p>
+                                            <p class="lineitem__description commercial--generic__item__description">
+                                                <i class="i i-arrow-white-down"></i>Buy now
+                                            </p>
                                         </div>
                                     </a>
-                                    <p class="lineitem__description commercial--generic__item__description">
-                                        <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253Dl%2526ai%253DCo1twsHepU67hA4uqigaZkYD4AQEAexABILlgKASIAQGQAQDAAQLIAQngAgGoAwGqBFZP0IbDEPgmJHGYVSwrSb4z26WzvCIJ4wmR_N3AZZsMQa-JKzk3BJIpFNYAeDJQQEMzOl8dovGgMhaV05qF4WpNLrcHKxnVbht2QdbeCuaZVmGtWon6mbgEAQ%2526preview%253D%2526num%253D1%2526sig%253DAOD64_3NtMlSz_KmriClXxDamaqCHWYnyg%2526client%253Dca-gfp-rama1%2526adurl%253Dhttp://www.guardian.co.uk/offer4" data-link-name="merchandising-Guardian%20Vintage%20Motoring-1234567890-high-Austin 7 racing slaoon-link"><i class="i i-arrow-white-down"></i>Buy now</a>
-                                    </p>
                                 </div>
                             </li>
                         </ul>
@@ -257,7 +269,7 @@
                     &lt;style type="text/css"&gt;
                         [%commercial__css%]
                     &lt;/style&gt;
-                    &lt;div class="commercial commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
+                    &lt;div class="commercial commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
                         &lt;div class="facia-container__inner"&gt;
                             &lt;div class="commercial__head container__title"&gt;
                                 &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
@@ -277,11 +289,11 @@
                                                 &lt;div class="lineitem__offer"&gt;
                                                     &lt;h4 class="lineitem__title"&gt;[%commercial__offer1title%]&lt;/h4&gt;
                                                     &lt;p class="lineitem__meta"&gt;[%commercial__offer1meta%]&lt;/p&gt;
+                                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                                        &lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
+                                                    &lt;/p&gt;
                                                 &lt;/div&gt;
                                             &lt;/a&gt;
-                                            &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offer1url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer1title%]-link"&gt;&lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
-                                            &lt;/p&gt;
                                         &lt;/div&gt;
                                     &lt;/li&gt;
                                     &lt;li class="lineitem"&gt;
@@ -291,11 +303,11 @@
                                                 &lt;div class="lineitem__offer"&gt;
                                                     &lt;h4 class="lineitem__title"&gt;[%commercial__offer2title%]&lt;/h4&gt;
                                                     &lt;p class="lineitem__meta"&gt;[%commercial__offer2meta%]&lt;/p&gt;
+                                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                                        &lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
+                                                    &lt;/p&gt;
                                                 &lt;/div&gt;
                                             &lt;/a&gt;
-                                            &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offer2url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer2title%]-link"&gt;&lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
-                                            &lt;/p&gt;
                                         &lt;/div&gt;
                                     &lt;/li&gt;
                                     &lt;li class="lineitem"&gt;
@@ -305,11 +317,11 @@
                                                 &lt;div class="lineitem__offer"&gt;
                                                     &lt;h4 class="lineitem__title"&gt;[%commercial__offer3title%]&lt;/h4&gt;
                                                     &lt;p class="lineitem__meta"&gt;[%commercial__offer3meta%]&lt;/p&gt;
+                                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                                        &lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
+                                                    &lt;/p&gt;
                                                 &lt;/div&gt;
                                             &lt;/a&gt;
-                                            &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offer3url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer3title%]-link"&gt;&lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
-                                            &lt;/p&gt;
                                         &lt;/div&gt;
                                     &lt;/li&gt;
                                     &lt;li class="lineitem"&gt;
@@ -319,11 +331,11 @@
                                                 &lt;div class="lineitem__offer"&gt;
                                                     &lt;h4 class="lineitem__title"&gt;[%commercial__offer4title%]&lt;/h4&gt;
                                                     &lt;p class="lineitem__meta"&gt;[%commercial__offer4meta%]&lt;/p&gt;
+                                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                                        &lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
+                                                    &lt;/p&gt;
                                                 &lt;/div&gt;
                                             &lt;/a&gt;
-                                            &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offer4url%]" data-link-name="merchandising-[%URI_ENCODE:commercial__title%]-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer4title%]-link"&gt;&lt;i class="i i-arrow-white-down"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
-                                            &lt;/p&gt;
                                         &lt;/div&gt;
                                     &lt;/li&gt;
                                 &lt;/ul&gt;

@@ -554,6 +554,9 @@ module.exports = function (grunt) {
             },
             facia: {
                 configFile: testConfDir + 'facia.js'
+            },
+            membership: {
+                configFile: testConfDir + 'membership.js'
             }
         },
 
@@ -584,6 +587,13 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'facia-tool/public/javascripts/',
                     src: ['**/*.js', '!components/**', '!omniture.js']
+                }]
+            },
+            membership: {
+                files: [{
+                    expand: true,
+                    cwd: 'identity/app/assets/javascripts/',
+                    src: ['**/*.js']
                 }]
             }
         },
