@@ -32,6 +32,8 @@ trait MetaData extends Tags {
 
   lazy val hasPageSkin = false
 
+  def isSurging = false
+
   def metaData: Map[String, Any] = Map(
     ("page-id", id),
     ("section", section),
