@@ -1,4 +1,5 @@
 require([
+    // 3rd party libs
     'lodash/arrays/compact',
     'lodash/arrays/first',
     'lodash/arrays/flatten',
@@ -20,22 +21,10 @@ require([
     'lodash/objects/isString',
     'lodash/objects/mapValues',
     'lodash/objects/values',
-    'common/utils/_',
     'lodash/utilities/mixin',
 
-    'common/modules/adverts/userAdTargeting',
-    'common/modules/component',
-    'common/modules/adverts/dfp',
-    'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/larger-mobile-mpu',
-    'common/modules/experiments/ab',
-    'common/modules/lazyload',
-    'common/modules/ui/images',
-    'components/imager.js/imager',
-    'imager',
-    'common/modules/onward/history',
-    'common/modules/ui/tabs',
-
+    // utilities
+    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/atob',
@@ -56,5 +45,13 @@ require([
     'common/utils/time',
     'common/utils/to-array',
     'common/utils/url',
-    'common/utils/userTiming'
+    'common/utils/userTiming',
+
+    // shared modules
+    'common/modules/adverts/userAdTargeting',
+    'common/modules/adverts/dfp',
+    'common/modules/component',
+    'common/modules/lazyload',
+    'common/modules/onward/history',
+    'common/modules/ui/tabs'
 ], function() {});
