@@ -231,7 +231,7 @@ define([
             liveStats.log(config);
         },
 
-        loadAnalytics: function (config, context) {
+        loadAnalytics: function (config) {
             var omniture = new Omniture();
 
             omniture.go(config);

@@ -23,8 +23,7 @@ define([
     mvtCookie,
     beacon,
     pad,
-    mediator,
-    analytics
+    mediator
     ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview

@@ -9,7 +9,8 @@ define([
     'common/modules/adverts/dfp',
     'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
-    'bean'
+    'bean',
+    'bonzo'
 ], function(
     $,
     ajax,
@@ -20,7 +21,8 @@ define([
     dfp,
     OmnitureMedia,
     _throttle,
-    bean
+    bean,
+    bonzo
 ) {
 
     var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
@@ -64,7 +66,7 @@ define([
         initOmnitureTracking: function(playerEl) {
             deferToAnalytics(function(){
                 new OmnitureMedia(playerEl).init();
-                $(playerEl).addClass('tracking-applied');
+                bonzo(playerEl).addClass('tracking-applied');
             });
         },
 
