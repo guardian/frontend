@@ -23,8 +23,7 @@ public class PageHelper {
     }
 
     public FrontPage goToFronts() {
-        String frontPageURL = forceBetaUrl(BASE_URL + TEST_CARD);
-        driver.get(frontPageURL);
+        driver.get(forceBetaUrl(BASE_URL + TEST_CARD));
         return new FrontPage(driver);
     }
 
@@ -39,7 +38,7 @@ public class PageHelper {
     }
 
     public LiveBlog goToLiveBlog(String blog) {
-        driver.get(BASE_URL + blog);
+        driver.get(forceBetaUrl(BASE_URL + blog));
         WaitHelper.waitForPageLoad(driver);
         return new LiveBlog(driver);
     }

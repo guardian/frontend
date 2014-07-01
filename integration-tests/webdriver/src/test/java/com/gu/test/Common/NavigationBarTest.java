@@ -1,6 +1,6 @@
 package com.gu.test.Common;
 
-import com.gu.test.RetryRule;
+import com.gu.test.helpers.RetryRule;
 import com.gu.test.helpers.PageHelper;
 
 import com.gu.test.shared.NavigationBar;

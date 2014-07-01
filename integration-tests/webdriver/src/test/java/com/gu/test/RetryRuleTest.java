@@ -1,5 +1,6 @@
 package com.gu.test;
 
+import com.gu.test.helpers.RetryRule;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;
