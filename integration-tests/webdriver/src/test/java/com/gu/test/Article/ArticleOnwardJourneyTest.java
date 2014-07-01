@@ -3,7 +3,7 @@ package com.gu.test.Article;
 import static com.gu.test.PropertyLoader.getProperty;
 import static com.gu.test.WebDriverFactory.createWebDriver;
 
-import com.gu.test.RetryRule;
+import com.gu.test.helpers.RetryRule;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 
