@@ -9,7 +9,6 @@ define([
     'common/utils/storage',
     'common/modules/lazyload',
     'common/modules/component',
-    'common/modules/onward/history',
     'common/modules/ui/images',
     'bean',
     'common/modules/ui/tabs'
@@ -20,7 +19,6 @@ define([
     storage,
     LazyLoad,
     Component,
-    History,
     images,
     bean,
     Tabs
