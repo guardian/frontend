@@ -20,26 +20,6 @@ public class Article {
         return driver.getCurrentUrl();
     }
 
-    public void shareViaEmail() {
-        driver.findElement(By.cssSelector(".i-share-email")).click();
-        WaitHelper.waitForPageLoad(driver);
-    }
-
-    public void shareOnFacebook() {
-        driver.findElement(By.cssSelector(".i-share-facebook")).click();
-        WaitHelper.waitForPageLoad(driver);
-    }
-
-    public void shareOnTwitter() {
-        driver.findElement(By.cssSelector(".i-share-twitter")).click();
-        WaitHelper.waitForPageLoad(driver);
-    }
-
-    public void shareOnGooglePlus() {
-        driver.findElement(By.cssSelector(".i-share-gplus")).click();
-        WaitHelper.waitForPageLoad(driver);
-    }
-
     public boolean hasMostPopularRight() {
         return driver.findElement(By.cssSelector(COMPONENT_POPULAR_RIGHT)).isDisplayed();
     }
