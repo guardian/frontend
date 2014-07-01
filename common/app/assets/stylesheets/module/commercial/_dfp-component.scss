@@ -19,7 +19,8 @@
                 margin-left: $gs-gutter/2
             ));
         }
-        .lineitem__link:hover .lineitem__offer {
+        .lineitem__link:hover .lineitem__offer,
+        .lineitem__link:focus .lineitem__offer {
             text-decoration: underline;
         }
     }
@@ -341,6 +342,7 @@
 .facia-container--layout-front .commercial--dfp {
     @include mq(desktop) {
         @include commercial-double-item;
+        
         .commercial__head {
             width: auto;
         }
