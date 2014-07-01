@@ -161,22 +161,20 @@
         }
     }
     @include mq(tablet) {
-        &.commercial--dfp-2 {
-            .lineitem {
-                width: 50%;
-                &:nth-child(n+3) {
-                    display: none;
-                }
+        &.commercial--dfp-2 .lineitem {
+            width: 50%;
+            
+            &:nth-child(n+3) {
+                display: none;
             }
         }
     }
     @include mq(rightCol) {
-        &.commercial--dfp-3 {
-            .lineitem {
-                width: 33%;
-                &:nth-child(n+4) {
-                    display: none;
-                }
+        &.commercial--dfp-3 .lineitem {
+            width: 33%;
+            
+            &:nth-child(n+4) {
+                display: none;
             }
         }
     }
