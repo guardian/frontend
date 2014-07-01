@@ -13,7 +13,7 @@ import conf.Configuration
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
   //NOTE - do NOT add body to this list
-  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,commentable,commentCloseDate,starRating"
+  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,commentable,commentCloseDate,starRating,productionOffice"
 
   val references = "pa-football-competition,pa-football-team,witness-assignment,esa-cricket-match"
 

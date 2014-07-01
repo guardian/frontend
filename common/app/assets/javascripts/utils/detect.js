@@ -209,6 +209,10 @@ define([
         return 'WebSocket' in window;
     }
 
+    function getOperatingSystem() {
+        return navigator.platform || 'unknown'
+    }
+
     return {
         hasCrossedBreakpoint: hasCrossedBreakpoint,
         getConnectionSpeed: getConnectionSpeed,
@@ -220,7 +224,8 @@ define([
         getBreakpoint: getBreakpoint,
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
-        hasWebSocket: hasWebSocket
+        hasWebSocket: hasWebSocket,
+        getOperatingSystem: getOperatingSystem
     };
 
 });

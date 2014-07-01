@@ -211,6 +211,11 @@ define([
 
             s.prop56    = 'Javascript';
 
+            // not all pages have a production office
+            if (config.page.productionOffice) {
+                s.prop64 = config.page.productionOffice;
+            }
+
             s.prop65    = config.page.headline || '';
 
             s.prop67    = 'nextgen-served';
@@ -227,6 +232,8 @@ define([
                 s.eVar50 = s.getQueryParam('INTCMP');
             }
             s.eVar50 = s.getValOnce(s.eVar50,'s_intcampaign', 0);
+
+            s.eVar58 = detect.getOperatingSystem();
 
             // the number of Guardian links inside the body
             if (config.page.inBodyInternalLinkCount) {
