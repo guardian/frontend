@@ -17,6 +17,7 @@ rbenv rehash
 
 export PATH=dev/gems/bin:$PATH
 
+bundle config
 bundle install --binstubs dev/gems/bin --path dev/gems
 npm install
 
