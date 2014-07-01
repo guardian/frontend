@@ -11,6 +11,8 @@ public class Article {
     private static final String COMPONENT_POPULAR_BELOW = ".article__popular div#tabs-popular-1 a";
     private static final String COMPONENT_POPULAR_RIGHT = ".right-most-popular-item__url";
     private static final String COMPONENT_RELATED_CONTENT = ".related .item__link";
+    private static final String TWEET = ".element-tweet .twitter-tweet";
+    private static final String COMMENTS = ".discussion-content";
 
     public Article(WebDriver driver) {
         this.driver = driver;
@@ -62,11 +64,11 @@ public class Article {
     }
 
     public boolean hasComments() {
-        return driver.findElement(By.cssSelector(".discussion-content")).isDisplayed();
+        return driver.findElement(By.cssSelector(COMMENTS)).isDisplayed();
     }
 
     public boolean hasTweets() {
-        return driver.findElement(By.cssSelector(".element-tweet")).isDisplayed();
+        return driver.findElement(By.cssSelector(TWEET)).isDisplayed();
     }
 }
 
