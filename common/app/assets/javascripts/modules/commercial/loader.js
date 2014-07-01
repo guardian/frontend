@@ -101,7 +101,7 @@ define([
                 return 'k=' + encodeURIComponent(keywordId.split('/').pop());
             }).join('&');
         } else {
-            return this.pageId.split('/').pop();
+            return 'k=' + this.pageId.split('/').pop();
         }
     };
 
