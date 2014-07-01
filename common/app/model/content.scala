@@ -13,6 +13,7 @@ import play.api.libs.json.JsValue
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
+import ophan.SurgingContentAgent
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -365,6 +366,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
     .orElse(mainPicture).orElse(videos.headOption)
 
+  def isSurging = SurgingContentAgent.isSurging(id)
+
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = {
     val bookReviewIsbns = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
@@ -374,7 +377,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       ("isLiveBlog", isLiveBlog),
       ("inBodyInternalLinkCount", linkCounts.internal),
       ("inBodyExternalLinkCount", linkCounts.external),
-      ("shouldHideAdverts", shouldHideAdverts)
+      ("shouldHideAdverts", shouldHideAdverts),
+      ("isSurging", isSurging)
     ) ++ bookReviewIsbns
   }
 
