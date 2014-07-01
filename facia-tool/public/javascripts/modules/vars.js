@@ -27,6 +27,8 @@ define([
 
         imageCdnDomain: 'guim.co.uk',
 
+        previewBase: 'http://preview.gutools.co.uk',
+
         viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
 
         filterTypes: {

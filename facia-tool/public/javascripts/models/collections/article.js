@@ -85,7 +85,7 @@ define([
             this.viewUrl = ko.computed(function() {
                 return this.fields.isLive() === 'true' ?
                     (this.meta.href() || this.props.webUrl()) :
-                    (this.props.webUrl() || '').replace(/^http:\/\/www\.theguardian\.com/, 'http://preview.gutools.co.uk');
+                    vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl());
             }, this);
 
             this.headlineInput  = this.overrider('headline');
