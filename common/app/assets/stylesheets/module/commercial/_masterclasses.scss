@@ -220,6 +220,19 @@
             line-height: 1.2;
         }
     }
+    @include mq(wide) {
+        .has-page-skin & {
+            .commercial__home-link {
+                width: auto;
+                @include rem((
+                    top: $gs-baseline
+                ));
+                right: 0;
+                left: auto;
+                bottom: auto;
+            }
+        }
+    }
     
     &.commercial--high {
         @include mq(desktop) {
