@@ -1,7 +1,7 @@
 define([
     'membership/paymentForm',
     'common/utils/ajax',
-    'common/$',
+    'common/utils/$',
     'stripe',
     'membership/stripeErrorMessages'
 ], function (PaymentForm, ajax, $, stripe, stripeErrorMessages) {
