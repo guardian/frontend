@@ -1,6 +1,29 @@
 /* ==========================================================================
    DFP bespoke component
    ========================================================================== */
+
+@mixin commercial-double-item {
+    &.commercial--dfp-2 {
+        .lineitem {
+            @include rem((
+                padding-bottom: $gs-baseline
+            ));
+        }
+        .lineitem__image {
+            width: 50%;
+            float: left;
+        }
+        .lineitem__offer {
+            float: left;
+            @include rem((
+                margin-left: $gs-gutter/2
+            ));
+        }
+        .lineitem__link:hover .lineitem__offer {
+            text-decoration: underline;
+        }
+    }
+}
    
 .commercial--dfp {
     .commercial__head {
@@ -134,6 +157,26 @@
                 @include rem((
                     padding-top: $gs-baseline
                 ));
+            }
+        }
+    }
+    @include mq(tablet) {
+        &.commercial--dfp-2 {
+            .lineitem {
+                width: 50%;
+                &:nth-child(n+3) {
+                    display: none;
+                }
+            }
+        }
+    }
+    @include mq(rightCol) {
+        &.commercial--dfp-3 {
+            .lineitem {
+                width: 33%;
+                &:nth-child(n+4) {
+                    display: none;
+                }
             }
         }
     }
@@ -292,10 +335,14 @@
             position: static;
         }
     }
+    @include mq(rightCol) {
+        @include commercial-double-item;
+    }
 }
 
 .facia-container--layout-front .commercial--dfp {
     @include mq(desktop) {
+        @include commercial-double-item;
         .commercial__head {
             width: auto;
         }
