@@ -143,7 +143,7 @@ var
       snapshot = {
         src: player.currentSrc(),
         currentTime: player.currentTime(),
-        type: player.currentType(),
+        techName: player.techName,
 
         // on slow connections, player.paused() may be true when starting and
         // stopping ads even though play has been requested. Hard-coding the
@@ -214,6 +214,10 @@ var
         }
       };
 
+    if (snapshot.techName !== player.techName) {
+      player.loadTech(snapshot.techName);
+    }
+
     if (snapshot.nativePoster) {
       tech.poster = snapshot.nativePoster;
     }
@@ -225,7 +229,7 @@ var
       return;
     }
 
-    player.src({src: snapshot.src, type: snapshot.type});
+    player.src(snapshot.src);
     // safari requires a call to `load` to pick up a changed source
     player.load();
 
@@ -465,7 +469,7 @@ var
       // events emitted by third party ad implementors
       'adsready',
       'adstart',  // startLinearAdMode()
-      'adend',    // endLinearAdMode()
+      'adend'     // endLinearAdMode()
     ]), fsmHandler);
     
     // implement 'contentupdate' event.
