@@ -32,7 +32,6 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/analytics/scrollDepth',
     'common/utils/cookies',
-    'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
     'common/modules/discussion/comment-count',
@@ -89,7 +88,6 @@ define([
     Omniture,
     ScrollDepth,
     Cookies,
-    OmnitureMedia,
     liveStats,
     ab,
     CommentCount,
@@ -233,19 +231,10 @@ define([
             liveStats.log(config);
         },
 
-        loadAnalytics: function (config, context) {
+        loadAnalytics: function (config) {
             var omniture = new Omniture();
 
-            omniture.go(config, function(){
-                // callback:
-
-                Array.prototype.forEach.call(context.getElementsByTagName('video'), function(video){
-                    if (!bonzo(video).hasClass('tracking-applied')) {
-                        bonzo(video).addClass('tracking-applied');
-                        new OmnitureMedia(video).init();
-                    }
-                });
-            });
+            omniture.go(config);
 
             if (config.switches.ophan && !config.page.isSSL) {
                 require('ophan/ng', function (ophan) {
