@@ -85,7 +85,7 @@ module.exports = function (grunt) {
                         },
                         {
                             name: 'bootstraps/commercial',
-                            exclude: ['core', 'bootstraps/app']
+                            exclude: ['core']
                         }
                     ]
                 }
@@ -852,8 +852,7 @@ module.exports = function (grunt) {
         if (target === 'js') {
             // compile just the project
             var project = filepath.split('/').shift();
-            grunt.task.run('requirejs:' + project);
-            grunt.task.run('asset_hash');
+            grunt.task.run(['requirejs:' + project, 'copy:javascript', 'concat', 'asset_hash']);
         }
     });
 

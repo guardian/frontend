@@ -119,18 +119,17 @@
     require([
         'core',
         'domReady!'
-    ], function (core, boostrap, commercial) {
+    ], function (core) {
 
-        require(['bootstraps/app'], function(bootstrap) {
-
-            require(['bootstraps/commercial'], function(commercial) {
-                commercial.init();
-            });
-
-            if (guardian.isModernBrowser) {
-                bootstrap.go();
-            }
+        require(['bootstraps/commercial'], function(commercial) {
+            commercial.init();
         });
+
+        if (guardian.isModernBrowser) {
+            require(['bootstraps/app'], function(bootstrap) {
+                bootstrap.go();
+            });
+        }
 
     });
 </script>
