@@ -53,22 +53,21 @@ define([
         this.mobileUserVariant  = conf.ab_commercialInArticleMobile || '';
         this.oastoken           = options.oastoken || '';
         this.adType             = options.adType || 'desktop';
-        this.userSegments       = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components         = {
-            bestbuy:           this.host + 'money/bestbuys.json?'           + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            bestbuyHigh:       this.host + 'money/bestbuys-high.json?'      + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            book:              this.host + 'books/book/' + this.pageId      + '.json',
-            books:             this.host + 'books/bestsellers.json?'        + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            booksMedium:       this.host + 'books/bestsellers-medium.json?' + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            booksHigh:         this.host + 'books/bestsellers-high.json?'   + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            jobs:              this.host + 'jobs.json?'                     + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            jobsHigh:          this.host + 'jobs-high.json?'                + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            masterclasses:     this.host + 'masterclasses.json?'            + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            masterclassesHigh: this.host + 'masterclasses-high.json?'       + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            soulmates:         this.host + 'soulmates/mixed.json?'          + this.userSegments + '&s=' + this.section,
-            soulmatesHigh:     this.host + 'soulmates/mixed-high.json?'     + this.userSegments + '&s=' + this.section,
-            travel:            this.host + 'travel/offers.json?'            + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            travelHigh:        this.host + 'travel/offers-high.json?'       + this.userSegments + '&s=' + this.section + '&' + this.getKeywords()
+            bestbuy:           this.host + 'money/bestbuys.json',
+            bestbuyHigh:       this.host + 'money/bestbuys-high.json',
+            book:              this.host + 'books/book/' + this.pageId + '.json',
+            books:             this.host + 'books/bestsellers.json?'        + this.getKeywords(),
+            booksMedium:       this.host + 'books/bestsellers-medium.json?' + this.getKeywords(),
+            booksHigh:         this.host + 'books/bestsellers-high.json?'   + this.getKeywords(),
+            jobs:              this.host + 'jobs.json?'                     + this.getKeywords(),
+            jobsHigh:          this.host + 'jobs-high.json?'                + this.getKeywords(),
+            masterclasses:     this.host + 'masterclasses.json?'            + this.getKeywords(),
+            masterclassesHigh: this.host + 'masterclasses-high.json?'       + this.getKeywords(),
+            soulmates:         this.host + 'soulmates/mixed.json',
+            soulmatesHigh:     this.host + 'soulmates/mixed-high.json',
+            travel:            this.host + 'travel/offers.json?'            + 's=' + this.section + '&' + this.getKeywords(),
+            travelHigh:        this.host + 'travel/offers-high.json?'       + 's=' + this.section + '&' + this.getKeywords()
         };
         this.postLoadEvents = {
             books: function(el) {
