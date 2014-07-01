@@ -3,14 +3,14 @@ package com.gu.fronts.integration.test.page.common
 import scala.collection.JavaConversions.asScalaBuffer
 import scala.reflect.BeanProperty
 
-import org.openqa.selenium.{WebDriver, WebElement}
+import org.openqa.selenium.{ WebDriver, WebElement }
 import org.openqa.selenium.By.cssSelector
 
-import com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.{TEST_ATTR_NAME, byTestAttribute}
+import com.gu.fronts.integration.test.fw.selenium.ByTestAttributeSelector.{ TEST_ATTR_NAME, byTestAttribute }
 import com.gu.fronts.integration.test.page.common.FaciaArticle.ARTICLE_CONTAINER_ID
-import com.gu.fronts.integration.test.page.common.FaciaGalleryItem.{GALLERY_ITEM_CONTAINER_ID, GALLERY_PICTURE_ID}
+import com.gu.fronts.integration.test.page.common.FaciaGalleryItem.{ GALLERY_ITEM_CONTAINER_ID, GALLERY_PICTURE_ID }
 import com.gu.fronts.integration.test.page.util.FrontsParentPage
-import com.gu.fronts.integration.test.page.util.PageElementHelper.{elementClickable, existsAndDisplayed, waitUntilVisible}
+import com.gu.fronts.integration.test.page.util.PageElementHelper.{ elementClickable, existsAndDisplayed, waitUntilVisible }
 
 object FaciaContainer {
 
@@ -58,10 +58,10 @@ class FaciaContainer(webDriver: WebDriver, containerTopElement: WebElement) exte
   }
 
   def firstGalleryItem(): FaciaGalleryItem = {
-    val containerElements = rootElement.findElements(cssSelector(byTestAttribute(GALLERY_ITEM_CONTAINER_ID)))
-    for (element <- containerElements) yield {
-      if (isPictureGallery(element)) {
-        return pageFactory.initPage(webDriver, classOf[FaciaGalleryItem], element)
+    val galleryElements = rootElement.findElements(cssSelector(byTestAttribute(GALLERY_ITEM_CONTAINER_ID)))
+    for (galleryElement <- galleryElements) yield {
+      if (isPictureGallery(galleryElement)) {
+        return pageFactory.initPage(webDriver, classOf[FaciaGalleryItem], galleryElement)
       }
     }
     throw new RuntimeException("Could not find any picture gallery elements on page: " + classOf[AllFaciaContainersPage].getSimpleName())
