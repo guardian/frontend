@@ -27,10 +27,12 @@ $commercial-cta-diameter: (
                 width: gs-span(3)
             ));
         }
-        .commercial__body {
-            @include rem((
-                padding-left: $gs-gutter
-            ));
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            .container__title {
+                margin-bottom: 0;
+            }
         }
     }
     &.commercial--high {
@@ -76,7 +78,6 @@ $commercial-cta-diameter: (
         @include mq(faciaLeftCol) {
             .commercial__head {
                 @include rem((
-                    padding-left: $gs-gutter,
                     width: gs-span(2) + $gs-gutter
                 ));
             }
@@ -98,11 +99,6 @@ $commercial-cta-diameter: (
                 &:nth-child(n+2) {
                     display: block;
                 }
-            }
-        }
-        @include mq(wide) {
-            .commercial__head {
-                padding: 0;
             }
         }
     }

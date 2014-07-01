@@ -77,7 +77,7 @@ function s_doPlugins(s) {
 //    s.eVar40=s.crossVisitParticipation(s.campaign,'s_ev40','30','5','>','',1);
 
     /* Days Since Last Visit */
-//    s.eVar10=s.getDaysSinceLastVisit('s_lv');
+    s.eVar10=s.getDaysSinceLastVisit('s_lv');
 
     /* New/Repeat Status */
 //    s.prop16=s.eVar16=s.getNewRepeat(365);

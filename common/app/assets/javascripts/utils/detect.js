@@ -8,7 +8,7 @@
 
 define([
     'common/modules/userPrefs',
-    'common/common'
+    'common/utils/common'
 ], function (
     userPrefs,
     common

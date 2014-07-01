@@ -1,17 +1,18 @@
 define([
-    'common/$',
+    'common/utils/$',
     'bean',
     'common/modules/identity/api',
     'membership/masker',
     'stripe',
     'common/utils/ajax',
-    'common/utils/config',
-    'membership/stripeErrorMessages'
-], function ($, bean, userUtil, masker, stripe, ajax, config, stripeErrorMessages) {
+    'membership/stripeErrorMessages',
+    'common/utils/config'
+], function ($, bean, userUtil, masker, stripe, ajax, stripeErrorMessages, config) {
     'use strict';
 
     function StripePaymentForm () {
         this.PUBLIC_STRIPE_KEY = config.page.stripePublicToken;
+
         return this;
     }
 

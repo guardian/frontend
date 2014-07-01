@@ -1,6 +1,6 @@
 define([
     // Common libraries
-    'common/$',
+    'common/utils/$',
     'common/utils/ajax',
     'common/utils/mediator',
     'bonzo',

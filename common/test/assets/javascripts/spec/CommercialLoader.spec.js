@@ -72,7 +72,7 @@
 
 
         it("Passes section and keyword to a travel component from the commercial server", function() {
-            server.respondWith("/commercial/travel/offers.json?seg=new&s=s&k=a&k=b&k=c", [200, {}, '{ "html": "<b>advert</b>" }']);
+            server.respondWith("/commercial/travel/offers.json?s=s&k=a&k=b&k=c", [200, {}, '{ "html": "<b>advert</b>" }']);
             runs(function() {
                 new CommercialComponent(options).init('travel', adSlot);
             });
@@ -85,29 +85,9 @@
             });
         });
 
-        it("Passes segment information to the commercial component", function() {
-
-            // two visits = a return visitor
-            var history = '{"value":[{"id":"/"},{"id":"/"}]}';
-
-            // a repeat user
-            localStorage.setItem('gu.history', history);
-
-            server.respondWith("/commercial/masterclasses.json?seg=repeat&s=s&k=a&k=b&k=c", [200, {}, '{ "html": "<b>advert</b>" }']);
-            runs(function() {
-                new CommercialComponent(options).init('masterclasses', adSlot);
-            });
-            waitsFor(function () {
-                return callback.called === true;
-            }, 'success never called', 500);
-            runs(function(){
-                expect(callback).toHaveBeenCalledOnce();
-            });
-        });
-
         // OAS can inject a url in to the advert code to track clicks on the component
         it("Injects an OAS tracker URL in to the response", function() {
-            server.respondWith("/commercial/jobs.json?seg=new&s=s&k=a&k=b&k=c", [200, {}, '{ "html": "<b>%OASToken% - %OASToken%</b>" }']);
+            server.respondWith("/commercial/jobs.json?k=a&k=b&k=c", [200, {}, '{ "html": "<b>%OASToken% - %OASToken%</b>" }']);
             runs(function() {
                 options.oastoken = '123';
                 new CommercialComponent(options).init('jobs', adSlot);

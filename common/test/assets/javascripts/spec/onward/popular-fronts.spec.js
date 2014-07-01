@@ -1,4 +1,4 @@
-define(['common/modules/onward/popular-fronts', 'bonzo', 'common/$', 'bean', 'helpers/fixtures', 'common/utils/ajax'], function(popular, bonzo, $, bean, fixtures, ajax) {
+define(['common/modules/onward/popular-fronts', 'bonzo', 'common/utils/$', 'bean', 'helpers/fixtures', 'common/utils/ajax'], function(popular, bonzo, $, bean, fixtures, ajax) {
 
     describe('Popular Fronts', function() {
 

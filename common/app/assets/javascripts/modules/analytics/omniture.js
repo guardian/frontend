@@ -1,6 +1,6 @@
 /*global s_i_guardian:true */
 define([
-    'common/common',
+    'common/utils/common',
     'common/utils/detect',
     'common/modules/experiments/ab',
     'common/utils/storage',
@@ -146,6 +146,11 @@ define([
             s.prop10    = config.page.tones || '';
 
             s.prop13    = config.page.series || '';
+
+            // see http://blogs.adobe.com/digitalmarketing/mobile/responsive-web-design-and-web-analytics/
+            s.eVar18    = detect.getBreakpoint();
+            s.eVar21    = document.documentElement.clientWidth + 'x' + document.documentElement.clientHeight;
+            s.eVar32    = detect.getOrientation();
 
             /* Set Time Parting Day and Hour Combination - 0 = GMT */
             var tpA = s.getTimeParting('n','+0');

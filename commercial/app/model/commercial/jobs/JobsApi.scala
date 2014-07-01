@@ -1,9 +1,10 @@
 package model.commercial.jobs
 
-import conf.{Switches, CommercialConfiguration}
+import conf.{CommercialConfiguration, Switches}
 import model.commercial.{OptString, XmlAdsApi}
 import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
 import org.joda.time.format.DateTimeFormat
+
 import scala.xml.Elem
 
 object JobsApi extends XmlAdsApi[Job] {
@@ -16,7 +17,7 @@ object JobsApi extends XmlAdsApi[Job] {
 
   // url changes daily so cannot be val
   protected def url = {
-    val feedDate = DateTimeFormat.forPattern("yyyy-MM-dd").print(System.currentTimeMillis)
+    val feedDate = DateTimeFormat.forPattern("yyyy-MM-dd").withZoneUTC().print(System.currentTimeMillis)
     val urlTemplate = CommercialConfiguration.getProperty("jobs.api.url.template")
     urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
   }

@@ -5,7 +5,7 @@
  *  forms.
  */
 define([
-    'common/$',
+    'common/utils/$',
     'bean',
     'bonzo',
     'common/utils/url'
@@ -58,7 +58,7 @@ define([
                     var tabs = self.accountProfileForms.querySelector(self.classes.tabs);
 
                     require(['bootstraps/membership'], function (MembershipTab) {
-                        self.membershipTab = new MembershipTab();
+                        self.membershipTab = new MembershipTab(context);
                         self.membershipTab.fetch($(self.classes.memberShipContainer));
                     });
 

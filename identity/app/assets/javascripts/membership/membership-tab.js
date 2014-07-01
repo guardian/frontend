@@ -1,7 +1,7 @@
 /*
 * If user is a member, display a membership tab on edit profile page
 */
-define(['common/$',
+define(['common/utils/$',
 'bean',
 'bonzo',
 'common/utils/ajax',
@@ -9,10 +9,9 @@ define(['common/$',
 'common/modules/component',
 'membership/paymentForm'], function ($, bean, bonzo, ajax, config, Component, PaymentForm) {
 
-    function Membership (context, mediator, options) {
+    function Membership (context, options) {
 
         this.context = context || document;
-        this.mediator = mediator;
 
         options = options || {};
 
