@@ -105,7 +105,7 @@ trait FrontPress extends Logging {
               FrontPressLiveFailure.increment()
               log.error("Error manually pressing live collection through update from tool", error)
             case Success(_) =>
-              FrontPressLiveFailure.increment()
+              FrontPressLiveSuccess.increment()
           }
           fut
         }
