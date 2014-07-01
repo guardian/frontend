@@ -16,7 +16,7 @@ define([
             technology:   ['9a9VRE', 'TL3gqK', 'MTLELH'],
             fashion:      ['TQV1_5', 'J0tykU', 'kLC9nW', 'MTLELH'],
             news:         ['eMdl6Y', 'mMYVrM', 'MTLELH'],
-            'default':    ['c7Zrhu', 'Y1C40a', 'LtKGsC']
+            'default':    ['c7Zrhu', 'Y1C40a', 'LtKGsC', 'MTLELH']
         },
         segments = [],
         load = once(function() {

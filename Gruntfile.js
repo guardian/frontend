@@ -58,7 +58,8 @@ module.exports = function (grunt) {
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
-                preserveLicenseComments: false
+                preserveLicenseComments: false,
+                fileExclusionRegExp: /^bower_components$/
             },
             common: {
                 options: {
@@ -553,6 +554,9 @@ module.exports = function (grunt) {
             },
             facia: {
                 configFile: testConfDir + 'facia.js'
+            },
+            membership: {
+                configFile: testConfDir + 'membership.js'
             }
         },
 
@@ -568,7 +572,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'common/app/assets/javascripts/',
-                    src: ['**/*.js', '!components/**', '!utils/atob.js']
+                    src: ['**/*.js', '!components/**', '!bower_components/**', '!utils/atob.js']
                 }]
             },
             facia: {
@@ -583,6 +587,13 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'facia-tool/public/javascripts/',
                     src: ['**/*.js', '!components/**', '!omniture.js']
+                }]
+            },
+            membership: {
+                files: [{
+                    expand: true,
+                    cwd: 'identity/app/assets/javascripts/',
+                    src: ['**/*.js']
                 }]
             }
         },
