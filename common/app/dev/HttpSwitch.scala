@@ -21,9 +21,9 @@ case class HttpSwitch(switch :conf.Switch) extends EnvConfig {
 
   def isSwitchedOn(implicit request: RequestHeader): Boolean =
     if(isNonProd)
-      if(onSwitches.exists(_.split(",").contains(switch.name))) true
-      else if(offSwitches.exists(_.split(",").contains(switch.name))) false
-      else switch.isSwitchedOn
+      onSwitches.map(_.split(",").contains(switch.name))
+        .orElse {offSwitches.map( ! _.split(",").contains(switch.name))}
+        .getOrElse(switch.isSwitchedOn)
     else switch.isSwitchedOn
 
   def isSwitchedOff(implicit request: RequestHeader): Boolean = !isSwitchedOn
@@ -37,12 +37,8 @@ trait HttpSwitchParameters extends EnvConfig{
     if(isNonProd) {
       val on = onSwitches.map{switchesOn + "=" + _}
       val off = offSwitches.map{switchesOff + "=" + _}
-      if(on.isDefined || off.isDefined){
-        val separator = if(url.contains("?")) "&" else "?"
-        url + separator + List(on, off).filter(_.isDefined).map{_.get}.mkString("&")
-      }
-      else url
-    }
+      val separator = if(url.contains("?")) "&" else "?"
+      url + List(on, off).flatten.mkString(separator, "&", "")}
     else url
 
   def onSwitches(implicit request: RequestHeader) = queryParameter(switchesOn)
