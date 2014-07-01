@@ -14,7 +14,7 @@
 
         @veryBigItems.zipWithIndex.map{ case (trail, index) =>
             @if(items.nonEmpty) {
-                <div class="facia-slice-wrapper" data-test-id="facia-container-element">
+                <div class="facia-slice-wrapper">
                     @fragments.items.fromage(trail, index + hugeItemsCount)
                 </div>
             }
