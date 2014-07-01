@@ -37,13 +37,26 @@ trait CommentsController extends DiscussionController {
 
   def commentsJson(key: DiscussionKey, orderBy: String = "newest") = comments(key, orderBy)
   def comments(key: DiscussionKey, orderBy: String = "newest", isTopComments: Boolean = false) = Action.async { implicit request =>
-    getComments(key, request.getQueryString("page").getOrElse("1"), orderBy, isTopComments)
+    getComments(
+      key,
+      request.getQueryString("page").getOrElse("1"),
+      orderBy,
+      isTopComments,
+      forceAllResponses = false,
+      request.getQueryString("index")
+    )
   }
 
-  def getComments(key: DiscussionKey, page: String = "1", orderBy: String = "newest", isTopComments: Boolean = false, forceAllResponses: Boolean = false)
-                 (implicit request: RequestHeader): Future[SimpleResult] = {
+  def getComments(
+    key: DiscussionKey,
+    page: String = "1",
+    orderBy: String = "newest",
+    isTopComments: Boolean = false,
+    forceAllResponses: Boolean = false,
+    sentimentId: Option[String] = None
+  ) (implicit request: RequestHeader): Future[SimpleResult] = {
     val allResponses = forceAllResponses || (request getBooleanParameter  "allResponses" getOrElse false)
-    val commentPage = if (isTopComments) discussionApi.topCommentsFor(key) else discussionApi.commentsFor(key, page, orderBy, allResponses)
+    val commentPage = if (isTopComments) discussionApi.topCommentsFor(key) else discussionApi.commentsFor(key, page, orderBy, allResponses, sentimentId)
     commentPage map {
       page =>
         Cached(60) {

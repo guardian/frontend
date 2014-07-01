@@ -1,4 +1,4 @@
-define(['fixtures/config', 'analytics/omniture', 'common/utils/common'], function(testConfigData, Omniture, common) {
+define(['analytics/omniture', 'common/utils/common'], function(Omniture, common) {
 
     describe("Omniture", function() {
 
