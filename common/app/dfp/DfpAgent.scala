@@ -6,7 +6,6 @@ import akka.agent.Agent
 import common._
 import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey}
 import model.{Config, Tag}
-import play.api.libs.json.Json._
 import play.api.{Application, GlobalSettings}
 import services.S3
 
@@ -30,11 +29,9 @@ trait DfpAgent {
     containerSponsoredTags(config, p).isDefined
   }
 
-  def isSponsored(tags: Seq[Tag]): Boolean = tags.exists(keyword => isSponsored(keyword.id))
   def isSponsored(tagId: String): Boolean = sponsoredTags exists (_.hasTag(tagId))
   def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
 
-  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = tags.exists(keyword => isAdvertisementFeature(keyword.id))
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureTags exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
@@ -44,9 +41,7 @@ trait DfpAgent {
   }
 
   def sponsorshipTag(config: Config): Option[String] = {
-    containerSponsoredTags(config, isSponsored) orElse {
-      containerSponsoredTags(config, isAdvertisementFeature)
-    }
+    containerSponsoredTags(config, isSponsored) orElse containerSponsoredTags(config, isAdvertisementFeature)
   }
 
   def getSponsor(tags: Seq[Tag]): Option[String] = {
