@@ -830,4 +830,17 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.registerTask('pr', 'Open github pull request', function(){
+        var done = this.async();
+        var open = require('open'),
+            exec = require('child_process').exec;
+        exec('git rev-parse --abbrev-ref HEAD', function(error, stdout){
+            var url = 'https://github.com/guardian/frontend/compare/' + stdout;
+            grunt.log.writeln('Opening:', url);
+            open(url);
+            done();
+        });
+
+    });
+
 };
