@@ -5,6 +5,7 @@ import com.gu.test.helpers.PageHelper;
 
 import com.gu.test.shared.NavigationBar;
 import org.junit.*;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 
 import static com.gu.test.WebDriverFactory.createWebDriver;
@@ -23,6 +24,8 @@ public class NavigationBarTest {
         pageHelper = new PageHelper(driver);
         navigationBar = new NavigationBar(driver);
         pageHelper.goToFronts();
+        driver.manage().addCookie(new Cookie("GU_EDITION", "UK"));
+        driver.navigate().refresh();
     }
 
     @Test

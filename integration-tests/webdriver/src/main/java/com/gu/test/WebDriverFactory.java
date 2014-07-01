@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -29,8 +28,6 @@ public class WebDriverFactory {
         // Create the connection to Sauce Labs to run the tests
         WebDriver driver = new RemoteWebDriver(new URL(sauceLabsUrl), capabilities);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().addCookie(new Cookie("GU_VIEW", "responsive"));
-        driver.manage().addCookie(new Cookie("GU_EDITION", "UK"));
         return driver;
     }
 }
