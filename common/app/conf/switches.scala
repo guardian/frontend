@@ -298,11 +298,6 @@ object Switches extends Collections {
 
   // A/B Tests
 
-  val ABLargerMobileMpu = Switch("A/B Tests", "ab-larger-mobile-mpu",
-    "If this switch is turned on, run the LargerMobileMpu A/B test",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 1)
-  )
-
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -463,7 +458,6 @@ object Switches extends Collections {
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     ResponsiveNavSwitch,
-    ABLargerMobileMpu,
     SmartBannerSwitch,
     ParameterlessImagesSwitch,
     SeoOptimisedContentImageSwitch,

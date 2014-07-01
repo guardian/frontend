@@ -16,11 +16,7 @@
                 </div>
             </div>
             <div class="gs-container l-footer__navigation-wrapper u-cf">
-                @if(ResponsiveNavSwitch.isSwitchedOn){
-                    @fragments.nav.megaNav(page)
-                } else {
-                    @fragments.sections(page, true)
-                }
+                @fragments.sections(page, true)
             </div>
         </div>
     </div>
