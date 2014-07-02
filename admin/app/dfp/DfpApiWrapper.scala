@@ -2,7 +2,7 @@ package dfp
 
 import com.google.api.ads.dfp.axis.factory.DfpServices
 import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
-import com.google.api.ads.dfp.axis.v201403.{LineItem => DfpApiLineItem, _}
+import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 
@@ -65,7 +65,7 @@ object DfpApiWrapper extends Logging {
     }
   }
 
-  def fetchLineItems(session: DfpSession, statementBuilder: StatementBuilder): Seq[DfpApiLineItem] = {
+  def fetchLineItems(session: DfpSession, statementBuilder: StatementBuilder): Seq[LineItem] = {
     fetch(statementBuilder) { statement =>
       val service = lineItemService(session)
       val page = service.getLineItemsByStatement(statementBuilder.toStatement)
