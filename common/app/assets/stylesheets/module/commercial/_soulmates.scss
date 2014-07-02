@@ -2,7 +2,36 @@
    Soulmates component
    ========================================================================== */
 
+@mixin c-soulmates-branding {
+   .commercial__explainer {
+       position: static;
+       color: #ffffff;
+       @include rem((
+           width: gs-span(2)-$gs-gutter,
+           padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5,
+           margin-top: $gs-baseline
+       ));
+   }
+   .i-soulmates-logo-2014 {
+       .svg & {
+           @include rem((
+               width: 100px,
+               height: 21px
+           ));
+           background-size: contain;
+       }
+   }
+   .commercial__buy-now-button {
+       display: inline-block;
+       @include rem((
+           padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5
+       ));
+       position: relative;
+   }
+}
+
 $c-soulmates-high: $c-neutral1;
+
 .commercial--soulmates {
     .commercial__head {
         height: auto;
@@ -220,6 +249,15 @@ $c-soulmates-high: $c-neutral1;
                 margin-left: $gs-gutter
             ));
         }
+        .i-soulmates-logo-2014 {
+            
+            .svg & {
+                @include rem((
+                    width: 136px,
+                    height: 28px
+                ));
+            }
+        }
     }
 }
 
@@ -267,32 +305,7 @@ $c-soulmates-high: $c-neutral1;
                 background-size: contain;
             }
         }
-        .commercial__explainer {
-            position: static;
-            color: #ffffff;
-            @include rem((
-                width: gs-span(2)-$gs-gutter,
-                padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5,
-                margin-top: $gs-baseline
-            ));
-        }
-        .i-soulmates-logo-2014 {
-            
-            .svg & {
-                @include rem((
-                    width: 100px,
-                    height: 21px
-                ));
-                background-size: contain;
-            }
-        }
-        .commercial__buy-now-button {
-            display: inline-block;
-            @include rem((
-                padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5
-            ));
-            position: relative;
-        }
+        @include c-soulmates-branding;
         .commercial__body {
             @include rem((
                 padding: $gs-baseline 0
@@ -307,15 +320,6 @@ $c-soulmates-high: $c-neutral1;
             
             .svg & {
                 background-size: cover;
-            }
-        }
-        .i-soulmates-logo-2014 {
-            
-            .svg & {
-                @include rem((
-                    width: 136px,
-                    height: 28px
-                ));
             }
         }
         .commercial__explainer {
@@ -418,31 +422,7 @@ $c-soulmates-high: $c-neutral1;
                 background-size: contain;                
             }
         }
-        .commercial__explainer {
-            position: static;
-            color: #ffffff;
-            @include rem((
-                width: gs-span(2)-$gs-gutter,
-                padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5,
-                margin-top: $gs-baseline
-            ));
-        }
-        .i-soulmates-logo-2014 {
-            .svg & {
-                @include rem((
-                    width: 100px,
-                    height: 21px
-                ));
-                background-size: contain;
-            }
-        }
-        .commercial__buy-now-button {
-            display: inline-block;
-            @include rem((
-                padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5
-            ));
-            position: relative;
-        }
+        @include c-soulmates-branding;
     }
     @include mq(faciaLeftCol) {
         .commercial__head {
@@ -466,14 +446,6 @@ $c-soulmates-high: $c-neutral1;
                 width: gs-span(3) !important,
                 margin-right: $gs-gutter
             ));
-        }
-        .i-soulmates-logo-2014 {
-            .svg & {            
-                @include rem((
-                    width: 136px,
-                    height: 28px
-                ));
-            }
         }
         .container__title__wrapper {
             @include rem((
