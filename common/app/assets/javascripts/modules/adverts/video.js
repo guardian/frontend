@@ -4,7 +4,7 @@ define([
     'common/utils/to-array',
     'bean',
     'common/utils/ajax',
-    'common/modules/adverts/query-string',
+    'common/utils/url',
     'common/modules/adverts/dfp'
 ], function(
     $,
@@ -12,7 +12,7 @@ define([
     toArray,
     bean,
     ajax,
-    queryString,
+    urlUtils,
     dfp
     ) {
 
@@ -206,7 +206,7 @@ define([
 
         var adUnit = dfp.buildAdUnit({ page: config });
 
-        var custParams = queryString.generateQueryString(dfp.buildPageTargeting({ page: config }));
+        var custParams = urlUtils.constructQuery(dfp.buildPageTargeting({ page: config }));
         var encodedCustParams = encodeURIComponent(custParams);
 
         var timestamp = new Date().getTime();

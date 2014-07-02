@@ -1,5 +1,5 @@
 import common.{AkkaAsync, Jobs, CloudWatchApplicationMetrics}
-import conf.{Gzipper, Management}
+import conf.{Configuration, Gzipper, Management}
 import dfp.DfpDataCacheJob
 import jobs.RefreshFrontsJob
 import model.AdminLifecycle
@@ -9,13 +9,15 @@ import scala.concurrent.Future
 object Global extends WithFilters(Gzipper) with AdminLifecycle with CloudWatchApplicationMetrics with Results {
   override lazy val applicationName = Management.applicationName
 
+  val adminPressJobPushRateInMinutes: Int = Configuration.faciatool.adminPressJobPushRateInMinutes
+
   override def onError(request: RequestHeader, ex: Throwable) = Future.successful(InternalServerError(
     views.html.errorPage(ex)
   ))
 
   def scheduleJobs() {
     //Every 3 minutes
-    Jobs.schedule("FrontPressJob", "0 0/3 * 1/1 * ? *") {
+    Jobs.schedule("FrontPressJob", s"0 0/$adminPressJobPushRateInMinutes * 1/1 * ? *") {
       RefreshFrontsJob.run()
     }
 

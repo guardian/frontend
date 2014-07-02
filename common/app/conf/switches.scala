@@ -101,6 +101,11 @@ object Switches extends Collections {
 
   // Advertising Switches
 
+  val CommercialSwitch = Switch("Advertising", "commercial",
+    "Kill switch for all commercial JS.",
+    safeState = On, sellByDate = never
+  )
+
   val StandardAdvertsSwitch = Switch("Advertising", "standard-adverts",
     "Display 'standard' adverts, e.g. top banner ads, inline ads, MPUs, etc.",
     safeState = On, sellByDate = never
@@ -161,6 +166,10 @@ object Switches extends Collections {
 
   val MediaMathSwitch = Switch("Commercial Tags", "media-math",
     "Enable Media Math audience segment tracking",
+    safeState = Off, sellByDate = never)
+
+  val RemarketingSwitch = Switch("Commercial Tags", "remarketing",
+    "Enable Remarketing tracking",
     safeState = Off, sellByDate = never)
 
   // Commercial Feeds
@@ -362,6 +371,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaToolDraftContent = Switch("Front Press Switches", "facia-tool-draft-content",
+    "If this switch is on facia tool will offer draft content to editors, and press draft fronts from draft content ",
+    safeState = Off, sellByDate = never
+  )
+
   val FaciaToolCachedContentApiSwitch = Switch("Front Press Switches", "facia-tool-cached-capi-requests",
     "If this switch is on facia tool will cache responses from the content API and use them on failure",
     safeState = On, sellByDate = never
@@ -402,6 +416,7 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
+    CommercialSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
@@ -434,6 +449,7 @@ object Switches extends Collections {
     ImrWorldwideSwitch,
     ForeseeSwitch,
     MediaMathSwitch,
+    RemarketingSwitch,
     DiagnosticsLogging,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
@@ -463,7 +479,8 @@ object Switches extends Collections {
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
-    FaciaToolDraftPressSwitch
+    FaciaToolDraftPressSwitch,
+    FaciaToolDraftContent
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

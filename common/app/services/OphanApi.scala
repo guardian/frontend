@@ -6,7 +6,6 @@ import conf.Configuration._
 import common.{ExecutionContexts, Logging}
 import play.api.libs.ws.WS
 
-
 object OphanApi extends ExecutionContexts with Logging {
 
   private def getBody(path: String, timeout: Int = ophanApi.timeout): Future[JsValue] = {
@@ -54,5 +53,7 @@ object OphanApi extends ExecutionContexts with Logging {
       .mkString("&")
     getBody(s"ads/render-time?$query", 5000)
   }
+
+  def getSurgingContent() = getBody("surging?")
 
 }

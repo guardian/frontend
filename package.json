@@ -8,7 +8,6 @@
         "grunt-asset-hash": "^0.1.2",
         "grunt-asset-monitor": "~0.1.5",
         "grunt-contrib-clean": "~0.5",
-        "grunt-contrib-concat": "^0.4.0",
         "grunt-contrib-copy": "~0.5.0",
         "grunt-contrib-imagemin": "^0.7.0",
         "grunt-contrib-jshint": "^0.10.0",

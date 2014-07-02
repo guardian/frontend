@@ -56,10 +56,10 @@ $commercial-cta-diameter: (
                 ));
             }
             .commercial__relevance-high {
-                width: 66%;
+                width: percentage(2/3);
             }
             .commercial__relevance-low {
-                width: 33%;
+                width: percentage(1/3);
             }
             .lineitem {
                 width: 100%;
@@ -105,6 +105,10 @@ $commercial-cta-diameter: (
 }
 
 .facia-container--layout-article .commercial {
+    .facia-container__inner {
+        margin-bottom: 0;
+    }
+    
     &.commercial--high {
         @include mq($from: tablet, $to: leftCol) {
             .lineitem {
@@ -131,10 +135,6 @@ $commercial-cta-diameter: (
             }
         }
     }    
-}
-
-.facia-container--layout-article .commercial .facia-container__inner {
-    margin-bottom: 0;
 }
 
 .commercial {
@@ -352,6 +352,7 @@ $commercial-cta-diameter: (
         margin-left: 90px
     ));
 }
+
 .commercial--high {
     .commercial__relevance-title {
         @include fs-bodyHeading(3);
@@ -397,7 +398,7 @@ $commercial-cta-diameter: (
             ));
         }
         .commercial__relevance-high {
-            width: 66%;
+            width: percentage(2/3);
             float: left;
             
             .lineitem__link {
@@ -405,7 +406,7 @@ $commercial-cta-diameter: (
             }
         }
         .commercial__relevance-low {
-            width: 33%;
+            width: percentage(1/3);
             float: right;
             
             .lineitem:first-child .lineitem__img {
@@ -424,10 +425,6 @@ $commercial-cta-diameter: (
         }           
     }
 }
-
-/* ==========================================================================
-   300x50 varient
-   ========================================================================== */
 
 @include mq($to: tablet) {
     .commercial__head {

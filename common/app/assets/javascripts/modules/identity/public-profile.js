@@ -62,9 +62,9 @@ function(
 
     function setupActivityStreamSearch(activityStream) {
         bean.on(context(), 'submit', '.js-activity-stream-search', function(e) {
-            e.preventDefault();
             var q = e.currentTarget.elements.q.value;
-            selectTab($('[data-stream-type="discussions"]'));
+            e.preventDefault();
+            selectTab($('a[data-stream-type="discussions"]'));
             activityStream.change({
                 streamType: q !== '' ? 'search/'+ encodeURIComponent(q) : 'comments'
             });

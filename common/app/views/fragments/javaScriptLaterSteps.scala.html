@@ -10,7 +10,6 @@
     var curl = {
         baseUrl: '@{Configuration.assets.path}javascripts',
         apiName: 'require',
-        overwriteApi: true,
         paths: {
             @curlPaths.map { case (module, path) =>
                 '@module': '@Static(path)',
@@ -22,9 +21,10 @@
             foresee: '@Static("javascripts/vendor/foresee/foresee-trigger.js")',
             googletag: '@{Configuration.javascript.config("googletagJsUrl")}',
             raven: '@Static("javascripts/components/raven-js/dist/raven.js")',
-            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")',
             core: '@Static("javascripts/core.js")',
-            'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")'
+            'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")',
+            'bootstraps/commercial' : '@Static("javascripts/bootstraps/commercial.js")',
+            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")'
         }
     };
 
@@ -113,6 +113,25 @@
 
     })(guardian.isModernBrowser);
 
-</script>
+    @* inline curl *@
+    @Html(Static.js.curl)
 
-<script async="async" src="@Static("javascripts/bootstraps/go.js")"></script>
+    require([
+        'core',
+        'domReady!'
+    ], function (core) {
+
+        if (guardian.config.switches.commercial) {
+            require(['bootstraps/commercial'], function(commercial) {
+                commercial.init();
+            });
+        }
+
+        if (guardian.isModernBrowser) {
+            require(['bootstraps/app'], function(bootstrap) {
+                bootstrap.go();
+            });
+        }
+
+    });
+</script>

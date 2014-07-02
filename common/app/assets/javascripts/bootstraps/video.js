@@ -4,19 +4,25 @@ define([
     'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',
-    'common/modules/adverts/query-string',
+    'common/utils/deferToAnalytics',
+    'common/utils/url',
     'common/modules/adverts/dfp',
+    'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
-    'bean'
+    'bean',
+    'bonzo'
 ], function(
     $,
     ajax,
     detect,
     config,
-    queryString,
+    deferToAnalytics,
+    urlUtils,
     dfp,
+    OmnitureMedia,
     _throttle,
-    bean
+    bean,
+    bonzo
 ) {
 
     var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
@@ -54,6 +60,13 @@ define([
                 bean.one(playerEl, event, function(event) {
                     modules.ophanRecord(playerEl, event);
                 });
+            });
+        },
+
+        initOmnitureTracking: function(playerEl) {
+            deferToAnalytics(function(){
+                new OmnitureMedia(playerEl).init();
+                bonzo(playerEl).addClass('tracking-applied');
             });
         },
 
@@ -141,8 +154,8 @@ define([
         },
 
         getVastUrl: function() {
-            var adUnit = dfp.buildAdUnit({ page: config.page }),
-                custParams = queryString.generateQueryString(dfp.buildPageTargeting({ page: config.page })),
+            var adUnit = config.page.adUnit,
+                custParams = urlUtils.constructQuery(dfp.buildPageTargeting({ page: config.page })),
                 encodedCustParams = encodeURIComponent(custParams),
                 timestamp = new Date().getTime(),
                 url = 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
@@ -157,27 +170,21 @@ define([
                       ' seconds <span class="vjs-ads-overlay__label">Advertisement</span></div>',
                 events =  {
                     destroy: function() {
-                        if(this.hasAdCountdown) {
-                            $('.js-ads-overlay', this.el()).remove();
-                            this.off('timeupdate', events.update);
-                            this.off('ended', events.destroy);
-                        }
+                        $('.js-ads-overlay', this.el()).remove();
+                        this.off('timeupdate', events.update);
                     },
                     update: function() {
                         $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
                     },
                     init: function() {
-                        this.on('timeupdate', events.update.bind(this));
-                        this.one('ended', events.destroy.bind(this));
-                        this.one('adtimeout', events.destroy.bind(this));
                         $(this.el()).append($.create(tmp));
-                        this.hasAdCountdown = true;
+                        this.on('timeupdate', events.update.bind(this));
+                        this.one('video:preroll:end', events.destroy.bind(player));
+                        this.one('video:content:play', events.destroy.bind(player));
+                        this.one('adtimeout', events.destroy.bind(player));
                     }
                 };
-            this.hasAdCountdown = false;
-            this.one('readyforpreroll', function() {
-                player.one('firstplay', events.init.bind(player));
-            });
+            this.one('video:preroll:play', events.init.bind(player));
         },
 
         initPlayer: function() {
@@ -195,7 +202,7 @@ define([
 
                     vjs.ready(function () {
                         var player = this;
-
+                        modules.initOmnitureTracking(el);
                         modules.initOphanTracking(el);
                         modules.bindPrerollEvents(player, el);
 
