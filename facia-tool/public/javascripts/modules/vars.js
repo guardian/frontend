@@ -21,7 +21,7 @@ define([
             {name: 'comment/comment-and-debate'}
         ],
 
-        detectPressFailureMs: 10000,
+        detectPressFailureMs: 15000,
 
         maxFronts: 200,
 
