@@ -172,19 +172,19 @@ define([
                     destroy: function() {
                         $('.js-ads-overlay', this.el()).remove();
                         this.off('timeupdate', events.update);
-                        this.off('ended', events.destroy);
                     },
                     update: function() {
                         $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
                     },
                     init: function() {
-                        this.on('timeupdate', events.update.bind(this));
                         $(this.el()).append($.create(tmp));
+                        this.on('timeupdate', events.update.bind(this));
+                        this.one('video:preroll:end', events.destroy.bind(player));
+                        this.one('video:content:play', events.destroy.bind(player));
+                        this.one('adtimeout', events.destroy.bind(player));
                     }
                 };
-            this.one('adstart', events.init.bind(player));
-            this.one('adend', events.destroy.bind(player));
-            this.one('adtimeout', events.destroy.bind(player));
+            this.one('video:preroll:play', events.init.bind(player));
         },
 
         initPlayer: function() {
