@@ -153,7 +153,7 @@ object RemoveOuterParaHtml {
 object JavaScriptValue {
   def apply(value: Any) = value match {
     case b: Boolean => b
-    case s => s""""${s.toString.replace(""""""", """\"""")}""""
+    case s => s""""${s.toString.trim.replace(""""""", """\"""")}""""
   }
 }
 
