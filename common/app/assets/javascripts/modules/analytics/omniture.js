@@ -219,6 +219,8 @@ define([
                 s.prop64 = config.page.productionOffice;
             }
 
+            s.prop63    = detect.getPageSpeed();
+
             s.prop65    = config.page.headline || '';
 
             s.prop67    = 'nextgen-served';
