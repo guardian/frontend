@@ -10,7 +10,7 @@ define([
     'common/modules/analytics/commercial/tags/common/audience-science',
     'common/modules/analytics/commercial/tags/common/audience-science-gateway',
     'common/modules/analytics/commercial/tags/common/criteo',
-    'common/modules/adverts/query-string',
+    'common/modules/adverts/keywords',
     'common/modules/adverts/userAdTargeting',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
@@ -30,7 +30,7 @@ define([
     audienceScience,
     audienceScienceGateway,
     criteo,
-    queryString,
+    keywords,
     userAdTargeting,
     flatten,
     uniq,
@@ -240,7 +240,7 @@ define([
         buildPageTargeting = function (config) {
 
             function encodeTargetValue(value) {
-                return value ? queryString.formatKeyword(value).replace(/&/g, 'and').replace(/'/g, '') : '';
+                return value ? keywords.format(value).replace(/&/g, 'and').replace(/'/g, '') : '';
             }
 
             var conf        = config.page,
@@ -263,9 +263,6 @@ define([
                 at      : cookies.get('adtest') || '',
                 gdncrm  : userAdTargeting.getUserSegments()
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
-        },
-        buildAdUnit = function (config) {
-            return '/' + config.page.dfpAccountId + '/' + config.page.dfpAdUnitRoot + '/' + config.page.adUnitSuffix;
         },
         createAdSlot = function(name, types, keywords) {
             var definition = adSlotDefinitions[name],
@@ -321,7 +318,7 @@ define([
          */
         defineSlots = function() {
 
-            var adUnit = buildAdUnit(config);
+            var adUnit = config.page.adUnit;
 
             adSlots.forEach(function($adSlot) {
 
@@ -419,8 +416,6 @@ define([
         },
 
         buildPageTargeting: buildPageTargeting,
-
-        buildAdUnit : buildAdUnit,
 
         createAdSlot: createAdSlot,
 
