@@ -2,7 +2,7 @@ define([
     'common/utils/config'
 ], function(
     config
-    ) {
+) {
 
     var remarketingUrl = '//www.googleadservices.com/pagead/conversion.js';
 
