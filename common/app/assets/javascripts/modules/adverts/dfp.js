@@ -243,11 +243,11 @@ define([
                 return value ? keywords.format(value).replace(/&/g, 'and').replace(/'/g, '') : '';
             }
 
-            var conf        = config.page,
-                section     = encodeTargetValue(conf.section),
-                series      = encodeTargetValue(conf.series),
-                contentType = encodeTargetValue(conf.contentType),
-                edition     = encodeTargetValue(conf.edition);
+            var page        = config.page,
+                section     = encodeTargetValue(page.section),
+                series      = encodeTargetValue(page.series),
+                contentType = encodeTargetValue(page.contentType),
+                edition     = encodeTargetValue(page.edition);
 
             return defaults({
                 url     : window.location.pathname,
@@ -257,7 +257,8 @@ define([
                 ct      : contentType,
                 pt      : contentType,
                 p       : 'ng',
-                k       : parseKeywords(conf.keywordIds || conf.pageId),
+                k       : parseKeywords(page.keywordIds || page.pageId),
+                su      : page.isSurging ? '1' : '0',
                 bp      : detect.getBreakpoint(),
                 a       : audienceScience.getSegments(),
                 at      : cookies.get('adtest') || '',
