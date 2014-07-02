@@ -101,6 +101,11 @@ object Switches extends Collections {
 
   // Advertising Switches
 
+  val CommercialSwitch = Switch("Advertising", "commercial",
+    "Kill switch for all commercial JS.",
+    safeState = On, sellByDate = never
+  )
+
   val StandardAdvertsSwitch = Switch("Advertising", "standard-adverts",
     "Display 'standard' adverts, e.g. top banner ads, inline ads, MPUs, etc.",
     safeState = On, sellByDate = never
@@ -411,6 +416,7 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
+    CommercialSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
