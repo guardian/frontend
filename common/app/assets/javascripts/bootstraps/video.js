@@ -5,7 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'common/utils/deferToAnalytics',
-    'common/modules/adverts/query-string',
+    'common/utils/url',
     'common/modules/adverts/dfp',
     'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
@@ -17,7 +17,7 @@ define([
     detect,
     config,
     deferToAnalytics,
-    queryString,
+    urlUtils,
     dfp,
     OmnitureMedia,
     _throttle,
@@ -154,8 +154,8 @@ define([
         },
 
         getVastUrl: function() {
-            var adUnit = dfp.buildAdUnit({ page: config.page }),
-                custParams = queryString.generateQueryString(dfp.buildPageTargeting({ page: config.page })),
+            var adUnit = config.page.adUnit,
+                custParams = urlUtils.generateQueryString(dfp.buildPageTargeting({ page: config.page })),
                 encodedCustParams = encodeURIComponent(custParams),
                 timestamp = new Date().getTime(),
                 url = 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
