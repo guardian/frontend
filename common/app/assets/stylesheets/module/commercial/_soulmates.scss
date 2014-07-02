@@ -2,6 +2,50 @@
    Soulmates component
    ========================================================================== */
 
+@mixin c-soulmates-branding-small {
+    .container__title__wrapper {
+        height: auto;
+        @include rem((
+            width: gs-span(2),
+            padding: $gs-baseline*2 0 $gs-baseline/2,
+            margin: 0 0 $gs-baseline*2.5
+        ));
+        .svg & {
+            background-size: cover;            
+        }
+    }
+    .commercial__explainer {
+        color: $c-soulmates-high;
+        position: absolute;
+        bottom: 0;
+        width: auto;
+        padding: 0;
+        @include fs-header(1);
+        @include rem((
+            margin: $gs-baseline 0 0
+        ));
+    }
+    .commercial__buy-now-button {
+        display: none;
+        border: 0;
+        color: #ffffff;
+        @include fs-headline(1, $size-only: true);
+
+        .search__submit__cta {
+            background-color: #68b8cb;
+        }
+    }
+    .i-soulmates-logo-2014 {
+        @include rem((
+            width: 86px,
+            height: 18px
+        ));
+        .svg & {
+            background-size: contain;
+        }
+    }    
+}
+
 @mixin c-soulmates-branding {
    .commercial__explainer {
        position: static;
@@ -42,33 +86,15 @@ $c-soulmates-high: $c-neutral1;
         margin-bottom: 0;
         padding: 0;
     }
-    .container__title__wrapper {
-        height: auto;
-        @include rem((
-            width: gs-span(2),
-            padding: $gs-baseline*2 0 $gs-baseline/2,
-            margin: 0 0 $gs-baseline*2.5
-        ));
-        
-        .svg & {
-            background-size: cover;            
-        }
-    }
     .commercial__title {
         float: none;
         margin-bottom: 0;
         text-align: center;
         line-height: 1;
     }
-    .i-soulmates-logo-2014 {
-        @include rem((
-            width: 86px,
-            height: 18px
-        ));
-        .svg & {
-            background-size: contain;
-        }
-    }
+    
+    @include c-soulmates-branding-small;
+    
     @include mq(tablet) {
         .commercial__header {
             float: left;
@@ -76,25 +102,6 @@ $c-soulmates-high: $c-neutral1;
             @include rem((
                 width: gs-span(3)
             ));
-        }
-    }
-    .commercial__explainer {
-        color: $c-soulmates-high;
-        position: absolute;
-        bottom: 0;
-        @include fs-header(1);
-        @include rem((
-            margin: $gs-baseline 0 0
-        ));
-    }
-    .commercial__buy-now-button {
-        display: none;
-        border: 0;
-        color: #ffffff;
-        @include fs-headline(1, $size-only: true);
-        
-        .search__submit__cta {
-            background-color: #68b8cb;
         }
     }
     .commercial__body {
@@ -339,34 +346,7 @@ $c-soulmates-high: $c-neutral1;
                 width: auto;
                 float: none;
             }
-            .container__title__wrapper {
-                height: auto;
-                @include rem((
-                    width: gs-span(2),
-                    padding: $gs-baseline*2 0 $gs-baseline/2,
-                    margin: 0 0 $gs-baseline*2.5
-                ));
-            }
-            .commercial__explainer {
-                color: $c-soulmates-high;
-                position: absolute;
-                bottom: 0;
-                width: auto;
-                padding: 0;
-                @include fs-header(1);
-                @include rem((
-                    margin: $gs-baseline 0 0
-                ));
-            }
-            .commercial__buy-now-button {
-                display: none;
-            }
-            .i-soulmates-logo-2014 {
-                @include rem((
-                    width: 86px,
-                    height: 18px
-                ));
-            }
+            @include c-soulmates-branding-small;
         }
     }
 }
