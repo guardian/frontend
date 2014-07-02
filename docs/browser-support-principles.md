@@ -41,7 +41,7 @@ In many ways responsive design is just usability, accessibility, and progressive
 _[Cutting the mustard](http://responsivenews.co.uk/post/18948466399/cutting-the-mustard)_ describes a technique that divides
 web browsers in to two groups - 'modern' and 'core'.
 
-We do this by evaluating the client's capability, like so :-
+We do this by evaluating the client's capability, like so :
 
 ```
 var isModern = function() { 
@@ -58,16 +58,16 @@ For browsers that fail that test, we still expect the content to render, but the
 This ensures a graceful experience when viewing with a less capable device, or simply when, for whatever reason, the JavaScript fails we can
 turn our [escalator into stairs](http://jakearchibald.com/2013/progressive-enhancement-still-important).
 
-Take a look at these screenshots for comparison:- 
+Take a look at these screenshots for comparison:
 
 - [IE 8](/docs/images/ie8_basic.png) - basic version as visible in IE8.
 - [Chrome 28](/docs/images/chrome_full.png) - full JS version as seen in Chrome.
 
 ### Browser support table
 
-Based on these principles and usage stats we have produced a [browser usage table](https://frontend.gutools.co.uk/analytics/browsers).
+Based on these principles and usage stats we have produced a [browser usage table](http://datascience.gutools.co.uk:8099/views/OSBrowserUsage/Tablefiltered).
 
-Here are the browsers and devices we currently regularly test on:-
+Here are the browsers and devices we currently regularly test on:
 
 ### Desktop
 
@@ -91,4 +91,4 @@ Here are the browsers and devices we currently regularly test on:-
 
 The share of traffic from IE8 is around 5%.
 
-We will serve a specific style sheet and Javascript to offer some enhanced functionality (Eg. stylesheets, adverts) whilst it continues to have significant usage.
+We will serve a specific style sheet and JavaScript to offer some enhanced functionality (Eg. stylesheets, adverts) whilst it continues to have significant usage.
