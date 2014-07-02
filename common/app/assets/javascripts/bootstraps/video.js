@@ -155,7 +155,7 @@ define([
 
         getVastUrl: function() {
             var adUnit = config.page.adUnit,
-                custParams = urlUtils.generateQueryString(dfp.buildPageTargeting({ page: config.page })),
+                custParams = urlUtils.constructQuery(dfp.buildPageTargeting({ page: config.page })),
                 encodedCustParams = encodeURIComponent(custParams),
                 timestamp = new Date().getTime(),
                 url = 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
