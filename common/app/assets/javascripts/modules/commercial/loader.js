@@ -9,6 +9,7 @@ define([
     'common/utils/storage',
     'common/modules/lazyload',
     'common/modules/component',
+    'common/modules/ui/images',
     'bean',
     'common/modules/ui/tabs'
 ], function (
@@ -18,6 +19,7 @@ define([
     storage,
     LazyLoad,
     Component,
+    images,
     bean,
     Tabs
 ) {
@@ -116,6 +118,8 @@ define([
                 return html ? html.replace(/%OASToken%/g, self.oastoken).replace(/%OmnitureToken%/g, '') : html;
             },
             success: function () {
+                images.upgrade(target);
+
                 if(name in self.postLoadEvents) {
                     self.postLoadEvents[name](target);
                 }

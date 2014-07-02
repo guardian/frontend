@@ -1,10 +1,8 @@
 define([
-    'lodash/objects/isArray',
     'lodash/objects/pairs',
     'common/utils/detect',
     'common/utils/common'
 ], function(
-    isArray,
     pairs,
     detect,
     common
@@ -53,12 +51,8 @@ define([
 
         // take an object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
         constructQuery: function (query) {
-            return pairs(query).map(function(queryParts) {
-                    var value = queryParts[1];
-                    if (isArray(value)) {
-                        value = value.join(',');
-                    }
-                    return [queryParts[0], '=', value].join('');
+            return pairs(query).map(function(queryPart) {
+                    return queryPart.join('=');
                 }).join('&');
         },
 

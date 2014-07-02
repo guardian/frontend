@@ -142,7 +142,9 @@ define([
         it('should define slots', function() {
             dfp.init({
                 page: {
-                    adUnit: '/123456/theguardian.com/front',
+                    dfpAccountId: 123456,
+                    dfpAdUnitRoot: 'theguardian.com',
+                    adUnitSuffix: 'front',
                     isFront: true,
                     section: ''
                 }
@@ -254,7 +256,9 @@ define([
             $('.ad-slot--dfp').first().data('out-of-page', true);
             dfp.init({
                 page: {
-                    adUnit: '/123456/theguardian.com/front',
+                    dfpAccountId: 123456,
+                    dfpAdUnitRoot: 'theguardian.com',
+                    adUnitSuffix: 'front',
                     isFront: true,
                     section: ''
                 }
