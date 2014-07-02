@@ -9,6 +9,7 @@ import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
 import play.api.Play
 import play.api.Play.current
+import scala.util.Try
 
 class BadConfigurationException(property: String) extends RuntimeException(s"Property $property not configured")
 
@@ -260,6 +261,20 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val contentApiPostEndpoint: Option[String] = configuration.getStringProperty("contentapi.post.endpoint")
     lazy val frontPressQueueUrl: Option[String] = configuration.getStringProperty("frontpress.sqs.queue")
     lazy val configBeforePressTimeout: Int = 1000
+
+    //It's not possible to take a batch size above 10
+    lazy val pressJobBatchSize: Int =
+      Try(configuration.getStringProperty("faciapress.batch.size").get.toInt)
+        .filter(_ <= 10).getOrElse(10)
+
+    //Above 59 would probably break the cron expression
+    lazy val pressJobConsumeRateInSeconds: Int =
+      Try(configuration.getStringProperty("faciapress.rate.inseconds").get.toInt)
+        .filter(_ <= 59).filter(_ > 0).getOrElse(10)
+
+    lazy val adminPressJobPushRateInMinutes: Int =
+      Try(configuration.getStringProperty("admin.pressjob.push.rate.inminutes").get.toInt)
+        .getOrElse(3)
   }
 
   object pa {

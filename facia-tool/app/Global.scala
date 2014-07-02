@@ -1,5 +1,5 @@
 import common._
-import conf.{Gzipper, Management}
+import conf.{Gzipper, Management, Configuration => GuardianConfiguration}
 import java.io.File
 import jobs.FrontPressJob
 import play.api._
@@ -12,6 +12,7 @@ object Global extends WithFilters(Gzipper)
   with ConfigAgentLifecycle {
 
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
+  val pressJobConsumeRateInSeconds: Int = GuardianConfiguration.faciatool.pressJobConsumeRateInSeconds
 
   override lazy val applicationName = Management.applicationName
   override def applicationMetrics: Map[String, Double] = Map(
@@ -55,7 +56,7 @@ object Global extends WithFilters(Gzipper)
   }
 
   def scheduleJobs() {
-    Jobs.schedule("FaciaToolPressJob", "0/10 * * * * ?") {
+    Jobs.schedule("FaciaToolPressJob", s"0/$pressJobConsumeRateInSeconds * * * * ?") {
       FrontPressJob.run()
     }
   }
