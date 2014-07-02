@@ -13,6 +13,7 @@ import play.api.libs.json.JsValue
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
+import ophan.SurgingContentAgent
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -122,6 +123,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val description: Option[String] = trailText
   override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
   override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
+  override def isSurging: Boolean = SurgingContentAgent.isSurging(id)
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = {

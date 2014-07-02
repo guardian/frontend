@@ -5,6 +5,7 @@ import dfp.DfpAgentLifecycle
 import feed.{OnwardJourneyLifecycle, MostReadLifecycle}
 import implicits.Requests
 import model.AdminLifecycle
+import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.{RequestHeader, EssentialAction, EssentialFilter, WithFilters}
 import services.ConfigAgentLifecycle
 
@@ -61,3 +62,4 @@ with CommercialLifecycle
 with MostReadLifecycle
 with DfpAgentLifecycle
 with ConfigAgentLifecycle
+with SurgingContentAgentLifecycle

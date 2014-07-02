@@ -32,6 +32,8 @@ trait MetaData extends Tags {
 
   lazy val hasPageSkin = false
 
+  def isSurging = false
+
   def metaData: Map[String, Any] = Map(
     ("page-id", id),
     ("section", section),
@@ -40,7 +42,8 @@ trait MetaData extends Tags {
     ("analytics-name", analyticsName),
     ("blockVideoAds", false),
     ("is-front", isFront),
-    ("ad-unit", s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix")
+    ("ad-unit", s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix"),
+    ("is-surging", isSurging)
   )
 
   def openGraph: Map[String, Any] = Map(

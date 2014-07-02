@@ -2,6 +2,7 @@ import common.{FaciaToolMetrics, ContentApiMetrics, FaciaMetrics, CloudWatchAppl
 import conf.{Management, Filters}
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
+import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
 import services.ConfigAgentLifecycle
 
@@ -10,7 +11,8 @@ object Global extends WithFilters(Filters.common: _*)
 with ConfigAgentLifecycle
 with DevParametersLifecycle
 with CloudWatchApplicationMetrics
-with DfpAgentLifecycle {
+with DfpAgentLifecycle
+with SurgingContentAgentLifecycle {
   override lazy val applicationName = Management.applicationName
 
   override def applicationMetrics: Map[String, Double] = super.applicationMetrics ++ Map(
