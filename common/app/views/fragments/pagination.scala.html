@@ -4,7 +4,7 @@
 
 @import views.support.Format
 
-@paginated(url: String, pageNum: Int) = {@common.LinkTo(url)@if(pageNum > 1){?page=@pageNum}}
+@paginated(url: String, pageNum: Int) = {@common.LinkTo(url+(if(pageNum > 1){"?page="+pageNum}else{""}))}
 @paginationPointer(pageNo: Option[Int], dir: String, url: String) = {
     <li class="pagination__item pagination__item--@dir">
         @pageNo.map { p =>

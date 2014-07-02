@@ -163,6 +163,10 @@ object Switches extends Collections {
     "Enable Media Math audience segment tracking",
     safeState = Off, sellByDate = never)
 
+  val RemarketingSwitch = Switch("Commercial Tags", "remarketing",
+    "Enable Remarketing tracking",
+    safeState = Off, sellByDate = never)
+
   // Commercial Feeds
 
   val TravelOffersFeedSwitch = Switch("Performance Switches", "gu-travel-offers",
@@ -362,6 +366,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val FaciaToolDraftContent = Switch("Front Press Switches", "facia-tool-draft-content",
+    "If this switch is on facia tool will offer draft content to editors, and press draft fronts from draft content ",
+    safeState = Off, sellByDate = never
+  )
+
   val FaciaToolCachedContentApiSwitch = Switch("Front Press Switches", "facia-tool-cached-capi-requests",
     "If this switch is on facia tool will cache responses from the content API and use them on failure",
     safeState = On, sellByDate = never
@@ -434,6 +443,7 @@ object Switches extends Collections {
     ImrWorldwideSwitch,
     ForeseeSwitch,
     MediaMathSwitch,
+    RemarketingSwitch,
     DiagnosticsLogging,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
@@ -463,7 +473,8 @@ object Switches extends Collections {
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
-    FaciaToolDraftPressSwitch
+    FaciaToolDraftPressSwitch,
+    FaciaToolDraftContent
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

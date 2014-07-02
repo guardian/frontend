@@ -36,6 +36,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
   lazy val primaryKeyWordTag: Option[Tag] = tags.find(!_.isSectionTag)
   lazy val keywordTags: Seq[Tag] = keywords.filter(tag => !tag.isSectionTag)
+  lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
   lazy val hasSingleContributor: Boolean = {
@@ -145,7 +146,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("shortUrl", shortUrl),
       ("thumbnail", thumbnailPath.getOrElse(false)),
       ("references", delegate.references.map(r => Reference(r.id))),
-      ("sectionName", sectionName)
+      ("sectionName", sectionName),
+      ("productionOffice", productionOffice.getOrElse(""))
     ) ++ Map(seriesMeta : _*)
   }
 

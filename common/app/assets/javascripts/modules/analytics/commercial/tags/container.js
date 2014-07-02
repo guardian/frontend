@@ -7,6 +7,7 @@ define([
     'common/modules/analytics/commercial/tags/common/imrworldwide',
     'common/modules/analytics/commercial/tags/common/media-math',
     'common/modules/analytics/commercial/tags/common/criteo',
+    'common/modules/analytics/commercial/tags/common/remarketing',
     'common/modules/analytics/commercial/tags/au/amaa',
     'common/modules/analytics/commercial/tags/au/effective-measure'
 ], function(
@@ -15,6 +16,7 @@ define([
     imrWorldwide,
     mediaMath,
     criteo,
+    remarketing,
     amaa,
     effectiveMeasure
 ) {
@@ -36,6 +38,7 @@ define([
         mediaMath.load();
         criteo.load();
         imrWorldwide.load();
+        remarketing.load();
     }
 
     return {

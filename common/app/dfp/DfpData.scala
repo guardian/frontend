@@ -27,7 +27,7 @@ case class TargetSet(op: String, targets: Seq[Target]) {
 }
 
 
-case class LineItem(id: Long, sponsor: Option[String], targetSets: Seq[TargetSet]) {
+case class GuLineItem(id: Long, sponsor: Option[String], targetSets: Seq[TargetSet]) {
 
   val sponsoredTags = targetSets.flatMap(_.sponsoredTags).distinct
 

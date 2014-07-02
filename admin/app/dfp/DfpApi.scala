@@ -3,7 +3,7 @@ package dfp
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
 import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
-import com.google.api.ads.dfp.axis.v201403.{LineItem => DfpApiLineItem, _}
+import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.AdminConfiguration
@@ -37,7 +37,7 @@ object DfpApi extends Logging with Collections{
       None
   }
 
-  def getAllCurrentDfpLineItems = dfpSession.fold(Seq[DfpApiLineItem]()) { session =>
+  def getAllCurrentDfpLineItems = dfpSession.fold(Seq[LineItem]()) { session =>
     val currentLineItems = new StatementBuilder()
       .where("status = :readyStatus OR status = :deliveringStatus")
       .orderBy("id ASC")
@@ -47,7 +47,7 @@ object DfpApi extends Logging with Collections{
     DfpApiWrapper.fetchLineItems(session, currentLineItems)
   }
 
-  private def onlyWithPageSkins(lineItems: Seq[DfpApiLineItem]) = {
+  private def onlyWithPageSkins(lineItems: Seq[LineItem]) = {
     def hasA1x1Pixel(placeholders: Array[CreativePlaceholder]): Boolean = {
       val outOfPagePlaceholder: Array[CreativePlaceholder] = for {
         placeholder <- placeholders
@@ -64,7 +64,7 @@ object DfpApi extends Logging with Collections{
     )
   }
 
-  def fetchAdUnitsThatAreTargettedByPageSkins(lineItems: Seq[DfpApiLineItem]): Seq[PageSkinSponsorship] = dfpSession.fold(Seq[PageSkinSponsorship]()) { session =>
+  def fetchAdUnitsThatAreTargettedByPageSkins(lineItems: Seq[LineItem]): Seq[PageSkinSponsorship] = dfpSession.fold(Seq[PageSkinSponsorship]()) { session =>
     val interimPageSkinSponsorships: Seq[(String, lang.Long, List[String])] = onlyWithPageSkins(lineItems).map { lineitem =>
        val adUnitIds: List[String] = lineitem.getTargeting
          .getInventoryTargeting.getTargetedAdUnits.toList.map(item => item.getAdUnitId)
@@ -100,7 +100,7 @@ object DfpApi extends Logging with Collections{
     DfpApiWrapper.fetchAdUnitTargetingObjects(session, adUnitTargetingQuery)
   }
 
-  def hydrateWithUsefulValues(lineItems: Seq[DfpApiLineItem]): Seq[LineItem] = dfpSession.fold(Seq[LineItem]()) {
+  def hydrateWithUsefulValues(lineItems: Seq[LineItem]): Seq[GuLineItem] = dfpSession.fold(Seq[GuLineItem]()) {
     session =>
       val namesOfRelevantTargetingKeys: List[String] = List("Keywords", "Slot", "Series")
       val getRelevantTargetingKeyObjects = new StatementBuilder()
@@ -132,11 +132,11 @@ object DfpApi extends Logging with Collections{
         currTargetSets = targetSets(lineItem, relevantTargetingKeys, relevantTargetingValues)
         if currTargetSets.nonEmpty
       } yield {
-        LineItem(lineItem.getId, sponsor(lineItem, sponsorFieldId), currTargetSets)
+        GuLineItem(lineItem.getId, sponsor(lineItem, sponsorFieldId), currTargetSets)
       }
   }
 
-  private def sponsor(lineItem: DfpApiLineItem, optSponsorFieldId: Option[Long]) = {
+  private def sponsor(lineItem: LineItem, optSponsorFieldId: Option[Long]) = {
     for {
       sponsorFieldId <- optSponsorFieldId
       customFieldValues <- Option(lineItem.getCustomFieldValues)
@@ -150,7 +150,7 @@ object DfpApi extends Logging with Collections{
     }
   }
 
-  private def targetSets(lineItem: DfpApiLineItem,
+  private def targetSets(lineItem: LineItem,
                             targetingKeys: Map[Long, String],
                             targetingValues: Map[Long, String]): Seq[TargetSet] = {
 
@@ -182,7 +182,7 @@ object DfpApi extends Logging with Collections{
     }.toSeq
   }
 
-  private def sponsorshipTags(lineItems: Seq[LineItem])(tags: LineItem => Seq[String]): Seq[Sponsorship] = {
+  private def sponsorshipTags(lineItems: Seq[GuLineItem])(tags: GuLineItem => Seq[String]): Seq[Sponsorship] = {
     val sponsorships = for {
       lineItem <- lineItems
       currTags = tags(lineItem)
@@ -193,11 +193,11 @@ object DfpApi extends Logging with Collections{
     sponsorships.distinct
   }
 
-  def filterOutSponsoredTagsFrom(lineItems: Seq[LineItem]): Seq[Sponsorship] = {
+  def filterOutSponsoredTagsFrom(lineItems: Seq[GuLineItem]): Seq[Sponsorship] = {
     sponsorshipTags(lineItems)(_.sponsoredTags)
   }
 
-  def filterOutAdvertisementFeatureTagsFrom(lineItems: Seq[LineItem]): Seq[Sponsorship] = {
+  def filterOutAdvertisementFeatureTagsFrom(lineItems: Seq[GuLineItem]): Seq[Sponsorship] = {
     sponsorshipTags(lineItems)(_.advertisementFeatureTags)
   }
 }
