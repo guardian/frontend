@@ -745,12 +745,20 @@ button {
 }
 
 .tools .tool.draft-publish {
+    background: #e8bd39;
+}
+
+.tools .tool.draft-publish:hover {
     background: #46c430;
 }
 
 .tools .tool.draft-warning {
     background: #e8bd39;
     margin-right: 4px;
+}
+
+.tools .tool.draft-warning:hover {
+    background: #BBBBBB;
 }
 
 .log-in-out {
