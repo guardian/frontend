@@ -56,10 +56,10 @@ $commercial-cta-diameter: (
                 ));
             }
             .commercial__relevance-high {
-                width: 66%;
+                width: percentage(2/3);
             }
             .commercial__relevance-low {
-                width: 33%;
+                width: percentage(1/3);
             }
             .lineitem {
                 width: 100%;
@@ -398,7 +398,7 @@ $commercial-cta-diameter: (
             ));
         }
         .commercial__relevance-high {
-            width: 66%;
+            width: percentage(2/3);
             float: left;
             
             .lineitem__link {
@@ -406,7 +406,7 @@ $commercial-cta-diameter: (
             }
         }
         .commercial__relevance-low {
-            width: 33%;
+            width: percentage(1/3);
             float: right;
             
             .lineitem:first-child .lineitem__img {
