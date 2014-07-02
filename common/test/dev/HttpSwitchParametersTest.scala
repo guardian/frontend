@@ -18,14 +18,14 @@ class HttpSwitchParametersTest extends FlatSpec with Matchers with HttpSwitchHel
   "queryString" should "not leave URL unchanged if environment is PROD" in Fake {
     val url = httpSwitchInProd.queryString("/bla/bla?page=1")(requestWithSwitchesOnAndOff)
 
-    url should not contain "switchesOn"
-    url should not contain "switchesOff"
+    url should not include "switchesOn"
+    url should not include "switchesOff"
   }
 
   "queryString" should "not append anything if no switches overrides present" in Fake {
     val url = httpSwitchInNonProd.queryString("/bla/bla")(requestWithNoSwitches)
 
-    url should not contain "?"
+    url should not include "?"
   }
 
   "queryString" should "append ON/OFF switches overrides if present" in Fake {
