@@ -55,7 +55,7 @@ function(
                 streamType: streamType
             }).then(function () {
                 url.pushUrl({}, null,
-                    '/user/id/'+ activityStream.options.userId+(streamType !== 'discussions' ? '/' + streamType : ''), true);
+                    '/user/id/'+ activityStream.options.userId+(streamType!=='discussions' ? '/'+streamType : ''), true);
             });
         });
     }
