@@ -16,6 +16,7 @@ define([
     'common/bootstraps/common',
     'common/bootstraps/tag',
     'common/bootstraps/section',
+    'common/bootstraps/imagecontent',
 
     'common/bootstraps/football',
     'common/bootstraps/article',
@@ -40,6 +41,7 @@ define([
     bootstrapCommon,
     Tag,
     Section,
+    ImageContent,
 
     Football,
     Article,
@@ -130,6 +132,10 @@ define([
 
             if (config.page.contentType === 'Section' && !config.page.isFront) {
                 Section.init(config, context);
+            }
+
+            if (config.page.contentType === 'ImageContent') {
+                ImageContent.init(config, context);
             }
 
             if (config.page.section === 'football') {
