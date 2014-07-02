@@ -53,7 +53,7 @@ function(
             activityStream.change({
                 page: 1,
                 streamType: streamType
-            }).then(function () {
+            }).then(function() {
                 url.pushUrl({}, null,
                     '/user/id/'+ activityStream.options.userId+(streamType!=='discussions' ? '/'+streamType : ''), true);
             });
