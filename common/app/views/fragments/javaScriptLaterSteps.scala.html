@@ -121,9 +121,11 @@
         'domReady!'
     ], function (core) {
 
-        require(['bootstraps/commercial'], function(commercial) {
-            commercial.init();
-        });
+        if (guardian.config.switches.commercial) {
+            require(['bootstraps/commercial'], function(commercial) {
+                commercial.init();
+            });
+        }
 
         if (guardian.isModernBrowser) {
             require(['bootstraps/app'], function(bootstrap) {
