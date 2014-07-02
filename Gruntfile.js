@@ -456,7 +456,8 @@ module.exports = function (grunt) {
                             'bootstraps/app.js',
                             'bootstraps/app.js.map',
                             'bootstraps/commercial.js',
-                            'bootstraps/commercial.js.map'
+                            'bootstraps/commercial.js.map',
+                            'components/curl/curl-domReady.js'
                         ],
                         dest: staticTargetDir + 'javascripts'
                     }
@@ -553,6 +554,7 @@ module.exports = function (grunt) {
                     cwd: staticTargetDir + 'javascripts',
                     src: [
                         '{components,vendor}/**/*.js',
+                        '!components/curl/**/*.js',
                         '!components/zxcvbn/**/*.js'
                     ],
                     dest: staticTargetDir + 'javascripts'
