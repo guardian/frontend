@@ -47,31 +47,31 @@
 }
 
 @mixin c-soulmates-branding {
-   .commercial__explainer {
-       position: static;
-       color: #ffffff;
-       @include rem((
-           width: gs-span(2)-$gs-gutter,
-           padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5,
-           margin-top: $gs-baseline
-       ));
-   }
-   .i-soulmates-logo-2014 {
-       .svg & {
-           @include rem((
-               width: 100px,
-               height: 21px
-           ));
-           background-size: contain;
-       }
-   }
-   .commercial__buy-now-button {
-       display: inline-block;
-       @include rem((
-           padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5
-       ));
-       position: relative;
-   }
+    .commercial__explainer {
+        position: static;
+        color: #ffffff;
+        @include rem((
+            width: gs-span(2)-$gs-gutter,
+            padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5,
+            margin-top: $gs-baseline
+        ));
+    }
+    .i-soulmates-logo-2014 {
+        .svg & {
+            @include rem((
+                width: 100px,
+                height: 21px
+            ));
+            background-size: contain;
+        }
+    }
+    .commercial__buy-now-button {
+        display: inline-block;
+        @include rem((
+            padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5
+        ));
+        position: relative;
+    }
 }
 
 $c-soulmates-high: $c-neutral1;
