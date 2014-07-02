@@ -192,6 +192,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
+
+  object witness {
+    lazy val witnessApiRoot = configuration.getMandatoryStringProperty("witness.apiRoot")
+  }
   
   object commercial {
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")

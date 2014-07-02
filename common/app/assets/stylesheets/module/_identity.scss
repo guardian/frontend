@@ -371,8 +371,17 @@
     .tabs__tab {
         @include rem((
             max-width: gs-span(3),
-            width: 33.3%
+            width: 25%
         ));
+    }
+
+    @include mq($to: tablet) {
+        a {
+            @include rem((
+                padding-top: $gs-baseline/4,
+                line-height: 13px !important
+            ));
+        }
     }
 }
 
@@ -385,6 +394,52 @@
             margin-right: $gs-gutter
         ));
     }
+}
+
+.activity-stream__witness-contributions {
+
+    @include rem((
+        padding-top: 15px
+    ));
+}
+
+.activity-stream__witness-item {
+    width: 292px;
+    display: inline-block;
+    margin-right: $gs-gutter/2;
+    margin-bottom: $gs-gutter;
+    vertical-align:top;
+
+    @include fs-textsans(2);
+    @include rem((
+        font-size:12px
+    ));
+}
+.activity-stream__witness-img {
+    width: 100%;
+}
+
+.activity-stream__witness-meta {
+    background-color: #efefef;
+    padding: 15px 0;
+    border: 1px solid #ddd;
+    border-top: 0;
+    font-family: "TextSans","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    text-align:right;
+
+    span {
+        margin: 0 10px;
+    }
+}
+.activity-stream__witness-content {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    line-height: 1.4;
+}
+.activity-stream__witness-description {
+    margin:5px 10px;
+    display: block;
 }
 
 /* Edit profile Membership tab
