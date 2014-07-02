@@ -105,7 +105,7 @@ $c-soulmates-high: $c-neutral1;
             }
         }
         @include mq(desktop) {
-            width: 16.66%;
+            width: percentage(1/6);
 
             &:nth-child(5),
             &:nth-child(6) {
@@ -227,10 +227,10 @@ $c-soulmates-high: $c-neutral1;
 .facia-container--layout-front .commercial--soulmates {
     @include mq(tablet) {
         .lineitems {
-            width: 66%;
+            width: percentage(2/3);
         }
         .commercial__search {
-            width: 33%;
+            width: percentage(1/3);
         }
     }
     @include mq(desktop) {

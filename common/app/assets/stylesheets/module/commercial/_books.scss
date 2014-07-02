@@ -130,7 +130,7 @@ $c-commercial-books-dark: #630d4c;
         }        
         .lineitem {
             position: relative;
-            width: 33%;
+            width: percentage(1/3);
             @include rem((
                 padding: 0 $gs-gutter/2
             ));
