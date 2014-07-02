@@ -42,7 +42,8 @@ trait MetaData extends Tags {
     ("analytics-name", analyticsName),
     ("blockVideoAds", false),
     ("is-front", isFront),
-    ("ad-unit-suffix", adUnitSuffix)
+    ("ad-unit-suffix", adUnitSuffix),
+    ("is-surging", isSurging)
   )
 
   def openGraph: Map[String, Any] = Map(

@@ -377,8 +377,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       ("isLiveBlog", isLiveBlog),
       ("inBodyInternalLinkCount", linkCounts.internal),
       ("inBodyExternalLinkCount", linkCounts.external),
-      ("shouldHideAdverts", shouldHideAdverts),
-      ("isSurging", isSurging)
+      ("shouldHideAdverts", shouldHideAdverts)
     ) ++ bookReviewIsbns
   }
 
