@@ -38,8 +38,11 @@ trait HttpSwitchParameters extends EnvConfig{
       val on = onSwitches.map{switchesOn + "=" + _}
       val off = offSwitches.map{switchesOff + "=" + _}
       val separator = if(url.contains("?")) "&" else "?"
-      url + List(on, off).flatten.mkString(separator, "&", "")}
-    else url
+      url + (List(on, off).flatten match {
+        case Nil => ""
+        case ss => ss.mkString(separator, "&", "")
+      })
+    } else url
 
   def onSwitches(implicit request: RequestHeader) = queryParameter(switchesOn)
 
