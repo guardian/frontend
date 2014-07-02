@@ -1,18 +1,12 @@
 package com.gu.test.Article;
 
 import static com.gu.test.PropertyLoader.getProperty;
-import static com.gu.test.WebDriverFactory.createWebDriver;
-
+import com.gu.test.SeleniumTestCase;
 import com.gu.test.helpers.RetryRule;
 import org.junit.*;
-import org.openqa.selenium.WebDriver;
-
-import com.gu.test.helpers.PageHelper;
 import com.gu.test.pages.Article;
 
-public class ArticleComponentTest {
-    WebDriver driver;
-    private PageHelper pageHelper;
+public class ArticleComponentTest extends SeleniumTestCase{
     private Article testArticle;
     private String ARTICLE_WITH_TWEETS = getProperty("articleWithTweets");
 
@@ -21,8 +15,7 @@ public class ArticleComponentTest {
 
     @Before
     public void setUp() throws Exception {
-        driver = createWebDriver();
-        pageHelper = new PageHelper(driver);
+        super.setUp();
         testArticle = pageHelper.goToArticle(ARTICLE_WITH_TWEETS);
     }
 
@@ -45,10 +38,5 @@ public class ArticleComponentTest {
     @Test
     public void articleHasTweets() {
         Assert.assertTrue("Failure: Tweets missing from page", testArticle.hasTweets());
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        pageHelper.endTest();
     }
 }

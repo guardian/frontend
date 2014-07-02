@@ -1,19 +1,13 @@
 package com.gu.test.Article;
 
 import static com.gu.test.PropertyLoader.getProperty;
-import static com.gu.test.WebDriverFactory.createWebDriver;
-
+import com.gu.test.SeleniumTestCase;
 import com.gu.test.helpers.RetryRule;
 import org.junit.*;
-import org.openqa.selenium.WebDriver;
 
-import com.gu.test.helpers.PageHelper;
-import com.gu.test.helpers.WaitHelper;
 import com.gu.test.pages.Article;
 
-public class ArticleOnwardJourneyTest {
-    WebDriver driver;
-    private PageHelper pageHelper;
+public class ArticleOnwardJourneyTest extends SeleniumTestCase {
     private Article testArticle;
     private String ARTICLE_WITH_SERIES = getProperty("articleWithSeries");
 
@@ -22,8 +16,7 @@ public class ArticleOnwardJourneyTest {
 
     @Before
     public void setUp() throws Exception {
-        driver = createWebDriver();
-        pageHelper = new PageHelper(driver);
+        super.setUp();
         testArticle = pageHelper.goToArticle(ARTICLE_WITH_SERIES);
     }
 
@@ -31,7 +24,6 @@ public class ArticleOnwardJourneyTest {
     public void goToFirstLinkInSidebarPopular() throws Exception {
         String articleLink = testArticle.getFirstArticleInMostPopularRight();
         Article popularArticle = testArticle.goToFirstArticleInMostPopularRight();
-        WaitHelper.waitForPageLoad(driver);
         String popularArticleCurrentURL = popularArticle.getCurrentURL();
         Assert.assertTrue("Article URL did not match the top link in Most Popular", articleLink.contentEquals(popularArticleCurrentURL));
     }
@@ -40,7 +32,6 @@ public class ArticleOnwardJourneyTest {
     public void goToFirstLinkInRelatedContent() throws Exception {
         String articleLink = testArticle.getFirstRelatedArticle();
         Article relatedArticle = testArticle.goToFirstRelatedArticle();
-        WaitHelper.waitForPageLoad(driver);
         String relatedArticleCurrentURL = relatedArticle.getCurrentURL();
         Assert.assertTrue("Article URL did not match the top link in Related Content", articleLink.contentEquals(relatedArticleCurrentURL));
     }
@@ -49,14 +40,7 @@ public class ArticleOnwardJourneyTest {
     public void goToFirstLinkInBelowArticlePopular() throws Exception {
         String articleLink = testArticle.getFirstArticleInMostPopularBelow();
         Article popularBottomArticle = testArticle.goToFirstArticleInMostPopularBottom();
-        WaitHelper.waitForPageLoad(driver);
         String popularArticleCurrentURL = popularBottomArticle.getCurrentURL();
         Assert.assertTrue("Article headline did not match the top link in Most Popular", articleLink.contentEquals(popularArticleCurrentURL));
-    }
-
-
-    @After
-    public void tearDown() throws Exception {
-        pageHelper.endTest();
     }
 }

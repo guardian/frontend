@@ -63,6 +63,14 @@ public class Article {
         return new Article(driver);
     }
 
+    public String getSeriesLabel(){
+        return driver.findElement(By.cssSelector(".content-meta__label")).getText();
+    }
+
+    public boolean hasSeriesComponent(){
+        return driver.findElement(By.cssSelector(".container--series")).isDisplayed();
+    }
+
     public boolean hasComments() {
         return driver.findElement(By.cssSelector(COMMENTS)).isDisplayed();
     }
