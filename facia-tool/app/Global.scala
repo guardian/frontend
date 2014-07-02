@@ -26,7 +26,7 @@ object Global extends WithFilters(Gzipper)
     ("front-press-draft-failure", FaciaToolMetrics.FrontPressDraftFailure.getAndReset.toDouble),
     ("front-press-draft-success", FaciaToolMetrics.FrontPressDraftSuccess.getAndReset.toDouble),
     ("front-press-live-failure", FaciaToolMetrics.FrontPressLiveFailure.getAndReset.toDouble),
-    ("front-press-live-success", FaciaToolMetrics.FrontPressLiveFailure.getAndReset.toDouble),
+    ("front-press-live-success", FaciaToolMetrics.FrontPressLiveSuccess.getAndReset.toDouble),
     ("front-press-cron-success", FaciaToolMetrics.FrontPressCronSuccess.getAndReset.toDouble),
     ("front-press-cron-failure", FaciaToolMetrics.FrontPressCronFailure.getAndReset.toDouble),
     ("elastic-content-api-calls", ContentApiMetrics.ElasticHttpTimingMetric.getAndReset.toDouble),

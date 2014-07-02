@@ -1,6 +1,30 @@
 /* ==========================================================================
    DFP bespoke component
    ========================================================================== */
+
+@mixin commercial-double-item {
+    &.commercial--items-dfp-2 {
+        .lineitem {
+            @include rem((
+                padding-bottom: $gs-baseline
+            ));
+        }
+        .lineitem__image {
+            width: 50%;
+            float: left;
+        }
+        .lineitem__offer {
+            float: left;
+            @include rem((
+                margin-left: $gs-gutter/2
+            ));
+        }
+        .lineitem__link:hover .lineitem__offer,
+        .lineitem__link:focus .lineitem__offer {
+            text-decoration: underline;
+        }
+    }
+}
    
 .commercial--dfp {
     .commercial__head {
@@ -137,6 +161,24 @@
             }
         }
     }
+    @include mq(tablet) {
+        &.commercial--items-dfp-2 .lineitem {
+            width: 50%;
+            
+            &:nth-child(n+3) {
+                display: none;
+            }
+        }
+    }
+    @include mq(rightCol) {
+        &.commercial--items-dfp-3 .lineitem {
+            width: 33%;
+            
+            &:nth-child(n+4) {
+                display: none;
+            }
+        }
+    }
 }
 
 .facia-container--layout-article .commercial--dfp.commercial--dfp-single {
@@ -256,6 +298,17 @@
             @include rem((
                 left: gs-span(12) + ($gs-gutter/2)
             ));
+            .has-page-skin & {
+                right: 0;
+                left: auto;
+            }
+        }
+        .has-page-skin & {
+            .commercial__home-link {
+                @include rem((
+                    top: $gs-baseline/2
+                ));
+            }
         }
     }
 }
@@ -281,10 +334,15 @@
             position: static;
         }
     }
+    @include mq(rightCol) {
+        @include commercial-double-item;
+    }
 }
 
 .facia-container--layout-front .commercial--dfp {
     @include mq(desktop) {
+        @include commercial-double-item;
+        
         .commercial__head {
             width: auto;
         }
@@ -323,6 +381,19 @@
         }
         .facia-container__inner {
             position: relative;
+        }
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            .commercial__home-link {
+                width: auto;
+                @include rem((
+                    top: $gs-baseline*2
+                ));
+                right: 0;
+                left: auto;
+                bottom: auto;
+            }
         }
     }
 }

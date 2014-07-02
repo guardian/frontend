@@ -95,9 +95,11 @@
                         <div class="d-comment__comment-removed">This comment was removed by a moderator because it didn't abide by our <a href="http://www.theguardian.com/community-standards" data-link-name="community standards">community standards</a>.
                         Replies may also be deleted. For more detail see <a href="http://www.theguardian.com/community-faqs" data-link-name="FAQs">our FAQs</a>.</div>
                     }else{
-                        @withJsoup(BulletCleaner(comment.body))(
-                            InBodyLinkCleaner("in body link")(Edition(request))
-                        )
+                        @defining(Edition(request)) { edition =>
+                            @withJsoup(BulletCleaner(comment.body))(
+                                InBodyLinkCleaner("in body link")
+                            )
+                        }
                     }
                 </div>
                 @if(!comment.isBlocked){

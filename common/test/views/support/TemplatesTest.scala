@@ -3,10 +3,12 @@ package views.support
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
 import model._
 import org.scalatest.{ Matchers, FlatSpec }
+import test.Fake
 import xml.XML
 import common.editions.Uk
 import conf.Configuration
 import org.jsoup.Jsoup
+import play.api.test.FakeRequest
 
 class TemplatesTest extends FlatSpec with Matchers {
 
@@ -97,8 +99,11 @@ class TemplatesTest extends FlatSpec with Matchers {
     }
   }
 
-  "InBodyLinkCleaner" should "clean links" in {
-    val body = XML.loadString(withJsoup(bodyTextWithLinks)(InBodyLinkCleaner("in body link")(Uk)).body.trim)
+  "InBodyLinkCleaner" should "clean links" in Fake {
+    implicit val edition = Uk
+    implicit val request = FakeRequest("GET", "/")
+
+    val body = XML.loadString(withJsoup(bodyTextWithLinks)(InBodyLinkCleaner("in body link")).body.trim)
 
     val link = (body \\ "a").head
 

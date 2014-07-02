@@ -6,9 +6,11 @@
         <meta itemprop="description" content="@StripHtmlTags(t)" />
     }
     @content.standfirst.map { s =>
-        @withJsoup(BulletCleaner(s))(
-            InBodyLinkCleaner("in standfirst link")(Edition(request))
-        )
+        @defining(Edition(request)) { edition =>
+            @withJsoup(BulletCleaner(s))(
+                InBodyLinkCleaner("in standfirst link")
+            )
+        }
 
         @content.starRating.map { s =>
             @fragments.items.elements.starRating(content)

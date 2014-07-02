@@ -9,7 +9,9 @@ define([
     'omniture',
     'common/modules/analytics/mvt-cookie',
     'common/modules/analytics/beacon',
-    'common/utils/pad'
+    'common/utils/pad',
+    'common/utils/mediator',
+    'common/utils/deferToAnalytics' // Ensure that 'analytics:ready' is handled.
 ], function(
     common,
     detect,
@@ -20,7 +22,8 @@ define([
     s,
     mvtCookie,
     beacon,
-    pad
+    pad,
+    mediator
     ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -147,6 +150,11 @@ define([
 
             s.prop13    = config.page.series || '';
 
+            // see http://blogs.adobe.com/digitalmarketing/mobile/responsive-web-design-and-web-analytics/
+            s.eVar18    = detect.getBreakpoint();
+            s.eVar21    = document.documentElement.clientWidth + 'x' + document.documentElement.clientHeight;
+            s.eVar32    = detect.getOrientation();
+
             /* Set Time Parting Day and Hour Combination - 0 = GMT */
             var tpA = s.getTimeParting('n','+0');
             s.prop20 = tpA[2] + ':' + tpA[1];
@@ -206,6 +214,13 @@ define([
 
             s.prop56    = 'Javascript';
 
+            // not all pages have a production office
+            if (config.page.productionOffice) {
+                s.prop64 = config.page.productionOffice;
+            }
+
+            s.prop63    = detect.getPageSpeed();
+
             s.prop65    = config.page.headline || '';
 
             s.prop67    = 'nextgen-served';
@@ -222,6 +237,9 @@ define([
                 s.eVar50 = s.getQueryParam('INTCMP');
             }
             s.eVar50 = s.getValOnce(s.eVar50,'s_intcampaign', 0);
+
+            // the operating system
+            s.eVar58 = navigator.platform || 'unknown';
 
             // the number of Guardian links inside the body
             if (config.page.inBodyInternalLinkCount) {
@@ -254,16 +272,7 @@ define([
             s.eVar75 = config.page.wordCount || 0;
         };
 
-        this.loaded = function(callback) {
-            this.populatePageProperties();
-            this.logView();
-            if (typeof callback === 'function') {
-                callback();
-            }
-        };
-
-        this.go = function(c, callback) {
-            var that = this;
+        this.go = function(c) {
 
             config = c; // update the module-wide config
 
@@ -271,7 +280,9 @@ define([
             window.s_account = config.page.omnitureAccount;
 
             s = window.s;
-            that.loaded(callback);
+            this.populatePageProperties();
+            this.logView();
+            mediator.emit('analytics:ready');
         };
 
         this.confirmPageView = function() {
