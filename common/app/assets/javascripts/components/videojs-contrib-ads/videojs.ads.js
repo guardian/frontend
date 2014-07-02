@@ -465,7 +465,7 @@ var
       // events emitted by third party ad implementors
       'adsready',
       'adstart',  // startLinearAdMode()
-      'adend',    // endLinearAdMode()
+      'adend'     // endLinearAdMode()
     ]), fsmHandler);
     
     // implement 'contentupdate' event.
