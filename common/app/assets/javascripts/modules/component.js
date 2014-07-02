@@ -74,6 +74,9 @@ define([
     /** @type {Number} id of autoupdate timer */
     Component.prototype.t = null;
 
+    /** @type {Object.<string.*>} data to send with fetch */
+    Component.prototype.fetchData = null;
+
     /** @type {String} */
     Component.prototype.manipulationType = 'append';
 
@@ -155,7 +158,8 @@ define([
             url: endpoint,
             type: 'json',
             method: 'get',
-            crossOrigin: true
+            crossOrigin: true,
+            data: this.fetchData
         });
     };
 
