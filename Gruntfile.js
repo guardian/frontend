@@ -75,19 +75,12 @@ module.exports = function (grunt) {
                             exports: 's'
                         }
                     },
-                    modules: [
-                        {
-                            name: 'core'
-                        },
-                        {
-                            name: 'bootstraps/app',
-                            exclude: ['core']
-                        },
-                        {
-                            name: 'bootstraps/commercial',
-                            exclude: ['core']
-                        }
-                    ]
+                    modules: [{
+                        name: 'core'
+                    }, {
+                        name: 'bootstraps/app',
+                        exclude: ['core']
+                    }]
                 }
             },
             facia: {
@@ -95,10 +88,7 @@ module.exports = function (grunt) {
                     baseUrl: 'facia/app/assets/javascripts',
                     name: 'bootstraps/facia',
                     out: staticTargetDir + 'javascripts/bootstraps/facia.js',
-                    exclude: [
-                        '../../../../common/app/assets/javascripts/core',
-                        '../../../../common/app/assets/javascripts/bootstraps/app'
-                    ]
+                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app']
                 }
             },
             identity: {
@@ -106,10 +96,7 @@ module.exports = function (grunt) {
                     baseUrl: 'identity/app/assets/javascripts',
                     name: 'bootstraps/membership',
                     out: staticTargetDir + 'javascripts/bootstraps/membership.js',
-                    exclude: [
-                        '../../../../common/app/assets/javascripts/core',
-                        '../../../../common/app/assets/javascripts/bootstraps/app'
-                    ]
+                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app']                    
                 }
             },
             ophan: {
@@ -451,12 +438,11 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: requirejsDir,
                         src: [
-                            'core.js',
-                            'core.js.map',
                             'bootstraps/app.js',
                             'bootstraps/app.js.map',
-                            'bootstraps/commercial.js',
-                            'bootstraps/commercial.js.map'
+                            'core.js',
+                            'core.js.map',
+                            'components/curl/curl-domReady.js'
                         ],
                         dest: staticTargetDir + 'javascripts'
                     }
@@ -489,16 +475,8 @@ module.exports = function (grunt) {
             headCss: {
                 files: [{
                     expand: true,
-                    cwd: staticTargetDir + 'stylesheets',
+                    cwd: 'static/target/stylesheets',
                     src: ['**/head*.css'],
-                    dest: 'common/conf/assets'
-                }]
-            },
-            headJs: {
-                files: [{
-                    expand: true,
-                    cwd: 'common/app/assets/javascripts/components/curl',
-                    src: ['curl-domReady.js'],
                     dest: 'common/conf/assets'
                 }]
             },
@@ -553,6 +531,7 @@ module.exports = function (grunt) {
                     cwd: staticTargetDir + 'javascripts',
                     src: [
                         '{components,vendor}/**/*.js',
+                        '!components/curl/**/*.js',
                         '!components/zxcvbn/**/*.js'
                     ],
                     dest: staticTargetDir + 'javascripts'
@@ -758,8 +737,15 @@ module.exports = function (grunt) {
                     }
                 ]
             }
-        }
+        },
 
+        concat: {
+            application: {
+                src: ['common/app/assets/javascripts/components/curl/curl-domReady.js',
+                      'common/app/assets/javascripts/bootstraps/go.js'],
+                dest: staticTargetDir + 'javascripts/bootstraps/go.js'
+            }
+        }
     });
 
     // Load the plugins
@@ -782,6 +768,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-reloadlet');
     grunt.loadNpmTasks('grunt-pagespeed');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
     // Default task
     grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
@@ -804,10 +791,10 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
-    grunt.registerTask('compile:js', ['requirejs', 'copy:javascript', 'uglify:javascript']);
+    grunt.registerTask('compile:js', ['requirejs', 'copy:javascript', 'concat', 'uglify:javascript']);
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
-    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap']);
+    grunt.registerTask('compile:conf', ['copy:headCss', 'copy:assetMap']);
     grunt.registerTask('compile', [
         'compile:images',
         'compile:css',
@@ -849,7 +836,8 @@ module.exports = function (grunt) {
         if (target === 'js') {
             // compile just the project
             var project = filepath.split('/').shift();
-            grunt.task.run(['requirejs:' + project, 'copy:javascript', 'asset_hash']);
+            grunt.task.run('requirejs:' + project);
+            grunt.task.run('asset_hash');
         }
     });
 
