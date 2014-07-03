@@ -10,17 +10,24 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Loads properties from a fixed file but can be overriden by specifying the environment variable of value
- * {@link #PROP_FILE_PATH_ENV_KEY} which can be set by providing a VM arguments like:
+ * This class loads properties from the classpath with an option to override by providing the path to an additional
+ * property file.
+ * 
+ * To use this property loading mechanism a file specified by {@link #DEFAULT_PROPERTIES_FILE} HAS to be put in the
+ * classpath. Then any property CAN then be overriden by creating another property file and specify the system property
+ * of {@link #PROP_FILE_PATH_ENV_KEY} which can be set by providing a VM argument like:
  * 
  * <pre>
  * -DTEST_PROPERTY_OVERRIDE_PATH=/home/shahin/local-config.properties
  * </pre>
+ * 
+ * This will override *only* those properties specified in the override file. Other properties will be left untouched.
+ * Finally, all system properties will override any previously loaded property values.
  */
 public class PropertyLoader {
 
     private static final Log LOG = LogFactory.getLog(PropertyLoader.class);
-    private static final String DEFAULT_PROPERTIES_FILE = "base.properties";
+    static final String DEFAULT_PROPERTIES_FILE = "base.properties";
     static final String PROP_FILE_PATH_ENV_KEY = "TEST_PROPERTY_OVERRIDE_PATH";
 
     public static String getProperty(String name) {
@@ -38,6 +45,7 @@ public class PropertyLoader {
         }
 
         addOverridePropertiesIfExists(loadedProperties);
+        addSystemOverridePropertiesIfExists(loadedProperties);
 
         return loadedProperties;
     }
@@ -71,6 +79,11 @@ public class PropertyLoader {
 
     private static String getOverridePropertyFilePath() {
         return System.getProperty(PROP_FILE_PATH_ENV_KEY);
+    }
+
+    private static void addSystemOverridePropertiesIfExists(Properties loadedProperties) {
+        LOG.info("Adding system properties: " + System.getProperties());
+        loadedProperties.putAll(System.getProperties());
     }
 
 }
