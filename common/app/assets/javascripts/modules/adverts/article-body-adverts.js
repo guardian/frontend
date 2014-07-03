@@ -4,16 +4,14 @@ define([
     'lodash/objects/assign',
     'common/utils/detect',
     'common/modules/adverts/dfp',
-    'common/modules/article/spacefinder',
-    'common/utils/deferToLoad'
+    'common/modules/article/spacefinder'
 ], function (
     Component,
     $,
     extend,
     detect,
     dfp,
-    spacefinder,
-    deferToLoad
+    spacefinder
 ) {
 
     function ArticleBodyAdverts(config) {
@@ -47,30 +45,27 @@ define([
     };
 
     ArticleBodyAdverts.prototype.init = function() {
-        var boundInit = function(){
-            var breakpoint  = detect.getBreakpoint();
+        var breakpoint  = detect.getBreakpoint();
 
-            var rules = {
-                minAbove: 250,
-                minBelow: 300,
-                selectors: {
-                    ' > h2': {minAbove: breakpoint === 'mobile' ? 20 : 0, minBelow: 250},
-                    ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250},
-                    ' .ad-slot': {minAbove: 500, minBelow: 500}
-                }
-            };
-
-            if((/wide|desktop|tablet/).test(breakpoint)) {
-                this.insertAdAtP(spacefinder.getParaWithSpace(rules));
-                if(window.innerWidth < 900) {
-                    this.insertAdAtP(spacefinder.getParaWithSpace(rules));
-                }
-            } else if(breakpoint === 'mobile') {
-                this.insertAdAtP(spacefinder.getParaWithSpace(rules));
-                this.insertAdAtP(spacefinder.getParaWithSpace(rules));
+        var rules = {
+            minAbove: 250,
+            minBelow: 300,
+            selectors: {
+                ' > h2': {minAbove: breakpoint === 'mobile' ? 20 : 0, minBelow: 250},
+                ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250},
+                ' .ad-slot': {minAbove: 500, minBelow: 500}
             }
         };
-        deferToLoad(boundInit.bind(this));
+
+        if((/wide|desktop|tablet/).test(breakpoint)) {
+            this.insertAdAtP(spacefinder.getParaWithSpace(rules));
+            if(window.innerWidth < 900) {
+                this.insertAdAtP(spacefinder.getParaWithSpace(rules));
+            }
+        } else if(breakpoint === 'mobile') {
+            this.insertAdAtP(spacefinder.getParaWithSpace(rules));
+            this.insertAdAtP(spacefinder.getParaWithSpace(rules));
+        }
     };
 
     return ArticleBodyAdverts;
