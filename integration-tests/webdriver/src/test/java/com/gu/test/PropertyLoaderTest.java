@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-//@Ignore("Messing up subsequent runs when trying to read override property file so run it manually only")
+@Ignore("Messing up subsequent runs when trying to read override property file so run it manually only")
 public class PropertyLoaderTest {
 
     @Before
