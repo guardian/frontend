@@ -216,9 +216,6 @@ object Navigation {
       case None =>
         topSection.links
     }
-
-
-//  def selectedTopSection: Option[]
 }
 
 trait Zones extends Navigation {

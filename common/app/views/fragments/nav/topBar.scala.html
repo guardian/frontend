@@ -2,11 +2,11 @@
 @import common._
 
 <!-- todo new-navigation--has-local-navigation -->
-<div class="new-navigation  new-navigation--collapsed">
-    <div class="gs-container">
-        <div class="new-navigation__inner">
-        <div class="new-navigation__scroll">
-            @defining(Edition(request).navigation) { navigation =>
+@defining(Edition(request).navigation) { navigation =>
+    <div class="new-navigation new-navigation--collapsed @if(Navigation.subNav(navigation, metaData).isDefined){new-navigation--has-local-navigation}">
+        <div class="gs-container">
+            <div class="new-navigation__inner">
+            <div class="new-navigation__scroll">
                 <div class="new-navigation__container new-navigation__container--first">
                     @fragments.nav.signposting(metaData, navigation)
                     <ul class="local-navigation">
@@ -29,19 +29,18 @@
                         }
                     </ul>
                 </div>
-            }
+            </div>
+            <!-- <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav">…<span class="u-h">All sections</span></a> -->
+            <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav">
+                <i class="new-navigation__toggle-arrow arrow-box"></i>
+                <span class="new-navigation__toggle-label new-navigation__toggle-label--open">all<span class="new-navigation__toggle-label__extra"> sections</span></span>
+                <span class="new-navigation__toggle-label new-navigation__toggle-label--close">close</span>
+            </a>
         </div>
-        <!-- <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav">…<span class="u-h">All sections</span></a> -->
-        <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav">
-            <i class="new-navigation__toggle-arrow arrow-box"></i>
-            <span class="new-navigation__toggle-label new-navigation__toggle-label--open">all<span class="new-navigation__toggle-label__extra"> sections</span></span>
-            <span class="new-navigation__toggle-label new-navigation__toggle-label--close">close</span>
-        </a>
+            <div class="new-navigation__expandable"></div>
+        </div>
     </div>
-        <div class="new-navigation__expandable"></div>
-    </div>
-</div>
-
+}
 @*
     <ul class="">
         @navigation.map { nav =>
