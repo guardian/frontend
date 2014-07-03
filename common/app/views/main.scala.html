@@ -18,6 +18,7 @@
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin),
+            ("has-new-navigation", HttpSwitch(ResponsiveNavSwitch).isSwitchedOn),
             ("has-localnav", Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
         itemscope itemtype="http://schema.org/WebPage">
 
