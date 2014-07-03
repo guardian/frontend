@@ -1,0 +1,21 @@
+@(metaData: MetaData, navigation: Seq[common.NavItem])(implicit request: RequestHeader)
+
+<ul class="signposting">
+    <li class="signposting__item signposting__item--home">
+        <a class="signposting__action" href="/uk">home</a>
+    </li>
+
+    @Navigation.topLevelItem(navigation, metaData).map{ link =>
+        <li class="signposting__item signposting__item--parent">
+            <span class="signposting__separator"><span class="signposting__separator__inner"></span></span>
+            <a class="signposting__action" href="@LinkTo{@link.name.href}">@Html(link.name.title)</a>
+        </li>
+    }
+
+    @Navigation.subNav(navigation, metaData).map{ link =>
+        <li class="signposting__item signposting__item--current">
+            <span class="signposting__separator"><span class="signposting__separator__inner"></span></span>
+            <a class="signposting__action" href="@LinkTo{@link.href}">@Html(link.title)</a>
+        </li>
+    }
+</ul>

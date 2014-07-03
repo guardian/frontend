@@ -1,6 +1,6 @@
 package common
 
-import model.{Content, Section, Tag, MetaData}
+import model.{Content, MetaData}
 
 case class SectionLink(zone: String, title: String, breadcumbTitle: String, href: String, newWindow: Boolean = false) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
@@ -192,7 +192,6 @@ object Breadcrumbs {
   }
 }
 
-
 // helper for the views
 object Navigation {
 
@@ -202,21 +201,21 @@ object Navigation {
 
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
-  def localNav(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = topLevelItem(navigation, page)
-    .filter(_.links.nonEmpty)
+  def localNav(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = topLevelItem(navigation, page).filter(_.links.nonEmpty)
 
   def sectionOverride(localNav: NavItem, currentSublink: Option[SectionLink]): String = currentSublink.map(_.title).getOrElse(localNav.name.title)
 
   def localNavWithoutCurrent(localNav: NavItem, currentSublink: Option[SectionLink]) =
     localNav.links.filter(_.href != currentSublink.map(_.href).getOrElse(""))
 
-  def rotateByOmittingCurrent(localNav: NavItem, currentSublink: Option[SectionLink]) = currentSublink match {
-    case Some(currentSection) =>
-      val navSlices = localNav.links.span(_.href != currentSection.href)
-      navSlices._2.drop(1) ++ navSlices._1
-    case None =>
-      localNav.links
-  }
+  def rotatedLocalNav(topSection: NavItem, metaData: MetaData): Seq[SectionLink] =
+    topSection.links.find(_.currentFor(metaData)) match {
+      case Some(currentSection) =>
+        val navSlices = topSection.links.span(_.href != currentSection.href)
+        navSlices._2.drop(1) ++ navSlices._1
+      case None =>
+        topSection.links
+    }
 }
 
 trait Zones extends Navigation {
