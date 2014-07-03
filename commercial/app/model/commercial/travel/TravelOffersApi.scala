@@ -45,7 +45,6 @@ object TravelOffersApi extends XmlAdsApi[Offer] {
 
   override def loadAds(): Future[Seq[Offer]] = doIfSwitchedOn {
     url map  { u=>
-      println("####### Going to try to get:" + u)
       val reply: Option[String] = S3.get(u)
       val result: Seq[Offer] = reply.fold(Seq[Offer]()) {r =>
         val elems = transform(r)

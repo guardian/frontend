@@ -15,9 +15,7 @@ object TravelOffersCacheAgent extends Logging with ExecutionContexts {
     val future: Future[Response] = WS.url(u).get
 
     future map { response =>
-      println("##### Saving to: " + travelOffersS3Key)
       S3.putPublic(travelOffersS3Key, response.body, "application/json;charset=utf-8")
-
     }
   }
 }
