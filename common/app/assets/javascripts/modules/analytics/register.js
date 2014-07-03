@@ -56,7 +56,7 @@ define([
         mediator.on('register:error', error);
 
         deferToLoadEvent(function() {
-            window.setTimeout(sendEvent(config), 5000);
+            window.setTimeout(sendEvent.bind(config), 5000);
         });
     }
 

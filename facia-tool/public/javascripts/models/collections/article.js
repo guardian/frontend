@@ -46,6 +46,7 @@ define([
                 'webPublicationDate']);
 
             this.fields = asObservableProps([
+                'isLive',
                 'headline',
                 'trailText',
                 'thumbnail']);
@@ -77,9 +78,14 @@ define([
                 return !!snap.validateId(this.id());
             }, this);
 
-            // Computeds
             this.webPublicationTime = ko.computed(function(){
                 return humanTime(this.props.webPublicationDate());
+            }, this);
+
+            this.viewUrl = ko.computed(function() {
+                return this.fields.isLive() === 'true' ?
+                    (this.meta.href() || this.props.webUrl()) :
+                    vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl());
             }, this);
 
             this.headlineInput  = this.overrider('headline');
@@ -168,7 +174,6 @@ define([
             if (validateMe) {
                  missingProps = [
                     'webUrl',
-                    'webPublicationDate',
                     'fields',
                     'fields.headline'
                  ].filter(function(prop) {return !deepGet(opts, prop);});
@@ -198,7 +203,7 @@ define([
             this.state.sparkUrl(undefined);
             if (vars.model.switches()['facia-tool-sparklines']) {
                 this.state.sparkUrl(
-                    vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':FED24C' : '')
+                    vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':46C430' : '')
                 );
                 this.state.ophanUrl(
                     vars.CONST.ophanBase + '?path=/' + path

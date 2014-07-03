@@ -46,9 +46,14 @@ var Comments = function(context, mediator, options) {
         this.options.order = userPrefs.get('discussion.order');
     }
 
+    this.fetchData = {
+        orderBy: this.options.order,
+        pageSize: 10
+    };
+
     this.endpoint = this.options.commentId ?
-        '/discussion/comment-permalink/' + this.options.order + '/' + this.options.commentId + '.json' :
-        '/discussion/' + this.options.order + this.options.discussionId + '.json';
+        '/discussion/comment-context/'+ this.options.commentId + '.json' :
+        '/discussion/'+ this.options.discussionId + '.json';
 };
 Component.define(Comments);
 
@@ -303,8 +308,7 @@ Comments.prototype.changePage = function(e) {
  */
 Comments.prototype.fetchComments = function(options) {
     var url = '/discussion/'+
-        (options.comment ? 'comment-permalink/' : '')+
-        this.options.order +'/'+
+        (options.comment ? 'comment-context/' : '')+
         (options.comment ? options.comment : this.options.discussionId)+
         '.json?'+ (options.page ? '&page=' + options.page : '') +'&maxResponses=3';
 
@@ -312,7 +316,8 @@ Comments.prototype.fetchComments = function(options) {
         url: url,
         type: 'json',
         method: 'get',
-        crossOrigin: true
+        crossOrigin: true,
+        data: this.fetchData
     }).then(this.renderComments.bind(this));
 };
 
@@ -572,6 +577,7 @@ Comments.prototype.setOrder = function(e) {
         $newComments = $(this.getElem('newComments'));
 
     this.options.order = newWorldOrder;
+    this.fetchData.orderBy = newWorldOrder;
     this.showDiscussion();
     this.loading();
 

@@ -18,15 +18,15 @@
                 <p class="gallery-nav">
 
                     @if(index > 1) {
-                        <a class="gallery-prev control tone-colour" href="?index=@(index - 1)">Previous</a>
+                        <a class="gallery-prev control tone-colour" href="@LinkTo{?index=@(index - 1)}">Previous</a>
                     }
 
                     Image @index of @gallery.size
 
                     @if(index < gallery.size) {
-                        <a class="gallery-next control tone-colour" href="?index=@(index + 1)">Next</a>
+                        <a class="gallery-next control tone-colour" href="@LinkTo{?index=@(index + 1)}">Next</a>
                     } else {
-                        <a class="gallery-next control tone-colour" href="?index=1">Next</a>
+                        <a class="gallery-next control tone-colour" href="@LinkTo{?index=1}">Next</a>
                     }
                 </p>
 

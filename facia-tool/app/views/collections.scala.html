@@ -18,6 +18,19 @@
     </div>
 
     <div class="toolbar" data-bind="visible: true" style="display: none">
+        <div class="toolbar--rhs">
+            <a class="tool tool-draft-mode tool-left-half" data-bind="
+                click: setModeDraft,
+                css: {active: !liveMode()}">Draft front</a
+           ><a class="tool tool-live-mode tool-right-half" data-bind="
+                click: setModeLive,
+                css: {active: liveMode}">Live front</a>
+
+            <a class="tool tool--preview" target="preview" data-bind="
+                attr: { href: previewUrl },
+                text: 'View ' + (liveMode() ? 'live' : 'draft'),
+                visible: front"></a>
+        </div>
 
         <span class="tool-label">Front</span>
         <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
@@ -26,19 +39,6 @@
             visible: frontSparkUrl,
             attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + front()}">
             <img data-bind="attr: {src: frontSparkUrl}" /></a>
-
-        <span class="tool-label">Mode</span>
-        <a class="tool pref-draft" data-bind="
-            click: setModeDraft,
-            css: {active: !liveMode()}">Draft</a
-        ><a class="tool pref-live" data-bind="
-            click: setModeLive,
-            css: {active: liveMode}">Live</a>
-
-        <a class="tool preview" target="preview" data-bind="
-            attr: {href: previewUrl},
-            text: 'View ' + (liveMode() ? 'Live' : 'Draft'),
-            visible: front"></a>
     </div>
 
     <div class="left-col">
@@ -53,7 +53,20 @@
         </div>
 
         <div data-bind="with: latestArticles">
-            <div class="title">Latest Articles</div>
+            <div class="search-tools">
+                <!-- ko if: $root.switches()['facia-tool-draft-content'] -->
+                    <a class="tool tool-draft-content tool-left-half" data-bind="
+                        click: showDrafts,
+                        css: {active: showingDrafts}">Draft content</a
+                   ><a class="tool tool-live-content tool-right-half" data-bind="
+                        click: showLive,
+                        css: {active: !showingDrafts()}">Live content</a>
+                <!-- /ko -->
+                <a class="tool"><i class="icon-refresh icon-white" data-bind="click: refresh"></i></a>
+                <a class="tool"><i class="icon-remove icon-white" data-bind="click: reset"></i></a>
+            </div>
+
+            <div class="title">Latest</div>
 
             <div class="search-form">
                 <div class="search-term">
@@ -85,8 +98,6 @@
                         <!-- /ko -->
                     </div>
                 </div>
-
-                <button class="search-submit"><i class="icon-refresh" data-bind="click: refresh"></i></button>
             </div>
 
             <div data-bind="template: {name: 'template_search_controls'}"></div>
@@ -112,11 +123,11 @@
                         <a class="draft-warning" data-bind="
                             click: $root.setModeDraft,
                             visible: $root.liveMode">
-                            <span class="tool draft-publish draft-warning">!</span>Draft Exists</a>
+                            <span class="tool draft-warning">Has Draft</a>
 
                         <span data-bind="visible: !$root.liveMode()">
                             <a class="tool draft-publish" data-bind="
-                                click: publishDraft">Publish</a>
+                                click: publishDraft">Launch</a>
 
                             <a class="tool draft-discard" data-bind="
                                 click: discardDraft">Discard</a>
@@ -342,7 +353,7 @@
                 </a>
 
                 <a class="tool tool--small tool--small--href" target="_blank" data-bind="
-                    attr: {href: meta.href() || props.webUrl()}">
+                    attr: {href: viewUrl}">
                     <i class="icon-share-alt"></i>
                 </a>
 
@@ -354,7 +365,7 @@
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
                     <a class="headline" target="article" data-bind="
-                        text: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : id),
+                        html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : id),
                         css: {'is-empty': isSnap() && !meta.headline()},
                         attr: {href: id},
                         click: open"></a>
@@ -373,6 +384,10 @@
                             attr: {class: 'is' + (meta.snapCss() ? ' is--' + meta.snapCss() : '')},
                             click: open,
                             text: meta.snapCss() || 'snap'"></span>
+
+                        <span class="is is--draft" data-bind="
+                            visible: fields.isLive() === 'false',
+                            click: open">Draft</span>
 
                         <span class="is is--breaking" data-bind="
                             visible: meta.isBreaking,
