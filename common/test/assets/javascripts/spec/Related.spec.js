@@ -1,4 +1,4 @@
-define(['common/utils/common', 'common/utils/ajax', 'common/modules/onward/related', 'helpers/fixtures'], function(common, ajax, Related, fixtures) {
+define(['common/utils/mediator', 'common/utils/ajax', 'common/modules/onward/related', 'helpers/fixtures'], function(mediator, ajax, Related, fixtures) {
 
     describe("Related", function() {
 
@@ -10,7 +10,7 @@ define(['common/utils/common', 'common/utils/ajax', 'common/modules/onward/relat
                 edition: "UK"
             }});
             callback = sinon.stub();
-            common.mediator.on('modules:related:loaded', callback);
+            mediator.on('modules:related:loaded', callback);
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;

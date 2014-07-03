@@ -5,7 +5,7 @@ define([
     'common/utils/detect'
 ], function (
     $,
-    common,
+    mediator,
     bonzo,
     detect
 ) {

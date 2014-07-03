@@ -1,13 +1,13 @@
-define(['common/utils/common', 'EventEmitter'], function (common, EventEmitter) {
+define(['common/utils/$', 'common/utils/mediator', 'EventEmitter'], function ($, mediator, EventEmitter) {
     
     describe("Common", function() {
         
         it("should contain an shared instance of event emitter", function() {
-            expect(common.mediator instanceof EventEmitter).toBeTruthy();
+            expect(mediator instanceof EventEmitter).toBeTruthy();
         });
         
         it("should contain an shared instance of bonzo/qwery selector engine", function() {
-            expect(common.$g('body').length).toBe(1);
+            expect($('body').length).toBe(1);
         });
 
     });
