@@ -1,19 +1,37 @@
 package discussion.model
 
-import play.api.libs.json.{JsObject, JsArray, JsValue}
+import play.api.libs.json.{JsArray, JsValue}
+import scala.collection.JavaConversions.asScalaIterator
+import org.joda.time.DateTime
+import org.joda.time.Days
+import org.joda.time.DurationFieldType
+import org.joda.time.DateTimeConstants
 
 case class WitnessActivity(
     headline: String,
     webUrl: String,
-    image: String
+    image: String,
+    bodyShort: String,
+    daysAgo: String
 )
 
 object WitnessActivity {
-  def apply(json: JsValue): WitnessActivity = {
-    WitnessActivity(
-      headline = (json \ "headline").as[String],
-      webUrl = (json \ "webUrl").as[String],
-      image = ((json \ "updates").as[JsArray].value.head \ "image" \ "mediumlandscapecropdouble").as[String]
-    )
-  }
+    def apply(json: JsValue): WitnessActivity = {
+        val updates = (json \ "updates").as[JsArray].value.head
+        val body = (updates \ "body").as[String]
+        val bodyTrimmed = body.split(" ",21).dropRight(1).mkString(" ")
+        val daysAgo = Days.daysBetween(new DateTime((updates \ "created").as[String]) , new DateTime() ).getDays()
+        val daysAgoStr = daysAgo match {
+          case 0 => "just now"
+          case 1 => "1 day ago"
+          case default => daysAgo + " days ago"
+        }
+        WitnessActivity(
+            headline = (json \ "headline").as[String],
+            webUrl = (json \ "webUrl").as[String],
+            image = (updates \ "image" \ "mediumlandscapecropdouble").as[String],
+            bodyShort = if(bodyTrimmed.length<body.length) bodyTrimmed+"..."  else bodyTrimmed,
+            daysAgo = daysAgoStr
+        )
+    }
 }

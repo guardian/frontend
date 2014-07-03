@@ -11,14 +11,12 @@
                     <img class="activity-stream__witness-img" src="@w.image" alt="Image for @w.headline">
                 </a>
                 <a href="@w.webUrl" class="activity-stream__witness-description">
-                    <div class="media-body">
-                        <h4 class="lst-title">@w.headline</h4>
-                        <p class="lst-body">** body text to go here **</p>
-                    </div>
+                    <h4>@w.headline</h4>
+                    <span>@w.bodyShort</span>
                 </a>
             </div>
             <div class="activity-stream__witness-meta">
-                <span>5 days ago</span>
+                <span>@w.daysAgo</span>
             </div>
         </div>
 	}
