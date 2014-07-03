@@ -10,7 +10,7 @@ define([
 
     'common/modules/analytics/errors',
     'common/modules/ui/fonts',
-    'common/modules/adverts/userAdTargeting',
+    'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/api',
 
     'common/bootstraps/common',

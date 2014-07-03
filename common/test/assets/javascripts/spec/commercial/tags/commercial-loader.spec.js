@@ -1,4 +1,4 @@
-    define([
+define([
     'common/utils/mediator',
     'common/utils/ajax',
     'common/modules/commercial/loader',

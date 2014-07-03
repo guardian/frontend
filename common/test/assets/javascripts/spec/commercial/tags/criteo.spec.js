@@ -1,7 +1,7 @@
 define([
     'common/utils/$',
     'lodash/arrays/zipObject',
-    'common/modules/analytics/commercial/tags/common/criteo'
+    'common/modules/commercial/tags/criteo'
 ], function(
     $,
     _zipObject,

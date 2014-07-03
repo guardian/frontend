@@ -6,7 +6,7 @@ define([
     'common/utils/config',
     'common/utils/deferToAnalytics',
     'common/utils/url',
-    'common/modules/adverts/dfp',
+    'common/modules/commercial/dfp',
     'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
     'bean',

@@ -4,7 +4,7 @@ define([
     'qwery',
     'lodash/objects/defaults',
     'common/utils/template',
-    'common/modules/adverts/dfp'
+    'common/modules/commercial/dfp'
 ], function (
     $,
     bonzo,

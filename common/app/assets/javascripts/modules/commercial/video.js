@@ -5,7 +5,7 @@ define([
     'bean',
     'common/utils/ajax',
     'common/utils/url',
-    'common/modules/adverts/dfp'
+    'common/modules/commercial/dfp'
 ], function(
     $,
     mediator,

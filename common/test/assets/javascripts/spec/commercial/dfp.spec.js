@@ -3,7 +3,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
-    'common/modules/adverts/dfp',
+    'common/modules/commercial/dfp',
     'helpers/fixtures',
     'common/utils/mediator'
 ], function(

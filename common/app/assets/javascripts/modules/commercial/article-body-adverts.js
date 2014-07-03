@@ -3,7 +3,7 @@ define([
     'common/utils/$',
     'lodash/objects/assign',
     'common/utils/detect',
-    'common/modules/adverts/dfp',
+    'common/modules/commercial/dfp',
     'common/modules/article/spacefinder'
 ], function (
     Component,
