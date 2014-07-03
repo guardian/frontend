@@ -560,7 +560,9 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   def applicationName: String
   def applicationMetrics: Map[String, Double] = Map(
     (s"$applicationName-${FilterCacheHit.name}", FilterCacheHit.getAndReset),
-    (s"$applicationName-${FilterCacheMiss.name}", FilterCacheMiss.getAndReset)
+    (s"$applicationName-${FilterCacheMiss.name}", FilterCacheMiss.getAndReset),
+    ("elastic-content-api-calls", ContentApiMetrics.ElasticHttpTimingMetric.getAndReset.toDouble),
+    ("elastic-content-api-timeouts", ContentApiMetrics.ElasticHttpTimeoutCountMetric.getAndReset.toDouble)
   )
 
   def systemMetrics: Map[String, Double] = Map(
