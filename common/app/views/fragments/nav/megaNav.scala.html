@@ -3,19 +3,17 @@
 
 @defining(Edition(request).navigation) { navigation =>
     @defining(Navigation.topLevelItem(navigation, metaData)) { topLevelSelected =>
-        <ul class="">
+        <ul class="global-navigation">
             @navigation.map { nav =>
-                <li class="@if(nav.currentFor(metaData)){current-section}">
-                    <a class="" href="@LinkTo(nav.name.href)" data-link-name="@nav.name.title">
-                        @if(nav.currentFor(metaData)){&raquo;}
+                <li class="global-navigation__section @if(nav.currentFor(metaData)){global-navigation__section--current}">
+                    <a class="global-navigation__title" href="@LinkTo(nav.name.href)" data-link-name="@nav.name.title">
                         @Html(nav.name.title)
                     </a>
                     @if(nav.links.nonEmpty) {
-                        <ul class="">
+                        <ul class="global-navigation__children">
                             @nav.links.map{ link =>
-                                <li class="@if(link.currentFor(metaData)){current-subsection}">
-                                    <a class="" href="@LinkTo(link.href)" data-link-name="@link.title">
-                                        @if(link.currentFor(metaData)){&raquo;}
+                                <li class="global-navigation__child @if(link.currentFor(metaData)){global-navigation__child--current}">
+                                    <a class="global-navigation__action" href="@LinkTo(link.href)" data-link-name="@link.title">
                                         @Html(link.title)
                                     </a>
                                 </li>

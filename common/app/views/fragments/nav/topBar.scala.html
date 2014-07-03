@@ -1,67 +1,40 @@
 @(metaData: model.MetaData)(implicit request: RequestHeader)
 @import common._
 
-<!-- todo new-navigation--has-local-navigation -->
 @defining(Edition(request).navigation) { navigation =>
     <div class="new-navigation new-navigation--collapsed @if(Navigation.subNav(navigation, metaData).isDefined){new-navigation--has-local-navigation}">
         <div class="gs-container">
             <div class="new-navigation__inner">
-            <div class="new-navigation__scroll">
-                <div class="new-navigation__container new-navigation__container--first">
-                    @fragments.nav.signposting(metaData, navigation)
-                    <ul class="local-navigation">
-                        @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
-                            @Navigation.rotatedLocalNav(topSection, metaData).map{  link =>
-                                <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo{@link.href}">@Html(link.title)</a></li>
+                <div class="new-navigation__scroll">
+                    <div class="new-navigation__container new-navigation__container--first">
+                        @fragments.nav.signposting(metaData, navigation)
+                        <ul class="local-navigation">
+                            @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
+                                @Navigation.rotatedLocalNav(topSection, metaData).map{  link =>
+                                    <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo{@link.href}">@Html(link.title)</a></li>
+                                }
                             }
-                        }
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
 
-                <div class="new-navigation__container new-navigation__container--second">
-                    <ul class="top-navigation">
-                        @navigation.map { nav =>
-                            <!--todo top-navigation__item--home-->
-                            <li class="top-navigation__item @if(nav.currentFor(metaData)){top-navigation__item--current}">
-                                <a class="top-navigation__action" href="@LinkTo(nav.name.href)"
-                                   data-link-name="@nav.name.title">@Html(nav.name.title)</a>
-                            </li>
-                        }
-                    </ul>
+                    <div class="new-navigation__container new-navigation__container--second">
+                        <ul class="top-navigation">
+                            @navigation.filter(!_.currentFor(metaData)).map { nav =>
+                                <li class="top-navigation__item @if(nav.currentFor(metaData)){top-navigation__item--current} @if(Navigation.isEditionFront(nav)){top-navigation__item--home}">
+                                    <a class="top-navigation__action" href="@LinkTo(nav.name.href)" data-link-name="@nav.name.title">@Html(nav.name.title)</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
+                <!-- <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav">…<span class="u-h">All sections</span></a> -->
+                <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav">
+                    <i class="new-navigation__toggle-arrow arrow-box"></i>
+                    <span class="new-navigation__toggle-label new-navigation__toggle-label--open">all<span class="new-navigation__toggle-label__extra"> sections</span></span>
+                    <span class="new-navigation__toggle-label new-navigation__toggle-label--close">close</span>
+                </a>
             </div>
-            <!-- <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav">…<span class="u-h">All sections</span></a> -->
-            <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav">
-                <i class="new-navigation__toggle-arrow arrow-box"></i>
-                <span class="new-navigation__toggle-label new-navigation__toggle-label--open">all<span class="new-navigation__toggle-label__extra"> sections</span></span>
-                <span class="new-navigation__toggle-label new-navigation__toggle-label--close">close</span>
-            </a>
-        </div>
             <div class="new-navigation__expandable"></div>
         </div>
     </div>
 }
-@*
-    <ul class="">
-        @navigation.map { nav =>
-            <li class="@if(nav.currentFor(metaData)){current-section}">
-                <a class="" href="@LinkTo(nav.name.href)" data-link-name="@nav.name.title">
-                    @Html(nav.name.title)
-                </a>
-            </li>
-        }
-    </ul>
-    <ul>
-        @Navigation.localNav(navigation, metaData).map { localNav =>
-            @localNav.links.map { link =>
-                <li class="">
-                    <a class="@if(link.currentFor(metaData)){current-section}"
-                       href="@LinkTo(link.href)" data-link-name="@link.title">
-                        @Html(link.title)
-                    </a>
-                </li>
-            }
-        }
-    </ul>
-}
-*@
