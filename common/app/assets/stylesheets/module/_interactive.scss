@@ -32,15 +32,12 @@
         }
     }
 
-
-
     @include mq(rightCol) {
         .content__meta-container {
-
             .content__dateline {
                 @include rem((
                     height: $gs-row-height,
-                    padding-top: $gs-baseline/6,
+                    padding-top: $gs-baseline/3,
                     padding-bottom: $gs-baseline
                 ));
             }
@@ -92,7 +89,6 @@
 
     .content__meta-container {
         border-bottom: 0;
-        width: 100%;
 
         @include mq(tablet, rightCol) {
             margin: auto;
@@ -102,6 +98,7 @@
         }
         @include mq(rightCol) {
             max-width: none;
+            width: 100%;
         }
         @include mq(leftCol) {
             position: relative;
@@ -118,37 +115,40 @@
         }
     }
 
+    .content-meta {
+        @include mq(tablet) {
+            @include rem((
+                padding-top: $gs-baseline/2
+            ))
+        }
+    }
     .content__headline,
     .content-meta {
         @include mq(leftCol) {
+            @include box-sizing(border-box);
             float: left;
             clear: left;
+            width: 50%;
             @include rem((
                 margin-left: -(gs-span(2) + $gs-gutter),
-                width: gs-span(6),
-                margin-right: $gs-gutter
+                padding-right: $gs-gutter
             ));
         }
         @include mq(wide) {
             @include rem((
-                margin-left: -(gs-span(3) + $gs-gutter),
-                width: gs-span(8)
+                margin-left: -(gs-span(3) + $gs-gutter)
             ));
         }
     }
 
     .content__standfirst {
         @include mq(leftCol) {
-            @include rem((
-                margin-bottom: $gs-baseline*2
-            ));
-        }
-        @include mq(leftCol) {
             float: left;
+            @include box-sizing(border-box);
+            width: 50%;
             @include rem((
                 padding-top: $gs-baseline/6,
-                margin-right: -(gs-span(4) + $gs-gutter),
-                width: gs-span(6)
+                margin-bottom: $gs-baseline*2
             ));
         }
         @include mq(wide) {
@@ -161,11 +161,10 @@
 
     .content__head {
         .content__main-column {
-            @include mq(rightCol, leftCol) {
+            @include mq(rightCol) {
+                width: 100%;
+                max-width: none;
                 margin-right: 0;
-                @include rem((
-                    max-width: gs-span(9)
-                ));
             }
         }
     }
