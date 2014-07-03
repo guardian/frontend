@@ -4,8 +4,6 @@ define([
 
     var options = {
             reconnection: false
-            //reconnectionDelay: 2000,
-            //reconnectionDelayMax: 20000
         },
         log = window.console.log.bind(window.console);
 
