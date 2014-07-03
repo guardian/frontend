@@ -1,18 +1,18 @@
 package dfp
 
 import common.ExecutionContexts
-import play.api.libs.json.Json._
-import scala.concurrent.future
-import tools.Store
-import play.api.libs.json.{Json, JsValue, Writes}
-import model.AdReports
-import org.joda.time.DateTime
 import implicits.Dates
+import org.joda.time.DateTime
+import play.api.libs.json.Json._
+import play.api.libs.json.{JsValue, Json, Writes}
+import tools.Store
+
+import scala.concurrent.future
 
 object DfpDataCacheJob extends ExecutionContexts with Dates{
 
-  private implicit val targetWrites = new Writes[Target] {
-    def writes(target: Target): JsValue = {
+  private implicit val customTargetWrites = new Writes[CustomTarget] {
+    def writes(target: CustomTarget): JsValue = {
       Json.obj(
         "name" -> target.name,
         "op" -> target.op,
@@ -21,11 +21,41 @@ object DfpDataCacheJob extends ExecutionContexts with Dates{
     }
   }
 
-  private implicit val targetSetWrites = new Writes[TargetSet] {
-    def writes(targetSet: TargetSet): JsValue = {
+  private implicit val customTargetSetWrites = new Writes[CustomTargetSet] {
+    def writes(targetSet: CustomTargetSet): JsValue = {
       Json.obj(
         "op" -> targetSet.op,
         "targets" -> targetSet.targets
+      )
+    }
+  }
+
+  private implicit val geoTargetWrites = new Writes[GeoTarget] {
+    def writes(geoTarget: GeoTarget): JsValue = {
+      Json.obj(
+        "id" -> geoTarget.id,
+        "parentId" -> geoTarget.parentId,
+        "locationType" -> geoTarget.locationType,
+        "name" -> geoTarget.name
+      )
+    }
+  }
+
+  private implicit val adUnitWrites = new Writes[GuAdUnit] {
+    def writes(adUnit: GuAdUnit): JsValue = {
+      Json.obj(
+        "id" -> adUnit.id,
+        "path" -> adUnit.path
+      )
+    }
+  }
+
+  private implicit val targetingWrites = new Writes[GuTargeting] {
+    def writes(targeting: GuTargeting): JsValue = {
+      Json.obj(
+        "adUnits" -> targeting.adUnits,
+        "geoTargets" -> targeting.geoTargets,
+        "customTargetSets" -> targeting.customTargetSets
       )
     }
   }
@@ -34,29 +64,31 @@ object DfpDataCacheJob extends ExecutionContexts with Dates{
     def writes(lineItem: GuLineItem ): JsValue = {
       Json.obj(
         "id" -> lineItem.id,
+        "name" -> lineItem.name,
+        "isPageSkin" -> lineItem.isPageSkin,
         "sponsor" -> lineItem.sponsor,
-        "targetSets" -> lineItem.targetSets
+        "targeting" -> lineItem.targeting
       )
     }
   }
 
   def run() {
     future {
-      val dfpLineItems = DfpApi.getAllCurrentDfpLineItems
-      if (dfpLineItems.nonEmpty) {
+      val data = DfpDataExtractor(DfpDataHydrator.loadCurrentLineItems())
+
+      if (data.isValid) {
         val now = DateTime.now().toHttpDateTimeString
-        val lineItems = DfpApi.hydrateWithUsefulValues(dfpLineItems)
 
-        val sponsoredTags: Seq[Sponsorship] = DfpApi.filterOutSponsoredTagsFrom(lineItems)
-        Store.putDfpSponsoredTags(stringify(SponsorshipReport(now, sponsoredTags).toJson))
+        val sponsorships = data.sponsorships
+        Store.putDfpSponsoredTags(stringify(SponsorshipReport(now, sponsorships).toJson()))
 
-        val advertisementTags: Seq[Sponsorship] = DfpApi.filterOutAdvertisementFeatureTagsFrom(lineItems)
-        Store.putDfpAdvertisementFeatureTags(stringify(SponsorshipReport(now, advertisementTags).toJson))
+        val advertisementFeatureSponsorships = data.advertisementFeatureSponsorships
+        Store.putDfpAdvertisementFeatureTags(stringify(SponsorshipReport(now, advertisementFeatureSponsorships).toJson()))
 
-        val pageSkinSponsorships: Seq[PageSkinSponsorship] = DfpApi.fetchAdUnitsThatAreTargettedByPageSkins(dfpLineItems)
-        Store.putDfpPageSkinAdUnits(stringify(PageSkinSponsorshipReport(now, pageSkinSponsorships).toJson))
+        val pageSkinSponsorships = data.pageSkinSponsorships
+        Store.putDfpPageSkinAdUnits(stringify(PageSkinSponsorshipReport(now, pageSkinSponsorships).toJson()))
 
-        Store.putDfpLineItemsReport(stringify(toJson(lineItems)))
+        Store.putDfpLineItemsReport(stringify(toJson(data.lineItems)))
       }
     }
   }

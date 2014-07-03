@@ -1,6 +1,6 @@
 package dfp
 
-case class Target(name: String, op: String, values: Seq[String]) {
+case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   def isPositive(targetName: String) = name == targetName && op == "IS"
 
@@ -14,8 +14,8 @@ case class Target(name: String, op: String, values: Seq[String]) {
 }
 
 
-case class TargetSet(op: String, targets: Seq[Target]) {
-  def filterTags(bySlotType: Target => Boolean) ={
+case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
+  def filterTags(bySlotType: CustomTarget => Boolean) = {
     if (targets exists bySlotType) {
       targets.filter(_.isTag).flatMap(_.values).distinct
     } else Nil
@@ -27,9 +27,18 @@ case class TargetSet(op: String, targets: Seq[Target]) {
 }
 
 
-case class GuLineItem(id: Long, sponsor: Option[String], targetSets: Seq[TargetSet]) {
+case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name: String)
 
-  val sponsoredTags = targetSets.flatMap(_.sponsoredTags).distinct
 
-  val advertisementFeatureTags = targetSets.flatMap(_.advertisementFeatureTags).distinct
+case class GuAdUnit(id: String, path: Seq[String])
+
+
+case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargets: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet])
+
+
+case class GuLineItem(id: Long, name: String, isPageSkin: Boolean, sponsor: Option[String], targeting: GuTargeting) {
+
+  val sponsoredTags: Seq[String] = targeting.customTargetSets.flatMap(_.sponsoredTags).distinct
+
+  val advertisementFeatureTags: Seq[String] = targeting.customTargetSets.flatMap(_.advertisementFeatureTags).distinct
 }
