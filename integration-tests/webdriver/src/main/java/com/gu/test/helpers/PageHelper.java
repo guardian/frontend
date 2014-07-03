@@ -1,37 +1,50 @@
 package com.gu.test.helpers;
 
+import static com.gu.test.PropertyLoader.getProperty;
+
+import org.openqa.selenium.WebDriver;
+
 import com.gu.test.pages.Article;
 import com.gu.test.pages.FrontPage;
-import org.openqa.selenium.WebDriver;
+import com.gu.test.pages.LiveBlog;
 
 public class PageHelper {
     private WebDriver driver;
-    protected final String baseUrl = "http://m.code.dev-theguardian.com";
-    protected final String betaSite = "/testcard";
+    protected final String BASE_URL = getProperty("baseUrl");
+    protected final String TEST_CARD = getProperty("testCard");
+    protected final String liveSite = "http://www.theguardian.com/uk";
 
     public PageHelper(WebDriver driver) {
         this.driver = driver;
     }
 
     public Object getBaseUrl() {
-        return this.baseUrl;
+        return BASE_URL;
     }
 
     public FrontPage goToFronts() {
-        String frontPageURL = this.getBaseUrl() + betaSite;
-        driver.get(frontPageURL);
+        driver.get(forceBetaUrl(BASE_URL + TEST_CARD));
         return new FrontPage(driver);
     }
 
+    private String forceBetaUrl(String originalUrl) {
+        return BASE_URL + "/preference/platform/mobile?page=" + originalUrl + "&view=mobile";
+    }
+
     public Article goToArticle(String article) {
-        driver.get(this.baseUrl + article);
-        WaitHelper.waitForArticleLoad(driver);
+        driver.get(forceBetaUrl(BASE_URL + article));
+        WaitHelper.waitForPageLoad(driver);
         return new Article(driver);
     }
 
+    public LiveBlog goToLiveBlog(String blog) {
+        driver.get(forceBetaUrl(BASE_URL + blog));
+        WaitHelper.waitForPageLoad(driver);
+        return new LiveBlog(driver);
+    }
+
     public FrontPage goToFrontsForTracking() {
-        String frontPageURL = "http://www.theguardian.com/uk?view=mobile";
-        driver.get(frontPageURL);
+        driver.get(forceBetaUrl(liveSite));
         return new FrontPage(driver);
     }
 

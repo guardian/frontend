@@ -1,14 +1,12 @@
 package com.gu.test.Fronts;
 
 import com.gu.test.helpers.PageHelper;
-import com.gu.test.pages.Article;
 import com.gu.test.pages.FrontPage;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.concurrent.TimeUnit;
+import static com.gu.test.WebDriverFactory.createWebDriver;
 
 public class BasicPageNavigationTest {
     WebDriver driver;
@@ -17,8 +15,7 @@ public class BasicPageNavigationTest {
 
     @Before
     public void setUp() throws Exception {
-        driver = new FirefoxDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver = createWebDriver();
         pageHelper = new PageHelper(driver);
         fronts = pageHelper.goToFronts();
     }

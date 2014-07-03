@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class WaitHelper {
 
-    public static void waitForArticleLoad(WebDriver driver) {
+    public static void waitForPageLoad(WebDriver driver) {
         ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
                 return ((JavascriptExecutor) driver).executeScript("return document.readyState")
@@ -16,7 +16,7 @@ public class WaitHelper {
             }
         };
 
-        Wait<WebDriver> wait = new WebDriverWait(driver, 30);
+        Wait<WebDriver> wait = new WebDriverWait(driver, 40);
         try {
             wait.until(expectation);
         } catch (Throwable error) {

@@ -1,34 +1,26 @@
 package com.gu.test.Article;
 
-import com.gu.test.helpers.PageHelper;
-import com.gu.test.pages.Article;
-import org.junit.After;
+import static com.gu.test.PropertyLoader.getProperty;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 
-import static com.gu.test.WebDriverFactory.createWebDriver;
+import com.gu.test.SeleniumTestCase;
+import com.gu.test.pages.Article;
 
-public class ArticleCommentTest {
-    WebDriver driver;
-    private PageHelper pageHelper;
+public class ArticleCommentTest extends SeleniumTestCase {
     private Article testArticle;
+    private String ARTICLE_WITH_COMMENTS = getProperty("articleWithComments");
 
     @Before
     public void setUp() throws Exception {
-        driver = createWebDriver();
-        pageHelper = new PageHelper(driver);
-        testArticle = pageHelper.goToArticle("/science/grrlscientist/2012/aug/07/3");
+        super.setUp();
+        testArticle = pageHelper.goToArticle(ARTICLE_WITH_COMMENTS);
     }
 
     @Test
     public void articleHasComments() {
         Assert.assertTrue("Failure: Comments missing from page", testArticle.hasComments());
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        pageHelper.endTest();
     }
 }

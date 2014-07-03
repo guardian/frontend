@@ -1,9 +1,11 @@
 package com.gu.test.Common;
 
-import com.gu.test.helpers.PageHelper;
 import com.gu.test.helpers.RetryRule;
+import com.gu.test.helpers.PageHelper;
+
 import com.gu.test.shared.NavigationBar;
 import org.junit.*;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 
 import static com.gu.test.WebDriverFactory.createWebDriver;
@@ -13,23 +15,25 @@ public class NavigationBarTest {
     private PageHelper pageHelper;
     private NavigationBar navigationBar;
 
+    @Rule
+    public RetryRule retry = new RetryRule(2);
+
     @Before
     public void setUp() throws Exception {
         driver = createWebDriver();
         pageHelper = new PageHelper(driver);
         navigationBar = new NavigationBar(driver);
         pageHelper.goToFronts();
+        driver.manage().addCookie(new Cookie("GU_EDITION", "UK"));
+        driver.navigate().refresh();
     }
-
-    @Rule
-    public RetryRule retryRule = new RetryRule(2);
 
     @Test
     public void changingFromUKtoUSEdition() throws Exception {
         navigationBar.goToEdition("US");
         Assert.assertTrue("Failure: not seeing US fronts", driver.getCurrentUrl().contentEquals(pageHelper.getBaseUrl() + "/us"));
     }
-
+    
     @Test
     public void changingFromUKtoAUEdition() throws Exception {
         navigationBar.goToEdition("AU");

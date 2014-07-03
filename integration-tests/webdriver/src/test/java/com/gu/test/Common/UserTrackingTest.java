@@ -2,12 +2,11 @@ package com.gu.test.Common;
 
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import com.gu.test.HttpMock;
+import com.gu.test.helpers.RetryRule;
 import com.gu.test.helpers.PageHelper;
 import com.gu.test.pages.FrontPage;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -42,8 +41,13 @@ public class UserTrackingTest {
         cap.setCapability(CapabilityType.PROXY, proxy);
         driver = new FirefoxDriver(cap);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().addCookie(new Cookie("GU_VIEW", "responsive"));
+        driver.manage().addCookie(new Cookie("GU_EDITION", "UK"));
         return driver;
     }
+
+    @Rule
+    public RetryRule retry = new RetryRule(2);
 
     @Test
     public void theCorrectTrackingInformationShouldBeSentForSportArticle() throws Exception {
@@ -57,7 +61,6 @@ public class UserTrackingTest {
                 contains = true;
             }
         }
-
         Assert.assertTrue("Failure: Tracking Not Found", contains);
     }
 
@@ -73,10 +76,8 @@ public class UserTrackingTest {
                 contains = true;
             }
         }
-
         Assert.assertTrue("Failure: Tracking Not Found", contains);
     }
-
 
     @After
     public void tearDown() throws Exception {
