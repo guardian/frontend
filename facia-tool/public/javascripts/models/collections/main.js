@@ -257,7 +257,7 @@ define([
                     wasPopstate = false;
                     loadCollections(front);
 
-                    if (front && !model.liveMode()) {
+                    if (!model.liveMode()) {
                         model.pressDraftFront();
                     }
                 });
