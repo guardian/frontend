@@ -285,21 +285,6 @@
             padding-right: $gs-gutter
         ));
     }
-
-    .commentcount {
-        .content__head & {
-            display: none;
-        }
-
-        .content__meta-container & {
-            display: block;
-            @include rem((
-                padding-top: ($gs-baseline/3),
-                margin-bottom: $gs-baseline
-            ));
-            border-top: 1px dotted $c-neutral5;
-        }
-    }
 }
 
 @include mq(wide) {
@@ -333,7 +318,6 @@
     }
 }
 
-
 .article-elongator {
     position: relative;
 
@@ -353,65 +337,5 @@
     //This is required for football components, please do not remove
     @include mq(rightCol) {
         display: none;
-    }
-}
-
-.commentcount {
-    display: none;
-    @include fs-data(3);
-
-    i {
-        vertical-align: bottom;
-        @include rem((
-            margin-right: 3px,
-            vertical-align: -4px
-        ));
-    }
-
-    .content__head & {
-        display: block;
-        @include rem((
-            margin-bottom: $gs-baseline
-        ));
-    }
-
-    @include mq(tablet) {
-        display: block;
-        position: absolute;
-        right: 0;
-        @include rem((
-            top: $gs-baseline/2
-        ));
-
-        .content__head & {
-            display: none;
-        }
-    }
-
-    @include mq(leftCol) {
-        @include rem((
-            height : gs-height(1)
-        ));
-        position: static;
-        @include box-sizing(border-box);
-    }
-}
-
-.commentcount__label {
-    .content__head & {
-        @extend %u-h;
-    }
-}
-
-.breadcrumb-list__item {
-    color: lighten($c-neutral2, 15%);
-    @include fs-data(1);
-}
-
-.breadcrumb-list__item + .breadcrumb-list__item {
-    .breadcrumb-keyword:before {
-        content: '› ';
-        display: inline-block;
-        margin-right: $gs-gutter/5;
     }
 }
