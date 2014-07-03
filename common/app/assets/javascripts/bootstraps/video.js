@@ -199,9 +199,17 @@ define([
                     });
 
                     vjs.ready(function () {
+                        var player = this;
+
+                        player.loadingSpinner.contentEl().innerHTML =
+                            '<div class="pamplemousse">' +
+                            '<div class="pamplemousse__pip"></div>' +
+                            '<div class="pamplemousse__pip"></div>' +
+                            '<div class="pamplemousse__pip"></div>' +
+                            '</div>';
 
                         deferToAnalytics(function () {
-                            var player = this;
+
                             modules.initOmnitureTracking(el);
                             modules.initOphanTracking(el);
                             modules.bindPrerollEvents(player, el);
@@ -214,13 +222,6 @@ define([
                             player.vast({
                                 url: modules.getVastUrl()
                             });
-
-                            player.loadingSpinner.contentEl().innerHTML =
-                                '<div class="pamplemousse">' +
-                                '<div class="pamplemousse__pip"></div>' +
-                                '<div class="pamplemousse__pip"></div>' +
-                                '<div class="pamplemousse__pip"></div>' +
-                                '</div>';
                         });
                     });
 
