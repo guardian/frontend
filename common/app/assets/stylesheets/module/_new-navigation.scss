@@ -590,7 +590,12 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     right: 0;
     top: 0;
     @include box-sizing(border-box);
+    @include f-header;
     font-weight: 900;
+    @include rem((
+        font-size: 16px,
+        line-height: $gs-row-height
+    ));
     @include rem((
         min-width: $new-navigation-toggler-width,
         padding-left: $gs-gutter,
