@@ -93,7 +93,7 @@ define([
                 '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
-        function detectPressFailure() {
+        model.deferredDetectPressFailure = _.debounce(function () {
             model.statusPressFailure(false);
 
             if (model.switches()['facia-tool-check-press-lastmodified'] && model.front()) {
@@ -115,26 +115,29 @@ define([
                     }
                 });
             }
-        }
+        }, vars.CONST.detectPressFailureMs || 10000);
 
-        var deferredDetectPressFailure = _.debounce(detectPressFailure, vars.CONST.detectPressFailureMs || 10000);
-
-        function pressFront() {
+        model.pressLiveFront = function () {
             model.statusPressFailure(false);
-
             if (model.front()) {
                 authedAjax.request({
-                    url: '/collection/update/' + model.collections()[0].id,
+                    url: '/press/live/' + model.front(),
                     method: 'post'
                 })
                 .always(function() {
-                    deferredDetectPressFailure();
+                    model.deferredDetectPressFailure();
                 });
             }
-        }
+        };
 
-        model.deferredDetectPressFailure = deferredDetectPressFailure;
-        model.pressFront = pressFront;
+        model.pressDraftFront = function () {
+            if (model.front()) {
+                authedAjax.request({
+                    url: '/press/draft/' + model.front(),
+                    method: 'post'
+                });
+            }
+        };
 
         function getFront() {
             return queryParams().front;
@@ -253,13 +256,21 @@ define([
                     }
                     wasPopstate = false;
                     loadCollections(front);
+
+                    if (front && !model.liveMode()) {
+                        model.pressDraftFront();
+                    }
                 });
 
-                model.liveMode.subscribe(function() {
+                model.liveMode.subscribe(function(isLive) {
                     _.each(model.collections(), function(collection) {
                         collection.closeAllArticles();
                         collection.populate();
                     });
+
+                    if (!isLive) {
+                        model.pressDraftFront();
+                    }
                 });
 
                 updateScrollables();

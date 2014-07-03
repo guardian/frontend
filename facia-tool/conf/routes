@@ -28,7 +28,9 @@ GET           /publish-all/comet         controllers.FaciaToolController.publish
 
 POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
 POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
-POST          /collection/update/*id     controllers.FaciaToolController.updateCollection(id)
+
+POST          /press/live/*path          controllers.FaciaToolController.pressLivePath(path)
+POST          /press/draft/*path         controllers.FaciaToolController.pressDraftPath(path)
 
 GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
 
