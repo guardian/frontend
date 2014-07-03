@@ -3,6 +3,7 @@
 @import views.support.MetadataJson
 @import views.support.JavaScriptVariableName
 @import common.Edition
+@import dev.HttpSwitch
 @import org.joda.time.DateTime
 
 {
@@ -30,7 +31,10 @@
         }
     },
     "switches" : { @{Html(conf.Switches.all.map{ switch =>
-            s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""
+            if(conf.Switches.httpSwitches.contains(switch))
+                s""""${JavaScriptVariableName(switch.name)}":${HttpSwitch(switch).isSwitchedOn}"""
+            else
+                s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""
         }.mkString(","))}
     },
     "modules": { }

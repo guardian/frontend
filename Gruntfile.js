@@ -166,6 +166,17 @@ module.exports = function (grunt) {
                     generateSourceMaps: true,
                     preserveLicenseComments: false
                 }
+            },
+            dev: {
+                options: {
+                    baseUrl: 'common/app/assets/javascripts',
+                    name: 'bootstraps/dev',
+                    out: staticTargetDir + 'javascripts/bootstraps/dev.js',
+                    paths: {
+                        socketio: 'components/socket.io-client/socket.io'
+                    }
+                },
+                exclude: ['core','bootstraps/app']
             }
         },
 
@@ -740,28 +751,15 @@ module.exports = function (grunt) {
             }
         },
 
-        reloadlet: {
+        csdevmode: {
             options: {
-                port: 8005
+                srcBasePath: 'common/app/assets/stylesheets/',
+                destBasePath: staticTargetDir + '/stylesheets'
             },
             main: {
-                sass: {
-                    src: 'common/app/assets/stylesheets/',
-                    dest: 'static/target/stylesheets'
-                },
-                assets: [
-                    {
-                        local: 'static/target/stylesheets/head.default.css',
-                        remote: '/assets/stylesheets/head.default.css'
-                    },
-                    {
-                        local: 'static/target/stylesheets/global.css',
-                        remote: '/assets/stylesheets/global.css'
-                    }
-                ]
+                assets: ['global', 'head.default']
             }
         }
-
     });
 
     // Load the plugins
@@ -782,8 +780,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-asset-monitor');
     grunt.loadNpmTasks('grunt-text-replace');
-    grunt.loadNpmTasks('grunt-reloadlet');
     grunt.loadNpmTasks('grunt-pagespeed');
+    grunt.loadNpmTasks('grunt-csdevmode');
 
     // Default task
     grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);

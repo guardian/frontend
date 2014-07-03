@@ -64,10 +64,8 @@ define([
         },
 
         initOmnitureTracking: function(playerEl) {
-            deferToAnalytics(function(){
-                new OmnitureMedia(playerEl).init();
-                bonzo(playerEl).addClass('tracking-applied');
-            });
+            new OmnitureMedia(playerEl).init();
+            bonzo(playerEl).addClass('tracking-applied');
         },
 
         bindPrerollEvents: function(player, videoEl) {
@@ -201,27 +199,29 @@ define([
                     });
 
                     vjs.ready(function () {
-                        var player = this;
-                        modules.initOmnitureTracking(el);
-                        modules.initOphanTracking(el);
-                        modules.bindPrerollEvents(player, el);
 
-                        // Init plugins
-                        player.adCountDown();
-                        player.ads({
-                            timeout: 3000
+                        deferToAnalytics(function () {
+                            var player = this;
+                            modules.initOmnitureTracking(el);
+                            modules.initOphanTracking(el);
+                            modules.bindPrerollEvents(player, el);
+
+                            // Init plugins
+                            player.adCountDown();
+                            player.ads({
+                                timeout: 3000
+                            });
+                            player.vast({
+                                url: modules.getVastUrl()
+                            });
+
+                            player.loadingSpinner.contentEl().innerHTML =
+                                '<div class="pamplemousse">' +
+                                '<div class="pamplemousse__pip"></div>' +
+                                '<div class="pamplemousse__pip"></div>' +
+                                '<div class="pamplemousse__pip"></div>' +
+                                '</div>';
                         });
-                        player.vast({
-                            url: modules.getVastUrl()
-                        });
-
-                        player.loadingSpinner.contentEl().innerHTML =
-                            '<div class="pamplemousse">' +
-                                '<div class="pamplemousse__pip"></div>' +
-                                '<div class="pamplemousse__pip"></div>' +
-                                '<div class="pamplemousse__pip"></div>' +
-                            '</div>';
-
                     });
 
                     // built in vjs-user-active is buggy so using custom implementation
