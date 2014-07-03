@@ -143,20 +143,6 @@ object S3Metrics {
 }
 
 object ContentApiMetrics {
-  object HttpTimingMetric extends FrontendTimingMetric(
-    "performance",
-    "content-api-calls",
-    "Content API calls",
-    "outgoing requests to content api"
-  ) with TimingMetricLogging
-
-  object HttpTimeoutCountMetric extends SimpleCountMetric(
-    "timeout",
-    "content-api-timeouts",
-    "Content API timeouts",
-    "Content api calls that timeout"
-  )
-
   object ElasticHttpTimingMetric extends FrontendTimingMetric(
     "performance",
     "elastic-content-api-calls",
@@ -194,8 +180,6 @@ object ContentApiMetrics {
 
 
   val all: Seq[Metric] = Seq(
-    HttpTimingMetric,
-    HttpTimeoutCountMetric,
     ElasticHttpTimeoutCountMetric,
     ElasticHttpTimingMetric,
     ContentApi404Metric,

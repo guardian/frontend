@@ -30,8 +30,6 @@ object Global extends WithFilters(Gzipper)
     ("front-press-live-success", FaciaToolMetrics.FrontPressLiveSuccess.getAndReset.toDouble),
     ("front-press-cron-success", FaciaToolMetrics.FrontPressCronSuccess.getAndReset.toDouble),
     ("front-press-cron-failure", FaciaToolMetrics.FrontPressCronFailure.getAndReset.toDouble),
-    ("solr-content-api-calls", ContentApiMetrics.HttpTimingMetric.getAndReset.toDouble),
-    ("solr-content-api-timeouts", ContentApiMetrics.HttpTimeoutCountMetric.getAndReset.toDouble),
     ("content-api-404", ContentApiMetrics.ContentApi404Metric.getAndReset.toDouble),
     ("content-api-client-parse-exceptions", ContentApiMetrics.ContentApiJsonParseExceptionMetric.getAndReset.toDouble),
     ("content-api-client-mapping-exceptions", ContentApiMetrics.ContentApiJsonMappingExceptionMetric.getAndReset.toDouble),
