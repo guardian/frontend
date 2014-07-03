@@ -21,6 +21,7 @@ import org.apache.commons.logging.LogFactory;
  * </pre>
  * 
  * This will override *only* those properties specified in the override file. Other properties will be left untouched.
+ * Finally, all system properties will override any previously loaded property values.
  */
 public class PropertyLoader {
 
@@ -51,6 +52,8 @@ public class PropertyLoader {
         }
 
         addOverridePropertiesIfExists(loadedProperties);
+
+        addSystemOverridePropertiesIfExists(loadedProperties);
 
         return loadedProperties;
     }
@@ -84,6 +87,10 @@ public class PropertyLoader {
 
     private static String getOverridePropertyFilePath() {
         return System.getProperty(PROP_FILE_PATH_ENV_KEY);
+    }
+
+    private static void addSystemOverridePropertiesIfExists(Properties loadedProperties) {
+        loadedProperties.putAll(System.getProperties());
     }
 
 }

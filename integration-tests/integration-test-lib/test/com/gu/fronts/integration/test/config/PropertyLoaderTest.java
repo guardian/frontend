@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore("Only run as single test as otherwise the set/unset of system property might interfere with other tests.")
+//@Ignore("Only run as single test as otherwise the set/unset of system property might interfere with other tests.")
 public class PropertyLoaderTest {
 
     @Before
@@ -38,6 +38,13 @@ public class PropertyLoaderTest {
     @Test
     public void shouldLoadNewPropertyValueFromOverridePropertyFile() {
         assertEquals("overriden2", PropertyLoader.getProperty("only.in.override"));
+    }
+    
+    @Test
+    public void shouldLoadPropertyValueFromSystemProperty() {
+        System.setProperty("only.in.override", "system_overriden");
+        assertEquals("system_overriden", PropertyLoader.getProperty("only.in.override"));
+        System.clearProperty("only.in.override");
     }
 
 }
