@@ -119,7 +119,7 @@ define([
                 authedAjax.request({
                     url: url
                 }).then(function(data) {
-                    var rawArticles = data.response && data.response[propName] ? data.response[propName] : [];
+                    var rawArticles = data.response && data.response[propName] ? [].concat(data.response [propName]) : [];
 
                     if (count !== counter) { return; }
 
