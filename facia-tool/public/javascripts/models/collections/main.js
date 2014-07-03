@@ -262,13 +262,13 @@ define([
                     }
                 });
 
-                model.liveMode.subscribe(function(isLive) {
+                model.liveMode.subscribe(function() {
                     _.each(model.collections(), function(collection) {
                         collection.closeAllArticles();
                         collection.populate();
                     });
 
-                    if (!isLive) {
+                    if (!model.liveMode()) {
                         model.pressDraftFront();
                     }
                 });
