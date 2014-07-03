@@ -7,14 +7,17 @@
             <div class="new-navigation__inner">
                 <div class="new-navigation__scroll">
                     <div class="new-navigation__container new-navigation__container--first">
-                        @fragments.nav.signposting(metaData, navigation)
-                        <ul class="local-navigation">
-                            @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
+                        @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
+                            @if(topSection.links.size > 0){
+                                @fragments.nav.signposting(metaData, navigation)
+                            }
+                            <ul class="local-navigation">
+
                                 @Navigation.rotatedLocalNav(topSection, metaData).map{  link =>
                                     <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo{@link.href}">@Html(link.title)</a></li>
                                 }
-                            }
-                        </ul>
+                            </ul>
+                        }
                     </div>
 
                     <div class="new-navigation__container new-navigation__container--second">
