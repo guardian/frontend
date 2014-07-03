@@ -70,12 +70,19 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     overflow: hidden;
     clear: both;
     background: $c-navigation-background;
-    @include fs-header(1);
     @include rem((
-        height: $gs-row-height,
+        height: $gs-row-height
+    ));
+}
+.top-navigation,
+.local-navigation,
+.global-navigation {
+    @include f-bodyCopy;
+    font-weight: bold;
+    @include rem((
+        font-size: 16px,
         line-height: $gs-row-height
     ));
-    font-weight: bold;
 
     a {
         &,
@@ -211,13 +218,14 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
 }
 .global-navigation__children {
     overflow: hidden;
+    background: $c-local-navigation-background;
+
     @include mq($to: tablet) {
         @include rem((
             font-size: 14px,
         ));
         line-height: 2;
     }
-    background: $c-local-navigation-background;
 }
 .local-navigation__item,
 .top-navigation__item {
@@ -376,7 +384,7 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
             display: none;
         }
     }
-    
+
     .global-navigation {
         display: none;
     }
@@ -461,36 +469,37 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
             float: left;
         }
     }
-    .local-navigation__item,
-    .global-navigation__child {
-        @include mq($to: tablet) {
-            float: left;
-            width: 50%;
-            padding-right: 0;
-            @include box-sizing(border-box);
-            @include rem((
-                padding-left: $gs-gutter/2,
-                padding-right: $gs-gutter/2
-            ));
-
-            &:nth-child(2n+1) {
-                clear: both;
-            }
-        }
-        @include mq(mobileLandscape, tablet) {
-            width: 33.3333333333%;
-
-            &:nth-child(n) {
-                clear: none;
-            }
-            &:nth-child(3n+1) {
-                clear: both;
-            }
-        }
-    }
     .local-navigation__action {
         display: block;
         float: left;
+    }
+}
+
+.new-navigation--expanded .local-navigation__item,
+.global-navigation__child {
+    @include mq($to: tablet) {
+        float: left;
+        width: 50%;
+        padding-right: 0;
+        @include box-sizing(border-box);
+        @include rem((
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2
+        ));
+
+        &:nth-child(2n+1) {
+            clear: both;
+        }
+    }
+    @include mq(mobileLandscape, tablet) {
+        width: 33.3333333333%;
+
+        &:nth-child(n) {
+            clear: none;
+        }
+        &:nth-child(3n+1) {
+            clear: both;
+        }
     }
 }
 
