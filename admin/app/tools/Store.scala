@@ -2,9 +2,8 @@ package tools
 
 import common.Logging
 import conf.AdminConfiguration
-import conf.Configuration.commercial.{dfpAdvertisementFeatureTagsDataKey, dfpSponsoredTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpLineItemsKey}
+import conf.Configuration.commercial._
 import services.S3
-import play.api.libs.json.Json
 import dfp.{PageSkinSponsorshipReportParser, PageSkinSponsorshipReport, SponsorshipReport, SponsorshipReportParser}
 import org.joda.time.DateTime
 import implicits.Dates

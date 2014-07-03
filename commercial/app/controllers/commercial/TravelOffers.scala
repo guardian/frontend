@@ -1,6 +1,6 @@
 package controllers.commercial
 
-import model.commercial.travel.{Offer, OffersAgent}
+import model.commercial.travel.{Offer, TravelOffersAgent}
 import model.{NoCache, Cached}
 import performance.MemcachedAction
 import play.api.mvc._
@@ -19,7 +19,7 @@ object TravelOffers extends Controller {
   private def renderTravelOffers(relevance: Relevance[Offer], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
-        (OffersAgent.specificTravelOffers(specificIds) ++ OffersAgent.adsTargetedAt(segment)).distinct match {
+        (TravelOffersAgent.specificTravelOffers(specificIds) ++ TravelOffersAgent.adsTargetedAt(segment)).distinct match {
           case Nil => NoCache(format.nilResult)
           case offers => Cached(componentMaxAge) {
             format.result(relevance.view(offers take 4))

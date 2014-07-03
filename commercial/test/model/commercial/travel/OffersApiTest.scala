@@ -67,12 +67,12 @@ class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
   }
 
   "OffersApi" should "build Offers from XML" in {
-    val offers = OffersApi.parse(xml)
+    val offers = TravelOffersApi.parse(xml)
     offers should be(Fixtures.untaggedOffers)
   }
 
   "Hydrated Offers" should "provide duration in words" in {
-    val offers = OffersApi.parse(xml)
+    val offers = TravelOffersApi.parse(xml)
 
     offers.find(_.id == 3381).head.durationInWords should be("5 nights")
     offers.find(_.id == 5098).head.durationInWords should be("4 nights")

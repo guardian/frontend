@@ -103,7 +103,7 @@ object Countries extends ExecutionContexts with Logging {
 
   def refresh() = {
     val countries = {
-      val currentAds = OffersAgent.currentAds
+      val currentAds = TravelOffersAgent.currentAds
       if (currentAds.isEmpty) defaultCountries
       else currentAds.flatMap(_.countries).distinct
     }

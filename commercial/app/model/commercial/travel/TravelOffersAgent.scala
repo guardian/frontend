@@ -3,7 +3,7 @@ package model.commercial.travel
 import common.{ExecutionContexts, Logging}
 import model.commercial.AdAgent
 
-object OffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
+object TravelOffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
 
   // most popular Travel Offers
   override def defaultAds = currentAds.sortBy(_.position).take(4)
@@ -14,7 +14,7 @@ object OffersAgent extends AdAgent[Offer] with Logging with ExecutionContexts {
   }
 
   def refresh() = {
-    for {offers <- OffersApi.loadAds()}
+    for {offers <- TravelOffersApi.loadAds()}
     yield updateCurrentAds(populateKeywords(offers))
   }
 

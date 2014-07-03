@@ -4,14 +4,16 @@ import org.joda.time.format.DateTimeFormat
 import scala.xml.{Elem, Node}
 import model.commercial.XmlAdsApi
 import conf.{Switches, CommercialConfiguration}
+import scala.concurrent.Future
+import services.S3
 
-object OffersApi extends XmlAdsApi[Offer] {
+object TravelOffersApi extends XmlAdsApi[Offer] {
 
   protected val adTypeName = "Travel Offers"
 
   protected val switch = Switches.TravelOffersFeedSwitch
 
-  protected val url = CommercialConfiguration.getProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
+  protected val url = Some(CommercialConfiguration.travelOffersS3Key)
 
   override protected val loadTimeout = 30000
 
@@ -40,4 +42,18 @@ object OffersApi extends XmlAdsApi[Offer] {
   }
 
   def parse(xml: Elem): Seq[Offer] = (xml \\ "offer") map buildOffer
+
+  override def loadAds(): Future[Seq[Offer]] = doIfSwitchedOn {
+    url map  { u=>
+      println("####### Going to try to get:" + u)
+      val reply: Option[String] = S3.get(u)
+      val result: Seq[Offer] = reply.fold(Seq[Offer]()) {r =>
+        val elems = transform(r)
+        parse(elems)
+      }
+      Future(result)
+    } getOrElse Future(Nil)
+  }
+  
+
 }
