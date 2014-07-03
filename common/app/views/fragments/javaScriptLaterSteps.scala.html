@@ -24,7 +24,8 @@
             core: '@Static("javascripts/core.js")',
             'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")',
             'bootstraps/commercial' : '@Static("javascripts/bootstraps/commercial.js")',
-            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")'
+            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")',
+            'bootstraps/dev' : '@Static("javascripts/bootstraps/dev.js")'
         }
     };
 
@@ -128,6 +129,11 @@
         }
 
         if (guardian.isModernBrowser) {
+
+            @if(play.Play.isDev()) {
+                require(['bootstraps/dev'], function (devmode) { devmode.init(); });
+            }
+
             require(['bootstraps/app'], function(bootstrap) {
                 bootstrap.go();
             });

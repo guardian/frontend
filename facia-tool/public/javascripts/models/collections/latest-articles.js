@@ -111,7 +111,7 @@ define([
                     url += '&content-set=' + (self.showingDrafts() ? 'preview&use-date=last-modified' : 'web-live');
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
-                    url += self.term() ? '&q=' + encodeURIComponent(self.term()) : '';
+                    url += self.term() ? '&q=' + encodeURIComponent(self.term().trim().replace(/ +/g,' AND ')) : '';
                     url += '&' + self.filterType().param + '=' + encodeURIComponent(self.filter());
                     propName = 'results';
                 }
@@ -119,7 +119,7 @@ define([
                 authedAjax.request({
                     url: url
                 }).then(function(data) {
-                    var rawArticles = data.response && data.response[propName] ? data.response[propName] : [];
+                    var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [];
 
                     if (count !== counter) { return; }
 
