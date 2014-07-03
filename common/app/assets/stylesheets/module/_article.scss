@@ -287,7 +287,6 @@
     }
 }
 
-
 @include mq(wide) {
     .article__main-column {
         @include rem((
@@ -318,7 +317,6 @@
         ));
     }
 }
-
 
 .article-elongator {
     position: relative;
