@@ -32,6 +32,31 @@
         }
     }
 
+
+
+    @include mq(rightCol) {
+        .content__meta-container {
+
+            .content__dateline {
+                @include rem((
+                    height: $gs-row-height,
+                    padding-top: $gs-baseline/6,
+                    padding-bottom: $gs-baseline
+                ));
+            }
+            .commentcount {
+                display: block;
+                position: static;
+                @include rem((
+                    padding-top: ($gs-baseline/3),
+                    margin-bottom: $gs-baseline
+                ));
+                border-top: 1px dotted $c-neutral5;
+            }
+        }
+    }
+
+
     .social__head {
         display: none;
     }
