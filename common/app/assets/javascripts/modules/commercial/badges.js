@@ -2,7 +2,7 @@ define([
     'qwery',
     'bonzo',
     'common/utils/$',
-    'common/modules/adverts/dfp',
+    'common/modules/commercial/dfp',
     'lodash/functions/once'
 ], function (
     qwery,

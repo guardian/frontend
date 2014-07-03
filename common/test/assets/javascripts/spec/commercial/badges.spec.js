@@ -1,5 +1,5 @@
 define([
-    'common/modules/adverts/badges',
+    'common/modules/commercial/badges',
     'common/utils/$',
     'qwery',
     'helpers/fixtures'

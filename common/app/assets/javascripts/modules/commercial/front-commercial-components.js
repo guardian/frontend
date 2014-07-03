@@ -2,7 +2,7 @@ define([
     'bonzo',
     'common/utils/$',
     'lodash/functions/once',
-    'common/modules/adverts/dfp'
+    'common/modules/commercial/dfp'
 ], function (
     bonzo,
     $,

@@ -2,7 +2,7 @@ define([
     'common/utils/$',
     'common/utils/detect',
     'lodash/objects/assign',
-    'common/modules/adverts/dfp'
+    'common/modules/commercial/dfp'
 ], function (
     $,
     detect,

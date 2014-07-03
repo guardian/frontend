@@ -1,5 +1,5 @@
 define([
-    'common/modules/analytics/commercial/tags/common/media-math'
+    'common/modules/commercial/tags/media-math'
 ], function(
     mediaMath
 ){

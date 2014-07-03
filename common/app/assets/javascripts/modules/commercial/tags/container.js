@@ -2,14 +2,14 @@
  * A regionalised container for all the commercial tags.
  */
 define([
-    'common/modules/analytics/commercial/tags/common/audience-science',
-    'common/modules/analytics/commercial/tags/common/audience-science-gateway',
-    'common/modules/analytics/commercial/tags/common/imrworldwide',
-    'common/modules/analytics/commercial/tags/common/media-math',
-    'common/modules/analytics/commercial/tags/common/criteo',
-    'common/modules/analytics/commercial/tags/common/remarketing',
-    'common/modules/analytics/commercial/tags/au/amaa',
-    'common/modules/analytics/commercial/tags/au/effective-measure'
+    'common/modules/commercial/tags/audience-science',
+    'common/modules/commercial/tags/audience-science-gateway',
+    'common/modules/commercial/tags/imrworldwide',
+    'common/modules/commercial/tags/media-math',
+    'common/modules/commercial/tags/criteo',
+    'common/modules/commercial/tags/remarketing',
+    'common/modules/commercial/tags/amaa',
+    'common/modules/commercial/tags/effective-measure'
 ], function(
     audienceScience,
     audienceScienceGateway,

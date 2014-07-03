@@ -2,7 +2,7 @@ define([
     'common/utils/$',
     'bonzo',
     'helpers/fixtures',
-    'common/modules/adverts/article-aside-adverts'
+    'common/modules/commercial/article-aside-adverts'
 ], function(
     $,
     bonzo,

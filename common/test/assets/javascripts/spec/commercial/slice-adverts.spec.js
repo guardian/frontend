@@ -4,7 +4,7 @@ define([
     'bonzo',
     'qwery',
     'helpers/fixtures',
-    'common/modules/adverts/slice-adverts'
+    'common/modules/commercial/slice-adverts'
 ], function(
     $,
     bean,
@@ -12,7 +12,7 @@ define([
     qwery,
     fixtures,
     SliceAdverts
-){
+) {
 
     describe('Slice Adverts', function() {
 
