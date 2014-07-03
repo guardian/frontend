@@ -203,9 +203,9 @@ define([
 
                         player.loadingSpinner.contentEl().innerHTML =
                             '<div class="pamplemousse">' +
-                            '<div class="pamplemousse__pip"></div>' +
-                            '<div class="pamplemousse__pip"></div>' +
-                            '<div class="pamplemousse__pip"></div>' +
+                            '<div class="pamplemousse__pip"><i></i></div>' +
+                            '<div class="pamplemousse__pip"><i></i></div>' +
+                            '<div class="pamplemousse__pip"><i></i></div>' +
                             '</div>';
 
                         deferToAnalytics(function () {

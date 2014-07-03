@@ -10,14 +10,10 @@ $pamplemousse-dot-margin-large: ($pamplemousse-dot-spacing - $pamplemousse-dot-s
 
 @include keyframes(pulsate) {
     25% {
-        width: $pamplemousse-dot-size-large;
-        height: $pamplemousse-dot-size-large;
-        margin: $pamplemousse-dot-margin-large;
+        @include transform(scale(1));
     }
     50% {
-        width: $pamplemousse-dot-size-small;
-        height: $pamplemousse-dot-size-small;
-        margin: $pamplemousse-dot-margin-small;
+        @include transform(scale(.3));
     }
 }
 
@@ -26,17 +22,27 @@ $pamplemousse-dot-margin-large: ($pamplemousse-dot-spacing - $pamplemousse-dot-s
 }
 
 .pamplemousse__pip {
-    background-color: $c-neutral2;
-    border-radius: 100px;
-    width: $pamplemousse-dot-size-small;
-    height: $pamplemousse-dot-size-small;
-    margin: $pamplemousse-dot-margin-small;
-    display: block;
-    @include animation(pulsate 2s ease-in-out infinite);
-    border: 1px solid lighten($c-neutral2, 15%);
+    width: $pamplemousse-dot-spacing;
+    height: $pamplemousse-dot-spacing;
     float: left;
+    display: block;
+    position: relative;
+    text-align: center;
+    line-height: $pamplemousse-dot-spacing;
+
+    i {
+        width: $pamplemousse-dot-size-large;
+        height: $pamplemousse-dot-size-large;
+        @include transform(scale(.3));
+        @include animation(pulsate 2s ease-in-out infinite);
+        display: block;
+
+        border: 1px solid lighten($c-neutral2, 15%);
+        background-color: $c-neutral2;
+        border-radius: 100px;
+    }
 }
 
-.pamplemousse__pip:nth-child(1) { @include animation-delay(0s); }
-.pamplemousse__pip:nth-child(2) { @include animation-delay(.33s); }
-.pamplemousse__pip:nth-child(3) { @include animation-delay(.66s); }
+.pamplemousse__pip:nth-child(1) i { @include animation-delay(0s); }
+.pamplemousse__pip:nth-child(2) i { @include animation-delay(.33s); }
+.pamplemousse__pip:nth-child(3) i { @include animation-delay(.66s); }
