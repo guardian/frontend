@@ -17,14 +17,20 @@ abstract class FrontsSeleniumTestSuite extends FunSuite with BeforeAndAfter with
 
   lazy val pageFactory: CustomPageFactory = new CustomPageFactory()
 
+  //this will run before all tests of a class
   before {
     System.setProperty(PropertyLoader.PROP_FILE_PATH_ENV_KEY, System.getProperty("user.home") + "/fronts-test-override.properties");
-    webDriver = WebdriverFactory.getFirefoxWebdriver()
   }
 
-  after {
-    webDriver.manage().deleteAllCookies()
-    webDriver.quit()
+  //this will run before and after each test
+  override protected def withFixture(test: NoArgTest) = {
+    webDriver = WebdriverFactory.getSauceLabsWebdriver(testClassMethodName(test))
+    //    webDriver = WebdriverFactory.getFirefoxWebdriver()
+    try {
+      super.withFixture(test) // Invoke the test function
+    } finally {
+      webDriver.quit()
+    }
   }
 
   protected def openNetworkFrontPage(): NetworkFrontPage = {
@@ -47,5 +53,9 @@ abstract class FrontsSeleniumTestSuite extends FunSuite with BeforeAndAfter with
     } else {
       frontsBaseUrl + "/preference/platform/mobile?page=" + frontsBaseUrl + "&view=mobile"
     }
+  }
+
+  private def testClassMethodName(test: NoArgTest): String = {
+    getClass().getSimpleName() + "." + test.name
   }
 }

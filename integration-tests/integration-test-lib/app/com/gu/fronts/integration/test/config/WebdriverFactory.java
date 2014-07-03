@@ -3,6 +3,7 @@ package com.gu.fronts.integration.test.config;
 import static com.gu.fronts.integration.test.config.PropertyLoader.SAUCELABS_REMOTEDRIVER_URL;
 import static com.gu.fronts.integration.test.config.PropertyLoader.getProperty;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,11 +41,13 @@ public class WebdriverFactory {
         return setGlobalWebdriverConf(new FirefoxDriver(), desiredCap);
     }
 
-    public static WebDriver getSauceLabsWebdriver() {
+    public static WebDriver getSauceLabsWebdriver(String jobName) {
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         capabilities.setCapability("version", SAUCE_LABS_FIREFOX_VERSION);
         capabilities.setCapability("platform", SAUCE_LABS_OS_VERSION);
-
+        if (isNotBlank(jobName)) {
+            capabilities.setCapability("name", jobName);
+        }
         String sauceLabsUrl = getProperty(SAUCELABS_REMOTEDRIVER_URL);
         // Create the connection to Sauce Labs to run the tests
         try {
