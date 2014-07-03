@@ -3,11 +3,11 @@ package discussion
 import java.net.URLEncoder
 
 import common.{ExecutionContexts, Logging}
+import controllers.DiscussionParams
 import scala.concurrent.Future
 import discussion.model._
 import play.api.mvc.Headers
 import discussion.util.Http
-import play.api.libs.json.JsArray
 import play.api.libs.ws.Response
 import play.api.libs.json.JsNumber
 import discussion.model.CommentCount
@@ -36,25 +36,25 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
   }
 
   def commentFor(id: Int): Future[Comment] = {
-    getCommentJsonForId(id, s"$apiRoot/comment/$id?displayResponses=true&displayThreaded=true")
+    getCommentJsonForId(id, s"$apiRoot/comment/$id?displayResponses=true")
   }
 
-  def commentsFor(key: DiscussionKey, page: String, orderBy: String = "newest", allResponses: Boolean = false, sentimentId: Option[String] = None): Future[CommentPage] = {
-    val url =
-      s"$apiRoot/discussion/$key?pageSize=$pageSize&page=$page&orderBy=$orderBy&showSwitches=true" +
-        (if(allResponses) "" else "&maxResponses=3") + sentimentId.map{ i: String => "&sentiment="+i }.getOrElse("")
+  def commentsFor(key: DiscussionKey, params: DiscussionParams): Future[CommentPage] = {
+    val url = s"$apiRoot/discussion/$key" + (if(params.topComments) "/topcomments" else "")+
+                    s"""|?pageSize=${params.pageSize}
+                    |&page=${params.page}
+                    |&orderBy=${params.orderBy}
+                    |&showSwitches=true""".stripMargin.replace("\n", "")+
+                    params.sentiment.map{ s: String => "&sentiment="+s }.getOrElse("")+
+                    params.maxResponses.map{i => "&maxResponses="+ i}.getOrElse("")
+
     getJsonForUri(key, url)
   }
 
-  def topCommentsFor(key: DiscussionKey): Future[CommentPage] = {
-    getJsonForUri(key, s"$apiRoot/discussion/$key/topcomments?page=1&orderBy=newest&showSwitches=true")
-  }
-
-  def commentContext(id: Int, orderBy: String = "newest"): Future[(DiscussionKey, String)] = {
+  def commentContext(id: Int, params: DiscussionParams): Future[(DiscussionKey, String)] = {
     def onError(r: Response) =
       s"Discussion API: Cannot load comment context, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-
-    val apiUrl = s"$apiRoot/comment/$id/context?pageSize=$pageSize&orderBy=$orderBy"
+    val apiUrl = s"$apiRoot/comment/$id/context?pageSize=${params.pageSize}&orderBy=${params.orderBy}"
 
     getJsonOrError(apiUrl, onError) map { json =>
         (DiscussionKey((json \ "discussionKey").as[String]), (json \ "page").as[Int].toString)
@@ -65,7 +65,6 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     def onError(r: Response) =
       s"Discussion API: Error loading profile, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     val apiUrl = s"$apiRoot/profile/me"
-
     val authHeader = AuthHeaders.filterHeaders(headers).toSeq
 
     getJsonOrError(apiUrl, onError, authHeader: _*) map {
