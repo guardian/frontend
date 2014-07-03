@@ -295,7 +295,7 @@
     @include box-sizing(border-box);
     @include fs-data(2);
     @include rem((
-        padding-top: $gs-baseline/4
+        padding-top: $gs-baseline/3
     ));
 
     i {
