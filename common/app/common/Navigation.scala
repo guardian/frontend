@@ -216,6 +216,8 @@ object Navigation {
       case None =>
         topSection.links
     }
+
+  def isEditionFront(topSection: NavItem): Boolean = ("/" :: Edition.editionFronts).contains(topSection.name.href)
 }
 
 trait Zones extends Navigation {
