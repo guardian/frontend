@@ -483,6 +483,10 @@ object Switches extends Collections {
     FaciaToolDraftContent
   )
 
+  val httpSwitches: List[Switch] = List(
+    ResponsiveNavSwitch
+  )
+
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
 
   def byName(name: String): Option[Switch] = all.find(_.name.equals(name))
