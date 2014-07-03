@@ -10,8 +10,10 @@
                 <div class="new-navigation__container new-navigation__container--first">
                     @fragments.nav.signposting(metaData, navigation)
                     <ul class="local-navigation">
-                        @Navigation.subNav(navigation, metaData).map{ link =>
-                            <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo{@link.href}">@Html(link.title)</a></li>
+                        @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
+                            @Navigation.rotatedLocalNav(topSection, metaData).map{  link =>
+                                <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo{@link.href}">@Html(link.title)</a></li>
+                            }
                         }
                     </ul>
                 </div>
