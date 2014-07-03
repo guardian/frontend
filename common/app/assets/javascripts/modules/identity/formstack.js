@@ -1,11 +1,11 @@
 define([
     'common/utils/$',
-    'common/utils/common',
+    'lodash/objects/assign',
     'bean',
     'common/modules/identity/api'
 ], function (
     $,
-    common,
+    extend,
     bean,
     idApi
 ) {
@@ -16,7 +16,7 @@ define([
             dom = {},
             formId = formstackId.split('-')[0];
 
-        config = common.extend({
+        config = extend({
             idClasses: {
                 form: 'form',
                 field: 'form-field',

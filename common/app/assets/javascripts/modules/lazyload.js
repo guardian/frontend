@@ -1,9 +1,9 @@
 define([
-    'common/utils/common',
+    'lodash/objects/assign',
     'common/utils/ajax',
     'bonzo'
 ], function (
-    common,
+    extend,
     ajax,
     bonzo
 ) {
@@ -30,7 +30,7 @@ define([
                 beforeInsert: function(html) { return html; },
                 force: false
             },
-            opts = common.extend(defaultOpts, options || {});
+            opts = extend(defaultOpts, options || {});
 
         this.load = function() {
 

@@ -1,11 +1,11 @@
 define([
-    'common/utils/common',
+    'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/ui/images',
     'lodash/objects/assign',
     'common/modules/component'
 ], function(
-    common,
+    mediator,
     register,
     images,
     extend,
@@ -32,7 +32,7 @@ define([
     };
 
     OnwardContent.prototype.error = function() {
-        common.mediator.emit('module:error', 'Failed to load series:' + this.config.page.series + 'common/modules/related.js');
+        mediator.emit('module:error', 'Failed to load series:' + this.config.page.series + 'common/modules/related.js');
         register.error('series-content');
     };
 

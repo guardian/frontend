@@ -1,10 +1,8 @@
 define([
-    'common/utils/common',
     'common/utils/storage',
     'common/utils/mediator',
     'common/modules/analytics/mvt-cookie'
 ], function (
-    common,
     store,
     mediator,
     mvtCookie
