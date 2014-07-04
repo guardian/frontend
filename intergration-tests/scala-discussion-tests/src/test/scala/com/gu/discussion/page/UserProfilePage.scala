@@ -13,8 +13,6 @@ case class UserProfilePage(implicit driver: WebDriver) {
   private def featuredTab = driver.findElement(ByExt.dataTypeStream("picks"))
   private def profileInfo = driver.findElement(By.className("disc-profile__user-info"))
   private def profileName = driver.findElement(By.className("user-profile__name"))
-  private def noCommentsMsg = driver.findElement(By.className("activity-stream__empty"))
-
 
   def getUserProfileName: String = {
     val userProfileName = profileName.getText()
@@ -41,7 +39,9 @@ case class UserProfilePage(implicit driver: WebDriver) {
 
   def waitForUserHistoryToLoad() = {
     //Need this wait for the page to reload/refresh which is actioned with javascript
-    //TODO wait for elements to appear
+
+    //Need to wait for elements to appear here
+
     //Wait().until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("activity-item__title")))
 
     /*val des =  driver.findElement(By.className("disc-profile__user-info"))

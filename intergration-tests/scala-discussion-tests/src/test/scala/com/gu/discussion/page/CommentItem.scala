@@ -26,8 +26,6 @@ case class CommentItem(implicit driver: WebDriver) {
   private def oldRecommendCommentCount = latestComment.findElement(By.cssSelector(".d-comment__recommend-count--old"))
   private def newRecommendCommentCount = latestComment.findElement(By.cssSelector(".d-comment__recommend-count--new"))
 
-    //TODO As a Staff member choose a comment to be a Featured comment (Pick)
-
   def showCommentPost(): CommentItem = {
     showCommentButton.click()
     this

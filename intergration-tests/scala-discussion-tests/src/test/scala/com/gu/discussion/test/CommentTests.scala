@@ -91,7 +91,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
         _.iCanPostANewComment()
         .iAmSignedInAsStaff()
       }.then {
-        //TODO change to a method to pick a comment here
+        //Change this to a method to pick a comment here
         _.iViewAllComments()
       }
     }

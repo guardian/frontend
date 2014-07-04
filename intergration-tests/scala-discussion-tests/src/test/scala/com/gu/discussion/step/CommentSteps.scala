@@ -107,8 +107,7 @@ case class CommentSteps(implicit driver: WebDriver, logger: TestLogger) extends 
   def iCanPickAComment() = {
     logger.step("I can Pick a comment to be Featured")
     new CommentItem().pickComment()
-    
-    //TODO Assert if Picked comment is now featured
+    //Assert if Picked comment is now featured
     
     this
   }
