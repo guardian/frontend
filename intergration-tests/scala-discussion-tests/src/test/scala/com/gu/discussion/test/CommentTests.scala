@@ -1,7 +1,6 @@
 package com.gu.discussion.test
 
-import com.gu.automation.core.GivenWhenThen
-import com.gu.automation.support.WebDriverFeatureSpec
+import com.gu.automation.core.{GivenWhenThen, WebDriverFeatureSpec}
 import com.gu.discussion.step.CommentSteps
 import org.scalatest.Tag
 
@@ -11,7 +10,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
 
   feature("As a signed in registered user I can contribute to a discussion") {
 
-    scenarioWeb("Add a new top level comment to an article", Tag("WIP")) {
+    scenarioWeb("Add a new top level comment to an article") {
       given {
         CommentSteps().iAmSignedInAsStaff()
       }.when {
@@ -42,15 +41,13 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
       }
     }
 
-    scenarioWeb("View a users discussion posts") {
+    scenarioWeb("View a users discussion posts", Tag("WIP")) {
       given {
         CommentSteps().iAmSignedInAsStaff()
       }.when {
         _.iViewAllComments()
       }.then {
         _.iCanViewUserCommentHistory()
-        .iCanSearchUserComments()
-
       }
     }
 

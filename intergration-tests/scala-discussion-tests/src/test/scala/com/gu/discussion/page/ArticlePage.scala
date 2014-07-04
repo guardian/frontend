@@ -20,7 +20,7 @@ case class ArticlePage(implicit driver: WebDriver) {
     this
   }
 
-  def showAllComments() = {
+  def showAllComments(): ArticlePage = {
     showAllCommentsLink.click()
     this
   }

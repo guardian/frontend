@@ -1,8 +1,6 @@
 package com.gu.discussion.page
 
-import com.gu.automation.support.{Wait}
 import com.gu.discussion.support.ByExt
-import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.{By, WebDriver}
 
 
@@ -14,7 +12,7 @@ case class UserProfilePage(implicit driver: WebDriver) {
   private def profileInfo = driver.findElement(By.className("disc-profile__user-info"))
   private def profileName = driver.findElement(By.className("user-profile__name"))
 
-  def getUserProfileName: String = {
+  def getUserProfileName = {
     val userProfileName = profileName.getText()
     userProfileName
   }
@@ -38,22 +36,11 @@ case class UserProfilePage(implicit driver: WebDriver) {
   }
 
   def waitForUserHistoryToLoad() = {
-    //Need this wait for the page to reload/refresh which is actioned with javascript
-
-    //Need to wait for elements to appear here
-
-    //Wait().until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("activity-item__title")))
-
-    /*val des =  driver.findElement(By.className("disc-profile__user-info"))
-
-    if(des.exists){
-      Wait().until(ExpectedConditions.presenceOfElementLocated(By.className("disc-profile__user-info")))
-    }else {
-      Wait().until(ExpectedConditions.presenceOfElementLocated(By.className("activity-stream__empty")))
-
-    }*/
-
+//    check if title comment title appears in the tab
+    if (driver.findElement(By.cssSelector(".activity-item__title")).isDisplayed ) {
+    } else (driver.findElement(By.cssSelector(".activity-stream__empty")).isDisplayed ) {
+      logger.info("Comments not loading")
+      println("Error - Comments not loading")
   }
-
 
 }

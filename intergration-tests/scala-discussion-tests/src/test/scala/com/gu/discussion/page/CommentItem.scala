@@ -1,6 +1,6 @@
 package com.gu.discussion.page
 
-import org.openqa.selenium.support.ui.{Select}
+import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.{By, WebDriver}
 
 case class CommentItem(implicit driver: WebDriver) {
@@ -73,8 +73,9 @@ case class CommentItem(implicit driver: WebDriver) {
     this
   }
 
-  def viewUserProfile() = {
+  def viewUserProfile(): CommentItem = {
     commentAuthorAvatar.click()
+    this
   }
 
   def viewUserHistory() = {
@@ -82,7 +83,7 @@ case class CommentItem(implicit driver: WebDriver) {
     UserProfilePage()
   }
 
-  def getCommentAuthor() = {
+  def getCommentAuthor(): String = {
     commentAuthorLink.getText()
   }
 
@@ -103,13 +104,13 @@ case class CommentItem(implicit driver: WebDriver) {
     commentTimeStamp.isDisplayed()
   }
 
-  def getLatestCommentText() = {
+  def getLatestCommentText(): String = {
     val newCommentURL = driver.getCurrentUrl()
     val newCommentID = newCommentURL.substring(newCommentURL.indexOf("#") + 1)
     driver.findElement(By.id(s"$newCommentID")).findElement(By.cssSelector(".d-comment__body p")).getText()
   }
 
-  def getLatestCommentsLatestReply() = {
+  def getLatestCommentsLatestReply(): String = {
     val newReplyURL = driver.getCurrentUrl()
     val newReplyID = newReplyURL.substring(newReplyURL.indexOf("#") + 1)
     driver.findElement(By.id(s"$newReplyID")).findElement(By.cssSelector(".d-comment__body p")).getText()
