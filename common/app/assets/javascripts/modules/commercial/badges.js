@@ -18,7 +18,7 @@ define([
         hadAdvertisementFeatureBadge = false,
         addPreBadge = function($adSlot, isSponsored, sponsor) {
             if (sponsor) {
-                var html = bonzo.create(template(
+                $adSlot.append(template(
                     '<div class="ad-slot--paid-for-badge__inner">' +
                         '<h3 class="ad-slot--paid-for-badge__header">{{header}}</h3>' +
                         '<p class="ad-slot--paid-for-badge__header">{{sponsor}}</p>' +
@@ -27,12 +27,11 @@ define([
                         header: isSponsored ? 'Sponsored by:' : 'Advertisement feature',
                         sponsor: sponsor
                     }
-                ))[0];
+                ));
                 if (!isSponsored) {
-                    $('.ad-slot--paid-for-badge__header', html).first()
-                        .after('<p class="ad-slot--paid-for-badge__label">in association with</p>')
+                    $('.ad-slot--paid-for-badge__header', $adSlot[0]).first()
+                        .after('<p class="ad-slot--paid-for-badge__label">in association with</p>');
                 }
-                $adSlot.append(html)
             }
         },
         createAdSlot = function(container, isSponsored, opts) {
