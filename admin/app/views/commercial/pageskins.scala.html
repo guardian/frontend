@@ -14,11 +14,13 @@
 
     <ol>
         @for(sponsorship <- pageSkinnedAdUnits.sponsorships) {
-            <li>@sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+            <li style="margin: 20px">@sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+            @if(sponsorship.countries.nonEmpty){<br />Countries: @sponsorship.countries}
+            <br />Ad Units:
             <ul>
-                @for(adunit <- sponsorship.adUnits) {
+            @for(adunit <- sponsorship.adUnits) {
                 <li>@adunit</li>
-                }
+            }
             </ul>
             </li>
         }
