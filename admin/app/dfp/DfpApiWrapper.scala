@@ -97,7 +97,7 @@ object DfpApiWrapper extends Logging {
     }
   }
 
-  def fetchAdUnitTargetingObjects(session: DfpSession, statementBuilder: StatementBuilder): Seq[AdUnit] = {
+  def fetchAdUnits(session: DfpSession, statementBuilder: StatementBuilder): Seq[AdUnit] = {
     fetch(statementBuilder) { statement =>
       val service = inventoryService(session)
       val page = service.getAdUnitsByStatement(statementBuilder.toStatement)

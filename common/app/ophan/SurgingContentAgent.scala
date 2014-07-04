@@ -32,6 +32,9 @@ object SurgingContentAgent extends Logging with ExecutionContexts {
     agent.get().contains(id)
   }
 
+  def getSurging= {
+    agent.get()
+  }
 
 }
 
