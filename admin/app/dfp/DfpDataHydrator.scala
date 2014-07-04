@@ -125,14 +125,12 @@ object DfpDataHydrator extends Logging {
       val dfpAdUnits = DfpApiWrapper.fetchAdUnits(session, statementBuilder)
 
       val descendantAdUnits = dfpAdUnits filter { adUnit =>
-        val path = adUnit.getParentPath
-        path != null && path.length > 1 && path(1).getName == rootName
+        Option(adUnit.getParentPath) exists (path => path.length > 1 && path(1).getName == rootName)
       }
 
-      def pathOf(adUnit: AdUnit) = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
-
       descendantAdUnits.map { adUnit =>
-        (adUnit.getId, GuAdUnit(adUnit.getId, pathOf(adUnit)))
+        val path = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
+        (adUnit.getId, GuAdUnit(adUnit.getId, path))
       }.toMap
   }
 
@@ -193,8 +191,5 @@ object DfpDataHydrator extends Logging {
     }.toSeq
   }
 
-  private def optJavaInt(i: java.lang.Integer): Option[Int] = {
-    if (i == null) None
-    else Some(i)
-  }
+  private def optJavaInt(i: java.lang.Integer): Option[Int] = if (i == null) None else Some(i)
 }
