@@ -24,8 +24,8 @@ abstract class FrontsSeleniumTestSuite extends FunSuite with BeforeAndAfter with
 
   //this will run before and after each test
   override protected def withFixture(test: NoArgTest) = {
-    //webDriver = WebdriverFactory.getSauceLabsWebdriver(testClassMethodName(test))
-    webDriver = WebdriverFactory.getFirefoxWebdriver()
+    webDriver = WebdriverFactory.getSauceLabsWebdriver(testClassMethodName(test))
+    //webDriver = WebdriverFactory.getFirefoxWebdriver()
     try {
       super.withFixture(test) // Invoke the test function
     } finally {
