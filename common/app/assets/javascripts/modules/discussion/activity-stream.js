@@ -1,14 +1,12 @@
 define([
     'bonzo',
     'bean',
-    'qwery',
     'common/utils/$',
     'common/modules/component',
     'common/modules/discussion/api'
 ], function(
     bonzo,
     bean,
-    qwery,
     $,
     component,
     discussionApi
@@ -40,7 +38,6 @@ define([
     };
     ActivityStream.prototype.change = function(opts) {
         var $el = bonzo(this.elem).empty();
-        bonzo(qwery('.identity-wrapper')).addClass('.identity-wrapper-'+opts.streamType);
         this.setState('loading');
         this.setOptions(opts);
         return this._fetch().then(function(resp) {

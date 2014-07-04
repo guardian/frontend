@@ -16,6 +16,8 @@ object WitnessActivity {
     def apply(json: JsValue): WitnessActivity = {
         val updates = (json \ "updates").as[JsArray].value.head
         val body = (updates \ "body").as[String]
+        val image = (updates \ "image" \ "mediumlandscapecropdouble");
+        println(image);
         val bodyTrimmed = body.split(" ",21).dropRight(1).mkString(" ")
         val daysAgo = Days.daysBetween(new DateTime((updates \ "created").as[String]) , new DateTime() ).getDays()
         val daysAgoStr = daysAgo match {

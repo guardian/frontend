@@ -411,22 +411,26 @@
 }
 
 .activity-stream__witness-item {
-    width: 292px;
+    @include rem((
+        width: 292px,
+        margin-right: $gs-gutter/2,
+        margin-bottom: $gs-gutter
+    ));
     display: inline-block;
-    margin-right: $gs-gutter/2;
-    margin-bottom: $gs-gutter;
     vertical-align: top;
 
     @include fs-textsans(1);
 }
 .activity-stream__witness-img {
-    width: 100%;
-    height: 250px;
-    background-size: cover;
+    @include rem((
+        width: 100%,
+        height: 250px
+    ));
+    @include background-size(cover);
 }
 
 .activity-stream__witness-meta {
-    background-color: #f9f9f9;
+    background-color: $c-neutral8;
     padding: $gs-baseline 0;
     border: 1px solid $c-neutral4;
     border-top: 0;
@@ -434,38 +438,39 @@
     text-align: right;
 
     span {
-        margin: 0 $gs-gutter;
+        @include rem((
+            margin: 0 $gs-gutter
+        ));
     }
 }
 .activity-stream__witness-content {
-    border-left: 1px solid $c-neutral4;
-    border-right: 1px solid $c-neutral4;
-    border-bottom: 1px solid $c-neutral4;
+    border: 1px solid $c-neutral4;
+    border-top: 0;
     line-height: 1.4;
 
     a {
-      text-decoration: none;
+        text-decoration: none;
     }
 }
 .activity-stream__witness-content:hover {
     background: #e7e7e7;
-    -webkit-transition: .3s all;
-    -moz-transition: .3s all;
-    transition: .3s all;
+    @include transition(.3s all);
+}
+.activity-stream__witness-text {
+    @include rem((
+        margin: $gs-gutter/2 $gs-gutter,
+        min-height: 100px
+    ));
+    display: block;
+}
+.activity-stream__witness-title {
+    margin-bottom: $gs-baseline/4;
+    color: $c-neutral1;
+    @include fs-textsans(4);
 }
 .activity-stream__witness-description {
-    margin: $gs-gutter/2 $gs-gutter;
-    display: block;
-
-    h4 {
-        margin-bottom: $gs-baseline/4;
-        color: $c-neutral1;
-        @include fs-textsans(4);
-    }
-    span {
-        color: $c-neutral2;
-        @include fs-textsans(2);
-    }
+    color: $c-neutral2;
+    @include fs-textsans(2);
 }
 
 /* Edit profile Membership tab
