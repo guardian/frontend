@@ -305,6 +305,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
   )
 
+  val SentimentalCommentsSwitch = Switch("Feature Switches", "sentimental-comments",
+    "When this switch is on, you will be able to put sentiment into your comments.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 9, 1)
+  )
+
   // A/B Tests
 
   // Dummy Switches
@@ -412,6 +417,12 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 8, 30)
   )
 
+  // actually just here to make us remove this in the future
+  val GuShiftCookieSwitch = Switch("Feature Switches", "gu-shift-cookie",
+    "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
+    safeState = On, sellByDate = new DateMidnight(2014, 9, 30)
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -468,6 +479,7 @@ object Switches extends Collections {
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
     ProfileCommentsSearchSwitch,
+    SentimentalCommentsSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,
@@ -480,7 +492,8 @@ object Switches extends Collections {
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
-    FaciaToolDraftContent
+    FaciaToolDraftContent,
+    GuShiftCookieSwitch
   )
 
   val httpSwitches: List[Switch] = List(

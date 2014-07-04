@@ -396,6 +396,10 @@
     }
 }
 
+.identity-wrapper-witness .activity-stream-search {
+    display: none;
+}
+
 .activity-stream__witness-contributions {
 
     @include rem((
