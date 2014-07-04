@@ -83,9 +83,9 @@ define([
             }, this);
 
             this.viewUrl = ko.computed(function() {
-                return this.fields.isLive() === 'true' ?
-                    (this.meta.href() || this.props.webUrl()) :
-                    vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl());
+                return this.fields.isLive() === 'false' ?
+                    vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl()) :
+                    this.meta.href() || this.props.webUrl();
             }, this);
 
             this.headlineInput  = this.overrider('headline');
