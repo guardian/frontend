@@ -58,6 +58,31 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
             }
         }
     }
+    .nav--guardian-services {
+        @include mq(tablet) {
+            float: right;
+            text-align: right;
+            @include rem((
+                padding-top: 7px,
+                width: gs-span(3)
+            ));
+            .nav__link {
+                border-top: 0;
+            }
+        }
+    }
+    .navigation-aside {
+        @include mq(tablet) {
+            float: left;
+            @include rem((
+                width: gs-span(4)
+            ));
+            clear: none;
+        }
+    }
+    .nav--guardian-services .nav__link {
+        top: 0;
+    }
 }
 
 
@@ -98,6 +123,10 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
 .new-navigation__main {
     position: relative;
     background: $c-top-navigation-background;
+}
+.new-navigation__expandable {
+    background: #ffffff;
+    overflow: hidden;
 }
 
 .signposting,
