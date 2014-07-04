@@ -76,7 +76,8 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
 }
 .top-navigation,
 .local-navigation,
-.global-navigation {
+.global-navigation,
+.signposting {
     @include f-bodyCopy;
     font-weight: bold;
     @include rem((
