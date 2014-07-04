@@ -32,7 +32,6 @@ object WebdriverFactory {
       capabilities.setCapability("name", jobName)
     }
     //TODO get from conf
-    val sauceLabsUrl = "http://guardian-shahin:61a62136-a937-4d3b-bd50-ff3f26d540cd@ondemand.saucelabs.com:80/wd/hub"
     val driver = new RemoteWebDriver(new URL(getProperty(SAUCELABS_REMOTEDRIVER_URL)), capabilities)
     setGlobalWebdriverConf(driver, capabilities)
     driver

@@ -22,11 +22,7 @@ object PropertyLoader extends TestLogging {
 
   private def loadProperties(defaultPropertiesFile: String): Properties = {
     val loadedProperties = new Properties()
-    try {
-      loadedProperties.load(getClass.getClassLoader.getResourceAsStream(defaultPropertiesFile))
-    } catch {
-      case e: Exception => loadedProperties.load(getClass.getClassLoader.getResourceAsStream("resources/" + defaultPropertiesFile))
-    }
+    loadedProperties.load(getClass.getClassLoader.getResourceAsStream(defaultPropertiesFile))
     addOverridePropertiesIfExists(loadedProperties)
     addSystemOverridePropertiesIfExists(loadedProperties)
     loadedProperties
