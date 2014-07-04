@@ -93,48 +93,59 @@ define([
                 '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
-        function detectPressFailure() {
-            model.statusPressFailure(false);
+        model.detectPressFailureCount = 0;
+
+        model.deferredDetectPressFailure = _.debounce(function () {
+            var count;
 
             if (model.switches()['facia-tool-check-press-lastmodified'] && model.front()) {
+                model.statusPressFailure(false);
+
+                count = ++model.detectPressFailureCount;
+
                 authedAjax.request({
                     url: '/front/lastmodified/' + model.front()
                 })
                 .always(function(resp) {
                     var lastPressed;
 
-                    if (resp.status !== 200) { return; }
-                    lastPressed = new Date(resp.responseText);
-                    if (isValidDate(lastPressed)) {
-                        model.statusPressFailure(
-                            _.some(model.collections(), function(collection) {
-                                var l = new Date(collection.state.lastUpdated());
-                                return isValidDate(l) ? l > lastPressed : false;
-                            })
-                        );
+                    if (model.detectPressFailureCount === count && resp.status === 200) {
+                        lastPressed = new Date(resp.responseText);
+
+                        if (isValidDate(lastPressed)) {
+                            model.statusPressFailure(
+                                _.some(model.collections(), function(collection) {
+                                    var l = new Date(collection.state.lastUpdated());
+                                    return isValidDate(l) ? l > lastPressed : false;
+                                })
+                            );
+                        }
                     }
                 });
             }
-        }
+        }, vars.CONST.detectPressFailureMs || 10000);
 
-        var deferredDetectPressFailure = _.debounce(detectPressFailure, vars.CONST.detectPressFailureMs || 10000);
-
-        function pressFront() {
+        model.pressLiveFront = function () {
             model.statusPressFailure(false);
-
             if (model.front()) {
                 authedAjax.request({
-                    url: '/collection/update/' + model.collections()[0].id,
+                    url: '/press/live/' + model.front(),
                     method: 'post'
                 })
                 .always(function() {
-                    deferredDetectPressFailure();
+                    model.deferredDetectPressFailure();
                 });
             }
-        }
+        };
 
-        model.deferredDetectPressFailure = deferredDetectPressFailure;
-        model.pressFront = pressFront;
+        model.pressDraftFront = function () {
+            if (model.front()) {
+                authedAjax.request({
+                    url: '/press/draft/' + model.front(),
+                    method: 'post'
+                });
+            }
+        };
 
         function getFront() {
             return queryParams().front;
@@ -253,6 +264,10 @@ define([
                     }
                     wasPopstate = false;
                     loadCollections(front);
+
+                    if (!model.liveMode()) {
+                        model.pressDraftFront();
+                    }
                 });
 
                 model.liveMode.subscribe(function() {
@@ -260,6 +275,10 @@ define([
                         collection.closeAllArticles();
                         collection.populate();
                     });
+
+                    if (!model.liveMode()) {
+                        model.pressDraftFront();
+                    }
                 });
 
                 updateScrollables();

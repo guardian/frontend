@@ -85,6 +85,7 @@ Comments.prototype.classes = {
     heading: 'discussion__heading',
     newComments: 'js-new-comments',
     orderControl: 'd-discussion__order-control',
+    sentimentControl: 'js-discussion-sentiment-changer',
     loader: 'd-discussion__loader',
 
     comment: 'd-comment',
@@ -163,6 +164,8 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     this.on('click', this.getClass('commentReport'), this.reportComment);
     this.on('change', this.getClass('orderControl'), this.setOrder);
+    this.on('click', this.getClass('sentimentControl'), this.setSentiment);
+
     this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
 
     this.addMoreRepliesButtons();
@@ -284,7 +287,8 @@ Comments.prototype.gotoPage = function(page) {
     scroller.scrollToElement(qwery('.discussion__comments__container .discussion__heading'), 100);
 
     return this.fetchComments({
-        page: page
+        page: page,
+        sentimentId: this.options.sentiment
     }).then(function() {
         this.loaded();
     }.bind(this));
@@ -308,9 +312,9 @@ Comments.prototype.changePage = function(e) {
  */
 Comments.prototype.fetchComments = function(options) {
     var url = '/discussion/'+
-        (options.comment ? 'comment-context/' : '')+
-        (options.comment ? options.comment : this.options.discussionId)+
-        '.json?'+ (options.page ? '&page=' + options.page : '') +'&maxResponses=3';
+        (options.comment ? 'comment-context/'+ options.comment : this.options.discussionId)+
+        '.json?'+ (options.page ? '&page=' + options.page : '')+
+        (options.sentimentId ? '&sentiment='+ options.sentimentId : '');
 
     return ajax({
         url: url,
@@ -590,6 +594,19 @@ Comments.prototype.setOrder = function(e) {
         this.showHiddenComments();
         this.loaded();
     }.bind(this));
+};
+
+/**
+ * @param {Event} e
+ * return {Reqwest}
+ */
+Comments.prototype.setSentiment = function(e) {
+    var el = e.currentTarget;
+    e.preventDefault();
+    $('.d-discussion__sentiment--active', this.elem).removeClass('d-discussion__sentiment--active');
+    $(el).addClass('d-discussion__sentiment--active');
+    this.options.sentiment = el.getAttribute('data-sentiment');
+    return this.gotoPage(1);
 };
 
 /**

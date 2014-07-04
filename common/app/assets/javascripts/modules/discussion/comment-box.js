@@ -2,6 +2,7 @@ define([
     'common/utils/$',
     'bean',
     'bonzo',
+    'common/utils/config',
     'common/utils/context',
     'common/utils/mediator',
     'common/modules/discussion/api',
@@ -13,6 +14,7 @@ define([
     $,
     bean,
     bonzo,
+    config,
     context,
     mediator,
     DiscussionApi,
@@ -70,6 +72,7 @@ CommentBox.prototype.classes = {};
 CommentBox.prototype.errorMessages = {
     EMPTY_COMMENT_BODY: 'Please write a comment.',
     COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
+    COMMENT_NEEDS_SENTIMENT: 'Please let us know if you agree or disagree.',
     ENHANCE_YOUR_CALM: 'You can only post one comment every minute. Please try again in a moment.',
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
     API_ERROR: 'Sorry, there was a problem posting your comment.',
@@ -138,7 +141,6 @@ CommentBox.prototype.prerender = function() {
         window.setTimeout(setSpoutMargin.bind(this), 0);
 
     }
-
 };
 
 /** @override */
@@ -171,6 +173,34 @@ CommentBox.prototype.ready = function() {
     if (this.options.focus) {
         this.getElem('body').focus();
     }
+
+    // The check on this should be done through the discussion API
+    // for now though this is a good (enough) check
+    if (config.switches.sentimentalComments) {
+        var sentimentActiveClass = 'd-comment-box__sentiment--active';
+        $('.open a[href="#comments"]').each(function (openLink) {
+            $('.d-discussion').addClass('d-discussion--sentimental');
+            $('.discussion__show-threaded').remove();
+            this.setState('sentimental');
+            this.options.maxLength = 350;
+
+            $.create('<div>' + $('.open__head__accent').text() + '</div>')
+                .addClass('d-comment-box__sentiments-head tone-news tone-colour')
+                .insertAfter(this.getElem('sentiments'));
+
+            bean.on(openLink, 'click', function (e) {
+                this.getElem('body').focus();
+                e.preventDefault();
+            }.bind(this));
+
+            bean.on(this.elem, 'click', this.getClass('sentiment'), function (e) {
+                $('.' + sentimentActiveClass, this.elem).removeClass(sentimentActiveClass);
+                $(e.currentTarget).addClass(sentimentActiveClass);
+                this.elem.sentiment.value = e.currentTarget.getAttribute('data-value');
+                this.getElem('body').focus();
+            }.bind(this));
+        }.bind(this));
+    }
 };
 
 /**
@@ -179,8 +209,12 @@ CommentBox.prototype.ready = function() {
 CommentBox.prototype.postComment = function(e) {
     var self = this,
         comment = {
-            body: this.getElem('body').value
+            body: this.elem.body.value
         };
+
+    if (this.elem.sentiment.value) {
+        comment.sentiment = this.elem.sentiment.value;
+    }
 
     e.preventDefault();
     self.clearErrors();
@@ -192,7 +226,11 @@ CommentBox.prototype.postComment = function(e) {
 
         if (comment.body.length > self.options.maxLength) {
             self.error('COMMENT_TOO_LONG', '<b>Comments must be shorter than '+ self.options.maxLength +' characters.</b>'+
-                'Yours is currently '+ (comment.body.length-self.options.maxLength) +' characters too long.');
+                'Yours is currently '+ (comment.body.length-self.options.maxLength) +' character(s) too long.');
+        }
+
+        if (self.hasState('sentimental') && !comment.sentiment) {
+            self.error('COMMENT_NEEDS_SENTIMENT');
         }
 
         if (self.options.replyTo) {
@@ -207,7 +245,7 @@ CommentBox.prototype.postComment = function(e) {
         }
     };
 
-    var  invalidEmailError = function () {
+    var invalidEmailError = function () {
         self.error('EMAIL_NOT_VERIFIED');
         ValidationEmail.init(self.context);
     };
