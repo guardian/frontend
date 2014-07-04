@@ -180,6 +180,7 @@ CommentBox.prototype.ready = function() {
         var sentimentActiveClass = 'd-comment-box__sentiment--active';
         $('.open a[href="#comments"]').each(function (openLink) {
             $('.d-discussion').addClass('d-discussion--sentimental');
+            $('.discussion__show-threaded').remove();
             this.setState('sentimental');
             this.options.maxLength = 350;
 
