@@ -269,7 +269,8 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     ));
 }
 .signposting__item--home,
-.top-navigation__item--home {
+.top-navigation__item--home,
+.top-navigation__item--current.top-navigation__item--home + .top-navigation__item {
     @include rem((
         padding-left: $gs-gutter/2
     ));
@@ -396,6 +397,7 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
    ========================================================================== */
 
 .new-navigation--collapsed {
+    .top-navigation__item--current.top-navigation__item--home,
     &.new-navigation--has-local-navigation .top-navigation__item--home {
         display: none;
     }
