@@ -113,6 +113,35 @@ $avatarSize: 44px;
         float: right;
     }
 }
+.d-discussion__sentiments {
+    @include fs-textsans(4);
+    @include rem((
+        margin-bottom: -1px,
+        margin-top: $gs-baseline
+    ));
+    background-color: $c-neutral7;
+    clear: both;
+    color: $c-neutral1;
+    display: none;
+    position: relative;
+
+    .d-discussion--sentimental & {
+        display: block;
+    }
+}
+.d-discussion__sentiment {
+    @include box-sizing(border-box);
+    @include rem((
+        margin-bottom: -1px,
+        padding: $gs-baseline/2 $gs-gutter/2
+    ));
+    color: $c-neutral1;
+    display: inline-block;
+}
+.d-discussion__sentiment--active {
+    background-color: #ffffff;
+    border-top: 3px solid $c-commentDefault;
+}
 
 .d-thread {
     list-style: none;
@@ -335,6 +364,24 @@ $avatarSize: 44px;
     }
 }
 
+.d-comment__sentiment {
+    @include border-radius(8px);
+    @include rem((
+        height: 8px,
+        width: 8px,
+        margin-right: $gs-gutter/3,
+        margin-top: $gs-baseline/2
+    ));
+    background-color: $c-neutral4;
+    float: left;
+}
+.d-comment__sentiment--for {
+    background-color: $c-statusPositive;
+}
+.d-comment__sentiment--against {
+    background-color: $c-statusNegative;
+}
+
 
 /* Comment body
    ======================================================= */
@@ -401,7 +448,7 @@ $avatarSize: 44px;
             margin-top: $gs-baseline*1.5
         ));
 
-        @include mq($comment-meta-breakpoint, wide) {
+        @include mq($comment-meta-breakpoint) {
             &:first-child {
                 margin-top: 0;
             }
@@ -565,6 +612,10 @@ $avatarSize: 44px;
 
     &:hover {
         text-decoration: underline;
+    }
+
+    .d-discussion--sentimental & {
+        display: none;
     }
 }
 .d-comment__reply-button {
@@ -1378,6 +1429,54 @@ $avatarSize: 44px;
     ));
     &:hover {
         border-color: $c-brandBlue;
+    }
+}
+
+$sentiment-width: 56+$gs-gutter/2;
+.d-comment-box__sentiments {
+    display: none;
+    float: right;
+    font-size: 0;
+    font-weight: bold;
+    text-align: center;
+
+    .d-comment-box--sentimental & {
+        display: block;
+    }
+}
+.d-comment-box__sentiments-head {
+    @include fs-header(2);
+    @include rem((
+        margin-bottom: $gs-baseline/2,
+        margin-right: $sentiment-width*2,
+        margin-top: $gs-baseline
+    ));
+}
+.d-comment-box__sentiment {
+    @include box-sizing(border-box);
+    @include fs-textsans(4);
+    @include rem((
+        padding: $gs-baseline/6 0,
+        width: $sentiment-width
+    ));
+    cursor: pointer;
+    background-color: $c-neutral6;
+    display: inline-block;
+    text-align: center;
+}
+.d-comment-box__sentiment--active {
+    color: #ffffff;
+}
+.d-comment-box__sentiment--for {
+    border-right: 1px solid #ffffff;
+
+    &.d-comment-box__sentiment--active {
+        background-color: $c-statusPositive;
+    }
+}
+.d-comment-box__sentiment--against {
+    &.d-comment-box__sentiment--active {
+        background-color: $c-statusNegative;
     }
 }
 

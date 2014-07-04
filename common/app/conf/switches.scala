@@ -305,6 +305,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 31)
   )
 
+  val SentimentalCommentsSwitch = Switch("Feature Switches", "sentimental-comments",
+    "When this switch is on, you will be able to put sentiment into your comments.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 9, 1)
+  )
+
   // A/B Tests
 
   // Dummy Switches
@@ -468,6 +473,7 @@ object Switches extends Collections {
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
     ProfileCommentsSearchSwitch,
+    SentimentalCommentsSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,
