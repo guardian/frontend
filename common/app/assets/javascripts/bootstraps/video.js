@@ -5,8 +5,8 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'common/utils/deferToAnalytics',
-    'common/modules/adverts/query-string',
-    'common/modules/adverts/dfp',
+    'common/utils/url',
+    'common/modules/commercial/dfp',
     'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
     'bean',
@@ -17,7 +17,7 @@ define([
     detect,
     config,
     deferToAnalytics,
-    queryString,
+    urlUtils,
     dfp,
     OmnitureMedia,
     _throttle,
@@ -64,10 +64,8 @@ define([
         },
 
         initOmnitureTracking: function(playerEl) {
-            deferToAnalytics(function(){
-                new OmnitureMedia(playerEl).init();
-                bonzo(playerEl).addClass('tracking-applied');
-            });
+            new OmnitureMedia(playerEl).init();
+            bonzo(playerEl).addClass('tracking-applied');
         },
 
         bindPrerollEvents: function(player, videoEl) {
@@ -154,8 +152,8 @@ define([
         },
 
         getVastUrl: function() {
-            var adUnit = dfp.buildAdUnit({ page: config.page }),
-                custParams = queryString.generateQueryString(dfp.buildPageTargeting({ page: config.page })),
+            var adUnit = config.page.adUnit,
+                custParams = urlUtils.constructQuery(dfp.buildPageTargeting({ page: config.page })),
                 encodedCustParams = encodeURIComponent(custParams),
                 timestamp = new Date().getTime(),
                 url = 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
@@ -170,27 +168,21 @@ define([
                       ' seconds <span class="vjs-ads-overlay__label">Advertisement</span></div>',
                 events =  {
                     destroy: function() {
-                        if(this.hasAdCountdown) {
-                            $('.js-ads-overlay', this.el()).remove();
-                            this.off('timeupdate', events.update);
-                            this.off('ended', events.destroy);
-                        }
+                        $('.js-ads-overlay', this.el()).remove();
+                        this.off('timeupdate', events.update);
                     },
                     update: function() {
                         $('.js-remaining-time', this.el()).text(parseInt(this.duration() - this.currentTime(), 10).toFixed());
                     },
                     init: function() {
-                        this.on('timeupdate', events.update.bind(this));
-                        this.one('ended', events.destroy.bind(this));
-                        this.one('adtimeout', events.destroy.bind(this));
                         $(this.el()).append($.create(tmp));
-                        this.hasAdCountdown = true;
+                        this.on('timeupdate', events.update.bind(this));
+                        this.one('video:preroll:end', events.destroy.bind(player));
+                        this.one('video:content:play', events.destroy.bind(player));
+                        this.one('adtimeout', events.destroy.bind(player));
                     }
                 };
-            this.hasAdCountdown = false;
-            this.one('readyforpreroll', function() {
-                player.one('firstplay', events.init.bind(player));
-            });
+            this.one('video:preroll:play', events.init.bind(player));
         },
 
         initPlayer: function() {
@@ -208,26 +200,29 @@ define([
 
                     vjs.ready(function () {
                         var player = this;
-                        modules.initOmnitureTracking(el);
-                        modules.initOphanTracking(el);
-                        modules.bindPrerollEvents(player, el);
-
-                        // Init plugins
-                        player.adCountDown();
-                        player.ads({
-                            timeout: 3000
-                        });
-                        player.vast({
-                            url: modules.getVastUrl()
-                        });
 
                         player.loadingSpinner.contentEl().innerHTML =
                             '<div class="pamplemousse">' +
-                                '<div class="pamplemousse__pip"></div>' +
-                                '<div class="pamplemousse__pip"></div>' +
-                                '<div class="pamplemousse__pip"></div>' +
+                            '<div class="pamplemousse__pip"></div>' +
+                            '<div class="pamplemousse__pip"></div>' +
+                            '<div class="pamplemousse__pip"></div>' +
                             '</div>';
 
+                        deferToAnalytics(function () {
+
+                            modules.initOmnitureTracking(el);
+                            modules.initOphanTracking(el);
+                            modules.bindPrerollEvents(player, el);
+
+                            // Init plugins
+                            player.adCountDown();
+                            player.ads({
+                                timeout: 3000
+                            });
+                            player.vast({
+                                url: modules.getVastUrl()
+                            });
+                        });
                     });
 
                     // built in vjs-user-active is buggy so using custom implementation

@@ -1,5 +1,5 @@
 import common._
-import conf.{Gzipper, Management}
+import conf.{Gzipper, Management, Configuration => GuardianConfiguration}
 import java.io.File
 import jobs.FrontPressJob
 import play.api._
@@ -12,6 +12,7 @@ object Global extends WithFilters(Gzipper)
   with ConfigAgentLifecycle {
 
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
+  val pressJobConsumeRateInSeconds: Int = GuardianConfiguration.faciatool.pressJobConsumeRateInSeconds
 
   override lazy val applicationName = Management.applicationName
   override def applicationMetrics: Map[String, Double] = Map(
@@ -30,9 +31,7 @@ object Global extends WithFilters(Gzipper)
     ("front-press-cron-success", FaciaToolMetrics.FrontPressCronSuccess.getAndReset.toDouble),
     ("front-press-cron-failure", FaciaToolMetrics.FrontPressCronFailure.getAndReset.toDouble),
     ("elastic-content-api-calls", ContentApiMetrics.ElasticHttpTimingMetric.getAndReset.toDouble),
-    ("solr-content-api-calls", ContentApiMetrics.HttpTimingMetric.getAndReset.toDouble),
     ("elastic-content-api-timeouts", ContentApiMetrics.ElasticHttpTimeoutCountMetric.getAndReset.toDouble),
-    ("solr-content-api-timeouts", ContentApiMetrics.HttpTimeoutCountMetric.getAndReset.toDouble),
     ("content-api-404", ContentApiMetrics.ContentApi404Metric.getAndReset.toDouble),
     ("content-api-client-parse-exceptions", ContentApiMetrics.ContentApiJsonParseExceptionMetric.getAndReset.toDouble),
     ("content-api-client-mapping-exceptions", ContentApiMetrics.ContentApiJsonMappingExceptionMetric.getAndReset.toDouble),
@@ -55,7 +54,7 @@ object Global extends WithFilters(Gzipper)
   }
 
   def scheduleJobs() {
-    Jobs.schedule("FaciaToolPressJob", "0/10 * * * * ?") {
+    Jobs.schedule("FaciaToolPressJob", s"0/$pressJobConsumeRateInSeconds * * * * ?") {
       FrontPressJob.run()
     }
   }

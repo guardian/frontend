@@ -97,10 +97,18 @@ $football-crest--large: 60px;
     @include fs-data(5);
 
     dd {
-        @include rem((
-            margin: 0 56px 0 10px,
-            padding: 0
-        ));
+        @include mq(mobile) {
+            @include rem((
+                margin: 0 56px 0 10px,
+                padding: 0
+            ))
+        }
+        @include mq($from: tablet) {
+            @include rem((
+                margin: 0 56px 0 64px,
+                padding: 0
+            ));
+        }
     }
 }
 

@@ -1,13 +1,14 @@
 @(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 @import model._
 @import conf.Switches._
+@import dev.HttpSwitch
 @import common._
 @import common.Edition
 
 <nav role="navigation" aria-label="Guardian sections"
     @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
         data-link-name="global navigation: header : sections"}>
-    @if(ResponsiveNavSwitch.isSwitchedOn){
+    @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
         @fragments.nav.megaNav(page)
     }else {
         <ul class="nav nav--columns u-cf nav--additional-sections nav--top-border-off @if(isFooter){nav--footer}">

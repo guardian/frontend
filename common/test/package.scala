@@ -141,3 +141,5 @@ object TestRequest {
     FakeRequest("GET", if (!path.startsWith("/")) s"/$path" else path)
   }
 }
+
+object Fake extends FakeApp

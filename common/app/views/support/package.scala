@@ -357,7 +357,7 @@ object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
 
-case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition) extends HtmlCleaner {
+case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
 
@@ -450,7 +450,7 @@ object TweetCleaner extends HtmlCleaner {
   }
 }
 
-class TagLinker(article: Article)(implicit val edition: Edition) extends HtmlCleaner{
+class TagLinker(article: Article)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner{
 
   private val group1 = "$1"
   private val group2 = "$2"
@@ -568,14 +568,14 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
 // (results in spaces after author names before commas)
 // so don't add any, fool.
 object ContributorLinks {
-  def apply(text: String, tags: Seq[Tag]): Html = Html {
+  def apply(text: String, tags: Seq[Tag])(implicit request: RequestHeader): Html = Html {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope=" " itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={s"/${tag.id}"}>{tag.name}</a></span>.toString())
+          <span itemscope=" " itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={s"${LinkTo("/"+tag.id)}"}>{tag.name}</a></span>.toString())
     }
   }
-  def apply(html: Html, tags: Seq[Tag]): Html = apply(html.body, tags)
+  def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
 }
 
 object OmnitureAnalyticsData {
@@ -670,7 +670,7 @@ object Format {
 }
 
 object cleanTrailText {
-  def apply(text: String)(implicit edition: Edition): Html = {
+  def apply(text: String)(implicit edition: Edition, request: RequestHeader): Html = {
     withJsoup(RemoveOuterParaHtml(BulletCleaner(text)))(InBodyLinkCleaner("in trail text link"))
   }
 }

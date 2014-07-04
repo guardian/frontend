@@ -1,0 +1,26 @@
+@(metaData: model.MetaData)(implicit request: RequestHeader)
+@import common._
+
+@defining(Edition(request).navigation) { navigation =>
+    <ul class="">
+        @navigation.map { nav =>
+            <li class="@if(nav.currentFor(metaData)){current-section}">
+                <a class="" href="@LinkTo(nav.name.href)" data-link-name="@nav.name.title">
+                    @Html(nav.name.title)
+                </a>
+            </li>
+        }
+    </ul>
+    <ul>
+        @Navigation.localNav(navigation, metaData).map { localNav =>
+            @localNav.links.map { link =>
+                <li class="">
+                    <a class="@if(link.currentFor(metaData)){current-section}"
+                       href="@LinkTo(link.href)" data-link-name="@link.title">
+                        @Html(link.title)
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+}
