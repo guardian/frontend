@@ -383,6 +383,14 @@
             ));
         }
     }
+    @include mq($to: 500px) {
+        .tabs__tab {
+            @include rem((
+                width: 50%,
+                margin-top: 5px
+            ));
+        }
+    }
 }
 
 .activity-stream-content {
@@ -396,14 +404,9 @@
     }
 }
 
-.identity-wrapper-witness .activity-stream-search {
-    display: none;
-}
-
 .activity-stream__witness-contributions {
-
     @include rem((
-        padding-top: 15px
+        padding-top: $gs-baseline*2
     ));
 }
 
@@ -412,33 +415,32 @@
     display: inline-block;
     margin-right: $gs-gutter/2;
     margin-bottom: $gs-gutter;
-    vertical-align:top;
+    vertical-align: top;
 
-    @include fs-textsans(2);
-    @include rem((
-        font-size:12px
-    ));
+    @include fs-textsans(1);
 }
 .activity-stream__witness-img {
     width: 100%;
+    height: 250px;
+    background-size: cover;
 }
 
 .activity-stream__witness-meta {
     background-color: #f9f9f9;
-    padding: 15px 0;
-    border: 1px solid #ddd;
+    padding: $gs-baseline 0;
+    border: 1px solid $c-neutral4;
     border-top: 0;
-    font-family: "TextSans","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
-    text-align:right;
+    @include fs-textsans(1);
+    text-align: right;
 
     span {
-        margin: 0 10px;
+        margin: 0 $gs-gutter;
     }
 }
 .activity-stream__witness-content {
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-left: 1px solid $c-neutral4;
+    border-right: 1px solid $c-neutral4;
+    border-bottom: 1px solid $c-neutral4;
     line-height: 1.4;
 
     a {
@@ -446,24 +448,23 @@
     }
 }
 .activity-stream__witness-content:hover {
-    background:#e7e7e7;
-    border-bottom:1px solid #bbb;
-    -webkit-transition:.3s all;
-    -moz-transition:.3s all;
-    transition:.3s all;
+    background: #e7e7e7;
+    -webkit-transition: .3s all;
+    -moz-transition: .3s all;
+    transition: .3s all;
 }
 .activity-stream__witness-description {
-    margin:5px 10px;
+    margin: $gs-gutter/2 $gs-gutter;
     display: block;
 
     h4 {
-        margin-bottom: 5px;
-        color: #444;
-        font-size: 16px;
+        margin-bottom: $gs-baseline/4;
+        color: $c-neutral1;
+        @include fs-textsans(4);
     }
     span {
-        color: #888;
-        font-size: 14px;
+        color: $c-neutral2;
+        @include fs-textsans(2);
     }
 }
 

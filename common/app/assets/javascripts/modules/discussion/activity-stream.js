@@ -43,7 +43,6 @@ define([
         bonzo(qwery('.identity-wrapper')).addClass('.identity-wrapper-'+opts.streamType);
         this.setState('loading');
         this.setOptions(opts);
-        setSectionTag(opts.streamType);
         return this._fetch().then(function(resp) {
             $.create(resp.html).each(function(el) {
                 $el.html($(el).html()).attr({ 'class': el.className });
@@ -51,15 +50,6 @@ define([
             this.removeState('loading');
         }.bind(this));
     };
-
-    function setSectionTag(tag) {
-        var $wrapper = bonzo(qwery('.identity-wrapper'));
-        $wrapper.removeClass('identity-wrapper-discussions');
-        $wrapper.removeClass('identity-wrapper-replies');
-        $wrapper.removeClass('identity-wrapper-picks');
-        $wrapper.removeClass('identity-wrapper-witness');
-        $wrapper.addClass('identity-wrapper-'+tag);
-    }
 
     function pagination(activityStream) {
         bean.on(activityStream.elem, 'click', '.js-activity-stream-page-change', function(e) {
