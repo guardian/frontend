@@ -44,31 +44,12 @@ case class CommentModule(implicit driver: WebDriver, logger: TestLogger) {
 
     //Ugly hack to wait for URL to change
     var retries = 10
-    while (!driver.getCurrentUrl().contains("#comment-") || retries < 0) {
+    while (!driver.getCurrentUrl().contains("#comment-") && retries > 0) {
       Thread.sleep(500)
       retries = retries - 1
-    }
-
-    val errorMsg = driver.findElement(By.cssSelector(".d-discussion__error-text"))
-
-    if (errorMsg.isDisplayed()) {
-      System.err.println("Sorry, there was a problem posting your comment.")
-    } else {
     }
     this
   }
-
-  /*def postNewComment(): CommentModule = {
-    postYourCommentButton.click()
-
-    //Ugly hack to wait for URL to change
-    var retries = 10
-    while (!driver.getCurrentUrl().contains("#comment-") || retries < 0) {
-      Thread.sleep(500)
-      retries = retries - 1
-    }
-    this
-  }*/
 
   def cancelNewComment(): CommentModule = {
     cancelButton.click()
