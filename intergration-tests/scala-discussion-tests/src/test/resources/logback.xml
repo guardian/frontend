@@ -1,0 +1,13 @@
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d %level %logger - %m%n</Pattern>
+        </layout>
+    </appender>
+    <appender name="TSTASH" class="com.gu.automation.api.TstashAppender">
+    </appender>
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="TSTASH"/>
+    </root>
+</configuration>
