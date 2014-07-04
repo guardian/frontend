@@ -114,7 +114,7 @@ define([
         // Add ad slot selection
         var adSlot = /[?&]ad-slot=([^&]+)/.exec(document.location.search),
             $select = $.create('<select></select>')
-                .addClass('render-time--ad__form__select'),
+                .addClass('form-control render-time--ad__form__select'),
             $label = $.create('<label></label>')
                 .addClass('render-time--ad__form__label')
                 .text('Ad slot:')
