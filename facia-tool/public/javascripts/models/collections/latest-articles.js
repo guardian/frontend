@@ -131,6 +131,8 @@ define([
                         var icc = internalContentCode(article);
 
                         article.id = icc;
+                        article.uneditable = true;
+
                         cache.put('contentApi', icc, article);
                         self.articles.push(new Article(article));
                     });
