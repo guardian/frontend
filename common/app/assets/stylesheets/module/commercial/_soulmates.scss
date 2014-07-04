@@ -35,7 +35,7 @@
             background-color: #68b8cb;
         }
     }
-    .i-soulmates-logo-2014 {
+    .i-soulmates-logo {
         @include rem((
             width: 86px,
             height: 18px
@@ -56,7 +56,7 @@
             margin-top: $gs-baseline
         ));
     }
-    .i-soulmates-logo-2014 {
+    .i-soulmates-logo {
         .svg & {
             @include rem((
                 width: 100px,
@@ -256,7 +256,7 @@ $c-soulmates-high: $c-neutral1;
                 margin-left: $gs-gutter
             ));
         }
-        .i-soulmates-logo-2014 {
+        .i-soulmates-logo {
             .svg & {
                 @include rem((
                     width: 136px,
