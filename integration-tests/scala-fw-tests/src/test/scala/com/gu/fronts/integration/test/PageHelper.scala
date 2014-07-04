@@ -1,25 +1,33 @@
 package com.gu.fronts.integration.test
 
 import org.openqa.selenium.WebDriver
+import com.gu.fronts.integration.test.config.PropertyLoader._
+import com.gu.fronts.integration.test.pages.common.FrontsParentPage
 
 trait PageHelper {
 
   var driver: WebDriver;
+  val frontsBaseUrl = getProperty(BASE_URL)
+  
+  def goTo(pageClass: FrontsParentPage): FrontsParentPage = {
+    goTo(pageClass.url, pageClass)
+  }
 
-  def goTo[Page](url: String, pageClass: Class[Page]): Page = {
-    driver.get(url)
-    instantiatePage(driver, pageClass)
+  def goTo(url: String, pageClass: FrontsParentPage): FrontsParentPage = {
+    driver.get(forceBetaSite(url))
+    pageClass.isDisplayed
+    pageClass
   }
 
   /**
    * This will append the request parameters needed to switch to beta site. However, for some reason, this does not work on
    * localhost so had to make a check
    */
-  def buildBetaSiteUrl(frontsBaseUrl: String): String = {
+  def forceBetaSite(url: String): String = {
     if (frontsBaseUrl.startsWith("http://localhost")) {
-      frontsBaseUrl
+      url
     } else {
-      frontsBaseUrl + "/preference/platform/mobile?page=" + frontsBaseUrl + "&view=mobile"
+      frontsBaseUrl + "/preference/platform/mobile?page=" + url + "&view=mobile"
     }
   }
 

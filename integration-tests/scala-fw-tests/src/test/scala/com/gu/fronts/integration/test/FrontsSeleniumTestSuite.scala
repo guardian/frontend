@@ -15,7 +15,8 @@ abstract class FrontsSeleniumTestSuite extends WebDriverFeatureSpec with Matcher
 
   //all this below is temporary until the framework guys support setting sauce lab job name to test name
   protected def startDriver(testName: String): WebDriver = {
-    WebdriverFactory.getSauceLabsWebdriver(testClassMethodName(testName))
+    //WebdriverFactory.getSauceLabsWebdriver(testClassMethodName(testName))
+    WebdriverFactory.getFirefoxWebdriver()
   }
 
   private def testClassMethodName(testName: String): String = {

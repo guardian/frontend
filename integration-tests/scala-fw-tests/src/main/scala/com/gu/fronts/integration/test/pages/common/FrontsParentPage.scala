@@ -8,8 +8,12 @@ import org.apache.commons.lang3.StringUtils
 import org.openqa.selenium.{By, WebDriver, WebDriverException, WebElement}
 
 abstract class FrontsParentPage(webDriver: WebDriver) extends TestLogging {
-
+  
   val TEST_ATTR_NAME = "data-test-id"
+    
+    
+  def isDisplayed(): Boolean
+  def url:String
 
   def findByTestAttribute(testAttributeValue: String): WebElement = {
     webDriver.findElement(By.cssSelector(new StringBuilder().append("[").append(TEST_ATTR_NAME).append("=").
@@ -36,8 +40,6 @@ abstract class FrontsParentPage(webDriver: WebDriver) extends TestLogging {
       case e: WebDriverException => errors.add(e.getMessage)
     }
   }
-
-  def isDisplayed(): Boolean
 
   private def getErrorMessages(errors: List[String]): String = StringUtils.join(errors, ",")
 

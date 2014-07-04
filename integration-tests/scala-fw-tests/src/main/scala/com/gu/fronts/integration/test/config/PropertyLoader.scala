@@ -13,6 +13,7 @@ object PropertyLoader extends TestLogging {
   val PROP_FILE_PATH_ENV_KEY = "TEST_PROPERTY_OVERRIDE_PATH"
 
   val SAUCELABS_REMOTEDRIVER_URL = "saucelabs.remotedriver.url"
+  val BASE_URL =   "fronts.base.url"
 
   def getProperty(name: String): String = {
     val property = loadProperties(DEFAULT_PROPERTIES_FILE).getProperty(name)
@@ -22,7 +23,8 @@ object PropertyLoader extends TestLogging {
 
   private def loadProperties(defaultPropertiesFile: String): Properties = {
     val loadedProperties = new Properties()
-    loadedProperties.load(getClass.getClassLoader.getResourceAsStream(defaultPropertiesFile))
+    val extractedLocalValue = getClass.getClassLoader.getResourceAsStream(defaultPropertiesFile)
+    loadedProperties.load(extractedLocalValue)
     addOverridePropertiesIfExists(loadedProperties)
     addSystemOverridePropertiesIfExists(loadedProperties)
     loadedProperties
