@@ -784,7 +784,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-csdevmode');
 
     // Default task
-    grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
+    grunt.registerTask('default', ['clean', 'compile', 'validate', 'test', 'analyse']);
 
     /**
      * Validate tasks
