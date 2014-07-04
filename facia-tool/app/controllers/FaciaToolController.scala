@@ -96,7 +96,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val block = FaciaApi.publishBlock(id, identity)
     block.foreach{ b =>
       UpdateActions.archivePublishBlock(id, b, identity)
-      pressCollectionIds(PressCommand.forOneId(id).withPressDraft().withPressLive())
+      pressCollectionIds(PressCommand.forOneId(id).withPressLive())
     }
     notifyContentApi(id)
     NoCache(Ok)
