@@ -4,6 +4,9 @@ import org.scalatest.Matchers
 import common.ExecutionContexts
 import org.scalatest.FlatSpec
 import scala.xml.XML
+import play.api.test.FakeApplication
+import play.api.test.Helpers._
+
 
 class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
 
@@ -66,7 +69,7 @@ class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
     """.stripMargin
   }
 
-  "OffersApi" should "build Offers from XML" in {
+  "OffersApi" should "build Offers from XML" in running(FakeApplication()) {
     val offers = TravelOffersApi.parse(xml)
     offers should be(Fixtures.untaggedOffers)
   }
