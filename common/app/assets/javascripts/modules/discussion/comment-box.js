@@ -212,7 +212,7 @@ CommentBox.prototype.postComment = function(e) {
         };
 
     if (this.elem.sentiment.value) {
-        comment.sentiment = this.elem.sentiment.value
+        comment.sentiment = this.elem.sentiment.value;
     }
 
     e.preventDefault();
