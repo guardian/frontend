@@ -5,7 +5,11 @@
     @defining(Navigation.topLevelItem(navigation, metaData)) { topLevelSelected =>
         <ul class="global-navigation">
             @navigation.map { nav =>
-                <li class="global-navigation__section@if(nav.currentFor(metaData)){ global-navigation__section--current}">
+                <li class="@RenderClasses(Map(
+                        ("global-navigation__section", true),
+                        ("global-navigation__section--current", nav.currentFor(metaData)),
+                        ("global-navigation__section--home", Navigation.isEditionFront(nav))
+                    ))">
                     <a class="global-navigation__title" href="@LinkTo(nav.name.href)" data-link-name="@nav.name.title">
                         @Html(nav.name.title)
                     </a>

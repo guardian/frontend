@@ -2,7 +2,7 @@
 @import common._
 
 @defining(Edition(request).navigation) { navigation =>
-    <div class="new-navigation new-navigation--collapsed @if(Navigation.subNav(navigation, metaData).isDefined){new-navigation--has-local-navigation}">
+    <div class="new-navigation new-navigation--collapsed@if(Navigation.subNav(navigation, metaData).isEmpty){ new-navigation--has-no-local-navigation}else{ new-navigation--has-local-navigation}">
         <div class="gs-container">
             <div class="new-navigation__inner">
                 <div class="new-navigation__scroll">

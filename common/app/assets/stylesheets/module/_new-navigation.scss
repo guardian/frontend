@@ -357,9 +357,11 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
         ));
     }
 }
+.new-navigation .global-navigation__section--home,
 .global-navigation__section--current {
     display: none;
 }
+
 
 /* State: collapsed
    ========================================================================== */
@@ -386,7 +388,7 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
         }
     }
 
-    .global-navigation {
+    .new-navigation__expandable {
         display: none;
     }
 
