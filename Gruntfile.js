@@ -784,12 +784,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-csdevmode');
 
     // Default task
-    grunt.registerTask('default', ['clean', 'compile', 'validate', 'test', 'analyse']);
+    grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
 
     /**
      * Validate tasks
      */
-    grunt.registerTask('validate:css', ['sass:compile']);
+    grunt.registerTask('validate:css', ['compile:images', 'sass:compile']);
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
         var target = (app) ? ':' + app : '';
