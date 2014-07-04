@@ -417,6 +417,12 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 8, 30)
   )
 
+  // actually just here to make us remove this in the future
+  val GuShiftCookieSwitch = Switch("Feature Switches", "gu-shift-cookie",
+    "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
+    safeState = On, sellByDate = new DateMidnight(2014, 9, 30)
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -486,7 +492,8 @@ object Switches extends Collections {
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
-    FaciaToolDraftContent
+    FaciaToolDraftContent,
+    GuShiftCookieSwitch
   )
 
   val httpSwitches: List[Switch] = List(
