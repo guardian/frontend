@@ -17,41 +17,17 @@
         <i class="icon-remove icon-white" data-bind="click: clearStatuses"></i>
     </div>
 
-    <div class="toolbar" data-bind="visible: true" style="display: none">
-        <div class="toolbar--rhs">
-            <a class="tool tool-draft-mode tool-left-half" data-bind="
-                click: setModeDraft,
-                css: {active: !liveMode()}">Draft front</a
-           ><a class="tool tool-live-mode tool-right-half" data-bind="
-                click: setModeLive,
-                css: {active: liveMode}">Live front</a>
-
-            <a class="tool tool--preview" target="preview" data-bind="
-                attr: { href: previewUrl },
-                text: 'View ' + (liveMode() ? 'live' : 'draft'),
-                visible: front"></a>
+    <div class="clipboard" data-bind="with: clipboard">
+       <div class="title">
+            Clipboard
         </div>
-
-        <span class="tool-label">Front</span>
-        <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
-
-        <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
-            visible: frontSparkUrl,
-            attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + front()}">
-            <img data-bind="attr: {src: frontSparkUrl}" /></a>
+        <div class="droppable" data-bind="
+            makeDropabble: true,
+            css: {underDrag: underDrag},
+            template: {name: 'template_article', foreach: items}"></div>
     </div>
 
     <div class="left-col">
-        <div class="title">
-            Clipboard
-        </div>
-        <div class="clipboard__wrapper" data-bind="with: clipboard">
-            <div class="clipboard droppable" data-bind="
-                makeDropabble: true,
-                css: {underDrag: underDrag},
-                template: {name: 'template_article', foreach: items}"></div>
-        </div>
-
         <div data-bind="with: latestArticles">
             <div class="search-tools">
                 <!-- ko if: $root.switches()['facia-tool-draft-content'] -->
@@ -107,6 +83,30 @@
     </div>
 
     <div class="right-col" data-bind="css: {'live-mode': $root.liveMode}">
+        <div class="toolbar" data-bind="visible: true" style="display: none">
+            <div class="toolbar--rhs">
+                <a class="tool tool-draft-mode tool-left-half" data-bind="
+                    click: setModeDraft,
+                    css: {active: !liveMode()}">Draft front</a
+               ><a class="tool tool-live-mode tool-right-half" data-bind="
+                    click: setModeLive,
+                    css: {active: liveMode}">Live front</a>
+
+                <a class="tool tool--preview" target="preview" data-bind="
+                    attr: { href: previewUrl },
+                    text: 'View ' + (liveMode() ? 'live' : 'draft'),
+                    visible: front"></a>
+            </div>
+
+            <span class="tool-label">Front</span>
+            <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
+
+            <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
+                visible: frontSparkUrl,
+                attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + front()}">
+                <img data-bind="attr: {src: frontSparkUrl}" /></a>
+        </div>
+
         <div class="collections__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
     </div>
 

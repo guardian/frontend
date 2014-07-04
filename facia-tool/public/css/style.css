@@ -110,11 +110,11 @@ a:hover {
 .left-col {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    position: absolute;
-    top: 49px;
+    clear: left;
+    float: left;
     width: 50%;
     padding: 10px 15px 0 12px;
-    border-right: 3px solid #dbd8c9;
+    border-right: 1px solid #dbd8c9;
     border-top: 1px solid #dbd8c9;
 }
 
@@ -152,6 +152,7 @@ a:hover {
     -webkit-transition: background-color 50ms;
     -moz-transition: background-color 50ms;
     transition: background-color 50ms;
+    overflow: auto;
 }
 
 .supporting .droppable {
@@ -216,11 +217,11 @@ a:hover {
 .right-col {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    position: absolute;
-    left: 50%;
-    top: 50px;
+    float: right;
+    clear: right;
     width: 50%;
     padding: 10px 15px 0 15px;
+    border-top: 1px solid #dbd8c9;
 }
 
 .right-col.live-mode {
@@ -256,6 +257,12 @@ a:hover {
     border-color: #EEFFEE;
     background: #EEFFEE;
 }
+
+.clipboard .article {
+    width: 50%;
+    float: left;
+}
+
 
 .article:hover,
 .live-mode .article:hover {
@@ -518,10 +525,11 @@ button {
     font-weight: bold;
 }
 
-.clipboard__wrapper {
-    position: relative;
+.clipboard {
+    clear: both;
+    width: 100%;
     margin: 0px 0 5px 0;
-    padding: 5px 0 5px 0;
+    padding: 12px;
 }
 
 .collection-overrides {
@@ -619,20 +627,8 @@ button {
 .toolbar {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    float: right;
-    position: absolute;
-    left: 50%;
-    width: 50%;
-    min-width: 350px;
-    padding: 10px 15px 10px 18px;
-    height: 50px;
     white-space: nowrap;
     overflow: hidden;
-    border-bottom: 1px solid #dbd8c9;
-    border-left: 3px solid #dbd8c9;
-    margin-left: -3px;
-    z-index: 1;
-    background: #ffffff;
 }
 
 .toolbar--rhs {
