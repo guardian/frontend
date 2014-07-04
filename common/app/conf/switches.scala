@@ -399,7 +399,7 @@ object Switches extends Collections {
 
   val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
     "If this switch is on the container configuration will allow articles to show their tags or sections",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 5)
   )
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
