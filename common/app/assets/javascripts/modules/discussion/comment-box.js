@@ -208,9 +208,12 @@ CommentBox.prototype.ready = function() {
 CommentBox.prototype.postComment = function(e) {
     var self = this,
         comment = {
-            body: this.elem.body.value,
-            sentiment: this.elem.sentiment.value
+            body: this.elem.body.value
         };
+
+    if (this.elem.sentiment.value) {
+        comment.sentiment = this.elem.sentiment.value
+    }
 
     e.preventDefault();
     self.clearErrors();
