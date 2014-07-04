@@ -1,11 +1,8 @@
 package discussion.model
 
 import play.api.libs.json.{JsArray, JsValue}
-import scala.collection.JavaConversions.asScalaIterator
 import org.joda.time.DateTime
 import org.joda.time.Days
-import org.joda.time.DurationFieldType
-import org.joda.time.DateTimeConstants
 
 case class WitnessActivity(
     headline: String,
