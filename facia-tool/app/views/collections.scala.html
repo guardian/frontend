@@ -33,14 +33,12 @@
                     'live-mode': !latestArticles.showingDrafts(),
                     'draft-mode': latestArticles.showingDrafts
                 }">
-                <!-- ko if: $root.switches()['facia-tool-draft-content'] -->
-                    <a class="draft-mode" data-bind="
-                        click: latestArticles.showDrafts,
-                        css: {active: latestArticles.showingDrafts}">Draft content</a
-                   ><a class="live-mode" data-bind="
-                        click: latestArticles.showLive,
-                        css: {active: !latestArticles.showingDrafts()}">Live content</a>
-                <!-- /ko -->
+                <!-- ko if: $root.switches()['facia-tool-draft-content'] --><a class="draft-mode" data-bind="
+                    click: latestArticles.showDrafts,
+                    css: {active: latestArticles.showingDrafts}">Draft content</a
+               ><!-- /ko --><a class="live-mode" data-bind="
+                    click: latestArticles.showLive,
+                    css: {active: !latestArticles.showingDrafts()}">Live content</a>
             </div>
         </div>
 
