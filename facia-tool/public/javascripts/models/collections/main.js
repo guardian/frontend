@@ -154,7 +154,8 @@ define([
         function loadCollections(frontId) {
             model.collections(
                 ((vars.state.config.fronts[frontId] || {}).collections || [])
-                .filter(function(id){ return vars.state.config.collections[id]; })
+                .filter(function(id) { return vars.state.config.collections[id]; })
+                .filter(function(id) { return !vars.state.config.collections[id].uneditable; })
                 .map(function(id){
                     return new Collection(
                         _.extend(

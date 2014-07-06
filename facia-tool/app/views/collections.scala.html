@@ -18,7 +18,7 @@
     </div>
 
     <div class="toolbar" data-bind="visible: true" style="display: none">
-        <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
+        <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'Choose a front...'"></select>
 
         <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
             visible: frontSparkUrl,
@@ -176,18 +176,16 @@
                         ></span>
                     </span>
 
-                    <i class="list-header__collapser" data-bind="
-                        click: toggleCollapsed,
-                        visible: !configMeta.uneditable(),
-                        css: {
+                    <a class="list-header__collapser" data-bind="click: toggleCollapsed">
+                        <i data-bind="css: {
                             'icon-chevron-down': !state.collapsed(),
-                            'icon-chevron-up'  :  state.collapsed }"></i>
+                            'icon-chevron-up'  :  state.collapsed }"></i></a>
 
                     <span class="list-header__timings" data-bind="
                         css: {'has-concurrent-user': state.hasConcurrentEdits}">
                         <!-- ko if: state.timeAgo -->
-                            Edited <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
-                            by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
+                            <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
+                            ago by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
                         <!-- /ko -->
                         <a data-bind="
                             click: reset,
@@ -222,7 +220,7 @@
     </script>
 
     <script type="text/html" id="template_groups">
-        <!-- ko if: !_.isUndefined(name) -->
+        <!-- ko if: name -->
         <div class="group-name" data-bind="text: name"></div>
         <!-- /ko -->
         <div class="droppable" data-bind="

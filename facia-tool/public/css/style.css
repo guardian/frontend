@@ -31,7 +31,7 @@ a:hover {
     width: 100%;
     background: #999999;
     color: #FFFFFF;
-    padding: 15px 40px 15px 40px;
+    padding: 16px 40px 16px 40px;
     z-index: 2;
     text-align: center;
 }
@@ -63,8 +63,9 @@ a:hover {
 .message {
     float: left;
     display: inline-block;
-    font-size: 30px;
+    font-size: 33px;
     line-height: 60px;
+    letter-spacing: -1px;
     color: #999999;
     font-weight: normal;
     text-transform: lowercase;
@@ -150,7 +151,7 @@ a:hover {
 }
 
 .open .droppable.underDrag {
-    background-color: #03a9f4;
+    background-color: #999999;
 }
 
 .pending {
@@ -229,8 +230,8 @@ a:hover {
 
 .col__inner,
 .modes-wrapper {
-    -moz-box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.1);
-    box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.1);
+    -moz-box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.2);
+    box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.2);
     margin: 0 0 5px 0;
 }
 
@@ -240,6 +241,7 @@ a:hover {
     background: #eeeeee;
     height: 40px;
     border-bottom: 5px solid #dddddd; 
+    overflow: hidden;
 }
 
 .modes.live-mode {
@@ -256,7 +258,7 @@ a:hover {
     background: #CCCCCC;
     height: 35px;
     color: #ffffff;
-    padding: 8px 15px;
+    padding: 8px 0;
     font-weight: bold;
     width: 120px;
     text-align: center;
@@ -276,7 +278,7 @@ a:hover {
 
 .collection {
     padding: 0 0 3px 0;
-    border-bottom: 1px solid #dbd8c9;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .article {
@@ -304,12 +306,12 @@ a:hover {
 }
 
 .supporting .article {
-    border-color: #dbd8c9;
-    background: #dbd8c9;
+    border-color: #dddddd;
+    background: #dddddd;
 }
 
 .article.open {
-    background: #dbd8c9 !important;
+    background: #dddddd !important;
     min-height: 75px;
 }
 
@@ -358,7 +360,7 @@ a:hover {
 }
 
 .is {
-    color: #ffc107;
+    color: #376ABF;
     font-size: 10px;
     text-transform: uppercase;
     font-weight: bold;
@@ -434,9 +436,10 @@ a:hover {
     line-height: 19px;
 }
 
-.article__overrides input {
+.article__overrides input,
+.article__overrides textarea {
     padding-right: 10px;
-    background: #f4f3e8;
+    background: #fafafa;
     width: 100%;
 }
 
@@ -457,6 +460,7 @@ a:hover {
 
 .misc__overrides {
     margin: 0 0 0 6px;
+    height: 25px;
 }
 
 .misc__overrides .selected {
@@ -548,7 +552,6 @@ textarea.trailtext {
     min-height: 35px;
     margin: 0;
     color: #333333;
-    background: #f4f3e8;
 }
 
 button {
@@ -575,11 +578,14 @@ button {
 }
 
 .group-name {
-    padding: 5px 0 0px 4px;
-    font-size: 10px;
+    padding: 2px 0 0px 0px;
+    margin: 5px 0 2px 4px;
+    font-size: 12px;
     line-height: 12px;
-    color: #666666;
+    color: #333333;
+    border-top: 1px dotted #cccccc;
     text-transform: uppercase;
+    width: 175px;
 }
 
 .search-tools {
@@ -678,7 +684,7 @@ button {
 
 .toolbar .spark {
     display: inline-block;
-    margin: 0 15px 0 0;
+    margin: 3px 15px 0 0;
     float: right;
     width: 100px;
 }
@@ -759,18 +765,20 @@ button {
 }
 
 .log-in-out {
-    margin: 19px 0 0 0px;
-    font-size: 10px;
-    text-transform: uppercase;
+    margin: 26px 0 0 8px;
+    font-size: 12px;
+    text-transform: lowercase;
     float: left;
+    color: #cccccc;
 }
 
 .tool--small {
     background: inherit;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 0 4px;
+    padding: 2px 4px 0 4px;
     margin: 0 1px 0 3px;
+    line-height: 19px;
 }
 
 .tool--small i {
@@ -1049,34 +1057,29 @@ button {
 }
 
 @media (max-width: 875px) {
-    .is-authed .tool-title,
+    .toolbar .spark,
     .left-col {
         display: none;
     }
     .toolbar {
-        position: fixed;
-        left: 0;
-        width: 100%;
-        height: 50px;
-        padding: 10px 15px 10px 45px;
+        float: left;
+        width: inherit;
+        margin-left: 10px;
     }
     .right-col {
-        left: 0;
         width: 100%;
-        padding: 10px 0 0 10px;
+        border: none;
     }
     .scrollable {
         overflow-y: inherit
     }
 }
 
-@media (max-width: 675px) {
-    .toolbar .tool-label {
+@media (max-width: 550px) {
+    .is-authed .tool-title,
+    .log-in-out {
         display: none;
     }
-}
-
-@media (max-width: 525px) {
     .article .article_content {
         margin-right: 25px;
     }
@@ -1098,11 +1101,15 @@ button {
     .article .article_content {
         margin-left: 0;
     }
+    .preview,
     .article .thumb,
     .image__overrides {
         display: none;
     }
     .article__overrides {
         margin: 0;
+    }
+    .modes a {
+        width: 50%;
     }
 }
