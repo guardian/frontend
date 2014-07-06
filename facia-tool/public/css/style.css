@@ -226,7 +226,8 @@ a:hover {
 }
 
 .col__inner {
-    padding: 15px;
+    padding: 15px 10px 15px 15px;
+    box-shadow: inset 0 23px 10px -25px rgba(0,0,0,0.4);
 }
 
 .modes {
@@ -236,6 +237,7 @@ a:hover {
     height: 40px;
     border-bottom: 5px solid #dddddd; 
     overflow: hidden;
+    box-shadow: inset 0 23px 10px -25px rgba(0,0,0,0.4);
 }
 
 .modes.live-mode {
