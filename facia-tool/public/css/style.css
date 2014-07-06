@@ -8,6 +8,7 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
+    font-family: Georgia, arial, sans-serif;
 }
 
 p {
@@ -149,7 +150,7 @@ a:hover {
 }
 
 .droppable.underDrag {
-    background-color: #03a9f4;
+    background-color: #607d8b;
 }
 
 .open .droppable.underDrag {
@@ -209,9 +210,7 @@ a:hover {
     clear: both;
     float: left;
     width: 50%;
-    border-top: 15px solid #fafafa;
-    border-left: 15px solid #fafafa;
-    border-right: 15px solid #fafafa;
+    border-right: 5px solid #607d8b;
 }
 
 .right-col {
@@ -220,8 +219,6 @@ a:hover {
     background: #ffffff;
     float: right;
     width: 50%;
-    border-top: 15px solid #fafafa;
-    border-right: 15px solid #fafafa;
 }
 
 .right-col.live-mode {
@@ -229,19 +226,13 @@ a:hover {
 }
 
 .col__inner {
-    padding: 15px 15px 10px 15px;
-}
-
-.col__inner {
-    -moz-box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.2);
-    box-shadow: 0px 3px 5px rgba(50, 50, 50, 0.1);
-    margin: 0 0 5px 0;
+    padding: 15px;
 }
 
 .modes {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    background: #fafafa;
+    background: #cfd8dc;
     height: 40px;
     border-bottom: 5px solid #dddddd; 
     overflow: hidden;
@@ -258,12 +249,11 @@ a:hover {
 .modes a {
     box-sizing: border-box;
     display: inline-block;
-    background: #cfd8dc;
     height: 35px;
     color: #ffffff;
-    padding: 8px 0;
-    width: 120px;
+    padding: 8px 20px;
     text-align: center;
+    font-weight: bold;
 }
 
 .draft-mode.active {
@@ -318,7 +308,7 @@ a:hover {
 }
 
 .article.underDrag {
-    border-top-color: #03a9f4;
+    border-top-color: #607d8b;
 }
 
 .open .article.underDrag {
@@ -710,7 +700,6 @@ button {
     font-size: 15px;
     line-height: 24px;
     color: #FFFFFF;
-    border-radius: 2px;
     border: 0;
     cursor: pointer;
     text-decoration: none;
