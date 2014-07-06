@@ -54,16 +54,18 @@
     </head>
     <body class="@if(isAuthed){is-authed}">
 
-    <a href="/"><img class="logo" src="@routes.Assets.at("images/logo.png")" /></a>
 
-    <h1 class="tool-title">@priority @title</h1>
+    <a href="/">
+        <img class="logo" src="@routes.Assets.at("images/plane.png")" />
+        <h1 class="tool-title">@priority @title</h1>
+    </a>
 
     @if(Switches.ToolDisable.isSwitchedOn) {
         <span class="message message--important">Temporarily disabled. Please try again shortly.</span>
     } else {
         @if(isAuthed) {
             @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
-                <span class="message message--important">Editing @Configuration.facia.stage.toUpperCase!</span>
+                <h1 class="message message--important">Editing @Configuration.facia.stage</h1>
             }
             <a class="log-in-out" href="/logout">Logout</a>
             @content

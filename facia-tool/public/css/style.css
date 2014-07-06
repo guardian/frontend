@@ -3,6 +3,7 @@ body {
     padding: 0;
     min-width: 320px;
     color: #000000;
+    background: #fafafa;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -36,7 +37,7 @@ a:hover {
 }
 
 .status-warning {
-    background: #FBCC43;
+    background: #ffc107;
 }
 
 .status-danger {
@@ -54,29 +55,24 @@ a:hover {
 }
 
 .logo {
-    position: fixed;
-    top: 8px;
-    left: 15px;
-    z-index: 3;
+    float: left;
+    margin: 10px 0 0 10px;
 }
 
-.tool-title {
+.tool-title,
+.message {
     float: left;
-    margin: 8px 10px 0 46px;
-    font-size: 26px;
-    line-height: 30px;
-    color: #000;
+    display: inline-block;
+    font-size: 30px;
+    line-height: 60px;
+    color: #999999;
     font-weight: normal;
-    text-transform: capitalize;
+    text-transform: lowercase;
+    margin: 0 0 0 10px;
 }
 
 .message {
-    float: left;
-    margin: 8px 10px 0 0;
     color: #dbd8c9;
-    font-size: 26px;
-    line-height: 30px;
-    font-weight: normal;
 }
 
 .message--important {
@@ -105,17 +101,6 @@ a:hover {
     display: block;
     font-size: 20px;
     padding: 10px 0 0 0;
-}
-
-.left-col {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    clear: left;
-    float: left;
-    width: 50%;
-    padding: 10px 15px 0 12px;
-    border-right: 1px solid #dbd8c9;
-    border-top: 1px solid #dbd8c9;
 }
 
 .finder__controls {
@@ -161,11 +146,11 @@ a:hover {
 }
 
 .droppable.underDrag {
-    background-color: #FBCC43;
+    background-color: #03a9f4;
 }
 
 .open .droppable.underDrag {
-    background-color: #999999;
+    background-color: #03a9f4;
 }
 
 .pending {
@@ -214,24 +199,79 @@ a:hover {
     color: #DD4B39;
 }
 
+.left-col {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #ffffff;
+    clear: both;
+    float: left;
+    width: 50%;
+    border-left: 15px solid #fafafa;
+    border-right: 15px solid #fafafa;
+}
+
 .right-col {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    background: #ffffff;
     float: right;
-    clear: right;
     width: 50%;
-    padding: 10px 15px 0 15px;
-    border-top: 1px solid #dbd8c9;
+    border-right: 15px solid #fafafa;
 }
 
 .right-col.live-mode {
     background: #EEFFEE;
 }
 
-.collections__inner {
+.col__inner {
+    padding: 15px 15px 0 15px;
+}
+
+.col__inner,
+.modes-wrapper {
+    -moz-box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.1);
+    box-shadow: 0px 2px 2px rgba(50, 50, 50, 0.1);
+    margin: 0 0 5px 0;
+}
+
+.modes {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 0 5px 0 0;
+    background: #eeeeee;
+    height: 40px;
+    border-bottom: 5px solid #dddddd; 
+}
+
+.modes.live-mode {
+    border-color: #46c430;
+}
+
+.modes.draft-mode {
+    border-color: #ffc107;
+}
+
+.modes a {
+    box-sizing: border-box;
+    display: inline-block;
+    background: #CCCCCC;
+    height: 35px;
+    color: #ffffff;
+    padding: 8px 15px;
+    font-weight: bold;
+    width: 120px;
+    text-align: center;
+}
+
+.draft-mode.active {
+    background: #ffc107;
+}
+
+.live-mode.active {
+    background: #46c430;
+}
+
+.preview {
+    float: right;
 }
 
 .collection {
@@ -258,12 +298,6 @@ a:hover {
     background: #EEFFEE;
 }
 
-.clipboard .article {
-    width: 50%;
-    float: left;
-}
-
-
 .article:hover,
 .live-mode .article:hover {
     background-color: #f4f3e8;
@@ -280,7 +314,7 @@ a:hover {
 }
 
 .article.underDrag {
-    border-top-color: #FBCC43;
+    border-top-color: #03a9f4;
 }
 
 .open .article.underDrag {
@@ -324,14 +358,14 @@ a:hover {
 }
 
 .is {
-    color: #FBCC43;
+    color: #ffc107;
     font-size: 10px;
     text-transform: uppercase;
     font-weight: bold;
 }
 
 .is--draft {
-    color: #e8bd39;
+    color: #ffc107;
 }
 
 .is--football {
@@ -490,7 +524,7 @@ select,
 input[type="text"] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    height: 23px;
+    height: 35px;
     padding: 1px 5px;
     margin: 1px 0 0 0;
     color: #000000;
@@ -526,10 +560,8 @@ button {
 }
 
 .clipboard {
-    clear: both;
     width: 100%;
-    margin: 0px 0 5px 0;
-    padding: 12px;
+    margin: 0 0 15px 0;
 }
 
 .collection-overrides {
@@ -552,6 +584,15 @@ button {
 
 .search-tools {
     float: right;
+}
+
+.search-tools a {
+    margin-left: 5px;
+    opacity: 0.5;
+}
+
+.search-tools a:hover {
+    opacity: 0.8;
 }
 
 .search-form {
@@ -629,20 +670,16 @@ button {
     box-sizing: border-box;
     white-space: nowrap;
     overflow: hidden;
-}
-
-.toolbar--rhs {
+    width: 50%;
     float: right;
-}
-
-.toolbar > * {
-    margin-bottom: 20px;
+    padding: 15px 0;
+    height: 66px;
 }
 
 .toolbar .spark {
     display: inline-block;
-    margin: -2px 15px 0 0;
-    float: left;
+    margin: 0 15px 0 0;
+    float: right;
     width: 100px;
 }
 
@@ -653,20 +690,17 @@ button {
 }
 
 .tool-select {
-    float: left;
     font-weight: bold;
     font-size: 16px;
     color: #000000;
-    margin: 4px 15px 15px 0;
-    width: 150px;
 }
 
 .tool {
     display: inline-block;
     padding: 0 10px;
     background: #dbd5b8;
-    font-size: 12px;
-    line-height: 20px;
+    font-size: 15px;
+    line-height: 24px;
     color: #FFFFFF;
     border-radius: 2px;
     border: 0;
@@ -703,45 +737,12 @@ button {
     background: #376ABF;
 }
 
-.tool-left-half {
-    font-weight: bold;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.tool-right-half {
-    font-weight: bold;
-    margin-left: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.tool-draft-mode.active {
-    background: #e8bd39;
-}
-
-.tool-live-mode.active {
-    background: #46c430;
-}
-
-.tool-draft-content.active {
-    background: #e8bd39;
-}
-
-.tool-live-content.active {
-    background: #46c430;
-}
-
-.tool--preview {
-    width: 55px;
-}
-
 .collection .tools {
     margin: 0 0 2px 4px;
 }
 
 .tools .tool.draft-publish {
-    background: #e8bd39;
+    background: #ffc107;
 }
 
 .tools .tool.draft-publish:hover {
@@ -749,7 +750,7 @@ button {
 }
 
 .tools .tool.draft-warning {
-    background: #e8bd39;
+    background: #ffc107;
     margin-right: 4px;
 }
 
@@ -886,7 +887,7 @@ button {
 }
 
 .cnf-collection.underDrag {
-    border-top-color: #FBCC43;
+    border-top-color: #03a9f4;
 }
 
 .cnf-collection__index {
@@ -962,7 +963,7 @@ button {
 
 .cnf-form input[type="text"],
 .cnf-form textarea,
-.cnf-form select{
+.cnf-form select {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     font-size: 12px;
