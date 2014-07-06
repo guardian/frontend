@@ -228,6 +228,7 @@ a:hover {
 .col__inner {
     padding: 15px 10px 15px 15px;
     box-shadow: inset 0 23px 10px -25px rgba(0,0,0,0.4);
+    transition: background-color 0.25s ease;
 }
 
 .modes {
@@ -257,13 +258,20 @@ a:hover {
     text-align: center;
     font-size: 15px;
     font-weight: bold;
+    transition: background-color 0.25s ease;
 }
 
-.draft-mode.active {
+.modes a:hover {
+   background: #90a4ae; 
+}
+
+.modes a.draft-mode.active,
+.modes a.draft-mode.active:hover {
     background: #ffc107;
 }
 
-.live-mode.active {
+.modes a.live-mode.active,
+.modes a.live-mode.active:hover {
     background: #46c430;
 }
 
