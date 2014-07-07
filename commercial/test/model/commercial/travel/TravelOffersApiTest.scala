@@ -4,8 +4,11 @@ import org.scalatest.Matchers
 import common.ExecutionContexts
 import org.scalatest.FlatSpec
 import scala.xml.XML
+import play.api.test.FakeApplication
+import play.api.test.Helpers._
 
-class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
+
+class TravelOffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
 
   val xml = XML.loadString {
     """
@@ -66,13 +69,13 @@ class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
     """.stripMargin
   }
 
-  "OffersApi" should "build Offers from XML" in {
-    val offers = OffersApi.parse(xml)
+  "OffersApi" should "build Offers from XML" in running(FakeApplication()) {
+    val offers = TravelOffersApi.parse(xml)
     offers should be(Fixtures.untaggedOffers)
   }
 
   "Hydrated Offers" should "provide duration in words" in {
-    val offers = OffersApi.parse(xml)
+    val offers = TravelOffersApi.parse(xml)
 
     offers.find(_.id == 3381).head.durationInWords should be("5 nights")
     offers.find(_.id == 5098).head.durationInWords should be("4 nights")
