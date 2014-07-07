@@ -72,7 +72,7 @@ CommentBox.prototype.classes = {};
 CommentBox.prototype.errorMessages = {
     EMPTY_COMMENT_BODY: 'Please write a comment.',
     COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
-    COMMENT_NEEDS_SENTIMENT: 'Please let us know if you agree or disagree.',
+    COMMENT_NEEDS_SENTIMENT: 'Please select yes or no.',
     ENHANCE_YOUR_CALM: 'You can only post one comment every minute. Please try again in a moment.',
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
     API_ERROR: 'Sorry, there was a problem posting your comment.',
