@@ -47,6 +47,7 @@ object SQSQueues {
 
 case class MessageId(get: String) extends AnyVal
 case class ReceiptHandle(get: String) extends AnyVal
+case class Message[A](id: MessageId, get: A, handle: ReceiptHandle)
 
 /** Utility class for SQS queues that use JSON to serialize their messages */
 case class JsonMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)
@@ -54,9 +55,7 @@ case class JsonMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)
   import SQSQueues._
   import scala.collection.JavaConverters._
 
-  case class Message(id: MessageId, get: A, handle: ReceiptHandle)
-
-  def receive(request: ReceiveMessageRequest)(implicit reads: Reads[A]): Future[Seq[Message]] =
+  def receive(request: ReceiveMessageRequest)(implicit reads: Reads[A]): Future[Seq[Message[A]]] =
     client.receiveMessageFuture(request.withQueueUrl(queueUrl)) map { response =>
       response.getMessages.asScala.toSeq map { message =>
         Message(
@@ -69,7 +68,7 @@ case class JsonMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)
     }
   }
 
-  def receiveOne(request: ReceiveMessageRequest)(implicit reads: Reads[A]): Future[Option[Message]] = {
+  def receiveOne(request: ReceiveMessageRequest)(implicit reads: Reads[A]): Future[Option[Message[A]]] = {
     receive(request.withMaxNumberOfMessages(1)) map { messages =>
       messages.seq match {
         case message :: Nil => Some(message)

@@ -266,8 +266,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object faciatool {
-    lazy val contentApiPostEndpoint: Option[String] = configuration.getStringProperty("contentapi.post.endpoint")
-    lazy val frontPressQueueUrl: Option[String] = configuration.getStringProperty("frontpress.sqs.queue")
+    lazy val contentApiPostEndpoint = configuration.getStringProperty("contentapi.post.endpoint")
+    lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
+    lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
     lazy val configBeforePressTimeout: Int = 1000
 
     //It's not possible to take a batch size above 10

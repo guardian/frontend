@@ -1,6 +1,6 @@
 import common.Jobs
 import conf.{Configuration => GuardianConfiguration}
-import frontpress.FrontPressJob
+import frontpress.{ToolPressQueue, FrontPressCron}
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings {
@@ -9,7 +9,7 @@ object Global extends GlobalSettings {
 
   def scheduleJobs() {
     Jobs.schedule("FaciaToolPressJob", s"0/$pressJobConsumeRateInSeconds * * * * ?") {
-      FrontPressJob.run()
+      FrontPressCron.run()
     }
   }
 
@@ -19,6 +19,7 @@ object Global extends GlobalSettings {
 
   override def onStart(app: play.api.Application) {
     super.onStart(app)
+    ToolPressQueue.start()
     descheduleJobs()
     scheduleJobs()
   }

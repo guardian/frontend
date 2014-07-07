@@ -15,8 +15,8 @@ import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-object FrontPressJob extends Logging with implicits.Collections {
-  val queueUrl: Option[String] = Configuration.faciatool.frontPressQueueUrl
+object FrontPressCron extends Logging with implicits.Collections {
+  val queueUrl: Option[String] = Configuration.faciatool.frontPressCronQueue
 
   import play.api.Play.current
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
@@ -28,7 +28,7 @@ object FrontPressJob extends Logging with implicits.Collections {
   }
 
   def run(): Unit = {
-    for(queueUrl <- queueUrl) {
+    for (queueUrl <- queueUrl) {
       if (FrontPressJobSwitch.isSwitchedOn) {
         val client = newClient
         try {
