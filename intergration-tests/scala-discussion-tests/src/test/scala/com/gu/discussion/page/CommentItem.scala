@@ -1,11 +1,12 @@
 package com.gu.discussion.page
 
+import com.gu.automation.support.page.Element
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.{By, WebDriver}
 
 case class CommentItem(implicit driver: WebDriver) {
 
-  private val latestComment = driver.findElement(By.cssSelector(".discussion__comments__container .d-comment"))
+  private val latestComment = Element(By.cssSelector(".discussion__comments__container .d-comment"))
   private def commentBody = latestComment.findElement(By.className("d-comment__body"))
   private def showCommentButton = latestComment.findElement(By.className("d-comment-box__show-parent"))
   private def replyToCommentButton = latestComment.findElement(By.className("d-comment__action--reply"))

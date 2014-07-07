@@ -75,6 +75,12 @@ case class CommentSteps(implicit driver: WebDriver, logger: TestLogger) extends 
 
     viewUserCommentReplies()
     viewUserFeaturedComments()
+    viewUserComments()
+    this
+  }
+
+  def viewUserComments() = {
+    UserProfilePage().viewProfileComments()
     this
   }
 

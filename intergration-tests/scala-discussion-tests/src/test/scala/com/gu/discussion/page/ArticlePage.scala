@@ -1,13 +1,14 @@
 package com.gu.discussion.page
 
 import com.gu.automation.support.Config
+import com.gu.automation.support.page.Element
 import com.gu.discussion.support.ByExt
 import org.openqa.selenium.{By, WebDriver}
 
 case class ArticlePage(implicit driver: WebDriver) {
 
-  private def commentCountLabel = driver.findElement(By.cssSelector("div.content__main-column.content__main-column--article div.js-comment-count a.js-show-discussion"))
-  private def showAllCommentsLink = driver.findElement(ByExt.dataLinkName("View all comments"))
+  private def commentCountLabel = Element(By.cssSelector("div.content__main-column.content__main-column--article div.js-comment-count a.js-show-discussion"))
+  private def showAllCommentsLink = Element(ByExt.dataLinkName("View all comments"))
 
   def goToStartOfComments(): ArticlePage = {
 
