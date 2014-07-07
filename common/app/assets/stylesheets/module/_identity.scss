@@ -414,11 +414,10 @@
     @include rem((
         width: 292px,
         margin-right: $gs-gutter/2,
-        margin-bottom: $gs-gutter
+        margin-bottom: $gs-baseline
     ));
     display: inline-block;
     vertical-align: top;
-
     @include fs-textsans(1);
 }
 .activity-stream__witness-img {
