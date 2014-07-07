@@ -3,7 +3,7 @@ package frontpress
 import scala.concurrent.Future
 import conf.Switches._
 import play.api.libs.ws.Response
-import services.{ContentApiWrite, ConfigAgent}
+import services.{FaciaPress, PressCommand, ContentApiWrite, ConfigAgent}
 import conf.Switches
 
 object CollectionPressing {
@@ -15,7 +15,7 @@ object CollectionPressing {
 
   def pressCollectionIds(pressCommand: PressCommand): Unit =
     if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
-      FrontPress.press(pressCommand)
+      FaciaPress.press(pressCommand)
     }
 
   def pressAndNotify(id: String) {

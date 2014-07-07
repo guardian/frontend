@@ -1,7 +1,6 @@
 import common._
 import conf.{Gzipper, Management, Configuration => GuardianConfiguration}
 import java.io.File
-import jobs.FrontPressJob
 import play.api._
 import play.api.mvc.WithFilters
 import services.ConfigAgentLifecycle

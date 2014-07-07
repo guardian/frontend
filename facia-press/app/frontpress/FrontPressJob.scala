@@ -1,19 +1,19 @@
-package jobs
+package frontpress
 
-import common.Logging
+import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
-import conf.Configuration
 import com.amazonaws.services.sqs.model._
-import com.amazonaws.regions.{Regions, Region}
-import scala.collection.JavaConversions._
-import services.{ConfigAgent, S3FrontsApi}
-import play.api.libs.json.{JsObject, Json}
-import scala.concurrent.Future
-import frontpress.{PressResult, PressCommand, FrontPress}
-import common.FaciaToolMetrics.{FrontPressSuccess, FrontPressFailure, FrontPressCronFailure, FrontPressCronSuccess}
-import play.api.libs.concurrent.Akka
-import scala.util.{Failure, Success}
+import common.FaciaToolMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
+import common.Logging
+import common.SQSQueues._
+import conf.Configuration
 import conf.Switches.FrontPressJobSwitch
+import play.api.libs.concurrent.Akka
+import play.api.libs.json.Json
+
+import scala.collection.JavaConversions._
+import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 object FrontPressJob extends Logging with implicits.Collections {
   val queueUrl: Option[String] = Configuration.faciatool.frontPressQueueUrl
@@ -24,9 +24,7 @@ object FrontPressJob extends Logging with implicits.Collections {
   val batchSize: Int = Configuration.faciatool.pressJobBatchSize
 
   def newClient: AmazonSQSAsyncClient = {
-    val c = new AmazonSQSAsyncClient(Configuration.aws.credentials)
-    c.setRegion(Region.getRegion(Regions.EU_WEST_1))
-    c
+    new AmazonSQSAsyncClient(Configuration.aws.credentials).withRegion(Region.getRegion(Regions.EU_WEST_1))
   }
 
   def run(): Unit = {

@@ -464,6 +464,9 @@ object Metrics {
   lazy val admin = AdminMetrics.all
   lazy val facia = FaciaMetrics.all
   lazy val faciaTool = FaciaToolMetrics.all
+
+  /** TODO, fix this */
+  lazy val faciaPress = FaciaToolMetrics.all
 }
 
 case class SimpleCountMetric(
