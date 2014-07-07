@@ -1,12 +1,10 @@
 define([
     'common/utils/$',
-    'bean',
     'bonzo',
     'common/modules/commercial/article-body-adverts',
     'helpers/fixtures'
 ], function(
     $,
-    bean,
     bonzo,
     ArticleBodyAdverts,
     fixtures

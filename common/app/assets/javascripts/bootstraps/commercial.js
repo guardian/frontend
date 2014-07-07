@@ -21,7 +21,7 @@ define([
     container,
     articleAsideAdverts,
     ArticleBodyAdverts,
-    SliceAdverts,
+    sliceAdverts,
     frontCommercialComponents,
     badges,
     dfp,
@@ -64,9 +64,9 @@ define([
                 }
             }
 
-            new SliceAdverts(config).init();
 
             articleAsideAdverts().init();
+            sliceAdverts().init();
             frontCommercialComponents.init();
             badges.init();
 

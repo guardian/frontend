@@ -1,11 +1,9 @@
 define([
-    'bonzo',
     'qwery',
     'helpers/fixtures',
     'common/utils/$',
     'common/modules/commercial/article-aside-adverts'
 ], function(
-    bonzo,
     qwery,
     fixtures,
     $,
