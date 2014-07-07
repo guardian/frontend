@@ -1,3 +1,4 @@
+import commercial.TravelOffersCacheJob
 import common.{AkkaAsync, Jobs, CloudWatchApplicationMetrics}
 import conf.{Configuration, Gzipper, Management}
 import dfp.DfpDataCacheJob
@@ -29,6 +30,7 @@ with SurgingContentAgentLifecycle {
     // every 30 minutes
     Jobs.schedule("DfpDataCacheJob", "0 1/30 * * * ? *") {
       DfpDataCacheJob.run()
+      TravelOffersCacheJob.run()
     }
   }
 
@@ -44,6 +46,7 @@ with SurgingContentAgentLifecycle {
 
     AkkaAsync {
       DfpDataCacheJob.run()
+      TravelOffersCacheJob.run()
     }
   }
 
