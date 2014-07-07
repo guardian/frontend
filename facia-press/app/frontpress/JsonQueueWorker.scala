@@ -1,5 +1,7 @@
 package frontpress
 
+import java.util.concurrent.atomic.AtomicInteger
+
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest
 import common.{ExecutionContexts, Message, Logging, JsonMessageQueue}
 import org.joda.time.DateTime
@@ -7,6 +9,24 @@ import play.api.libs.json.Reads
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
+
+object ConsecutiveErrorsRecorder {
+  def apply() = new ConsecutiveErrorsRecorder
+}
+
+final private[frontpress] class ConsecutiveErrorsRecorder {
+  private val errorCount = new AtomicInteger()
+
+  def recordSuccess() = {
+    errorCount.set(0)
+  }
+
+  def recordError() {
+    errorCount.addAndGet(1)
+  }
+
+  def get = errorCount.get()
+}
 
 object DateTimeRecorder {
   def apply() = new DateTimeRecorder
@@ -44,10 +64,10 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
   val queue: JsonMessageQueue[A]
 
   final private val lastSuccessfulReceipt = DateTimeRecorder()
-  final private val lastSuccessfulProcess = DateTimeRecorder()
+  final private val consecutiveProcessingErrors = ConsecutiveErrorsRecorder()
 
   final def lastReceipt = lastSuccessfulReceipt.get
-  final def lastProcess = lastSuccessfulProcess.get
+  final def consecutiveErrors = consecutiveProcessingErrors.get
 
   def process(a: A): Future[Unit]
 
@@ -67,10 +87,11 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
               case error => log.error(s"Error deleting message $id from queue", error)
             }
 
-            lastSuccessfulProcess.refresh()
+            consecutiveProcessingErrors.recordSuccess()
 
           case Failure(error) =>
             log.error(s"Error processing message $id", error)
+            consecutiveProcessingErrors.recordError()
         }
 
       case Success(None) =>
