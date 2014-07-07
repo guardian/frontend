@@ -165,7 +165,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     white-space: nowrap;
     display: table-cell;
     position: relative;
-
     @include rem((
         padding-left: $new-navigation-h-space-between-items/2
     ));
@@ -180,9 +179,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     text-decoration: none;
     display: table-cell;
 }
-.signposting__item--home {
-}
-
 .signposting__separator {
     display: table-cell;
     vertical-align: top;
@@ -227,8 +223,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
         z-index: 2;
     }
 }
-
-
 .local-navigation__action,
 .top-navigation__action,
 .global-navigation__action {
@@ -236,13 +230,11 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     overflow: hidden;
     white-space: nowrap;
 }
-
 .top-navigation__item--current {
     @include rem((
         margin-right: $gs-gutter/2
     ));
 }
-
 .global-navigation__title {
     float: left;
 }
@@ -262,7 +254,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     white-space: nowrap;
     display: table-cell;
     position: relative;
-
     @include rem((
         padding-right: $new-navigation-h-space-between-items/2,
         padding-left: $new-navigation-h-space-between-items/2
@@ -361,12 +352,14 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
         display: block;
     }
 }
+
 .global-navigation__children {
     @include box-sizing(border-box);
     @include rem((
         min-height: $gs-row-height,
         padding-top: $gs-baseline/4
     ));
+
     @include mq($to: tablet) {
         @include rem((
             margin-left: -$gs-gutter/2,
@@ -412,11 +405,9 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     &.new-navigation--has-local-navigation .top-navigation__item--home {
         display: none;
     }
-
     .new-navigation--collapsed__hide {
         display: none !important;
     }
-
     .new-navigation__container {
         display: table-cell;
         vertical-align: top;
@@ -429,11 +420,9 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
             display: none;
         }
     }
-
     .new-navigation__expandable {
         display: none;
     }
-
     &,
     .signposting,
     .local-navigation {
@@ -445,7 +434,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     .local-navigation {
         display: table-cell;
     }
-
     &.new-navigation--has-local-navigation .top-navigation {
         @include rem((
             padding-left: $new-navigation-h-space-between-items/2
@@ -488,7 +476,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     .local-navigation {
         overflow: hidden;
         background: $c-local-navigation-background;
-
 
         @include mq(mobileLandscape) {
             @include rem((
@@ -585,7 +572,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
         .top-navigation__item--home {
             display: none !important;
         }
-        
 
         // Re-align signposting and local nav
         .signposting,
@@ -700,7 +686,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
 .new-navigation--expanded .new-navigation__toggle-label--close {
     display: inline;
 }
-
 .new-navigation__toggle-arrow {
     position: absolute;
     @include rem((
