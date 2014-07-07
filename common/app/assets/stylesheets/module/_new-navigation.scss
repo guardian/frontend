@@ -554,6 +554,18 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
 
 @include mq(wide) {
     .new-navigation--has-local-navigation {
+        &:after {
+            content: '';
+            position: absolute;
+            display: block;
+            left: 0;
+            right: 0;
+            @include rem((
+                top: $gs-row-height
+            ));
+            height: 1px;
+            background: rgba(#ffffff, .3);
+        }
         &.new-navigation--collapsed {
             @include rem((
                 height: $gs-row-height * 2
