@@ -401,7 +401,7 @@
 .membership-tab__details-list {
 
     @include rem((
-        padding: $gs-baseline*2 0 $gs-baseline*2 0
+        padding-top: $gs-baseline*2
     ));
 
     li {
@@ -448,6 +448,10 @@
         }
     }
 
+    .membership-payment-cost {
+        text-transform: uppercase;
+    }
+
     .membership-tab__update-button--muted {
         background: none;
         color: $c-newsDefault;
@@ -460,6 +464,13 @@
             color: $c-newsAccent;
         }
     }
+}
+
+.membership-tab__details-list--lower {
+    @include rem((
+        padding-top: 0,
+        padding-bottom: $gs-baseline*2
+    ));
 }
 
 .membership-tab__change-cc-form-cont {
