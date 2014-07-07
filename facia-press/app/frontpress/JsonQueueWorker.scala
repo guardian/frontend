@@ -118,6 +118,7 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
       if (started) {
         log.warn("Attempted to start queue worker but queue worker is already started")
       } else {
+        log.info("Starting worker ... ")
         started = true
         next()
       }

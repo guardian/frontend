@@ -15,6 +15,10 @@ import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
+/** TODO convert this to use JsonQueueWorker
+  *
+  * (So as to a) reduce code, and b) allow us to use the various metrics it gives for health checks)
+  */
 object FrontPressCron extends Logging with implicits.Collections {
   val queueUrl: Option[String] = Configuration.faciatool.frontPressCronQueue
 
