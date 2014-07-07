@@ -18,7 +18,7 @@ define([
     assign,
     config,
     userPrefs,
-    container,
+    tagsContainer,
     articleAsideAdverts,
     articleBodyAdverts,
     sliceAdverts,
@@ -52,7 +52,7 @@ define([
 
             // load tags
             if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
-                container.init(config);
+                tagsContainer.init(config);
             }
 
             // following modules add ad slots to the page, if appropriate

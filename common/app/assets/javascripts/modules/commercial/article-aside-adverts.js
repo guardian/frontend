@@ -14,7 +14,7 @@ define([
 
     function init(c) {
         var config = defaults(
-                c || {},
+            c || {},
             globalConfig,
             {
                 columnSelector: '.content__secondary-column',
