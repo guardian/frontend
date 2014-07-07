@@ -1,0 +1,26 @@
+@(activity: List[WitnessActivity])(implicit request: RequestHeader)
+
+<div class="activity-stream__witness-contributions">
+@if(activity.isEmpty){
+	<p class="activity-stream__empty">Nothing to see here at the moment.</p>
+} else {
+	@activity.map{ w =>
+        @if(!w.image.isEmpty){
+        <div class="activity-stream__witness-item">
+            <div class="activity-stream__witness-content">
+                <a href="@w.webUrl">
+                    <div class="activity-stream__witness-img" style="background-image: url('@w.image');"></div>
+                    <div class="activity-stream__witness-text">
+                        <div class="activity-stream__witness-title">@w.headline</div>
+                        <div class="activity-stream__witness-description">@w.bodyShort</div>
+                    </div>
+                </a>
+            </div>
+            <div class="activity-stream__witness-meta">
+                <span>@w.daysAgo</span>
+            </div>
+        </div>
+        }
+	}
+}
+</div>
