@@ -3,41 +3,44 @@
 
 @defining(Edition(request).navigation) { navigation =>
     <div class="@RenderClasses(Map(
-                    ("new-navigation new-navigation--collapsed", true),
-                    ("new-navigation--has-no-local-navigation", Navigation.localLinks(navigation, metaData).isEmpty),
+                    ("new-navigation", true),
+                    ("new-navigation--collapsed", true),
                     ("new-navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
                 ))">
         <div class="gs-container">
             <div class="new-navigation__inner">
                 <div class="new-navigation__scroll">
                     <div class="new-navigation__container new-navigation__container--first">
-                        @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
-                            @if(topSection.links.nonEmpty){
-                                @fragments.nav.signposting(metaData, navigation)
-                            }
-                            <ul class="local-navigation">
-                                @Navigation.rotatedLocalNav(topSection, metaData).map{  link =>
-                                    <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo(link.href)">@Html(link.title)</a></li>
+                        @if(!Edition.isEditionFront){
+                            @fragments.nav.signposting(metaData, navigation)
+
+                            @Navigation.topLevelItem(navigation, metaData).map{ topSection =>
+                                @if(Navigation.localLinks(navigation, metaData).nonEmpty) {
+                                    <ul class="local-navigation">
+                                        @Navigation.rotatedLocalNav(topSection, metaData).map{ link =>
+                                            <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo(link.href)">@Html(link.title)</a></li>
+                                        }
+                                    </ul>
                                 }
-                            </ul>
+                            }
                         }
                     </div>
-
                     <div class="new-navigation__container new-navigation__container--second">
                         <ul class="top-navigation">
                             @navigation.map{ nav =>
-                                <li class="@RenderClasses(Map(
-                                        ("top-navigation__item", true),
-                                        ("top-navigation__item--current", nav.currentFor(metaData)),
-                                        ("top-navigation__item--home", Navigation.isEditionFront(nav))
-                                    ))">
-                                    <a class="top-navigation__action" href="@LinkTo(nav.name.href)" data-link-name="@nav.name.title">
-                                        @Html(nav.name.title)
-                                        @if(nav.currentFor(metaData)){
-                                            <span class="u-h">selected</span>
-                                        }
-                                    </a>
-                                </li>
+                                @if(!Navigation.isEditionFront(nav)){
+                                    <li class="@RenderClasses(Map(
+                                            ("top-navigation__item", true),
+                                            ("top-navigation__item--current", nav.currentFor(metaData))
+                                        ))">
+                                        <a class="top-navigation__action" href="@LinkTo(nav.name.href)" data-link-name="@nav.name.title">
+                                            @Html(nav.name.title)
+                                            @if(nav.currentFor(metaData)){
+                                                <span class="u-h">selected</span>
+                                            }
+                                        </a>
+                                    </li>
+                                }
                             }
                         </ul>
                     </div>

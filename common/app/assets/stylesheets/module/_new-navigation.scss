@@ -124,6 +124,13 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     position: relative;
     background: $c-top-navigation-background;
 }
+.new-navigation__container--first {
+    background: $c-top-navigation-background;
+    @include rem((
+        min-height: $gs-row-height
+    ));
+}
+
 .new-navigation__expandable {
     background: #ffffff;
     overflow: hidden;
@@ -238,17 +245,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
 .global-navigation__title {
     float: left;
 }
-.global-navigation__children {
-    overflow: hidden;
-    background: $c-local-navigation-background;
-
-    @include mq($to: tablet) {
-        @include rem((
-            font-size: 14px,
-        ));
-        line-height: 2;
-    }
-}
 .local-navigation__item,
 .top-navigation__item {
     white-space: nowrap;
@@ -260,8 +256,7 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     ));
 }
 .signposting__item--home,
-.top-navigation__item--home,
-.top-navigation__item--current.top-navigation__item--home + .top-navigation__item {
+.top-navigation__item:first-child {
     @include rem((
         padding-left: $gs-gutter/2
     ));
@@ -345,20 +340,14 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     }
 }
 
-@include mq($to: tablet) {
-    .global-navigation__title,
-    .global-navigation__children {
-        float: none;
-        display: block;
-    }
-}
-
 .global-navigation__children {
     @include box-sizing(border-box);
     @include rem((
         min-height: $gs-row-height,
         padding-top: $gs-baseline/4
     ));
+    overflow: hidden;
+    background: $c-local-navigation-background;
 
     @include mq($to: tablet) {
         @include rem((
@@ -366,8 +355,10 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
             margin-right: -$gs-gutter/2,
             padding-left: $gs-gutter/2,
             padding-right: $gs-gutter/2,
-            padding-bottom: $gs-baseline*.75
+            padding-bottom: $gs-baseline*.75,
+            font-size: 14px
         ));
+        line-height: 2;
     }
     @include mq(mobileLandscape, tablet) {
         @include rem((
@@ -377,10 +368,19 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     }
     @include mq(tablet) {
         @include rem((
-            padding-bottom: $gs-baseline/4
+            padding-bottom: $gs-baseline/4,
+            padding-left: $gs-gutter/2
         ));
     }
 }
+@include mq($to: tablet) {
+    .global-navigation__title,
+    .global-navigation__children {
+        float: none;
+        display: block;
+    }
+}
+
 @include mq(tablet) {
     .global-navigation__action {
         float: left;
@@ -392,7 +392,7 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     }
 }
 .new-navigation .global-navigation__section--home,
-.global-navigation__section--current {
+.new-navigation .global-navigation__section--current {
     display: none;
 }
 
@@ -401,10 +401,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
    ========================================================================== */
 
 .new-navigation--collapsed {
-    .top-navigation__item--current.top-navigation__item--home,
-    &.new-navigation--has-local-navigation .top-navigation__item--home {
-        display: none;
-    }
     .new-navigation--collapsed__hide {
         display: none !important;
     }
@@ -434,11 +430,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     .local-navigation {
         display: table-cell;
     }
-    &.new-navigation--has-local-navigation .top-navigation {
-        @include rem((
-            padding-left: $new-navigation-h-space-between-items/2
-        ));
-    }
     .local-navigation__item,
     .top-navigation__item {
         white-space: nowrap;
@@ -466,12 +457,8 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     z-index: 2;
     height: auto;
 
-    // Show only the home section
-    .top-navigation__item {
+    .top-navigation {
         display: none;
-    }
-    &.new-navigation--has-no-local-navigation .top-navigation__item--home {
-        display: block;
     }
     .local-navigation {
         overflow: hidden;
@@ -568,9 +555,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
         }
         .top-navigation__item {
             display: table-cell !important;
-        }
-        .top-navigation__item--home {
-            display: none !important;
         }
 
         // Re-align signposting and local nav
