@@ -5,6 +5,7 @@
 	<p class="activity-stream__empty">Nothing to see here at the moment.</p>
 } else {
 	@activity.map{ w =>
+        @if(!w.image.isEmpty){
         <div class="activity-stream__witness-item">
             <div class="activity-stream__witness-content">
                 <a href="@w.webUrl">
@@ -19,6 +20,7 @@
                 <span>@w.daysAgo</span>
             </div>
         </div>
+        }
 	}
 }
 </div>

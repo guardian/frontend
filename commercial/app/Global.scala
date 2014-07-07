@@ -7,7 +7,7 @@ import model.commercial.jobs.{Industries, JobsAgent}
 import model.commercial.masterclasses.{MasterClassTagsAgent, MasterClassAgent}
 import model.commercial.money.BestBuysAgent
 import model.commercial.soulmates.SoulmatesAggregatingAgent
-import model.commercial.travel.{Countries, OffersAgent}
+import model.commercial.travel.{Countries, TravelOffersAgent}
 import play.api.mvc.WithFilters
 import play.api.{Application => PlayApp, GlobalSettings}
 import scala.util.{Failure, Success, Random}
@@ -19,11 +19,11 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     MasterClassTagsRefresh,
     MasterclassesRefresh,
     CountriesRefresh,
-    TravelOffersRefresh,
     IndustriesRefresh,
     JobsRefresh,
     MoneyBestBuysRefresh,
-    BooksRefresh
+    BooksRefresh,
+    TravelOffersRefresh
   )
 
   override def onStart(app: PlayApp) {
@@ -47,7 +47,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       }
 
       Countries.refresh() andThen {
-        case Success(_) => OffersAgent.refresh()
+        case Success(_) => TravelOffersAgent.refresh()
         case Failure(e) => log.warn(s"Failed to refresh travel offer countries: ${e.getMessage}")
       }
 
@@ -59,6 +59,7 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
       BestBuysAgent.refresh()
 
       BestsellersAgent.refresh()
+      TravelOffersRefresh.refresh()
     }
   }
 
@@ -131,9 +132,9 @@ object CountriesRefresh extends RefreshJob {
 object TravelOffersRefresh extends RefreshJob {
   val name: String = "TravelOffers"
 
-  def refresh() = OffersAgent.refresh()
+  def refresh() = TravelOffersAgent.refresh()
 
-  def stopJob() = OffersAgent.stop()
+  def stopJob() = TravelOffersAgent.stop()
 }
 
 object IndustriesRefresh extends RefreshJob {

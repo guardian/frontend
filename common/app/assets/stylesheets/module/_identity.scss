@@ -446,7 +446,9 @@
 .activity-stream__witness-content {
     border: 1px solid $c-neutral4;
     border-top: 0;
-    line-height: 1.4;
+    @include rem((
+        line-height: 14px
+    ));
 
     a {
         text-decoration: none;
