@@ -399,7 +399,7 @@ object Switches extends Collections {
 
   val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
     "If this switch is on the container configuration will allow articles to show their tags or sections",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 5)
   )
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
@@ -415,6 +415,12 @@ object Switches extends Collections {
   val SeoOptimisedContentImageSwitch = Switch("Image Server", "seo-optimised-article-image",
     "If this switch is on images then articles will get a 460px on static.guim.co.uk image as the low-res version.",
     safeState = On, sellByDate = new DateMidnight(2014, 8, 30)
+  )
+
+  // actually just here to make us remove this in the future
+  val GuShiftCookieSwitch = Switch("Feature Switches", "gu-shift-cookie",
+    "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
+    safeState = On, sellByDate = new DateMidnight(2014, 9, 30)
   )
 
   val all: List[Switch] = List(
@@ -486,7 +492,8 @@ object Switches extends Collections {
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
-    FaciaToolDraftContent
+    FaciaToolDraftContent,
+    GuShiftCookieSwitch
   )
 
   val httpSwitches: List[Switch] = List(
