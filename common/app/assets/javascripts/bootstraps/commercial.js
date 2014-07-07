@@ -50,9 +50,7 @@ define([
         if (!userPrefs.isOff('adverts') && !config.page.shouldHideAdverts && !config.page.isSSL) {
 
             // load tags
-            if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
-                tagsContainer.init(config);
-            }
+            tagsContainer.init(config);
 
             // following modules add ad slots to the page, if appropriate
             articleAsideAdverts().init();
