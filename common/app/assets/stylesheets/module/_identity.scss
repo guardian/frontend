@@ -434,10 +434,10 @@
     border: 1px solid $c-neutral4;
     border-top: 0;
     text-align: right;
-    @include rem((
-            padding: $gs-baseline 0
-    ));
     @include fs-textsans(1);
+    @include rem((
+        padding: $gs-baseline 0
+    ));
 
     .activity-stream__witness-meta-inner {
         @include rem((
