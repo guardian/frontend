@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    'lodash/objects/assign',
     'common/utils/config',
     'common/modules/userPrefs',
     'common/modules/commercial/tags/container',
@@ -15,7 +14,6 @@ define([
 ], function (
     bonzo,
     qwery,
-    assign,
     config,
     userPrefs,
     tagsContainer,
@@ -30,6 +28,7 @@ define([
 
     function init() {
 
+        // forces a commercial component on a page, for testing
         [
             ['commercial-component', 'merchandising'],
             ['commercial-component-high', 'merchandising-high']
@@ -67,13 +66,7 @@ define([
             badges.init();
 
             // now call dfp
-            var options = {};
-            if (!config.switches.standardAdverts) {
-                options.adSlotSelector = '.ad-slot--commercial-component';
-            } else if (!config.switches.commercialComponents) {
-                options.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
-            }
-            dfp.init(assign(config, options));
+            dfp.init();
         }
 
     }
