@@ -19,8 +19,13 @@ object PressType {
 
 sealed trait PressType
 
-case object Live extends PressType
-case object Draft extends PressType
+case object Live extends PressType {
+  override def toString = "Live"
+}
+
+case object Draft extends PressType {
+  override def toString = "Draft"
+}
 
 object FrontPath {
   implicit val jsonFormat = new Format[FrontPath] {

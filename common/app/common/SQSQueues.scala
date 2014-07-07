@@ -70,7 +70,7 @@ case class JsonMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)
 
   def receiveOne(request: ReceiveMessageRequest)(implicit reads: Reads[A]): Future[Option[Message[A]]] = {
     receive(request.withMaxNumberOfMessages(1)) map { messages =>
-      messages.seq match {
+      messages.toList match {
         case message :: Nil => Some(message)
         case Nil => None
         case _ => throw new RuntimeException(s"Asked for 1 message from queue but got ${messages.length}")

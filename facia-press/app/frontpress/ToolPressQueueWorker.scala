@@ -22,6 +22,8 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] {
   override def process(job: PressJob): Future[Unit] = {
     val PressJob(FrontPath(path), pressType) = job
 
+    log.info(s"Processing job from tool to update $path on $pressType")
+
     (pressType match {
       case Draft => FrontPress.pressDraftByPathId(path)
       case Live => FrontPress.pressLiveByPathId(path)
