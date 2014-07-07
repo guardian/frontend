@@ -37,6 +37,16 @@
     font-size: 14px;
 }
 
-.label-warning {
-    color: #ffffff !important;
+.redirect-form .controls {
+    margin-left: 50px !important;
+}
+
+.redirect-form .control-label {
+    width: 40px !important;
+    font-weight: bold;
+}
+
+.redirect-form input[type=text] {
+    max-width: 90%;
+    width: 500px;
 }
