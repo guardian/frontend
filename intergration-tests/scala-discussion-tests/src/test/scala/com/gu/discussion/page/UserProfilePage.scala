@@ -6,7 +6,7 @@ import com.gu.discussion.support.ByExt
 import org.openqa.selenium.{By, WebDriver}
 
 
-case class UserProfilePage(implicit driver: WebDriver, logger: TestLogger){
+case class UserProfilePage(implicit driver: WebDriver){
 
   private def commentsTab = Element(ByExt.dataTypeStream("discussions"))
   private def repliesTab = Element(ByExt.dataTypeStream("replies"))
