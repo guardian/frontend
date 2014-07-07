@@ -446,10 +446,7 @@
         @include rem((
             margin: 0 $gs-gutter
         ));
-    }
-
-    a {
-        @include fs-textsans(1);
+        color: $c-neutral1;
     }
 }
 .activity-stream__witness-content {
