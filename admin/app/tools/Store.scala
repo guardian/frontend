@@ -39,7 +39,7 @@ trait Store extends Logging with Dates {
     S3.putPublic(dfpLineItemsKey, everything, defaultJsonEncoding)
   }
   def putCachedTravelOffersFeed(everything: String) {
-    S3.putPublic(travelOffersS3Key, everything, defaultJsonEncoding)
+    S3.putPublic(travelOffersS3Key, everything, "text/plain")
   }
 
   val now: String = DateTime.now().toHttpDateTimeString

@@ -1,3 +1,4 @@
+import commercial.TravelOffersCacheJob
 import common.{AkkaAsync, Jobs, CloudWatchApplicationMetrics}
 import conf.{Configuration, Gzipper, Management}
 import dfp.DfpDataCacheJob
@@ -24,6 +25,7 @@ object Global extends WithFilters(Gzipper) with AdminLifecycle with CloudWatchAp
     // every 30 minutes
     Jobs.schedule("DfpDataCacheJob", "0 1/30 * * * ? *") {
       DfpDataCacheJob.run()
+      TravelOffersCacheJob.run()
     }
   }
 
@@ -39,6 +41,7 @@ object Global extends WithFilters(Gzipper) with AdminLifecycle with CloudWatchAp
 
     AkkaAsync {
       DfpDataCacheJob.run()
+      TravelOffersCacheJob.run()
     }
   }
 

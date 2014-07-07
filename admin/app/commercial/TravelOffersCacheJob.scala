@@ -37,10 +37,16 @@ object TravelOffersCacheJob extends ExecutionContexts with Dates with Logging {
 
         future onSuccess {
           case response =>
-            log.info(s"Successfully loaded Travel Offers from $u")
-            recordLoad(System.currentTimeMillis - start)
+            val status = response.status
+            if (status == 200) {
+              log.info(s"Successfully loaded Travel Offers from $u")
+              recordLoad(System.currentTimeMillis - start)
 
-            Store.putCachedTravelOffersFeed(response.body)
+              Store.putCachedTravelOffersFeed(response.body)
+            } else {
+              log.error(s"Error loading Travel Offers from $u, response code is $status")
+              recordLoad(-1)
+            }
         }
         future onFailure {
           case e: Exception =>
