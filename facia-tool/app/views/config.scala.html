@@ -11,18 +11,22 @@
     <div class="updating">Updating</div>
 
     <div class="left-col">
-        <div class="title">Containers</div>
-        <div class="scrollable cnf-collections" data-bind="
-            template: {name: 'template_minimal_collection', foreach: collections}"></div>
+        <div class="col__inner scrollable">
+            <div class="title">Containers</div>
+            <div class="cnf-collections" data-bind="
+                template: {name: 'template_minimal_collection', foreach: collections}"></div>
+        </div>
     </div>
 
     <div class="right-col">
-        <div class="title">
-            Fronts
-            <span data-bind="click: createFront" class="linky">+</span>
+        <div class="col__inner scrollable">
+            <div class="title">
+                Fronts
+                <span data-bind="click: createFront" class="linky">+</span>
+            </div>
+            <div class="cnf-fronts" data-bind="
+                template: {name: 'template_front', foreach: fronts}"></div>
         </div>
-        <div class="scrollable cnf-fronts" data-bind="
-            template: {name: 'template_front', foreach: fronts}"></div>
     </div>
 
     <script type="text/html" id="template_minimal_collection">

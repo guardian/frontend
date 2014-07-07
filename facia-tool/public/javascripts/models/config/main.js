@@ -35,6 +35,8 @@ define([
     return function() {
         var model = vars.model = {};
 
+        model.title = ko.observable(pageConfig.priority + ' fronts configuration');
+
         model.switches = ko.observable();
 
         model.navSections = [].concat(pageConfig.navSections);

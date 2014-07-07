@@ -64,7 +64,7 @@ header {
 
 .logo {
     float: left;
-    margin: 3px 0 0 10px;
+    margin: 2px 0 0 4px;
     width: 48px;
     height: 45px;
 }
@@ -100,13 +100,14 @@ h1 {
 
 .login-form {
     position: absolute;
-    top: 55px;
-    left: 10px;
+    top: 10px;
+    left: 145px;
 }
 
 .front-priorities {
-    clear: both;
-    padding: 20px 0 0 20px;
+    position: absolute;
+    top: 45px;
+    left: 64px;
 }
 
 .front-priorities--priority {
@@ -218,7 +219,6 @@ h1 {
     top: 45px;
     left: 0;
     width: 50%;
-    border-right: 5px solid #ffffff;
 }
 
 .right-col {
@@ -247,7 +247,7 @@ h1 {
     height: 40px;
     border-bottom: 5px solid #dddddd; 
     overflow: hidden;
-    box-shadow: inset 0 23px 10px -25px rgba(0,0,0,0.4);
+    box-shadow: inset -23px 23px 10px -25px rgba(0,0,0,0.4);
 }
 
 .modes.live-mode {
@@ -300,7 +300,6 @@ h1 {
     overflow: hidden;
     padding: 0 2px 3px 4px;
     position: relative;
-    background: #FFFFFF;
     border-top: 5px solid #FFFFFF;
     -webkit-transition: border-color 150ms;
        -moz-transition: border-color 150ms;
@@ -576,7 +575,7 @@ button {
 
 .clipboard {
     width: 100%;
-    margin: 0 0 15px 0;
+    margin: 5px 0 15px 0;;
 }
 
 .collection-overrides {
