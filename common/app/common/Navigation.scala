@@ -218,6 +218,8 @@ object Navigation {
     }
 
   def isEditionFront(topSection: NavItem): Boolean = ("/" :: Edition.editionFronts).contains(topSection.name.href)
+
+  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] = Navigation.topLevelItem(navigation, metaData).map(_.links).getOrElse(List())
 }
 
 trait Zones extends Navigation {
