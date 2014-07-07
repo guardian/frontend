@@ -183,6 +183,12 @@ define([
             var gu_shift = Cookies.get('GU_SHIFT');
             if (gu_shift) {
                 var shiftValue = 'gu_shift,' + gu_shift + ',';
+                var gu_view = Cookies.get('GU_VIEW');
+
+                if (gu_view) {
+                    shiftValue += ',' + gu_view;
+                }
+
                 s.prop51  = shiftValue + s.prop51;
                 s.eVar51  = shiftValue + s.eVar51;
             }

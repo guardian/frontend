@@ -281,15 +281,14 @@ Comments.prototype.gotoComment = function(id) {
 
 /**
  * @param {number} page
- * @param {number=} sentimentId (optional)
  */
-Comments.prototype.gotoPage = function(page, sentimentId) {
+Comments.prototype.gotoPage = function(page) {
     this.loading();
     scroller.scrollToElement(qwery('.discussion__comments__container .discussion__heading'), 100);
 
     return this.fetchComments({
         page: page,
-        sentimentId: sentimentId
+        sentimentId: this.options.sentiment
     }).then(function() {
         this.loaded();
     }.bind(this));
@@ -606,7 +605,8 @@ Comments.prototype.setSentiment = function(e) {
     e.preventDefault();
     $('.d-discussion__sentiment--active', this.elem).removeClass('d-discussion__sentiment--active');
     $(el).addClass('d-discussion__sentiment--active');
-    return this.gotoPage(1, el.getAttribute('data-sentiment'));
+    this.options.sentiment = el.getAttribute('data-sentiment');
+    return this.gotoPage(1);
 };
 
 /**

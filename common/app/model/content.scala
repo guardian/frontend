@@ -147,6 +147,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("thumbnail", thumbnailPath.getOrElse(false)),
       ("references", delegate.references.map(r => Reference(r.id))),
       ("sectionName", sectionName),
+      ("showRelatedContent", showInRelated),
       ("productionOffice", productionOffice.getOrElse(""))
     ) ++ Map(seriesMeta : _*)
   }

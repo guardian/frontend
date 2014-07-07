@@ -93,25 +93,33 @@ define([
                 '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
+        model.detectPressFailureCount = 0;
+
         model.deferredDetectPressFailure = _.debounce(function () {
-            model.statusPressFailure(false);
+            var count;
 
             if (model.switches()['facia-tool-check-press-lastmodified'] && model.front()) {
+                model.statusPressFailure(false);
+
+                count = ++model.detectPressFailureCount;
+
                 authedAjax.request({
                     url: '/front/lastmodified/' + model.front()
                 })
                 .always(function(resp) {
                     var lastPressed;
 
-                    if (resp.status !== 200) { return; }
-                    lastPressed = new Date(resp.responseText);
-                    if (isValidDate(lastPressed)) {
-                        model.statusPressFailure(
-                            _.some(model.collections(), function(collection) {
-                                var l = new Date(collection.state.lastUpdated());
-                                return isValidDate(l) ? l > lastPressed : false;
-                            })
-                        );
+                    if (model.detectPressFailureCount === count && resp.status === 200) {
+                        lastPressed = new Date(resp.responseText);
+
+                        if (isValidDate(lastPressed)) {
+                            model.statusPressFailure(
+                                _.some(model.collections(), function(collection) {
+                                    var l = new Date(collection.state.lastUpdated());
+                                    return isValidDate(l) ? l > lastPressed : false;
+                                })
+                            );
+                        }
                     }
                 });
             }
