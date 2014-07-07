@@ -7,7 +7,7 @@ import conf.{Switches, CommercialConfiguration}
 import scala.concurrent.Future
 import services.S3
 
-object TravelOffersApi extends XmlAdsApi[Offer] {
+object TravelOffersApi extends XmlAdsApi[TravelOffer] {
 
   protected val adTypeName = "Travel Offers"
 
@@ -19,13 +19,13 @@ object TravelOffersApi extends XmlAdsApi[Offer] {
 
   private val dateFormat = DateTimeFormat.forPattern("dd-MMM-yyyy")
 
-  private def buildOffer(node: Node): Offer = {
+  private def buildOffer(node: Node): TravelOffer = {
 
     def textValue(nodeName: String): String = (node \ nodeName).text.trim()
 
     def textValues(nodeName: String): List[String] = (node \ nodeName).map(_.text.trim()).toList
 
-    Offer(
+    TravelOffer(
       textValue("prodId").toInt,
       textValue("prodName"),
       textValue("prodUrl"),
@@ -41,12 +41,12 @@ object TravelOffersApi extends XmlAdsApi[Offer] {
     )
   }
 
-  def parse(xml: Elem): Seq[Offer] = (xml \\ "offer") map buildOffer
+  def parse(xml: Elem): Seq[TravelOffer] = (xml \\ "offer") map buildOffer
 
-  override def loadAds(): Future[Seq[Offer]] = doIfSwitchedOn {
+  override def loadAds(): Future[Seq[TravelOffer]] = doIfSwitchedOn {
     url map  { u=>
       val reply: Option[String] = S3.get(u)
-      val result: Seq[Offer] = reply.fold(Seq[Offer]()) {r =>
+      val result: Seq[TravelOffer] = reply.fold(Seq[TravelOffer]()) {r =>
         val elems = transform(r)
         parse(elems)
       }

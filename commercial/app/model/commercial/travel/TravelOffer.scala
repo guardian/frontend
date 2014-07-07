@@ -9,7 +9,7 @@ import akka.util.Timeout
 import model.commercial.Segment
 import scala.Some
 
-case class Offer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
+case class TravelOffer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
                  earliestDeparture: DateTime, keywordIds: List[String], countries: List[String], category: String,
                  tags: List[String], duration: String, position: Int)
   extends Ad {

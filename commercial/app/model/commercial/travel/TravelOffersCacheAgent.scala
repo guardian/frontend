@@ -36,7 +36,6 @@ object TravelOffersCacheAgent extends Logging with ExecutionContexts {
 
       future onSuccess {
         case response =>
-          println("######## OK, this works")
           log.info(s"Loaded Travel Offers from $u")
           recordLoad(System.currentTimeMillis - start)
 
