@@ -3,9 +3,10 @@ package model.commercial.travel
 import org.joda.time.format.DateTimeFormat
 import scala.xml.{Elem, Node}
 import model.commercial.XmlAdsApi
-import conf.{Switches, CommercialConfiguration}
+import conf.{Switches}
 import scala.concurrent.Future
 import services.S3
+import conf.Configuration.commercial._
 
 object TravelOffersApi extends XmlAdsApi[TravelOffer] {
 
@@ -13,7 +14,7 @@ object TravelOffersApi extends XmlAdsApi[TravelOffer] {
 
   protected val switch = Switches.TravelOffersFeedSwitch
 
-  protected val url = Some(CommercialConfiguration.travelOffersS3Key)
+  protected val url = Some(travelOffersS3Key)
 
   override protected val loadTimeout = 30000
 

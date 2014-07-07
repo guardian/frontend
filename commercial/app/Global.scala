@@ -7,7 +7,7 @@ import model.commercial.jobs.{Industries, JobsAgent}
 import model.commercial.masterclasses.{MasterClassTagsAgent, MasterClassAgent}
 import model.commercial.money.BestBuysAgent
 import model.commercial.soulmates.SoulmatesAggregatingAgent
-import model.commercial.travel.{TravelOffersCacheAgent, Countries, TravelOffersAgent}
+import model.commercial.travel.{Countries, TravelOffersAgent}
 import play.api.mvc.WithFilters
 import play.api.{Application => PlayApp, GlobalSettings}
 import scala.util.{Failure, Success, Random}
@@ -15,7 +15,6 @@ import scala.util.{Failure, Success, Random}
 trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionContexts {
 
   private val refreshJobs: List[RefreshJob] = List(
-    TravelOffersCacheRefresh,
     SoulmatesRefresh,
     MasterClassTagsRefresh,
     MasterclassesRefresh,
@@ -40,8 +39,6 @@ trait CommercialLifecycle extends GlobalSettings with Logging with ExecutionCont
     }
 
     AkkaAsync {
-      TravelOffersCacheAgent.refresh()
-
       SoulmatesAggregatingAgent.refresh()
 
       MasterClassTagsAgent.refresh() andThen {
@@ -138,14 +135,6 @@ object TravelOffersRefresh extends RefreshJob {
   def refresh() = TravelOffersAgent.refresh()
 
   def stopJob() = TravelOffersAgent.stop()
-}
-
-object TravelOffersCacheRefresh extends RefreshJob {
-  override val name: String = "TravelOffersCacheRefresh"
-
-  override protected def refresh(): Unit = TravelOffersCacheAgent.refresh()
-
-  override protected def stopJob(): Unit = {}
 }
 
 object IndustriesRefresh extends RefreshJob {
