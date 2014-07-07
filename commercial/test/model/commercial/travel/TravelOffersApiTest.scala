@@ -8,7 +8,7 @@ import play.api.test.FakeApplication
 import play.api.test.Helpers._
 
 
-class OffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
+class TravelOffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
 
   val xml = XML.loadString {
     """
