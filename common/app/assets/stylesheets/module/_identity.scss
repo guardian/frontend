@@ -431,13 +431,15 @@
 
 .activity-stream__witness-meta {
     background-color: $c-neutral8;
-    padding: $gs-baseline 0;
     border: 1px solid $c-neutral4;
     border-top: 0;
-    @include fs-textsans(1);
     text-align: right;
+    @include rem((
+            padding: $gs-baseline 0
+    ));
+    @include fs-textsans(1);
 
-    span {
+    .activity-stream__witness-meta-inner {
         @include rem((
             margin: 0 $gs-gutter
         ));
@@ -455,7 +457,7 @@
     }
 }
 .activity-stream__witness-content:hover {
-    background: #e7e7e7;
+    background: $c-neutral6;
     @include transition(.3s all);
 }
 .activity-stream__witness-text {
