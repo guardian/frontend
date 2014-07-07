@@ -4,10 +4,15 @@ import conf.{Configuration, Gzipper, Management}
 import dfp.DfpDataCacheJob
 import jobs.RefreshFrontsJob
 import model.AdminLifecycle
+import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.{WithFilters, Results, RequestHeader}
 import scala.concurrent.Future
 
-object Global extends WithFilters(Gzipper) with AdminLifecycle with CloudWatchApplicationMetrics with Results {
+object Global extends WithFilters(Gzipper)
+with AdminLifecycle
+with CloudWatchApplicationMetrics
+with Results
+with SurgingContentAgentLifecycle {
   override lazy val applicationName = Management.applicationName
 
   val adminPressJobPushRateInMinutes: Int = Configuration.faciatool.adminPressJobPushRateInMinutes

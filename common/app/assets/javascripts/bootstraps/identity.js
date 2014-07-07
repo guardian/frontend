@@ -8,7 +8,7 @@ define([
     'common/modules/identity/validation-email',
     'common/modules/identity/api',
     'common/modules/identity/account-profile',
-    'common/modules/adverts/userAdTargeting',
+    'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/user-avatars',
     'common/utils/mediator',
     'common/modules/ui/tabs'

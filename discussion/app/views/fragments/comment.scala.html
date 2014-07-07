@@ -2,11 +2,14 @@
 @import conf.Configuration
 
 @* Please don't use the isTopComment switch - we've kept it pretty clean without it, but just need a solution for IDs *@
-<li class="d-comment
-           @if(isResponse){d-comment--response}else{d-comment--top-level}
-           @if(comment.isBlocked){d-comment--blocked}
-           @if(comment.responses.nonEmpty){d-comment--has-replies}
-           @if(comment.profile.isStaff){d-comment-staff}"
+<li class="d-comment u-cf
+            @RenderClasses(Map(
+                "d-comment--response" -> isResponse,
+                "d-comment--top-level" -> !isResponse,
+                "d-comment--blocked" -> comment.isBlocked,
+                "d-comment--has-replies" -> comment.responses.nonEmpty,
+                "d-comment-staff" -> comment.profile.isStaff
+            ))"
            id="@if(isTopComment){top-}comment-@comment.id"
            data-comment-id="@comment.id"
            data-comment-author="@comment.profile.displayName"
@@ -88,6 +91,10 @@
                     <div class="d-comment__pick @if(!comment.isHighlighted || comment.isBlocked){u-h}" title="Guardian pick">
                         <i class="i i-gupickasterisk"></i>Guardian Pick
                     </div>
+                }
+
+                @comment.sentiment.map{ s =>
+                    <div class="d-comment__sentiment d-comment__sentiment--@if(s == 0){for}else{against}"></div>
                 }
 
                 <div class="d-comment__body" itemprop="text">

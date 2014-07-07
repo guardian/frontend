@@ -48,8 +48,8 @@ require([
     'common/utils/userTiming',
 
     // shared modules
-    'common/modules/adverts/userAdTargeting',
-    'common/modules/adverts/dfp',
+    'common/modules/commercial/user-ad-targeting',
+    'common/modules/commercial/dfp',
     'common/modules/component',
     'common/modules/lazyload',
     'common/modules/ui/tabs'

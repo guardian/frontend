@@ -66,7 +66,7 @@ define([
             }).init();
             common.mediator.emit('modules:related:loaded', config, context);
 
-        } else if (config.switches && config.switches.relatedContent) {
+        } else if (config.switches && config.switches.relatedContent && config.page.showRelatedContent) {
             container = context.querySelector('.js-related');
             if (container) {
                 var popularInTag = this.popularInTagOverride(config),
