@@ -96,7 +96,7 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
 
       case Success(None) =>
         lastSuccessfulReceipt.refresh()
-        log.trace(s"No message after $WaitTimeSeconds seconds")
+        log.info(s"No message after $WaitTimeSeconds seconds")
 
       case Failure(error) =>
         log.error("Encountered error receiving message from queue", error)

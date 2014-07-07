@@ -2,7 +2,7 @@
     "packages": {
         "facia-press": {
             "type": "autoscaling",
-            "apps": ["frontend::facia-tool"],
+            "apps": ["frontend::facia-press"],
             "data": {
                 "secondsToWait": 1200,
                 "port": 18080,
@@ -19,10 +19,10 @@
             "depends": ["artifactUpload", "deploy"]
         },
         "deploy": {
-            "actionsBeforeApp": ["facia-tool.deploy"]
+            "actionsBeforeApp": ["facia-press.deploy"]
         },
         "artifactUpload": {
-            "actionsBeforeApp": ["facia-tool.uploadArtifacts"]
+            "actionsBeforeApp": ["facia-press.uploadArtifacts"]
         }
     }
 }
