@@ -48,7 +48,6 @@ define([
                         .html('body:after{ content: "wide"}')
                         .appendTo('head');
                     getParaWithSpaceStub = sinon.stub(mocks.store['common/modules/article/spacefinder'], 'getParaWithSpace');
-                    console.log(getParaWithSpaceStub);
                 });
 
                 afterEach(function() {
@@ -82,10 +81,21 @@ define([
 
                 it('should insert an inline ad container to the available slot', function() {
                     var paras = qwery('p', fixture);
-                    getParaWithSpaceStub.returns(qwery('.first-para', fixture));
+                    getParaWithSpaceStub.onFirstCall().returns(paras[0]);
+                    getParaWithSpaceStub.onSecondCall().returns(paras[1]);
                     articleBodyAdverts.init(config);
                     expect(qwery('.ad-slot--inline', fixture).length).toBeGreaterThan(0);
+                    expect(getParaWithSpaceStub).toHaveBeenCalledWith({
+                        minAbove: 250,
+                        minBelow: 300,
+                        selectors: {
+                            ' > h2': {minAbove: 0, minBelow: 250},
+                            ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250},
+                            ' .ad-slot': {minAbove: 500, minBelow: 500}
+                        }
+                    })
                 });
             });
         });
+    
 });
