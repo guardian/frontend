@@ -52,9 +52,11 @@ define([
 
         model.front = ko.observable();
 
-        model.liveMode = vars.state.liveMode;
+        model.title = ko.computed(function() {
+            return model.front() || (pageConfig.priority + ' fronts');
+        }, this);
 
-        model.frontSparkUrl = ko.observable();
+        model.liveMode = vars.state.liveMode;
 
         model.latestArticles = new LatestArticles({
             filterTypes: vars.CONST.filterTypes
@@ -173,14 +175,6 @@ define([
                     );
                 })
             );
-            showFrontSpark();
-        }
-
-        function showFrontSpark() {
-            model.frontSparkUrl(undefined);
-            if (model.switches()['facia-tool-sparklines']) {
-                model.frontSparkUrl(vars.sparksBaseFront + getFront());
-            }
         }
 
         var startCollectionsPoller = _.once(function() {
@@ -204,7 +198,6 @@ define([
                         list.refreshSparklines();
                     }, index * period / (model.collections().length || 1)); // stagger requests
                 });
-                showFrontSpark();
             }, period);
         });
 

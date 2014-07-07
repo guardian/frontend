@@ -17,14 +17,7 @@
         <i class="icon-remove icon-white" data-bind="click: clearStatuses"></i>
     </div>
 
-    <div class="toolbar" data-bind="visible: true" style="display: none">
-        <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'Choose a front...'"></select>
-
-        <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
-            visible: frontSparkUrl,
-            attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + front()}"
-           ><img data-bind="attr: {src: frontSparkUrl}" /></a>
-    </div>
+    <select class="front-selector" data-bind="options: fronts, value: front, optionsCaption: 'Choose a front...'"></select>
 
     <div class="left-col">
         <div class="modes-wrapper">

@@ -54,20 +54,24 @@
     </head>
     <body class="@if(isAuthed){is-authed}">
 
-
-    <a href="/">
-        <img class="logo" src="@routes.Assets.at("images/plane.png")" />
-        <h1 class="tool-title">@priority @title</h1>
-    </a>
-
     @if(Switches.ToolDisable.isSwitchedOn) {
         <span class="message message--important">Temporarily disabled. Please try again shortly.</span>
+
     } else {
-        @if(isAuthed) {
-            @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
-                <h1 class="message message--important">Editing @Configuration.facia.stage</h1>
+        <header>
+            <a href="/">
+                <img class="logo" src="@routes.Assets.at("images/plane.png")" />
+                <h1 data-bind="text: title()">fronts</h1>
+                <h1>
+                    @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") { : @Configuration.facia.stage }
+                </h1>
+            </a>
+            @if(isAuthed) {
+                <a class="log-in-out" href="/logout">Logout</a>
             }
-            <a class="log-in-out" href="/logout">Logout</a>
+        </header>
+
+        @if(isAuthed) {
             @content
         } else {
             <form action="@routes.Login.loginPost()" method="post" class="login-form tools">
@@ -75,12 +79,6 @@
             </form>
         }
     }
-
-    <script>
-        curl(['js!omniture']).then(function () {
-            s.tl();
-        })
-    </script>
 
     </body>
 </html>

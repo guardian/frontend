@@ -3,26 +3,33 @@ body {
     padding: 0;
     min-width: 320px;
     color: #000000;
-    background: #607d8b;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-    font-family: Georgia, arial, sans-serif;
 }
 
 p {
     margin: 0;
 }
 
-a, a:hover {
-    color: #3279F1;
+a,
+a:hover,
+.linky {
+    color: #607d8b;
     text-decoration: none;
     cursor: pointer;
 }
 
-a:hover {
-    color: #376ABF;
+a:hover,
+.linky:hover {
+    color: #3279F1;
+}
+
+header {
+    height: 45px;
+    position: absolute;
+    width: 100%;
 }
 
 .status {
@@ -57,22 +64,22 @@ a:hover {
 
 .logo {
     float: left;
-    margin: 10px 0 0 10px;
+    margin: 3px 0 0 10px;
     width: 48px;
     height: 45px;
 }
 
-.tool-title,
-.message {
+h1 {
     float: left;
     display: inline-block;
-    font-size: 33px;
-    line-height: 60px;
+    font-size: 32px;
+    line-height: 40px;
     letter-spacing: -1px;
-    color: #cfd8dc;
+    color: #607d8b;
     font-weight: normal;
     text-transform: lowercase;
     margin: 0 0 0 5px;
+    font-family: Georgia;
 }
 
 .message {
@@ -92,8 +99,9 @@ a:hover {
 }
 
 .login-form {
-    float: left;
-    margin: 13px 10px 0 0;
+    position: absolute;
+    top: 55px;
+    left: 10px;
 }
 
 .front-priorities {
@@ -150,7 +158,7 @@ a:hover {
 }
 
 .droppable.underDrag {
-    background-color: #607d8b;
+    background-color: #3279F1;
 }
 
 .open .droppable.underDrag {
@@ -206,18 +214,19 @@ a:hover {
 .left-col {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    background: #ffffff;
-    clear: both;
-    float: left;
+    position: absolute;
+    top: 45px;
+    left: 0;
     width: 50%;
-    border-right: 5px solid #607d8b;
+    border-right: 5px solid #ffffff;
 }
 
 .right-col {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    background: #ffffff;
-    float: right;
+    position: absolute;
+    top: 45px;
+    right: 0;
     width: 50%;
 }
 
@@ -319,7 +328,7 @@ a:hover {
 }
 
 .article.underDrag {
-    border-top-color: #607d8b;
+    border-top-color: #3279F1;
 }
 
 .open .article.underDrag {
@@ -531,7 +540,7 @@ select,
 input[type="text"] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    height: 35px;
+    height: 25px;
     padding: 1px 5px;
     margin: 1px 0 0 0;
     color: #000000;
@@ -585,7 +594,7 @@ button {
     margin: 5px 0 2px 4px;
     font-size: 12px;
     line-height: 12px;
-    color: #333333;
+    color: #666666;
     border-top: 1px dotted #cccccc;
     text-transform: uppercase;
     width: 175px;
@@ -665,43 +674,20 @@ button {
     width: 40px;
 }
 
-.linky {
-    cursor: pointer !important;
-    color: #3279F1 !important;
-}
-
-.linky:hover {
-    color: #005580;
-}
-
-.toolbar {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 50%;
-    float: right;
-    padding: 15px 0;
-    height: 66px;
-}
-
-.toolbar .spark {
-    display: inline-block;
-    margin: 3px 15px 0 0;
-    float: right;
-    width: 100px;
-}
-
-.toolbar .tool,
-.article__overrides .tool,
-.collection-overrides .tool {
-    margin-top: 5px;
-}
-
-.tool-select {
+.front-selector {
     font-weight: bold;
     font-size: 16px;
     color: #000000;
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    height: 30px;
+}
+
+.article__overrides .tool,
+.collection-overrides .tool {
+    margin-top: 5px;
 }
 
 .tool {
@@ -768,11 +754,10 @@ button {
 
 .log-in-out,
 .log-in-out:hover {
-    margin: 26px 0 0 8px;
+    margin: 12px 20px 0 0;
     font-size: 12px;
     text-transform: lowercase;
-    float: left;
-    color: #cccccc;
+    float: right;
 }
 
 .tool--small {
@@ -1039,9 +1024,10 @@ button {
 
 
 @media (max-width: 1100px) {
-    .toolbar,
-    .right-col {
+    .front-selector {
         left: 40%;
+    }
+    .right-col {
         width: 60%;
     }
     .left-col {
@@ -1060,18 +1046,18 @@ button {
 }
 
 @media (max-width: 875px) {
-    .toolbar .spark,
     .left-col {
         display: none;
     }
-    .toolbar {
-        float: left;
-        width: inherit;
-        margin-left: 10px;
+    .front-selector {
+        right: 10px;
+        left: inherit;
     }
     .right-col {
         width: 100%;
         border: none;
+        right: inherit;
+        left: 0;
     }
     .scrollable {
         overflow-y: inherit
@@ -1079,17 +1065,12 @@ button {
 }
 
 @media (max-width: 550px) {
-    .is-authed .tool-title,
-    .log-in-out {
-        display: none;
-    }
     .article .article_content {
         margin-right: 25px;
     }
     .article > .closed .tool--remove {
         top: 0;
     }
-    .toolbar .spark,
     .article .spark {
         display: none;
     }
