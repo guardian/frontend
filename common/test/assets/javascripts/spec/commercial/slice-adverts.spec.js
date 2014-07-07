@@ -40,13 +40,13 @@ define([
             sliceAdverts.reset();
         });
 
-        it('should be able to instantiate', function() {
+        it('should exist', function() {
             expect(sliceAdverts).toBeDefined();
         });
 
         it('should not not display ad slot if standard-adverts switch is off', function() {
             config.switches.standardAdverts = false;
-            expect(sliceAdverts.init(config)).toBeFalsy();
+            expect(sliceAdverts.init(config)).toBe(false);
             expect(qwery('.ad-slot', fixture).length).toBe(0);
         });
 

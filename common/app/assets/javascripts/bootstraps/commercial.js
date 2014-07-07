@@ -20,7 +20,7 @@ define([
     userPrefs,
     container,
     articleAsideAdverts,
-    ArticleBodyAdverts,
+    articleBodyAdverts,
     sliceAdverts,
     frontCommercialComponents,
     badges,
@@ -48,28 +48,25 @@ define([
                 }
             });
 
-        if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
-            container.init(config);
-        }
+        if (!userPrefs.isOff('adverts') && !config.page.shouldHideAdverts && !config.page.isSSL) {
 
-        var showAds = !userPrefs.isOff('adverts') && !config.page.shouldHideAdverts && !config.page.isSSL;
-
-        if (showAds) {
-
-            // if it's an article, excluding live blogs, create our inline adverts
-            if (config.switches.standardAdverts && config.page.contentType === 'Article') {
-                // no inline adverts on live
-                if (!config.page.isLiveBlog) {
-                    new ArticleBodyAdverts().init();
-                }
+            // load tags
+            if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
+                container.init(config);
             }
 
-
+            // following modules add ad slots to the page, if appropriate
             articleAsideAdverts().init();
+
+            articleBodyAdverts().init();
+
             sliceAdverts().init();
+
             frontCommercialComponents.init();
+
             badges.init();
 
+            // now call dfp
             var options = {};
             if (!config.switches.standardAdverts) {
                 options.adSlotSelector = '.ad-slot--commercial-component';

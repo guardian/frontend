@@ -35,6 +35,7 @@ define([
             if (!config.switches.standardAdverts) {
                 return false;
             }
+
             // get all the containers
             var containers = qwery(config.containerSelector),
                 index = 0,

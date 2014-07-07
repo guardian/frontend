@@ -24,7 +24,7 @@ define([
             }
         );
 
-        // is the switch off, or is the secondary column hidden
+        // is the switch off, or not an article, or the secondary column hidden
         if (
             !config.switches.standardAdverts ||
             config.page.contentType !== 'Article' ||
