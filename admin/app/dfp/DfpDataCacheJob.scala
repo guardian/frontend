@@ -90,6 +90,15 @@ object DfpDataCacheJob extends ExecutionContexts with Dates{
     }
   }
 
+  private implicit val countryWrites = new Writes[Country] {
+    def writes(country: Country): JsValue = {
+      Json.obj(
+        "name" -> country.name,
+        "editionId" -> country.editionId
+      )
+    }
+  }
+
   private implicit val pageSkinSponsorshipWrites = new Writes[PageSkinSponsorship] {
     def writes(sponsorship: PageSkinSponsorship): JsValue = {
       Json.obj(

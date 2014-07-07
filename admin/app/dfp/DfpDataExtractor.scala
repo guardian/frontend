@@ -21,7 +21,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
       val paths = lineItem.targeting.adUnits map { adUnit =>
         adUnit.path mkString "/"
       }
-      val countries = lineItem.targeting.geoTargets map (_.name)
+      val countries = lineItem.targeting.geoTargets map (geoTarget => Country.fromName(geoTarget.name))
       PageSkinSponsorship(lineItem.name, lineItem.id, paths, countries)
     }
   }
