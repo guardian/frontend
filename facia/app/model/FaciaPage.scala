@@ -29,9 +29,9 @@ case class FaciaPage(
 
   override lazy val contentType: String =   if (isNetworkFront) "Network Front" else "Section"
 
-  override def sponsor = DfpAgent.getSponsor(id)
-  override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
   override def isSponsored = DfpAgent.isSponsored(id)
+  override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
+  override def sponsor = DfpAgent.getSponsor(id)
   override lazy val hasPageSkin = DfpAgent.isPageSkinned(adUnitSuffix)
 }
 
