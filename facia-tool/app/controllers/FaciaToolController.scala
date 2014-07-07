@@ -6,16 +6,10 @@ import frontsapi.model.UpdateList
 import play.api.mvc.{AnyContent, Action, Controller}
 import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
-import conf.{Switches, Configuration}
+import conf.Configuration
 import tools.FaciaApi
 import services._
 import model.{NoCache, Cached}
-import scala.concurrent.Future
-import scala.util.{Failure, Success}
-import play.api.libs.Comet
-import frontpress.PressCommand
-import frontpress.FrontPress.{pressLiveByPathId, pressDraftByPathId}
-import frontpress.CollectionPressing.pressCollectionIds
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
   def priorities() = ExpiringAuthentication { request =>
@@ -147,12 +141,12 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def pressLivePath(path: String) = AjaxExpiringAuthentication { request =>
-    pressLiveByPathId(path)
+    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Live))
     NoCache(Ok)
   }
 
   def pressDraftPath(path: String) = AjaxExpiringAuthentication { request =>
-    pressDraftByPathId(path)
+    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft))
     NoCache(Ok)
   }
   

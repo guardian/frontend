@@ -1,12 +1,14 @@
 import common.Jobs
+import conf.{Configuration => GuardianConfiguration}
 import frontpress.FrontPressJob
 import play.api.GlobalSettings
 
 object Global extends GlobalSettings {
+  val pressJobConsumeRateInSeconds: Int = GuardianConfiguration.faciatool.pressJobConsumeRateInSeconds
   /** TODO add CloudWatch metrics here */
 
   def scheduleJobs() {
-    Jobs.schedule("FaciaToolPressJob", "0/10 * * * * ?") {
+    Jobs.schedule("FaciaToolPressJob", s"0/$pressJobConsumeRateInSeconds * * * * ?") {
       FrontPressJob.run()
     }
   }

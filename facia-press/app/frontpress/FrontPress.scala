@@ -34,13 +34,13 @@ trait FrontPress extends Logging {
     live
   }
 
-  private def pressDraftByPathId(path: String): Future[JsObject] =
+  def pressDraftByPathId(path: String): Future[JsObject] =
     generateDraftJson(path).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
       json
     }
 
-  private def pressLiveByPathId(path: String): Future[JsObject] =
+  def pressLiveByPathId(path: String): Future[JsObject] =
     generateLiveJson(path).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
       json

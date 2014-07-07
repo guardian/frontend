@@ -1,5 +1,5 @@
 import common._
-import conf.{Gzipper, Management, Configuration => GuardianConfiguration}
+import conf.{Gzipper, Management}
 import java.io.File
 import play.api._
 import play.api.mvc.WithFilters
@@ -9,9 +9,7 @@ object Global extends WithFilters(Gzipper)
   with GlobalSettings
   with CloudWatchApplicationMetrics
   with ConfigAgentLifecycle {
-
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
-  val pressJobConsumeRateInSeconds: Int = GuardianConfiguration.faciatool.pressJobConsumeRateInSeconds
 
   override lazy val applicationName = Management.applicationName
   override def applicationMetrics: Map[String, Double] = Map(
@@ -51,26 +49,4 @@ object Global extends WithFilters(Gzipper)
     val newConfig: Configuration = if (mode == Mode.Dev) config ++ devConfig else config
     super.onLoadConfig(newConfig, path, classloader, mode)
   }
-
-  def scheduleJobs() {
-    Jobs.schedule("FaciaToolPressJob", s"0/$pressJobConsumeRateInSeconds * * * * ?") {
-      FrontPressJob.run()
-    }
-  }
-
-  def descheduleJobs() {
-    Jobs.deschedule("FaciaToolPressJob")
-  }
-
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
-    descheduleJobs()
-    scheduleJobs()
-  }
-
-  override def onStop(app: play.api.Application) {
-    descheduleJobs()
-    super.onStop(app)
-  }
-
 }
