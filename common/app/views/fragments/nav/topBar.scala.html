@@ -17,7 +17,7 @@
                             }
                             <ul class="local-navigation">
                                 @Navigation.rotatedLocalNav(topSection, metaData).map{  link =>
-                                    <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo{@link.href}">@Html(link.title)</a></li>
+                                    <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo(link.href)">@Html(link.title)</a></li>
                                 }
                             </ul>
                         }
