@@ -19,7 +19,7 @@ define([
     config,
     userPrefs,
     container,
-    ArticleAsideAdverts,
+    articleAsideAdverts,
     ArticleBodyAdverts,
     SliceAdverts,
     frontCommercialComponents,
@@ -52,17 +52,12 @@ define([
             container.init(config);
         }
 
-        var showAds =
-            !userPrefs.isOff('adverts') &&
-            !config.page.shouldHideAdverts &&
-            !config.page.isSSL &&
-            (config.switches.standardAdverts || config.switches.commercialComponents);
+        var showAds = !userPrefs.isOff('adverts') && !config.page.shouldHideAdverts && !config.page.isSSL;
 
         if (showAds) {
 
             // if it's an article, excluding live blogs, create our inline adverts
             if (config.switches.standardAdverts && config.page.contentType === 'Article') {
-                new ArticleAsideAdverts(config).init();
                 // no inline adverts on live
                 if (!config.page.isLiveBlog) {
                     new ArticleBodyAdverts().init();
@@ -71,12 +66,11 @@ define([
 
             new SliceAdverts(config).init();
 
-            frontCommercialComponents.init(config);
-
+            articleAsideAdverts().init();
+            frontCommercialComponents.init();
             badges.init();
 
             var options = {};
-
             if (!config.switches.standardAdverts) {
                 options.adSlotSelector = '.ad-slot--commercial-component';
             } else if (!config.switches.commercialComponents) {

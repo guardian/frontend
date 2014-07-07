@@ -1,35 +1,51 @@
 define([
+    'lodash/objects/defaults',
+    'lodash/functions/once',
     'common/utils/$',
-    'common/utils/detect',
-    'lodash/objects/assign',
+    'common/utils/config',
     'common/modules/commercial/dfp'
 ], function (
+    defaults,
+    once,
     $,
-    detect,
-    _assign,
+    globalConfig,
     dfp
 ) {
 
-    function ArticleAsideAdverts(config) {
-        this.config = _assign(this.defaultConfig, config);
-    }
+    function init(c) {
+        var config = defaults(
+                c || {},
+            globalConfig,
+            {
+                columnSelector: '.content__secondary-column',
+                adSlotContainerSelector: '.js-mpu-ad-slot',
+                switches: {},
+                page: {}
+            }
+        );
 
-    ArticleAsideAdverts.prototype.defaultConfig = {
-        columnSelector: '.content__secondary-column',
-        adSlotContainerSelector: '.js-mpu-ad-slot',
-        switches: {}
-    };
-
-    ArticleAsideAdverts.prototype.init = function() {
         // is the switch off, or is the secondary column hidden
-        if (!this.config.switches.standardAdverts || $(this.config.columnSelector).css('display') === 'none') {
+        if (
+            !config.switches.standardAdverts ||
+            config.page.contentType !== 'Article' ||
+            $(config.columnSelector).css('display') === 'none'
+        ) {
             return false;
         }
 
-        return $(this.config.adSlotContainerSelector)
+        return $(config.adSlotContainerSelector)
             .append(dfp.createAdSlot('right', 'mpu-banner-ad'));
-    };
+    }
 
-    return ArticleAsideAdverts;
+    return {
+
+        init: once(init),
+
+        // for testing
+        reset: function() {
+            this.init = once(init);
+        }
+
+    };
 
 });
