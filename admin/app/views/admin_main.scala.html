@@ -23,7 +23,8 @@
         <meta name="msapplication-TileColor" content="#214583" />
         <meta name="msapplication-TileImage" content="@routes.Assets.at("images/windows_tile_144_b.png")" />
 
-        <link href="@routes.Assets.at("javascripts/components/bootstrap/dist/css/bootstrap.css")" rel="stylesheet" />
+        <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet" />
+        <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap-responsive.css")" rel="stylesheet" />
         <link href="@routes.Assets.at("css/admin.css")" rel="stylesheet">
         <style>
             .ajax-loading { background-image: url('@routes.Assets.at("images/ajax-loader.gif")'); }
@@ -40,21 +41,18 @@
     </head>
     <body>
         <div class="container-fluid container--global">
-
-            <div class="global-nav navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="/admin">Home</a>
-                    </div>
-                    <p class="navbar-text label label-warning">Environment: @env.toLowerCase</p>
+            <div class="global-nav navbar">
+                <div class="navbar-inner">
+                    <div class="global-nav__environment" id="environment"><span class="label label-warning">Environment: @env.toLowerCase</span></div>
+                    <ul class="nav">
+                        <li><a id="home" href="/admin">Home</a></li>
+                    </ul>
                     @if(isAuthed){
-                        <ul class="nav navbar-nav navbar-right">
-                            <li>
-                                <a href="/logout" id="logout-button">Logout</a>
-                            </li>
+                        <ul class="nav pull-right">
+                            <li><a href="/logout" id="logout-button">Logout</a></li>
                         </ul>
                     } else {
-                        <form action="@controllers.admin.routes.Login.loginPost()" method="post" class="navbar-form navbar-right" style="margin:0px;">
+                        <form action="@controllers.admin.routes.Login.loginPost()" method="post" class="pull-right" style="margin:0px;">
                             <input value="Log In" class="btn btn-primary" type="submit" id="login-button">
                         </form>
                     }
@@ -63,9 +61,11 @@
 
             @content
 
+
             @if(isAuthed){
                 <hr/>
                 <footer><p>&copy; The Grauniad</p></footer>
+
             }
 
         </div>
@@ -80,8 +80,15 @@
             };
         </script>
         <script type="text/javascript" src="@Static("javascripts/components/curl/curl-domReady.js")"></script>
+        <script type="text/javascript">
+            var script = document.createElement('script');
+            script.async = 'async';
+            script.src = '@Static("javascripts/bootstraps/admin.js")';
+
+            document.getElementsByTagName("head")[0].appendChild(script);
+        </script>
+
         <script src="//code.jquery.com/jquery.js"></script>
-        <script type="text/javascript" src="@routes.Assets.at("javascripts/components/bootstrap/dist/js/bootstrap.js")"></script>
-        <script type="text/javascript" src="@Static("javascripts/bootstraps/admin.js")" async></script>
+        <script type="text/javascript" src="@routes.Assets.at("javascripts/components/bootstrap.css/js/bootstrap.js")"></script>
     </body>
 </html>
