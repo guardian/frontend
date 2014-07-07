@@ -6,6 +6,9 @@
         "facia-container--sponsored" -> index.page.isSponsored,
         "facia-container--advertisement-feature" -> (index.page.isAdvertisementFeature && !index.page.isSponsored)))"
     data-link-name="Front | @request.path"
+    @index.page.sponsor.map { sponsor =>
+        data-sponsor="@sponsor"
+    }
     role="main">
 
     @if(index.page.hasPageSkin) {
