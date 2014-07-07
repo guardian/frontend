@@ -275,6 +275,10 @@
         padding: 2px 0 $gs-baseline
     ));
 
+    // badges are always broken out, so hide the actual ad
+    iframe {
+        display: none;
+    }
     .ad-slot--paid-for-badge__inner {
         overflow: hidden;
 
