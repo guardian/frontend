@@ -2,6 +2,8 @@
  * A regionalised container for all the commercial tags.
  */
 define([
+    'lodash/objects/defaults',
+    'common/utils/config',
     'common/modules/commercial/tags/audience-science',
     'common/modules/commercial/tags/audience-science-gateway',
     'common/modules/commercial/tags/imrworldwide',
@@ -11,6 +13,8 @@ define([
     'common/modules/commercial/tags/amaa',
     'common/modules/commercial/tags/effective-measure'
 ], function(
+    defaults,
+    globalConfig,
     audienceScience,
     audienceScienceGateway,
     imrWorldwide,
@@ -21,7 +25,20 @@ define([
     effectiveMeasure
 ) {
 
-    function init(config) {
+    function init(c) {
+
+        var config = defaults(
+            c || {},
+            globalConfig,
+            {
+                switches: {},
+                page: {}
+            }
+        );
+
+        if (config.page.contentType === 'Identity' || config.page.section === 'identity') {
+            return false;
+        }
 
         switch (config.page.edition.toLowerCase()) {
             case 'au':

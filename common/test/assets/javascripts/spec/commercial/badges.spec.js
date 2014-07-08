@@ -12,7 +12,7 @@ define([
 
     describe('Badges', function() {
 
-        var fixtureConf = {
+        var fixturesConfig = {
                 id: 'badges',
                 fixtures: [
                     '<div class="facia-container">\
@@ -37,15 +37,33 @@ define([
                     '<h3 class="ad-slot--paid-for-badge__header">Sponsored by:</h3>' +
                     '<p class="ad-slot--paid-for-badge__header">' + sponsor + '</p>' +
                 '</div>';
-            };
+            },
+            fixture,
+            config;
 
         beforeEach(function() {
-            fixtures.render(fixtureConf);
+            fixtures.render(fixturesConfig);
+            fixture = qwery('#' + fixturesConfig.id)[0];
+            config = {
+                switches: {
+                    sponsored: true
+                }
+            };
         });
 
         afterEach(function() {
-            fixtures.clean(fixtureConf.id);
+            fixtures.clean(fixturesConfig.id);
             badges.reset();
+        });
+
+        it('should exist', function() {
+            expect(badges).toBeDefined();
+        });
+
+        it('should not display ad slot if sponsored switch is off', function() {
+            config.switches.sponsored = false;
+            expect(badges.init(config)).toBe(false);
+            expect(qwery('.ad-slot', fixture).length).toBe(0);
         });
 
         describe('sponsored pages', function() {
@@ -59,24 +77,24 @@ define([
                     type: 'advertisement-feature',
                     name: 'adbadge'
                 }
-            ].forEach(function(config) {
+            ].forEach(function(badge) {
 
-                    it('should add "' + config.name + '" badge to first container if page is ' + config.type, function() {
-                        $('.facia-container').addClass('facia-container--' + config.type);
-                        badges.init();
+                    it('should add "' + badge.name + '" badge to first container if page is ' + badge.type, function() {
+                        $('.facia-container').addClass('facia-container--' + badge.type);
+                        badges.init(config);
                         var $adSlot = $('.facia-container .container:first-child .ad-slot').first();
-                        expect($adSlot.data('name')).toBe(config.name);
+                        expect($adSlot.data('name')).toBe(badge.name);
                         expect($adSlot.hasClass('ad-slot--paid-for-badge--front')).toBeTruthy();
                     });
 
                     it('should add pre-badge if sponsor\'s name available', function() {
                         var sponsor = 'Unilever',
                             container = $('.facia-container').first()
-                                .addClass('facia-container--' + config.type)
+                                .addClass('facia-container--' + badge.type)
                                 .attr('data-sponsor', sponsor)[0];
-                        badges.init();
+                        badges.init(config);
                         expect($('.ad-slot', container).html()).toBe(
-                                config.type === 'sponsored' ? spPreBadgeHtml(sponsor) : adPreBadgeHtml(sponsor)
+                                badge.type === 'sponsored' ? spPreBadgeHtml(sponsor) : adPreBadgeHtml(sponsor)
                         );
                     });
 
@@ -97,40 +115,40 @@ define([
                 }
             ];
 
-            configs.forEach(function(config) {
-                it('should add "' + config.name + '" badge to ' + config.type + ' container', function() {
-                    $('.container').first().addClass('container--' + config.type);
-                    badges.init();
+            configs.forEach(function(badge) {
+                it('should add "' + badge.name + '" badge to ' + badge.type + ' container', function() {
+                    $('.container').first().addClass('container--' + badge.type);
+                    badges.init(config);
                     var $adSlot = $('.facia-container .container:first-child .ad-slot').first();
-                    expect($adSlot.data('name')).toBe(config.name);
+                    expect($adSlot.data('name')).toBe(badge.name);
                     expect($adSlot.hasClass('ad-slot--paid-for-badge--front')).toBeTruthy();
                 });
             });
 
-            configs.forEach(function(config) {
+            configs.forEach(function(badge) {
                 it('should not add more than one of the same badge', function () {
-                    $('.container').addClass('container--' + config.type);
-                    badges.init();
+                    $('.container').addClass('container--' + badge.type);
+                    badges.init(config);
                     expect(qwery('.facia-container .ad-slot').length).toBe(1);
                 });
             });
 
-            configs.forEach(function(config) {
+            configs.forEach(function(badge) {
                 it('should add pre-badge if sponsor\'s name available', function() {
                     var sponsor = 'Unilever',
                         container = $('.facia-container .container').first()
-                            .addClass('container--' + config.type)
+                            .addClass('container--' + badge.type)
                             .attr('data-sponsor', sponsor)[0];
-                    badges.init();
+                    badges.init(config);
                     expect($('.ad-slot', container).html()).toBe(
-                        config.type === 'sponsored' ? spPreBadgeHtml(sponsor) : adPreBadgeHtml(sponsor)
+                            badge.type === 'sponsored' ? spPreBadgeHtml(sponsor) : adPreBadgeHtml(sponsor)
                     );
                 });
             });
 
             it('should not add a badge if one already exists', function() {
                 $('.facia-container .container__header').first().after('<div class="ad-slot--paid-for-badge"></div>');
-                badges.init();
+                badges.init(config);
                 expect(qwery('.facia-container .ad-slot').length).toBe(0);
             });
 
@@ -138,7 +156,7 @@ define([
                 $('.facia-container .container').first()
                     .addClass('container--sponsored')
                     .attr('data-keywords', 'russia,ukraine');
-                badges.init();
+                badges.init(config);
                 expect($('.facia-container .ad-slot').data('keywords')).toBe('russia,ukraine');
             });
 
@@ -146,7 +164,7 @@ define([
                 $('.facia-container .container').first()
                     .addClass('container--sponsored')
                     .attr('data-keywords', 'russia,ukraine');
-                badges.init();
+                badges.init(config);
                 expect($('.facia-container .ad-slot').data('keywords')).toBe('russia,ukraine');
             });
 

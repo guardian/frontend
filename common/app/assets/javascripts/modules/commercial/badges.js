@@ -1,17 +1,21 @@
 define([
     'qwery',
     'bonzo',
-    'common/utils/$',
-    'common/modules/commercial/dfp',
+    'lodash/objects/defaults',
     'lodash/functions/once',
-    'common/utils/template'
+    'common/utils/$',
+    'common/utils/template',
+    'common/utils/config',
+    'common/modules/commercial/dfp'
 ], function (
     qwery,
     bonzo,
-    $,
-    dfp,
+    defaults,
     once,
-    template
+    $,
+    template,
+    globalConfig,
+    dfp
 ) {
 
     var hadSponsoredBadge = false,
@@ -51,7 +55,20 @@ define([
             $('.container__header', container)
                 .after($adSlot);
         },
-        init = function() {
+        init = function(c) {
+
+            var config = defaults(
+                c || {},
+                globalConfig,
+                {
+                    switches: {}
+                }
+            );
+
+            if (!config.switches.sponsored) {
+                return false;
+            }
+
             $('.facia-container--sponsored, .facia-container--advertisement-feature').each(function(faciaContainer) {
                 var $faciaContainer = bonzo(faciaContainer);
                 createAdSlot(

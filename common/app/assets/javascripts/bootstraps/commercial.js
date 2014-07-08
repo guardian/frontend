@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    'lodash/objects/assign',
     'common/utils/config',
     'common/modules/userPrefs',
     'common/modules/commercial/tags/container',
@@ -15,13 +14,12 @@ define([
 ], function (
     bonzo,
     qwery,
-    assign,
     config,
     userPrefs,
-    container,
-    ArticleAsideAdverts,
-    ArticleBodyAdverts,
-    SliceAdverts,
+    tagsContainer,
+    articleAsideAdverts,
+    articleBodyAdverts,
+    sliceAdverts,
     frontCommercialComponents,
     badges,
     dfp,
@@ -30,6 +28,7 @@ define([
 
     function init() {
 
+        // forces a commercial component on a page, for testing
         [
             ['commercial-component', 'merchandising'],
             ['commercial-component-high', 'merchandising-high']
@@ -48,41 +47,24 @@ define([
                 }
             });
 
-        if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
-            container.init(config);
-        }
+        if (!userPrefs.isOff('adverts') && !config.page.shouldHideAdverts && !config.page.isSSL) {
 
-        var showAds =
-            !userPrefs.isOff('adverts') &&
-            !config.page.shouldHideAdverts &&
-            !config.page.isSSL &&
-            (config.switches.standardAdverts || config.switches.commercialComponents);
+            // load tags
+            tagsContainer.init(config);
 
-        if (showAds) {
+            // following modules add ad slots to the page, if appropriate
+            articleAsideAdverts.init();
 
-            // if it's an article, excluding live blogs, create our inline adverts
-            if (config.switches.standardAdverts && config.page.contentType === 'Article') {
-                new ArticleAsideAdverts(config).init();
-                // no inline adverts on live
-                if (!config.page.isLiveBlog) {
-                    new ArticleBodyAdverts().init();
-                }
-            }
+            articleBodyAdverts.init();
 
-            new SliceAdverts(config).init();
+            sliceAdverts.init();
 
-            frontCommercialComponents.init(config);
+            frontCommercialComponents.init();
 
             badges.init();
 
-            var options = {};
-
-            if (!config.switches.standardAdverts) {
-                options.adSlotSelector = '.ad-slot--commercial-component';
-            } else if (!config.switches.commercialComponents) {
-                options.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
-            }
-            dfp.init(assign(config, options));
+            // now call dfp
+            dfp.init();
         }
 
     }
