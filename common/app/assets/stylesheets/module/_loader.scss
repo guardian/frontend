@@ -8,13 +8,26 @@ $pamplemousse-dot-spacing: 17px;
 $pamplemousse-dot-margin-small: ($pamplemousse-dot-spacing - $pamplemousse-dot-size-small) / 2;
 $pamplemousse-dot-margin-large: ($pamplemousse-dot-spacing - $pamplemousse-dot-size-large) / 2;
 
-@include keyframes(pulsate) {
+@-webkit-keyframes pulsate {
     25% {
-        @include transform(scale(1));
+        -webkit-transform: scale(1);
+        -o-transform: scale(1);
     }
+
     50% {
-        @include transform(scale(.3));
+        -webkit-transform: scale(.3);
+        -o-transform: scale(.3);
     }
+}
+
+@-moz-keyframes pulsate {
+    25% { -moz-transform: scale(1); }
+    50% { -moz-transform: scale(.3); }
+}
+
+@keyframes pulsate {
+    25% { transform: scale(1); }
+    50% { transform: scale(.3); }
 }
 
 .pamplemousse {
