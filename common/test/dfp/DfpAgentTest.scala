@@ -1,5 +1,7 @@
 package dfp
 
+import common.{Edition, editions}
+import conf.Configuration.commercial.dfpAdUnitRoot
 import model.Config
 import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
@@ -18,7 +20,17 @@ class DfpAgentTest extends FlatSpec with Matchers {
       Sponsorship(Seq("film"), None)
     )
 
-    override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = Seq(PageSkinSponsorship("lineItemName", 1234L, Seq("theguardian.com/business/front")))
+    override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] =
+      Seq(
+        PageSkinSponsorship("lineItemName",
+          1234L,
+          Seq(s"$dfpAdUnitRoot/business/front"),
+          Seq(Country("United Kingdom", "UK"))),
+        PageSkinSponsorship("lineItemName2",
+          12345L,
+          Seq(s"$dfpAdUnitRoot/music/front"),
+          Nil)
+      )
   }
 
   def apiQuery(apiQuery: String) = {
@@ -187,5 +199,22 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
   "getSponsor" should "have no value for an unsponsored tag" in {
     testDfpAgent.getSponsor("culture") should be(None)
+  }
+
+  "isPageSkinned" should "be true for a front with a pageskin in given edition" in {
+    testDfpAgent.isPageSkinned("business/front", Edition.defaultEdition) should be(true)
+  }
+
+  "isPageSkinned" should "be false for a front with a pageskin in another edition" in {
+    testDfpAgent.isPageSkinned("business/front", editions.Au) should be(false)
+  }
+
+  "isPageSkinned" should "be false for a front without a pageskin" in {
+    testDfpAgent.isPageSkinned("culture/front", Edition.defaultEdition) should be(false)
+  }
+
+  "isPageSkinned" should "be true for a front with a pageskin in all editions" in {
+    testDfpAgent.isPageSkinned("music/front", Edition.defaultEdition) should be(true)
+    testDfpAgent.isPageSkinned("music/front", editions.Us) should be(true)
   }
 }
