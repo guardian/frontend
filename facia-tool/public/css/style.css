@@ -864,7 +864,7 @@ button {
 
 .cnf-front.open {
     background: #eeeeee;
-    padding-bottom: 5px;
+    padding: 5px 0;
     margin: 0 0 10px 0;
 }
 
@@ -901,7 +901,7 @@ button {
 }
 
 .cnf-front .cnf-collection:nth-child(odd) {
-    background: #ffffff;
+    background: #f6f6f6;
 }
 
 .cnf-front .cnf-collection:nth-child(even) {
