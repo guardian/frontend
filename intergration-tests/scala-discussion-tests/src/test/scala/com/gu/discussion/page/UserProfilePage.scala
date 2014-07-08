@@ -12,8 +12,8 @@ case class UserProfilePage(implicit driver: WebDriver){
   private def featuredTab = Element(ByExt.dataTypeStream("picks"))
   private def profileName = Element(By.className("user-profile__name"))
   private def activityItemTitle = Element(By.className("user-profile__name"))
-  private def activityStreamEmpty = Element(By.className("user-profile__name")
-  private def activitySearch = Element(By.id("activity-stream-search")
+  private def activityStreamEmpty = Element(By.className("user-profile__name"))
+  private def activitySearch = Element(By.id("activity-stream-search"))
 
   def getUserProfileName = {
     val userProfileName = profileName.getText()
