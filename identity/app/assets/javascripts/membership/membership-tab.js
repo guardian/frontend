@@ -88,7 +88,7 @@ define(['common/utils/$',
     Membership.prototype.formatAmount = function (amount) {
 
         return (amount === 0) ? 'free' : (amount / 100).toFixed(2);
-    }
+    };
 
     /**
     *    If the user is a guardian member; Render the contents of the membership
@@ -107,7 +107,7 @@ define(['common/utils/$',
             self.display = true;
             self.getElem('TIER').innerHTML = resp.subscription.plan.name;
             self.getElem('COST').innerHTML = self.formatAmount(resp.subscription.plan.amount);
-            self.getElem('JOIN').innerHTML = self.formatDate(new Date(resp.joinDate * 1000));
+            self.getElem('JOIN').innerHTML = self.formatDate(new Date(Date.parse(resp.joinDate)));
 
             if (resp.tier === 'Partner' || resp.tier === 'Patron') {
 
