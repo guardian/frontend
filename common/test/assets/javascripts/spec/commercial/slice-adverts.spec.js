@@ -2,11 +2,13 @@ define([
     'qwery',
     'helpers/fixtures',
     'common/utils/$',
+    'common/utils/storage',
     'common/modules/commercial/slice-adverts'
 ], function(
     qwery,
     fixtures,
     $,
+    storage,
     sliceAdverts
 ) {
 
@@ -19,7 +21,8 @@ define([
                     '<div class="container container-second"></div>',
                     '<div class="container container-third"><div class="js-slice--ad-candidate"><div class="slice"></div></div></div>',
                     '<div class="container container-fourth"><div class="js-slice--ad-candidate"><div class="slice"></div></div></div>',
-                    '<div class="container container-fifth"><div class="js-slice--ad-candidate"><div class="slice"></div></div></div>'
+                    '<div class="container container-fifth"><div class="js-slice--ad-candidate"><div class="slice"></div></div></div>',
+                    '<div class="container container-sixth"><div class="js-slice--ad-candidate"><div class="slice"></div></div></div>'
                 ]
             },
             fixture,
@@ -38,6 +41,7 @@ define([
         afterEach(function() {
             fixtures.clean(fixturesConfig.id);
             sliceAdverts.reset();
+            storage.local.removeAll();
         });
 
         it('should exist', function() {
@@ -84,6 +88,17 @@ define([
             };
             sliceAdverts.init(config);
             expect(qwery('.container-first .ad-slot', fixture).length).toBe(0);
+        });
+
+        it('should not add ad to container if it is closed', function() {
+            var containerId = '9cd2-e508-2bc1-5afd',
+                prefs = {};
+            prefs[containerId] = 'closed';
+            $('.container-first', fixture).attr('data-id', containerId);
+            storage.local.set('container-states', prefs);
+            sliceAdverts.init(config);
+            expect(qwery('.container-third .ad-slot', fixture).length).toBe(1);
+            expect(qwery('.container-sixth .ad-slot', fixture).length).toBe(1);
         });
 
     });
