@@ -8,10 +8,10 @@
 
 define([
     'common/modules/userPrefs',
-    'common/utils/common'
+    'common/utils/mediator'
 ], function (
     userPrefs,
-    common
+    mediator
 ) {
 
     var supportsPushState,
@@ -178,7 +178,7 @@ define([
                 pageVisibility = this[hidden] ? 'hidden' : 'visible';
             }
 
-            common.mediator.emit('modules:detect:pagevisibility:' + pageVisibility);
+            mediator.emit('modules:detect:pagevisibility:' + pageVisibility);
         }
 
         // Standards:

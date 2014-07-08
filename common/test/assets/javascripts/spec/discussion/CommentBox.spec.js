@@ -1,5 +1,4 @@
 define([
-    'common/utils/common',
     'common/modules/identity/api',
     'common/utils/ajax',
     'common/utils/context',
@@ -10,7 +9,6 @@ define([
     'fixtures/discussion/api-post-comment-valid',
     'common/modules/discussion/comment-box'
 ], function(
-    common,
     Id,
     ajax,
     context,
