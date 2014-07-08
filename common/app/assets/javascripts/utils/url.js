@@ -2,12 +2,12 @@ define([
     'lodash/objects/isArray',
     'lodash/objects/pairs',
     'common/utils/detect',
-    'common/utils/common'
+    'common/utils/mediator'
 ], function(
     isArray,
     pairs,
     detect,
-    common
+    mediator
 ) {
     
     var supportsPushState = detect.hasPushStateSupport();
@@ -70,7 +70,7 @@ define([
     };
 
     // pubsub
-    common.mediator.on('modules:url:pushquerystring', model.pushQueryString);
+    mediator.on('modules:url:pushquerystring', model.pushQueryString);
 
     // not exposing all the methods here
     return {
