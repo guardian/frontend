@@ -92,12 +92,13 @@ object DfpDataHydrator extends Logging {
         } getOrElse Nil
 
         GuLineItem(
-          dfpLineItem.getId,
-          dfpLineItem.getName,
-          toJodaTime(dfpLineItem.getStartDateTime),
-          isPageSkin(dfpLineItem),
-          sponsor,
-          GuTargeting(adUnits, geoTargets, customTargetSets)
+          id = dfpLineItem.getId,
+          name = dfpLineItem.getName,
+          startTime = toJodaTime(dfpLineItem.getStartDateTime),
+          endTime = if (dfpLineItem.getUnlimitedEndDateTime) None else Some(toJodaTime(dfpLineItem.getEndDateTime)),
+          isPageSkin = isPageSkin(dfpLineItem),
+          sponsor = sponsor,
+          targeting = GuTargeting(adUnits, geoTargets, customTargetSets)
         )
       }
 

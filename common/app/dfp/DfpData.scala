@@ -41,6 +41,7 @@ case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargets: Seq[GeoTarget], custo
 case class GuLineItem(id: Long,
                       name: String,
                       startTime: DateTime,
+                      endTime: Option[DateTime],
                       isPageSkin: Boolean,
                       sponsor: Option[String],
                       targeting: GuTargeting) {

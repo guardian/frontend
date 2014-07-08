@@ -63,10 +63,12 @@ object DfpDataCacheJob extends ExecutionContexts with Dates{
 
   private implicit val lineItemWrites = new Writes[GuLineItem] {
     def writes(lineItem: GuLineItem ): JsValue = {
+      val timePattern = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm z")
       Json.obj(
         "id" -> lineItem.id,
         "name" -> lineItem.name,
-        "startTime" -> DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm z").print(lineItem.startTime),
+        "startTime" -> timePattern.print(lineItem.startTime),
+        "endTime" -> lineItem.endTime.map(endTime => timePattern.print(endTime)),
         "isPageSkin" -> lineItem.isPageSkin,
         "sponsor" -> lineItem.sponsor,
         "targeting" -> lineItem.targeting
