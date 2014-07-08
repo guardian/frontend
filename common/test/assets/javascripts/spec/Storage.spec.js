@@ -44,7 +44,6 @@ define(['common/utils/mediator', 'common/utils/storage'], function(mediator, sto
                 setItem: sinon.stub().throws()
             });
             expect(storage.local.isAvailable()).toBeFalsy();
-            expect(mediator.emit).toHaveBeenCalledWith('module:error', 'Unable to save to local storage: Error', 'common/utils/storage.js');
         });
 
         it('should save and retrieve data', function() {
