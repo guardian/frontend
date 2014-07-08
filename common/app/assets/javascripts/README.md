@@ -9,13 +9,14 @@ We use [Bower](https://github.com/twitter/bower) to handle our JS dependencies. 
 ### Installation
 ------------ 
 
-    $ npm install bower -g
+    $ npm install -g bower
+    $ npm install -g bower-installer
     
 ### Usage
 
  * Installing the dependencies
  
-    $ bower install
+    $ bower-installer
     
  * Listing the dependencies and their versions
  
