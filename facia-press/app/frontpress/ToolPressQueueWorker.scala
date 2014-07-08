@@ -8,6 +8,7 @@ import conf.Configuration
 import services.{Live, Draft, FrontPath, PressJob}
 
 import scala.concurrent.Future
+import scala.util.{Success, Failure}
 
 object ToolPressQueueWorker extends JsonQueueWorker[PressJob] {
   override val queue = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
@@ -24,9 +25,18 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] {
 
     log.info(s"Processing job from tool to update $path on $pressType")
 
-    (pressType match {
+    val pressFuture = (pressType match {
       case Draft => FrontPress.pressDraftByPathId(path)
       case Live => FrontPress.pressLiveByPathId(path)
-    }).map(_ => ())
+    })
+
+    pressFuture onComplete {
+      case Success(_) =>
+        log.info(s"Successfully pressed $path on $pressType")
+      case Failure(error) =>
+        log.error(s"Failed to press $path on $pressType", error)
+    }
+
+    pressFuture.map(_ => ())
   }
 }
