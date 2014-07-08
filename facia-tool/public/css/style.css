@@ -32,7 +32,7 @@ header {
     position: absolute;
     width: 100%;
     background: #ffffff;
-    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
     z-index: 1;
     overflow: hidden;
 }
@@ -44,7 +44,7 @@ header {
     width: 100%;
     background: #999999;
     color: #000000;
-    padding: 15px 40px 0 40px;
+    padding: 15px 40px 0;
     height: 51px;
     z-index: 3;
     text-align: center;
@@ -184,7 +184,7 @@ h1 {
     top: 10px;
     right: 90px;
     height: 30px;
-    padding: 5px 20px 0 20px;
+    padding: 5px 20px 0;
     font-size: 12px;
     z-index: 1;
     -moz-box-sizing: border-box;
@@ -509,7 +509,7 @@ h1 {
 }
 
 .image__overrides * {
-    text-shadow: 0px 0px 2px #666666;
+    text-shadow: 0 0 2px #666666;
 }
 
 .supporting .image__overrides {
@@ -578,7 +578,7 @@ textarea.trailtext {
     width: 100%;
     font-size: 12px;
     line-height: 14px;
-    padding: 3px 5px 0px 5px;
+    padding: 3px 5px 0 5px;
     min-height: 35px;
     margin: 0;
     color: #333333;
@@ -608,7 +608,7 @@ button {
 }
 
 .group-name {
-    padding: 2px 0 0px 0px;
+    padding: 2px 0 0 0;
     margin: 5px 0 2px 4px;
     font-size: 11px;
     line-height: 12px;
@@ -772,19 +772,21 @@ button {
     background: #BBBBBB;
 }
 
-.log-in-out,
-.log-in-out:hover {
+.log-in-out {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     height: 51px;
-    padding: 15px 20px 0 20px;
+    padding: 15px 20px 0;
     font-size: 14px;
     float: right;
-    color: #999999;
     border-left: 1px solid #cfd8dc;
 }
 
-.log-in-out:hover {
+.log-in-out a {
+    color: #999999;
+}
+
+.log-in-out a:hover {
     color: #333333;
 }
 

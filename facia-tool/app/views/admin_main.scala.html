@@ -56,18 +56,17 @@
 
     @if(Switches.ToolDisable.isSwitchedOn) {
         <span class="message message--important">Temporarily disabled. Please try again shortly.</span>
-
     } else {
         <header>
             <a href="/">
                 <img class="logo" src="@routes.Assets.at("images/plane.png")" />
-                <h1 data-bind="text: title()">fronts</h1>
                 <h1>
+                    <span data-bind="text: title()">fronts</span>
                     @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") { : @Configuration.facia.stage }
                 </h1>
             </a>
             @if(isAuthed) {
-                <a class="log-in-out" href="/logout">Logout</a>
+                <div class="log-in-out"><a href="/logout">Logout</a></div>
             }
         </header>
 
