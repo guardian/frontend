@@ -54,7 +54,8 @@ module.exports = function (grunt) {
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
-                    stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min'
+                    stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min',
+                    raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven'
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
@@ -442,7 +443,6 @@ module.exports = function (grunt) {
                         cwd: 'common/app/public/javascripts/components',
                         src: [
                             'html5shiv/dist/html5shiv.js',
-                            'raven-js/dist/raven.js',
                             'swipe/swipe.js',
                             'zxcvbn/index.js'
                         ],
