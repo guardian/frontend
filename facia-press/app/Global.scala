@@ -2,8 +2,9 @@ import common.Jobs
 import conf.{Configuration => GuardianConfiguration}
 import frontpress.{ToolPressQueueWorker, FrontPressCron}
 import play.api.GlobalSettings
+import services.ConfigAgentLifecycle
 
-object Global extends GlobalSettings {
+object Global extends GlobalSettings with ConfigAgentLifecycle {
   val pressJobConsumeRateInSeconds: Int = GuardianConfiguration.faciatool.pressJobConsumeRateInSeconds
   /** TODO add CloudWatch metrics here */
 
