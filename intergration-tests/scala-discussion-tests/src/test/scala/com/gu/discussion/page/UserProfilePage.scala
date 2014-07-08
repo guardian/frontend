@@ -1,6 +1,5 @@
 package com.gu.discussion.page
 
-import com.gu.automation.support.TestLogger
 import com.gu.automation.support.page.Element
 import com.gu.discussion.support.ByExt
 import org.openqa.selenium.{By, WebDriver}

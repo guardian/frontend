@@ -7,17 +7,18 @@ import org.openqa.selenium.{By, WebDriver}
 
 case class CommentModule(implicit driver: WebDriver, logger: TestLogger) {
 
-  private val startComments = Element(By.cssSelector(".d-discussion .d-discussion__pagination .pagination"))
+  private val startOfComments = Element(By.cssSelector(".d-discussion .d-discussion__pagination .pagination"))
   private def showMoreFeaturedCommeLink = Element(By.className("show-more__container--featured"))
   private def showAllCommentsButton = Element(By.className("d-discussion__show-all-comments"))
   private def commentTextArea = Element(By.className("d-comment-box__body"))
   private def postYourCommentButton = Element(By.className("d-comment-box__submit"))
   private def cancelButton = Element(By.className("d-comment-box__cancel"))
   private def sortOrderControl = Element(By.cssSelector(".discussion__comments > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > select:nth-child(1)"))
-  private def nextPageControl = startComments.findElement(By.cssSelector(".pagination__item--next .pagination__item-inner"))
-  private def previousPageControl = startComments.findElement(By.cssSelector(".pagination__item--prev .pagination__item-inner"))
-  private def firstPageControl = startComments.findElement(By.cssSelector(".pagination__item--first .pagination__item-inner"))
-  private def lastPageControl = startComments.findElement(By.cssSelector(".pagination__item--last .pagination__item-inner"))
+  private def nextPageControl = startOfComments.element(By.cssSelector(".pagination__item--next " +
+    ".pagination__item-inner"))
+  private def previousPageControl = startOfComments.element(By.cssSelector(".pagination__item--prev .pagination__item-inner"))
+  private def firstPageControl = startOfComments.element(By.cssSelector(".pagination__item--first .pagination__item-inner"))
+  private def lastPageControl = startOfComments.element(By.cssSelector(".pagination__item--last .pagination__item-inner"))
   private def showMoreRepliesButton = Element(By.className("d-show-more-replies"))
 
   def showAllReplies(): CommentModule = {
