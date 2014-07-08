@@ -405,11 +405,9 @@ define([
             });
 
         if (adSlots.length > 0) {
-            // if we don't already have googletag, create command queue and load it async
+            // if we don't already have googletag, create command queue (assumes it's loaded further up the chain)
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
-                // load the library asynchronously
-                require(['googletag']);
             }
 
             window.googletag.cmd.push(setListeners);

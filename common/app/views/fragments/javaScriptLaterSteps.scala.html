@@ -145,7 +145,7 @@
 
             if (guardian.config.switches.commercial) {
 
-                require(['bootstraps/commercial'], function(commercial) {
+                require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
                     commercial.init();
                 });
 
