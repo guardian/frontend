@@ -7,6 +7,7 @@ import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.{AdminConfiguration, Configuration}
+import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 
 object DfpDataHydrator extends Logging {
 
@@ -93,6 +94,7 @@ object DfpDataHydrator extends Logging {
         GuLineItem(
           dfpLineItem.getId,
           dfpLineItem.getName,
+          toJodaTime(dfpLineItem.getStartDateTime),
           isPageSkin(dfpLineItem),
           sponsor,
           GuTargeting(adUnits, geoTargets, customTargetSets)
@@ -186,6 +188,16 @@ object DfpDataHydrator extends Logging {
     customCriteriaSet.getChildren.flatMap { critSet =>
       buildTargetSet(critSet.asInstanceOf[CustomCriteriaSet])
     }.toSeq
+  }
+
+  private def toJodaTime(time: DateTime): JodaDateTime = {
+    val date = time.getDate
+    new JodaDateTime(date.getYear,
+      date.getMonth,
+      date.getDay,
+      time.getHour,
+      time.getMinute,
+      DateTimeZone.forID(time.getTimeZoneID))
   }
 
   private def optJavaInt(i: java.lang.Integer): Option[Int] = if (i == null) None else Some(i)
