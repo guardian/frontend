@@ -6,7 +6,7 @@ import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
-import conf.AdminConfiguration
+import conf.{AdminConfiguration, Configuration}
 
 object DfpDataHydrator extends Logging {
 
@@ -16,7 +16,6 @@ object DfpDataHydrator extends Logging {
       clientSecret <- AdminConfiguration.dfpApi.clientSecret
       refreshToken <- AdminConfiguration.dfpApi.refreshToken
       appName <- AdminConfiguration.dfpApi.appName
-      networkId <- AdminConfiguration.dfpApi.networkId
     } yield {
       val credential = new OfflineCredentials.Builder()
         .forApi(Api.DFP)
@@ -26,7 +25,7 @@ object DfpDataHydrator extends Logging {
       new DfpSession.Builder()
         .withOAuth2Credential(credential)
         .withApplicationName(appName)
-        .withNetworkCode(networkId)
+        .withNetworkCode(Configuration.commercial.dfpAccountId)
         .build()
     }
   } catch {
@@ -34,8 +33,6 @@ object DfpDataHydrator extends Logging {
       log.error(s"Building DFP session failed: $e")
       None
   }
-
-  private val rootAdUnitName = "theguardian.com"
 
   def loadCurrentLineItems(): Seq[GuLineItem] = dfpSession.fold(Seq[GuLineItem]()) { session =>
 
@@ -51,7 +48,7 @@ object DfpDataHydrator extends Logging {
 
       val optSponsorFieldId = loadCustomFieldId("sponsor")
 
-      val allAdUnits = loadActiveDescendantAdUnits(rootAdUnitName)
+      val allAdUnits = loadActiveDescendantAdUnits(Configuration.commercial.dfpAdUnitRoot)
 
       val allCustomTargetingKeys = loadAllCustomTargetKeys()
       val allCustomTargetingValues = loadAllCustomTargetValues()
@@ -125,14 +122,12 @@ object DfpDataHydrator extends Logging {
       val dfpAdUnits = DfpApiWrapper.fetchAdUnits(session, statementBuilder)
 
       val descendantAdUnits = dfpAdUnits filter { adUnit =>
-        val path = adUnit.getParentPath
-        path != null && path.length > 1 && path(1).getName == rootName
+        Option(adUnit.getParentPath) exists (path => path.length > 1 && path(1).getName == rootName)
       }
 
-      def pathOf(adUnit: AdUnit) = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
-
       descendantAdUnits.map { adUnit =>
-        (adUnit.getId, GuAdUnit(adUnit.getId, pathOf(adUnit)))
+        val path = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
+        (adUnit.getId, GuAdUnit(adUnit.getId, path))
       }.toMap
   }
 
@@ -193,8 +188,5 @@ object DfpDataHydrator extends Logging {
     }.toSeq
   }
 
-  private def optJavaInt(i: java.lang.Integer): Option[Int] = {
-    if (i == null) None
-    else Some(i)
-  }
+  private def optJavaInt(i: java.lang.Integer): Option[Int] = if (i == null) None else Some(i)
 }

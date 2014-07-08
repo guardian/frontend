@@ -14,6 +14,14 @@ GET         /ab.gif                                                             
 GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 
+# Analytics
+GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
+GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET         /analytics/commercial                                                                                    controllers.admin.CommercialController.renderCommercial()
+GET         /analytics/commercial/sponsorships                                                                       controllers.admin.CommercialController.renderSponsorships()
+GET         /analytics/commercial/pageskins                                                                          controllers.admin.CommercialController.renderPageskins()
+GET         /analytics/commercial/surging                                                                            controllers.admin.CommercialController.renderSurgingContent()
+
 # Discussion
 GET         /discussion/comment-box.json                                                                             controllers.DiscussionApp.commentBox()
 
@@ -138,10 +146,8 @@ GET         /ophan/pageviews/*path                                              
 GET         /ophan/pageviews                                                                                         controllers.admin.OphanApiController.platformPageViews()
 GET         /dev/switchboard                                                                                         controllers.admin.SwitchboardController.renderSwitchboard()
 POST        /dev/switchboard                                                                                         controllers.admin.SwitchboardController.save()
-GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
 GET         /metrics/loadbalancers                                                                                   controllers.admin.DashboardController.renderDashboard()
 GET         /metrics/googlebot/404                                                                                   controllers.admin.DashboardController.renderGooglebot404s()
-GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /metrics/fastly                                                                                          controllers.admin.FastlyController.renderFastly()
 GET         /metrics/errors                                                                                          controllers.admin.DashboardController.renderErrors()
 GET         /metrics/errors/4xx                                                                                      controllers.admin.DashboardController.render4XX()

@@ -5,6 +5,7 @@ import java.net.URLDecoder
 import akka.agent.Agent
 import common._
 import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey}
+import conf.Switches.EditionalisedPageSkinsSwitch
 import model.{Config, Tag}
 import play.api.{Application, GlobalSettings}
 import services.S3
@@ -41,9 +42,19 @@ trait DfpAgent {
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
-  def isPageSkinned(adUnitWithoutRoot: String) = {
+  def isPageSkinned(adUnitWithoutRoot: String, edition: Edition) = {
     val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
-    pageSkinSponsorships exists (_.adUnits contains adUnitWithRoot)
+
+    if (EditionalisedPageSkinsSwitch.isSwitchedOn) {
+      pageSkinSponsorships.exists { sponsorship =>
+        sponsorship.adUnits.contains(adUnitWithRoot) &&
+          (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id))
+      }
+    } else {
+      pageSkinSponsorships.exists { sponsorship =>
+        sponsorship.adUnits.contains(adUnitWithRoot)
+      }
+    }
   }
 
   def sponsorshipTag(config: Config): Option[String] = {
