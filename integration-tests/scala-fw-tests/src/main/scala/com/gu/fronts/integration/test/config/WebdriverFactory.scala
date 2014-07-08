@@ -3,54 +3,86 @@ package com.gu.fronts.integration.test.config
 import java.net.URL
 import java.util.concurrent.TimeUnit.SECONDS
 
-import com.gu.fronts.integration.test.config.PropertyLoader._
 import org.apache.commons.lang3.StringUtils.isNotBlank
-import org.openqa.selenium.{Dimension, Point, WebDriver}
-import org.openqa.selenium.chrome.{ChromeDriver, ChromeOptions}
+import org.openqa.selenium.Dimension
+import org.openqa.selenium.Point
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.firefox.FirefoxDriver
-import org.openqa.selenium.remote.{DesiredCapabilities, RemoteWebDriver}
+import org.openqa.selenium.ie.InternetExplorerDriver
+import org.openqa.selenium.remote.DesiredCapabilities
+import org.openqa.selenium.remote.RemoteWebDriver
+
+import com.gu.fronts.integration.test.config.PropertyLoader.BROWSER
+import com.gu.fronts.integration.test.config.PropertyLoader.BROWSER_VERSION
+import com.gu.fronts.integration.test.config.PropertyLoader.SAUCELABS_REMOTEDRIVER_URL
+import com.gu.fronts.integration.test.config.PropertyLoader.getProperty
 
 object WebdriverFactory {
 
-  val SAUCE_LABS_FIREFOX_VERSION = "30"
+  //  def getWebDriver(testCaseName: String): WebDriver = {
+  //    val capabilities = initDesiredCapabilities
+  //    capabilities.setCapability("version", getProperty(BROWSER_VERSION))
+  //    if (isNotBlank(testCaseName)) {
+  //      capabilities.setCapability("name", testCaseName)
+  //    }
+  //    var driver: WebDriver = null
+  //    if (isNotBlank(getProperty(SAUCELABS_REMOTEDRIVER_URL))) {
+  //      driver = new RemoteWebDriver(new URL(getProperty(SAUCELABS_REMOTEDRIVER_URL)), capabilities)
+  //    } else {
+  //      driver = 
+  //    }
+  //    setGlobalWebdriverConf(driver)
+  //  }
 
-  val SAUCE_LABS_OS_VERSION = "Windows 7"
-
-  def getDefaultWebDriver(): WebDriver = getFirefoxWebdriver
-
-  def getFirefoxWebdriver(): WebDriver = {
-    val desiredCap = DesiredCapabilities.firefox()
-    desiredCap.setCapability("applicationCacheEnabled", false)
-    setGlobalWebdriverConf(new FirefoxDriver(), desiredCap)
-  }
-
-  def getSauceLabsWebdriver(jobName: String): WebDriver = {
-    val capabilities = DesiredCapabilities.firefox()
-    capabilities.setCapability("version", SAUCE_LABS_FIREFOX_VERSION)
-    capabilities.setCapability("platform", SAUCE_LABS_OS_VERSION)
-    if (isNotBlank(jobName)) {
-      capabilities.setCapability("name", jobName)
+  def createWebDriver(testCaseName: String): WebDriver = {
+    var driver: WebDriver = null
+    var capabilities: DesiredCapabilities = null
+    getProperty(BROWSER) match {
+      case "firefox" =>
+        capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.firefox())
+        driver = new FirefoxDriver(capabilities)
+      case "chrome" =>
+        capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.chrome())
+        driver = new ChromeDriver(capabilities)
+      case "ie" =>
+        capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.internetExplorer())
+        driver = new InternetExplorerDriver(capabilities)
+      case default => throw new RuntimeException("Browser: [" + default + "] is not supported")
     }
-    //TODO get from conf
-    val driver = new RemoteWebDriver(new URL(getProperty(SAUCELABS_REMOTEDRIVER_URL)), capabilities)
-    setGlobalWebdriverConf(driver, capabilities)
-    driver
+
+    if (isNotBlank(getProperty(SAUCELABS_REMOTEDRIVER_URL))) {
+      driver = new RemoteWebDriver(new URL(getProperty(SAUCELABS_REMOTEDRIVER_URL)), capabilities)
+    }
+
+    initWebDriver(driver)
   }
 
-  /**
-   * only use if you have a chrome driver installed
-   */
-  def getChromeWebdriver(): WebDriver = {
-    val options = new ChromeOptions()
-    options.addArguments("--disable-application-cache")
-    val webDriver = new ChromeDriver(options)
-    setGlobalWebdriverConf(webDriver, new DesiredCapabilities())
-  }
+  //  private def initWebDriver: WebDriver = {
+  //    if(StringUtils.isNotBlank(getProperty(SAUCELABS_REMOTEDRIVER_URL)){
+  //      
+  //    }
+  //    getProperty(BROWSER) match {
+  //      case "firefox" => return new FirefoxDriver
+  //      case "chrome" => return DesiredCapabilities.chrome()
+  //      case "ie" => return DesiredCapabilities.internetExplorer()
+  //      case default => return DesiredCapabilities.firefox()
+  //    }
+  //  }
 
-  private def setGlobalWebdriverConf(webDriver: WebDriver, desiredCap: DesiredCapabilities): WebDriver = {
+  private def initWebDriver(webDriver: WebDriver): WebDriver = {
     webDriver.manage().window().setPosition(new Point(0, 0))
+    //needs to set a custom size because the auto size sometimes is not large enough to display certain elements
     webDriver.manage().window().setSize(new Dimension(1600, 1024))
     webDriver.manage().timeouts().implicitlyWait(10, SECONDS)
     webDriver
+  }
+
+  private def initDesiredCapabilities(testCaseName: String, capabilities: DesiredCapabilities): DesiredCapabilities = {
+    capabilities.setCapability("version", getProperty(BROWSER_VERSION))
+    if (isNotBlank(testCaseName)) {
+      capabilities.setCapability("name", testCaseName)
+    }
+    return capabilities
   }
 }

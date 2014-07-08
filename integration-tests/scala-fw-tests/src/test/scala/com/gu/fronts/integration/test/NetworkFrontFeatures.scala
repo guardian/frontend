@@ -18,8 +18,8 @@ class NetworkFrontFeatures extends FrontsSeleniumTestSuite {
       val displayedImgBefore = pictureOverlay.getDisplayedImage
       pictureOverlay.clickNextPicture
       // give some time for next image to become active
-      Thread.sleep(200);
-      val displayedImgAfter = pictureOverlay.getDisplayedImage();
+      Thread.sleep(500);
+      val displayedImgAfter = pictureOverlay.getDisplayedImage;
       displayedImgBefore should not be (displayedImgAfter)
     }
   }

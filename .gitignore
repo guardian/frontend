@@ -67,4 +67,8 @@ ivy-sbt
 .classpath
 .springBeans
 .cache
+
 bower_components
+
+#Scala test framework
+local.conf

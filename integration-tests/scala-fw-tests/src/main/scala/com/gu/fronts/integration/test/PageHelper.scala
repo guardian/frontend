@@ -1,13 +1,12 @@
 package com.gu.fronts.integration.test
 
-import java.util.{ArrayList, List}
-
 import com.gu.automation.support.TestLogging
-import com.gu.fronts.integration.test.config.PropertyLoader.{BASE_URL, getProperty}
+import com.gu.fronts.integration.test.config.PropertyLoader.{ BASE_URL, getProperty }
 import com.gu.fronts.integration.test.pages.common.FrontsParentPage
 import org.apache.commons.collections.CollectionUtils
 import org.apache.commons.lang3.StringUtils
-import org.openqa.selenium.{By, WebDriver, WebDriverException, WebElement}
+import org.openqa.selenium.{ By, WebDriver, WebDriverException, WebElement }
+import scala.collection.JavaConverters._
 
 trait PageHelper extends TestLogging {
 
@@ -48,7 +47,7 @@ trait PageHelper extends TestLogging {
    * Will find all elements with the provided test attribute id, using the webdriver as search context
    */
   def findAllByTestAttribute(testAttributeValue: String): List[WebElement] = {
-    driver.findElements(byTestAttributeId(testAttributeValue))
+    driver.findElements(byTestAttributeId(testAttributeValue)).asScala.toList
   }
 
   /**
@@ -62,7 +61,7 @@ trait PageHelper extends TestLogging {
    * Will find all elements with the provided test attribute id, using the provided webelement as search context
    */
   def findAllByTestAttribute(testAttributeValue: String, contextElement: WebElement): List[WebElement] = {
-    contextElement.findElements(byTestAttributeId(testAttributeValue))
+    contextElement.findElements(byTestAttributeId(testAttributeValue)).asScala.toList
   }
 
   private def byTestAttributeId(testAttributeValue: String): org.openqa.selenium.By = {
@@ -74,28 +73,28 @@ trait PageHelper extends TestLogging {
    * Checks if the provided elements exist and are displayed. If any element is not, then an exception is
    * thrown with a message with further details about missing elements
    */
-  def existsAndDisplayed(elementsToCheck: WebElement*) = {
-    val errors = new ArrayList[String]()
+  def existsAndDisplayed(elementsToCheck: WebElement*): Boolean = {
+    val errors = List[String]()
     for (webElement <- elementsToCheck) {
       checkElementExistsAndCreateError(webElement, errors)
     }
-    if (CollectionUtils.isNotEmpty(errors)) {
-      throw new RuntimeException("Error loading page due to: " + getErrorMessages(errors))
+    if (!errors.isEmpty) {
+      throw new RuntimeException("Error loading page due to: " + errors mkString ("\n"))
+    } else {
+      return true
     }
   }
 
   private def checkElementExistsAndCreateError(webElement: WebElement, errors: List[String]) {
     try {
       if (!webElement.isDisplayed) {
-        errors.add("Element was not displayed " + webElement);
+        errors :+ ("WebElement was not displayed " + webElement);
       }
     } catch {
       case e: WebDriverException => {
-        logger.warn("Element was not displayed " + webElement, e)
-        errors.add(e.getMessage)
+        logger.warn("WebElement was not displayed " + webElement, e)
+        errors :+ (e.getMessage)
       }
     }
   }
-
-  private def getErrorMessages(errors: List[String]): String = StringUtils.join(errors, ",")
 }

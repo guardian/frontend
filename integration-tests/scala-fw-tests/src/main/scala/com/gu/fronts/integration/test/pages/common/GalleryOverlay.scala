@@ -1,6 +1,5 @@
 package com.gu.fronts.integration.test.page.common
 
-import java.util.List
 import scala.collection.JavaConversions.asScalaBuffer
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
@@ -9,17 +8,16 @@ import com.gu.fronts.integration.test.pages.common.FrontsParentPage
 
 class GalleryOverlay(implicit var driver: WebDriver) extends FrontsParentPage() {
 
-    
-  private var galleryGridButton: WebElement = findByTestAttribute("gallery-grid")
+  private def galleryGridButton: WebElement = findByTestAttribute("gallery-grid")
 
-  private var galleryFullButton: WebElement = findByTestAttribute("gallery-full")
+  private def galleryFullButton: WebElement = findByTestAttribute("gallery-full")
 
-  private var galleryNextButton: WebElement = findByTestAttribute("gallery-next")
+  private def galleryNextButton: WebElement = findByTestAttribute("gallery-next")
 
-  private var galleryImages: List[WebElement] = findAllByTestAttribute("gallery-image-item")
+  private def galleryImages: List[WebElement] = findAllByTestAttribute("gallery-image-item")
 
-  private var closeOverlayButton: WebElement = findByTestAttribute("close-overlay")
-  
+  private def closeOverlayButton: WebElement = findByTestAttribute("close-overlay")
+
   override def isDisplayed() = {
     existsAndDisplayed(galleryGridButton)
   }
@@ -45,15 +43,12 @@ class GalleryOverlay(implicit var driver: WebDriver) extends FrontsParentPage() 
   }
 
   def getDisplayedImage(): WebElement = {
-    var displayedImage: WebElement = null
-    for (image <- galleryImages if image.isDisplayed) {
-      displayedImage = image
-      //break
+    for (image <- galleryImages) {
+      if (image.isDisplayed()) {
+        return image
+      }
     }
-    if (displayedImage == null) {
-      throw new RuntimeException("Could not find a displayed Gallery Overlay picture item with attribute [" + TEST_ATTR_NAME + "=gallery-image-item")
-    }
-    displayedImage
+    throw new RuntimeException("Could not find a displayed Gallery Overlay picture item with attribute [" + TEST_ATTR_NAME + "=gallery-image-item")
   }
 
   def close(): NetworkFrontPage = {
