@@ -20,7 +20,7 @@ case class CommentItem(implicit driver: WebDriver) {
   private def reportEmail = latestComment.element(By.id("d-report-comment__email"))
   private def sendReportButton = latestComment.element(By.cssSelector("button.d-report-comment__submit"))
   private def showMoreRepliesButton = latestComment.element(By.className("d-show-more-replies"))
-  private def recommendCommentButton = latestComment.elements(By.className("d-comment__recommend-button"))
+  private def recommendCommentButton = latestComment.element(By.className("d-comment__recommend-button"))
   private def commentAuthorAvatar = latestComment.element(By.className("d-comment__avatar"))
   private def commentAuthorLink = latestComment.element(By.cssSelector(".d-comment__author a"))
   private def commentTimeStamp = latestComment.element(By.className("d-comment__timestamp"))
