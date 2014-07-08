@@ -14,7 +14,7 @@ $c-navigation-background: #5094cf !global;
 $c-navigation-action: guss-colour(neutral-1) !global;
 
 $c-signposting-action: guss-colour(guardian-brand) !global;
-$c-signposting-background: #ddf7ff !global;
+$c-signposting-background: #e4eff8 !global;
 
 $c-top-navigation-action: #ffffff !global;
 $c-top-navigation-background: guss-colour(guardian-brand) !global;
@@ -31,10 +31,12 @@ $c-local-navigation-current-border: 0 !global;
 $c-global-navigation-background: #2479c3 !global;
 $c-global-navigation-title: #ffffff !global;
 $c-global-navigation-title-background: guss-colour(guardian-brand) !global;
+$global-navigation-title-width: gs-span(2) + $gs-gutter * 2 !global;
 $c-global-navigation-action: #ffffff !global;
 $c-global-navigation-border: rgba(#ffffff, .3) !global;
 
-$c-navigation-toggle-background: #2479c3 !global;
+
+$c-navigation-toggle-background: guss-colour(neutral-1) !global;
 $c-navigation-toggle-icon: #ffffff !global;
 $c-navigation-toggle-shadow: rgba(#000000, .333333) !global;
 
@@ -98,6 +100,19 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     @include rem((
         height: $gs-row-height
     ));
+    
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: lighten($c-navigation-background, 10%);
+        @include rem((
+            height: $gs-row-height
+        ));
+    }
 }
 .top-navigation,
 .local-navigation,
@@ -163,6 +178,9 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
 .global-navigation__action {
     color: $c-global-navigation-action;
     display: block;
+}
+.signposting {
+    background: $c-signposting-background;
 }
 .signposting__item {
     display: table-cell;
@@ -308,7 +326,7 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     }
     @include mq(tablet) {
         @include rem((
-            padding-left: (gs-span(2) + $gs-gutter)
+            padding-left: $global-navigation-title-width
         ));
     }
 }
@@ -328,13 +346,14 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
         ));
     }
     @include mq(tablet) {
+        @include box-sizing(border-box);
         position: absolute;
         top: 0;
         bottom: 0;
         left: 0;
         background: $c-global-navigation-title-background;
         @include rem((
-            width: gs-span(2),
+            width: $global-navigation-title-width,
             padding-left: $gs-gutter
         ));
     }
@@ -390,10 +409,6 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
             padding-right: $new-navigation-h-space-between-items/2
         ));
     }
-}
-.new-navigation .global-navigation__section--home,
-.new-navigation .global-navigation__section--current {
-    display: none;
 }
 
 
@@ -554,7 +569,7 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
             margin-left: 0 !important;
         }
         .top-navigation__item {
-            display: table-cell !important;
+            display: table-cell;
         }
 
         // Re-align signposting and local nav
@@ -595,6 +610,23 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
     }
 }
 
+
+/* Overrides
+   ========================================================================== */
+
+.new-navigation {
+    .global-navigation__section--home,
+    .top-navigation__item--current,
+    .global-navigation__section--current {
+        display: none;
+    }
+
+    .top-navigation__item--current {
+        @include mq(wide) {
+            display: table-cell;
+        }
+    }
+}
 
 /* Page Skin: grow navigation up to wide and then shrink back to desktop
    ========================================================================== */
@@ -653,6 +685,9 @@ $new-navigation-h-space-between-items: $gs-gutter !global;
             padding-left: $gs-gutter/2,
             padding-right: $gs-gutter/2
         ));
+    }
+    @include mq(wide) {
+        border-left: 0;
     }
 }
 .new-navigation__toggle-label {}
