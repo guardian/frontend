@@ -398,78 +398,84 @@
     }
 }
 
-.membership-tab__details-list {
+.membership-tab {
 
     @include rem((
-        padding-top: $gs-baseline*2
+        padding-bottom: $gs-baseline*2
     ));
 
-    li {
+    .membership-tab__details-list {
+
         @include rem((
-            margin-bottom: $gs-baseline
+            padding-top: $gs-baseline*2
         ));
 
-        .membership-tab__card-details {
+        li {
             @include rem((
-                padding: 8px 4px 8px 12px
+                margin-bottom: $gs-baseline
             ));
+
+            .membership-tab__card-details {
+                @include rem((
+                    padding: 8px 4px 8px 12px
+                ));
+            }
+
+            .membership-tab__upgrade {
+                margin: 0;
+            }
         }
 
-        .membership-tab__upgrade {
-            margin: 0;
+        .membership-tab__card-types {
+            display: inline-block;
+            @include rem((
+                height: 35px,
+                width: 54px
+            ));
+            vertical-align: middle;
         }
-    }
 
-    .membership-tab__card-types {
-        display: inline-block;
-        @include rem((
-            height: 35px,
-            width: 54px
-        ));
-        vertical-align: middle;
-    }
+        .membership-tab__update-button {
+            display: block;
+            @include rem((
+                width: 120px,
+                margin: $gs-baseline/2 0 0 0
+            ));
 
-    .membership-tab__update-button {
-        display: block;
-        @include rem((
-            width: 120px,
-            margin: $gs-baseline/2 0 0 0
-        ));
-
-        @include mq(tablet) {
-            float: right;
-            margin: 0;
+            @include mq(tablet) {
+                float: right;
+                margin: 0;
+            }
+            box-sizing: border-box;
+            &:hover,
+            &:active,
+            &:focus {
+                text-decoration: none;
+            }
         }
-        box-sizing: border-box;
-        &:hover,
-        &:active,
-        &:focus {
-            text-decoration: none;
+
+        .membership-payment-cost {
+            text-transform: uppercase;
         }
-    }
 
-    .membership-payment-cost {
-        text-transform: uppercase;
-    }
-
-    .membership-tab__update-button--muted {
-        background: none;
-        color: $c-newsDefault;
-        &:hover,
-        &:focus {
+        .membership-tab__update-button--muted {
             background: none;
-            text-decoration: underline;
-        }
-        &:active {
-            color: $c-newsAccent;
+            color: $c-newsDefault;
+            &:hover,
+            &:focus {
+                background: none;
+                text-decoration: underline;
+            }
+            &:active {
+                color: $c-newsAccent;
+            }
         }
     }
 }
 
 .membership-tab__details-list--lower {
     @include rem((
-        padding-top: 0,
-        padding-bottom: $gs-baseline*2
+        padding-top: 0
     ));
 }
 
