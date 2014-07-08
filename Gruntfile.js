@@ -441,11 +441,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'common/app/public/javascripts/components',
-                        src: [
-                            'html5shiv/dist/html5shiv.js',
-                            'swipe/swipe.js',
-                            'zxcvbn/index.js'
-                        ],
+                        src: ['**/*.js'],
                         dest: staticTargetDir + 'javascripts/components'
                     },
                     {
