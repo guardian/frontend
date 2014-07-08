@@ -3,6 +3,7 @@ body {
     padding: 0;
     min-width: 320px;
     color: #000000;
+    background-color: #f6f6f6;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -16,20 +17,22 @@ p {
 a,
 a:hover,
 .linky {
-    color: #607d8b;
+    color: #148ad2;
     text-decoration: none;
     cursor: pointer;
 }
 
 a:hover,
 .linky:hover {
-    color: #3279F1;
+    color: #2ea3eb;
 }
 
 header {
-    height: 45px;
+    height: 51px;
     position: absolute;
     width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #cfd8dc;
 }
 
 .status {
@@ -38,7 +41,7 @@ header {
     position: fixed;
     width: 100%;
     background: #999999;
-    color: #FFFFFF;
+    color: #ffffff;
     padding: 16px 40px 16px 40px;
     z-index: 2;
     text-align: center;
@@ -64,7 +67,7 @@ header {
 
 .logo {
     float: left;
-    margin: 2px 0 0 4px;
+    margin: 5px 0 0 8px;
     width: 48px;
     height: 45px;
 }
@@ -73,9 +76,9 @@ h1 {
     float: left;
     display: inline-block;
     font-size: 32px;
-    line-height: 40px;
+    line-height: 44px;
     letter-spacing: -1px;
-    color: #607d8b;
+    color: #666666;
     font-weight: normal;
     text-transform: lowercase;
     margin: 0 0 0 5px;
@@ -100,19 +103,19 @@ h1 {
 
 .login-form {
     position: absolute;
-    top: 10px;
+    top: 13px;
     left: 145px;
 }
 
 .front-priorities {
     position: absolute;
-    top: 45px;
-    left: 64px;
+    top: 50px;
+    left: 57px;
 }
 
 .front-priorities--priority {
     display: block;
-    font-size: 20px;
+    font-size: 17px;
     padding: 10px 0 0 0;
 }
 
@@ -125,8 +128,7 @@ h1 {
 
 .title {
     font-size: 18px;
-    font-weight: bold;
-    color: #000000;
+    color: #666666;
     padding: 0 0 0 4px;
 }
 
@@ -159,7 +161,7 @@ h1 {
 }
 
 .droppable.underDrag {
-    background-color: #3279F1;
+    background-color: #2ea3eb;
 }
 
 .open .droppable.underDrag {
@@ -172,12 +174,17 @@ h1 {
 
 .updating {
     display: none;
-    color: #46c430;
+    background: #46c430;
+    color: #ffffff;
     position: absolute;
-    top: 13px;
-    right: 15px;
+    top: 10px;
+    right: 90px;
+    height: 30px;
+    padding: 5px 20px 0 20px;
+    font-size: 12px;
     z-index: 1;
-    font-weight: bold;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .pending .updating {
@@ -212,22 +219,22 @@ h1 {
     color: #DD4B39;
 }
 
-.left-col {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    position: absolute;
-    top: 45px;
-    left: 0;
-    width: 50%;
-}
-
+.left-col,
 .right-col {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
-    top: 45px;
-    right: 0;
+    top: 51px;
     width: 50%;
+    background: #ffffff;
+}
+
+.left-col {
+    left: 0;
+}
+
+.right-col {
+    right: 0;
 }
 
 .right-col.live-mode {
@@ -237,13 +244,13 @@ h1 {
 .col__inner {
     padding: 15px 10px 15px 15px;
     box-shadow: inset 0 23px 10px -25px rgba(0,0,0,0.4);
-    transition: background-color 0.25s ease;
+    transition: background-color 0.25s;
 }
 
 .modes {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    background: #cfd8dc;
+    background: #f6f6f6;
     height: 40px;
     border-bottom: 5px solid #dddddd; 
     overflow: hidden;
@@ -262,25 +269,27 @@ h1 {
     box-sizing: border-box;
     display: inline-block;
     height: 35px;
-    color: #ffffff;
+    color: #999999;
     padding: 8px 20px;
     text-align: center;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 14px;
     transition: background-color 0.25s ease;
 }
 
 .modes a:hover {
-   background: #90a4ae; 
+   background: #cccccc;
+   color: #ffffff;
 }
 
 .modes a.draft-mode.active,
 .modes a.draft-mode.active:hover {
+    color: #ffffff;
     background: #ffc107;
 }
 
 .modes a.live-mode.active,
 .modes a.live-mode.active:hover {
+    color: #ffffff;
     background: #46c430;
 }
 
@@ -300,7 +309,8 @@ h1 {
     overflow: hidden;
     padding: 0 2px 3px 4px;
     position: relative;
-    border-top: 5px solid #FFFFFF;
+    background: #ffffff;
+    border-top: 5px solid #ffffff;
     -webkit-transition: border-color 150ms;
        -moz-transition: border-color 150ms;
             transition: border-color 150ms;
@@ -313,7 +323,7 @@ h1 {
 
 .article:hover,
 .live-mode .article:hover {
-    background-color: #f4f3e8;
+    background-color: #eeeeee;
 }
 
 .supporting .article {
@@ -327,7 +337,7 @@ h1 {
 }
 
 .article.underDrag {
-    border-top-color: #3279F1;
+    border-top-color: #2ea3eb;
 }
 
 .open .article.underDrag {
@@ -343,7 +353,7 @@ h1 {
     width: 75px;
     height: 45px;
     margin: 3px 0 0 0;
-    background-color: #f4f3e8;
+    background-color: #eeeeee;
     border-radius: 2px;
 }
 
@@ -591,12 +601,12 @@ button {
 .group-name {
     padding: 2px 0 0px 0px;
     margin: 5px 0 2px 4px;
-    font-size: 12px;
+    font-size: 11px;
     line-height: 12px;
     color: #666666;
     border-top: 1px dotted #cccccc;
     text-transform: uppercase;
-    width: 175px;
+    width: 143px;
 }
 
 .search-tools {
@@ -643,6 +653,7 @@ button {
 .autocompleter select {
     float: left;
     width: 35%;
+    color: #999999;
 }
 
 .autocompleter input {
@@ -680,7 +691,7 @@ button {
     margin: 0;
     position: absolute;
     left: 50%;
-    top: 8px;
+    top: 10px;
     height: 30px;
 }
 
@@ -692,10 +703,10 @@ button {
 .tool {
     display: inline-block;
     padding: 0 10px;
-    background: #dbd5b8;
+    background: #cccccc;
     font-size: 15px;
     line-height: 24px;
-    color: #FFFFFF;
+    color: #ffffff;
     border: 0;
     cursor: pointer;
     text-decoration: none;
@@ -708,7 +719,7 @@ button {
 
 .tool:hover {
     background: #BBBBBB;
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 .tool.active {
@@ -723,11 +734,11 @@ button {
 }
 
 .tools .tool:first-child {
-    background: #3279F1;
+    background: #2ea3eb;
 }
 
 .tools .tool:first-child:hover {
-    background: #376ABF;
+    background: #148ad2;
 }
 
 .collection .tools {
@@ -753,10 +764,18 @@ button {
 
 .log-in-out,
 .log-in-out:hover {
-    margin: 12px 20px 0 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 51px;
+    padding: 15px 20px 0 20px;
     font-size: 12px;
-    text-transform: lowercase;
     float: right;
+    color: #666666;
+    border-left: 1px solid #cfd8dc;
+}
+
+.log-in-out:hover {
+
 }
 
 .tool--small {
@@ -789,7 +808,7 @@ button {
 
 .article:hover > .closed .tool--small {
     display: block;
-    opacity: 0.8;
+    opacity: 0.6;
 }
 
 .article > .closed .tool--small:hover {
@@ -825,7 +844,6 @@ button {
 
 .cnf-fronts {
     margin-top: 10px;
-    padding: 0 15px 0 0;
 }
 
 .cnf-front {
@@ -833,7 +851,7 @@ button {
 }
 
 .cnf-front.open {
-    background: #f4f3e8;
+    background: #eeeeee;
     padding-bottom: 5px;
     margin: 0 0 10px 0;
 }
@@ -846,6 +864,7 @@ button {
 
 .cnf-front.open .title {
     font-weight: bold;
+    color: #000000;
 }
 
 .cnf-front__inner {
@@ -866,7 +885,7 @@ button {
 }
 
 .cnf-front .cnf-collection {
-    border-top: 3px solid #f4f3e8;
+    border-top: 3px solid #eeeeee;
 }
 
 .cnf-front .cnf-collection:nth-child(odd) {
@@ -874,7 +893,7 @@ button {
 }
 
 .cnf-front .cnf-collection:nth-child(even) {
-    background: #f4f3e8;
+    background: #eeeeee;
 }
 
 .cnf-collection.open {
@@ -882,7 +901,7 @@ button {
 }
 
 .cnf-collection.underDrag {
-    border-top-color: #03a9f4;
+    border-top-color: #2ea3eb;
 }
 
 .cnf-collection__index {
@@ -897,12 +916,9 @@ button {
     color: #000000;
 }
 
-.cnf-collection__also-on {
-    font-weight: bold;
-}
-
 .cnf-collection .placements {
     color: #999999;
+    font-size: 12px;
 }
 
 .is-parent {
@@ -914,7 +930,7 @@ button {
 }
 
 .cnf-collection .placements a {
-    color: #999999;
+    color: #666666;
     border-left: 1px solid #dbd8c9;
     padding-left: 5px;
 }
@@ -965,7 +981,7 @@ button {
     line-height: 14px;
     width: 300px;
     margin: 0 0 2px 0;
-    border: 1px solid #dbd5b8;
+    border: 1px solid #cccccc;
 }
 
 .cnf-form select {
@@ -1049,7 +1065,7 @@ button {
         display: none;
     }
     .front-selector {
-        right: 10px;
+        right: 87px;
         left: inherit;
     }
     .right-col {
@@ -1064,14 +1080,18 @@ button {
 }
 
 @media (max-width: 550px) {
+    .front-selector {
+        right: 10px;
+    }
+    .log-in-out,
+    .article .spark {
+        display: none;
+    }
     .article .article_content {
         margin-right: 25px;
     }
     .article > .closed .tool--remove {
         top: 0;
-    }
-    .article .spark {
-        display: none;
     }
     .article__time {
         position: inherit;
@@ -1084,6 +1104,7 @@ button {
     .article .article_content {
         margin-left: 0;
     }
+    h1,
     .preview,
     .article .thumb,
     .image__overrides {
