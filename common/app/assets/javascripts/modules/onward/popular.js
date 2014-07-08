@@ -1,11 +1,9 @@
 define([
-    'common/utils/common',
     'common/modules/lazyload',
     'common/utils/mediator'
 ], function (
-      common,
-      LazyLoad,
-      mediator
+    LazyLoad,
+    mediator
 ) {
 
 
@@ -25,12 +23,12 @@ define([
                 url: url + '.json',
                 container: container,
                 success: function () {
-                    common.mediator.emit('modules:popular:loaded', container);
-                    common.mediator.emit('fragment:ready:images', container);
+                    mediator.emit('modules:popular:loaded', container);
+                    mediator.emit('fragment:ready:images', container);
                     mediator.emit('register:end','popular-in-section');
                 },
                 error: function(req) {
-                    common.mediator.emit('module:error', 'Failed to load most read: ' + req.statusText, 'common/modules/popular.js');
+                    mediator.emit('module:error', 'Failed to load most read: ' + req.statusText, 'common/modules/popular.js');
                     mediator.emit('register:error','popular-in-section');
                 }
             }).load();

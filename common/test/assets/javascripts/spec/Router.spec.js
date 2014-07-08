@@ -1,4 +1,4 @@
-define(['common/utils/common', 'common/modules/router'], function(common, Router) {
+define(['common/modules/router'], function(Router) {
 
     describe("Router", function() {
 
