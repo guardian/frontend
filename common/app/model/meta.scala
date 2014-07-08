@@ -1,9 +1,8 @@
 package model
 
-import common.{Pagination, ManifestData}
+import common.{Edition, ManifestData, Pagination}
 import conf.Configuration
 import dfp.DfpAgent
-import conf.Switches._
 
 trait MetaData extends Tags {
   def id: String
@@ -30,7 +29,7 @@ trait MetaData extends Tags {
 
   def adUnitSuffix = section
 
-  lazy val hasPageSkin = false
+  def hasPageSkin(edition: Edition) = false
 
   def isSurging = false
 
