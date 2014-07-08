@@ -25,15 +25,6 @@ trait FrontPress extends Logging {
     Future.sequence(collections)
   }
 
-  def pressByPathId(path: String): Future[JsValue] = {
-    val live: Future[JsObject] = pressLiveByPathId(path)
-    if (FaciaToolDraftPressSwitch.isSwitchedOn)
-      live onComplete {
-        case _ => pressDraftByPathId(path)
-      }
-    live
-  }
-
   def pressDraftByPathId(path: String): Future[JsObject] =
     generateDraftJson(path).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
