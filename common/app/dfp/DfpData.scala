@@ -46,6 +46,8 @@ case class GuLineItem(id: Long,
                       sponsor: Option[String],
                       targeting: GuTargeting) {
 
+  val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
+
   val sponsoredTags: Seq[String] = targeting.customTargetSets.flatMap(_.sponsoredTags).distinct
 
   val advertisementFeatureTags: Seq[String] = targeting.customTargetSets.flatMap(_.advertisementFeatureTags).distinct
