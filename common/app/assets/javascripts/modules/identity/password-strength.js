@@ -3,14 +3,14 @@ define([
     'bonzo',
     'bean'
 ], function (
-    extend,
+    assign,
     bonzo,
     bean
 ) {
 
     function PasswordStrength(el, context, config) {
 
-        config = extend({
+        config = assign({
             text: {
                 label: 'Password strength',
                 'long': 'Password too long',

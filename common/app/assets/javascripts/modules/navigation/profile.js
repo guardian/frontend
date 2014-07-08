@@ -7,7 +7,7 @@ define([
     'common/utils/detect',
     'common/modules/identity/api'
 ], function(
-    extend,
+    assign,
     mediator,
     ajax,
     bonzo,
@@ -23,7 +23,7 @@ define([
      */
     function Profile(context, config) {
         this.context = context;
-        this.config = extend(this.config, config);
+        this.config = assign(this.config, config);
         this.dom.container = context.querySelector('.' + Profile.CONFIG.classes.container);
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = context.querySelector('.' + Profile.CONFIG.classes.popup);

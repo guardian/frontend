@@ -3,7 +3,7 @@ define([
     'common/utils/ajax',
     'bonzo'
 ], function (
-    extend,
+    assign,
     ajax,
     bonzo
 ) {
@@ -30,7 +30,7 @@ define([
                 beforeInsert: function(html) { return html; },
                 force: false
             },
-            opts = extend(defaultOpts, options || {});
+            opts = assign(defaultOpts, options || {});
 
         this.load = function() {
 

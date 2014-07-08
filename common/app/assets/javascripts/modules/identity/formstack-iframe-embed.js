@@ -20,7 +20,7 @@ define([
     'common/modules/identity/api'
 ], function (
     $,
-    extend,
+    assign,
     bean,
     idApi
 ) {
@@ -31,7 +31,7 @@ define([
             dom = {},
             formId = formstackId.split('-')[0];
 
-        config = extend({
+        config = assign({
             idClasses: {
                 form: 'form',
                 field: 'form-field',

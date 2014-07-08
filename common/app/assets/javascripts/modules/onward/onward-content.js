@@ -2,13 +2,11 @@ define([
     'common/utils/mediator',
     'common/modules/analytics/register',
     'common/modules/ui/images',
-    'lodash/objects/assign',
     'common/modules/component'
 ], function(
     mediator,
     register,
     images,
-    extend,
     Component
 ){
 
