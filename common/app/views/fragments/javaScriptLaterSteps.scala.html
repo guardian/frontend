@@ -5,6 +5,11 @@
 
 @* Scripts that should be executed after CSS is loaded *@
 
+@* browser support for raven *@
+<!--[if lt IE 8]>
+    <script src="@Static("javascripts/components/JSON-js/json2.js")"></script>
+<![endif]-->
+
 <script>
 
     var curl = {
