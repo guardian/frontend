@@ -1,4 +1,4 @@
-define(['analytics/clickstream', 'bean', 'common/utils/common', 'helpers/fixtures'], function(Clickstream, bean, common, fixtures) {
+define(['analytics/clickstream', 'bean', 'common/utils/mediator', 'helpers/fixtures'], function(Clickstream, bean, mediator, fixtures) {
 
     var fixtureId = 'clickstream-fixture',
         clickIds = ['click-me', 'click-me-ancestor', 'click-me-descendant', 'click-me-quick', 'click-me-internal', 'click-me-external'];
@@ -57,7 +57,7 @@ define(['analytics/clickstream', 'bean', 'common/utils/common', 'helpers/fixture
             bean.remove(document.body, 'click');
 
             // clean listeners
-            common.mediator.removeEvent('module:clickstream:click');
+            mediator.removeEvent('module:clickstream:click');
         });
 
         it("should derive analytics tag name from the dom ancestors of the source element", function(){
@@ -73,7 +73,7 @@ define(['analytics/clickstream', 'bean', 'common/utils/common', 'helpers/fixture
                     tag: 'outer div | the button'
                 };
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(el, 'click');
 
@@ -97,7 +97,7 @@ define(['analytics/clickstream', 'bean', 'common/utils/common', 'helpers/fixture
                     tag: 'outer div | the ancestor | the descendant'
                 };
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(el, 'click');
 
@@ -113,7 +113,7 @@ define(['analytics/clickstream', 'bean', 'common/utils/common', 'helpers/fixture
                 object = { method: function (tag) {} },
                 spy = sinon.spy(object, "method");
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(document.getElementById('not-inside-a-link'), 'click');
 
@@ -136,7 +136,7 @@ define(['analytics/clickstream', 'bean', 'common/utils/common', 'helpers/fixture
                     tag: 'outer div | paragraph'
                 };
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(el, 'click');
 
@@ -158,7 +158,7 @@ define(['analytics/clickstream', 'bean', 'common/utils/common', 'helpers/fixture
                     tag: 'outer div | internal link'
                 };
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(el, 'click');
 
@@ -180,7 +180,7 @@ define(['analytics/clickstream', 'bean', 'common/utils/common', 'helpers/fixture
                     tag: 'outer div | external link'
                 };
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(el, 'click');
 
@@ -195,7 +195,7 @@ define(['analytics/clickstream', 'bean', 'common/utils/common', 'helpers/fixture
                 object = { method: function (tag) {} },
                 spy = sinon.spy(object, "method");
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(document.getElementById('click-me'), 'click');
 
@@ -220,7 +220,7 @@ define(['analytics/clickstream', 'bean', 'common/utils/common', 'helpers/fixture
                     linkContextName: 'the inner context name'
                 };
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(el, 'click');
 

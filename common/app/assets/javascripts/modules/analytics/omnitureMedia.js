@@ -1,9 +1,9 @@
 define([
-    'common/utils/common',
+    'lodash/functions/throttle',
     'common/utils/config',
     'bean'
 ], function(
-    common,
+    throttle,
     config,
     bean
     ) {
@@ -81,7 +81,7 @@ define([
             bean.on(videoEl, 'pause', this.pause.bind(this));
             bean.on(videoEl, 'seeking', this.seeking.bind(this));
             bean.on(videoEl, 'seeked', this.seeked.bind(this));
-            bean.on(videoEl, 'volumechange', common.throttle(this.trackUserInteraction.bind(this, 'Volume', 'User Changed Volume'), 250));
+            bean.on(videoEl, 'volumechange', throttle(this.trackUserInteraction.bind(this, 'Volume', 'User Changed Volume'), 250));
 
             bean.on(videoEl, 'video:preroll:ready', this.trackVideoAdvertReady.bind(this));
             bean.on(videoEl, 'video:content:ready', this.trackVideoContentReady.bind(this));

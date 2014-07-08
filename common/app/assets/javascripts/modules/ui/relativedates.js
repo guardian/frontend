@@ -1,8 +1,10 @@
 define([
-    'common/utils/common',
+    'common/utils/$',
+    'common/utils/mediator',
     'bonzo'
 ], function (
-    common,
+    $,
+    mediator,
     bonzo
 ) {
 
@@ -146,12 +148,12 @@ define([
 
     function findValidTimestamps(context) {
         // `.blocktime time` used in blog html
-        return common.$g('.js-timestamp, .js-item__timestamp', context);
+        return $('.js-timestamp, .js-item__timestamp', context);
     }
 
     function replaceLocaleTimestamps(context) {
         var cls = 'js-locale-timestamp';
-        common.$g('.' + cls, context).each(function(el){
+        $('.' + cls, context).each(function(el){
             var datetime,
                 $el = bonzo(el),
                 timestamp = parseInt($el.attr('data-timestamp'), 10);
@@ -196,7 +198,7 @@ define([
 
      // DEPRECATED: Bindings
     ['related', 'autoupdate'].forEach(function(module) {
-        common.mediator.on('modules:' + module + ':render', replaceValidTimestamps);
+        mediator.on('modules:' + module + ':render', replaceValidTimestamps);
     });
 
     function init(context, opts) {

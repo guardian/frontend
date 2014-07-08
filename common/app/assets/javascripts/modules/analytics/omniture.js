@@ -1,6 +1,5 @@
 /*global s_i_guardian:true */
 define([
-    'common/utils/common',
     'common/utils/detect',
     'common/modules/experiments/ab',
     'common/utils/storage',
@@ -13,7 +12,6 @@ define([
     'common/utils/mediator',
     'common/utils/deferToAnalytics' // Ensure that 'analytics:ready' is handled.
 ], function(
-    common,
     detect,
     ab,
     storage,
@@ -304,7 +302,7 @@ define([
                     clearInterval(checkForPageViewInterval);
 
                     self.pageviewSent = true;
-                    common.mediator.emit('module:analytics:omniture:pageview:sent');
+                    mediator.emit('module:analytics:omniture:pageview:sent');
                 }
             }, 250);
 
@@ -314,16 +312,16 @@ define([
             }, 10000);
         };
 
-        common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
+        mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
 
-        common.mediator.on('module:clickstream:click', that.logTag );
+        mediator.on('module:clickstream:click', that.logTag );
 
-        common.mediator.on('module:autoupdate:loaded', function() {
+        mediator.on('module:autoupdate:loaded', function() {
             that.populatePageProperties();
             that.logUpdate();
         });
 
-        common.mediator.on('module:analytics:omniture:pageview:sent', function(){
+        mediator.on('module:analytics:omniture:pageview:sent', function(){
             // independently log this page view
             // used for checking we have not broken analytics
             beacon.fire('/count/pva.gif');

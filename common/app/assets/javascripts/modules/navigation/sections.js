@@ -1,10 +1,10 @@
 define([
-    'common/utils/common',
+    'common/utils/$',
     'bonzo',
     'common/utils/mediator',
     'common/utils/detect'
 ], function (
-    common,
+    $,
     bonzo,
     mediator,
     detect
@@ -41,7 +41,7 @@ define([
                             that.view.hideColumns(sectionsHeader, sectionsNav);
 
                             // Hide popup localnav if visible
-                            common.$g('.nav-popup--localnav').addClass('is-off');
+                            $('.nav-popup--localnav').addClass('is-off');
                         } else {
                             that.view.showColumns(sectionsHeader, sectionsNav);
                         }
@@ -54,15 +54,15 @@ define([
             },
 
             showColumns : function(sectionsHeader) {
-                common.$g('.nav__item', sectionsHeader).removeClass('u-h');
+                $('.nav__item', sectionsHeader).removeClass('u-h');
             },
 
             hideColumns :  function(sectionsHeader, sectionsNav) {
                 var firstTopPos,
                     visibleItems = [],
-                    popupItems = common.$g('.nav__item', sectionsHeader).removeClass('u-h');
+                    popupItems = $('.nav__item', sectionsHeader).removeClass('u-h');
 
-                common.$g('.nav__item', sectionsNav).each(function(e) {
+                $('.nav__item', sectionsNav).each(function(e) {
                     firstTopPos = firstTopPos || bonzo(e).offset().top;
                     if(bonzo(e).offset().top === firstTopPos) {
                         visibleItems.push(e);
