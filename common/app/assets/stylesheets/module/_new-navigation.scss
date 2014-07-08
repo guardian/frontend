@@ -43,6 +43,8 @@ $c-navigation-toggle-shadow: rgba(#000000, .333333);
 
 $new-navigation-h-space-between-items: $gs-gutter;
 
+$c-navigation-expandable-background: guss-colour(neutral-1);
+
 
 /* Overrides (to be incorporated into the global CSS when killing the old nav)
    ========================================================================== */
@@ -89,11 +91,14 @@ $new-navigation-h-space-between-items: $gs-gutter;
     }
 
     @include mq($to: tablet) {
-        .container--first .container__border,
         .container--first .container__header,
-        .js-on &.has-localnav .container--first .container__title,
-        .js-on &.has-localnav .container--first .container__border {
+        .js-on &.has-localnav .container--first .container__title {
             display: block;
+        }
+        .container--first .container__title {
+            color: #333333;
+            padding-left: 0;
+            background: transparent;
         }
     }
 
@@ -103,6 +108,43 @@ $new-navigation-h-space-between-items: $gs-gutter;
                 width: auto
             ));
         }
+    }
+}
+.new-navigation__expandable {
+    .switcher,
+    .switcher__option,
+    .switcher__option a:link,
+    .switcher__option a:visited {
+        color: mix($c-navigation-expandable-background, #ffffff, 5%);
+    }
+    .switcher__option--active:link,
+    .switcher__option--active:visited {
+        color: #ffffff;
+    }
+    .switcher__option--active:before {
+        background: #ffffff;
+    }
+    .navigation-aside {
+        @include rem((
+            margin-top: 2px
+        ));
+    }
+    .switcher {
+        padding-bottom: 0;
+        @include rem((
+            min-height: $gs-row-height - $gs-baseline/2 - 2
+        ));
+    }
+    .nav--guardian-services .nav__link {
+        font-weight: 400;
+        padding-bottom: 0;
+        @include rem((
+            padding-top: 1px
+        ));
+    }
+    .nav--guardian-services .nav__item .nav__link--faded:link,
+    .nav--guardian-services .nav__item .nav__link--faded:visited {
+        color: mix($c-navigation-expandable-background, #ffffff, 5%);
     }
 }
 
@@ -120,7 +162,8 @@ $new-navigation-h-space-between-items: $gs-gutter;
         height: $gs-row-height
     ));
 
-    &:before {
+    &:before,
+    &:after {
         content: '';
         display: block;
         position: absolute;
@@ -131,6 +174,21 @@ $new-navigation-h-space-between-items: $gs-gutter;
         @include rem((
             height: $gs-row-height
         ));
+    }
+    &:before {
+        border-bottom: 1px solid $c-global-navigation-border;
+        -moz-background-clip: padding-box;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+    }
+    &:after {
+        top: auto;
+        bottom: 0;
+        background: mix($c-navigation-expandable-background, #ffffff, 80%);
+        z-index: -1;
+    }
+    &.new-navigation--collapsed:after {
+        display: none;
     }
 }
 .top-navigation,
@@ -165,7 +223,7 @@ $new-navigation-h-space-between-items: $gs-gutter;
     ));
 }
 .new-navigation__expandable {
-    background: #ffffff;
+    background: $c-navigation-expandable-background;
     overflow: hidden;
 }
 .signposting,
@@ -570,7 +628,7 @@ $new-navigation-h-space-between-items: $gs-gutter;
 
 @include mq(wide) {
     .new-navigation--has-local-navigation {
-        &:after {
+        .new-navigation__inner:before {
             content: '';
             position: absolute;
             display: block;
@@ -580,7 +638,7 @@ $new-navigation-h-space-between-items: $gs-gutter;
                 top: $gs-row-height
             ));
             height: 1px;
-            background: rgba(#ffffff, .3);
+            background: $c-global-navigation-border;
         }
         &.new-navigation--collapsed {
             @include rem((
