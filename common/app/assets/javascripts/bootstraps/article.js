@@ -1,5 +1,4 @@
 define([
-    'common/utils/common',
     'common/utils/mediator',
     'common/utils/$',
     'fence',
@@ -12,7 +11,6 @@ define([
     'lodash/collections/contains'
 
 ], function (
-    common,
     mediator,
     $,
     fence,
@@ -33,9 +31,9 @@ define([
         },
 
         initOpen: function() {
-            common.mediator.on('page:article:ready', function(config, context) {
+            mediator.on('page:article:ready', function(config, context) {
                 if (config.switches.openCta && config.page.commentable) {
-                    var openCta = new OpenCta(context, common.mediator, {
+                    var openCta = new OpenCta(context, mediator, {
                         discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
                     });
 
@@ -48,7 +46,7 @@ define([
         },
 
         initFence: function() {
-            common.mediator.on('page:article:ready', function() {
+            mediator.on('page:article:ready', function() {
                 $('.fenced').each(function(el) {
                     fence.render(el);
                 });
@@ -82,7 +80,7 @@ define([
             modules.initTruncateAndTwitter();
             modules.initWorldCup(config);
         }
-        common.mediator.emit('page:article:ready', config, context);
+        mediator.emit('page:article:ready', config, context);
     };
 
     return {

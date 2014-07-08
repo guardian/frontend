@@ -1,4 +1,4 @@
-define(['common/utils/common', 'bean', 'common/modules/analytics/errors'], function(common, bean, Errors) {
+define(['common/utils/$', 'bean', 'common/modules/analytics/errors'], function($, bean, Errors) {
 
     describe("Errors", function() {
        
@@ -13,7 +13,7 @@ define(['common/utils/common', 'bean', 'common/modules/analytics/errors'], funct
         });
         
         afterEach(function() {
-            common.$g('#js-err').remove();
+            $('#js-err').remove();
         });
 
         it("should listen for uncaught errors on the window object", function(){

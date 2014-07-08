@@ -1,10 +1,10 @@
 define([
-    'common/utils/common',
+    'common/utils/mediator',
     'common/utils/detect',
     'bean',
     'common/modules/experiments/ab'
 ], function (
-    common,
+    mediator,
     detect,
     bean,
     ab
@@ -114,7 +114,7 @@ define([
                 }
 
                 if (clickSpec) {
-                    common.mediator.emit('module:clickstream:click', clickSpec);
+                    mediator.emit('module:clickstream:click', clickSpec);
                 }
             });
         }
