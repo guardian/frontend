@@ -3,7 +3,7 @@ package dfp
 import common.ExecutionContexts
 import implicits.Dates
 import org.joda.time.DateTime
-import play.api.libs.json.Json.{toJson, _}
+import play.api.libs.json.Json._
 import play.api.libs.json.{JsValue, Json, Writes}
 import tools.Store
 
@@ -72,53 +72,6 @@ object DfpDataCacheJob extends ExecutionContexts with Dates{
     }
   }
 
-  private implicit val sponsorshipWrites = new Writes[Sponsorship] {
-    def writes(sponsorship: Sponsorship): JsValue = {
-      Json.obj(
-        "sponsor" -> sponsorship.sponsor,
-        "tags" -> sponsorship.tags
-      )
-    }
-  }
-
-  private implicit val sponsorshipReportWrites = new Writes[SponsorshipReport] {
-    def writes(sponsorshipReport: SponsorshipReport): JsValue = {
-      Json.obj(
-        "updatedTimeStamp" -> sponsorshipReport.updatedTimeStamp,
-        "sponsorships" -> sponsorshipReport.sponsorships
-      )
-    }
-  }
-
-  private implicit val countryWrites = new Writes[Country] {
-    def writes(country: Country): JsValue = {
-      Json.obj(
-        "name" -> country.name,
-        "editionId" -> country.editionId
-      )
-    }
-  }
-
-  private implicit val pageSkinSponsorshipWrites = new Writes[PageSkinSponsorship] {
-    def writes(sponsorship: PageSkinSponsorship): JsValue = {
-      Json.obj(
-        "lineItem" -> sponsorship.lineItemName,
-        "lineItemId" -> sponsorship.lineItemId,
-        "adUnits" -> sponsorship.adUnits,
-        "countries" -> sponsorship.countries
-      )
-    }
-  }
-
-  private implicit val pageSkinSponsorshipReportWrites = new Writes[PageSkinSponsorshipReport] {
-    def writes(report: PageSkinSponsorshipReport): JsValue = {
-      Json.obj(
-        "updatedTimeStamp" -> report.updatedTimeStamp,
-        "sponsorships" -> report.sponsorships
-      )
-    }
-  }
-
   def run() {
     future {
       val data = DfpDataExtractor(DfpDataHydrator.loadCurrentLineItems())
@@ -127,13 +80,13 @@ object DfpDataCacheJob extends ExecutionContexts with Dates{
         val now = DateTime.now().toHttpDateTimeString
 
         val sponsorships = data.sponsorships
-        Store.putDfpSponsoredTags(stringify(toJson(SponsorshipReport(now, sponsorships))))
+        Store.putDfpSponsoredTags(stringify(SponsorshipReport(now, sponsorships).toJson()))
 
         val advertisementFeatureSponsorships = data.advertisementFeatureSponsorships
-        Store.putDfpAdvertisementFeatureTags(stringify(toJson(SponsorshipReport(now, advertisementFeatureSponsorships))))
+        Store.putDfpAdvertisementFeatureTags(stringify(SponsorshipReport(now, advertisementFeatureSponsorships).toJson()))
 
         val pageSkinSponsorships = data.pageSkinSponsorships
-        Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
+        Store.putDfpPageSkinAdUnits(stringify(PageSkinSponsorshipReport(now, pageSkinSponsorships).toJson()))
 
         Store.putDfpLineItemsReport(stringify(toJson(data.lineItems)))
       }

@@ -1,5 +1,4 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
-@import common.Edition
 
 <div class="@RenderClasses(Map(
         "facia-container" -> true,
@@ -12,7 +11,7 @@
     }
     role="main">
 
-    @if(index.page.hasPageSkin(Edition(request))) {
+    @if(index.page.hasPageSkin) {
         @fragments.commercial.pageSkin()
     }
 

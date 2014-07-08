@@ -1,5 +1,4 @@
 @(faciaPage: FaciaPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
-@import common.Edition
 
 @if(faciaPage.collections.nonEmpty) {
     <div class="@RenderClasses(Map(
@@ -13,7 +12,7 @@
         }
         role="main">
 
-        @if(faciaPage.hasPageSkin(Edition(request))) {
+        @if(faciaPage.hasPageSkin) {
             @fragments.commercial.pageSkin()
         }
 

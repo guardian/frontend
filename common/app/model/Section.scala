@@ -1,7 +1,7 @@
 package model
 
 import com.gu.openplatform.contentapi.model.{ Section => ApiSection }
-import common.{Edition, Pagination}
+import common.Pagination
 import dfp.DfpAgent
 
 case class Section(private val delegate: ApiSection, override val pagination: Option[Pagination] = None)
@@ -31,5 +31,6 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
   override def isSponsored = DfpAgent.isSponsored(this.id)
   override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(this.id)
   override def sponsor = DfpAgent.getSponsor(this.id)
-  override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
+  override lazy val hasPageSkin = DfpAgent.isPageSkinned(adUnitSuffix)
+
 }

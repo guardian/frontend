@@ -1,6 +1,5 @@
 @(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map())(head: Html)(body: Html)(implicit request: RequestHeader)
 @import conf.Switches._
-@import common.Edition
 
 @* Identity pages use identityMain.scala.html, most of which is shared fragments,
    be sure to apply any necessary changes to non-shared code there too. *@
@@ -14,12 +13,11 @@
     case c: model.Content if c.shouldHideAdverts => { false }
     case _ => { true }
 }) { showAdverts =>
-@defining(Edition(request)) { edition =>
     <body
         id="top"
         class="@RenderClasses(Map(
-            ("has-page-skin", metaData.hasPageSkin(edition)),
-            ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
+            ("has-page-skin", metaData.hasPageSkin),
+            ("has-localnav", Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(metaData)
@@ -45,5 +43,4 @@
         @fragments.analytics(metaData)
     </body>
     </html>
-}
 }

@@ -41,13 +41,9 @@ trait DfpAgent {
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
-  def isPageSkinned(adUnitWithoutRoot: String, edition: Edition) = {
+  def isPageSkinned(adUnitWithoutRoot: String) = {
     val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
-
-    pageSkinSponsorships.exists { sponsorship =>
-      sponsorship.adUnits.contains(adUnitWithRoot) &&
-        (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id))
-    }
+    pageSkinSponsorships exists (_.adUnits contains adUnitWithRoot)
   }
 
   def sponsorshipTag(config: Config): Option[String] = {
