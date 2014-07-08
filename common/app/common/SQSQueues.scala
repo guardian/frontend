@@ -5,6 +5,7 @@ import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import com.amazonaws.services.sqs.model._
 import com.amazonaws.regions.{Region => AwsRegion}
 import play.api.libs.json.{Writes, Json, Reads}
+import java.util.concurrent.{Future => JavaFuture}
 
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.{Failure, Success}
@@ -23,19 +24,19 @@ object SQSQueues {
       (promise.future, handler)
     }
 
-    private def asFuture[A <: com.amazonaws.AmazonWebServiceRequest, B](f: AsyncHandler[A, B] => Any) = {
+    private def asFuture[A <: com.amazonaws.AmazonWebServiceRequest, B](f: AsyncHandler[A, B] => JavaFuture[B]) = {
       val (future, handler) = createHandler[A, B]()
       f(handler)
       future
     }
 
-    def receiveMessageFuture(request: ReceiveMessageRequest) =
+    def receiveMessageFuture(request: ReceiveMessageRequest): Future[ReceiveMessageResult] =
       asFuture[ReceiveMessageRequest, ReceiveMessageResult](client.receiveMessageAsync(request, _))
 
-    def deleteMessageFuture(request: DeleteMessageRequest) =
+    def deleteMessageFuture(request: DeleteMessageRequest): Future[Void] =
       asFuture[DeleteMessageRequest, Void](client.deleteMessageAsync(request, _))
 
-    def sendMessageFuture(request: SendMessageRequest) =
+    def sendMessageFuture(request: SendMessageRequest): Future[SendMessageResult] =
       asFuture[SendMessageRequest, SendMessageResult](client.sendMessageAsync(request, _))
 
     def withRegion(region: AwsRegion) = {
