@@ -19,31 +19,14 @@ object Global extends WithFilters(Gzipper)
     ("content-api-put-success", FaciaToolMetrics.ContentApiPutSuccess.getAndReset.toDouble),
     ("draft-publish", FaciaToolMetrics.DraftPublishCount.getAndReset.toDouble),
     ("auth-expired", FaciaToolMetrics.ExpiredRequestCount.getAndReset.toDouble),
-    ("front-press-failure", getTotalPressFailureCount.toDouble),
-    ("front-press-success", getTotalPressSuccessCount.toDouble),
-    ("front-press-draft-failure", FaciaToolMetrics.FrontPressDraftFailure.getAndReset.toDouble),
-    ("front-press-draft-success", FaciaToolMetrics.FrontPressDraftSuccess.getAndReset.toDouble),
-    ("front-press-live-failure", FaciaToolMetrics.FrontPressLiveFailure.getAndReset.toDouble),
-    ("front-press-live-success", FaciaToolMetrics.FrontPressLiveSuccess.getAndReset.toDouble),
-    ("front-press-cron-success", FaciaToolMetrics.FrontPressCronSuccess.getAndReset.toDouble),
-    ("front-press-cron-failure", FaciaToolMetrics.FrontPressCronFailure.getAndReset.toDouble),
     ("elastic-content-api-calls", ContentApiMetrics.ElasticHttpTimingMetric.getAndReset.toDouble),
     ("elastic-content-api-timeouts", ContentApiMetrics.ElasticHttpTimeoutCountMetric.getAndReset.toDouble),
     ("content-api-404", ContentApiMetrics.ContentApi404Metric.getAndReset.toDouble),
     ("content-api-client-parse-exceptions", ContentApiMetrics.ContentApiJsonParseExceptionMetric.getAndReset.toDouble),
     ("content-api-client-mapping-exceptions", ContentApiMetrics.ContentApiJsonMappingExceptionMetric.getAndReset.toDouble),
     ("content-api-invalid-content-exceptions", FaciaToolMetrics.InvalidContentExceptionMetric.getAndReset.toDouble),
-    ("s3-client-exceptions", S3Metrics.S3ClientExceptionsMetric.getAndReset.toDouble),
-    ("content-api-seo-request-success", FaciaToolMetrics.ContentApiSeoRequestSuccess.getAndReset.toDouble),
-    ("content-api-seo-request-failure", FaciaToolMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble),
-    ("content-api-fallbacks", FaciaToolMetrics.MemcachedFallbackMetric.getAndReset.toDouble)
+    ("s3-client-exceptions", S3Metrics.S3ClientExceptionsMetric.getAndReset.toDouble)
   )
-
-  private def getTotalPressSuccessCount: Long =
-    FaciaToolMetrics.FrontPressLiveSuccess.getResettingValue() + FaciaToolMetrics.FrontPressDraftSuccess.getResettingValue()
-
-  private def getTotalPressFailureCount: Long =
-    FaciaToolMetrics.FrontPressLiveFailure.getResettingValue() + FaciaToolMetrics.FrontPressDraftFailure.getResettingValue()
 
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {
     val newConfig: Configuration = if (mode == Mode.Dev) config ++ devConfig else config

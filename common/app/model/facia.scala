@@ -7,7 +7,7 @@ import scala.concurrent.Future
 import com.gu.openplatform.contentapi.model.ItemResponse
 import conf.LiveContentApi
 import services.ConfigAgent
-import common.FaciaToolMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
+import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import dfp.DfpAgent
 
 case class Config(

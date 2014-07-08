@@ -3,7 +3,7 @@ package services
 import com.amazonaws.regions.{Regions, Region}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import com.amazonaws.services.sqs.model.SendMessageResult
-import common.FaciaToolMetrics.{FrontPressDraftSuccess, FrontPressDraftFailure, FrontPressLiveSuccess, FrontPressLiveFailure}
+import common.FaciaToolMetrics.{EnqueuePressFailure, EnqueuePressSuccess}
 import common.{ExecutionContexts, JsonMessageQueue, Logging}
 import common.SQSQueues._
 import conf.Configuration
@@ -57,10 +57,10 @@ object FaciaPress extends Logging with ExecutionContexts {
           val fut = Future.traverse(paths)(path => FaciaPressQueue.enqueue(PressJob(FrontPath(path), Live)))
           fut.onComplete {
             case Failure(error) =>
-              FrontPressLiveFailure.increment()
+              EnqueuePressFailure.increment()
               log.error("Error manually pressing live collection through update from tool", error)
             case Success(_) =>
-              FrontPressLiveSuccess.increment()
+              EnqueuePressSuccess.increment()
           }
           fut
         } else {
@@ -72,10 +72,10 @@ object FaciaPress extends Logging with ExecutionContexts {
           val fut = Future.traverse(paths)(path => FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft)))
           fut.onComplete {
             case Failure(error) =>
-              FrontPressDraftFailure.increment()
+              EnqueuePressFailure.increment()
               log.error("Error manually pressing live collection through update from tool", error)
             case Success(_) =>
-              FrontPressDraftSuccess.increment()
+              EnqueuePressSuccess.increment()
           }
           fut
         } else Future.successful(Set.empty)

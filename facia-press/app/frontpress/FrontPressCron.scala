@@ -3,7 +3,7 @@ package frontpress
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import com.amazonaws.services.sqs.model._
-import common.FaciaToolMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
+import common.FaciaPressMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
 import common.Logging
 import common.SQSQueues._
 import conf.Configuration
