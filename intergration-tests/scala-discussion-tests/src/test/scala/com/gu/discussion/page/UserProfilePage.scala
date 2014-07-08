@@ -1,11 +1,12 @@
 package com.gu.discussion.page
 
+import com.gu.automation.support.Config
 import com.gu.automation.support.page.Element
 import com.gu.discussion.support.ByExt
 import org.openqa.selenium.{By, WebDriver}
 
 
-case class UserProfilePage(implicit driver: WebDriver){
+case class UserProfilePage(implicit driver: WebDriver) {
 
   private def commentsTab = Element(ByExt.dataTypeStream("discussions"))
   private def repliesTab = Element(ByExt.dataTypeStream("replies"))
@@ -32,21 +33,18 @@ case class UserProfilePage(implicit driver: WebDriver){
     this
   }
 
-  def viewProfileFeatured(): UserProfilePage =  {
+  def viewProfileFeatured(): UserProfilePage = {
     featuredTab.click()
     waitForUserHistoryToLoad()
     this
   }
 
-  def searchForComment(): UserProfilePage =  {
+  def searchForComment(): UserProfilePage = {
     activitySearch.sendKeys("This is a test")
     activitySearch.click()
     waitForUserHistoryToLoad()
     this
   }
-
-
-
 
   def waitForUserHistoryToLoad() = {
     if (activityItemTitle.safeGet.map(_.isDisplayed) != Some(true)
@@ -56,4 +54,12 @@ case class UserProfilePage(implicit driver: WebDriver){
     this
   }
 
+}
+
+object UserProfilePage {
+
+  def goto()(implicit driver: WebDriver) = {
+    driver.get(Config().getUserValue("identityURL") + "user/id/" + Config().getUserValue("testUserProfile"))
+    UserProfilePage()
+  }
 }

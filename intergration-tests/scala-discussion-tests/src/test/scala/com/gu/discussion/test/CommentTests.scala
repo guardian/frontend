@@ -53,9 +53,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
 
     scenarioWeb("Search a users discussion posts", Tag("WIP")) {
       given {
-        CommentSteps().iAmAGuestUser()
-      }.when {
-        _.iViewAllComments()
+        CommentSteps().iViewAUsersCommentHistory()
       }.then {
         _.iCanSearchUserComments()
       }

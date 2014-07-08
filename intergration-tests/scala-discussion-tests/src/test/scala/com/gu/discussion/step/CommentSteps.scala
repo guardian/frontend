@@ -94,9 +94,16 @@ case class CommentSteps(implicit driver: WebDriver, logger: TestLogger) extends 
     this
   }
 
+  def iViewAUsersCommentHistory() = {
+    logger.step("I can view a users comment history")
+    UserProfilePage.goto
+    this
+  }
+
+
   def iCanSearchUserComments() = {
     logger.step("I can search a users comment history")
-    UserProfilePage().searchForComment()
+    UserProfilePage().searchForComment
     this
   }
 
