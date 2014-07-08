@@ -40,6 +40,13 @@
             return fBound;
         };
     }
+    @* JSON support needed for raven *@
+    if ("object" !== typeof JSON) {
+        var s = document.createElement('script'),
+            sc = document.getElementsByTagName('script')[0];
+        s.src = '@Static("javascripts/components/JSON-js/json2.js")';
+        sc.parentNode.insertBefore(s, sc);
+    }
 
     var guardian = {
         isModernBrowser: (
