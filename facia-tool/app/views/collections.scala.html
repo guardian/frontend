@@ -20,19 +20,17 @@
     <select class="front-selector" data-bind="options: fronts, value: front, optionsCaption: 'choose a front...'"></select>
 
     <div class="left-col">
-        <div class="modes-wrapper">
-            <div class="modes" data-bind="
-                css: {
-                    'live-mode': !latestArticles.showingDrafts(),
-                    'draft-mode': latestArticles.showingDrafts
-                }">
-                <!-- ko if: $root.switches()['facia-tool-draft-content'] --><a class="draft-mode" data-bind="
-                    click: latestArticles.showDrafts,
-                    css: {active: latestArticles.showingDrafts}">Draft content</a
-               ><!-- /ko --><a class="live-mode" data-bind="
-                    click: latestArticles.showLive,
-                    css: {active: !latestArticles.showingDrafts()}">Live content</a>
-            </div>
+        <div class="modes" data-bind="
+            css: {
+                'live-mode': !latestArticles.showingDrafts(),
+                'draft-mode': latestArticles.showingDrafts
+            }">
+            <!-- ko if: $root.switches()['facia-tool-draft-content'] --><a class="draft-mode" data-bind="
+                click: latestArticles.showDrafts,
+                css: {active: latestArticles.showingDrafts}">Draft content</a
+           ><!-- /ko --><a class="live-mode" data-bind="
+                click: latestArticles.showLive,
+                css: {active: !latestArticles.showingDrafts()}">Live content</a>
         </div>
 
         <div class="col__inner scrollable">
@@ -94,23 +92,21 @@
     </div>
 
     <div class="right-col" data-bind="css: {'live-mode': $root.liveMode}">
-        <div class="modes-wrapper">
-            <div class="modes" data-bind="
-                css: {
-                    'live-mode': $root.liveMode,
-                    'draft-mode': !$root.liveMode()
-                }">
-                <a class="draft-mode" data-bind="
-                    click: setModeDraft,
-                    css: {active: !liveMode()}">Draft front</a
-               ><a class="live-mode" data-bind="
-                    click: setModeLive,
-                    css: {active: liveMode}">Live front</a>
-                <a class="preview" target="preview" data-bind="
-                    attr: { href: previewUrl },
-                    text: 'View ' + (liveMode() ? 'live' : 'draft'),
-                    visible: front"></a>
-            </div>
+        <div class="modes" data-bind="
+            css: {
+                'live-mode': $root.liveMode,
+                'draft-mode': !$root.liveMode()
+            }">
+            <a class="draft-mode" data-bind="
+                click: setModeDraft,
+                css: {active: !liveMode()}">Draft front</a
+           ><a class="live-mode" data-bind="
+                click: setModeLive,
+                css: {active: liveMode}">Live front</a>
+            <a class="preview" target="preview" data-bind="
+                attr: { href: previewUrl },
+                text: 'View ' + (liveMode() ? 'live' : 'draft'),
+                visible: front"></a>
         </div>
 
         <div class="col__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>

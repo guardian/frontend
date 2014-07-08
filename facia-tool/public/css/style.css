@@ -32,7 +32,9 @@ header {
     position: absolute;
     width: 100%;
     background: #ffffff;
-    border-bottom: 1px solid #cfd8dc;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    overflow: hidden;
 }
 
 .status {
@@ -41,18 +43,19 @@ header {
     position: fixed;
     width: 100%;
     background: #999999;
-    color: #ffffff;
-    padding: 16px 40px 16px 40px;
-    z-index: 2;
+    color: #000000;
+    padding: 15px 40px 0 40px;
+    height: 51px;
+    z-index: 3;
     text-align: center;
 }
 
 .status-warning {
-    background: #ffc107;
+    background: #ffff00;
 }
 
 .status-danger {
-    background: #DD4B39;
+    background: #ff7043;
 }
 
 .status .icon-remove {
@@ -76,7 +79,7 @@ h1 {
     float: left;
     display: inline-block;
     font-size: 32px;
-    line-height: 44px;
+    line-height: 46px;
     letter-spacing: -1px;
     color: #666666;
     font-weight: normal;
@@ -104,13 +107,14 @@ h1 {
 .login-form {
     position: absolute;
     top: 13px;
-    left: 145px;
+    left: 160px;
+    z-index: 1;
 }
 
 .front-priorities {
     position: absolute;
-    top: 50px;
-    left: 57px;
+    top: 60px;
+    left: 60px;
 }
 
 .front-priorities--priority {
@@ -204,7 +208,7 @@ h1 {
 
 .list-header__collapser {
     float: right;
-    margin: 2px 6px 0 8px;
+    margin: 0 6px 0 8px;
     opacity: 0.75;
 }
 
@@ -231,6 +235,7 @@ h1 {
 
 .left-col {
     left: 0;
+    border-right: 1px solid #cfd8dc;
 }
 
 .right-col {
@@ -244,7 +249,6 @@ h1 {
 .col__inner {
     padding: 15px 10px 15px 15px;
     box-shadow: inset 0 23px 10px -25px rgba(0,0,0,0.4);
-    transition: background-color 0.25s;
 }
 
 .modes {
@@ -252,17 +256,16 @@ h1 {
     box-sizing: border-box;
     background: #f6f6f6;
     height: 40px;
-    border-bottom: 5px solid #dddddd; 
+    border-bottom: 5px solid #dddddd;
     overflow: hidden;
-    box-shadow: inset -23px 23px 10px -25px rgba(0,0,0,0.4);
 }
 
 .modes.live-mode {
-    border-color: #46c430;
+    border-bottom-color: #46c430;
 }
 
 .modes.draft-mode {
-    border-color: #ffc107;
+    border-bottom-color: #ffc107;
 }
 
 .modes a {
@@ -273,7 +276,7 @@ h1 {
     padding: 8px 20px;
     text-align: center;
     font-size: 14px;
-    transition: background-color 0.25s ease;
+    transition: background-color 0.2s;
 }
 
 .modes a:hover {
@@ -299,7 +302,13 @@ h1 {
 
 .collection {
     padding: 0 0 3px 0;
-    border-bottom: 1px solid #CCCCCC;
+    border-top: 1px solid #CCCCCC;
+    box-shadow: inset 0 22px 10px -25px rgba(0,0,0,0.4);
+}
+
+.collection:first-child {
+    border-top: 0;
+    box-shadow: none;
 }
 
 .article {
@@ -691,8 +700,9 @@ button {
     margin: 0;
     position: absolute;
     left: 50%;
-    top: 10px;
+    top: 11px;
     height: 30px;
+    z-index: 2;
 }
 
 .article__overrides .tool,
@@ -768,14 +778,14 @@ button {
     box-sizing: border-box;
     height: 51px;
     padding: 15px 20px 0 20px;
-    font-size: 12px;
+    font-size: 14px;
     float: right;
-    color: #666666;
+    color: #999999;
     border-left: 1px solid #cfd8dc;
 }
 
 .log-in-out:hover {
-
+    color: #333333;
 }
 
 .tool--small {
