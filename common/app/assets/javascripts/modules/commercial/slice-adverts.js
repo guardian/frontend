@@ -4,9 +4,9 @@ define([
     'lodash/objects/defaults',
     'lodash/functions/once',
     'common/utils/$',
-    'common/utils/storage',
     'common/utils/config',
     'common/utils/template',
+    'common/modules/userPrefs',
     'common/modules/commercial/dfp'
 ], function (
     bonzo,
@@ -14,9 +14,9 @@ define([
     defaults,
     once,
     $,
-    storage,
     globalConfig,
     template,
+    userPrefs,
     dfp
 ) {
 
@@ -43,7 +43,7 @@ define([
                 index = 0,
                 adSlices = [],
                 containerGap = 2,
-                prefs = storage.local.get('container-states');
+                prefs = userPrefs.get('container-states');
             // pull out ad slices which are have at least x containers between them
             while (index < containers.length) {
                 var container = containers[index],

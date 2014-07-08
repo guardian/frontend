@@ -2,13 +2,13 @@ define([
     'qwery',
     'helpers/fixtures',
     'common/utils/$',
-    'common/utils/storage',
+    'common/modules/userPrefs',
     'common/modules/commercial/slice-adverts'
 ], function(
     qwery,
     fixtures,
     $,
-    storage,
+    userPrefs,
     sliceAdverts
 ) {
 
@@ -41,7 +41,7 @@ define([
         afterEach(function() {
             fixtures.clean(fixturesConfig.id);
             sliceAdverts.reset();
-            storage.local.removeAll();
+            userPrefs.remove('container-states');
         });
 
         it('should exist', function() {
@@ -95,7 +95,7 @@ define([
                 prefs = {};
             prefs[containerId] = 'closed';
             $('.container-first', fixture).attr('data-id', containerId);
-            storage.local.set('container-states', prefs);
+            userPrefs.set('container-states', prefs);
             sliceAdverts.init(config);
             expect(qwery('.container-third .ad-slot', fixture).length).toBe(1);
             expect(qwery('.container-sixth .ad-slot', fixture).length).toBe(1);
