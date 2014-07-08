@@ -1,5 +1,6 @@
 @(env: String, pageSkinnedAdUnits: dfp.PageSkinSponsorshipReport)
 @import tools.DfpLink
+@import tools.SiteLink
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
@@ -18,8 +19,8 @@
             @if(sponsorship.countries.nonEmpty){<br />Editions: @for(country <- sponsorship.countries){@{country.editionId}<span style="font-size:75%"> [deduced from country: @{country.name}]</span>}}
             <br />Ad Units:
             <ul>
-            @for(adunit <- sponsorship.adUnits) {
-                <li>@adunit</li>
+            @for(adUnit <- sponsorship.adUnits) {
+                <li>@SiteLink.adUnit(adUnit).map{link => <a href="@link">@adUnit</a>}.getOrElse{@adUnit}</li>
             }
             </ul>
             </li>
