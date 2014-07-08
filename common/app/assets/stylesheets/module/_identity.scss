@@ -437,6 +437,7 @@
 
         .membership-tab__update-button {
             display: block;
+            box-sizing: box-sizing();
             @include rem((
                 width: 120px,
                 margin: $gs-baseline/2 0 0 0
@@ -446,7 +447,7 @@
                 float: right;
                 margin: 0;
             }
-            box-sizing: border-box;
+
             &:hover,
             &:active,
             &:focus {
@@ -461,6 +462,7 @@
         .membership-tab__update-button--muted {
             background: none;
             color: $c-newsDefault;
+
             &:hover,
             &:focus {
                 background: none;
@@ -474,9 +476,7 @@
 }
 
 .membership-tab__details-list--lower {
-    @include rem((
-        padding-top: 0
-    ));
+    padding-top: 0;
 }
 
 .membership-tab__change-cc-form-cont {

@@ -86,7 +86,6 @@ define(['common/utils/$',
      * @returns {string}
      */
     Membership.prototype.formatAmount = function (amount) {
-
         return (amount === 0) ? 'free' : (amount / 100).toFixed(2);
     };
 
