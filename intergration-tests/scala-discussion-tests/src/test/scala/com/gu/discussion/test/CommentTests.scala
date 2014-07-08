@@ -51,7 +51,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
       }
     }
 
-    /*scenarioWeb("Search a users discussion posts") {
+    scenarioWeb("Search a users discussion posts", Tag("WIP")) {
       given {
         CommentSteps().iAmAGuestUser()
       }.when {
@@ -59,7 +59,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
       }.then {
         _.iCanSearchUserComments()
       }
-    }*/
+    }
 
     scenarioWeb("Recommend a users comment") {
       given {
@@ -81,7 +81,9 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
       }
     }
 
-    /*scenarioWeb("Pick a comment to be Featured") {
+    /*
+    //Need to wait until Code eznvronment is fixed to allow Picks
+    scenarioWeb("Pick a comment to be Featured") {
       given {
         CommentSteps().iAmSignedInAsAMember()
       }.when {

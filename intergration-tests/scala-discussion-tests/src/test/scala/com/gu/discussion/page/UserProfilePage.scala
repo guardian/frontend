@@ -12,8 +12,8 @@ case class UserProfilePage(implicit driver: WebDriver){
   private def featuredTab = Element(ByExt.dataTypeStream("picks"))
   private def profileName = Element(By.className("user-profile__name"))
   private def activityItemTitle = Element(By.className("user-profile__name"))
-  private def activityStreamEmpty = Element(By.className("user-profile__name"))
-
+  private def activityStreamEmpty = Element(By.className("user-profile__name")
+  private def activitySearch = Element(By.id("activity-stream-search")
 
   def getUserProfileName = {
     val userProfileName = profileName.getText()
@@ -37,6 +37,16 @@ case class UserProfilePage(implicit driver: WebDriver){
     waitForUserHistoryToLoad()
     this
   }
+
+  def searchForComment(): UserProfilePage =  {
+    activitySearch.sendKeys("This is a test")
+    activitySearch.click()
+    waitForUserHistoryToLoad()
+    this
+  }
+
+
+
 
   def waitForUserHistoryToLoad() = {
     if (activityItemTitle.safeGet.map(_.isDisplayed) != Some(true)
