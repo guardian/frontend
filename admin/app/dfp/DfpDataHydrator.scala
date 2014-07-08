@@ -6,7 +6,7 @@ import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
-import conf.AdminConfiguration
+import conf.{AdminConfiguration, Configuration}
 
 object DfpDataHydrator extends Logging {
 
@@ -16,7 +16,6 @@ object DfpDataHydrator extends Logging {
       clientSecret <- AdminConfiguration.dfpApi.clientSecret
       refreshToken <- AdminConfiguration.dfpApi.refreshToken
       appName <- AdminConfiguration.dfpApi.appName
-      networkId <- AdminConfiguration.dfpApi.networkId
     } yield {
       val credential = new OfflineCredentials.Builder()
         .forApi(Api.DFP)
@@ -26,7 +25,7 @@ object DfpDataHydrator extends Logging {
       new DfpSession.Builder()
         .withOAuth2Credential(credential)
         .withApplicationName(appName)
-        .withNetworkCode(networkId)
+        .withNetworkCode(Configuration.commercial.dfpAccountId)
         .build()
     }
   } catch {
@@ -34,8 +33,6 @@ object DfpDataHydrator extends Logging {
       log.error(s"Building DFP session failed: $e")
       None
   }
-
-  private val rootAdUnitName = "theguardian.com"
 
   def loadCurrentLineItems(): Seq[GuLineItem] = dfpSession.fold(Seq[GuLineItem]()) { session =>
 
@@ -51,7 +48,7 @@ object DfpDataHydrator extends Logging {
 
       val optSponsorFieldId = loadCustomFieldId("sponsor")
 
-      val allAdUnits = loadActiveDescendantAdUnits(rootAdUnitName)
+      val allAdUnits = loadActiveDescendantAdUnits(Configuration.commercial.dfpAdUnitRoot)
 
       val allCustomTargetingKeys = loadAllCustomTargetKeys()
       val allCustomTargetingValues = loadAllCustomTargetValues()
