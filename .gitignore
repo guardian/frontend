@@ -37,7 +37,6 @@ RUNNING_PID
 *.sublime-*
 
 local.sbt
-build.sbt
 sbt-idea-*.pom
 
 node_modules
