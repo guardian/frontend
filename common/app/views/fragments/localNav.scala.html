@@ -2,9 +2,7 @@
 @import common._
 
 @Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).map{ localNav =>
-    @defining(localNav.links.find(_.currentFor(metaData))){ currentSublink =>
-
-
+    @defining(localNav.searchForCurrentSublink(metaData)){ currentSublink =>
         <div class="localnav--small tone-@{metaData.visualTone} tone-accent-border js-visible js-localnav--small">
             <div class="localnav__inner u-cf">
                 <button class="u-button-reset localnav__cta" data-link-name="Popup Localnav" data-toggle="nav-popup--localnav">

@@ -126,6 +126,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val EditionalisedPageSkinsSwitch = Switch("Advertising", "editionalised-pageskins",
+    "Pageskin ads are edition-specific",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 17)
+  )
+
   val SmartBannerSwitch = Switch("Advertising", "smart-banner",
     "Display smart app banner onboarding message to iOS and Android users",
     safeState = Off, sellByDate = new DateMidnight(2014, 8, 31)
@@ -432,6 +437,7 @@ object Switches extends Collections {
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
     SponsoredSwitch,
+    EditionalisedPageSkinsSwitch,
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
     CriteoSwitch,
