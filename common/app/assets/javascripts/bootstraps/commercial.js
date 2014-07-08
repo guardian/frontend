@@ -53,11 +53,11 @@ define([
             tagsContainer.init(config);
 
             // following modules add ad slots to the page, if appropriate
-            articleAsideAdverts().init();
+            articleAsideAdverts.init();
 
-            articleBodyAdverts().init();
+            articleBodyAdverts.init();
 
-            sliceAdverts().init();
+            sliceAdverts.init();
 
             frontCommercialComponents.init();
 
