@@ -34,11 +34,6 @@ object FaciaPressQueue extends ExecutionContexts {
         queue.send(job)
 
       case None =>
-        /** For running locally.
-          *
-          * TODO This ought to either error on application start up (forcing the user to set up a queue) or have some
-          * fallback where it presses on the same box. Decide which, then refactor this.
-          */
         Future.failed(new RuntimeException("`facia.press.queue_url` property not in config, could not enqueue job."))
     }
   }
