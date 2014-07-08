@@ -29,11 +29,11 @@ object Uk extends Edition(id = "UK", displayName = "UK edition", timezone = Date
     NavItem(culture, Seq(film, televisionAndRadio, music, books, artanddesign, stage, classical)),
     NavItem(economy, Seq(markets, companies)),
     NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
+    NavItem(fashion),
     NavItem(environment, Seq(cities, globalDevelopment)),
     NavItem(technology, Seq(games)),
     NavItem(money, Seq(property, savings, borrowing, careers)),
     NavItem(travel, Seq(uktravel, europetravel, usTravel)),
-    NavItem(fashion),
     NavItem(media)
   )
 }
