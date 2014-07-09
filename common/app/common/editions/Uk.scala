@@ -4,7 +4,8 @@ import common._
 import org.joda.time.DateTimeZone
 
 
-object Uk extends Edition(id = "UK", displayName = "UK edition", timezone = DateTimeZone.forID("Europe/London")) with Zones {
+object Uk extends Edition(id = "UK", displayName = "UK edition", timezone = DateTimeZone.forID("Europe/London"))
+  with Zones {
 
   implicit val UK = Uk
   val zones = Seq(
