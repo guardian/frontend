@@ -615,50 +615,6 @@
             @include animation(updated 1s ease-in-out forwards);
         }
 
-        /* Membership Keyframe animations
-           ========================================================================== */
-
-        @include keyframes('mem-tab-to-open') {
-            0% {
-                max-height: 0;
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-                @include rem((max-height: 424px));
-
-                @include mq(tablet) {
-                    @include rem((max-height: 350px));
-                }
-            }
-        }
-
-        @include keyframes('mem-tab-to-closed') {
-            0% {
-                @include rem((max-height: 424px));
-
-                @include mq(tablet) {
-                    @include rem((max-height: 350px));
-                }
-                opacity: 1;
-            }
-            100% {
-                max-height: 0;
-                opacity: 0;
-            }
-        }
-
-        @include keyframes('updated') {
-            0% {
-                background-color: $c-brandLightBlue;
-                color: #ffffff;
-            }
-            100% {
-                background-color: #ffffff;
-                color: inherit;
-            }
-        }
-
         /* Stripe credit card types
            ========================================================================== */
 
@@ -688,5 +644,49 @@
                 @include background-size(49px $small-card);
             }
         }
+    }
+}
+
+/* Membership Keyframe animations
+           ========================================================================== */
+
+@include keyframes('mem-tab-to-open') {
+    0% {
+        max-height: 0;
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+        @include rem((max-height: 424px));
+
+        @include mq(tablet) {
+            @include rem((max-height: 350px));
+        }
+    }
+}
+
+@include keyframes('mem-tab-to-closed') {
+    0% {
+        @include rem((max-height: 424px));
+
+        @include mq(tablet) {
+            @include rem((max-height: 350px));
+        }
+        opacity: 1;
+    }
+    100% {
+        max-height: 0;
+        opacity: 0;
+    }
+}
+
+@include keyframes('updated') {
+    0% {
+        background-color: $c-brandLightBlue;
+        color: #ffffff;
+    }
+    100% {
+        background-color: #ffffff;
+        color: inherit;
     }
 }

@@ -166,7 +166,7 @@ define(['common/utils/$',
         var self = this;
         self.form.$cont.removeClass(self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_OPENED', true)).addClass(self.getClass('ANIM_CLOSE', true));
         self.form.$button.removeClass('membership-tab__update-button--muted')
-            .text('Change');
+            .text('Change card');
     };
 
     /** @override */
