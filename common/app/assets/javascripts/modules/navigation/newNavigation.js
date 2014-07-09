@@ -1,11 +1,11 @@
 define([
     'qwery',
     'bean',
-    'bonzo'
+    'common/utils/$'
 ], function (
     qwery,
     bean,
-    bonzo
+    $
 ) {
     var NewNavigation = {
         init: function(){
@@ -14,8 +14,8 @@ define([
         },
 
         addMegaNavMenu: function(){
-            var megaNav = bonzo(qwery('.js-transfuse'));
-            var placeholder = bonzo(qwery('.'+megaNav.attr('data-transfuse-target')));
+            var megaNav = $('.js-transfuse');
+            var placeholder = $('.'+megaNav.attr('data-transfuse-target'));
             placeholder.html(megaNav.html());
         },
 
@@ -24,11 +24,11 @@ define([
                 bean.on(elem, 'click touchstart', function (e) {
                     e.preventDefault();
                     if (qwery('.new-navigation--expanded').length > 0) {
-                        bonzo(qwery('.new-navigation'))
+                        $('.new-navigation')
                             .removeClass('new-navigation--expanded')
                             .addClass('new-navigation--collapsed');
                     } else {
-                        bonzo(qwery('.new-navigation'))
+                        $('.new-navigation')
                             .addClass('new-navigation--expanded')
                             .removeClass('new-navigation--collapsed');
                     }
