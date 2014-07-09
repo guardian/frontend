@@ -201,10 +201,8 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
 .local-navigation,
 .global-navigation,
 .signposting {
-    @include f-bodyCopy;
     font-weight: bold;
     @include rem((
-        font-size: 16px,
         line-height: $gs-row-height
     ));
 
@@ -729,10 +727,8 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
     right: 0;
     top: 0;
     @include box-sizing(border-box);
-    @include f-header;
-    font-weight: 900;
+    font-weight: bold;
     @include rem((
-        font-size: 16px,
         line-height: $gs-row-height
     ));
     @include rem((
