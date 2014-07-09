@@ -15,8 +15,8 @@ $theme: default;
 $c-navigation-background: mix($c-new-navigation-base, #ffffff, 80%);
 $c-navigation-action: guss-colour(neutral-1);
 
-$c-signposting-action: guss-colour(guardian-brand);
-$c-signposting-background: mix($c-new-navigation-base, #ffffff, 20%);
+$c-signposting-action: #ffffff;
+$c-signposting-background: $c-new-navigation-base;
 
 $c-top-navigation-action: #ffffff;
 $c-top-navigation-background: guss-colour(guardian-brand);
@@ -63,21 +63,9 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
             }
         }
     }
-    .nav--guardian-services {
-        @include mq(tablet) {
-            float: right;
-            text-align: right;
-            @include rem((
-                padding-top: 7px,
-                width: gs-span(3)
-            ));
-
-            .nav__link {
-                border-top: 0;
-            }
-        }
-    }
     .navigation-aside {
+        border-top: 0;
+
         @include mq(tablet) {
             float: left;
             clear: none;
@@ -85,9 +73,6 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
                 width: gs-span(4)
             ));
         }
-    }
-    .nav--guardian-services .nav__link {
-        top: 0;
     }
 
     @include mq($to: tablet) {
@@ -141,16 +126,39 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
             min-height: $gs-row-height - $gs-baseline/2 - 2
         ));
     }
-    .nav--guardian-services .nav__link {
-        font-weight: 400;
-        padding-bottom: 0;
+    .nav--guardian-services {
         @include rem((
-            padding-top: 1px
+            padding-top: $gs-baseline/2
         ));
-    }
-    .nav--guardian-services .nav__item .nav__link--faded:link,
-    .nav--guardian-services .nav__item .nav__link--faded:visited {
-        color: mix($c-navigation-expandable-background, #ffffff, 5%);
+
+        .nav__link {
+            border-top: 0;
+            @include rem((
+                padding-bottom: $gs-baseline/2
+            ));
+            font-weight: 400;
+
+            @include mq(tablet) {
+                padding-bottom: 0;
+                @include rem((
+                    padding-top: 1px
+                ));
+            }
+        }
+        .nav__item .nav__link:link,
+        .nav__item .nav__link:visited {
+            color: mix($c-navigation-expandable-background, #ffffff, 5%);
+        }
+
+        @include mq(tablet) {
+            padding-top: 0;
+            float: right;
+            text-align: right;
+            @include rem((
+                padding-top: 7px,
+                width: gs-span(3)
+            ));
+        }
     }
 }
 
