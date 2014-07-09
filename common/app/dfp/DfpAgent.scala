@@ -17,7 +17,7 @@ trait DfpAgent {
   protected def advertisementFeatureSponsorships: Seq[Sponsorship]
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
-  private def containerSponsoredTags(config: Config, p: String => Boolean): Option[String] = {
+  private def containerSponsoredTag(config: Config, p: String => Boolean): Option[String] = {
     config.contentApiQuery.flatMap { encodedQuery =>
       val query = URLDecoder.decode(encodedQuery, "utf-8")
       val tokens = query.split( """\?|&|=|\(|\)|\||\,""").map(_.replaceFirst(".*/", ""))
@@ -26,7 +26,7 @@ trait DfpAgent {
   }
 
   private def isSponsoredContainer(config: Config, p: String => Boolean): Boolean = {
-    containerSponsoredTags(config, p).isDefined
+    containerSponsoredTag(config, p).isDefined
   }
 
   private def getPrimaryKeywordOrSeriesTag(tags: Seq[Tag]): Option[Tag] = tags find { tag =>
@@ -55,7 +55,7 @@ trait DfpAgent {
   }
 
   def sponsorshipTag(config: Config): Option[String] = {
-    containerSponsoredTags(config, isSponsored) orElse containerSponsoredTags(config, isAdvertisementFeature)
+    containerSponsoredTag(config, isSponsored) orElse containerSponsoredTag(config, isAdvertisementFeature)
   }
 
   def getSponsor(tags: Seq[Tag]): Option[String] = getPrimaryKeywordOrSeriesTag(tags) flatMap (tag => getSponsor(tag.id))
@@ -63,6 +63,13 @@ trait DfpAgent {
   def getSponsor(tagId: String): Option[String] = {
     def sponsorOf(sponsorships: Seq[Sponsorship]) = sponsorships.find(_.hasTag(tagId)).flatMap(_.sponsor)
     sponsorOf(sponsorships) orElse sponsorOf(advertisementFeatureSponsorships)
+  }
+
+  def getSponsor(config: Config): Option[String] = {
+    for {
+      tagId <- sponsorshipTag(config)
+      sponsor <- getSponsor(tagId)
+    } yield sponsor
   }
 }
 

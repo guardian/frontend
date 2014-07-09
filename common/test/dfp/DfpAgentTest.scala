@@ -12,7 +12,8 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
     override protected def sponsorships: Seq[Sponsorship] = Seq(
       Sponsorship(Seq("spon-page"), Some("spon")),
-      Sponsorship(Seq("media"), None)
+      Sponsorship(Seq("media"), None),
+      Sponsorship(Seq("healthyliving"), Some("Squeegee"))
     )
 
     override protected def advertisementFeatureSponsorships: Seq[Sponsorship] = Seq(
@@ -203,6 +204,22 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
   "getSponsor" should "have no value for an unsponsored tag" in {
     testDfpAgent.getSponsor("culture") should be(None)
+  }
+
+  "getSponsor" should "have some value for a sponsored container" in {
+    val containerQuery = apiQuery(
+      "search?tag=books/series/toptens|music/series/album-streams|music/series/new-music-from-around-the-world|music" +
+        "/series/10-of-the-best|culture/series/the-10-best|books/series/the-100-best-novels|artanddesign/series" +
+        "/exhibitionist|section7/healthyliving|stage/series/this-week-new-theatre")
+    testDfpAgent.getSponsor(containerQuery) should be(Some("Squeegee"))
+  }
+
+  "getSponsor" should "have no value for an unsponsored container" in {
+    val containerQuery = apiQuery(
+      "search?tag=books/series/toptens|music/series/album-streams|music/series/new-music-from-around-the-world|music" +
+        "/series/10-of-the-best|culture/series/the-10-best|books/series/the-100-best-novels|artanddesign/series" +
+        "/exhibitionist|stage/series/this-week-new-theatre")
+    testDfpAgent.getSponsor(containerQuery) should be(None)
   }
 
   "isPageSkinned" should "be true for a front with a pageskin in given edition" in {
