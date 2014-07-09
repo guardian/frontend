@@ -6,7 +6,7 @@
             "data":{
                 "secondsToWait":1200,
                 "port":18080,
-                "healthcheckGrace":20,
+                "healthcheckGrace":60,
                 "bucket":"aws-frontend-artifacts",
                 "healthcheck_paths":[
                     "/management/healthcheck"
