@@ -10,7 +10,6 @@ import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
 import org.fluentlenium.core.filter.FilterConstructor._
-import org.fluentlenium.core.domain.FluentWebElement
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
@@ -515,9 +514,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".related__container").getAttribute("role") should be("complementary")
         findFirst(".related__container").getAttribute("aria-labelledby") should be("related-content-head")
-
-        val navsWithNoAriaLabel = find("nav").filter(hasNoAriaLabel(_))
-        navsWithNoAriaLabel should have length (0)
       }
     }
 
@@ -529,9 +525,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         Then("I should see a fancy gallery trail")
         $(".item--gallery") should have size 1
-
-        //And("should show a total image count of 12")
-        //$(".trail__count--imagecount").getText should be("12 images")
       }
 
 
@@ -667,5 +660,4 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     }
   }
 
-  private def hasNoAriaLabel(e: FluentWebElement) = e.getAttribute("aria-label") == null
 }
