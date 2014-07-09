@@ -1,10 +1,10 @@
 define([
     'common/utils/$',
-    'common/utils/common',
+    'lodash/functions/throttle',
     'bean'
 ], function (
     $,
-    common,
+    throttle,
     bean
 ) {
 
@@ -21,7 +21,7 @@ define([
             enabled = true;
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
 
-            var searchLoader = common.throttle(function() {
+            var searchLoader = throttle(function() {
                 self.load();
             });
 

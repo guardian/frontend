@@ -18,6 +18,7 @@ define([
 
     describe('DFP', function() {
         var $style,
+            config,
             breakpoint = 'wide',
             conf = {
                 id: 'article',
@@ -45,6 +46,12 @@ define([
 
         beforeEach(function() {
             fixtures.render(conf);
+            config = {
+                switches: {
+                    standardAdverts: true,
+                    commercialComponents: true
+                }
+            };
             $style = $.create('<style type="text/css"></style>')
                 .html('body:after{ content: "' + breakpoint + '"}')
                 .appendTo('head');
@@ -92,18 +99,57 @@ define([
             dfp.reset();
         });
 
+        it('should exist', function() {
+            expect(dfp).toBeDefined();
+        });
+
         it('should return dfp object on init', function() {
-            expect(dfp.init()).toBe(dfp);
+            expect(dfp.init(config)).toBe(dfp);
         });
 
         it('should get the ad slots', function() {
-            var adSlots = dfp.init().getAdSlots();
+            var adSlots = dfp.init(config).getAdSlots();
             expect(adSlots.length).toBe(4);
+        });
+
+        it('should not call DFP if standard-adverts and commercial-components switches are off', function() {
+            config.switches = {
+                standardAdverts: false,
+                commercialComponents: false
+            };
+            expect(dfp.init(config)).toBe(false);
+        });
+
+        it('should not use commercial components if commercial-components switch is off', function() {
+            config.switches = {
+                standardAdverts: true,
+                commercialComponents: false
+            };
+            var commercialComponentSlot = $('.ad-slot--dfp').first().addClass('ad-slot--commercial-component')[0],
+                adSlots = dfp.init(config).getAdSlots();
+            expect(adSlots.length).toBe(3);
+            adSlots.forEach(function($adSlot) {
+                expect($adSlot[0]).not.toBe(commercialComponentSlot);
+            })
+        });
+
+        it('should not use non-commercial components if standard-adverts switch is off', function() {
+            config.switches = {
+                standardAdverts: false,
+                commercialComponents: true
+            };
+            $('.ad-slot--dfp:nth-child(n+2)').addClass('ad-slot--commercial-component');
+            var standardAdvertSlot = $('.ad-slot--dfp').first()[0],
+                adSlots = dfp.init(config).getAdSlots();
+            expect(adSlots.length).toBe(3);
+            adSlots.forEach(function($adSlot) {
+                expect($adSlot[0]).not.toBe(standardAdvertSlot);
+            })
         });
 
         it('should not get hidden ad slots', function() {
             var hiddenSlot = $('.ad-slot--dfp').first().css('display', 'none')[0],
-                adSlots = dfp.init().getAdSlots();
+                adSlots = dfp.init(config).getAdSlots();
             expect(adSlots.length).toBe(3);
             adSlots.forEach(function($adSlot) {
                 expect($adSlot[0]).not.toBe(hiddenSlot);
@@ -111,19 +157,20 @@ define([
         });
 
         it('should set listeners', function() {
-            dfp.init();
+            dfp.init(config);
             window.googletag.cmd.forEach(function(func) { func(); });
             expect(googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
         });
 
         it('should build correct page targeting', function() {
-            var page = {
+            config.page = {
                 section: 'news',
                 series: 'happy times',
                 contentType: 'Article',
                 edition: 'us'
             };
-            dfp.init({ page: page });
+
+            dfp.init(config);
             window.googletag.cmd.forEach(function(func) { func(); });
             // expected targetting
             [
@@ -140,13 +187,12 @@ define([
         });
 
         it('should define slots', function() {
-            dfp.init({
-                page: {
-                    adUnit: '/123456/theguardian.com/front',
-                    isFront: true,
-                    section: ''
-                }
-            });
+            config.page = {
+                adUnit: '/123456/theguardian.com/front',
+                isFront: true,
+                section: ''
+            };
+            dfp.init(config);
             window.googletag.cmd.forEach(function(func) { func(); });
 
             [
@@ -166,7 +212,7 @@ define([
         });
 
         it('should refresh on breakpoint changed', function() {
-            dfp.init();
+            dfp.init(config);
             window.googletag.cmd.forEach(function(func) { func(); });
             // change breakpoint
             $style.html('body:after { content: "mobile"; }');
@@ -181,7 +227,7 @@ define([
         });
 
         it('should display ads', function() {
-            dfp.init();
+            dfp.init(config);
             window.googletag.cmd.forEach(function(func) { func(); });
             expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
             expect(window.googletag.pubads().collapseEmptyDivs).toHaveBeenCalled();
@@ -252,13 +298,12 @@ define([
 
         it('should be able to create "out of page" ad slot', function() {
             $('.ad-slot--dfp').first().data('out-of-page', true);
-            dfp.init({
-                page: {
-                    adUnit: '/123456/theguardian.com/front',
-                    isFront: true,
-                    section: ''
-                }
-            });
+            config.page = {
+                adUnit: '/123456/theguardian.com/front',
+                isFront: true,
+                section: ''
+            }
+            dfp.init(config);
             window.googletag.cmd.forEach(function(func) { func(); });
             expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalledWith('/123456/theguardian.com/front', 'dfp-ad-html-slot');
         });
@@ -266,28 +311,26 @@ define([
         describe('keyword targeting', function() {
 
             it('should send page level keywords', function() {
-                dfp.init({
-                    page: {
-                        keywordIds: 'world/korea,world/ukraine'
-                    }
-                });
+                config.page = {
+                    keywordIds: 'world/korea,world/ukraine'
+                };
+                dfp.init(config);
                 window.googletag.cmd.forEach(function(func) { func(); });
                 expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
             });
 
             it('should send container level keywords', function() {
                 $('.ad-slot--dfp').first().data('keywords', 'country/china');
-                dfp.init();
+                dfp.init(config);
                 window.googletag.cmd.forEach(function(func) { func(); });
                 expect(window.googletag.setTargeting).toHaveBeenCalledWith('k', ['china']);
             });
 
             it('should use pageId if no keywords ', function() {
-                dfp.init({
-                    page: {
-                        pageId: 'world/uk'
-                    }
-                });
+                config.page = {
+                    pageId: 'world/uk'
+                };
+                dfp.init(config);
                 window.googletag.cmd.forEach(function(func) { func(); });
                 expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['uk']);
             });
@@ -301,7 +344,7 @@ define([
 
             it('should be added', function() {
                 var $slot = $('#' + slotId);
-                dfp.init();
+                dfp.init(config);
                 window.googletag.cmd.forEach(function(func) { func(); });
                 window.googletag.pubads().listener(makeFakeEvent(slotId));
                 expect($('.ad-slot__label', $slot[0]).text()).toBe('Advertisement');
@@ -309,7 +352,7 @@ define([
 
             it('should not be added if data-label attribute is false', function() {
                 var $slot = $('#' + slotId).data('label', false);
-                dfp.init();
+                dfp.init(config);
                 window.googletag.cmd.forEach(function(func) { func(); });
                 window.googletag.pubads().listener(makeFakeEvent(slotId));
                 expect($('.ad-slot__label', $slot[0]).length).toBe(0);
@@ -318,7 +361,7 @@ define([
             it('should be added only once', function() {
                 var fakeEvent = makeFakeEvent(slotId),
                     $slot = $('#' + slotId);
-                dfp.init();
+                dfp.init(config);
                 window.googletag.cmd.forEach(function(func) { func(); });
                 window.googletag.pubads().listener(fakeEvent);
                 window.googletag.pubads().listener(fakeEvent);
@@ -346,7 +389,7 @@ define([
                 var html = '<div class="dfp-iframe-content">Some content</div>',
                     $slot = $('#' + slotId).data('label', false);
                 createTestIframe(slotId, '<div class="breakout__html">' + html + '</div>');
-                dfp.init();
+                dfp.init(config);
                 window.googletag.cmd.forEach(function(func) { func(); });
                 window.googletag.pubads().listener(makeFakeEvent(slotId));
                 expect($('#' + slotId).html()).toBe('<div class="dfp-iframe-content">Some content</div>');
@@ -355,7 +398,7 @@ define([
             it('should run javascript', function() {
                 var str = 'This came from an iframe';
                 createTestIframe(slotId, '<script class="breakout__script">window.dfpModuleTestVar = "'+ str +'"</script>');
-                dfp.init();
+                dfp.init(config);
                 window.googletag.cmd.forEach(function(func) { func(); });
                 window.googletag.pubads().listener(makeFakeEvent(slotId));
                 expect(window.dfpModuleTestVar).toBe(str);

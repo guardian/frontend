@@ -1,72 +1,85 @@
 define([
-    'common/modules/component',
+    'lodash/objects/defaults',
+    'lodash/functions/once',
     'common/utils/$',
-    'lodash/objects/assign',
+    'common/utils/config',
     'common/utils/detect',
     'common/modules/commercial/dfp',
     'common/modules/article/spacefinder'
 ], function (
-    Component,
+    defaults,
+    once,
     $,
-    extend,
+    globalConfig,
     detect,
     dfp,
     spacefinder
 ) {
 
-    function ArticleBodyAdverts(config) {
-        this.context = document;
-        this.config = extend(this.config, config);
-    }
+    var ads = [],
+        insertAdAtP = function(para) {
+            if (para) {
+                var $ad = $.create(dfp.createAdSlot('inline' + (ads.length + 1), 'inline'))
+                    .insertBefore(para);
+                ads.push($ad);
+            }
+        },
+        init = function(c) {
 
-    Component.define(ArticleBodyAdverts);
+            var config = defaults(
+                c || {},
+                globalConfig,
+                {
+                    switches: {}
+                }
+            );
 
-    ArticleBodyAdverts.prototype.ads = [];
+            // is the switch off, or not an article, or a live blog
+            if (
+                !config.switches.standardAdverts ||
+                config.page.contentType !== 'Article' ||
+                config.page.isLiveBlog
+            ) {
+                return false;
+            }
 
-    ArticleBodyAdverts.prototype.config = {};
+            var breakpoint  = detect.getBreakpoint(),
+                rules = {
+                    minAbove: 250,
+                    minBelow: 300,
+                    selectors: {
+                        ' > h2': {minAbove: breakpoint === 'mobile' ? 20 : 0, minBelow: 250},
+                        ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250},
+                        ' .ad-slot': {minAbove: 500, minBelow: 500}
+                    }
+                };
 
-    ArticleBodyAdverts.prototype.destroy = function() {
-        this.ads.forEach(function($ad) {
-            $ad.remove();
-        });
-    };
-
-    ArticleBodyAdverts.prototype.generateAdElement = function() {
-        var adIndex = this.ads.length + 1,
-            $ad = $.create(dfp.createAdSlot('inline' + adIndex, 'inline'));
-        this.ads.push($ad);
-        return $ad;
-    };
-
-    ArticleBodyAdverts.prototype.insertAdAtP = function(para) {
-        if (para) {
-            this.generateAdElement().insertBefore(para);
-        }
-    };
-
-    ArticleBodyAdverts.prototype.init = function() {
-        var breakpoint  = detect.getBreakpoint();
-
-        var rules = {
-            minAbove: 250,
-            minBelow: 300,
-            selectors: {
-                ' > h2': {minAbove: breakpoint === 'mobile' ? 20 : 0, minBelow: 250},
-                ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250},
-                ' .ad-slot': {minAbove: 500, minBelow: 500}
+            if ((/wide|desktop|tablet/).test(breakpoint)) {
+                insertAdAtP(spacefinder.getParaWithSpace(rules));
+                if (window.innerWidth < 900) {
+                    insertAdAtP(spacefinder.getParaWithSpace(rules));
+                }
+            } else {
+                insertAdAtP(spacefinder.getParaWithSpace(rules));
+                insertAdAtP(spacefinder.getParaWithSpace(rules));
             }
         };
 
-        if((/wide|desktop|tablet/).test(breakpoint)) {
-            this.insertAdAtP(spacefinder.getParaWithSpace(rules));
-            if(window.innerWidth < 900) {
-                this.insertAdAtP(spacefinder.getParaWithSpace(rules));
-            }
-        } else if(breakpoint === 'mobile') {
-            this.insertAdAtP(spacefinder.getParaWithSpace(rules));
-            this.insertAdAtP(spacefinder.getParaWithSpace(rules));
-        }
-    };
+    return {
 
-    return ArticleBodyAdverts;
+        init: once(init),
+
+        destroy: function() {
+            ads.forEach(function($ad) {
+                $ad.remove();
+            });
+        },
+
+        // for testing
+        reset: function() {
+            ads = [];
+            this.init = once(init);
+        }
+
+    };
 });

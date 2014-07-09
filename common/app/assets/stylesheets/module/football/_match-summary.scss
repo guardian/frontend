@@ -358,7 +358,7 @@ $football-crest--large: 60px;
         @include fs-headline(3, true);
     }
     .team__scorers {
-        @include fs-data(2, true);
+        @include fs-data(3, true);
     }
     .team__crest {
         @include rem((

@@ -1,42 +1,41 @@
 package dfp
 
-import play.api.libs.json.{Json, JsValue, Writes}
-import common.Logging
+import common.editions
+import common.{Edition, Logging}
 
-case class PageSkinSponsorship(lineItemName: String, lineItemId: Long, adUnits: Seq[String])
+case class PageSkinSponsorship(lineItemName: String, lineItemId: Long, adUnits: Seq[String], countries: Seq[Country])
 
-case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[PageSkinSponsorship]) {
-  private implicit val pageSkinSponsorship = new Writes[PageSkinSponsorship] {
-    def writes(sponsorship: PageSkinSponsorship): JsValue = {
-      Json.obj(
-        "lineItem" -> sponsorship.lineItemName,
-        "lineItemId" -> sponsorship.lineItemId,
-        "adUnits" -> sponsorship.adUnits
-      )
+case class Country(name: String, editionId: String)
+
+object Country {
+  def fromName(name: String) = {
+    val edition = name match {
+      case "United States" => editions.Us
+      case "Australia" => editions.Au
+      case _ => Edition.defaultEdition
     }
+    Country(name, edition.id)
   }
-
-  private implicit val pageSkinSponsorshipReportWrites = new Writes[PageSkinSponsorshipReport] {
-    def writes(report: PageSkinSponsorshipReport): JsValue = {
-      Json.obj(
-        "updatedTimeStamp" -> report.updatedTimeStamp,
-        "sponsorships" -> report.sponsorships
-      )
-    }
-  }
-
-  def toJson() = Json.toJson(this)
 }
 
+case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[PageSkinSponsorship])
+
 object PageSkinSponsorshipReportParser extends Logging {
-  import play.api.libs.json._
   import play.api.libs.functional.syntax._
+  import play.api.libs.json._
 
   def apply(jsonString: String) = {
+
+    implicit val countryReads: Reads[Country] = (
+      (JsPath \ "name").read[String] and
+        (JsPath \ "editionId").read[String]
+      )(Country.apply _)
+
     implicit val pageskinSponsorShipReads: Reads[PageSkinSponsorship] = (
       (JsPath \ "lineItem").read[String] and
         (JsPath \ "lineItemId").read[Long] and
-        (JsPath \ "adUnits").read[Seq[String]]
+        (JsPath \ "adUnits").read[Seq[String]] and
+        (JsPath \ "countries").read[Seq[Country]]
       )(PageSkinSponsorship.apply _)
 
     implicit val reportReads: Reads[PageSkinSponsorshipReport] = (
@@ -47,7 +46,7 @@ object PageSkinSponsorshipReportParser extends Logging {
     val result: JsResult[PageSkinSponsorshipReport] = Json.parse(jsonString).validate[PageSkinSponsorshipReport]
     result match {
       case s: JsSuccess[PageSkinSponsorshipReport] => Some(s.get)
-      case e: JsError => println("Errors: " + JsError.toFlatJson(e).toString()); None
+      case e: JsError => log.error("Errors: " + JsError.toFlatJson(e).toString()); None
     }
   }
 }

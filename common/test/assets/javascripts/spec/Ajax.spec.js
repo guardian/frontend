@@ -1,4 +1,4 @@
-define(['common/utils/common', 'common/utils/ajax'], function (common, ajax) {
+define(['common/utils/ajax'], function (ajax) {
 
     var config = {
         page: {

@@ -1,5 +1,5 @@
 define([
-    'common/utils/common',
+    'common/utils/mediator',
     'common/modules/lazyload',
     'common/modules/ui/expandable',
     'common/modules/ui/images',
@@ -10,7 +10,7 @@ define([
     'common/modules/analytics/register',
     'lodash/arrays/intersection'
 ], function (
-    common,
+    mediator,
     LazyLoad,
     Expandable,
     images,
@@ -64,9 +64,9 @@ define([
                 expanded: false,
                 showCount: false
             }).init();
-            common.mediator.emit('modules:related:loaded', config, context);
+            mediator.emit('modules:related:loaded', config, context);
 
-        } else if (config.switches && config.switches.relatedContent) {
+        } else if (config.switches && config.switches.relatedContent && config.page.showRelatedContent) {
             container = context.querySelector('.js-related');
             if (container) {
                 var popularInTag = this.popularInTagOverride(config),
@@ -88,11 +88,11 @@ define([
                         new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
                         // upgrade images
                         images.upgrade(relatedTrails);
-                        common.mediator.emit('modules:related:loaded', config, context);
+                        mediator.emit('modules:related:loaded', config, context);
                         register.end(componentName);
                     },
                     error: function(req) {
-                        common.mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
+                        mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
                         register.error(componentName);
                     }
                 }).load();
