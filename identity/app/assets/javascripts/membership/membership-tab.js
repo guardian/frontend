@@ -106,7 +106,7 @@ define(['common/utils/$',
             self.display = true;
             self.getElem('TIER').innerHTML = resp.subscription.plan.name;
             self.getElem('COST').innerHTML = self.formatAmount(resp.subscription.plan.amount);
-            self.getElem('JOIN').innerHTML = self.formatDate(new Date(Date.parse(resp.joinDate)));
+            self.getElem('JOIN').innerHTML = self.formatDate(new Date(resp.joinDate));
 
             if (resp.tier === 'Partner' || resp.tier === 'Patron') {
 
