@@ -5,7 +5,6 @@ import conf.Configuration.commercial.dfpAdUnitRoot
 import model.Config
 import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
-import conf.Switches.EditionalisedPageSkinsSwitch
 
 class DfpAgentTest extends FlatSpec with Matchers {
 
@@ -207,7 +206,6 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "isPageSkinned" should "be false for a front with a pageskin in another edition" in {
-    EditionalisedPageSkinsSwitch.switchOn()
     testDfpAgent.isPageSkinned("business/front", editions.Au) should be(false)
   }
 
