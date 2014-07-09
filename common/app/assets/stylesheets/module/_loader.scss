@@ -35,17 +35,22 @@ $pamplemousse-dot-margin-large: ($pamplemousse-dot-spacing - $pamplemousse-dot-s
 }
 
 .pamplemousse__pip {
-    width: $pamplemousse-dot-spacing;
-    height: $pamplemousse-dot-spacing;
     float: left;
     display: block;
     position: relative;
     text-align: center;
-    line-height: $pamplemousse-dot-spacing;
+    @include rem((
+        width: $pamplemousse-dot-spacing,
+        height: $pamplemousse-dot-spacing,
+        line-height: $pamplemousse-dot-spacing
+    ));
 
     i {
-        width: $pamplemousse-dot-size-large;
-        height: $pamplemousse-dot-size-large;
+        @include rem((
+            width: $pamplemousse-dot-size-large,
+            height: $pamplemousse-dot-size-large
+        ));
+
         @include transform(scale(.3));
         @include animation(pulsate 2s ease-in-out infinite);
         display: block;
