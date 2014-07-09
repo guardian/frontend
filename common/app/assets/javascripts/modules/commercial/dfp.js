@@ -94,10 +94,9 @@ define([
             },
             im: {
                 label: false,
+                refresh: false,
                 sizeMappings: {
-                    mobile: '300,50',
-                    mobilelandscape: '300,50|320,50',
-                    tabletportrait: '300,250'
+                    mobile: '88,89'
                 }
             },
             inline1: {
