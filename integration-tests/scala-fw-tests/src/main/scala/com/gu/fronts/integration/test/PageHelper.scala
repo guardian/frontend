@@ -8,8 +8,7 @@ import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.WebElement
 
 import com.gu.automation.support.TestLogging
-import com.gu.fronts.integration.test.config.PropertyLoader.BASE_URL
-import com.gu.fronts.integration.test.config.PropertyLoader.getProperty
+import com.gu.fronts.integration.test.config.PropertyLoader._
 import com.gu.fronts.integration.test.pages.common.FrontsParentPage
 
 /**
@@ -19,7 +18,7 @@ import com.gu.fronts.integration.test.pages.common.FrontsParentPage
 trait PageHelper extends TestLogging {
 
   var driver: WebDriver;
-  val frontsBaseUrl = getProperty(BASE_URL)
+  val frontsBaseUrl = getProperty(BaseUrl)
   val TEST_ATTR_NAME = "data-test-id"
 
   def goTo[Page <: FrontsParentPage](pageObject: Page): Page = {
@@ -82,26 +81,23 @@ trait PageHelper extends TestLogging {
    * thrown with a message with further details about missing elements
    */
   def existsAndDisplayed(elementsToCheck: WebElement*): Boolean = {
-    val errors = List[String]()
-    for (webElement <- elementsToCheck) {
-      checkElementExistsAndCreateError(webElement, errors)
-    }
-    if (!errors.isEmpty) {
+    val errors = elementsToCheck.flatMap(checkElementExistsAndCreateError)
+    if (errors.isEmpty)
+      true
+    else
       throw new RuntimeException("Error loading page due to: " + errors mkString ("\n"))
-    } else {
-      return true
-    }
   }
 
-  private def checkElementExistsAndCreateError(webElement: WebElement, errors: List[String]) {
+  private def checkElementExistsAndCreateError(webElement: WebElement): Option[String] = {
     try {
-      if (!webElement.isDisplayed) {
-        errors :+ ("WebElement was not displayed " + webElement);
-      }
+      if (!webElement.isDisplayed)
+        Option("WebElement was not displayed " + webElement)
+      else
+        None
     } catch {
       case e: WebDriverException => {
         logger.warn("WebElement was not displayed " + webElement, e)
-        errors :+ (e.getMessage)
+        Option(e.getMessage)
       }
     }
   }

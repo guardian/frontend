@@ -6,10 +6,10 @@ import com.gu.automation.support.TestLogging
 object PropertyLoader extends TestLogging {
 
   //property keys
-  val SAUCELABS_REMOTEDRIVER_URL = "sauceLabsUrl"
-  val BROWSER = "browser"
-  val BROWSER_VERSION = "browserVersion"
-  val BASE_URL = "baseUrl"
+  val SauceLabsUrl = "sauceLabsUrl"
+  val Browser = "browser"
+  val BrowserVersion = "browserVersion"
+  val BaseUrl = "baseUrl"
 
   def getProperty(name: String): String = {
     Config().getUserValue(name)

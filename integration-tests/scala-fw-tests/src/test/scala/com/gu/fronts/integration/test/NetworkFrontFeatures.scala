@@ -1,14 +1,14 @@
 package com.gu.fronts.integration.test
 
 import com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage
-import com.gu.fronts.integration.test.page.common.AllFaciaContainersPage.IN_PICTURES_CONTAINER_ID
+import com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage._
 
 class NetworkFrontFeatures extends FrontsSeleniumTestSuite {
 
   feature("Network Front") {
     scenarioWeb("click through the picture gallery overlay") {
       val nwFront = goTo(new NetworkFrontPage)
-      val picContainer = nwFront.faciaContainerWithId(IN_PICTURES_CONTAINER_ID)
+      val picContainer = nwFront.faciaContainerWithId(InPicturesContainerId)
 
       val pictureOverlay = picContainer.firstPictureItem.clickPicture
 

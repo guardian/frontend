@@ -1,13 +1,15 @@
 package com.gu.fronts.integration.test.pages.common
 
-import java.util.{ ArrayList, List }
+import org.openqa.selenium.WebDriver
+
 import com.gu.automation.support.TestLogging
-import org.apache.commons.collections.CollectionUtils
-import org.apache.commons.lang3.StringUtils
-import org.openqa.selenium.{ By, WebDriver, WebDriverException, WebElement }
-import com.gu.fronts.integration.test.PageHelper
 import com.gu.fronts.integration.test.PageHelper
 
+/**
+ * This is a parent class for all Page Objects and it defines two methods. isDisplayed is a method which needs to be implemented
+ * which says if this page is properly displayed or not. url is an optional property which the page can define to say that this
+ * is the url to be loaded before the Page Object is initialised
+ */
 abstract class FrontsParentPage(implicit driver: WebDriver) extends TestLogging with PageHelper {
   def isDisplayed()
   def url: String = null

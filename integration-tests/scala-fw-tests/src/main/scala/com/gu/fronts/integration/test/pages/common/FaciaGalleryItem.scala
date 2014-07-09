@@ -8,14 +8,14 @@ import com.gu.fronts.integration.test.pages.common.FrontsParentPage
 
 object FaciaGalleryItem {
 
-  val GALLERY_ITEM_CONTAINER_ID = "gallery-item-container"
+  val GalleryItemContainerId = "gallery-item-container"
 
-  val GALLERY_PICTURE_ID = "gallery-picture"
+  val GalleryPictureId = "gallery-picture"
 }
 
 class FaciaGalleryItem(rootElement: WebElement)(implicit var driver: WebDriver) extends FrontsParentPage() {
 
-  private def pictureElement = findByTestAttribute(GALLERY_PICTURE_ID, rootElement)
+  private def pictureElement = findByTestAttribute(GalleryPictureId, rootElement)
 
   override def isDisplayed() = {
     existsAndDisplayed(rootElement)

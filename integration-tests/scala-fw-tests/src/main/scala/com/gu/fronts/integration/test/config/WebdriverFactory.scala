@@ -11,9 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.ie.InternetExplorerDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
-import com.gu.fronts.integration.test.config.PropertyLoader.BROWSER
-import com.gu.fronts.integration.test.config.PropertyLoader.BROWSER_VERSION
-import com.gu.fronts.integration.test.config.PropertyLoader.SAUCELABS_REMOTEDRIVER_URL
+import com.gu.fronts.integration.test.config.PropertyLoader._
 import com.gu.fronts.integration.test.config.PropertyLoader.getProperty
 import com.gu.automation.support.TestLogging
 
@@ -22,7 +20,7 @@ object WebdriverFactory extends TestLogging {
   def createWebDriver(testCaseName: String): WebDriver = {
     var capabilities: DesiredCapabilities = null
 
-    lazy val driver: WebDriver = getProperty(BROWSER) match {
+    lazy val driver: WebDriver = getProperty(Browser) match {
       case "firefox" =>
         capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.firefox())
         new FirefoxDriver(capabilities)
@@ -47,7 +45,7 @@ object WebdriverFactory extends TestLogging {
   }
 
   private def initDesiredCapabilities(testCaseName: String, capabilities: DesiredCapabilities): DesiredCapabilities = {
-    capabilities.setCapability("version", getProperty(BROWSER_VERSION))
+    capabilities.setCapability("version", getProperty(BrowserVersion))
     if (isNotBlank(testCaseName)) {
       capabilities.setCapability("name", testCaseName)
     }
@@ -55,10 +53,9 @@ object WebdriverFactory extends TestLogging {
   }
   
   private def overrideSauceLabsDriver(capabilities: DesiredCapabilities, driver: => WebDriver): WebDriver = {
-    if (isNotBlank(getProperty(SAUCELABS_REMOTEDRIVER_URL))) {
-      new RemoteWebDriver(new URL(getProperty(SAUCELABS_REMOTEDRIVER_URL)), capabilities)
-    } else {
-      driver
-    }
+    val sauceLabsUrl = getProperty(SauceLabsUrl)
+    if (isNotBlank(sauceLabsUrl)) {
+      new RemoteWebDriver(new URL(sauceLabsUrl), capabilities)
+    } else driver
   }
 }
