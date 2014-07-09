@@ -3,6 +3,7 @@ package test
 
 import conf.{Switches, HealthcheckPage, Configuration}
 import conf.Switches._
+import dev.HttpSwitch
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 import collection.JavaConversions._
@@ -511,6 +512,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst("header").getAttribute("role") should be("banner")
         findFirst(".l-footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
+        if (HttpSwitch(ResponsiveNavSwitch).isSwitchedOff) {
+          findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
+        }
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".related__container").getAttribute("role") should be("complementary")
         findFirst(".related__container").getAttribute("aria-labelledby") should be("related-content-head")

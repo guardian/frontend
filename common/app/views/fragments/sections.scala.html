@@ -4,10 +4,14 @@
 @import dev.HttpSwitch
 @import common._
 @import common.Edition
-
+@if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
 <div class="js-transfuse" data-transfuse-target="js-mega-nav-placeholder"
+} else {
+<nav role="navigation" aria-label="Guardian sections"
+}
     @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
         data-link-name="global navigation: header : sections"}>
+}
     @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
         @fragments.nav.megaNav(page)
     }else {
@@ -71,4 +75,8 @@
             </div>
         }
     </div>
+@if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
 </div>
+} else {
+</nav>
+}
