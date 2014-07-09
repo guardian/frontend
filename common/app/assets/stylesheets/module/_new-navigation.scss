@@ -716,9 +716,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
     @include box-sizing(border-box);
     font-weight: bold;
     @include rem((
-        line-height: $gs-row-height
-    ));
-    @include rem((
+        line-height: $gs-row-height,
         min-width: $new-navigation-toggler-width,
         padding-left: $gs-gutter + 2,
         padding-right: $gs-gutter/2,
