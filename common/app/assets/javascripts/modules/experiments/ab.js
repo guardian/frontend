@@ -1,14 +1,17 @@
 define([
     'common/utils/storage',
     'common/utils/mediator',
-    'common/modules/analytics/mvt-cookie'
+    'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/high-commercial-component'
 ], function (
     store,
     mediator,
-    mvtCookie
+    mvtCookie,
+    HighCommercialComponent
     ) {
 
     var TESTS = [
+            new HighCommercialComponent()
         ],
         participationsKey = 'gu.ab.participations';
 
