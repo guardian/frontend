@@ -1,5 +1,6 @@
 require([
     // 3rd party libs
+    'raven',
     'lodash/arrays/compact',
     'lodash/arrays/first',
     'lodash/arrays/flatten',
