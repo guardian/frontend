@@ -44,7 +44,7 @@ class GalleryOverlay(implicit var driver: WebDriver) extends FrontsParentPage() 
 
   def getDisplayedImage(): WebElement = {
     galleryImages.find(_.isDisplayed) getOrElse {
-      throw new RuntimeException("Could not find a displayed Gallery Overlay picture item with attribute [" + TEST_ATTR_NAME + "=gallery-image-item]")
+      throw new RuntimeException("Could not find a displayed Gallery Overlay picture item with attribute [" + TestAttributeName + "=gallery-image-item]")
     }
   }
 

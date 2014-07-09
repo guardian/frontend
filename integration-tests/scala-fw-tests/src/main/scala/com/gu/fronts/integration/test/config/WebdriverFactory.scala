@@ -18,22 +18,20 @@ import com.gu.automation.support.TestLogging
 object WebdriverFactory extends TestLogging {
 
   def createWebDriver(testCaseName: String): WebDriver = {
-    var capabilities: DesiredCapabilities = null
-
-    lazy val driver: WebDriver = getProperty(Browser) match {
+    val (webDriver, capabilities) = getProperty(Browser) match {
       case "firefox" =>
-        capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.firefox())
-        new FirefoxDriver(capabilities)
+        val capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.firefox())
+        (new FirefoxDriver(capabilities), capabilities)
       case "chrome" =>
-        capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.chrome())
-        new ChromeDriver(capabilities)
+        val capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.chrome())
+        (new ChromeDriver(capabilities), capabilities)
       case "ie" =>
-        capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.internetExplorer())
-        new InternetExplorerDriver(capabilities)
+        val capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.internetExplorer())
+        (new InternetExplorerDriver(capabilities), capabilities)
       case default => throw new RuntimeException("Browser: [" + default + "] is not supported")
     }
 
-    initWebDriver(overrideSauceLabsDriver(capabilities, driver))
+    initWebDriver(overrideSauceLabsDriver(capabilities, webDriver))
   }
 
   private def initWebDriver(webDriver: WebDriver): WebDriver = {

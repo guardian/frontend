@@ -17,9 +17,9 @@ import com.gu.fronts.integration.test.pages.common.FrontsParentPage
  */
 trait PageHelper extends TestLogging {
 
-  var driver: WebDriver;
+  var driver: WebDriver
   val frontsBaseUrl = getProperty(BaseUrl)
-  val TEST_ATTR_NAME = "data-test-id"
+  val TestAttributeName = "data-test-id"
 
   def goTo[Page <: FrontsParentPage](pageObject: Page): Page = {
     goTo(pageObject.url, pageObject)
@@ -72,7 +72,7 @@ trait PageHelper extends TestLogging {
   }
 
   private def byTestAttributeId(testAttributeValue: String): org.openqa.selenium.By = {
-    By.cssSelector(new StringBuilder().append("[").append(TEST_ATTR_NAME).append("=").
+    By.cssSelector(new StringBuilder().append("[").append(TestAttributeName).append("=").
       append(testAttributeValue).append("]").toString)
   }
 
