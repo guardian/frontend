@@ -1,0 +1,29 @@
+.content--video {
+
+    .byline,
+    .content__dateline,
+    .social-wrapper--aside,
+    .content__meta-container {
+        border-color: $c-neutral2;
+    }
+
+    .social-icon-wrapper {
+        opacity: .8;
+        &:hover { opacity: 1; }
+    }
+
+    .content__headline:before {
+        content: '';
+        margin-right: $gs-gutter/2;
+        @include icon(video-icon);
+        @include background-size(100%);
+
+        height: 19px !important;
+        margin-top: 2px;
+
+    }
+}
+
+.content-footer--video {
+    margin-top: $gs-baseline;
+}

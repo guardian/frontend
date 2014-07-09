@@ -1,0 +1,36 @@
+.content--video {
+
+    background-color: $c-neutral1;
+    color: $c-neutral7;
+
+    .content__section .tone-colour {
+        color: $c-neutral7;
+    }
+
+    .content__head__border-top {
+        display: none;
+    }
+
+    .byline,
+    .byline .tone-colour {
+        color: $c-neutral7;
+    }
+
+    .social__head {
+        color: $c-neutral7;
+    }
+
+    .content__standfirst {
+        color: $c-neutral5;
+        a {
+            color: $c-neutral5;
+        }
+
+        .u-underline {
+            border-color: $c-neutral3;
+            &:hover {
+                border-color: $c-neutral8;
+            }
+        }
+    }
+}
