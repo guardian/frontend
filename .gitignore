@@ -55,7 +55,6 @@ developer.properties
 static
 
 common/app/assets/stylesheets/icons/*
-common/app/assets/javascripts/*
 
 ivy-sbt
 
