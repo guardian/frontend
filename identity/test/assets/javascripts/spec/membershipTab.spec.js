@@ -4,9 +4,8 @@ define(['membership/membership-tab'], function (MembershipTab) {
 
         var membershipTab,
             tierAmount = {
-                tier3: 6000,
-                tier2: 1500,
-                tier1: 0
+                tier1: 500,
+                tier0: 0
             },
             months = [
                 'January',
@@ -40,23 +39,15 @@ define(['membership/membership-tab'], function (MembershipTab) {
         });
 
         it('formatAmount method returns correct formatted amount for paid tier', function () {
-            var formattedAmount = membershipTab.formatAmount(tierAmount.tier3);
+            var formattedAmount = membershipTab.formatAmount(tierAmount.tier1);
 
             expect(formattedAmount).not.toBeUndefined();
             expect(typeof formattedAmount).toEqual('string');
-            expect(formattedAmount).toEqual('60.00');
-        });
-
-        it('formatAmount method returns correct formatted amount for paid tier', function () {
-            var formattedAmount = membershipTab.formatAmount(tierAmount.tier2);
-
-            expect(formattedAmount).not.toBeUndefined();
-            expect(typeof formattedAmount).toEqual('string');
-            expect(formattedAmount).toEqual('15.00');
+            expect(formattedAmount).toEqual('5.00');
         });
 
         it('formatAmount method returns correct formatted amount for free tier', function () {
-            var formattedAmount = membershipTab.formatAmount(tierAmount.tier1);
+            var formattedAmount = membershipTab.formatAmount(tierAmount.tier0);
 
             expect(formattedAmount).not.toBeUndefined();
             expect(typeof formattedAmount).toEqual('string');
