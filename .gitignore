@@ -37,7 +37,7 @@ RUNNING_PID
 *.sublime-*
 
 local.sbt
-build.sbt
+sbt-idea-*.pom
 
 node_modules
 screenshots
@@ -66,4 +66,8 @@ ivy-sbt
 .classpath
 .springBeans
 .cache
+
 bower_components
+
+#Scala test framework
+local.conf

@@ -86,8 +86,10 @@ trait Prototypes {
 
   def root() = Project("root", base = file("."))
 
-  def application(applicationName: String) = {
-    play.Project(applicationName, version, path = file(applicationName))
+  def application(applicationName: String):Project = application(applicationName, None)
+
+  def application(applicationName: String, path:Option[String]):Project = {
+    play.Project(applicationName, version, path = file(path.getOrElse(applicationName)))
     .settings(frontendDependencyManagementSettings:_*)
     .settings(frontendCompilationSettings:_*)
     .settings(frontendClientSideSettings:_*)

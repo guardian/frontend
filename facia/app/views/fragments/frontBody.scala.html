@@ -2,7 +2,7 @@
 @import common.Edition
 
 @if(faciaPage.collections.nonEmpty) {
-    <div class="@RenderClasses(Map(
+    <div data-test-id="all-front-containers" class="@RenderClasses(Map(
             "facia-container" -> true,
             "facia-container--layout-front" -> true,
             "facia-container--sponsored" -> faciaPage.isSponsored,

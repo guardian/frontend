@@ -95,7 +95,8 @@
 
         @defining(standardItems.slice(10, 28), hugeItemsCount + veryBigItemsCount + bigItemsCount + 10) { case (items, offset) =>
             @if(items.nonEmpty) {
-                <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
+                <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone"
+                        data-test-id="show-more-news-expanded">
                     <ul class="l-columns linkslist">
                         @items.zipWithIndex.map{ case (trail, index) =>
                             @trail match {
