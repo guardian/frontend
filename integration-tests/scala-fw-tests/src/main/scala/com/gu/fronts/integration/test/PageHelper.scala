@@ -1,13 +1,21 @@
 package com.gu.fronts.integration.test
 
-import com.gu.automation.support.TestLogging
-import com.gu.fronts.integration.test.config.PropertyLoader.{ BASE_URL, getProperty }
-import com.gu.fronts.integration.test.pages.common.FrontsParentPage
-import org.apache.commons.collections.CollectionUtils
-import org.apache.commons.lang3.StringUtils
-import org.openqa.selenium.{ By, WebDriver, WebDriverException, WebElement }
-import scala.collection.JavaConverters._
+import scala.collection.JavaConverters.asScalaBufferConverter
 
+import org.openqa.selenium.By
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebDriverException
+import org.openqa.selenium.WebElement
+
+import com.gu.automation.support.TestLogging
+import com.gu.fronts.integration.test.config.PropertyLoader.BASE_URL
+import com.gu.fronts.integration.test.config.PropertyLoader.getProperty
+import com.gu.fronts.integration.test.pages.common.FrontsParentPage
+
+/**
+ * This trait is providing various helper functionalities for navigating, loading and initialising pages and Page Objects.
+ * Observe that it depends on a WebDriver to be in context to work
+ */
 trait PageHelper extends TestLogging {
 
   var driver: WebDriver;

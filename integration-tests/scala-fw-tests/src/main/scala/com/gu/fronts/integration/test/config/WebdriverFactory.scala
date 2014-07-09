@@ -20,24 +20,10 @@ import com.gu.fronts.integration.test.config.PropertyLoader.getProperty
 
 object WebdriverFactory {
 
-  //  def getWebDriver(testCaseName: String): WebDriver = {
-  //    val capabilities = initDesiredCapabilities
-  //    capabilities.setCapability("version", getProperty(BROWSER_VERSION))
-  //    if (isNotBlank(testCaseName)) {
-  //      capabilities.setCapability("name", testCaseName)
-  //    }
-  //    var driver: WebDriver = null
-  //    if (isNotBlank(getProperty(SAUCELABS_REMOTEDRIVER_URL))) {
-  //      driver = new RemoteWebDriver(new URL(getProperty(SAUCELABS_REMOTEDRIVER_URL)), capabilities)
-  //    } else {
-  //      driver = 
-  //    }
-  //    setGlobalWebdriverConf(driver)
-  //  }
-
   def createWebDriver(testCaseName: String): WebDriver = {
     var driver: WebDriver = null
     var capabilities: DesiredCapabilities = null
+    
     getProperty(BROWSER) match {
       case "firefox" =>
         capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.firefox())
@@ -57,18 +43,6 @@ object WebdriverFactory {
 
     initWebDriver(driver)
   }
-
-  //  private def initWebDriver: WebDriver = {
-  //    if(StringUtils.isNotBlank(getProperty(SAUCELABS_REMOTEDRIVER_URL)){
-  //      
-  //    }
-  //    getProperty(BROWSER) match {
-  //      case "firefox" => return new FirefoxDriver
-  //      case "chrome" => return DesiredCapabilities.chrome()
-  //      case "ie" => return DesiredCapabilities.internetExplorer()
-  //      case default => return DesiredCapabilities.firefox()
-  //    }
-  //  }
 
   private def initWebDriver(webDriver: WebDriver): WebDriver = {
     webDriver.manage().window().setPosition(new Point(0, 0))
