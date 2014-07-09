@@ -3,6 +3,7 @@ package dfp
 import common.ExecutionContexts
 import implicits.Dates
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import play.api.libs.json.Json.{toJson, _}
 import play.api.libs.json.{JsValue, Json, Writes}
 import tools.Store
@@ -62,9 +63,12 @@ object DfpDataCacheJob extends ExecutionContexts with Dates{
 
   private implicit val lineItemWrites = new Writes[GuLineItem] {
     def writes(lineItem: GuLineItem ): JsValue = {
+      val timePattern = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm z")
       Json.obj(
         "id" -> lineItem.id,
         "name" -> lineItem.name,
+        "startTime" -> timePattern.print(lineItem.startTime),
+        "endTime" -> lineItem.endTime.map(endTime => timePattern.print(endTime)),
         "isPageSkin" -> lineItem.isPageSkin,
         "sponsor" -> lineItem.sponsor,
         "targeting" -> lineItem.targeting
