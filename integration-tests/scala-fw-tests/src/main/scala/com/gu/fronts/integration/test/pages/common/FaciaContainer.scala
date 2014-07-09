@@ -31,12 +31,13 @@ class FaciaContainer(rootElement: WebElement)(implicit var driver: WebDriver) ex
   def firstPictureItem(): FaciaGalleryItem = {
     val galleryElements = findAllByTestAttribute(GalleryItemContainerId, rootElement)
 
-    for (galleryElement <- galleryElements) yield {
-      if (isPictureGallery(galleryElement)) {
-        return new FaciaGalleryItem(galleryElement)
-      }
+    galleryElements find { galleryElement =>
+      isPictureGallery(galleryElement)
+    } map { galleryElement =>
+      new FaciaGalleryItem(galleryElement)
+    } getOrElse {
+      throw new RuntimeException("Could not find any picture gallery elements")
     }
-    throw new RuntimeException("Could not find any picture gallery elements")
   }
 
   def isPictureGallery(galleryElement: WebElement): Boolean = {

@@ -1,8 +1,8 @@
 package com.gu.fronts.integration.test.page.common
 
-import scala.collection.JavaConversions.asScalaBuffer
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+
 import com.gu.fronts.integration.test.page.nwfront.NetworkFrontPage
 import com.gu.fronts.integration.test.pages.common.FrontsParentPage
 
@@ -43,12 +43,9 @@ class GalleryOverlay(implicit var driver: WebDriver) extends FrontsParentPage() 
   }
 
   def getDisplayedImage(): WebElement = {
-    for (image <- galleryImages) {
-      if (image.isDisplayed()) {
-        return image
-      }
+    galleryImages.find(_.isDisplayed) getOrElse {
+      throw new RuntimeException("Could not find a displayed Gallery Overlay picture item with attribute [" + TEST_ATTR_NAME + "=gallery-image-item]")
     }
-    throw new RuntimeException("Could not find a displayed Gallery Overlay picture item with attribute [" + TEST_ATTR_NAME + "=gallery-image-item")
   }
 
   def close(): NetworkFrontPage = {
