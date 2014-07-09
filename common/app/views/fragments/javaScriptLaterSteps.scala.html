@@ -138,6 +138,9 @@
                         edition: config.page.edition,
                         contentType: config.page.contentType,
                         buildNumber: config.page.buildNumber
+                    },
+                    shouldSendCallback: function(data) {
+                        return Math.random() < 0.1;
                     }
                 }
             ).install();
