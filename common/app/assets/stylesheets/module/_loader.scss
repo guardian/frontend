@@ -9,15 +9,8 @@ $pamplemousse-dot-margin-small: ($pamplemousse-dot-spacing - $pamplemousse-dot-s
 $pamplemousse-dot-margin-large: ($pamplemousse-dot-spacing - $pamplemousse-dot-size-large) / 2;
 
 @-webkit-keyframes pulsate {
-    25% {
-        -webkit-transform: scale(1);
-        -o-transform: scale(1);
-    }
-
-    50% {
-        -webkit-transform: scale(.3);
-        -o-transform: scale(.3);
-    }
+    25% { -webkit-transform: scale(1); }
+    50% { -webkit-transform: scale(.3); }
 }
 
 @-moz-keyframes pulsate {
