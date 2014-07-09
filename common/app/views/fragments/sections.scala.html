@@ -11,7 +11,7 @@
 }
     @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
         data-link-name="global navigation: header : sections"}>
-}
+
     @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
         @fragments.nav.megaNav(page)
     }else {
