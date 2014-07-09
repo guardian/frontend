@@ -10,7 +10,8 @@
         <div class="gs-container">
             <div class="new-navigation__inner">
                 <div class="new-navigation__scroll">
-                    <div class="new-navigation__container new-navigation__container--first">
+                    <nav class="new-navigation__container new-navigation__container--first">
+                        <h6 class="u-h">Current navigation</h6>
                         @if(!Edition.isEditionFront){
                             @fragments.nav.signposting(metaData, navigation)
 
@@ -24,8 +25,9 @@
                                 }
                             }
                         }
-                    </div>
-                    <div class="new-navigation__container new-navigation__container--second">
+                    </nav>
+                    <nav class="new-navigation__container new-navigation__container--second">
+                        <h6 class="u-h">Main navigation</h6>
                         <ul class="top-navigation">
                             @navigation.map{ nav =>
                                 @if(!Navigation.isEditionFront(nav)){
@@ -43,10 +45,10 @@
                                 }
                             }
                         </ul>
-                    </div>
+                    </nav>
                 </div>
                 <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav">
-                    <i class="new-navigation__toggle-arrow arrow-box"></i>
+                    <i class="new-navigation__toggle-burger honest-burger"><i></i><i></i><i></i></i>
                     <span class="new-navigation__toggle-label new-navigation__toggle-label--open">all<span class="new-navigation__toggle-label__extra"> sections</span></span>
                     <span class="new-navigation__toggle-label new-navigation__toggle-label--close">close</span>
                 </a>

@@ -5,7 +5,7 @@
 @import common._
 @import common.Edition
 
-<nav class="js-transfuse" role="navigation" aria-label="Guardian sections" data-transfuse-target="js-mega-nav-placeholder"
+<div class="js-transfuse" data-transfuse-target="js-mega-nav-placeholder"
     @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
         data-link-name="global navigation: header : sections"}>
     @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
@@ -71,4 +71,4 @@
             </div>
         }
     </div>
-</nav>
+</div>
