@@ -145,12 +145,6 @@
                 }
             ).install();
 
-            @* see https://github.com/getsentry/raven-js/blob/master/plugins/require.js *@
-            if (typeof define === 'function' && define.amd) {
-                define = raven.wrap({deep: false}, define);
-                require = raven.wrap({deep: false}, require);
-            }
-
             if (guardian.config.switches.commercial) {
 
                 require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
