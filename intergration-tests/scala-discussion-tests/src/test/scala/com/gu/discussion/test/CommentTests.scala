@@ -80,7 +80,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
     }
 
     /*
-    //Need to wait until Code eznvronment is fixed to allow Picks
+    //Need to wait until Code environment is fixed to allow Picks
     scenarioWeb("Pick a comment to be Featured") {
       given {
         CommentSteps().iAmSignedInAsAMember()
