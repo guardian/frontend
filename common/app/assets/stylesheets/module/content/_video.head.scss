@@ -1,3 +1,11 @@
+.content__main-column--video {
+    @include mq(wide) {
+        @include rem((
+            width: gs-span(9)
+        ));
+    }
+}
+
 .content--video {
 
     background-color: $c-neutral1;
