@@ -18,26 +18,26 @@ class GalleryOverlay(implicit var driver: WebDriver) extends FrontsParentPage() 
 
   private def closeOverlayButton: WebElement = findByTestAttribute("close-overlay")
 
-  override def isDisplayed() = {
-    existsAndDisplayed(galleryGridButton)
+  override def assertIsDisplayed() = {
+    assertExistsAndDisplayed(galleryGridButton)
   }
 
   def clickGalleryGridMode(): GalleryOverlay = {
-    existsAndDisplayed(galleryGridButton)
+    assertExistsAndDisplayed(galleryGridButton)
     galleryGridButton.click()
-    existsAndDisplayed(galleryFullButton)
+    assertExistsAndDisplayed(galleryFullButton)
     this
   }
 
   def clickGalleryFullMode(): GalleryOverlay = {
-    existsAndDisplayed(galleryFullButton)
+    assertExistsAndDisplayed(galleryFullButton)
     galleryFullButton.click()
-    existsAndDisplayed(galleryGridButton)
+    assertExistsAndDisplayed(galleryGridButton)
     this
   }
 
   def clickNextPicture(): GalleryOverlay = {
-    existsAndDisplayed(galleryNextButton)
+    assertExistsAndDisplayed(galleryNextButton)
     galleryNextButton.click()
     this
   }
@@ -49,7 +49,7 @@ class GalleryOverlay(implicit var driver: WebDriver) extends FrontsParentPage() 
   }
 
   def close(): NetworkFrontPage = {
-    existsAndDisplayed(closeOverlayButton)
+    assertExistsAndDisplayed(closeOverlayButton)
     closeOverlayButton.click()
     new NetworkFrontPage
   }

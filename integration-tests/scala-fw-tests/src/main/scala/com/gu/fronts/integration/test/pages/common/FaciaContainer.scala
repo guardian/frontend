@@ -18,13 +18,13 @@ object FaciaContainer {
 
 class FaciaContainer(rootElement: WebElement)(implicit var driver: WebDriver) extends FrontsParentPage {
 
-  override def isDisplayed() = {
-    existsAndDisplayed(rootElement)
+  override def assertIsDisplayed() = {
+    assertExistsAndDisplayed(rootElement)
   }
 
   private def clickFirstValidPictureOn() = {
     val picOverlay = firstPictureItem.clickPicture
-    picOverlay.isDisplayed
+    picOverlay.assertIsDisplayed
     picOverlay
   }
 
@@ -42,7 +42,7 @@ class FaciaContainer(rootElement: WebElement)(implicit var driver: WebDriver) ex
 
   def isPictureGallery(galleryElement: WebElement): Boolean = {
     try {
-      existsAndDisplayed(findByTestAttribute(GalleryPictureId, galleryElement))
+      assertExistsAndDisplayed(findByTestAttribute(GalleryPictureId, galleryElement))
       true
     } catch {
       case ex: Exception => {

@@ -17,13 +17,13 @@ class NetworkFrontPage(implicit var driver: WebDriver) extends FrontsParentPage(
 
   override def url = getProperty(BaseUrl)
 
-  def isDisplayed() = {
-    existsAndDisplayed(dateTitle)
+  def assertIsDisplayed() = {
+    assertExistsAndDisplayed(dateTitle)
   }
 
   def faciaContainerWithId(testAttributeId: String): FaciaContainer = {
     val faciaContainer = new FaciaContainer(findByTestAttribute(testAttributeId, allFaciaContainers))
-    faciaContainer.isDisplayed
+    faciaContainer.assertIsDisplayed
     faciaContainer
   }
 }

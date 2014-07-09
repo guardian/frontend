@@ -27,7 +27,7 @@ trait PageHelper extends TestLogging {
 
   def goTo[Page <: FrontsParentPage](url: String, pageObject: Page): Page = {
     driver.get(forceBetaSite(url))
-    pageObject.isDisplayed
+    pageObject.assertIsDisplayed
     pageObject
   }
 
@@ -80,7 +80,7 @@ trait PageHelper extends TestLogging {
    * Checks if the provided elements exist and are displayed. If any element is not, then an exception is
    * thrown with a message with further details about missing elements
    */
-  def existsAndDisplayed(elementsToCheck: WebElement*): Boolean = {
+  def assertExistsAndDisplayed(elementsToCheck: WebElement*): Boolean = {
     val errors = elementsToCheck.flatMap(checkElementExistsAndCreateError)
     if (errors.isEmpty)
       true

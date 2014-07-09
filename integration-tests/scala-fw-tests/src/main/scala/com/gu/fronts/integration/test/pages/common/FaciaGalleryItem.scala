@@ -17,12 +17,12 @@ class FaciaGalleryItem(rootElement: WebElement)(implicit var driver: WebDriver) 
 
   private def pictureElement = findByTestAttribute(GalleryPictureId, rootElement)
 
-  override def isDisplayed() = {
-    existsAndDisplayed(rootElement)
+  override def assertIsDisplayed() = {
+    assertExistsAndDisplayed(rootElement)
   }
 
   def clickPicture(): GalleryOverlay = {
-    existsAndDisplayed(pictureElement)
+    assertExistsAndDisplayed(pictureElement)
     pictureElement.click()
     new GalleryOverlay
   }
