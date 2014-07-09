@@ -5,7 +5,6 @@ import java.net.URLDecoder
 import akka.agent.Agent
 import common._
 import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey}
-import conf.Switches.EditionalisedPageSkinsSwitch
 import model.{Config, Tag}
 import play.api.{Application, GlobalSettings}
 import services.S3
@@ -42,18 +41,16 @@ trait DfpAgent {
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
-  def isPageSkinned(adUnitWithoutRoot: String, edition: Edition) = {
-    val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
+  def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
+    if (adUnitWithoutRoot endsWith "front") {
+      val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
-    if (EditionalisedPageSkinsSwitch.isSwitchedOn) {
       pageSkinSponsorships.exists { sponsorship =>
         sponsorship.adUnits.contains(adUnitWithRoot) &&
           (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id))
       }
     } else {
-      pageSkinSponsorships.exists { sponsorship =>
-        sponsorship.adUnits.contains(adUnitWithRoot)
-      }
+      false
     }
   }
 
@@ -82,14 +79,14 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
   def refresh() {
 
-    def stringFromS3(key: String) = S3.get(key)(UTF8)
+    def stringFromS3(key: String): Option[String] = S3.get(key)(UTF8)
 
     def grabSponsorshipsFromStore(key: String): Seq[Sponsorship] = {
       val reportOption: Option[SponsorshipReport] = for {
         jsonString <- stringFromS3(key)
         report <- SponsorshipReportParser(jsonString)
       } yield report
-      
+
       reportOption.fold(Seq[Sponsorship]())(_.sponsorships)
     }
 
@@ -102,7 +99,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
       reportOption.fold(Seq[PageSkinSponsorship]())(_.sponsorships)
     }
 
-    def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) = {
+    def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) {
       agent sendOff { oldData =>
         if (freshData.nonEmpty) {
           freshData
