@@ -3,9 +3,7 @@
 
 @defining(Edition(request).navigation) { navigation =>
     @defining(Navigation.topLevelItem(navigation, metaData)) { topLevelSelected =>
-        <nav>
-            <h6 class="u-h">All sections</h6>
-
+        <nav role="navigation" aria-label="All sections">
             <ul class="global-navigation">
                 @navigation.map { nav =>
                     <li class="@RenderClasses(Map(
