@@ -59,13 +59,6 @@ define([
             showHours: 1,
             width: 100,
             height: 35
-        },
-        sparksFrontParams: {
-            graphs: 'other:3279F1,google:65b045,guardian:376ABF',
-            hotLevel: 250,
-            showStats: 1,
-            width: 100,
-            height: 35
         }
     };
 
@@ -76,8 +69,7 @@ define([
     return {
         CONST: CONST,
         model: undefined,
-        sparksBase:      sparksBaseUrl(CONST.sparksParams),
-        sparksBaseFront: sparksBaseUrl(CONST.sparksFrontParams),
+        sparksBase: sparksBaseUrl(CONST.sparksParams),
         priority: pageConfig.priority === 'editorial' ? undefined : pageConfig.priority,
         state: {
             config: {},

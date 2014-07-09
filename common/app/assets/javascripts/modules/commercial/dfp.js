@@ -1,44 +1,46 @@
 /* global googletag: false */
 define([
-    'common/utils/$',
     'bonzo',
     'qwery',
     'lodash/functions/debounce',
-    'common/utils/cookies',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/modules/commercial/tags/audience-science',
-    'common/modules/commercial/tags/audience-science-gateway',
-    'common/modules/commercial/tags/criteo',
-    'common/modules/commercial/keywords',
-    'common/modules/commercial/user-ad-targeting',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
     'lodash/functions/once',
     'lodash/objects/defaults',
     'lodash/objects/isArray',
     'lodash/objects/pairs',
-    'common/utils/template'
+    'common/utils/$',
+    'common/utils/cookies',
+    'common/utils/detect',
+    'common/utils/mediator',
+    'common/utils/config',
+    'common/utils/template',
+    'common/modules/commercial/tags/audience-science',
+    'common/modules/commercial/tags/audience-science-gateway',
+    'common/modules/commercial/tags/criteo',
+    'common/modules/commercial/keywords',
+    'common/modules/commercial/user-ad-targeting'
 ], function (
-    $,
     bonzo,
     qwery,
     debounce,
-    cookies,
-    detect,
-    mediator,
-    audienceScience,
-    audienceScienceGateway,
-    criteo,
-    keywords,
-    userAdTargeting,
     flatten,
     uniq,
     once,
     defaults,
     isArray,
     pairs,
-    template
+    $,
+    cookies,
+    detect,
+    mediator,
+    globalConfig,
+    template,
+    audienceScience,
+    audienceScienceGateway,
+    criteo,
+    keywords,
+    userAdTargeting
 ) {
 
     /**
@@ -88,6 +90,14 @@ define([
             right: {
                 sizeMappings: {
                     tabletlandscape: '300,250|300,600'
+                }
+            },
+            im: {
+                label: false,
+                sizeMappings: {
+                    mobile: '300,50',
+                    mobilelandscape: '300,50|320,50',
+                    tabletportrait: '300,250'
                 }
             },
             inline1: {
@@ -373,11 +383,25 @@ define([
      */
     var init = function (c) {
 
-        config = defaults(c || {}, {
-            adSlotSelector: '.ad-slot--dfp',
-            page: {},
-            switches: {}
-        });
+        config = defaults(
+            c || {},
+            globalConfig,
+            {
+                adSlotSelector: '.ad-slot--dfp',
+                page: {},
+                switches: {}
+            }
+        );
+
+        if (!config.switches.standardAdverts && !config.switches.commercialComponents) {
+            return false;
+        }
+
+        if (!config.switches.standardAdverts) {
+            config.adSlotSelector = '.ad-slot--commercial-component';
+        } else if (!config.switches.commercialComponents) {
+            config.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
+        }
 
         adSlots = qwery(config.adSlotSelector)
             // filter out hidden ads

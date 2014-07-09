@@ -27,21 +27,21 @@
     <form action="/redirect-post" method="POST" class="form-horizontal redirect-form">
         <fieldset>
             <legend>Redirect:</legend>
-            <div class="control-group">
-                <label for="from" class="control-label">From:</label>
-                <div class="controls">
-                    <input type="text" id="from" name="from" value="" placeholder="http://www.theguardian.com/from-here" />
+            <div class="form-group">
+                <label for="from" class="control-label col-sm-1">From:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="from" name="from" value="" placeholder="http://www.theguardian.com/from-here" />
                 </div>
             </div>
-            <div class="control-group">
-                <label for="to" class="control-label">To:</label>
-                <div class="controls">
-                    <input type="text" id="to" name="to" value="" placeholder="http://www.theguardian.com/to-here" />
+            <div class="form-group">
+                <label for="to" class="control-label col-sm-1">To:</label>
+                <div class="controls col-sm-6">
+                    <input type="text" class="form-control" id="to" name="to" value="" placeholder="http://www.theguardian.com/to-here" />
                 </div>
             </div>
-            <div class="control-group">
-                <div class="controls">
-                    <input type="submit" value="Submit" />
+            <div class="form-group">
+                <div class="controls col-sm-offset-1 col-sm-11">
+                    <input class="btn btn-default" type="submit" value="Submit" />
                 </div>
             </div>
         </fieldset>

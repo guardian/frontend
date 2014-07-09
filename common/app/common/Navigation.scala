@@ -1,11 +1,13 @@
 package common
 
-import model.{Content, Section, Tag, MetaData}
+import model.{Content, MetaData}
+import play.api.mvc.RequestHeader
+import conf.Switches._
+import dev.HttpSwitch
 
 case class SectionLink(zone: String, title: String, breadcumbTitle: String, href: String, newWindow: Boolean = false) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
-    page.url == href ||
     (Edition.all.exists(_.id.toLowerCase == page.id.toLowerCase) && href == "/")
 
   def currentForIncludingAllTags(page: MetaData): Boolean = page.tags.exists(t => s"/${t.id}" == href)
@@ -20,9 +22,17 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
   def currentForIncludingAllTags(page: MetaData): Boolean = name.currentForIncludingAllTags(page) ||
     links.exists(_.currentForIncludingAllTags(page))
 
-  def searchForCurrentSublink(page: MetaData): Option[SectionLink] =
-    links.find(_.currentFor(page))
+  def searchForCurrentSublink(page: MetaData)(implicit request: RequestHeader): Option[SectionLink] = {
+    lazy val oldCurrentSublink = links.find(_.currentFor(page))
       .orElse(links.find(_.currentForIncludingAllTags(page)))
+    if (HttpSwitch(NewNavigationHighlightingSwitch).isSwitchedOn) {
+      val localHrefs = links.map(_.href)
+      val currentHref = page.tags.find(tag => localHrefs.contains(tag.url)).map(_.url).getOrElse("")
+      links.find(_.href == currentHref)
+        .orElse(oldCurrentSublink)
+    }
+    else oldCurrentSublink
+  }
 
   def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
 }
@@ -76,7 +86,8 @@ trait Navigation {
   val golf = SectionLink("sport", "golf", "Golf", "/sport/golf")
   val horseracing = SectionLink("sport", "horse racing", "Horse racing", "/sport/horse-racing")
   val boxing = SectionLink("sport", "boxing", "Boxing", "/sport/boxing")
-  val formulaOne = SectionLink("sport", "formula one", "Formula one", "/sport/formulaone")
+  val formulaOne = SectionLink("sport", "F1", "Formula one", "/sport/formulaone")
+  val racing = SectionLink("sport", "racing", "Racing", "/sport/racing")
 
   val nfl = SectionLink("sport", "NFL", "NFL", "/sport/nfl")
   val mlb = SectionLink("sport", "MLB", "MLB", "/sport/mlb")
@@ -101,6 +112,7 @@ trait Navigation {
   val music = SectionLink("culture", "music", "Music", "/music")
   val stage = SectionLink("culture", "stage", "Stage", "/stage")
   val televisionAndRadio = SectionLink("culture", "tv & radio", "TV & radio", "/tv-and-radio")
+  val classical = SectionLink("culture", "classical", "Classical", "/music/classicalmusicandopera")
 
   //Technology
   val technologyblog = SectionLink("technology", "technology blog", "Technology blog", "/technology/blog")

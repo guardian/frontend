@@ -126,6 +126,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val EditionalisedPageSkinsSwitch = Switch("Advertising", "editionalised-pageskins",
+    "Pageskin ads are edition-specific",
+    safeState = Off, sellByDate = new DateMidnight(2014, 7, 17)
+  )
+
   val SmartBannerSwitch = Switch("Advertising", "smart-banner",
     "Display smart app banner onboarding message to iOS and Android users",
     safeState = Off, sellByDate = new DateMidnight(2014, 8, 31)
@@ -310,6 +315,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new DateMidnight(2014, 9, 1)
   )
 
+  val NewNavigationHighlightingSwitch = Switch("Feature Switches", "nav-highlight",
+    "When this switch is on, navigation highlighting will become more relevant as they will be based on tags.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 9, 1)
+  )
+
   // A/B Tests
 
   // Dummy Switches
@@ -432,6 +442,7 @@ object Switches extends Collections {
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
     SponsoredSwitch,
+    EditionalisedPageSkinsSwitch,
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
     CriteoSwitch,
@@ -486,6 +497,7 @@ object Switches extends Collections {
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     ResponsiveNavSwitch,
+    NewNavigationHighlightingSwitch,
     SmartBannerSwitch,
     ParameterlessImagesSwitch,
     SeoOptimisedContentImageSwitch,
@@ -497,7 +509,8 @@ object Switches extends Collections {
   )
 
   val httpSwitches: List[Switch] = List(
-    ResponsiveNavSwitch
+    ResponsiveNavSwitch,
+    NewNavigationHighlightingSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
