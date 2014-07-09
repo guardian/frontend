@@ -2,7 +2,6 @@ package com.gu.fronts.integration.test.config
 
 import java.net.URL
 import java.util.concurrent.TimeUnit.SECONDS
-
 import org.apache.commons.lang3.StringUtils.isNotBlank
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.Point
@@ -12,36 +11,31 @@ import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.ie.InternetExplorerDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
-
 import com.gu.fronts.integration.test.config.PropertyLoader.BROWSER
 import com.gu.fronts.integration.test.config.PropertyLoader.BROWSER_VERSION
 import com.gu.fronts.integration.test.config.PropertyLoader.SAUCELABS_REMOTEDRIVER_URL
 import com.gu.fronts.integration.test.config.PropertyLoader.getProperty
+import com.gu.automation.support.TestLogging
 
-object WebdriverFactory {
+object WebdriverFactory extends TestLogging {
 
   def createWebDriver(testCaseName: String): WebDriver = {
-    var driver: WebDriver = null
     var capabilities: DesiredCapabilities = null
-    
-    getProperty(BROWSER) match {
+
+    lazy val driver: WebDriver = getProperty(BROWSER) match {
       case "firefox" =>
         capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.firefox())
-        driver = new FirefoxDriver(capabilities)
+        new FirefoxDriver(capabilities)
       case "chrome" =>
         capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.chrome())
-        driver = new ChromeDriver(capabilities)
+        new ChromeDriver(capabilities)
       case "ie" =>
         capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.internetExplorer())
-        driver = new InternetExplorerDriver(capabilities)
+        new InternetExplorerDriver(capabilities)
       case default => throw new RuntimeException("Browser: [" + default + "] is not supported")
     }
 
-    if (isNotBlank(getProperty(SAUCELABS_REMOTEDRIVER_URL))) {
-      driver = new RemoteWebDriver(new URL(getProperty(SAUCELABS_REMOTEDRIVER_URL)), capabilities)
-    }
-
-    initWebDriver(driver)
+    initWebDriver(overrideSauceLabsDriver(capabilities, driver))
   }
 
   private def initWebDriver(webDriver: WebDriver): WebDriver = {
@@ -58,5 +52,13 @@ object WebdriverFactory {
       capabilities.setCapability("name", testCaseName)
     }
     return capabilities
+  }
+  
+  private def overrideSauceLabsDriver(capabilities: DesiredCapabilities, driver: => WebDriver): WebDriver = {
+    if (isNotBlank(getProperty(SAUCELABS_REMOTEDRIVER_URL))) {
+      new RemoteWebDriver(new URL(getProperty(SAUCELABS_REMOTEDRIVER_URL)), capabilities)
+    } else {
+      driver
+    }
   }
 }
