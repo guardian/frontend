@@ -1,5 +1,7 @@
 package dfp
 
+import org.joda.time.DateTime
+
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   def isPositive(targetName: String) = name == targetName && op == "IS"
@@ -36,7 +38,15 @@ case class GuAdUnit(id: String, path: Seq[String])
 case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargets: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet])
 
 
-case class GuLineItem(id: Long, name: String, isPageSkin: Boolean, sponsor: Option[String], targeting: GuTargeting) {
+case class GuLineItem(id: Long,
+                      name: String,
+                      startTime: DateTime,
+                      endTime: Option[DateTime],
+                      isPageSkin: Boolean,
+                      sponsor: Option[String],
+                      targeting: GuTargeting) {
+
+  val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
 
   val sponsoredTags: Seq[String] = targeting.customTargetSets.flatMap(_.sponsoredTags).distinct
 

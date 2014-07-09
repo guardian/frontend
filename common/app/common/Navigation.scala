@@ -1,11 +1,13 @@
 package common
 
 import model.{Content, MetaData}
+import play.api.mvc.RequestHeader
+import conf.Switches._
+import dev.HttpSwitch
 
 case class SectionLink(zone: String, title: String, breadcumbTitle: String, href: String, newWindow: Boolean = false) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
-    page.url == href ||
     (Edition.all.exists(_.id.toLowerCase == page.id.toLowerCase) && href == "/")
 
   def currentForIncludingAllTags(page: MetaData): Boolean = page.tags.exists(t => s"/${t.id}" == href)
@@ -20,9 +22,17 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
   def currentForIncludingAllTags(page: MetaData): Boolean = name.currentForIncludingAllTags(page) ||
     links.exists(_.currentForIncludingAllTags(page))
 
-  def searchForCurrentSublink(page: MetaData): Option[SectionLink] =
-    links.find(_.currentFor(page))
+  def searchForCurrentSublink(page: MetaData)(implicit request: RequestHeader): Option[SectionLink] = {
+    lazy val oldCurrentSublink = links.find(_.currentFor(page))
       .orElse(links.find(_.currentForIncludingAllTags(page)))
+    if (HttpSwitch(NewNavigationHighlightingSwitch).isSwitchedOn) {
+      val localHrefs = links.map(_.href)
+      val currentHref = page.tags.find(tag => localHrefs.contains(tag.url)).map(_.url).getOrElse("")
+      links.find(_.href == currentHref)
+        .orElse(oldCurrentSublink)
+    }
+    else oldCurrentSublink
+  }
 
   def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
 }
