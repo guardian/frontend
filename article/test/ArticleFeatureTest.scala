@@ -10,6 +10,7 @@ import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
 import org.fluentlenium.core.filter.FilterConstructor._
+import org.fluentlenium.core.domain.FluentWebElement
 
 class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
@@ -511,11 +512,12 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst("header").getAttribute("role") should be("banner")
         findFirst(".l-footer__secondary").getAttribute("role") should be("contentinfo")
         findFirst("nav").getAttribute("role") should be("navigation")
-        findFirst("nav").getAttribute("aria-label") should be("Guardian sections")
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".related__container").getAttribute("role") should be("complementary")
         findFirst(".related__container").getAttribute("aria-labelledby") should be("related-content-head")
 
+        val navsWithNoAriaLabel = find("nav").filter(hasNoAriaLabel(_))
+        navsWithNoAriaLabel should have length (0)
       }
     }
 
@@ -664,4 +666,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
   }
+
+  private def hasNoAriaLabel(e: FluentWebElement) = e.getAttribute("aria-label") == null
 }
