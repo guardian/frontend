@@ -565,128 +565,128 @@
             }
         }
     }
-}
 
-.membership-tab__details-list--lower {
-    padding-top: 0;
-}
-
-.membership-tab__change-cc-form-cont {
-    display: none;
-    overflow: hidden;
-    height: auto;
-
-    .form__error {
-        @include rem((
-            margin: 0 0 $gs-baseline 0
-        ));
+    .membership-tab__details-list--lower {
+        padding-top: 0;
     }
 
-    .is-updating {
-        vertical-align: middle;
-        margin-top: 0;
-    }
-
-    &.membership-tab__change-cc-form-cont--to-open {
-        display: block;
-        @include animation(mem-tab-to-open .25s ease-in-out);
-    }
-    &.membership-tab__change-cc-form-cont--open {
-        display: block;
-
-        @include mq(tablet) {
-            @include rem((max-height: 350px));
-        }
-        opacity: 1;
-    }
-
-    &.membership-tab__change-cc-form-cont--to-closed {
-        display: block;
-        max-height: 0;
-        opacity: 0;
-        @include animation(mem-tab-to-closed .25s ease-in-out forwards);
-    }
-    &.membership-tab__change-cc-form-cont--closed {
+    .membership-tab__change-cc-form-cont {
         display: none;
-        max-height: 0;
-        opacity: 0;
-    }
-}
+        overflow: hidden;
+        height: auto;
 
-.membership-tab__updated {
-    @include animation(updated 1s ease-in-out forwards);
-}
+        .form__error {
+            @include rem((
+                margin: 0 0 $gs-baseline 0
+            ));
+        }
 
-/* Membership Keyframe animations
-   ========================================================================== */
+        .is-updating {
+            vertical-align: middle;
+            margin-top: 0;
+        }
 
-@include keyframes('mem-tab-to-open') {
-    0% {
-        max-height: 0;
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-        @include rem((max-height: 424px));
+        &.membership-tab__change-cc-form-cont--to-open {
+            display: block;
+            @include animation(mem-tab-to-open .25s ease-in-out);
+        }
+        &.membership-tab__change-cc-form-cont--open {
+            display: block;
+
+            @include mq(tablet) {
+                @include rem((max-height: 350px));
+            }
+            opacity: 1;
+        }
+
+        &.membership-tab__change-cc-form-cont--to-closed {
+            display: block;
+            max-height: 0;
+            opacity: 0;
+            @include animation(mem-tab-to-closed .25s ease-in-out forwards);
+        }
+        &.membership-tab__change-cc-form-cont--closed {
+            display: none;
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .membership-tab__updated {
+            @include animation(updated 1s ease-in-out forwards);
+        }
+
+        /* Membership Keyframe animations
+           ========================================================================== */
+
+        @include keyframes('mem-tab-to-open') {
+            0% {
+                max-height: 0;
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+                @include rem((max-height: 424px));
+
+                @include mq(tablet) {
+                    @include rem((max-height: 350px));
+                }
+            }
+        }
+
+        @include keyframes('mem-tab-to-closed') {
+            0% {
+                @include rem((max-height: 424px));
+
+                @include mq(tablet) {
+                    @include rem((max-height: 350px));
+                }
+                opacity: 1;
+            }
+            100% {
+                max-height: 0;
+                opacity: 0;
+            }
+        }
+
+        @include keyframes('updated') {
+            0% {
+                background-color: $c-brandLightBlue;
+                color: #ffffff;
+            }
+            100% {
+                background-color: #ffffff;
+                color: inherit;
+            }
+        }
+
+        /* Stripe credit card types
+           ========================================================================== */
+
+        $small-card: 32px;
+        $large-card: 35px;
+
+        .membership-tab__credit-card-container {
+            position: relative;
+        }
+
+        .membership-tab__card-types--in-field {
+            position: absolute;
+            @include rem((
+                right: 2px,
+                top: 2px,
+                width: 54px,
+                height: $large-card
+            ));
+        }
 
         @include mq(tablet) {
-            @include rem((max-height: 350px));
+            .membership-tab__card-types--in-field {
+                @include rem((
+                    width: 49px !important,
+                    height: $small-card !important
+                ));
+                @include background-size(49px $small-card);
+            }
         }
-    }
-}
-
-@include keyframes('mem-tab-to-closed') {
-    0% {
-        @include rem((max-height: 424px));
-
-        @include mq(tablet) {
-            @include rem((max-height: 350px));
-        }
-        opacity: 1;
-    }
-    100% {
-        max-height: 0;
-        opacity: 0;
-    }
-}
-
-@include keyframes('updated') {
-    0% {
-        background-color: $c-brandLightBlue;
-        color: #ffffff;
-    }
-    100% {
-        background-color: #ffffff;
-        color: inherit;
-    }
-}
-
-/* Stripe credit card types
-   ========================================================================== */
-
-$small-card: 32px;
-$large-card: 35px;
-
-.membership-tab__credit-card-container {
-    position: relative;
-}
-
-.membership-tab__card-types--in-field {
-    position: absolute;
-    @include rem((
-        right: 2px,
-        top: 2px,
-        width: 54px,
-        height: $large-card
-    ));
-}
-
-@include mq(tablet) {
-    .membership-tab__card-types--in-field {
-        @include rem((
-            width: 49px !important,
-            height: $small-card !important
-        ));
-        @include background-size(49px $small-card);
     }
 }
