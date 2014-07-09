@@ -29,6 +29,10 @@ class DfpAgentTest extends FlatSpec with Matchers {
         PageSkinSponsorship("lineItemName2",
           12345L,
           Seq(s"$dfpAdUnitRoot/music/front"),
+          Nil),
+        PageSkinSponsorship("lineItemName3",
+          123456L,
+          Seq(s"$dfpAdUnitRoot/sport"),
           Nil)
       )
   }
@@ -216,5 +220,9 @@ class DfpAgentTest extends FlatSpec with Matchers {
   "isPageSkinned" should "be true for a front with a pageskin in all editions" in {
     testDfpAgent.isPageSkinned("music/front", Edition.defaultEdition) should be(true)
     testDfpAgent.isPageSkinned("music/front", editions.Us) should be(true)
+  }
+
+  "isPageSkinned" should "be false for any content (non-front) page" in {
+    testDfpAgent.isPageSkinned("sport", Edition.defaultEdition) should be(false)
   }
 }
