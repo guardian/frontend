@@ -1,7 +1,6 @@
 package conf
 
 import com.gu.conf.ConfigurationFactory
-import scala.slick.session.Database
 
 object AdminConfiguration {
 
@@ -27,6 +26,5 @@ object AdminConfiguration {
     lazy val clientSecret = configuration.getStringProperty("api.dfp.clientSecret")
     lazy val refreshToken = configuration.getStringProperty("api.dfp.refreshToken")
     lazy val appName = configuration.getStringProperty("api.dfp.applicationName")
-    lazy val networkId = configuration.getStringProperty("api.dfp.networkCode")
   }
 }
