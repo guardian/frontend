@@ -1,11 +1,13 @@
 define([
     'common/utils/storage',
     'common/utils/mediator',
+    'common/utils/config',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component'
 ], function (
     store,
     mediator,
+    config,
     mvtCookie,
     HighCommercialComponent
     ) {
@@ -38,7 +40,7 @@ define([
         store.local.set(participationsKey, participations);
     }
 
-    function cleanParticipations(config) {
+    function cleanParticipations() {
         // Removes any tests from localstorage that have been
         // renamed/deleted from the backend
         var participations = getParticipations();
@@ -74,9 +76,9 @@ define([
         });
     }
 
-    function testCanBeRun(test, config) {
+    function testCanBeRun(test) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun(config) && !expired && isTestSwitchedOn(test, config));
+        return (test.canRun() && !expired && isTestSwitchedOn(test));
     }
 
     function getTest(id) {
@@ -86,12 +88,12 @@ define([
         return (test) ? test[0] : '';
     }
 
-    function makeOmnitureTag (config) {
+    function makeOmnitureTag () {
         var participations = getParticipations(),
             tag = [];
 
         Object.keys(participations).forEach(function (k) {
-            if (testCanBeRun(getTest(k), config)) {
+            if (testCanBeRun(getTest(k))) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
             }
         });
@@ -100,13 +102,13 @@ define([
     }
 
     // Finds variant in specific tests and runs it
-    function run(test, config, context) {
-        if (isParticipating(test) && testCanBeRun(test, config)) {
+    function run(test) {
+        if (isParticipating(test) && testCanBeRun(test)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
             test.variants.some(function(variant) {
                 if (variant.id === variantId) {
-                    variant.test(context, config);
+                    variant.test();
                     return true;
                 }
             });
@@ -116,10 +118,10 @@ define([
         }
     }
 
-    function allocateUserToTest(test, config) {
+    function allocateUserToTest(test) {
 
         // Skip allocation if the user is already participating, or the test is invalid.
-        if (!testCanBeRun(test, config) || isParticipating(test)) {
+        if (!testCanBeRun(test) || isParticipating(test)) {
             return;
         }
 
@@ -145,7 +147,7 @@ define([
         }
     }
 
-    function isTestSwitchedOn(test, config) {
+    function isTestSwitchedOn(test) {
         return config.switches['ab' + test.id];
     }
 
@@ -164,9 +166,9 @@ define([
             TESTS = [];
         },
 
-        segment: function(config) {
+        segment: function() {
             getActiveTests().forEach(function(test) {
-                allocateUserToTest(test, config);
+                allocateUserToTest(test);
             });
         },
 
@@ -178,7 +180,7 @@ define([
             });
         },
 
-        segmentUser: function(config) {
+        segmentUser: function() {
             mvtCookie.generateMvtCookie();
 
             var forceUserIntoTest = /^#ab/.test(window.location.hash);
@@ -187,15 +189,15 @@ define([
                 var test = tokens[0], variant = tokens[1];
                 ab.forceSegment(test, variant);
             } else {
-                ab.segment(config);
+                ab.segment();
             }
 
-            cleanParticipations(config);
+            cleanParticipations();
         },
 
-        run: function(config, context) {
+        run: function() {
             getActiveTests().forEach(function(test) {
-                run(test, config, context);
+                run(test);
             });
         },
 
@@ -226,13 +228,13 @@ define([
             });
         },
 
-        getAbLoggableObject: function(config) {
+        getAbLoggableObject: function() {
             var abLogObject = {};
 
             try {
                 getActiveTests().forEach(function (test) {
 
-                    if (isParticipating(test) && testCanBeRun(test, config)) {
+                    if (isParticipating(test) && testCanBeRun(test)) {
                         var variant = getTestVariant(test.id);
                         if (variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;

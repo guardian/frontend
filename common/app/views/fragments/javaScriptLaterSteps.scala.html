@@ -145,25 +145,31 @@
                 }
             ).install();
 
-            if (guardian.config.switches.commercial) {
+            require(['common/modules/experiments/ab'], function(ab) {
 
-                require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
-                    commercial.init();
-                });
+                ab.segmentUser();
+                ab.run();
 
-            }
+                if (guardian.config.switches.commercial) {
 
-            if (guardian.isModernBrowser) {
-
-                @if(play.Play.isDev()) {
-                    require(['bootstraps/dev'], function (devmode) { devmode.init(); });
+                    require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
+                        commercial.init();
+                    });
                 }
 
-                require(['bootstraps/app'], function(bootstrap) {
-                    bootstrap.go();
-                });
+                if (guardian.isModernBrowser) {
 
-            }
+                    @if(play.Play.isDev()) {
+                        require(['bootstraps/dev'], function (devmode) { devmode.init(); });
+                    }
+
+                    require(['bootstraps/app'], function(bootstrap) {
+                        bootstrap.go();
+                    });
+
+                }
+
+            });
 
         });
 
