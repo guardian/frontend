@@ -185,6 +185,15 @@ define([
             this.one('video:preroll:play', events.init.bind(player));
         },
 
+        initLoadingSpinner: function(player) {
+            player.loadingSpinner.contentEl().innerHTML =
+                '<div class="pamplemousse">' +
+                '<div class="pamplemousse__pip"><i></i></div>' +
+                '<div class="pamplemousse__pip"><i></i></div>' +
+                '<div class="pamplemousse__pip"><i></i></div>' +
+                '</div>';
+        },
+
         initPlayer: function() {
 
             require('bootstraps/video-player', function () {
@@ -201,12 +210,7 @@ define([
                     vjs.ready(function () {
                         var player = this;
 
-                        player.loadingSpinner.contentEl().innerHTML =
-                            '<div class="pamplemousse">' +
-                            '<div class="pamplemousse__pip"></div>' +
-                            '<div class="pamplemousse__pip"></div>' +
-                            '<div class="pamplemousse__pip"></div>' +
-                            '</div>';
+                        modules.initLoadingSpinner(player);
 
                         deferToAnalytics(function () {
 
