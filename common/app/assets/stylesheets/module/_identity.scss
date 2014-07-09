@@ -371,8 +371,25 @@
     .tabs__tab {
         @include rem((
             max-width: gs-span(3),
-            width: 33.3%
+            width: 25%
         ));
+    }
+
+    @include mq($to: tablet) {
+        a {
+            @include rem((
+                padding-top: $gs-baseline/4,
+                line-height: 13px !important
+            ));
+        }
+    }
+    @include mq($to: 500px) {
+        .tabs__tab {
+            @include rem((
+                width: 50%,
+                margin-top: 5px
+            ));
+        }
     }
 }
 
@@ -385,6 +402,81 @@
             margin-right: $gs-gutter
         ));
     }
+}
+
+.activity-stream__witness-contributions {
+    @include rem((
+        padding-top: $gs-baseline*2
+    ));
+}
+
+.activity-stream__witness-item {
+    @include rem((
+        width: 292px,
+        margin-right: $gs-gutter/2,
+        margin-bottom: $gs-baseline
+    ));
+    display: inline-block;
+    vertical-align: top;
+    @include fs-textsans(1);
+
+    a {
+        text-decoration: none;
+    }
+}
+.activity-stream__witness-img {
+    width: 100%;
+    @include rem((
+        height: 250px
+    ));
+    @include background-size(cover);
+}
+
+.activity-stream__witness-meta {
+    background-color: $c-neutral8;
+    border: 1px solid $c-neutral4;
+    border-top: 0;
+    text-align: right;
+    @include fs-textsans(1);
+    @include rem((
+        padding: $gs-baseline 0
+    ));
+
+    .activity-stream__witness-meta-inner {
+        @include rem((
+            margin: 0 $gs-gutter
+        ));
+        color: $c-neutral1;
+    }
+}
+.activity-stream__witness-content {
+    border: 1px solid $c-neutral4;
+    border-top: 0;
+    @include rem((
+        line-height: 14px
+    ));
+}
+.activity-stream__witness-content:hover {
+    background: $c-neutral6;
+    @include transition(.3s all);
+}
+.activity-stream__witness-text {
+    @include rem((
+        margin: $gs-baseline/2 $gs-gutter,
+        min-height: 100px
+    ));
+    display: block;
+}
+.activity-stream__witness-title {
+    @include rem((
+        margin-bottom: $gs-baseline/4
+    ));
+    color: $c-neutral1;
+    @include fs-textsans(4);
+}
+.activity-stream__witness-description {
+    color: $c-neutral2;
+    @include fs-textsans(2);
 }
 
 /* Edit profile Membership tab
