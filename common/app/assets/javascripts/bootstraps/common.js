@@ -23,6 +23,7 @@ define([
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
     'common/modules/navigation/search',
+    'common/modules/navigation/newNavigation',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/ui/dropdowns',
@@ -69,6 +70,7 @@ define([
     Profile,
     Sections,
     Search,
+    newNavigation,
 
     Tabs,
     Toggles,
@@ -119,6 +121,10 @@ define([
 
             sections.init(document);
             search.init(header);
+        },
+
+        initialiseNewNavigation: function (config) {
+            newNavigation.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -436,7 +442,11 @@ define([
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
-            modules.initialiseNavigation(config);
+            if(config.switches.responsiveNav){
+                modules.initialiseNewNavigation(config);
+            } else {
+                modules.initialiseNavigation(config);
+            }
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();
