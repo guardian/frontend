@@ -3,35 +3,39 @@
 
 @defining(Edition(request).navigation) { navigation =>
     @defining(Navigation.topLevelItem(navigation, metaData)) { topLevelSelected =>
-        <ul class="global-navigation">
-            @navigation.map { nav =>
-                <li class="@RenderClasses(Map(
-                        ("global-navigation__section", true),
-                        ("global-navigation__section--current", nav.currentFor(metaData)),
-                        ("global-navigation__section--home", Navigation.isEditionFront(nav))
-                    ))">
-                    <a class="global-navigation__title" href="@LinkTo(nav.name.href)" data-link-name="@nav.name.title">
-                        @Html(nav.name.title)
-                        @if(nav.currentFor(metaData)) {
-                            <span class="u-h">selected</span>
-                        }
-                    </a>
-                    @if(nav.links.nonEmpty) {
-                        <ul class="global-navigation__children">
-                            @nav.links.map{ link =>
-                                <li class="global-navigation__child@if(link.currentFor(metaData)){ global-navigation__child--current}">
-                                    <a class="global-navigation__action" href="@LinkTo(link.href)" data-link-name="@link.title">
-                                        @Html(link.title)
-                                        @if(link.currentFor(metaData)){
-                                            <span class="u-h">selected</span>
-                                        }
-                                    </a>
-                                </li>
+        <nav>
+            <h6 class="u-h">All sections</h6>
+
+            <ul class="global-navigation">
+                @navigation.map { nav =>
+                    <li class="@RenderClasses(Map(
+                            ("global-navigation__section", true),
+                            ("global-navigation__section--current", nav.currentFor(metaData)),
+                            ("global-navigation__section--home", Navigation.isEditionFront(nav))
+                        ))">
+                        <a class="global-navigation__title" href="@LinkTo(nav.name.href)" data-link-name="@nav.name.title">
+                            @Html(nav.name.title)
+                            @if(nav.currentFor(metaData)) {
+                                <span class="u-h">selected</span>
                             }
-                        </ul>
-                    }
-                </li>
-            }
-        </ul>
+                        </a>
+                        @if(nav.links.nonEmpty) {
+                            <ul class="global-navigation__children">
+                                @nav.links.map{ link =>
+                                    <li class="global-navigation__child@if(link.currentFor(metaData)){ global-navigation__child--current}">
+                                        <a class="global-navigation__action" href="@LinkTo(link.href)" data-link-name="@link.title">
+                                            @Html(link.title)
+                                            @if(link.currentFor(metaData)){
+                                                <span class="u-h">selected</span>
+                                            }
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                }
+            </ul>
+        </nav>
     }
 }
