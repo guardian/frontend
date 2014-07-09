@@ -253,11 +253,26 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
    ========================================================================== */
 
 .signposting {
+    position: relative;
     background: $c-signposting-background;
-}
-.signposting__item {
-    display: table-cell;
-    background: $c-signposting-background;
+    border-right: 1px solid $c-global-navigation-border;
+    @include rem((
+        padding-right: $new-navigation-h-space-between-items
+    ));
+
+    .new-navigation--expanded & {
+        border-bottom: 1px solid $c-global-navigation-border;
+
+        @include mq($to: wide) {
+            border-right: 0;
+        }
+        @include mq(wide) {
+            border-bottom: 0;
+            @include rem((
+                min-width: gs-span(2) + $gs-gutter
+            ));
+        }
+    }
 }
 .signposting__item {
     white-space: nowrap;
@@ -265,11 +280,6 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
     position: relative;
     @include rem((
         padding-left: $new-navigation-h-space-between-items/2
-    ));
-}
-.signposting__item:last-child {
-    @include rem((
-        padding-right: $new-navigation-h-space-between-items/2
     ));
 }
 .signposting__action {
@@ -280,46 +290,16 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
 .signposting__separator {
     display: table-cell;
     vertical-align: top;
+    line-height: 1;
 }
 .signposting__separator__inner {
-    $_dim-arrow-w: $gs-gutter/2;
-    $_dim-arrow-h: 20px;
-    $_dim-arrow-my: $_dim-arrow-h * -1;
-
-    position: relative;
-    background: $c-signposting-background;
-    display: block;
-    overflow: hidden;
+    font-size: 27px;
+    font-weight: 200;
+    color: $c-signposting-action;
     @include rem((
-        width: $gs-gutter/2,
-        height: $gs-row-height,
-        margin-right: $gs-gutter/2
+        line-height: $gs-row-height,
+        padding-right: $new-navigation-h-space-between-items/2
     ));
-
-    &:before,
-    &:after {
-        content: '';
-        display: block;
-        top: 50%;
-        left: -1px;
-        position: absolute;
-        width: 0;
-        height: 0;
-        @include rem((
-            margin-top: $_dim-arrow-my,
-            border-top: $_dim-arrow-h solid transparent,
-            border-bottom: $_dim-arrow-h solid transparent,
-            border-left: $_dim-arrow-w solid #2479c3
-        ));
-    }
-    &:before {
-        margin-left: 1px;
-        z-index: 1;
-    }
-    &:after {
-        border-left-color: $c-signposting-background;
-        z-index: 2;
-    }
 }
 
 
@@ -369,6 +349,12 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
         padding-right: $new-navigation-h-space-between-items/2,
         padding-left: $new-navigation-h-space-between-items/2
     ));
+
+    .new-navigation--collapsed &:first-child {
+        @include rem((
+            padding-left: $new-navigation-h-space-between-items
+        ));
+    }
 }
 .signposting__item--home,
 .top-navigation__item:first-child {
@@ -651,6 +637,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
             ));
             height: 1px;
             background: $c-global-navigation-border;
+            z-index: 1;
         }
         &.new-navigation--collapsed {
             @include rem((
@@ -682,11 +669,6 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
             display: table-cell;
             @include rem((
                 line-height: $gs-row-height
-            ));
-        }
-        .local-navigation {
-            @include rem((
-                padding-left: $gs-gutter/2
             ));
         }
 
