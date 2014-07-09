@@ -3,8 +3,30 @@
     .byline,
     .content__dateline,
     .social-wrapper--aside,
-    .content__meta-container {
+    .content__meta-container,
+    .ad-slot--paid-for-badge--article,
+    .commentcount {
         border-color: $c-neutral2;
+    }
+
+    .commentcount.tone-colour {
+        color: $c-commentAccent2;
+        &:hover {
+            color: $c-commentAccent2;
+        }
+        i {
+            @include icon(comment-commentaccent);
+        }
+    }
+
+    .player {
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
+    }
+
+    .gu-video-wrapper {
+        margin-bottom: 0;
     }
 
     .social-icon-wrapper {
