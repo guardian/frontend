@@ -33,7 +33,8 @@ $c-local-navigation-current-border: 0;
 $c-global-navigation-background: $c-new-navigation-base;
 $c-global-navigation-title: #ffffff;
 $c-global-navigation-title-background: guss-colour(guardian-brand);
-$global-navigation-title-width: gs-span(2) + $gs-gutter * 2;
+$global-navigation-title-width: $a-leftCol-width + $gs-gutter;
+$global-navigation-title-width-wide: $a-leftColWide-width + $gs-gutter;
 $c-global-navigation-action: #ffffff;
 $c-global-navigation-border: rgba(#ffffff, .3);
 
@@ -268,7 +269,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
     @include mq(wide) {
         border-right-width: 0;
 
-        .new-navigation--has-local-navigation {
+        .new-navigation--has-local-navigation & {
             border-right-width: 1px;
         }
     }
@@ -327,10 +328,6 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
     color: $c-top-navigation-action;
     display: table-cell;
 }
-.global-navigation__title {
-    color: $c-global-navigation-title;
-    background: $c-global-navigation-title-background;
-}
 .global-navigation__action {
     color: $c-global-navigation-action;
     display: block;
@@ -346,9 +343,6 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
     @include rem((
         margin-right: $gs-gutter/2
     ));
-}
-.global-navigation__title {
-    float: left;
 }
 .local-navigation__item,
 .top-navigation__item {
@@ -419,8 +413,17 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
             padding-left: $global-navigation-title-width
         ));
     }
+    @include mq(wide) {
+        @include rem((
+            padding-left: $global-navigation-title-width-wide
+        ));
+    }
 }
 .global-navigation__title {
+    color: $c-global-navigation-title;
+    background: $c-global-navigation-title-background;
+    float: left;
+
     @include mq($to: tablet) {
         @include rem((
             line-height: $gs-baseline*2,
@@ -445,6 +448,11 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
         @include rem((
             width: $global-navigation-title-width,
             padding-left: $gs-gutter
+        ));
+    }
+    @include mq(wide) {
+        @include rem((
+            width: $global-navigation-title-width-wide
         ));
     }
 }
