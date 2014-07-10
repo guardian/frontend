@@ -1,9 +1,9 @@
 package services
 
-import contentapi.{ContentApiClient, ElasticSearchLiveContentApiClient}
 import conf.Configuration
-import play.api.libs.json.{JsObject, JsValue}
+import contentapi.{ContentApiClient, ElasticSearchLiveContentApiClient}
 import org.joda.time.DateTime
+import play.api.libs.json.{JsObject, JsValue}
 
 class ElasticSearchDraftContentApiClient extends ElasticSearchLiveContentApiClient {
   override val targetUrl = Configuration.contentApi.contentApiDraftHost
