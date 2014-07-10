@@ -8,11 +8,11 @@ import com.gu.fronts.integration.test.config.WebdriverFactory
 
 abstract class FrontsSeleniumTestSuite extends WebDriverFeatureSpec with Matchers with PageHelper {
 
-  override protected def startDriver(): WebDriver = {
-    WebdriverFactory.createWebDriver(testClassAndMethod)
+  override protected def startDriver(testName: String): WebDriver = {
+    WebdriverFactory.createWebDriver(testClassAndMethod(testName))
   }
 
-  private def testClassAndMethod(): String = {
+  private def testClassAndMethod(testName: String): String = {
     getClass().getSimpleName() + "." + testName
   }
 }

@@ -7,7 +7,7 @@ resolvers ++= Seq(
   "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/")
 
 libraryDependencies ++= Seq(
-  "com.gu" %% "scala-automation" % "1.8"
+  "com.gu" %% "scala-automation" % "1.11"
 )
 
 EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.Resource

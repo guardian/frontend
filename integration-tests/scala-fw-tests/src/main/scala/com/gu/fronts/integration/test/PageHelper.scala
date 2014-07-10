@@ -1,15 +1,14 @@
 package com.gu.fronts.integration.test
 
 import scala.collection.JavaConverters.asScalaBufferConverter
-
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.WebElement
-
 import com.gu.automation.support.TestLogging
 import com.gu.fronts.integration.test.config.PropertyLoader._
 import com.gu.fronts.integration.test.pages.common.FrontsParentPage
+import org.openqa.selenium.SearchContext
 
 /**
  * This trait is providing various helper functionalities for navigating, loading and initialising pages and Page Objects.
@@ -17,17 +16,11 @@ import com.gu.fronts.integration.test.pages.common.FrontsParentPage
  */
 trait PageHelper extends TestLogging {
 
-  var driver: WebDriver
   val frontsBaseUrl = getProperty(BaseUrl)
   val TestAttributeName = "data-test-id"
 
-  def goTo[Page <: FrontsParentPage](pageObject: Page): Page = {
-    goTo(pageObject.url, pageObject)
-  }
-
-  def goTo[Page <: FrontsParentPage](url: String, pageObject: Page): Page = {
-    driver.get(forceBetaSite(url))
-    pageObject.assertIsDisplayed
+  def goTo[Page <: FrontsParentPage](absoluteUrl: String, pageObject: => Page)(implicit driver:WebDriver): Page = {
+    driver.get(forceBetaSite(absoluteUrl))
     pageObject
   }
 
@@ -48,44 +41,27 @@ trait PageHelper extends TestLogging {
   }
 
   /**
-   * Will find the element with the provided test attribute id, using the webdriver as search context
+   * Will find the element with the provided test attribute id and, if provided, using the provided webelement as search context
+   * otherwise it will use the WebDriver
    */
-  def findByTestAttribute(testAttributeValue: String): WebElement = {
+  def findByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver:WebDriver): WebElement = {
     wrapException {
-      driver.findElement(byTestAttributeId(testAttributeValue))
+      contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
     }
   }
 
   /**
-   * Will find all elements with the provided test attribute id, using the webdriver as search context
+   * Will find all elements with the provided test attribute id and, if provided, using the provided webelement as search context
+   * otherwise it will use the WebDriver
    */
-  def findAllByTestAttribute(testAttributeValue: String): List[WebElement] = {
+  def findAllByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver:WebDriver): List[WebElement] = {
     wrapException {
-      driver.findElements(byTestAttributeId(testAttributeValue)).asScala.toList
-    }
-  }
-
-  /**
-   * Will find the element with the provided test attribute id, using the provided webelement as search context
-   */
-  def findByTestAttribute(testAttributeValue: String, contextElement: WebElement): WebElement = {
-    wrapException {
-      contextElement.findElement(byTestAttributeId(testAttributeValue))
-    }
-  }
-
-  /**
-   * Will find all elements with the provided test attribute id, using the provided webelement as search context
-   */
-  def findAllByTestAttribute(testAttributeValue: String, contextElement: WebElement): List[WebElement] = {
-    wrapException {
-      contextElement.findElements(byTestAttributeId(testAttributeValue)).asScala.toList
+      contextElement.getOrElse(driver).findElements(byTestAttributeId(testAttributeValue)).asScala.toList
     }
   }
 
   private def byTestAttributeId(testAttributeValue: String): org.openqa.selenium.By = {
-    By.cssSelector(new StringBuilder().append("[").append(TestAttributeName).append("=").
-      append(testAttributeValue).append("]").toString)
+    By.cssSelector(s"[$TestAttributeName=$testAttributeValue]")
   }
 
   private def wrapException[A](f: => A): A = {
@@ -94,33 +70,6 @@ trait PageHelper extends TestLogging {
     } catch {
       case e: Exception =>
         throw new RuntimeException(s"WebElement was not found on page [$getClass]", e)
-    }
-  }
-
-  /**
-   * Checks if the provided elements exist and are displayed. If any element is not, then an exception is
-   * thrown with a message with further details about missing elements
-   */
-  def assertExistsAndDisplayed(elementsToCheck: WebElement*): Boolean = {
-    val errors = elementsToCheck.flatMap(checkElementExistsAndCreateError)
-    if (errors.isEmpty)
-      true
-    else
-      throw new RuntimeException("Error loading page due to: " + errors mkString ("\n"))
-  }
-
-  private def checkElementExistsAndCreateError(webElement: WebElement): Option[String] = {
-    try {
-      if (!webElement.isDisplayed)
-        Option(s"WebElement [$webElement] was not displayed on page [$getClass]")
-      else
-        None
-    } catch {
-      case e: WebDriverException => {
-        val notFoundMsg = s"WebElement [$webElement] was not found on page [$getClass]"
-        logger.warn(notFoundMsg, e)
-        Option(s"$notFoundMsg due to ${e.getMessage}")
-      }
     }
   }
 }

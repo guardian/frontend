@@ -5,11 +5,7 @@ import org.openqa.selenium.WebElement
 
 import com.gu.fronts.integration.test.pages.common.FrontsParentPage
 
-class MostPopularModule(implicit var driver: WebDriver) extends FrontsParentPage() {
+class MostPopularModule(implicit driver: WebDriver) extends FrontsParentPage() {
 
-  private def mostPopularRootElement: WebElement = findByTestAttribute("right-most-popular")
-
-  def assertIsDisplayed() = {
-    assertExistsAndDisplayed(mostPopularRootElement)
-  }
+  val mostPopularRootElement: WebElement = findByTestAttribute("right-most-popular")
 }
