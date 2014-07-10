@@ -1,10 +1,11 @@
 package util
 
-import org.scalatest.{ShouldMatchers, FlatSpec}
 import org.scalatest.concurrent.ScalaFutures
-import Enumerators._
+import org.scalatest.{FlatSpec, ShouldMatchers}
+import play.api.libs.iteratee.Iteratee
+import util.Enumerators._
+
 import scala.concurrent.Future
-import play.api.libs.iteratee.{Enumerator, Iteratee}
 
 class EnumeratorsTest extends FlatSpec with ShouldMatchers with ScalaFutures {
   "enumerate" should "simply enumerate the list if the function applied lifts the value into a Future" in {

@@ -1,17 +1,18 @@
 package services
 
+import com.ning.http.client.Realm
+import common.FaciaToolMetrics.{ContentApiPutFailure, ContentApiPutSuccess}
+import common.{ExecutionContexts, Logging}
+import conf.Configuration
 import frontsapi.model.Trail
 import model.Config
-import scala.concurrent.Future
-import tools.FaciaApi
+import org.joda.time.DateTime
+import play.Play
 import play.api.libs.json.{JsNull, JsNumber, JsValue, Json}
 import play.api.libs.ws.{Response, WS}
-import common.{Logging, ExecutionContexts}
-import com.ning.http.client.Realm
-import conf.Configuration
-import play.Play
-import common.FaciaToolMetrics.{ContentApiPutFailure, ContentApiPutSuccess}
-import org.joda.time.DateTime
+import tools.FaciaApi
+
+import scala.concurrent.Future
 
 trait ContentApiWrite extends ExecutionContexts with Logging {
 

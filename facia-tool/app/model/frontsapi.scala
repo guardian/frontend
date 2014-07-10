@@ -1,6 +1,6 @@
 package frontsapi.model
 
-import play.api.libs.json.{JsString, Json, JsValue}
+import play.api.libs.json.{Json, JsValue}
 import tools.FaciaApi
 import controllers.Identity
 import org.joda.time.DateTime
@@ -13,13 +13,13 @@ object Front {
 }
 
 case class Front(
-                  collections: List[String],
-                  navSection: Option[String],
-                  webTitle: Option[String],
-                  title: Option[String],
-                  description: Option[String],
-                  priority: Option[String]
-                  )
+  collections: List[String],
+  navSection: Option[String],
+  webTitle: Option[String],
+  title: Option[String],
+  description: Option[String],
+  priority: Option[String]
+)
 
 object Collection {
   implicit val jsonFormat = Json.format[Collection]
@@ -29,15 +29,15 @@ object Collection {
 }
 
 case class Collection(
-                  displayName: Option[String],
-                  apiQuery: Option[String],
-                 `type`: Option[String],
-                  href: Option[String],
-                  groups: Option[List[String]],
-                  uneditable: Option[Boolean],
-                  showTags: Option[Boolean],
-                  showSections: Option[Boolean]
-                  )
+  displayName: Option[String],
+  apiQuery: Option[String],
+  `type`: Option[String],
+  href: Option[String],
+  groups: Option[List[String]],
+  uneditable: Option[Boolean],
+  showTags: Option[Boolean],
+  showSections: Option[Boolean]
+)
 
 object Config {
   implicit val jsonFormat = Json.format[Config]
@@ -174,6 +174,7 @@ trait UpdateActions extends Logging {
   //Archiving
   def archivePublishBlock(id: String, block: Block, identity: Identity): Block =
     archiveBlock(id, block, "publish", identity)
+
   def archiveDiscardBlock(id: String, block: Block, identity: Identity): Block =
     archiveBlock(id, block, "discard", identity)
 
