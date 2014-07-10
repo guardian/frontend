@@ -1,6 +1,5 @@
 package services
 
-import common.FaciaMetrics.S3AuthorizationError
 import common._
 import conf.LiveContentApi
 import conf.Configuration
@@ -19,6 +18,7 @@ import play.api.libs.ws.Response
 import play.api.libs.json.JsObject
 import scala.concurrent.duration._
 import conf.Switches.{FaciaToolCachedContentApiSwitch, FaciaToolCachedZippingContentApiSwitch}
+import common.S3Metrics.S3AuthorizationError
 
 
 object Path {
