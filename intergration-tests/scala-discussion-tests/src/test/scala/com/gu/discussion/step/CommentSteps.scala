@@ -5,7 +5,7 @@ import com.gu.discussion.page._
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 
-case class CommentSteps(implicit driver: WebDriver, logger: TestLogger) extends Matchers with LoggingIn {
+case class CommentSteps(implicit driver: WebDriver) extends Matchers with LoggingIn with TestLogging {
 
   def iAmSignedInAsAMember() = {
     logger.step("I am Staff user and signed into NGW")
@@ -99,7 +99,6 @@ case class CommentSteps(implicit driver: WebDriver, logger: TestLogger) extends 
     UserProfilePage.goto
     this
   }
-
 
   def iCanSearchUserComments() = {
     logger.step("I can search a users comment history")
