@@ -558,7 +558,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
 
         @include mq(tablet) {
             @include rem((
-                padding-right: $new-navigation-toggler-width-full + $gs-gutter
+                padding-right: $new-navigation-toggler-width-full * 2
             ));
         }
     }
