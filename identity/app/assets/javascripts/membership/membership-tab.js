@@ -1,6 +1,3 @@
-/*
-* If user is a member, display a membership tab on edit profile page
-*/
 define(['common/utils/$',
 'bean',
 'bonzo',
