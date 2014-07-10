@@ -105,9 +105,8 @@ define([
             images.listen();
         },
 
-        initialiseNavigation: function (config) {
-            var sections = new Sections(config),
-                search = new Search(config),
+        initialiseTopNavItems: function(config){
+            var search = new Search(config),
                 header = document.getElementById('header');
 
             if (header) {
@@ -119,8 +118,11 @@ define([
                 }
             }
 
-            sections.init(document);
             search.init(header);
+        },
+
+        initialiseNavigation: function (config) {
+            new Sections(config).init(document);
         },
 
         initialiseNewNavigation: function (config) {
@@ -442,6 +444,7 @@ define([
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
+            modules.initialiseTopNavItems(config);
             if(config.switches.responsiveNav){
                 modules.initialiseNewNavigation(config);
             } else {
