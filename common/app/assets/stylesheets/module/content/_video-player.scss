@@ -1,5 +1,5 @@
-@import '../icons/_video-icons-sprite';
-@import '../icons/_video-icons-svg';
+@import '../../icons/video-icons-sprite';
+@import '../../icons/video-icons-svg';
 
 .player {
     @include rem((
@@ -91,8 +91,7 @@ $vjs-control-height: $gs-baseline*4;
     }
 
     .vjs-playing &,
-    .vjs-has-started.vjs-using-native-controls &,
-    .vjs-ad-loading & {
+    .vjs-has-started.vjs-using-native-controls & {
         display: none !important;
     }
 }
@@ -103,10 +102,6 @@ $vjs-control-height: $gs-baseline*4;
     left: 50%;
     margin-left: -23px;
     margin-top: -15px;
-
-    .vjs-ad-loading & {
-        display: block !important;
-    }
 }
 
 /* VJS: CONTROL BAR
