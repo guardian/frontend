@@ -823,22 +823,24 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
         margin-top: 2px
     ));
 
-    .new-navigation--expanded & {
-        &:nth-child(1) {
-            position: relative;
-            top: rem(4px);
-            @include transform(rotate(-45deg));
+    @if not $old-ie {
+        .new-navigation--expanded & {
+            &:nth-child(1) {
+                position: relative;
+                top: rem(4px);
+                @include transform(rotate(-45deg));
+            }
+            &:nth-child(2) {
+                display: none;
+            }
+            &:nth-child(3) {
+                position: relative;
+                top: -rem(4px);
+                @include transform(rotate(45deg));
+            }
         }
-        &:nth-child(2) {
-            display: none;
+        @include mq(tablet) {
+            @include transition(all .1s ease-in);
         }
-        &:nth-child(3) {
-            position: relative;
-            top: -rem(4px);
-            @include transform(rotate(45deg));
-        }
-    }
-    @include mq(tablet) {
-        transition: all .1s ease-in;
     }
 }
