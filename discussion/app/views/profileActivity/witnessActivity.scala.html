@@ -2,7 +2,8 @@
 
 <div class="activity-stream__witness-contributions">
 @if(activity.isEmpty){
-	<p class="activity-stream__empty">Nothing to see here at the moment.</p>
+	<p class="activity-stream__empty">No contributions found.<br/><br/>
+    Want to contribute to GuardianWitness? <a href="https://witness.theguardian.com/">Find out how and take part.</a></p>
 } else {
 	@activity.map{ w =>
         @if(!w.image.isEmpty){
