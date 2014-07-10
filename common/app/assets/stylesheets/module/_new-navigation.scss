@@ -822,32 +822,23 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
         border-top: 2px solid rgba(#ffffff, .9),
         margin-top: 2px
     ));
-}
 
-
-// Animate the burger on click only for super cutting edge devices
-// so that the transition is garanteed to be really smooth
-@supports (transform-origin: 50% 50%) {
-    @include mq(tablet) {
-        .honest-burger i {
-            transition: all .1s ease-in;
+    .new-navigation--expanded & {
+        &:nth-child(1) {
+            position: relative;
+            top: rem(4px);
+            @include transform(rotate(-45deg));
+        }
+        &:nth-child(2) {
+            display: none;
+        }
+        &:nth-child(3) {
+            position: relative;
+            top: -rem(4px);
+            @include transform(rotate(45deg));
         }
     }
-    .new-navigation--expanded {
-        .honest-burger i {
-            &:nth-child(1) {
-                position: relative;
-                top: rem(4px);
-                transform: rotate(-45deg);
-            }
-            &:nth-child(2) {
-                display: none;
-            }
-            &:nth-child(3) {
-                position: relative;
-                top: -rem(4px);
-                transform: rotate(45deg);
-            }
-        }
+    @include mq(tablet) {
+        transition: all .1s ease-in;
     }
 }
