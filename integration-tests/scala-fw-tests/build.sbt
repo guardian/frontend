@@ -9,5 +9,3 @@ resolvers ++= Seq(
 libraryDependencies ++= Seq(
   "com.gu" %% "scala-automation" % "1.11"
 )
-
-EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.Resource
