@@ -106,7 +106,6 @@ define([
         },
 
         initialiseTopNavItems: function(config){
-            window.console.log('initialiseTopNavItems');
             var search = new Search(config),
                 header = document.getElementById('header');
 
