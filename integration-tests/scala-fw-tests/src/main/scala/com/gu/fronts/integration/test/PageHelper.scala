@@ -30,9 +30,9 @@ trait PageHelper extends TestLogging {
     pageObject.assertIsDisplayed
     pageObject
   }
-  
-  def fromRelativeUrl(relativeUrl:String) : String = {
-    frontsBaseUrl+relativeUrl
+
+  def fromRelativeUrl(relativeUrl: String): String = {
+    frontsBaseUrl + relativeUrl
   }
 
   /**
@@ -51,33 +51,50 @@ trait PageHelper extends TestLogging {
    * Will find the element with the provided test attribute id, using the webdriver as search context
    */
   def findByTestAttribute(testAttributeValue: String): WebElement = {
-    driver.findElement(byTestAttributeId(testAttributeValue))
+    wrapException {
+      driver.findElement(byTestAttributeId(testAttributeValue))
+    }
   }
 
   /**
    * Will find all elements with the provided test attribute id, using the webdriver as search context
    */
   def findAllByTestAttribute(testAttributeValue: String): List[WebElement] = {
-    driver.findElements(byTestAttributeId(testAttributeValue)).asScala.toList
+    wrapException {
+      driver.findElements(byTestAttributeId(testAttributeValue)).asScala.toList
+    }
   }
 
   /**
    * Will find the element with the provided test attribute id, using the provided webelement as search context
    */
   def findByTestAttribute(testAttributeValue: String, contextElement: WebElement): WebElement = {
-    contextElement.findElement(byTestAttributeId(testAttributeValue))
+    wrapException {
+      contextElement.findElement(byTestAttributeId(testAttributeValue))
+    }
   }
 
   /**
    * Will find all elements with the provided test attribute id, using the provided webelement as search context
    */
   def findAllByTestAttribute(testAttributeValue: String, contextElement: WebElement): List[WebElement] = {
-    contextElement.findElements(byTestAttributeId(testAttributeValue)).asScala.toList
+    wrapException {
+      contextElement.findElements(byTestAttributeId(testAttributeValue)).asScala.toList
+    }
   }
 
   private def byTestAttributeId(testAttributeValue: String): org.openqa.selenium.By = {
     By.cssSelector(new StringBuilder().append("[").append(TestAttributeName).append("=").
       append(testAttributeValue).append("]").toString)
+  }
+
+  private def wrapException[A](f: => A): A = {
+    try {
+      f
+    } catch {
+      case e: Exception =>
+        throw new RuntimeException(s"WebElement was not found on page [$getClass]", e)
+    }
   }
 
   /**
@@ -95,13 +112,14 @@ trait PageHelper extends TestLogging {
   private def checkElementExistsAndCreateError(webElement: WebElement): Option[String] = {
     try {
       if (!webElement.isDisplayed)
-        Option("WebElement was not displayed " + webElement)
+        Option(s"WebElement [$webElement] was not displayed on page [$getClass]")
       else
         None
     } catch {
       case e: WebDriverException => {
-        logger.warn("WebElement was not displayed " + webElement, e)
-        Option(e.getMessage)
+        val notFoundMsg = s"WebElement [$webElement] was not found on page [$getClass]"
+        logger.warn(notFoundMsg, e)
+        Option(s"$notFoundMsg due to ${e.getMessage}")
       }
     }
   }
