@@ -335,13 +335,16 @@
     position: relative;
     width: gs-span(1);
     height: 60px; //Intentionally off grid
-    -webkit-transform: translateX(0); // fix for webkit not properly scaling/clipping the child element
     @include rem((
         margin: $gs-baseline/2 0
     ));
     overflow: hidden;
-    @include border-radius(50%);
+    @include border-radius(100rem);
     background-color: $c-neutral7;
+
+    // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
+    -webkit-transform: translateZ(0);
+    -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
 
     @include mq(leftCol) {
         width: gs-span(2);
