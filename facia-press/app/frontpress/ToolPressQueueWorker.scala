@@ -2,7 +2,7 @@ package frontpress
 
 import com.amazonaws.regions.{Regions, Region}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
-import common.JsonMessageQueue
+import common.{FaciaPressMetrics, JsonMessageQueue}
 import common.SQSQueues._
 import conf.Configuration
 import services.{Live, Draft, FrontPath, PressJob}
@@ -32,8 +32,16 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] {
 
     pressFuture onComplete {
       case Success(_) =>
+        pressType match {
+          case Draft => FaciaPressMetrics.FrontPressDraftSuccess.increment()
+          case Live => FaciaPressMetrics.FrontPressLiveSuccess.increment()
+        }
         log.info(s"Successfully pressed $path on $pressType")
       case Failure(error) =>
+        pressType match {
+          case Draft => FaciaPressMetrics.FrontPressDraftFailure.increment()
+          case Live => FaciaPressMetrics.FrontPressLiveFailure.increment()
+        }
         log.error(s"Failed to press $path on $pressType", error)
     }
 
