@@ -335,6 +335,7 @@
     position: relative;
     width: gs-span(1);
     height: 60px; //Intentionally off grid
+    -webkit-transform: translateX(0); // fix for webkit not properly scaling/clipping the child element
     @include rem((
         margin: $gs-baseline/2 0
     ));
@@ -358,7 +359,9 @@
     //This centres the image within its container
     height: 110%;
     bottom: -6px;
-    left: -15%;
+    left: -9999px;
+    right: -9999px;
+    margin: auto;
 
     @include mq(leftCol) {
         bottom: -14px;
@@ -480,6 +483,13 @@
         margin-left: 0;
         margin-right: 0;
     }
+}
+
+.meta__comment-count--top { // currently used on video page only
+    display: none;
+    margin-top: $gs-baseline/2;
+    margin-left: $gs-gutter/4;
+    float: right;
 }
 
 .byline {

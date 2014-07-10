@@ -19,15 +19,27 @@
         }
     }
 
-    .content__meta-container {
-        position: relative;
-        .commentcount {
-            display: block;
-            position: absolute;
-            right: 0;
-            top: 0;
+    .content__head__comment-count {
+        display: none;
+    }
+
+    @include mq($to: desktop) {
+        .meta__comment-count--top,
+        .meta__comment-count--bottom {
+            .commentcount {
+                border-top: 0;
+            }
             .commentcount__label {
                 display: none;
+            }
+        }
+        .meta__comment-count--bottom {
+            display: none;
+        }
+        .meta__comment-count--top {
+            display: block;
+            .commentcount {
+                display: block;
             }
         }
     }
