@@ -355,18 +355,22 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
     ));
 
 }
-.new-navigation--collapsed.new-navigation--has-signposting .local-navigation,
-.new-navigation--collapsed.new-navigation--has-signposting .top-navigation {
-    @include rem((
-        padding-left: $new-navigation-h-space-between-items/2
-    ));
-}
-@include mq(mobileLandscape) {
-    .new-navigation--collapsed .local-navigation,
-    .new-navigation--collapsed .top-navigation {
+.new-navigation--collapsed.new-navigation--has-signposting {
+    .local-navigation,
+    .top-navigation {
         @include rem((
             padding-left: $new-navigation-h-space-between-items/2
         ));
+    }
+}
+@include mq(mobileLandscape) {
+    .new-navigation--collapsed {
+        .local-navigation,
+        .top-navigation {
+            @include rem((
+                padding-left: $new-navigation-h-space-between-items/2
+            ));
+        }
     }
 }
 
