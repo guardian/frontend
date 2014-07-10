@@ -7,8 +7,8 @@ import org.openqa.selenium.{By, WebDriver}
 
 case class ArticlePage(implicit driver: WebDriver) {
 
-  private def commentCountLabel = driver >> By.cssSelector("div.content__main-column.content__main-column--article div.js-comment-count a.js-show-discussion")
-  private def showAllCommentsLink = driver >> ByExt.dataLinkName("View all comments")
+  private def commentCountLabel = driver element (By.cssSelector("div.content__main-column.content__main-column--article div.js-comment-count a.js-show-discussion"))
+  private def showAllCommentsLink = driver element (ByExt.dataLinkName("View all comments"))
 
   def goToStartOfComments(): ArticlePage = {
 

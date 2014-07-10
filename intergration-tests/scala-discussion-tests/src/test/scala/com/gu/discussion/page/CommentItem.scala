@@ -2,30 +2,31 @@ package com.gu.discussion.page
 
 import com.gu.automation.support.page.Element._
 import org.openqa.selenium.support.ui.Select
-import org.openqa.selenium.{By, WebDriver}
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.By._
 
 case class CommentItem(implicit driver: WebDriver) {
 
-  private val latestComment = driver >> By.cssSelector(".discussion__comments__container .d-comment")
-  private def commentBody = latestComment >> By.className("d-comment__body")
-  private def showCommentButton = latestComment >> By.className("d-comment-box__show-parent")
-  private def replyToCommentButton = latestComment >> By.className("d-comment__action--reply")
-  private def commentTextArea = latestComment >> By.cssSelector("textarea[name=\"body\"]")
-  private def postReplyButton = latestComment >> By.className("d-comment-box__submit")
-  private def cancelReplyButton = latestComment >> By.className("d-comment-box__cancel")
-  private def pickCommentButton = latestComment >> By.className("d-comment__action--pick")
-  private def reportCommentButton = latestComment >> By.className("d-comment__action--report")
-  private def reportSelectControl = latestComment >> By.name("category")
-  private def reportTextArea = latestComment >> By.id("d-report-comment__reason")
-  private def reportEmail = latestComment >> By.id("d-report-comment__email")
-  private def sendReportButton = latestComment >> By.cssSelector("button.d-report-comment__submit")
-  private def showMoreRepliesButton = latestComment >> By.className("d-show-more-replies")
-  private def recommendCommentButton = latestComment >> By.className("d-comment__recommend-button")
-  private def commentAuthorAvatar = latestComment >> By.className("d-comment__avatar")
-  private def commentAuthorLink = latestComment >> By.cssSelector(".d-comment__author a")
-  private def commentTimeStamp = latestComment >> By.className("d-comment__timestamp")
-  private def oldRecommendCommentCount = latestComment >> By.cssSelector(".d-comment__recommend-count--old")
-  private def newRecommendCommentCount = latestComment >> By.cssSelector(".d-comment__recommend-count--new")
+  private val latestComment = driver element cssSelector(".discussion__comments__container .d-comment")
+  private def commentBody = latestComment element className("d-comment__body")
+  private def showCommentButton = latestComment element className("d-comment-box__show-parent")
+  private def replyToCommentButton = latestComment element className("d-comment__action--reply")
+  private def commentTextArea = latestComment element cssSelector("textarea[name=\"body\"]")
+  private def postReplyButton = latestComment element className("d-comment-box__submit")
+  private def cancelReplyButton = latestComment element className("d-comment-box__cancel")
+  private def pickCommentButton = latestComment element className("d-comment__action--pick")
+  private def reportCommentButton = latestComment element className("d-comment__action--report")
+  private def reportSelectControl = latestComment element name("category")
+  private def reportTextArea = latestComment element id("d-report-comment__reason")
+  private def reportEmail = latestComment element id("d-report-comment__email")
+  private def sendReportButton = latestComment element cssSelector("button.d-report-comment__submit")
+  private def showMoreRepliesButton = latestComment element className("d-show-more-replies")
+  private def recommendCommentButton = latestComment element className("d-comment__recommend-button")
+  private def commentAuthorAvatar = latestComment element className("d-comment__avatar")
+  private def commentAuthorLink = latestComment element cssSelector(".d-comment__author a")
+  private def commentTimeStamp = latestComment element className("d-comment__timestamp")
+  private def oldRecommendCommentCount = latestComment element cssSelector(".d-comment__recommend-count--old")
+  private def newRecommendCommentCount = latestComment element cssSelector(".d-comment__recommend-count--new")
 
   def showCommentPost(): CommentItem = {
     showCommentButton.click()
@@ -108,13 +109,13 @@ case class CommentItem(implicit driver: WebDriver) {
   def getLatestCommentText(): String = {
     val newCommentURL = driver.getCurrentUrl()
     val newCommentID = newCommentURL.substring(newCommentURL.indexOf("#") + 1)
-    driver.findElement(By.id(s"$newCommentID")).findElement(By.cssSelector(".d-comment__body p")).getText()
+    driver.findElement(id(s"$newCommentID")).findElement(cssSelector(".d-comment__body p")).getText()
   }
 
   def getLatestCommentsLatestReply(): String = {
     val newReplyURL = driver.getCurrentUrl()
     val newReplyID = newReplyURL.substring(newReplyURL.indexOf("#") + 1)
-    driver.findElement(By.id(s"$newReplyID")).findElement(By.cssSelector(".d-comment__body p")).getText()
+    driver.findElement(id(s"$newReplyID")).findElement(cssSelector(".d-comment__body p")).getText()
   }
 
   def goToLatestComment(): CommentItem =  {

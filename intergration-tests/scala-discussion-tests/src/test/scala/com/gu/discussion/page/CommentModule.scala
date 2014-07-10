@@ -4,23 +4,25 @@ import com.gu.automation.support.TestLogger
 import com.gu.automation.support.page.Element._
 import com.gu.automation.support.page.{Element, Wait}
 import org.openqa.selenium.support.ui.{ExpectedConditions, Select}
-import org.openqa.selenium.{By, WebDriver}
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.By._
 
 case class CommentModule(implicit driver: WebDriver, logger: TestLogger) {
 
-  private val startOfComments = driver >> By.cssSelector(".d-discussion .d-discussion__pagination .pagination")
-  private def showMoreFeaturedCommeLink = driver >> By.className("show-more__container--featured")
-  private def showAllCommentsButton = driver >> By.className("d-discussion__show-all-comments")
-  private def commentTextArea = driver >> By.className("d-comment-box__body")
-  private def postYourCommentButton = driver >> By.className("d-comment-box__submit")
-  private def cancelButton = driver >> By.className("d-comment-box__cancel")
-  private def sortOrderControl = driver >> By.cssSelector(".discussion__comments > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > select:nth-child(1)")
-  private def nextPageControl = startOfComments >> By.cssSelector(".pagination__item--next " +
+  private val startOfComments = driver element cssSelector(".d-discussion .d-discussion__pagination .pagination")
+  private def showMoreFeaturedCommeLink = driver element className("show-more__container--featured")
+  private def showAllCommentsButton = driver element className("d-discussion__show-all-comments")
+  private def commentTextArea = driver element className("d-comment-box__body")
+  private def postYourCommentButton = driver element className("d-comment-box__submit")
+  private def cancelButton = driver element className("d-comment-box__cancel")
+  private def sortOrderControl = driver element cssSelector(".discussion__comments > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > select:nth-child(1)")
+  private def nextPageControl = startOfComments element cssSelector(".pagination__item--next " +
     ".pagination__item-inner")
-  private def previousPageControl = startOfComments >> By.cssSelector(".pagination__item--prev .pagination__item-inner")
-  private def firstPageControl = startOfComments >> By.cssSelector(".pagination__item--first .pagination__item-inner")
-  private def lastPageControl = startOfComments >> By.cssSelector(".pagination__item--last .pagination__item-inner")
-  private def showMoreRepliesButton = driver >> By.className("d-show-more-replies")
+  private def previousPageControl = startOfComments element cssSelector(".pagination__item--prev .pagination__item-inner")
+  private def firstPageControl = startOfComments element cssSelector(".pagination__item--first .pagination__item-inner")
+  private def lastPageControl = startOfComments element cssSelector(".pagination__item--last .pagination__item-inner")
+  private def showMoreRepliesButton = driver element className("d-show-more-replies")
+  private def commentsLoading = driver element cssSelector(".discussion__comments__container .preload-msg.d-discussion__loader.u-h")
 
   def showAllReplies(): CommentModule = {
     showMoreRepliesButton.click()
@@ -100,7 +102,7 @@ case class CommentModule(implicit driver: WebDriver, logger: TestLogger) {
 
   def waitForCommentsToLoad() = {
     //Need this wait for the page to reload/refresh which is actioned with javascript
-    Wait().until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".discussion__comments__container .preload-msg.d-discussion__loader.u-h")))
+    commentsLoading.waitGet()
   }
 
 }
