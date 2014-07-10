@@ -27,20 +27,21 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
 
   def iViewAnArticleWithComments() = {
     logger.step("I view comments on an article")
-    new ArticlePage().goToStartOfComments()
+    ArticlePage().goToStartOfComments()
     this
   }
 
   def iViewAllComments() = {
     logger.step("I view all comments for a given article")
-    new ArticlePage().showAllComments()
+    ArticlePage().showAllComments()
     this
   }
 
   def iCanPostANewComment() = {
     logger.step("I can post a new comment")
-    new CommentModule().addNewComment()
-    new CommentModule().postNewComment()
+    val module = CommentModule()
+    module.addNewComment()
+    module.postNewComment()
 
     val newComment = CommentItem().getLatestCommentText()
 
@@ -50,9 +51,9 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
 
   def iCanPostANewReply() = {
     logger.step("I can post a new reply")
-    new CommentModule().showAllComments()
-    new CommentItem().replyToComment()
-    new CommentItem().postReply()
+    CommentModule().showAllComments()
+    CommentItem().replyToComment()
+    CommentItem().postReply()
 
     val newReply = CommentItem().getLatestCommentsLatestReply()
     newReply should be("Test reply please ignore - lorem ipsum dolor sit amet")
@@ -61,7 +62,7 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
 
   def iCanReportAComment() = {
     logger.step("I can report a comment")
-    new CommentItem().reportComment()
+    CommentItem().reportComment()
     this
   }
 
@@ -118,18 +119,18 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
 
   def iCanPickAComment() = {
     logger.step("I can Pick a comment to be Featured")
-    new CommentItem().pickComment()
+    CommentItem().pickComment()
     //Assert if Picked comment is now featured
     this
   }
 
   def iCanNavigateCommentPages() = {
     logger.step("I can navigate through comments")
-    new CommentModule().gotoNextPage()
-    new CommentModule().gotoLastPage()
-    new CommentModule().gotoPreviousPage()
-    new CommentModule().gotofirstPage()
-    new CommentModule().sortCommentsByOrder()
+    CommentModule().gotoNextPage()
+    CommentModule().gotoLastPage()
+    CommentModule().gotoPreviousPage()
+    CommentModule().gotofirstPage()
+    CommentModule().sortCommentsByOrder()
     this
   }
 
