@@ -11,9 +11,11 @@
 
     .commentcount.tone-colour {
         color: $c-commentAccent2;
+
         &:hover {
             color: $c-commentAccent2;
         }
+
         i {
             @include icon(comment-commentaccent);
         }
@@ -56,7 +58,10 @@
 
     .social-icon-wrapper {
         opacity: .8;
-        &:hover { opacity: 1; }
+
+        &:hover {
+            opacity: 1;
+        }
     }
 
     .social-icon {
@@ -67,7 +72,6 @@
         content: '';
         @include icon(video-icon);
         @include background-size(auto 100%);
-
         @include rem((
             margin-right: $gs-gutter/3,
             height: 20px !important,
@@ -95,5 +99,4 @@
     @include rem((
         margin-top: $gs-baseline
     ));
-
 }
