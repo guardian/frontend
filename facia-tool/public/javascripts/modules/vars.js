@@ -27,6 +27,8 @@ define([
 
         imageCdnDomain: 'guim.co.uk',
 
+        previewBase: 'http://preview.gutools.co.uk',
+
         viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
 
         filterTypes: {
@@ -39,8 +41,8 @@ define([
         capiBatchSize:         10,
 
         collectionsPollMs:     10000,
-        latestArticlesPollMs:  20000,
-        configSettingsPollMs:  5000,
+        latestArticlesPollMs:  30000,
+        configSettingsPollMs:  30000,
         cacheExpiryMs:         60000,
         sparksRefreshMs:       300000,
         pubTimeRefreshMs:      30000,
@@ -57,13 +59,6 @@ define([
             showHours: 1,
             width: 100,
             height: 35
-        },
-        sparksFrontParams: {
-            graphs: 'other:3279F1,google:65b045,guardian:376ABF',
-            hotLevel: 250,
-            showStats: 1,
-            width: 100,
-            height: 35
         }
     };
 
@@ -74,8 +69,7 @@ define([
     return {
         CONST: CONST,
         model: undefined,
-        sparksBase:      sparksBaseUrl(CONST.sparksParams),
-        sparksBaseFront: sparksBaseUrl(CONST.sparksFrontParams),
+        sparksBase: sparksBaseUrl(CONST.sparksParams),
         priority: pageConfig.priority === 'editorial' ? undefined : pageConfig.priority,
         state: {
             config: {},

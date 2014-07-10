@@ -1,9 +1,8 @@
 package model
 
-import common.{Pagination, ManifestData}
+import common.{Edition, ManifestData, Pagination}
 import conf.Configuration
 import dfp.DfpAgent
-import conf.Switches._
 
 trait MetaData extends Tags {
   def id: String
@@ -30,7 +29,9 @@ trait MetaData extends Tags {
 
   def adUnitSuffix = section
 
-  lazy val hasPageSkin = false
+  def hasPageSkin(edition: Edition) = false
+
+  def isSurging = false
 
   def metaData: Map[String, Any] = Map(
     ("page-id", id),
@@ -40,7 +41,8 @@ trait MetaData extends Tags {
     ("analytics-name", analyticsName),
     ("blockVideoAds", false),
     ("is-front", isFront),
-    ("ad-unit-suffix", adUnitSuffix)
+    ("ad-unit", s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix"),
+    ("is-surging", isSurging)
   )
 
   def openGraph: Map[String, Any] = Map(
@@ -170,6 +172,7 @@ trait Tags {
 
   def isSponsored = DfpAgent.isSponsored(tags)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
+  def sponsor = DfpAgent.getSponsor(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   lazy val visualTone: String =

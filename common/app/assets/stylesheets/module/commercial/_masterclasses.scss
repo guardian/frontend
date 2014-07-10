@@ -45,10 +45,6 @@
         &:nth-child(n+3) {
             display: none;
         }
-        
-        &:nth-child(1) {
-            padding-left: 0;
-        }
         .commercial--masterclasses__class__title {
             @include fs-bodyHeading(1);
         }
@@ -97,16 +93,15 @@
             @include rem((
                 padding-left: $gs-gutter/2
             ));
-            
-            &:nth-child(1) {
-                padding-left: 0;
-            }
+        }
+        .lineitems {
+            @include rem((
+                margin: 0 (-$gs-gutter/2)
+            ));
         }
         @include mq(tablet) {
             .commercial--masterclasses__class {
-                @include rem((
-                    width: 33%
-                ));
+                width: percentage(1/3);
             }
         }
     }
@@ -130,9 +125,7 @@
     }
     @include mq(tablet) {
         .commercial--masterclasses__class {
-            @include rem((
-                width: 33%
-            ));
+            width: percentage(1/3);
             
             &:nth-child(3) {
                 display: block;
@@ -220,6 +213,19 @@
             line-height: 1.2;
         }
     }
+    @include mq(wide) {
+        .has-page-skin & {
+            .commercial__home-link {
+                width: auto;
+                @include rem((
+                    top: $gs-baseline
+                ));
+                right: 0;
+                left: auto;
+                bottom: auto;
+            }
+        }
+    }
     
     &.commercial--high {
         @include mq(desktop) {
@@ -248,13 +254,9 @@
             }
             .lineitems {
                 @include rem((
-                    padding-left: $gs-gutter/2
+                    padding-left: $gs-gutter/2,
+                    margin: 0 -($gs-gutter/2)
                 ));
-            }
-            .lineitem {
-                &:nth-child(1) {
-                    padding-left: 0;
-                }
             }
         }
     }
@@ -324,13 +326,9 @@
             }
             .lineitems {
                 @include rem((
-                    padding-left: $gs-gutter/2
+                    padding-left: $gs-gutter/2,
+                    margin: 0 -($gs-gutter/2)
                 ));
-            }
-            .lineitem {
-                &:nth-child(1) {
-                    padding-left: 0;
-                }
             }
         }
     }

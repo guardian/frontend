@@ -21,7 +21,7 @@
         <meta name="msapplication-TileImage" content="@routes.Assets.at("images/windows_tile_144_b.png")" />
 
         <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet">
-        <link href="@routes.Assets.at("css/style.css")" rel="stylesheet">
+        <link href="@routes.Assets.at("css/style.css?v2")" rel="stylesheet">
         <script>
             var curl = {
                 baseUrl: '/assets/javascripts',
@@ -54,18 +54,23 @@
     </head>
     <body class="@if(isAuthed){is-authed}">
 
-    <a href="/"><img class="logo" src="@routes.Assets.at("images/logo.png")" /></a>
-
-    <h1 class="tool-title">@priority @title</h1>
-
     @if(Switches.ToolDisable.isSwitchedOn) {
         <span class="message message--important">Temporarily disabled. Please try again shortly.</span>
     } else {
-        @if(isAuthed) {
-            @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
-                <span class="message message--important">Editing @Configuration.facia.stage.toUpperCase!</span>
+        <header>
+            <a href="/">
+                <img class="logo" src="@routes.Assets.at("images/plane.png")" />
+                <h1>
+                    <span data-bind="text: title()">fronts</span>
+                    @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") { : @Configuration.facia.stage }
+                </h1>
+            </a>
+            @if(isAuthed) {
+                <div class="log-in-out"><a href="/logout">Logout</a></div>
             }
-            <a class="log-in-out" href="/logout">Logout</a>
+        </header>
+
+        @if(isAuthed) {
             @content
         } else {
             <form action="@routes.Login.loginPost()" method="post" class="login-form tools">
@@ -73,12 +78,6 @@
             </form>
         }
     }
-
-    <script>
-        curl(['js!omniture']).then(function () {
-            s.tl();
-        })
-    </script>
 
     </body>
 </html>

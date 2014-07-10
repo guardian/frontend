@@ -71,20 +71,13 @@ trait FrontPress extends Logging {
   import play.api.Play.current
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
-  def pressByPathId(path: String): Future[JsValue] = {
-    val live: Future[JsObject] = pressLiveByPathId(path)
-    if (FaciaToolDraftPressSwitch.isSwitchedOn)
-      live.onComplete{ case _ => pressDraftByPathId(path) }
-    live
-  }
-
-  private def pressDraftByPathId(path: String): Future[JsObject] =
+  def pressDraftByPathId(path: String): Future[JsObject] =
     FrontPress.generateDraftJson(path).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
       json
     }
 
-  private def pressLiveByPathId(path: String): Future[JsObject] =
+  def pressLiveByPathId(path: String): Future[JsObject] =
     FrontPress.generateLiveJson(path).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
       json
@@ -105,7 +98,7 @@ trait FrontPress extends Logging {
               FrontPressLiveFailure.increment()
               log.error("Error manually pressing live collection through update from tool", error)
             case Success(_) =>
-              FrontPressLiveFailure.increment()
+              FrontPressLiveSuccess.increment()
           }
           fut
         }

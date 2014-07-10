@@ -16,6 +16,7 @@ import scala.concurrent.Future
 import scala.util.{Failure, Success}
 import play.api.libs.Comet
 import frontpress.PressCommand
+import frontpress.FrontPress.{pressLiveByPathId, pressDraftByPathId}
 import frontpress.CollectionPressing.pressCollectionIds
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -95,7 +96,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val block = FaciaApi.publishBlock(id, identity)
     block.foreach{ b =>
       UpdateActions.archivePublishBlock(id, b, identity)
-      pressCollectionIds(PressCommand.forOneId(id).withPressDraft().withPressLive())
+      pressCollectionIds(PressCommand.forOneId(id).withPressLive())
     }
     notifyContentApi(id)
     NoCache(Ok)
@@ -160,9 +161,13 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
-  def updateCollection(id: String) = AjaxExpiringAuthentication { request =>
-    pressCollectionIds(PressCommand.forOneId(id).withPressDraft().withPressLive())
-    notifyContentApi(id)
+  def pressLivePath(path: String) = AjaxExpiringAuthentication { request =>
+    pressLiveByPathId(path)
+    NoCache(Ok)
+  }
+
+  def pressDraftPath(path: String) = AjaxExpiringAuthentication { request =>
+    pressDraftByPathId(path)
     NoCache(Ok)
   }
 

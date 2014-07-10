@@ -10,7 +10,6 @@
     var curl = {
         baseUrl: '@{Configuration.assets.path}javascripts',
         apiName: 'require',
-        overwriteApi: true,
         paths: {
             @curlPaths.map { case (module, path) =>
                 '@module': '@Static(path)',
@@ -21,10 +20,11 @@
             'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',
             foresee: '@Static("javascripts/vendor/foresee/foresee-trigger.js")',
             googletag: '@{Configuration.javascript.config("googletagJsUrl")}',
-            raven: '@Static("javascripts/components/raven-js/dist/raven.js")',
-            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")',
             core: '@Static("javascripts/core.js")',
-            'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")'
+            'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")',
+            'bootstraps/commercial' : '@Static("javascripts/bootstraps/commercial.js")',
+            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")',
+            'bootstraps/dev' : '@Static("javascripts/bootstraps/dev.js")'
         }
     };
 
@@ -113,6 +113,59 @@
 
     })(guardian.isModernBrowser);
 
-</script>
+    @* inline curl *@
+    @Html(Static.js.curl)
 
-<script async="async" src="@Static("javascripts/bootstraps/go.js")"></script>
+    require([
+        'core',
+        'domReady!'
+    ], function (core) {
+
+        require(['raven', 'common/utils/config'], function(raven, config) {
+
+            raven.config(
+                'http://' + config.page.sentryApiKey + '@@' + config.page.sentryHost,
+                {
+                    logger: 'javascript',
+                    whitelistUrls: [
+                        /localhost/,
+                        /assets\.guim\.co\.uk/,
+                        /theguardian\.com/,
+                        /ophan\.co\.uk/,
+                        /api\.nextgen\.guardianapps\.co\.uk/
+                    ],
+                    tags: {
+                        edition: config.page.edition,
+                        contentType: config.page.contentType,
+                        buildNumber: config.page.buildNumber
+                    },
+                    shouldSendCallback: function(data) {
+                        return Math.random() < 0.1;
+                    }
+                }
+            ).install();
+
+            if (guardian.config.switches.commercial) {
+
+                require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
+                    commercial.init();
+                });
+
+            }
+
+            if (guardian.isModernBrowser) {
+
+                @if(play.Play.isDev()) {
+                    require(['bootstraps/dev'], function (devmode) { devmode.init(); });
+                }
+
+                require(['bootstraps/app'], function(bootstrap) {
+                    bootstrap.go();
+                });
+
+            }
+
+        });
+
+    });
+</script>

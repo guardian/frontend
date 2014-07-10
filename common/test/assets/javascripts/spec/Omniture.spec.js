@@ -1,4 +1,4 @@
-define(['fixtures/config', 'analytics/omniture', 'common/utils/common'], function(testConfigData, Omniture, common) {
+define(['analytics/omniture', 'common/utils/mediator'], function(Omniture, mediator) {
 
     describe("Omniture", function() {
 
@@ -141,7 +141,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/utils/common'], functio
             o.go(config);
             waits(100);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', clickSpec);
+                mediator.emit('module:clickstream:click', clickSpec);
                 expect(s.tl).toHaveBeenCalledOnce();
             });
         });
@@ -158,7 +158,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/utils/common'], functio
             o.go(config);
             waits(100);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', clickSpec);
+                mediator.emit('module:clickstream:click', clickSpec);
                 expect(s.apl).toHaveBeenCalled();
                 expect(s.apl.args[0][1]).toBe('event16');
             });
@@ -177,7 +177,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/utils/common'], functio
 
             o.go(config);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', clickSpecSamePage);  // same page  (non-delayed s.tl call)
+                mediator.emit('module:clickstream:click', clickSpecSamePage);  // same page  (non-delayed s.tl call)
                 expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledOnce();
             });
 
@@ -196,7 +196,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/utils/common'], functio
 
             o.go(config);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', clickSpec);
+                mediator.emit('module:clickstream:click', clickSpec);
                 expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
             });
 
@@ -215,7 +215,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/utils/common'], functio
 
             o.go(config);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', clickSpec);
+                mediator.emit('module:clickstream:click', clickSpec);
                 expect(s.tl.withArgs(el,   'o', 'tag')).toHaveBeenCalledOnce();
             });
 

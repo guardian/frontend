@@ -13,6 +13,7 @@ import play.api.libs.json.JsValue
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
+import ophan.SurgingContentAgent
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
@@ -35,6 +36,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
   lazy val primaryKeyWordTag: Option[Tag] = tags.find(!_.isSectionTag)
   lazy val keywordTags: Seq[Tag] = keywords.filter(tag => !tag.isSectionTag)
+  lazy val productionOffice: Option[String] = delegate.safeFields.get("productionOffice")
 
   lazy val showInRelated: Boolean = delegate.safeFields.get("showInRelatedContent").exists(_ == "true")
   lazy val hasSingleContributor: Boolean = {
@@ -121,6 +123,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val description: Option[String] = trailText
   override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
   override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
+  override def isSurging: Boolean = SurgingContentAgent.isSurging(id)
+
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
   override def metaData: Map[String, Any] = {
@@ -142,7 +146,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("shortUrl", shortUrl),
       ("thumbnail", thumbnailPath.getOrElse(false)),
       ("references", delegate.references.map(r => Reference(r.id))),
-      ("sectionName", sectionName)
+      ("sectionName", sectionName),
+      ("showRelatedContent", showInRelated),
+      ("productionOffice", productionOffice.getOrElse(""))
     ) ++ Map(seriesMeta : _*)
   }
 
@@ -353,7 +359,7 @@ class Snap(snapId: String,
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
-  override lazy val contentType = "Article"
+  override lazy val contentType = GuardianContentTypes.ARTICLE
 
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -397,6 +403,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
   lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
+
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary"
   )
@@ -418,7 +425,7 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
   lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
   lazy val mediaId: Option[String] = mainVideo.map(_.id)
 
-  override lazy val contentType = "Video"
+  override lazy val contentType = GuardianContentTypes.VIDEO
   lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
 
   // I know its not too pretty
@@ -451,7 +458,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   def apply(index: Int): ImageAsset = galleryImages(index).largestImage.get
 
   lazy val size = galleryImages.size
-  override lazy val contentType = "Gallery"
+  override lazy val contentType = GuardianContentTypes.GALLERY
   lazy val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   lazy val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   lazy val isInPicturesSeries = tags.exists(_.id == "lifeandstyle/series/in-pictures")
@@ -488,7 +495,7 @@ object Gallery {
 }
 
 class Interactive(content: ApiContentWithMeta) extends Content(content) {
-  override lazy val contentType = "Interactive"
+  override lazy val contentType = GuardianContentTypes.INTERACTIVE
   lazy val body: Option[String] = delegate.safeFields.get("body")
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
@@ -500,7 +507,7 @@ object Interactive {
 
 class ImageContent(content: ApiContentWithMeta) extends Content(content) {
 
-  override lazy val contentType = "ImageContent"
+  override lazy val contentType = GuardianContentTypes.IMAGE_CONTENT
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType)
 

@@ -130,7 +130,7 @@ $c-commercial-books-dark: #630d4c;
         }        
         .lineitem {
             position: relative;
-            width: 33%;
+            width: percentage(1/3);
             @include rem((
                 padding: 0 $gs-gutter/2
             ));
@@ -270,6 +270,24 @@ $c-commercial-books-dark: #630d4c;
                 width: gs-span(2) + $gs-gutter
             ));
             margin-right: 0;
+        }
+        &.commercial--high {
+            .has-page-skin & {
+                .container__title {
+                    @include rem((
+                        margin-bottom: $gs-baseline
+                    ));
+                }
+                .commercial__home-link {
+                    width: auto;
+                    right: 0;
+                    left: auto;
+                    bottom: auto;
+                    @include rem((
+                        top: $gs-baseline
+                    ));
+                }
+            }
         }
     }
 }

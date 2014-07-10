@@ -7,6 +7,7 @@ import model.{Snap, Trail, MetaData}
 import org.jsoup.Jsoup
 import scala.collection.JavaConversions._
 import conf.Configuration.environment
+import dev.HttpSwitch
 
 
 /*
@@ -23,16 +24,17 @@ trait LinkTo extends Logging {
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request), Region(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request), Region(request))
 
-  def apply(url: String, edition: Edition, region: Option[Region] = None): String = (url match {
-    case "http://www.theguardian.com" => homeLink(edition, region)
-    case "/" => homeLink(edition, region)
-    case protocolRelative if protocolRelative.startsWith("//") => protocolRelative
-    case AbsoluteGuardianUrl(path) =>  urlFor(path, edition)
-    case "/rss" => urlFor("", edition) + "/rss"
-    case RssPath(path, format) => urlFor(path, edition) + "/rss"
-    case AbsolutePath(path) => urlFor(path, edition)
-    case otherUrl => otherUrl
-  }).trim
+  def apply(url: String, edition: Edition, region: Option[Region] = None)(implicit request : RequestHeader): String =
+    (HttpSwitch.queryString(url) match {
+      case "http://www.theguardian.com" => homeLink(edition, region)
+      case "/" => homeLink(edition, region)
+      case protocolRelative if protocolRelative.startsWith("//") => protocolRelative
+      case AbsoluteGuardianUrl(path) =>  urlFor(path, edition)
+      case "/rss" => urlFor("", edition) + "/rss"
+      case RssPath(path, format) => urlFor(path, edition) + "/rss"
+      case AbsolutePath(path) => urlFor(path, edition)
+      case otherUrl => otherUrl
+    }).trim
 
   def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = trail match {
     case snap: Snap => snap.snapUrl.filter(_.nonEmpty)
@@ -91,8 +93,8 @@ object ClassicLink {
       case id => id
     }
 
-    val targetUrl = encode(s"${LinkTo(s"/$fixedId")}?view=classic", "UTF-8")
-    s"${LinkTo{"/preference/platform/classic"}}?page=$targetUrl"
+    val targetUrl = encode(LinkTo(s"/$fixedId?view=classic"), "UTF-8")
+    LinkTo{s"/preference/platform/classic?page=$targetUrl"}
   }
 
   // As we move towards taking over full site traffic, we will get pages that only work on the Next Gen platform.

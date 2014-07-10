@@ -515,7 +515,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         findFirst("#article").getAttribute("role") should be("main")
         findFirst(".related__container").getAttribute("role") should be("complementary")
         findFirst(".related__container").getAttribute("aria-labelledby") should be("related-content-head")
-
       }
     }
 
@@ -527,9 +526,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         Then("I should see a fancy gallery trail")
         $(".item--gallery") should have size 1
-
-        //And("should show a total image count of 12")
-        //$(".trail__count--imagecount").getText should be("12 images")
       }
 
 
@@ -664,4 +660,5 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
   }
+
 }

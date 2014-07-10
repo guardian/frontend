@@ -8,10 +8,10 @@
 
 define([
     'common/modules/userPrefs',
-    'common/utils/common'
+    'common/utils/mediator'
 ], function (
     userPrefs,
-    common
+    mediator
 ) {
 
     var supportsPushState,
@@ -42,7 +42,7 @@ define([
     }
 
     /**
-     * @param Object performance Allow passing in of window.performance, for testing
+     * @param performance - Object allows passing in of window.performance, for testing
      */
     function getPageSpeed(performance) {
 
@@ -178,7 +178,7 @@ define([
                 pageVisibility = this[hidden] ? 'hidden' : 'visible';
             }
 
-            common.mediator.emit('modules:detect:pagevisibility:' + pageVisibility);
+            mediator.emit('modules:detect:pagevisibility:' + pageVisibility);
         }
 
         // Standards:
@@ -202,7 +202,7 @@ define([
     }
 
     function pageVisible() {
-        return pageVisibility === 'visible' ? true : false;
+        return pageVisibility === 'visible';
     }
 
     function hasWebSocket() {
@@ -220,7 +220,8 @@ define([
         getBreakpoint: getBreakpoint,
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
-        hasWebSocket: hasWebSocket
+        hasWebSocket: hasWebSocket,
+        getPageSpeed: getPageSpeed
     };
 
 });

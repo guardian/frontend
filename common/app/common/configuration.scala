@@ -4,11 +4,12 @@ import com.amazonaws.auth._
 import com.amazonaws.internal.StaticCredentialsProvider
 import com.gu.conf.ConfigurationFactory
 import com.gu.management.{ Manifest => ManifestFile }
-import conf.Configuration
+import conf.{Switches, Configuration}
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
 import play.api.Play
 import play.api.Play.current
+import scala.util.Try
 
 class BadConfigurationException(property: String) extends RuntimeException(s"Property $property not configured")
 
@@ -65,7 +66,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object contentApi {
     val defaultContentApi: String = "http://content.guardianapis.com"
     lazy val contentApiLiveHost: String = configuration.getStringProperty("content.api.elastic.host").getOrElse(defaultContentApi)
-    lazy val contentApiDraftHost: String = configuration.getStringProperty("content.api.draft.host").getOrElse(contentApiLiveHost)
+    def contentApiDraftHost: String =
+        configuration.getStringProperty("content.api.draft.host")
+          .filter(_ => Switches.FaciaToolDraftContent.isSwitchedOn)
+          .getOrElse(contentApiLiveHost)
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: Int = configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000)
@@ -192,6 +196,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
+
+  object witness {
+    lazy val witnessApiRoot = configuration.getMandatoryStringProperty("witness.apiRoot")
+  }
   
   object commercial {
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
@@ -200,15 +208,19 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val masterclasses_url = configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
+    lazy val traveloffers_url = configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
 
     lazy val dfpSponsoredTagsDataKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-tags-v2.json"
     lazy val dfpAdvertisementFeatureTagsDataKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-tags-v2.json"
     lazy val dfpPageSkinnedAdUnitsKey =
-      s"${environment.stage.toUpperCase}/commercial/dfp/pageskinned-adunits-v2.json"
+      s"${environment.stage.toUpperCase}/commercial/dfp/pageskinned-adunits-v3.json"
     lazy val dfpLineItemsKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/lineitems.json"
+    lazy val travelOffersS3Key =
+      s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
+
   }
 
   object open {
@@ -250,13 +262,27 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object facia {
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(Configuration.environment.stage)
-    lazy val collectionCap: Int = configuration.getIntegerProperty("facia.collection.cap").getOrElse(25)
+    lazy val collectionCap: Int = 35
   }
 
   object faciatool {
     lazy val contentApiPostEndpoint: Option[String] = configuration.getStringProperty("contentapi.post.endpoint")
     lazy val frontPressQueueUrl: Option[String] = configuration.getStringProperty("frontpress.sqs.queue")
     lazy val configBeforePressTimeout: Int = 1000
+
+    //It's not possible to take a batch size above 10
+    lazy val pressJobBatchSize: Int =
+      Try(configuration.getStringProperty("faciapress.batch.size").get.toInt)
+        .filter(_ <= 10).getOrElse(10)
+
+    //Above 59 would probably break the cron expression
+    lazy val pressJobConsumeRateInSeconds: Int =
+      Try(configuration.getStringProperty("faciapress.rate.inseconds").get.toInt)
+        .filter(_ <= 59).filter(_ > 0).getOrElse(10)
+
+    lazy val adminPressJobPushRateInMinutes: Int =
+      Try(configuration.getStringProperty("admin.pressjob.push.rate.inminutes").get.toInt)
+        .getOrElse(3)
   }
 
   object pa {

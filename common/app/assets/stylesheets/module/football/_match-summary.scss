@@ -97,10 +97,18 @@ $football-crest--large: 60px;
     @include fs-data(5);
 
     dd {
-        @include rem((
-            margin: 0 56px 0 10px,
-            padding: 0
-        ));
+        @include mq(mobile) {
+            @include rem((
+                margin: 0 56px 0 10px,
+                padding: 0
+            ))
+        }
+        @include mq($from: tablet) {
+            @include rem((
+                margin: 0 56px 0 64px,
+                padding: 0
+            ));
+        }
     }
 }
 
@@ -350,7 +358,7 @@ $football-crest--large: 60px;
         @include fs-headline(3, true);
     }
     .team__scorers {
-        @include fs-data(2, true);
+        @include fs-data(3, true);
     }
     .team__crest {
         @include rem((

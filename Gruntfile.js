@@ -54,11 +54,13 @@ module.exports = function (grunt) {
                     omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
-                    stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min'
+                    stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min',
+                    raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven'
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
-                preserveLicenseComments: false
+                preserveLicenseComments: false,
+                fileExclusionRegExp: /^bower_components$/
             },
             common: {
                 options: {
@@ -74,12 +76,19 @@ module.exports = function (grunt) {
                             exports: 's'
                         }
                     },
-                    modules: [{
-                        name: 'core'
-                    }, {
-                        name: 'bootstraps/app',
-                        exclude: ['core']
-                    }]
+                    modules: [
+                        {
+                            name: 'core'
+                        },
+                        {
+                            name: 'bootstraps/app',
+                            exclude: ['core']
+                        },
+                        {
+                            name: 'bootstraps/commercial',
+                            exclude: ['core']
+                        }
+                    ]
                 }
             },
             facia: {
@@ -87,7 +96,10 @@ module.exports = function (grunt) {
                     baseUrl: 'facia/app/assets/javascripts',
                     name: 'bootstraps/facia',
                     out: staticTargetDir + 'javascripts/bootstraps/facia.js',
-                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app']
+                    exclude: [
+                        '../../../../common/app/assets/javascripts/core',
+                        '../../../../common/app/assets/javascripts/bootstraps/app'
+                    ]
                 }
             },
             identity: {
@@ -95,7 +107,10 @@ module.exports = function (grunt) {
                     baseUrl: 'identity/app/assets/javascripts',
                     name: 'bootstraps/membership',
                     out: staticTargetDir + 'javascripts/bootstraps/membership.js',
-                    exclude: ['../../../../common/app/assets/javascripts/bootstraps/app']                    
+                    exclude: [
+                        '../../../../common/app/assets/javascripts/core',
+                        '../../../../common/app/assets/javascripts/bootstraps/app'
+                    ]
                 }
             },
             ophan: {
@@ -152,6 +167,17 @@ module.exports = function (grunt) {
                     generateSourceMaps: true,
                     preserveLicenseComments: false
                 }
+            },
+            dev: {
+                options: {
+                    baseUrl: 'common/app/assets/javascripts',
+                    name: 'bootstraps/dev',
+                    out: staticTargetDir + 'javascripts/bootstraps/dev.js',
+                    paths: {
+                        socketio: 'components/socket.io-client/socket.io'
+                    }
+                },
+                exclude: ['core','bootstraps/app']
             }
         },
 
@@ -415,12 +441,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         cwd: 'common/app/public/javascripts/components',
-                        src: [
-                            'html5shiv/dist/html5shiv.js',
-                            'raven-js/dist/raven.js',
-                            'swipe/swipe.js',
-                            'zxcvbn/index.js'
-                        ],
+                        src: ['**/*.js'],
                         dest: staticTargetDir + 'javascripts/components'
                     },
                     {
@@ -437,10 +458,12 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: requirejsDir,
                         src: [
-                            'bootstraps/app.js',
-                            'bootstraps/app.js.map',
                             'core.js',
                             'core.js.map',
+                            'bootstraps/app.js',
+                            'bootstraps/app.js.map',
+                            'bootstraps/commercial.js',
+                            'bootstraps/commercial.js.map',
                             'components/curl/curl-domReady.js'
                         ],
                         dest: staticTargetDir + 'javascripts'
@@ -474,8 +497,16 @@ module.exports = function (grunt) {
             headCss: {
                 files: [{
                     expand: true,
-                    cwd: 'static/target/stylesheets',
+                    cwd: staticTargetDir + 'stylesheets',
                     src: ['**/head*.css'],
+                    dest: 'common/conf/assets'
+                }]
+            },
+            headJs: {
+                files: [{
+                    expand: true,
+                    cwd: 'common/app/assets/javascripts/components/curl',
+                    src: ['curl-domReady.js'],
                     dest: 'common/conf/assets'
                 }]
             },
@@ -553,6 +584,9 @@ module.exports = function (grunt) {
             },
             facia: {
                 configFile: testConfDir + 'facia.js'
+            },
+            membership: {
+                configFile: testConfDir + 'membership.js'
             }
         },
 
@@ -568,7 +602,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: 'common/app/assets/javascripts/',
-                    src: ['**/*.js', '!components/**', '!utils/atob.js']
+                    src: ['**/*.js', '!components/**', '!bower_components/**', '!utils/atob.js']
                 }]
             },
             facia: {
@@ -583,6 +617,13 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'facia-tool/public/javascripts/',
                     src: ['**/*.js', '!components/**', '!omniture.js']
+                }]
+            },
+            membership: {
+                files: [{
+                    expand: true,
+                    cwd: 'identity/app/assets/javascripts/',
+                    src: ['**/*.js']
                 }]
             }
         },
@@ -706,33 +747,13 @@ module.exports = function (grunt) {
             }
         },
 
-        reloadlet: {
+        csdevmode: {
             options: {
-                port: 8005
+                srcBasePath: 'common/app/assets/stylesheets/',
+                destBasePath: staticTargetDir + '/stylesheets'
             },
             main: {
-                sass: {
-                    src: 'common/app/assets/stylesheets/',
-                    dest: 'static/target/stylesheets'
-                },
-                assets: [
-                    {
-                        local: 'static/target/stylesheets/head.default.css',
-                        remote: '/assets/stylesheets/head.default.css'
-                    },
-                    {
-                        local: 'static/target/stylesheets/global.css',
-                        remote: '/assets/stylesheets/global.css'
-                    }
-                ]
-            }
-        },
-
-        concat: {
-            application: {
-                src: ['common/app/assets/javascripts/components/curl/curl-domReady.js',
-                      'common/app/assets/javascripts/bootstraps/go.js'],
-                dest: staticTargetDir + 'javascripts/bootstraps/go.js'
+                assets: ['global', 'head.default']
             }
         }
     });
@@ -755,9 +776,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-asset-monitor');
     grunt.loadNpmTasks('grunt-text-replace');
-    grunt.loadNpmTasks('grunt-reloadlet');
     grunt.loadNpmTasks('grunt-pagespeed');
-    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-csdevmode');
 
     // Default task
     grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
@@ -765,7 +785,7 @@ module.exports = function (grunt) {
     /**
      * Validate tasks
      */
-    grunt.registerTask('validate:css', ['sass:compile']);
+    grunt.registerTask('validate:css', ['compile:images', 'sass:compile']);
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
         var target = (app) ? ':' + app : '';
@@ -780,10 +800,10 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
-    grunt.registerTask('compile:js', ['requirejs', 'copy:javascript', 'concat', 'uglify:javascript']);
+    grunt.registerTask('compile:js', ['requirejs', 'copy:javascript', 'uglify:javascript']);
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
-    grunt.registerTask('compile:conf', ['copy:headCss', 'copy:assetMap']);
+    grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap']);
     grunt.registerTask('compile', [
         'compile:images',
         'compile:css',
@@ -825,8 +845,7 @@ module.exports = function (grunt) {
         if (target === 'js') {
             // compile just the project
             var project = filepath.split('/').shift();
-            grunt.task.run('requirejs:' + project);
-            grunt.task.run('asset_hash');
+            grunt.task.run(['requirejs:' + project, 'copy:javascript', 'asset_hash']);
         }
     });
 

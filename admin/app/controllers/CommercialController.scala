@@ -10,6 +10,7 @@ import play.api.libs.json.Json
 import dfp.{SponsorshipReport, Sponsorship}
 import implicits.Dates
 import org.joda.time.DateTime
+import ophan.SurgingContentAgent
 
 object CommercialController extends Controller with Logging with AuthLogging {
 
@@ -38,6 +39,13 @@ object CommercialController extends Controller with Logging with AuthLogging {
     val pageskinnedAdUnits = Store.getDfpPageSkinnedAdUnits()
 
     NoCache(Ok(views.html.commercial.pageskins(Configuration.environment.stage, pageskinnedAdUnits)))
+  }
+
+  def renderSurgingContent = Authenticated {implicit request =>
+    val surging: Seq[(String, Int)] = SurgingContentAgent.getSurging.toSeq
+    val sortedSurging: Seq[(String, Int)] = surging.sortBy(_._2).reverse
+
+    NoCache(Ok(views.html.commercial.surgingpages(Configuration.environment.stage, sortedSurging)))
   }
 
 

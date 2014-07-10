@@ -1,24 +1,34 @@
 @(page: MetaData, isFooter: Boolean=false)(implicit request: RequestHeader)
 @import model._
+@import conf.Switches._
+@import dev.HttpSwitch
 @import common._
 @import common.Edition
-
+@if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
+<div class="js-transfuse" data-transfuse-target="js-mega-nav-placeholder"
+} else {
 <nav role="navigation" aria-label="Guardian sections"
+}
     @if(isFooter){ data-link-name="global navigation: footer : sections"} else {
         data-link-name="global navigation: header : sections"}>
-    <ul class="nav nav--columns u-cf nav--additional-sections nav--top-border-off @if(isFooter){nav--footer}">
-        @Edition(request).navigation.map{ section =>
-            <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
-                <a href="@LinkTo{@section.name.href}"
-                    data-link-name="@section.name.title"
-                    class="nav__link@if("/" + page.id == section.name.href) { is-active}"
-                    @if(section.name.newWindow){ target="_blank" }>
-                        @HtmlFormat.raw(section.name.title)
-                </a>
-            </li>
-        }
-        <li class="nav__item"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
-    </ul>
+
+    @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
+        @fragments.nav.megaNav(page)
+    }else {
+        <ul class="nav nav--columns u-cf nav--additional-sections nav--top-border-off @if(isFooter){nav--footer}">
+            @Edition(request).navigation.map{ section =>
+                <li class="nav__item@if(section.name.newWindow && !isFooter){ mobile-only}">
+                    <a href="@LinkTo{@section.name.href}"
+                        data-link-name="@section.name.title"
+                        class="nav__link@if("/" + page.id == section.name.href) { is-active}"
+                        @if(section.name.newWindow){ target="_blank" }>
+                            @HtmlFormat.raw(section.name.title)
+                    </a>
+                </li>
+            }
+            <li class="nav__item"><a class="nav__link" data-link-name="all sections" href="@LinkTo("/sections")">All sections</a></li>
+        </ul>
+    }
     <ul class="nav nav--columns nav--guardian-services u-cf @if(isFooter){nav--footer}">
         <li class="nav__item"><a class="nav__link nav__link--faded" href="https://soulmates.theguardian.com/?INTCMP=NGW_NAVBAR_UK_GU_SOULMATES" target="_blank" data-link-name="Soulmates">Soulmates</a></li>
         <li class="nav__item"><a class="nav__link nav__link--faded" href="http://jobs.theguardian.com/?INTCMP=NGW_NAVBAR_UK_GU_JOBS" target="_blank" data-link-name="Jobs">Jobs</a></li>
@@ -65,4 +75,8 @@
             </div>
         }
     </div>
+@if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
+</div>
+} else {
 </nav>
+}

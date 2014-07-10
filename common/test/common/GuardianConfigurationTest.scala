@@ -21,6 +21,8 @@ class GuardianConfigurationTest extends FlatSpec with Matchers {
     // the properties needed to run this project. Make sure you update it if there
     // are any required changes, update the hash below, and off you go.
 
-    hash should be ("d4d0d518284787757a3014922f8a0b01")
+    withClue("Look at comment in GuardianConfigurationTest.scala!") {
+      hash should be("1ed809543f99c76089ed60aaf9d175cf")
+    }
   }
 }

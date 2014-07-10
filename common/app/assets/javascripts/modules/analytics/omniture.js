@@ -1,6 +1,5 @@
 /*global s_i_guardian:true */
 define([
-    'common/utils/common',
     'common/utils/detect',
     'common/modules/experiments/ab',
     'common/utils/storage',
@@ -9,9 +8,10 @@ define([
     'omniture',
     'common/modules/analytics/mvt-cookie',
     'common/modules/analytics/beacon',
-    'common/utils/pad'
+    'common/utils/pad',
+    'common/utils/mediator',
+    'common/utils/deferToAnalytics' // Ensure that 'analytics:ready' is handled.
 ], function(
-    common,
     detect,
     ab,
     storage,
@@ -20,7 +20,8 @@ define([
     s,
     mvtCookie,
     beacon,
-    pad
+    pad,
+    mediator
     ) {
 
     // https://developer.omniture.com/en_US/content_page/sitecatalyst-tagging/c-tagging-overview
@@ -147,6 +148,11 @@ define([
 
             s.prop13    = config.page.series || '';
 
+            // see http://blogs.adobe.com/digitalmarketing/mobile/responsive-web-design-and-web-analytics/
+            s.eVar18    = detect.getBreakpoint();
+            s.eVar21    = document.documentElement.clientWidth + 'x' + document.documentElement.clientHeight;
+            s.eVar32    = detect.getOrientation();
+
             /* Set Time Parting Day and Hour Combination - 0 = GMT */
             var tpA = s.getTimeParting('n','+0');
             s.prop20 = tpA[2] + ':' + tpA[1];
@@ -175,6 +181,12 @@ define([
             var gu_shift = Cookies.get('GU_SHIFT');
             if (gu_shift) {
                 var shiftValue = 'gu_shift,' + gu_shift + ',';
+                var gu_view = Cookies.get('GU_VIEW');
+
+                if (gu_view) {
+                    shiftValue += ',' + gu_view;
+                }
+
                 s.prop51  = shiftValue + s.prop51;
                 s.eVar51  = shiftValue + s.eVar51;
             }
@@ -206,6 +218,13 @@ define([
 
             s.prop56    = 'Javascript';
 
+            // not all pages have a production office
+            if (config.page.productionOffice) {
+                s.prop64 = config.page.productionOffice;
+            }
+
+            s.prop63    = detect.getPageSpeed();
+
             s.prop65    = config.page.headline || '';
 
             s.prop67    = 'nextgen-served';
@@ -222,6 +241,9 @@ define([
                 s.eVar50 = s.getQueryParam('INTCMP');
             }
             s.eVar50 = s.getValOnce(s.eVar50,'s_intcampaign', 0);
+
+            // the operating system
+            s.eVar58 = navigator.platform || 'unknown';
 
             // the number of Guardian links inside the body
             if (config.page.inBodyInternalLinkCount) {
@@ -254,16 +276,7 @@ define([
             s.eVar75 = config.page.wordCount || 0;
         };
 
-        this.loaded = function(callback) {
-            this.populatePageProperties();
-            this.logView();
-            if (typeof callback === 'function') {
-                callback();
-            }
-        };
-
-        this.go = function(c, callback) {
-            var that = this;
+        this.go = function(c) {
 
             config = c; // update the module-wide config
 
@@ -271,7 +284,9 @@ define([
             window.s_account = config.page.omnitureAccount;
 
             s = window.s;
-            that.loaded(callback);
+            this.populatePageProperties();
+            this.logView();
+            mediator.emit('analytics:ready');
         };
 
         this.confirmPageView = function() {
@@ -287,7 +302,7 @@ define([
                     clearInterval(checkForPageViewInterval);
 
                     self.pageviewSent = true;
-                    common.mediator.emit('module:analytics:omniture:pageview:sent');
+                    mediator.emit('module:analytics:omniture:pageview:sent');
                 }
             }, 250);
 
@@ -297,16 +312,16 @@ define([
             }, 10000);
         };
 
-        common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
+        mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
 
-        common.mediator.on('module:clickstream:click', that.logTag );
+        mediator.on('module:clickstream:click', that.logTag );
 
-        common.mediator.on('module:autoupdate:loaded', function() {
+        mediator.on('module:autoupdate:loaded', function() {
             that.populatePageProperties();
             that.logUpdate();
         });
 
-        common.mediator.on('module:analytics:omniture:pageview:sent', function(){
+        mediator.on('module:analytics:omniture:pageview:sent', function(){
             // independently log this page view
             // used for checking we have not broken analytics
             beacon.fire('/count/pva.gif');

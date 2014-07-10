@@ -3,15 +3,17 @@
 @import views.support.MetadataJson
 @import views.support.JavaScriptVariableName
 @import common.Edition
+@import dev.HttpSwitch
 @import org.joda.time.DateTime
 
+@defining(Edition(request)) { edition =>
 {
     "page": {
         @{Html(item.metaData.map{ data => MetadataJson(data) }.mkString(","))},
         @{Html((Configuration.javascript.config ++ Configuration.javascript.pageData).map{ case (key, value) =>
             s""""${JavaScriptVariableName(key.split('.').last)}":"${value}""""}.mkString(",")
         )},
-        "edition": "@Edition(request).id",
+        "edition": "@edition.id",
         "ajaxUrl": "@Configuration.ajax.url",
         "isDev": @play.Play.isDev(),
         "oasHost": "oas.theguardian.com",
@@ -23,15 +25,19 @@
         "renderTime": "@{(new DateTime).toISODateTimeNoMillisString}",
         "isSSL": @Configuration.environment.secure,
         "assetsPath": "@Configuration.assets.path",
-        "hasPageSkin": @item.hasPageSkin,
+        "hasPageSkin": @item.hasPageSkin(edition),
         "shouldHideAdverts": @item match {
             case c: model.Content if c.shouldHideAdverts => {true}
             case _                                       => {false}
         }
     },
     "switches" : { @{Html(conf.Switches.all.map{ switch =>
-            s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""
+            if(conf.Switches.httpSwitches.contains(switch))
+                s""""${JavaScriptVariableName(switch.name)}":${HttpSwitch(switch).isSwitchedOn}"""
+            else
+                s""""${JavaScriptVariableName(switch.name)}":${switch.isSwitchedOn}"""
         }.mkString(","))}
     },
     "modules": { }
+}
 }

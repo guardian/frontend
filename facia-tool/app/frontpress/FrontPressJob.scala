@@ -21,6 +21,8 @@ object FrontPressJob extends Logging with implicits.Collections {
   import play.api.Play.current
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
+  val batchSize: Int = Configuration.faciatool.pressJobBatchSize
+
   def newClient: AmazonSQSAsyncClient = {
     val c = new AmazonSQSAsyncClient(Configuration.aws.credentials)
     c.setRegion(Region.getRegion(Regions.EU_WEST_1))
@@ -32,9 +34,9 @@ object FrontPressJob extends Logging with implicits.Collections {
       if (FrontPressJobSwitch.isSwitchedOn) {
         val client = newClient
         try {
-          val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(10))
+          val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(batchSize))
           Future.traverse(receiveMessageResult.getMessages.map(getConfigFromMessage).distinct) { path =>
-            val f = FrontPress.pressByPathId(path)
+            val f = FrontPress.pressLiveByPathId(path)
             f onComplete {
               case Success(_) =>
                 deleteMessage(receiveMessageResult, queueUrl)
