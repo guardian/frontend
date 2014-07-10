@@ -209,7 +209,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
 .local-navigation,
 .global-navigation,
 .signposting {
-    font-weight: bold;
+    @include fs-header(1);
     @include rem((
         line-height: $gs-row-height
     ));
@@ -714,7 +714,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
     right: 0;
     top: 0;
     @include box-sizing(border-box);
-    font-weight: bold;
+    @include fs-header(1);
     @include rem((
         line-height: $gs-row-height,
         min-width: $new-navigation-toggler-width,
