@@ -6,7 +6,7 @@
    ========================================================================== */
 
 $new-navigation-toggler-width: 48px;
-$new-navigation-toggler-width-full: 230px;
+$new-navigation-toggler-width-full: 130px;
 
 $c-new-navigation-base: #2479c3;
 
@@ -558,7 +558,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
 
         @include mq(tablet) {
             @include rem((
-                padding-right: $new-navigation-toggler-width-full + $gs-gutter
+                padding-right: $new-navigation-toggler-width-full * 2
             ));
         }
     }
