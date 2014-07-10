@@ -260,14 +260,24 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
         padding-right: $new-navigation-h-space-between-items
     ));
 
-    .new-navigation--expanded & {
-        border-bottom: 1px solid $c-global-navigation-border;
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $new-navigation-h-space-between-items/2
+        ));
+    }
+    @include mq(wide) {
+        border-right-width: 0;
 
+        .new-navigation--has-local-navigation {
+            border-right-width: 1px;
+        }
+    }
+
+    .new-navigation--expanded & {
         @include mq($to: wide) {
             border-right: 0;
         }
         @include mq(wide) {
-            border-bottom: 0;
             @include rem((
                 min-width: gs-span(2) + $gs-gutter
             ));
@@ -350,21 +360,18 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
         padding-left: $new-navigation-h-space-between-items/2
     ));
 
-    .new-navigation--collapsed &:first-child {
-        @include rem((
-            padding-left: $new-navigation-h-space-between-items
-        ));
-    }
 }
-.signposting__item--home,
-.top-navigation__item:first-child {
+.new-navigation--collapsed.new-navigation--has-signposting .local-navigation,
+.new-navigation--collapsed.new-navigation--has-signposting .top-navigation {
     @include rem((
-        padding-left: $gs-gutter/2
+        padding-left: $new-navigation-h-space-between-items/2
     ));
-
-    @include mq(mobileLandscape) {
+}
+@include mq(mobileLandscape) {
+    .new-navigation--collapsed .local-navigation,
+    .new-navigation--collapsed .top-navigation {
         @include rem((
-            padding-left: $gs-gutter
+            padding-left: $new-navigation-h-space-between-items/2
         ));
     }
 }
@@ -623,7 +630,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
    ========================================================================== */
 
 @include mq(wide) {
-    .new-navigation--has-local-navigation {
+    .new-navigation--has-signposting {
         .new-navigation__inner:before {
             content: '';
             position: absolute;

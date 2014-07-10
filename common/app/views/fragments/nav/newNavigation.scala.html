@@ -5,6 +5,7 @@
     <div class="@RenderClasses(Map(
                     ("new-navigation", true),
                     ("new-navigation--collapsed", true),
+                    ("new-navigation--has-signposting", !Edition.isEditionFront),
                     ("new-navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
                 ))">
         <div class="gs-container">
