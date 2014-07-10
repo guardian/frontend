@@ -10,6 +10,9 @@
 
     background-color: $c-neutral1;
     color: $c-neutral7;
+    @include rem((
+        padding-top: $gs-baseline/2
+    ));
 
     .content__section .tone-colour,
     .byline,
@@ -39,7 +42,7 @@
 
     .content__standfirst {
         color: $c-neutral5;
-        
+
         a {
             color: $c-neutral5;
         }
