@@ -1,6 +1,7 @@
 .content {
+    border-top: 1px solid #ffffff;
+    padding-top: 0;
     @include rem((
-        padding-top: 1px,
         padding-bottom: $gs-baseline*3.5
     ));
 
@@ -339,7 +340,7 @@
         margin: $gs-baseline/2 0
     ));
     overflow: hidden;
-    @include border-radius(100rem);
+    @include border-radius(50%);
     background-color: $c-neutral7;
 
     // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
@@ -490,9 +491,11 @@
 
 .meta__comment-count--top { // currently used on video page only
     display: none;
-    margin-top: $gs-baseline/2;
-    margin-left: $gs-gutter/4;
     float: right;
+    @include rem((
+        margin-top: $gs-baseline/2,
+        margin-left: $gs-gutter/4
+    ));
 }
 
 .byline {
