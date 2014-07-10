@@ -1,31 +1,31 @@
 package com.gu.discussion.page
 
-import com.gu.automation.support.page.Element
+import com.gu.automation.support.page.Element._
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.{By, WebDriver}
 
 case class CommentItem(implicit driver: WebDriver) {
 
-  private val latestComment = Element(By.cssSelector(".discussion__comments__container .d-comment"))
-  private def commentBody = latestComment.element(By.className("d-comment__body"))
-  private def showCommentButton = latestComment.element(By.className("d-comment-box__show-parent"))
-  private def replyToCommentButton = latestComment.element(By.className("d-comment__action--reply"))
-  private def commentTextArea = latestComment.element(By.cssSelector("textarea[name=\"body\"]"))
-  private def postReplyButton = latestComment.element(By.className("d-comment-box__submit"))
-  private def cancelReplyButton = latestComment.element(By.className("d-comment-box__cancel"))
-  private def pickCommentButton = latestComment.element(By.className("d-comment__action--pick"))
-  private def reportCommentButton = latestComment.element(By.className("d-comment__action--report"))
-  private def reportSelectControl = latestComment.element(By.name("category"))
-  private def reportTextArea = latestComment.element(By.id("d-report-comment__reason"))
-  private def reportEmail = latestComment.element(By.id("d-report-comment__email"))
-  private def sendReportButton = latestComment.element(By.cssSelector("button.d-report-comment__submit"))
-  private def showMoreRepliesButton = latestComment.element(By.className("d-show-more-replies"))
-  private def recommendCommentButton = latestComment.element(By.className("d-comment__recommend-button"))
-  private def commentAuthorAvatar = latestComment.element(By.className("d-comment__avatar"))
-  private def commentAuthorLink = latestComment.element(By.cssSelector(".d-comment__author a"))
-  private def commentTimeStamp = latestComment.element(By.className("d-comment__timestamp"))
-  private def oldRecommendCommentCount = latestComment.element(By.cssSelector(".d-comment__recommend-count--old"))
-  private def newRecommendCommentCount = latestComment.element(By.cssSelector(".d-comment__recommend-count--new"))
+  private val latestComment = driver >> By.cssSelector(".discussion__comments__container .d-comment")
+  private def commentBody = latestComment >> By.className("d-comment__body")
+  private def showCommentButton = latestComment >> By.className("d-comment-box__show-parent")
+  private def replyToCommentButton = latestComment >> By.className("d-comment__action--reply")
+  private def commentTextArea = latestComment >> By.cssSelector("textarea[name=\"body\"]")
+  private def postReplyButton = latestComment >> By.className("d-comment-box__submit")
+  private def cancelReplyButton = latestComment >> By.className("d-comment-box__cancel")
+  private def pickCommentButton = latestComment >> By.className("d-comment__action--pick")
+  private def reportCommentButton = latestComment >> By.className("d-comment__action--report")
+  private def reportSelectControl = latestComment >> By.name("category")
+  private def reportTextArea = latestComment >> By.id("d-report-comment__reason")
+  private def reportEmail = latestComment >> By.id("d-report-comment__email")
+  private def sendReportButton = latestComment >> By.cssSelector("button.d-report-comment__submit")
+  private def showMoreRepliesButton = latestComment >> By.className("d-show-more-replies")
+  private def recommendCommentButton = latestComment >> By.className("d-comment__recommend-button")
+  private def commentAuthorAvatar = latestComment >> By.className("d-comment__avatar")
+  private def commentAuthorLink = latestComment >> By.cssSelector(".d-comment__author a")
+  private def commentTimeStamp = latestComment >> By.className("d-comment__timestamp")
+  private def oldRecommendCommentCount = latestComment >> By.cssSelector(".d-comment__recommend-count--old")
+  private def newRecommendCommentCount = latestComment >> By.cssSelector(".d-comment__recommend-count--new")
 
   def showCommentPost(): CommentItem = {
     showCommentButton.click()

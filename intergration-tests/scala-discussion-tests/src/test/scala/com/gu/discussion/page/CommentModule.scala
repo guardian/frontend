@@ -1,25 +1,26 @@
 package com.gu.discussion.page
 
 import com.gu.automation.support.TestLogger
+import com.gu.automation.support.page.Element._
 import com.gu.automation.support.page.{Element, Wait}
 import org.openqa.selenium.support.ui.{ExpectedConditions, Select}
 import org.openqa.selenium.{By, WebDriver}
 
 case class CommentModule(implicit driver: WebDriver, logger: TestLogger) {
 
-  private val startOfComments = Element(By.cssSelector(".d-discussion .d-discussion__pagination .pagination"))
-  private def showMoreFeaturedCommeLink = Element(By.className("show-more__container--featured"))
-  private def showAllCommentsButton = Element(By.className("d-discussion__show-all-comments"))
-  private def commentTextArea = Element(By.className("d-comment-box__body"))
-  private def postYourCommentButton = Element(By.className("d-comment-box__submit"))
-  private def cancelButton = Element(By.className("d-comment-box__cancel"))
-  private def sortOrderControl = Element(By.cssSelector(".discussion__comments > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > select:nth-child(1)"))
-  private def nextPageControl = startOfComments.element(By.cssSelector(".pagination__item--next " +
-    ".pagination__item-inner"))
-  private def previousPageControl = startOfComments.element(By.cssSelector(".pagination__item--prev .pagination__item-inner"))
-  private def firstPageControl = startOfComments.element(By.cssSelector(".pagination__item--first .pagination__item-inner"))
-  private def lastPageControl = startOfComments.element(By.cssSelector(".pagination__item--last .pagination__item-inner"))
-  private def showMoreRepliesButton = Element(By.className("d-show-more-replies"))
+  private val startOfComments = driver >> By.cssSelector(".d-discussion .d-discussion__pagination .pagination")
+  private def showMoreFeaturedCommeLink = driver >> By.className("show-more__container--featured")
+  private def showAllCommentsButton = driver >> By.className("d-discussion__show-all-comments")
+  private def commentTextArea = driver >> By.className("d-comment-box__body")
+  private def postYourCommentButton = driver >> By.className("d-comment-box__submit")
+  private def cancelButton = driver >> By.className("d-comment-box__cancel")
+  private def sortOrderControl = driver >> By.cssSelector(".discussion__comments > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > select:nth-child(1)")
+  private def nextPageControl = startOfComments >> By.cssSelector(".pagination__item--next " +
+    ".pagination__item-inner")
+  private def previousPageControl = startOfComments >> By.cssSelector(".pagination__item--prev .pagination__item-inner")
+  private def firstPageControl = startOfComments >> By.cssSelector(".pagination__item--first .pagination__item-inner")
+  private def lastPageControl = startOfComments >> By.cssSelector(".pagination__item--last .pagination__item-inner")
+  private def showMoreRepliesButton = driver >> By.className("d-show-more-replies")
 
   def showAllReplies(): CommentModule = {
     showMoreRepliesButton.click()

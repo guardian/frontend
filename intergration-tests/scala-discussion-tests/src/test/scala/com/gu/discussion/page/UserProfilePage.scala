@@ -1,20 +1,20 @@
 package com.gu.discussion.page
 
 import com.gu.automation.support.Config
-import com.gu.automation.support.page.Element
+import com.gu.automation.support.page.Element._
 import com.gu.discussion.support.ByExt
 import org.openqa.selenium.{By, WebDriver}
 
 
 case class UserProfilePage(implicit driver: WebDriver) {
 
-  private def commentsTab = Element(ByExt.dataTypeStream("discussions"))
-  private def repliesTab = Element(ByExt.dataTypeStream("replies"))
-  private def featuredTab = Element(ByExt.dataTypeStream("picks"))
-  private def profileName = Element(By.className("user-profile__name"))
-  private def activityItemTitle = Element(By.className("user-profile__name"))
-  private def activityStreamEmpty = Element(By.className("user-profile__name"))
-  private def activitySearch = Element(By.id("activity-stream-search"))
+  private def commentsTab = driver >> ByExt.dataTypeStream("discussions")
+  private def repliesTab = driver >> ByExt.dataTypeStream("replies")
+  private def featuredTab = driver >> ByExt.dataTypeStream("picks")
+  private def profileName = driver >> By.className("user-profile__name")
+  private def activityItemTitle = driver >> By.className("user-profile__name")
+  private def activityStreamEmpty = driver >> By.className("user-profile__name")
+  private def activitySearch = driver >> By.id("activity-stream-search")
 
   def getUserProfileName = {
     val userProfileName = profileName.getText()

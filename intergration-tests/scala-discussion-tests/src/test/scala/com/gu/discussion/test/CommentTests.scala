@@ -2,6 +2,7 @@ package com.gu.discussion.test
 
 import com.gu.automation.core.{GivenWhenThen, WebDriverFeatureSpec}
 import com.gu.discussion.step.CommentSteps
+import org.openqa.selenium.WebDriver
 import org.scalatest.Tag
 
 class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
@@ -11,6 +12,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
   feature("As a signed in registered user I can contribute to a discussion") {
 
     scenarioWeb("Add a new top level comment to an article") {
+      implicit driver: WebDriver =>
       given {
         CommentSteps().iAmSignedInAsStaff()
       }.when {
@@ -21,6 +23,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
     }
 
     scenarioWeb("Reply to a top level comment") {
+      implicit driver: WebDriver =>
       given {
         CommentSteps().iAmSignedInAsStaff()
       }.when {
@@ -31,6 +34,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
     }
 
     scenarioWeb("Report a comment") {
+      implicit driver: WebDriver =>
       given {
         CommentSteps().iAmSignedInAsStaff()
       }.when {
@@ -42,6 +46,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
     }
 
     scenarioWeb("View a users discussion posts") {
+      implicit driver: WebDriver =>
       given {
         CommentSteps().iAmSignedInAsStaff()
       }.when {
@@ -52,6 +57,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
     }
 
     scenarioWeb("Search a users discussion posts", Tag("WIP")) {
+      implicit driver: WebDriver =>
       given {
         CommentSteps().iViewAUsersCommentHistory()
       }.then {
@@ -60,6 +66,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
     }
 
     scenarioWeb("Recommend a users comment") {
+      implicit driver: WebDriver =>
       given {
         CommentSteps().iAmAGuestUser()
       }.when {
@@ -70,6 +77,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
     }
 
     scenarioWeb("Navigate through comment pages") {
+      implicit driver: WebDriver =>
       given {
         CommentSteps().iAmAGuestUser()
       }.when {
@@ -82,6 +90,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
     /*
     //Need to wait until Code environment is fixed to allow Picks
     scenarioWeb("Pick a comment to be Featured") {
+    implicit driver: WebDriver =>
       given {
         CommentSteps().iAmSignedInAsAMember()
       }.when {
