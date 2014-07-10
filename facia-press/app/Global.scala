@@ -33,6 +33,7 @@ object Global extends GlobalSettings
     ("content-api-client-mapping-exceptions", ContentApiMetrics.ContentApiJsonMappingExceptionMetric.getAndReset.toDouble),
     ("content-api-invalid-content-exceptions", FaciaToolMetrics.InvalidContentExceptionMetric.getAndReset.toDouble),
     ("s3-client-exceptions", S3Metrics.S3ClientExceptionsMetric.getAndReset.toDouble),
+    ("s3-authorization-exceptions", S3Metrics.S3AuthorizationError.getAndReset.toDouble),
     ("content-api-seo-request-success", FaciaPressMetrics.ContentApiSeoRequestSuccess.getAndReset.toDouble),
     ("content-api-seo-request-failure", FaciaPressMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble),
     ("content-api-fallbacks", FaciaPressMetrics.MemcachedFallbackMetric.getAndReset.toDouble)
