@@ -139,7 +139,14 @@ object S3Metrics {
     "Number of times the AWS S3 client has thrown an Exception"
   )
 
-  val all: Seq[Metric] = Seq(S3ClientExceptionsMetric)
+  object S3AuthorizationError extends SimpleCountMetric(
+    "facia-front",
+    "facia-s3-authorization-403",
+    "Facia S3 403 (Unauthorized) error count",
+    "Number of requests to S3 by facia that have resulted in a 403"
+  )
+
+  val all: Seq[Metric] = Seq(S3ClientExceptionsMetric, S3AuthorizationError)
 }
 
 object ContentApiMetrics {
@@ -244,13 +251,6 @@ object FaciaMetrics {
     "Number of errors whilst parsing JSON out of S3"
   )
 
-  object S3AuthorizationError extends SimpleCountMetric(
-    "facia-front",
-    "facia-s3-authorization-403",
-    "Facia S3 403 (Unauthorized) error count",
-    "Number of requests to S3 by facia that have resulted in a 403"
-  )
-
   object FaciaToApplicationRedirectMetric extends SimpleCountMetric(
     "facia-front",
     "facia-applications-redirects",
@@ -260,10 +260,9 @@ object FaciaMetrics {
 
   val all: Seq[Metric] = Seq(
     JsonParsingErrorCount,
-    S3AuthorizationError,
     InvalidContentExceptionMetric,
     FaciaToApplicationRedirectMetric
-  )
+  ) ++ S3Metrics.all
 }
 
 object FaciaPressMetrics {
