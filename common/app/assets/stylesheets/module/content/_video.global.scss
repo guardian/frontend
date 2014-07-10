@@ -92,5 +92,8 @@
 }
 
 .content-footer--video {
-    margin-top: $gs-baseline;
+    @include rem((
+        margin-top: $gs-baseline
+    ));
+
 }
