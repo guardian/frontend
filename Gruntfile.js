@@ -753,7 +753,7 @@ module.exports = function (grunt) {
                 destBasePath: staticTargetDir + '/stylesheets'
             },
             main: {
-                assets: ['global', 'head.default']
+                assets: ['global', 'head.default', 'head.facia']
             }
         }
     });
