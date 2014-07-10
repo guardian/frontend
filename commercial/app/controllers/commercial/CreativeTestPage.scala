@@ -1,6 +1,6 @@
 package controllers.commercial
 
-import model.{NoCache, Cached}
+import model.{GuardianContentTypes, NoCache, Cached}
 import play.api.mvc._
 import conf.Configuration
 
@@ -26,7 +26,7 @@ object TestPage extends model.MetaData  {
 
   val isNetworkFront: Boolean = false
 
-  override lazy val contentType: String =   if (isNetworkFront) "Network Front" else "Section"
+  override lazy val contentType: String =   if (isNetworkFront) GuardianContentTypes.NETWORK_FRONT else GuardianContentTypes.SECTION
 
 }
 

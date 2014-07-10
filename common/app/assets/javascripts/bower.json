@@ -18,7 +18,8 @@
     "videojs-contrib-ads": "guardian/videojs-contrib-ads#798b8a93cb293a95ede9af385c2354aa2c129216",
     "videojs-vast": "~0.1.5",
     "videojs-persistvolume": "~0.1.0",
-    "socket.io-client": "1.0.6"
+    "socket.io-client": "1.0.6",
+    "raven-js": "~1.1.15"
   },
   "resolutions": {
     "videojs": "59d4443682bd578e03c3925ed40a623c466476c6",

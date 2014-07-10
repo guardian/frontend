@@ -18,20 +18,22 @@ define([
             news:         ['eMdl6Y', 'mMYVrM', 'MTLELH'],
             'default':    ['c7Zrhu', 'Y1C40a', 'LtKGsC', 'MTLELH']
         },
-        segments = [],
+        segments = {},
         load = once(function() {
             if (config.switches.audienceScience) {
                 var placements = sectionPlacements[config.page.section] || sectionPlacements['default'],
                     query = urlUtils.constructQuery({
-                            placementIdList: placements.join(','),
-                            cb: new Date().getTime()
-                        }),
+                        placementIdList: placements.join(','),
+                        cb: new Date().getTime()
+                    }),
                     url = [gatewayUrl, '?', query].join('');
 
                 return require(['js!' + url + '!exports=asiPlacements'])
                     .then(function(asiPlacements) {
                         for (var placement in asiPlacements) {
-                            segments['pq_' + placement] = asiPlacements[placement]['default'] ? 'T' : '';
+                            if (asiPlacements[placement]['default']) {
+                                segments['pq_' + placement] = 'T';
+                            }
                         }
                     });
             }
