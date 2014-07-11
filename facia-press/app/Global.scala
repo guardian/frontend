@@ -35,7 +35,9 @@ object Global extends GlobalSettings
     ("s3-client-exceptions", S3Metrics.S3ClientExceptionsMetric.getAndReset.toDouble),
     ("content-api-seo-request-success", FaciaPressMetrics.ContentApiSeoRequestSuccess.getAndReset.toDouble),
     ("content-api-seo-request-failure", FaciaPressMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble),
-    ("content-api-fallbacks", FaciaPressMetrics.MemcachedFallbackMetric.getAndReset.toDouble)
+    ("content-api-fallbacks", FaciaPressMetrics.MemcachedFallbackMetric.getAndReset.toDouble),
+    ("front-press-latency", FaciaPressMetrics.FrontPressLatency.getAndReset.toDouble),
+    ("uk-network-front-press-latency", FaciaPressMetrics.UkFrontPressLatency.getAndReset.toDouble)
   )
 
   def scheduleJobs() {
