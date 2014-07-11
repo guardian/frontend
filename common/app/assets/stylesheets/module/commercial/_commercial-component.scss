@@ -164,34 +164,45 @@ $commercial-cta-diameter: (
         
         .commercial--v-high__head {
             border-top: 1px solid $c-neutral3;
-            padding: $gs-baseline 0;
+            @include rem((
+                padding: $gs-baseline 0
+            ));
         }
         .lineitem__title {
             white-space: normal;
         }
+        .lineitem__link {
+            float: none;
+        }
         .commercial--v-high__body {
             border: 1px dotted $c-neutral3;
-            padding: $gs-baseline/2 0;
+            @include rem((
+                padding: $gs-baseline/2 0
+            ));
             border-width: 1px 0;
         }
         .commercial--v-high__footer {
             border-bottom: 1px dotted $c-neutral3;
-            padding: $gs-baseline/2 0;
+            @include rem((
+                padding: $gs-baseline/2 0
+            ));
         }
         .commercial__home-link {
             float: none;
+            padding-left: 0;
+            color: #ffffff;
         }
     }
 }
 
 .ad-slot--im {
-    @include box-sizing(border-box);
     @include rem((
         padding-right: $gs-gutter
     ));
     width: 50%;
     float: left;
     @include mq(leftCol) {
+        @include box-sizing(border-box);
         @include rem((
             width: gs-span(2) + $gs-gutter,
             margin-left: -(gs-span(2) + $gs-gutter)
@@ -594,6 +605,23 @@ $commercial-cta-diameter: (
                 height: 8px;
                 margin-left: -5px;
                 margin-top: -4px;
+                background-size: contain;
+            }
+        }
+    }
+    .commercial__home-link__pill {
+        padding: 4px 25px 4px 12px;
+        background-position: right;
+        @include border-radius(50%);
+        white-space: nowrap;
+        
+        .i {
+            left: auto;
+            right: 10px;
+            
+            .svg & {
+                width: 12px;
+                height: 8px;
                 background-size: contain;
             }
         }
