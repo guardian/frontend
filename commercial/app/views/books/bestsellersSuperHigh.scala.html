@@ -18,25 +18,25 @@
                 <p itemprop="author" class="lineitem__meta">@book.author</p>
             </div>
             <div class="commercial--v-high__body">
-                <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-image">
+                <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-@{book.isbn}-@{book.author}-@{book.title}">
                     @book.jacketUrl.map { url =>
                     <img itemprop="image" class="highitem__img" src="@url" alt="" />
                     }
+                    <p itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="commercial--books__price">
+                        @book.price.map { price =>
+                        <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
+                        }
+                        @book.offerPrice.map { price =>
+                        <span class="commercial--books__price__our">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
+                        <meta itemprop="priceCurrency" content="GBP" />
+                        }
+                    </p>
                 </a>
-                <p itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="commercial--books__price">
-                    @book.price.map { price =>
-                    <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
-                    }
-                    @book.offerPrice.map { price =>
-                    <span class="commercial--books__price__our">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
-                    <meta itemprop="priceCurrency" content="GBP" />
-                    }
-                </p>
             </div>
             <div class="commercial--v-high__footer">
-                <a href="#"
+                <a href="@AdLink{@book.buyUrl}"
                     class="commercial__home-link"
-                    data-link-name="merchandising-bookshop-v@{version}_@{date}-high-visit-shop">
+                    data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
                     Buy now
                     <span class="commercial__home-link__cta">
                         <span class="i i-filter-arrow-down"></span>
