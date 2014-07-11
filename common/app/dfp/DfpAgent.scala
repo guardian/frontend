@@ -5,7 +5,6 @@ import java.net.URLDecoder
 import akka.agent.Agent
 import common._
 import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey, inlineMerchandisingSponsorshipsDataKey}
-import conf.Switches.EditionalisedPageSkinsSwitch
 import model.{Config, Tag}
 import play.api.{Application, GlobalSettings}
 import services.S3
@@ -47,19 +46,15 @@ trait DfpAgent {
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
-<<<<<<< HEAD
 
   def hasInlineMerchandise(tags: Seq[Tag]): Boolean = getPrimaryKeywordSeriesOrSectionTag(tags)  exists (tag => hasInlineMerchandise(tag.id))
   def hasInlineMerchandise(tagId: String): Boolean = inlineMerchandisingDeals exists (_.hasTag(tagId))
   def hasInlineMerchandise(config: Config): Boolean = isSponsoredContainer(config, hasInlineMerchandise)
 
-  def isPageSkinned(adUnitWithoutRoot: String, edition: Edition) = {
-    val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
-=======
+
   def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
     if (adUnitWithoutRoot endsWith "front") {
       val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
->>>>>>> origin/master
 
       pageSkinSponsorships.exists { sponsorship =>
         sponsorship.adUnits.contains(adUnitWithRoot) &&
