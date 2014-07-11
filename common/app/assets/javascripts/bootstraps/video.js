@@ -1,3 +1,4 @@
+/* jshint nonew: false */
 /* global videojs */
 define([
     'common/utils/$',
@@ -10,7 +11,8 @@ define([
     'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
     'bean',
-    'bonzo'
+    'bonzo',
+    'common/modules/onward/most-viewed-video'
 ], function(
     $,
     ajax,
@@ -22,7 +24,8 @@ define([
     OmnitureMedia,
     _throttle,
     bean,
-    bonzo
+    bonzo,
+    MostViewedVideo
 ) {
 
     var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
@@ -253,6 +256,8 @@ define([
                     vjs.persistvolume({namespace: 'gu.vjs'});
                 });
             });
+
+            new MostViewedVideo();
         }
     };
 
