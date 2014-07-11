@@ -118,13 +118,6 @@ $football-crest--large: 60px;
     }
 }
 
-/*.match-summary--minbymin,
-.match-summary--report {
-    dd {
-        margin: 0 !important;
-    }
-}*/
-
 .match-summary__status {
     @include rem((
         padding: $gs-baseline 0
