@@ -56,6 +56,12 @@
         margin-bottom: 0;
     }
 
+    .social-wrapper--bottom {
+        @include mq(leftCol) {
+            display: none;
+        }
+    }
+
     .social-icon-wrapper {
         opacity: .8;
 
