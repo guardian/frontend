@@ -2,10 +2,10 @@ package controllers
 
 import frontsapi.model.{Collection, Front}
 import play.api.mvc.Controller
+import services.PressAndNotify
 import util.Requests._
 import play.api.libs.json.Json
 import config.UpdateManager
-import frontpress.CollectionPressing.pressAndNotify
 
 object CreateFront {
   implicit val jsonFormat = Json.format[CreateFront]
@@ -27,7 +27,7 @@ object FrontController extends Controller {
       case Some(createFrontRequest) =>
         val identity = Identity(request).get
         val newCollectionId = UpdateManager.createFront(createFrontRequest, identity)
-        pressAndNotify(newCollectionId)
+        PressAndNotify(Set(newCollectionId))
         Ok
 
       case None => BadRequest

@@ -251,20 +251,20 @@
             <div data-bind="if: state.isOpen">
                 <div class="article__overrides">
                     <div class="article__overrides__fields">
-                        <input type="text" data-bind="
+                        <textarea class="headline" data-bind="
                             hasFocus: true,
                             event: {blur: save},
                             value: headlineInput,
-                            attr: {placeholder: fields.headline() || 'Link text'}"/>
+                            attr: {placeholder: fields.headline() || 'Link text'}"></textarea>
                         <a class="revert revert--headline" data-bind="
                             click: headlineRevert,
                             attr: {title: 'Revert to: ' + fields.headline()},
                             visible: meta.headline"><i class="icon-fast-backward"></i></a>
 
-                        <textarea class="trailtext" type="text" data-bind="
+                        <textarea class="trailtext" data-bind="
                             event: {blur: save},
                             value: trailTextInput,
-                            attr: {placeholder: fields.trailText() || 'Trail text'}"/></textarea>
+                            attr: {placeholder: fields.trailText() || 'Trail text'}"></textarea>
                         <a class="revert revert--trailtext" data-bind="
                             click: trailTextRevert,
                             attr: {title: 'Revert to: ' + fields.trailText()},

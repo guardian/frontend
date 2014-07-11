@@ -86,8 +86,7 @@ trait Navigation {
   val golf = SectionLink("sport", "golf", "Golf", "/sport/golf")
   val horseracing = SectionLink("sport", "horse racing", "Horse racing", "/sport/horse-racing")
   val boxing = SectionLink("sport", "boxing", "Boxing", "/sport/boxing")
-  val formulaOne = SectionLink("sport", "F1", "Formula one", "/sport/formulaone")
-  val racing = SectionLink("sport", "racing", "Racing", "/sport/racing")
+  val formulaOne = SectionLink("sport", "formula one", "Formula one", "/sport/formulaone")
 
   val nfl = SectionLink("sport", "NFL", "NFL", "/sport/nfl")
   val mlb = SectionLink("sport", "MLB", "MLB", "/sport/mlb")
@@ -112,7 +111,6 @@ trait Navigation {
   val music = SectionLink("culture", "music", "Music", "/music")
   val stage = SectionLink("culture", "stage", "Stage", "/stage")
   val televisionAndRadio = SectionLink("culture", "tv & radio", "TV & radio", "/tv-and-radio")
-  val classical = SectionLink("culture", "classical", "Classical", "/music/classicalmusicandopera")
 
   //Technology
   val technologyblog = SectionLink("technology", "technology blog", "Technology blog", "/technology/blog")
@@ -204,7 +202,6 @@ object Breadcrumbs {
   }
 }
 
-
 // helper for the views
 object Navigation {
 
@@ -214,21 +211,25 @@ object Navigation {
 
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
-  def localNav(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = topLevelItem(navigation, page)
-    .filter(_.links.nonEmpty)
+  def localNav(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = topLevelItem(navigation, page).filter(_.links.nonEmpty)
 
   def sectionOverride(localNav: NavItem, currentSublink: Option[SectionLink]): String = currentSublink.map(_.title).getOrElse(localNav.name.title)
 
   def localNavWithoutCurrent(localNav: NavItem, currentSublink: Option[SectionLink]) =
     localNav.links.filter(_.href != currentSublink.map(_.href).getOrElse(""))
 
-  def rotateByOmittingCurrent(localNav: NavItem, currentSublink: Option[SectionLink]) = currentSublink match {
-    case Some(currentSection) =>
-      val navSlices = localNav.links.span(_.href != currentSection.href)
-      navSlices._2.drop(1) ++ navSlices._1
-    case None =>
-      localNav.links
-  }
+  def rotatedLocalNav(topSection: NavItem, metaData: MetaData): Seq[SectionLink] =
+    topSection.links.find(_.currentFor(metaData)) match {
+      case Some(currentSection) =>
+        val navSlices = topSection.links.span(_.href != currentSection.href)
+        navSlices._2.drop(1) ++ navSlices._1
+      case None =>
+        topSection.links
+    }
+
+  def isEditionFront(topSection: NavItem): Boolean = ("/" :: Edition.editionFronts).contains(topSection.name.href)
+
+  def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] = Navigation.topLevelItem(navigation, metaData).map(_.links).getOrElse(List())
 }
 
 trait Zones extends Navigation {

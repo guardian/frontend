@@ -6,7 +6,7 @@
 @* Critical scripts that should execute as soon as possible, preventing layout thrashing *@
 
 <!--[if lt IE 9]>
-    <script src="@Static("javascripts/components/html5shiv/dist/html5shiv.js")"></script>
+    <script src="@Static("javascripts/components/html5shiv/html5shiv.js")"></script>
 <![endif]-->
 
 <style class="initial" data-cache-name="WebEgyptian" data-cache-file-woff="@Static("fonts/WebEgyptian.woff.json")" data-cache-file-ttf="@Static("fonts/WebEgyptian.ttf.json")"></style>
@@ -39,6 +39,13 @@
 
             return fBound;
         };
+    }
+    @* JSON support needed for raven *@
+    if ("object" !== typeof JSON) {
+        var s = document.createElement('script'),
+            sc = document.getElementsByTagName('script')[0];
+        s.src = '@Static("javascripts/components/JSON-js/json2.js")';
+        sc.parentNode.insertBefore(s, sc);
     }
 
     var guardian = {

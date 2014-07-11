@@ -37,9 +37,9 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   }
 
   def getConfigsUsingCollectionId(id: String): Seq[String] = {
-    getConfigCollectionMap.collect{
+    (getConfigCollectionMap collect {
       case (configId, collectionIds) if collectionIds.contains(id) => configId
-    }.toSeq
+    }).toSeq
   }
 
   def getConfigForId(id: String): Option[List[Config]] = {

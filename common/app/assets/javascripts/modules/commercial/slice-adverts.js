@@ -6,6 +6,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/utils/template',
+    'common/modules/userPrefs',
     'common/modules/commercial/dfp'
 ], function (
     bonzo,
@@ -15,6 +16,7 @@ define([
     $,
     globalConfig,
     template,
+    userPrefs,
     dfp
 ) {
 
@@ -40,13 +42,16 @@ define([
             var containers = qwery(config.containerSelector),
                 index = 0,
                 adSlices = [],
-                containerGap = 2;
+                containerGap = 2,
+                prefs = userPrefs.get('container-states');
             // pull out ad slices which are have at least x containers between them
             while (index < containers.length) {
-                var $adSlice = $(config.sliceSelector, containers[index]),
+                var container = containers[index],
+                    containerId = bonzo(container).data('id'),
+                    $adSlice = $(config.sliceSelector, container),
                     // don't display ad in the first container on the fronts
                     isFrontFirst = ['uk', 'us', 'au'].indexOf(config.page.pageId) > -1 && index === 0;
-                if ($adSlice.length && !isFrontFirst) {
+                if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
                     adSlices.push($adSlice.first());
                     index += (containerGap + 1);
                 } else {
