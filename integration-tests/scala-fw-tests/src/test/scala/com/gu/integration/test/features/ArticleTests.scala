@@ -1,7 +1,8 @@
-package com.gu.fronts.integration.test.features;
+package com.gu.integration.test.features
 
-import com.gu.fronts.integration.test.FrontsSeleniumTestSuite;
 import org.openqa.selenium.WebDriver
+
+import com.gu.integration.test.FrontsSeleniumTestSuite
 
 class ArticleTests extends FrontsSeleniumTestSuite {
   

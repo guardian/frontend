@@ -1,10 +1,9 @@
-package com.gu.fronts.integration.test
+package com.gu.integration.test
 
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
-
 import com.gu.automation.core.WebDriverFeatureSpec
-import com.gu.fronts.integration.test.config.WebdriverFactory
+import com.gu.integration.test.config.WebdriverFactory
 
 abstract class FrontsSeleniumTestSuite extends WebDriverFeatureSpec with Matchers with PageHelper {
 

@@ -1,9 +1,9 @@
-package com.gu.fronts.integration.test.features;
+package com.gu.integration.test.features
 
 import com.gu.automation.support.TestLogging
 import org.openqa.selenium.WebDriver
-import com.gu.fronts.integration.test.PageHelper
-import com.gu.fronts.integration.test.page.nwfront.ArticlePage
+import com.gu.integration.test.PageHelper
+import com.gu.integration.test.pages.article.ArticlePage
 
 case class ArticleSteps(implicit driver: WebDriver) extends TestLogging with PageHelper {
 

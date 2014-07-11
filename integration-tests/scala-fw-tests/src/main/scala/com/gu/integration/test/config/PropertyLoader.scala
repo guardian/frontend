@@ -1,4 +1,4 @@
-package com.gu.fronts.integration.test.config
+package com.gu.integration.test.config
 
 import com.gu.automation.support.Config
 import com.gu.automation.support.TestLogging

@@ -1,4 +1,4 @@
-package com.gu.fronts.integration.test.config
+package com.gu.integration.test.config
 
 import java.net.URL
 import java.util.concurrent.TimeUnit.SECONDS
@@ -11,8 +11,8 @@ import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.ie.InternetExplorerDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
-import com.gu.fronts.integration.test.config.PropertyLoader._
-import com.gu.fronts.integration.test.config.PropertyLoader.getProperty
+import com.gu.integration.test.config.PropertyLoader._
+import com.gu.integration.test.config.PropertyLoader.getProperty
 import com.gu.automation.support.TestLogging
 
 object WebdriverFactory extends TestLogging {
@@ -28,7 +28,7 @@ object WebdriverFactory extends TestLogging {
       case "ie" =>
         val capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.internetExplorer())
         (new InternetExplorerDriver(capabilities), capabilities)
-      case default => throw new RuntimeException("Browser: [" + default + "] is not supported")
+      case default => throw new RuntimeException(s"Browser: [$default] is not supported")
     }
 
     initWebDriver(overrideSauceLabsDriver(capabilities, webDriver))
