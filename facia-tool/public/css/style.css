@@ -378,7 +378,7 @@ h1 {
     opacity: 0.5;
 }
 
-.headline {
+a.headline {
     font-size: 14px;
     line-height: 16px;
     color: #000000;
@@ -387,7 +387,7 @@ h1 {
     text-decoration: none;
 }
 
-.headline:hover {
+a.headline:hover {
     color: #000000;
 }
 
