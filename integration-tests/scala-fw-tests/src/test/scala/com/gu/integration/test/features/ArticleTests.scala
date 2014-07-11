@@ -2,9 +2,9 @@ package com.gu.integration.test.features
 
 import org.openqa.selenium.WebDriver
 
-import com.gu.integration.test.FrontsSeleniumTestSuite
+import com.gu.integration.test.SeleniumTestSuite
 
-class ArticleTests extends FrontsSeleniumTestSuite {
+class ArticleTests extends SeleniumTestSuite {
   
   feature("Articles") { 
     scenarioWeb("checking most popular module exists") { implicit driver: WebDriver =>
