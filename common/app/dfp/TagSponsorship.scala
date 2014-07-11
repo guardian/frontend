@@ -5,7 +5,9 @@ import common.Logging
 
 case class Sponsorship(tags: Seq[String], sponsor: Option[String]) {
 
-  def hasTag(tagId: String): Boolean = tags contains (tagId.split('/').last)
+  def hasTag(tagId: String): Boolean = {
+    tags contains (tagId.split('/').last)
+  }
 }
 
 case class SponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[Sponsorship])
