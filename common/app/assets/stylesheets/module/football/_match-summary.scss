@@ -93,9 +93,17 @@ $football-crest--large: 60px;
     top: 0;
 }
 
+.match-summary {
+    dd {
+        margin: 0;
+    }
+}
+
 .team__scorers {
     @include fs-data(5);
+}
 
+.match-summary--report .team__scorers {
     dd {
         @include mq(mobile) {
             @include rem((
@@ -112,9 +120,12 @@ $football-crest--large: 60px;
     }
 }
 
-.match-summary--minbymin dd {
-    margin: 0 !important;
-}
+/*.match-summary--minbymin,
+.match-summary--report {
+    dd {
+        margin: 0 !important;
+    }
+}*/
 
 .match-summary__status {
     @include rem((
