@@ -64,7 +64,6 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     }
   }
 
-
   def renderPopularDayJson(countryCode: String) = Action { implicit request =>
     Cached(900) {
       JsonComponent(
