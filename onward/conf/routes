@@ -22,7 +22,7 @@ GET        /related/*path                             controllers.RelatedControl
 
 GET        /popular-in-tag/*tag.json                  controllers.PopularInTag.renderJson(tag)
 
-GET        /video/most-viewed                         controllers.MostViewedVideoController.renderView()
+GET        /video/most-viewed.json                    controllers.MostViewedVideoController.renderJson()
 
 GET        /preference/platform/:platform             controllers.ChangeViewController.render(platform, page)
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
