@@ -229,42 +229,6 @@ $c-commercial-books-dark: #630d4c;
             }
         }
     }
-    &.commercial--v-high {
-        background-repeat: repeat-x;
-        background-position: top, bottom;
-        @include rem((
-            padding: $gs-baseline $gs-gutter/2
-        ));
-        
-        .commercial--v-high__head {
-            border-top: 1px solid $c-neutral3;
-            padding: $gs-baseline 0;
-        }
-        .lineitem__title {
-            white-space: normal;
-        }
-        .commercial--v-high__body {
-            border: 1px dotted $c-neutral3;
-            padding: $gs-baseline/2 0;
-            border-width: 1px 0;
-        }
-        .commercial--v-high__footer {
-            border-bottom: 1px dotted $c-neutral3;
-            padding: $gs-baseline/2 0;
-        }
-        .commercial__home-link {
-            float: none;
-        }
-    }
-}
-
-.ad-slot--im {
-    @include box-sizing(border-box);
-    @include rem((
-        padding-right: $gs-gutter
-    ));
-    width: 50%;
-    float: left;
 }
 
 /* fronts */

@@ -52,7 +52,7 @@ define([
         this.components         = {
             bestbuy:           this.host + 'money/bestbuys.json',
             bestbuyHigh:       this.host + 'money/bestbuys-high.json',
-            book:              this.host + 'books/book.json'                + this.getKeywords(),
+            book:              this.host + 'books/book.json?'               + this.getKeywords(),
             books:             this.host + 'books/bestsellers.json?'        + this.getKeywords(),
             booksMedium:       this.host + 'books/bestsellers-medium.json?' + this.getKeywords(),
             booksHigh:         this.host + 'books/bestsellers-high.json?'   + this.getKeywords(),
