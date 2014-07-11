@@ -35,29 +35,30 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
       case Success(_) =>
         pressType match {
           case Draft => FaciaPressMetrics.FrontPressDraftSuccess.increment()
-          case Live =>
-            FaciaPressMetrics.FrontPressLiveSuccess.increment()
-
-            message.sentAt match {
-              case Some(start) =>
-                val millisToPress = DateTime.now.getMillis - start.getMillis
-
-                if (millisToPress < 0) {
-                  log.error(s"Tachyons messing up our pressing! (pressed in ${millisToPress}ms)")
-                  log.info(s"Successfully pressed $path on $pressType")
-                } else {
-                  log.info(s"Pressed $path on $pressType in ${millisToPress}ms")
-                  FaciaPressMetrics.FrontPressLatency.recordTimeSpent(millisToPress)
-
-                  if (path == "uk") {
-                    FaciaPressMetrics.UkFrontPressLatency.recordTimeSpent(millisToPress)
-                  }
-                }
-
-              case None =>
-                log.error("Asked SQS for SentTimestamp but it wasn't sent")
-            }
+          case Live => FaciaPressMetrics.FrontPressLiveSuccess.increment()
         }
+
+        val maybeElapsed = message.sentAt.map(DateTime.now.getMillis - _.getMillis)
+
+        maybeElapsed match {
+          case Some(millisToPress) =>
+            if (millisToPress < 0) {
+              log.error(s"Tachyons messing up our pressing! (pressed in ${millisToPress}ms)")
+            } else {
+              FaciaPressMetrics.FrontPressLatency.recordTimeSpent(millisToPress)
+
+              if (path == "uk") {
+                FaciaPressMetrics.UkFrontPressLatency.recordTimeSpent(millisToPress)
+              }
+            }
+
+            log.info(s"Successfully pressed $path on $pressType after ${millisToPress}ms")
+
+          case None =>
+            log.error("Asked SQS for SentTimestamp but did not receive it")
+            log.info(s"Successfully pressed $path on $pressType")
+        }
+        
       case Failure(error) =>
         pressType match {
           case Draft => FaciaPressMetrics.FrontPressDraftFailure.increment()
