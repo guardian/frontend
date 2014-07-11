@@ -114,7 +114,7 @@ h1 {
 .front-priorities {
     position: absolute;
     top: 60px;
-    left: 60px;
+    left: 20px;
 }
 
 .front-priorities--priority {
@@ -132,7 +132,7 @@ h1 {
 
 .title {
     font-size: 18px;
-    color: #666666;
+    color: #333333;
     padding: 0 0 0 4px;
 }
 
@@ -162,7 +162,8 @@ h1 {
 
 .supporting .droppable {
     padding: 0 0 15px 0;
-    border-top: 1px dashed #dddddd;
+    border-top: 1px solid #e9e9e9;
+    margin-top: 2px;
 }
 
 .droppable.underDrag {
@@ -377,7 +378,7 @@ h1 {
     opacity: 0.5;
 }
 
-.headline {
+a.headline {
     font-size: 14px;
     line-height: 16px;
     color: #000000;
@@ -386,7 +387,7 @@ h1 {
     text-decoration: none;
 }
 
-.headline:hover {
+a.headline:hover {
     color: #000000;
 }
 
@@ -490,8 +491,9 @@ h1 {
 }
 
 .misc__overrides {
-    margin: 0 0 0 6px;
-    height: 25px;
+    margin: 5px 0 5px 6px;
+    font-size: 12px;
+    line-height: 15px;
 }
 
 .misc__overrides .selected {
@@ -573,16 +575,24 @@ input[type="text"] {
     padding: 0 10px 0 2px;
 }
 
+textarea.headline,
 textarea.trailtext {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
-    font-size: 12px;
-    line-height: 14px;
-    padding: 3px 5px 0 5px;
-    min-height: 35px;
-    margin: 0;
-    color: #333333;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 2px 5px 0 5px;
+    margin: 1px 0;
+    color: #000000;
+}
+
+textarea.headline {
+    height: 54px;
+}
+
+textarea.trailtext {
+    height: 70px;
 }
 
 button {
@@ -611,9 +621,9 @@ button {
 .group-name {
     padding: 2px 0 0 0;
     margin: 5px 0 2px 4px;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 12px;
-    color: #666666;
+    color: #333333;
     border-top: 1px dotted #cccccc;
     text-transform: uppercase;
     width: 143px;

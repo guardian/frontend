@@ -20,7 +20,6 @@
             'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',
             foresee: '@Static("javascripts/vendor/foresee/foresee-trigger.js")',
             googletag: '@{Configuration.javascript.config("googletagJsUrl")}',
-            raven: '@Static("javascripts/components/raven-js/dist/raven.js")',
             core: '@Static("javascripts/core.js")',
             'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")',
             'bootstraps/commercial' : '@Static("javascripts/bootstraps/commercial.js")',
@@ -122,22 +121,51 @@
         'domReady!'
     ], function (core) {
 
-        if (guardian.config.switches.commercial) {
-            require(['bootstraps/commercial'], function(commercial) {
-                commercial.init();
-            });
-        }
+        require(['raven', 'common/utils/config'], function(raven, config) {
 
-        if (guardian.isModernBrowser) {
+            raven.config(
+                'http://' + config.page.sentryApiKey + '@@' + config.page.sentryHost,
+                {
+                    logger: 'javascript',
+                    whitelistUrls: [
+                        /localhost/,
+                        /assets\.guim\.co\.uk/,
+                        /theguardian\.com/,
+                        /ophan\.co\.uk/,
+                        /api\.nextgen\.guardianapps\.co\.uk/
+                    ],
+                    tags: {
+                        edition: config.page.edition,
+                        contentType: config.page.contentType,
+                        buildNumber: config.page.buildNumber
+                    },
+                    shouldSendCallback: function(data) {
+                        return Math.random() < 0.1;
+                    }
+                }
+            ).install();
 
-            @if(play.Play.isDev()) {
-                require(['bootstraps/dev'], function (devmode) { devmode.init(); });
+            if (guardian.config.switches.commercial) {
+
+                require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
+                    commercial.init();
+                });
+
             }
 
-            require(['bootstraps/app'], function(bootstrap) {
-                bootstrap.go();
-            });
-        }
+            if (guardian.isModernBrowser) {
+
+                @if(play.Play.isDev()) {
+                    require(['bootstraps/dev'], function (devmode) { devmode.init(); });
+                }
+
+                require(['bootstraps/app'], function(bootstrap) {
+                    bootstrap.go();
+                });
+
+            }
+
+        });
 
     });
 </script>

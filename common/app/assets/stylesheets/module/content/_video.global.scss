@@ -1,0 +1,102 @@
+.content--video {
+
+    .byline,
+    .content__dateline,
+    .social-wrapper--aside,
+    .content__meta-container,
+    .ad-slot--paid-for-badge--article,
+    .commentcount {
+        border-color: $c-neutral2;
+    }
+
+    .commentcount.tone-colour {
+        color: $c-commentAccent2;
+
+        &:hover {
+            color: $c-commentAccent2;
+        }
+
+        i {
+            @include icon(comment-commentaccent);
+        }
+    }
+
+    .content__head__comment-count {
+        display: none;
+    }
+
+    @include mq($to: desktop) {
+        .meta__comment-count--top,
+        .meta__comment-count--bottom {
+            .commentcount {
+                border-top: 0;
+            }
+            .commentcount__label {
+                display: none;
+            }
+        }
+        .meta__comment-count--bottom {
+            display: none;
+        }
+        .meta__comment-count--top {
+            display: block;
+            .commentcount {
+                display: block;
+            }
+        }
+    }
+
+    .player {
+        @include rem((
+            margin-bottom: $gs-baseline/2
+        ));
+    }
+
+    .gu-video-wrapper {
+        margin-bottom: 0;
+    }
+
+    .social-icon-wrapper {
+        opacity: .8;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    .social-icon {
+        overflow: visible; // opacity cuts borders off on chrome otherwise
+    }
+
+    .content__headline:before {
+        content: '';
+        @include icon(video-icon);
+        @include background-size(auto 100%);
+        @include rem((
+            margin-right: $gs-gutter/3,
+            height: 20px !important,
+            width: 34px !important
+        ));
+
+        @include mq(mobileLandscape) {
+            @include rem((
+                height: 25px !important,
+                width: 40px !important,
+                margin-right: $gs-gutter/2
+            ));
+        }
+
+        @include mq(tablet) {
+            @include rem((
+                height: 27px !important,
+                width: 43px !important
+            ));
+        }
+    }
+}
+
+.content-footer--video {
+    @include rem((
+        margin-top: $gs-baseline
+    ));
+}

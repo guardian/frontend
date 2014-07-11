@@ -10,7 +10,7 @@ import conf.Configuration
 import play.api.Play
 import Play.current
 import scala.util.Try
-import common.FaciaToolMetrics.MemcachedFallbackMetric
+import common.FaciaPressMetrics.MemcachedFallbackMetric
 
 object MemcachedFallback extends ExecutionContexts with Dates with Logging {
   private def connectToMemcached(host: String) = {

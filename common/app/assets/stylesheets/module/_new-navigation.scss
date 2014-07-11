@@ -1,0 +1,846 @@
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+
+/* Configuration
+   ========================================================================== */
+
+$new-navigation-toggler-width: 48px;
+$new-navigation-toggler-width-full: 130px;
+
+$c-new-navigation-base: #2479c3;
+
+$theme: default;
+
+$c-navigation-background: mix($c-new-navigation-base, #ffffff, 80%);
+$c-navigation-action: guss-colour(neutral-1);
+
+$c-signposting-action: #ffffff;
+$c-signposting-background: $c-new-navigation-base;
+
+$c-top-navigation-action: #ffffff;
+$c-top-navigation-background: guss-colour(guardian-brand);
+
+$c-local-navigation-background: $c-new-navigation-base;
+$c-local-navigation-action: #ffffff;
+
+$c-local-navigation-parent-background: guss-colour(guardian-brand);
+
+$c-local-navigation-current-background: $c-local-navigation-parent-background;
+$c-local-navigation-current: #ffffff;
+$c-local-navigation-current-border: 0;
+
+$c-global-navigation-background: $c-new-navigation-base;
+$c-global-navigation-title: #ffffff;
+$c-global-navigation-title-background: guss-colour(guardian-brand);
+$global-navigation-title-width: $a-leftCol-width + $gs-gutter;
+$global-navigation-title-width-wide: $a-leftColWide-width + $gs-gutter;
+$c-global-navigation-action: #ffffff;
+$c-global-navigation-border: rgba(#ffffff, .3);
+
+$c-navigation-toggle-background: guss-colour(neutral-1);
+$c-navigation-toggle-icon: #ffffff;
+$c-navigation-toggle-shadow: rgba(#000000, .333333);
+
+$new-navigation-h-space-between-items: $gs-gutter;
+
+$c-navigation-expandable-background: guss-colour(neutral-1);
+
+
+/* Overrides (to be incorporated into the global CSS when killing the old nav)
+   ========================================================================== */
+
+.has-new-navigation {
+    .l-header {
+        border-bottom: 0;
+    }
+    .container--first {
+        @include mq($to: tablet) {
+            padding-top: 0;
+
+            .container__border,
+            .container__header {
+                display: none;
+            }
+        }
+    }
+    .navigation-aside {
+        border-top: 0;
+
+        @include mq(tablet) {
+            float: left;
+            clear: none;
+            @include rem((
+                width: gs-span(4)
+            ));
+        }
+    }
+
+    @include mq($to: tablet) {
+        // Display the first container header everywhere
+        .container--first .container__header,
+        .js-on &.has-localnav .container--first .container__title {
+            display: block;
+        }
+        // But not on the homepage
+        .container--first[data-link-name=top-stories] .container__header {
+            display: none;
+        }
+        // And restyle the title to look less bulky
+        .container--first .container__title {
+            color: #333333;
+            padding-left: 0;
+            background: transparent;
+        }
+    }
+
+    @include mq(wide) {
+        &.has-page-skin .l-header .gs-container {
+            @include rem((
+                width: auto
+            ));
+        }
+    }
+}
+.new-navigation__expandable {
+    .switcher,
+    .switcher__option,
+    .switcher__option a:link,
+    .switcher__option a:visited {
+        color: mix($c-navigation-expandable-background, #ffffff, 5%);
+    }
+    .switcher__option--active:link,
+    .switcher__option--active:visited {
+        color: #ffffff;
+    }
+    .switcher__option--active:before {
+        background: #ffffff;
+    }
+    .navigation-aside {
+        @include rem((
+            margin-top: 2px
+        ));
+    }
+    .switcher {
+        padding-bottom: 0;
+        @include rem((
+            min-height: $gs-row-height - $gs-baseline/2 - 2
+        ));
+    }
+    .nav--guardian-services {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+
+        .nav__link {
+            border-top: 0;
+            @include rem((
+                padding-bottom: $gs-baseline/2
+            ));
+            font-weight: 400;
+
+            @include mq(tablet) {
+                padding-bottom: 0;
+                @include rem((
+                    padding-top: 1px
+                ));
+            }
+        }
+        .nav__item .nav__link:link,
+        .nav__item .nav__link:visited {
+            color: mix($c-navigation-expandable-background, #ffffff, 5%);
+        }
+
+        @include mq(tablet) {
+            padding-top: 0;
+            float: right;
+            text-align: right;
+            @include rem((
+                padding-top: 7px,
+                width: gs-span(3)
+            ));
+        }
+    }
+}
+
+
+/* Styles common to all states
+   ========================================================================== */
+
+.new-navigation {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    clear: both;
+    background: $c-navigation-background;
+    @include rem((
+        height: $gs-row-height
+    ));
+
+    &:before,
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: mix(guss-colour(guardian-brand), #ffffff, 80%);
+        @include rem((
+            height: $gs-row-height
+        ));
+    }
+    &:before {
+        border-bottom: 1px solid $c-global-navigation-border;
+        -moz-background-clip: padding-box;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+    }
+    &:after {
+        top: auto;
+        bottom: 0;
+        background: mix($c-navigation-expandable-background, #ffffff, 80%);
+        z-index: -1;
+    }
+    &.new-navigation--collapsed:after {
+        display: none;
+    }
+}
+.top-navigation,
+.local-navigation,
+.global-navigation,
+.signposting {
+    @include fs-header(1);
+    @include rem((
+        line-height: $gs-row-height
+    ));
+
+    a {
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            text-decoration: none;
+        }
+    }
+}
+.top-navigation,
+.new-navigation__main {
+    position: relative;
+    background: $c-top-navigation-background;
+}
+.new-navigation__container--first {
+    background: $c-top-navigation-background;
+    @include rem((
+        min-height: $gs-row-height
+    ));
+}
+.new-navigation__expandable {
+    background: $c-navigation-expandable-background;
+    overflow: hidden;
+}
+.signposting,
+.local-navigation,
+.top-navigation,
+.global-navigation,
+.global-navigation__children {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Signposting
+   ========================================================================== */
+
+.signposting {
+    position: relative;
+    background: $c-signposting-background;
+    border-right: 1px solid $c-global-navigation-border;
+    @include rem((
+        padding-right: $new-navigation-h-space-between-items
+    ));
+
+    @include mq(mobileLandscape) {
+        @include rem((
+            padding-left: $new-navigation-h-space-between-items/2
+        ));
+    }
+    @include mq(wide) {
+        border-right-width: 0;
+
+        .new-navigation--has-local-navigation & {
+            border-right-width: 1px;
+        }
+    }
+
+    .new-navigation--expanded & {
+        @include mq($to: wide) {
+            border-right: 0;
+        }
+        @include mq(wide) {
+            @include rem((
+                min-width: gs-span(2) + $gs-gutter
+            ));
+        }
+    }
+}
+.signposting__item {
+    white-space: nowrap;
+    display: table-cell;
+    position: relative;
+    @include rem((
+        padding-left: $new-navigation-h-space-between-items/2
+    ));
+}
+.signposting__action {
+    color: $c-signposting-action;
+    text-decoration: none;
+    display: table-cell;
+}
+.signposting__separator {
+    display: table-cell;
+    vertical-align: top;
+    line-height: 1;
+}
+.signposting__separator__inner {
+    font-weight: 200;
+    color: $c-signposting-action;
+    @include rem((
+        font-size: 27px,
+        line-height: $gs-row-height,
+        padding-right: $new-navigation-h-space-between-items/2
+    ));
+}
+
+
+/* Actions and items
+   ========================================================================== */
+
+.local-navigation {
+    background: $c-local-navigation-background;
+}
+.local-navigation__action,
+.top-navigation__action {
+    color: $c-local-navigation-action;
+}
+.top-navigation__action {
+    color: $c-top-navigation-action;
+    display: table-cell;
+}
+.global-navigation__action {
+    color: $c-global-navigation-action;
+    display: block;
+}
+.local-navigation__action,
+.top-navigation__action,
+.global-navigation__action {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.top-navigation__item--current {
+    @include rem((
+        margin-right: $gs-gutter/2
+    ));
+}
+.local-navigation__item,
+.top-navigation__item {
+    white-space: nowrap;
+    display: table-cell;
+    position: relative;
+    @include rem((
+        padding-right: $new-navigation-h-space-between-items/2,
+        padding-left: $new-navigation-h-space-between-items/2
+    ));
+
+}
+.new-navigation--collapsed.new-navigation--has-signposting {
+    .local-navigation,
+    .top-navigation {
+        @include rem((
+            padding-left: $new-navigation-h-space-between-items/2
+        ));
+    }
+}
+@include mq(mobileLandscape) {
+    .new-navigation--collapsed {
+        .local-navigation,
+        .top-navigation {
+            @include rem((
+                padding-left: $new-navigation-h-space-between-items/2
+            ));
+        }
+    }
+}
+
+
+/* Global navigation
+   ========================================================================== */
+
+.global-navigation {
+    background: $c-global-navigation-background;
+    clear: both;
+    @include clearfix;
+
+    @include mq($to: tablet) {
+        @include rem((
+            line-height: 28px
+        ));
+    }
+    @include mq(mobileLandscape, tablet) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
+    }
+}
+.global-navigation__section {
+    display: block;
+    clear: both;
+    margin-right: 0;
+    overflow: hidden;
+    border-top: 1px solid $c-global-navigation-border;
+    position: relative;
+    @include rem((
+        min-height: $gs-row-height
+    ));
+
+    @include mq(mobileLandscape, tablet) {
+        @include rem((
+            margin-right: -$gs-gutter,
+            margin-left: -$gs-gutter
+        ));
+    }
+    @include mq(tablet) {
+        @include rem((
+            padding-left: $global-navigation-title-width
+        ));
+    }
+    @include mq(wide) {
+        @include rem((
+            padding-left: $global-navigation-title-width-wide
+        ));
+    }
+}
+.global-navigation__title {
+    color: $c-global-navigation-title;
+    background: $c-global-navigation-title-background;
+    float: left;
+
+    @include mq($to: tablet) {
+        @include rem((
+            line-height: $gs-baseline*2,
+            padding-bottom: $gs-baseline,
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2
+        ));
+    }
+    @include mq(mobileLandscape, tablet) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
+    }
+    @include mq(tablet) {
+        @include box-sizing(border-box);
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        background: $c-global-navigation-title-background;
+        @include rem((
+            width: $global-navigation-title-width,
+            padding-left: $gs-gutter
+        ));
+    }
+    @include mq(wide) {
+        @include rem((
+            width: $global-navigation-title-width-wide
+        ));
+    }
+}
+.global-navigation__children {
+    @include box-sizing(border-box);
+    @include rem((
+        min-height: $gs-row-height,
+        padding-top: $gs-baseline/4
+    ));
+    overflow: hidden;
+    background: $c-local-navigation-background;
+
+    @include mq($to: tablet) {
+        @include rem((
+            margin-left: -$gs-gutter/2,
+            margin-right: -$gs-gutter/2,
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2,
+            padding-bottom: $gs-baseline*.75,
+            font-size: 14px
+        ));
+        line-height: 2;
+    }
+    @include mq(mobileLandscape, tablet) {
+        @include rem((
+            padding-left: $gs-gutter,
+            padding-right: $gs-gutter
+        ));
+    }
+    @include mq(tablet) {
+        @include rem((
+            padding-bottom: $gs-baseline/4,
+            padding-left: $gs-gutter/2
+        ));
+    }
+}
+@include mq($to: tablet) {
+    .global-navigation__title,
+    .global-navigation__children {
+        float: none;
+        display: block;
+    }
+}
+@include mq(tablet) {
+    .global-navigation__action {
+        float: left;
+        @include rem((
+            line-height: $gs-row-height - $gs-baseline/2,
+            padding-left: $new-navigation-h-space-between-items/2,
+            padding-right: $new-navigation-h-space-between-items/2
+        ));
+    }
+}
+
+
+/* State: collapsed
+   ========================================================================== */
+
+.new-navigation--collapsed {
+    .new-navigation--collapsed__hide {
+        display: none !important;
+    }
+    .new-navigation__container {
+        display: table-cell;
+        vertical-align: top;
+    }
+    .new-navigation__scroll {
+        overflow-x: scroll;
+        -webkit-overflow-scrolling: touch;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    .new-navigation__expandable {
+        display: none;
+    }
+    &,
+    .signposting,
+    .local-navigation {
+        @include rem((
+            height: $gs-row-height
+        ));
+    }
+    .signposting,
+    .local-navigation {
+        display: table-cell;
+    }
+    .local-navigation__item,
+    .top-navigation__item {
+        white-space: nowrap;
+        display: table-cell;
+        position: relative;
+    }
+    .top-navigation__item:last-child {
+        @include rem((
+            padding-right: $new-navigation-toggler-width + $gs-gutter
+        ));
+
+        @include mq(tablet) {
+            @include rem((
+                padding-right: $new-navigation-toggler-width-full + $gs-gutter
+            ));
+        }
+    }
+}
+
+
+/* State: expanded
+   ========================================================================== */
+
+.new-navigation--expanded {
+    z-index: 2;
+    height: auto;
+
+    .top-navigation {
+        display: none;
+    }
+    .local-navigation {
+        overflow: hidden;
+        background: $c-local-navigation-background;
+
+        @include mq(mobileLandscape) {
+            @include rem((
+                padding-left: $gs-gutter/2,
+                padding-right: $gs-gutter/2
+            ));
+        }
+    }
+    .local-navigation__item {
+        @include mq($to: tablet) {
+            @include rem((
+                font-size: 14px,
+                line-height: 28px
+            ));
+            &:last-child {
+                // Add space below the local nav (only if there is one)
+                @include rem((
+                    padding-bottom: $gs-baseline
+                ));
+            }
+        }
+        @include mq(tablet) {
+            float: left;
+        }
+    }
+    .local-navigation__action {
+        display: block;
+        float: left;
+    }
+}
+
+.new-navigation--expanded .local-navigation__item,
+.global-navigation__child {
+    @include mq($to: tablet) {
+        float: left;
+        width: 50%;
+        padding-right: 0;
+        @include box-sizing(border-box);
+        @include rem((
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2
+        ));
+
+        &:nth-child(2n+1) {
+            clear: both;
+        }
+    }
+    @include mq(mobileLandscape, tablet) {
+        width: 33.3333333333%;
+
+        &:nth-child(n) {
+            clear: none;
+        }
+        &:nth-child(3n+1) {
+            clear: both;
+        }
+    }
+}
+
+
+/* Side breakpoint: navigation goes on two levels
+   ========================================================================== */
+
+@include mq(wide) {
+    .new-navigation--has-signposting {
+        .new-navigation__inner:before {
+            content: '';
+            position: absolute;
+            display: block;
+            left: 0;
+            right: 0;
+            @include rem((
+                top: $gs-row-height
+            ));
+            height: 1px;
+            background: $c-global-navigation-border;
+            z-index: 1;
+        }
+        &.new-navigation--collapsed {
+            @include rem((
+                height: $gs-row-height * 2
+            ));
+        }
+        &.new-navigation--expanded {
+            .top-navigation__item {
+                visibility: hidden;
+            }
+        }
+        .top-navigation {
+            margin-left: 0 !important;
+        }
+        .top-navigation__item {
+            display: table-cell;
+        }
+
+        // Re-align signposting and local nav
+        .signposting,
+        .local-navigation {
+            vertical-align: top;
+            display: table-cell;
+            @include rem((
+                height: $gs-row-height
+            ));
+        }
+        .local-navigation__action {
+            display: table-cell;
+            @include rem((
+                line-height: $gs-row-height
+            ));
+        }
+
+        // Re-order top nav on top of local nav
+        .new-navigation__container {
+            display: block !important;
+        }
+        .new-navigation__container--first {
+            background: $c-local-navigation-background;
+            @include rem((
+                border-top: $gs-row-height solid $c-top-navigation-background
+            ));
+        }
+        .new-navigation__container--second {
+            position: absolute;
+            top: 0;
+        }
+    }
+}
+
+
+/* Overrides
+   ========================================================================== */
+
+.new-navigation {
+    .global-navigation__section--home,
+    .top-navigation__item--current,
+    .global-navigation__section--current {
+        display: none;
+    }
+    .top-navigation__item--current {
+        @include mq(wide) {
+            display: table-cell;
+        }
+    }
+}
+
+
+/* Toggle button
+   ========================================================================== */
+
+.new-navigation__toggle {
+    z-index: 2;
+    position: absolute;
+    right: 0;
+    top: 0;
+    @include box-sizing(border-box);
+    @include fs-header(1);
+    @include rem((
+        line-height: $gs-row-height,
+        min-width: $new-navigation-toggler-width,
+        padding-left: $gs-gutter + 2,
+        padding-right: $gs-gutter/2,
+    ));
+    background: $c-navigation-toggle-background;
+    -moz-background-clip: padding-box;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    text-align: center;
+    border-left: 2px solid $c-navigation-toggle-shadow;
+    outline: none;
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+        color: $c-navigation-toggle-icon;
+        text-decoration: none;
+    }
+    &:focus {
+        background: mix($c-navigation-toggle-background, #ffffff, 92%);
+    }
+
+    .new-navigation--expanded & {
+        border-left-color: transparent;
+    }
+
+    @include mq(tablet) {
+        @include rem((
+            min-width: $new-navigation-toggler-width-full,
+            padding-left: $gs-gutter + 12px,
+            padding-right: $gs-gutter/2
+        ));
+        text-align: left;
+    }
+    @include mq(wide) {
+        border-left: 0;
+    }
+}
+.new-navigation__toggle-label {}
+.new-navigation__toggle-label__extra {
+    display: none;
+
+    @include mq(tablet) {
+        display: inline;
+    }
+}
+.new-navigation__toggle-label--close,
+.new-navigation--expanded .new-navigation__toggle-label--open {
+    display: none;
+}
+.new-navigation--expanded .new-navigation__toggle-label--close {
+    display: inline;
+}
+.new-navigation__toggle-burger {
+    position: absolute;
+    left: 6px;
+    @include rem((
+        top: 11px
+    ));
+
+    @include mq(tablet) {
+        @include rem((
+            left: 10px
+        ));
+    }
+}
+.honest-burger {
+    display: block;
+    @include rem((
+        width: 12px,
+        height: 16px
+    ));
+
+    @include mq(tablet) {
+        @include rem((
+            width: 16px
+        ));
+    }
+}
+.honest-burger i {
+    display: block;
+    @include rem((
+        border-top: 2px solid rgba(#ffffff, .9),
+        margin-top: 2px
+    ));
+
+    @if not $old-ie {
+        .new-navigation--expanded & {
+            &:nth-child(1) {
+                position: relative;
+                top: rem(4px);
+                @include transform(rotate(-45deg));
+            }
+            &:nth-child(2) {
+                display: none;
+            }
+            &:nth-child(3) {
+                position: relative;
+                top: -rem(4px);
+                @include transform(rotate(45deg));
+            }
+        }
+        @include mq(tablet) {
+            @include transition(all .1s ease-in);
+        }
+    }
+}
