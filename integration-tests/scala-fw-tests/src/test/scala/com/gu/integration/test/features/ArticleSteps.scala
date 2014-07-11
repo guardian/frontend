@@ -4,7 +4,6 @@ import com.gu.automation.support.TestLogging
 import org.openqa.selenium.WebDriver
 import com.gu.integration.test.pages.article.ArticlePage
 import com.gu.fronts.integration.test.PageLoader._
-import com.gu.integration.test.PageSteps
 
 case class ArticleSteps(implicit driver: WebDriver) extends TestLogging {
 
@@ -18,5 +17,4 @@ case class ArticleSteps(implicit driver: WebDriver) extends TestLogging {
     logger.step("Get most popular module and check that it is displayed")
     articlePage.mostPopularModule()
   }
-
 }
