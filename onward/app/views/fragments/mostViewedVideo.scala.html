@@ -1,0 +1,24 @@
+@(videos: Seq[model.Video])(implicit request: RequestHeader)
+
+<div class="most-viewed-video" data-component="most-viewed-video">
+
+    <h3>Popular Videos</h3>
+    <ul class="most-viewed-video__items" data-link-name="Most viewed video">
+        @for(video <- videos) {
+            @item(video)
+        }
+    </ul>
+</div>
+
+@item(content: model.Video) = {
+    <li class="most-viewed-video-item">
+        <a class="most-viewed-video-item__url" href="@LinkTo{@content.url}">
+            @content.trailPicture(5, 3).map{ image =>
+                <div class="most-viewed-video-item__img media__img">
+                    <img class="responsiveimg" src="@Item120.bestFor(image)"/>
+                </div>
+            }
+            <h4 class="most-viewed-video-item__headline">@content.videoLinkText</h4>
+        </a>
+    </li>
+}

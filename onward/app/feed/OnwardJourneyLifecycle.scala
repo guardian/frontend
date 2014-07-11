@@ -16,6 +16,7 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
         MostPopularAgent.refresh()
         MostPopularExpandableAgent.refresh()
         GeoMostPopularAgent.refresh()
+        MostViewedVideoAgent.refresh()
       }
 
       // fire every hour
@@ -28,10 +29,7 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
         MostPopularAgent.refresh()
         MostPopularExpandableAgent.refresh()
         GeoMostPopularAgent.refresh()
-      }
-
-      AkkaAsync{
-        // kick off refresh now, as this happens hourly
+        MostViewedVideoAgent.refresh()
         DayMostPopularAgent.refresh()
       }
   }
@@ -45,6 +43,7 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
     MostPopularExpandableAgent.stop()
     GeoMostPopularAgent.stop()
     DayMostPopularAgent.stop()
+    MostViewedVideoAgent.stop()
 
     super.onStop(app)
   }

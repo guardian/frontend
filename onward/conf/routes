@@ -5,9 +5,6 @@
 # For dev machines
 GET        /assets/*path                              dev.DevAssetsController.at(path)
 
-# A websocket for recently published content
-GET        /onward/recently-published                 controllers.LatestContentController.recentlyPublished()
-
 GET        /most-read                                 controllers.MostPopularController.render(path = "")
 GET        /most-read.json                            controllers.MostPopularController.render(path = "")
 GET        /most-read/*path.json                      controllers.MostPopularController.renderJson(path)
@@ -19,9 +16,13 @@ GET        /top-stories                               controllers.TopStoriesCont
 GET        /top-stories.json                          controllers.TopStoriesController.renderTopStoriesJson()
 GET        /top-stories/trails                        controllers.TopStoriesController.renderTrails()
 GET        /top-stories/trails.json                   controllers.TopStoriesController.renderJsonTrails()
+
 GET        /related/*path.json                        controllers.RelatedController.renderJson(path)
 GET        /related/*path                             controllers.RelatedController.render(path)
+
 GET        /popular-in-tag/*tag.json                  controllers.PopularInTag.renderJson(tag)
+
+GET        /video/most-viewed                         controllers.MostViewedVideoController.renderView()
 
 GET        /preference/platform/:platform             controllers.ChangeViewController.render(platform, page)
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
@@ -31,3 +32,4 @@ GET        /preference/front-alphas/:optAction        controllers.ChangeAlphaCon
 GET        /cards/opengraph/*path.json                controllers.CardController.opengraph(path)
 GET        /tagged.json                               controllers.TaggedContentController.renderJson(tag: String)
 GET        /series/*path.json                         controllers.SeriesController.renderSeriesStories(path)
+GET        /onward/recently-published                 controllers.LatestContentController.recentlyPublished()
