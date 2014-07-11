@@ -85,7 +85,7 @@ linters:
     enabled: true
     max_depth: 4
     exclude: # Exclude if forced to break the inception rule to style third party components
-        - common/app/assets/stylesheets/module/_live-blog.scss
+        - common/app/assets/stylesheets/module/content/_live-blog.scss
         - common/app/assets/stylesheets/module/commercial/_travel.scss
 
   Shorthand:

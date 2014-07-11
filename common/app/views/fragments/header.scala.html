@@ -115,7 +115,7 @@ to apply any necessary changes to non-shared code there too.
         </div>
     </div>
     @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
-        @fragments.nav.topBar(page)
+        @fragments.nav.newNavigation(page)
     } else {
         @defining(Edition(request).navigation) { navigation =>
             @defining(Navigation.topLevelItem(navigation, page)) { topLevelSelected =>

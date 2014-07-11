@@ -13,7 +13,7 @@
         data-link-name="global navigation: header : sections"}>
 
     @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
-        @fragments.nav.megaNav(page)
+        @fragments.nav.globalNavigation(page)
     }else {
         <ul class="nav nav--columns u-cf nav--additional-sections nav--top-border-off @if(isFooter){nav--footer}">
             @Edition(request).navigation.map{ section =>

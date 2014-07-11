@@ -1,6 +1,7 @@
 .content {
+    border-top: 1px solid #ffffff;
+    padding-top: 0;
     @include rem((
-        padding-top: $gs-row-height*.5,
         padding-bottom: $gs-baseline*3.5
     ));
 
@@ -342,6 +343,10 @@
     @include border-radius(50%);
     background-color: $c-neutral7;
 
+    // fixes for webkit not properly scaling/clipping the child element (still broken on some android browsers...)
+    -webkit-transform: translateZ(0);
+    -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+
     @include mq(leftCol) {
         width: gs-span(2);
         height: gs-span(2); //This is intentionally square
@@ -358,7 +363,9 @@
     //This centres the image within its container
     height: 110%;
     bottom: -6px;
-    left: -15%;
+    left: -9999px;
+    right: -9999px;
+    margin: auto;
 
     @include mq(leftCol) {
         bottom: -14px;
@@ -480,6 +487,15 @@
         margin-left: 0;
         margin-right: 0;
     }
+}
+
+.meta__comment-count--top { // currently used on video page only
+    display: none;
+    float: right;
+    @include rem((
+        margin-top: $gs-baseline/2,
+        margin-left: $gs-gutter/4
+    ));
 }
 
 .byline {

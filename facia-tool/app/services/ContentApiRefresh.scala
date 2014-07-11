@@ -1,12 +1,12 @@
 package services
 
-import _root_.util.Futures._
-import _root_.util.Enumerators._
 import common.ExecutionContexts
 import play.api.libs.iteratee.Enumerator
-import scala.util.Try
-import scala.concurrent.Future
 import play.api.libs.ws.Response
+import scala.concurrent.Future
+import scala.util.Try
+import util.Enumerators._
+import util.Futures._
 
 /** Service to fully refresh the Content API data set based on the current state of the Facia tool */
 object ContentApiRefresh extends ExecutionContexts {
