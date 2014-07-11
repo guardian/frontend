@@ -14,7 +14,10 @@
         padding-top: $gs-baseline/2
     ));
 
-    .content__section .tone-colour,
+    .content__section .tone-colour {
+        color: $c-commentAccent;
+    }
+
     .byline,
     .byline .tone-colour,
     .social__head {
