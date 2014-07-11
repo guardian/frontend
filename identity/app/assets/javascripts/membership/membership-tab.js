@@ -112,7 +112,7 @@ define(['common/utils/$',
 
                 $(self.getElem('TAB_DETAILS_LIST_LOWER'), self.context).removeClass('is-hidden');
 
-                self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end * 1000));
+                self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end));
                 self.getElem('CC_LAST4').innerHTML = resp.subscription.card.last4;
 
                 self.currentCardTypeClass = 'i-' + resp.subscription.card.type.toLowerCase().replace(' ', '-');
