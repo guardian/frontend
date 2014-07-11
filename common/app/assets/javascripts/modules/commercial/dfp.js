@@ -92,6 +92,14 @@ define([
                     tabletlandscape: '300,250|300,600'
                 }
             },
+            im: {
+                label: false,
+                sizeMappings: {
+                    mobile: '300,50',
+                    mobilelandscape: '300,50|320,50',
+                    tabletportrait: '300,250'
+                }
+            },
             inline1: {
                 sizeMappings: {
                     mobile: '300,50',

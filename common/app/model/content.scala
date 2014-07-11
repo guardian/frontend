@@ -371,6 +371,10 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
     .orElse(mainPicture).orElse(videos.headOption)
 
+  override def hasInlineMerchandise = {
+    isbn.isDefined || super.hasInlineMerchandise
+  }
+
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = {
     val bookReviewIsbns = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
@@ -380,7 +384,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       ("isLiveBlog", isLiveBlog),
       ("inBodyInternalLinkCount", linkCounts.internal),
       ("inBodyExternalLinkCount", linkCounts.external),
-      ("shouldHideAdverts", shouldHideAdverts)
+      ("shouldHideAdverts", shouldHideAdverts),
+      ("hasInlineMerchandise", hasInlineMerchandise)
     ) ++ bookReviewIsbns
   }
 
