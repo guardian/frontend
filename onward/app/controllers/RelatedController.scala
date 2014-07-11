@@ -2,9 +2,8 @@ package controllers
 
 import common._
 import model._
-import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.mvc.{ RequestHeader, Controller }
 import services._
-import play.api.libs.json.JsArray
 import performance.MemcachedAction
 
 object RelatedController extends Controller with Related with Logging with ExecutionContexts {
