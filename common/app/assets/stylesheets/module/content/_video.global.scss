@@ -112,7 +112,10 @@
             content: 'Share this page';
             @include fs-data(3);
             color: $c-neutral3;
-            margin-top: $gs-baseline/4;
+            @include rem((
+                margin-top: $gs-baseline/4
+            ));
+
         }
 
         .social {
@@ -137,7 +140,9 @@
         .content__meta-container {
             float: left;
             width: 400px;
-            margin-right: $gs-gutter;
+            @include rem((
+                margin-right: $gs-gutter
+            ));
         }
         .social-wrapper--bottom {
             float: left;
