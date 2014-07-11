@@ -32,9 +32,6 @@ trait Store extends Logging with Dates {
   def putDfpAdvertisementFeatureTags(keywordsJson: String) {
     S3.putPublic(dfpAdvertisementFeatureTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
-  def putInlineMerchandisingSponsorships(keywordsJson: String) {
-    S3.putPublic(inlineMerchandisingSponsorshipsDataKey, keywordsJson, defaultJsonEncoding)
-  }
   def putDfpPageSkinAdUnits(adUnitJson: String) {
     S3.putPublic(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding )
   }

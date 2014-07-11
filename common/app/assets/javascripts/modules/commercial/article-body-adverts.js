@@ -17,12 +17,10 @@ define([
 ) {
 
     var ads = [],
-        adNames = [['im', 'im'], ['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function(para) {
             if (para) {
-                var adName = adNames[ads.length],
-                    $ad = $.create(dfp.createAdSlot(adName[0], adName[1]))
-                        .insertBefore(para);
+                var $ad = $.create(dfp.createAdSlot('inline' + (ads.length + 1), 'inline'))
+                    .insertBefore(para);
                 ads.push($ad);
             }
         },
@@ -37,7 +35,11 @@ define([
             );
 
             // is the switch off, or not an article, or a live blog
-            if (!config.switches.standardAdverts || config.page.contentType !== 'Article' || config.page.isLiveBlog) {
+            if (
+                !config.switches.standardAdverts ||
+                config.page.contentType !== 'Article' ||
+                config.page.isLiveBlog
+            ) {
                 return false;
             }
 
@@ -54,12 +56,10 @@ define([
 
             if ((/wide|desktop|tablet/).test(breakpoint)) {
                 insertAdAtP(spacefinder.getParaWithSpace(rules));
-                insertAdAtP(spacefinder.getParaWithSpace(rules));
                 if (window.innerWidth < 900) {
                     insertAdAtP(spacefinder.getParaWithSpace(rules));
                 }
             } else {
-                insertAdAtP(spacefinder.getParaWithSpace(rules));
                 insertAdAtP(spacefinder.getParaWithSpace(rules));
                 insertAdAtP(spacefinder.getParaWithSpace(rules));
             }
