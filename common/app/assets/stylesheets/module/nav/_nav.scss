@@ -352,19 +352,17 @@
 .top-nav__item--right {
     @include box-sizing(border-box);
     float: right;
+    padding-top: 0,
+    padding-left: 0
 
-    @include rem((
-        padding-top: $gs-baseline/2,
-        margin-right: 0
-    ));
 
-    @include mq(tablet) {
-        & + .top-nav__item {
-            border-left: 1px solid $c-neutral4;
-        }
+    .top-nav__item {
         @include rem((
-            padding-left: $gs-gutter/2
+            margin-right: $gs-gutter
         ));
+    }
+    .top-nav__item:last-child {
+        margin-right: 0
     }
 }
 .top-nav__item--mobile-only {

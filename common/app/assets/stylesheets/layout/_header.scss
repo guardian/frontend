@@ -61,7 +61,7 @@
     @include mq(tablet) {
         float: none;
         background: $c-neutral8;
-        border-bottom: 1px solid $c-neutral4;
+        border-bottom: 0px solid $c-neutral4;
     }
 }
 .l-header-pre__inner {
@@ -125,25 +125,22 @@ a.edition {
     }
 }
 
+.preheader__guardian-services {
+    display: inline;
+}
 .guardian-services {
     @include fs-header(1);
+    @include rem((
+        padding: $gs-baseline/2 0
+    ));
 }
 .guardian-services,
-.guardian-services__title,
-.guardian-services__item,
-.guardian-services {
-    padding: 0;
+.guardian-services__item {
     margin: 0;
     display: inline-block;
 }
 .guardian-services__title {
     font-weight: normal;
-}
-.guardian-services__title,
-.guardian-services {
-    @include rem((
-        padding: $gs-baseline/2 $gs-gutter/4
-    ));
 }
 .guardian-services__item {
     color: $c-brandLightBlue;
@@ -154,18 +151,11 @@ a.edition {
         ));
     }
 }
-.guardian-services {
+.guardian-service {
     text-decoration: none;
     margin: 0;
+    color: $c-neutral1
 }
-a.guardian-services {
-    &:hover,
-    &:focus {
-        color: $c-brandLightBlue;
-        text-decoration: none;
-    }
-}
-
 
 /* Main header (logo, actions)
    ========================================================================== */
