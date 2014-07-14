@@ -1,0 +1,85 @@
+[data-page-path='/world/france'] {
+    .easter-egg-vive-la-france {
+        [data-id='world/france/news/regular-stories'] {
+            .container__title {
+                &:before {
+                    content: 'Vive la ';
+                }
+                @include mq(faciaLeftCol) {
+                    &:after {
+                        position: absolute;
+                        display: block;
+                        content: '';
+                        background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MDAgNjAwIj4NCjxwYXRoIGZpbGw9IiNlZDI5MzkiIGQ9Im0wLDBoOTAwdjYwMGgtOTAweiIvPg0KPHBhdGggZmlsbD0iI2ZmZiIgZD0ibTAsMGg2MDB2NjAwaC02MDB6Ii8+DQo8cGF0aCBmaWxsPSIjMDAyMzk1IiBkPSJtMCwwaDMwMHY2MDBoLTMwMHoiLz4NCjwvc3ZnPg0K');
+                        @include rem((
+                            width: 150px,
+                            height: 100px,
+                            margin-top: ($gs-baseline/3)*2
+                        ));
+                    }
+                }
+            }
+            .container__border {
+                $c-french-flag-blue: #0055a4;
+                $c-french-flag-white: guss-colour(neutral-8);
+                $c-french-flag-red: #ef4135;
+
+                border-color: $c-french-flag-white;
+                border-width: 8px;
+
+                &:before,
+                &:after {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    width: 33%;
+                    height: 8px;
+                }
+                &:before {
+                    background: $c-french-flag-blue;
+                    left: 0;
+                }
+                &:after {
+                    right: 0;
+                    background: $c-french-flag-red;
+                }
+            }
+            .pagination_legend {
+                &:after {
+                    content: ', le pays de la baguette et du saucisson';
+                }
+            }
+        }
+        .guardian-logo-wrapper {
+            &:before {
+                @include box-sizing(border-box);
+                content: 'le';
+                position: absolute;
+                background: #ffffff;
+                @include f-headline;
+                font-weight: 900;
+                color: $c-brandLightBlue;
+                text-align: right;
+                @include rem((
+                    width: 43px,
+                    font-size: 30px,
+                    line-height: 30px,
+                    padding-right: 1px,
+                    height: 23px
+                ));
+
+                @include mq(tablet) {
+                    background: $c-neutral8;
+                    @include rem((
+                        width: 91px,
+                        font-size: 63px,
+                        line-height: 58px,
+                        padding-right: 2px,
+                        height: 48px
+                    ));
+                }
+            }
+        }
+    }
+}
