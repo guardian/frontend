@@ -1,0 +1,23 @@
+@(page: model.MetaData)(implicit request: RequestHeader)
+@import conf.Switches._
+@import dev.HttpSwitch
+
+@if(HttpSwitch(GuardianServicesLinksSwitch).isSwitchedOn){
+    <div class="top-nav__item--right hide-on-mobile" data-component="guardian-services">
+        <div class="preheader__guardian-services">
+            <dl class="guardian-services">
+                <dt class="guardian-services__title">
+                </dt>
+
+                <dd class="guardian-services__item">
+                    <a class="guardian-service" data-link-name="topNav : soulmates"
+                       href="https://soulmates.theguardian.com/?INTCMP=NGW_NAVBAR_UK_GU_SOULMATES">Soulmates</a>
+                </dd>
+                <dd class="guardian-services__item">
+                    <a class="guardian-service" data-link-name="topNav : jobs"
+                       href="http://jobs.theguardian.com/?INTCMP=NGW_NAVBAR_UK_GU_JOBS">Jobs</a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+}

@@ -349,6 +349,24 @@
         ));
     }
 }
+.top-nav__item--right {
+    @include box-sizing(border-box);
+    float: right;
+
+    @include rem((
+        padding-top: $gs-baseline/2,
+        margin-right: 0
+    ));
+
+    @include mq(tablet) {
+        & + .top-nav__item {
+            border-left: 1px solid $c-neutral4;
+        }
+        @include rem((
+            padding-left: $gs-gutter/2
+        ));
+    }
+}
 .top-nav__item--mobile-only {
     @include mq(tablet) {
         margin-right: 0;
