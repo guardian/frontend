@@ -57,7 +57,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     }
 
     def onSuccess(form: (String, String, String, Boolean, Boolean)): Future[SimpleResult] = form match {
-      case (email, username, password, gnmMarketing, thirdPartyMarketing) => {
+      case (email, username, password, gnmMarketing, thirdPartyMarketing) =>
         val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing, idRequest.clientIp)
         val registeredUser: Future[Response[User]] = api.register(user, trackingData)
 
@@ -72,10 +72,10 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
             formWithError.fill(email,username,"",thirdPartyMarketing,gnmMarketing)
             Future { Ok(views.html.registration(page.registrationError(idRequest), idRequest, idUrlBuilder, formWithError)) }
 
-          case Right(user) =>
+          case Right(usr) =>
             val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
-            val authResponse = api.authBrowser(EmailPassword(email, password), trackingData)
-            val response: Future[SimpleResult] = signinService.getCookies(authResponse, false) map {
+            val authResponse = api.authBrowser(EmailPassword(email, password, idRequest.clientIp), trackingData)
+            val response: Future[SimpleResult] = signinService.getCookies(authResponse, rememberMe = false) map {
               case Left(errors) =>
                 Ok(views.html.registrationConfirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl))
 
@@ -85,9 +85,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
             response
         }
-
         result
-      }
     }
 
     boundForm.fold[Future[SimpleResult]](onError, onSuccess)

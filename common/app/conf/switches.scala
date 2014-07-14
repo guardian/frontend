@@ -423,6 +423,12 @@ object Switches extends Collections {
     safeState = On, sellByDate = new DateMidnight(2014, 9, 30)
   )
 
+  // Easter eggs
+  val ViveLaFranceEasterEggSwitch = Switch("Easter eggs Switches", "egg-vive-la-france",
+    "If switched on, the /world/france page will look awesome",
+    safeState = On, sellByDate = new DateMidnight(2014, 7, 30)
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -493,11 +499,13 @@ object Switches extends Collections {
     FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
     FaciaToolDraftContent,
-    GuShiftCookieSwitch
+    GuShiftCookieSwitch,
+    ViveLaFranceEasterEggSwitch
   )
 
   val httpSwitches: List[Switch] = List(
     ResponsiveNavSwitch,
+    ViveLaFranceEasterEggSwitch,
     NewNavigationHighlightingSwitch
   )
 
