@@ -9,8 +9,8 @@ class ArticleTests extends SeleniumTestSuite {
   feature("Articles") { 
     scenarioWeb("checking most popular module and related content exist on article page") { implicit driver: WebDriver =>
       val articlePage = ArticleSteps().goToArticle("/world/2014/jul/13/voodoo-big-problem-haiti-cardinal-chibly-langlois")
-      ArticleSteps().checkMostPopularModuleExistsOn(articlePage)
-      ArticleSteps().checkMostRelatedContentModuleExistsOn(articlePage)
+      ArticleSteps().checkMostPopularDisplayedProperly(articlePage)
+      ArticleSteps().checkMostRelatedContentDisplayedProperly(articlePage)
     }
   }
 }

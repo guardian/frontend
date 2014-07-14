@@ -6,6 +6,8 @@ import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.By
 import com.gu.integration.test.config.PropertyLoader._
+import org.openqa.selenium.WebDriverException
+import org.openqa.selenium.JavascriptExecutor
 
 object ElementLoader {
 
@@ -40,8 +42,43 @@ object ElementLoader {
     try {
       f
     } catch {
-      case e: Exception =>
-        throw new RuntimeException(s"WebElement was not found on page [$getClass]", e)
+      case e: WebDriverException =>
+        //Since this was converted from trait to class the getClass no longer gets the name of the calling class
+        //TODO find a way to get the calling class
+        throw new RuntimeException(s"WebElement(s) were not found on page [$getClass]", e)
+    }
+  }
+
+  /**
+   * Find all link elements, including nested, from the provided SearchContext and returns those that are displayed
+   */
+  def displayedLinks(searchContext: SearchContext): List[WebElement] = {
+    wrapException {
+      searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => element.isDisplayed)
+    }
+  }
+
+  /**
+   * Find all image elements, including nested, from the provided SearchContext and returns those that are displayed.
+   * Observe that this method does a double check as the selenium isDisplayed method does not guarantee that a picture is actually
+   * visible
+   */
+  def displayedImages(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
+    wrapException {
+      val preDisplayedImages = searchContext.findElements(By.cssSelector("img")).asScala.toList.filter(element => element.isDisplayed)
+      //preDisplayedImages
+      return preDisplayedImages.filter(element => isImageDisplayed(element))
+    }
+  }
+
+  def isImageDisplayed(imageElement: WebElement)(implicit driver: WebDriver): Boolean = {
+    val result = driver.asInstanceOf[JavascriptExecutor].
+      executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0",
+        imageElement)
+    if (result.isInstanceOf[java.lang.Boolean]) {
+      result.asInstanceOf[java.lang.Boolean]
+    } else {
+      false
     }
   }
 }
