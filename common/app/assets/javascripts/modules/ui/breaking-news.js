@@ -14,24 +14,30 @@ define([
 
     return function (config) {
         var matchers = [window.location.pathname.slice(1)],
-            edSec = [];
+            page = (config || {}).page,
+            editionSection = [];
 
-        if (!config || !config.page) {
-            return;
+        if (!page) { return; }
+
+        if (page.edition) {
+            matchers.push(page.edition.toLowerCase());
+            editionSection.push(page.edition.toLowerCase());
         }
 
-        if (config.page.edition) {
-            matchers.push(config.page.edition.toLowerCase());
-            edSec.push(config.page.edition.toLowerCase());
+        if (page.section) {
+            matchers.push(page.section.toLowerCase());
+            editionSection.push(page.section.toLowerCase());
+        }
+       
+        if (page.keywordIds) {
+            page.keywordIds.split(',').forEach(function(keyword) {
+                matchers.push(keyword.toLowerCase());
+                matchers.push(keyword.split('/')[0].toLowerCase());
+            }); 
         }
 
-        if (config.page.section) {
-            matchers.push(config.page.section.toLowerCase());
-            edSec.push(config.page.section.toLowerCase());
-        }
-        
-        edSec = edSec.join('/');
-        matchers.push(edSec);
+        matchers.push(editionSection.join('/'));
+        window.console.log(matchers);
 
         return ajax({
             url: breakignNewsSource,
@@ -42,7 +48,7 @@ define([
                 var articles = [];
 
                 resp.collections.forEach(function(coll) {
-                    if (coll.content.length && (matchers.indexOf(coll.displayName) > -1 || coll.displayName === 'global')) {
+                    if (coll.content.length && (matchers.indexOf(coll.displayName.toLowerCase()) > -1 || coll.displayName.toLowerCase() === 'global')) {
                        articles = articles.concat(coll.content);
                     }
                 });
