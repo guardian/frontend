@@ -1,6 +1,18 @@
 <div class="membership-tab js-membership-tab" data-sprite-url="@Static("stylesheets/membership-icons.css")">
 @import views.html.fragments.selectDates
 
+    <div class="membership-tab__subscription-cancel is-hidden js-mem-cancel-tier">
+        <h2>You've cancelled your membership</h2>
+        <p>Now that you've cancelled your membership, your <span class="js-mem-tier"></span> <a class="js-mem-tier-href" href="">benefits</a> will run out on <span class="js-mem-current-period-end"></span>. After that date, the membership section won't be available in your profile. Your final subscription payment was taken on <span class="js-mem-current-period-start"></span>. Please note, you won't be able to amend your package again until this change has been processed.</p>
+    </div>
+
+    <div class="membership-tab__subscription-change is-hidden js-mem-change-tier">
+        <h2>You've changed packages</h2>
+
+        <p>Now that you've switched packages, your <span class="js-mem-tier"></span> benefits will run out on <span class="js-mem-current-period-end"></span>. After that date, you'll default to our Friend level of membership. Your final <span class="js-mem-tier"></span> subscription payment was taken on <span class="js-mem-current-period-start"></span>. 
+        Please note, you won't be able to amend your package again until this change has been processed.</p>
+    </div>
+
     <ul class="u-unstyled membership-tab__details-list">
 
         <li>
@@ -35,9 +47,9 @@
         <li>
             <div class="fieldset__heading">
                 <h2 class="form__heading">
-                    Monthly payment
+                    <span class="js-membership-plan-interval"></span> payment
                 </h2>
-                <p class="form-field__note">The monthly cost of your membership</p>
+                <p class="form-field__note">The <span class="membership-tab__interval js-membership-plan-interval"></span> cost of your membership</p>
             </div>
 
             <div class="fieldset__fields">
