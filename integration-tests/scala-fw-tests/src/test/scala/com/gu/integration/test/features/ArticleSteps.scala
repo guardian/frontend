@@ -15,6 +15,11 @@ case class ArticleSteps(implicit driver: WebDriver) extends TestLogging {
 
   def checkMostPopularModuleExistsOn(articlePage: ArticlePage) = {
     logger.step("Get most popular module and check that it is displayed")
-    articlePage.mostPopularModule()
+    articlePage.mostPopularModule
+  }
+  
+  def checkMostRelatedContentModuleExistsOn(articlePage: ArticlePage) = {
+    logger.step("Get most popular module and check that it is displayed")
+    articlePage.relatedContentModule
   }
 }

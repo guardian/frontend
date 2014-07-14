@@ -7,9 +7,10 @@ import com.gu.integration.test.SeleniumTestSuite
 class ArticleTests extends SeleniumTestSuite {
   
   feature("Articles") { 
-    scenarioWeb("checking most popular module exists") { implicit driver: WebDriver =>
-      val articlePage = ArticleSteps().goToArticle("/technology/2014/jul/10/emergency-surveillance-laws-rushed-through-cross-party-support")
+    scenarioWeb("checking most popular module and related content exist on article page") { implicit driver: WebDriver =>
+      val articlePage = ArticleSteps().goToArticle("/world/2014/jul/13/voodoo-big-problem-haiti-cardinal-chibly-langlois")
       ArticleSteps().checkMostPopularModuleExistsOn(articlePage)
+      ArticleSteps().checkMostRelatedContentModuleExistsOn(articlePage)
     }
   }
 }
