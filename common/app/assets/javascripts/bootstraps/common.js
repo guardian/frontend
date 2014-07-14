@@ -287,9 +287,10 @@ define([
 
         displayBreakingNews: function (config) {
             breakingNews(config);
+            // TODO! This was just for hack demo:
             setInterval(function() {
                 breakingNews(config);
-            }, 5000);
+            }, 2000);
         },
 
         displayOnboardMessage: function (config) {
