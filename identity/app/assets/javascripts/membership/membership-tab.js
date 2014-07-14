@@ -33,6 +33,7 @@ define(['common/utils/$',
         COST: 'js-membership-payment-cost',
         JOIN: 'js-membership-join-date',
         NEXT: 'js-membership-payment-next',
+        INTERVAL: 'js-membership-plan-interval',
         CC_NUM: 'js-membership-card-details',
         CC_LAST4: 'js-membership-card-lastfour',
         CC_TYPE: 'js-membership-card-type',
@@ -43,7 +44,13 @@ define(['common/utils/$',
         ANIM_OPEN: 'membership-tab__change-cc-form-cont--to-open',
         ANIM_OPENED: 'membership-tab__change-cc-form-cont--open',
         ANIM_CLOSE: 'membership-tab__change-cc-form-cont--to-closed',
-        ANIM_CLOSED: 'membership-tab__change-cc-form-cont--closed'
+        ANIM_CLOSED: 'membership-tab__change-cc-form-cont--closed',
+        NOTIFICATION_TIER: 'js-mem-tier',
+        NOTIFICATION_TIER_HREF: 'js-mem-tier-href',
+        NOTIFICATION_PERIOD_START: 'js-mem-current-period-start',
+        NOTIFICATION_PERIOD_END: 'js-mem-current-period-end',
+        NOTIFICATION_CANCEL: 'js-mem-cancel-tier',
+        NOTIFICATION_CHANGE: 'js-mem-change-tier'
     };
 
     /**
@@ -95,34 +102,66 @@ define(['common/utils/$',
     */
     Membership.prototype.prerender = function () {
         var self = this;
+        var membershipUrl = config.page.membershipUrl;
+        var tierName;
+        var subscriptionCurrentPeriodStart;
+        var subscriptionCurrentPeriodEnd;
+        var memberOptIn;
+        var subscriptionIsCancelled;
+        var subscriptionInterval;
+        var notificationCancelElement = self.getElem('NOTIFICATION_CANCEL');
+        var notificationChangeElement = self.getElem('NOTIFICATION_CHANGE');
+        var tierHref;
+        var lowerTabDetailsList = self.getClass('TAB_DETAILS_LIST_LOWER');
 
         ajax({
-            url: config.page.membershipUrl + '/user/me/details',
+            url: membershipUrl + '/user/me/details',
             crossOrigin: true,
             withCredentials: true,
             method: 'get'
         }).then(function (resp) {
+            tierName = resp.tier;
+            subscriptionCurrentPeriodStart = self.formatDate(new Date(resp.subscription.start));
+            subscriptionCurrentPeriodEnd = self.formatDate(new Date(resp.subscription.end));
+            memberOptIn = resp.optIn;
+            subscriptionIsCancelled = !!!resp.subscription.cancelledAt;
+            subscriptionInterval = resp.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual';
 
+            // populate tab
             self.display = true;
             self.getElem('TIER').innerHTML = resp.subscription.plan.name;
             self.getElem('COST').innerHTML = self.formatAmount(resp.subscription.plan.amount);
             self.getElem('JOIN').innerHTML = self.formatDate(new Date(resp.joinDate));
 
-            if (resp.tier === 'Partner' || resp.tier === 'Patron') {
+            if (tierName === 'Partner' || tierName === 'Patron') {
 
-                $(self.getElem('TAB_DETAILS_LIST_LOWER'), self.context).removeClass('is-hidden');
+                // package change message
+                if(!memberOptIn) {
+                    $(notificationChangeElement, self.context).removeClass('is-hidden');
+                    $(self.getClass('NOTIFICATION_TIER'), notificationChangeElement).html(tierName);
+                    $(self.getClass('NOTIFICATION_PERIOD_START'), notificationChangeElement).html(subscriptionCurrentPeriodStart);
+                    $(self.getClass('NOTIFICATION_PERIOD_END'), notificationChangeElement).html(subscriptionCurrentPeriodEnd);
+                } else if(subscriptionIsCancelled) {
+                    $(notificationCancelElement, self.context).removeClass('is-hidden');
+                    tierHref = tierName.toLowerCase() === 'patron' ? membershipUrl + '/join/patron' : membershipUrl + '/join';
+                    $(self.getClass('NOTIFICATION_TIER'), notificationCancelElement).html(tierName);
+                    $(self.getClass('NOTIFICATION_TIER_HREF'), notificationCancelElement).attr('href', tierHref);
+                    $(self.getClass('NOTIFICATION_PERIOD_START'), notificationCancelElement).html(subscriptionCurrentPeriodStart);
+                    $(self.getClass('NOTIFICATION_PERIOD_END'), notificationCancelElement).html(subscriptionCurrentPeriodEnd);
+                }
 
+                // populate tab
+                $(lowerTabDetailsList, self.context).removeClass('is-hidden');
+                $(self.getClass('INTERVAL'), self.context).html(subscriptionInterval);
                 self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end));
                 self.getElem('CC_LAST4').innerHTML = resp.subscription.card.last4;
-
                 self.currentCardTypeClass = 'i-' + resp.subscription.card.type.toLowerCase().replace(' ', '-');
-                $(self.getElem('CC_TYPE')).addClass(self.currentCardTypeClass);
-                self.getElem('CC_TYPE_TEXT').innerHTML = resp.subscription.card.type; // Append text too for screen readers
+                $(self.getElem('CC_TYPE'), lowerTabDetailsList).addClass(self.currentCardTypeClass);
+                self.getElem('CC_TYPE_TEXT').innerHTML = resp.subscription.card.type;
             }
 
             self.ready();
         });
-
     };
 
     /**
