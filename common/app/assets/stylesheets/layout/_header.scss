@@ -151,11 +151,15 @@ a.edition {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     background-color: #c0031b;
-    padding: 10px 20px;
+    padding: 10px 10px;
     font-weight: bold;
-
     a {
         display: inline-block;
         color: #ffffff; 
     }
+
+    @include mq(mobileLandscape) {
+        padding: 10px 20px;
+    }
 }
+
