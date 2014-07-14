@@ -564,6 +564,10 @@
                 color: $c-newsAccent;
             }
         }
+
+        .membership-tab__interval {
+            text-transform: lowercase;
+        }
     }
 
     .membership-tab__details-list--lower {
