@@ -40,18 +40,21 @@ define([
             crossOrigin: true
         }).then(
             function(resp) {
-                var html = '';
+                var articles = [];
 
                 resp.collections.forEach(function(coll) {
                     if (matchers.indexOf(coll.displayName) > -1) {
-                       coll.content.forEach(function(article) {
-                           html += '<div><a href="/' + article.id + '">' + article.headline + '</a></div>';   
-                       });
+                       articles.concat(coll.content);
                     }
                 });
-               
-                html = '<div class="gs-container breaking-news">' + html + '</div>';
-                bonzo(document.querySelector('#header')).after(html);
+              
+                if (articles.length) {
+                   bonzo(document.querySelector('#header')).after(
+                       '<div class="gs-container breaking-news">' +
+                       articles.map(function(article) {return '<a href="/' + article.id + '">' + article.headline + '</a>';}).join('') + 
+                       '</div>'
+                   );
+                }
             },
             function() {
                 mediator.emit(
