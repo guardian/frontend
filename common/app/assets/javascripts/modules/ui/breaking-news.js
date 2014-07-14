@@ -32,8 +32,6 @@ define([
         edSec = edSec.join('/');
         matchers.push(edSec);
 
-        window.console.log(matchers);
-
         return ajax({
             url: breakignNewsSource,
             type: 'json',
@@ -43,11 +41,11 @@ define([
                 var articles = [];
 
                 resp.collections.forEach(function(coll) {
-                    if (matchers.indexOf(coll.displayName) > -1) {
-                       articles.concat(coll.content);
+                    if (coll.content.length && (matchers.indexOf(coll.displayName) > -1 || coll.displayName === 'global')) {
+                       articles = articles.concat(coll.content);
                     }
                 });
-              
+
                 if (articles.length) {
                    bonzo(document.querySelector('#header')).after(
                        '<div class="gs-container breaking-news">' +
