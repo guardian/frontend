@@ -287,6 +287,9 @@ define([
 
         displayBreakingNews: function (config) {
             breakingNews(config);
+            setInterval(function() {
+                breakingNews(config);
+            }, 5000);
         },
 
         displayOnboardMessage: function (config) {

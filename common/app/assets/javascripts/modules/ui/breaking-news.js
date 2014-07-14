@@ -9,7 +9,8 @@ define([
     ajax,
     bonzo
 ) {
-    var breakignNewsSource = '/breaking-news/lite.json';
+    var breakignNewsSource = '/breaking-news/lite.json',
+        header = bonzo(document.querySelector('#header'));
 
     return function (config) {
         var matchers = [window.location.pathname.slice(1)],
@@ -46,12 +47,10 @@ define([
                     }
                 });
 
+                $('#breaking-news').remove();
+
                 if (articles.length) {
-                   bonzo(document.querySelector('#header')).after(
-                       '<div class="gs-container breaking-news">' +
-                       articles.map(function(article) {return '<a href="/' + article.id + '">' + article.headline + '</a>';}).join('') + 
-                       '</div>'
-                   );
+                     header.after('<div id="breaking-news" class="gs-container"><a href="/' + articles[0].id + '">' + articles[0].headline + '</a></div>');
                 }
             },
             function() {
