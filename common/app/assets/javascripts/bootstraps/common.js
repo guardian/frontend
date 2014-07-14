@@ -24,6 +24,7 @@ define([
     'common/modules/navigation/sections',
     'common/modules/navigation/search',
     'common/modules/navigation/newNavigation',
+    'common/modules/ui/breaking-news',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/ui/dropdowns',
@@ -72,6 +73,7 @@ define([
     Search,
     newNavigation,
 
+    breakingNews,
     Tabs,
     Toggles,
     Dropdowns,
@@ -283,6 +285,10 @@ define([
             }
         },
 
+        displayBreakingNews: function (config) {
+            breakingNews(config);
+        },
+
         displayOnboardMessage: function (config) {
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
                 bean.on(document, 'click', '.js-site-message-close', function() {
@@ -439,6 +445,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.displayBreakingNews(config);
             modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
@@ -466,7 +473,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
-            modules.initDiscussion();
+            //modules.initDiscussion();
         }
         mediator.emit('page:common:ready', config, context);
     };

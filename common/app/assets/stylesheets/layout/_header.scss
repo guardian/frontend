@@ -142,3 +142,19 @@ a.edition {
     position: relative;
     z-index: 2;
 }
+
+
+/* Post-header breaking news
+   ========================================================================== */
+
+.breaking-news {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #c0031b;
+    padding: 10px 20px;
+    font-weight: bold;
+
+    a {
+        color: #ffffff; 
+    }
+}
