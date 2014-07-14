@@ -7,5 +7,5 @@ resolvers ++= Seq(
   "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/")
 
 libraryDependencies ++= Seq(
-  "com.gu" %% "scala-automation" % "1.11"
+  "com.gu" %% "scala-automation" % "1.15-SNAPSHOT"
 )

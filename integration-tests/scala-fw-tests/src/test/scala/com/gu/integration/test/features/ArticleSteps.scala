@@ -8,7 +8,7 @@ import com.gu.fronts.integration.test.PageLoader._
 case class ArticleSteps(implicit driver: WebDriver) extends TestLogging {
 
   def goToArticle(relativeArticleUrl: String): ArticlePage = {
-    logger.step("I am an Article page with relative url: " + relativeArticleUrl)
+    logger.step(s"I am an Article page with relative url: $relativeArticleUrl")
     lazy val article = new ArticlePage()
     goTo(fromRelativeUrl(relativeArticleUrl), article)
   }
