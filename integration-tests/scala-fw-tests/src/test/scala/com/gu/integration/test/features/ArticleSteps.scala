@@ -21,7 +21,7 @@ case class ArticleSteps(implicit driver: WebDriver) extends TestLogging with Mat
   }
   
   def checkMostRelatedContentDisplayedProperly(articlePage: ArticlePage) = {
-    logger.step("Get most popular module and check that it is properly displayed")
+    logger.step("Get related content module and check that it is properly displayed")
     articlePage.relatedContentModule.displayedLinks should not be empty
     articlePage.relatedContentModule.displayedImages should not be empty
   }
