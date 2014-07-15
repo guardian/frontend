@@ -55,7 +55,7 @@
 .l-header-pre {
     float: left;
     min-width: gs-span(2);
-    z-index: 1;
+    z-index: 2;
     position: relative;
 
     @include mq(tablet) {
@@ -156,11 +156,43 @@ a.edition {
     margin: 0;
     color: $c-neutral1;
 }
+.guardian-services__item-more--collapsed .guardian-services__item--more-menu {
+    display: none;
+}
+.guardian-services__item-more--expanded {
+    position: relative;
+
+    &.top-nav__item {
+        background: $c-new-navigation-base;
+    }
+
+    .guardian-service {
+        color: $c-local-navigation-action;
+    }
+}
+.guardian-services__item--more-menu {
+    position: absolute;
+    color: $c-local-navigation-action;
+    background: $c-new-navigation-base;
+    margin: 0;
+    right: 0;
+    list-style: none;
+    @include rem((
+        top: 3 * $gs-baseline,
+        padding: $gs-baseline/2,
+        width: 3 * $gs-column-width + $gs-gutter
+    ));
+
+    .top-navigation__action {
+        display: inline;
+        color: $c-local-navigation-action;
+    }
+}
 
 /* Main header (logo, actions)
    ========================================================================== */
 
 .l-header-main {
     position: relative;
-    z-index: 2;
+    z-index: 1;
 }

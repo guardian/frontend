@@ -352,16 +352,15 @@
 .top-nav__item--right {
     @include box-sizing(border-box);
     float: right;
-    padding-top: 0;
-    padding-left: 0;
 
     .top-nav__item {
         @include rem((
-            margin-right: $gs-gutter
+            padding: 0 $gs-gutter 0 $gs-gutter/2
         ));
+        margin: 0;
     }
     .top-nav__item:last-child {
-        margin-right: 0;
+        padding-right: 0;
     }
 }
 .top-nav__item--mobile-only {
