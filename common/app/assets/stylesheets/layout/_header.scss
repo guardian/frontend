@@ -61,7 +61,6 @@
     @include mq(tablet) {
         float: none;
         background: $c-neutral8;
-        border-bottom: 0;
     }
 }
 .l-header-pre__inner {
@@ -156,8 +155,8 @@ a.edition {
     list-style: none;
     @include rem((
         top: 3 * $gs-baseline,
-        padding: $gs-baseline/2,
-        width: 3 * $gs-column-width + $gs-gutter
+        padding: $gs-baseline/2 $gs-gutter/2,
+        width: gs-span(3) + $gs-gutter
     ));
 
     .guardian-services__action {
