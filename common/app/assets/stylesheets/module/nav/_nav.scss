@@ -355,7 +355,7 @@
 
     .top-nav__item {
         @include rem((
-            padding: 0 $gs-gutter 0 $gs-gutter/2
+            padding: $gs-baseline/2 $gs-gutter 0 $gs-gutter/2
         ));
         margin: 0;
     }
