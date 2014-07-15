@@ -2,17 +2,22 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/ajax',
+    'modules/onward/history',
     'bonzo'
 ], function (
     $,
     mediator,
     ajax,
+    History,
     bonzo
 ) {
     var breakignNewsSource = '/breaking-news/lite.json',
+        historyThreshold = 2,
         header,
         matchers,
-        editionSection;
+        editionSection,
+        hist,
+        histCount;
 
     return function (config) {
         var page = (config || {}).page;
@@ -22,6 +27,7 @@ define([
         if (!matchers) {
             matchers = {};
             editionSection = [];
+            histCount = {};
         
             matchers[window.location.pathname.slice(1)] = true;
 
@@ -43,6 +49,17 @@ define([
                     matchers[keyword.split('/')[0].toLowerCase()] = true;
                 }); 
             }
+
+            hist = new History();
+            hist.get().forEach(function(article) {
+                var s = article.section;
+
+                histCount[s] = (histCount[s] || 0) + 1;
+
+                if (histCount[s] >= historyThreshold) {
+                    matchers[s] = true;
+                } 
+            });
 
             window.console.log('Breaking news matchers: ' + Object.keys(matchers).join(', '));
         }
