@@ -2,7 +2,7 @@ define([
     'common/utils/$',
     'common/utils/mediator',
     'common/utils/ajax',
-    'modules/onward/history',
+    'common/modules/onward/history',
     'bonzo'
 ], function (
     $,
