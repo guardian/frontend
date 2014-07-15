@@ -477,6 +477,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
+            // TODO! Uncomment this. It was just for hack day.
             //modules.initDiscussion();
         }
         mediator.emit('page:common:ready', config, context);
