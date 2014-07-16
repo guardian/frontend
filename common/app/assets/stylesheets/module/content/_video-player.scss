@@ -73,7 +73,6 @@ $vjs-control-height: $gs-baseline*4;
     }
 
     > span {
-
         @mixin size($size) {
             width: $size;
             height: $size;
@@ -91,7 +90,6 @@ $vjs-control-height: $gs-baseline*4;
         @include mq(tablet) {
             @include size(70px);
         }
-
 
         background-color: rgba(51, 51, 51, .8);
 
