@@ -141,11 +141,12 @@ a.edition {
 }
 .guardian-services__action__arrow {
     display: inline-block;
+    pointer-events: none;
     width: 0;
     height: 0;
+    border-bottom: 0 solid transparent;
     @include rem((
         margin: 2px,
-        border-bottom: 0 solid transparent,
         border-left: $servicesToggleArrowSize solid transparent,
         border-right: $servicesToggleArrowSize solid transparent,
         border-top: $servicesToggleArrowSize solid $c-neutral1
@@ -164,9 +165,9 @@ a.edition {
     }
     .guardian-services__action__arrow {
         border-top: 0 solid transparent;
-        border-left: $servicesToggleArrowSize solid transparent;
-        border-right: $servicesToggleArrowSize solid transparent;
-        border-bottom: $servicesToggleArrowSize solid $c-local-navigation-action;
+        @include rem((
+            border-bottom: $servicesToggleArrowSize solid $c-local-navigation-action
+        ));
     }
 }
 .guardian-services__item--more-menu {
