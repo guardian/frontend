@@ -1,13 +1,16 @@
 package com.gu.integration.test.util
 
-import scala.collection.JavaConverters._
-import org.openqa.selenium.WebElement
+import scala.collection.JavaConverters.asScalaBufferConverter
+
+import org.openqa.selenium.By
+import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.By
-import com.gu.integration.test.config.PropertyLoader._
 import org.openqa.selenium.WebDriverException
-import org.openqa.selenium.JavascriptExecutor
+import org.openqa.selenium.WebElement
+
+import com.gu.integration.test.config.PropertyLoader.BaseUrl
+import com.gu.integration.test.config.PropertyLoader.getProperty
 
 object ElementLoader {
 
@@ -71,6 +74,11 @@ object ElementLoader {
     }
   }
 
+  /**
+   * Use this method to check that an img element is properly displayed. This is needed as the Selenium isDisplayed does not explicitly
+   * check that the image is displayed, just that the element is there and visible. This actually checks the size of the image to
+   * make sure it is greater than 0
+   */
   def isImageDisplayed(imageElement: WebElement)(implicit driver: WebDriver): Boolean = {
     val result = driver.asInstanceOf[JavascriptExecutor].
       executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0",
