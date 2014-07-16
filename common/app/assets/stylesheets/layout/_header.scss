@@ -154,9 +154,9 @@ a.edition {
     right: 0;
     list-style: none;
     @include rem((
-        top: 3 * $gs-baseline,
+        top: $headerHeight,
         padding: $gs-baseline/2 $gs-gutter/2,
-        width: gs-span(3) + $gs-gutter
+        width: gs-span(3) - $gs-gutter
     ));
 
     .guardian-services__action {
