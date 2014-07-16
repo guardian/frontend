@@ -12,8 +12,6 @@ define([
     removeById,
     Group
 ) {
-    var storage = window.localStorage,
-        storageKey ='gu.fronts-tool.drag-source';
 
     window.addEventListener('dragover', function(event) {
         event.preventDefault();
@@ -33,7 +31,7 @@ define([
                     var sourceItem = ko.dataFor(event.target);
 
                     if (_.isFunction(sourceItem.get)) {
-                        storage.setItem(storageKey, JSON.stringify(sourceItem.get()));
+                        event.dataTransfer.setData('sourceItem', JSON.stringify(sourceItem.get()));
                     }
                     sourceList = ko.dataFor(element);
                 }, false);
@@ -123,12 +121,11 @@ define([
                         return;
                     }
 
-                    try {
-                        sourceItem = JSON.parse(storage.getItem(storageKey));
-                    } catch(e) {}
-                    storage.removeItem(storageKey);
+                    sourceItem = event.dataTransfer.getData('sourceItem');
 
-                    if (!sourceItem || sourceItem.id !== urlAbsPath(id)) {
+                    if (sourceItem) {
+                        sourceItem = JSON.parse(sourceItem);
+                    } else {
                         sourceItem = {meta: knownQueryParams};
                         sourceList = undefined;
                         id = id.split('?')[0] + (_.isEmpty(unknownQueryParams) ? '' : '?' + _.map(unknownQueryParams, function(val, key) {
