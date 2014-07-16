@@ -9,6 +9,12 @@
 @defining(("1_0", "2014-07-10")) { case (version, date) =>
     
     <div class="commercial commercial--v-high commercial--books" role="complementary" itemscope itemtype="http://schema.org/Book">
+        <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
+            <h3 class="commercial__title">
+                <span class="i i--commercial i-bookshop-logo--guardian"></span><span class="i i--commercial i-bookshop-logo--bookshop"></span>
+                <span class="u-h">Guardian bookshop</span>
+            </h3>
+        </a>
         @books.take(1).map { book =>
             <div class="commercial--v-high__head">
                 <h4 itemprop="name" class="lineitem__title">
