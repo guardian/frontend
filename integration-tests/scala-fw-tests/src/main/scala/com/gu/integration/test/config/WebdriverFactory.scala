@@ -16,22 +16,30 @@ import com.gu.integration.test.config.PropertyLoader.getProperty
 import com.gu.automation.support.TestLogging
 
 object WebdriverFactory extends TestLogging {
+  val Firefox = "firefox"
+  val Chrome = "chrome"
+  val Ie = "ie"
 
   def createWebDriver(testCaseName: String): WebDriver = {
-    val (webDriver, capabilities) = getProperty(Browser) match {
-      case "firefox" =>
-        val capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.firefox())
-        (new FirefoxDriver(capabilities), capabilities)
-      case "chrome" =>
-        val capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.chrome())
-        (new ChromeDriver(capabilities), capabilities)
-      case "ie" =>
-        val capabilities = initDesiredCapabilities(testCaseName, DesiredCapabilities.internetExplorer())
-        (new InternetExplorerDriver(capabilities), capabilities)
-      case default => throw new RuntimeException(s"Browser: [$default] is not supported")
+    val sauceLabsUrl = getProperty(SauceLabsUrl)
+    val browserName = getProperty(Browser)
+    
+    val capabilities = browserName match {
+      case Firefox => initDesiredCapabilities(testCaseName, DesiredCapabilities.firefox())
+      case Chrome => initDesiredCapabilities(testCaseName, DesiredCapabilities.chrome())
+      case Ie => initDesiredCapabilities(testCaseName, DesiredCapabilities.internetExplorer())
+      case unknown => throw new RuntimeException(s"Browser: [$unknown] is not supported")
+    }
+    
+    val webDriver = if (isNotBlank(sauceLabsUrl)) {
+      new RemoteWebDriver(new URL(sauceLabsUrl), capabilities)
+    } else browserName match {
+      case Firefox => new FirefoxDriver(capabilities)
+      case Chrome => new ChromeDriver(capabilities)
+      case Ie => new InternetExplorerDriver(capabilities)
     }
 
-    initWebDriver(overrideSauceLabsDriver(capabilities, webDriver))
+    initWebDriver(webDriver)
   }
 
   private def initWebDriver(webDriver: WebDriver): WebDriver = {
@@ -48,12 +56,5 @@ object WebdriverFactory extends TestLogging {
       capabilities.setCapability("name", testCaseName)
     }
     return capabilities
-  }
-  
-  private def overrideSauceLabsDriver(capabilities: DesiredCapabilities, driver: => WebDriver): WebDriver = {
-    val sauceLabsUrl = getProperty(SauceLabsUrl)
-    if (isNotBlank(sauceLabsUrl)) {
-      new RemoteWebDriver(new URL(sauceLabsUrl), capabilities)
-    } else driver
   }
 }

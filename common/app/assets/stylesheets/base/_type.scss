@@ -25,6 +25,30 @@ body {
 }
 
 
+/**
+ * Turn on kerning and ligatures
+ */
+
+html,
+body {
+    -webkit-font-feature-settings: "kern" 1, "liga" 1;
+    -moz-font-feature-settings: "kern" 1, "liga" 1;
+    font-feature-settings: "kern" 1, "liga" 1;
+}
+
+
+/**
+ * Turn off kerning and ligatures for monospace type
+ */
+
+pre,
+code {
+    -webkit-font-feature-settings: "kern" 0, "liga" 0;
+    -moz-font-feature-settings: "kern" 0, "liga" 0;
+    font-feature-settings: "kern" 0, "liga" 0;
+}
+
+
 /* Base headings
    ========================================================================== */
 

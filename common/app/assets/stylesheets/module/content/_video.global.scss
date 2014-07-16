@@ -9,6 +9,10 @@
         border-color: $c-neutral2;
     }
 
+    .content__dateline {
+        color: $c-neutral3;
+    }
+
     .commentcount.tone-colour {
         color: $c-commentAccent2;
 
@@ -56,6 +60,12 @@
         margin-bottom: 0;
     }
 
+    .social-wrapper--bottom {
+        @include mq(leftCol) {
+            display: none;
+        }
+    }
+
     .social-icon-wrapper {
         opacity: .8;
 
@@ -91,6 +101,51 @@
                 height: 27px !important,
                 width: 43px !important
             ));
+        }
+    }
+
+    .social-wrapper {
+        border-top: 1px dotted $c-neutral2;
+        padding-top: 0;
+
+        &:before {
+            content: 'Share this page';
+            @include fs-data(3);
+            color: $c-neutral3;
+            @include rem((
+                margin-top: $gs-baseline/4
+            ));
+
+        }
+
+        .social {
+            @include rem((
+                padding-top: $gs-baseline/3
+            ));
+        }
+
+        .social__head {
+            display: none;
+        }
+    }
+
+    .content__meta-container {
+        border-bottom: 0;
+    }
+    .social-wrapper--bottom {
+        max-width: none;
+    }
+
+    @include mq(tablet, rightCol) {
+        .content__meta-container {
+            float: left;
+            width: gs-span(5) + $gs-gutter*2;
+            @include rem((
+                margin-right: $gs-gutter
+            ));
+        }
+        .social-wrapper--bottom {
+            float: left;
         }
     }
 }

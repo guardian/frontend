@@ -19,7 +19,7 @@
                                 @if(Navigation.localLinks(navigation, metaData).nonEmpty) {
                                     <ul class="local-navigation">
                                         @Navigation.rotatedLocalNav(topSection, metaData).map{ link =>
-                                            <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="@link.title">@Html(link.title)</a></li>
+                                            <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : secondary : @link.title">@Html(link.title)</a></li>
                                         }
                                     </ul>
                                 }
@@ -34,7 +34,7 @@
                                             ("top-navigation__item", true),
                                             ("top-navigation__item--current", nav.currentFor(metaData))
                                         ))">
-                                        <a class="top-navigation__action" href="@LinkTo(nav.name.href)" data-link-name="@nav.name.title">
+                                        <a class="top-navigation__action" href="@LinkTo(nav.name.href)" data-link-name="nav : primary : @nav.name.title">
                                             @Html(nav.name.title)
                                             @if(nav.currentFor(metaData)){
                                                 <span class="u-h">selected</span>
@@ -46,7 +46,7 @@
                         </ul>
                     </nav>
                 </div>
-                <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav" data-link-name="Popup Localnav">
+                <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections">
                     <i class="new-navigation__toggle-burger honest-burger"><i></i><i></i><i></i></i>
                     <span class="new-navigation__toggle-label new-navigation__toggle-label--open">all<span class="new-navigation__toggle-label__extra"> sections</span></span>
                     <span class="new-navigation__toggle-label new-navigation__toggle-label--close">close</span>
