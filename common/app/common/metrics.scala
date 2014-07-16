@@ -358,6 +358,20 @@ object FaciaPressMetrics {
     "Time from press command for UK front being queued to being processed"
   )
 
+  object UsFrontPressLatency extends FrontendTimingMetric(
+    "facia-front-press",
+    "us-network-front-press-latency",
+    "US Network Front Press Latency",
+    "Time from press command for US front being queued to being processed"
+  )
+
+  object AuFrontPressLatency extends FrontendTimingMetric(
+    "facia-front-press",
+    "au-network-front-press-latency",
+    "AU Network Front Press Latency",
+    "Time from press command for AU front being queued to being processed"
+  )
+
   val all: Seq[Metric] = Seq(
     FrontPressSuccess,
     FrontPressLiveSuccess,
@@ -371,7 +385,9 @@ object FaciaPressMetrics {
     ContentApiSeoRequestSuccess,
     ContentApiSeoRequestFailure,
     FrontPressLatency,
-    UkFrontPressLatency
+    UkFrontPressLatency,
+    UsFrontPressLatency,
+    AuFrontPressLatency
   )
 }
 

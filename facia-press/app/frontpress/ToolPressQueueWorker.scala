@@ -21,6 +21,13 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
     throw new RuntimeException("Required property 'frontpress.sqs.tool_queue_url' not set")
   }
 
+  /** We record separate metrics for each of the editions' network fronts */
+  val metricsByPath = Map(
+    "uk" -> FaciaPressMetrics.UkFrontPressLatency,
+    "us" -> FaciaPressMetrics.UsFrontPressLatency,
+    "au" -> FaciaPressMetrics.AuFrontPressLatency
+  )
+
   override def process(message: Message[PressJob]): Future[Unit] = {
     val PressJob(FrontPath(path), pressType) = message.get
 
@@ -47,8 +54,8 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
             } else {
               FaciaPressMetrics.FrontPressLatency.recordTimeSpent(millisToPress)
 
-              if (path == "uk") {
-                FaciaPressMetrics.UkFrontPressLatency.recordTimeSpent(millisToPress)
+              metricsByPath.get(path) foreach { metric =>
+                metric.recordTimeSpent(millisToPress)
               }
             }
 
@@ -58,7 +65,7 @@ object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
             log.error("Asked SQS for SentTimestamp but did not receive it")
             log.info(s"Successfully pressed $path on $pressType")
         }
-        
+
       case Failure(error) =>
         pressType match {
           case Draft => FaciaPressMetrics.FrontPressDraftFailure.increment()

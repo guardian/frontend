@@ -37,7 +37,9 @@ object Global extends GlobalSettings
     ("content-api-seo-request-failure", FaciaPressMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble),
     ("content-api-fallbacks", FaciaPressMetrics.MemcachedFallbackMetric.getAndReset.toDouble),
     ("front-press-latency", FaciaPressMetrics.FrontPressLatency.getAndReset.toDouble),
-    ("uk-network-front-press-latency", FaciaPressMetrics.UkFrontPressLatency.getAndReset.toDouble)
+    ("uk-network-front-press-latency", FaciaPressMetrics.UkFrontPressLatency.getAndReset.toDouble),
+    ("us-network-front-press-latency", FaciaPressMetrics.UsFrontPressLatency.getAndReset.toDouble),
+    ("au-network-front-press-latency", FaciaPressMetrics.AuFrontPressLatency.getAndReset.toDouble)
   )
 
   def scheduleJobs() {
