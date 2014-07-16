@@ -3,11 +3,10 @@
 */
 define(['common/utils/$',
 'bean',
-'bonzo',
 'common/utils/ajax',
 'common/utils/config',
 'common/modules/component',
-'membership/paymentForm'], function ($, bean, bonzo, ajax, config, Component, PaymentForm) {
+'membership/paymentForm'], function ($, bean, ajax, config, Component, PaymentForm) {
 
     function Membership (context, options) {
 
@@ -183,7 +182,7 @@ define(['common/utils/$',
         if (this.$successMessageElem) {
             this.$successMessageElem.text(message);
         } else {
-            this.$successMessageElem = bonzo(bonzo.create('<div>')).addClass('form__success').text(message).prependTo(this.getClass('TAB_CONTAINER'));
+            this.$successMessageElem = $.create('<div>').addClass('form__success').text(message).prependTo(this.getClass('TAB_CONTAINER'));
         }
     };
 
@@ -252,7 +251,7 @@ define(['common/utils/$',
             });
 
             bean.on(self.getElem('CC_CHANGE_FORM_CONT'), 'animationend webkitAnimationEnd oanimationend MSAnimationEnd', function () {
-                var $elem = bonzo(this);
+                var $elem = $(this);
                 if ($elem.hasClass(self.getClass('ANIM_OPEN', true))) {
                     $elem.removeClass(self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_CLOSE', true) + ' ' + self.getClass('ANIM_CLOSED', true)).addClass(self.getClass('ANIM_OPENED', true));
                 } else {
