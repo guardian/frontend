@@ -1,6 +1,6 @@
 [data-page-path='/world/france'] {
     .easter-egg-vive-la-france {
-        .container__title {
+        [data-id='world/france/news/regular-stories'] .container__title {
             &:before {
                 content: 'Vive la ';
             }
@@ -22,13 +22,13 @@
                 }
             }
         }
-        .pagination_legend {
+        [data-id='world/france/news/regular-stories'] .pagination_legend {
             &:after {
                 content: ', le pays de la baguette et du saucisson';
             }
         }
         .localnav--small,
-        .container__border {
+        [data-id='world/france/news/regular-stories'] .container__border {
             $top-flag-height: 8px;
             $c-french-flag-blue: #0055a4;
             $c-french-flag-white: guss-colour(neutral-8);
