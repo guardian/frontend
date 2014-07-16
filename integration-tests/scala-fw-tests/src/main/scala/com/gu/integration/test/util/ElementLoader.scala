@@ -6,7 +6,6 @@ import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.WebElement
 
 import com.gu.integration.test.config.PropertyLoader.BaseUrl
@@ -22,9 +21,7 @@ object ElementLoader {
    * otherwise it will use the WebDriver
    */
   def findByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): WebElement = {
-    wrapException {
-      contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
-    }
+    contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
   }
 
   /**
@@ -32,33 +29,18 @@ object ElementLoader {
    * otherwise it will use the WebDriver
    */
   def findAllByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): List[WebElement] = {
-    wrapException {
-      contextElement.getOrElse(driver).findElements(byTestAttributeId(testAttributeValue)).asScala.toList
-    }
+    contextElement.getOrElse(driver).findElements(byTestAttributeId(testAttributeValue)).asScala.toList
   }
 
   private def byTestAttributeId(testAttributeValue: String): org.openqa.selenium.By = {
     By.cssSelector(s"[$TestAttributeName=$testAttributeValue]")
   }
 
-  private def wrapException[A](f: => A): A = {
-    try {
-      f
-    } catch {
-      case e: WebDriverException =>
-        //Since this was converted from trait to class the getClass no longer gets the name of the calling class
-        //TODO find a way to get the calling class
-        throw new RuntimeException(s"WebElement(s) were not found on page [$getClass]", e)
-    }
-  }
-
   /**
    * Find all link elements, including nested, from the provided SearchContext and returns those that are displayed
    */
   def displayedLinks(searchContext: SearchContext): List[WebElement] = {
-    wrapException {
-      searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => element.isDisplayed)
-    }
+    searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => element.isDisplayed)
   }
 
   /**
@@ -67,11 +49,9 @@ object ElementLoader {
    * visible
    */
   def displayedImages(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
-    wrapException {
-      val preDisplayedImages = searchContext.findElements(By.cssSelector("img")).asScala.toList.filter(element => element.isDisplayed)
-      //preDisplayedImages
-      return preDisplayedImages.filter(element => isImageDisplayed(element))
-    }
+    val preDisplayedImages = searchContext.findElements(By.cssSelector("img")).asScala.toList.filter(element => element.isDisplayed)
+    //preDisplayedImages
+    return preDisplayedImages.filter(element => isImageDisplayed(element))
   }
 
   /**
