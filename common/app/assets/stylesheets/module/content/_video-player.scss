@@ -73,24 +73,46 @@ $vjs-control-height: $gs-baseline*4;
     }
 
     > span {
+        @mixin video-play-button-size($size) {
+            width: $size;
+            height: $size;
+            font-size: $size/6; // play triangle is em based so this scales it
+        }
+
         display: inline-block;
         vertical-align: middle;
-        @include icon(play-60-transparent);
-        @include background-size(100%);
-        height: 0 !important;
-
-        width: 17% !important;
-        padding-bottom: 17.5%; // +0.5% stops clipping
+        position: relative;
+        @include border-radius(50%);
+        @include video-play-button-size(50px);
         @include mq(mobileLandscape) {
-            width: 12% !important;
-            padding-bottom: 12.5%; // +0.5% stops clipping
+            @include video-play-button-size(70px);
         }
-        @include rem((
-            max-width: $gs-baseline*7.5
-        ));
+
+        background-color: rgba(51, 51, 51, .8);
 
         .gu-video-wrapper:hover & {
-            @include icon(play-60-yellow);
+            background-color: $c-mediaDefault;
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 1em 0 1em 2.4em;
+            border-color: transparent transparent transparent $c-neutral7;
+            border-radius: .2em;
+            -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
+            top: 50%;
+            left: 0;
+            margin-top: -.9em;
+            margin-left: 2.2em;
+
+            .gu-video-wrapper:hover & {
+                border-left-color: #333333;
+            }
         }
     }
 
