@@ -750,7 +750,7 @@ module.exports = function (grunt) {
         csdevmode: {
             options: {
                 srcBasePath: 'common/app/assets/stylesheets/',
-                destBasePath: staticTargetDir + '/stylesheets'
+                destBasePath: staticHashDir + '/stylesheets'
             },
             main: {
                 assets: ['global', 'head.default', 'head.facia']
