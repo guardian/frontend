@@ -221,6 +221,7 @@ $football-crest--large: 60px;
 
     .match-summary__teams {
         border-top: 0 none;
+        white-space: nowrap;
     }
     .match-summary__team {
         @include box-sizing(border-box);
