@@ -1,6 +1,8 @@
 /* Global header and navigation
    ========================================================================== */
 
+$servicesToggleArrowSize: 5px;
+
 .l-header {
     position: relative;
     z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050
@@ -135,6 +137,19 @@ a.edition {
     text-decoration: none;
     margin: 0;
     color: $c-neutral1;
+    cursor: pointer;
+}
+.guardian-services__action__arrow {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    @include rem((
+        margin: 2px,
+        border-bottom: 0 solid transparent,
+        border-left: $servicesToggleArrowSize solid transparent,
+        border-right: $servicesToggleArrowSize solid transparent,
+        border-top: $servicesToggleArrowSize solid $c-neutral1
+    ));
 }
 .guardian-services__item-more--collapsed .guardian-services__item--more-menu {
     display: none;
@@ -144,7 +159,14 @@ a.edition {
     background: $c-new-navigation-base;
 
     .guardian-services__action {
+        display: inline-block;
         color: $c-local-navigation-action;
+    }
+    .guardian-services__action__arrow {
+        border-top: 0 solid transparent;
+        border-left: $servicesToggleArrowSize solid transparent;
+        border-right: $servicesToggleArrowSize solid transparent;
+        border-bottom: $servicesToggleArrowSize solid $c-local-navigation-action;
     }
 }
 .guardian-services__item--more-menu {
@@ -156,13 +178,8 @@ a.edition {
     @include rem((
         top: $headerHeight,
         padding: $gs-baseline/2 $gs-gutter/2,
-        width: gs-span(3) - $gs-gutter
+        width: gs-span(3) - $gs-gutter/2
     ));
-
-    .guardian-services__action {
-        display: inline;
-        color: $c-local-navigation-action;
-    }
 }
 
 /* Main header (logo, actions)
