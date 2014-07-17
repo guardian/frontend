@@ -1,4 +1,4 @@
-@(trail: model.Trail, index: Int, imageOverride: Option[String])
+@(trail: model.Trail, index: Int, imageOverride: Option[String])(implicit requestHeader: RequestHeader)
 @import model._
 
 @trail match {
