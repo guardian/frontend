@@ -1,4 +1,4 @@
-@(page: MetaData, position: String = "bottom", iconModifier: String = "")(implicit request: RequestHeader)
+@(page: model.Content, position: String = "bottom", iconModifier: String = "")(implicit request: RequestHeader)
 
 
 @defining(s"http://${request.host}${request.path}"){ url =>
