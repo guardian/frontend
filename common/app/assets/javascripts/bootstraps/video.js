@@ -10,7 +10,8 @@ define([
     'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
     'bean',
-    'bonzo'
+    'bonzo',
+    'common/modules/component'
 ], function(
     $,
     ajax,
@@ -22,7 +23,8 @@ define([
     OmnitureMedia,
     _throttle,
     bean,
-    bonzo
+    bonzo,
+    Component
 ) {
 
     var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
@@ -253,11 +255,20 @@ define([
                     vjs.persistvolume({namespace: 'gu.vjs'});
                 });
             });
+        },
+        initMoreInSection: function() {
+            var section = new Component();
+            section.endpoint = '/video/section/' + config.page.section + '.json';
+            section.fetch($('.js-onward')[0]);
         }
     };
 
     var ready = function () {
         modules.initPlayer();
+
+        if(config.page.contentType === 'Video') {
+            modules.initMoreInSection();
+        }
     };
 
     return {
