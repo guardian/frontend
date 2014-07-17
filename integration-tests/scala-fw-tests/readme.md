@@ -30,14 +30,15 @@ To do this, go to the build, with the test failure in question, and mute it. The
 
 ![Alt text](doc/build_mute_test_1.png?raw=true "Build chain with tests failing")
 
+------>
 
 ![Alt text](doc/build_mute_test_2.png?raw=true "Build chain with tests failing")
 
-Then when doing a successive build, with the muted test, it then be successful and look like this:
+Then when doing a successive build, with the muted test, it will then be successful and look like this:
 
 ![Alt text](doc/build_chain_success_muted.png?raw=true "Build chain with tests muted")
 
-That will allow you to deploy the fix to prod. Remember though to unmute it, using similar procedure, once the fix has been applied to prod.
+This will allow you to deploy the fix to prod. Remember though to unmute it, using similar procedure, once the fix has been applied so the test  can then be (hopefully) successfuly run.
 
 
 
