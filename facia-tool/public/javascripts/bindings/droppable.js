@@ -80,10 +80,7 @@ define([
                             excludeNamespace: true
                         }),
                         sourceItem,
-                        position,
-                        newItems,
                         groups,
-                        insertAt,
                         isAfter = false;
 
                     event.preventDefault();
@@ -114,8 +111,6 @@ define([
                         }
                     }
 
-                    position = targetItem && _.isFunction(targetItem.id) ? targetItem.id() : undefined;
-
                     if (!id) {
                         alertBadContent();
                         return;
@@ -141,39 +136,57 @@ define([
                         }
                     });
 
-                    removeById(targetList.items, urlAbsPath(id));
+                    opts.id = id;
+                    opts.sourceList = sourceList;
+                    opts.sourceItem = sourceItem;
+                    opts.targetList = targetList;
+                    opts.targetItem = targetItem;
+                    opts.isAfter = isAfter;
 
-                    insertAt = targetList.items().indexOf(targetItem) + isAfter;
-                    insertAt = insertAt === -1 ? targetList.items().length : insertAt;
+                    transferBetweenLists(opts);
 
-                    newItems = opts.newItemsConstructor(id, sourceItem, targetList);
-
-                    if (!newItems[0]) {
-                        alertBadContent(id);
-                        return;
-                    }
-
-                    targetList.items.splice(insertAt, 0, newItems[0]);
-
-                    opts.newItemsValidator(newItems)
-                    .fail(function(err) {
-                        _.each(newItems, function(item) { targetList.items.remove(item); });
-                        alertBadContent(id, err);
-                    })
-                    .done(function() {
-                        if (_.isFunction(targetList.reflow)) {
-                            targetList.reflow();
-                        }
-
-                        if (!targetList.parent) {
-                            return;
-                        }
-
-                        opts.newItemsPersister(newItems, sourceList, targetList, position, isAfter);
-                    });
                 }, false);
             }
         };
+    }
+
+    function transferBetweenLists(opts) {
+        var position,
+            newItems,
+            insertAt;
+
+        position = opts.targetItem && _.isFunction(opts.targetItem.id) ? opts.targetItem.id() : undefined;
+
+        removeById(opts.targetList.items, urlAbsPath(opts.id));
+
+        insertAt = opts.targetList.items().indexOf(opts.targetItem) + opts.isAfter;
+        insertAt = insertAt === -1 ? opts.targetList.items().length : insertAt;
+
+        newItems = opts.newItemsConstructor(opts.id, opts.sourceItem, opts.targetList);
+
+        if (!newItems[0]) {
+            alertBadContent(opts.id, null);
+            return;
+        }
+
+        opts.targetList.items.splice(insertAt, 0, newItems[0]);
+
+        opts.newItemsValidator(newItems)
+        .fail(function(err) {
+            _.each(newItems, function(item) { opts.targetList.items.remove(item); });
+            alertBadContent(opts.id, err);
+        })
+        .done(function() {
+            if (_.isFunction(opts.targetList.reflow)) {
+                opts.targetList.reflow();
+            }
+
+            if (!opts.targetList.parent) {
+                return;
+            }
+
+            opts.newItemsPersister(newItems, opts.sourceList, opts.targetList, position, opts.isAfter);
+        });
     }
 
     function alertBadContent(id, msg) {
