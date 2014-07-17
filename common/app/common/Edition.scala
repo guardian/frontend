@@ -10,7 +10,6 @@ abstract class Edition(
     val displayName: String,
     val timezone: DateTimeZone
   ) extends Navigation {
-  def zones: Seq[Zone]
   def navigation: Seq[NavItem]
 }
 
