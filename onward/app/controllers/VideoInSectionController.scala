@@ -50,7 +50,8 @@ object VideoInSectionController extends Controller with Logging with Paging with
   }
 
   private def renderSectionTrails(trails: Seq[Content], sectionId: String)(implicit request: RequestHeader) = {
-    implicit val config = Config(id = sectionId, href = Option(sectionId), displayName = Some(s"More ${sectionId} videos") )
+    val sectionName = request.getQueryString("sectionName").getOrElse("")
+    implicit val config = Config(id = sectionId, href = Option(sectionId), displayName = Some(s"More ${sectionName} videos") )
     val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1)
     renderFormat(response, response, 1)
   }

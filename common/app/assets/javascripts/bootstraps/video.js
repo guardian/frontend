@@ -258,7 +258,7 @@ define([
         },
         initMoreInSection: function() {
             var section = new Component();
-            section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+            section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl + '&sectionName=' + config.page.sectionName;
             section.fetch($('.js-onward')[0]);
         }
     };
