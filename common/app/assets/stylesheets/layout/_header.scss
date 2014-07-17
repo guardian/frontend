@@ -184,8 +184,13 @@ a.edition {
     @include rem((
         top: $headerHeight,
         padding: 0 $gs-gutter/2,
-        width: gs-span(3)
+        width: gs-span(2)
     ));
+    @include mq(desktop) {
+        @include rem((
+            width: gs-span(3)
+        ));
+    }
 }
 
 /* Main header (logo, actions)
