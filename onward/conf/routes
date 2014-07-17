@@ -17,7 +17,7 @@ GET        /related/*path.json                        controllers.RelatedControl
 
 GET        /popular-in-tag/*tag.json                  controllers.PopularInTag.render(tag)
 
-GET        /video/most-viewed.json                    controllers.MostViewedVideoController.render()
+GET        /video/most-viewed.json                    controllers.MostViewedVideoController.renderMostViewed()
 
 GET        /preference/platform/:platform             controllers.ChangeViewController.render(platform, page)
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)

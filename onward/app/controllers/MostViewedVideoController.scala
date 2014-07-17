@@ -7,7 +7,7 @@ import play.api.mvc.{ Controller, Action }
 
 object MostViewedVideoController extends Controller with Logging with ExecutionContexts {
 
-  def render() = Action { implicit request =>
+  def renderMostViewed() = Action { implicit request =>
 
     val videos = MostViewedVideoAgent.mostViewedVideo().take(6)
 

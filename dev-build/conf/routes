@@ -52,7 +52,7 @@ GET         /most-read.json                                                     
 GET         /most-read/*path.json                                                                                 controllers.MostPopularController.render(path)
 GET         /most-read-geo.json                                                                                   controllers.MostPopularController.renderPopularGeo()
 GET         /most-read-day.json                                                                                   controllers.MostPopularController.renderPopularDay(countryCode)
-GET         /video/most-viewed.json                                                                               controllers.MostViewedVideoController.render()
+GET         /video/most-viewed.json                                                                               controllers.MostViewedVideoController.renderMostViewed()
 
 GET         /top-stories.json                                                                                     controllers.TopStoriesController.renderTopStories()
 GET         /top-stories/trails.json                                                                              controllers.TopStoriesController.renderTrails()
