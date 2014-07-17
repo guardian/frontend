@@ -8,7 +8,6 @@ import performance.MemcachedAction
 
 object RelatedController extends Controller with Related with Logging with ExecutionContexts {
 
-  def renderJson(path: String) = render(path)
   def render(path: String) = MemcachedAction { implicit request =>
     val edition = Edition(request)
     related(edition, path) map {
@@ -20,11 +19,8 @@ object RelatedController extends Controller with Related with Logging with Execu
   private def renderRelated(trails: Seq[Trail])(implicit request: RequestHeader) = Cached(900) {
     val html = views.html.fragments.relatedTrails(trails, "Related content", 5)
 
-    if (request.isJson)
-      JsonComponent(
-        "html" -> html
-      )
-    else
-      Ok(html)
+    JsonComponent(
+      "html" -> html
+    )
   }
 }

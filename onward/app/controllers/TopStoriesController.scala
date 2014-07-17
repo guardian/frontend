@@ -9,9 +9,6 @@ import com.gu.openplatform.contentapi.ApiError
 
 object TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
 
-  val validFormats: Seq[String] = Seq("html", "json")
-
-  def renderTopStoriesJson() = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>
     val response = lookup(Edition(request)) map { topStories =>
       topStories map { renderTopStoriesPage(_) }
@@ -20,7 +17,6 @@ object TopStoriesController extends Controller with Logging with Paging with Exe
     response map { _ getOrElse NotFound }
   }
 
-  def renderJsonTrails() = renderTrails()
   def renderTrails() = Action.async { implicit request =>
     val response = lookup(Edition(request)) map { topStories =>
       topStories map { renderTopStoriesTrails(_) }
