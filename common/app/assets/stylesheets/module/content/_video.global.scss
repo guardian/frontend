@@ -132,6 +132,7 @@
     .content__meta-container {
         border-bottom: 0;
     }
+
     .social-wrapper--bottom {
         max-width: none;
     }
@@ -161,36 +162,73 @@
                 top: $gs-baseline/4
             ));
         }
-
         @include rem((
             height: gs-height(1) + $gs-baseline
+        ));
+    }
+
+    .most-viewed-video__item {
+        position: relative;
+        @include rem((
+            margin-bottom: $gs-baseline*2
+        ));
+    }
+
+    .most-viewed-video__item:nth-child(-n+3) {
+        border-right: 1px solid $c-neutral2;
+        @include rem((
+            padding-right: 9px,
+            width: gs-span(2)
         ));
     }
 
     .most-viewed-video__action {
         display: block;
         @include rem((
-            height: gs-height(3) + 18px,
-            margin-bottom: $gs-baseline
+            width: gs-span(2)
         ));
         h4 {
             @include f-headline;
             @include font-size(14, 18);
             @include text-clamp(3, 18px);
+            @include rem((
+                height: 18px * 3
+            ));
+            color: $c-neutral5;
+        }
+        &:hover,
+        &:focus {
+            text-decoration: underline;
             color: $c-neutral5;
         }
     }
 
     .most-viewed-video li:nth-child(3n + 2),
     .most-viewed-video li:nth-child(3n + 3) {
-        border-top: 1px solid $c-mediaDefault;
         @include rem((
-            padding-top: $gs-baseline * 2/3
+            width: gs-span(2)
+        ));
+        &:before {
+            height: 1px;
+            background-color: $c-mediaDefault;
+            content: " ";
+            display: block;
+            position: absolute;
+            @include rem((
+                width: gs-span(2),
+                top: -$gs-baseline
+            ));
+        }
+    }
+
+    .most-viewed-video li:nth-child(n + 4) {
+        @include rem((
+            margin-left: $gs-gutter/2
         ));
     }
 }
 
-@include guss-columns('.most-viewed-video', $column-min-width: gs-span(2));
+@include guss-columns('.most-viewed-video', $column-min-width: gs-span(2), $column-gap: 0);
 
 .content-footer--video {
     @include rem((
