@@ -1,4 +1,6 @@
 /* global module: false, process: false */
+var pngquant = require('imagemin-pngquant');
+
 module.exports = function (grunt) {
 
     var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
@@ -427,6 +429,10 @@ module.exports = function (grunt) {
         },
 
         imagemin: {
+            options: {
+                optimizationLevel: 2,
+                use: [pngquant()]
+            },
             files: {
                 expand: true,
                 cwd: staticTargetDir + 'images/',

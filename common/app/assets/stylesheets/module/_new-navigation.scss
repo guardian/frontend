@@ -8,8 +8,6 @@
 $new-navigation-toggler-width: 48px;
 $new-navigation-toggler-width-full: 130px;
 
-$c-new-navigation-base: #2479c3;
-
 $theme: default;
 
 $c-navigation-background: mix($c-new-navigation-base, #ffffff, 80%);
@@ -22,7 +20,6 @@ $c-top-navigation-action: #ffffff;
 $c-top-navigation-background: guss-colour(guardian-brand);
 
 $c-local-navigation-background: $c-new-navigation-base;
-$c-local-navigation-action: #ffffff;
 
 $c-local-navigation-parent-background: guss-colour(guardian-brand);
 
@@ -45,6 +42,8 @@ $c-navigation-toggle-shadow: rgba(#000000, .333333);
 $new-navigation-h-space-between-items: $gs-gutter;
 
 $c-navigation-expandable-background: guss-colour(neutral-1);
+
+$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
 
 
 /* Overrides (to be incorporated into the global CSS when killing the old nav)
@@ -94,7 +93,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
         }
     }
 
-    @include mq(wide) {
+    @include mq(navigationBreakOnTwoLevels) {
         &.has-page-skin .l-header .gs-container {
             @include rem((
                 width: auto
@@ -257,6 +256,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
     position: relative;
     background: $c-signposting-background;
     border-right: 1px solid $c-global-navigation-border;
+    @include box-sizing(border-box);
     @include rem((
         padding-right: $new-navigation-h-space-between-items
     ));
@@ -266,7 +266,12 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
             padding-left: $new-navigation-h-space-between-items/2
         ));
     }
-    @include mq(wide) {
+    .new-navigation--expanded.new-navigation--has-local-navigation & {
+        @include mq($to: navigationBreakOnTwoLevels) {
+            border-bottom: 1px solid $c-global-navigation-border;
+        }
+    }
+    @include mq(tablet) {
         border-right-width: 0;
 
         .new-navigation--has-local-navigation & {
@@ -275,12 +280,17 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
     }
 
     .new-navigation--expanded & {
-        @include mq($to: wide) {
+        @include mq($to: tablet) {
             border-right: 0;
+        }
+        @include mq(tablet) {
+            @include rem((
+                min-width: $global-navigation-title-width
+            ));
         }
         @include mq(wide) {
             @include rem((
-                min-width: gs-span(2) + $gs-gutter
+                min-width: $global-navigation-title-width-wide
             ));
         }
     }
@@ -551,6 +561,15 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
         display: table-cell;
         position: relative;
     }
+    .top-navigation {
+        @include mq(navigationBreakOnTwoLevels) {
+            @include box-sizing(border-box);
+            @include rem((
+                min-width: gs-span(12),
+                padding-right: $new-navigation-toggler-width-full + $gs-gutter
+            ));
+        }
+    }
     .top-navigation__item:last-child {
         @include rem((
             padding-right: $new-navigation-toggler-width + $gs-gutter
@@ -560,6 +579,9 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
             @include rem((
                 padding-right: $new-navigation-toggler-width-full + $gs-gutter
             ));
+        }
+        @include mq(navigationBreakOnTwoLevels) {
+            padding-right: 0;
         }
     }
 }
@@ -641,7 +663,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
 /* Side breakpoint: navigation goes on two levels
    ========================================================================== */
 
-@include mq(wide) {
+@include mq(navigationBreakOnTwoLevels) {
     .new-navigation--has-signposting {
         .new-navigation__inner:before {
             content: '';
@@ -717,7 +739,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
         display: none;
     }
     .top-navigation__item--current {
-        @include mq(wide) {
+        @include mq(navigationBreakOnTwoLevels) {
             display: table-cell;
         }
     }
@@ -771,7 +793,7 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
         ));
         text-align: left;
     }
-    @include mq(wide) {
+    @include mq(navigationBreakOnTwoLevels) {
         border-left: 0;
     }
 }
@@ -842,5 +864,18 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
         @include mq(tablet) {
             @include transition(all .1s ease-in);
         }
+    }
+}
+
+
+/**
+ * Super dirty way to hide some navigation items
+ */
+
+$hidden-top-nav-sections: (science, education);
+
+@each $section in $hidden-top-nav-sections {
+    .top-navigation [data-link-name='nav : primary : #{$section}'] {
+        display: none;
     }
 }
