@@ -866,16 +866,3 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
         }
     }
 }
-
-
-/**
- * Super dirty way to hide some navigation items
- */
-
-$hidden-top-nav-sections: (science, education);
-
-@each $section in $hidden-top-nav-sections {
-    .top-navigation [data-link-name='nav : primary : #{$section}'] {
-        display: none;
-    }
-}

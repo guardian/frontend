@@ -1,7 +1,6 @@
 package common.editions
 
 import org.joda.time.DateTimeZone
-import model._
 import common._
 import contentapi.QueryDefaults
 import common.NavItem
@@ -22,7 +21,8 @@ object Au extends Edition(id = "AU", displayName = "Australia edition", DateTime
     NavItem(football, aLeague :: footballNav.toList),
     NavItem(technology, Seq(games)),
     NavItem(culture, Seq(film, music, books, televisionAndRadio , artanddesign, stage)),
-    NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, fashion)),
+    NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
+    NavItem(fashion),
     NavItem(economy, Seq(markets, companies, money)),
     NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
     NavItem(science),
@@ -39,7 +39,8 @@ object Au extends Edition(id = "AU", displayName = "Australia edition", DateTime
     NavItem(football, aLeague :: footballNav.toList),
     NavItem(technology, Seq(games)),
     NavItem(culture, Seq(film, music, books, televisionAndRadio , artanddesign, stage)),
-    NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, fashion)),
+    NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
+    NavItem(fashion),
     NavItem(economy, Seq(markets, companies, money)),
     NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
     NavItem(science),
