@@ -128,6 +128,7 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
     logger.step("I can Pick a comment to be Featured")
     CommentModule().getLatestComment().pickComment()
     //Assert if Picked comment is now featured
+
     this
   }
 

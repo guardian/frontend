@@ -1,9 +1,11 @@
 package com.gu.discussion.page
 
 import com.gu.automation.support.Config
+import com.gu.automation.support.page.Element
 import com.gu.discussion.support.ByExt
 import org.openqa.selenium.{WebDriver}
 import org.openqa.selenium.By._
+import Element._
 
 
 case class UserProfilePage(implicit driver: WebDriver) {
@@ -47,8 +49,8 @@ case class UserProfilePage(implicit driver: WebDriver) {
   }
 
   def waitForUserHistoryToLoad() = {
-    if (activityItemTitle.safeGet.map(_.isDisplayed) != Some(true)
-      && activityStreamEmpty.safeGet.map(_.isDisplayed) != Some(true)) {
+    if (elementOption(activityItemTitle).map(_.isDisplayed) != Some(true)
+      && elementOption(activityStreamEmpty).map(_.isDisplayed) != Some(true)) {
       throw new RuntimeException("Content not loaded!")
     }
     this
