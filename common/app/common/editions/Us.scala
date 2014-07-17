@@ -6,24 +6,10 @@ import model.MetaData
 import contentapi.QueryDefaults
 import common.NavItem
 
-object Us extends Edition(
-  id = "US",
-  displayName = "US edition",
-  timezone = DateTimeZone.forID("America/New_York")
-  ) with Zones with QueryDefaults {
+object Us extends Edition(id = "US", displayName = "US edition", timezone = DateTimeZone.forID("America/New_York"))
+  with Zones with QueryDefaults {
 
   implicit val US = Us
-  val zones = Seq(
-    newsZone,
-    sportsZone,
-    cifZone,
-    cultureZone,
-    technologyZone,
-    businessZone,
-    moneyZone,
-    lifeandstyleZone,
-    travelZone
-  )
 
   def navigation: Seq[NavItem] = Seq(
     NavItem(home),
