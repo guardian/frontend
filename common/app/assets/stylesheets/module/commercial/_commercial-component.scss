@@ -170,6 +170,11 @@ $commercial-cta-diameter: (
                 display: block;
             }
         }
+        @include mq($from: leftCol, $to: wide) {
+            .i-bookshop-logo--bookshop {
+                margin-left: 0;
+            }
+        }
         .commercial--v-high__head {
             clear: both;
             border-top: 1px solid $c-neutral3;
