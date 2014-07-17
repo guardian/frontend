@@ -336,6 +336,7 @@
     float: left;
 
     @include rem((
+        padding-top: 2px,
         margin-right: $gs-gutter/2
     ));
 
@@ -354,7 +355,7 @@
 
     .top-nav__item {
         @include rem((
-            padding: $gs-baseline/2 $gs-gutter 0 $gs-gutter/2
+            padding: 2px+$gs-baseline/2 $gs-gutter 0 $gs-gutter/2
         ));
         margin: 0;
     }
