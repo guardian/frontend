@@ -564,10 +564,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
     .top-navigation {
         @include mq(navigationBreakOnTwoLevels) {
             @include box-sizing(border-box);
-            @include rem((
-                min-width: gs-span(12),
-                padding-right: $new-navigation-toggler-width-full + $gs-gutter
-            ));
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
         }
     }
     .top-navigation__item:last-child {
