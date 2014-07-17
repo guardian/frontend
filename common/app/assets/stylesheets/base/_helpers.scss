@@ -22,13 +22,6 @@
         display: none !important;
     }
 }
-
-.tablet-only {
-    @include mq(tablet) {
-        display: none !important;
-    }
-}
-
 .hide-on-mobile {
     display: none !important;
 
@@ -41,6 +34,20 @@
 
     @include mq(tablet) {
         display: inline !important;
+    }
+}
+
+.tablet-only {
+    @include mq($to: mobile) {
+        display: none !important;
+    }
+    @include mq(desktop) {
+        display: none !important;
+    }
+}
+.hide-on-tablet {
+    @include mq(mobile, desktop) {
+        display: none !important;
     }
 }
 
