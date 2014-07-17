@@ -9,13 +9,13 @@ import org.openqa.selenium.By._
 
 case class UserProfilePage(implicit driver: WebDriver) {
 
-  private def commentsTab = driver element ByExt.dataTypeStream("discussions")
-  private def repliesTab = driver element ByExt.dataTypeStream("replies")
-  private def featuredTab = driver element ByExt.dataTypeStream("picks")
-  private def profileName = driver element className("user-profile__name")
-  private def activityItemTitle = driver element className("user-profile__name")
-  private def activityStreamEmpty = driver element className("user-profile__name")
-  private def activitySearch = driver element id("activity-stream-search")
+  private def commentsTab = driver findElement ByExt.dataTypeStream("discussions")
+  private def repliesTab = driver findElement ByExt.dataTypeStream("replies")
+  private def featuredTab = driver findElement ByExt.dataTypeStream("picks")
+  private def profileName = driver findElement className("user-profile__name")
+  private def activityItemTitle = driver findElement className("user-profile__name")
+  private def activityStreamEmpty = driver findElement className("user-profile__name")
+  private def activitySearch = driver findElement id("activity-stream-search")
 
   def getUserProfileName = {
     val userProfileName = profileName.getText()

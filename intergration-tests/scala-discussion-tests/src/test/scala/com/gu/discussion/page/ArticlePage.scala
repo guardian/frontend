@@ -1,14 +1,14 @@
 package com.gu.discussion.page
 
 import com.gu.automation.support.Config
-import com.gu.automation.support.page.Element._
+import com.gu.automation.support.page.PageCompanion
 import com.gu.discussion.support.ByExt
 import org.openqa.selenium.{By, WebDriver}
 
 case class ArticlePage(implicit driver: WebDriver) {
 
-  private def commentCountLabel = driver element (By.cssSelector("div.content__main-column.content__main-column--article div.js-comment-count a.js-show-discussion"))
-  private def showAllCommentsLink = driver element (ByExt.dataLinkName("View all comments"))
+  private def commentCountLabel = driver findElement (By.cssSelector("div.content__main-column.content__main-column--article div.js-comment-count a.js-show-discussion"))
+  private def showAllCommentsLink = driver findElement (ByExt.dataLinkName("View all comments"))
 
   def goToStartOfComments(): ArticlePage = {
 
@@ -28,13 +28,12 @@ case class ArticlePage(implicit driver: WebDriver) {
 
 }
 
-object ArticlePage {
+object ArticlePage extends PageCompanion[ArticlePage] {
 
-  def goto()(implicit driver: WebDriver) = {
-    driver.get(Config().getTestBaseUrl() + Config().getUserValue("testArticlePath"))
-    ArticlePage()
-  }
+  override val relativeUrl = Config().getUserValue("testArticlePath")
 
-
+  override def makePage(implicit driver: WebDriver) = ArticlePage()
 
 }
+
+

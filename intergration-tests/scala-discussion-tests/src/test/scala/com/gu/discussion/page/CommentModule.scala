@@ -9,18 +9,18 @@ import org.openqa.selenium.By._
 
 case class CommentModule(implicit driver: WebDriver, logger: TestLogger) {
 
-  private val startOfComments = driver element cssSelector(".d-discussion .d-discussion__pagination .pagination")
+  private val startOfComments = driver findElement cssSelector(".d-discussion .d-discussion__pagination .pagination")
   private def showMoreFeaturedCommeLink = driver element className("show-more__container--featured")
   private def showAllCommentsButton = driver element className("d-discussion__show-all-comments")
   private def commentTextArea = driver element className("d-comment-box__body")
   private def postYourCommentButton = driver element className("d-comment-box__submit")
   private def cancelButton = driver element className("d-comment-box__cancel")
   private def sortOrderControl = driver element cssSelector(".discussion__comments > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > select:nth-child(1)")
-  private def nextPageControl = startOfComments element cssSelector(".pagination__item--next " +
+  private def nextPageControl = startOfComments findElement cssSelector(".pagination__item--next " +
     ".pagination__item-inner")
-  private def previousPageControl = startOfComments element cssSelector(".pagination__item--prev .pagination__item-inner")
-  private def firstPageControl = startOfComments element cssSelector(".pagination__item--first .pagination__item-inner")
-  private def lastPageControl = startOfComments element cssSelector(".pagination__item--last .pagination__item-inner")
+  private def previousPageControl = startOfComments findElement cssSelector(".pagination__item--prev .pagination__item-inner")
+  private def firstPageControl = startOfComments findElement cssSelector(".pagination__item--first .pagination__item-inner")
+  private def lastPageControl = startOfComments findElement cssSelector(".pagination__item--last .pagination__item-inner")
   private def showMoreRepliesButton = driver element className("d-show-more-replies")
   private def commentsLoading = driver element cssSelector(".discussion__comments__container .preload-msg.d-discussion__loader.u-h")
 
@@ -39,8 +39,8 @@ case class CommentModule(implicit driver: WebDriver, logger: TestLogger) {
     this
   }
 
-  def addNewComment(): CommentModule = {
-    commentTextArea.sendKeys("This is a test comment - lorem ipsum dolor sit amet")
+  def addNewComment(newCommentText :String): CommentModule = {
+    commentTextArea.sendKeys(newCommentText)
     this
   }
 

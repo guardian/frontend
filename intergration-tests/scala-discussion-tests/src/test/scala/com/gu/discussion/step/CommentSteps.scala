@@ -9,19 +9,19 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
 
   def iAmSignedInAsAMember() = {
     logger.step("I am Staff user and signed into NGW")
-    logInToGUPage(ArticlePage.goto, Some("memberLogin"))
+    logInToGUPage(()=>ArticlePage.goto(), Some("memberLogin"))
     CommentSteps()
   }
 
   def iAmSignedInAsStaff() = {
     logger.step("I am Registered Member and signed into NGW")
-    logInToGUPage(ArticlePage.goto)
+    logInToGUPage(()=>ArticlePage.goto())
     CommentSteps()
   }
 
   def iAmAGuestUser(): CommentSteps = {
     logger.step("I am Guest user to NGW")
-    ArticlePage.goto
+    ArticlePage.goto()
     this
   }
 
@@ -37,26 +37,30 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
     this
   }
 
+  private val newCommentText: String = "This is a test comment - lorem ipsum dolor sit amet"
+
   def iCanPostANewComment() = {
     logger.step("I can post a new comment")
     val module = CommentModule()
-    module.addNewComment()
+    module.addNewComment(newCommentText)
     module.postNewComment()
 
     val newComment = CommentItem().getLatestCommentText()
 
-    newComment should be("This is a test comment - lorem ipsum dolor sit amet")
+    newComment should be(newCommentText)
     this
   }
+
+  private val newReplyText: String = "This is a test reply - Please ignonre"
 
   def iCanPostANewReply() = {
     logger.step("I can post a new reply")
     CommentModule().showAllComments()
-    CommentItem().replyToComment()
+    CommentItem().replyToComment(newReplyText)
     CommentItem().postReply()
 
     val newReply = CommentItem().getLatestCommentsLatestReply()
-    newReply should be("Test reply please ignore - lorem ipsum dolor sit amet")
+    newReply should be(newReplyText)
     this
   }
 
