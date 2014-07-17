@@ -8,8 +8,6 @@
 $new-navigation-toggler-width: 48px;
 $new-navigation-toggler-width-full: 130px;
 
-$c-new-navigation-base: #2479c3;
-
 $theme: default;
 
 $c-navigation-background: mix($c-new-navigation-base, #ffffff, 80%);
@@ -22,7 +20,6 @@ $c-top-navigation-action: #ffffff;
 $c-top-navigation-background: guss-colour(guardian-brand);
 
 $c-local-navigation-background: $c-new-navigation-base;
-$c-local-navigation-action: #ffffff;
 
 $c-local-navigation-parent-background: guss-colour(guardian-brand);
 

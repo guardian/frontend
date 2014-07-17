@@ -275,6 +275,10 @@ object Switches extends Collections {
     sellByDate = new DateMidnight(2014, 10, 30)
   )
 
+  val GuardianServicesLinksSwitch = Switch("Feature Switches", "guardian-services-links",
+    "If this switch is switched on then Jobs and Soulmates links will be displayed on page headers",
+    safeState = Off,sellByDate = new DateMidnight(2014, 8, 12))
+
   val ResponsiveNavSwitch = Switch("Feature Switches", "responsive-nav",
     "If this switch is turned on then the new responsive navigation will be displayed.",
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 22)
@@ -479,6 +483,7 @@ object Switches extends Collections {
     WorldCupArticleContainerSwitch,
     ProfileCommentsSearchSwitch,
     SentimentalCommentsSwitch,
+    GuardianServicesLinksSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,
@@ -498,7 +503,8 @@ object Switches extends Collections {
 
   val httpSwitches: List[Switch] = List(
     ResponsiveNavSwitch,
-    NewNavigationHighlightingSwitch
+    NewNavigationHighlightingSwitch,
+    GuardianServicesLinksSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
