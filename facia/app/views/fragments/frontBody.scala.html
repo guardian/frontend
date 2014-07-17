@@ -1,4 +1,6 @@
-@(faciaPage: FaciaPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(faciaPage: model.FaciaPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+
+@import views.support.RenderClasses
 @import common.Edition
 
 @if(faciaPage.collections.nonEmpty) {
