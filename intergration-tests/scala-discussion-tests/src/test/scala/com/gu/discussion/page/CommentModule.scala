@@ -1,28 +1,33 @@
 package com.gu.discussion.page
 
 import com.gu.automation.support.TestLogger
-import com.gu.automation.support.page.Element._
-import com.gu.automation.support.page.{Element, Wait}
-import org.openqa.selenium.support.ui.{ExpectedConditions, Select}
-import org.openqa.selenium.WebDriver
+import com.gu.automation.support.page.Element
 import org.openqa.selenium.By._
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.support.ui.Select
+import Element._
 
-case class CommentModule(implicit driver: WebDriver, logger: TestLogger) {
+case class CommentModule(implicit driver: WebDriver, logger: TestLogger) extends Support {
 
+  private val latestComment = driver findElement cssSelector(".discussion__comments__container .d-comment")
   private val startOfComments = driver findElement cssSelector(".d-discussion .d-discussion__pagination .pagination")
-  private def showMoreFeaturedCommeLink = driver element className("show-more__container--featured")
-  private def showAllCommentsButton = driver element className("d-discussion__show-all-comments")
-  private def commentTextArea = driver element className("d-comment-box__body")
-  private def postYourCommentButton = driver element className("d-comment-box__submit")
-  private def cancelButton = driver element className("d-comment-box__cancel")
-  private def sortOrderControl = driver element cssSelector(".discussion__comments > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > select:nth-child(1)")
+  private def showMoreFeaturedCommeLink = driver findElement className("show-more__container--featured")
+  private def showAllCommentsButton = driver findElement className("d-discussion__show-all-comments")
+  private def commentTextArea = driver findElement className("d-comment-box__body")
+  private def postYourCommentButton = driver findElement className("d-comment-box__submit")
+  private def cancelButton = driver findElement className("d-comment-box__cancel")
+  private def sortOrderControl = driver findElement cssSelector(".discussion__comments > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > select:nth-child(1)")
   private def nextPageControl = startOfComments findElement cssSelector(".pagination__item--next " +
     ".pagination__item-inner")
   private def previousPageControl = startOfComments findElement cssSelector(".pagination__item--prev .pagination__item-inner")
   private def firstPageControl = startOfComments findElement cssSelector(".pagination__item--first .pagination__item-inner")
   private def lastPageControl = startOfComments findElement cssSelector(".pagination__item--last .pagination__item-inner")
-  private def showMoreRepliesButton = driver element className("d-show-more-replies")
-  private def commentsLoading = driver element cssSelector(".discussion__comments__container .preload-msg.d-discussion__loader.u-h")
+  private def showMoreRepliesButton = driver findElement className("d-show-more-replies")
+  private def commentsLoading = driver findElement cssSelector(".discussion__comments__container .preload-msg.d-discussion__loader.u-h")
+
+  def getLatestComment(): CommentItem = {
+    CommentItem(latestComment)
+  }
 
   def showAllReplies(): CommentModule = {
     showMoreRepliesButton.click()
@@ -39,21 +44,14 @@ case class CommentModule(implicit driver: WebDriver, logger: TestLogger) {
     this
   }
 
-  def addNewComment(newCommentText :String): CommentModule = {
+  def addNewComment(newCommentText: String): CommentModule = {
     commentTextArea.sendKeys(newCommentText)
     this
   }
 
-  def postNewComment(): CommentModule = {
+  def postNewComment(): CommentItem = {
     postYourCommentButton.click()
-
-    //Ugly hack to wait for URL to change
-    var retries = 10
-    while (!driver.getCurrentUrl().contains("#comment-") && retries > 0) {
-      Thread.sleep(500)
-      retries = retries - 1
-    }
-    this
+    waitForNewCommentItem
   }
 
   def cancelNewComment(): CommentModule = {
@@ -102,7 +100,9 @@ case class CommentModule(implicit driver: WebDriver, logger: TestLogger) {
 
   def waitForCommentsToLoad() = {
     //Need this wait for the page to reload/refresh which is actioned with javascript
-    commentsLoading.waitGet()
+    waitGet(commentsLoading)
   }
 
 }
+
+

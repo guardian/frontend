@@ -1,7 +1,6 @@
 package com.gu.discussion.page
 
 import com.gu.automation.support.Config
-import com.gu.automation.support.page.Element._
 import com.gu.discussion.support.ByExt
 import org.openqa.selenium.{WebDriver}
 import org.openqa.selenium.By._

@@ -43,9 +43,9 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
     logger.step("I can post a new comment")
     val module = CommentModule()
     module.addNewComment(newCommentText)
-    module.postNewComment()
+    val newcommmentItem =  module.postNewComment()
 
-    val newComment = CommentItem().getLatestCommentText()
+    val newComment = newcommmentItem.getCommentText()
 
     newComment should be(newCommentText)
     this
@@ -55,25 +55,28 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
 
   def iCanPostANewReply() = {
     logger.step("I can post a new reply")
-    CommentModule().showAllComments()
-    CommentItem().replyToComment(newReplyText)
-    CommentItem().postReply()
+    val commentModule = CommentModule()
+      commentModule.showAllComments()
+    val latestComment = commentModule.getLatestComment()
+    latestComment.replyToComment(newReplyText)
 
-    val newReply = CommentItem().getLatestCommentsLatestReply()
-    newReply should be(newReplyText)
+    val newReplyItem = latestComment.postReply()
+
+    val newReply = newReplyItem.getCommentText()
+    newReply should be (newReplyText)
     this
   }
 
   def iCanReportAComment() = {
     logger.step("I can report a comment")
-    CommentItem().reportComment()
+    CommentModule().getLatestComment().reportComment()
     this
   }
 
   def iCanViewUserCommentHistory() = {
     logger.step("I can view a users profile comment history")
-    val originatingAuthor = CommentItem().getCommentAuthor()
-    val userHistory = CommentItem().viewUserHistory()
+    val originatingAuthor = CommentModule().getLatestComment().getCommentAuthor()
+    val userHistory = CommentModule().getLatestComment().viewUserHistory()
     val userProfileName: String = userHistory.getUserProfileName
 
     userProfileName should be(originatingAuthor)
@@ -113,7 +116,7 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
 
   def iCanRecommendAComment() = {
     logger.step("I can recommend a comment")
-    val recommendCommentCount = CommentItem().recommendComment()
+    val recommendCommentCount = CommentModule().getLatestComment().recommendComment()
 
     (recommendCommentCount._1, recommendCommentCount._2)
 
@@ -123,7 +126,7 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
 
   def iCanPickAComment() = {
     logger.step("I can Pick a comment to be Featured")
-    CommentItem().pickComment()
+    CommentModule().getLatestComment().pickComment()
     //Assert if Picked comment is now featured
     this
   }
