@@ -106,13 +106,13 @@ define(['common/utils/$',
             self.display = true;
             self.getElem('TIER').innerHTML = resp.subscription.plan.name;
             self.getElem('COST').innerHTML = self.formatAmount(resp.subscription.plan.amount);
-            self.getElem('JOIN').innerHTML = self.formatDate(new Date(Date.parse(resp.joinDate)));
+            self.getElem('JOIN').innerHTML = self.formatDate(new Date(resp.joinDate));
 
             if (resp.tier === 'Partner' || resp.tier === 'Patron') {
 
                 $(self.getElem('TAB_DETAILS_LIST_LOWER'), self.context).removeClass('is-hidden');
 
-                self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end * 1000));
+                self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end));
                 self.getElem('CC_LAST4').innerHTML = resp.subscription.card.last4;
 
                 self.currentCardTypeClass = 'i-' + resp.subscription.card.type.toLowerCase().replace(' ', '-');
@@ -166,7 +166,7 @@ define(['common/utils/$',
         var self = this;
         self.form.$cont.removeClass(self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_OPENED', true)).addClass(self.getClass('ANIM_CLOSE', true));
         self.form.$button.removeClass('membership-tab__update-button--muted')
-            .text('Change');
+            .text('Change card');
     };
 
     /** @override */

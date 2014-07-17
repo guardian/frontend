@@ -138,15 +138,12 @@
                         edition: config.page.edition,
                         contentType: config.page.contentType,
                         buildNumber: config.page.buildNumber
+                    },
+                    shouldSendCallback: function(data) {
+                        return Math.random() < 0.1;
                     }
                 }
             ).install();
-
-            @* see https://github.com/getsentry/raven-js/blob/master/plugins/require.js *@
-            if (typeof define === 'function' && define.amd) {
-                define = raven.wrap({deep: false}, define);
-                require = raven.wrap({deep: false}, require);
-            }
 
             if (guardian.config.switches.commercial) {
 

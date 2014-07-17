@@ -4,25 +4,10 @@ import common._
 import org.joda.time.DateTimeZone
 import model.MetaData
 
-
-object Uk extends Edition(
-  id = "UK",
-  displayName = "UK edition",
-  timezone = DateTimeZone.forID("Europe/London")
-  ) with Zones {
+object Uk extends Edition(id = "UK", displayName = "UK edition", timezone = DateTimeZone.forID("Europe/London"))
+  with Zones {
 
   implicit val UK = Uk
-  val zones = Seq(
-    newsZone,
-    sportZone,
-    cifZone,
-    cultureZone,
-    technologyZone,
-    businessZone,
-    moneyZone,
-    lifeandstyleZone,
-    travelZone
-  )
 
   def navigation: Seq[NavItem] = Seq(
     NavItem(home),
