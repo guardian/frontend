@@ -23,6 +23,12 @@
     }
 }
 
+.tablet-only {
+    @include mq(tablet) {
+        display: none !important;
+    }
+}
+
 .hide-on-mobile {
     display: none !important;
 
