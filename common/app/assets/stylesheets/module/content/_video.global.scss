@@ -148,7 +148,49 @@
             float: left;
         }
     }
+
+    .most-viewed-video-container {
+        border-top: 1px solid $c-mediaDefault;
+    }
+
+    .most-viewed-video-container__header {
+        h3 {
+            @include fs-header(1);
+            position: relative;
+            @include rem((
+                top: $gs-baseline/4
+            ));
+        }
+
+        @include rem((
+            height: gs-height(1) + $gs-baseline
+        ));
+    }
+
+    .most-viewed-video__action {
+        display: block;
+        @include rem((
+            height: gs-height(3) + 18px,
+            margin-bottom: $gs-baseline
+        ));
+        h4 {
+            @include f-headline;
+            @include font-size(14, 18);
+            @include text-clamp(3, 18px);
+            color: $c-neutral5;
+        }
+    }
+
+    .most-viewed-video li:nth-child(3n + 2),
+    .most-viewed-video li:nth-child(3n + 3) {
+        border-top: 1px solid $c-mediaDefault;
+        @include rem((
+            padding-top: $gs-baseline * 2/3
+        ));
+    }
 }
+
+@include guss-columns('.most-viewed-video', $column-min-width: gs-span(2));
 
 .content-footer--video {
     @include rem((
