@@ -13,7 +13,7 @@ object Uk extends Edition(id = "UK", displayName = "UK edition", timezone = Date
     NavItem(home),
     NavItem(uk),
     NavItem(world, Seq(europeNews, us, americas, asia, australia, africa, middleEast)),
-    NavItem(sport, Seq(football, worldCup, rugbyunion, rugbyLeague, cricket, tennis, cycling, boxing, usSport, formulaOne)),
+    NavItem(sport, Seq(football, rugbyunion, rugbyLeague, cricket, tennis, cycling, boxing, usSport, formulaOne)),
     NavItem(football, footballNav),
     NavItem(cif),
     NavItem(culture, Seq(film, televisionAndRadio, music, books, artanddesign, stage)),
