@@ -70,7 +70,7 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
     }
   }
 
-  private def doIfSwitchedOn(action: => Future[Seq[T]]): Future[Seq[T]] = {
+  def doIfSwitchedOn(action: => Future[Seq[T]]): Future[Seq[T]] = {
     if (switch.isSwitchedOn) {
       action
     } else {

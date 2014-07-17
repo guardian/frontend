@@ -23,12 +23,14 @@ GET           /commercial                controllers.FaciaToolController.collect
 GET           /editorial/config          controllers.FaciaToolController.configEditor(priority="editorial")
 GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
 
-GET           /publish-all               controllers.FaciaToolController.publishAll()
-GET           /publish-all/comet         controllers.FaciaToolController.publishAllStream()
+GET           /publish-all               controllers.ContentApiPressController.publishAll()
+GET           /publish-all/comet         controllers.ContentApiPressController.publishAllStream()
 
 POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
 POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
-POST          /collection/update/*id     controllers.FaciaToolController.updateCollection(id)
+
+POST          /press/live/*path          controllers.FaciaToolController.pressLivePath(path)
+POST          /press/draft/*path         controllers.FaciaToolController.pressDraftPath(path)
 
 GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
 

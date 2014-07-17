@@ -14,30 +14,35 @@ GET         /ab.gif                                                             
 GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
 
+# Analytics
+GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
+GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET         /analytics/commercial                                                                                    controllers.admin.CommercialController.renderCommercial()
+GET         /analytics/commercial/sponsorships                                                                       controllers.admin.CommercialController.renderSponsorships()
+GET         /analytics/commercial/pageskins                                                                          controllers.admin.CommercialController.renderPageskins()
+GET         /analytics/commercial/surging                                                                            controllers.admin.CommercialController.renderSurgingContent()
+
 # Discussion
 GET         /discussion/comment-box.json                                                                             controllers.DiscussionApp.commentBox()
+
 GET         /discussion/comment-counts                                                                               controllers.DiscussionApp.commentCount(shortUrls: String)
 GET         /discussion/comment-counts.json                                                                          controllers.DiscussionApp.commentCountJson(shortUrls: String)
+
 GET         /discussion/comment/*id.json                                                                             controllers.DiscussionApp.commentJson(id: Int)
 GET         /discussion/comment/*id                                                                                  controllers.DiscussionApp.comment(id: Int)
 
-GET         /discussion/comment-permalink/*order/*commentId.json                                                     controllers.DiscussionApp.commentPermalinkJson(commentId: Int, order: String)
-GET         /discussion/comment-permalink/*order/*commentId                                                          controllers.DiscussionApp.commentPermalink(commentId: Int, order: String)
-
-GET         /discussion/top/*discussionKey.json                                                                      controllers.DiscussionApp.topCommentsJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/top/*discussionKey                                                                           controllers.DiscussionApp.topComments(discussionKey: discussion.model.DiscussionKey)
+GET         /discussion/comment-context/*commentId.json                                                              controllers.DiscussionApp.commentContextJson(commentId: Int)
 
 GET         /discussion/non-threaded/$discussionKey</?p/\w+>.json                                                    controllers.DiscussionApp.commentsListJson(discussionKey: discussion.model.DiscussionKey)
 GET         /discussion/non-threaded/$discussionKey</?p/\w+>                                                         controllers.DiscussionApp.commentsList(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey, order: String = "newest")
-GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>.json                                         controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey, order: String)
-GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String = "newest")
-GET         /discussion/$order<(oldest|newest)>/$discussionKey</?p/\w+>                                              controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey, order: String)
+GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey)
+GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey)
 
 GET         /discussion/profile/:id/search/:q.json                                                                   controllers.DiscussionApp.profileSearch(id: String, q: String)
 GET         /discussion/profile/:id/discussions.json                                                                 controllers.DiscussionApp.profileDiscussions(id: String)
 GET         /discussion/profile/:id/replies.json                                                                     controllers.DiscussionApp.profileReplies(id: String)
 GET         /discussion/profile/:id/picks.json                                                                       controllers.DiscussionApp.profilePicks(id: String)
+GET         /discussion/profile/:id/witness.json                                                                     controllers.WitnessActivityController.witnessActivity(id: String)
 
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
 
@@ -141,10 +146,8 @@ GET         /ophan/pageviews/*path                                              
 GET         /ophan/pageviews                                                                                         controllers.admin.OphanApiController.platformPageViews()
 GET         /dev/switchboard                                                                                         controllers.admin.SwitchboardController.renderSwitchboard()
 POST        /dev/switchboard                                                                                         controllers.admin.SwitchboardController.save()
-GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
 GET         /metrics/loadbalancers                                                                                   controllers.admin.DashboardController.renderDashboard()
 GET         /metrics/googlebot/404                                                                                   controllers.admin.DashboardController.renderGooglebot404s()
-GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /metrics/fastly                                                                                          controllers.admin.FastlyController.renderFastly()
 GET         /metrics/errors                                                                                          controllers.admin.DashboardController.renderErrors()
 GET         /metrics/errors/4xx                                                                                      controllers.admin.DashboardController.render4XX()
@@ -236,10 +239,6 @@ GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer           
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                  controllers.AllIndexController.allOn(path, day, month, year)
 GET        /$path<.+>/all                                                                                            controllers.AllIndexController.all(path)
 
-
-# Applications
-GET         /sections                                                                                                controllers.SectionsController.renderSections()
-GET         /sections.json                                                                                           controllers.SectionsController.renderSectionsJson()
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")

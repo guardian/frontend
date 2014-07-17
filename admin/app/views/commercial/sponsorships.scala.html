@@ -10,9 +10,9 @@
 <h3>Sponsored Tags</h3>
 <p>Last updated: @sponsoredTags.updatedTimeStamp</p>
 <ol>
-    @for(tag <- sponsoredTags.sponsorships) {
-    <li>@{tag.tags.mkString(", ")}@{tag.sponsor.map(sponsor =>
-        <small>[sponsored by <b>@sponsor</b>]</small>
+    @for(sponsorship <- sponsoredTags.sponsorships) {
+    <li>@{sponsorship.tags.mkString(", ")}@{sponsorship.sponsor.map(sponsor =>
+        <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[sponsored by <b>{sponsor}</b>]</small>
         )}
     </li>
     }
@@ -22,9 +22,9 @@
 <p>Last updated: @advertisementTags.updatedTimeStamp</p>
 
 <ol>
-    @for(tag <- advertisementTags.sponsorships) {
-    <li>@{tag.tags.mkString(", ")}@{tag.sponsor.map(sponsor =>
-        <small>[sponsored by <b>@sponsor</b>]</small>
+    @for(sponsorship <- advertisementTags.sponsorships) {
+    <li>@{sponsorship.tags.mkString(", ")}@{sponsorship.sponsor.map(sponsor =>
+        <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[sponsored by <b>{sponsor}</b>]</small>
         )}
     </li>
     }

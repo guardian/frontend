@@ -1,4 +1,31 @@
-define([
+require([
+    // 3rd party libs
+    'raven',
+    'lodash/arrays/compact',
+    'lodash/arrays/first',
+    'lodash/arrays/flatten',
+    'lodash/arrays/last',
+    'lodash/arrays/uniq',
+    'lodash/arrays/zip',
+    'lodash/chaining/wrapperValueOf',
+    'lodash/collections/every',
+    'lodash/collections/filter',
+    'lodash/collections/forEach',
+    'lodash/collections/map',
+    'lodash/collections/max',
+    'lodash/collections/pluck',
+    'lodash/collections/sortBy',
+    'lodash/objects/clone',
+    'lodash/objects/functions',
+    'lodash/objects/isArguments',
+    'lodash/objects/isArray',
+    'lodash/objects/isString',
+    'lodash/objects/mapValues',
+    'lodash/objects/values',
+    'lodash/utilities/mixin',
+
+    // utilities
+    'common/utils/_',
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/atob',
@@ -19,5 +46,12 @@ define([
     'common/utils/time',
     'common/utils/to-array',
     'common/utils/url',
-    'common/utils/userTiming'
+    'common/utils/userTiming',
+
+    // shared modules
+    'common/modules/commercial/user-ad-targeting',
+    'common/modules/commercial/dfp',
+    'common/modules/component',
+    'common/modules/lazyload',
+    'common/modules/ui/tabs'
 ], function() {});

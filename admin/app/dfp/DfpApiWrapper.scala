@@ -1,11 +1,10 @@
 package dfp
 
+import com.google.api.ads.dfp.axis.factory.DfpServices
 import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
-import com.google.api.ads.dfp.axis.v201403.{LineItem => DfpApiLineItem}
-import common.Logging
 import com.google.api.ads.dfp.lib.client.DfpSession
-import com.google.api.ads.dfp.axis.factory.DfpServices
+import common.Logging
 
 object DfpApiWrapper extends Logging {
 
@@ -46,13 +45,27 @@ object DfpApiWrapper extends Logging {
     try {
       fetch(Nil)
     } catch {
+
+      case e: ApiException =>
+        e.getErrors foreach { err =>
+          val reasonMsg = err match {
+            case freqCapErr: FrequencyCapError => s", with the reason '${freqCapErr.getReason}'"
+            case notNullErr: NotNullError => s", with the reason '${notNullErr.getReason}'"
+            case _ => ""
+          }
+          log.error(s"API Exception fetching: type '${err.getApiErrorType}', on the field '${err.getFieldPath}', " +
+            s"caused by an invalid value '${err.getTrigger}', with the error message '${err.getErrorString}'" +
+            reasonMsg)
+        }
+        Nil
+
       case e: Exception =>
-        log.error(s"Exception fetching: $e")
+        log.error(s"Exception fetching: ${e.getMessage}")
         Nil
     }
   }
 
-  def fetchLineItems(session: DfpSession, statementBuilder: StatementBuilder): Seq[DfpApiLineItem] = {
+  def fetchLineItems(session: DfpSession, statementBuilder: StatementBuilder): Seq[LineItem] = {
     fetch(statementBuilder) { statement =>
       val service = lineItemService(session)
       val page = service.getLineItemsByStatement(statementBuilder.toStatement)
@@ -84,7 +97,7 @@ object DfpApiWrapper extends Logging {
     }
   }
 
-  def fetchAdUnitTargetingObjects(session: DfpSession, statementBuilder: StatementBuilder): Seq[AdUnit] = {
+  def fetchAdUnits(session: DfpSession, statementBuilder: StatementBuilder): Seq[AdUnit] = {
     fetch(statementBuilder) { statement =>
       val service = inventoryService(session)
       val page = service.getAdUnitsByStatement(statementBuilder.toStatement)

@@ -6,7 +6,6 @@ import akka.agent.Agent
 import common._
 import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey}
 import model.{Config, Tag}
-import play.api.libs.json.Json._
 import play.api.{Application, GlobalSettings}
 import services.S3
 
@@ -14,11 +13,11 @@ import scala.io.Codec.UTF8
 
 trait DfpAgent {
 
-  protected def sponsoredTags: Seq[Sponsorship]
-  protected def advertisementFeatureTags: Seq[Sponsorship]
+  protected def sponsorships: Seq[Sponsorship]
+  protected def advertisementFeatureSponsorships: Seq[Sponsorship]
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
-  private def containerSponsoredTags(config: Config, p: String => Boolean): Option[String] = {
+  private def containerSponsoredTag(config: Config, p: String => Boolean): Option[String] = {
     config.contentApiQuery.flatMap { encodedQuery =>
       val query = URLDecoder.decode(encodedQuery, "utf-8")
       val tokens = query.split( """\?|&|=|\(|\)|\||\,""").map(_.replaceFirst(".*/", ""))
@@ -27,38 +26,50 @@ trait DfpAgent {
   }
 
   private def isSponsoredContainer(config: Config, p: String => Boolean): Boolean = {
-    containerSponsoredTags(config, p).isDefined
+    containerSponsoredTag(config, p).isDefined
   }
 
-  def isSponsored(tags: Seq[Tag]): Boolean = tags.exists(keyword => isSponsored(keyword.id))
-  def isSponsored(tagId: String): Boolean = sponsoredTags exists (_.hasTag(tagId))
+  private def getPrimaryKeywordOrSeriesTag(tags: Seq[Tag]): Option[Tag] = tags find { tag =>
+    (tag.tagType == "keyword" && !tag.isSectionTag) || tag.tagType == "series"
+  }
+
+  def isSponsored(tags: Seq[Tag]): Boolean = getPrimaryKeywordOrSeriesTag(tags) exists (tag => isSponsored(tag.id))
+  def isSponsored(tagId: String): Boolean = sponsorships exists (_.hasTag(tagId))
   def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
 
-  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = tags.exists(keyword => isAdvertisementFeature(keyword.id))
-  def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureTags exists (_.hasTag(tagId))
+  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = getPrimaryKeywordOrSeriesTag(tags) exists (tag => isAdvertisementFeature(tag.id))
+  def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
-  def isPageSkinned(adUnitWithoutRoot: String) = {
-    val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
-    pageSkinSponsorships exists (_.adUnits contains adUnitWithRoot)
+  def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
+    if (adUnitWithoutRoot endsWith "front") {
+      val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
+
+      pageSkinSponsorships.exists { sponsorship =>
+        sponsorship.adUnits.contains(adUnitWithRoot) &&
+          (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id))
+      }
+    } else {
+      false
+    }
   }
 
   def sponsorshipTag(config: Config): Option[String] = {
-    containerSponsoredTags(config, isSponsored) orElse {
-      containerSponsoredTags(config, isAdvertisementFeature)
-    }
+    containerSponsoredTag(config, isSponsored) orElse containerSponsoredTag(config, isAdvertisementFeature)
   }
 
-  def getSponsor(tags: Seq[Tag]): Option[String] = {
-    tags match {
-      case head :: tail => getSponsor(head.id) orElse getSponsor(tail)
-      case Nil => None
-    }
-  }
+  def getSponsor(tags: Seq[Tag]): Option[String] = getPrimaryKeywordOrSeriesTag(tags) flatMap (tag => getSponsor(tag.id))
 
   def getSponsor(tagId: String): Option[String] = {
-    def sponsor(tags: Seq[Sponsorship]) = tags.find(_.hasTag(tagId)).flatMap(_.sponsor)
-    sponsor(sponsoredTags) orElse sponsor(advertisementFeatureTags)
+    def sponsorOf(sponsorships: Seq[Sponsorship]) = sponsorships.find(_.hasTag(tagId)).flatMap(_.sponsor)
+    sponsorOf(sponsorships) orElse sponsorOf(advertisementFeatureSponsorships)
+  }
+
+  def getSponsor(config: Config): Option[String] = {
+    for {
+      tagId <- sponsorshipTag(config)
+      sponsor <- getSponsor(tagId)
+    } yield sponsor
   }
 }
 
@@ -69,20 +80,20 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
   private lazy val advertisementFeatureTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
 
-  protected def sponsoredTags: Seq[Sponsorship] = sponsoredTagsAgent get()
-  protected def advertisementFeatureTags: Seq[Sponsorship] = advertisementFeatureTagsAgent get()
+  protected def sponsorships: Seq[Sponsorship] = sponsoredTagsAgent get()
+  protected def advertisementFeatureSponsorships: Seq[Sponsorship] = advertisementFeatureTagsAgent get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
 
   def refresh() {
 
-    def stringFromS3(key: String) = S3.get(key)(UTF8)
+    def stringFromS3(key: String): Option[String] = S3.get(key)(UTF8)
 
     def grabSponsorshipsFromStore(key: String): Seq[Sponsorship] = {
       val reportOption: Option[SponsorshipReport] = for {
         jsonString <- stringFromS3(key)
         report <- SponsorshipReportParser(jsonString)
       } yield report
-      
+
       reportOption.fold(Seq[Sponsorship]())(_.sponsorships)
     }
 
@@ -95,7 +106,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
       reportOption.fold(Seq[PageSkinSponsorship]())(_.sponsorships)
     }
 
-    def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) = {
+    def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) {
       agent sendOff { oldData =>
         if (freshData.nonEmpty) {
           freshData

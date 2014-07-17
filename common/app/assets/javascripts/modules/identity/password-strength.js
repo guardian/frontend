@@ -1,16 +1,16 @@
 define([
-    'common/utils/common',
+    'lodash/objects/assign',
     'bonzo',
     'bean'
 ], function (
-    common,
+    assign,
     bonzo,
     bean
 ) {
 
     function PasswordStrength(el, context, config) {
 
-        config = common.extend({
+        config = assign({
             text: {
                 label: 'Password strength',
                 'long': 'Password too long',

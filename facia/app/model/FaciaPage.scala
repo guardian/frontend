@@ -27,11 +27,12 @@ case class FaciaPage(
 
   val isNetworkFront: Boolean = Edition.all.exists(edition => id.toLowerCase.endsWith(edition.id.toLowerCase))
 
-  override lazy val contentType: String =   if (isNetworkFront) "Network Front" else "Section"
+  override lazy val contentType: String =   if (isNetworkFront) GuardianContentTypes.NETWORK_FRONT else GuardianContentTypes.SECTION
 
   override def isSponsored = DfpAgent.isSponsored(id)
   override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
-  override lazy val hasPageSkin = DfpAgent.isPageSkinned(adUnitSuffix)
+  override def sponsor = DfpAgent.getSponsor(id)
+  override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 }
 
 object FaciaPage {

@@ -1,4 +1,5 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@import common.Edition
 
 <div class="@RenderClasses(Map(
         "facia-container" -> true,
@@ -6,9 +7,12 @@
         "facia-container--sponsored" -> index.page.isSponsored,
         "facia-container--advertisement-feature" -> (index.page.isAdvertisementFeature && !index.page.isSponsored)))"
     data-link-name="Front | @request.path"
+    @index.page.sponsor.map { sponsor =>
+        data-sponsor="@sponsor"
+    }
     role="main">
 
-    @if(index.page.hasPageSkin) {
+    @if(index.page.hasPageSkin(Edition(request))) {
         @fragments.commercial.pageSkin()
     }
 
@@ -18,7 +22,5 @@
         @fragments.footballNav(index.page)
     </section>
 
-    @if(!index.page.hasPageSkin) {
-        @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
-    }
+    @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
 </div>

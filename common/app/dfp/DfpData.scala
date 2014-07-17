@@ -1,6 +1,8 @@
 package dfp
 
-case class Target(name: String, op: String, values: Seq[String]) {
+import org.joda.time.DateTime
+
+case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   def isPositive(targetName: String) = name == targetName && op == "IS"
 
@@ -14,8 +16,8 @@ case class Target(name: String, op: String, values: Seq[String]) {
 }
 
 
-case class TargetSet(op: String, targets: Seq[Target]) {
-  def filterTags(bySlotType: Target => Boolean) ={
+case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
+  def filterTags(bySlotType: CustomTarget => Boolean) = {
     if (targets exists bySlotType) {
       targets.filter(_.isTag).flatMap(_.values).distinct
     } else Nil
@@ -27,9 +29,26 @@ case class TargetSet(op: String, targets: Seq[Target]) {
 }
 
 
-case class LineItem(id: Long, sponsor: Option[String], targetSets: Seq[TargetSet]) {
+case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name: String)
 
-  val sponsoredTags = targetSets.flatMap(_.sponsoredTags).distinct
 
-  val advertisementFeatureTags = targetSets.flatMap(_.advertisementFeatureTags).distinct
+case class GuAdUnit(id: String, path: Seq[String])
+
+
+case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargets: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet])
+
+
+case class GuLineItem(id: Long,
+                      name: String,
+                      startTime: DateTime,
+                      endTime: Option[DateTime],
+                      isPageSkin: Boolean,
+                      sponsor: Option[String],
+                      targeting: GuTargeting) {
+
+  val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
+
+  val sponsoredTags: Seq[String] = targeting.customTargetSets.flatMap(_.sponsoredTags).distinct
+
+  val advertisementFeatureTags: Seq[String] = targeting.customTargetSets.flatMap(_.advertisementFeatureTags).distinct
 }

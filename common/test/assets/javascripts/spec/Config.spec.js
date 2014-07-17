@@ -1,4 +1,4 @@
-define(['fixtures/config', 'common/utils/config'], function(testConfigData, config) {
+define(['common/utils/config'], function(config) {
 
     describe('Page Config', function() {
         

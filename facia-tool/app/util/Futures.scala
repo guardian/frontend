@@ -1,8 +1,9 @@
 package util
 
+import common.ExecutionContexts
+
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
-import common.ExecutionContexts
 
 object Futures extends ExecutionContexts {
   implicit class RichFuture[A](future: Future[A]) {

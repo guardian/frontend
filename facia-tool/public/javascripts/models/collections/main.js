@@ -52,9 +52,11 @@ define([
 
         model.front = ko.observable();
 
-        model.liveMode = vars.state.liveMode;
+        model.title = ko.computed(function() {
+            return model.front() || (pageConfig.priority + ' fronts');
+        }, this);
 
-        model.frontSparkUrl = ko.observable();
+        model.liveMode = vars.state.liveMode;
 
         model.latestArticles = new LatestArticles({
             filterTypes: vars.CONST.filterTypes
@@ -93,48 +95,59 @@ define([
                 '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
-        function detectPressFailure() {
-            model.statusPressFailure(false);
+        model.detectPressFailureCount = 0;
+
+        model.deferredDetectPressFailure = _.debounce(function () {
+            var count;
 
             if (model.switches()['facia-tool-check-press-lastmodified'] && model.front()) {
+                model.statusPressFailure(false);
+
+                count = ++model.detectPressFailureCount;
+
                 authedAjax.request({
                     url: '/front/lastmodified/' + model.front()
                 })
                 .always(function(resp) {
                     var lastPressed;
 
-                    if (resp.status !== 200) { return; }
-                    lastPressed = new Date(resp.responseText);
-                    if (isValidDate(lastPressed)) {
-                        model.statusPressFailure(
-                            _.some(model.collections(), function(collection) {
-                                var l = new Date(collection.state.lastUpdated());
-                                return isValidDate(l) ? l > lastPressed : false;
-                            })
-                        );
+                    if (model.detectPressFailureCount === count && resp.status === 200) {
+                        lastPressed = new Date(resp.responseText);
+
+                        if (isValidDate(lastPressed)) {
+                            model.statusPressFailure(
+                                _.some(model.collections(), function(collection) {
+                                    var l = new Date(collection.state.lastUpdated());
+                                    return isValidDate(l) ? l > lastPressed : false;
+                                })
+                            );
+                        }
                     }
                 });
             }
-        }
+        }, vars.CONST.detectPressFailureMs || 10000);
 
-        var deferredDetectPressFailure = _.debounce(detectPressFailure, vars.CONST.detectPressFailureMs || 10000);
-
-        function pressFront() {
+        model.pressLiveFront = function () {
             model.statusPressFailure(false);
-
             if (model.front()) {
                 authedAjax.request({
-                    url: '/collection/update/' + model.collections()[0].id,
+                    url: '/press/live/' + model.front(),
                     method: 'post'
                 })
                 .always(function() {
-                    deferredDetectPressFailure();
+                    model.deferredDetectPressFailure();
                 });
             }
-        }
+        };
 
-        model.deferredDetectPressFailure = deferredDetectPressFailure;
-        model.pressFront = pressFront;
+        model.pressDraftFront = function () {
+            if (model.front()) {
+                authedAjax.request({
+                    url: '/press/draft/' + model.front(),
+                    method: 'post'
+                });
+            }
+        };
 
         function getFront() {
             return queryParams().front;
@@ -143,7 +156,8 @@ define([
         function loadCollections(frontId) {
             model.collections(
                 ((vars.state.config.fronts[frontId] || {}).collections || [])
-                .filter(function(id){ return vars.state.config.collections[id]; })
+                .filter(function(id) { return vars.state.config.collections[id]; })
+                .filter(function(id) { return !vars.state.config.collections[id].uneditable; })
                 .map(function(id){
                     return new Collection(
                         _.extend(
@@ -161,14 +175,6 @@ define([
                     );
                 })
             );
-            showFrontSpark();
-        }
-
-        function showFrontSpark() {
-            model.frontSparkUrl(undefined);
-            if (model.switches()['facia-tool-sparklines']) {
-                model.frontSparkUrl(vars.sparksBaseFront + getFront());
-            }
         }
 
         var startCollectionsPoller = _.once(function() {
@@ -192,7 +198,6 @@ define([
                         list.refreshSparklines();
                     }, index * period / (model.collections().length || 1)); // stagger requests
                 });
-                showFrontSpark();
             }, period);
         });
 
@@ -253,6 +258,10 @@ define([
                     }
                     wasPopstate = false;
                     loadCollections(front);
+
+                    if (!model.liveMode()) {
+                        model.pressDraftFront();
+                    }
                 });
 
                 model.liveMode.subscribe(function() {
@@ -260,6 +269,10 @@ define([
                         collection.closeAllArticles();
                         collection.populate();
                     });
+
+                    if (!model.liveMode()) {
+                        model.pressDraftFront();
+                    }
                 });
 
                 updateScrollables();

@@ -28,24 +28,29 @@ define([
             counter = 0,
             container = document.querySelector('.latest-articles');
 
-        this.articles   = ko.observableArray();
+        this.articles = ko.observableArray();
 
-        this.term       = ko.observable(queryParams().q || '');
-        this.suggestions= ko.observableArray();
+        this.term = ko.observable(queryParams().q || '');
+        this.term.subscribe(function() { self.search(); });
+        this.isTermAnItem = function() { return (self.term() || '').match(/\//); };
 
         this.filter     = ko.observable();
         this.filterType = ko.observable();
         this.filterTypes= ko.observableArray(_.values(opts.filterTypes) || []);
 
-        this.page       = ko.observable(1);
-
-        this.isTermAnItem = function() {
-            return (self.term() || '').match(/\//);
+        this.showingDrafts = ko.observable(false);
+        this.showDrafts = function() {
+            self.showingDrafts(true);
+            self.search();
+        };
+        this.showLive = function() {
+            self.showingDrafts(false);
+            self.search();
         };
 
-        this.term.subscribe(function(){
-            self.search();
-        });
+        this.suggestions = ko.observableArray();
+
+        this.page = ko.observable(1);
 
         this.setFilter = function(item) {
             self.filter(item && item.id ? item.id : item);
@@ -83,6 +88,10 @@ define([
 
             opts = opts || {};
 
+            if (!vars.model.switches()['facia-tool-draft-content']) {
+                self.showingDrafts(false);
+            }
+
             clearTimeout(deBounced);
             deBounced = setTimeout(function(){
 
@@ -99,9 +108,10 @@ define([
                     propName = 'content';
                 } else {
                     url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';
+                    url += '&content-set=' + (self.showingDrafts() ? 'preview&use-date=last-modified' : 'web-live');
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
-                    url += self.term() ? '&q=' + encodeURIComponent(self.term()) : '';
+                    url += self.term() ? '&q=' + encodeURIComponent(self.term().trim().replace(/ +/g,' AND ')) : '';
                     url += '&' + self.filterType().param + '=' + encodeURIComponent(self.filter());
                     propName = 'results';
                 }
@@ -109,16 +119,22 @@ define([
                 authedAjax.request({
                     url: url
                 }).then(function(data) {
-                    var rawArticles = data.response && data.response[propName] ? data.response[propName] : [];
+                    var rawArticles = data.response && data.response[propName] ? [].concat(data.response[propName]) : [];
 
                     if (count !== counter) { return; }
 
                     self.flush(rawArticles.length === 0 ? '...sorry, no articles were found.' : '');
 
-                    ([].concat(rawArticles)).forEach(function(article) {
-                        article.id = internalContentCode(article);
+                   _.chain(rawArticles)
+                    .filter(function(article) { return article.fields && article.fields.headline; })
+                    .each(function(article) {
+                        var icc = internalContentCode(article);
+
+                        article.id = icc;
+                        article.uneditable = true;
+
+                        cache.put('contentApi', icc, article);
                         self.articles.push(new Article(article));
-                        cache.put('contentApi', article.id, article);
                     });
                 });
             }, 300);
@@ -135,6 +151,12 @@ define([
         this.refresh = function() {
             self.page(1);
             self.search();
+        };
+
+        this.reset = function() {
+            self.page(1);
+            this.clearTerm();
+            this.clearFilter();
         };
 
         this.pageNext = function() {

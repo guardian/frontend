@@ -1,5 +1,6 @@
 @(page: MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
+@import dev.HttpSwitch
 @import org.joda.time.DateTime
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
@@ -15,12 +16,8 @@
                     <a class="top top--footer" data-link-name="back to top" href="#top">Back to top<i class="i i-arrow-small-up"></i></a>
                 </div>
             </div>
-            <div class="gs-container l-footer__navigation-wrapper u-cf">
-                @if(ResponsiveNavSwitch.isSwitchedOn){
-                    @fragments.nav.megaNav(page)
-                } else {
-                    @fragments.sections(page, true)
-                }
+            <div class="@if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOff){gs-container }l-footer__navigation-wrapper u-cf">
+                @fragments.sections(page, true)
             </div>
         </div>
     </div>

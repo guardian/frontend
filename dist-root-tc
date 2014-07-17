@@ -4,14 +4,14 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-./grunt-tc clean validate:js test:unit compile emitAbTestInfo
+./grunt-tc clean validate test:unit compile emitAbTestInfo
 ./sbt-tc "project root" compile test dist
 
 echo "Disting everything."
 rm -rf "dist"
 
 configurations="admin applications archive article commercial diagnostics discussion "\
-"facia facia-tool identity image onward preview router sport"
+"facia facia-tool facia-press identity image onward preview router sport"
 
 for config in $configurations
 do

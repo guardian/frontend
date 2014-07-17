@@ -1,8 +1,8 @@
-@(offers: Seq[model.commercial.travel.Offer])(implicit request: RequestHeader)
+@(offers: Seq[model.commercial.travel.TravelOffer])(implicit request: RequestHeader)
 
 @import conf.Configuration
 
-@defining(("2_0", "2014-04-29")) { case (version, date) =>
+@defining(("2_1", "2014-07-04")) { case (version, date) =>
     <div class="commercial commercial--low commercial--travel">
         <div class="facia-container__inner">
             <div class="container__title commercial__head">

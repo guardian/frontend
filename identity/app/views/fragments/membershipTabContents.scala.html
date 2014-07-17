@@ -11,10 +11,10 @@
                 <p class="form-field__note">Your membership tier plan</p>
             </div>
 
-            <div class="fieldset__fields">
+            <div class="fieldset__fields u-cf">
                 <div class="form-field">
                     <span class="js-membership-tier"></span>
-                    <a href="@(conf.Configuration.id.membershipUrl)/tier/change" class="submit-input membership-tab__update-button">Change</a>
+                    <a href="@(conf.Configuration.id.membershipUrl)/tier/change" class="submit-input membership-tab__update-button">Change tier</a>
                 </div>
             </div>
         </li>
@@ -27,7 +27,9 @@
             </div>
 
             <div class="fieldset__fields">
-                <span class="js-membership-start-date"></span>
+                <div class="form-field">
+                    <span class="js-membership-join-date"></span>
+                </div>
             </div>
         </li>
         <li>
@@ -39,9 +41,13 @@
             </div>
 
             <div class="fieldset__fields">
-                <span class="membership-tab__currency">£</span><span class="js-membership-payment-cost"></span>
+                <div class="form-field">
+                    <span class="membership-tab__currency">£</span><span class="membership-payment-cost js-membership-payment-cost"></span>
+                </div>
             </div>
         </li>
+    </ul>
+    <ul class="is-hidden u-unstyled membership-tab__details-list membership-tab__details-list--lower js-membership-details-list-lower">
         <li>
             <div class="fieldset__heading">
                 <h2 class="form__heading">
@@ -51,7 +57,9 @@
             </div>
 
             <div class="fieldset__fields">
-                <span class="js-membership-payment-next"></span>
+                <div class="form-field">
+                    <span class="js-membership-payment-next"></span>
+                </div>
             </div>
         </li>
         <li>
@@ -62,10 +70,12 @@
                 <p class="form-field__note">The card that will be used for your next payment</p>
             </div>
 
-            <div class="fieldset__fields">
-                <span class="js-membership-card-type membership-tab__card-types"><span class="js-membership-card-text u-h"></span></span>
-                <span class="membership-tab__card-details js-membership-card-details">&#8226;&#8226;&#8226;&#8226;&nbsp;&#8226;&#8226;&#8226;&#8226;&nbsp;&#8226;&#8226;&#8226;&#8226;&nbsp;<span class="js-membership-card-lastfour"></span></span>
-                <button class="submit-input js-membership-change-cc-open membership-tab__update-button">Change</button>
+            <div class="fieldset__fields u-cf">
+                <div class="form-field">
+                    <span class="js-membership-card-type membership-tab__card-types"><span class="js-membership-card-text u-h"></span></span>
+                    <span class="membership-tab__card-details js-membership-card-details">&#8226;&#8226;&#8226;&#8226;&nbsp;&#8226;&#8226;&#8226;&#8226;&nbsp;&#8226;&#8226;&#8226;&#8226;&nbsp;<span class="js-membership-card-lastfour"></span></span>
+                    <button class="submit-input js-membership-change-cc-open membership-tab__update-button">Change card</button>
+                </div>
             </div>
         </li>
         <li class="membership-tab__change-cc-form-cont js-membership-change-cc-form-cont">
@@ -122,5 +132,4 @@
             </form>
         </li>
     </ul>
-
 </div>

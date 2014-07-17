@@ -371,8 +371,25 @@
     .tabs__tab {
         @include rem((
             max-width: gs-span(3),
-            width: 33.3%
+            width: 25%
         ));
+    }
+
+    @include mq($to: tablet) {
+        a {
+            @include rem((
+                padding-top: $gs-baseline/4,
+                line-height: 13px !important
+            ));
+        }
+    }
+    @include mq($to: 500px) {
+        .tabs__tab {
+            @include rem((
+                width: 50%,
+                margin-top: 5px
+            ));
+        }
     }
 }
 
@@ -387,6 +404,81 @@
     }
 }
 
+.activity-stream__witness-contributions {
+    @include rem((
+        padding-top: $gs-baseline*2
+    ));
+}
+
+.activity-stream__witness-item {
+    @include rem((
+        width: 292px,
+        margin-right: $gs-gutter/2,
+        margin-bottom: $gs-baseline
+    ));
+    display: inline-block;
+    vertical-align: top;
+    @include fs-textsans(1);
+
+    a {
+        text-decoration: none;
+    }
+}
+.activity-stream__witness-img {
+    width: 100%;
+    @include rem((
+        height: 250px
+    ));
+    @include background-size(cover);
+}
+
+.activity-stream__witness-meta {
+    background-color: $c-neutral8;
+    border: 1px solid $c-neutral4;
+    border-top: 0;
+    text-align: right;
+    @include fs-textsans(1);
+    @include rem((
+        padding: $gs-baseline 0
+    ));
+
+    .activity-stream__witness-meta-inner {
+        @include rem((
+            margin: 0 $gs-gutter
+        ));
+        color: $c-neutral1;
+    }
+}
+.activity-stream__witness-content {
+    border: 1px solid $c-neutral4;
+    border-top: 0;
+    @include rem((
+        line-height: 14px
+    ));
+}
+.activity-stream__witness-content:hover {
+    background: $c-neutral6;
+    @include transition(.3s all);
+}
+.activity-stream__witness-text {
+    @include rem((
+        margin: $gs-baseline/2 $gs-gutter,
+        min-height: 100px
+    ));
+    display: block;
+}
+.activity-stream__witness-title {
+    @include rem((
+        margin-bottom: $gs-baseline/4
+    ));
+    color: $c-neutral1;
+    @include fs-textsans(4);
+}
+.activity-stream__witness-description {
+    color: $c-neutral2;
+    @include fs-textsans(2);
+}
+
 /* Edit profile Membership tab
    ========================================================================== */
 
@@ -398,104 +490,161 @@
     }
 }
 
-.membership-tab__details-list {
+.membership-tab {
 
     @include rem((
-        padding: $gs-baseline*2 0 $gs-baseline*2 0
+        padding-bottom: $gs-baseline*2
     ));
 
-    li {
+    .membership-tab__details-list {
+
         @include rem((
-            margin-bottom: $gs-baseline
+            padding-top: $gs-baseline*2
         ));
 
-        .membership-tab__card-details {
+        li {
             @include rem((
-                padding: 8px 4px 8px 12px
+                margin-bottom: $gs-baseline
+            ));
+
+            .membership-tab__card-details {
+                @include rem((
+                    padding: 8px 4px 8px 12px
+                ));
+            }
+
+            .membership-tab__upgrade {
+                margin: 0;
+            }
+        }
+
+        .membership-tab__card-types {
+            display: inline-block;
+            @include rem((
+                height: 35px,
+                width: 54px
+            ));
+            vertical-align: middle;
+        }
+
+        .membership-tab__update-button {
+            display: block;
+            box-sizing: box-sizing();
+            @include rem((
+                width: 120px,
+                margin: $gs-baseline/2 0 0 0
+            ));
+
+            @include mq(tablet) {
+                float: right;
+                margin: 0;
+            }
+
+            &:hover,
+            &:active,
+            &:focus {
+                text-decoration: none;
+            }
+        }
+
+        .membership-payment-cost {
+            text-transform: uppercase;
+        }
+
+        .membership-tab__update-button--muted {
+            background: none;
+            color: $c-newsDefault;
+
+            &:hover,
+            &:focus {
+                background: none;
+                text-decoration: underline;
+            }
+            &:active {
+                color: $c-newsAccent;
+            }
+        }
+    }
+
+    .membership-tab__details-list--lower {
+        padding-top: 0;
+    }
+
+    .membership-tab__change-cc-form-cont {
+        display: none;
+        overflow: hidden;
+        height: auto;
+
+        .form__error {
+            @include rem((
+                margin: 0 0 $gs-baseline 0
             ));
         }
 
-        .membership-tab__upgrade {
-            margin: 0;
+        .is-updating {
+            vertical-align: middle;
+            margin-top: 0;
+        }
+
+        &.membership-tab__change-cc-form-cont--to-open {
+            display: block;
+            @include animation(mem-tab-to-open .25s ease-in-out);
+        }
+        &.membership-tab__change-cc-form-cont--open {
+            display: block;
+
+            @include mq(tablet) {
+                @include rem((max-height: 350px));
+            }
+            opacity: 1;
+        }
+
+        &.membership-tab__change-cc-form-cont--to-closed {
+            display: block;
+            max-height: 0;
+            opacity: 0;
+            @include animation(mem-tab-to-closed .25s ease-in-out forwards);
+        }
+        &.membership-tab__change-cc-form-cont--closed {
+            display: none;
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .membership-tab__updated {
+            @include animation(updated 1s ease-in-out forwards);
+        }
+
+        /* Stripe credit card types
+           ========================================================================== */
+
+        $small-card: 32px;
+        $large-card: 35px;
+
+        .membership-tab__credit-card-container {
+            position: relative;
+        }
+
+        .membership-tab__card-types--in-field {
+            position: absolute;
+            @include rem((
+                right: 2px,
+                top: 2px,
+                width: 54px,
+                height: $large-card
+            ));
+        }
+
+        @include mq(tablet) {
+            .membership-tab__card-types--in-field {
+                @include rem((
+                    width: 49px !important,
+                    height: $small-card !important
+                ));
+                @include background-size(49px $small-card);
+            }
         }
     }
-
-    .membership-tab__card-types {
-        display: inline-block;
-        @include rem((
-            height: 35px,
-            width: 54px
-        ));
-        vertical-align: middle;
-    }
-
-    .membership-tab__update-button {
-        @include rem((
-            min-width: 120px,
-            width: 120px
-        ));
-        float: right;
-        box-sizing: border-box;
-        &:hover,
-        &:active,
-        &:focus {
-            text-decoration: none;
-        }
-    }
-
-    .membership-tab__update-button--muted {
-        background: none;
-        color: $c-newsDefault;
-        &:hover,
-        &:focus {
-            background: none;
-            text-decoration: underline;
-        }
-        &:active {
-            color: $c-newsAccent;
-        }
-    }
-}
-
-.membership-tab__change-cc-form-cont {
-    display: none;
-    overflow: hidden;
-    height: auto;
-
-    .form__error {
-        @include rem((
-            margin: 0 0 $gs-baseline 0
-        ));
-    }
-
-    .is-updating {
-        vertical-align: middle;
-        margin-top: 0;
-    }
-
-    &.membership-tab__change-cc-form-cont--to-open {
-        display: block;
-        @include animation(mem-tab-to-open .25s ease-in-out forwards);
-    }
-    &.membership-tab__change-cc-form-cont--open {
-        display: block;
-        @include rem((max-height: 350px));
-        opacity: 1;
-    }
-
-    &.membership-tab__change-cc-form-cont--to-closed {
-        display: block;
-        @include animation(mem-tab-to-closed .25s ease-in-out forwards);
-    }
-    &.membership-tab__change-cc-form-cont--closed {
-        display: none;
-        max-height: 0;
-        opacity: 0;
-    }
-}
-
-.membership-tab__updated {
-    @include animation(updated 1s ease-in-out forwards);
 }
 
 /* Membership Keyframe animations
@@ -507,14 +656,22 @@
         opacity: 0;
     }
     100% {
-        @include rem((max-height: 350px));
         opacity: 1;
+        @include rem((max-height: 424px));
+
+        @include mq(tablet) {
+            @include rem((max-height: 350px));
+        }
     }
 }
 
 @include keyframes('mem-tab-to-closed') {
     0% {
-        @include rem((max-height: 350px));
+        @include rem((max-height: 424px));
+
+        @include mq(tablet) {
+            @include rem((max-height: 350px));
+        }
         opacity: 1;
     }
     100% {
@@ -531,33 +688,5 @@
     100% {
         background-color: #ffffff;
         color: inherit;
-    }
-}
-
-/* Stripe credit card types
-   ========================================================================== */
-
-$small-card: 32px;
-$large-card: 35px;
-
-.membership-tab__credit-card-container {
-    position: relative;
-}
-
-.membership-tab__card-types--in-field {
-    position: absolute;
-    @include rem((
-        right: 2px,
-        top: 2px,
-        width: 54px,
-        height: $large-card
-    ));
-}
-
-@include mq(tablet) {
-    .membership-tab__card-types--in-field {
-        width: 49px !important;
-        height: $small-card !important;
-        @include background-size(49px $small-card);
     }
 }

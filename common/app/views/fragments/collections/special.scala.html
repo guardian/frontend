@@ -1,4 +1,4 @@
-@(items: Seq[Trail], style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
+@(items: Seq[model.Trail], style: views.support.Container, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
 
 <div class="facia-slice-wrapper">
     <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
@@ -11,14 +11,8 @@
     @if(items.nonEmpty) {
         <div class="linkslist-container js-container--show-more tone-@{style.tone}" data-tone="@style.tone">
             <ul class="l-columns linkslist">
-                @items.zipWithIndex.map{ case (trail, index) =>
-                    @trail match {
-                        case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 4, Some("boost")) }
-                        case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 4, Some("boost")) }
-                        case v: Video                        => { @fragments.items.linksList.video(v, index + 4, Some("boost")) }
-                        case c if c.visualTone == "comment"  => { @fragments.items.linksList.comment(c, index + 4, Some("boost")) }
-                        case t                               => { @fragments.items.linksList.standard(t, index + 4, Some("boost")) }
-                    }
+                @items.zipWithIndex.map { case (trail, index) =>
+                    @fragments.items.linksList.trail(trail, index + 4, Some("boost"))
                 }
             </ul>
         </div>
