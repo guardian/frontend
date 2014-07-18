@@ -6,6 +6,7 @@ define([
     'common/utils/config',
     'common/utils/deferToAnalytics',
     'common/utils/url',
+    'common/modules/ui/images',
     'common/modules/commercial/dfp',
     'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
@@ -19,6 +20,7 @@ define([
     config,
     deferToAnalytics,
     urlUtils,
+    images,
     dfp,
     OmnitureMedia,
     _throttle,
@@ -257,9 +259,12 @@ define([
             });
         },
         initMoreInSection: function() {
-            var section = new Component();
+            var section = new Component(),
+                parentEl = $('.js-onward')[0];
             section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
-            section.fetch($('.js-onward')[0]);
+            section.fetch(parentEl).then(function() {
+                images.upgrade(parentEl);
+            });
         }
     };
 

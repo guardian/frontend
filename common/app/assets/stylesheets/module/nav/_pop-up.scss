@@ -82,7 +82,7 @@
 
     @include mq(tablet) {
         right: auto;
-        top: -1px;
+        top: 0;
         border: 1px solid $c-neutral4;
 
         @include rem((
@@ -101,9 +101,9 @@
 .nav-popup--profile {
     @include mq(tablet) {
         right: auto;
-        top: -1px;
+        top: 0;
         @include rem((
-            left: 319px,
+            left: 321px,
             width: gs-span(3)
         ));
     }
