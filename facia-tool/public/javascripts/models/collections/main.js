@@ -9,12 +9,13 @@ define([
     'utils/update-scrollables',
     'utils/terminate',
     'utils/is-valid-date',
+    'modules/droppable',
     'modules/authed-ajax',
     'models/group',
-    'models/collections/droppable',
     'models/collections/collection',
     'models/collections/article',
-    'models/collections/latest-articles'
+    'models/collections/latest-articles',
+    'models/collections/new-items'
 ], function(
     pageConfig,
     ko,
@@ -25,12 +26,13 @@ define([
     updateScrollables,
     terminate,
     isValidDate,
+    droppable,
     authedAjax,
     Group,
-    droppable,
     Collection,
     Article,
-    LatestArticles
+    LatestArticles,
+    newItems
 ) {
 
     return function() {
@@ -212,8 +214,6 @@ define([
         });
 
         this.init = function() {
-            droppable.init();
-
             fetchSettings(function (config, switches) {
                 var fronts;
 
@@ -285,8 +285,8 @@ define([
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
             });
+
+            droppable(newItems);
         };
-
     };
-
 });

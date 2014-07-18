@@ -378,6 +378,16 @@ h1 {
     opacity: 0.5;
 }
 
+.article .copy-paste {
+    display: none;
+}
+
+.article:hover .copy-paste {
+    display: inline-block;
+    color: #CCCCCC;
+    font-size: 12px;
+}
+
 a.headline {
     font-size: 14px;
     line-height: 16px;

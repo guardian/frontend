@@ -11,6 +11,7 @@ define([
     'models/group',
     'modules/authed-ajax',
     'modules/content-api',
+    'modules/list-manager',
     'knockout'
 ],
     function (
@@ -25,6 +26,7 @@ define([
         Group,
         authedAjax,
         contentApi,
+        listManager,
         ko
     ) {
         var storage = window.localStorage,
@@ -152,7 +154,7 @@ define([
         };
 
         Article.prototype.paste = function() {
-            //var sourceItem = storage.getItem(storageKeyCopied);
+
         };
 
         Article.prototype.overrider = function(key) {

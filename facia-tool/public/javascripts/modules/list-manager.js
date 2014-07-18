@@ -1,0 +1,66 @@
+/* global _: true */
+define([
+    'utils/url-abs-path',
+    'utils/remove-by-id'
+], function(
+    urlAbsPath,
+    removeById
+) {
+    /* params:
+        opts.id
+        opts.sourceItem
+        opts.sourceList (optional)
+
+        opts.targetItem (optional)
+        opts.targetList
+
+        opts.isAfter (optional)
+
+        opts.newItemsConstructor
+        opts.newItemsValidator
+        opts.newItemsPersister
+    */
+
+    function alertBadContent(id, msg) {
+        window.alert(msg ? msg + '. ' + id : 'Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
+    }
+
+    return function(opts) {
+        var position,
+            newItems,
+            insertAt;
+
+        position = opts.targetItem && _.isFunction(opts.targetItem.id) ? opts.targetItem.id() : undefined;
+
+        removeById(opts.targetList.items, urlAbsPath(opts.id));
+
+        insertAt = opts.targetList.items().indexOf(opts.targetItem) + (opts.isAfter || 0);
+        insertAt = insertAt === -1 ? opts.targetList.items().length : insertAt;
+
+        newItems = opts.newItemsConstructor(opts.id, opts.sourceItem, opts.targetList);
+
+        if (!newItems[0]) {
+            alertBadContent(opts.id, null);
+            return;
+        }
+
+        opts.targetList.items.splice(insertAt, 0, newItems[0]);
+
+        opts.newItemsValidator(newItems)
+        .fail(function(err) {
+            _.each(newItems, function(item) { opts.targetList.items.remove(item); });
+            alertBadContent(opts.id, err);
+        })
+        .done(function() {
+            if (_.isFunction(opts.targetList.reflow)) {
+                opts.targetList.reflow();
+            }
+
+            if (!opts.targetList.parent) {
+                return;
+            }
+
+            opts.newItemsPersister(newItems, opts.sourceList, opts.targetList, position, opts.isAfter);
+        });
+    };
+});

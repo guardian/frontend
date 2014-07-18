@@ -4,6 +4,7 @@ define([
     'knockout',
     'modules/vars',
     'modules/authed-ajax',
+    'modules/droppable',
     'utils/fetch-settings',
     'utils/update-scrollables',
     'utils/clean-clone',
@@ -11,15 +12,16 @@ define([
     'utils/find-first-by-id',
     'utils/terminate',
     'models/group',
-    'models/config/droppable',
     'models/config/front',
     'models/config/collection',
+    'models/config/new-items',
     'models/config/persistence'
 ], function(
     pageConfig,
     ko,
     vars,
     authedAjax,
+    droppable,
     fetchSettings,
     updateScrollables,
     cleanClone,
@@ -27,9 +29,9 @@ define([
     findFirstById,
     terminate,
     Group,
-    droppable,
     Front,
     Collection,
+    newItems,
     persistence
 ) {
     return function() {
@@ -143,7 +145,7 @@ define([
         }
 
         this.init = function() {
-            droppable.init();
+            droppable(newItems);
 
             persistence.registerCallback(function () {
                 bootstrap({

@@ -1,16 +1,14 @@
 /* global _: true */
 define([
     'knockout',
-    'utils/parse-query-params',
-    'utils/url-abs-path',
-    'utils/remove-by-id',
-    'models/group'
+    'models/group',
+    'modules/list-manager',
+    'utils/parse-query-params'
 ], function(
     ko,
-    parseQueryParams,
-    urlAbsPath,
-    removeById,
-    Group
+    Group,
+    listManager,
+    parseQueryParams
 ) {
 
     window.addEventListener('dragover', function(event) {
@@ -21,7 +19,7 @@ define([
         event.preventDefault();
     },false);
 
-    function droppable(opts) {
+    return function(opts) {
         var sourceList;
 
         ko.bindingHandlers.makeDropabble = {
@@ -112,7 +110,7 @@ define([
                     }
 
                     if (!id) {
-                        alertBadContent();
+                        window.alert('Sorry, you can\'t add that to a front');
                         return;
                     }
 
@@ -143,68 +141,10 @@ define([
                     opts.targetItem = targetItem;
                     opts.isAfter = isAfter;
 
-                    transferBetweenLists(opts);
+                    listManager(opts);
 
                 }, false);
             }
         };
-    }
-
-    /* params:
-        opts.id
-        opts.sourceList
-        opts.sourceItem
-        opts.targetList
-        opts.targetItem
-        opts.isAfter
-
-        opts.newItemsConstructor
-        opts.newItemsValidator
-        opts.newItemsPersister
-    */
-
-    function transferBetweenLists(opts) {
-        var position,
-            newItems,
-            insertAt;
-
-        position = opts.targetItem && _.isFunction(opts.targetItem.id) ? opts.targetItem.id() : undefined;
-
-        removeById(opts.targetList.items, urlAbsPath(opts.id));
-
-        insertAt = opts.targetList.items().indexOf(opts.targetItem) + (opts.isAfter || 0);
-        insertAt = insertAt === -1 ? opts.targetList.items().length : insertAt;
-
-        newItems = opts.newItemsConstructor(opts.id, opts.sourceItem, opts.targetList);
-
-        if (!newItems[0]) {
-            alertBadContent(opts.id, null);
-            return;
-        }
-
-        opts.targetList.items.splice(insertAt, 0, newItems[0]);
-
-        opts.newItemsValidator(newItems)
-        .fail(function(err) {
-            _.each(newItems, function(item) { opts.targetList.items.remove(item); });
-            alertBadContent(opts.id, err);
-        })
-        .done(function() {
-            if (_.isFunction(opts.targetList.reflow)) {
-                opts.targetList.reflow();
-            }
-
-            if (!opts.targetList.parent) {
-                return;
-            }
-
-            opts.newItemsPersister(newItems, opts.sourceList, opts.targetList, position, opts.isAfter);
-        });
-    }
-
-    function alertBadContent(id, msg) {
-        window.alert(msg ? msg + '. ' + id : 'Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
-    }
-
-    return droppable;
+    };
 });
