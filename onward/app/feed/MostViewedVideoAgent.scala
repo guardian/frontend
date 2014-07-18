@@ -19,7 +19,7 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
   def refresh() = {
     log.info("Refreshing most viewed video.")
 
-    val ophanResponse = services.OphanApi.getMostViewedVideos(hours = 6, count = 15)
+    val ophanResponse = services.OphanApi.getMostViewedVideos(hours = 3, count = 12)
 
     ophanResponse.map { result =>
 
