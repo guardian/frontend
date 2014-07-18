@@ -21,6 +21,4 @@ class PageSupport(implicit driver: WebDriver) {
     CommentItem(commentRootById(newReplyID))
   }
 
-
-
 }
