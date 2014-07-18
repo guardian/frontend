@@ -195,6 +195,17 @@
         }
     }
 
+    .most-viewed-video__headline:before {
+        content: '';
+        @include icon(video-icon);
+        @include background-size(auto 100%);
+        @include rem((
+            margin-right: $gs-gutter/4,
+            height: 12px !important,
+            width: 18px !important
+        ));
+    }
+
     .most-viewed-video__item {
         position: relative;
         @include rem((
@@ -210,7 +221,7 @@
         &:before {
             height: 1px;
             background-color: $c-mediaDefault;
-            content: ' ';
+            content: '';
             display: block;
             position: absolute;
             @include rem((
