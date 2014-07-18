@@ -150,9 +150,16 @@
         }
     }
 
+    .content__main-column--video {
+        @include rem((
+            min-height: 531px // The height of the 'most viewed' component
+        ));
+    }
+
     .content__secondary-column--video {
         @include rem((
-            padding-left: $gs-gutter/2
+            padding-left: $gs-gutter/2,
+            height: 531px
         ));
         border-left: 1px solid $c-neutral2;
     }
