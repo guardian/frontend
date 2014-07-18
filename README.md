@@ -146,21 +146,17 @@ grunt compile
 
 Start the Grunt build and watch for development changes (see the note on
 `grunt csdevmode` vs `grunt watch` [below](client-side-development)):
-
 ```
 grunt watch
 ```
 
-In another console, start Simple Build Tool (sbt). Note that you **must**
-start SBT with the supplied `sbt` script. *If you start SBT any other way the
-project will not run*:
+In another console, start Simple Build Tool (sbt) using the supplied `sbt`
+script. Note that if you start SBT any other way the project will not run.
 ```
 ./sbt
 ```
 
-It may take a while to start the first time.
-
-Once SBT is running (you'll know when you get a prompt), switch project by
+Once SBT is running (it may take a while to start the first time - you'll know when you get a prompt), switch project by
 typing `project dev-build
 `. Then compile and run the project locally by typing
 `run`. This also can take a while first time.
