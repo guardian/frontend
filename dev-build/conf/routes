@@ -47,7 +47,7 @@ GET         /discussion/profile/:id/witness.json                                
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
 
 
-# Core Navigation
+# Onward
 GET         /most-read                                                                                               controllers.MostPopularController.render(path = "")
 GET         /most-read.json                                                                                          controllers.MostPopularController.render(path = "")
 GET         /most-read/*path.json                                                                                    controllers.MostPopularController.renderJson(path)
@@ -69,6 +69,8 @@ GET         /preference/front-alphas/:optAction                                 
 
 GET         /cards/opengraph/*path.json                                                                              controllers.CardController.opengraph(path)
 GET         /tagged.json                                                                                             controllers.TaggedContentController.renderJson(tag: String)
+
+GET         /video/section/*sectionId.json                                                                           controllers.VideoInSectionController.renderSectionVideos(sectionId)
 
 # Sport
 GET         /sport/cricket/match/:matchId                                                                            controllers.CricketMatchController.renderMatchId(matchId)
