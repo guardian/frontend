@@ -56,6 +56,9 @@ object DfpDataCacheJob extends ExecutionContexts {
         val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
         Store.putInlineMerchandisingSponsorships(stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
 
+        val foundationSupported = data.foundationSupported
+        Store.putDfpFoundationSupportedTags(stringify(toJson(SponsorshipReport(now, foundationSupported))))
+
         val pageSkinSponsorships = data.pageSkinSponsorships
         Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
 
