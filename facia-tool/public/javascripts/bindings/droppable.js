@@ -150,6 +150,19 @@ define([
         };
     }
 
+    /* params:
+        opts.id
+        opts.sourceList
+        opts.sourceItem
+        opts.targetList
+        opts.targetItem
+        opts.isAfter
+
+        opts.newItemsConstructor
+        opts.newItemsValidator
+        opts.newItemsPersister
+    */
+
     function transferBetweenLists(opts) {
         var position,
             newItems,
@@ -159,7 +172,7 @@ define([
 
         removeById(opts.targetList.items, urlAbsPath(opts.id));
 
-        insertAt = opts.targetList.items().indexOf(opts.targetItem) + opts.isAfter;
+        insertAt = opts.targetList.items().indexOf(opts.targetItem) + (opts.isAfter || 0);
         insertAt = insertAt === -1 ? opts.targetList.items().length : insertAt;
 
         newItems = opts.newItemsConstructor(opts.id, opts.sourceItem, opts.targetList);

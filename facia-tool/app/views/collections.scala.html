@@ -370,6 +370,9 @@
                         attr: {href: id},
                         click: open"></a>
 
+                    <span data-bind="
+                        click: copy">clip</span>
+
                     <!-- ko if: meta.supporting && meta.supporting.items().length -->
                         <span class="count">(<span class="non-zero" data-bind="text: meta.supporting.items().length"></span>)</span>
                     <!-- /ko -->

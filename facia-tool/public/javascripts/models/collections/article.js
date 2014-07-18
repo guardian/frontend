@@ -26,7 +26,10 @@ define([
         authedAjax,
         contentApi,
         ko
-        ){
+    ) {
+        var storage = window.localStorage,
+            storageKeyCopied ='gu.fronts-tool.copied';
+
         function Article(opts) {
             var self = this;
 
@@ -141,6 +144,16 @@ define([
 
             this.setFrontPublicationTime();
         }
+
+        Article.prototype.copy = function() {
+            var self = this;
+
+            storage.setItem(storageKeyCopied, JSON.stringify(self.get()));
+        };
+
+        Article.prototype.paste = function() {
+            //var sourceItem = storage.getItem(storageKeyCopied);
+        };
 
         Article.prototype.overrider = function(key) {
             return ko.computed({
