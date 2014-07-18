@@ -151,6 +151,9 @@
                 }
             }
         }
+        .container__title-jobs .commercial__title span {
+            font-style: italic;
+        }
         .commercial__body {
             @include rem((
                 padding: $gs-baseline 0
