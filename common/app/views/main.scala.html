@@ -20,7 +20,6 @@
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
-            ("easter-egg-vive-la-france", HttpSwitch(ViveLaFranceEasterEggSwitch).isSwitchedOn),
             ("has-new-navigation", HttpSwitch(ResponsiveNavSwitch).isSwitchedOn),
             ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
         itemscope itemtype="http://schema.org/WebPage">

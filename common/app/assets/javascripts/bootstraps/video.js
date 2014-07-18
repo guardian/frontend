@@ -1,4 +1,3 @@
-/* jshint nonew: false */
 /* global videojs */
 define([
     'common/utils/$',
@@ -7,12 +6,13 @@ define([
     'common/utils/config',
     'common/utils/deferToAnalytics',
     'common/utils/url',
+    'common/modules/ui/images',
     'common/modules/commercial/dfp',
     'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
     'bean',
     'bonzo',
-    'common/modules/onward/most-viewed-video'
+    'common/modules/component'
 ], function(
     $,
     ajax,
@@ -20,12 +20,13 @@ define([
     config,
     deferToAnalytics,
     urlUtils,
+    images,
     dfp,
     OmnitureMedia,
     _throttle,
     bean,
     bonzo,
-    MostViewedVideo
+    Component
 ) {
 
     var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
@@ -256,13 +257,23 @@ define([
                     vjs.persistvolume({namespace: 'gu.vjs'});
                 });
             });
-
-            new MostViewedVideo();
+        },
+        initMoreInSection: function() {
+            var section = new Component(),
+                parentEl = $('.js-onward')[0];
+            section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+            section.fetch(parentEl).then(function() {
+                images.upgrade(parentEl);
+            });
         }
     };
 
     var ready = function () {
         modules.initPlayer();
+
+        if(config.page.contentType === 'Video') {
+            modules.initMoreInSection();
+        }
     };
 
     return {

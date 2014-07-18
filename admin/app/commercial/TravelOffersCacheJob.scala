@@ -16,7 +16,7 @@ object TravelOffersCacheJob extends ExecutionContexts with Dates with Logging {
   // following RFC-2616#3.7.1
   protected val characterEncoding: String = AsyncHttpProviderUtils.DEFAULT_CHARSET
 
-  protected val loadTimeout: Int = 20000
+  protected val loadTimeout: Int = 60000
 
   protected val adTypeName = "Travel Offers"
 

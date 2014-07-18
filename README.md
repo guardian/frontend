@@ -67,6 +67,7 @@ Local Install Requirements
 * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
 * Installed Ruby >= v1.9.x (on Ubuntu: `sudo apt-get install ruby ruby-dev`) & [bundler](http://gembundler.com/) (You may already have this installed, but run `ruby -v` to check version number)
 * Installed Memcached `sudo apt-get install memcached` - this is optional (most of the time you do not want to use it as caching makes local development harder)
+* Installed [libpng](http://libpng.org/pub/png/libpng.html): `brew install libpng` (Mac OSX with [Homebrew](http://brew.sh/)) or `sudo apt-get install libpng-dev` (Ubuntu)
 
 
 NPM ownership
@@ -155,6 +156,20 @@ SBT project. see https://github.com/mpeltonen/sbt-idea
 Further information on using the Play console is available [here][play2-console].
 
 
+Client-side development
+-----------------------
+`grunt-watch` is pretty inefficient to compile our Sass into CSS, so @mattosborn
+created a script called [grunt-csdevmode][grunt-csdevmode].
+
+`grunt csdevmode` pushes stylesheets to all connected browsers:
+no need to reload a page to preview your changes, just like with Livereload.
+
+```bash
+grunt compile --dev
+grunt csdevmode
+```
+
+
 Endpoints
 ---------
 The available endpoints are listed in `conf/routes` of each application and
@@ -197,3 +212,4 @@ Further documentation notes and useful items can be found in `docs`.
 [sbteclipse]: https://github.com/typesafehub/sbteclipse
 [sbt-idea]: https://github.com/mpeltonen/sbt-idea
 [magenta]: https://github.com/guardian/deploy
+[grunt-csdevmode]: https://github.com/mattosborn/grunt-csdevmode
