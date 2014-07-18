@@ -583,6 +583,7 @@ class FrontendTimingMetric(
   override val getValue = () => totalTimeInMillis
 
   def getAndReset: Long = currentCount.getAndSet(0)
+  def getAndResetTime: Long = timeInMillis.getAndSet(0) / currentCount.getAndSet(0)
 }
 
 object PerformanceMetrics {
