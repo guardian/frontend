@@ -139,15 +139,9 @@ Install additional dependencies:
 bundle
 ```
 
-After this, you can compile the assets:
+After this, you can compile the assets (see the note about `grunt watch` [below](#client-side-development)):
 ```
 grunt compile
-```
-
-Start the Grunt build and watch for development changes (see the note on
-`grunt csdevmode` vs `grunt watch` [below](client-side-development)):
-```
-grunt watch
 ```
 
 In another console, start Simple Build Tool (sbt) using the supplied `sbt`
@@ -156,10 +150,10 @@ script. Note that if you start SBT any other way the project will not run.
 ./sbt
 ```
 
-Once SBT is running (it may take a while to start the first time - you'll know when you get a prompt), switch project by
-typing `project dev-build
-`. Then compile and run the project locally by typing
-`run`. This also can take a while first time.
+Once SBT is running (it may take a while to start the first time - you'll know
+when you get a prompt), switch project by typing `project dev-build`. Then
+compile and run the project locally by typing `run`. This also can take a
+while first time.
 
 Now test you are up and running by hitting the following URLs:
    * http://localhost:9000/books
@@ -169,7 +163,7 @@ Now test you are up and running by hitting the following URLs:
 Play Framework will recompile code changes on refresh.
 
 To create project files for use in IntelliJ, run the `gen-idea` task from the
-root SBT project. see https://github.com/mpeltonen/sbt-idea
+root SBT project. See https://github.com/mpeltonen/sbt-idea.
 
 Further information on using the Play console is available
 [here][play2-console].
@@ -177,11 +171,12 @@ Further information on using the Play console is available
 
 Client-side development
 -----------------------
-`grunt-watch` is pretty inefficient to compile our Sass into CSS, so
-@mattosborn
-created a script called [grunt-csdevmode][grunt-csdevmode].
 
-`grunt csdevmode` pushes stylesheets to all connected browsers:
+There is a `grunt watch` task available to build and watch for development
+changes, but `grunt-watch` is pretty inefficient to compile our Sass into CSS
+so @mattosborn created a script called [grunt-csdevmode][grunt-csdevmode].
+
+`grunt csdevmode` also pushes stylesheets to all connected browsers:
 no need to reload a page to preview your changes, just like with Livereload.
 
 ```bash
