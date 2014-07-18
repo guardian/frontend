@@ -29,7 +29,7 @@ class TopStoriesControllerTest extends FlatSpec with Matchers {
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = controllers.TopStoriesController.renderTopStoriesJson()(fakeRequest)
+    val result = controllers.TopStoriesController.renderTopStories()(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
     contentAsString(result) should startWith("{\"html\"")

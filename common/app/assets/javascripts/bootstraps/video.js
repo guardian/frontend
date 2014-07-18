@@ -265,6 +265,12 @@ define([
             section.fetch(parentEl).then(function() {
                 images.upgrade(parentEl);
             });
+        },
+        initMostViewedVideo: function() {
+            var mostViewed = new Component();
+
+            mostViewed.endpoint = '/video/most-viewed.json';
+            mostViewed.fetch($('.js-video-components-container')[0], 'html');
         }
     };
 
@@ -273,6 +279,7 @@ define([
 
         if(config.page.contentType === 'Video') {
             modules.initMoreInSection();
+            modules.initMostViewedVideo();
         }
     };
 
