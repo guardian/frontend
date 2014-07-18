@@ -75,7 +75,7 @@ class EditionalisedHtmlUnit extends TestSettings {
   // the default is I.E 7 which we do not support
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 
-  val host = "http://localhost:9001"
+  val host = "http://localhost:9000"
 
 
   val Port = """.*:(\d*)$""".r
@@ -94,7 +94,7 @@ class EditionalisedHtmlUnit extends TestSettings {
 
     val port = host match {
       case Port(p) => p.toInt
-      case _ => 9001
+      case _ => 9000
     }
 
     running(TestServer(port,
@@ -112,12 +112,12 @@ class EditionalisedHtmlUnit extends TestSettings {
 
 object WithHost {
   def apply(path: String): String = UK(path)
-  def UK(path: String): String = s"http://localhost:9001$path"
-  def US(path: String): String = s"http://127.0.0.1:9001$path"
+  def UK(path: String): String = s"http://localhost:9000$path"
+  def US(path: String): String = s"http://127.0.0.1:9000$path"
 }
 
 object ClassicVersionLink {
-  def apply(path: String) = s"http://localhost:9001/preference/platform/classic?page=${URLEncoder.encode(s"$path?view=classic", "UTF-8")}"
+  def apply(path: String) = s"http://localhost:9000/preference/platform/classic?page=${URLEncoder.encode(s"$path?view=classic", "UTF-8")}"
 }
 
 /**
@@ -126,7 +126,6 @@ object ClassicVersionLink {
 trait FakeApp extends TestSettings {
 
   def apply[T](block: => T): T = running(
-    // specify port here.
     FakeApplication(
       withoutPlugins = disabledPlugins,
       withGlobal = globalSettingsOverride,
