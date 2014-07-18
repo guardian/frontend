@@ -86,7 +86,8 @@ trait Navigation {
   val golf = SectionLink("sport", "golf", "Golf", "/sport/golf")
   val horseracing = SectionLink("sport", "horse racing", "Horse racing", "/sport/horse-racing")
   val boxing = SectionLink("sport", "boxing", "Boxing", "/sport/boxing")
-  val formulaOne = SectionLink("sport", "formula one", "Formula one", "/sport/formulaone")
+  val formulaOne = SectionLink("sport", "F1", "Formula one", "/sport/formulaone")
+  val racing = SectionLink("sport", "racing", "Racing", "/sport/racing")
 
   val nfl = SectionLink("sport", "NFL", "NFL", "/sport/nfl")
   val mlb = SectionLink("sport", "MLB", "MLB", "/sport/mlb")

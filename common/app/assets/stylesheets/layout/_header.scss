@@ -133,11 +133,15 @@ a.edition {
     ));
 }
 .guardian-services__action {
-    @include fs-header(1);
+    @include fs-headline(1);
+    display: block;
     text-decoration: none;
     margin: 0;
     color: $c-neutral1;
     cursor: pointer;
+    @include rem((
+        line-height: $headerHeight
+    ));
 }
 .guardian-services__action__arrow {
     display: inline-block;
@@ -160,7 +164,6 @@ a.edition {
     background: $c-new-navigation-base;
 
     .guardian-services__action {
-        display: inline-block;
         color: $c-local-navigation-action;
     }
     .guardian-services__action__arrow {
@@ -175,11 +178,12 @@ a.edition {
     position: absolute;
     background: $c-new-navigation-base;
     margin: 0;
+    padding: 0;
     right: 0;
     list-style: none;
     @include rem((
         top: $headerHeight,
-        padding: $gs-baseline/2 $gs-gutter/2,
+        padding: 0 $gs-gutter/2,
         width: gs-span(3)
     ));
 }

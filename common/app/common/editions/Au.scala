@@ -1,7 +1,6 @@
 package common.editions
 
 import org.joda.time.DateTimeZone
-import model._
 import common._
 import contentapi.QueryDefaults
 import common.NavItem
@@ -13,7 +12,7 @@ object Au extends Edition(id = "AU", displayName = "Australia edition", DateTime
 
   implicit val AU = Au
 
-  def navigation: Seq[NavItem] = Seq(
+  override val navigation: Seq[NavItem] = Seq(
     NavItem(home),
     NavItem(australia),
     NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
@@ -22,11 +21,29 @@ object Au extends Edition(id = "AU", displayName = "Australia edition", DateTime
     NavItem(football, aLeague :: footballNav.toList),
     NavItem(technology, Seq(games)),
     NavItem(culture, Seq(film, music, books, televisionAndRadio , artanddesign, stage)),
-    NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women, fashion)),
-    NavItem(economy, Seq(markets, companies, money, media)),
+    NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
+    NavItem(fashion),
+    NavItem(economy, Seq(markets, companies, money)),
     NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
     NavItem(science),
     NavItem(environment, Seq(cities, globalDevelopment)),
-    NavItem(education, Seq(students))
+    NavItem(media)
+  )
+
+  override val briefNav: Seq[NavItem] = Seq(
+    NavItem(home),
+    NavItem(australia),
+    NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
+    NavItem(cif),
+    NavItem(sport, Seq(australiaSport, football, cricket, rugbyunion, rugbyLeague , tennis, cycling, boxing, afl, nrl)),
+    NavItem(football, aLeague :: footballNav.toList),
+    NavItem(technology, Seq(games)),
+    NavItem(culture, Seq(film, music, books, televisionAndRadio , artanddesign, stage)),
+    NavItem(lifeandstyle, Seq(foodanddrink, healthandwellbeing, loveAndSex, family, women)),
+    NavItem(fashion),
+    NavItem(economy, Seq(markets, companies, money)),
+    NavItem(travel, Seq(australasiaTravel, asiaTravel, uktravel, europetravel, usTravel)),
+    NavItem(science),
+    NavItem(environment, Seq(cities, globalDevelopment))
   )
 }
