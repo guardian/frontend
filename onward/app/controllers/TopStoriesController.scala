@@ -9,6 +9,7 @@ import com.gu.openplatform.contentapi.ApiError
 
 object TopStoriesController extends Controller with Logging with Paging with ExecutionContexts {
 
+  def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>
     val response = lookup(Edition(request)) map { topStories =>
       topStories map { renderTopStoriesPage(_) }

@@ -20,6 +20,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     "GFE:Most Read"
   )
 
+  def renderHtml(path: String) = render(path)
   def render(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val globalPopular = MostPopular("The Guardian", "", MostPopularAgent.mostPopular(edition))
