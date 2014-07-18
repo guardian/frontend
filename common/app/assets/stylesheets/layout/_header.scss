@@ -155,7 +155,7 @@ a.edition {
         pointer-events: none;
         width: 0;
         height: 0;
-        border-top: 0 solid transparent;
+        border-top: 0;
         @include rem((
             margin: 2px,
             border-left: $servicesToggleArrowSize solid transparent,
@@ -177,7 +177,7 @@ a.edition {
         }
 
         .guardian-services__action__arrow {
-            border-bottom: 0 solid transparent;
+            border-bottom: 0;
             @include rem((
                 border-top: $servicesToggleArrowSize solid $c-neutral1
             ));
