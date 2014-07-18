@@ -109,7 +109,9 @@
             @include c-soulmates-branding-small;
 
             .commercial__title {
-                text-indent: -9999px;
+                .svg & {
+                    text-indent: -9999px;
+                }
             }
             .i-soulmates-logo {
                 .svg & {
