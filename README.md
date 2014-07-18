@@ -50,7 +50,7 @@ Vagrant
 -------
 You can run the project with the supplied Vagrantfile - make sure you understand what vagrant is http://www.vagrantup.com/
 
-* You need Virtualbox and Vagrant - on Ubuntu `sudo apt-get install virtualbox vagrant` otherwise see http://docs.vagrantup.com/v2/installation/index.html
+* Make sure you have [Virtualbox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) installed (on Ubuntu `sudo apt-get install virtualbox vagrant`)
 * change directory into the folder where this README is located
 * `vagrant up` - this will take a while, make some coffee
 * You can now get onto the box by `vagrant ssh`
@@ -111,36 +111,37 @@ SBT for the Play Framework backend. Neither of these tools are much use for
 building the other half of the project and coupling them together with an
 integration is one of those bad ideas that is even worse than it sounds.
 
-Run 
+Install node dependencies:
 ```
 npm install
 ```
-to download Node dependencies
 
-Run
+Install additional dependencies:
 ```
 bundle
 ```
-to install additional dependencies
 
-Run
+After this, you can compile the assets:
 ```
 grunt compile
 ```
-to compile assets
 
-You ***must*** start SBT with the supplied script called `sbt` if you start
-SBT any other way the project will not run.
-
-Start the Grunt build and watch for development changes:
+Start the Grunt build and watch for development changes (see the note on `grunt csdevmode` vs `grunt watch` [below](client-side-development)):
 
 ```
 grunt watch
 ```
 
-In another console, start Simple Build Tool (sbt) by running `./sbt`. It may
-take a while to start the first time. Once SBT is running, switch project by
-typing `project dev-build`. Then compile and run the project locally by typing
+In another console, start Simple Build Tool (sbt). Note that you **must** start SBT with the supplied `sbt` script. *If you start SBT any other way the project will not run*:
+```
+./sbt
+```
+
+It may take a while to start the first time.
+
+Once SBT is running (you'll know when you get a prompt), switch project by
+typing `project dev-build
+`. Then compile and run the project locally by typing
 `run`. This also can take a while first time.
 
 Now test you are up and running by hitting the following URLs:
