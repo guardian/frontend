@@ -27,7 +27,6 @@ case class CommentItem(commentRoot: WebElement)(implicit driver: WebDriver) exte
   private def newRecommendCommentCount = commentRoot findElement  cssSelector(".d-comment__recommend-count--new")
   private def textDisplayed = commentRoot.findElement(cssSelector("" +
     ".d-comment__body p"))
-  private def replyText = driver.get(Config().getTestBaseUrl() + Config().getUserValue("commentText"))
 
   def showCommentPost(): CommentItem = {
     showCommentButton.click()
@@ -63,10 +62,9 @@ case class CommentItem(commentRoot: WebElement)(implicit driver: WebDriver) exte
   def reportComment(): CommentItem = {
     reportCommentButton.click()
     new Select(reportSelectControl).selectByVisibleText("Spam")
-    reportTextArea.sendKeys("This is a test report")
+    reportTextArea.sendKeys("This is a test report - Please ignore")
     reportEmail.sendKeys("test.test@test.com")
     sendReportButton.click()
-    this
   }
 
   def viewUserProfile(): CommentItem = {

@@ -67,8 +67,13 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
     this
   }
 
+  private val newReportText: String = "This is a test report - please ignore"
+
   def iCanReportAComment() = {
     logger.step("I can report a comment")
+    val commentModule = CommentModule()
+    commentModule.showAllComments()
+
     CommentModule().getLatestComment().reportComment()
     this
   }
