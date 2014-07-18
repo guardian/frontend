@@ -17,97 +17,99 @@
         <i class="icon-remove icon-white" data-bind="click: clearStatuses"></i>
     </div>
 
-    <div class="toolbar" data-bind="visible: true" style="display: none">
-        <div class="toolbar--rhs">
-            <a class="tool tool-draft-mode tool-left-half" data-bind="
-                click: setModeDraft,
-                css: {active: !liveMode()}">Draft front</a
-           ><a class="tool tool-live-mode tool-right-half" data-bind="
-                click: setModeLive,
-                css: {active: liveMode}">Live front</a>
-
-            <a class="tool tool--preview" target="preview" data-bind="
-                attr: { href: previewUrl },
-                text: 'View ' + (liveMode() ? 'live' : 'draft'),
-                visible: front"></a>
-        </div>
-
-        <span class="tool-label">Front</span>
-        <select class="tool-select" data-bind="options: fronts, value: front, optionsCaption: 'choose...'"></select>
-
-        <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
-            visible: frontSparkUrl,
-            attr: {href: 'http://dashboard.ophan.co.uk/graph/breakdown?path=/' + front()}">
-            <img data-bind="attr: {src: frontSparkUrl}" /></a>
-    </div>
+    <select class="front-selector" data-bind="options: fronts, value: front, optionsCaption: 'choose a front...'"></select>
 
     <div class="left-col">
-        <div class="title">
-            Clipboard
-        </div>
-        <div class="clipboard__wrapper" data-bind="with: clipboard">
-            <div class="clipboard droppable" data-bind="
-                makeDropabble: true,
-                css: {underDrag: underDrag},
-                template: {name: 'template_article', foreach: items}"></div>
+        <div class="modes" data-bind="
+            css: {
+                'live-mode': !latestArticles.showingDrafts(),
+                'draft-mode': latestArticles.showingDrafts
+            }">
+            <!-- ko if: $root.switches()['facia-tool-draft-content'] --><a class="draft-mode" data-bind="
+                click: latestArticles.showDrafts,
+                css: {active: latestArticles.showingDrafts}">Draft content</a
+           ><!-- /ko --><a class="live-mode" data-bind="
+                click: latestArticles.showLive,
+                css: {active: !latestArticles.showingDrafts()}">Live content</a>
         </div>
 
-        <div data-bind="with: latestArticles">
-            <div class="search-tools">
-                <!-- ko if: $root.switches()['facia-tool-draft-content'] -->
-                    <a class="tool tool-draft-content tool-left-half" data-bind="
-                        click: showDrafts,
-                        css: {active: showingDrafts}">Draft content</a
-                   ><a class="tool tool-live-content tool-right-half" data-bind="
-                        click: showLive,
-                        css: {active: !showingDrafts()}">Live content</a>
-                <!-- /ko -->
-                <a class="tool"><i class="icon-refresh icon-white" data-bind="click: refresh"></i></a>
-                <a class="tool"><i class="icon-remove icon-white" data-bind="click: reset"></i></a>
+        <div class="col__inner scrollable">
+            <div class="clipboard" data-bind="with: clipboard">
+               <div class="title">
+                    Clipboard
+                </div>
+                <div class="droppable" data-bind="
+                    makeDropabble: true,
+                    css: {underDrag: underDrag},
+                    template: {name: 'template_article', foreach: items}"></div>
             </div>
 
-            <div class="title">Latest</div>
-
-            <div class="search-form">
-                <div class="search-term">
-                    <input type="text" placeholder="Search for..." data-bind='
-                        event: {keyup: search, afterpaste: search},
-                        value: term,
-                        valueUpdate: ["afterkeydown", "afterpaste"]'/>
+            <div data-bind="with: latestArticles">
+                <div class="search-tools">
+                    <a><i class="icon-refresh" data-bind="click: refresh"></i></a>
+                    <a><i class="icon-remove" data-bind="click: reset"></i></a>
                 </div>
 
-                <div class="autocompleter">
-                    <select data-bind="
-                        event: { change: clearFilter },
-                        options: filterTypes,
-                        optionsText: 'display',
-                        value: filterType"></select>
+                <div class="title">Latest</div>
 
-                    <input type="text" placeholder="filter" data-bind='
-                        attr: {placeholder: filterType().placeholder},
-                        event: {keyup: autoComplete, afterpaste: autoComplete},
-                        value: filter,
-                        valueUpdate: ["afterkeydown", "afterpaste"]'/>
+                <div class="search-form">
+                    <div class="search-term">
+                        <input type="text" placeholder="Search for..." data-bind='
+                            event: {keyup: search, afterpaste: search},
+                            value: term,
+                            valueUpdate: ["afterkeydown", "afterpaste"]'/>
+                    </div>
 
-                    <div class="suggestions" data-bind="foreach: suggestions">
-                        <!-- ko if: $data._alert -->
-                        <div class="suggestion" data-bind="text: _alert"></div>
-                        <!-- /ko -->
-                        <!-- ko if: $data.id -->
-                        <div class="suggestion linky"  data-bind="text: id, click: $parent.setFilter"></div>
-                        <!-- /ko -->
+                    <div class="autocompleter">
+                        <select data-bind="
+                            event: { change: clearFilter },
+                            options: filterTypes,
+                            optionsText: 'display',
+                            value: filterType"></select>
+
+                        <input type="text" placeholder="filter" data-bind='
+                            attr: {placeholder: filterType().placeholder},
+                            event: {keyup: autoComplete, afterpaste: autoComplete},
+                            value: filter,
+                            valueUpdate: ["afterkeydown", "afterpaste"]'/>
+
+                        <div class="suggestions" data-bind="foreach: suggestions">
+                            <!-- ko if: $data._alert -->
+                            <div class="suggestion" data-bind="text: _alert"></div>
+                            <!-- /ko -->
+                            <!-- ko if: $data.id -->
+                            <div class="suggestion linky"  data-bind="text: id, click: $parent.setFilter"></div>
+                            <!-- /ko -->
+                        </div>
                     </div>
                 </div>
+
+                <div data-bind="template: {name: 'template_search_controls'}"></div>
+
+                <div class="latest-articles" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
             </div>
-
-            <div data-bind="template: {name: 'template_search_controls'}"></div>
-
-            <div class="latest-articles scrollable" data-bind="template: {name: 'template_article', foreach: articles}">Searching...</div>
         </div>
     </div>
 
     <div class="right-col" data-bind="css: {'live-mode': $root.liveMode}">
-        <div class="collections__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
+        <div class="modes" data-bind="
+            css: {
+                'live-mode': $root.liveMode,
+                'draft-mode': !$root.liveMode()
+            }">
+            <a class="draft-mode" data-bind="
+                click: setModeDraft,
+                css: {active: !liveMode()}">Draft front</a
+           ><a class="live-mode" data-bind="
+                click: setModeLive,
+                css: {active: liveMode}">Live front</a>
+            <a class="preview" target="preview" data-bind="
+                attr: { href: previewUrl },
+                text: liveMode() ? 'View live' : 'Preview draft',
+                visible: front"></a>
+        </div>
+
+        <div class="col__inner scrollable" data-bind="template: {name: 'template_collection', foreach: collections}"></div>
     </div>
 
     <!-- templates -->
@@ -123,7 +125,7 @@
                         <a class="draft-warning" data-bind="
                             click: $root.setModeDraft,
                             visible: $root.liveMode">
-                            <span class="tool draft-warning">Has Draft</a>
+                            <span class="tool draft-warning">Unlaunched changes</a>
 
                         <span data-bind="visible: !$root.liveMode()">
                             <a class="tool draft-publish" data-bind="
@@ -161,18 +163,16 @@
                         ></span>
                     </span>
 
-                    <i class="list-header__collapser" data-bind="
-                        click: toggleCollapsed,
-                        visible: !configMeta.uneditable(),
-                        css: {
+                    <a class="list-header__collapser" data-bind="click: toggleCollapsed">
+                        <i data-bind="css: {
                             'icon-chevron-down': !state.collapsed(),
-                            'icon-chevron-up'  :  state.collapsed }"></i>
+                            'icon-chevron-up'  :  state.collapsed }"></i></a>
 
                     <span class="list-header__timings" data-bind="
                         css: {'has-concurrent-user': state.hasConcurrentEdits}">
                         <!-- ko if: state.timeAgo -->
-                            Edited <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
-                            by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
+                            <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
+                            ago by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
                         <!-- /ko -->
                         <a data-bind="
                             click: reset,
@@ -207,7 +207,7 @@
     </script>
 
     <script type="text/html" id="template_groups">
-        <!-- ko if: !_.isUndefined(name) -->
+        <!-- ko if: name -->
         <div class="group-name" data-bind="text: name"></div>
         <!-- /ko -->
         <div class="droppable" data-bind="
@@ -251,20 +251,20 @@
             <div data-bind="if: state.isOpen">
                 <div class="article__overrides">
                     <div class="article__overrides__fields">
-                        <input type="text" data-bind="
+                        <textarea class="headline" data-bind="
                             hasFocus: true,
                             event: {blur: save},
                             value: headlineInput,
-                            attr: {placeholder: fields.headline() || 'Link text'}"/>
+                            attr: {placeholder: fields.headline() || 'Link text'}"></textarea>
                         <a class="revert revert--headline" data-bind="
                             click: headlineRevert,
                             attr: {title: 'Revert to: ' + fields.headline()},
                             visible: meta.headline"><i class="icon-fast-backward"></i></a>
 
-                        <textarea class="trailtext" type="text" data-bind="
+                        <textarea class="trailtext" data-bind="
                             event: {blur: save},
                             value: trailTextInput,
-                            attr: {placeholder: fields.trailText() || 'Trail text'}"/></textarea>
+                            attr: {placeholder: fields.trailText() || 'Trail text'}"></textarea>
                         <a class="revert revert--trailtext" data-bind="
                             click: trailTextRevert,
                             attr: {title: 'Revert to: ' + fields.trailText()},

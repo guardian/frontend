@@ -2,11 +2,12 @@ package model
 
 import org.joda.time.DateTime
 import common.{Logging, ExecutionContexts, Edition}
+import play.api.libs.json.Json
 import scala.concurrent.Future
 import com.gu.openplatform.contentapi.model.ItemResponse
 import conf.LiveContentApi
 import services.ConfigAgent
-import common.FaciaToolMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
+import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import dfp.DfpAgent
 
 case class Config(
@@ -73,6 +74,8 @@ case class SeoData(
   description: Option[String])
 
 object SeoData extends ExecutionContexts with Logging {
+  implicit val jsonFormat = Json.format[SeoData]
+
   val editions = Edition.all.map(_.id.toLowerCase)
 
   def fromPath(path: String): SeoData = path.split('/').toList match {
@@ -96,15 +99,14 @@ object SeoData extends ExecutionContexts with Logging {
   def descriptionFromWebTitle(webTitle: String): Option[String] = Option(s"Latest $webTitle news, comment and analysis from the Guardian, the world's leading liberal voice")
 
   def getSeoData(path: String): Future[SeoData] = {
-    val seoDataFromConfig:   Future[SeoDataJson] = Future.successful(ConfigAgent.getSeoDataJsonFromConfig(path))
     val itemResponseForPath: Future[Option[ItemResponse]] = getSectionOrTagWebTitle(path)
-    val seoDataFromPath:     Future[SeoData] = Future.successful(SeoData.fromPath(path))
 
     for {
-      sc <- seoDataFromConfig
       ir <- itemResponseForPath
-      sp <- seoDataFromPath
     } yield {
+      val sc = ConfigAgent.getSeoDataJsonFromConfig(path)
+      val sp = SeoData.fromPath(path)
+
       val navSection:  String = sc.navSection.orElse(ir.flatMap(getNavSectionFromItemResponse)).getOrElse(sp.navSection)
       val webTitle: String = sc.webTitle.orElse(ir.flatMap(getWebTitleFromItemResponse)).getOrElse(sp.webTitle)
       val title: Option[String] = sc.title

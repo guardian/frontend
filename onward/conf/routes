@@ -27,6 +27,8 @@ GET        /preference/platform/:platform             controllers.ChangeViewCont
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
 GET        /preference/front-alphas/:optAction        controllers.ChangeAlphaController.render(optAction, page)
 
+GET        /video/section/*sectionId.json             controllers.VideoInSectionController.renderSectionVideos(sectionId)
+
 # Experimental
 GET        /cards/opengraph/*path.json                controllers.CardController.opengraph(path)
 GET        /tagged.json                               controllers.TaggedContentController.renderJson(tag: String)

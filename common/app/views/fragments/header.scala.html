@@ -12,6 +12,7 @@ to apply any necessary changes to non-shared code there too.
     <div class="l-header-pre">
         <div class="l-header-pre__inner gs-container u-cf">
             <div class="top-nav">
+                @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOff){
                 <div class="top-nav__item top-nav__item--mobile-only">
                     <a href="#footer-nav" data-link-name="Sections" data-toggle="nav-popup--sections"
                        class="control control--sections">
@@ -22,6 +23,7 @@ to apply any necessary changes to non-shared code there too.
                         </span>
                     </a>
                 </div>
+                }
                 @if(SearchSwitch.isSwitchedOn) {
                     <div class="top-nav__item top-nav__item--search" data-component="search">
                         <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
@@ -85,6 +87,7 @@ to apply any necessary changes to non-shared code there too.
                         </div>
                     </div>
                 }
+                @fragments.topNav.servicesLinks(page)
             </div>
         </div>
     </div>
@@ -105,13 +108,15 @@ to apply any necessary changes to non-shared code there too.
             @if(SearchSwitch.isSwitchedOn) {
                 <div class="nav-popup--search nav-popup--small nav-popup is-off"><div class="js-search-placeholder"></div></div>
             }
+            @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOff){
             <div class="nav-popup--sections nav-popup nav-popup--small is-off" data-component="navigation">
                 @fragments.sections(page, false)
             </div>
+            }
         </div>
     </div>
     @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
-        @fragments.nav.topBar(page)
+        @fragments.nav.newNavigation(page)
     } else {
         @defining(Edition(request).navigation) { navigation =>
             @defining(Navigation.topLevelItem(navigation, page)) { topLevelSelected =>

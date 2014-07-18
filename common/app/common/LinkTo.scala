@@ -25,7 +25,7 @@ trait LinkTo extends Logging {
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request), Region(request))
 
   def apply(url: String, edition: Edition, region: Option[Region] = None)(implicit request : RequestHeader): String =
-    (HttpSwitch.queryString(url) match {
+    HttpSwitch.queryString(url match {
       case "http://www.theguardian.com" => homeLink(edition, region)
       case "/" => homeLink(edition, region)
       case protocolRelative if protocolRelative.startsWith("//") => protocolRelative

@@ -247,11 +247,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val ClientSideErrorSwitch = Switch("Feature Switches", "client-side-errors",
-    "If this is switch on the the browser will log JavaScript errors to the server (via a beacon)",
-    safeState = Off, sellByDate = never
-  )
-
   val FacebookAutoSigninSwitch = Switch("Feature Switches", "facebook-autosignin",
     "If this switch is on then users who have previously authorized the guardian app in facebook and who have not recently signed out are automatically signed in.",
     safeState = Off, sellByDate = never
@@ -280,6 +275,10 @@ object Switches extends Collections {
     sellByDate = new DateMidnight(2014, 10, 30)
   )
 
+  val GuardianServicesLinksSwitch = Switch("Feature Switches", "guardian-services-links",
+    "If this switch is switched on then Jobs and Soulmates links will be displayed on page headers",
+    safeState = Off,sellByDate = new DateMidnight(2014, 8, 12))
+
   val ResponsiveNavSwitch = Switch("Feature Switches", "responsive-nav",
     "If this switch is turned on then the new responsive navigation will be displayed.",
     safeState = Off, sellByDate = new DateMidnight(2014, 7, 22)
@@ -307,6 +306,11 @@ object Switches extends Collections {
 
   val SentimentalCommentsSwitch = Switch("Feature Switches", "sentimental-comments",
     "When this switch is on, you will be able to put sentiment into your comments.",
+    safeState = Off, sellByDate = new DateMidnight(2014, 9, 1)
+  )
+
+  val NewNavigationHighlightingSwitch = Switch("Feature Switches", "nav-highlight",
+    "When this switch is on, navigation highlighting will become more relevant as they will be based on tags.",
     safeState = Off, sellByDate = new DateMidnight(2014, 9, 1)
   )
 
@@ -399,7 +403,7 @@ object Switches extends Collections {
 
   val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
     "If this switch is on the container configuration will allow articles to show their tags or sections",
-    safeState = Off, sellByDate = new DateMidnight(2014, 7, 7)
+    safeState = Off, sellByDate = new DateMidnight(2014, 8, 5)
   )
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
@@ -415,6 +419,12 @@ object Switches extends Collections {
   val SeoOptimisedContentImageSwitch = Switch("Image Server", "seo-optimised-article-image",
     "If this switch is on images then articles will get a 460px on static.guim.co.uk image as the low-res version.",
     safeState = On, sellByDate = new DateMidnight(2014, 8, 30)
+  )
+
+  // actually just here to make us remove this in the future
+  val GuShiftCookieSwitch = Switch("Feature Switches", "gu-shift-cookie",
+    "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
+    safeState = On, sellByDate = new DateMidnight(2014, 9, 30)
   )
 
   val all: List[Switch] = List(
@@ -435,7 +445,6 @@ object Switches extends Collections {
     SearchSwitch,
     ReleaseMessageSwitch,
     IntegrationTestSwitch,
-    ClientSideErrorSwitch,
     IdentityProfileNavigationSwitch,
     CssFromStorageSwitch,
     FacebookAutoSigninSwitch,
@@ -474,23 +483,28 @@ object Switches extends Collections {
     WorldCupArticleContainerSwitch,
     ProfileCommentsSearchSwitch,
     SentimentalCommentsSwitch,
+    GuardianServicesLinksSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     ResponsiveNavSwitch,
+    NewNavigationHighlightingSwitch,
     SmartBannerSwitch,
     ParameterlessImagesSwitch,
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
-    FaciaToolDraftContent
+    FaciaToolDraftContent,
+    GuShiftCookieSwitch
   )
 
   val httpSwitches: List[Switch] = List(
-    ResponsiveNavSwitch
+    ResponsiveNavSwitch,
+    NewNavigationHighlightingSwitch,
+    GuardianServicesLinksSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

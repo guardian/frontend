@@ -34,26 +34,22 @@
                 </div>
             </div>
 
-            @fragments.contentMeta(video)
-
             <div data-component="body">
                 <div class="video-standfirst">
                     @fragments.standfirst(video)
                 </div>
-
-                <div class="content__keywords" data-link-name="video keywords">
-                    @fragments.keywordList(video.keywords)
-                </div>
             </div>
 
-            <div class="social-wrapper" data-component="share">
-                @fragments.social(video)
+            @fragments.contentMeta(video)
+
+            <div class="social-wrapper social-wrapper--bottom" data-component="share">
+                @fragments.social(video, iconModifier = "white")
             </div>
 
         </div>
     </div>
 </article>
 
-@fragments.contentFooter(video, storyPackage)
+@fragments.contentFooter(video, storyPackage, "video")
 
 }

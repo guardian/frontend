@@ -84,6 +84,8 @@ object Frontend extends Build with Prototypes {
 
   val faciaTool = application("facia-tool").dependsOn(commonWithTests)
 
+  val faciaPress = application("facia-press").dependsOn(commonWithTests)
+
   val identityLibVersion = "3.21"
   val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
@@ -170,6 +172,7 @@ object Frontend extends Build with Prototypes {
     common,
     facia,
     faciaTool,
+    faciaPress,
     article,
     applications,
     sport,

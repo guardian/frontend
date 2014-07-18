@@ -1,6 +1,6 @@
 @(error: Option[String] = None, env: String)
 
-@admin_main("Login", env) {
+@admin_main("fronts", env) {
         @if(error.isDefined) {
             <div class="alert alert-error">
                 <p>@error.get</p>

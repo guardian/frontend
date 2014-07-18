@@ -38,6 +38,20 @@
     }
 }
 
+.tablet-only {
+    @include mq($to: mobile) {
+        display: none !important;
+    }
+    @include mq(desktop) {
+        display: none !important;
+    }
+}
+.hide-on-tablet {
+    @include mq(mobile, desktop) {
+        display: none !important;
+    }
+}
+
 .u-cf {
     @include clearfix;
 }

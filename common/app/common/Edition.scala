@@ -10,8 +10,8 @@ abstract class Edition(
     val displayName: String,
     val timezone: DateTimeZone
   ) extends Navigation {
-  def zones: Seq[Zone]
   def navigation: Seq[NavItem]
+  def briefNav: Seq[NavItem]
 }
 
 object Edition {
@@ -21,7 +21,7 @@ object Edition {
 
   val defaultEdition = editions.Uk
 
-  val all = Seq(
+  val all = List(
     editions.Uk,
     editions.Us,
     editions.Au
@@ -29,7 +29,7 @@ object Edition {
 
   lazy val editionFronts = Edition.all.map {e => "/" + e.id.toLowerCase}
 
-  def isEditionFront(request: RequestHeader): Boolean = editionFronts.contains(request.path)
+  def isEditionFront(implicit request: RequestHeader): Boolean = editionFronts.contains(request.path)
 
   def editionId(request: RequestHeader): String = {
     // override for Ajax calls

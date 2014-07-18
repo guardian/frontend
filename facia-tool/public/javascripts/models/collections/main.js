@@ -52,9 +52,11 @@ define([
 
         model.front = ko.observable();
 
-        model.liveMode = vars.state.liveMode;
+        model.title = ko.computed(function() {
+            return model.front() || (pageConfig.priority + ' fronts');
+        }, this);
 
-        model.frontSparkUrl = ko.observable();
+        model.liveMode = vars.state.liveMode;
 
         model.latestArticles = new LatestArticles({
             filterTypes: vars.CONST.filterTypes
@@ -93,25 +95,33 @@ define([
                 '&url=' + model.front() + encodeURIComponent('?view=mobile');
         });
 
+        model.detectPressFailureCount = 0;
+
         model.deferredDetectPressFailure = _.debounce(function () {
-            model.statusPressFailure(false);
+            var count;
 
             if (model.switches()['facia-tool-check-press-lastmodified'] && model.front()) {
+                model.statusPressFailure(false);
+
+                count = ++model.detectPressFailureCount;
+
                 authedAjax.request({
                     url: '/front/lastmodified/' + model.front()
                 })
                 .always(function(resp) {
                     var lastPressed;
 
-                    if (resp.status !== 200) { return; }
-                    lastPressed = new Date(resp.responseText);
-                    if (isValidDate(lastPressed)) {
-                        model.statusPressFailure(
-                            _.some(model.collections(), function(collection) {
-                                var l = new Date(collection.state.lastUpdated());
-                                return isValidDate(l) ? l > lastPressed : false;
-                            })
-                        );
+                    if (model.detectPressFailureCount === count && resp.status === 200) {
+                        lastPressed = new Date(resp.responseText);
+
+                        if (isValidDate(lastPressed)) {
+                            model.statusPressFailure(
+                                _.some(model.collections(), function(collection) {
+                                    var l = new Date(collection.state.lastUpdated());
+                                    return isValidDate(l) ? l > lastPressed : false;
+                                })
+                            );
+                        }
                     }
                 });
             }
@@ -146,7 +156,8 @@ define([
         function loadCollections(frontId) {
             model.collections(
                 ((vars.state.config.fronts[frontId] || {}).collections || [])
-                .filter(function(id){ return vars.state.config.collections[id]; })
+                .filter(function(id) { return vars.state.config.collections[id]; })
+                .filter(function(id) { return !vars.state.config.collections[id].uneditable; })
                 .map(function(id){
                     return new Collection(
                         _.extend(
@@ -164,14 +175,6 @@ define([
                     );
                 })
             );
-            showFrontSpark();
-        }
-
-        function showFrontSpark() {
-            model.frontSparkUrl(undefined);
-            if (model.switches()['facia-tool-sparklines']) {
-                model.frontSparkUrl(vars.sparksBaseFront + getFront());
-            }
         }
 
         var startCollectionsPoller = _.once(function() {
@@ -195,7 +198,6 @@ define([
                         list.refreshSparklines();
                     }, index * period / (model.collections().length || 1)); // stagger requests
                 });
-                showFrontSpark();
             }, period);
         });
 

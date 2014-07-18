@@ -1,44 +1,46 @@
 /* global googletag: false */
 define([
-    'common/utils/$',
     'bonzo',
     'qwery',
     'lodash/functions/debounce',
-    'common/utils/cookies',
-    'common/utils/detect',
-    'common/utils/mediator',
-    'common/modules/commercial/tags/audience-science',
-    'common/modules/commercial/tags/audience-science-gateway',
-    'common/modules/commercial/tags/criteo',
-    'common/modules/commercial/keywords',
-    'common/modules/commercial/user-ad-targeting',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
     'lodash/functions/once',
     'lodash/objects/defaults',
     'lodash/objects/isArray',
     'lodash/objects/pairs',
-    'common/utils/template'
+    'common/utils/$',
+    'common/utils/cookies',
+    'common/utils/detect',
+    'common/utils/mediator',
+    'common/utils/config',
+    'common/utils/template',
+    'common/modules/commercial/tags/audience-science',
+    'common/modules/commercial/tags/audience-science-gateway',
+    'common/modules/commercial/tags/criteo',
+    'common/modules/commercial/keywords',
+    'common/modules/commercial/user-ad-targeting'
 ], function (
-    $,
     bonzo,
     qwery,
     debounce,
-    cookies,
-    detect,
-    mediator,
-    audienceScience,
-    audienceScienceGateway,
-    criteo,
-    keywords,
-    userAdTargeting,
     flatten,
     uniq,
     once,
     defaults,
     isArray,
     pairs,
-    template
+    $,
+    cookies,
+    detect,
+    mediator,
+    globalConfig,
+    template,
+    audienceScience,
+    audienceScienceGateway,
+    criteo,
+    keywords,
+    userAdTargeting
 ) {
 
     /**
@@ -108,7 +110,7 @@ define([
                 label: false,
                 refresh: false,
                 sizeMappings: {
-                    desktop: '888,88'
+                    desktop: '888,88|88,88'
                 }
             },
             spbadge: {
@@ -373,11 +375,25 @@ define([
      */
     var init = function (c) {
 
-        config = defaults(c || {}, {
-            adSlotSelector: '.ad-slot--dfp',
-            page: {},
-            switches: {}
-        });
+        config = defaults(
+            c || {},
+            globalConfig,
+            {
+                adSlotSelector: '.ad-slot--dfp',
+                page: {},
+                switches: {}
+            }
+        );
+
+        if (!config.switches.standardAdverts && !config.switches.commercialComponents) {
+            return false;
+        }
+
+        if (!config.switches.standardAdverts) {
+            config.adSlotSelector = '.ad-slot--commercial-component';
+        } else if (!config.switches.commercialComponents) {
+            config.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
+        }
 
         adSlots = qwery(config.adSlotSelector)
             // filter out hidden ads
@@ -389,11 +405,9 @@ define([
             });
 
         if (adSlots.length > 0) {
-            // if we don't already have googletag, create command queue and load it async
+            // if we don't already have googletag, create command queue (assumes it's loaded further up the chain)
             if (!window.googletag) {
                 window.googletag = { cmd: [] };
-                // load the library asynchronously
-                require(['googletag']);
             }
 
             window.googletag.cmd.push(setListeners);

@@ -1,6 +1,5 @@
 /*global s_i_guardian:true */
 define([
-    'common/utils/common',
     'common/utils/detect',
     'common/modules/experiments/ab',
     'common/utils/storage',
@@ -13,7 +12,6 @@ define([
     'common/utils/mediator',
     'common/utils/deferToAnalytics' // Ensure that 'analytics:ready' is handled.
 ], function(
-    common,
     detect,
     ab,
     storage,
@@ -90,9 +88,12 @@ define([
             s.prop37 = 'D=v37';
 
             if(/social/.test(tag)) {
-                s.linkTrackVars += ',eVar12';
+                s.linkTrackVars += ',eVar12,prop4,prop9,prop10';
                 s.linkTrackEvents += ',event16';
                 s.eVar12 = tag;
+                s.prop4     = config.page.keywords || '';
+                s.prop9     = config.page.contentType || '';
+                s.prop10    = config.page.tones || '';
                 s.events = s.apl(s.events, 'event16', ',');
             }
         };
@@ -160,7 +161,7 @@ define([
             s.prop20 = tpA[2] + ':' + tpA[1];
             s.eVar20 = 'D=c20';
 
-            
+
             s.prop25    = config.page.blogs || '';
 
             s.prop14    = config.page.buildNumber || '';
@@ -183,6 +184,12 @@ define([
             var gu_shift = Cookies.get('GU_SHIFT');
             if (gu_shift) {
                 var shiftValue = 'gu_shift,' + gu_shift + ',';
+                var gu_view = Cookies.get('GU_VIEW');
+
+                if (gu_view) {
+                    shiftValue += ',' + gu_view;
+                }
+
                 s.prop51  = shiftValue + s.prop51;
                 s.eVar51  = shiftValue + s.eVar51;
             }
@@ -298,7 +305,7 @@ define([
                     clearInterval(checkForPageViewInterval);
 
                     self.pageviewSent = true;
-                    common.mediator.emit('module:analytics:omniture:pageview:sent');
+                    mediator.emit('module:analytics:omniture:pageview:sent');
                 }
             }, 250);
 
@@ -308,16 +315,16 @@ define([
             }, 10000);
         };
 
-        common.mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
+        mediator.on('module:clickstream:interaction', that.trackNonLinkEvent );
 
-        common.mediator.on('module:clickstream:click', that.logTag );
+        mediator.on('module:clickstream:click', that.logTag );
 
-        common.mediator.on('module:autoupdate:loaded', function() {
+        mediator.on('module:autoupdate:loaded', function() {
             that.populatePageProperties();
             that.logUpdate();
         });
 
-        common.mediator.on('module:analytics:omniture:pageview:sent', function(){
+        mediator.on('module:analytics:omniture:pageview:sent', function(){
             // independently log this page view
             // used for checking we have not broken analytics
             beacon.fire('/count/pva.gif');

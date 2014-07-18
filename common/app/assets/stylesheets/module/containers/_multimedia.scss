@@ -65,6 +65,17 @@
             }
         }
     }
+    @include mq(rightCol) {
+        .facia-slice-wrapper--position-1 {
+            .facia-slice__item:nth-child(2),
+            .facia-slice__item:nth-child(3) {
+                .item__standfirst {
+                    display: block;
+                    color: $c-neutral4;
+                }
+            }
+        }
+    }
     @include mq(faciaLeftCol) {
         .facia-slice-wrapper--position-1 {
             @include rem((

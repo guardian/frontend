@@ -1,9 +1,7 @@
 define([
-    'common/utils/common',
     'common/utils/ajax',
     'common/utils/cookies'
 ], function(
-    common,
     ajax,
     cookies
 ) {

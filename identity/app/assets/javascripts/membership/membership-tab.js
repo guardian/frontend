@@ -28,9 +28,10 @@ define(['common/utils/$',
         TAB: 'js-membership-tab',
         TAB_BUTTON: 'js-memebership-tab-button',
         TAB_CONTAINER: 'js-memebership-tab-container',
+        TAB_DETAILS_LIST_LOWER: 'js-membership-details-list-lower',
         TIER: 'js-membership-tier',
         COST: 'js-membership-payment-cost',
-        START: 'js-membership-start-date',
+        JOIN: 'js-membership-join-date',
         NEXT: 'js-membership-payment-next',
         CC_NUM: 'js-membership-card-details',
         CC_LAST4: 'js-membership-card-lastfour',
@@ -80,6 +81,15 @@ define(['common/utils/$',
     };
 
     /**
+     * Friend tier is 0, Partner and Patron need their amounts displayed
+     * @param amount
+     * @returns {string}
+     */
+    Membership.prototype.formatAmount = function (amount) {
+        return (amount === 0) ? 'free' : (amount / 100).toFixed(2);
+    };
+
+    /**
     *    If the user is a guardian member; Render the contents of the membership
     *    tab using the response from the /user/me
     */
@@ -92,12 +102,17 @@ define(['common/utils/$',
             withCredentials: true,
             method: 'get'
         }).then(function (resp) {
+
+            self.display = true;
+            self.getElem('TIER').innerHTML = resp.subscription.plan.name;
+            self.getElem('COST').innerHTML = self.formatAmount(resp.subscription.plan.amount);
+            self.getElem('JOIN').innerHTML = self.formatDate(new Date(resp.joinDate));
+
             if (resp.tier === 'Partner' || resp.tier === 'Patron') {
-                self.display = true;
-                self.getElem('TIER').innerHTML = resp.subscription.plan.name;
-                self.getElem('COST').innerHTML = (resp.subscription.plan.amount / 100).toFixed(2);
-                self.getElem('START').innerHTML = self.formatDate(new Date(resp.subscription.start * 1000));
-                self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end * 1000));
+
+                $(self.getElem('TAB_DETAILS_LIST_LOWER'), self.context).removeClass('is-hidden');
+
+                self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end));
                 self.getElem('CC_LAST4').innerHTML = resp.subscription.card.last4;
 
                 self.currentCardTypeClass = 'i-' + resp.subscription.card.type.toLowerCase().replace(' ', '-');
@@ -105,9 +120,6 @@ define(['common/utils/$',
                 self.getElem('CC_TYPE_TEXT').innerHTML = resp.subscription.card.type; // Append text too for screen readers
             }
 
-            self.ready();
-        }, function () {
-            self.getElem('TIER').innerHTML = 'Tier not currently available';
             self.ready();
         });
 
@@ -154,7 +166,7 @@ define(['common/utils/$',
         var self = this;
         self.form.$cont.removeClass(self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_OPENED', true)).addClass(self.getClass('ANIM_CLOSE', true));
         self.form.$button.removeClass('membership-tab__update-button--muted')
-            .text('Change');
+            .text('Change card');
     };
 
     /** @override */

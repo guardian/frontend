@@ -23,6 +23,8 @@ define([
     'common/modules/navigation/profile',
     'common/modules/navigation/sections',
     'common/modules/navigation/search',
+    'common/modules/navigation/servicesNav',
+    'common/modules/navigation/newNavigation',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/ui/dropdowns',
@@ -69,6 +71,8 @@ define([
     Profile,
     Sections,
     Search,
+    ServicesNav,
+    newNavigation,
 
     Tabs,
     Toggles,
@@ -103,9 +107,8 @@ define([
             images.listen();
         },
 
-        initialiseNavigation: function (config) {
-            var sections = new Sections(config),
-                search = new Search(config),
+        initialiseTopNavItems: function(config){
+            var search = new Search(config),
                 header = document.getElementById('header');
 
             if (header) {
@@ -117,8 +120,17 @@ define([
                 }
             }
 
-            sections.init(document);
             search.init(header);
+
+            ServicesNav.init(config);
+        },
+
+        initialiseNavigation: function (config) {
+            new Sections(config).init(document);
+        },
+
+        initialiseNewNavigation: function (config) {
+            newNavigation.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -436,7 +448,12 @@ define([
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
-            modules.initialiseNavigation(config);
+            modules.initialiseTopNavItems(config);
+            if(config.switches.responsiveNav){
+                modules.initialiseNewNavigation(config);
+            } else {
+                modules.initialiseNavigation(config);
+            }
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();

@@ -27,7 +27,7 @@
 }
 .top-banner-ad-container--desktop {
     background-color: $c-neutral8;
-    border-bottom: 2px solid $c-newsDefault;
+    border-bottom: 2px solid $c-neutral4;
     display: none;
 
     @include mq(tablet) {
@@ -275,6 +275,10 @@
         padding: 2px 0 $gs-baseline
     ));
 
+    // badges are always broken out, so hide the actual ad
+    iframe {
+        display: none;
+    }
     .ad-slot--paid-for-badge__inner {
         overflow: hidden;
 

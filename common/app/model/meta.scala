@@ -1,9 +1,8 @@
 package model
 
-import common.{Pagination, ManifestData}
+import common.{Edition, ManifestData, Pagination}
 import conf.Configuration
 import dfp.DfpAgent
-import conf.Switches._
 
 trait MetaData extends Tags {
   def id: String
@@ -30,7 +29,7 @@ trait MetaData extends Tags {
 
   def adUnitSuffix = section
 
-  lazy val hasPageSkin = false
+  def hasPageSkin(edition: Edition) = false
 
   def isSurging = false
 
@@ -173,6 +172,7 @@ trait Tags {
 
   def isSponsored = DfpAgent.isSponsored(tags)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
+  def sponsor = DfpAgent.getSponsor(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   lazy val visualTone: String =

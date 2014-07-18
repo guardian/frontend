@@ -196,6 +196,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val apiClientHeader = configuration.getMandatoryStringProperty("discussion.apiClientHeader")
     lazy val url = configuration.getMandatoryStringProperty("discussion.url")
   }
+
+  object witness {
+    lazy val witnessApiRoot = configuration.getMandatoryStringProperty("witness.apiRoot")
+  }
   
   object commercial {
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
@@ -204,15 +208,19 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val masterclasses_url = configuration.getMandatoryStringProperty("commercial.masterclasses_url")
     lazy val soulmates_url = configuration.getMandatoryStringProperty("commercial.soulmates_url")
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
+    lazy val traveloffers_url = configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
 
     lazy val dfpSponsoredTagsDataKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-tags-v2.json"
     lazy val dfpAdvertisementFeatureTagsDataKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-tags-v2.json"
     lazy val dfpPageSkinnedAdUnitsKey =
-      s"${environment.stage.toUpperCase}/commercial/dfp/pageskinned-adunits-v2.json"
+      s"${environment.stage.toUpperCase}/commercial/dfp/pageskinned-adunits-v3.json"
     lazy val dfpLineItemsKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/lineitems.json"
+    lazy val travelOffersS3Key =
+      s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
+
   }
 
   object open {
@@ -258,8 +266,9 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object faciatool {
-    lazy val contentApiPostEndpoint: Option[String] = configuration.getStringProperty("contentapi.post.endpoint")
-    lazy val frontPressQueueUrl: Option[String] = configuration.getStringProperty("frontpress.sqs.queue")
+    lazy val contentApiPostEndpoint = configuration.getStringProperty("contentapi.post.endpoint")
+    lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
+    lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
     lazy val configBeforePressTimeout: Int = 1000
 
     //It's not possible to take a batch size above 10
