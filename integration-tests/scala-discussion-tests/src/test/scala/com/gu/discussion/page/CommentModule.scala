@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.Select
 import Element._
 
-case class CommentModule(implicit driver: WebDriver, logger: TestLogger) extends Support {
+case class CommentModule(implicit driver: WebDriver, logger: TestLogger) extends PageSupport {
 
   private val latestComment = driver findElement cssSelector(".discussion__comments__container .d-comment")
   private val startOfComments = driver findElement cssSelector(".d-discussion .d-discussion__pagination .pagination")
@@ -52,7 +52,10 @@ case class CommentModule(implicit driver: WebDriver, logger: TestLogger) extends
   def postNewComment(): CommentItem = {
     postYourCommentButton.click()
     waitForNewCommentItem
+
+
   }
+
 
   def cancelNewComment(): CommentModule = {
     cancelButton.click()

@@ -7,7 +7,6 @@ import org.openqa.selenium.{WebDriver}
 import org.openqa.selenium.By._
 import Element._
 
-
 case class UserProfilePage(implicit driver: WebDriver) {
 
   private def commentsTab = driver findElement ByExt.dataTypeStream("discussions")
@@ -19,7 +18,7 @@ case class UserProfilePage(implicit driver: WebDriver) {
   private def activitySearch = driver findElement id("activity-stream-search")
 
   def getUserProfileName = {
-    val userProfileName = profileName.getText()
+    val userProfileName = profileName.getText
     userProfileName
   }
 

@@ -22,7 +22,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
       }
     }
 
-    scenarioWeb("Reply to a top level comment") {
+    scenarioWeb("Reply to a top level comment", Tag("WIP")) {
       implicit driver: WebDriver =>
       given {
         CommentSteps().iAmSignedInAsStaff()

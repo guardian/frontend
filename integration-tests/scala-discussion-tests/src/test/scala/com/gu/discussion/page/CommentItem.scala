@@ -1,11 +1,10 @@
 package com.gu.discussion.page
 
-import com.gu.automation.support.Config
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.{WebElement, WebDriver}
 import org.openqa.selenium.By._
 
-case class CommentItem(commentRoot: WebElement)(implicit driver: WebDriver) extends Support {
+case class CommentItem(commentRoot: WebElement)(implicit driver: WebDriver) extends PageSupport {
 
   private def showCommentButton = commentRoot findElement  className("d-comment-box__show-parent")
   private def replyToCommentButton = commentRoot findElement  className("d-comment__action--reply")
@@ -25,8 +24,7 @@ case class CommentItem(commentRoot: WebElement)(implicit driver: WebDriver) exte
   private def commentTimeStamp = commentRoot findElement  className("d-comment__timestamp")
   private def oldRecommendCommentCount = commentRoot findElement  cssSelector(".d-comment__recommend-count--old")
   private def newRecommendCommentCount = commentRoot findElement  cssSelector(".d-comment__recommend-count--new")
-  private def textDisplayed = commentRoot.findElement(cssSelector("" +
-    ".d-comment__body p"))
+  private def textDisplayed = commentRoot.findElement(cssSelector(".d-comment__body p"))
 
   def showCommentPost(): CommentItem = {
     showCommentButton.click()
@@ -65,6 +63,7 @@ case class CommentItem(commentRoot: WebElement)(implicit driver: WebDriver) exte
     reportTextArea.sendKeys("This is a test report - Please ignore")
     reportEmail.sendKeys("test.test@test.com")
     sendReportButton.click()
+    this
   }
 
   def viewUserProfile(): CommentItem = {
@@ -78,24 +77,24 @@ case class CommentItem(commentRoot: WebElement)(implicit driver: WebDriver) exte
   }
 
   def getCommentAuthor(): String = {
-    commentAuthorLink.getText()
+    commentAuthorLink.getText
   }
 
   def recommendComment(): (Int, Int) = {
-    val oldRecommendCount = oldRecommendCommentCount.getText().toInt
+    val oldRecommendCount = oldRecommendCommentCount.getText.toInt
 
     recommendCommentButton.click()
 
-    val newRecommendCount = newRecommendCommentCount.getText().toInt
+    val newRecommendCount = newRecommendCommentCount.getText.toInt
     (oldRecommendCount, newRecommendCount)
   }
 
   def isAvatarPresent(): Boolean = {
-    commentAuthorAvatar.isDisplayed()
+    commentAuthorAvatar.isDisplayed
   }
 
   def isDateStampPresent(): Boolean = {
-    commentTimeStamp.isDisplayed()
+    commentTimeStamp.isDisplayed
   }
 
   def getCommentText(): String = {

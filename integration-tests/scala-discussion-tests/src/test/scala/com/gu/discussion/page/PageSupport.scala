@@ -4,7 +4,7 @@ import org.openqa.selenium.By._
 import org.openqa.selenium.WebDriver
 
 /** Created by glockett.  */
-class Support(implicit driver: WebDriver) {
+class PageSupport(implicit driver: WebDriver) {
 
   private def commentRootById(commentId: String) = driver.findElement(id(s"$commentId"))
 

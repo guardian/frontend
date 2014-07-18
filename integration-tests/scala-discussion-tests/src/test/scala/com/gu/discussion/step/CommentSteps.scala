@@ -43,9 +43,9 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
     logger.step("I can post a new comment")
     val module = CommentModule()
     module.addNewComment(newCommentText)
-    val newcommmentItem =  module.postNewComment()
+    val newCommentItem =  module.postNewComment()
 
-    val newComment = newcommmentItem.getCommentText()
+    val newComment = newCommentItem.getCommentText()
 
     newComment should be(newCommentText)
     this
@@ -72,8 +72,6 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
   def iCanReportAComment() = {
     logger.step("I can report a comment")
     val commentModule = CommentModule()
-    commentModule.showAllComments()
-
     CommentModule().getLatestComment().reportComment()
     this
   }
@@ -115,7 +113,7 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
 
   def iCanSearchUserComments() = {
     logger.step("I can search a users comment history")
-    UserProfilePage().searchForComment
+    UserProfilePage().searchForComment()
     this
   }
 
