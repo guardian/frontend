@@ -1,6 +1,6 @@
 package football.model
 
-import org.joda.time.{DateTimeZone, DateMidnight, DateTime}
+import org.joda.time.{DateTimeZone, LocalDate, DateTime}
 import pa._
 import feed.CompetitionSupport
 import model.Competition
@@ -8,7 +8,7 @@ import model.Competition
 
 trait MatchTestData {
   val now = DateTime.now(DateTimeZone.forID("Europe/London"))
-  val today = DateMidnight.now(DateTimeZone.forID("Europe/London"))
+  val today = LocalDate.now(DateTimeZone.forID("Europe/London"))
 
   val spurs = MatchDayTeam("19", "Spurs", Some(4), Some(1), None, Some("Emmanuel Adebayor (19),Joe Paulo Paulinho (53),Emmanuel Adebayor (82),Nacer Chadli (88)"))
   val arsenal = MatchDayTeam("1006", "Arsenal", Some(0), Some(0), None, None)

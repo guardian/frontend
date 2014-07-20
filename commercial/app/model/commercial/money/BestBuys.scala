@@ -59,8 +59,4 @@ object BestBuysAgent {
   def refresh() {
     agents foreach (_.refresh())
   }
-
-  def stop() {
-    agents foreach (_.stop())
-  }
 }

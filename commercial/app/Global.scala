@@ -80,8 +80,6 @@ trait RefreshJob extends Logging {
 
   protected def refresh()
 
-  protected def stopJob()
-
   def start(schedule: String) {
     Jobs.deschedule(s"${name}RefreshJob")
 
@@ -93,7 +91,6 @@ trait RefreshJob extends Logging {
 
   def stop() {
     Jobs.deschedule(s"${name}RefreshJob")
-    stopJob()
   }
 }
 
@@ -101,24 +98,18 @@ object SoulmatesRefresh extends RefreshJob {
   val name: String = "Soulmates"
 
   def refresh() = SoulmatesAggregatingAgent.refresh()
-
-  def stopJob() = SoulmatesAggregatingAgent.stop()
 }
 
 object MasterClassTagsRefresh extends RefreshJob {
   val name: String = "MasterClassTags"
 
   def refresh() = MasterClassTagsAgent.refresh()
-
-  def stopJob() = MasterClassTagsAgent.stop()
 }
 
 object MasterclassesRefresh extends RefreshJob {
   val name: String = "Masterclasses"
 
   def refresh() = MasterClassAgent.refresh()
-
-  def stopJob() = MasterClassAgent.stop()
 }
 
 object CountriesRefresh extends RefreshJob {
@@ -126,45 +117,34 @@ object CountriesRefresh extends RefreshJob {
 
   def refresh() = Countries.refresh()
 
-  def stopJob() = Countries.stop()
 }
 
 object TravelOffersRefresh extends RefreshJob {
   val name: String = "TravelOffers"
 
   def refresh() = TravelOffersAgent.refresh()
-
-  def stopJob() = TravelOffersAgent.stop()
 }
 
 object IndustriesRefresh extends RefreshJob {
   val name: String = "Industries"
 
   def refresh() = Industries.refresh()
-
-  def stopJob() = Industries.stop()
 }
 
 object JobsRefresh extends RefreshJob {
   val name: String = "Jobs"
 
   def refresh() = JobsAgent.refresh()
-
-  def stopJob() = JobsAgent.stop()
 }
 
 object MoneyBestBuysRefresh extends RefreshJob {
   val name: String = "Best Buys"
 
   def refresh() = BestBuysAgent.refresh()
-
-  def stopJob() = BestBuysAgent.stop()
 }
 
 object BooksRefresh extends RefreshJob {
   val name: String = "Books"
 
   def refresh() = BestsellersAgent.refresh()
-
-  def stopJob() = BestsellersAgent.stop()
 }

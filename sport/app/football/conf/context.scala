@@ -70,14 +70,12 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin with ExecutionContexts {
 
   override def onStop() {
     descheduleJobs()
-
-    Competitions.stop()
-    LiveBlogAgent.stop()
-    TeamMap.stop()
   }
 }
 
 object FootballClient extends PaClient with Http with Logging with ExecutionContexts {
+
+  import play.api.Play.current
 
   override lazy val base = Configuration.pa.host
 
