@@ -5,7 +5,7 @@ import common.ExecutionContexts
 import play.api.mvc._
 import scala.concurrent.duration._
 import play.api.mvc.Results._
-import play.api.mvc.SimpleResult
+import play.api.mvc.Result
 import play.api.libs.json.{JsNumber, JsString, JsObject, Json}
 import play.Play
 
@@ -24,7 +24,7 @@ object AjaxExpiringAuthentication extends ExpiringAuthAction("/login") {
         )
       )
     )
-  override def authFailResult(request: Request[AnyContent]): SimpleResult = Forbidden(Json.toJson(errorResponse))
+  override def authFailResult(request: Request[AnyContent]): Result = Forbidden(Json.toJson(errorResponse))
 }
 
 object Login extends LoginController with Controller with ExecutionContexts {

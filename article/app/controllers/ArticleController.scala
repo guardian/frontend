@@ -49,7 +49,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
 
   def renderLatest(path: String, lastUpdate: Option[String]) = lastUpdate map { renderLatestFrom(path, _) } getOrElse { renderArticle(path) }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, SimpleResult]] = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[ArticleWithStoryPackage, Result]] = {
     val edition = Edition(request)
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)

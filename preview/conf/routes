@@ -135,7 +135,6 @@ GET        /football/match-redirect/:matchId                                    
 GET        /football/world-cup-2014/r2-front-world-cup-embed                                   football.controllers.WallchartController.renderR2FrontWorldCupEmbed()
 
 # Onward journeys
-GET        /onward/recently-published                                                          controllers.LatestContentController.recentlyPublished()
 GET        /series/*path.json                                                                  controllers.SeriesController.renderSeriesStories(path)
 
 

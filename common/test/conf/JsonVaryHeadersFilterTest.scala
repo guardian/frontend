@@ -2,7 +2,7 @@ package conf
 
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.iteratee.Enumerator
-import play.api.mvc.{ResponseHeader, SimpleResult}
+import play.api.mvc.{ResponseHeader, Result}
 import test.TestRequest
 
 import scala.concurrent.duration._
@@ -35,6 +35,6 @@ class JsonVaryHeadersFilterTest extends FlatSpec with Matchers {
   }
 
   private def buildResult(headers: (String, String)*) =  Future.successful(
-    SimpleResult(ResponseHeader( 200, headers.toMap), Enumerator.empty)
+    Result(ResponseHeader( 200, headers.toMap), Enumerator.empty)
   )
 }

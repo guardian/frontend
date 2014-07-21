@@ -6,11 +6,14 @@ import conf.Switch
 import model.diagnostics.CloudWatch
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WS
+import com.ning.http.client.{ Response => AHCResponse}
 
 import scala.concurrent.Future
 import scala.xml.{Elem, XML}
 
 trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
+
+  import play.api.Play.current
 
   protected val switch: Switch
 
@@ -44,7 +47,7 @@ trait AdsApi[F, T <: Ad] extends ExecutionContexts with Logging {
               if (characterEncoding == AsyncHttpProviderUtils.DEFAULT_CHARSET)
                 response.body
               else
-                response.getAHCResponse.getResponseBody(characterEncoding)
+                response.underlying[AHCResponse].getResponseBody(characterEncoding)
             }
             val feed = transform(body)
             parse(feed)

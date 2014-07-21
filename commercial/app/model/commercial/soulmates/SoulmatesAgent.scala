@@ -13,10 +13,6 @@ object SoulmatesAggregatingAgent {
     soulmatesAgents foreach (_.refresh())
   }
 
-  def stop() {
-    soulmatesAgents foreach (_.stop())
-  }
-
   def sampleMembers(segment: Segment): Seq[Member] = {
     val women = Random.shuffle(SoulmatesWomenAgent.adsTargetedAt(segment))
     val men = Random.shuffle(SoulmatesMenAgent.adsTargetedAt(segment))

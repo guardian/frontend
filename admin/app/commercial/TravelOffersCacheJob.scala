@@ -1,14 +1,15 @@
 package commercial
 
-import scala.concurrent.future
-import tools.Store
-import implicits.Dates
 import com.ning.http.util.AsyncHttpProviderUtils
-import model.diagnostics.CloudWatch
 import common.{ExecutionContexts, Logging}
-import play.api.libs.ws.{Response, WS}
-import scala.concurrent.Future
 import conf.Configuration.commercial._
+import implicits.Dates
+import model.diagnostics.CloudWatch
+import play.api.Play.current
+import play.api.libs.ws.{WS, WSResponse}
+import tools.Store
+
+import scala.concurrent.{Future, future}
 
 object TravelOffersCacheJob extends ExecutionContexts with Dates with Logging {
 
@@ -33,7 +34,7 @@ object TravelOffersCacheJob extends ExecutionContexts with Dates with Logging {
         val start = System.currentTimeMillis
 
         // Go grab the thing
-        val future: Future[Response] = WS.url(u) withRequestTimeout loadTimeout get()
+        val future: Future[WSResponse] = WS.url(u) withRequestTimeout loadTimeout get()
 
         future onSuccess {
           case response =>

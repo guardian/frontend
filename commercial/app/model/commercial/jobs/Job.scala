@@ -70,14 +70,10 @@ object Industries extends ExecutionContexts {
     sectorIdIndustryMap map {
       case (id, name) =>
         Lookup.keyword(name) flatMap {
-          keywords => industryKeywordIds.alter(_.updated(id, keywords.map(_.id)))(5.seconds)
+          keywords => industryKeywordIds.alter(_.updated(id, keywords.map(_.id)))
         }
     }
   }
 
-  def stop() {
-    industryKeywordIds.close()
-  }
-
-  def forIndustry(id: Int) = industryKeywordIds().get(id).getOrElse(Nil)
+  def forIndustry(id: Int) = industryKeywordIds().getOrElse(id, Nil)
 }

@@ -3,7 +3,7 @@ package common
 import conf.Switches.AutoRefreshSwitch
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
-import play.api.templates.Html
+import play.twirl.api.Html
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.api.libs.json.Json._

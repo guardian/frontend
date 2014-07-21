@@ -8,6 +8,8 @@ import scala.concurrent.Await
 
 abstract class HealthcheckTest(warmupUrl: String) extends FlatSpec with Matchers {
 
+  import play.api.Play.current
+
   def prepareForTest() {}
 
   // you have to actually hit a url (in dev/ test mode) before the management plugin will start, hence warmup url

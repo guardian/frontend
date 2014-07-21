@@ -5,7 +5,6 @@ import scala.util._
 import play.api.data.Forms._
 import scala.util.Success
 import scala.util.Failure
-import scala.Some
 import play.api.i18n.Messages
 
 trait DateMapping {

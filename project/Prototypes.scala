@@ -3,8 +3,9 @@ package com.gu
 import com.gu.versioninfo.VersionInfo
 import sbt._
 import sbt.Keys._
-import play.Project._
+import play._
 import com.typesafe.sbt.SbtNativePackager._
+import play.twirl.sbt.Import._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -49,12 +50,7 @@ trait Prototypes {
   )
 
   val frontendClientSideSettings = Seq(
-    // Effectively disable built in Play javascript compiler
-    javascriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
-    lessEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
-    coffeescriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
-
-    templatesImport ++= Seq(
+    TwirlKeys.templateImports ++= Seq(
       "common._",
       "model._",
       "views._",
@@ -84,10 +80,10 @@ trait Prototypes {
     baseDirectory in Test := file(".")
   )
 
-  def root() = Project("root", base = file("."))
+  def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
 
   def application(applicationName: String) = {
-    play.Project(applicationName, version, path = file(applicationName))
+    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)
     .settings(frontendDependencyManagementSettings:_*)
     .settings(frontendCompilationSettings:_*)
     .settings(frontendClientSideSettings:_*)
@@ -95,7 +91,7 @@ trait Prototypes {
     .settings(VersionInfo.settings:_*)
     .settings(
       libraryDependencies ++= Seq(
-        "com.gu" %% "management-play" % "6.1",
+        "com.gu" %% "management-play" % "7.0",
         "commons-io" % "commons-io" % "2.4"
       )
     )

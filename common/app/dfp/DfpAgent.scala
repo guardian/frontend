@@ -130,13 +130,6 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
     update(foundationSupportedTagsAgent, grabSponsorshipsFromStore(dfpFoundationSupportedTagsDataKey))
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
   }
-
-  def stop() {
-    sponsoredTagsAgent close()
-    advertisementFeatureTagsAgent close()
-    foundationSupportedTagsAgent close()
-    pageskinnedAdUnitAgent close()
-  }
 }
 
 
@@ -157,8 +150,6 @@ trait DfpAgentLifecycle extends GlobalSettings {
 
   override def onStop(app: Application) {
     Jobs.deschedule("DfpDataRefreshJob")
-    DfpAgent.stop()
-
     super.onStop(app)
   }
 }

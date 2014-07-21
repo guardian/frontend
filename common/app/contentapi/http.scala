@@ -11,11 +11,12 @@ import com.gu.management.TimingMetric
 import common.ContentApiMetrics.ContentApi404Metric
 import java.net.InetAddress
 import scala.util.Try
-import com.ning.http.client.Realm.AuthScheme
+import play.api.libs.ws.WSAuthScheme
 
 class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCountMetric) extends Http[Future]
                                                                                               with ExecutionContexts {
 
+  import play.api.Play.current
   import System.currentTimeMillis
 
   override def GET(url: String, headers: Iterable[(String, String)]) = {
@@ -28,7 +29,7 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCo
     val start = currentTimeMillis
 
     val baseRequest = WS.url(urlWithDebugInfo)
-    val request = previewAuth.fold(baseRequest)(auth => baseRequest.withAuth(auth.user, auth.password, AuthScheme.BASIC))
+    val request = previewAuth.fold(baseRequest)(auth => baseRequest.withAuth(auth.user, auth.password, WSAuthScheme.BASIC))
     val response = request.withHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
 
     // record metrics

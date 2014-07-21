@@ -7,6 +7,6 @@ resolvers ++= Seq(
   Classpaths.typesafeReleases
 )
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.2.2")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3.2")
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "0.7.0-RC2")
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "0.7.1")

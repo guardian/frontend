@@ -6,6 +6,7 @@ import conf.Configuration._
 import common.{ExecutionContexts, Logging}
 import play.api.libs.ws.WS
 import java.net.URL
+import play.api.Play.current
 
 object OphanApi extends ExecutionContexts with Logging {
 
