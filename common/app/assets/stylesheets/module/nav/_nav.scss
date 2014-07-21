@@ -261,17 +261,6 @@
         padding-right: 0;
     }
 }
-.top-nav__item--mobile-only {
-    @include mq(tablet) {
-        margin-right: 0;
-        padding-left: 0;
-
-        + .top-nav__item {
-            border-left: 0;
-            padding-left: 0;
-        }
-    }
-}
 
 .top-nav__item--search {
     padding-left: 0;

@@ -56,20 +56,6 @@
         }
     }
 }
-.nav-popup--sections {
-    padding-bottom: 0;
-
-    @include mq(tablet) {
-        @include rem((
-            top: 120px
-        ));
-    }
-    @include mq(desktop) {
-        @include rem((
-            top: 120px - $gs-row-height
-        ));
-    }
-}
 
 
 /* Identity Menu
