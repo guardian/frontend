@@ -1,7 +1,7 @@
 package common
 
 import com.gu.openplatform.contentapi.model.ItemResponse
-import play.api.mvc.{ SimpleResult, RequestHeader, Results }
+import play.api.mvc.{ Result, RequestHeader, Results }
 import model._
 import implicits.ItemResponses
 import java.net.URI
@@ -11,7 +11,7 @@ import java.net.URI
 // Assuming that 'I can serve this to the user' is the least error state.
 object ModelOrResult extends Results with Logging {
 
-  def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, SimpleResult] =
+  def apply[T](item: Option[T], response: ItemResponse)(implicit request: RequestHeader): Either[T, Result] =
     item.map(i => ItemOrRedirect(i, response))
     .orElse(InternalRedirect(response).map(Right(_)))
     .getOrElse(Right(NoCache(NotFound)))
@@ -45,12 +45,12 @@ object InternalRedirect extends implicits.Requests {
 
   lazy val ShortUrl = """^(/p/.*)$""".r
 
-  def apply(response: ItemResponse)(implicit request: RequestHeader): Option[SimpleResult] = contentTypes(response)
+  def apply(response: ItemResponse)(implicit request: RequestHeader): Option[Result] = contentTypes(response)
     .orElse(response.tag.map(t => internalRedirect("facia", t.id)))
     .orElse(response.section.map(s => internalRedirect("facia", s.id)))
 
 
-  def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[SimpleResult] = {
+  def contentTypes(response: ItemResponse)(implicit request: RequestHeader): Option[Result] = {
     response.content.map {
       case a if a.isArticle || a.isLiveBlog => internalRedirect("type/article", a.id)
       case v if v.isVideo => internalRedirect("applications", v.id)
@@ -59,9 +59,9 @@ object InternalRedirect extends implicits.Requests {
     }
   }
 
-  def internalRedirect(base: String, id: String)(implicit request: RequestHeader): SimpleResult = internalRedirect(base, id, None)
+  def internalRedirect(base: String, id: String)(implicit request: RequestHeader): Result = internalRedirect(base, id, None)
 
-  def internalRedirect(base: String, id: String, queryString: Option[String])(implicit request: RequestHeader): SimpleResult = {
+  def internalRedirect(base: String, id: String, queryString: Option[String])(implicit request: RequestHeader): Result = {
     val qs: String = queryString.getOrElse("")
     request.path match {
       case ShortUrl(_) => Found(s"/$id$qs")

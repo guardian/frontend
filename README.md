@@ -12,7 +12,8 @@ On the server
 -------------
 
 * Every request can be cached and has an appropriate Cache-Control header set.
-* Each request may only perform 1 I/O operation on the backend. (you cannot make 2 calls to the content API or any
+* Each request may only perform 1 I/O operation on the backend. (you cannot
+make 2 calls to the content API or any
   other 3rd party)
 * The average response time of any endpoint is less than 500ms.
 * Requests that take longer than 2 seconds will be terminated.
@@ -26,31 +27,39 @@ Coding conventions
 ------------------
 Install the EditorConfig plugin in your IDE/text editor: http://editorconfig.org/#download
 
-It will read the contents of the [.editorconfig](https://github.com/guardian/frontend/blob/editorconfig/.editorconfig) file and set up your editor with the correct encoding and indentation settings for the project.
+It will read the contents of the [.editorconfig](https://github.com/guardian/frontend/blob/editorconfig/.editorconfig) file and set up your editor with the
+correct encoding and indentation settings for the project.
 
 
 Configuration
 -------------
 You need 2 files on your machine.
 
-The first file is called `/etc/gu/install_vars` and has the following contents...
+The first file is called `/etc/gu/install_vars` and has the following contents…
 ```
 STAGE=DEV
 ```
 
-The second file is called `[YOUR_HOME_DIR]/.gu/frontend.properties` and you can get its contents from a shared
-document. Ask your team mates to share it with you. If it has already been shared with you just search for "frontend.properties" in your documents.
+The second file is called `[YOUR_HOME_DIR]/.gu/frontend.properties` and you
+can get its contents from a shared document. Ask your team mates to share it
+with you. If it has already been shared with you just search for
+"frontend.properties" in your documents.
 
 Nginx
 -----
 
-If you are working on Identity or Discussion, Nginx must be installed and configured to correctly serve the application, please refer to [`/nginx/README.md`](./nginx/README.md) in this project.
+If you are working on Identity or Discussion, Nginx must be installed and
+configured to correctly serve the application, please refer to
+[`/nginx/README.md`](./nginx/README.md) in this project.
 
 Vagrant
 -------
-You can run the project with the supplied Vagrantfile - make sure you understand what vagrant is http://www.vagrantup.com/
+You can run the project with the supplied Vagrantfile - make sure you
+understand what vagrant is http://www.vagrantup.com/
 
-* You need Virtualbox and Vagrant - on Ubuntu `sudo apt-get install virtualbox vagrant` otherwise see http://docs.vagrantup.com/v2/installation/index.html
+* Make sure you have [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
+and [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) installed
+(on Ubuntu `sudo apt-get install virtualbox vagrant`)
 * change directory into the folder where this README is located
 * `vagrant up` - this will take a while, make some coffee
 * You can now get onto the box by `vagrant ssh`
@@ -65,23 +74,33 @@ Local Install Requirements
 * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 * Installed npm (Node package manager - you quite possibly already have this)
 * Installed Grunt (build tool) `sudo npm -g install grunt-cli`
-* Installed Ruby >= v1.9.x (on Ubuntu: `sudo apt-get install ruby ruby-dev`) & [bundler](http://gembundler.com/) (You may already have this installed, but run `ruby -v` to check version number)
-* Installed Memcached `sudo apt-get install memcached` - this is optional (most of the time you do not want to use it as caching makes local development harder)
+* Installed Ruby >= v1.9.x (on Ubuntu: `sudo apt-get install ruby ruby-dev`) &
+ [bundler](http://gembundler.com/) (You may already have this installed, but
+ run `ruby -v` to check version number)
+* Installed Memcached `sudo apt-get install memcached` - this is optional
+(most of the time you do not want to use it as caching makes local development
+harder)
+* Installed [libpng](http://libpng.org/pub/png/libpng.html):
+`brew install libpng` (Mac OSX with [Homebrew](http://brew.sh/)) or
+`sudo apt-get install libpng-dev` (Ubuntu)
 
 
 NPM ownership
 -------------
-Sometimes when you install npm it ends up owned by root (but in your home directory).
+Sometimes when you install npm it ends up owned by root (but in your home
+directory).
 
 Check that you own your own .npm directory `ls -ld ~/.npm`
 
-If it is owned by root then take ownership of it `sudo chown -R username:username ~/.npm`
+If it is owned by root then take ownership of it
+`sudo chown -R username:username ~/.npm`
 
 
 File handles
 ------------
-On Linux machines you may run into a "too many files open" error during compilation or reloading. You can find out
-how many file handles you are allowed per process by running `ulimit -n`. This can be quite low, e.g. 1024
+On Linux machines you may run into a "too many files open" error during
+compilation or reloading. You can find out how many file handles you are
+allowed per process by running `ulimit -n`. This can be quite low, e.g. 1024
 
 To increase the limit do the following (instructions from Ubuntu 12.10)...
 
@@ -110,37 +129,31 @@ SBT for the Play Framework backend. Neither of these tools are much use for
 building the other half of the project and coupling them together with an
 integration is one of those bad ideas that is even worse than it sounds.
 
-Run 
+Install node dependencies:
 ```
 npm install
 ```
-to download Node dependencies
 
-Run
+Install additional dependencies:
 ```
 bundle
 ```
-to install additional dependencies
 
-Run
+After this, you can compile the assets (see the note about `grunt watch` [below](#client-side-development)):
 ```
 grunt compile
 ```
-to compile assets
 
-You ***must*** start SBT with the supplied script called `sbt` if you start
-SBT any other way the project will not run.
-
-Start the Grunt build and watch for development changes:
-
+In another console, start Simple Build Tool (sbt) using the supplied `sbt`
+script. Note that if you start SBT any other way the project will not run.
 ```
-grunt watch
+./sbt
 ```
 
-In another console, start Simple Build Tool (sbt) by running `./sbt`. It may
-take a while to start the first time. Once SBT is running, switch project by
-typing `project dev-build`. Then compile and run the project locally by typing
-`run`. This also can take a while first time.
+Once SBT is running (it may take a while to start the first time - you'll know
+when you get a prompt), switch project by typing `project dev-build`. Then
+compile and run the project locally by typing `run`. This also can take a
+while first time.
 
 Now test you are up and running by hitting the following URLs:
    * http://localhost:9000/books
@@ -149,18 +162,21 @@ Now test you are up and running by hitting the following URLs:
 
 Play Framework will recompile code changes on refresh.
 
-To create project files for use in IntelliJ, run the `gen-idea` task from the root
-SBT project. see https://github.com/mpeltonen/sbt-idea
+To create project files for use in IntelliJ, run the `gen-idea` task from the
+root SBT project. See https://github.com/mpeltonen/sbt-idea.
 
-Further information on using the Play console is available [here][play2-console].
+Further information on using the Play console is available
+[here][play2-console].
 
 
 Client-side development
 -----------------------
-`grunt-watch` is pretty inefficient to compile our Sass into CSS, so @mattosborn
-created a script called [grunt-csdevmode][grunt-csdevmode].
 
-`grunt csdevmode` pushes stylesheets to all connected browsers:
+There is a `grunt watch` task available to build and watch for development
+changes, but `grunt-watch` is pretty inefficient to compile our Sass into CSS
+so @mattosborn created a script called [grunt-csdevmode][grunt-csdevmode].
+
+`grunt csdevmode` also pushes stylesheets to all connected browsers:
 no need to reload a page to preview your changes, just like with Livereload.
 
 ```bash
@@ -195,8 +211,10 @@ You can debug your local Frontend application, by attaching a debugger.
 * Build and run your application. See "Running" for steps.
 * Use a debugger to attach to the remote Java process, on localhost:1044.
 
-Any IDE debugger should be compatible. In IntelliJ, add a new Debug Configuration, based on the Remote default.
-Ensure the Transport is Socket, the Debugger mode is Attach, and the port is set to 1044.
+Any IDE debugger should be compatible. In IntelliJ, add a new Debug
+Configuration, based on the Remote default.
+Ensure the Transport is Socket, the Debugger mode is Attach, and the port is
+set to 1044.
 Start a new Debug session, and your breakpoints should be active.
 
 

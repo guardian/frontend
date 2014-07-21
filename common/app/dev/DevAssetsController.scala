@@ -16,7 +16,7 @@ object DevAssetsController extends Controller with ExecutionContexts {
 
     val resolved = new File(s"static/hash/$path").toURI.toURL
 
-    SimpleResult(
+    Result(
       ResponseHeader(OK, Map(CONTENT_TYPE -> contentType.getOrElse(BINARY))),
       Enumerator.fromStream(resolved.openStream())
     )

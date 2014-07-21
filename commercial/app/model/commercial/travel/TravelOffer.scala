@@ -7,7 +7,6 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
 import model.commercial.Segment
-import scala.Some
 
 case class TravelOffer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
                  earliestDeparture: DateTime, keywordIds: List[String], countries: List[String], category: String,
@@ -116,11 +115,6 @@ object Countries extends ExecutionContexts with Logging {
       }
     }
   }
-
-  def stop() {
-    countryKeywordIds.close()
-  }
-
 
   def forCountry(name: String) = countryKeywordIds().get(name).getOrElse(Nil)
 }

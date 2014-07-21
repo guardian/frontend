@@ -3,7 +3,7 @@ package controllers.admin
 import play.api._
 import play.api.mvc._
 import play.api.Play.current
-import org.joda.time.DateMidnight
+import org.joda.time.LocalDate
 import java.net.URLDecoder
 import scala.concurrent.Future
 import common.ExecutionContexts

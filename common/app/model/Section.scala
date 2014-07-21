@@ -15,7 +15,7 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
 
   override lazy val isFront = true
 
-  override lazy val description = Some(s"Latest news and comment on ${webTitle.toLowerCase()} from the Guardian")
+  override lazy val description = Some(s"Latest news and comment on ${webTitle.toLowerCase} from the Guardian")
 
   override lazy val url: String = SupportedUrl(delegate)
 
@@ -28,8 +28,9 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
     "content-type" -> "Section"
   )
 
-  override def isSponsored = DfpAgent.isSponsored(this.id)
-  override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(this.id)
-  override def sponsor = DfpAgent.getSponsor(this.id)
+  override lazy val isSponsored = DfpAgent.isSponsored(id)
+  override lazy val isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
+  override lazy val isFoundationSupported = DfpAgent.isFoundationSupported(id)
+  override lazy val sponsor = DfpAgent.getSponsor(id)
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 }

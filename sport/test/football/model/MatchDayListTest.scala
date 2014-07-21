@@ -31,7 +31,7 @@ class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData w
 
       "should show all matches happening today" in {
         matches.relevantMatches.foreach { case (fMatch, _) =>
-          fMatch.date.toDateMidnight should equal(today)
+          fMatch.date.toLocalDate should equal(today)
         }
       }
 

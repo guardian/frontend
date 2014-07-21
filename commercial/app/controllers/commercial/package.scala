@@ -4,7 +4,7 @@ import common.{JsonNotFound, JsonComponent}
 import model.commercial.{Context, Segment}
 import play.api.mvc._
 import scala.concurrent.duration._
-import play.api.templates.Html
+import play.twirl.api.Html
 
 package object commercial {
 
@@ -27,17 +27,17 @@ package object commercial {
   }
 
   trait Format {
-    def nilResult(implicit request: RequestHeader): SimpleResult
-    def result(view: Html)(implicit request: RequestHeader): SimpleResult
+    def nilResult(implicit request: RequestHeader): Result
+    def result(view: Html)(implicit request: RequestHeader): Result
   }
 
   object htmlFormat extends Format {
-    override def nilResult(implicit request: RequestHeader): SimpleResult = Results.NotFound
-    override def result(view: Html)(implicit request: RequestHeader): SimpleResult = Results.Ok(view)
+    override def nilResult(implicit request: RequestHeader): Result = Results.NotFound
+    override def result(view: Html)(implicit request: RequestHeader): Result = Results.Ok(view)
   }
 
   object jsonFormat extends Format {
-    override def nilResult(implicit request: RequestHeader): SimpleResult = JsonNotFound.apply()
-    override def result(view: Html)(implicit request: RequestHeader): SimpleResult = JsonComponent(view)
+    override def nilResult(implicit request: RequestHeader): Result = JsonNotFound.apply()
+    override def result(view: Html)(implicit request: RequestHeader): Result = JsonComponent(view)
   }
 }

@@ -1,3 +1,3 @@
 package services
 
-class OnwardHealthcheckTest extends HealthcheckTest("/top-stories")
+class OnwardHealthcheckTest extends HealthcheckTest("/most-read.json")
