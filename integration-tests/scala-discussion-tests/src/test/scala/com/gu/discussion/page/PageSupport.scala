@@ -12,7 +12,6 @@ class PageSupport(implicit driver: WebDriver) {
   private def commentRootById(commentId: String) = driver.findElement(id(s"$commentId"))
 
   def waitForNewCommentItem: CommentItem = {
-    //Ugly hack to wait for URL to change
     val e = new ExpectedCondition[Boolean]() {
       def apply(d: WebDriver): Boolean = {
         return (d.getCurrentUrl() contains "#comment-")
@@ -25,7 +24,7 @@ class PageSupport(implicit driver: WebDriver) {
   val newReplyID = newReplyURL.substring(newReplyURL.indexOf("#") + 1)
 
   CommentItem(commentRootById(newReplyID))
-}
+  }
 
 
 }

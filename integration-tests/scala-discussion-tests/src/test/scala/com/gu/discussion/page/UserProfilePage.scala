@@ -47,8 +47,10 @@ case class UserProfilePage(implicit driver: WebDriver) {
   }
 
   def waitForUserHistoryToLoad() = {
-    if (ElementOption(activityItemTitle).map(_.isDisplayed) != Some(true)
-      && ElementOption(activityStreamEmpty).map(_.isDisplayed) != Some(true)) {
+    val activeItemIsDisplayed: Boolean = ElementOption(activityItemTitle).map(_.isDisplayed) != Some(true)
+    val activityStreamIsEmpty: Boolean = ElementOption(activityStreamEmpty).map(_.isDisplayed) != Some(true)
+
+    if (activeItemIsDisplayed && activityStreamIsEmpty) {
       throw new RuntimeException("Content not loaded!")
     }
     this
