@@ -96,11 +96,6 @@ to apply any necessary changes to non-shared code there too.
             @if(SearchSwitch.isSwitchedOn) {
                 <div class="nav-popup--search nav-popup--small nav-popup is-off"><div class="js-search-placeholder"></div></div>
             }
-            @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOff){
-            <div class="nav-popup--sections nav-popup nav-popup--small is-off" data-component="navigation">
-                @fragments.sections(page, false)
-            </div>
-            }
         </div>
     </div>
     @fragments.nav.newNavigation(page)

@@ -42,13 +42,6 @@
         background-color: #ffffff;
         border: 1px solid $c-neutral4;
 
-        .nav--additional-sections > .nav__item {
-            > .nav__link {
-                border-top: 0;
-                border-bottom: 1px solid lighten($c-neutral4, 8%);
-            }
-        }
-
         .nav__link {
             @include rem((
                 padding: 10px 0

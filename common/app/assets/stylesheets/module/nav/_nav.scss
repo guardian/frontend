@@ -193,24 +193,10 @@
 }
 
 
-/* Overrides for the sections menu
+/* Overrides for the services menu
    ========================================================================== */
 
 @include mq(tablet) {
-    .nav--additional-sections {
-        @include rem((
-            padding-left: $gs-gutter/2,
-            padding-right: $gs-gutter/2
-        ));
-
-        > .nav__item {
-            clear: none !important;
-            padding-left: $gs-gutter/2 !important;
-            padding-right: $gs-gutter/2 !important;
-            padding-left: rem($gs-gutter/2) !important;
-            padding-right: rem($gs-gutter/2) !important;
-        }
-    }
     .nav--guardian-services {
         .nav__link {
             position: relative;
