@@ -3,6 +3,7 @@
 @import views.html.fragments.items.linksList.{trail => linksList}
 @import model.FaciaComponentName
 @import common.LinkTo
+@import views.support.GetClasses
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
