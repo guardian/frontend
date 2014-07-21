@@ -1,0 +1,11 @@
+@(items: Seq[model.Trail], indexOffset: Int, style: views.support.Container)(implicit header: RequestHeader, config: model.Config)
+
+@if(items.nonEmpty) {
+    <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
+        <ul class="l-columns linkslist">
+        @items.zipWithIndex.map{ case (trail, index) =>
+            @fragments.items.linksList.trail(trail, index + indexOffset, None)
+        }
+        </ul>
+    </div>
+}

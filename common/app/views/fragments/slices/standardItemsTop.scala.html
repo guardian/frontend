@@ -1,0 +1,11 @@
+@(items: Seq[model.Trail], indexOffset: Int, containerIndex: Int)(implicit header: RequestHeader, config: model.Config)
+
+@if(items.nonEmpty) {
+    <div class="facia-slice-wrapper">
+        <ul class="u-unstyled l-row l-row--layout-m l-row--items-4 facia-slice">
+        @items.zipWithIndex.map { case (trail, index) =>
+            @fragments.collections.items.standard(trail, index + indexOffset, containerIndex)
+        }
+        </ul>
+    </div>
+}

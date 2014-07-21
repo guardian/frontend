@@ -1,7 +1,7 @@
-@(items: Seq[model.Trail])
+@(items: Seq[model.Trail], indexOffset: Int)(implicit request: RequestHeader)
 
 @items.zipWithIndex.map { case (trail, index) =>
     <div class="facia-slice-wrapper">
-        @fragments.items.baguette(trail, index)
+        @fragments.items.baguette(trail, index + indexOffset)
     </div>
 }

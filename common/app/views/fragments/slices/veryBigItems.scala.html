@@ -1,0 +1,7 @@
+@(items: Seq[model.Trail], indexOffset: Int)(implicit request: RequestHeader, config: model.Config)
+
+@items.zipWithIndex.map { case (trail, index) =>
+    <div class="facia-slice-wrapper">
+        @fragments.items.fromage(trail, index + indexOffset)
+    </div>
+}

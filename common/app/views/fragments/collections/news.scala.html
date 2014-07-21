@@ -1,74 +1,17 @@
 @(items: Seq[model.Trail], style: views.support.Container, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
 
-@import views.helpers.CSS.bigItemCssClass
-@import views.fragments.slices
+@import views.html.fragments.slices
 
-@defining(items.filter(_.group == Option("3")), items.filter(_.group == Option("2")), items.filter(_.group == Option("1")), items.filter(items => items.group == Option("0") || items.group == None)) { case (hugeItems, veryBigItems, bigItems, standardItems) =>
+@defining(items.filter(_.group == Option("3")), items.filter(_.group == Option("2")), items.filter(_.group == Option("1")), items.filter(item => item.group == Option("0") || item.group == None)) { case (hugeItems, veryBigItems, bigItems, standardItems) =>
+    @slices.hugeItems(hugeItems, 0)
 
-    @defining(hugeItems.size, veryBigItems.size, bigItems.size, standardItems.size) { case (hugeItemsCount, veryBigItemsCount, bigItemsCount, standardItemsCount) =>
+    @slices.veryBigItems(veryBigItems, hugeItems.size)
 
-        @slices.hugeItems(hugeItems)
+    @slices.bigItems(bigItems, hugeItems.size + veryBigItems.size, containerIndex)
 
-        @veryBigItems.zipWithIndex.map { case (trail, index) =>
-            @if(items.nonEmpty) {
-                <div class="facia-slice-wrapper">
-                    @fragments.items.fromage(trail, index + hugeItemsCount)
-                </div>
-            }
-        }
+    @slices.standardItemsTop(standardItems.slice(0, 4), hugeItems.size + veryBigItems.size + bigItems.size, containerIndex)
 
-        @bigItems.grouped(2).map{ items =>
-            @if(items.nonEmpty) {
-                <div class="facia-slice-wrapper">
-                    @if(items.size == 1) {
-                        @items.zipWithIndex.map{ case (trail, index) =>
-                            @fragments.items.fromage(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount)
-                        }
-                    }else{
-                        <ul class="row-of-two @bigItemCssClass(items(0).imageAdjust, items(1).imageAdjust) u-unstyled l-row l-row--items-2 facia-slice">
-                            @items.zipWithIndex.map{ case (trail, index) =>
-                                @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
-                            }
-                        </ul>
-                    }
-                </div>
-            }
-        }
+    @slices.standardItemsMiddle(standardItems.slice(4, 10), hugeItems.size + veryBigItems.size + bigItems.size + 4, style)
 
-        @defining(standardItems.slice(0, 4)) { items =>
-            @if(items.nonEmpty) {
-                <div class="facia-slice-wrapper">
-                    <ul class="u-unstyled l-row l-row--layout-m l-row--items-4 facia-slice">
-                        @items.zipWithIndex.map{ case (trail, index) =>
-                            @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
-                        }
-                    </ul>
-                </div>
-            }
-        }
-
-        @defining(standardItems.slice(4, 10), hugeItemsCount + veryBigItemsCount + bigItemsCount + 4) { case (items, offset) =>
-            @if(items.nonEmpty) {
-                <div class="linkslist-container tone-@{style.tone} js-slice--ad-candidate">
-                    <ul class="l-columns linkslist linkslist--with-images">
-                        @items.zipWithIndex.map{ case (trail, index) =>
-                            @fragments.items.linksList.trail(trail, index + offset, Some("boost"))
-                        }
-                    </ul>
-                </div>
-            }
-        }
-
-        @defining(standardItems.slice(10, 28), hugeItemsCount + veryBigItemsCount + bigItemsCount + 10) { case (items, offset) =>
-            @if(items.nonEmpty) {
-                <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
-                    <ul class="l-columns linkslist">
-                        @items.zipWithIndex.map{ case (trail, index) =>
-                            @fragments.items.linksList.trail(trail, index + offset, None)
-                        }
-                    </ul>
-                </div>
-            }
-        }
-    }
+    @slices.standardItemsBottom(standardItems.slice(10, 28), hugeItems.size + veryBigItems.size + bigItems.size + 10, style)
 }
