@@ -36,10 +36,6 @@
             @fragments.commercial.topBannerMobile()
         }
 
-        @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOff){
-            @fragments.localNav(metaData)
-        }
-
         @body
 
         @fragments.footer(metaData)

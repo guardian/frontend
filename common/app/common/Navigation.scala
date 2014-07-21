@@ -209,13 +209,6 @@ object Navigation {
 
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
-  def localNav(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = topLevelItem(navigation, page).filter(_.links.nonEmpty)
-
-  def sectionOverride(localNav: NavItem, currentSublink: Option[SectionLink]): String = currentSublink.map(_.title).getOrElse(localNav.name.title)
-
-  def localNavWithoutCurrent(localNav: NavItem, currentSublink: Option[SectionLink]) =
-    localNav.links.filter(_.href != currentSublink.map(_.href).getOrElse(""))
-
   def rotatedLocalNav(topSection: NavItem, metaData: MetaData): Seq[SectionLink] =
     topSection.links.find(_.currentFor(metaData)) match {
       case Some(currentSection) =>

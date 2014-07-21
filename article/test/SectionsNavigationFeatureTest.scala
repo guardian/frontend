@@ -26,7 +26,7 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with M
         sections.length should be > 0
 
         And("a button to activate that list")
-        findFirst(".control--sections").getAttribute("href") should include("australia-mining-boom-end#footer-nav")
+        findFirst(".new-navigation__toggle").getAttribute("href") should include("australia-mining-boom-end#footer-nav")
       }
     }
 
