@@ -27,6 +27,7 @@ define(['common/utils/$',
         TAB: 'js-membership-tab',
         TAB_BUTTON: 'js-memebership-tab-button',
         TAB_CONTAINER: 'js-memebership-tab-container',
+        TAB_DETAILS_LIST_UPPER: 'js-membership-details-list-upper',
         TAB_DETAILS_LIST_LOWER: 'js-membership-details-list-lower',
         TIER: 'js-membership-tier',
         COST: 'js-membership-payment-cost',
@@ -44,12 +45,16 @@ define(['common/utils/$',
         ANIM_OPENED: 'membership-tab__change-cc-form-cont--open',
         ANIM_CLOSE: 'membership-tab__change-cc-form-cont--to-closed',
         ANIM_CLOSED: 'membership-tab__change-cc-form-cont--closed',
-        NOTIFICATION_TIER: 'js-mem-tier',
+        NOTIFICATION_TIER_CURRENT: 'js-mem-tier-current',
+        NOTIFICATION_TIER_TARGET: 'js-mem-tier-target',
         NOTIFICATION_TIER_HREF: 'js-mem-tier-href',
         NOTIFICATION_PERIOD_START: 'js-mem-current-period-start',
         NOTIFICATION_PERIOD_END: 'js-mem-current-period-end',
         NOTIFICATION_CANCEL: 'js-mem-cancel-tier',
-        NOTIFICATION_CHANGE: 'js-mem-change-tier'
+        NOTIFICATION_CHANGE: 'js-mem-change-tier',
+        NOTIFICATION_NEW_START: 'js-mem-new-start',
+        NOTIFICATION_ICON_CURRENT: 'js-mem-icon-current',
+        NOTIFICATION_ICON_TARGET: 'js-mem-icon-target'
     };
 
     /**
@@ -100,18 +105,17 @@ define(['common/utils/$',
     *    tab using the response from the /user/me
     */
     Membership.prototype.prerender = function () {
-        var self = this;
-        var membershipUrl = config.page.membershipUrl;
-        var tierName;
-        var subscriptionCurrentPeriodStart;
-        var subscriptionCurrentPeriodEnd;
-        var memberOptIn;
-        var subscriptionIsCancelled;
-        var subscriptionInterval;
-        var notificationCancelElement = self.getElem('NOTIFICATION_CANCEL');
-        var notificationChangeElement = self.getElem('NOTIFICATION_CHANGE');
-        var tierHref;
-        var lowerTabDetailsList = self.getClass('TAB_DETAILS_LIST_LOWER');
+        var self = this,
+            membershipUrl = config.page.membershipUrl,
+            tierName,
+            subscriptionCurrentPeriodStart,
+            subscriptionCurrentPeriodEnd,
+            memberOptIn,
+            subscriptionIsCancelled,
+            subscriptionInterval,
+            notificationCancelElement = self.getElem('NOTIFICATION_CANCEL'),
+            notificationChangeElement = self.getElem('NOTIFICATION_CHANGE'),
+            tierHref;
 
         ajax({
             url: membershipUrl + '/user/me/details',
@@ -124,39 +128,68 @@ define(['common/utils/$',
             subscriptionCurrentPeriodEnd = self.formatDate(new Date(resp.subscription.end));
             memberOptIn = resp.optIn;
             subscriptionIsCancelled = !!!resp.subscription.cancelledAt;
-            subscriptionInterval = resp.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual';
+            subscriptionInterval = resp.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual',
+            upperTabDetailsList = self.getClass('TAB_DETAILS_LIST_UPPER'),
+            lowerTabDetailsList = self.getClass('TAB_DETAILS_LIST_LOWER');
 
             // populate tab
             self.display = true;
-            self.getElem('TIER').innerHTML = resp.subscription.plan.name;
-            self.getElem('COST').innerHTML = self.formatAmount(resp.subscription.plan.amount);
-            self.getElem('JOIN').innerHTML = self.formatDate(new Date(resp.joinDate));
+            $(self.getClass('TIER'), upperTabDetailsList).text(resp.subscription.plan.name);
+            $(self.getClass('COST')).each(function () {
+                this.innerHTML = '&pound;'+self.formatAmount(resp.subscription.plan.amount);
+            });
+            $(self.getClass('JOIN'), upperTabDetailsList).text(self.formatDate(new Date(resp.joinDate)));
 
             if (tierName === 'Partner' || tierName === 'Patron') {
 
-                // package change message
+                //var memberOptIn = true;
+                var subscriptionIsCancelled = false;
+
                 if(!memberOptIn) {
+                    // Change package in process
+
+                    var subscriptionNewStartDate = self.formatDate(
+                        new Date(
+                                new Date(resp.subscription.end).getTime() + (24 * 60 * 60 * 1000)
+                        )
+                    );
+                    $(self.getClass('TAB_DETAILS_LIST_UPPER'), self.context).addClass('is-hidden');
                     $(notificationChangeElement, self.context).removeClass('is-hidden');
-                    $(self.getClass('NOTIFICATION_TIER'), notificationChangeElement).html(tierName);
+                    $(self.getClass('NOTIFICATION_TIER_CURRENT'), notificationChangeElement).html(tierName);
+                    $(self.getClass('NOTIFICATION_TIER_TARGET'), notificationChangeElement).html('Friend');
                     $(self.getClass('NOTIFICATION_PERIOD_START'), notificationChangeElement).html(subscriptionCurrentPeriodStart);
                     $(self.getClass('NOTIFICATION_PERIOD_END'), notificationChangeElement).html(subscriptionCurrentPeriodEnd);
+                    $(self.getClass('NOTIFICATION_NEW_START'), notificationChangeElement).html(subscriptionNewStartDate);
+                    $(self.getClass('NOTIFICATION_ICON_CURRENT'), notificationChangeElement).addClass('i-g-'+tierName.toLowerCase());
+                    $(self.getClass('NOTIFICATION_ICON_TARGET'), notificationChangeElement).addClass('i-g-'+'friend');
+                    $(self.getClass('CC_LAST4'), notificationChangeElement).text(resp.subscription.card.last4);
+
                 } else if(subscriptionIsCancelled) {
+                    // Cancellation in progress
+
+                    $(self.getClass('TAB_DETAILS_LIST_UPPER'), self.context).addClass('is-hidden');
                     $(notificationCancelElement, self.context).removeClass('is-hidden');
                     tierHref = tierName.toLowerCase() === 'patron' ? membershipUrl + '/join/patron' : membershipUrl + '/join';
                     $(self.getClass('NOTIFICATION_TIER'), notificationCancelElement).html(tierName);
                     $(self.getClass('NOTIFICATION_TIER_HREF'), notificationCancelElement).attr('href', tierHref);
                     $(self.getClass('NOTIFICATION_PERIOD_START'), notificationCancelElement).html(subscriptionCurrentPeriodStart);
                     $(self.getClass('NOTIFICATION_PERIOD_END'), notificationCancelElement).html(subscriptionCurrentPeriodEnd);
+
+                } else {
+                    // Regular membership tab
+
+                    $(lowerTabDetailsList, self.context).removeClass('is-hidden');
+                    $(self.getClass('INTERVAL'), self.context).html(subscriptionInterval);
+                    $(self.getClass('NEXT'), lowerTabDetailsList).text(self.formatDate(new Date(resp.subscription.end)));
+                    $(self.getClass('CC_LAST4'), lowerTabDetailsList).text(resp.subscription.card.last4);
+
+                    self.currentCardTypeClass = 'i-' + resp.subscription.card.type.toLowerCase().replace(' ', '-');
+
+                    $(self.getClass('CC_TYPE'), lowerTabDetailsList).addClass(self.currentCardTypeClass);
+                    $(self.getClass('CC_TYPE_TEXT'), lowerTabDetailsList).text(resp.subscription.card.type);
+
                 }
 
-                // populate tab
-                $(lowerTabDetailsList, self.context).removeClass('is-hidden');
-                $(self.getClass('INTERVAL'), self.context).html(subscriptionInterval);
-                self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end));
-                self.getElem('CC_LAST4').innerHTML = resp.subscription.card.last4;
-                self.currentCardTypeClass = 'i-' + resp.subscription.card.type.toLowerCase().replace(' ', '-');
-                $(self.getElem('CC_TYPE'), lowerTabDetailsList).addClass(self.currentCardTypeClass);
-                self.getElem('CC_TYPE_TEXT').innerHTML = resp.subscription.card.type;
             }
 
             self.ready();

@@ -2,18 +2,79 @@
 @import views.html.fragments.selectDates
 
     <div class="membership-tab__subscription-cancel is-hidden js-mem-cancel-tier">
-        <h2>You've cancelled your membership</h2>
-        <p>Now that you've cancelled your membership, your <span class="js-mem-tier"></span> <a class="js-mem-tier-href" href="">benefits</a> will run out on <span class="js-mem-current-period-end"></span>. After that date, the membership section won't be available in your profile. Your final subscription payment was taken on <span class="js-mem-current-period-start"></span>. Please note, you won't be able to amend your package again until this change has been processed.</p>
+        <h2 class="subscription-change__title">You've cancelled your membership</h2>
+        <p>Now that you've cancelled your membership, your <span class="js-mem-tier"></span> <a class="js-mem-tier-href" href="">benefits</a> will run out on <span class="js-mem-current-period-end"></span>. After that date, the membership section won't be available in your profile.</p>
+        <p>Your final subscription payment was taken on <span class="js-mem-current-period-start"></span>. Please note,
+        you won't be able to amend your package again until this change has been processed.</p>
     </div>
 
     <div class="membership-tab__subscription-change is-hidden js-mem-change-tier">
-        <h2>You've changed packages</h2>
+        <h2 class="subscription-change__title">You've changed packages</h2>
 
-        <p>Now that you've switched packages, your <span class="js-mem-tier"></span> benefits will run out on <span class="js-mem-current-period-end"></span>. After that date, you'll default to our Friend level of membership. Your final <span class="js-mem-tier"></span> subscription payment was taken on <span class="js-mem-current-period-start"></span>. 
-        Please note, you won't be able to amend your package again until this change has been processed.</p>
+        <p>Now that you've switched packages, your <span class="js-mem-tier"></span> benefits will run out on <span class="js-mem-current-period-end"></span>. After that date, you'll default to our Friend level of membership. Your final <span class="js-mem-tier"></span> subscription payment was taken on <span
+        class="js-mem-current-period-start"></span>.</p>
+        <p>Please note, you won't be able to amend your package again until this change has been processed.</p>
+
+        <h2 class="change-summary__heading">Change package summary</h2>
+
+        <i class="i i-mem-arrow change-summary__arrow"></i>
+
+        <div class="change-summary__container l-row l-row--items-2">
+
+            <div class="change-summary__panel change-summary__panel--current l-row__item">
+                <div class="change-summary__header">
+                    <div class="change-summary__tier-icon">
+                        <i class="i js-mem-icon-current"></i>
+                    </div>
+                    <h3 class="change-summary_tier js-mem-tier-current"></h3>
+                </div>
+                <div class="change-summary__meta">
+                    <ul class="u-unstyled">
+                        <li class="change-summery__item">
+                            <span class="change-summary__label">End date</span>
+                            <span class="change-summary__data js-mem-current-period-end"></span>
+                        </li>
+                        <li class="change-summery__item">
+                            <span class="change-summary__label">Monthly payment</span>
+                            <span class="change-summary__data js-membership-payment-cost"></span>
+                        </li>
+                        <li class="change-summery__item">
+                            <span class="change-summary__label">Last payment</span>
+                            <span class="change-summary__data js-mem-current-period-start"></span>
+                        </li>
+                        <li class="change-summery__item">
+                            <span class="change-summary__label">Card</span>
+                            <span class="change-summary__data">
+                                <span class="membership-tab__card-details js-membership-card-details">&#8226;&#8226;&#8226;&#8226;&nbsp;&#8226;&#8226;&#8226;&#8226;&nbsp;&#8226;&#8226;&#8226;&#8226;&nbsp;<span class="js-membership-card-lastfour"></span></span>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="change-summary__panel change-summary__panel--target l-row__item">
+                <div class="change-summary__header">
+                    <div class="change-summary__tier-icon">
+                        <i class="i js-mem-icon-target"></i>
+                    </div>
+                    <h3 class="change-summary_tier js-mem-tier-target"></h3>
+                </div>
+                <div class="change-summary__meta">
+                    <ul class="u-unstyled">
+                        <li class="change-summery__item">
+                            <span class="change-summary__label">Start date</span>
+                            <span class="change-summary__data js-mem-new-start"></span>
+                        </li>
+                        <li class="change-summery__item">
+                            <span class="change-summary__label">Monthly payment</span>
+                            <span class="change-summary__data">£FREE</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <ul class="u-unstyled membership-tab__details-list">
+    <ul class="u-unstyled membership-tab__details-list js-membership-details-list-upper">
 
         <li>
             <div class="fieldset__heading">
