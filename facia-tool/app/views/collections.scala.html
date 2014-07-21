@@ -333,7 +333,7 @@
             </div>
 
             <div class="closed" data-bind="if: !state.isOpen()">
-                <a class="spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
+                <a class="article__spark" target="ophan" title="Dark blue: Guardian. Green: Google. Light blue: Other." data-bind="
                     visible: state.sparkUrl,
                     attr: {href: state.ophanUrl}">
                     <img data-bind="attr: {src: state.sparkUrl}" />
@@ -348,14 +348,20 @@
                         visible: meta.imageSrc">Replaced</div>
                 </div>
 
-                <a class="tool tool--small tool--small--remove" data-bind="click: $parent.omitItem">
-                    <i class="icon-trash"></i>
-                </a>
+                <div class="article__tools">
+                    <span class="tool tool--small tool--small--remove" data-bind="click: $parent.omitItem">
+                        <i class="icon-trash"></i></span>
 
-                <a class="tool tool--small tool--small--href" target="_blank" data-bind="
-                    attr: {href: viewUrl}">
-                    <i class="icon-share-alt"></i>
-                </a>
+                    <span class="tool tool--small tool--small--href" target="_blank" data-bind="
+                        attr: {href: viewUrl}">
+                        <i class="icon-share-alt"></i></span>
+
+                    <span class="tool tool--small tool--small--copy" data-bind="
+                        click: copy">copy</span>
+
+                    <span class="tool tool--small tool--small--paste" data-bind="
+                        click: paste">paste</span>
+                </div>
 
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">
                     <span target="article" class="is-empty__url" data-bind="
@@ -369,15 +375,6 @@
                         css: {'is-empty': isSnap() && !meta.headline()},
                         attr: {href: id},
                         click: open"></a>
-
-                    <span class="copy-paste">
-                        &middot;
-                        <span class="linky" data-bind="
-                            click: copy">copy</span>
-                        &middot;
-                        <span class="linky" data-bind="
-                            click: paste">paste</span>
-                    </span>
 
                     <!-- ko if: meta.supporting && meta.supporting.items().length -->
                         <span class="count">(<span class="non-zero" data-bind="text: meta.supporting.items().length"></span>)</span>

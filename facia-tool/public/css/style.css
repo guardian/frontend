@@ -337,6 +337,11 @@ h1 {
     background-color: #eeeeee;
 }
 
+.article:hover .article__time,
+.article:hover .article__spark {
+    display: none;
+}
+
 .supporting .article {
     border-color: #dddddd;
     background: #dddddd;
@@ -454,7 +459,7 @@ a.headline:hover {
 
 .article__time {
     position: absolute;
-    right: 28px;
+    right: 0;
     top: 1px;
     font-size: 9px;
     line-height: 12px;
@@ -622,10 +627,10 @@ button {
     margin: -6px 0 0 3px;
 }
 
-.article .spark {
+.article__spark {
     position: absolute;
     top: 13px;
-    right: 28px;
+    right: 0;
 }
 
 .group-name {
@@ -811,13 +816,30 @@ button {
     color: #333333;
 }
 
+.article__tools {
+    display: none;
+}
+
+.article:hover > .closed > .article__tools {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 89px;
+    height: 51px;
+}
+
 .tool--small {
-    background: inherit;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 2px 4px 0 4px;
-    margin: 0 1px 0 3px;
-    line-height: 19px;
+    background: #CCCCCC;
+    text-align: center;
+    font-size: 12px;
+    line-height: 21px;
+    color: #333333;
+    width: 40px;
+    padding: 0;
+    opacity: 0.75;
 }
 
 .tool--small i {
@@ -825,27 +847,41 @@ button {
 }
 
 .article > .closed .tool--small {
-    display: none;
     position: absolute;
-    right: 2px;
-    background: #dddddd;
+}
+
+.article > .closed .tool--small--copy {
+    top: 3px;
+    right: 45px;
+}
+
+.article > .closed .tool--small--paste {
+    top: 26px;
+    right: 45px;
 }
 
 .article > .closed .tool--small--href {
-    top: 4px;
+    top: 3px;
+    right: 3px;
 }
 
 .article > .closed .tool--small--remove {
-    top: 27px;
+    top: 26px;
+    right: 3px;
 }
 
 .article:hover > .closed .tool--small {
     display: block;
-    opacity: 0.6;
 }
 
 .article > .closed .tool--small:hover {
     opacity: 1;
+    background: #999999;
+    color: #ffffff;
+}
+
+.article > .closed .tool--small:active{
+    background: #148ad2;
 }
 
 .latest-articles .tool--small--remove {
@@ -1084,7 +1120,7 @@ button {
     .left-col .article .article_content {
         margin-right: 40px;
     }
-    .left-col .article .spark {
+    .left-col .article__spark {
         display: none;
     }
     .left-col .article__time {
@@ -1116,20 +1152,22 @@ button {
     .front-selector {
         right: 10px;
     }
+    .col__inner {
+        padding: 5px 0 0 5px;
+    }
     .log-in-out,
-    .article .spark {
+    .article__time,
+    .article__spark {
         display: none;
     }
     .article .article_content {
-        margin-right: 25px;
+        margin-right: 5px;
     }
     .article > .closed .tool--remove {
         top: 0;
     }
-    .article__time {
-        position: inherit;
-        right: 0;
-        top: 2px;
+    .article:hover > .closed > .article__tools {
+        background-color: #eeeeee;
     }
 }
 
