@@ -5,13 +5,12 @@
 /* Configuration
    ========================================================================== */
 
+$c-new-navigation-base: #2479c3;
+
 $new-navigation-toggler-width: 48px;
 $new-navigation-toggler-width-full: 130px;
 
-$theme: default;
-
 $c-navigation-background: mix($c-new-navigation-base, #ffffff, 80%);
-$c-navigation-action: guss-colour(neutral-1);
 
 $c-signposting-action: #ffffff;
 $c-signposting-background: $c-new-navigation-base;
@@ -19,13 +18,8 @@ $c-signposting-background: $c-new-navigation-base;
 $c-top-navigation-action: #ffffff;
 $c-top-navigation-background: guss-colour(guardian-brand);
 
+$c-local-navigation-action: #ffffff;
 $c-local-navigation-background: $c-new-navigation-base;
-
-$c-local-navigation-parent-background: guss-colour(guardian-brand);
-
-$c-local-navigation-current-background: $c-local-navigation-parent-background;
-$c-local-navigation-current: #ffffff;
-$c-local-navigation-current-border: 0;
 
 $c-global-navigation-background: $c-new-navigation-base;
 $c-global-navigation-title: #ffffff;
