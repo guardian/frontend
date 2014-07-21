@@ -262,7 +262,7 @@ define([
                     name: 'merchandising-high',
                     type: 'commercial-component',
                     html: '<div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component" ' +
-                        'data-link-name="ad slot merchandising-high" data-name="merchandising-high" data-desktop="888,88|88,88" ' +
+                        'data-link-name="ad slot merchandising-high" data-name="merchandising-high" data-desktop="88,88" ' +
                         'data-refresh="false" data-label="false"></div>'
                 },
                 {

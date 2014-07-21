@@ -136,9 +136,6 @@ object DfpDataCacheJob extends ExecutionContexts with Dates{
         val advertisementFeatureSponsorships = data.advertisementFeatureSponsorships
         Store.putDfpAdvertisementFeatureTags(stringify(toJson(SponsorshipReport(now, advertisementFeatureSponsorships))))
 
-        val foundationSupported = data.foundationSupported
-        Store.putDfpFoundationSupportedTags(stringify(toJson(SponsorshipReport(now, foundationSupported))))
-
         val pageSkinSponsorships = data.pageSkinSponsorships
         Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
 

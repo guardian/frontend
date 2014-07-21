@@ -21,11 +21,6 @@ class DfpAgentTest extends FlatSpec with Matchers {
       Sponsorship(Seq("film"), None)
     )
 
-    override protected def foundationSupported: Seq[Sponsorship] = Seq(
-      Sponsorship(Seq("music"), Some("Music Foundation")),
-      Sponsorship(Seq("chuckle"), None)
-    )
-
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] =
       Seq(
         PageSkinSponsorship("lineItemName",
@@ -47,14 +42,6 @@ class DfpAgentTest extends FlatSpec with Matchers {
     Config("id", Some(apiQuery), None, None)
   }
 
-  "isSponsored" should "be true for a sponsored article" in {
-    testDfpAgent.isSponsored("spon-page") should be(true)
-  }
-
-  "isSponsored" should "be false for an unsponsored article" in {
-    testDfpAgent.isSponsored("article") should be(false)
-  }
-
   "isAdvertisementFeature" should "be true for an advertisement feature" in {
     testDfpAgent.isAdvertisementFeature("ad-feature") should be(true)
   }
@@ -63,12 +50,12 @@ class DfpAgentTest extends FlatSpec with Matchers {
     testDfpAgent.isAdvertisementFeature("article") should be(false)
   }
 
-  "isFoundationSupported" should "be true for a foundation-supported page" in {
-    testDfpAgent.isFoundationSupported("chuckle") should be(true)
+  "isSponsored" should "be true for a sponsored article" in {
+    testDfpAgent.isSponsored("spon-page") should be(true)
   }
 
-  "isFoundationSupported" should "be false for a non foundation-supported page" in {
-    testDfpAgent.isFoundationSupported("guffaw") should be(false)
+  "isSponsored" should "be false for an unsponsored article" in {
+    testDfpAgent.isSponsored("article") should be(false)
   }
 
   "isSponsored" should "be true for a sponsored container" in {
@@ -211,20 +198,8 @@ class DfpAgentTest extends FlatSpec with Matchers {
     testDfpAgent.getSponsor("ad-feature") should be(Some("spon2"))
   }
 
-  "getSponsor" should "have some value for a foundation-supported tag with a specified sponsor" in {
-    testDfpAgent.getSponsor("music") should be(Some("Music Foundation"))
-  }
-
-  "getSponsor" should "have no value for a sponsored tag without a specified sponsor" in {
-    testDfpAgent.getSponsor("media") should be(None)
-  }
-
   "getSponsor" should "have no value for an advertisement feature tag without a specified sponsor" in {
     testDfpAgent.getSponsor("film") should be(None)
-  }
-
-  "getSponsor" should "have no value for a foundation-supported tag without a specified sponsor" in {
-    testDfpAgent.getSponsor("chuckle") should be(None)
   }
 
   "getSponsor" should "have no value for an unsponsored tag" in {
