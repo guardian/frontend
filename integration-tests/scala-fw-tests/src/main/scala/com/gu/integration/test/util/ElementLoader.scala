@@ -1,15 +1,16 @@
 package com.gu.integration.test.util
 
 import scala.collection.JavaConverters.asScalaBufferConverter
-
 import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.ui.WebDriverWait
+import org.openqa.selenium.support.ui.ExpectedConditions
+import com.gu.automation.support.TestLogging
 
-
-object ElementLoader {
+object ElementLoader extends TestLogging {
 
   val TestAttributeName = "data-test-id"
 
@@ -36,8 +37,20 @@ object ElementLoader {
   /**
    * Find all link elements, including nested, from the provided SearchContext and returns those that are displayed
    */
-  def displayedLinks(searchContext: SearchContext): List[WebElement] = {
-    searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => element.isDisplayed)
+  def displayedLinks(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
+    searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => waitUntilDisplayed(element))
+  }
+
+  def waitUntilDisplayed(element: WebElement)(implicit driver: WebDriver): Boolean = {
+    try {
+      new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(element))
+    } catch {
+      case e: Exception => {
+        logger.info(s"Element not displayed after waiting: ${e.getMessage()}")
+        false
+      }
+    }
+    true
   }
 
   /**
@@ -46,9 +59,8 @@ object ElementLoader {
    * visible
    */
   def displayedImages(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
-    val preDisplayedImages = searchContext.findElements(By.cssSelector("img")).asScala.toList.filter(element => element.isDisplayed)
-    //preDisplayedImages
-    return preDisplayedImages.filter(element => isImageDisplayed(element))
+    val preDisplayedImages = searchContext.findElements(By.cssSelector("img")).asScala.toList.filter(element => waitUntilDisplayed(element))
+    preDisplayedImages.filter(element => isImageDisplayed(element))
   }
 
   /**
