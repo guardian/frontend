@@ -17,7 +17,7 @@ define([
 ) {
 
     var ads = [],
-        adNames = [['im', 'im'], ['inline1', 'inline'], ['inline2', 'inline']],
+        adNames = [['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function(para) {
             if (para) {
                 var adName = adNames[ads.length],
@@ -52,15 +52,13 @@ define([
                     }
                 };
 
-            if ((/wide|desktop|tablet/).test(breakpoint)) {
+            if (config.page.hasInlineMerchandise) {
+                adNames.unshift(['im', 'im']);
                 insertAdAtP(spacefinder.getParaWithSpace(rules));
-                insertAdAtP(spacefinder.getParaWithSpace(rules));
-                if (window.innerWidth < 900) {
-                    insertAdAtP(spacefinder.getParaWithSpace(rules));
-                }
-            } else {
-                insertAdAtP(spacefinder.getParaWithSpace(rules));
-                insertAdAtP(spacefinder.getParaWithSpace(rules));
+            }
+            insertAdAtP(spacefinder.getParaWithSpace(rules));
+
+            if (breakpoint === 'mobile' || ((/wide|desktop|tablet/).test(breakpoint) && (config.innerWidth || window.innerWidth) < 900)) {
                 insertAdAtP(spacefinder.getParaWithSpace(rules));
             }
         };
