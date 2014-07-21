@@ -1,6 +1,6 @@
 @(env: String)(implicit request: RequestHeader)
 @import conf.AdminConfiguration.pa
-@import org.joda.time.{DateTime, DateMidnight}
+@import org.joda.time.{DateTime, LocalDate}
 @import views.support.Format
 
 @admin_main("Football Troubleshooter", env, isAuthed = true) {
@@ -55,7 +55,7 @@
     <p>Here is the API call for results in the <strong>World Cup 2014</strong> (id 700). You can get other competition IDs
         from the Competitions feed above and the date format is <i>YYYYMMDD</i> (12 Jun is the start of the World Cup).</p>
 
-    <a href="@pa.host/api/football/competition/results/@pa.apiKey/700/@Format(new DateMidnight(2014, 6, 12), "yyyyMMdd")">@pa.host/api/football/competition/results/@pa.apiKey/<strong>700</strong>/<strong>@Format(new DateMidnight(2014, 6, 12), "yyyyMMdd")</strong></a>
+    <a href="@pa.host/api/football/competition/results/@pa.apiKey/700/@Format(new LocalDate(2014, 6, 12), "yyyyMMdd")">@pa.host/api/football/competition/results/@pa.apiKey/<strong>700</strong>/<strong>@Format(new LocalDate(2014, 6, 12), "yyyyMMdd")</strong></a>
 
     <h2>League table</h2>
 

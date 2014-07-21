@@ -1,8 +1,8 @@
-@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport)
+@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport, foundationSupportedTags: dfp.SponsorshipReport)
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
-<link rel="stylesheet" type="text/css" href="@routes.Assets.at(" css/commercial.css")">
+<link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
 
 <h1>Content Sponsorships:</h1>
 <p><a href="#criteria">Criteria for sponsorship</a></p>
@@ -23,6 +23,18 @@
 
 <ol>
     @for(sponsorship <- advertisementTags.sponsorships) {
+    <li>@{sponsorship.tags.mkString(", ")}@{sponsorship.sponsor.map(sponsor =>
+        <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[sponsored by <b>{sponsor}</b>]</small>
+        )}
+    </li>
+    }
+</ol>
+
+<h3>Foundation Supported Tags</h3>
+<p>Last updated: @foundationSupportedTags.updatedTimeStamp</p>
+
+<ol>
+    @for(sponsorship <- foundationSupportedTags.sponsorships) {
     <li>@{sponsorship.tags.mkString(", ")}@{sponsorship.sponsor.map(sponsor =>
         <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[sponsored by <b>{sponsor}</b>]</small>
         )}

@@ -17,7 +17,7 @@ case class Redirect(location: String) extends Destination
 case class Archive(location: String) extends Destination
 
 trait DynamoDB extends Logging with ExecutionContexts {
-
+  import play.api.Play.current
   private val tableName = "redirects"
   private val DynamoDbGet = "DynamoDB_20120810.GetItem"
 

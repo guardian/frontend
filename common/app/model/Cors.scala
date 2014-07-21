@@ -1,12 +1,12 @@
 package model
 
-import play.api.mvc.{RequestHeader, SimpleResult, Results}
-import play.api.mvc.SimpleResult
+import play.api.mvc.{RequestHeader, Result, Results}
+import play.api.mvc.Result
 import conf.Configuration.ajax._
 
 
 object Cors extends Results {
-  def apply(result: SimpleResult)(implicit request: RequestHeader): SimpleResult = {
+  def apply(result: Result)(implicit request: RequestHeader): Result = {
     request.headers.get("Origin") match {
       case None => result
       case Some(requestOrigin) =>

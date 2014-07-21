@@ -10,6 +10,8 @@ import implicits.WSRequests.WsWithAuth
 
 object FaciaContentApiProxy extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
+  import play.api.Play.current
+
   def proxy(path: String) = AjaxExpiringAuthentication.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
     val queryString = request.queryString.filter(_._2.exists(_.nonEmpty)).map { p =>

@@ -4,7 +4,6 @@ import conf.LiveContentApi
 import common._
 import services.OphanApi
 import play.api.libs.json.{JsArray, JsValue}
-import java.net.URL
 import model.Content
 import scala.concurrent.duration._
 import scala.concurrent.Future
@@ -27,12 +26,9 @@ object MostPopularAgent extends Logging with ExecutionContexts {
       val mostViewed = response.mostViewed map { Content(_) } take 10
       agent.alter{ old =>
         old + (edition.id -> mostViewed)
-      }(Timeout(5.seconds))
+      }
     }
 
-  def stop() {
-    agent.close()
-  }
 }
 
 object GeoMostPopularAgent extends Logging with ExecutionContexts {
@@ -60,7 +56,7 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        LiveContentApi.item(UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
+        LiveContentApi.item(OphanApi.UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
       }
 
       Future.sequence(mostRead).map { contentSeq =>
@@ -78,18 +74,6 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
         }
       }
     }
-  }
-
-  def stop() {
-    ophanPopularAgent.close()
-  }
-
-  private def UrlToContentPath(url: String): String = {
-    var contentId = new URL(url).getPath
-    if (contentId.startsWith("/")) {
-      contentId = contentId.substring(1)
-    }
-    contentId
   }
 }
 
@@ -116,7 +100,7 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        LiveContentApi.item(UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
+        LiveContentApi.item(OphanApi.UrlToContentPath(url), Edition.defaultEdition ).response.map( _.content.map( Content(_)))
       }
 
       Future.sequence(mostRead).map { contentSeq =>
@@ -135,19 +119,6 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
       }
     }
   }
-
-  def stop() {
-    ophanPopularAgent.close()
-  }
-
-  private def UrlToContentPath(url: String): String = {
-    var contentId = new URL(url).getPath
-    if (contentId.startsWith("/")) {
-      contentId = contentId.substring(1)
-    }
-    contentId
-  }
-
 }
 
 object MostPopularExpandableAgent extends Logging with ExecutionContexts {
@@ -171,7 +142,4 @@ object MostPopularExpandableAgent extends Logging with ExecutionContexts {
     }
   }
 
-  def stop() {
-    agent.close()
-  }
 }

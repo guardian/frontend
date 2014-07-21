@@ -1,13 +1,13 @@
 var $$FSR = {
-   'timestamp': 'February 20, 2014 @ 5:05 PM',
+   'timestamp': 'June 5, 2014 @ 11:07 AM',
    'version': '16.2.1',
-   'build': '5',
+   'build': '7',
    'enabled': true,
    'frames' : false,
    'sessionreplay': true,
    'auto' : true,
    'encode' : true,
-   'files': guardian.config.page.assetsPath + 'javascripts/vendor/foresee/',
+    'files': guardian.config.page.assetsPath + 'javascripts/vendor/foresee2/',
    // needs to be set when foresee-transport.swf is not located at 'files'
    //'swf_files': '__swf_files_'
    'id': 'fdIXz/UlLcgRJ+Qwv25S0Q==',
@@ -186,7 +186,7 @@ b,f=e.name,g=h,k;return function(){k=p.qb(f);c.f.xa(a,d,g,k)}};break;case "cooki
 function(){var a=e,d=b,f=e.value,g=h;return function(){c.f.xa(a,d,g,f)}}}e.on&&"load"!=e.on&&e.query?A(e.query,e.on,l()):l()();b++}}}}};c.popNow=function(a){ca(a,"now")};c.popLater=function(a){ca(a,"later")};c.popImmediate=function(){ca(100,"now")};c.popFeedback=function(a){var b=k.controller;b&&b.execute(b.Te,a)};c.clearTracker=function(){f.l.Tb(f.ra("fsr.r"),{path:"/",domain:k.site.domain,secure:k.site.secure});f.l.Tb(f.ra("fsr.s"),{path:"/",domain:k.site.domain,secure:k.site.secure})};c.stopTracker=
 function(a){var b=k.controller;b&&b.rd(c._sd(),{pu:a})};c.run=function(){var a=k.controller;a&&a.execute(a.md)};c.invite=function(a,b,d){var e=k.controller;e&&e.execute(e.Yb,c._sd(),{sp:a,when:b,qualifier:d,invite:!0})};c.popCancel=function(){k.controller&&k.controller.Zc(c._sd())};c.showInvite=function(){k.controller&&k.controller.Ba(c._sd())};c.close=function(){k.controller&&k.controller.cb(c._sd())};c.pause=function(a){k.controller&&k.controller.pause(a)};c._sd=function(){return k.controller&&
 k.controller.oa};c._pd=function(){return k.controller&&k.controller.Ra};c._cancel=function(){t.canceled=!0};c._override=function(a){k.controller&&k.controller.Pe(a)};c._language=function(a){a&&(t[a]=a,f.g("l",a))};c._qualify=function(a){t.canceled=!1;a&&(t.qid=a,f.g("q",a))};c.Cookie={};c.Cookie.read=function(a){return f.l.U(a)};c.Cookie.write=function(a,b,c){c||(c={});c.domain||(c.domain=k.site.domain);return f.l.write(a,b,c)};c.Storage={};c.Storage.read=function(a){return f.g(a)};c.$S=t;var va=
-new c.f;c.Sa(function(){function a(){g.j.kb();g.j.triggerState==g.j.n.J?c.hc():(va.load(),A(m,"unload",function(){k.controller.vf()}))}s.Qb?a():s.Hb.Va(a)},k.triggerDelay?1E3*k.triggerDelay:void 0);c.f.S={Mb:{loaded:L(),initialized:L(),surveydefChanged:L(),inviteShown:L(),inviteAccepted:L(),inviteDeclined:L(),trackerShown:L(),trackerCanceled:L(),qualifierShown:L(),surveyShown:L()},ea:{global:function(){return!1},Ba:function(){return!1}},Re:{windows:!1,mac:!1,linux:!1,ipod:!0,ipad:!1,iphone:!0,android:!0,
+new c.f;c.Sa(function(){function a(){g.j.kb();g.j.triggerState==g.j.n.J?c.hc():(va.load(),A(m,"unload",function(){k.controller.vf()}))}s.Qb?a():s.Hb.Va(a)},k.triggerDelay?1E3*k.triggerDelay:void 0);c.f.S={Mb:{loaded:L(),initialized:L(),surveydefChanged:L(),inviteShown:L(),inviteAccepted:L(),inviteDeclined:L(),trackerShown:L(),trackerCanceled:L(),qualifierShown:L(),surveyShown:L()},ea:{global:function(){return!1},Ba:function(){return!1}},Re:{windows:!0,mac:!0,linux:!0,ipod:!0,ipad:!1,iphone:!0,android:!0,
 blackberry:!0,winphone:!0,kindle:!1,nook:!1,wince:!1,mobile:!1,other:!1},wf:!0}})(self,$$FSR);
 })({});
 }

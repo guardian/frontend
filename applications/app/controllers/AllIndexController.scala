@@ -44,7 +44,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
     implicit val dedupe = TemplateDeduping()
     val edition = Edition(request)
     val requestedDate = dateFormat.parseDateTime(s"$year/$month/$day").withZone(edition.timezone)
-      .toDateMidnight.plusDays(1).toDateTime.minusSeconds(1)
+      .toLocalDate.plusDays(1).toDateTimeAtStartOfDay.minusSeconds(1)
 
     loadLatest(path, requestedDate).map { _.map { index =>
 

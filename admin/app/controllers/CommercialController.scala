@@ -1,16 +1,14 @@
 package controllers.admin
 
-import play.api.mvc.Controller
 import common.Logging
-import model.{AdReports, NoCache}
-import controllers.AuthLogging
 import conf.Configuration
-import tools.Store
-import play.api.libs.json.Json
-import dfp.{SponsorshipReport, Sponsorship}
-import implicits.Dates
-import org.joda.time.DateTime
+import controllers.AuthLogging
+import dfp.Sponsorship
+import model.NoCache
 import ophan.SurgingContentAgent
+import play.api.libs.json.Json
+import play.api.mvc.Controller
+import tools.Store
 
 object CommercialController extends Controller with Logging with AuthLogging {
 
@@ -29,14 +27,19 @@ object CommercialController extends Controller with Logging with AuthLogging {
   }
 
   def renderSponsorships = Authenticated { implicit request =>
-    val sponsoredTags = Store.getDfpSponsoredTags()
-    val advertisementTags = Store.getDfpAdvertisementTags()
+    val sponsoredTags = Store.getDfpSponsoredTags
+    val advertisementFeatureTags = Store.getDfpAdvertisementFeatureTags
+    val foundationSupportedTags = Store.getDfpFoundationSupportedTags
 
-    NoCache(Ok(views.html.commercial.sponsorships(Configuration.environment.stage, sponsoredTags, advertisementTags)))
+    NoCache(Ok(views.html.commercial.sponsorships(
+      Configuration.environment.stage,
+      sponsoredTags,
+      advertisementFeatureTags,
+      foundationSupportedTags)))
   }
 
   def renderPageskins = Authenticated { implicit request =>
-    val pageskinnedAdUnits = Store.getDfpPageSkinnedAdUnits()
+    val pageskinnedAdUnits = Store.getDfpPageSkinnedAdUnits
 
     NoCache(Ok(views.html.commercial.pageskins(Configuration.environment.stage, pageskinnedAdUnits)))
   }

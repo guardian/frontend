@@ -6,15 +6,15 @@ import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import com.gu.automation.support.TestLogging
-import com.gu.integration.test.config.PropertyLoader._
 import com.gu.integration.test.pages.common.ParentPage
+import com.gu.automation.support.Config
 
 /**
  * This class is for loading and initializing pages and page objects. Example usage: <code></code>
  */
 object PageLoader extends TestLogging {
 
-  val frontsBaseUrl = getProperty(BaseUrl)
+  val frontsBaseUrl = Config().getTestBaseUrl//getProperty(BaseUrl)
   val TestAttributeName = "data-test-id"
 
   /**

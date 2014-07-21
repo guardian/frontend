@@ -427,6 +427,7 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val contentType = GuardianContentTypes.VIDEO
   lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
+  lazy val videoLinkText: String = webTitle.stripSuffix(" - video").stripSuffix(" – video")
 
   // I know its not too pretty
   lazy val bylineWithSource: Option[String] = Some(Seq(
@@ -439,7 +440,6 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
-
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "video",
     "og:type" -> "video",

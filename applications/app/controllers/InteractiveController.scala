@@ -25,7 +25,7 @@ object InteractiveController extends Controller with Logging with ExecutionConte
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[InteractivePage, SimpleResult]] = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[InteractivePage, Result]] = {
     val edition = Edition(request)
     log.info(s"Fetching interactive: $path for edition $edition")
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)

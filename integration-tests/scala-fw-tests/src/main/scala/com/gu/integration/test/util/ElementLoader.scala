@@ -8,17 +8,14 @@ import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
-import com.gu.integration.test.config.PropertyLoader.BaseUrl
-import com.gu.integration.test.config.PropertyLoader.getProperty
 
 object ElementLoader {
 
-  val frontsBaseUrl = getProperty(BaseUrl)
   val TestAttributeName = "data-test-id"
 
   /**
    * Will find the element with the provided test attribute id and, if provided, using the provided webelement as search context
-   * otherwise it will use the WebDriver
+   * otherwise it will use the WebDriver, which has to be in scope
    */
   def findByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): WebElement = {
     contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
@@ -26,7 +23,7 @@ object ElementLoader {
 
   /**
    * Will find all elements with the provided test attribute id and, if provided, using the provided webelement as search context
-   * otherwise it will use the WebDriver
+   * otherwise it will use the WebDriver, which has to be in scope
    */
   def findAllByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): List[WebElement] = {
     contextElement.getOrElse(driver).findElements(byTestAttributeId(testAttributeValue)).asScala.toList

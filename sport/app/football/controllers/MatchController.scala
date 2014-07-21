@@ -43,7 +43,7 @@ object MatchController extends Controller with Football with Requests with Loggi
   def renderMatchJson(year: String, month: String, day: String, home: String, away: String) = renderMatch(year, month, day, home, away)
   def renderMatch(year: String, month: String, day: String, home: String, away: String) = {
 
-    val date = dateFormat.parseDateTime(year + month + day).toDateMidnight
+    val date = dateFormat.parseDateTime(year + month + day).toLocalDate
 
     (TeamMap.findTeamIdByUrlName(home), TeamMap.findTeamIdByUrlName(away)) match {
       case (Some(homeId), Some(awayId)) => render(Competitions().matchFor(date, homeId, awayId))
