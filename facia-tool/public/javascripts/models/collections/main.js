@@ -16,7 +16,8 @@ define([
     'models/group',
     'models/collections/collection',
     'models/collections/article',
-    'models/collections/latest-articles'
+    'models/collections/latest-articles',
+    'models/collections/new-items'
 ], function(
     pageConfig,
     ko,
@@ -34,7 +35,8 @@ define([
     Group,
     Collection,
     Article,
-    LatestArticles
+    LatestArticles,
+    newItems
 ) {
     return function() {
 
@@ -287,7 +289,7 @@ define([
                 model.latestArticles.startPoller();
             });
 
-            listManager.init();
+            listManager.init(newItems);
             droppable.init();
         };
     };
