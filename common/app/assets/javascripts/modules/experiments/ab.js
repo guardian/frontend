@@ -78,7 +78,7 @@ define([
 
     function testCanBeRun(test, config) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
-        return (test.canRun() && !expired && isTestSwitchedOn(test));
+        return (test.canRun(config) && !expired && isTestSwitchedOn(test, config));
     }
 
     function getTest(id) {
@@ -103,7 +103,7 @@ define([
 
     // Finds variant in specific tests and runs it
     function run(test, config, context) {
-        if (isParticipating(test) && testCanBeRun(test)) {
+        if (isParticipating(test) && testCanBeRun(test, config)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
             test.variants.some(function(variant) {
