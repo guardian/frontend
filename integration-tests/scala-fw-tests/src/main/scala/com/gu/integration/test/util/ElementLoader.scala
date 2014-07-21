@@ -16,10 +16,14 @@ object ElementLoader extends TestLogging {
 
   /**
    * Will find the element with the provided test attribute id and, if provided, using the provided webelement as search context
-   * otherwise it will use the WebDriver, which has to be in scope
+   * otherwise it will use the WebDriver, which has to be in scope. Waits until element is displayed before returning
    */
   def findByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): WebElement = {
-    contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
+    val extractedLocalValue = {
+      contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
+    }
+    waitUntilDisplayed(extractedLocalValue)
+    extractedLocalValue
   }
 
   /**
