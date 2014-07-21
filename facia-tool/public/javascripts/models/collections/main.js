@@ -16,8 +16,7 @@ define([
     'models/group',
     'models/collections/collection',
     'models/collections/article',
-    'models/collections/latest-articles',
-    'models/collections/new-items'
+    'models/collections/latest-articles'
 ], function(
     pageConfig,
     ko,
@@ -35,8 +34,7 @@ define([
     Group,
     Collection,
     Article,
-    LatestArticles,
-    newItems
+    LatestArticles
 ) {
     return function() {
 
@@ -216,10 +214,6 @@ define([
             }, period);
         });
 
-        mediator.on('collection:updates', function(opts) {
-            listManager(_.extend(opts, newItems));
-        });
-
         this.init = function() {
             fetchSettings(function (config, switches) {
                 var fronts;
@@ -293,7 +287,8 @@ define([
                 model.latestArticles.startPoller();
             });
 
-            droppable(newItems);
+            listManager.init();
+            droppable.init();
         };
     };
 });

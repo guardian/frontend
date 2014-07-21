@@ -12,7 +12,6 @@ define([
     'utils/human-time',
     'modules/authed-ajax',
     'modules/content-api',
-    'modules/list-manager',
     'models/group'
 ],
     function (
@@ -28,7 +27,6 @@ define([
         humanTime,
         authedAjax,
         contentApi,
-        listManager,
         Group
     ) {
         var storage = window.localStorage,

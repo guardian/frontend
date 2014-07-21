@@ -2,25 +2,25 @@
 define([
     'knockout',
     'models/group',
-    'modules/list-manager',
+    'utils/mediator',
     'utils/parse-query-params'
 ], function(
     ko,
     Group,
-    listManager,
+    mediator,
     parseQueryParams
 ) {
 
-    window.addEventListener('dragover', function(event) {
-        event.preventDefault();
-    },false);
-
-    window.addEventListener('drop', function(event) {
-        event.preventDefault();
-    },false);
-
-    return function(opts) {
+    function init() {
         var sourceList;
+
+        window.addEventListener('dragover', function(event) {
+            event.preventDefault();
+        },false);
+
+        window.addEventListener('drop', function(event) {
+            event.preventDefault();
+        },false);
 
         ko.bindingHandlers.makeDropabble = {
             init: function(element) {
@@ -134,17 +134,21 @@ define([
                         }
                     });
 
-                    opts.id = id;
-                    opts.sourceList = sourceList;
-                    opts.sourceItem = sourceItem;
-                    opts.targetList = targetList;
-                    opts.targetItem = targetItem;
-                    opts.isAfter = isAfter;
-
-                    listManager(opts);
+                    mediator.emit('collection:updates', {
+                        id: id,
+                        sourceList: sourceList,
+                        sourceItem: sourceItem,
+                        targetList: targetList,
+                        targetItem: targetItem,
+                        isAfter: isAfter
+                    });
 
                 }, false);
             }
         };
+    }
+
+    return {
+        init: _.once(init)
     };
 });
