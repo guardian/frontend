@@ -4,6 +4,7 @@
 @import model.FaciaComponentName
 @import common.LinkTo
 @import views.support.GetClasses
+@import views.html.fragments.slices.{standardItemsMiddle, standardItemsBottom}
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
@@ -64,34 +65,14 @@
                 <div class="container__banding container--rolled-up-hide">
                     <div class="facia-container__inner">
                         <div class="container__body">
-                            @defining(items.slice(4, 10)) { items =>
-                                @if(items.nonEmpty) {
-                                    <div class="linkslist-container tone-@{style.tone} js-slice--ad-candidate" data-tone="@style.tone">
-                                        <ul class="l-columns linkslist">
-                                            @items.zipWithIndex.map{ case (trail, index) =>
-                                                @linksList(trail, index + 4, Some("boost"))
-                                            }
-                                        </ul>
-                                    </div>
-                                }
-                            }
+                            @standardItemsMiddle(items.slice(4, 10), 4, style)
                         </div>
                     </div>
                 </div>
                 <div class="container__banding container--rolled-up-hide">
                     <div class="facia-container__inner">
                         <div class="container__body">
-                            @defining(items.drop(10)) { case (items) =>
-                                @if(items.nonEmpty) {
-                                    <div class="linkslist-container @if(style.showMore){js-container--show-more} tone-@{style.tone}" data-tone="@style.tone">
-                                        <ul class="l-columns linkslist">
-                                            @items.zipWithIndex.map{ case (trail, index) =>
-                                                @linksList(trail, index + 10, None)
-                                            }
-                                        </ul>
-                                    </div>
-                                }
-                            }
+                            @standardItemsBottom(items.drop(10), 10, style)
                         </div>
                     </div>
                 </div>
