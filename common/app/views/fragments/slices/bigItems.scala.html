@@ -1,0 +1,19 @@
+@(items: Seq[model.Trail], indexOffset: Int, containerIndex: Int)(implicit header: RequestHeader, config: model.Config)
+
+@import views.helpers.CSS.bigItemCssClass
+
+@items.grouped(2).map { items =>
+    <div class="facia-slice-wrapper">
+    @if(items.size == 1) {
+        @items.zipWithIndex.map{ case (trail, index) =>
+            @fragments.items.fromage(trail, index + indexOffset)
+        }
+    }else{
+        <ul class="row-of-two @bigItemCssClass(items(0).imageAdjust, items(1).imageAdjust) u-unstyled l-row l-row--items-2 facia-slice">
+        @items.zipWithIndex.map{ case (trail, index) =>
+            @fragments.collections.items.standard(trail, index + indexOffset, containerIndex)
+        }
+        </ul>
+    }
+    </div>
+}

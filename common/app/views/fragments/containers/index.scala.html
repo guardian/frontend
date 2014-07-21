@@ -1,6 +1,7 @@
-@(collection: Collection, style: NewsContainer, containerIndex: Int, date: org.joda.time.DateTime, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: model.Collection, style: views.support.NewsContainer, containerIndex: Int, date: org.joda.time.DateTime, nav: views.support.PreviousAndNext)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
-@import org.joda.time.DateTime
+@import common.LinkTo
+@import views.support.{GetClasses, Format}
 
 @defining(collection.displayName) { title =>
 

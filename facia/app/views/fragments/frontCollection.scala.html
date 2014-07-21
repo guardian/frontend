@@ -1,5 +1,6 @@
-@(front: MetaData, block: (Config, Collection), collectionsSize: Int = 1, index: Int = 1)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
-@import views.support.ForceGroupsCollection
+@(front: model.MetaData, block: (model.Config, model.Collection), collectionsSize: Int = 1, index: Int = 1)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+@import views.support._
+@import fragments.containers
 
 @block._1.collectionType match {
     case Some("news")                       => { @containers.news(front, block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
