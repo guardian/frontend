@@ -7,7 +7,7 @@ define([
 ], function (
     store,
     mediator,
-    config,
+    globalConfig,
     mvtCookie,
     HighCommercialComponent
     ) {
@@ -40,7 +40,7 @@ define([
         store.local.set(participationsKey, participations);
     }
 
-    function cleanParticipations() {
+    function cleanParticipations(config) {
         // Removes any tests from localstorage that have been
         // renamed/deleted from the backend
         var participations = getParticipations();
@@ -76,7 +76,7 @@ define([
         });
     }
 
-    function testCanBeRun(test) {
+    function testCanBeRun(test, config) {
         var expired = (new Date() - new Date(test.expiry)) > 0;
         return (test.canRun() && !expired && isTestSwitchedOn(test));
     }
@@ -88,12 +88,12 @@ define([
         return (test) ? test[0] : '';
     }
 
-    function makeOmnitureTag () {
+    function makeOmnitureTag (config) {
         var participations = getParticipations(),
             tag = [];
 
         Object.keys(participations).forEach(function (k) {
-            if (testCanBeRun(getTest(k))) {
+            if (testCanBeRun(getTest(k), config)) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
             }
         });
@@ -102,13 +102,13 @@ define([
     }
 
     // Finds variant in specific tests and runs it
-    function run(test) {
+    function run(test, config, context) {
         if (isParticipating(test) && testCanBeRun(test)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
             test.variants.some(function(variant) {
                 if (variant.id === variantId) {
-                    variant.test();
+                    variant.test(context, config);
                     return true;
                 }
             });
@@ -118,10 +118,10 @@ define([
         }
     }
 
-    function allocateUserToTest(test) {
+    function allocateUserToTest(test, config) {
 
         // Skip allocation if the user is already participating, or the test is invalid.
-        if (!testCanBeRun(test) || isParticipating(test)) {
+        if (!testCanBeRun(test, config) || isParticipating(test)) {
             return;
         }
 
@@ -147,7 +147,7 @@ define([
         }
     }
 
-    function isTestSwitchedOn(test) {
+    function isTestSwitchedOn(test, config) {
         return config.switches['ab' + test.id];
     }
 
@@ -166,9 +166,9 @@ define([
             TESTS = [];
         },
 
-        segment: function() {
+        segment: function(config) {
             getActiveTests().forEach(function(test) {
-                allocateUserToTest(test);
+                allocateUserToTest(test, config);
             });
         },
 
@@ -180,7 +180,7 @@ define([
             });
         },
 
-        segmentUser: function() {
+        segmentUser: function(config) {
             mvtCookie.generateMvtCookie();
 
             var forceUserIntoTest = /^#ab/.test(window.location.hash);
@@ -189,15 +189,15 @@ define([
                 var test = tokens[0], variant = tokens[1];
                 ab.forceSegment(test, variant);
             } else {
-                ab.segment();
+                ab.segment(config);
             }
 
-            cleanParticipations();
+            cleanParticipations(config);
         },
 
-        run: function() {
+        run: function(config, context) {
             getActiveTests().forEach(function(test) {
-                run(test);
+                run(test, config, context);
             });
         },
 
@@ -228,13 +228,13 @@ define([
             });
         },
 
-        getAbLoggableObject: function() {
+        getAbLoggableObject: function(config) {
             var abLogObject = {};
 
             try {
                 getActiveTests().forEach(function (test) {
 
-                    if (isParticipating(test) && testCanBeRun(test)) {
+                    if (isParticipating(test) && testCanBeRun(test, config)) {
                         var variant = getTestVariant(test.id);
                         if (variant && variant !== 'notintest') {
                             abLogObject['ab' + test.id] = variant;
