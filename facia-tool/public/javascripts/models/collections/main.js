@@ -3,6 +3,7 @@ define([
     'config',
     'knockout',
     'modules/vars',
+    'utils/mediator',
     'utils/fetch-settings',
     'utils/query-params',
     'utils/ammended-query-str',
@@ -10,6 +11,7 @@ define([
     'utils/terminate',
     'utils/is-valid-date',
     'modules/droppable',
+    'modules/list-manager',
     'modules/authed-ajax',
     'models/group',
     'models/collections/collection',
@@ -20,6 +22,7 @@ define([
     pageConfig,
     ko,
     vars,
+    mediator,
     fetchSettings,
     queryParams,
     ammendedQueryStr,
@@ -27,6 +30,7 @@ define([
     terminate,
     isValidDate,
     droppable,
+    listManager,
     authedAjax,
     Group,
     Collection,
@@ -34,7 +38,6 @@ define([
     LatestArticles,
     newItems
 ) {
-
     return function() {
 
         var model = vars.model = {};
@@ -211,6 +214,10 @@ define([
                     list.refreshFrontPublicationTime();
                 });
             }, period);
+        });
+
+        mediator.on('collection:updates', function(opts) {
+            listManager(_.extend(opts, newItems));
         });
 
         this.init = function() {

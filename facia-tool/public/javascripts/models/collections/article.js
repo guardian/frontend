@@ -1,6 +1,8 @@
 /* global _: true */
 define([
     'modules/vars',
+    'knockout',
+    'utils/mediator',
     'utils/url-abs-path',
     'utils/as-observable-props',
     'utils/populate-observables',
@@ -8,14 +10,15 @@ define([
     'utils/deep-get',
     'utils/snap',
     'utils/human-time',
-    'models/group',
     'modules/authed-ajax',
     'modules/content-api',
     'modules/list-manager',
-    'knockout'
+    'models/group'
 ],
     function (
         vars,
+        ko,
+        mediator,
         urlAbsPath,
         asObservableProps,
         populateObservables,
@@ -23,11 +26,10 @@ define([
         deepGet,
         snap,
         humanTime,
-        Group,
         authedAjax,
         contentApi,
         listManager,
-        ko
+        Group
     ) {
         var storage = window.localStorage,
             storageKeyCopied ='gu.fronts-tool.copied';
@@ -39,6 +41,7 @@ define([
 
             this.id = ko.observable(opts.id);
 
+            this.group = opts.group;
             this.parent = opts.parent;
             this.parentType = opts.parentType;
             this.uneditable = opts.uneditable;
@@ -153,8 +156,19 @@ define([
             storage.setItem(storageKeyCopied, JSON.stringify(self.get()));
         };
 
-        Article.prototype.paste = function() {
+        Article.prototype.paste = function () {
+            var sourceItem = storage.getItem(storageKeyCopied);
 
+            if(!sourceItem) { return; }
+
+            sourceItem = JSON.parse(sourceItem);
+
+            mediator.emit('collection:updates', {
+                id: sourceItem.id,
+                sourceItem: sourceItem,
+                targetItem: this,
+                targetList: this.group
+            });
         };
 
         Article.prototype.overrider = function(key) {

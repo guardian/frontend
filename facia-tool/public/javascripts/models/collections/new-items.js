@@ -27,6 +27,7 @@ define([
             return new Article({
                 id: item.id,
                 meta: cleanClone(item.meta),
+                group: targetList,
                 parent: targetList.parent,
                 parentType: targetList.parentType
             });

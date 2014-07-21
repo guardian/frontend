@@ -209,11 +209,13 @@ define([
         });
 
         _.each(list, function(item) {
-            (_.find(self.groups, function(g){
+            var group = _.find(self.groups, function(g) {
                 return (parseInt((item.meta || {}).group, 10) || 0) === g.group;
-            }) || self.groups[0])
-            .items.push(
+            }) || self.groups[0];
+
+            group.items.push(
                 new Article(_.extend(item, {
+                    group: group,
                     parent: self,
                     parentType: 'Collection'
                 }))
