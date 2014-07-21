@@ -20,7 +20,6 @@
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
-            ("has-new-navigation", HttpSwitch(ResponsiveNavSwitch).isSwitchedOn),
             ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
         itemscope itemtype="http://schema.org/WebPage">
 
@@ -34,10 +33,6 @@
 
         @if(showAdverts) {
             @fragments.commercial.topBannerMobile()
-        }
-
-        @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOff){
-            @fragments.localNav(metaData)
         }
 
         @body

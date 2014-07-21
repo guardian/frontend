@@ -46,61 +46,45 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
 $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
 
 
-/* Overrides (to be incorporated into the global CSS when killing the old nav)
+/* First container page title overrides
    ========================================================================== */
 
-.has-new-navigation {
-    .l-header {
-        border-bottom: 0;
-    }
-    .container--first {
-        @include mq($to: tablet) {
-            padding-top: 0;
+@include mq($to: tablet) {
+    // Note the double chained selectors to avoid use of !important
 
-            .container__border,
-            .container__header {
-                display: none;
-            }
-        }
+    // Display the first container header everywhere
+    .container--first.container--first .container__header,
+    .js-on .has-localnav .container--first .container__title {
+        display: block;
     }
-    .navigation-aside {
-        border-top: 0;
-
-        @include mq(tablet) {
-            float: left;
-            clear: none;
-            @include rem((
-                width: gs-span(4)
-            ));
-        }
+    // But not on the homepage
+    .container--first[data-link-name=top-stories] .container__header {
+        display: none;
     }
-
-    @include mq($to: tablet) {
-        // Display the first container header everywhere
-        .container--first .container__header,
-        .js-on &.has-localnav .container--first .container__title {
-            display: block;
-        }
-        // But not on the homepage
-        .container--first[data-link-name=top-stories] .container__header {
-            display: none;
-        }
-        // And restyle the title to look less bulky
-        .container--first .container__title {
-            color: #333333;
-            padding-left: 0;
-            background: transparent;
-        }
-    }
-
-    @include mq(navigationBreakOnTwoLevels) {
-        &.has-page-skin .l-header .gs-container {
-            @include rem((
-                width: auto
-            ));
-        }
+    // And restyle the title to look less bulky
+    .container--first.container--first .container__title {
+        color: #333333;
+        padding-left: 0;
+        background: transparent;
     }
 }
+
+
+/* Page skins
+   ========================================================================== */
+
+@include mq(navigationBreakOnTwoLevels) {
+    .has-page-skin .l-header .gs-container {
+        @include rem((
+            width: auto
+        ));
+    }
+}
+
+
+/* Meganav footer overrides (edition switcher and Guardian services)
+   ========================================================================== */
+
 .new-navigation__expandable {
     .switcher,
     .switcher__option,
