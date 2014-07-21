@@ -661,8 +661,7 @@
                 ));
             }
 
-            &.change-summary__panel--current:before,
-            &.change-summary__panel--target:before {
+            .change-summary__panel-label {
                 display: block;
                 @include fs-textsans(4);
                 color: #ffffff;
@@ -673,13 +672,10 @@
                 ));
             }
 
-            &.change-summary__panel--current:before {
-                content: 'Your current package';
+            .change-summary__panel-label--current {
                 background-color: $c-neutral2;
             }
-
-            &.change-summary__panel--target:before {
-                content: 'Your new package';
+            .change-summary__panel-label--target {
                 background-color: $c-newsAccent;
             }
         }
