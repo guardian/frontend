@@ -1,18 +1,13 @@
 @(items: Seq[model.Trail], style: views.support.Container, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
 
 @import views.helpers.CSS.bigItemCssClass
+@import views.fragments.slices
 
 @defining(items.filter(_.group == Option("3")), items.filter(_.group == Option("2")), items.filter(_.group == Option("1")), items.filter(items => items.group == Option("0") || items.group == None)) { case (hugeItems, veryBigItems, bigItems, standardItems) =>
 
     @defining(hugeItems.size, veryBigItems.size, bigItems.size, standardItems.size) { case (hugeItemsCount, veryBigItemsCount, bigItemsCount, standardItemsCount) =>
 
-        @hugeItems.zipWithIndex.map { case (trail, index) =>
-            @if(items.nonEmpty) {
-                <div class="facia-slice-wrapper">
-                    @fragments.items.baguette(trail, index)
-                </div>
-            }
-        }
+        @slices.hugeItems(hugeItems)
 
         @veryBigItems.zipWithIndex.map { case (trail, index) =>
             @if(items.nonEmpty) {

@@ -1,0 +1,7 @@
+@(items: Seq[model.Trail])
+
+@items.zipWithIndex.map { case (trail, index) =>
+    <div class="facia-slice-wrapper">
+        @fragments.items.baguette(trail, index)
+    </div>
+}
