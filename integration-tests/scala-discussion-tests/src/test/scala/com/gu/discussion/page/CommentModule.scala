@@ -1,11 +1,10 @@
 package com.gu.discussion.page
 
 import com.gu.automation.support.TestLogger
-import com.gu.automation.support.page.Element
+import com.gu.automation.support.page.{WaitGet}
 import org.openqa.selenium.By._
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.Select
-import Element._
 
 case class CommentModule(implicit driver: WebDriver, logger: TestLogger) extends PageSupport {
 
@@ -52,8 +51,6 @@ case class CommentModule(implicit driver: WebDriver, logger: TestLogger) extends
   def postNewComment(): CommentItem = {
     postYourCommentButton.click()
     waitForNewCommentItem
-
-
   }
 
 
@@ -103,7 +100,7 @@ case class CommentModule(implicit driver: WebDriver, logger: TestLogger) extends
 
   def waitForCommentsToLoad() = {
     //Need this wait for the page to reload/refresh which is actioned with javascript
-    waitGet(commentsLoading)
+    WaitGet(commentsLoading)
   }
 
 }

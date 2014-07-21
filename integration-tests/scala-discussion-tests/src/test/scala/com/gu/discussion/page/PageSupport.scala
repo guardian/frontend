@@ -1,7 +1,10 @@
 package com.gu.discussion.page
 
+import com.gu.automation.support.page.{ExplicitWait}
 import org.openqa.selenium.By._
-import org.openqa.selenium.WebDriver
+import org.openqa.selenium.{WebDriver}
+import org.openqa.selenium.support.ui.{ExpectedCondition}
+
 
 /** Created by glockett.  */
 class PageSupport(implicit driver: WebDriver) {
@@ -10,15 +13,19 @@ class PageSupport(implicit driver: WebDriver) {
 
   def waitForNewCommentItem: CommentItem = {
     //Ugly hack to wait for URL to change
-    var retries = 10
-    while (!driver.getCurrentUrl().contains("#comment-") || retries < 0) {
-      Thread.sleep(500)
-      retries = retries - 1
+    val e = new ExpectedCondition[Boolean]() {
+      def apply(d: WebDriver): Boolean = {
+        return (d.getCurrentUrl() contains "#comment-")
+      }
     }
-    val newReplyURL = driver.getCurrentUrl()
-    val newReplyID = newReplyURL.substring(newReplyURL.indexOf("#") + 1)
 
-    CommentItem(commentRootById(newReplyID))
-  }
+    ExplicitWait().until(e);
+
+  val newReplyURL = driver.getCurrentUrl()
+  val newReplyID = newReplyURL.substring(newReplyURL.indexOf("#") + 1)
+
+  CommentItem(commentRootById(newReplyID))
+}
+
 
 }
