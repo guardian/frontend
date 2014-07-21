@@ -50,8 +50,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
    ========================================================================== */
 
 @include mq($to: tablet) {
+    // Note the double chained selectors to avoid use of !important
+
     // Display the first container header everywhere
-    .container--first .container__header,
+    .container--first.container--first .container__header,
     .js-on .has-localnav .container--first .container__title {
         display: block;
     }
@@ -60,7 +62,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
         display: none;
     }
     // And restyle the title to look less bulky
-    .container--first .container__title {
+    .container--first.container--first .container__title {
         color: #333333;
         padding-left: 0;
         background: transparent;
