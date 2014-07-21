@@ -1,4 +1,6 @@
 /* global module: false, process: false */
+var pngquant = require('imagemin-pngquant');
+
 module.exports = function (grunt) {
 
     var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
@@ -427,6 +429,10 @@ module.exports = function (grunt) {
         },
 
         imagemin: {
+            options: {
+                optimizationLevel: 2,
+                use: [pngquant()]
+            },
             files: {
                 expand: true,
                 cwd: staticTargetDir + 'images/',
@@ -448,11 +454,19 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'common/app/public/javascripts/vendor',
                         src: [
-                            'foresee/foresee-trigger.js',
+                            'foresee*/foresee-trigger.js',
                             'formstack-interactive/0.1/boot.js',
                             'vast-client.js'
                         ],
                         dest: staticTargetDir + 'javascripts/vendor'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'common/app/public/javascripts/vendor',
+                        src: [
+                            'foresee*/**'
+                        ],
+                        dest: staticHashDir + 'javascripts/vendor'
                     },
                     {
                         expand: true,
@@ -750,7 +764,7 @@ module.exports = function (grunt) {
         csdevmode: {
             options: {
                 srcBasePath: 'common/app/assets/stylesheets/',
-                destBasePath: staticTargetDir + '/stylesheets'
+                destBasePath: staticHashDir + '/stylesheets'
             },
             main: {
                 assets: ['global', 'head.default', 'head.facia']

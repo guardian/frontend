@@ -1,8 +1,8 @@
 package conf
 
-import _root_.play.api.libs.ws.WS
+import play.api.libs.ws.WS
 import common.Metrics
-import com.gu.management._
+import com.gu.management.{ErrorResponse, ManifestPage, StatusPage, PropertiesPage}
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import scala.concurrent.{ExecutionContext, Await, Future}
@@ -19,6 +19,8 @@ class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(u
 
 
   override def get(req: HttpRequest) = {
+
+    import play.api.Play.current
     def fetch(url: String) = WS.url(url).withHeaders("X-Gu-Management-Healthcheck" -> "true").get()
 
     val checks = urls map { base + _ } map { url => fetch(url).map{ response => url -> response } }

@@ -1,17 +1,24 @@
 package com.gu
 
+import akka.remote.transport.TestAssociationHandle
 import sbt._
 import sbt.Keys._
-import play.Project._
+import play.Play.autoImport._
+import PlayKeys._
+import play._
+import play.twirl.sbt.Import._
+import com.typesafe.sbt.web.Import._
 
 object Frontend extends Build with Prototypes {
+
+  scalaVersion := "2.11.1"
 
   val common = application("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
       "com.gu" %% "content-api-client" % "2.18",
 
-      "com.typesafe.akka" %% "akka-agent" % "2.1.0",
+      "com.typesafe.akka" %% "akka-agent" % "2.3.4",
 
       "org.jsoup" % "jsoup" % "1.6.3",
 
@@ -34,10 +41,19 @@ object Frontend extends Build with Prototypes {
 
       "org.xerial.snappy" % "snappy-java" % "1.0.5.1",
 
-      filters
+      filters,
+      ws
     )
+  ).settings(
+      mappings in TestAssets ~= filterAssets
   )
-  val paVersion = "5.0.0"
+
+  private def filterAssets(testAssets: Seq[(File, String)]) = testAssets.filterNot{ case (file, fileName) =>
+    // built in sbt plugins did not like the bower files
+    fileName.endsWith("bower.json")
+  }
+
+  val paVersion = "5.0.1-NG"
 
   def withTests(project: Project) = project % "test->test;compile->compile"
 
@@ -51,7 +67,7 @@ object Frontend extends Build with Prototypes {
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies += "com.gu" %% "pa-client" % paVersion,
-    templatesImport ++= Seq(
+    TwirlKeys.templateImports ++= Seq(
       "pa._",
       "feed._",
       "football.controllers._"
@@ -61,7 +77,7 @@ object Frontend extends Build with Prototypes {
   val image = application("image")
 
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
-    templatesImport ++= Seq("discussion._", "discussion.model._")
+    TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
   )
 
   val router = application("router")

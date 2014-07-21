@@ -9,7 +9,7 @@ import javax.inject.Singleton
 import model.IdentityPage
 import play.api.mvc._
 import play.api.data._
-import play.api.mvc.SimpleResult
+import play.api.mvc.Result
 import scala.concurrent.Future
 import services._
 import utils.SafeLogging
@@ -49,19 +49,19 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     val boundForm = registrationForm.bindFromRequest
     val trackingData = idRequest.trackingData
 
-    def onError(formWithErrors: Form[(String, String, String, Boolean, Boolean)]): Future[SimpleResult] = {
+    def onError(formWithErrors: Form[(String, String, String, Boolean, Boolean)]): Future[Result] = {
       logger.info("Invalid registration request")
       Future {
         Ok(views.html.registration(page.registrationError(idRequest), idRequest, idUrlBuilder, formWithErrors))
       }
     }
 
-    def onSuccess(form: (String, String, String, Boolean, Boolean)): Future[SimpleResult] = form match {
+    def onSuccess(form: (String, String, String, Boolean, Boolean)): Future[Result] = form match {
       case (email, username, password, gnmMarketing, thirdPartyMarketing) =>
         val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing, idRequest.clientIp)
         val registeredUser: Future[Response[User]] = api.register(user, trackingData)
 
-        val result: Future[SimpleResult] = registeredUser flatMap {
+        val result: Future[Result] = registeredUser flatMap {
           case Left(errors) =>
             val formWithError = errors.foldLeft(boundForm) { (form, error) =>
               error match {
@@ -75,7 +75,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
           case Right(usr) =>
             val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
             val authResponse = api.authBrowser(EmailPassword(email, password, idRequest.clientIp), trackingData)
-            val response: Future[SimpleResult] = signinService.getCookies(authResponse, rememberMe = false) map {
+            val response: Future[Result] = signinService.getCookies(authResponse, rememberMe = false) map {
               case Left(errors) =>
                 Ok(views.html.registrationConfirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl))
 
@@ -88,6 +88,6 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
         result
     }
 
-    boundForm.fold[Future[SimpleResult]](onError, onSuccess)
+    boundForm.fold[Future[Result]](onError, onSuccess)
   }
 }

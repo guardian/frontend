@@ -2,7 +2,7 @@ package views
 
 import pa.{ LineUpPlayer, Team }
 import common.Logging
-import play.api.templates.Html
+import play.twirl.api.Html
 
 object FootballHelpers {
   implicit class lineUpPlayer2rich(t: LineUpPlayer) {

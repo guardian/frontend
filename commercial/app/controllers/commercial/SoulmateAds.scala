@@ -5,7 +5,7 @@ import model.commercial.soulmates._
 import model.{NoCache, Cached}
 import performance.MemcachedAction
 import play.api.mvc._
-import play.api.templates.Html
+import play.twirl.api.Html
 import scala.concurrent.Future
 
 object SoulmateAds extends Controller {

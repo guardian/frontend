@@ -7,7 +7,6 @@ import services._
 
 object PopularInTag extends Controller with Related with Logging with ExecutionContexts {
 
-  def renderJson(path: String) = render(path)
   def render(tag: String) = Action.async { implicit request =>
     val edition = Edition(request)
     getPopularInTag(edition, tag) map {
@@ -20,11 +19,8 @@ object PopularInTag extends Controller with Related with Logging with ExecutionC
 
     val html = views.html.fragments.relatedTrails(trails, "Related content", 10)
 
-    if (request.isJson)
-      JsonComponent(
-        "html" -> html
-      )
-    else
-      Ok(html)
+    JsonComponent(
+      "html" -> html
+    )
   }
 }

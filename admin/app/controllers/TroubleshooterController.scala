@@ -82,6 +82,7 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
   }
 
   private def httpGet(testName: String, url: String) =  {
+    import play.api.Play.current
     WS.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(2000).get().map {
       response =>
         if (response.status == 200) {
