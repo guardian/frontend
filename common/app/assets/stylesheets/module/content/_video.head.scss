@@ -18,6 +18,10 @@
         color: $c-commentAccent;
     }
 
+    .byline {
+        word-break: break-word;
+    }
+
     .byline,
     .byline .tone-colour,
     .social__head {

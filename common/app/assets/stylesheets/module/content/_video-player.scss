@@ -117,7 +117,8 @@ $vjs-control-height: $gs-baseline*4;
     }
 
     .vjs-playing &,
-    .vjs-has-started.vjs-using-native-controls & {
+    .vjs-has-started.vjs-using-native-controls &,
+    .vjs-ad-loading & {
         display: none !important;
     }
 }
@@ -130,7 +131,11 @@ $vjs-control-height: $gs-baseline*4;
     margin-top: -15px;
 
     .vjs-using-native-controls & {
-        display: none;
+        display: none !important;
+    }
+
+    .vjs-ad-loading & {
+        display: block !important;
     }
 }
 

@@ -403,6 +403,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
   lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
+  override lazy val contentType = GuardianContentTypes.LIVEBLOG
 
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary"
