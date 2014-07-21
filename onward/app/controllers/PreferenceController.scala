@@ -1,6 +1,6 @@
 package controllers
 
-import play.api.mvc.{SimpleResult, Results, Cookie, RequestHeader}
+import play.api.mvc.{Result, Results, Cookie, RequestHeader}
 import common.LinkTo
 import conf.Configuration.site
 import model.NoCache
@@ -25,9 +25,9 @@ trait PreferenceController extends Results {
     }
   }
 
-  def switchTo(cookie: (String, String), url: String)(implicit request: RequestHeader): SimpleResult = switchTo(Seq(cookie), url)
+  def switchTo(cookie: (String, String), url: String)(implicit request: RequestHeader): Result = switchTo(Seq(cookie), url)
 
-  def switchTo(cookies: Seq[(String, String)], url: String)(implicit request: RequestHeader): SimpleResult = if (allowedUrl(url)){
+  def switchTo(cookies: Seq[(String, String)], url: String)(implicit request: RequestHeader): Result = if (allowedUrl(url)){
     NoCache(
       Found(url)
       .withCookies(cookies.map{ case (name, value) =>

@@ -50,7 +50,7 @@ trait IndexController extends Controller with Index with Logging with Paging wit
     }
   }
 
-  private def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader) = {
+  private def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Result = {
     Cached(model.page) {
       if (request.isRss)
         Ok(TrailsToRss(model.page, model.trails))

@@ -7,14 +7,14 @@ define(['common/utils/cookies'], function(Cookie) {
 
     function load() {
         
-        var sample = (Math.random() * 125) < 1, // 0.2%, or 1 in every 500, will see the survey
+        var sample = Math.random() <= 0.05, // 5% sample rate
             hasForcedOptIn = /forceForesee/.test(location.hash);
     
         if (hasForcedOptIn) {
             storeForeseeForcingCookie();
         }
 
-        // the Foresee code is large, we only want to load it in when neccessary.
+        // the Foresee code is large, we only want to load it in when necessary.
         if (sample || hasForcedOptIn) {
             require(['js!foresee'], function() {});
         }

@@ -56,14 +56,14 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
     val idRequest = idRequestParser(request)
     val boundForm = requestPasswordResetForm.bindFromRequest
 
-    def onError(formWithErrors: Form[(String)]): Future[SimpleResult] = {
+    def onError(formWithErrors: Form[(String)]): Future[Result] = {
       logger.info("bad password reset request form submission")
       Future {
         Ok(views.html.password.requestPasswordReset(page, idRequest, idUrlBuilder, formWithErrors, Nil))
       }
     }
 
-    def onSuccess(email: (String)): Future[SimpleResult] = {
+    def onSuccess(email: (String)): Future[Result] = {
         api.sendPasswordResetEmail(email, idRequest.trackingData) map {
           case Left(errors) =>
             logger.info(s"Request new password returned errors ${errors.toString()}")
@@ -76,21 +76,21 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
         }
     }
 
-    boundForm.fold[Future[SimpleResult]](onError, onSuccess)
+    boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
   def resetPassword(token : String) = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromRequest
 
-    def onError(formWithErrors: Form[(String, String, String)]): Future[SimpleResult] = {
+    def onError(formWithErrors: Form[(String, String, String)]): Future[Result] = {
       logger.info("form errors in reset password attempt")
       Future {
         Ok(views.html.password.resetPassword(page, idRequest, idUrlBuilder, formWithErrors, token))
       }
     }
 
-    def onSuccess(form: (String, String, String)): Future[SimpleResult] = form match {
+    def onSuccess(form: (String, String, String)): Future[Result] = form match {
       case (password, password_confirm, email_address) =>
         api.resetPassword(token,password) map {
           case Left(errors) =>
@@ -111,7 +111,7 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
         }
     }
 
-    boundForm.fold[Future[SimpleResult]](onError, onSuccess)
+    boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
   def processUpdatePasswordToken( token : String) = Action.async { implicit request =>

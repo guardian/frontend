@@ -1,25 +1,12 @@
 package football.model
 
-import org.joda.time.{DateMidnight, DateTime}
+import org.joda.time.{LocalDate, DateTime}
 import pa._
 import model.Competition
-import model.Competition
-import scala.Some
-import model.Competition
-import scala.Some
-import model.Competition
-import scala.Some
-import model.Competition
-import pa.MatchDayTeam
-import pa.MatchDay
-import pa.Stage
-import scala.Some
-import pa.Round
-import pa.Fixture
 
 trait CompetitionTestData {
   val now = DateTime.now()
-  val today = DateMidnight.now()
+  val today = LocalDate.now()
 
   val teams = (0 until 16).map { i =>
     val idStr = i.toString
@@ -31,9 +18,9 @@ trait CompetitionTestData {
   val `final` = Round("2", Some("Final"))
   val knockoutRounds = List(quarterFinals, semiFinals, thirdPlacePlayoff, `final`)
 
-  private val _matchDay = MatchDay("1234", today.toDateTime, None, Stage("1"), Round("1", None), "1", true, false, true, false, true, "KO", None, teams(0), teams(1), None, None, None)
-  private val _fixture = Fixture("1234", today.toDateTime, Stage("1"), Round("1", None), "1", teams(0), teams(1), None, None)
-  private val _result = Result("1234", today.toDateTime, Stage("1"), Round("1", None), "1", false, None, teams(0), teams(1), None, None, None)
+  private val _matchDay = MatchDay("1234", today.toDateTimeAtStartOfDay, None, Stage("1"), Round("1", None), "1", true, false, true, false, true, "KO", None, teams(0), teams(1), None, None, None)
+  private val _fixture = Fixture("1234", today.toDateTimeAtStartOfDay, Stage("1"), Round("1", None), "1", teams(0), teams(1), None, None)
+  private val _result = Result("1234", today.toDateTimeAtStartOfDay, Stage("1"), Round("1", None), "1", false, None, teams(0), teams(1), None, None, None)
 
   private def liveMatch(date: DateTime, stage: Stage, round: Round, leg: String, homeTeam: MatchDayTeam = _matchDay.homeTeam, awayTeam: MatchDayTeam = _matchDay.awayTeam) =
     _matchDay.copy(

@@ -3,7 +3,7 @@ package common
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import views.support.{ WitnessCleaner, withJsoup }
-import play.api.templates.Html
+import play.twirl.api.Html
 import conf.Switches
 
 class WitnessCleanerTest extends FlatSpec with Matchers {

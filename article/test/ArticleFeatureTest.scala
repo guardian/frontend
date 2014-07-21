@@ -1,4 +1,3 @@
-
 package test
 
 import conf.{Switches, HealthcheckPage, Configuration}
@@ -586,6 +585,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
     ignore("Health check"){
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
+        import play.api.Play.current
         Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (503)
         HealthcheckPage.get(com.gu.management.HttpRequest(com.gu.management.GET, "/management/healthcheck", "http://localhost:10808", Map.empty))
         Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (200)

@@ -454,11 +454,19 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'common/app/public/javascripts/vendor',
                         src: [
-                            'foresee/foresee-trigger.js',
+                            'foresee*/foresee-trigger.js',
                             'formstack-interactive/0.1/boot.js',
                             'vast-client.js'
                         ],
                         dest: staticTargetDir + 'javascripts/vendor'
+                    },
+                    {
+                        expand: true,
+                        cwd: 'common/app/public/javascripts/vendor',
+                        src: [
+                            'foresee*/**'
+                        ],
+                        dest: staticHashDir + 'javascripts/vendor'
                     },
                     {
                         expand: true,

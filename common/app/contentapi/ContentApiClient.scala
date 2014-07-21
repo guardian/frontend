@@ -26,13 +26,13 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
     def apply(result: Future[ItemResponse]): Future[Seq[Trail]] =
       result.map{ r =>
 
-        val leadContentCutOff = DateTime.now.toDateMidnight - leadContentMaxAge
+        val leadContentCutOff = DateTime.now.toLocalDate - leadContentMaxAge
 
         var results = r.results.map(Content(_))
         var editorsPicks = r.editorsPicks.map(Content(_))
 
         val leadContent = if (editorsPicks.isEmpty)
-            r.leadContent.filter(_.webPublicationDate >= leadContentCutOff).map(Content(_)).take(1)
+            r.leadContent.filter(_.webPublicationDate >= leadContentCutOff.toDateTimeAtStartOfDay).map(Content(_)).take(1)
           else
             Nil
 

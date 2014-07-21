@@ -21,12 +21,12 @@ object HeaderLoggingFilter extends Filter with SafeLogging with ExecutionContext
     logger.debug(s"Request headers: $header")
   }
 
-  def apply(next: (RequestHeader) => SimpleResult)(rh: RequestHeader) = {
+  def apply(next: (RequestHeader) => Result)(rh: RequestHeader) = {
     if (logger.isDebugEnabled) { logHeaders(rh) }
     next(rh)
   }
 
-  def apply(next: (RequestHeader) => Future[SimpleResult])(rh: RequestHeader): Future[SimpleResult] = {
+  def apply(next: (RequestHeader) => Future[Result])(rh: RequestHeader): Future[Result] = {
     if (logger.isDebugEnabled) { logHeaders(rh) }
     next(rh)
   }

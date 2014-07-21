@@ -228,7 +228,6 @@ GET         /commercial/money/credit-cards/:creditCardType                      
 GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
 
 # Onward journeys
-GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
 GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                           controllers.AllIndexController.on(path)

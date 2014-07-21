@@ -7,7 +7,7 @@ import model._
 import java.net.URLEncoder._
 import org.apache.commons.lang.StringEscapeUtils
 import org.jboss.dna.common.text.Inflector
-import org.joda.time.{DateMidnight, DateTime}
+import org.joda.time.{LocalDate, DateTime}
 import org.joda.time.format.DateTimeFormat
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{ Element, Document }
@@ -15,8 +15,8 @@ import org.jsoup.safety.{ Whitelist, Cleaner }
 import play.api.libs.json.Json._
 import play.api.libs.json.Writes
 import play.api.mvc.RequestHeader
-import play.api.mvc.SimpleResult
-import play.api.templates.Html
+import play.api.mvc.Result
+import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
 import java.util.regex.Pattern
@@ -664,7 +664,7 @@ object Format {
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timezone))
   }
 
-  def apply(date: DateMidnight, pattern: String)(implicit request: RequestHeader): String = this(date.toDateTime, pattern)(request)
+  def apply(date: LocalDate, pattern: String)(implicit request: RequestHeader): String = this(date.toDateTimeAtStartOfDay, pattern)(request)
 
   def apply(a: Int): String = new DecimalFormat("#,###").format(a)
 }
@@ -709,7 +709,7 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 
 object RenderOtherStatus {
   def gonePage(implicit request: RequestHeader) = model.Page(request.path, "news", "This page has been removed", "GFE:Gone")
-  def apply(result: SimpleResult)(implicit request: RequestHeader) = result.header.status match {
+  def apply(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
     case 410 => Cached(60)(Gone(views.html.expired(gonePage)))

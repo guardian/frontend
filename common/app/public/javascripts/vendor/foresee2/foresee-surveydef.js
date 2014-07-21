@@ -1,6 +1,6 @@
 FSR.surveydefs = [{
     name: 'mobile_web',
-	platform: 'phone',
+    platform: 'phone',
     invite: {
         when: 'onentry'
     },
@@ -8,7 +8,36 @@ FSR.surveydefs = [{
         when: 'later'
     },
     criteria: {
-        sp: 10,
+        sp: 100,
+        lf: 1
+    },
+    include: {
+        urls: ['.']
+    }
+}, {
+    name: 'browse',
+    section: 'ngw',
+    platform: 'desktop',
+    invite: {
+        when: 'onentry',
+        dialogs: [[{
+            reverseButtons: false,
+            headline: "We'd welcome your feedback!",
+            blurb: "Thank you for visiting the Guardian. You have been selected to participate in a brief customer satisfaction survey to let us know how we can improve your experience.",
+            noticeAboutSurvey: "The survey is designed to measure your entire experience, please look for it at the <u>conclusion</u> of your visit.",
+            attribution: "This survey is conducted by an independent company ForeSee, on behalf of the site you are visiting.",
+            closeInviteButtonText: "Click to close.",
+            declineButton: "No, thanks",
+            acceptButton: "Yes, I'll give feedback",
+            error: "Error",
+            warnLaunch: "this will launch a new window"
+        }]]
+    },
+    pop: {
+        when: 'later'
+    },
+    criteria: {
+        sp: 100,
         lf: 1
     },
     include: {
@@ -200,7 +229,19 @@ FSR.properties = {
         google_remote: false
     },
     
-    cpps: {},
+    cpps: {
+        Beta_Site: {
+			source: 'function',
+			value: function(){
+				if (typeof window.guardian.r2 === "undefined") {
+				}
+				if (window.guardian.r2) {
+					return 'N'
+				}
+				return 'Y';
+			}
+		}
+    },
     
     mode: 'first-party'
 };

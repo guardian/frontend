@@ -1,10 +1,10 @@
 package football.controllers
 
 import model.{ Trail, MetaData, Competition }
-import org.joda.time.DateMidnight
+import org.joda.time.LocalDate
 import implicits.Football
 
-case class MatchesOnDate(date: DateMidnight, competitions: Seq[Competition])
+case class MatchesOnDate(date: LocalDate, competitions: Seq[Competition])
 
 case class CompetitionFilter(name: String, url: String)
 

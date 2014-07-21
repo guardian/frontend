@@ -26,12 +26,9 @@ object MostPopularAgent extends Logging with ExecutionContexts {
       val mostViewed = response.mostViewed map { Content(_) } take 10
       agent.alter{ old =>
         old + (edition.id -> mostViewed)
-      }(Timeout(5.seconds))
+      }
     }
 
-  def stop() {
-    agent.close()
-  }
 }
 
 object GeoMostPopularAgent extends Logging with ExecutionContexts {
@@ -78,10 +75,6 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
       }
     }
   }
-
-  def stop() {
-    ophanPopularAgent.close()
-  }
 }
 
 object DayMostPopularAgent extends Logging with ExecutionContexts {
@@ -126,11 +119,6 @@ object DayMostPopularAgent extends Logging with ExecutionContexts {
       }
     }
   }
-
-  def stop() {
-    ophanPopularAgent.close()
-  }
-
 }
 
 object MostPopularExpandableAgent extends Logging with ExecutionContexts {
@@ -154,7 +142,4 @@ object MostPopularExpandableAgent extends Logging with ExecutionContexts {
     }
   }
 
-  def stop() {
-    agent.close()
-  }
 }
