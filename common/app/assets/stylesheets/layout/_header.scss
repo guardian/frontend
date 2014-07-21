@@ -9,7 +9,6 @@ $servicesToggleArrowSize: 5px;
 
     @include mq(tablet) {
         background: $c-neutral8;
-        border-bottom: 2px solid $c-brandBlue;
     }
     @include mq(wide) {
         .has-page-skin & .gs-container {

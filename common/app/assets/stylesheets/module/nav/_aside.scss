@@ -1,14 +1,16 @@
 .navigation-aside {
     clear: both;
-    border-top: 1px solid lighten($c-neutral4, 5%);
     @include font-size(14, 20);
     @include rem((
         margin-top: ($gs-baseline/3)*2
     ));
+    border-top: 0;
 
     @include mq(tablet) {
-        border-top: 0;
+        float: left;
+        clear: none;
         @include rem((
+            width: gs-span(4),
             margin-top: $gs-baseline/3
         ));
     }
