@@ -4,6 +4,7 @@ define([
     'knockout',
     'modules/vars',
     'modules/authed-ajax',
+    'modules/list-manager',
     'modules/droppable',
     'utils/fetch-settings',
     'utils/update-scrollables',
@@ -21,6 +22,7 @@ define([
     ko,
     vars,
     authedAjax,
+    listManager,
     droppable,
     fetchSettings,
     updateScrollables,
@@ -145,8 +147,6 @@ define([
         }
 
         this.init = function() {
-            droppable(newItems);
-
             persistence.registerCallback(function () {
                 bootstrap({
                     force: true
@@ -165,6 +165,9 @@ define([
                 updateScrollables();
                 window.onresize = updateScrollables;
             });
+
+            listManager.init(newItems);
+            droppable.init();
         };
     };
 });
