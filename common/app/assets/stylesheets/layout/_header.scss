@@ -51,10 +51,8 @@ $servicesToggleArrowSize: 5px;
     }
 }
 
-.logo-wrapper--observer {
-    &:after {
-        display: none;
-    }
+.logo-wrapper--observer:after {
+    display: none;
 }
 
 
