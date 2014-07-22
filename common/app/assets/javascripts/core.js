@@ -52,6 +52,7 @@ require([
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/dfp',
     'common/modules/component',
+    'common/modules/experiments/ab',
     'common/modules/lazyload',
     'common/modules/ui/tabs'
 ], function() {});

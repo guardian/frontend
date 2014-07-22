@@ -1,14 +1,21 @@
 define([
+    'lodash/objects/assign',
     'common/utils/storage',
     'common/utils/mediator',
-    'common/modules/analytics/mvt-cookie'
+    'common/utils/config',
+    'common/modules/analytics/mvt-cookie',
+    'common/modules/experiments/tests/high-commercial-component'
 ], function (
+    assign,
     store,
     mediator,
-    mvtCookie
+    globalConfig,
+    mvtCookie,
+    HighCommercialComponent
     ) {
 
     var TESTS = [
+            new HighCommercialComponent()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -40,7 +47,7 @@ define([
         // renamed/deleted from the backend
         var participations = getParticipations();
         Object.keys(participations).forEach(function (k) {
-            if (typeof(config.switches['ab' + k]) === 'undefined') {
+            if (typeof(assign(globalConfig, config).switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
             } else {
                 var testExists = TESTS.some(function (element) {
@@ -143,7 +150,7 @@ define([
     }
 
     function isTestSwitchedOn(test, config) {
-        return config.switches['ab' + test.id];
+        return assign(globalConfig, config).switches['ab' + test.id];
     }
 
     function getTestVariant(testId) {
