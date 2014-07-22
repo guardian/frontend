@@ -186,6 +186,9 @@
 }
 
 .most-viewed-video-container__header {
+    @include rem((
+        height: gs-height(1) + $gs-baseline
+    ));
     .most-viewed-video-container__heading {
         @include fs-header(1);
         position: relative;
@@ -193,9 +196,6 @@
             top: $gs-baseline/4
         ));
     }
-    @include rem((
-        height: gs-height(1) + $gs-baseline
-    ));
 }
 
 .most-viewed-video {
