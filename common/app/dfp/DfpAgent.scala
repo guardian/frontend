@@ -30,7 +30,7 @@ trait DfpAgent {
   }
 
   private def getPrimaryKeywordOrSeriesTag(tags: Seq[Tag]): Option[Tag] = tags find { tag =>
-    (tag.tagType == "keyword" && !tag.isSectionTag) || tag.tagType == "series"
+    tag.tagType == "keyword" || tag.tagType == "series"
   }
 
   def isSponsored(tags: Seq[Tag]): Boolean = getPrimaryKeywordOrSeriesTag(tags) exists (tag => isSponsored(tag.id))
