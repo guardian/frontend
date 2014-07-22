@@ -9,7 +9,7 @@ object MostPopularTags {
     */
   def apply(items: Seq[Content]): Seq[(Tag, Int)] =
     items.foldLeft(List.empty[Tag])(_ ++ _.tags)
-      .filter(_.isKeyWord)
+      .filter(_.isKeyword)
       .filterNot(_.isSectionTag)
       .frequencies
       .toSeq
