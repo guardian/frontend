@@ -18,14 +18,14 @@ define([
         newItemsValidator
         newItemsPersister
 
-        opts.id
-        opts.sourceItem
-        opts.sourceList (optional)
+        id
+        sourceItem
+        sourceList (optional)
 
-        opts.targetItem (optional)
-        opts.targetList
+        targetItem (optional)
+        targetList
 
-        opts.isAfter (optional)
+        isAfter (optional)
     */
     function listManager(opts) {
         var position,

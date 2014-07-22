@@ -149,9 +149,7 @@ define([
         }
 
         Article.prototype.copy = function() {
-            var self = this;
-
-            storage.setItem(storageKeyCopied, JSON.stringify(self.get()));
+            storage.setItem(storageKeyCopied, JSON.stringify(this.get()));
         };
 
         Article.prototype.paste = function () {
@@ -160,6 +158,8 @@ define([
             if(!sourceItem) { return; }
 
             sourceItem = JSON.parse(sourceItem);
+
+            if(sourceItem.id === this.id()) { return; }
 
             mediator.emit('collection:updates', {
                 id: sourceItem.id,

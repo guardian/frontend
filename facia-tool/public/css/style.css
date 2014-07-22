@@ -810,14 +810,18 @@ button {
 
 .article__tools {
     display: none;
-}
-
-.article:hover > .closed > .article__tools {
-    display: block;
     position: absolute;
     right: 0;
     width: 88px;
     height: 51px;
+}
+
+.latest-articles .article__tools {
+    width: 45px;
+}
+
+.article:hover > .closed > .article__tools {
+    display: block;
 }
 
 .tool--small {
