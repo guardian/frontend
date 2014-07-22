@@ -8,8 +8,6 @@ import services.IndexPage
 import common._
 
 object LatestIndexController extends Controller with ExecutionContexts with implicits.ItemResponses with Logging {
-  val NumberOfRelatedTagsToDisplay = 10
-
   def latest(path: String) = Action.async { implicit request =>
 
     loadLatest(path).map { _.map { index =>
@@ -27,7 +25,7 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
     val result = LiveContentApi.item(s"/$path", Edition(request)).pageSize(1).orderBy("newest").response.map{ item =>
       item.section.map( section =>
         IndexPage(Section(section), item.results.map(Content(_)))
-      ).orElse(item.tag.map(tag =>
+      ).orElse(item.tag.map( tag =>
         IndexPage(Tag(tag), item.results.map(Content(_)))
       ))
     }
