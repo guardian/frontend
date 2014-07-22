@@ -177,143 +177,142 @@
             border-left: 1px solid $c-neutral2;
         }
     }
+}
 
-    .most-viewed-video-container {
-        @include mq(tablet) {
-            border-top: 1px solid $c-mediaDefault;
-        }
+.most-viewed-video-container {
+    @include mq(tablet) {
+        border-top: 1px solid $c-mediaDefault;
     }
+}
 
-    .most-viewed-video-container__header {
-        .most-viewed-video-container__heading {
-            @include fs-header(1);
-            position: relative;
-            @include rem((
-                top: $gs-baseline/4
-            ));
-        }
-        @include rem((
-            height: gs-height(1) + $gs-baseline
-        ));
-    }
-
-    .most-viewed-video {
-        @include rem((
-            margin-left: -$gs-gutter/2
-        ));
-    }
-
-    .most-viewed-video__action {
-        display: block;
-        @include rem((
-            padding-top: $gs-baseline
-        ));
-        color: $c-neutral5;
-
-        &:hover,
-        &:focus {
-            text-decoration: underline;
-        }
-        &:visited,
-        &:active {
-            color: darken($c-neutral5, 20%);
-        }
-    }
-
-    .most-viewed-video__img {
-        @include rem((
-            margin-bottom: $gs-baseline/3
-        ));
-    }
-
-    .most-viewed-video__headline {
-        @include f-headline;
-        @include font-size(14, 18);
-        @include text-clamp(3, 18px);
-        @include rem((
-            height: 18px * 3
-        ));
-
-        &:before {
-            content: '';
-            @include icon(video-icon);
-            @include background-size(auto 100%);
-            @include rem((
-                margin-right: $gs-gutter/4,
-                height: 12px !important,
-                width: 18px !important
-            ));
-        }
-    }
-
-    .most-viewed-video__item {
+.most-viewed-video-container__header {
+    .most-viewed-video-container__heading {
+        @include fs-header(1);
         position: relative;
-        float: left;
-        width: 50%;
-        @include box-sizing(border-box);
         @include rem((
-            margin-bottom: $gs-baseline*2,
-            padding-left: $gs-gutter/2,
-            padding-right: $gs-gutter/2
+            top: $gs-baseline/4
+        ));
+    }
+    @include rem((
+        height: gs-height(1) + $gs-baseline
+    ));
+}
+
+.most-viewed-video {
+    @include rem((
+        margin-left: -$gs-gutter/2
+    ));
+}
+
+.most-viewed-video__action {
+    display: block;
+    @include rem((
+        padding-top: $gs-baseline
+    ));
+    color: $c-neutral5;
+
+    &:hover,
+    &:focus {
+        text-decoration: underline;
+    }
+    &:visited,
+    &:active {
+        color: darken($c-neutral5, 20%);
+    }
+}
+
+.most-viewed-video__img {
+    @include rem((
+        margin-bottom: $gs-baseline/3
+    ));
+}
+
+.most-viewed-video__headline {
+    @include f-headline;
+    @include font-size(14, 18);
+    @include text-clamp(3, 18px);
+    @include rem((
+        height: 18px * 3
+    ));
+
+    &:before {
+        content: '';
+        @include icon(video-icon);
+        @include background-size(auto 100%);
+        @include rem((
+            margin-right: $gs-gutter/4,
+            height: 12px !important,
+            width: 18px !important
+        ));
+    }
+}
+
+.most-viewed-video__item {
+    position: relative;
+    float: left;
+    width: 50%;
+    @include box-sizing(border-box);
+    @include rem((
+        margin-bottom: $gs-baseline*2,
+        padding-left: $gs-gutter/2,
+        padding-right: $gs-gutter/2
+    ));
+
+    .most-viewed-video__item__container {
+        @include rem((
+            margin-top: -$gs-baseline
+        ));
+        border-top: 1px solid $c-mediaDefault;
+    }
+
+    @include mq($to: tablet) {
+        &:nth-child(odd) {
+            border-right: 1px solid $c-neutral2;
+
+            @include rem((
+                padding-right: 9px,
+            ));
+        }
+    }
+
+    @include mq($from: tablet, $to: rightCol) {
+        @include rem((
+            width: gs-span(3) - $gs-gutter/2
         ));
 
-        .most-viewed-video__item__container {
+        &:nth-child(-n+3) {
+            .most-viewed-video__item__container {
+                border-top: 0;
+            }
+        }
+
+        &:nth-child(3n-1),
+        &:nth-child(3n-2) {
+            border-right: 1px solid $c-neutral2;
             @include rem((
-                margin-top: -$gs-baseline
+                padding-right: 9px
             ));
-            border-top: 1px solid $c-mediaDefault;
         }
+    }
 
-        @include mq($to: tablet) {
-            &:nth-child(odd) {
-                border-right: 1px solid $c-neutral2;
-
-
-                @include rem((
-                    padding-right: 9px,
-                ));
+    @include mq(rightCol) {
+        &:nth-child(-n+2) {
+            .most-viewed-video__item__container {
+                border-top: 0;
             }
         }
 
-        @include mq($from: tablet, $to: rightCol) {
+        &:nth-child(odd) {
+            border-right: 1px solid $c-neutral2;
             @include rem((
-                width: gs-span(3) - $gs-gutter/2
+                padding-right: 9px,
             ));
-
-            &:nth-child(-n+3) {
-                .most-viewed-video__item__container {
-                    border-top: 0;
-                }
-            }
-
-            &:nth-child(3n-1),
-            &:nth-child(3n-2) {
-                border-right: 1px solid $c-neutral2;
-                @include rem((
-                    padding-right: 9px
-                ));
-            }
         }
 
-        @include mq(rightCol) {
-            &:nth-child(-n+2) {
-                .most-viewed-video__item__container {
-                    border-top: 0;
-                }
-            }
-
-            &:nth-child(odd) {
-                border-right: 1px solid $c-neutral2;
-                @include rem((
-                        padding-right: 9px,
-                ));
-            }
-
-            &:nth-child(even) {
-                @include rem((
-                    padding-left: $gs-gutter/2
-                ));
-            }
+        &:nth-child(even) {
+            @include rem((
+                padding-left: $gs-gutter/2
+            ));
         }
     }
 }
