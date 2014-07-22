@@ -1,9 +1,14 @@
 /* global _: true */
 define([
-    'knockout'
+    'knockout',
+    'utils/mediator'
 ], function(
-    ko
+    ko,
+    mediator
 ) {
+    var storage = window.localStorage,
+        storageKeyCopied ='gu.fronts-tool.copied';
+
     function Group(opts) {
         var self = this;
 
@@ -21,7 +26,24 @@ define([
         this.keepCopy   = opts.keepCopy;
         this.reflow     = opts.reflow  || function() {};
 
+        this.pasteItem = function() {
+            var sourceItem = storage.getItem(storageKeyCopied);
+
+            if(!sourceItem) { return; }
+
+            sourceItem = JSON.parse(sourceItem);
+
+            mediator.emit('collection:updates', {
+                id: sourceItem.id,
+                sourceItem: sourceItem,
+                targetItem: _.last(this.items()),
+                targetList: this,
+                isAfter: true
+            });
+        };
+
         this.omitItem   = function(item) {
+            item.copy();
             self.items.remove(item);
             self.reflow();
             if (_.isFunction(opts.omitItem)) { opts.omitItem(item); }
