@@ -2,7 +2,7 @@ define(function () {
 
     return function () {
         this.id = 'HighCommercialComponent';
-        this.start = '2014-07-09';
+        this.start = '2014-07-22';
         this.expiry = '2015-07-09';
         this.author = 'Darren Hurley';
         this.description = 'Using as a DFP targeting hook to test different high relevance components';
