@@ -132,6 +132,7 @@ $c-guardian-services-active-background: #2479c3;
     ));
 }
 .guardian-services__action,
+.guardian-services__action:focus,
 .guardian-services__action:hover {
     @include f-headline;
     display: block;
