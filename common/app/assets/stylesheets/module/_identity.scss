@@ -123,7 +123,7 @@
     .social-signin__action {
         color: #ffffff;
         display: block;
-        font-family: $sans-serif;
+        font-family: $f-data;
         @include rem((
             font-size: 14px,
             padding: 8px 0 9px,
@@ -218,7 +218,7 @@
     }
 }
 .user-profile__about {
-    @include fs-textsans(2);
+    @include fs-textSans(2);
     @include rem((
         margin-top: $gs-baseline
     ));
@@ -242,9 +242,9 @@
     }
 }
 .user-profile__name {
-    @include fs-headline(3);
+    @include fs-headline(4);
     @include mq(tablet) {
-        @include fs-headline(6, true);
+        @include fs-headline(7, true);
     }
 }
 .user-profile__last-seen,
@@ -310,7 +310,7 @@
 .formstack-count {
     position: absolute;
     color: $c-neutral1;
-    font-family: $sans-serif;
+    font-family: $f-data;
     @include rem((
         font-size: 13px,
         margin-left: 6px,
@@ -418,7 +418,7 @@
     ));
     display: inline-block;
     vertical-align: top;
-    @include fs-textsans(1);
+    @include fs-textSans(1);
 
     a {
         text-decoration: none;
@@ -437,7 +437,7 @@
     border: 1px solid $c-neutral4;
     border-top: 0;
     text-align: right;
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     @include rem((
         padding: $gs-baseline 0
     ));
@@ -472,11 +472,11 @@
         margin-bottom: $gs-baseline/4
     ));
     color: $c-neutral1;
-    @include fs-textsans(4);
+    @include fs-textSans(4);
 }
 .activity-stream__witness-description {
     color: $c-neutral2;
-    @include fs-textsans(2);
+    @include fs-textSans(2);
 }
 
 /* Edit profile Membership tab
@@ -663,7 +663,7 @@
 
             .change-summary__panel-label {
                 display: block;
-                @include fs-textsans(4);
+                @include fs-textSans(4);
                 color: #ffffff;
                 @include rem((
                     height: 30px,
@@ -742,7 +742,7 @@
             }
 
             .change-summary__data {
-                @include fs-bodyCopy(3);
+                @include fs-bodyCopy(2);
             }
         }
     }

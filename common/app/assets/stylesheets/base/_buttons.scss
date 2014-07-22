@@ -1,6 +1,6 @@
 .button {}
 .button--show-more {
-    @include fs-textsans(3);
+    @include fs-textSans(3);
     @include rem((
         margin-bottom: $gs-baseline,
         padding: ($gs-baseline/3)*2 0

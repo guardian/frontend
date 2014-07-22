@@ -7,7 +7,7 @@
     }
     .facia-slice-wrapper--position-1 {
         .item__title {
-            @include fs-headline(2, true);
+            @include fs-headline(3, true);
             @include box-sizing(border-box);
             @include rem((
                 padding-bottom: $gs-baseline,
@@ -23,7 +23,7 @@
                 border-bottom: 0;
 
                 .item__title {
-                    @include fs-headline(1, true);
+                    @include fs-headline(2, true);
                 }
             }
             .item--has-image .item__media-wrapper,

@@ -189,8 +189,7 @@
             width: gs-span(2)
         ));
         .most-viewed-video__headline {
-            @include f-headline;
-            @include font-size(14, 18);
+            @include fs-headline(1);
             @include text-clamp(3, 18px);
             @include rem((
                 height: 18px * 3
