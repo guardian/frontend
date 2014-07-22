@@ -82,15 +82,7 @@ define([
                     getParaWithSpaceStub.onSecondCall().returns(paras[1]);
                     articleBodyAdverts.init(config);
                     expect(qwery('.ad-slot--inline', fixture).length).toBeGreaterThan(0);
-                    expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                        minAbove: 250,
-                        minBelow: 300,
-                        selectors: {
-                            ' > h2': {minAbove: 0, minBelow: 250},
-                            ' > *:not(p):not(h2)': {minAbove: 25, minBelow: 250},
-                            ' .ad-slot': {minAbove: 500, minBelow: 500}
-                        }
-                    })
+                    expect(getParaWithSpaceStub).toHaveBeenCalled();
                 });
             });
         });
