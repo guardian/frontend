@@ -321,19 +321,19 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': 'Guardian Text Sans Web',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': 'Guardian Text Sans Web',
                             'font-style': 'italic',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': 'Guardian Text Sans Web',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff',
                             format: 'woff'
                         }
                     ]
@@ -346,19 +346,19 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': 'Guardian Text Sans Web',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': 'Guardian Text Sans Web',
                             'font-style': 'italic',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.ttf',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': 'Guardian Text Sans Web',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextSansWeb/GuardianTextSansWeb-Medium.ttf',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.ttf',
                             format: 'ttf'
                         }
                     ]
