@@ -37,7 +37,7 @@
                 </div>
                 @pagination.map{ paginate => @fragments.pagination(page, paginate)}
 
-                @seeAlsoTags(topTags(collection.items, 10).filterNot(_.id == page.id))
+                @seeAlsoTags(topTags(collection.items, 5).filterNot(_.id == page.id))
             </div>
         </section>
     }

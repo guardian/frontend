@@ -4,7 +4,7 @@
 @import views.support.ListTemplate.zipWithIsLast
 
 @if(tags.nonEmpty) {
-    <div class="related-subjects">
+    <div class="related-keywords">
         <ul class="inline-list">
             <li class="inline-list__item">See also:</li>
             @zipWithIsLast(tags).map { case (tag, isLast) =>
