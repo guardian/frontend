@@ -18,7 +18,7 @@
         <div class="most-viewed-video__item__container">
             <a class="most-viewed-video__action" href="@LinkTo{@content.url}">
                 @content.trailPicture(5, 3).map{ image =>
-                    <div class="most-viewed-video__img">
+                    <div class="most-viewed-video__img u-responsive-ratio">
                         <img class="responsiveimg" src="@Item140.bestFor(image)"/>
                     </div>
                 }
