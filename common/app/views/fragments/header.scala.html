@@ -11,9 +11,9 @@ to apply any necessary changes to non-shared code there too.
 <header id="header" class="l-header u-cf" role="banner" data-link-name="global navigation: header">
     <div class="l-header-pre">
         <div class="l-header-pre__inner gs-container u-cf">
-            <div class="top-nav">
+            <div class="top-bar">
                 @if(SearchSwitch.isSwitchedOn) {
-                    <div class="top-nav__item top-nav__item--search" data-component="search">
+                    <div class="top-bar__item top-bar__item--search" data-component="search">
                         <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
                             class="control control--search js-search-toggle" data-toggle="nav-popup--search">
                             <span class="control__icon">
@@ -24,7 +24,7 @@ to apply any necessary changes to non-shared code there too.
                         </a>
                     </div>
                 }
-                <div class="top-nav__item hide-on-mobile" data-component="edition">
+                <div class="top-bar__item hide-on-mobile" data-component="edition">
                     <div class="preheader__editions">
                         <dl class="editions">
                             <dt class="editions__title">
@@ -62,7 +62,7 @@ to apply any necessary changes to non-shared code there too.
                     </div>
                 </div>
                 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                    <div class="top-nav__item" data-component="identity-profile">
+                    <div class="top-bar__item" data-component="identity-profile">
                         <div class="js-profile-nav js-hidden">
                             <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
                                class="control control--profile">
