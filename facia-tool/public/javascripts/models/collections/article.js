@@ -190,7 +190,7 @@ define([
             };
         };
 
-        Article.prototype.populate = function(opts, validateMe) {
+        Article.prototype.populate = function(opts, validate) {
             var missingProps;
 
             populateObservables(this.props,  opts);
@@ -198,7 +198,7 @@ define([
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
 
-            if (validateMe) {
+            if (validate || opts.webUrl) {
                  missingProps = [
                     'webUrl',
                     'fields',
