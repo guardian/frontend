@@ -6,7 +6,7 @@ define(['common/utils/cookies'], function(Cookie) {
             hasForcedOptIn = /forceForesee/.test(location.hash);
 
         // the Foresee code is large, we only want to load it in when necessary.
-        if (!Cookie.get('gu.testagent') && (sample || hasForcedOptIn)) {
+        if (!Cookie.get('gu.test') && (sample || hasForcedOptIn)) {
             require(['js!foresee'], function() {});
         }
     }
