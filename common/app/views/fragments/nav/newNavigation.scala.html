@@ -12,7 +12,8 @@
             <div class="gs-container">
                 <div class="new-navigation__inner">
                     <div class="new-navigation__scroll">
-                        <nav class="new-navigation__container new-navigation__container--first" aria-label="Current section">
+                        <nav class="new-navigation__container new-navigation__container--first"
+                             aria-label="Current section" role="navigation">
                             @if(!Edition.isEditionFront){
                                 @fragments.nav.signposting(metaData, navigation)
 
@@ -27,7 +28,8 @@
                                 }
                             }
                         </nav>
-                        <nav class="new-navigation__container new-navigation__container--second" aria-label="Guardian sections">
+                        <nav class="new-navigation__container new-navigation__container--second"
+                             aria-label="Guardian sections" role="navigation">
                             <ul class="top-navigation">
                                 @briefNav.map{ nav =>
                                     @if(!Navigation.isEditionFront(nav)){
