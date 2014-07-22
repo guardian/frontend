@@ -7,7 +7,7 @@ import idapiclient.{ScGuU, IdApiClient}
 import conf.{FrontendIdentityCookieDecoder, IdentityConfiguration}
 import org.scalatest.mock.MockitoSugar
 import test.{FakeCSRFRequest, TestRequest, Fake}
-import play.api.mvc.{RequestHeader, Request, SimpleResult}
+import play.api.mvc.{RequestHeader, Request, Result}
 import scala.concurrent.Future
 import com.gu.identity.model.{StatusFields, User}
 import org.mockito.Mockito._
@@ -40,7 +40,7 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
   val errors = List(error)
 
   val authAction  = new actions.AuthenticatedAction(authService) {
-    override protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]): Future[SimpleResult] = {
+    override def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[Result]): Future[Result] = {
       block(AuthRequest(request, user, testAuth))
     }
   }

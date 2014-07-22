@@ -4,30 +4,18 @@
 
 .nav-popup {
     position: absolute;
-    top: 0;
     clear: both;
     z-index: 100;
     @include rem((
-        padding: ($gs-baseline/3)*2 0
+        padding: $gs-baseline/3 0 $gs-baseline,
+        top: $headerHeight,
+        min-height: 47px
     ));
     list-style: none;
     margin-bottom: -4px;
     border-bottom: 2px solid $c-brandBlue;
     background: #ffffff;
     width: 100%;
-}
-
-
-/* Small
-   ========================================================================== */
-
-.nav-popup--small {
-    @include rem((
-        padding-top: $gs-baseline/3,
-        padding-bottom: $gs-baseline,
-        top: $headerHeight,
-        min-height: 47px
-    ));
 
     @include mq(tablet) {
         position: absolute;
@@ -35,19 +23,11 @@
         @include rem((
             top: 40px,
             right: $gs-gutter,
-            padding-top: $gs-baseline/3,
             width: gs-span(4) + $gs-gutter
         ));
         @include box-sizing(border-box);
         background-color: #ffffff;
         border: 1px solid $c-neutral4;
-
-        .nav--additional-sections > .nav__item {
-            > .nav__link {
-                border-top: 0;
-                border-bottom: 1px solid lighten($c-neutral4, 8%);
-            }
-        }
 
         .nav__link {
             @include rem((
@@ -56,23 +36,9 @@
         }
     }
 }
-.nav-popup--sections {
-    padding-bottom: 0;
-
-    @include mq(tablet) {
-        @include rem((
-            top: 120px
-        ));
-    }
-    @include mq(desktop) {
-        @include rem((
-            top: 120px - $gs-row-height
-        ));
-    }
-}
 
 
-/* Identity Menu
+/* Search Menu
    ========================================================================== */
 
 .nav-popup--search {
@@ -82,7 +48,7 @@
 
     @include mq(tablet) {
         right: auto;
-        top: -1px;
+        top: 0;
         border: 1px solid $c-neutral4;
 
         @include rem((
@@ -101,9 +67,9 @@
 .nav-popup--profile {
     @include mq(tablet) {
         right: auto;
-        top: -1px;
+        top: 0;
         @include rem((
-            left: 319px,
+            left: 321px,
             width: gs-span(3)
         ));
     }
@@ -163,18 +129,5 @@
         @include rem((
             left: $gs-gutter
         ));
-    }
-}
-
-
-/* Local navigation
-   ========================================================================== */
-
-.nav-popup--localnav {
-    top: auto;
-    border-color: $c-neutral4;
-
-    .is-active .nav__link {
-        color: $c-brandLightBlue;
     }
 }

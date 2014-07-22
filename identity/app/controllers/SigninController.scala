@@ -46,17 +46,17 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     val idRequest = idRequestParser(request)
     val boundForm = form.bindFromRequest
 
-    def onError(formWithErrors: Form[(String, String, Boolean)]): Future[SimpleResult] = {
+    def onError(formWithErrors: Form[(String, String, Boolean)]): Future[Result] = {
       logger.info("Invalid login form submission")
       Future {
         Ok(views.html.signin(page.signinValidationError(idRequest), idRequest, idUrlBuilder, formWithErrors))
       }
     }
 
-    def onSuccess(form: (String, String, Boolean)): Future[SimpleResult] = form match {
+    def onSuccess(form: (String, String, Boolean)): Future[Result] = form match {
       case (email, password, rememberMe) =>
         logger.trace("authing with ID API")
-        val authResponse = api.authBrowser(EmailPassword(email, password), idRequest.trackingData)
+        val authResponse = api.authBrowser(EmailPassword(email, password, idRequest.clientIp), idRequest.trackingData)
         signInService.getCookies(authResponse, rememberMe) map {
           case Left(errors) =>
             logger.error(errors.toString())
@@ -76,6 +76,6 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
         }
     }
 
-    boundForm.fold[Future[SimpleResult]](onError, onSuccess)
+    boundForm.fold[Future[Result]](onError, onSuccess)
   }
 }

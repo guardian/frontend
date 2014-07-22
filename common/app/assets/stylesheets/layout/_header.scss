@@ -1,13 +1,14 @@
 /* Global header and navigation
    ========================================================================== */
 
+$servicesToggleArrowSize: 5px;
+
 .l-header {
     position: relative;
     z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050
 
     @include mq(tablet) {
         background: $c-neutral8;
-        border-bottom: 2px solid $c-brandBlue;
     }
     @include mq(wide) {
         .has-page-skin & .gs-container {
@@ -47,12 +48,6 @@
             font-size: 13px;
         }
     }
-    @include mq(desktop) {
-        @include rem((
-            margin-top: -$gs-row-height,
-            margin-bottom: $gs-baseline * 1.5
-        ));
-    }
 }
 
 /* Pre-header
@@ -61,16 +56,12 @@
 .l-header-pre {
     float: left;
     min-width: gs-span(2);
-    z-index: 1;
+    z-index: 3;
     position: relative;
 
     @include mq(tablet) {
         float: none;
         background: $c-neutral8;
-        border-bottom: 1px solid $c-neutral4;
-    }
-    @include mq(desktop) {
-        border-bottom-color: $c-neutral8;
     }
 }
 .l-header-pre__inner {
@@ -134,6 +125,72 @@ a.edition {
     }
 }
 
+.guardian-services {
+    @include fs-header(1);
+    @include rem((
+        padding: $gs-baseline/2 0
+    ));
+}
+.guardian-services__action {
+    @include fs-headline(1);
+    display: block;
+    text-decoration: none;
+    margin: 0;
+    color: $c-neutral1;
+    cursor: pointer;
+    @include rem((
+        line-height: $headerHeight
+    ));
+}
+.guardian-services__action__arrow {
+    display: inline-block;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    border-bottom: 0 solid transparent;
+    @include rem((
+        margin: 2px,
+        border-left: $servicesToggleArrowSize solid transparent,
+        border-right: $servicesToggleArrowSize solid transparent,
+        border-top: $servicesToggleArrowSize solid $c-neutral1
+    ));
+}
+.guardian-services__item-more--collapsed .guardian-services__item--more-menu {
+    display: none;
+}
+.guardian-services__item-more--expanded {
+    position: relative;
+    background: $c-new-navigation-base;
+
+    .guardian-services__action {
+        color: $c-local-navigation-action;
+    }
+    .guardian-services__action__arrow {
+        border-top: 0 solid transparent;
+        @include rem((
+            border-bottom: $servicesToggleArrowSize solid $c-local-navigation-action
+        ));
+    }
+}
+.guardian-services__item--more-menu {
+    @include box-sizing(border-box);
+    position: absolute;
+    background: $c-new-navigation-base;
+    margin: 0;
+    padding: 0;
+    right: 0;
+    list-style: none;
+    @include rem((
+        top: $headerHeight,
+        padding: 0 $gs-gutter/2,
+        width: gs-span(2)
+    ));
+    @include mq(desktop) {
+        @include rem((
+            width: gs-span(3)
+        ));
+    }
+}
 
 /* Main header (logo, actions)
    ========================================================================== */

@@ -1,13 +1,13 @@
 var $$FSR = {
-   'timestamp': 'February 20, 2014 @ 5:05 PM',
+   'timestamp': 'June 5, 2014 @ 11:07 AM',
    'version': '16.2.1',
-   'build': '5',
+   'build': '7',
    'enabled': true,
    'frames' : false,
    'sessionreplay': true,
    'auto' : true,
    'encode' : true,
-   'files': guardian.config.page.assetsPath + 'javascripts/vendor/foresee/',
+   'files': '/foresee/',
    // needs to be set when foresee-transport.swf is not located at 'files'
    //'swf_files': '__swf_files_'
    'id': 'fdIXz/UlLcgRJ+Qwv25S0Q==',

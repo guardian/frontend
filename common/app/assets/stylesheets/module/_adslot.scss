@@ -27,7 +27,7 @@
 }
 .top-banner-ad-container--desktop {
     background-color: $c-neutral8;
-    border-bottom: 2px solid $c-newsDefault;
+    border-bottom: 2px solid $c-neutral4;
     display: none;
 
     @include mq(tablet) {

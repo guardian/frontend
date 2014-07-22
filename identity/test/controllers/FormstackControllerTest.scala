@@ -13,7 +13,7 @@ import org.mockito.Mockito._
 import org.mockito.Matchers
 import test.{TestRequest, Fake}
 import play.api.test.Helpers._
-import play.api.mvc.SimpleResult
+import play.api.mvc.Result
 import services.IdentityRequest
 import client.Error
 import idapiclient.TrackingData
@@ -36,7 +36,7 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
   val testAuth = new ScGuU("abc")
 
   val authAction  = new actions.AuthenticatedAction(authService) {
-    override protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]): Future[SimpleResult] = {
+    override def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[Result]): Future[Result] = {
       block(AuthRequest(request, user, testAuth))
     }
   }

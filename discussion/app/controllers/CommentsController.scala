@@ -3,7 +3,7 @@ package controllers
 import model.Cached
 import scala.concurrent.Future
 import common.JsonComponent
-import play.api.mvc.{ Action, RequestHeader, SimpleResult }
+import play.api.mvc.{ Action, RequestHeader, Result }
 import discussion.model.{BlankComment, DiscussionKey}
 
 trait CommentsController extends DiscussionController {
@@ -36,7 +36,7 @@ trait CommentsController extends DiscussionController {
     getComments(key)
   }
 
-  def getComments(key: DiscussionKey, optParams: Option[DiscussionParams] = None)(implicit request: RequestHeader): Future[SimpleResult] = {
+  def getComments(key: DiscussionKey, optParams: Option[DiscussionParams] = None)(implicit request: RequestHeader): Future[Result] = {
     val params = optParams.getOrElse(DiscussionParams(request))
     val commentPage = discussionApi.commentsFor(key, params)
 

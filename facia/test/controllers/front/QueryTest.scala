@@ -10,7 +10,7 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
-import play.api.libs.ws.Response
+import play.api.libs.ws.WSResponse
 import services.ParseCollection
 import contentapi.ContentApiClient
 import play.api.libs.json.JsValue
@@ -30,7 +30,7 @@ class FailingCollectionQuery(id: String) {
 }
 
 class TestParseCollection(httpStatusCode: Int, responseString: String = "{}") extends ParseCollection with MockitoSugar {
-  val response = mock[Response]
+  val response = mock[WSResponse]
 
   when(response.status) thenReturn httpStatusCode
   when(response.body) thenReturn responseString

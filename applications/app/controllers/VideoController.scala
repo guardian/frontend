@@ -42,7 +42,7 @@ object VideoController extends Controller with Logging with ExecutionContexts {
     result recover convertApiExceptions
   }
 
-  private def renderVideo(model: VideoPage)(implicit request: RequestHeader): SimpleResult = {
+  private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result = {
     val htmlResponse = () => views.html.video(model)
     val jsonResponse = () => views.html.fragments.videoBody(model)
     renderFormat(htmlResponse, jsonResponse, model.video, Switches.all)

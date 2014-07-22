@@ -4,11 +4,12 @@ import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import com.amazonaws.services.sqs.model._
 import com.amazonaws.regions.{Region => AwsRegion}
+import org.joda.time.DateTime
 import play.api.libs.json.{Writes, Json, Reads}
 import java.util.concurrent.{Future => JavaFuture}
 
 import scala.concurrent.{ExecutionContext, Future, Promise}
-import scala.util.{Failure, Success}
+import scala.util.{Try, Failure, Success}
 
 object SQSQueues {
   implicit class RichAmazonSQSAsyncClient(client: AmazonSQSAsyncClient) {
@@ -48,7 +49,7 @@ object SQSQueues {
 
 case class MessageId(get: String) extends AnyVal
 case class ReceiptHandle(get: String) extends AnyVal
-case class Message[A](id: MessageId, get: A, handle: ReceiptHandle)
+case class Message[A](id: MessageId, get: A, handle: ReceiptHandle, sentAt: Option[DateTime])
 
 /** Utility class for SQS queues that use JSON to serialize their messages */
 case class JsonMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)
@@ -57,14 +58,21 @@ case class JsonMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)
   import scala.collection.JavaConverters._
 
   def receive(request: ReceiveMessageRequest)(implicit reads: Reads[A]): Future[Seq[Message[A]]] =
-    client.receiveMessageFuture(request.withQueueUrl(queueUrl)) map { response =>
+    client.receiveMessageFuture(
+      request.withQueueUrl(queueUrl).withAttributeNames("SentTimestamp")
+    ) map { response =>
       response.getMessages.asScala.toSeq map { message =>
         Message(
           MessageId(message.getMessageId),
           Json.fromJson[A](Json.parse(message.getBody)) getOrElse {
             throw new RuntimeException(s"Couldn't parse JSON for message with ID ${message.getMessageId}")
           },
-          ReceiptHandle(message.getReceiptHandle)
+          ReceiptHandle(message.getReceiptHandle),
+          message.getAttributes.asScala.get("SentTimestamp") flatMap { timeStampString =>
+            Try {
+              new DateTime(timeStampString.toLong)
+            }.toOption
+          }
         )
     }
   }

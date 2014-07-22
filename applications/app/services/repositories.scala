@@ -9,7 +9,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import contentapi.QueryDefaults
 import scala.concurrent.Future
-import play.api.mvc.{RequestHeader, SimpleResult}
+import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.openplatform.contentapi.ApiError
 import controllers.ImageContentPage
 
@@ -37,7 +37,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
     }
   }
 
-  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean): Future[Either[IndexPage, SimpleResult]] = {
+  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean): Future[Either[IndexPage, PlayResult]] = {
 
     val section = leftSide.split('/').head
 
@@ -96,7 +96,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
     response.total
   ))
 
-  def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, SimpleResult]] = {
+  def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
 
     val promiseOfResponse = LiveContentApi.item(path, edition)
       .page(pageNum)
@@ -147,7 +147,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
 trait ImageQuery extends ConciergeRepository with QueryDefaults {
 
-  def image(edition: Edition, path: String): Future[Either[ImageContentPage, SimpleResult]]= {
+  def image(edition: Edition, path: String): Future[Either[ImageContentPage, PlayResult]]= {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
     val response = LiveContentApi.item(path, edition)
       .showExpired(true)

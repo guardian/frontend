@@ -5,6 +5,7 @@ import net.liftweb.json.JsonDSL._
 import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import play.api.Play.current
 
 /*
  * App is considered healthy if any of the given URLs is OK.

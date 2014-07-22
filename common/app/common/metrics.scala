@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong
 import com.amazonaws.services.cloudwatch.model.Dimension
 import common.FaciaToolMetrics.InvalidContentExceptionMetric
 import scala.collection.JavaConversions._
+import scala.util.Try
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -343,6 +344,34 @@ object FaciaPressMetrics {
     "Number of times facia-tool has failed to made the request for SEO purposes of webTitle and section"
   )
 
+  object FrontPressLatency extends FrontendTimingMetric(
+    "facia-front-press",
+    "front-press-latency",
+    "Front Press Latency",
+    "Time from press command being queued to being processed"
+  )
+
+  object UkFrontPressLatency extends FrontendTimingMetric(
+    "facia-front-press",
+    "uk-network-front-press-latency",
+    "UK Network Front Press Latency",
+    "Time from press command for UK front being queued to being processed"
+  )
+
+  object UsFrontPressLatency extends FrontendTimingMetric(
+    "facia-front-press",
+    "us-network-front-press-latency",
+    "US Network Front Press Latency",
+    "Time from press command for US front being queued to being processed"
+  )
+
+  object AuFrontPressLatency extends FrontendTimingMetric(
+    "facia-front-press",
+    "au-network-front-press-latency",
+    "AU Network Front Press Latency",
+    "Time from press command for AU front being queued to being processed"
+  )
+
   val all: Seq[Metric] = Seq(
     FrontPressSuccess,
     FrontPressLiveSuccess,
@@ -354,7 +383,11 @@ object FaciaPressMetrics {
     FrontPressCronFailure,
     MemcachedFallbackMetric,
     ContentApiSeoRequestSuccess,
-    ContentApiSeoRequestFailure
+    ContentApiSeoRequestFailure,
+    FrontPressLatency,
+    UkFrontPressLatency,
+    UsFrontPressLatency,
+    AuFrontPressLatency
   )
 }
 
@@ -551,6 +584,7 @@ class FrontendTimingMetric(
   override val getValue = () => totalTimeInMillis
 
   def getAndReset: Long = currentCount.getAndSet(0)
+  def getAndResetTime: Long = Try(timeInMillis.getAndSet(0) / currentCount.getAndSet(0)).getOrElse(0L)
 }
 
 object PerformanceMetrics {

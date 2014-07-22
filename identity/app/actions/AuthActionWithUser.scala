@@ -8,12 +8,12 @@ import com.google.inject.Inject
 import services.{AuthenticationService, IdRequestParser}
 import scala.concurrent.ExecutionContext.Implicits.global
 import utils.SafeLogging
-import play.api.mvc.SimpleResult
+import play.api.mvc.Result
 
 class AuthActionWithUser @Inject()(authService: AuthenticationService, identityApiClient: IdApiClient, idRequestParser: IdRequestParser)
   extends ActionBuilder[AuthRequest] with Results with SafeLogging {
 
-  protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]) = {
+  def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[Result]) = {
     val authResult = authService.handleAuthenticatedRequest(request)
     authResult.fold(
       error => {
