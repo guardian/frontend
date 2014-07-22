@@ -15,13 +15,15 @@
 
 @item(content: model.Video) = {
     <li class="most-viewed-video__item">
-        <a class="most-viewed-video__action" href="@LinkTo{@content.url}">
-            @content.trailPicture(5, 3).map{ image =>
-                <div class="most-viewed-video__img">
-                    <img class="responsiveimg" src="@Item140.bestFor(image)"/>
-                </div>
-            }
-            <h4 class="most-viewed-video__headline">@content.videoLinkText</h4>
-        </a>
+        <div class="most-viewed-video__item__container">
+            <a class="most-viewed-video__action" href="@LinkTo{@content.url}">
+                @content.trailPicture(5, 3).map{ image =>
+                    <div class="most-viewed-video__img">
+                        <img class="responsiveimg" src="@Item140.bestFor(image)"/>
+                    </div>
+                }
+                <h4 class="most-viewed-video__headline">@content.videoLinkText</h4>
+            </a>
+        </div>
     </li>
 }
