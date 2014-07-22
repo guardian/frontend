@@ -14,8 +14,8 @@ trait ExecutionContexts {
   lazy val memcachedExecutionContext: ExecutionContext = PlayAkka.system.dispatchers.lookup("play.akka.actor.memcached")
 }
 
-object AkkaAgent {
-  def apply[T](value: T) = Agent(value)(PlayAkka.system(Play.current))
+object AkkaAgent extends ExecutionContexts{
+  def apply[T](value: T): Agent[T] = Agent(value)
 }
 
 object AkkaAsync extends ExecutionContexts {

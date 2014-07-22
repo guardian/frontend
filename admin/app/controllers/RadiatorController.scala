@@ -5,13 +5,14 @@ import common.Logging
 import controllers.AuthLogging
 import tools.{ChartFormat, CloudWatch}
 import play.api.libs.ws.WS
-import com.ning.http.client.Realm
+import play.api.libs.ws.WSAuthScheme
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
 import conf.Configuration
 import model.NoCache
 import conf.Switches
-import org.joda.time.DateTime
+import org.joda.time.LocalDate
+import play.api.Play.current
 
 object RadiatorController extends Controller with Logging with AuthLogging {
 
@@ -24,7 +25,7 @@ object RadiatorController extends Controller with Logging with AuthLogging {
 
   def switchesExpiringThisWeek() = {  
     Switches.all.filter { switch =>
-      switch.sellByDate.isBefore(new DateTime().plusDays(7))
+      switch.sellByDate.isBefore(new LocalDate().plusDays(7))
     }
   }
 
@@ -52,7 +53,7 @@ object RadiatorController extends Controller with Logging with AuthLogging {
     val apiKey = Configuration.pingdom.apiKey
 
     WS.url(url)
-      .withAuth(user, password,  Realm.AuthScheme.BASIC)
+      .withAuth(user, password,  WSAuthScheme.BASIC)
       .withHeaders("App-Key" ->  apiKey)
       .get().map { response =>
         NoCache(Ok(Json.toJson(response.body)))

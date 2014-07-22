@@ -55,7 +55,7 @@ echo ''
 
 
 # NOTE this is not a REAL APP_SECRET it is just for DEV environments
-fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
+export APP_SECRET="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
 
 ####################################################################################
 #
@@ -64,7 +64,6 @@ fake_secret="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
 ####################################################################################
 java $FRONTEND_JVM_ARGS  \
   $DEBUG_PARAMS \
-  -DAPP_SECRET=$fake_secret \
   -Dsbt.ivy.home=`dirname $0`/ivy-sbt \
   -Duser.timezone=Australia/Sydney \
   -jar `dirname $0`/dev/sbt-launch.jar "$@"

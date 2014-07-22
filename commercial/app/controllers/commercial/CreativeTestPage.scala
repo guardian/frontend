@@ -32,7 +32,7 @@ object TestPage extends model.MetaData  {
 
 object CreativeTestPage extends Controller {
   def allComponents() = Action{ implicit request =>
-    if(Configuration.environment.stage == "dev") {
+    if(Configuration.environment.stage == "dev" || Configuration.environment.stage == "code") {
       Ok(views.html.debugger.allcreatives(TestPage))
     } else {
       NotFound

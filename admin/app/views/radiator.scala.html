@@ -25,7 +25,7 @@
         <h2>Expiring features</h2>
         <ul id="sell-by-date">
             @switches.map{ switch =>
-                @defining(Days.daysBetween(new DateTime(), switch.sellByDate).getDays()) { days =>
+                @defining(Days.daysBetween(new DateTime(), switch.sellByDate.toDateTimeAtStartOfDay).getDays()) { days =>
                     <li class="Expiring expiry-days-@days" title="@switch.name - expires in @days days">
                         @switch.name
                     </li>

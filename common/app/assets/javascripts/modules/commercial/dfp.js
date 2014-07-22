@@ -117,7 +117,7 @@ define([
                 label: false,
                 refresh: false,
                 sizeMappings: {
-                    desktop: '888,88|88,88'
+                    desktop: '88,88'
                 }
             },
             spbadge: {

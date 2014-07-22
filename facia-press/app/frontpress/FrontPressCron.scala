@@ -4,7 +4,7 @@ import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import com.amazonaws.services.sqs.model._
 import common.FaciaPressMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
-import common.Logging
+import common.{Edition, Logging}
 import common.SQSQueues._
 import conf.Configuration
 import conf.Switches.FrontPressJobSwitch
@@ -14,6 +14,7 @@ import play.api.libs.json.Json
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
+import org.joda.time.DateTime
 
 /** TODO convert this to use JsonQueueWorker
   *
@@ -38,9 +39,14 @@ object FrontPressCron extends Logging with implicits.Collections {
         try {
           val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(batchSize))
           Future.traverse(receiveMessageResult.getMessages.map(getConfigFromMessage).distinct) { path =>
+            val start = DateTime.now
             val f = FrontPress.pressLiveByPathId(path)
             f onComplete {
               case Success(_) =>
+                if (Edition.all.map(_.id.toLowerCase).exists(_ == path))
+                  ToolPressQueueWorker.metricsByPath.get(path).foreach { metric =>
+                    metric.recordTimeSpent(DateTime.now.getMillis - start.getMillis)
+                }
                 deleteMessage(receiveMessageResult, queueUrl)
                 FrontPressCronSuccess.increment()
               case Failure(error) =>
@@ -48,7 +54,6 @@ object FrontPressCron extends Logging with implicits.Collections {
                 log.warn("Error updating collection via cron", error)
                 FrontPressCronFailure.increment()
             }
-
             f
           }
         } catch {

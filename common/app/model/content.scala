@@ -403,6 +403,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
   lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
+  override lazy val contentType = GuardianContentTypes.LIVEBLOG
 
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary"
@@ -427,6 +428,7 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val contentType = GuardianContentTypes.VIDEO
   lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
+  lazy val videoLinkText: String = webTitle.stripSuffix(" - video").stripSuffix(" – video")
 
   // I know its not too pretty
   lazy val bylineWithSource: Option[String] = Some(Seq(
@@ -439,7 +441,6 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
-
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "video",
     "og:type" -> "video",

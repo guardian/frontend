@@ -47,21 +47,16 @@ GET         /discussion/profile/:id/witness.json                                
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
 
 
-# Core Navigation
-GET         /most-read                                                                                               controllers.MostPopularController.render(path = "")
+# Onward
 GET         /most-read.json                                                                                          controllers.MostPopularController.render(path = "")
-GET         /most-read/*path.json                                                                                    controllers.MostPopularController.renderJson(path)
-GET         /most-read/*path                                                                                         controllers.MostPopularController.render(path)
-GET         /most-read-geo.json                                                                                      controllers.MostPopularController.renderPopularGeoJson()
-GET         /most-read-day.json                                                                                      controllers.MostPopularController.renderPopularDayJson(countryCode)
+GET         /most-read/*path.json                                                                                    controllers.MostPopularController.render(path)
+GET         /most-read-geo.json                                                                                      controllers.MostPopularController.renderPopularGeo()
+GET         /most-read-day.json                                                                                      controllers.MostPopularController.renderPopularDay(countryCode)
 
-GET         /top-stories                                                                                             controllers.TopStoriesController.renderTopStories()
-GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStoriesJson()
-GET         /top-stories/trails                                                                                      controllers.TopStoriesController.renderTrails()
-GET         /top-stories/trails.json                                                                                 controllers.TopStoriesController.renderJsonTrails()
-GET         /related/*path.json                                                                                      controllers.RelatedController.renderJson(path)
-GET         /related/*path                                                                                           controllers.RelatedController.render(path)
-GET         /popular-in-tag/*tag.json                                                                                controllers.PopularInTag.renderJson(tag)
+GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStories()
+GET         /top-stories/trails.json                                                                                 controllers.TopStoriesController.renderTrails()
+GET         /related/*path.json                                                                                      controllers.RelatedController.render(path)
+GET         /popular-in-tag/*tag.json                                                                                controllers.PopularInTag.render(tag)
 
 GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
 GET         /preference/edition/:edition                                                                             controllers.ChangeEditionController.render(edition)
@@ -69,6 +64,9 @@ GET         /preference/front-alphas/:optAction                                 
 
 GET         /cards/opengraph/*path.json                                                                              controllers.CardController.opengraph(path)
 GET         /tagged.json                                                                                             controllers.TaggedContentController.renderJson(tag: String)
+
+GET         /video/section/*sectionId.json                                                                           controllers.VideoInSectionController.renderSectionVideos(sectionId)
+GET         /video/most-viewed.json                                                                                  controllers.MostViewedVideoController.renderMostViewed()
 
 # Sport
 GET         /sport/cricket/match/:matchId                                                                            controllers.CricketMatchController.renderMatchId(matchId)
@@ -230,7 +228,6 @@ GET         /commercial/money/credit-cards/:creditCardType                      
 GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
 
 # Onward journeys
-GET         /onward/recently-published                                                                               controllers.LatestContentController.recentlyPublished()
 GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                                                           controllers.AllIndexController.on(path)
@@ -239,10 +236,6 @@ GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer           
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                                                  controllers.AllIndexController.allOn(path, day, month, year)
 GET        /$path<.+>/all                                                                                            controllers.AllIndexController.all(path)
 
-
-# Applications
-GET         /sections                                                                                                controllers.SectionsController.renderSections()
-GET         /sections.json                                                                                           controllers.SectionsController.renderSectionsJson()
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")

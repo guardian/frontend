@@ -5,7 +5,7 @@ import play.api.mvc._
 import play.api.Play.current
 import football.services.{GetPaClient, Client}
 import common.{Logging, ExecutionContexts}
-import org.joda.time.DateMidnight
+import org.joda.time.LocalDate
 import java.net.URLDecoder
 import scala.concurrent.Future
 import scala.language.postfixOps

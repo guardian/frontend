@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong
 import com.amazonaws.services.cloudwatch.model.Dimension
 import common.FaciaToolMetrics.InvalidContentExceptionMetric
 import scala.collection.JavaConversions._
+import scala.util.Try
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -583,6 +584,7 @@ class FrontendTimingMetric(
   override val getValue = () => totalTimeInMillis
 
   def getAndReset: Long = currentCount.getAndSet(0)
+  def getAndResetTime: Long = Try(timeInMillis.getAndSet(0) / currentCount.getAndSet(0)).getOrElse(0L)
 }
 
 object PerformanceMetrics {

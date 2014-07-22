@@ -67,19 +67,16 @@ define([
                 it('should not not display ad slot if standard-adverts switch is off', function() {
                     config.switches.standardAdverts = false;
                     expect(articleBodyAdverts.init(config)).toBe(false);
-                    expect(qwery('.ad-slot', fixture).length).toBe(0);
                 });
 
                 it('should not display ad slot if not on an article', function() {
                     config.page.contentType = 'Gallery';
                     expect(articleBodyAdverts.init(config)).toBe(false);
-                    expect(qwery('.ad-slot', fixture).length).toBe(0);
                 });
 
                 it('should not display ad slot if a live blog', function() {
-                    config.page.isLiveBlog = true;
+                    config.page.contentType = 'LiveBlog';
                     expect(articleBodyAdverts.init(config)).toBe(false);
-                    expect(qwery('.ad-slot', fixture).length).toBe(0);
                 });
 
                 it('should call \'getParaWithSpace\' with correct arguments', function() {

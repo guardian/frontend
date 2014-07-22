@@ -13,9 +13,19 @@
 }
 .container--first {
     margin-top: 0;
-    @include rem((
-        padding-top: $gs-row-height*.5
-    ));
+    padding-top: 0;
+
+    @include mq($to: tablet) {
+        .container__border,
+        .container__header {
+            display: none;
+        }
+    }
+    @include mq(tablet) {
+        @include rem((
+            padding-top: $gs-row-height*.5
+        ));
+    }
 }
 .container__border {
     border-top-style: solid;

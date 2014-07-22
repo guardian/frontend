@@ -10,6 +10,8 @@ import model.NoCache
 
 object Api extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 
+  import play.api.Play.current
+
   def proxy(path: String, callback: String) = Authenticated.async { request =>
     val queryString = request.queryString.map { p =>
        "%s=%s".format(p._1, p._2.head.urlEncoded)

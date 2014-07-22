@@ -14,7 +14,7 @@ define([
     detect,
     dfp,
     spacefinder
-) {
+    ) {
 
     var ads = [],
         adNames = [['inline1', 'inline'], ['inline2', 'inline']],
@@ -29,7 +29,7 @@ define([
         init = function(c) {
 
             var config = defaults(
-                c || {},
+                    c || {},
                 globalConfig,
                 {
                     switches: {}

@@ -4,7 +4,7 @@ import common.Edition
 import feed.Competitions
 import football.model._
 import model._
-import org.joda.time.DateMidnight
+import org.joda.time.LocalDate
 import pa.FootballTeam
 import play.api.mvc.{Action, AnyContent}
 
@@ -17,9 +17,9 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
 
   def allFixturesJson() = allFixtures()
   def allFixtures(): Action[AnyContent] =
-    renderAllFixtures(DateMidnight.now(Edition.defaultEdition.timezone))
+    renderAllFixtures(LocalDate.now(Edition.defaultEdition.timezone))
 
-  private def renderAllFixtures(date: DateMidnight) = Action { implicit request =>
+  private def renderAllFixtures(date: LocalDate) = Action { implicit request =>
     val fixtures = new FixturesList(date, Competitions())
     val page = new Page("football/fixtures", "football", "All fixtures", "GFE:Football:automatic:fixtures")
     renderMatchList(page, fixtures, filters)
@@ -27,13 +27,13 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
 
   def tagFixturesJson(tag: String) = tagFixtures(tag)
   def tagFixtures(tag: String): Action[AnyContent] =
-    renderTagFixtures(DateMidnight.now(Edition.defaultEdition.timezone), tag)
+    renderTagFixtures(LocalDate.now(Edition.defaultEdition.timezone), tag)
 
   def tagFixturesForJson(year: String, month: String, day: String, tag: String) = tagFixturesFor(year, month, day, tag)
   def tagFixturesFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
     renderTagFixtures(createDate(year, month, day), tag)
 
-  private def renderTagFixtures(date: DateMidnight, tag: String): Action[AnyContent] = {
+  private def renderTagFixtures(date: LocalDate, tag: String): Action[AnyContent] = {
     lookupCompetition(tag).map { comp =>
       renderCompetitionFixtures(tag, comp, date)
     }.orElse {
@@ -43,13 +43,13 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
     }
   }
 
-  private def renderCompetitionFixtures(competitionName: String, competition: Competition, date: DateMidnight) = Action { implicit request =>
+  private def renderCompetitionFixtures(competitionName: String, competition: Competition, date: LocalDate) = Action { implicit request =>
     val fixtures = new CompetitionFixturesList(date, Competitions(), competition.id)
     val page = new Page(s"football/$competitionName/fixtures", "football", s"${competition.fullName} fixtures", "GFE:Football:automatic:competition fixtures")
     renderMatchList(page, fixtures, filters)
   }
 
-  private def renderTeamFixtures(teamName: String, team: FootballTeam, date: DateMidnight) = Action { implicit request =>
+  private def renderTeamFixtures(teamName: String, team: FootballTeam, date: LocalDate) = Action { implicit request =>
     val fixtures = new TeamFixturesList(date, Competitions(), team.id)
     val page = new Page(s"football/$teamName/fixtures", "football", s"${team.name} fixtures", "GFE:Football:automatic:team fixtures")
     renderMatchList(page, fixtures, filters)
@@ -58,7 +58,7 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
   def teamFixturesComponentJson(teamId: String) = teamFixturesComponent(teamId)
   def teamFixturesComponent(teamId: String) = Action { implicit request =>
     Competitions().findTeam(teamId).map { team =>
-      val date = DateMidnight.now(Edition.defaultEdition.timezone)
+      val date = LocalDate.now(Edition.defaultEdition.timezone)
       val fixtures = new TeamFixturesList(date, Competitions(), teamId, 2)
       val page = new Page(
         s"football/${team.id}/fixtures",

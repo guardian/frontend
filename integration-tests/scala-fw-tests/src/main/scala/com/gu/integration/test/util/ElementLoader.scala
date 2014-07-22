@@ -1,32 +1,34 @@
 package com.gu.integration.test.util
 
 import scala.collection.JavaConverters.asScalaBufferConverter
-
 import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
+import org.openqa.selenium.support.ui.WebDriverWait
+import org.openqa.selenium.support.ui.ExpectedConditions
+import com.gu.automation.support.TestLogging
+import org.openqa.selenium.WebDriverException
 
-import com.gu.integration.test.config.PropertyLoader.BaseUrl
-import com.gu.integration.test.config.PropertyLoader.getProperty
+object ElementLoader extends TestLogging {
 
-object ElementLoader {
-
-  val frontsBaseUrl = getProperty(BaseUrl)
   val TestAttributeName = "data-test-id"
 
   /**
    * Will find the element with the provided test attribute id and, if provided, using the provided webelement as search context
-   * otherwise it will use the WebDriver
+   * otherwise it will use the WebDriver, which has to be in scope. Waits until element is displayed before returning
    */
   def findByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): WebElement = {
-    contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
+    val extractedLocalValue = contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
+
+    waitUntilDisplayed(extractedLocalValue)
+    extractedLocalValue
   }
 
   /**
    * Will find all elements with the provided test attribute id and, if provided, using the provided webelement as search context
-   * otherwise it will use the WebDriver
+   * otherwise it will use the WebDriver, which has to be in scope
    */
   def findAllByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): List[WebElement] = {
     contextElement.getOrElse(driver).findElements(byTestAttributeId(testAttributeValue)).asScala.toList
@@ -39,8 +41,20 @@ object ElementLoader {
   /**
    * Find all link elements, including nested, from the provided SearchContext and returns those that are displayed
    */
-  def displayedLinks(searchContext: SearchContext): List[WebElement] = {
-    searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => element.isDisplayed)
+  def displayedLinks(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
+    searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => waitUntilDisplayed(element))
+  }
+
+  def waitUntilDisplayed(element: WebElement)(implicit driver: WebDriver): Boolean = {
+    try {
+      new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(element))
+    } catch {
+      case e: WebDriverException => {
+        logger.info(s"Element not displayed after waiting: ${e.getMessage()}")
+        false
+      }
+    }
+    true
   }
 
   /**
@@ -49,9 +63,8 @@ object ElementLoader {
    * visible
    */
   def displayedImages(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
-    val preDisplayedImages = searchContext.findElements(By.cssSelector("img")).asScala.toList.filter(element => element.isDisplayed)
-    //preDisplayedImages
-    return preDisplayedImages.filter(element => isImageDisplayed(element))
+    val preDisplayedImages = searchContext.findElements(By.cssSelector("img")).asScala.toList.filter(element => waitUntilDisplayed(element))
+    preDisplayedImages.filter(element => isImageDisplayed(element))
   }
 
   /**

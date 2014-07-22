@@ -5,6 +5,8 @@ import play.api.libs.json._
 import conf.Configuration._
 import common.{ExecutionContexts, Logging}
 import play.api.libs.ws.WS
+import java.net.URL
+import play.api.Play.current
 
 object OphanApi extends ExecutionContexts with Logging {
 
@@ -20,6 +22,14 @@ object OphanApi extends ExecutionContexts with Logging {
       log.error("Ophan host or key not configured")
       Future.successful(JsObject(Nil))
     }
+  }
+
+  def UrlToContentPath(url: String): String = {
+    var contentId = new URL(url).getPath
+    if (contentId.startsWith("/")) {
+      contentId = contentId.substring(1)
+    }
+    contentId
   }
 
   def getBreakdown(platform: String, hours: Int): Future[JsValue] = getBody(s"breakdown?platform=$platform&hours=$hours")
@@ -56,4 +66,5 @@ object OphanApi extends ExecutionContexts with Logging {
 
   def getSurgingContent() = getBody("surging?")
 
+  def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] = getBody(s"video/mostviewed?hours=$hours&count=$count")
 }

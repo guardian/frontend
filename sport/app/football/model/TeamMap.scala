@@ -121,10 +121,6 @@ object TeamMap extends ExecutionContexts with Logging {
       teamAgent.send(old => old ++ tagReferences)
     }
   }
-
-  def stop() {
-    teamAgent.close()
-  }
 }
 
 object TeamUrl {

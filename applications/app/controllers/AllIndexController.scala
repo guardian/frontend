@@ -18,7 +18,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
 
   def newer(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
     val edition = Edition(request)
-    val requestedDate: DateTime = dateFormat.parseDateTime(s"$year/$month/$day").withZone(edition.timezone)
+    val requestedDate: DateTime = dateFormat.withZone(edition.timezone).parseDateTime(s"$year/$month/$day")
     findNewer(path, requestedDate).map{ _.map{ date =>
       val foundDate = date.withZone(edition.timezone)
       Found(s"/$path/${urlFormat(foundDate)}/all")
@@ -43,8 +43,8 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   def allOn(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
     implicit val dedupe = TemplateDeduping()
     val edition = Edition(request)
-    val requestedDate = dateFormat.parseDateTime(s"$year/$month/$day").withZone(edition.timezone)
-      .toDateMidnight.plusDays(1).toDateTime.minusSeconds(1)
+    val requestedDate = dateFormat.withZone(edition.timezone).parseDateTime(s"$year/$month/$day")
+      .withTimeAtStartOfDay().plusDays(1).minusSeconds(1)
 
     loadLatest(path, requestedDate).map { _.map { index =>
 

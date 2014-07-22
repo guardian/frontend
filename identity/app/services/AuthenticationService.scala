@@ -3,19 +3,18 @@ package services
 import com.google.inject.{Inject, Singleton}
 import conf.FrontendIdentityCookieDecoder
 import client.Logging
-import play.api.mvc.{SimpleResult, Request}
+import play.api.mvc.{Results, Request, Result => PlayResult}
 import idapiclient.ScGuU
 import java.net.URLEncoder
-import play.api.mvc.Results._
-import play.api.mvc.SimpleResult
+
 import actions.AuthRequest
 
 
 @Singleton
 class AuthenticationService @Inject()(cookieDecoder: FrontendIdentityCookieDecoder,
                                       idRequestParser: IdRequestParser,
-                                      identityUrlBuilder: IdentityUrlBuilder) extends Logging {
-  def handleAuthenticatedRequest[A](request: Request[A]): Either[SimpleResult, AuthRequest[A]] = {
+                                      identityUrlBuilder: IdentityUrlBuilder) extends Logging with Results {
+  def handleAuthenticatedRequest[A](request: Request[A]): Either[PlayResult, AuthRequest[A]] = {
     authenticatedRequestFor(request) match {
       case Some(authRequest) => {
         logger.trace("user is logged in")
