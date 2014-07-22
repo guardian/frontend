@@ -6,16 +6,16 @@
 
 @if(HttpSwitch(GuardianServicesLinksSwitch).isSwitchedOn){
     @if(Edition(request) == Uk){
-        <div class="top-nav__item--right hide-on-mobile" data-component="guardian-services">
-            <div class="top-nav__item">
+        <div class="top-bar__item--right hide-on-mobile" data-component="guardian-services">
+            <div class="top-bar__item">
                 <a class="guardian-services__action" data-link-name="topNav : jobs"
                    href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS">jobs</a>
             </div>
-            <div class="top-nav__item hide-on-tablet">
+            <div class="top-bar__item hide-on-tablet">
                 <a class="guardian-services__action" data-link-name="topNav : soulmates"
                    href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">soulmates</a>
             </div>
-            <div class="top-nav__item guardian-services__item-more is-off">
+            <div class="top-bar__item guardian-services__item-more--collapsed">
                 <a href="#services" class="guardian-services__action"
                    data-toggle="guardian-services__item-more" data-link-name="topNav : more">
                     <span>more</span>

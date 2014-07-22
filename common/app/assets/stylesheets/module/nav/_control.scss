@@ -23,26 +23,6 @@
 }
 
 
-/* Sections control - (Hamburger icon)
-   ========================================================================== */
-
-.control--sections {
-    @include mq(tablet) {
-        position: absolute;
-        z-index: 1;
-        @include rem((
-            right: $gs-gutter,
-            top: 131px
-        ));
-    }
-    @include mq(desktop) {
-        @include rem((
-            top: 131px - $gs-row-height
-        ));
-    }
-}
-
-
 /* Search control & control info (text label next to it)
    ========================================================================== */
 
