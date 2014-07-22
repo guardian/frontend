@@ -37,7 +37,8 @@ $navigation-h-space-between-items: $gs-gutter;
 
 $c-navigation-expandable-background: guss-colour(neutral-1);
 
-$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
+$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, map-get($mq-breakpoints, desktop));
+$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map-get($mq-breakpoints, desktop) + gs-span(1) + $gs-gutter * 1.5);
 
 
 /* First container page title overrides
@@ -60,18 +61,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
         color: #333333;
         padding-left: 0;
         background: transparent;
-    }
-}
-
-
-/* Page skins
-   ========================================================================== */
-
-@include mq(navigationBreakOnTwoLevels) {
-    .has-page-skin .l-header .gs-container {
-        @include rem((
-            width: auto
-        ));
     }
 }
 
@@ -332,6 +321,12 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
         margin-right: $gs-gutter/2
     ));
 }
+@mixin navigation-items-shrink-spacing {
+    @include rem((
+        padding-right: $navigation-h-space-between-items/2 - 1,
+        padding-left: $navigation-h-space-between-items/2 - 1
+    ));
+}
 .local-navigation__item,
 .top-navigation__item {
     white-space: nowrap;
@@ -342,6 +337,14 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
         padding-left: $navigation-h-space-between-items/2
     ));
 
+    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
+        @include navigation-items-shrink-spacing;
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            @include navigation-items-shrink-spacing;
+        }
+    }
 }
 .navigation--collapsed.navigation--has-signposting {
     .local-navigation,
@@ -727,6 +730,21 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
 /* Toggle button
    ========================================================================== */
 
+@mixin navigation__toggle--width($width: small) {
+    @if $width == small {
+        @include rem((
+            min-width: $navigation-toggler-width,
+            padding-left: $gs-gutter + 2
+        ));
+    }
+    @if $width == wide {
+        @include rem((
+            min-width: $navigation-toggler-width-full,
+            padding-left: $gs-gutter + 12px
+        ));
+    }
+}
+
 .navigation__toggle {
     z-index: 2;
     position: absolute;
@@ -736,10 +754,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
     @include fs-header(1);
     @include rem((
         line-height: $gs-row-height,
-        min-width: $navigation-toggler-width,
-        padding-left: $gs-gutter + 2,
-        padding-right: $gs-gutter/2,
+        padding-right: $gs-gutter/2
     ));
+    @include navigation__toggle--width(small);
     background: $c-navigation-toggle-background;
     -moz-background-clip: padding-box;
     -webkit-background-clip: padding-box;
@@ -764,15 +781,19 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
     }
 
     @include mq(tablet) {
-        @include rem((
-            min-width: $navigation-toggler-width-full,
-            padding-left: $gs-gutter + 12px,
-            padding-right: $gs-gutter/2
-        ));
+        @include navigation__toggle--width(wide);
         text-align: left;
     }
     @include mq(navigationBreakOnTwoLevels) {
         border-left: 0;
+    }
+    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
+        @include navigation__toggle--width(small);
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            @include navigation__toggle--width(small);
+        }
     }
 }
 .navigation__toggle-label {}
@@ -782,6 +803,14 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
     @include mq(tablet) {
         display: inline;
     }
+    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
+        display: none;
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            display: none;
+        }
+    }
 }
 .navigation__toggle-label--close,
 .navigation--expanded .navigation__toggle-label--open {
@@ -790,31 +819,45 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, gs-span(14));
 .navigation--expanded .navigation__toggle-label--close {
     display: inline;
 }
+@mixin navigation__toggle-burger--width($width: small) {
+    @if $width == small {
+        @include rem((
+            left: 6px,
+            width: 12px
+        ));
+    }
+    @if $width == wide {
+        @include rem((
+            left: 10px,
+            width: 16px
+        ));
+    }
+}
+
 .navigation__toggle-burger {
     position: absolute;
-    left: 6px;
     @include rem((
         top: 11px
     ));
+    @include navigation__toggle-burger--width(small);
 
     @include mq(tablet) {
-        @include rem((
-            left: 10px
-        ));
+        @include navigation__toggle-burger--width(wide);
+    }
+    @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
+        @include navigation__toggle-burger--width(small);
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            @include navigation__toggle-burger--width(small);
+        }
     }
 }
 .honest-burger {
     display: block;
     @include rem((
-        width: 12px,
         height: 16px
     ));
-
-    @include mq(tablet) {
-        @include rem((
-            width: 16px
-        ));
-    }
 }
 .honest-burger i {
     display: block;
