@@ -20,7 +20,7 @@ $servicesToggleArrowSize: 5px;
     }
 }
 
-.guardian-logo-wrapper {
+.logo-wrapper {
     position: relative;
     float: right;
     @include rem((
@@ -50,6 +50,13 @@ $servicesToggleArrowSize: 5px;
         }
     }
 }
+
+.logo-wrapper--observer {
+    &:after {
+        display: none;
+    }
+}
+
 
 /* Pre-header
    ========================================================================== */
