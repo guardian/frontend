@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.WebDriverWait
 import org.openqa.selenium.support.ui.ExpectedConditions
 import com.gu.automation.support.TestLogging
+import org.openqa.selenium.WebDriverException
 
 object ElementLoader extends TestLogging {
 
@@ -19,9 +20,8 @@ object ElementLoader extends TestLogging {
    * otherwise it will use the WebDriver, which has to be in scope. Waits until element is displayed before returning
    */
   def findByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): WebElement = {
-    val extractedLocalValue = {
-      contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
-    }
+    val extractedLocalValue = contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
+
     waitUntilDisplayed(extractedLocalValue)
     extractedLocalValue
   }
@@ -49,7 +49,7 @@ object ElementLoader extends TestLogging {
     try {
       new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(element))
     } catch {
-      case e: Exception => {
+      case e: WebDriverException => {
         logger.info(s"Element not displayed after waiting: ${e.getMessage()}")
         false
       }
