@@ -131,8 +131,9 @@ $c-guardian-services-active-background: #2479c3;
         padding: $gs-baseline/2 0
     ));
 }
-.guardian-services__action {
-    @include fs-headline(1);
+.guardian-services__action,
+.guardian-services__action:hover {
+    @include f-headline;
     display: block;
     text-decoration: none;
     margin: 0;
@@ -210,3 +211,4 @@ $c-guardian-services-active-background: #2479c3;
     position: relative;
     z-index: 2;
 }
+
