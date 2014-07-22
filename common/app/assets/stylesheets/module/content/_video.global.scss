@@ -208,18 +208,22 @@
         @include rem((
             padding-top: $gs-baseline
         ));
+        color: $c-neutral5;
 
         &:hover,
         &:focus {
             text-decoration: underline;
-            color: $c-neutral5;
+        }
+        &:visited,
+        &:active {
+            color: darken($c-neutral5, 20%);
         }
     }
 
     .most-viewed-video__img {
-        img {
-            width: 100%;
-        }
+        @include rem((
+            margin-bottom: $gs-baseline/3
+        ));
     }
 
     .most-viewed-video__headline {
@@ -227,18 +231,17 @@
         @include font-size(14, 18);
         @include text-clamp(3, 18px);
         @include rem((
-                height: 18px * 3
+            height: 18px * 3
         ));
-        color: $c-neutral5;
 
         &:before {
             content: '';
             @include icon(video-icon);
             @include background-size(auto 100%);
             @include rem((
-                    margin-right: $gs-gutter/4,
-                    height: 12px !important,
-                    width: 18px !important
+                margin-right: $gs-gutter/4,
+                height: 12px !important,
+                width: 18px !important
             ));
         }
     }
@@ -279,7 +282,7 @@
 
             &:nth-child(-n+3) {
                 .most-viewed-video__item__container {
-                    border-top: none;
+                    border-top: 0;
                 }
             }
 
@@ -295,7 +298,7 @@
         @include mq(rightCol) {
             &:nth-child(-n+2) {
                 .most-viewed-video__item__container {
-                    border-top: none;
+                    border-top: 0;
                 }
             }
 
