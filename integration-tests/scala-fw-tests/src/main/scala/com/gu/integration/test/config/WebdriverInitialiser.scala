@@ -16,7 +16,7 @@ import org.openqa.selenium.Platform
 
 object WebdriverInitialiser extends TestLogging {
 
-  def initWebDriver(webDriver: WebDriver): WebDriver = {
+  def augmentWebDriver(webDriver: WebDriver): WebDriver = {
     webDriver.manage().timeouts().implicitlyWait(10, SECONDS)
     webDriver
   }
