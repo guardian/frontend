@@ -106,11 +106,8 @@ define(['common/utils/$',
     */
     Membership.prototype.prerender = function () {
         var self = this,
-            subscriptionCurrentPeriodStart,
-            subscriptionCurrentPeriodEnd,
             memberOptIn,
             subscriptionIsCancelled,
-            subscriptionInterval,
             notificationCancelElement = self.getElem('NOTIFICATION_CANCEL'),
             notificationChangeElement = self.getElem('NOTIFICATION_CHANGE'),
             upperTabDetailsList = self.getClass('TAB_DETAILS_LIST_UPPER'),
@@ -122,11 +119,13 @@ define(['common/utils/$',
             withCredentials: true,
             method: 'get'
         }).then(function (resp) {
-            subscriptionCurrentPeriodStart = self.formatDate(new Date(resp.subscription.start));
-            subscriptionCurrentPeriodEnd = self.formatDate(new Date(resp.subscription.end));
+            var subscriptionDates = {
+                currentPeriodStart: self.formatDate(new Date(resp.subscription.start)),
+                currentPeriodEnd: self.formatDate(new Date(resp.subscription.end)),
+                interval: resp.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual'
+            };
             memberOptIn = resp.optIn;
             subscriptionIsCancelled = !!resp.subscription.cancelledAt;
-            subscriptionInterval = resp.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual';
 
             // Display default tab contents
             self.display = true;
@@ -141,21 +140,13 @@ define(['common/utils/$',
                 if (subscriptionIsCancelled) {
 
                     if (memberOptIn) {
-                        self.displayChangePackageTabContents.bind(self)(notificationChangeElement, resp, subscriptionCurrentPeriodStart, subscriptionCurrentPeriodEnd);
+                        self.displayChangePackageTabContents.call(self, notificationChangeElement, resp, subscriptionDates);
                     } else {
-                        self.displayCancellationTabContents.bind(self)(notificationCancelElement, resp, subscriptionCurrentPeriodStart, subscriptionCurrentPeriodEnd);
+                        self.displayCancellationTabContents.call(self, notificationCancelElement, resp, subscriptionDates);
                     }
 
-                } else { // Display regular membership tab contents
-                    $(lowerTabDetailsList, self.context).removeClass('is-hidden');
-                    $(self.getClass('INTERVAL'), self.context).html(subscriptionInterval);
-                    $(self.getClass('NEXT'), lowerTabDetailsList).text(self.formatDate(new Date(resp.subscription.end)));
-                    $(self.getClass('CC_LAST4'), lowerTabDetailsList).text(resp.subscription.card.last4);
-
-                    self.currentCardTypeClass = 'i-' + resp.subscription.card.type.toLowerCase().replace(' ', '-');
-
-                    $(self.getClass('CC_TYPE'), lowerTabDetailsList).addClass(self.currentCardTypeClass);
-                    $(self.getClass('CC_TYPE_TEXT'), lowerTabDetailsList).text(resp.subscription.card.type);
+                } else {
+                    self.displayLowerTabContents.call(self, lowerTabDetailsList, resp, subscriptionDates);
                 }
             }
 
@@ -168,8 +159,9 @@ define(['common/utils/$',
      *
      * @param rootElement String classname for the root
      * @param resp Object JSON response
+     * @param subscriptionDates Object subscript relevant dates
      */
-    Membership.prototype.displayChangePackageTabContents = function (rootElement, resp, subscriptionCurrentPeriodStart, subscriptionCurrentPeriodEnd) {
+    Membership.prototype.displayChangePackageTabContents = function (rootElement, resp, subscriptionDates) {
         var subscriptionNewStartDate = this.formatDate(
             new Date(
                     new Date(resp.subscription.end).getTime() + (24 * 60 * 60 * 1000)
@@ -179,8 +171,8 @@ define(['common/utils/$',
         $(rootElement,this.context).removeClass('is-hidden');
         $(this.getClass('NOTIFICATION_TIER_CURRENT'), rootElement).html(resp.tier);
         $(this.getClass('NOTIFICATION_TIER_TARGET'), rootElement).html('Friend');
-        $(this.getClass('NOTIFICATION_PERIOD_START'), rootElement).html(subscriptionCurrentPeriodStart);
-        $(this.getClass('NOTIFICATION_PERIOD_END'), rootElement).html(subscriptionCurrentPeriodEnd);
+        $(this.getClass('NOTIFICATION_PERIOD_START'), rootElement).html(subscriptionDates.currentPeriodStart);
+        $(this.getClass('NOTIFICATION_PERIOD_END'), rootElement).html(subscriptionDates.currentPeriodEnd);
         $(this.getClass('NOTIFICATION_NEW_START'), rootElement).html(subscriptionNewStartDate);
         $(this.getClass('NOTIFICATION_ICON_CURRENT'), rootElement).addClass('i-g-' + resp.tier.toLowerCase());
         $(this.getClass('NOTIFICATION_ICON_TARGET'), rootElement).addClass('i-g-' + 'friend');
@@ -192,15 +184,35 @@ define(['common/utils/$',
      *
      * @param rootElement String classname for the root
      * @param resp Object JSON response
+     * @param subscriptionDates Object subscript relevant dates
      */
-    Membership.prototype.displayCancellationTabContents = function (rootElement, resp, subscriptionCurrentPeriodStart, subscriptionCurrentPeriodEnd) {
+    Membership.prototype.displayCancellationTabContents = function (rootElement, resp, subscriptionDates) {
         $(this.getClass('TAB_DETAILS_LIST_UPPER'), this.context).addClass('is-hidden');
         $(rootElement, this.context).removeClass('is-hidden');
         var tierHref = resp.tier.toLowerCase() === 'patron' ? config.page.membershipUrl + '/join/patron' : config.page.membershipUrl + '/join';
         $(this.getClass('NOTIFICATION_TIER'), rootElement).html(resp.tier);
         $(this.getClass('NOTIFICATION_TIER_HREF'), rootElement).attr('href', tierHref);
-        $(this.getClass('NOTIFICATION_PERIOD_START'), rootElement).html(subscriptionCurrentPeriodStart);
-        $(this.getClass('NOTIFICATION_PERIOD_END'), rootElement).html(subscriptionCurrentPeriodEnd);
+        $(this.getClass('NOTIFICATION_PERIOD_START'), rootElement).html(subscriptionDates.currentPeriodStart);
+        $(this.getClass('NOTIFICATION_PERIOD_END'), rootElement).html(subscriptionDates.currentPeriodEnd);
+    };
+
+    /**
+     * Display the contents of the lower tab for subscribed members
+     *
+     * @param rootElement String classname for the root
+     * @param resp Object JSON response
+     * @param subscriptionDates Object subscript relevant dates
+     */
+    Membership.prototype.displayLowerTabContents = function (rootElement, resp, subscriptionDates) {
+        $(rootElement, this.context).removeClass('is-hidden');
+        $(this.getClass('INTERVAL'), this.context).html(subscriptionDates.interval);
+        $(this.getClass('NEXT'), rootElement).text(this.formatDate(new Date(resp.subscription.end)));
+        $(this.getClass('CC_LAST4'), rootElement).text(resp.subscription.card.last4);
+
+        this.currentCardTypeClass = 'i-' + resp.subscription.card.type.toLowerCase().replace(' ', '-');
+
+        $(this.getClass('CC_TYPE'), rootElement).addClass(this.currentCardTypeClass);
+        $(this.getClass('CC_TYPE_TEXT'), rootElement).text(resp.subscription.card.type);
     };
 
     /**
