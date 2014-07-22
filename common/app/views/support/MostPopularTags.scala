@@ -16,5 +16,5 @@ object MostPopularTags {
       .sortBy(-_._2)
 
   /** The top n tags that occur for the given items of content */
-  def topTags(items: Seq[Content], n: Int) = apply(items).take(n).map(_._1)
+  def topTags(items: Seq[Content]) = apply(items).map(_._1)
 }
