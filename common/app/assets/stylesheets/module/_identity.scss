@@ -593,7 +593,7 @@
         @include fs-header(3);
         @include rem((
             border-top: 1px solid $c-neutral4,
-            padding: 15px 0 $gs-gutter,
+            padding: 15px 0 20px,
             margin-top: $gs-gutter*2
         ));
     }
@@ -601,10 +601,10 @@
     .change-summary__arrow {
         display: block;
         position: absolute;
+        @include background-size(rem(18px 16px));
         @include rem((
             left: 50%,
             top: 598px,
-            background-size: 18px 16px,
             margin-left: -9px,
             width: 18px,
             height: 16px
@@ -618,11 +618,12 @@
                 top: 384px
             ));
         }
+
         @include mq(desktop) {
             @include transform(rotate(0deg));
+            @include background-size(rem(26px 24px));
             @include rem((
                 top: 330px,
-                background-size: 26px 24px,
                 margin-left: -13px,
                 width: 26px,
                 height: 24px
@@ -633,7 +634,7 @@
     .change-summary__container {
 
         @include rem((
-           padding-bottom: $gs-gutter*4
+           padding-bottom: 80px
         ));
 
         -webkit-box-pack: justify;
@@ -647,14 +648,13 @@
             @include rem((
                 margin-top: 30px
             ));
+
             @include mq(tablet) {
                 margin: 0;
                 flex-grow: 0;
                 flex-direction: column;
-
                 display: inline-block;
                 vertical-align: top;
-
                 @include rem((
                     width: 47%,
                     flex-basis: 47%
@@ -700,8 +700,8 @@
             i {
                 display: inline-block;
                 vertical-align: middle;
+                @include background-size(rem(28px 28px));
                 @include rem((
-                    background-size: 28px 28px,
                     height: 28px,
                     width: 28px
                 ));
@@ -725,6 +725,7 @@
             .change-summary__label,
             .change-summary__data {
                 display: inline-block;
+
                 @include mq(tablet, desktop) {
                     display: block;
                     @include rem((
@@ -744,8 +745,6 @@
                 @include fs-bodyCopy(3);
             }
         }
-
-
     }
 
     .membership-tab__change-cc-form-cont {
