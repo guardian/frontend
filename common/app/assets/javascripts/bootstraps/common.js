@@ -22,7 +22,6 @@ define([
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
-    'common/modules/navigation/servicesNav',
     'common/modules/navigation/newNavigation',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
@@ -69,7 +68,6 @@ define([
     images,
     Profile,
     Search,
-    ServicesNav,
     newNavigation,
 
     Tabs,
@@ -119,8 +117,6 @@ define([
             }
 
             search.init(header);
-
-            ServicesNav.init(config);
         },
 
         initialiseNewNavigation: function (config) {
