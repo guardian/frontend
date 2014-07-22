@@ -135,6 +135,11 @@ $c-guardian-services-active-background: #2479c3;
 .guardian-services__action:focus,
 .guardian-services__action:hover {
     @include f-headline;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     display: block;
     text-decoration: none;
     margin: 0;
