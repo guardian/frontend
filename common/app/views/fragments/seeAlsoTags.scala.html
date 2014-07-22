@@ -1,0 +1,15 @@
+@(tags: Seq[model.Tag])(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import views.support.ListTemplate.zipWithIsLast
+
+@if(tags.nonEmpty) {
+    <div class="related-subjects">
+        <ul class="inline-list">
+            <li class="inline-list__item">See also:</li>
+            @zipWithIsLast(tags).map { case (tag, isLast) =>
+                <li class="inline-list__item"><a href="@LinkTo{/@tag.id}">@tag.name</a>@if(!isLast){, }</li>
+            }
+        </ul>
+    </div>
+}
