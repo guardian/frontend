@@ -96,6 +96,8 @@ linters:
 
   SpaceAfterComma:
     enabled: true
+    exclude:
+        - common/app/assets/stylesheets/webfonts.scss
 
   SpaceAfterPropertyColon:
     enabled: true
