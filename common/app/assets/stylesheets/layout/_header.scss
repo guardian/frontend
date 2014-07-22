@@ -9,7 +9,6 @@ $servicesToggleArrowSize: 5px;
 
     @include mq(tablet) {
         background: $c-neutral8;
-        border-bottom: 2px solid $c-brandBlue;
     }
     @include mq(wide) {
         .has-page-skin & .gs-container {
@@ -125,7 +124,7 @@ a.edition {
         text-decoration: none;
     }
 }
-
+$c-guardian-services-active-background: #2479c3;
 .guardian-services {
     @include fs-header(1);
     @include rem((
@@ -161,22 +160,22 @@ a.edition {
 }
 .guardian-services__item-more--expanded {
     position: relative;
-    background: $c-new-navigation-base;
+    background: $c-guardian-services-active-background;
 
     .guardian-services__action {
-        color: $c-local-navigation-action;
+        color: #ffffff;
     }
     .guardian-services__action__arrow {
         border-top: 0 solid transparent;
         @include rem((
-            border-bottom: $servicesToggleArrowSize solid $c-local-navigation-action
+            border-bottom: $servicesToggleArrowSize solid #ffffff
         ));
     }
 }
 .guardian-services__item--more-menu {
     @include box-sizing(border-box);
     position: absolute;
-    background: $c-new-navigation-base;
+    background: $c-guardian-services-active-background;
     margin: 0;
     padding: 0;
     right: 0;

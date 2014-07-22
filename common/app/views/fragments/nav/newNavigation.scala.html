@@ -4,15 +4,16 @@
 @defining(Edition(request).navigation) { navigation =>
     @defining(Edition(request).briefNav) { briefNav =>
         <div class="@RenderClasses(Map(
-                        ("new-navigation", true),
-                        ("new-navigation--collapsed", true),
-                        ("new-navigation--has-signposting", !Edition.isEditionFront),
-                        ("new-navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
+                        ("navigation", true),
+                        ("navigation--collapsed", true),
+                        ("navigation--has-signposting", !Edition.isEditionFront),
+                        ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
                     ))">
             <div class="gs-container">
-                <div class="new-navigation__inner">
-                    <div class="new-navigation__scroll">
-                        <nav class="new-navigation__container new-navigation__container--first" aria-label="Current section">
+                <div class="navigation__inner">
+                    <div class="navigation__scroll">
+                        <nav class="navigation__container navigation__container--first"
+                             aria-label="Current section" role="navigation">
                             @if(!Edition.isEditionFront){
                                 @fragments.nav.signposting(metaData, navigation)
 
@@ -27,7 +28,8 @@
                                 }
                             }
                         </nav>
-                        <nav class="new-navigation__container new-navigation__container--second" aria-label="Guardian sections">
+                        <nav class="navigation__container navigation__container--second"
+                             aria-label="Guardian sections" role="navigation">
                             <ul class="top-navigation">
                                 @briefNav.map{ nav =>
                                     @if(!Navigation.isEditionFront(nav)){
@@ -47,13 +49,13 @@
                             </ul>
                         </nav>
                     </div>
-                    <a class="new-navigation__toggle js-new-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections">
-                        <i class="new-navigation__toggle-burger honest-burger"><i></i><i></i><i></i></i>
-                        <span class="new-navigation__toggle-label new-navigation__toggle-label--open">all<span class="new-navigation__toggle-label__extra"> sections</span></span>
-                        <span class="new-navigation__toggle-label new-navigation__toggle-label--close">close</span>
+                    <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections">
+                        <i class="navigation__toggle-burger honest-burger"><i></i><i></i><i></i></i>
+                        <span class="navigation__toggle-label navigation__toggle-label--open">all<span class="navigation__toggle-label__extra"> sections</span></span>
+                        <span class="navigation__toggle-label navigation__toggle-label--close">close</span>
                     </a>
                 </div>
-                <div class="new-navigation__expandable">
+                <div class="navigation__expandable">
                     <div class="js-mega-nav-placeholder"></div>
                 </div>
             </div>

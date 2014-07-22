@@ -4,7 +4,7 @@ import java.net.URLDecoder
 
 import akka.agent.Agent
 import common._
-import conf.Configuration.commercial._
+import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey}
 import model.{Config, Tag}
 import play.api.{Application, GlobalSettings}
 import services.S3
@@ -15,7 +15,6 @@ trait DfpAgent {
 
   protected def sponsorships: Seq[Sponsorship]
   protected def advertisementFeatureSponsorships: Seq[Sponsorship]
-  protected def foundationSupported: Seq[Sponsorship]
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
   private def containerSponsoredTag(config: Config, p: String => Boolean): Option[String] = {
@@ -31,22 +30,16 @@ trait DfpAgent {
   }
 
   private def getPrimaryKeywordOrSeriesTag(tags: Seq[Tag]): Option[Tag] = tags find { tag =>
-    (tag.tagType == "keyword" && !tag.isSectionTag) || tag.tagType == "series"
+    tag.tagType == "keyword" || tag.tagType == "series"
   }
 
   def isSponsored(tags: Seq[Tag]): Boolean = getPrimaryKeywordOrSeriesTag(tags) exists (tag => isSponsored(tag.id))
   def isSponsored(tagId: String): Boolean = sponsorships exists (_.hasTag(tagId))
   def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
 
-  def isAdvertisementFeature(tags: Seq[Tag]): Boolean =
-    getPrimaryKeywordOrSeriesTag(tags) exists (tag => isAdvertisementFeature(tag.id))
+  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = getPrimaryKeywordOrSeriesTag(tags) exists (tag => isAdvertisementFeature(tag.id))
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
-
-  def isFoundationSupported(tags: Seq[Tag]): Boolean =
-    getPrimaryKeywordOrSeriesTag(tags) exists (tag => isFoundationSupported(tag.id))
-  def isFoundationSupported(tagId: String): Boolean = foundationSupported exists (_.hasTag(tagId))
-  def isFoundationSupported(config: Config): Boolean = isSponsoredContainer(config, isFoundationSupported)
 
   def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
     if (adUnitWithoutRoot endsWith "front") {
@@ -69,7 +62,7 @@ trait DfpAgent {
 
   def getSponsor(tagId: String): Option[String] = {
     def sponsorOf(sponsorships: Seq[Sponsorship]) = sponsorships.find(_.hasTag(tagId)).flatMap(_.sponsor)
-    sponsorOf(sponsorships) orElse sponsorOf(advertisementFeatureSponsorships) orElse sponsorOf(foundationSupported)
+    sponsorOf(sponsorships) orElse sponsorOf(advertisementFeatureSponsorships)
   }
 
   def getSponsor(config: Config): Option[String] = {
@@ -85,13 +78,11 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
   private lazy val sponsoredTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
   private lazy val advertisementFeatureTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
-  private lazy val foundationSupportedTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
 
-  override protected def sponsorships: Seq[Sponsorship] = sponsoredTagsAgent get()
-  override protected def advertisementFeatureSponsorships: Seq[Sponsorship] = advertisementFeatureTagsAgent get()
-  override protected def foundationSupported: Seq[Sponsorship] = foundationSupportedTagsAgent get()
-  override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
+  protected def sponsorships: Seq[Sponsorship] = sponsoredTagsAgent get()
+  protected def advertisementFeatureSponsorships: Seq[Sponsorship] = advertisementFeatureTagsAgent get()
+  protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
 
   def refresh() {
 
@@ -127,7 +118,6 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
     update(sponsoredTagsAgent, grabSponsorshipsFromStore(dfpSponsoredTagsDataKey))
     update(advertisementFeatureTagsAgent, grabSponsorshipsFromStore(dfpAdvertisementFeatureTagsDataKey))
-    update(foundationSupportedTagsAgent, grabSponsorshipsFromStore(dfpFoundationSupportedTagsDataKey))
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
   }
 }

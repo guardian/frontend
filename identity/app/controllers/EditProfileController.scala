@@ -92,7 +92,7 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
 
   def renderMembershipTab() = authActionWithUser { implicit request =>
     Cached(60)(JsonComponent(
-      "html" -> views.html.fragments.membershipTabContents()
+      "html" -> views.html.fragments.profile.membershipDetailsForm()
     ))
   }
 
