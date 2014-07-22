@@ -495,6 +495,7 @@ a.headline:hover {
 
 .article__overrides .tools {
     float: right;
+    margin: 5px 26px 0 0;
 }
 
 .article__overrides__fields {
@@ -624,7 +625,7 @@ button {
 }
 
 .collection-overrides {
-    margin: -6px 0 0 3px;
+    margin: -2px 0 0 3px;
 }
 
 .article__spark {
@@ -731,11 +732,6 @@ button {
     z-index: 2;
 }
 
-.article__overrides .tool,
-.collection-overrides .tool {
-    margin-top: 5px;
-}
-
 .tool {
     display: inline-block;
     padding: 0 10px;
@@ -775,10 +771,6 @@ button {
 
 .tools .tool:first-child:hover {
     background: #148ad2;
-}
-
-.collection .tools {
-    margin: 0 0 2px 4px;
 }
 
 .tools .tool.draft-publish {
@@ -823,9 +815,8 @@ button {
 .article:hover > .closed > .article__tools {
     display: block;
     position: absolute;
-    top: 0;
     right: 0;
-    width: 89px;
+    width: 88px;
     height: 51px;
 }
 
@@ -835,11 +826,12 @@ button {
     background: #CCCCCC;
     text-align: center;
     font-size: 12px;
-    line-height: 21px;
+    line-height: 22px;
     color: #333333;
-    width: 40px;
+    width: 42px;
+    height: 23px;
     padding: 0;
-    opacity: 0.75;
+    opacity: 0.7;
 }
 
 .tool--small i {
@@ -848,7 +840,7 @@ button {
 
 .article > .closed .tool--small {
     float: left;
-    margin: 3px 0 0 3px;
+    margin: 1px 0 0 1px;
 }
 
 .latest-articles .tool--small--remove,
