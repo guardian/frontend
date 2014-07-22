@@ -323,9 +323,14 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
 }
 @mixin navigation-items-shrink-spacing {
     @include rem((
-        padding-right: $navigation-h-space-between-items/2 - 1,
-        padding-left: $navigation-h-space-between-items/2 - 1
+        padding-right: $navigation-h-space-between-items/2 - 3,
+        padding-left: $navigation-h-space-between-items/2 - 3
     ));
+    &:first-child {
+        @include rem((
+            padding-left: $navigation-h-space-between-items/2
+        ));
+    }
 }
 .local-navigation__item,
 .top-navigation__item {
