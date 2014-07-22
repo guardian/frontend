@@ -164,7 +164,7 @@
             position: relative;
             width: 100%;
             @include rem((
-                max-width: 620px
+                max-width: gs-span(8)
             ));
             margin: auto;
         }
@@ -268,10 +268,6 @@
     @include mq($to: tablet) {
         &:nth-child(odd) {
             border-right: 1px solid $c-neutral2;
-
-            @include rem((
-                padding-right: 9px,
-            ));
         }
     }
 
@@ -289,9 +285,6 @@
         &:nth-child(3n-1),
         &:nth-child(3n-2) {
             border-right: 1px solid $c-neutral2;
-            @include rem((
-                padding-right: 9px
-            ));
         }
     }
 
@@ -304,15 +297,6 @@
 
         &:nth-child(odd) {
             border-right: 1px solid $c-neutral2;
-            @include rem((
-                padding-right: 9px,
-            ));
-        }
-
-        &:nth-child(even) {
-            @include rem((
-                padding-left: $gs-gutter/2
-            ));
         }
     }
 }
