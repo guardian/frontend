@@ -193,13 +193,13 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': 'Guardian Agate Sans 1 Web',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': 'Guardian Agate Sans 1 Web',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.woff',
                             format: 'woff'
                         }
                     ]
@@ -212,13 +212,13 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': 'AgateSans',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': 'Guardian Agate Sans 1 Web',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.ttf',
                             format: 'ttf'
                         }
                     ]
@@ -237,25 +237,25 @@ module.exports = function (grunt) {
                         {
                             'font-family': 'Guardian Text Egyptian Web',
                             'font-style': 'italic',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': 'Guardian Text Egyptian Web',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': 'Guardian Egyptian Web',
                             'font-weight': '200',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': 'Guardian Egyptian Web',
                             'font-weight': '400',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
                             format: 'woff'
                         },
                         // This weight contains only a certain set of chars
@@ -282,25 +282,25 @@ module.exports = function (grunt) {
                         {
                             'font-family': 'Guardian Text Egyptian Web',
                             'font-style': 'italic',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': 'Guardian Text Egyptian Web',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': 'Guardian Egyptian Web',
                             'font-weight': '200',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': 'Guardian Egyptian Web',
                             'font-weight': '400',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         // This weight contains only a certain set of chars
@@ -327,7 +327,7 @@ module.exports = function (grunt) {
                         {
                             'font-family': 'Guardian Text Sans Web',
                             'font-style': 'italic',
-                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff',
                             format: 'woff'
                         },
                         {
@@ -352,7 +352,7 @@ module.exports = function (grunt) {
                         {
                             'font-family': 'Guardian Text Sans Web',
                             'font-style': 'italic',
-                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.ttf',
                             format: 'ttf'
                         },
                         {
@@ -371,7 +371,7 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': 'Guardian Sans Web',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianSansWeb/GuardianSansWeb-Light.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianSansWeb/GuardianSansWeb-Light.woff',
                             'font-weight': '200',
                             format: 'woff'
                         }
@@ -385,7 +385,7 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': 'Guardian Sans Web',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianSansWeb/GuardianSansWeb-Light.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianSansWeb/GuardianSansWeb-Light.ttf',
                             'font-weight': '200',
                             format: 'ttf'
                         }
