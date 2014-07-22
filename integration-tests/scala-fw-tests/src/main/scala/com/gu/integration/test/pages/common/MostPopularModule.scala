@@ -6,14 +6,10 @@ import org.openqa.selenium.WebElement
 import com.gu.integration.test.util.ElementLoader
 import com.gu.integration.test.util.ElementLoader.findByTestAttribute
 
-class MostPopularModule(implicit driver: WebDriver) extends ParentPage {
-  val mostPopularRootElement: WebElement = findByTestAttribute("right-most-popular")
+class MostPopularModule(implicit val driver: WebDriver) extends ParentPage with DisplayedImages {
+  val rootElement: WebElement = findByTestAttribute("right-most-popular")
 
   def displayedLinks(): List[WebElement] = {
-    ElementLoader.displayedLinks(mostPopularRootElement)
-  }
-  
-  def displayedImages(): List[WebElement] = {
-    ElementLoader.displayedImages(mostPopularRootElement)
+    ElementLoader.displayedLinks(rootElement)
   }
 }
