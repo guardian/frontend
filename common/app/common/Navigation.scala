@@ -5,7 +5,7 @@ import play.api.mvc.RequestHeader
 import conf.Switches._
 import dev.HttpSwitch
 
-case class SectionLink(zone: String, title: String, breadcumbTitle: String, href: String, newWindow: Boolean = false) {
+case class SectionLink(zone: String, title: String, breadcumbTitle: String, href: String) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
     (Edition.all.exists(_.id.toLowerCase == page.id.toLowerCase) && href == "/")
