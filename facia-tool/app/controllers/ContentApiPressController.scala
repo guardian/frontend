@@ -16,11 +16,11 @@ import scala.util.{Failure, Success}
   * Tool.
   */
 object ContentApiPressController extends Controller with ExecutionContexts {
-  def publishAll() = ExpiringAuthentication { request =>
+  def publishAll() = ExpiringActions.ExpiringAuthAction { request =>
     Ok(views.html.publish_all(Configuration.environment.stage, Identity(request)))
   }
 
-  def publishAllStream() = ExpiringAuthentication { request =>
+  def publishAllStream() = ExpiringActions.ExpiringAuthAction { request =>
     Ok.chunked((ContentApiRefresh.refresh() map {
       case (collectionId, Success(_)) => s"Successfully published $collectionId"
       case (collectionId, Failure(error)) => s"Failed to publish $collectionId: ${error.getMessage}"

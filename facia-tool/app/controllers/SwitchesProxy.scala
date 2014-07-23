@@ -8,7 +8,7 @@ import play.api.libs.json.Json
 
 object SwitchesProxy extends Controller with ExecutionContexts {
 
-  def getSwitches() = AjaxExpiringAuthentication { request =>
+  def getSwitches() = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ProxyCount.increment()
     val r = Switches.all.map {switch =>
       switch.name -> switch.isSwitchedOn

@@ -12,7 +12,7 @@ object FaciaContentApiProxy extends Controller with Logging with AuthLogging wit
 
   import play.api.Play.current
 
-  def proxy(path: String) = AjaxExpiringAuthentication.async { request =>
+  def proxy(path: String) = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
     val queryString = request.queryString.filter(_._2.exists(_.nonEmpty)).map { p =>
        "%s=%s".format(p._1, p._2.head.urlEncoded)
@@ -31,7 +31,7 @@ object FaciaContentApiProxy extends Controller with Logging with AuthLogging wit
     }
   }
 
-  def json(url: String) = AjaxExpiringAuthentication.async { request =>
+  def json(url: String) = ExpiringActions.ExpiringAuthAction.async { request =>
     FaciaToolMetrics.ProxyCount.increment()
     log("Proxying json request to: %s" format url, request)
 
