@@ -8,7 +8,7 @@ define([], function() {
         set: function(article) {
             storage.setItem(storageKeyCopied, JSON.stringify({
                 article: article.get(),
-                group: article.group ? article.group.group : undefined,
+                groupIndex: article.group ? article.group.index : undefined,
                 groupParentId: article.group && article.group.parent ? article.group.parent.id : undefined
             }));
         },
@@ -26,7 +26,7 @@ define([], function() {
             });
 
             obj.article.group = sourceCollection ? _.find(sourceCollection.groups, function(group) {
-                return group.group === obj.group;
+                return group.index === obj.groupIndex;
             }) : undefined;
 
             return obj.article;

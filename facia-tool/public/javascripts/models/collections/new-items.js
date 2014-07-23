@@ -66,7 +66,7 @@ define([
             itemMeta = newItems[0].getMeta() || {};
 
             if (deepGet(targetGroup, '.parent.groups.length') > 1) {
-                itemMeta.group = targetGroup.group + '';
+                itemMeta.group = targetGroup.index + '';
             } else {
                 delete itemMeta.group;
             }

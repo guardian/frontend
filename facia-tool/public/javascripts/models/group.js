@@ -18,7 +18,7 @@ define([
         this.items = ko.isObservable(opts.items) && opts.items.push ? opts.items : ko.observableArray(opts.items);
 
         this.underDrag  = ko.observable();
-        this.group      = opts.group || 0;
+        this.index      = opts.index || 0;
         this.name       = opts.name || '';
 
         this.parent     = opts.parent;

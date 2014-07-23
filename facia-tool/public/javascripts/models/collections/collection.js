@@ -72,7 +72,7 @@ define([
 
         return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
             return new Group({
-                group: index,
+                index: index,
                 name: name,
                 parent: self,
                 parentType: 'Collection',
