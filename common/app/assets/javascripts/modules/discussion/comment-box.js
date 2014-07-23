@@ -177,29 +177,31 @@ CommentBox.prototype.ready = function() {
     // The check on this should be done through the discussion API
     // for now though this is a good (enough) check
     if (config.switches.sentimentalComments) {
-        var sentimentActiveClass = 'd-comment-box__sentiment--active';
-        $('.open a[href="#comments"]').each(function (openLink) {
-            $('.d-discussion').addClass('d-discussion--sentimental');
-            $('.discussion__show-threaded').remove();
-            this.setState('sentimental');
-            this.options.maxLength = 350;
+        setTimeout(function() {
+            var sentimentActiveClass = 'd-comment-box__sentiment--active';
+            $('.open a[href="#comments"]').each(function (openLink) {
+                $('.d-discussion').addClass('d-discussion--sentimental');
+                $('.discussion__show-threaded').remove();
+                this.setState('sentimental');
+                this.options.maxLength = 350;
 
-            $.create('<div>' + $('.open__head__accent').text() + '</div>')
-                .addClass('d-comment-box__sentiments-head tone-news tone-colour')
-                .insertAfter(this.getElem('sentiments'));
+                $.create('<div>' + $('.open__head__accent').text() + '</div>')
+                    .addClass('d-comment-box__sentiments-head tone-news tone-colour')
+                    .insertAfter(this.getElem('sentiments'));
 
-            bean.on(openLink, 'click', function (e) {
-                this.getElem('body').focus();
-                e.preventDefault();
+                bean.on(openLink, 'click', function (e) {
+                    this.getElem('body').focus();
+                    e.preventDefault();
+                }.bind(this));
+
+                bean.on(this.elem, 'click', this.getClass('sentiment'), function (e) {
+                    $('.' + sentimentActiveClass, this.elem).removeClass(sentimentActiveClass);
+                    $(e.currentTarget).addClass(sentimentActiveClass);
+                    this.elem.sentiment.value = e.currentTarget.getAttribute('data-value');
+                    this.getElem('body').focus();
+                }.bind(this));
             }.bind(this));
-
-            bean.on(this.elem, 'click', this.getClass('sentiment'), function (e) {
-                $('.' + sentimentActiveClass, this.elem).removeClass(sentimentActiveClass);
-                $(e.currentTarget).addClass(sentimentActiveClass);
-                this.elem.sentiment.value = e.currentTarget.getAttribute('data-value');
-                this.getElem('body').focus();
-            }.bind(this));
-        }.bind(this));
+        }.bind(this), 500); // used as we don't know when the open module loads.
     }
 };
 
