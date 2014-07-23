@@ -142,7 +142,7 @@ Comments.prototype.prerender = function() {
 
     // Determine user staff status
     if (this.user && this.user.badge) {
-        this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies functi\on
+        this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
             return e.name === 'Staff';
         });
 
