@@ -7,6 +7,7 @@ import services.{TagIndexReadError, TagIndexNotFound, TagIndexesS3}
 
 object TagIndexController extends Controller with ExecutionContexts with Logging {
   private def forTagType(keywordType: String, page: String) = Action { implicit request =>
+    val indexListing = TagIndexesS3.listIndexPages(keywordType)
     val indexCharacter = page.charAt(0)
 
     TagIndexesS3.getIndex(keywordType, indexCharacter) match {
@@ -22,7 +23,8 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
         Ok(views.html.tagIndexPage(
           new TagIndexPageMetaData(keywordType, indexCharacter),
           tagPage,
-          s"${keywordType.capitalize}s"
+          s"${keywordType.capitalize}s",
+          indexListing
         ))
     }
   }

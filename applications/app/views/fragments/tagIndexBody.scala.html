@@ -1,4 +1,4 @@
-@(page: model.TagIndexPage, subTitle: String)(implicit request: RequestHeader)
+@(page: model.TagIndexPage, subTitle: String, indexListing: Seq[Char])(implicit request: RequestHeader)
 
 @import common.LinkTo
 
@@ -6,6 +6,12 @@
     <h1>Site index</h1>
 
     <h2>@subTitle</h2>
+
+    <ul>
+    @for(page <- indexListing) {
+        <li><a href="@LinkTo(page.toString)">@page.toUpper</a></li>
+    }
+    </ul>
 
     <h3>@page.indexCharacter.toUpper</h3>
 
