@@ -1,7 +1,7 @@
 package jobs
 
 import common.{Logging, ExecutionContexts, StopWatch}
-import indexes.{TagPage, AllTagsEnumerator}
+import indexes.{TagPages, ContentApiTagsEnumerator}
 
 import scala.util.{Success, Failure}
 
@@ -9,9 +9,9 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
   def run() {
     val stopWatch = new StopWatch
 
-    log.info("Rebuilding site map - loading all tags from Content API")
+    log.info("Rebuilding keyword indexes - loading all keyword tags from Content API")
 
-    val tagPagesFuture = TagPage.fromEnumerator(AllTagsEnumerator.allTags)
+    val tagPagesFuture = TagPages.fromEnumerator(ContentApiTagsEnumerator.keywords)
 
     tagPagesFuture onComplete {
       case Success(tagPages) =>
@@ -22,5 +22,8 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
       case Failure(error) =>
         log.error(s"Encountered error loading tag pages from Content API after ${stopWatch.elapsed}ms", error)
     }
+    
+    /** TODO rebuild contributors */
+
   }
 }

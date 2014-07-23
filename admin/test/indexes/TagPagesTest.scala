@@ -5,13 +5,13 @@ import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, FlatSpec}
 import play.api.libs.iteratee.Enumerator
-import TagPage._
+import TagPages._
 
 import scala.language.postfixOps
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 
-class TagPageTest extends FlatSpec with Matchers with ScalaFutures {
+class TagPagesTest extends FlatSpec with Matchers with ScalaFutures {
   "indexCharacter" should "return the downcased first character of an ASCII string" in {
     val words = Seq(
       "monads" -> 'm',
@@ -68,7 +68,7 @@ class TagPageTest extends FlatSpec with Matchers with ScalaFutures {
       advertisingTag,
       otherDigitalSolutionsTag
     )).futureValue(Timeout(1 second)) shouldEqual Seq(
-      TagPage(
+      TagIndexPage(
         'a',
         List(
           activateTag,
@@ -76,13 +76,13 @@ class TagPageTest extends FlatSpec with Matchers with ScalaFutures {
           archivedSpeakersTag
         )
       ),
-      TagPage(
+      TagIndexPage(
         'b',
         List(
           blogTag
         )
       ),
-      TagPage(
+      TagIndexPage(
         'o',
         List(
           otherDigitalSolutionsTag
