@@ -3,10 +3,10 @@
 # ~~~~
 
 # authentication endpoints
-GET           /login                     controllers.Login.login
-POST          /login                     controllers.Login.loginPost
-GET           /openIDCallback            controllers.Login.openIDCallback
-GET           /logout                    controllers.Login.logout
+GET           /login                     controllers.OAuthLoginController.login
+POST          /login                     controllers.OAuthLoginController.loginAction
+GET           /oauth2callback            controllers.OAuthLoginController.oauth2Callback
+GET           /logout                    controllers.OAuthLoginController.logout
 
 # static files
 GET           /assets/*file              controllers.Assets.at(path="/public", file)
