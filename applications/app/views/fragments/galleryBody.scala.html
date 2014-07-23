@@ -1,65 +1,66 @@
 @(gallery: Gallery, storyPackage: List[Trail], index: Int)(implicit request: RequestHeader)
+<div class="site-borders-wrapper site-borders-wrapper--layout-content">
+    <article class="content content--gallery tone-@gallery.visualTone"
+        itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
 
-<article class="content content--gallery tone-@gallery.visualTone"
-    itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
+        @fragments.headDefault(gallery)
 
-    @fragments.headDefault(gallery)
+        <div class="gs-container">
+            <div class="content__main-column content__main-column--gallery">
 
-    <div class="gs-container">
-        <div class="content__main-column content__main-column--gallery">
+                @fragments.contentMeta(gallery)
 
-            @fragments.contentMeta(gallery)
+                <!-- Lightbox JS Gallery -->
+                @fragments.galleryThumbs(gallery, showCta=true)
 
-            <!-- Lightbox JS Gallery -->
-            @fragments.galleryThumbs(gallery, showCta=true)
+                <!-- Non-JS Gallery / LightboxSwitch off mode -->
+                <div class="js-hidden">
+                    <p class="gallery-nav">
 
-            <!-- Non-JS Gallery / LightboxSwitch off mode -->
-            <div class="js-hidden">
-                <p class="gallery-nav">
-
-                    @if(index > 1) {
-                        <a class="gallery-prev control tone-colour" href="@LinkTo{?index=@(index - 1)}">Previous</a>
-                    }
-
-                    Image @index of @gallery.size
-
-                    @if(index < gallery.size) {
-                        <a class="gallery-next control tone-colour" href="@LinkTo{?index=@(index + 1)}">Next</a>
-                    } else {
-                        <a class="gallery-next control tone-colour" href="@LinkTo{?index=1}">Next</a>
-                    }
-                </p>
-
-                <div class="gallery-container">
-                    @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-                        @if(row.rowNum == index) {
-                            <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
-                                src="@image.path"
-                                alt="@image.altText.getOrElse("")"
-                            />
-
-                            <div class="gallery-caption">
-                                <p class="caption">@Html(image.caption.getOrElse(""))</p>
-                                <p class="caption-credit">@image.credit</p>
-                            </div>
+                        @if(index > 1) {
+                            <a class="gallery-prev control tone-colour" href="@LinkTo{?index=@(index - 1)}">Previous</a>
                         }
-                    }
+
+                        Image @index of @gallery.size
+
+                        @if(index < gallery.size) {
+                            <a class="gallery-next control tone-colour" href="@LinkTo{?index=@(index + 1)}">Next</a>
+                        } else {
+                            <a class="gallery-next control tone-colour" href="@LinkTo{?index=1}">Next</a>
+                        }
+                    </p>
+
+                    <div class="gallery-container">
+                        @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
+                            @if(row.rowNum == index) {
+                                <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
+                                    src="@image.path"
+                                    alt="@image.altText.getOrElse("")"
+                                />
+
+                                <div class="gallery-caption">
+                                    <p class="caption">@Html(image.caption.getOrElse(""))</p>
+                                    <p class="caption-credit">@image.credit</p>
+                                </div>
+                            }
+                        }
+                    </div>
                 </div>
-            </div>
 
-            <div data-component="body">
-                @fragments.standfirst(gallery)
+                <div data-component="body">
+                    @fragments.standfirst(gallery)
 
-                <div class="content__keywords" data-link-name="gallery keywords">
-                    @fragments.keywordList(gallery.keywords)
+                    <div class="content__keywords" data-link-name="gallery keywords">
+                        @fragments.keywordList(gallery.keywords)
+                    </div>
                 </div>
-            </div>
 
-            <div class="social-wrapper" data-component="share">
-                @fragments.social(gallery)
+                <div class="social-wrapper" data-component="share">
+                    @fragments.social(gallery)
+                </div>
             </div>
         </div>
-    </div>
-</article>
+    </article>
 
-@fragments.contentFooter(gallery, storyPackage)
+    @fragments.contentFooter(gallery, storyPackage)
+</div>
