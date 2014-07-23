@@ -3,7 +3,7 @@ define([
     'modules/vars',
     'knockout',
     'utils/mediator',
-    'utils/copied-item',
+    'utils/copied-article',
     'utils/url-abs-path',
     'utils/as-observable-props',
     'utils/populate-observables',
@@ -19,7 +19,7 @@ define([
         vars,
         ko,
         mediator,
-        copiedItem,
+        copiedArticle,
         urlAbsPath,
         asObservableProps,
         populateObservables,
@@ -147,17 +147,17 @@ define([
         }
 
         Article.prototype.copy = function() {
-            copiedItem.set(this.get());
+            copiedArticle.set(this);
         };
 
         Article.prototype.paste = function () {
-            var sourceItem = copiedItem.get();
+            var sourceItem = copiedArticle.get(vars.model.collections());
 
             if(!sourceItem || sourceItem.id === this.id()) { return; }
 
             mediator.emit('collection:updates', {
-                id: sourceItem.id,
                 sourceItem: sourceItem,
+                sourceGroup: sourceItem.group,
                 targetItem: this,
                 targetGroup: this.group
             });

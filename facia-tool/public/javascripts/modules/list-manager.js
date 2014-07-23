@@ -18,7 +18,6 @@ define([
         newItemsValidator
         newItemsPersister
 
-        id
         sourceItem
         sourceGroup (optional)
 
@@ -34,15 +33,15 @@ define([
 
         position = opts.targetItem && _.isFunction(opts.targetItem.id) ? opts.targetItem.id() : undefined;
 
-        removeById(opts.targetGroup.items, urlAbsPath(opts.id));
+        removeById(opts.targetGroup.items, urlAbsPath(opts.sourceItem.id));
 
         insertAt = opts.targetGroup.items().indexOf(opts.targetItem) + (opts.isAfter || 0);
         insertAt = insertAt === -1 ? opts.targetGroup.items().length : insertAt;
 
-        newItems = opts.newItemsConstructor(opts.id, opts.sourceItem, opts.targetGroup);
+        newItems = opts.newItemsConstructor(opts.sourceItem.id, opts.sourceItem, opts.targetGroup);
 
         if (!newItems[0]) {
-            alertBadContent(opts.id, null);
+            alertBadContent(opts.sourceItem.id, null);
             return;
         }
 
@@ -51,7 +50,7 @@ define([
         opts.newItemsValidator(newItems)
         .fail(function(err) {
             _.each(newItems, function(item) { opts.targetGroup.items.remove(item); });
-            alertBadContent(opts.id, err);
+            alertBadContent(opts.sourceItem.id, err);
         })
         .done(function() {
             if (_.isFunction(opts.targetGroup.reflow)) {

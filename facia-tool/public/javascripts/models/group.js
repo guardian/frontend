@@ -2,11 +2,11 @@
 define([
     'knockout',
     'utils/mediator',
-    'utils/copied-item'
+    'utils/copied-article'
 ], function(
     ko,
     mediator,
-    copiedItem
+    copiedArticle
 ) {
     function Group(opts) {
         var self = this;
@@ -26,13 +26,13 @@ define([
         this.reflow     = opts.reflow  || function() {};
 
         this.pasteItem = function() {
-            var sourceItem = copiedItem.get();
+            var sourceItem = copiedArticle.get();
 
             if(!sourceItem) { return; }
 
             mediator.emit('collection:updates', {
-                id: sourceItem.id,
                 sourceItem: sourceItem,
+                sourceGroup: sourceItem.group,
                 targetItem: _.last(this.items()),
                 targetGroup: this,
                 isAfter: true
