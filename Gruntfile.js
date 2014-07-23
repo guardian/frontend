@@ -192,12 +192,12 @@ module.exports = function (grunt) {
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'Guardian Agate Sans 1 Web',
+                            'font-family': '"Guardian Agate Sans 1 Web"',
                             file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'Guardian Agate Sans 1 Web',
+                            'font-family': '"Guardian Agate Sans 1 Web"',
                             'font-weight': '700',
                             file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.woff',
                             format: 'woff'
@@ -211,12 +211,12 @@ module.exports = function (grunt) {
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'Guardian Agate Sans 1 Web',
+                            'font-family': '"Guardian Agate Sans 1 Web"',
                             file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'Guardian Agate Sans 1 Web',
+                            'font-family': '"Guardian Agate Sans 1 Web"',
                             'font-weight': '700',
                             file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.ttf',
                             format: 'ttf'
@@ -230,30 +230,30 @@ module.exports = function (grunt) {
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'Guardian Text Egyptian Web',
+                            'font-family': '"Guardian Text Egyptian Web"',
                             file: webfontsDir + 'hinting-off-latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'Guardian Text Egyptian Web',
+                            'font-family': '"Guardian Text Egyptian Web"',
                             'font-style': 'italic',
                             file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'Guardian Text Egyptian Web',
+                            'font-family': '"Guardian Text Egyptian Web"',
                             'font-weight': '700',
                             file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'Guardian Egyptian Web',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '200',
                             file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'Guardian Egyptian Web',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '400',
                             file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
                             format: 'woff'
@@ -261,7 +261,7 @@ module.exports = function (grunt) {
                         // This weight contains only a certain set of chars
                         // since it is used only in one place (section names)
                         {
-                            'font-family': 'Guardian Egyptian Web',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '900',
                             file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff',
                             format: 'woff'
@@ -275,30 +275,30 @@ module.exports = function (grunt) {
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'Guardian Text Egyptian Web',
+                            'font-family': '"Guardian Text Egyptian Web"',
                             file: webfontsDir + 'hinting-off-latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'Guardian Text Egyptian Web',
+                            'font-family': '"Guardian Text Egyptian Web"',
                             'font-style': 'italic',
                             file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'Guardian Text Egyptian Web',
+                            'font-family': '"Guardian Text Egyptian Web"',
                             'font-weight': '700',
                             file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'Guardian Egyptian Web',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '200',
                             file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'Guardian Egyptian Web',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '400',
                             file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
                             format: 'ttf'
@@ -306,7 +306,7 @@ module.exports = function (grunt) {
                         // This weight contains only a certain set of chars
                         // since it is used only in one place (section names)
                         {
-                            'font-family': 'Guardian Egyptian Web',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '900',
                             file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.ttf',
                             format: 'ttf'
@@ -320,18 +320,18 @@ module.exports = function (grunt) {
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'Guardian Text Sans Web',
+                            'font-family': '"Guardian Text Sans Web"',
                             file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'Guardian Text Sans Web',
+                            'font-family': '"Guardian Text Sans Web"',
                             'font-style': 'italic',
                             file: webfontsDir + 'hinting-off-ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'Guardian Text Sans Web',
+                            'font-family': '"Guardian Text Sans Web"',
                             'font-weight': '700',
                             file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff',
                             format: 'woff'
@@ -345,18 +345,18 @@ module.exports = function (grunt) {
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'Guardian Text Sans Web',
+                            'font-family': '"Guardian Text Sans Web"',
                             file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'Guardian Text Sans Web',
+                            'font-family': '"Guardian Text Sans Web"',
                             'font-style': 'italic',
                             file: webfontsDir + 'hinting-off-ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'Guardian Text Sans Web',
+                            'font-family': '"Guardian Text Sans Web"',
                             'font-weight': '700',
                             file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.ttf',
                             format: 'ttf'
@@ -370,7 +370,7 @@ module.exports = function (grunt) {
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'Guardian Sans Web',
+                            'font-family': '"Guardian Sans Web"',
                             file: webfontsDir + 'hinting-off-ascii/GuardianSansWeb/GuardianSansWeb-Light.woff',
                             'font-weight': '200',
                             format: 'woff'
@@ -384,7 +384,7 @@ module.exports = function (grunt) {
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'Guardian Sans Web',
+                            'font-family': '"Guardian Sans Web"',
                             file: webfontsDir + 'hinting-off-ascii/GuardianSansWeb/GuardianSansWeb-Light.ttf',
                             'font-weight': '200',
                             format: 'ttf'
