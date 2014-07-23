@@ -1,7 +1,7 @@
 package com.gu.discussion.page
 
 import com.gu.automation.support.TestLogger
-import com.gu.automation.support.page.{WaitGet}
+import com.gu.automation.support.page.WaitGet
 import org.openqa.selenium.By._
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.support.ui.Select
