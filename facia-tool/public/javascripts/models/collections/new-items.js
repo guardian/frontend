@@ -28,9 +28,7 @@ define([
             return new Article({
                 id: item.id,
                 meta: cleanClone(item.meta),
-                group: targetGroup,
-                parent: targetGroup.parent,
-                parentType: targetGroup.parentType
+                group: targetGroup
             });
         });
     }

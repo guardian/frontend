@@ -39,8 +39,7 @@ define([
             this.id = ko.observable(opts.id);
 
             this.group = opts.group;
-            this.parent = opts.parent;
-            this.parentType = opts.parentType;
+
             this.uneditable = opts.uneditable;
 
             this.frontPublicationDate = opts.frontPublicationDate;
@@ -128,20 +127,20 @@ define([
             this.populate(opts);
 
             // Populate supporting
-            if (this.parentType !== 'Article') {
+            if (this.group && this.group.parentType !== 'Article') {
                 this.meta.supporting = new Group({
-                    items: _.map((opts.meta || {}).supporting, function(item) {
-                        return new Article(_.extend(item, {
-                            parent: self,
-                            parentType: 'Article'
-                        }));
-                    }),
                     parent: self,
                     parentType: 'Article',
                     omitItem: self.save.bind(self)
                 });
 
-                contentApi.decorateItems(self.meta.supporting.items());
+                this.meta.supporting.items(_.map((opts.meta || {}).supporting, function(item) {
+                    return new Article(_.extend(item, {
+                        group: self.meta.supporting
+                    }));
+                }));
+
+                contentApi.decorateItems(this.meta.supporting.items());
             }
 
             this.setFrontPublicationTime();

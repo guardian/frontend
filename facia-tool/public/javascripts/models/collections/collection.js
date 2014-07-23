@@ -215,9 +215,7 @@ define([
 
             group.items.push(
                 new Article(_.extend(item, {
-                    group: group,
-                    parent: self,
-                    parentType: 'Collection'
+                    group: group
                 }))
             );
         });
