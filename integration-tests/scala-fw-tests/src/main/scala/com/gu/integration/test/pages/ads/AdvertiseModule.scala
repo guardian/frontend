@@ -14,12 +14,11 @@ case class AdvertiseModule(rootElement: WebElement)(implicit val driver: WebDriv
   /**
    * Have to call this method, for ads nested inside IFrames, before checking the content
    */
-  def advertiseIFrameContent(): AdvertiseIFrame = {
+  def advertiseIFrameModule(): AdvertiseIFrameModule = {
     val iframeElements = ElementLoader.displayedIFrames(rootElement)
     if (iframeElements.size != 1) {
       throw new RuntimeException(s"Unexpected number of iframes ${iframeElements.size} inside advertise element: ${rootElement}")
     }
-    driver.switchTo().frame(iframeElements.last)
-    new AdvertiseIFrame(driver.findElement(By.cssSelector("div")))
+    new AdvertiseIFrameModule(iframeElements.last)
   }
 }

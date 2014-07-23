@@ -52,10 +52,11 @@ case class ArticleSteps(implicit driver: WebDriver) extends TestLogging with Mat
 
   private def checkThatAdWithIFrameIsDisplayedProperly(adModule: AdvertiseModule) = {
     adModule.adLabel.isDisplayed should be(true)
-    val adIFrame = adModule.advertiseIFrameContent
+    val adIFrame = adModule.advertiseIFrameModule
     adIFrame.displayedLinks should not be empty
     adIFrame.displayedImages should not be empty
+    
     //this is neccessary in order to switch back to the main frame
-    driver.switchTo().defaultContent()
+    adIFrame.dispose
   }
 }
