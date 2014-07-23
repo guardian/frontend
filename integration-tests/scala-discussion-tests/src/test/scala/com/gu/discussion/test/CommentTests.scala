@@ -4,6 +4,7 @@ import com.gu.automation.core.{GivenWhenThen, WebDriverFeatureSpec}
 import com.gu.discussion.step.CommentSteps
 import org.openqa.selenium.WebDriver
 import org.scalatest.Tag
+import com.gu.automation.support.CookieManager
 
 class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
 
@@ -11,7 +12,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
 
   feature("As a signed in registered user I can contribute to a discussion") {
 
-    scenarioWeb("Add a new top level comment to an article") {
+    scenarioWeb("Add a new top level comment to an article", Tag("WIP")) {
       implicit driver: WebDriver =>
       given {
         CommentSteps().iAmSignedInAsStaff()
@@ -22,7 +23,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
       }
     }
 
-    scenarioWeb("Reply to a top level comment", Tag("WIP")) {
+    scenarioWeb("Reply to a top level comment") {
       implicit driver: WebDriver =>
       given {
         CommentSteps().iAmSignedInAsStaff()
@@ -56,7 +57,7 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
       }
     }
 
-    scenarioWeb("Search a users discussion posts", Tag("WIP")) {
+    scenarioWeb("Search a users discussion posts") {
       implicit driver: WebDriver =>
       given {
         CommentSteps().iViewAUsersCommentHistory()
@@ -102,5 +103,11 @@ class CommentTests extends WebDriverFeatureSpec with GivenWhenThen {
       }
     }*/
 
+  }
+
+  override protected def startDriver(testName: String) = {
+    implicit val driver = super.startDriver(testName)
+    CookieManager.addCookie("gu.test", "true")
+    driver
   }
 }

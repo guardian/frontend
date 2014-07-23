@@ -44,7 +44,6 @@ case class CommentSteps(implicit driver: WebDriver) extends Matchers with Loggin
     val module = CommentModule()
     module.addNewComment(newCommentText)
     val newCommentItem =  module.postNewComment()
-
     val newComment = newCommentItem.getCommentText()
 
     newComment should be(newCommentText)
