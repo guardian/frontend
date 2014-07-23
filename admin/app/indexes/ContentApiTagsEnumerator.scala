@@ -7,7 +7,7 @@ import scala.concurrent.Future
 import com.gu.openplatform.contentapi.model.{Tag, TagsResponse}
 import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
-import play.api.libs.iteratee.Enumerator
+import play.api.libs.iteratee.{Enumeratee, Enumerator}
 
 object ContentApiTagsEnumerator extends Logging {
   val DelayBetweenRetries = 100.millis
@@ -39,4 +39,7 @@ object ContentApiTagsEnumerator extends Logging {
   def enumerateTagType(tagType: String) = enumeratePages { page =>
     LiveContentApi.tags.tagType(tagType).pageSize(MaxPageSize).page(page).response
   }
+
+  def enumerateTagTypeFiltered(tagType: String) =
+    enumerateTagType(tagType) through Enumeratee.filterNot(_.id.startsWith("weather/"))
 }

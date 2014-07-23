@@ -12,7 +12,7 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
 
     log.info(s"Rebuilding $tagType indexes - loading all $tagType tags from Content API")
 
-    val tagPagesFuture = TagPages.fromEnumerator(ContentApiTagsEnumerator.enumerateTagType(tagType))
+    val tagPagesFuture = TagPages.fromEnumerator(ContentApiTagsEnumerator.enumerateTagTypeFiltered(tagType))
 
     tagPagesFuture onComplete {
       case Success(tagPages) =>
