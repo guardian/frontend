@@ -1,16 +1,18 @@
 package com.gu.integration.test.util
 
 import scala.collection.JavaConverters.asScalaBufferConverter
+
 import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
-import org.openqa.selenium.support.ui.WebDriverWait
-import org.openqa.selenium.support.ui.ExpectedConditions._
-import com.gu.automation.support.TestLogging
 import org.openqa.selenium.WebDriverException
+import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.ExpectedCondition
+import org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf
+import org.openqa.selenium.support.ui.WebDriverWait
+
+import com.gu.automation.support.TestLogging
 
 object ElementLoader extends TestLogging {
 
@@ -21,10 +23,9 @@ object ElementLoader extends TestLogging {
    * otherwise it will use the WebDriver, which has to be in scope. Waits until element is displayed before returning
    */
   def findByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): WebElement = {
-    val extractedLocalValue = contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
-
-    waitUntil(visibilityOf(extractedLocalValue), 3)
-    extractedLocalValue
+    val foundElement = contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
+    waitUntil(visibilityOf(foundElement), 3)
+    foundElement
   }
 
   /**
@@ -43,7 +44,8 @@ object ElementLoader extends TestLogging {
    * Find all link elements, including nested, from the provided SearchContext and returns those that are displayed
    */
   def displayedLinks(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
-    searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => waitUntil(visibilityOf(element)))
+    val visibleLinks = searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => waitUntil(visibilityOf(element)))
+    visibleLinks.filter(element => element.isDisplayed())
   }
 
   /**
@@ -83,7 +85,8 @@ object ElementLoader extends TestLogging {
 
   /**
    * This method is needed because calling isDisplayed on a list of elements, which were asynchronously loaded,
-   *  was proven to be a bit flaky
+   *  was proven to be a bit flaky. So calling this method, before calling is displayed, will make sure the elements are loaded and
+   *  visible
    */
   private def waitUntil(expectedCondition: ExpectedCondition[WebElement], timeoutInSeconds: Int = 2)(implicit driver: WebDriver): Boolean = {
     try {
