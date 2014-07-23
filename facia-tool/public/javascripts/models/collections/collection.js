@@ -210,7 +210,7 @@ define([
 
         _.each(list, function(item) {
             var group = _.find(self.groups, function(g) {
-                return (parseInt((item.meta || {}).group, 10) || 0) === g.group;
+                return (parseInt((item.meta || {}).group, 10) || 0) === g.index;
             }) || self.groups[0];
 
             group.items.push(
