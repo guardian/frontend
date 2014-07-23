@@ -230,6 +230,12 @@ define([
                             player.vast({
                                 url: modules.getVastUrl()
                             });
+                            if(/desktop|wide/.test(detect.getBreakpoint())) {
+                                player.endcard({
+                                    getRelatedContent: modules.fetchEndSlateContent,
+                                    getNextVid: function() { return []; }
+                                });
+                            }
                         });
                     });
 
@@ -257,6 +263,20 @@ define([
                     vjs.persistvolume({namespace: 'gu.vjs'});
                 });
             });
+        },
+        generateEndSlateUrl: function() {
+            var seriesId = config.page.seriesId;
+            var sectionId = config.page.section;
+            return (seriesId)  ? '/video/end-slate/series/' + seriesId + '.json' : '/video/end-slate/section/' + sectionId + '.json';
+        },
+        fetchEndSlateContent: function(callback) {
+             ajax({
+                url: modules.generateEndSlateUrl(),
+                crossOrigin: true,
+                type: 'json'
+             }).then(function(resp){
+                 callback(bonzo.create(resp.html));
+             });
         },
         initMoreInSection: function() {
             var section = new Component(),

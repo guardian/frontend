@@ -4,13 +4,15 @@ define([
     'videojs',
     'videojsads',
     'videojsvast',
-    'videojspersistvolume'
+    'videojspersistvolume',
+    'videojsendslate'
 ], function(
     vast,
     videojs,
     videojsads,
     videojsvast,
-    videojspersistvolume
+    videojspersistvolume,
+    videojsendskate
 ) {
 
     return;
