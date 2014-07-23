@@ -1,5 +1,6 @@
 @(index: services.IndexPage, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
 @main(index.page, projectName = Option("facia")){  }{
+<div class="site-borders-wrapper site-borders-wrapper--layout-front">
     <div data-link-name="Front" role="main" class="facia-container facia-container--layout-front">
 
         @fragments.containers.index(Collection(index.trails), NewsContainer(showMore = false), 0, index.date, nav)(request, templateDeduping, Config.emptyConfig)
@@ -8,5 +9,5 @@
             @fragments.footballNav(index.page)
         </section>
     </div>
-
+</div>
 }
