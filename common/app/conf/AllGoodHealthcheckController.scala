@@ -12,10 +12,9 @@ trait HealthcheckController extends Controller with Results with ExecutionContex
   val port = 9000
   val baseUrl = s"http://localhost:$port"
 
-  def doCheck(): Future[Result]
-  def healthcheck(): Action[AnyContent] = Action.async(doCheck())
+  def healthcheck(): Action[AnyContent]
 
-  def fetchResults(paths: String*): Seq[Future[(String, Int)]] = {
+  protected def fetchResults(paths: String*): Seq[Future[(String, Int)]] = {
     paths.map(path => WS.url(s"$baseUrl$path")
       .withHeaders("X-Gu-Management-Healthcheck" -> "true")
       .withRequestTimeout(10000).get()
@@ -26,7 +25,7 @@ trait HealthcheckController extends Controller with Results with ExecutionContex
 // expects ALL of the paths to return 200. If one fails the entire healthcheck fails
 class AllGoodHealthcheckController(paths: String*) extends HealthcheckController {
 
-  override def doCheck() = {
+  override def healthcheck() = Action.async{
 
     val healthCheckResults = fetchResults(paths:_*)
 
@@ -40,10 +39,9 @@ class AllGoodHealthcheckController(paths: String*) extends HealthcheckController
 
 // expects ONE of the paths to return 200. If one passes the entire healthcheck passes regardless of other failures
 class AnyGoodHealthcheckController(paths: String*) extends HealthcheckController {
-  override def doCheck() = {
+  override def healthcheck() = Action.async{
 
     val healthCheckResults = fetchResults(paths:_*)
-
 
     Future.sequence(healthCheckResults).map(_.filterNot { case (_, status) => status == 200})
       .map {

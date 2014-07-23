@@ -11,9 +11,9 @@ object HealthCheck extends AllGoodHealthcheckController("/login") {
   def isOK = status.get
   def setUnhealthy(){ status.set(false) }
 
-  override def healthcheck() = Action.async{
-    doCheck().map{ result =>
-      if (!isOK) InternalServerError("JAXP00010001") else result
-    }
+  override def healthcheck() = if (!isOK) {
+    Action(InternalServerError("JAXP00010001"))
+  } else {
+    super.healthcheck()
   }
 }
