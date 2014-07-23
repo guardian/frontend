@@ -2,7 +2,7 @@
 @import conf.Switches._
 
 @defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
-<div class="site-borders-wrapper site-borders-wrapper--layout-content">
+<div class="l-side-margins l-side-margins--layout-content">
     <article id="live-blog"
         class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
