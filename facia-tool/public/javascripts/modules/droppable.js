@@ -12,7 +12,7 @@ define([
 ) {
 
     function init() {
-        var sourceList;
+        var sourceGroup;
 
         window.addEventListener('dragover', function(event) {
             event.preventDefault();
@@ -31,18 +31,18 @@ define([
                     if (_.isFunction(sourceItem.get)) {
                         event.dataTransfer.setData('sourceItem', JSON.stringify(sourceItem.get()));
                     }
-                    sourceList = ko.dataFor(element);
+                    sourceGroup = ko.dataFor(element);
                 }, false);
 
                 element.addEventListener('dragover', function(event) {
-                    var targetList = ko.dataFor(element),
+                    var targetGroup = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target);
 
                     event.preventDefault();
                     event.stopPropagation();
 
-                    targetList.underDrag(targetItem.constructor === Group);
-                    _.each(targetList.items(), function(item) {
+                    targetGroup.underDrag(targetItem.constructor === Group);
+                    _.each(targetGroup.items(), function(item) {
                         var underDrag = (item === targetItem);
                         if (underDrag !== item.state.underDrag()) {
                             item.state.underDrag(underDrag);
@@ -51,13 +51,13 @@ define([
                 }, false);
 
                 element.addEventListener('dragleave', function(event) {
-                    var targetList = ko.dataFor(element);
+                    var targetGroup = ko.dataFor(element);
 
                     event.preventDefault();
                     event.stopPropagation();
 
-                    targetList.underDrag(false);
-                    _.each(targetList.items(), function(item) {
+                    targetGroup.underDrag(false);
+                    _.each(targetGroup.items(), function(item) {
                         if (item.state.underDrag()) {
                             item.state.underDrag(false);
                         }
@@ -65,7 +65,7 @@ define([
                 }, false);
 
                 element.addEventListener('drop', function(event) {
-                    var targetList = ko.dataFor(element),
+                    var targetGroup = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
                         id = event.dataTransfer.getData('Text'),
                         knownQueryParams = parseQueryParams(id, {
@@ -84,22 +84,22 @@ define([
                     event.preventDefault();
                     event.stopPropagation();
 
-                    if (!targetList) { return; }
+                    if (!targetGroup) { return; }
 
-                    targetList.underDrag(false);
-                    _.each(targetList.items(), function(item) {
+                    targetGroup.underDrag(false);
+                    _.each(targetGroup.items(), function(item) {
                         item.state.underDrag(false);
                     });
 
                     // If the item isn't dropped onto an item, assume it's to be appended *after* the other items in this group,
                     if (targetItem.constructor === Group) {
-                        targetItem = _.last(targetList.items());
+                        targetItem = _.last(targetGroup.items());
                         if (targetItem) {
                             isAfter = true;
                         // or if there arent't any other items, after those in the first preceding group that contains items.
-                        } else if (targetList.parentType === 'Collection') {
-                            groups = targetList.parent.groups;
-                            for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
+                        } else if (targetGroup.parentType === 'Collection') {
+                            groups = targetGroup.parent.groups;
+                            for (var i = groups.indexOf(targetGroup) - 1; i >= 0; i -= 1) {
                                 targetItem = _.last(groups[i].items());
                                 if (targetItem) {
                                     isAfter = true;
@@ -120,7 +120,7 @@ define([
                         sourceItem = JSON.parse(sourceItem);
                     } else {
                         sourceItem = {meta: knownQueryParams};
-                        sourceList = undefined;
+                        sourceGroup = undefined;
                         id = id.split('?')[0] + (_.isEmpty(unknownQueryParams) ? '' : '?' + _.map(unknownQueryParams, function(val, key) {
                             return key + (val ? '=' + val : '');
                         }).join('&'));
@@ -136,10 +136,10 @@ define([
 
                     mediator.emit('collection:updates', {
                         id: id,
-                        sourceList: sourceList,
                         sourceItem: sourceItem,
-                        targetList: targetList,
+                        sourceGroup: sourceGroup,
                         targetItem: targetItem,
+                        targetGroup: targetGroup,
                         isAfter: isAfter
                     });
 

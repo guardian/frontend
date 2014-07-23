@@ -160,7 +160,7 @@ define([
                 id: sourceItem.id,
                 sourceItem: sourceItem,
                 targetItem: this,
-                targetList: this.group
+                targetGroup: this.group
             });
         };
 

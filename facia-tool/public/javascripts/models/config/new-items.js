@@ -20,12 +20,12 @@ define([
             return defer.promise();
         },
 
-        newItemsPersister: function(newItems, sourceList, targetList) {
-            if (newItems[0].parents.indexOf(targetList.parent) < 0) {
-                newItems[0].parents.push(targetList.parent);
+        newItemsPersister: function(newItems, sourceGroup, targetGroup) {
+            if (newItems[0].parents.indexOf(targetGroup.parent) < 0) {
+                newItems[0].parents.push(targetGroup.parent);
             }
 
-            targetList.parent.saveProps();
+            targetGroup.parent.saveProps();
         }
     };
 });

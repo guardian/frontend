@@ -34,7 +34,7 @@ define([
                 id: sourceItem.id,
                 sourceItem: sourceItem,
                 targetItem: _.last(this.items()),
-                targetList: this,
+                targetGroup: this,
                 isAfter: true
             });
         };

@@ -20,10 +20,10 @@ define([
 
         id
         sourceItem
-        sourceList (optional)
+        sourceGroup (optional)
 
         targetItem (optional)
-        targetList
+        targetGroup
 
         isAfter (optional)
     */
@@ -34,35 +34,35 @@ define([
 
         position = opts.targetItem && _.isFunction(opts.targetItem.id) ? opts.targetItem.id() : undefined;
 
-        removeById(opts.targetList.items, urlAbsPath(opts.id));
+        removeById(opts.targetGroup.items, urlAbsPath(opts.id));
 
-        insertAt = opts.targetList.items().indexOf(opts.targetItem) + (opts.isAfter || 0);
-        insertAt = insertAt === -1 ? opts.targetList.items().length : insertAt;
+        insertAt = opts.targetGroup.items().indexOf(opts.targetItem) + (opts.isAfter || 0);
+        insertAt = insertAt === -1 ? opts.targetGroup.items().length : insertAt;
 
-        newItems = opts.newItemsConstructor(opts.id, opts.sourceItem, opts.targetList);
+        newItems = opts.newItemsConstructor(opts.id, opts.sourceItem, opts.targetGroup);
 
         if (!newItems[0]) {
             alertBadContent(opts.id, null);
             return;
         }
 
-        opts.targetList.items.splice(insertAt, 0, newItems[0]);
+        opts.targetGroup.items.splice(insertAt, 0, newItems[0]);
 
         opts.newItemsValidator(newItems)
         .fail(function(err) {
-            _.each(newItems, function(item) { opts.targetList.items.remove(item); });
+            _.each(newItems, function(item) { opts.targetGroup.items.remove(item); });
             alertBadContent(opts.id, err);
         })
         .done(function() {
-            if (_.isFunction(opts.targetList.reflow)) {
-                opts.targetList.reflow();
+            if (_.isFunction(opts.targetGroup.reflow)) {
+                opts.targetGroup.reflow();
             }
 
-            if (!opts.targetList.parent) {
+            if (!opts.targetGroup.parent) {
                 return;
             }
 
-            opts.newItemsPersister(newItems, opts.sourceList, opts.targetList, position, opts.isAfter);
+            opts.newItemsPersister(newItems, opts.sourceGroup, opts.targetGroup, position, opts.isAfter);
         });
     }
 

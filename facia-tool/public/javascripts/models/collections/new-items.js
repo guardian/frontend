@@ -17,7 +17,7 @@ define([
     removeById
 ) {
 
-    function newItemsConstructor(id, sourceItem, targetList) {
+    function newItemsConstructor(id, sourceItem, targetGroup) {
         var items = [_.extend(_.isObject(sourceItem) ? sourceItem : {}, { id: id })];
 
         if(sourceItem && sourceItem.meta && sourceItem.meta.supporting) {
@@ -28,9 +28,9 @@ define([
             return new Article({
                 id: item.id,
                 meta: cleanClone(item.meta),
-                group: targetList,
-                parent: targetList.parent,
-                parentType: targetList.parentType
+                group: targetGroup,
+                parent: targetGroup.parent,
+                parentType: targetGroup.parentType
             });
         });
     }
@@ -39,46 +39,46 @@ define([
         return contentApi.validateItem(newItems[0]);
     }
 
-    function newItemsPersister(newItems, sourceList, targetList, position, isAfter) {
+    function newItemsPersister(newItems, sourceGroup, targetGroup, position, isAfter) {
         var id = newItems[0].id(),
             itemMeta,
             supporting,
             remove;
 
-        if (!targetList || !targetList.parent) { return; }
+        if (!targetGroup || !targetGroup.parent) { return; }
 
-        if (targetList.parentType === 'Article') {
-            supporting = targetList.parent.meta.supporting.items;
+        if (targetGroup.parentType === 'Article') {
+            supporting = targetGroup.parent.meta.supporting.items;
             _.each(newItems.slice(1), function(item) {
                 supporting.remove(function (supp) { return supp.id() === item.id(); });
                 supporting.push(item);
             });
             contentApi.decorateItems(supporting());
-            targetList.parent.save();
+            targetGroup.parent.save();
 
-            remove = remover(sourceList, id);
+            remove = remover(sourceGroup, id);
             if (remove) {
                 authedAjax.updateCollections({remove: remove});
-                removeById(sourceList.items, id);
+                removeById(sourceGroup.items, id);
             }
         }
 
-        if (targetList.parentType === 'Collection') {
-            targetList.parent.closeAllArticles();
+        if (targetGroup.parentType === 'Collection') {
+            targetGroup.parent.closeAllArticles();
             itemMeta = newItems[0].getMeta() || {};
 
-            if (deepGet(targetList, '.parent.groups.length') > 1) {
-                itemMeta.group = targetList.group + '';
+            if (deepGet(targetGroup, '.parent.groups.length') > 1) {
+                itemMeta.group = targetGroup.group + '';
             } else {
                 delete itemMeta.group;
             }
 
-            remove = (deepGet(sourceList, '.parent.id') && deepGet(sourceList, '.parent.id') !== targetList.parent.id);
-            remove = remove ? remover(sourceList, id) : undefined;
+            remove = (deepGet(sourceGroup, '.parent.id') && deepGet(sourceGroup, '.parent.id') !== targetGroup.parent.id);
+            remove = remove ? remover(sourceGroup, id) : undefined;
 
             authedAjax.updateCollections({
                 update: {
-                    collection: targetList.parent,
+                    collection: targetGroup.parent,
                     item:     id,
                     position: position,
                     after:    isAfter,
@@ -94,20 +94,20 @@ define([
                 }
             });
 
-            if (sourceList && !sourceList.keepCopy && sourceList !== targetList) {
-                removeById(sourceList.items, id); // for immediate UI effect
+            if (sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup) {
+                removeById(sourceGroup.items, id); // for immediate UI effect
             }
         }
     }
 
-    function remover(sourceList, id) {
-        if (sourceList &&
-            sourceList.parentType === 'Collection' &&
-           !sourceList.keepCopy) {
+    function remover(sourceGroup, id) {
+        if (sourceGroup &&
+            sourceGroup.parentType === 'Collection' &&
+           !sourceGroup.keepCopy) {
 
             return {
-                collection: sourceList.parent,
-                id:     sourceList.parent.id,
+                collection: sourceGroup.parent,
+                id:     sourceGroup.parent.id,
                 item:   id,
                 live:   vars.state.liveMode(),
                 draft: !vars.state.liveMode()
