@@ -211,7 +211,7 @@ module.exports = function (grunt) {
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'AgateSans',
+                            'font-family': 'Guardian Agate Sans 1 Web',
                             file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.ttf',
                             format: 'ttf'
                         },
