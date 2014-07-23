@@ -6,10 +6,10 @@ import play.api.mvc.{Action, Controller}
 import services.{TagIndexReadError, TagIndexNotFound, TagIndexesS3}
 
 object TagIndexController extends Controller with ExecutionContexts with Logging {
-  private def keyword(keywordType: String, page: String) = Action {
+  private def forTagType(keywordType: String, page: String) = Action { implicit request =>
     val indexCharacter = page.charAt(0)
 
-    TagIndexesS3.getIndex("subject", indexCharacter) match {
+    TagIndexesS3.getIndex(keywordType, indexCharacter) match {
       case Left(TagIndexNotFound) =>
         log.error(s"404 error serving tag index page for $keywordType $page")
         NotFound
@@ -23,7 +23,7 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
     }
   }
 
-  def subject(page: String) = keyword("subject", page)
+  def keyword(page: String) = forTagType("keyword", page)
 
-  def contributor(page: String) = keyword("contributor", page)
+  def contributor(page: String) = forTagType("contributor", page)
 }

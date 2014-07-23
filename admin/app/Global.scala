@@ -55,6 +55,7 @@ with SurgingContentAgentLifecycle {
       scheduleJobs()
 
       AkkaAsync {
+        RebuildIndexJob.run()
         DfpDataCacheJob.run()
         TravelOffersCacheJob.run()
       }
