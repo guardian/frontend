@@ -7,9 +7,10 @@ import org.openqa.selenium.SearchContext
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.WebDriverWait
-import org.openqa.selenium.support.ui.ExpectedConditions
+import org.openqa.selenium.support.ui.ExpectedConditions._
 import com.gu.automation.support.TestLogging
 import org.openqa.selenium.WebDriverException
+import org.openqa.selenium.support.ui.ExpectedCondition
 
 object ElementLoader extends TestLogging {
 
@@ -22,7 +23,7 @@ object ElementLoader extends TestLogging {
   def findByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): WebElement = {
     val extractedLocalValue = contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
 
-    waitUntilDisplayed(extractedLocalValue)
+    waitUntil(visibilityOf(extractedLocalValue), 3)
     extractedLocalValue
   }
 
@@ -42,34 +43,23 @@ object ElementLoader extends TestLogging {
    * Find all link elements, including nested, from the provided SearchContext and returns those that are displayed
    */
   def displayedLinks(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
-    searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => waitUntilDisplayed(element))
-  }
-
-  def waitUntilDisplayed(element: WebElement)(implicit driver: WebDriver): Boolean = {
-    try {
-      new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOf(element))
-    } catch {
-      case e: WebDriverException => {
-        logger.info(s"Element not displayed after waiting: ${e.getMessage()}")
-        false
-      }
-    }
-    true
+    searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => waitUntil(visibilityOf(element)))
   }
 
   /**
    * Find all image elements, including nested, from the provided SearchContext and returns those that are displayed.
-   * Observe that this method does a double check as the selenium isDisplayed method does not guarantee that a picture is actually
-   * visible
+   * Observe that this method does a double check as the selenium check for visibility does not guarantee that an image is
+   * actually displayed, just that an img element is not hidden
    */
   def displayedImages(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
-    val preDisplayedImages = searchContext.findElements(By.cssSelector("img")).asScala.toList.filter(element => waitUntilDisplayed(element))
+    val preDisplayedImages = searchContext.findElements(By.cssSelector("img")).asScala.toList.filter(element =>
+      waitUntil(visibilityOf(element)))
     preDisplayedImages.filter(element => isImageDisplayed(element))
   }
 
   /**
-   * Use this method to check that an img element is properly displayed. This is needed as the Selenium isDisplayed does not explicitly
-   * check that the image is displayed, just that the element is there and visible. This actually checks the size of the image to
+   * Use this method to check that an img element is properly displayed. This is needed as the Selenium check for visibility does not explicitly
+   * guarantee that the image is displayed, just that the element is there and visible. This actually checks the size of the image to
    * make sure it is greater than 0
    */
   def isImageDisplayed(imageElement: WebElement)(implicit driver: WebDriver): Boolean = {
@@ -81,5 +71,29 @@ object ElementLoader extends TestLogging {
     } else {
       false
     }
+  }
+
+  /**
+   * Find all link IFrames, including nested, from the provided SearchContext and returns those that are visible
+   */
+  def displayedIFrames(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
+    val visibileFrames = searchContext.findElements(By.cssSelector("iframe")).asScala.toList.filter(element => waitUntil(visibilityOf(element)))
+    visibileFrames.filter(element => element.isDisplayed())
+  }
+
+  /**
+   * This method is needed because calling isDisplayed on a list of elements, which were asynchronously loaded,
+   *  was proven to be a bit flaky
+   */
+  private def waitUntil(expectedCondition: ExpectedCondition[WebElement], timeoutInSeconds: Int = 2)(implicit driver: WebDriver): Boolean = {
+    try {
+      new WebDriverWait(driver, timeoutInSeconds).until(expectedCondition)
+    } catch {
+      case e: WebDriverException => {
+        logger.info(s"Element not displayed after waiting: ${e.getMessage()}")
+        false
+      }
+    }
+    true
   }
 }
