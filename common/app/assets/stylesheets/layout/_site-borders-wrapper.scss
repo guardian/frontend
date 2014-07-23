@@ -1,0 +1,109 @@
+.site-borders-wrapper {
+    @include clearfix;
+    position: relative;
+
+    @include mq(tablet) {
+        &:after,
+        &:before {
+            content: '';
+            display: block;
+            position: absolute;
+            z-index: 1;
+            background: rgba($c-neutral4, .2);
+            top: 0;
+            height: 100%;
+            width: 50%;
+
+            .has-page-skin & {
+                display: none;
+            }
+        }
+        &:before {
+            @include rem((
+                left: -((gs-span(9) + $gs-gutter * 2) / 2)
+            ));
+        }
+        &:after {
+            @include rem((
+                right: -((gs-span(9) + $gs-gutter * 2) / 2)
+            ));
+        }
+    }
+    @include mq(desktop) {
+        &:before {
+            @include rem((
+                left: -((gs-span(12) + $gs-gutter * 2) / 2)
+            ));
+        }
+        &:after {
+            @include rem((
+                right: -((gs-span(12) + $gs-gutter * 2) / 2)
+            ));
+        }
+    }
+    @include mq(wide) {
+        &:before {
+            @include rem((
+                left: -((gs-span(16) + $gs-gutter * 2) / 2)
+            ));
+        }
+        &:after {
+            @include rem((
+                right: -((gs-span(16) + $gs-gutter * 2) / 2)
+            ));
+        }
+        .has-page-skin & {
+            &:before,
+            &:after {
+                display: none;
+            }
+        }
+    }
+}
+
+.site-borders-wrapper--layout-front {
+    @include mq(faciaLeftCol, wide) {
+        &:before {
+            @include rem((
+                left: -((gs-span(14) + $gs-gutter * 2) / 2)
+            ));
+        }
+        &:after {
+            @include rem((
+                right: -((gs-span(14) + $gs-gutter * 2) / 2)
+            ));
+        }
+    }
+}
+.site-borders-wrapper--layout-content {
+    @include mq(tablet, desktop) {
+        &:before {
+            @include rem((
+                left: -((gs-span(8) + $gs-gutter * 2) / 2)
+            ));
+        }
+        &:after {
+            @include rem((
+                right: -((gs-span(8) + $gs-gutter * 2) / 2)
+            ));
+        }
+    }
+    @include mq(rightCol, leftCol) {
+        &:before,
+        &:after {
+            display: none;
+        }
+    }
+    @include mq(leftCol, wide) {
+        &:before {
+            @include rem((
+                left: -((gs-span(14) + $gs-gutter * 2) / 2)
+            ));
+        }
+        &:after {
+            @include rem((
+                right: -((gs-span(14) + $gs-gutter * 2) / 2)
+            ));
+        }
+    }
+}
