@@ -10,6 +10,7 @@ class CommercialTests extends SeleniumTestSuite {
     scenarioWeb("checking ad slots are properly displayed on a specific article page") { implicit driver: WebDriver =>
       val articlePage = ArticleSteps().goToArticle("/politics/2014/jul/01/michael-gove-lord-harris")
       ArticleSteps().checkThatTopBannerAdIsDisplayedProperly(articlePage)
+      ArticleSteps().checkThatAdToTheRightIsDisplayedProperly(articlePage)
     }
   }
 }

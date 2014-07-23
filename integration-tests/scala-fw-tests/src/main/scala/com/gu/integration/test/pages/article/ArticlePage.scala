@@ -12,7 +12,8 @@ class ArticlePage(implicit driver: WebDriver) extends ParentPage {
 
   val articleRootElement: WebElement = findByTestAttribute("article-root")
   def topBannerAdElement: WebElement = findByTestAttribute("ad-slot-top-above-nav")
-
+  def rightHandAdElement: WebElement = findByTestAttribute("ad-slot-right")
+  
   def mostPopularModule() = {
     new MostPopularModule
   }
@@ -23,5 +24,9 @@ class ArticlePage(implicit driver: WebDriver) extends ParentPage {
 
   def topBannerAdModule(): AdvertiseModule = {
     new AdvertiseModule(topBannerAdElement)
+  }
+  
+  def rightHandAdModule(): AdvertiseModule = {
+    new AdvertiseModule(rightHandAdElement)
   }
 }

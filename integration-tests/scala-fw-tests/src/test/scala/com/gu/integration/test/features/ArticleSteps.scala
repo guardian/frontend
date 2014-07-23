@@ -36,4 +36,15 @@ case class ArticleSteps(implicit driver: WebDriver) extends TestLogging with Mat
     //this is neccessary in order to switch back to the main frame
     driver.switchTo().defaultContent()
   }
+  
+  def checkThatAdToTheRightIsDisplayedProperly(articlePage: ArticlePage) = {
+    logger.step("Check that right hand ad is displayed on the page")
+    articlePage.rightHandAdElement.isDisplayed should be (true)
+    articlePage.rightHandAdModule.adLabel.isDisplayed() should be (true)
+    val adIFrame = articlePage.rightHandAdModule.advertiseIFrameContent
+    adIFrame.displayedLinks should not be empty
+    adIFrame.displayedImages should not be empty
+    //this is neccessary in order to switch back to the main frame
+    driver.switchTo().defaultContent()
+  }
 }
