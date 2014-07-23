@@ -38,7 +38,7 @@ trait AuthLogging {
   def log(msg: String, request: Request[AnyContent]) {
     request match {
       case auth: AuthenticatedRequest => log.info(auth.identity.email + ": " + msg)
-      case auth: com.gu.googleauth.AuthenticatedRequest if auth.identity.isDefined => log.info(auth.identity.get.email + ": " + msg)
+      case auth: com.gu.googleauth.AuthenticatedRequest[AnyContent] if auth.isAuthenticated => log.info(msg)
       case _ => throw new IllegalStateException("Expected an authenticated request")
     }
   }
