@@ -47,7 +47,6 @@ define(['common/utils/$',
         ANIM_CLOSED: 'membership-tab__change-cc-form-cont--closed',
         NOTIFICATION_TIER_CURRENT: 'js-mem-tier-current',
         NOTIFICATION_TIER_TARGET: 'js-mem-tier-target',
-        NOTIFICATION_TIER_HREF: 'js-mem-tier-href',
         NOTIFICATION_PERIOD_START: 'js-mem-current-period-start',
         NOTIFICATION_PERIOD_END: 'js-mem-current-period-end',
         NOTIFICATION_CANCEL: 'js-mem-cancel-tier',
@@ -189,9 +188,7 @@ define(['common/utils/$',
     Membership.prototype.displayCancellationTabContents = function (rootElement, resp, subscriptionDates) {
         $(this.getClass('TAB_DETAILS_LIST_UPPER'), this.context).addClass('is-hidden');
         $(rootElement, this.context).removeClass('is-hidden');
-        var tierHref = resp.tier.toLowerCase() === 'patron' ? config.page.membershipUrl + '/join/patron' : config.page.membershipUrl + '/join';
         $(this.getClass('NOTIFICATION_TIER'), rootElement).html(resp.tier);
-        $(this.getClass('NOTIFICATION_TIER_HREF'), rootElement).attr('href', tierHref);
         $(this.getClass('NOTIFICATION_PERIOD_START'), rootElement).html(subscriptionDates.currentPeriodStart);
         $(this.getClass('NOTIFICATION_PERIOD_END'), rootElement).html(subscriptionDates.currentPeriodEnd);
     };
