@@ -40,7 +40,6 @@ define([
         };
 
         this.omitItem   = function(item) {
-            item.copy();
             self.items.remove(item);
             self.reflow();
             if (_.isFunction(opts.omitItem)) { opts.omitItem(item); }

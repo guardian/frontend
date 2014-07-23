@@ -311,23 +311,23 @@ define([
             var timestamp,
                 itemMeta;
 
-            if (!this.parent) {
+            if (!this.group.parent) {
                 return;
             }
 
-            if (this.parentType === 'Article') {
-                this.parent._save();
+            if (this.group.parentType === 'Article') {
+                this.group.parent._save();
                 return;
             }
 
-            if (this.parentType === 'Collection') {
+            if (this.group.parentType === 'Collection') {
 
                 itemMeta = this.getMeta();
                 timestamp = Math.floor(new Date().getTime()/1000);
 
                 authedAjax.updateCollections({
                     update: {
-                        collection: this.parent,
+                        collection: this.group.parent,
                         item:       this.id(),
                         position:   this.id(),
                         itemMeta:   itemMeta,
@@ -336,7 +336,7 @@ define([
                     }
                 });
 
-                this.parent.setPending(true);
+                this.group.parent.setPending(true);
             }
         };
 

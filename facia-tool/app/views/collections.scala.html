@@ -313,13 +313,13 @@
                     <div class="supporting-message">Add supporting content below</div>
                 </div>
 
-                <div data-bind="if: parentType === 'Collection' || parentType === 'Clipboard'">
+                <div data-bind="if: group.parentType === 'Collection' || group.parentType === 'Clipboard'">
                     <div class="supporting" data-bind="with: meta.supporting">
                         <div class="droppable" data-bind="
                             makeDropabble: true,
+                            click: pasteItem,
                             css: {underDrag: underDrag},
                             template: {name: 'template_article', foreach: items}"></div>
-
                     </div>
                 </div>
             </div>
