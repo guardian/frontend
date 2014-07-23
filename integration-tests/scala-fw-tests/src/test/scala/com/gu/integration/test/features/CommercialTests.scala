@@ -11,6 +11,8 @@ class CommercialTests extends SeleniumTestSuite {
       val articlePage = ArticleSteps().goToArticle("/politics/2014/jul/01/michael-gove-lord-harris")
       ArticleSteps().checkThatTopBannerAdIsDisplayedProperly(articlePage)
       ArticleSteps().checkThatAdToTheRightIsDisplayedProperly(articlePage)
+      ArticleSteps().checkThatInlineAdIsDisplayedProperly(articlePage)
+      ArticleSteps().checkThatBottomMerchandisingAdIsDisplayedProperly(articlePage)
     }
   }
 }

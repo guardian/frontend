@@ -37,6 +37,19 @@ case class ArticleSteps(implicit driver: WebDriver) extends TestLogging with Mat
     checkThatAdWithIFrameIsDisplayedProperly(articlePage.rightHandAdModule)
   }
 
+  def checkThatInlineAdIsDisplayedProperly(articlePage: ArticlePage) = {
+    logger.step("Check that inline ad is displayed on the page")
+    checkThatAdWithIFrameIsDisplayedProperly(articlePage.inlineAdModule)
+  }
+
+  def checkThatBottomMerchandisingAdIsDisplayedProperly(articlePage: ArticlePage) = {
+    logger.step("Check that bottom merchandising ad is displayed on the page")
+    val bottomMerchandisingAd = articlePage.bottomMerchandisingAdModule
+    bottomMerchandisingAd.adLabel.isDisplayed() should be (true)
+    bottomMerchandisingAd.displayedLinks should not be empty
+    bottomMerchandisingAd.displayedImages should not be empty
+  }
+
   private def checkThatAdWithIFrameIsDisplayedProperly(adModule: AdvertiseModule) = {
     adModule.adLabel.isDisplayed should be(true)
     val adIFrame = adModule.advertiseIFrameContent

@@ -11,9 +11,12 @@ import com.gu.integration.test.pages.common.AdvertiseModule
 class ArticlePage(implicit driver: WebDriver) extends ParentPage {
 
   val articleRootElement: WebElement = findByTestAttribute("article-root")
+  
   def topBannerAdElement: WebElement = findByTestAttribute("ad-slot-top-above-nav")
   def rightHandAdElement: WebElement = findByTestAttribute("ad-slot-right")
-  
+  def inlineAdElement: WebElement = findByTestAttribute("ad-slot-inline1")
+  def bottomMerchandisingAdElement: WebElement = findByTestAttribute("ad-slot-merchandising")
+
   def mostPopularModule() = {
     new MostPopularModule
   }
@@ -25,8 +28,16 @@ class ArticlePage(implicit driver: WebDriver) extends ParentPage {
   def topBannerAdModule(): AdvertiseModule = {
     new AdvertiseModule(topBannerAdElement)
   }
-  
+
   def rightHandAdModule(): AdvertiseModule = {
     new AdvertiseModule(rightHandAdElement)
+  }
+
+  def inlineAdModule(): AdvertiseModule = {
+    new AdvertiseModule(inlineAdElement)
+  }
+
+  def bottomMerchandisingAdModule(): AdvertiseModule = {
+    new AdvertiseModule(bottomMerchandisingAdElement)
   }
 }
