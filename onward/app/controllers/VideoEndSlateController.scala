@@ -23,7 +23,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
     response map { _ getOrElse NotFound }
   }
 
-  private def lookupSection(edition: Edition, sectionId: String)(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
+  private def lookupSection(edition: Edition, sectionId: String)(implicit request: RequestHeader): Future[Option[Seq[Video]]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching video content in section: ${sectionId}" )
 
@@ -38,7 +38,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
       .map {
         response =>
           response.results filter { content => isCurrentStory(content) } map { result =>
-            Content(result)
+            Video(result)
           } match {
             case Nil => None
             case results => Some(results)
@@ -51,10 +51,8 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
       }
   }
 
-  private def renderSectionTrails(trails: Seq[Content], sectionId: String)(implicit request: RequestHeader) = {
-    val sectionName = trails.headOption.map(t => t.sectionName).getOrElse("")
-    implicit val config = Config(id = sectionId, href = Option(sectionId), displayName = Some(s"More ${sectionName} videos") )
-    val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1)
+  private def renderSectionTrails(trails: Seq[Video], sectionId: String)(implicit request: RequestHeader) = {
+    val response = () => views.html.fragments.videoEndSlate(trails)
     renderFormat(response, response, 1)
   }
 
