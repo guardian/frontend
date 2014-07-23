@@ -189,8 +189,9 @@
     @include rem((
         height: gs-height(1) + $gs-baseline
     ));
+
     .most-viewed-video-container__heading {
-        @include fs-header(1);
+        @include fs-header(2);
         position: relative;
         @include rem((
             top: $gs-baseline/4
@@ -228,11 +229,10 @@
 }
 
 .most-viewed-video__headline {
-    @include f-headline;
-    @include font-size(14, 18);
-    @include text-clamp(3, 18px);
+    @include fs-headline(1);
+    @include text-clamp(3, get-line-height($fs-headlines, 1));
     @include rem((
-        height: 18px * 3
+        height: get-line-height($fs-headlines, 1) * 3
     ));
 
     &:before {

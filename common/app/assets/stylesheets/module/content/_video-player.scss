@@ -401,7 +401,7 @@ $vjs-progress-inset-bottom: 4px;
     }
     > div {
         color: #ffffff;
-        @include fs-headline(2);
+        @include fs-headline(3);
         text-align: left;
         @include box-sizing(border-box);
         @include rem((
@@ -439,12 +439,12 @@ $vjs-progress-inset-bottom: 4px;
         @include rem((
             padding: $gs-gutter/2
         ));
-        @include fs-headline(3);
+        @include fs-headline(4);
         @include mq(tablet) {
-            @include fs-headline(4);
+            @include fs-headline(5);
         }
         @include mq(desktop) {
-            @include fs-headline(5);
+            @include fs-headline(6);
         }
         &:before {
             content: '';
@@ -458,7 +458,7 @@ $vjs-progress-inset-bottom: 4px;
     .vjs-overlay__duration {
         text-align: left;
         color: $c-mediaDefault;
-        @include fs-headline(2);
+        @include fs-headline(3);
         @include rem((
             padding: 0 $gs-gutter/2 $gs-baseline*2
         ));
@@ -469,7 +469,7 @@ $vjs-progress-inset-bottom: 4px;
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
-    @include fs-headline(1);
+    @include fs-headline(2);
     position: absolute;
     $height: nth(nth($fs-headlines, 1), 2);
     @include rem((
@@ -522,10 +522,10 @@ $vjs-progress-inset-bottom: 4px;
     border-top: 1px solid $c-neutral2;
     color: #ffffff;
     text-align: left;
-    @include fs-textsans(1);
+    @include fs-textSans(1);
 
     @include mq(tablet) {
-        @include fs-textsans(2, true);
+        @include fs-textSans(2, true);
     }
 }
 
