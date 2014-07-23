@@ -142,13 +142,13 @@ Comments.prototype.prerender = function() {
 
     // Determine user staff status
     if (this.user && this.user.badge) {
-        this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
+        this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies functi\on
             return e.name === 'Staff';
         });
 
         if (this.user.isStaff) {
-            this.removeState('not-staff');
-            this.setState('is-staff');
+            $('.d-discussion').removeClass('d-discussion--not-staff');
+            $('.d-discussion').addClass('d-discussion--is-staff');
         }
     }
 
@@ -181,7 +181,7 @@ Comments.prototype.ready = function() {
         if (comment.attr('hidden')) {
             bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
         }
-        
+
         window.location.replace('#comment-'+ this.options.commentId);
     }
 
