@@ -22,6 +22,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       .getOrElse(throw new BadConfigurationException(property))
   }
 
+  object indexes {
+    val adminRebuildIndexRateInMinutes =
+      configuration.getIntegerProperty("admin.rebuild_index_rate_in_minutes").getOrElse(60)
+  }
+
   object environment {
     private val installVars = new File("/etc/gu/install_vars") match {
       case f if f.exists => IOUtils.toString(new FileInputStream(f))
