@@ -119,11 +119,14 @@ define([
                     if (sourceItem) {
                         sourceItem = JSON.parse(sourceItem);
                     } else {
-                        sourceItem = {meta: knownQueryParams};
-                        sourceGroup = undefined;
                         id = id.split('?')[0] + (_.isEmpty(unknownQueryParams) ? '' : '?' + _.map(unknownQueryParams, function(val, key) {
                             return key + (val ? '=' + val : '');
                         }).join('&'));
+                        sourceItem = {
+                            id: id,
+                            meta: knownQueryParams
+                        };
+                        sourceGroup = undefined;
                     }
 
                     // Parse url from links such as http://www.google.co.uk/?param-name=http://www.theguardian.com/foobar
@@ -135,7 +138,6 @@ define([
                     });
 
                     mediator.emit('collection:updates', {
-                        id: id,
                         sourceItem: sourceItem,
                         sourceGroup: sourceGroup,
                         targetItem: targetItem,

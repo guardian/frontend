@@ -9,7 +9,7 @@ define([], function() {
             storage.setItem(storageKeyCopied, JSON.stringify({
                 article: article.get(),
                 group: article.group ? article.group.group : undefined,
-                groupParentId: article.group ? article.group.parent.id : undefined
+                groupParentId: article.group && article.group.parent ? article.group.parent.id : undefined
             }));
         },
 
