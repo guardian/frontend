@@ -29,7 +29,7 @@ object TagIndexesS3 extends S3 {
     get(indexKey(indexType, indexCharacter)) match {
       case Some(jsonString) =>
         Json.fromJson[TagIndexPage](Json.parse(jsonString)) match {
-          case JsSuccess(tagPage) => Right(tagPage)
+          case JsSuccess(tagPage, _) => Right(tagPage)
           case error @ JsError(_) => Left(TagIndexReadError(error))
         }
 

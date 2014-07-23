@@ -1,6 +1,7 @@
 package indexes
 
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag}
+import model.{TagDefinition, TagIndexPage}
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{Matchers, FlatSpec}
@@ -74,18 +75,18 @@ class TagPagesTest extends FlatSpec with Matchers with ScalaFutures {
           activateTag,
           advertisingTag,
           archivedSpeakersTag
-        )
+        ).map(TagDefinition.fromContentApiTag)
       ),
       TagIndexPage(
         'b',
         List(
-          blogTag
+          TagDefinition.fromContentApiTag(blogTag)
         )
       ),
       TagIndexPage(
         'o',
         List(
-          otherDigitalSolutionsTag
+          TagDefinition.fromContentApiTag(otherDigitalSolutionsTag)
         )
       )
     )

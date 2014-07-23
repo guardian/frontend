@@ -3,7 +3,7 @@ package indexes
 import common.Maps._
 import com.gu.openplatform.contentapi.model.Tag
 import java.text.Normalizer
-import model.TagIndexPage
+import model.{TagDefinition, TagIndexPage}
 
 import play.api.libs.iteratee.{Iteratee, Enumerator}
 
@@ -18,7 +18,7 @@ object TagPages {
       insertWith(acc, indexCharacter(tag.webTitle), Set(tag))(_ union _)
     }) map { tagsByCharacter =>
       tagsByCharacter.toSeq.sortBy(_._1) map { case (indexCharacter, tagSet) =>
-        TagIndexPage(indexCharacter, tagSet.toSeq.sortBy(_.webTitle.toLowerCase))
+        TagIndexPage(indexCharacter, tagSet.toSeq.sortBy(_.webTitle.toLowerCase).map(TagDefinition.fromContentApiTag))
       }
     }
 }
