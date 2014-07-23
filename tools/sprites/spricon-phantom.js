@@ -28,12 +28,25 @@ phantom args sent from app.js:
 */
 
 var fs = require( "fs" );
+var gm = require( "gm" );
 var inputdir = phantom.args[0];
 var imgOutputdir = phantom.args[1];
 var cssOutputdir  = phantom.args[2];
 var spritepath =  phantom.args[7];
 var cssprefix = phantom.args[8];
-var files = fs.list( inputdir );
+var files = fs.list( inputdir).sort(function(fileOne, fileTwo) {
+//    var fileOneHeight = 0,
+//        fileTwoHeight = 0;
+//    gm(fileOne).size(function(err, size) {
+//        if (!err) {
+//            fileOneHeight = size.height;
+//        }
+//    });
+//    gm(fileOne).size(function(err, size) {
+//        fileTwoHeight = size.height;
+//    });
+//    return fileOneHeight - fileTwoHeight
+});
 var currfile = 0;
 var pngcssrules = [];
 var pngdatacssrules = [];
