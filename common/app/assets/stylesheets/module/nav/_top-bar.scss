@@ -9,17 +9,19 @@
     float: left;
 
     @include rem((
-        padding-top: 2px,
+        padding-top: $gs-baseline/2,
         margin-right: $gs-gutter/2
     ));
 
     @include mq(tablet) {
+        @include rem((
+            padding-top: 2px,
+            padding-left: $gs-gutter/2
+        ));
+
         & + .top-bar__item {
             border-left: 1px solid $c-neutral4;
         }
-        @include rem((
-            padding-left: $gs-gutter/2
-        ));
     }
 }
 .top-bar__item--right {
