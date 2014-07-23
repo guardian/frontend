@@ -8,8 +8,8 @@ define([], function() {
         set: function(article) {
             storage.setItem(storageKeyCopied, JSON.stringify({
                 article: article.get(),
-                group: article.group.group,
-                groupParentId: article.group.parent.id
+                group: article.group ? article.group.group : undefined,
+                groupParentId: article.group ? article.group.parent.id : undefined
             }));
         },
 

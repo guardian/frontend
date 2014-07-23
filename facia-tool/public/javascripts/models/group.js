@@ -1,10 +1,12 @@
 /* global _: true */
 define([
     'knockout',
+    'modules/vars',
     'utils/mediator',
     'utils/copied-article'
 ], function(
     ko,
+    vars,
     mediator,
     copiedArticle
 ) {
@@ -26,7 +28,7 @@ define([
         this.reflow     = opts.reflow  || function() {};
 
         this.pasteItem = function() {
-            var sourceItem = copiedArticle.get();
+            var sourceItem = copiedArticle.get(vars.model.collections());
 
             if(!sourceItem) { return; }
 
