@@ -1,0 +1,11 @@
+@(page: model.TagIndexPage)
+
+<article>
+    <h1>@page.indexCharacter.toUpper</h1>
+
+    @for( tag <- page.tags ) {
+
+        <p>@tag.webTitle</p>
+
+    }
+</article>

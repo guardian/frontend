@@ -1,0 +1,7 @@
+@(metaData: model.TagIndexPageMetaData, page: model.TagIndexPage)(implicit request: RequestHeader)
+
+@import fragments.tagIndexBody
+
+@main(metaData) { } {
+    @tagIndexBody(page)
+}

@@ -39,7 +39,4 @@ object ContentApiTagsEnumerator extends Logging {
   def enumerateTagType(tagType: String) = enumeratePages { page =>
     LiveContentApi.tags.tagType(tagType).pageSize(MaxPageSize).page(page).response
   }
-
-  def keywords = enumerateTagType("keyword")
-  def contributors = enumerateTagType("contributor")
 }

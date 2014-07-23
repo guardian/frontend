@@ -23,8 +23,11 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object indexes {
+    val tagIndexesBucket =
+      configuration.getMandatoryStringProperty("tag_indexes.bucket")
+
     val adminRebuildIndexRateInMinutes =
-      configuration.getIntegerProperty("admin.rebuild_index_rate_in_minutes").getOrElse(60)
+      configuration.getIntegerProperty("tag_indexes.rebuild_rate_in_minutes").getOrElse(60)
   }
 
   object environment {
