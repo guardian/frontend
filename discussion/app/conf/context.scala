@@ -5,6 +5,8 @@ import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 
+object HealthCheck extends AllGoodHealthcheckController("/discussion/p/37v3a")
+
 object Management extends GuManagement {
   val applicationName = "frontend-discussion"
   val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.discussion

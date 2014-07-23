@@ -6,6 +6,8 @@
 GET        /assets/*path                                             dev.DevAssetsController.at(path)
 GET        /commercial/test-page                                     controllers.commercial.CreativeTestPage.allComponents
 
+GET        /_healthcheck                                             conf.HealthCheck.healthcheck()
+
 # Travel offers
 GET        /commercial/travel/offers                                 controllers.commercial.TravelOffers.travelOffersLowHtml
 GET        /commercial/travel/offers.json                            controllers.commercial.TravelOffers.travelOffersLowJson

@@ -109,6 +109,11 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   }
 }
 
+object HealthCheck extends AllGoodHealthcheckController(
+  "/football/live",
+  "/football/premierleague/results"
+)
+
 object Management extends GuManagement {
   val applicationName = "frontend-sport"
   val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.pa
