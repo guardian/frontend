@@ -1,8 +1,8 @@
 package conf
 
-import _root_.play.api.mvc.Action
+
 import common.Metrics
-import com.gu.management._
+import com.gu.management.{ErrorResponse, ManifestPage, StatusPage, PropertiesPage}
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import com.gu.management.HttpRequest
