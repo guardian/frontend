@@ -256,7 +256,7 @@
     }
 }
 /* article */
-.facia-container--layout-article .commercial--jobs {
+.facia-container--layout-content .commercial--jobs {
     @include mq(tablet) {
         .commercial--jobs__sectors {
             float: left;

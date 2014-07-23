@@ -19,17 +19,18 @@
         }
     }
 
-    <h2 class="article__zone sport-header tone-accent-border hide-on-mobile-if-localnav">
-        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
-    </h2>
-    <h1 class="page-header">@page.webTitle</h1>
+        <h2 class="article__zone sport-header tone-accent-border hide-on-mobile-if-localnav">
+            <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
+        </h2>
+        <h1 class="page-header">@page.webTitle</h1>
 
     @competitionList.map{ comp =>
         @renderFilter(comp)
     }
 
-    @fragments.footballNav(page)
-</div>
-<div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder("sport")
+        @fragments.footballNav(page)
+    </div>
+    <div class="facia-container facia-container--layout-content">
+        @fragments.mostPopularPlaceholder("sport")
+    </div>
 </div>

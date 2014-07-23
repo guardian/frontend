@@ -262,7 +262,7 @@
     }
 }
 /* article */
-.facia-container--layout-article .commercial--masterclasses {
+.facia-container--layout-content .commercial--masterclasses {
     @include mq(tablet) {
         .commercial__home-link {
             @include rem((

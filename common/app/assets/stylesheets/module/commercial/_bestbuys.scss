@@ -257,7 +257,7 @@ $c-money-high: #63007f;
     }
 }
 /* article */
-.facia-container--layout-article .commercial--bestbuys {
+.facia-container--layout-content .commercial--bestbuys {
     @include mq(tablet) {
         .tools__calculators {
             right: $gs-gutter;
