@@ -1,11 +1,17 @@
-@(page: model.TagIndexPage)
+@(page: model.TagIndexPage, subTitle: String)(implicit request: RequestHeader)
+
+@import common.LinkTo
 
 <article>
-    <h1>@page.indexCharacter.toUpper</h1>
+    <h1>Site index</h1>
 
-    @for( tag <- page.tags ) {
+    <h2>@subTitle</h2>
 
-        <p>@tag.webTitle</p>
+    <h3>@page.indexCharacter.toUpper</h3>
 
+    <ul>
+    @for(tag <- page.tags) {
+        <li><a href="@LinkTo("/" + tag.id)">@tag.webTitle</a></li>
     }
+    </ul>
 </article>

@@ -19,7 +19,11 @@ object TagIndexController extends Controller with ExecutionContexts with Logging
         InternalServerError(s"Error reading $page")
 
       case Right(tagPage) =>
-        Ok(views.html.tagIndexPage(new TagIndexPageMetaData(keywordType, indexCharacter), tagPage))
+        Ok(views.html.tagIndexPage(
+          new TagIndexPageMetaData(keywordType, indexCharacter),
+          tagPage,
+          s"${keywordType.capitalize}s"
+        ))
     }
   }
 
