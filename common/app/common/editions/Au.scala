@@ -8,7 +8,7 @@ import common.NavItem
 //All that is really being used is Edition.id, which is AU
 //It is not included in the Edition.all sequence
 object Au extends Edition(id = "AU", displayName = "Australia edition", DateTimeZone.forID("Australia/Sydney"))
-  with Zones with QueryDefaults {
+  with QueryDefaults {
 
   implicit val AU = Au
 
