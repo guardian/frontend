@@ -57,7 +57,7 @@
 }
 
 .d2-username {
-    font-family: $serif;
+    font-family: $f-serif-text;
 
     @include mq(tablet) {
         font-size: 1.28571428571em;
@@ -67,7 +67,7 @@
 .d2-permalink .d2-datetime {
     color: $c-neutral2;
     font-size: .85714285714em;
-    font-family: $sans-serif; // Force font when used outside of comment context
+    font-family: $f-data; // Force font when used outside of comment context
 }
 
 .d2-permalink .d2-datetime:hover {

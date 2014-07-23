@@ -39,7 +39,7 @@ $avatarSize: 44px;
     color: $c-neutral3;
 }
 .discussion__show-threaded {
-    @include fs-textsans(2);
+    @include fs-textSans(2);
     position: absolute;
     right: 0;
     top: $gs-baseline/2;
@@ -92,7 +92,7 @@ $avatarSize: 44px;
 }
 
 .d-discussion__comment-count {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     min-height: $gs-baseline * 2;
     color: $c-neutral2;
     border-top: 1px solid $c-neutral4;
@@ -114,7 +114,7 @@ $avatarSize: 44px;
     }
 }
 .d-discussion__sentiments {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     @include rem((
         margin-bottom: -1px,
         margin-top: $gs-baseline
@@ -164,7 +164,7 @@ $avatarSize: 44px;
 }
 .d-discussion__show-more {
     padding-top: ($gs-baseline/3)*2;
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     position: relative;
     line-height: 24px;
 
@@ -181,7 +181,7 @@ $avatarSize: 44px;
     display: inline-block;
 }
 .d-discussion__show-all-comments {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     @include rem((
         height: 40px,
         line-height: 40px
@@ -328,7 +328,7 @@ $avatarSize: 44px;
 }
 .d-comment__author,
 .d-comment-box__author {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     font-weight: bold;
     display: block;
     overflow: hidden;
@@ -338,7 +338,7 @@ $avatarSize: 44px;
     ));
 }
 .d-comment__author-label {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     text-transform: uppercase;
     display: block;
 }
@@ -346,13 +346,13 @@ $avatarSize: 44px;
 .d-comment--staff .d-comment__author-label--staff { display: block; }
 
 .d-comment__timestamp {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     margin-bottom: $gs-baseline/3;
     a { color: $c-neutral2; }
 }
 .d-comment__reply-to-author,
 .d-comment-box__reply-to-author {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     display: none;
 }
 .d-comment-box__reply-to-author {
@@ -400,7 +400,7 @@ $avatarSize: 44px;
 }
 .d-comment__pick {
     white-space: nowrap;
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     font-weight: bold;
     @include rem((
         margin-bottom: $gs-baseline/6
@@ -433,7 +433,7 @@ $avatarSize: 44px;
 }
 .d-comment__body,
 .d-comment-box__preview-body {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     min-height: 2.5em;
     position: relative;
     z-index: 2;
@@ -468,7 +468,7 @@ $avatarSize: 44px;
    ======================================================= */
 
 .d-comment__comment-removed {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     color: $c-neutral2;
     @include rem((
         margin-top: $gs-baseline*2
@@ -518,7 +518,7 @@ $avatarSize: 44px;
     background-color: $c-neutral4;
 }
 .d-comment__recommend-count {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     @include rem((
         height: 16px
     ));
@@ -589,7 +589,7 @@ $avatarSize: 44px;
    ======================================================= */
 
 .d-comment__actions {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     @include rem((
         height: 14px,
         padding-top: ($gs-baseline/3)*2,
@@ -634,7 +634,7 @@ $avatarSize: 44px;
     right: $gs-baseline/3;
 }
 .d-comment__action-separator {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     color: $c-neutral2;
     display: inline-block;
     @include rem((
@@ -808,7 +808,7 @@ $avatarSize: 44px;
     }
 }
 .d-discussion__error {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     color: $c-error;
     @include rem((
         margin-top: ($gs-baseline/3)*2
@@ -851,7 +851,7 @@ $avatarSize: 44px;
     }
 }
 .d-show-more-replies {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     background-color: transparent;
     border-top: 1px dotted $c-neutral5;
     color: $c-newsDefault;
@@ -1013,12 +1013,12 @@ $avatarSize: 44px;
    ===========================================================================*/
 
 .comment {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     display: block;
     position: relative;
 }
 .comment__datecreated {
-    @include fs-textsans(1, true);
+    @include fs-textSans(1, true);
     display: block;
 }
 .comment--speechy {
@@ -1072,7 +1072,7 @@ $avatarSize: 44px;
 }
 
 .comments-link {
-    @include fs-textsans(1, true);
+    @include fs-textSans(1, true);
     display: block;
     float: right;
     @include rem((
@@ -1099,7 +1099,7 @@ $avatarSize: 44px;
    ========================================================================== */
 
 .person {
-    @include fs-textsans(2, true);
+    @include fs-textSans(2, true);
 }
 .person__avatar {
     @include border-radius(50%);
@@ -1150,7 +1150,7 @@ $avatarSize: 44px;
         padding-right: $gs-gutter,
         margin: ($gs-baseline/3)*4 0
     ));
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     color: #808080;
 }
 .d-actions__link:after {
@@ -1167,7 +1167,7 @@ $avatarSize: 44px;
 
 .d-bar {
     color: $c-neutral2;
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     @include rem((
         margin-bottom: ($gs-baseline/3)*4
     ));
@@ -1219,7 +1219,7 @@ $avatarSize: 44px;
 }
 .d-comment-box__submit {
     display: inline-block;
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     font-weight: bold;
 }
 .d-comment-box__cancel {
@@ -1229,12 +1229,12 @@ $avatarSize: 44px;
 }
 .d-comment-box__reply-to,
 .d-comment-box__cancel {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     color: $c-neutral1;
 }
 .d-comment-box__hide-preview,
 .d-comment-box__preview {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     color: $c-neutral2;
     font-weight: bold;
 }
@@ -1247,7 +1247,7 @@ $avatarSize: 44px;
 }
 .d-comment-box__hide-parent,
 .d-comment-box__show-parent {
-    @include fs-textsans(2);
+    @include fs-textSans(2);
     @include rem((
         margin-left: $gs-gutter
     ));
@@ -1328,7 +1328,7 @@ $avatarSize: 44px;
     ));
 }
 .d-comment-box__parent-comment {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     background-color: $c-neutral7;
     @include rem((
         padding: $gs-baseline $gs-gutter,
@@ -1420,7 +1420,7 @@ $avatarSize: 44px;
     color: $c-neutral2;
     text-align: center;
     cursor: pointer;
-    @include fs-textsans(2);
+    @include fs-textSans(2);
     @include rem((
         margin-left: $gs-gutter / 5,
         padding: 2px 5px 0px 5px,
@@ -1454,7 +1454,7 @@ $sentiment-width: 56+$gs-gutter/2;
 }
 .d-comment-box__sentiment {
     @include box-sizing(border-box);
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     @include rem((
         padding: $gs-baseline/6 0,
         width: $sentiment-width
