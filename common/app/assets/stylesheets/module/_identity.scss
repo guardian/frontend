@@ -123,7 +123,7 @@
     .social-signin__action {
         color: #ffffff;
         display: block;
-        font-family: $sans-serif;
+        font-family: $f-data;
         @include rem((
             font-size: 14px,
             padding: 8px 0 9px,
@@ -218,7 +218,7 @@
     }
 }
 .user-profile__about {
-    @include fs-textsans(2);
+    @include fs-textSans(2);
     @include rem((
         margin-top: $gs-baseline
     ));
@@ -242,9 +242,9 @@
     }
 }
 .user-profile__name {
-    @include fs-headline(3);
+    @include fs-headline(4);
     @include mq(tablet) {
-        @include fs-headline(6, true);
+        @include fs-headline(7, true);
     }
 }
 .user-profile__last-seen,
@@ -310,7 +310,7 @@
 .formstack-count {
     position: absolute;
     color: $c-neutral1;
-    font-family: $sans-serif;
+    font-family: $f-data;
     @include rem((
         font-size: 13px,
         margin-left: 6px,
@@ -418,7 +418,7 @@
     ));
     display: inline-block;
     vertical-align: top;
-    @include fs-textsans(1);
+    @include fs-textSans(1);
 
     a {
         text-decoration: none;
@@ -437,7 +437,7 @@
     border: 1px solid $c-neutral4;
     border-top: 0;
     text-align: right;
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     @include rem((
         padding: $gs-baseline 0
     ));
@@ -472,11 +472,11 @@
         margin-bottom: $gs-baseline/4
     ));
     color: $c-neutral1;
-    @include fs-textsans(4);
+    @include fs-textSans(4);
 }
 .activity-stream__witness-description {
     color: $c-neutral2;
-    @include fs-textsans(2);
+    @include fs-textSans(2);
 }
 
 /* Edit profile Membership tab
@@ -564,10 +564,187 @@
                 color: $c-newsAccent;
             }
         }
+
+        .membership-tab__interval {
+            text-transform: lowercase;
+        }
     }
 
     .membership-tab__details-list--lower {
         padding-top: 0;
+    }
+
+    .membership-tab__subscription-change {
+        position: relative;
+    }
+
+    .subscription-change__title {
+        background-color: #fff8e5;
+        @include fs-header(3);
+        @include rem((
+            padding: 15px 0 15px 4px,
+            margin: 32px 0 15px,
+            border-top: 1px solid $c-commentAccent,
+            border-bottom: 1px solid $c-commentAccent
+        ));
+    }
+
+    .change-summary__heading {
+        @include fs-header(3);
+        @include rem((
+            border-top: 1px solid $c-neutral4,
+            padding: 15px 0 20px,
+            margin-top: $gs-gutter*2
+        ));
+    }
+
+    .change-summary__arrow {
+        display: block;
+        position: absolute;
+        @include background-size(rem(18px 16px));
+        @include rem((
+            left: 50%,
+            top: 598px,
+            margin-left: -9px,
+            width: 18px,
+            height: 16px
+        ));
+
+        @include transform(rotate(90deg));
+
+        @include mq(tablet) {
+            @include transform(rotate(0deg));
+            @include rem((
+                top: 384px
+            ));
+        }
+
+        @include mq(desktop) {
+            @include transform(rotate(0deg));
+            @include background-size(rem(26px 24px));
+            @include rem((
+                top: 330px,
+                margin-left: -13px,
+                width: 26px,
+                height: 24px
+            ));
+        }
+    }
+
+    .change-summary__container {
+
+        @include rem((
+           padding-bottom: 80px
+        ));
+
+        -webkit-box-pack: justify;
+        -moz-box-pack: justify;
+        -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+
+        .change-summary__panel {
+            background-color: $c-neutral8;
+            @include rem((
+                margin-top: 30px
+            ));
+
+            @include mq(tablet) {
+                margin: 0;
+                flex-grow: 0;
+                flex-direction: column;
+                display: inline-block;
+                vertical-align: top;
+                @include rem((
+                    width: 47%,
+                    flex-basis: 47%
+                ));
+            }
+
+            .change-summary__panel-label {
+                display: block;
+                @include fs-textSans(4);
+                color: #ffffff;
+                @include rem((
+                    height: 30px,
+                    padding: 0 0 0 12px,
+                    line-height: 30px
+                ));
+            }
+
+            .change-summary__panel-label--current {
+                background-color: $c-neutral2;
+            }
+            .change-summary__panel-label--target {
+                background-color: $c-newsAccent;
+            }
+        }
+
+        .change-summary__header {
+            @include rem((
+                height: 57px,
+                border-top: 1px solid $c-neutral4,
+                border-bottom: 1px solid $c-neutral4
+            ));
+
+            .change-summary__tier-icon {
+                display: inline-block;
+                vertical-align: middle;
+                @include rem((
+                    height: 28px,
+                    line-height: 54px,
+                    padding: 0 6px 0 12px
+                ));
+            }
+
+            i {
+                display: inline-block;
+                vertical-align: middle;
+                @include background-size(rem(28px 28px));
+                @include rem((
+                    height: 28px,
+                    width: 28px
+                ));
+            }
+
+            .change-summary_tier {
+                @include fs-header(2);
+                display: inline-block;
+                vertical-align: top;
+                @include rem((
+                    line-height: 57px
+                ));
+            }
+        }
+
+        .change-summary__meta {
+            @include rem((
+                padding: 15px 0 30px 12px
+            ));
+
+            .change-summary__label,
+            .change-summary__data {
+                display: inline-block;
+
+                @include mq(tablet, desktop) {
+                    display: block;
+                    @include rem((
+                        margin-bottom: $gs-baseline
+                    ));
+                }
+            }
+
+            .change-summary__label {
+                @include fs-bodyHeading(2);
+                @include rem((
+                    min-width: 50%
+                ));
+            }
+
+            .change-summary__data {
+                @include fs-bodyCopy(2);
+            }
+        }
     }
 
     .membership-tab__change-cc-form-cont {

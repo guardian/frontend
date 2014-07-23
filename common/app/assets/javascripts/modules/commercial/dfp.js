@@ -19,7 +19,8 @@ define([
     'common/modules/commercial/tags/audience-science-gateway',
     'common/modules/commercial/tags/criteo',
     'common/modules/commercial/keywords',
-    'common/modules/commercial/user-ad-targeting'
+    'common/modules/commercial/user-ad-targeting',
+    'common/modules/experiments/ab'
 ], function (
     bonzo,
     qwery,
@@ -40,7 +41,8 @@ define([
     audienceScienceGateway,
     criteo,
     keywords,
-    userAdTargeting
+    userAdTargeting,
+    ab
 ) {
 
     /**
@@ -110,7 +112,7 @@ define([
                 label: false,
                 refresh: false,
                 sizeMappings: {
-                    desktop: '888,88|88,88'
+                    desktop: '88,88'
                 }
             },
             spbadge: {
@@ -264,7 +266,8 @@ define([
                 bp      : detect.getBreakpoint(),
                 a       : audienceScience.getSegments(),
                 at      : cookies.get('adtest') || '',
-                gdncrm  : userAdTargeting.getUserSegments()
+                gdncrm  : userAdTargeting.getUserSegments(),
+                ab      : ab.makeOmnitureTag()
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         createAdSlot = function(name, types, keywords) {

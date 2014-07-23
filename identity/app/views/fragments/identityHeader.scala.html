@@ -4,9 +4,9 @@
 <header id="header" class="l-header l-header--identity" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
     <div class="l-header-pre">
         <div class="l-header-pre__inner gs-container u-cf">
-            <div class="top-nav">
+            <div class="top-bar">
                 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                    <div class="top-nav__item">
+                    <div class="top-bar__item">
                         <div class="js-profile-nav js-hidden">
                             <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
                                class="control control--profile">
@@ -32,7 +32,7 @@
             </a>
 
             @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                <div class="nav-popup--profile nav-popup--profile-docked-left nav-popup--small js-profile-nav-popup nav-popup is-off"></div>
+                <div class="nav-popup nav-popup--profile nav-popup--profile-docked-left js-profile-nav-popup is-off"></div>
             }
         </div>
     </div>

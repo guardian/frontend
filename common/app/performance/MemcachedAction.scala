@@ -10,7 +10,7 @@ import org.apache.commons.codec.digest.DigestUtils
 import DigestUtils.sha256Hex
 import conf.Switches.{MemcachedSwitch, IncludeBuildNumberInMemcachedKey}
 import common.MemcachedMetrics._
-import play.api.mvc.SimpleResult
+import play.api.mvc.Result
 import play.api.mvc.ResponseHeader
 import org.joda.time.{Seconds, DateTime}
 import play.api.Play
@@ -21,7 +21,7 @@ import java.util.zip.{GZIPInputStream, GZIPOutputStream}
 import org.apache.commons.io.IOUtils
 
 
-case class CachedResponse(result: SimpleResult, body: String)
+case class CachedResponse(result: Result, body: String)
 
 private[performance] trait MemcachedSupport extends ExecutionContexts with implicits.Dates {
   import play.api.libs.json._
@@ -54,7 +54,7 @@ private[performance] trait MemcachedSupport extends ExecutionContexts with impli
         headers + ("Cache-Control" -> headers("Cache-Control").replaceAll("""max-age=\d+""", s"max-age=${t - secondsAgo}"))
       }.getOrElse(headers)
 
-      CachedResponse(SimpleResult(ResponseHeader(status, newHeaders), Enumerator(body.getBytes("utf-8")) ), body)
+      CachedResponse(Result(ResponseHeader(status, newHeaders), Enumerator(body.getBytes("utf-8")) ), body)
     }
 
     override def serialize(response: CachedResponse): Array[Byte] = {
@@ -75,7 +75,7 @@ private[performance] trait MemcachedSupport extends ExecutionContexts with impli
 
   // this needs to return the body as otherwise it is read twice.
   // in that case I got some weird result in testing.
-  def cache(key: String, result: SimpleResult): Future[String] = {
+  def cache(key: String, result: Result): Future[String] = {
     val promiseOfBody = result.body |>>> Iteratee.consume[Array[Byte]]()
     promiseOfBody.map{ bodyArr =>
       val body = new String(bodyArr, "utf-8")
@@ -107,7 +107,7 @@ private object CacheKey extends implicits.Requests {
 
 object MemcachedAction extends Results with MemcachedSupport with implicits.Requests with Logging {
 
-  def apply(block: RequestHeader => Future[SimpleResult]): Action[AnyContent] = Action.async { request =>
+  def apply(block: RequestHeader => Future[Result]): Action[AnyContent] = Action.async { request =>
 
     // don't cache during tests
     if (isConfigured && MemcachedSwitch.isSwitchedOn && !Play.isTest && !cacheExempt(request)) {

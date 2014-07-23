@@ -27,7 +27,7 @@
 }
 .top-banner-ad-container--desktop {
     background-color: $c-neutral8;
-    border-bottom: 2px solid $c-newsDefault;
+    border-bottom: 2px solid $c-neutral4;
     display: none;
 
     @include mq(tablet) {
@@ -232,7 +232,7 @@
     @include font-size(16, 20);
 }
 .ad-slot--sponsored__text {
-    @include f-textsans;
+    @include f-textSans;
     @include font-size(14, 18);
 }
 .ad-slot--sponsored__header {
@@ -317,7 +317,7 @@
         display: block;
     }
     .ad-slot--paid-for-badge__help {
-        @include fs-textsans(1, $size-only: true);
+        @include fs-textSans(1, $size-only: true);
         @include rem((
             margin-top: $gs-baseline/3
         ));

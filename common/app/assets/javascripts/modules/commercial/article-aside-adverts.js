@@ -27,7 +27,7 @@ define([
         // is the switch off, or not an article, or the secondary column hidden
         if (
             !config.switches.standardAdverts ||
-            config.page.contentType !== 'Article' ||
+            !/Article|LiveBlog/.test(config.page.contentType) ||
             $(config.columnSelector).css('display') === 'none'
         ) {
             return false;

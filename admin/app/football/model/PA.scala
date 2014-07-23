@@ -41,7 +41,7 @@ object PA extends Collections {
   def filterCompetitions(competitions: List[Season]): List[Season] = {
     competitions
       .filter(comp => approvedCompetitions.contains(comp.competitionId))
-      .sortBy(_.startDate.getMillis).reverse
+      .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis).reverse
       .distinctBy(_.competitionId)
       .sortBy(_.competitionId)
   }

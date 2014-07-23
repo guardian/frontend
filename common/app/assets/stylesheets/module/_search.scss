@@ -53,7 +53,7 @@ td.gsc-search-button {
 }
 .gsc-completion-container,
 .gsc-input {
-    font-family: $sans-serif;
+    font-family: $f-data;
 }
 
 .gsc-result-info {
@@ -130,7 +130,7 @@ td.gsc-search-button {
 // Make titles look like story headlines
 .gsc-thumbnail-inside a.gs-title {
     display: block;
-    @include fs-headline(1);
+    @include fs-headline(2);
     padding-bottom: 10px;
 }
 .gs-webResult.gs-result a.gs-title,

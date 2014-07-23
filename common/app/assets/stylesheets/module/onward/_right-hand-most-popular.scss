@@ -20,7 +20,7 @@
 .right-most-popular-item__headline {
     color: $c-neutral1;
     margin-bottom: 0;
-    @include fs-headline(1);
+    @include fs-headline(2);
     @include text-clamp(4, 20);
 }
 
@@ -89,6 +89,6 @@
         display: block;
         margin-top: -5px;
         color: $c-neutral4;
-        @include font($serifheadline, 200, 43px);
+        @include font($f-serif-headline, 200, 43px);
     }
 }

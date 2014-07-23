@@ -5,7 +5,7 @@ define([
     var options = {
             reconnection: false
         },
-        log = window.console.log.bind(window.console);
+        log = function(msg) { window.console.log(msg); };
 
     function removeElement(id) {
         var oldStyle = document.querySelector('*[data-reload="' + id + '"]');

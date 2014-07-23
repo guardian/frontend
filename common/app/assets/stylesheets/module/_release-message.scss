@@ -36,7 +36,7 @@
     }
 
     .site-message__header {
-        @include fs-headline(8);
+        @include fs-headline(9);
         font-weight: 200;
         color: #ffffff;
         border-bottom: 1px dotted #ffffff;
@@ -61,7 +61,7 @@
     }
 
     .site-message__list__item {
-        @include fs-headline(1);
+        @include fs-headline(2);
         font-weight: 200;
         margin-top: .6em;
 
@@ -117,7 +117,7 @@
 }
 
 .site-message__message {
-    @include fs-headline(2);
+    @include fs-headline(3);
     color: $c-neutral2;
     margin-bottom: 0;
     margin-right: $gs-gutter*2;

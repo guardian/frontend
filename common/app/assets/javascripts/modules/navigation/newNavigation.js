@@ -20,17 +20,17 @@ define([
         },
 
         enableMegaNavToggle: function(){
-            qwery('.js-new-navigation-toggle').forEach(function(elem) {
+            qwery('.js-navigation-toggle').forEach(function(elem) {
                 bean.on(elem, 'click touchstart', function (e) {
                     e.preventDefault();
-                    if (qwery('.new-navigation--expanded').length > 0) {
-                        $('.new-navigation')
-                            .removeClass('new-navigation--expanded')
-                            .addClass('new-navigation--collapsed');
+                    if (qwery('.navigation--expanded').length > 0) {
+                        $('.navigation')
+                            .removeClass('navigation--expanded')
+                            .addClass('navigation--collapsed');
                     } else {
-                        $('.new-navigation')
-                            .addClass('new-navigation--expanded')
-                            .removeClass('new-navigation--collapsed');
+                        $('.navigation')
+                            .addClass('navigation--expanded')
+                            .removeClass('navigation--collapsed');
                     }
                 });
             });

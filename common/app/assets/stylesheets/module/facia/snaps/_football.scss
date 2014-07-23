@@ -118,7 +118,7 @@
     }
 
     .team__info {
-        @include fs-headline(2, true);
+        @include fs-headline(3, true);
     }
 
     .status__time {
@@ -150,7 +150,7 @@
             border-top: 0 none;
         }
         .team__info {
-            @include fs-headline(5, true)
+            @include fs-headline(6, true)
         }
     }
 
@@ -166,7 +166,7 @@
 
     &.facia-snap-point--medium {
         .team__info {
-            @include fs-headline(2, true)
+            @include fs-headline(3, true)
         }
     }
 
@@ -175,7 +175,7 @@
         @include table--hide-from-importance-2;
 
         .team__info {
-            @include fs-headline(1, true)
+            @include fs-headline(2, true)
         }
     }
 

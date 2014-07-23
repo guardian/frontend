@@ -5,7 +5,7 @@ import play.api.mvc.RequestHeader
 import conf.Switches._
 import dev.HttpSwitch
 
-case class SectionLink(zone: String, title: String, breadcumbTitle: String, href: String, newWindow: Boolean = false) {
+case class SectionLink(zone: String, title: String, breadcumbTitle: String, href: String) {
   def currentFor(page: MetaData): Boolean = page.url == href ||
     s"/${page.section}" == href ||
     (Edition.all.exists(_.id.toLowerCase == page.id.toLowerCase) && href == "/")
@@ -86,15 +86,14 @@ trait Navigation {
   val golf = SectionLink("sport", "golf", "Golf", "/sport/golf")
   val horseracing = SectionLink("sport", "horse racing", "Horse racing", "/sport/horse-racing")
   val boxing = SectionLink("sport", "boxing", "Boxing", "/sport/boxing")
-  val formulaOne = SectionLink("sport", "formula one", "Formula one", "/sport/formulaone")
+  val formulaOne = SectionLink("sport", "F1", "Formula one", "/sport/formulaone")
+  val racing = SectionLink("sport", "racing", "Racing", "/sport/racing")
 
   val nfl = SectionLink("sport", "NFL", "NFL", "/sport/nfl")
   val mlb = SectionLink("sport", "MLB", "MLB", "/sport/mlb")
   val nba = SectionLink("sport", "NBA", "NBA", "/sport/nba")
   val mls = SectionLink("football", "MLS", "MLS", "/football/mls")
   val nhl = SectionLink("sport", "NHL", "NHL", "/sport/nhl")
-
-  val worldCup = SectionLink("football", "world cup", "World Cup", "/football/world-cup-2014")
 
   //Cif
   val cif = SectionLink("commentisfree", "comment", "Comment", "/commentisfree")
@@ -181,7 +180,6 @@ trait Navigation {
   val globalDevelopment = SectionLink("environment", "development", "Development", "/global-development")
 
   val footballNav = Seq(
-    worldCup,
     SectionLink("football", "live scores", "Live scores", "/football/live"),
     SectionLink("football", "tables", "Tables", "/football/tables"),
     SectionLink("football", "competitions", "Competitions", "/football/competitions"),
@@ -211,15 +209,8 @@ object Navigation {
 
   def subNav(navigation: Seq[NavItem], page: MetaData): Option[SectionLink] = topLevelItem(navigation, page).flatMap(_.links.find(_.currentFor(page)))
 
-  def localNav(navigation: Seq[NavItem], page: MetaData): Option[NavItem] = topLevelItem(navigation, page).filter(_.links.nonEmpty)
-
-  def sectionOverride(localNav: NavItem, currentSublink: Option[SectionLink]): String = currentSublink.map(_.title).getOrElse(localNav.name.title)
-
-  def localNavWithoutCurrent(localNav: NavItem, currentSublink: Option[SectionLink]) =
-    localNav.links.filter(_.href != currentSublink.map(_.href).getOrElse(""))
-
-  def rotatedLocalNav(topSection: NavItem, metaData: MetaData): Seq[SectionLink] =
-    topSection.links.find(_.currentFor(metaData)) match {
+  def rotatedLocalNav(topSection: NavItem, metaData: MetaData)(implicit request: RequestHeader): Seq[SectionLink] =
+    topSection.searchForCurrentSublink(metaData) match {
       case Some(currentSection) =>
         val navSlices = topSection.links.span(_.href != currentSection.href)
         navSlices._2.drop(1) ++ navSlices._1

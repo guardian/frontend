@@ -9,7 +9,7 @@ import com.amazonaws.util.StringInputStream
 import scala.io.{Codec, Source}
 import org.joda.time.DateTime
 import play.Play
-import play.api.libs.ws.WS
+import play.api.libs.ws.{WSRequestHolder, WS}
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import sun.misc.BASE64Encoder
@@ -158,13 +158,14 @@ object S3FrontsApi extends S3 {
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {
+  import play.api.Play.current
   val algorithm: String = "HmacSHA1"
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
 
-  def urlGet(id: String): WS.WSRequestHolder = url("GET", id)
+  def urlGet(id: String): WSRequestHolder = url("GET", id)
 
-  private def url(httpVerb: String, id: String): WS.WSRequestHolder = {
+  private def url(httpVerb: String, id: String): WSRequestHolder = {
 
     // we are working with a credentials provider here - this needs to be scoped inside the function
     // i.e. we need a new one each request

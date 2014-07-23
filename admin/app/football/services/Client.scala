@@ -3,7 +3,7 @@ package football.services
 import scala.concurrent.{ExecutionContext, Future}
 import play.api.libs.ws.WS
 import play.api.Play.current
-import org.joda.time.DateMidnight
+import org.joda.time.LocalDate
 import java.io.File
 import scala.util.{Failure, Success}
 import play.Logger
@@ -26,6 +26,7 @@ private object Client extends Client {
   override lazy val base = Configuration.pa.host
 
   override def GET(urlString: String): Future[pa.Response] = {
+    import play.api.Play.current
     WS.url(urlString).get().map { response =>
       pa.Response(response.status, response.body, response.statusText)
     }
@@ -37,7 +38,7 @@ private object TestClient extends Client {
 
   override def get(suffix: String)(implicit context: ExecutionContext): Future[String] = {
 
-    val todayString = DateMidnight.now().toString("yyyyMMdd")
+    val todayString = LocalDate.now().toString("yyyyMMdd")
     val filename = {
       suffix
         .replace("/", "__")

@@ -13,16 +13,16 @@
     .facia-slice-wrapper--position-1 {
         .item__title,
         .item__byline {
-            @include fs-headline(1, true);
+            @include fs-headline(2, true);
 
             @include mq(tablet) {
-                @include fs-headline(2, true);
+                @include fs-headline(3, true);
             }
         }
         .facia-slice__item:first-child {
             .item__title,
             .item__byline {
-                @include fs-headline(2, true);
+                @include fs-headline(3, true);
             }
             @include item--hide-tone-border;
         }
@@ -42,7 +42,7 @@
         .item--has-no-image {
             .item__title,
             .item__byline {
-                @include fs-headline(3, true);
+                @include fs-headline(4, true);
             }
             @include mq(tablet) {
                 .item__standfirst {

@@ -24,11 +24,7 @@ define([
             }
         );
 
-        if (
-            !config.switches.commercialComponents ||
-            !config.page.isFront ||
-            config.page.hasPageSkin
-        ) {
+        if (!config.switches.commercialComponents || !config.page.isFront || config.page.hasPageSkin ) {
             return false;
         }
 

@@ -73,29 +73,52 @@ $vjs-control-height: $gs-baseline*4;
     }
 
     > span {
+        @mixin video-play-button-size($size) {
+            width: $size;
+            height: $size;
+            font-size: $size/6; // play triangle is em based so this scales it
+        }
+
         display: inline-block;
         vertical-align: middle;
-        @include icon(play-60-transparent);
-        @include background-size(100%);
-        height: 0 !important;
-
-        width: 17% !important;
-        padding-bottom: 17.5%; // +0.5% stops clipping
+        position: relative;
+        @include border-radius(50%);
+        @include video-play-button-size(50px);
         @include mq(mobileLandscape) {
-            width: 12% !important;
-            padding-bottom: 12.5%; // +0.5% stops clipping
+            @include video-play-button-size(70px);
         }
-        @include rem((
-            max-width: $gs-baseline*7.5
-        ));
+
+        background-color: rgba(51, 51, 51, .8);
 
         .gu-video-wrapper:hover & {
-            @include icon(play-60-yellow);
+            background-color: $c-mediaDefault;
+        }
+
+        &:before {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 1em 0 1em 2.4em;
+            border-color: transparent transparent transparent $c-neutral7;
+            border-radius: .2em;
+            -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
+            top: 50%;
+            left: 0;
+            margin-top: -.9em;
+            margin-left: 2.2em;
+
+            .gu-video-wrapper:hover & {
+                border-left-color: #333333;
+            }
         }
     }
 
     .vjs-playing &,
-    .vjs-has-started.vjs-using-native-controls & {
+    .vjs-has-started.vjs-using-native-controls &,
+    .vjs-ad-loading & {
         display: none !important;
     }
 }
@@ -108,7 +131,11 @@ $vjs-control-height: $gs-baseline*4;
     margin-top: -15px;
 
     .vjs-using-native-controls & {
-        display: none;
+        display: none !important;
+    }
+
+    .vjs-ad-loading & {
+        display: block !important;
     }
 }
 
@@ -374,7 +401,7 @@ $vjs-progress-inset-bottom: 4px;
     }
     > div {
         color: #ffffff;
-        @include fs-headline(2);
+        @include fs-headline(3);
         text-align: left;
         @include box-sizing(border-box);
         @include rem((
@@ -412,12 +439,12 @@ $vjs-progress-inset-bottom: 4px;
         @include rem((
             padding: $gs-gutter/2
         ));
-        @include fs-headline(3);
+        @include fs-headline(4);
         @include mq(tablet) {
-            @include fs-headline(4);
+            @include fs-headline(5);
         }
         @include mq(desktop) {
-            @include fs-headline(5);
+            @include fs-headline(6);
         }
         &:before {
             content: '';
@@ -431,7 +458,7 @@ $vjs-progress-inset-bottom: 4px;
     .vjs-overlay__duration {
         text-align: left;
         color: $c-mediaDefault;
-        @include fs-headline(2);
+        @include fs-headline(3);
         @include rem((
             padding: 0 $gs-gutter/2 $gs-baseline*2
         ));
@@ -442,7 +469,7 @@ $vjs-progress-inset-bottom: 4px;
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
-    @include fs-headline(1);
+    @include fs-headline(2);
     position: absolute;
     $height: nth(nth($fs-headlines, 1), 2);
     @include rem((
@@ -495,10 +522,10 @@ $vjs-progress-inset-bottom: 4px;
     border-top: 1px solid $c-neutral2;
     color: #ffffff;
     text-align: left;
-    @include fs-textsans(1);
+    @include fs-textSans(1);
 
     @include mq(tablet) {
-        @include fs-textsans(2, true);
+        @include fs-textSans(2, true);
     }
 }
 

@@ -1,6 +1,6 @@
 package controllers
 
-import play.api.mvc.{AnyContent, SimpleResult, Action}
+import play.api.mvc.{AnyContent, Result, Action}
 import common.JsonComponent
 import model.Cached
 import discussion.model.{Profile, PrivateProfileFields}

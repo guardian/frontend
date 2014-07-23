@@ -1,7 +1,7 @@
 package common
 
-import play.api.templates.Html
-import play.api.mvc.{SimpleResult, AnyContent, Request, RequestHeader}
+import play.twirl.api.Html
+import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
 import conf.Configuration
 import model.{Snap, Trail, MetaData}
 import org.jsoup.Jsoup
@@ -47,7 +47,7 @@ trait LinkTo extends Logging {
     .map(urlFor(_, edition))
     .getOrElse(urlFor("", edition))
 
-  def redirectWithParameters(request: Request[AnyContent], realPath: String): SimpleResult = {
+  def redirectWithParameters(request: Request[AnyContent], realPath: String): Result = {
     val params = if (request.hasParameters) s"?${request.rawQueryString}" else ""
     Redirect(request.path.endsWith(".json") match {
       case true => s"/$realPath.json$params"

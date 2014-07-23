@@ -25,12 +25,8 @@ object MostReadAgent extends Logging with ExecutionContexts {
         (UrlToContentPath(url), count)
       }
 
-      agent.update(mostRead.toMap)
+      agent.alter(mostRead.toMap)
     }
-  }
-
-  def stop() {
-    agent.close()
   }
 
   def getViewCount(id: String): Option[Int] = {

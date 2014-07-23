@@ -18,7 +18,7 @@
             swipe: '@Static("javascripts/components/swipe/swipe.js")',
             zxcvbn: '@Static("javascripts/components/zxcvbn/index.js")',
             'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',
-            foresee: '@Static("javascripts/vendor/foresee/foresee-trigger.js")',
+            foresee: '@Static("javascripts/vendor/foresee2/foresee-trigger.js")',
             googletag: '@{Configuration.javascript.config("googletagJsUrl")}',
             core: '@Static("javascripts/core.js")',
             'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")',
@@ -145,25 +145,31 @@
                 }
             ).install();
 
-            if (guardian.config.switches.commercial) {
+            require(['common/modules/experiments/ab'], function(ab) {
 
-                require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
-                    commercial.init();
-                });
+                ab.segmentUser();
+                ab.run();
 
-            }
+                if (guardian.config.switches.commercial) {
 
-            if (guardian.isModernBrowser) {
-
-                @if(play.Play.isDev()) {
-                    require(['bootstraps/dev'], function (devmode) { devmode.init(); });
+                    require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
+                        commercial.init();
+                    });
                 }
 
-                require(['bootstraps/app'], function(bootstrap) {
-                    bootstrap.go();
-                });
+                if (guardian.isModernBrowser) {
 
-            }
+                    @if(play.Play.isDev()) {
+                        require(['bootstraps/dev'], function (devmode) { devmode.init(); });
+                    }
+
+                    require(['bootstraps/app'], function(bootstrap) {
+                        bootstrap.go();
+                    });
+
+                }
+
+            });
 
         });
 
