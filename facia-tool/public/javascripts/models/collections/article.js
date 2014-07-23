@@ -3,6 +3,7 @@ define([
     'modules/vars',
     'knockout',
     'utils/mediator',
+    'utils/copied-item',
     'utils/url-abs-path',
     'utils/as-observable-props',
     'utils/populate-observables',
@@ -18,6 +19,7 @@ define([
         vars,
         ko,
         mediator,
+        copiedItem,
         urlAbsPath,
         asObservableProps,
         populateObservables,
@@ -29,9 +31,6 @@ define([
         contentApi,
         Group
     ) {
-        var storage = window.localStorage,
-            storageKeyCopied ='gu.fronts-tool.copied';
-
         function Article(opts) {
             var self = this;
 
@@ -149,17 +148,13 @@ define([
         }
 
         Article.prototype.copy = function() {
-            storage.setItem(storageKeyCopied, JSON.stringify(this.get()));
+            copiedItem.set(this.get());
         };
 
         Article.prototype.paste = function () {
-            var sourceItem = storage.getItem(storageKeyCopied);
+            var sourceItem = copiedItem.get();
 
-            if(!sourceItem) { return; }
-
-            sourceItem = JSON.parse(sourceItem);
-
-            if(sourceItem.id === this.id()) { return; }
+            if(!sourceItem || sourceItem.id === this.id()) { return; }
 
             mediator.emit('collection:updates', {
                 id: sourceItem.id,

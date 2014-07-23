@@ -1,14 +1,13 @@
 /* global _: true */
 define([
     'knockout',
-    'utils/mediator'
+    'utils/mediator',
+    'utils/copied-item'
 ], function(
     ko,
-    mediator
+    mediator,
+    copiedItem
 ) {
-    var storage = window.localStorage,
-        storageKeyCopied ='gu.fronts-tool.copied';
-
     function Group(opts) {
         var self = this;
 
@@ -27,11 +26,9 @@ define([
         this.reflow     = opts.reflow  || function() {};
 
         this.pasteItem = function() {
-            var sourceItem = storage.getItem(storageKeyCopied);
+            var sourceItem = copiedItem.get();
 
             if(!sourceItem) { return; }
-
-            sourceItem = JSON.parse(sourceItem);
 
             mediator.emit('collection:updates', {
                 id: sourceItem.id,
