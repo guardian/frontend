@@ -17,6 +17,7 @@ case class ArticleSteps(implicit driver: WebDriver) extends TestLogging with Mat
 
   def checkMostPopularDisplayedProperly(articlePage: ArticlePage) = {
     logger.step("Get most popular module and check that it is properly displayed")
+    false should be (true)
     articlePage.mostPopularModule.displayedLinks should not be empty
     articlePage.mostPopularModule.displayedImages should not be empty
   }
