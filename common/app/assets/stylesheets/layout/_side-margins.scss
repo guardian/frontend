@@ -40,10 +40,6 @@
             top: 0;
             height: 100%;
             width: 50%;
-
-            .has-page-skin & {
-                display: none;
-            }
         }
         @include side-margins-position(gs-span(9));
     }
