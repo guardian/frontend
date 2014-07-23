@@ -9,7 +9,7 @@ import play.api.mvc.Result
 import play.api.libs.json.{JsNumber, JsString, JsObject, Json}
 import play.Play
 
-object Authenticated extends AuthAction(routes.Login.login.url)
+object Authenticated extends AuthAction(routes.OAuthLoginController.oauth2Callback().url)
 
 object ExpiringAuthentication extends ExpiringAuthAction("/login")
 
@@ -29,7 +29,7 @@ object AjaxExpiringAuthentication extends ExpiringAuthAction("/login") {
 
 object Login extends LoginController with Controller with ExecutionContexts {
 
-  val loginUrl: String = routes.Login.login.url
+  val loginUrl: String = routes.OAuthLoginController.oauth2Callback().url
   val baseUrl: String = "/"
   val maxAuthAge: Long = if (Play.isDev) 10.minutes.toSeconds else 0
   override val extraOpenIDParameters: Seq[String] = Seq(
@@ -37,7 +37,7 @@ object Login extends LoginController with Controller with ExecutionContexts {
     s"openid.pape.max_auth_age=${maxAuthAge}"
   )
 
-  def openIdCallback(secure: Boolean)(implicit request: RequestHeader): String = routes.Login.openIDCallback.absoluteURL(secure)
+  def openIdCallback(secure: Boolean)(implicit request: RequestHeader): String = routes.OAuthLoginController.oauth2Callback().absoluteURL(secure)
 
   def login = Action {
     request =>
