@@ -67,7 +67,7 @@ define(['common/utils/$',
     * @override
     * @type {string}
     */
-    Membership.prototype.componentClass = 'js-memebership-tab-container';
+    Membership.prototype.componentClass = 'js-membership-tab-container';
 
     Membership.prototype.formatDate = function (date) { // eg: 4th Jun 2014
 
