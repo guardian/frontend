@@ -2,7 +2,6 @@
 define([
     'qwery',
     'common/utils/mediator',
-    'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',
     'common/utils/context',
@@ -26,7 +25,6 @@ define([
 ], function (
     qwery,
     mediator,
-    ajax,
     detect,
     config,
     Context,
@@ -50,10 +48,6 @@ define([
 ) {
 
     var modules = {
-
-        initialiseAjax: function(config) {
-            ajax.init(config);
-        },
 
         initialiseDiscussionApi: function(config) {
             DiscussionApi.init(config);
@@ -83,7 +77,6 @@ define([
         var context = document.getElementById('js-context');
         Context.set(context);
 
-        modules.initialiseAjax(config);
         modules.initialiseDiscussionApi(config);
         modules.loadFonts(config, navigator.userAgent);
         modules.initId(config, context);
