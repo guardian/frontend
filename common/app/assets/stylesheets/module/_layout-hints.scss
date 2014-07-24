@@ -134,6 +134,8 @@ figure {
 
 .tone-feature .media-primary.media-primary--showcase {
     margin-left: 0;
+    z-index: 2; // Put the image on top of the left and right layout borders
+    position: relative;
 
     .responsive-img {
         @include mq($from: rightCol) {
@@ -154,12 +156,16 @@ figure {
                 padding-bottom: aspect-ratio-height(5, 3)
             ));
         }
-
-        // Magic number for max height in 5:2 ratio before cropping kicks in.
-        @include mq(1680px) {
-            @include rem((
-                padding-bottom: 672px
-            ));
-        }
+    }
+    @include mq(leftCol) {
+        margin: 0 auto;
+        @include rem((
+            max-width: gs-span(14) + $gs-gutter * 2,
+        ));
+    }
+    @include mq(wide) {
+        @include rem((
+            max-width: gs-span(16) + $gs-gutter * 2,
+        ));
     }
 }

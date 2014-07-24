@@ -233,7 +233,7 @@
     }
 }
 
-.facia-container--layout-article .commercial--dfp.commercial--dfp-single {
+.facia-container--layout-content .commercial--dfp.commercial--dfp-single {
     @include mq(rightCol) {
         .commercial__head {
             width: 25%;
@@ -365,7 +365,7 @@
     }
 }
 
-.facia-container--layout-article .commercial--dfp {
+.facia-container--layout-content .commercial--dfp {
     @include mq(leftCol) {
         .commercial__body {
             @include rem((
@@ -450,7 +450,7 @@
     }
 }
 
-.facia-container--layout-article .commercial--dfp,
+.facia-container--layout-content .commercial--dfp,
 .facia-container--layout-front .commercial--dfp {
     @include mq(wide) {
         .commercial__home-link {
