@@ -7,6 +7,7 @@ import play.api.mvc.Controller
 import services.ContentApiRefresh
 
 import scala.util.{Failure, Success}
+import auth.ExpiringActions
 
 /** Utility endpoint for forcing updates to Content API.
   *

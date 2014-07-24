@@ -5,6 +5,7 @@ import common.{FaciaToolMetrics, ExecutionContexts}
 import model.Cached
 import conf.Switches
 import play.api.libs.json.Json
+import auth.ExpiringActions
 
 object SwitchesProxy extends Controller with ExecutionContexts {
 

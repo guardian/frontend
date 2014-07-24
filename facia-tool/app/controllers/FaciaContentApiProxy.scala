@@ -7,6 +7,7 @@ import play.api.mvc._
 import play.api.libs.ws.WS
 import model.Cached
 import implicits.WSRequests.WsWithAuth
+import auth.ExpiringActions
 
 object FaciaContentApiProxy extends Controller with Logging with AuthLogging with ExecutionContexts with Strings {
 

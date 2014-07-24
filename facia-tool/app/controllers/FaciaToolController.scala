@@ -9,49 +9,9 @@ import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
 import model.{NoCache, Cached}
-import com.gu.googleauth.{AuthenticatedRequest => AR, UserIdentity, Actions}
-import play.api.mvc.Call
-import org.joda.time.DateTime
+import com.gu.googleauth.UserIdentity
 import services._
-import play.api.mvc.Result
-import scala.concurrent.Future
-
-
-object ExpiringActions extends implicits.Dates with implicits.Requests with ExecutionContexts {
-  import play.api.mvc.Results.{Forbidden, Redirect}
-
-  object AuthActions extends Actions {
-    val loginTarget: Call = routes.OAuthLoginController.login()
-
-    override def sendForAuth[A](request:Request[A]) =
-      if (request.isXmlHttpRequest)
-        Future.successful(Forbidden.withNewSession)
-      else
-        super.sendForAuth(request)
-  }
-
-  val loginTarget: Call = routes.OAuthLoginController.login()
-
-  private def withinAllowedTime(session: Session): Boolean = session.get(Configuration.cookies.lastSeenKey).map(new DateTime(_)).exists(_.age < Configuration.cookies.sessionExpiryTime)
-
-  object ExpiringAuthAction {
-    def async(f: AR[AnyContent] => Future[Result]) = AuthActions.AuthAction.async { request =>
-      if (withinAllowedTime(request.session)) {
-        f(request).map(_.withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)))
-      }
-      else {
-        if (request.isXmlHttpRequest)
-          Future.successful(Forbidden.withNewSession)
-        else {
-          Future.successful(Redirect(AuthActions.loginTarget).withNewSession)
-        }
-      }
-    }
-
-    def apply(f: AR[AnyContent] => Result) = async(request => Future.successful(f(request)))
-  }
-}
-
+import auth.ExpiringActions
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {

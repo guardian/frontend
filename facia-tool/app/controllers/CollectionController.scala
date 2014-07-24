@@ -7,6 +7,7 @@ import play.api.mvc.Controller
 import config.UpdateManager
 import play.api.libs.json.Json
 import com.gu.googleauth.UserIdentity
+import auth.ExpiringActions
 
 object CollectionRequest {
   implicit val jsonFormat = Json.format[CollectionRequest]

@@ -7,6 +7,7 @@ import util.Requests._
 import play.api.libs.json.Json
 import config.UpdateManager
 import com.gu.googleauth.UserIdentity
+import auth.ExpiringActions
 
 object CreateFront {
   implicit val jsonFormat = Json.format[CreateFront]
