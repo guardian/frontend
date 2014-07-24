@@ -65,6 +65,10 @@ $vjs-control-height: $gs-baseline*4;
         ));
     }
 
+    .vjs-has-ended & {
+        display: none;
+    }
+
     &:after {
         display: inline-block;
         vertical-align: middle;

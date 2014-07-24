@@ -161,7 +161,7 @@ module.exports = function (grunt) {
                         videojsads: {
                             deps: ['videojs']
                         },
-                        videojsvast :{
+                        videojsvast: {
                              deps: ['vast', 'videojs']
                         }
                     },

@@ -1,0 +1,27 @@
+@(videos: Seq[model.Video], componentId: String, heading: String)(implicit request: RequestHeader)
+
+<div class="video-end-slate" data-component="video-end-slate-@componentId">
+    <div class="video-end-slate__container">
+        <div class="video-end-slate__header">
+            <h3 class="video-end-slate__heading">@heading</h3>
+        </div>
+        <ul class="video-items video-items--end-slate u-unstyled u-cf" data-link-name="Video end slate">
+            @videos.map(item(_))
+        </ul>
+    </div>
+</div>
+
+    @item(content: model.Video) = {
+        <li class="video-item">
+            <div class="video-item__container">
+                <a class="video-item__action" href="@LinkTo{@content.url}">
+                    @content.trailPicture(5, 3).map{ image =>
+                        <div class="video-item__img u-responsive-ratio">
+                            <img class="responsiveimg" src="@Item140.bestFor(image)" alt="" />
+                        </div>
+                    }
+                    <h4 class="video-item__headline">@content.videoLinkText</h4>
+                </a>
+            </div>
+        </li>
+    }
