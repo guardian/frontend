@@ -12,9 +12,6 @@ class CommercialTests extends SeleniumTestSuite {
       ArticleSteps().checkThatTopBannerAdIsDisplayedProperly(articlePage)
       ArticleSteps().checkThatAdToTheRightIsDisplayedProperly(articlePage)
       ArticleSteps().checkThatInlineAdIsDisplayedProperly(articlePage)
-      //Commented out as this test wont work due to ad not showing from outside of UK, where SauceLabs/Browserstack servers are
-      //However it does work running from a local browser
-      //ArticleSteps().checkThatBottomMerchandisingAdIsDisplayedProperly(articlePage)
     }
   }
 }
