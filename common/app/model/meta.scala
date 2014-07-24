@@ -147,27 +147,14 @@ trait Elements {
     case _ => None
   }
 
-  protected lazy val videos: Seq[VideoElement] = elements.flatMap { e =>
-
-
-    println("****************************************")
-    println(e)
-
-    e match {
-      case video: VideoElement => Some(video)
-      case _ => None
-    }
+  protected lazy val videos: Seq[VideoElement] = elements.flatMap {
+    case video: VideoElement => Some(video)
+    case _ => None
   }
 
-  protected lazy val audios: Seq[AudioElement] = elements.flatMap { e =>
-
-    println("****************************************")
-    println(e)
-
-    e match {
-      case audio: AudioElement => Some(audio)
-      case _ => None
-    }
+  protected lazy val audios: Seq[AudioElement] = elements.flatMap {
+    case audio: AudioElement => Some(audio)
+    case _ => None
   }
 
   protected lazy val embeds: Seq[EmbedElement] = elements.flatMap {
