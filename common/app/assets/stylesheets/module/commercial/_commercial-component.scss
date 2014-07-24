@@ -627,6 +627,7 @@ $commercial-cta-diameter: (
     .commercial__home-link__pill {
         padding: 4px 25px 4px 12px;
         background-position: right;
+        background-color: $c-newsDefault;
         @include border-radius(50%);
         white-space: nowrap;
         
