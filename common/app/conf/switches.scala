@@ -312,6 +312,11 @@ object Switches extends Collections {
 
   // A/B Tests
 
+  val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
+    "Switch for the High Commercial Component A/B test.",
+    safeState = Off, sellByDate = never
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -500,6 +505,7 @@ object Switches extends Collections {
     FaciaToolDraftPressSwitch,
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
+    ABHighCommercialComponent,
     SeoBlockGooglebotFromJSPathsSwitch
   )
 

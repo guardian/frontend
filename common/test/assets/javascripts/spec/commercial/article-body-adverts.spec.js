@@ -83,7 +83,7 @@ define([
                     articleBodyAdverts.init(config);
                     expect(qwery('.ad-slot--inline', fixture).length).toBeGreaterThan(0);
                     expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                        minAbove: 250,
+                        minAbove: 700,
                         minBelow: 300,
                         selectors: {
                             ' > h2': {minAbove: 0, minBelow: 250},

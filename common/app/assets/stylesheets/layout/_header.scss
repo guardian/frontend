@@ -19,7 +19,7 @@ $servicesToggleArrowSize: 5px;
     }
 }
 
-.guardian-logo-wrapper {
+.logo-wrapper {
     position: relative;
     float: right;
     @include rem((
@@ -49,6 +49,11 @@ $servicesToggleArrowSize: 5px;
         }
     }
 }
+
+.logo-wrapper--observer:after {
+    display: none;
+}
+
 
 /* Pre-header
    ========================================================================== */
@@ -131,8 +136,14 @@ $c-guardian-services-active-background: #2479c3;
         padding: $gs-baseline/2 0
     ));
 }
-.guardian-services__action {
-    @include fs-headline(1);
+.guardian-services__action,
+.guardian-services__action:focus,
+.guardian-services__action:hover {
+    @include f-headline;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     display: block;
     text-decoration: none;
     margin: 0;
@@ -142,23 +153,7 @@ $c-guardian-services-active-background: #2479c3;
         line-height: $headerHeight
     ));
 }
-.guardian-services__action__arrow {
-    display: inline-block;
-    pointer-events: none;
-    width: 0;
-    height: 0;
-    border-bottom: 0 solid transparent;
-    @include rem((
-        margin: 2px,
-        border-left: $servicesToggleArrowSize solid transparent,
-        border-right: $servicesToggleArrowSize solid transparent,
-        border-top: $servicesToggleArrowSize solid $c-neutral1
-    ));
-}
-.guardian-services__item-more--collapsed .guardian-services__item--more-menu {
-    display: none;
-}
-.guardian-services__item-more--expanded {
+.guardian-services__item-more {
     position: relative;
     background: $c-guardian-services-active-background;
 
@@ -166,10 +161,37 @@ $c-guardian-services-active-background: #2479c3;
         color: #ffffff;
     }
     .guardian-services__action__arrow {
-        border-top: 0 solid transparent;
+        display: inline-block;
+        pointer-events: none;
+        width: 0;
+        height: 0;
+        border-top: 0;
         @include rem((
+            margin: 2px,
+            border-left: $servicesToggleArrowSize solid transparent,
+            border-right: $servicesToggleArrowSize solid transparent,
             border-bottom: $servicesToggleArrowSize solid #ffffff
         ));
+    }
+
+    &.is-off {
+        background-color: inherit;
+        display: block;
+
+        .guardian-services__item--more-menu {
+            display: none;
+        }
+
+        .guardian-services__action {
+            color: $c-neutral1;
+        }
+
+        .guardian-services__action__arrow {
+            border-bottom: 0;
+            @include rem((
+                border-top: $servicesToggleArrowSize solid $c-neutral1
+            ));
+        }
     }
 }
 .guardian-services__item--more-menu {
@@ -199,3 +221,4 @@ $c-guardian-services-active-background: #2479c3;
     position: relative;
     z-index: 2;
 }
+

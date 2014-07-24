@@ -15,7 +15,7 @@
                 <a class="signposting__action" href="@LinkTo(topLink.name.href)" data-link-name="nav : signposting : @topLink.name.title">@Html(topLink.name.title)</a>
             </li>
 
-            @Navigation.subNav(navigation, metaData).map{ subLink =>
+            @topLink.searchForCurrentSublink(metaData).map{ subLink =>
                 <li class="signposting__item signposting__item--current">
                     <span class="signposting__separator"><span class="signposting__separator__inner">›</span></span>
                     <a class="signposting__action" href="@LinkTo(subLink.href)" data-link-name="nav : signposting : @topLink.name.title &gt; @subLink.title">@Html(subLink.title)</a>

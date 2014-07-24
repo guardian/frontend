@@ -1,0 +1,93 @@
+package controllers
+
+import play.api.mvc.{ Controller, Action, RequestHeader }
+import common._
+import model._
+import scala.concurrent.Future
+import implicits.Requests
+import conf.LiveContentApi
+import com.gu.openplatform.contentapi.ApiError
+import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+
+object VideoEndSlateController extends Controller with Logging with Paging with ExecutionContexts with Requests {
+
+  def renderSection(sectionId: String) = Action.async { implicit request =>
+    val response = lookupSection(Edition(request), sectionId) map { seriesItems =>
+      seriesItems map { trail => renderSectionTrails(trail) }
+    }
+    response map { _ getOrElse NotFound }
+  }
+
+  private def lookupSection(edition: Edition, sectionId: String)(implicit request: RequestHeader): Future[Option[Seq[Video]]] = {
+    val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
+    log.info(s"Fetching video content in section: ${sectionId}" )
+
+    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{ shortUrl => !shortUrl.equals(currentShortUrl) }.getOrElse(false)
+
+    val promiseOrResponse = LiveContentApi.search(edition)
+      .section(sectionId)
+      .tag("type/video")
+      .showTags("all")
+      .showFields("all")
+      .response
+      .map {
+        response =>
+          response.results filter { content => isCurrentStory(content) } map { result =>
+            Video(result)
+          } match {
+            case Nil => None
+            case results => Some(results)
+          }
+      }
+
+      promiseOrResponse.recover{ case ApiError(404, message) =>
+         log.info(s"Got a 404 calling content api: $message" )
+         None
+      }
+  }
+
+  private def renderSectionTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
+    val sectionName = trails.headOption.map(t => t.sectionName).getOrElse("")
+    val response = () => views.html.fragments.videoEndSlate(trails.take(4), "section", s"More ${sectionName} videos")
+    renderFormat(response, response, 1)
+  }
+
+  def renderSeries(seriesId: String) = Action.async { implicit request =>
+    val response = lookupSeries(Edition(request), seriesId) map { seriesItems =>
+      seriesItems map { trail => renderSeriesTrails(trail) }
+    }
+    response map { _ getOrElse NotFound }
+  }
+
+  private def lookupSeries( edition: Edition, seriesId: String)(implicit request: RequestHeader): Future[Option[Seq[Video]]] = {
+    val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
+    log.info(s"Fetching content in series: ${seriesId} the ShortUrl ${currentShortUrl}" )
+
+    def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{shortUrl => !shortUrl.equals(currentShortUrl)}.getOrElse(false)
+
+    val promiseOrResponse = LiveContentApi.item(seriesId, edition)
+      .tag("type/video")
+      .showTags("all")
+      .showFields("all")
+      .response
+      .map {
+      response =>
+        response.results filter { content => isCurrentStory(content) } map { result =>
+          Video(result)
+        } match {
+          case Nil => None
+          case results => Some(results)
+        }
+    }
+
+    promiseOrResponse.recover{ case ApiError(404, message) =>
+      log.info(s"Got a 404 calling content api: $message" )
+      None
+    }
+  }
+
+  private def renderSeriesTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
+    val response = () => views.html.fragments.videoEndSlate(trails.take(4), "series", "More from this series")
+    renderFormat(response, response, 1)
+  }
+}

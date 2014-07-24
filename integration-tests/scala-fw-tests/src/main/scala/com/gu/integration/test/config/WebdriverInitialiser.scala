@@ -13,11 +13,13 @@ import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 import com.gu.automation.support.TestLogging
 import org.openqa.selenium.Platform
+import com.gu.automation.support.CookieManager
 
 object WebdriverInitialiser extends TestLogging {
 
-  def initWebDriver(webDriver: WebDriver): WebDriver = {
+  def augmentWebDriver(implicit webDriver: WebDriver): WebDriver = {
     webDriver.manage().timeouts().implicitlyWait(10, SECONDS)
+    CookieManager.addCookie("gu.test", "true")
     webDriver
   }
 }
