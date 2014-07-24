@@ -108,7 +108,8 @@ object DfpDataCacheJob extends ExecutionContexts {
         "lineItem" -> sponsorship.lineItemName,
         "lineItemId" -> sponsorship.lineItemId,
         "adUnits" -> sponsorship.adUnits,
-        "countries" -> sponsorship.countries
+        "countries" -> sponsorship.countries,
+        "isAdTest" -> sponsorship.targetsAdTest
       )
     }
   }
