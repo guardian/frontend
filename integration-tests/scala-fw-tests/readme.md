@@ -60,7 +60,7 @@ Writing new tests is fairly simple and follow these steps:
 ```
 * Make sure to name your feature and scenarioWeb appropriately
 * Dont forget the ```implicit driver: WebDriver =>```
-* The body of the test method should be very sparce and basically delegate everything to XXXSteps classes see ```ArticleSteps``` for an example
+* The body of the test method should only show a short overview of what the test does and basically delegate everything to XXXSteps classes see ```ArticleSteps``` for an example. Step classes in turn should delegate page specific operations, such as clicking on links etc, to Page Objects.
 * For navigating to pages use the PageLoader.goTo and PageLoader.fromRelativeUrl, if you are going to a relative url (which is the case in most situations, see Configuration below).
 * Create, or extend existing, PageObjects for representing pages, and parts of pages. They should be put under ```src/main/scala/com.gu.integration.test.pages.XXX``` where XXX is the page group. 
 * Page objects shall extend ParentPage and define an implicit driver: WebDriver in its constructor argument list. See ```ArticlePage``` for an example.
