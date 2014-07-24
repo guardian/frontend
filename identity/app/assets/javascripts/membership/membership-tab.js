@@ -3,11 +3,10 @@
 */
 define(['common/utils/$',
 'bean',
-'bonzo',
 'common/utils/ajax',
 'common/utils/config',
 'common/modules/component',
-'membership/paymentForm'], function ($, bean, bonzo, ajax, config, Component, PaymentForm) {
+'membership/paymentForm'], function ($, bean, ajax, config, Component, PaymentForm) {
 
     function Membership (context, options) {
 
@@ -28,11 +27,13 @@ define(['common/utils/$',
         TAB: 'js-membership-tab',
         TAB_BUTTON: 'js-memebership-tab-button',
         TAB_CONTAINER: 'js-memebership-tab-container',
+        TAB_DETAILS_LIST_UPPER: 'js-membership-details-list-upper',
         TAB_DETAILS_LIST_LOWER: 'js-membership-details-list-lower',
         TIER: 'js-membership-tier',
         COST: 'js-membership-payment-cost',
         JOIN: 'js-membership-join-date',
         NEXT: 'js-membership-payment-next',
+        INTERVAL: 'js-membership-plan-interval',
         CC_NUM: 'js-membership-card-details',
         CC_LAST4: 'js-membership-card-lastfour',
         CC_TYPE: 'js-membership-card-type',
@@ -43,7 +44,16 @@ define(['common/utils/$',
         ANIM_OPEN: 'membership-tab__change-cc-form-cont--to-open',
         ANIM_OPENED: 'membership-tab__change-cc-form-cont--open',
         ANIM_CLOSE: 'membership-tab__change-cc-form-cont--to-closed',
-        ANIM_CLOSED: 'membership-tab__change-cc-form-cont--closed'
+        ANIM_CLOSED: 'membership-tab__change-cc-form-cont--closed',
+        NOTIFICATION_TIER_CURRENT: 'js-mem-tier-current',
+        NOTIFICATION_TIER_TARGET: 'js-mem-tier-target',
+        NOTIFICATION_PERIOD_START: 'js-mem-current-period-start',
+        NOTIFICATION_PERIOD_END: 'js-mem-current-period-end',
+        NOTIFICATION_CANCEL: 'js-mem-cancel-tier',
+        NOTIFICATION_CHANGE: 'js-mem-change-tier',
+        NOTIFICATION_NEW_START: 'js-mem-new-start',
+        NOTIFICATION_ICON_CURRENT: 'js-mem-icon-current',
+        NOTIFICATION_ICON_TARGET: 'js-mem-icon-target'
     };
 
     /**
@@ -56,7 +66,7 @@ define(['common/utils/$',
     * @override
     * @type {string}
     */
-    Membership.prototype.componentClass = 'js-memebership-tab-container';
+    Membership.prototype.componentClass = 'js-membership-tab-container';
 
     Membership.prototype.formatDate = function (date) { // eg: 4th Jun 2014
 
@@ -94,7 +104,13 @@ define(['common/utils/$',
     *    tab using the response from the /user/me
     */
     Membership.prototype.prerender = function () {
-        var self = this;
+        var self = this,
+            memberOptIn,
+            subscriptionIsCancelled,
+            notificationCancelElement = self.getElem('NOTIFICATION_CANCEL'),
+            notificationChangeElement = self.getElem('NOTIFICATION_CHANGE'),
+            upperTabDetailsList = self.getClass('TAB_DETAILS_LIST_UPPER'),
+            lowerTabDetailsList = self.getClass('TAB_DETAILS_LIST_LOWER');
 
         ajax({
             url: config.page.membershipUrl + '/user/me/details',
@@ -102,27 +118,98 @@ define(['common/utils/$',
             withCredentials: true,
             method: 'get'
         }).then(function (resp) {
+            var subscriptionDates = {
+                currentPeriodStart: self.formatDate(new Date(resp.subscription.start)),
+                currentPeriodEnd: self.formatDate(new Date(resp.subscription.end)),
+                interval: resp.subscription.plan.interval === 'month' ? 'Monthly' : 'Annual'
+            };
+            memberOptIn = resp.optIn;
+            subscriptionIsCancelled = !!resp.subscription.cancelledAt;
 
+            // Display default tab contents
             self.display = true;
-            self.getElem('TIER').innerHTML = resp.subscription.plan.name;
-            self.getElem('COST').innerHTML = self.formatAmount(resp.subscription.plan.amount);
-            self.getElem('JOIN').innerHTML = self.formatDate(new Date(resp.joinDate));
+            $(self.getClass('TIER'), upperTabDetailsList).text(resp.subscription.plan.name);
+            $(self.getClass('COST')).each(function () {
+                this.innerHTML = self.formatAmount(resp.subscription.plan.amount);
+            });
+            $(self.getClass('JOIN'), upperTabDetailsList).text(self.formatDate(new Date(resp.joinDate)));
 
             if (resp.tier === 'Partner' || resp.tier === 'Patron') {
 
-                $(self.getElem('TAB_DETAILS_LIST_LOWER'), self.context).removeClass('is-hidden');
+                if (subscriptionIsCancelled) {
 
-                self.getElem('NEXT').innerHTML = self.formatDate(new Date(resp.subscription.end));
-                self.getElem('CC_LAST4').innerHTML = resp.subscription.card.last4;
+                    if (memberOptIn) {
+                        self.displayChangePackageTabContents.call(self, notificationChangeElement, resp, subscriptionDates);
+                    } else {
+                        self.displayCancellationTabContents.call(self, notificationCancelElement, resp, subscriptionDates);
+                    }
 
-                self.currentCardTypeClass = 'i-' + resp.subscription.card.type.toLowerCase().replace(' ', '-');
-                $(self.getElem('CC_TYPE')).addClass(self.currentCardTypeClass);
-                self.getElem('CC_TYPE_TEXT').innerHTML = resp.subscription.card.type; // Append text too for screen readers
+                } else {
+                    self.displayLowerTabContents.call(self, lowerTabDetailsList, resp, subscriptionDates);
+                }
             }
 
             self.ready();
         });
+    };
 
+    /**
+     * Display the tab contents for a downgraded membership
+     *
+     * @param rootElement String classname for the root
+     * @param resp Object JSON response
+     * @param subscriptionDates Object subscript relevant dates
+     */
+    Membership.prototype.displayChangePackageTabContents = function (rootElement, resp, subscriptionDates) {
+        var subscriptionNewStartDate = this.formatDate(
+            new Date(
+                    new Date(resp.subscription.end).getTime() + (24 * 60 * 60 * 1000)
+            )
+        );
+        $(this.getClass('TAB_DETAILS_LIST_UPPER'),this.context).addClass('is-hidden');
+        $(rootElement,this.context).removeClass('is-hidden');
+        $(this.getClass('NOTIFICATION_TIER_CURRENT'), rootElement).html(resp.tier);
+        $(this.getClass('NOTIFICATION_TIER_TARGET'), rootElement).html('Friend');
+        $(this.getClass('NOTIFICATION_PERIOD_START'), rootElement).html(subscriptionDates.currentPeriodStart);
+        $(this.getClass('NOTIFICATION_PERIOD_END'), rootElement).html(subscriptionDates.currentPeriodEnd);
+        $(this.getClass('NOTIFICATION_NEW_START'), rootElement).html(subscriptionNewStartDate);
+        $(this.getClass('NOTIFICATION_ICON_CURRENT'), rootElement).addClass('i-g-' + resp.tier.toLowerCase());
+        $(this.getClass('NOTIFICATION_ICON_TARGET'), rootElement).addClass('i-g-' + 'friend');
+        $(this.getClass('CC_LAST4'), rootElement).text(resp.subscription.card.last4);
+    };
+
+    /**
+     * Display the tab contents for a cancelled membership
+     *
+     * @param rootElement String classname for the root
+     * @param resp Object JSON response
+     * @param subscriptionDates Object subscript relevant dates
+     */
+    Membership.prototype.displayCancellationTabContents = function (rootElement, resp, subscriptionDates) {
+        $(this.getClass('TAB_DETAILS_LIST_UPPER'), this.context).addClass('is-hidden');
+        $(rootElement, this.context).removeClass('is-hidden');
+        $(this.getClass('NOTIFICATION_TIER'), rootElement).html(resp.tier);
+        $(this.getClass('NOTIFICATION_PERIOD_START'), rootElement).html(subscriptionDates.currentPeriodStart);
+        $(this.getClass('NOTIFICATION_PERIOD_END'), rootElement).html(subscriptionDates.currentPeriodEnd);
+    };
+
+    /**
+     * Display the contents of the lower tab for subscribed members
+     *
+     * @param rootElement String classname for the root
+     * @param resp Object JSON response
+     * @param subscriptionDates Object subscript relevant dates
+     */
+    Membership.prototype.displayLowerTabContents = function (rootElement, resp, subscriptionDates) {
+        $(rootElement, this.context).removeClass('is-hidden');
+        $(this.getClass('INTERVAL'), this.context).html(subscriptionDates.interval);
+        $(this.getClass('NEXT'), rootElement).text(this.formatDate(new Date(resp.subscription.end)));
+        $(this.getClass('CC_LAST4'), rootElement).text(resp.subscription.card.last4);
+
+        this.currentCardTypeClass = 'i-' + resp.subscription.card.type.toLowerCase().replace(' ', '-');
+
+        $(this.getClass('CC_TYPE'), rootElement).addClass(this.currentCardTypeClass);
+        $(this.getClass('CC_TYPE_TEXT'), rootElement).text(resp.subscription.card.type);
     };
 
     /**
@@ -144,7 +231,7 @@ define(['common/utils/$',
         if (this.$successMessageElem) {
             this.$successMessageElem.text(message);
         } else {
-            this.$successMessageElem = bonzo(bonzo.create('<div>')).addClass('form__success').text(message).prependTo(this.getClass('TAB_CONTAINER'));
+            this.$successMessageElem = $.create('<div>').addClass('form__success').text(message).prependTo(this.getClass('TAB_CONTAINER'));
         }
     };
 
@@ -213,7 +300,7 @@ define(['common/utils/$',
             });
 
             bean.on(self.getElem('CC_CHANGE_FORM_CONT'), 'animationend webkitAnimationEnd oanimationend MSAnimationEnd', function () {
-                var $elem = bonzo(this);
+                var $elem = $(this);
                 if ($elem.hasClass(self.getClass('ANIM_OPEN', true))) {
                     $elem.removeClass(self.getClass('ANIM_OPEN', true) + ' ' + self.getClass('ANIM_CLOSE', true) + ' ' + self.getClass('ANIM_CLOSED', true)).addClass(self.getClass('ANIM_OPENED', true));
                 } else {

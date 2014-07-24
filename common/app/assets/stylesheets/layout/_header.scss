@@ -1,13 +1,14 @@
 /* Global header and navigation
    ========================================================================== */
 
+$servicesToggleArrowSize: 5px;
+
 .l-header {
     position: relative;
     z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050
 
     @include mq(tablet) {
         background: $c-neutral8;
-        border-bottom: 2px solid $c-brandBlue;
     }
     @include mq(wide) {
         .has-page-skin & .gs-container {
@@ -18,7 +19,7 @@
     }
 }
 
-.guardian-logo-wrapper {
+.logo-wrapper {
     position: relative;
     float: right;
     @include rem((
@@ -47,13 +48,12 @@
             font-size: 13px;
         }
     }
-    @include mq(desktop) {
-        @include rem((
-            margin-top: -$gs-row-height,
-            margin-bottom: $gs-baseline * 1.5
-        ));
-    }
 }
+
+.logo-wrapper--observer:after {
+    display: none;
+}
+
 
 /* Pre-header
    ========================================================================== */
@@ -61,16 +61,12 @@
 .l-header-pre {
     float: left;
     min-width: gs-span(2);
-    z-index: 1;
+    z-index: 3;
     position: relative;
 
     @include mq(tablet) {
         float: none;
         background: $c-neutral8;
-        border-bottom: 1px solid $c-neutral4;
-    }
-    @include mq(desktop) {
-        border-bottom-color: $c-neutral8;
     }
 }
 .l-header-pre__inner {
@@ -133,7 +129,90 @@ a.edition {
         text-decoration: none;
     }
 }
+$c-guardian-services-active-background: #2479c3;
+.guardian-services {
+    @include fs-header(1);
+    @include rem((
+        padding: $gs-baseline/2 0
+    ));
+}
+.guardian-services__action,
+.guardian-services__action:focus,
+.guardian-services__action:hover {
+    @include f-headline;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: block;
+    text-decoration: none;
+    margin: 0;
+    color: $c-neutral1;
+    cursor: pointer;
+    @include rem((
+        line-height: $headerHeight
+    ));
+}
+.guardian-services__item-more {
+    position: relative;
+    background: $c-guardian-services-active-background;
 
+    .guardian-services__action {
+        color: #ffffff;
+    }
+    .guardian-services__action__arrow {
+        display: inline-block;
+        pointer-events: none;
+        width: 0;
+        height: 0;
+        border-top: 0;
+        @include rem((
+            margin: 2px,
+            border-left: $servicesToggleArrowSize solid transparent,
+            border-right: $servicesToggleArrowSize solid transparent,
+            border-bottom: $servicesToggleArrowSize solid #ffffff
+        ));
+    }
+
+    &.is-off {
+        background-color: inherit;
+        display: block;
+
+        .guardian-services__item--more-menu {
+            display: none;
+        }
+
+        .guardian-services__action {
+            color: $c-neutral1;
+        }
+
+        .guardian-services__action__arrow {
+            border-bottom: 0;
+            @include rem((
+                border-top: $servicesToggleArrowSize solid $c-neutral1
+            ));
+        }
+    }
+}
+.guardian-services__item--more-menu {
+    @include box-sizing(border-box);
+    position: absolute;
+    background: $c-guardian-services-active-background;
+    margin: 0;
+    padding: 0;
+    right: 0;
+    list-style: none;
+    @include rem((
+        top: $headerHeight,
+        padding: 0 $gs-gutter/2,
+        width: gs-span(2)
+    ));
+    @include mq(desktop) {
+        @include rem((
+            width: gs-span(3)
+        ));
+    }
+}
 
 /* Main header (logo, actions)
    ========================================================================== */
@@ -143,17 +222,15 @@ a.edition {
     z-index: 2;
 }
 
-
 /* Post-header breaking news
    ========================================================================== */
 
 #breaking-news {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    @include box-sizing(border-box);
     background-color: #ff3d00;
-    padding: 10px 10px;
+    padding: 10px;
     font-weight: bold;
-    border-top: 1px solid rgba(255,255,255,0.3);
+    border-top: 1px solid rgba(255, 255, 255, .3);
     
     a {
         display: inline-block;
@@ -164,4 +241,3 @@ a.edition {
         padding: 10px 20px;
     }
 }
-

@@ -5,9 +5,7 @@
 # For dev machines
 GET         /assets/*path                                                       dev.DevAssetsController.at(path)
 
-# Section paths
-GET        /sections                                                            controllers.SectionsController.renderSections()
-GET        /sections.json                                                       controllers.SectionsController.renderSectionsJson()
+GET        /_healthcheck                                                        conf.HealthCheck.healthcheck()
 
 GET        /humans.txt                                                          controllers.Assets.at(path="/public", file="humans.txt")
 

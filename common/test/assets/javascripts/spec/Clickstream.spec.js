@@ -60,29 +60,6 @@ define(['analytics/clickstream', 'bean', 'common/utils/mediator', 'helpers/fixtu
             mediator.removeEvent('module:clickstream:click');
         });
 
-        it("should derive analytics tag name from the dom ancestors of the source element", function(){
-
-            var cs  = new Clickstream({ filter: ["button"], withEvent: false }),
-                object = { method: function (p) {} },
-                spy = sinon.spy(object, "method"),
-                el = document.getElementById('click-me-button'),
-                clickSpec = {
-                    target: el,
-                    samePage: true,
-                    sameHost: true,
-                    tag: 'outer div | the button'
-                };
-
-            mediator.on('module:clickstream:click', spy);
-
-            bean.fire(el, 'click');
-
-            runs(function(){
-                expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
-            });
-
-        });
-
         it("should report the ancestor 'clickable' element, not the element that actually received the click", function(){
 
             var cs  = new Clickstream({ filter: ["a"], withEvent: false }),

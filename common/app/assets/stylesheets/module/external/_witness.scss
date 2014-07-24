@@ -29,7 +29,7 @@
         margin: ($gs-baseline/3)*4 0 0 0
     ));
     // Make it look like the body copy
-    @include fs-bodyCopy(3);
+    @include fs-bodyCopy(2);
     color: $c-neutral1;
 
     &:before {
@@ -49,7 +49,7 @@
         padding: $gs-baseline $gs-gutter/2
     ));
     background: $c-neutral7;
-    @include fs-textsans(3);
+    @include fs-textSans(3);
     color: $c-neutral2-contrasted !important;
 
     img {
@@ -60,14 +60,14 @@
     @include rem((
         padding-left: $gs-gutter/2
     ));
-    @include fs-textsans(3);
+    @include fs-textSans(3);
     color: $c-neutral2;
 }
 .element-witness--author-name {
     font-weight: bold;
 }
 .element-witness--date {
-    @include fs-textsans(1, true);
+    @include fs-textSans(1, true);
 }
 .element-witness--author time {
     display: block;
@@ -92,7 +92,7 @@
     ));
 }
 .witness-cta__body {
-    @include fs-textsans(3);
+    @include fs-textSans(3);
     float: left;
     @include rem((
         line-height: 15px,
@@ -107,7 +107,7 @@
 .witness-logo {
     display: inline-block;
     color: #247eb3;
-    @include font($serif, 700, 16, 16);
+    @include font($f-serif-text, 700, 16, 16);
     letter-spacing: -.04em;
     text-transform: lowercase;
 }

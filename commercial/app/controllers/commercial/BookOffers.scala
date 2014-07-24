@@ -5,7 +5,7 @@ import model.commercial.books.{Book, BookFinder, BestsellersAgent}
 import model.{NoCache, Cached}
 import performance.MemcachedAction
 import play.api.mvc._
-import play.api.templates.Html
+import play.twirl.api.Html
 import scala.concurrent.Future
 
 object BookOffers extends Controller with ExecutionContexts with implicits.Collections {

@@ -21,9 +21,8 @@ define([
     'common/modules/onward/onward-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
-    'common/modules/navigation/sections',
     'common/modules/navigation/search',
-    'common/modules/navigation/newNavigation',
+    'common/modules/navigation/navigation',
     'common/modules/ui/breaking-news',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
@@ -69,9 +68,8 @@ define([
     Onward,
     images,
     Profile,
-    Sections,
     Search,
-    newNavigation,
+    Navigation,
 
     breakingNews,
     Tabs,
@@ -124,11 +122,7 @@ define([
         },
 
         initialiseNavigation: function (config) {
-            new Sections(config).init(document);
-        },
-
-        initialiseNewNavigation: function (config) {
-            newNavigation.init(config);
+            Navigation.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -213,8 +207,7 @@ define([
         initRightHandComponent: function(config) {
             if(config.page.contentType === 'Article' &&
                 detect.getBreakpoint() !== 'mobile' &&
-                parseInt(config.page.wordCount, 10) > 500 &&
-                !config.page.isLiveBlog) {
+                parseInt(config.page.wordCount, 10) > 500) {
                 new GeoMostPopular({});
             }
         },
@@ -236,7 +229,7 @@ define([
                         mediator.on('scrolldepth:data', ophan.record);
 
                         new ScrollDepth({
-                            isContent: config.page.contentType === 'Article'
+                            isContent: /Article|LiveBlog/.test(config.page.contentType)
                         });
                     }
                 });
@@ -456,11 +449,7 @@ define([
             modules.upgradeImages();
             modules.showTabs();
             modules.initialiseTopNavItems(config);
-            if(config.switches.responsiveNav){
-                modules.initialiseNewNavigation(config);
-            } else {
-                modules.initialiseNavigation(config);
-            }
+            modules.initialiseNavigation(config);
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();
@@ -492,3 +481,4 @@ define([
         init: init
     };
 });
+

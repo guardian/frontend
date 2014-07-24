@@ -18,6 +18,10 @@
         color: $c-commentAccent;
     }
 
+    .byline {
+        word-break: break-word;
+    }
+
     .byline,
     .byline .tone-colour,
     .social__head {
@@ -39,8 +43,10 @@
         color: $c-commentAccent;
     }
 
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help {
-        color: $c-neutral2;
+        color: $c-neutral7;
     }
 
     .content__standfirst {

@@ -7,6 +7,8 @@ import com.gu.management.logback.LogbackLevelPage
 import com.gu.management.HttpRequest
 import services.ConfigAgent
 
+object HealthCheck extends AllGoodHealthcheckController("/uk")
+
 object Management extends GuManagement {
   val applicationName = "frontend-facia"
   val metrics = Metrics.facia ++ Metrics.contentApi ++ Metrics.common

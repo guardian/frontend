@@ -1,6 +1,7 @@
 .breadcrumb-list__item {
     color: lighten($c-neutral2, 15%);
     @include fs-data(1);
+    white-space: nowrap;
 }
 
 .breadcrumb-list__item + .breadcrumb-list__item {

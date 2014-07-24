@@ -70,14 +70,12 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin with ExecutionContexts {
 
   override def onStop() {
     descheduleJobs()
-
-    Competitions.stop()
-    LiveBlogAgent.stop()
-    TeamMap.stop()
   }
 }
 
 object FootballClient extends PaClient with Http with Logging with ExecutionContexts {
+
+  import play.api.Play.current
 
   override lazy val base = Configuration.pa.host
 
@@ -110,6 +108,11 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
     _http.GET(urlString)
   }
 }
+
+object HealthCheck extends AllGoodHealthcheckController(
+  "/football/live",
+  "/football/premierleague/results"
+)
 
 object Management extends GuManagement {
   val applicationName = "frontend-sport"

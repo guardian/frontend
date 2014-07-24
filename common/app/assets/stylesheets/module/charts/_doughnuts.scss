@@ -10,7 +10,7 @@
     }
 
     .chart__unit {
-        @include fs-headline(3);
+        @include fs-headline(4);
         fill: $c-neutral2;
         font-weight: 900;
         text-anchor: middle;

@@ -5,7 +5,8 @@
     @defining(templateDeduping(5, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
-                class="@RenderClasses(Map(
+                class="facia-container--default-heading
+                    @RenderClasses(Map(
                     ("container", true),
                     (s"container--${style.containerType}", true),
                     ("js-container--toggle", (containerIndex > 0 && title.nonEmpty))))"

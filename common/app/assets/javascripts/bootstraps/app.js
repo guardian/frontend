@@ -18,6 +18,7 @@ define([
 
     'common/bootstraps/football',
     'common/bootstraps/article',
+    'common/bootstraps/liveblog',
     'common/bootstraps/video',
     'common/bootstraps/gallery',
     'common/bootstraps/identity',
@@ -41,6 +42,7 @@ define([
 
     Football,
     Article,
+    LiveBlog,
     Video,
     Gallery,
     Identity,
@@ -99,6 +101,10 @@ define([
 
             if(config.page.contentType === 'Article') {
                 Article.init(config, context);
+            }
+
+            if(config.page.contentType === 'LiveBlog') {
+                LiveBlog.init(config, context);
             }
 
             if (config.page.contentType === 'Video' || qwery('video').length) {

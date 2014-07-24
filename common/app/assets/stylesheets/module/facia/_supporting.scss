@@ -17,7 +17,7 @@
     ));
 }
 .supporting__action {
-    @include font-size(14, 18);
+    @include fs-headline(1, true)
 }
 
 @include mq(tablet) {

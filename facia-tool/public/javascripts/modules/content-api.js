@@ -1,15 +1,15 @@
 /* global _: true */
 define([
-    'modules/authed-ajax',
     'modules/vars',
+    'modules/authed-ajax',
     'modules/cache',
     'utils/internal-content-code',
     'utils/url-abs-path',
     'utils/snap'
 ],
 function (
-    authedAjax,
     vars,
+    authedAjax,
     cache,
     internalContentCode,
     urlAbsPath,

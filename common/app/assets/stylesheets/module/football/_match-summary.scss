@@ -34,7 +34,7 @@ $football-crest--large: 60px;
 }
 
 .team__info {
-    @include fs-headline(5);
+    @include fs-headline(6);
     @include rem((
         margin-left: $gs-gutter/2+$football-crest--small
     ));
@@ -221,6 +221,7 @@ $football-crest--large: 60px;
 
     .match-summary__teams {
         border-top: 0 none;
+        white-space: nowrap;
     }
     .match-summary__team {
         @include box-sizing(border-box);
@@ -261,7 +262,7 @@ $football-crest--large: 60px;
     }
 
     .team__info {
-        @include fs-headline(7, true);
+        @include fs-headline(8, true);
     }
 
     .team__crest {
@@ -357,7 +358,7 @@ $football-crest--large: 60px;
     }
 
     .team__info {
-        @include fs-headline(3, true);
+        @include fs-headline(4, true);
     }
     .team__scorers {
         @include fs-data(3, true);

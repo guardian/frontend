@@ -39,7 +39,7 @@ $c-money-high: #63007f;
         ));
         color: $c-money-high;
         width: auto;
-        @include fs-textsans(2);
+        @include fs-textSans(2);
         font-weight: bold;
         
         .i.i-arrow-white-down {
@@ -95,7 +95,7 @@ $c-money-high: #63007f;
         @include rem((
             margin-bottom: $comercial-comp-baseline
         ));
-        @include fs-textsans(4);
+        @include fs-textSans(4);
     }
     .table--commercial__head {
         color: $c-neutral2;
@@ -257,7 +257,7 @@ $c-money-high: #63007f;
     }
 }
 /* article */
-.facia-container--layout-article .commercial--bestbuys {
+.facia-container--layout-content .commercial--bestbuys {
     @include mq(tablet) {
         .tools__calculators {
             right: $gs-gutter;

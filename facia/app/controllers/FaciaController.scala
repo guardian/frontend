@@ -7,7 +7,7 @@ import play.api.mvc._
 import play.api.libs.json.{JsObject, JsValue, Json}
 import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
-import play.api.templates.Html
+import play.twirl.api.Html
 import performance.MemcachedAction
 import services.ConfigAgent
 import common.FaciaMetrics.FaciaToApplicationRedirectMetric
@@ -21,6 +21,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
+  def rootEditionRedirect() = editionRedirect(path = "")
   def editionRedirect(path: String) = Action{ implicit request =>
 
     val edition = Edition(request)

@@ -69,16 +69,16 @@ abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts 
   final def lastReceipt = lastSuccessfulReceipt.get
   final def consecutiveErrors = consecutiveProcessingErrors.get
 
-  def process(a: A): Future[Unit]
+  def process(message: Message[A]): Future[Unit]
 
   final protected def getAndProcess: Future[Unit] = {
     val getRequest = queue.receiveOne(new ReceiveMessageRequest().withWaitTimeSeconds(WaitTimeSeconds))
 
     getRequest onComplete {
-      case Success(Some(Message(id, a, receipt))) =>
+      case Success(Some(message @ Message(id, _, receipt, _))) =>
         lastSuccessfulReceipt.refresh()
 
-        process(a) onComplete {
+        process(message) onComplete {
           case Success(_) =>
             /** Ultimately, we ought to be able to recover from processing the same message twice anyway, as the nature
               * of SQS means you could get the same message delivered twice.

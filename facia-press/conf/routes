@@ -1,1 +1,2 @@
-GET    /   controllers.Application.index
+GET        /_healthcheck        conf.HealthCheck.healthcheck()
+GET        /                    controllers.Application.index

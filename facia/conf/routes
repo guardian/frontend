@@ -6,10 +6,12 @@
 # For dev machines
 GET        /assets/*path                                               dev.DevAssetsController.at(path)
 
+GET        /_healthcheck                                               conf.HealthCheck.healthcheck()
+
 GET        /humans.txt                                                 controllers.Assets.at(path="/public", file="humans.txt")
 
 # Editionalised redirects
-GET        /                                                           controllers.FaciaController.editionRedirect(path = "")
+GET        /                                                           controllers.FaciaController.rootEditionRedirect()
 GET        /$path<(culture|sport|commentisfree|business|money|rss)>    controllers.FaciaController.editionRedirect(path)
 
 #Facia Press

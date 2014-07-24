@@ -13,9 +13,19 @@
 }
 .container--first {
     margin-top: 0;
-    @include rem((
-        padding-top: $gs-row-height*.5
-    ));
+    padding-top: 0;
+
+    @include mq($to: tablet) {
+        .container__border,
+        .container__header {
+            display: none;
+        }
+    }
+    @include mq(tablet) {
+        @include rem((
+            padding-top: $gs-row-height*.5
+        ));
+    }
 }
 .container__border {
     border-top-style: solid;
@@ -62,10 +72,10 @@
 
     .today__sub {
         @include mq(faciaLeftCol) {
-            @include fs-headline(1);
+            @include fs-headline(2);
         }
         @include mq(wide) {
-            @include fs-headline(2, $size-only: true);
+            @include fs-headline(3, $size-only: true);
         }
     }
     a {
@@ -74,7 +84,7 @@
 }
 .container__updated {
     display: block;
-    @include fs-headline(1);
+    @include fs-headline(2);
     margin-top: ($gs-baseline/3)*5;
     padding-top: $gs-baseline/3;
     border-top: 1px solid $c-neutral5;
@@ -275,7 +285,7 @@
     @include rem((
         padding-top: $gs-baseline/6
     ));
-    @include fs-headline(1, true);
+    @include fs-headline(2, true);
     word-wrap: break-word;
 
     .i-quote-orange {
@@ -322,7 +332,7 @@
     }
 }
 .item__byline {
-    @include fs-headline(2);
+    @include fs-headline(3);
     @include rem((
         margin-bottom: $gs-baseline/3
     ));
@@ -344,7 +354,7 @@
     }
 }
 .item__tag {
-    @include fs-headline(1);
+    @include fs-headline(2);
 }
 .item__meta {
     position: absolute;

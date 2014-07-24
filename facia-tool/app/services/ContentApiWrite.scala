@@ -1,6 +1,5 @@
 package services
 
-import com.ning.http.client.Realm
 import common.FaciaToolMetrics.{ContentApiPutFailure, ContentApiPutSuccess}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
@@ -9,7 +8,7 @@ import model.Config
 import org.joda.time.DateTime
 import play.Play
 import play.api.libs.json.{JsNull, JsNumber, JsValue, Json}
-import play.api.libs.ws.{Response, WS}
+import play.api.libs.ws.{WSAuthScheme, WSResponse, WS}
 import tools.FaciaApi
 
 import scala.concurrent.Future
@@ -45,7 +44,8 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
     .filter(_.startsWith("https://") || Play.isDev)
     .map(_ + s"/collections/$id")
 
-  def writeToContentapi(config: Config): Future[Response] = {
+  def writeToContentapi(config: Config): Future[WSResponse] = {
+    import play.api.Play.current
     (for {
       username      <- Configuration.contentApi.write.username
       password      <- Configuration.contentApi.write.password
@@ -55,7 +55,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
       val contentApiPut = generateContentApiPut(config)
 
       val response = WS
-        .url(url).withAuth(username, password, Realm.AuthScheme.NONE)
+        .url(url).withAuth(username, password, WSAuthScheme.NONE)
         .put(Json.toJson(contentApiPut))
 
       response.onSuccess{case r =>

@@ -260,7 +260,7 @@ p + video {
 
     // This is a weird xml output from the api
     table caption {
-        @include fs-headline(2);
+        @include fs-headline(3);
         padding: ($gs-baseline/3)*2 0;
         text-align: left;
         border-top: 1px solid #b3b3b4;

@@ -60,8 +60,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
 
     "with valid API response" - {
       val fakeRequest = FakeRequest(POST, "/signin").withFormUrlEncodedBody("email" -> "test@example.com", "password" -> "testpassword")
-      val auth = EmailPassword("test@example.com", "testpassword")
-      val clientAuth = ClientAuth("frontend-dev-client-token")
+      val auth = EmailPassword("test@example.com", "testpassword", identityRequest.clientIp)
 
       "if api call succeeds" - {
         when(api.authBrowser(any[Auth], same(trackingData))).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
