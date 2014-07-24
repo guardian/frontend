@@ -29,7 +29,7 @@ define([
     Component
 ) {
 
-    var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
+    var autoplay = config.page.contentType === 'Media' && /desktop|wide/.test(detect.getBreakpoint());
     var QUARTILES = [25, 50, 75];
     // Advert and content events used by analytics. The expected order of bean events is:
     var EVENTS = [
@@ -291,7 +291,7 @@ define([
     var ready = function () {
         modules.initPlayer();
 
-        if(config.page.contentType === 'Video') {
+        if(config.page.contentType === 'Media') {
             modules.initMoreInSection();
             modules.initMostViewedVideo();
         }
