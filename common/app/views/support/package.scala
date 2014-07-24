@@ -104,6 +104,10 @@ case class MostReferredContainer(showMore: Boolean = true) extends Container {
   val containerType = "most-referred"
   val tone = "news"
 }
+case class HeadlineContainer(showMore: Boolean = true) extends Container {
+  val containerType = "headline"
+  val tone = "news"
+}
 
 
 /**
