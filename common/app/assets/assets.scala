@@ -4,7 +4,8 @@ import common.Logging
 import org.apache.commons.io.IOUtils
 import play.api.{ Mode, Play }
 import play.api.libs.json.{ JsString, Json, JsObject }
-import conf.{Switches, Configuration}
+import conf.Configuration
+import conf.Switches.SeoBlockGooglebotFromJSPathsSwitch
 import collection.mutable.{ Map => MutableMap }
 
 case class Asset(path: String) {
@@ -101,30 +102,28 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
   object js {
 
-    private def cleanRelativeJsPaths(s: String): String = {
-      // prevent googlebot trying to index relative path js files, eg;
+    private def escapeRelativeJsPaths(unescaped: String): String = {
+
+      // We are getting Googlebot 404 because Google is incorrectly seeing paths in the curl js
+      // we need to escape them out.
       // "../foo"
       // "./foo"
       // and any that are inside single quotes too
       val regex = """["'](\.{1,2}\/){1,}\w*(\/){0,}\w*(\/)?['"]""".r
 
-      var newString = s
+      val matches = regex.findAllIn(unescaped).toSeq
 
-      regex.findAllIn(s).foreach { pathToFix =>
-        newString = newString.replace(pathToFix, pathToFix.replace("./", ".\" + \"/\" + \""))
-      }
-
-      newString
-    }
-
-    lazy val curl: String = {
-      val url = Play.classloader(Play.current).getResource(s"assets/curl-domReady.js")
-      if (Switches.SeoBlockGooglebotFromJSPathsSwitch.isSwitchedOn) {
-        cleanRelativeJsPaths(IOUtils.toString(url))
-      } else {
-        IOUtils.toString(url)
+      matches.foldLeft(unescaped){ case (result:String, matched: String) =>
+        result.replace(matched, matched.replace("./", ".\" + \"/\" + \""))
       }
     }
+
+    private lazy val curlScript = IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js"))
+    private lazy val escapedCurlScript = escapeRelativeJsPaths(curlScript)
+
+    // TODO make this a val again when we get rid of the switch
+    def curl: String = if (SeoBlockGooglebotFromJSPathsSwitch.isSwitchedOn) escapedCurlScript else curlScript
+
 
   }
 

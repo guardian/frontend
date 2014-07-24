@@ -424,7 +424,7 @@ object Switches extends Collections {
   )
 
   // google crawler switches
-  val SeoBlockGooglebotFromJSPathsSwitch = Switch("SEO Switches", "seo-block-googlebot-js-paths",
+  val SeoBlockGooglebotFromJSPathsSwitch = Switch("Feature Switches", "seo-block-googlebot-js-paths",
     "If switched on, relative paths in JS files become concatenated string segments to stop googlebot following them",
     safeState = Off, sellByDate = new LocalDate(2014, 8, 29)
   )
