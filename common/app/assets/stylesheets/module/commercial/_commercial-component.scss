@@ -156,8 +156,10 @@ $commercial-cta-diameter: (
     }
     
     &.commercial--v-high {
+        background-image: radial-gradient(circle at center, white 3px, transparent 4px), radial-gradient(circle at center, white 3px, transparent 4px);
+        background-size: 14px 12px;
+        background-position: center -6px, center calc(100% + 6px);
         background-repeat: repeat-x;
-        background-position: top, bottom;
         @include rem((
             padding: $gs-baseline $gs-gutter/2
         ));
