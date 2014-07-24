@@ -17,7 +17,7 @@
         .stars {
             @include rem((
                 margin-bottom: $gs-baseline / 2
-            ))
+            ));
         }
         @include mq($to: tablet) {
             .facia-slice__item {
