@@ -13,7 +13,7 @@
 
         @include mq($to: tablet) {
             .item__title {
-                @include fs-headline(2, true);
+                @include fs-headline(3, true);
             }
         }
     }

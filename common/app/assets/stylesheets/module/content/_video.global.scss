@@ -191,8 +191,9 @@
     @include rem((
         height: gs-height(1) + $gs-baseline
     ));
+
     .most-viewed-video-container__heading {
-        @include fs-header(1);
+        @include fs-header(2);
         position: relative;
         @include rem((
             top: $gs-baseline/4
@@ -232,9 +233,12 @@
 }
 
 .video-item__headline {
-    @include f-headline;
-    @include font-size(14, 18);
+    @include fs-headline(1);
     text-align: left; //Required for end slate items
+    @include text-clamp(3, get-line-height($fs-headlines, 1));
+    @include rem((
+        height: get-line-height($fs-headlines, 1) * 3
+    ));
 
     &:before {
         content: '';

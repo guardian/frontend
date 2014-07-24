@@ -35,7 +35,7 @@
 
     a,
     .tab__link {
-        @include fs-headline(1);
+        @include fs-headline(2);
         @include box-sizing(border-box);
         min-height: $gs-row-height;
         text-align: left;

@@ -36,10 +36,10 @@
     max-width: gs-span(7);
 
     @include mq(tablet) {
-        @include fs-bodyCopy(3, true);
+        @include fs-bodyCopy(2, true);
     }
     @include mq(desktop) {
-        @include fs-bodyCopy(3, true);
+        @include fs-bodyCopy(2, true);
         @include rem((
             height: 120px
         ));

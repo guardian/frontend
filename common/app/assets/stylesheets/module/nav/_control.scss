@@ -8,7 +8,7 @@
 .control {
     @extend %icon-holder-circle;
     float: left;
-    font-family: $serif;
+    font-family: $f-serif-text;
     @include rem((
         font-size: 13px
     ));

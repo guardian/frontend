@@ -228,6 +228,8 @@ GET         /commercial/money/savings/:savingsType                              
 GET         /commercial/money/current-accounts/:currentAccountType                                                   controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
 GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)
 GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
+GET         /commercial/capi/*contentId.json                                                                         controllers.commercial.ContentApiOffers.itemJson(contentId)
+GET         /commercial/capi/*contentId                                                                              controllers.commercial.ContentApiOffers.itemHtml(contentId)
 
 # Onward journeys
 GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)

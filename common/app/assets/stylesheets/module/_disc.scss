@@ -12,7 +12,7 @@ $disc-avatar-size: 44px;
    Comment
    ========================================================================== */
 .disc-comment {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     @include rem((
         padding-bottom: $gs-baseline/2
     ));
@@ -24,7 +24,7 @@ $disc-avatar-size: 44px;
     }
 }
 .disc-comment__meta {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     @include rem((
         margin-bottom: $gs-baseline*1.5
     ));
@@ -35,7 +35,7 @@ $disc-avatar-size: 44px;
     }
 }
 .disc-comment__date-published {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     display: block;
 }
 .disc-comment__permalink {
@@ -98,7 +98,7 @@ $disc-avatar-size: 44px;
     }
 }
 .disc-comment__view-discussion {
-    @include fs-textsans(2);
+    @include fs-textSans(2);
     display: inline-block;
 }
 
@@ -107,7 +107,7 @@ $disc-avatar-size: 44px;
    Profile
    ========================================================================== */
 .disc-profile {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
 }
 .disc-profile__avatar {
     @include border-radius($gs-gutter*4);
@@ -128,11 +128,11 @@ $disc-avatar-size: 44px;
     ));
 }
 .disc-profile__badges {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     text-transform: uppercase;
 }
 .disc-profile__date {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     color: $c-neutral2-contrasted;
 }
 
@@ -141,7 +141,7 @@ $disc-avatar-size: 44px;
    Activity stream
    ========================================================================== */
 .activity-stream--loading:after {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     @include rem((
         min-height: $gs-baseline*20,
         padding-top: $gs-baseline*2
@@ -203,7 +203,7 @@ $disc-avatar-size: 44px;
     margin-left: 0;
 }
 .activity-item__content-meta {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
 
     @include mq($disc-respond-when) {
         @include rem((
@@ -221,7 +221,7 @@ $disc-avatar-size: 44px;
     }
 }
 .activity-stream__empty {
-    @include fs-textsans(4);
+    @include fs-textSans(4);
     @include rem((
         min-height: $gs-baseline*20,
         padding-top: $gs-baseline*2
@@ -265,7 +265,7 @@ $disc-avatar-size: 44px;
 }
 .activity-stream-search__q {
     @include box-sizing(border-box);
-    @include fs-textsans(2);
+    @include fs-textSans(2);
     @include rem((
         padding-bottom: $gs-baseline/6,
         padding-left: $gs-gutter/5,
