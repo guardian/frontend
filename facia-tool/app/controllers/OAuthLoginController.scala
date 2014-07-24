@@ -15,10 +15,10 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   val ANTI_FORGERY_KEY = "antiForgeryToken"
   val googleAuthConfig =
     GoogleAuthConfig(
-      "283258724824-gv88hsfbl2os5n9qlt2ocs8bu94cao5r.apps.googleusercontent.com",  // The client ID from the dev console
-      "GMrS7OdO0cHCdb4pfRsm20wv",                  // The client secret from the dev console
-      "http://localhost:9001/oauth2callback",      // The redirect URL Google send users back to (must be the same as
-      // that configured in the developer console)
+      Configuration.faciatool.oauthClientId,       // The client ID from the dev console
+      Configuration.faciatool.oauthSecret,         // The client secret from the dev console
+      Configuration.faciatool.oauthCallback,       // The redirect URL Google send users back to (must be the same as
+                                                   // that configured in the developer console)
       Some("guardian.co.uk"),                      // Google App domain to restrict login
       Some(0)
     )
