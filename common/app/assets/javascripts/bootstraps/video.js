@@ -189,12 +189,17 @@ define([
 
                 videojs.plugin('adCountDown', modules.countDown);
 
+
                 $('.gu-video').each(function (el) {
                     var mediaId = el.getAttribute('data-media-id'),
                         vjs = videojs(el, {
                         controls: true,
                         autoplay: false,
                         preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
+                    });
+
+                    vjs.playlist({
+                        mediaType: 'audio'
                     });
 
                     vjs.ready(function () {
