@@ -1,6 +1,6 @@
 package conf
 
-import org.scalatest.{Suites, BeforeAndAfter, Matchers, FlatSpec}
+import org.scalatest.{Matchers, FlatSpec}
 import test.Fake
 
 class StaticTest extends FlatSpec with Matchers {
