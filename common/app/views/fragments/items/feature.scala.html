@@ -28,20 +28,18 @@
                         }
                     }
                 }
-                <div class="item__header">
-                    <h2 class="item__title">
-                        @if(trail.isBreaking){
-                            <span class="item__live-indicator">Breaking News</span>
-                        }
-                        @if(trail.isLive && !trail.isBreaking){
-                            <span class="item__live-indicator">Live</span>
-                        }
-                        @if(tone == "comment") {
-                            <span class="i i-quote-orange"></span>
-                        }
-                        @RemoveOuterParaHtml(trail.headline)
-                    </h2>
-                </div>
+                <h2 class="item__title">
+                    @if(trail.isBreaking){
+                        <span class="item__live-indicator">Breaking News</span>
+                    }
+                    @if(trail.isLive && !trail.isBreaking){
+                        <span class="item__live-indicator">Live</span>
+                    }
+                    @if(tone == "comment") {
+                        <span class="i i-quote-orange"></span>
+                    }
+                    @RemoveOuterParaHtml(trail.headline)
+                </h2>
             </a>
 
         </div>

@@ -5,13 +5,6 @@
         @include fs-headline(5, $size-only: true);
     }
 
-    .stars {
-        @include rem((
-            margin-top: $gs-baseline * .25,
-            margin-bottom: $gs-baseline * 1.5
-        ));
-    }
-
     @include mq($to: tablet) {
         .facia-slice-wrapper:first-child & {
             @include item--hide-tone-border;

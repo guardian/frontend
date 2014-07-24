@@ -190,18 +190,6 @@
         padding-right: $gs-gutter/2,
         margin-bottom: $gs-baseline/2
     ));
-
-    .stars {
-        @include rem((
-            margin-top: $gs-baseline * .25
-        ));
-
-        @include mq(tablet) {
-            @include rem((
-                margin-bottom: $gs-baseline * 1.25
-            ));
-        }
-    }
 }
 .item__link {
     display: block;
@@ -237,7 +225,6 @@
         display: none;
     }
 }
-
 .item__media-wrapper,
 .item__image-container {
     display: none;
