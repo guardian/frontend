@@ -9,15 +9,14 @@ import scala.concurrent.Future
 import views.support.RenderOtherStatus
 
 
-case class VideoPage(video: Video, storyPackage: List[Trail])
+case class MediaPage(media: Media, storyPackage: List[Trail])
 
-object VideoController extends Controller with Logging with ExecutionContexts {
+object MediaController extends Controller with Logging with ExecutionContexts {
 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request =>
     lookup(path) map {
-      case Left(model) if model.video.isExpired => RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
-      case Left(model) => renderVideo(model)
+      case Left(model) => renderMedia(model)
       case Right(other) => RenderOtherStatus(other)
     }
   }
@@ -25,7 +24,7 @@ object VideoController extends Controller with Logging with ExecutionContexts {
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
 
-    log.info(s"Fetching video: $path for edition $edition")
+    log.info(s"Fetching media: $path for edition $edition")
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
@@ -33,8 +32,11 @@ object VideoController extends Controller with Logging with ExecutionContexts {
 
     val result = response map { response =>
       val storyPackage = response.storyPackage map { Content(_) }
-      val videoOption = response.content filter { _.isVideo } map { Video(_) }
-      val model = videoOption map { video => VideoPage(video, storyPackage.filterNot(_.id == video.id)) }
+      val mediaOption: Option[Media] = response.content filter { content => content.isAudio || content.isVideo } map {
+        case a if a.isAudio => Audio(a)
+        case v => Video(v)
+      }
+      val model = mediaOption map { media => MediaPage(media, storyPackage.filterNot(_.id == media.id)) }
 
       ModelOrResult(model, response)
     }
@@ -42,9 +44,9 @@ object VideoController extends Controller with Logging with ExecutionContexts {
     result recover convertApiExceptions
   }
 
-  private def renderVideo(model: VideoPage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = () => views.html.video(model)
-    val jsonResponse = () => views.html.fragments.videoBody(model)
-    renderFormat(htmlResponse, jsonResponse, model.video, Switches.all)
+  private def renderMedia(model: MediaPage)(implicit request: RequestHeader): Result = {
+    val htmlResponse = () => views.html.media(model)
+    val jsonResponse = () => views.html.fragments.mediaBody(model)
+    renderFormat(htmlResponse, jsonResponse, model.media, Switches.all)
   }
 }

@@ -131,6 +131,9 @@ trait Elements {
   def mainVideo: Option[VideoElement] = videos.find(_.isMain).headOption
   lazy val hasMainVideo: Boolean = mainVideo.flatMap(_.videoAssets.headOption).isDefined
 
+  def mainAudio: Option[AudioElement] = audios.find(_.isMain).headOption
+  lazy val hasMainAudio: Boolean = mainAudio.flatMap(_.audioAssets.headOption).isDefined
+
   def mainEmbed: Option[EmbedElement] = embeds.find(_.isMain).headOption
   lazy val hasMainEmbed: Boolean = mainEmbed.flatMap(_.embedAssets.headOption).isDefined
 

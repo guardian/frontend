@@ -1,0 +1,50 @@
+@(page: MediaPage)(implicit request: RequestHeader)
+@import conf.Switches._
+
+@defining(page.media, page.storyPackage){ case (media, storyPackage) =>
+<div class="l-side-margins l-side-margins--layout-content">
+    <article class="content content--video tone-@media.visualTone"
+        itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
+
+        @fragments.headDefault(media)
+
+        <div class="gs-container">
+            <div class="content__main-column content__main-column--video">
+
+                <div class="media-primary player">
+
+                    <div class="gu-video-wrapper">
+                        <div class="u-responsive-ratio u-responsive-ratio--hd">
+                            @media match {
+                                case audio: Audio => { @fragments.media.audio(audio) }
+                                case video: Video => { @fragments.media.video(video) }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div data-component="body">
+                    <div class="video-standfirst">
+                        @fragments.standfirst(media)
+                    </div>
+                </div>
+
+                @fragments.contentMeta(media)
+
+                <div class="social-wrapper social-wrapper--bottom" data-component="share">
+                    @fragments.social(media, iconModifier = "white")
+                </div>
+
+            </div>
+
+            <div class="content__secondary-column content__secondary-column--video" aria-hidden="true">
+                <div class="js-video-components-container"></div>
+            </div>
+
+        </div>
+    </article>
+
+    @fragments.contentFooter(media, storyPackage, "video")
+
+    }
+</div>

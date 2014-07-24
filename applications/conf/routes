@@ -25,10 +25,8 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json       
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>            controllers.ImageContentController.render(path)
 
 # Video paths
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                           controllers.VideoController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                controllers.VideoController.render(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/audio/.*>.json                           controllers.AudioController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/audio/.*>                                controllers.AudioController.render(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                   controllers.MediaController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                        controllers.MediaController.render(path)
 
 
 # Interactive paths
