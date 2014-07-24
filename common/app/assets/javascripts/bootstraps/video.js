@@ -264,7 +264,8 @@ define([
         generateEndSlateUrl: function() {
             var seriesId = config.page.seriesId;
             var sectionId = config.page.section;
-            return (seriesId)  ? '/video/end-slate/series/' + seriesId + '.json' : '/video/end-slate/section/' + sectionId + '.json';
+            var url = (seriesId)  ? '/video/end-slate/series/' + seriesId : '/video/end-slate/section/' + sectionId;
+            return url + '.json?shortUrl=' + config.page.shortUrl;
         },
         initEndSlate: function(player) {
             var endSlate = new Component(),
