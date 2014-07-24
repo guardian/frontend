@@ -24,6 +24,11 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
     override def view(books: Seq[Book])(implicit request: RequestHeader): Html =
       views.html.books.bestsellersHigh(books)
   }
+  
+  object superHighRelevance extends Relevance[Book] {
+    override def view(books: Seq[Book])(implicit request: RequestHeader): Html =
+      views.html.books.bestsellersSuperHigh(books)
+  }
 
   private def renderBestsellers(relevance: Relevance[Book], format: Format) =
     MemcachedAction { implicit request =>
@@ -46,22 +51,8 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
 
   def bestsellersHighJson = renderBestsellers(highRelevance, jsonFormat)
   def bestsellersHighHtml = renderBestsellers(highRelevance, htmlFormat)
-
-  def singleBookJson(pageId: String) = MemcachedAction { implicit request =>
-    BookFinder.findByPageId(pageId) map {
-      case Some(book) => Cached(componentMaxAge) {
-        JsonComponent(views.html.books.singleBook(book))
-      }
-      case None => NoCache(JsonNotFound.apply())
-    }
-  }
-
-  def singleBookHtml(pageId: String) = MemcachedAction { implicit request =>
-    BookFinder.findByPageId(pageId) map {
-      case Some(book) => Cached(componentMaxAge) {
-        Ok(views.html.books.singleBook(book))
-      }
-      case None => NoCache(NotFound)
-    }
-  }
+  
+  def bestsellersSuperHighJson = renderBestsellers(superHighRelevance, jsonFormat)
+  def bestsellersSuperHighHtml = renderBestsellers(superHighRelevance, htmlFormat)
+  
 }
