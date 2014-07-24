@@ -1,30 +1,49 @@
-// Charset
-//
-// - ascii: 256 characters only, very small
-// - latin1: latin 1 character set
-// - original: full character set
-
+/**
+ * Charset
+ *
+ * - ascii: 256 characters only, very small
+ * - latin1: latin 1 character set
+ * - original: full character set
+ * 
+ * @type String
+ */
 $guss-webfonts-charset: 'original' !default;
 
-
-// Hinting {String}
-//
-// - on: larger file but better rendering in Windows
-// - off: smaller files, render well on HiDPI displays
-
+/**
+ * Hinting
+ *
+ * - on: larger file but better rendering in Windows
+ * - off: smaller files, render well on HiDPI displays
+ *
+ *  @type String
+ */
 $guss-webfonts-hinting: 'on' !default;
 
 
-// Location
-//
-// URL can be an absolute HTTP ('//pasteup.guim.co.uk/fonts/') or relative ('../')
-
+/**
+ * Base URL
+ * URL can be an absolute HTTP (`//pasteup.guim.co.uk/fonts/`) or relative (`../`)
+ *
+ * @type String
+ */
 $guss-webfonts-base-url: './' !default;
+
+/**
+ * Complete path
+ *
+ * @requires {variable} guss-webfonts-charset
+ * @requires {variable} guss-webfonts-hinting
+ *
+ * @type String
+ */
 $guss-webfonts-path: 'webfonts/hinting-#{$guss-webfonts-hinting}-#{$guss-webfonts-charset}/' !default;
 
 
-// Human-readable Font-weights
-
+/**
+ * Human-readable Font-weights
+ * 
+ * @type Map
+ */
 $guss-font-weights: (
     'thin':       100,
     'light':      200,
@@ -41,8 +60,18 @@ $guss-font-weights: (
 // Extra fonts
 // =============================================================================
 
+/**
+ * Extra fonts directory
+ * 
+ * @type String
+ */
 $guss-extras-directory: 'GuardianExtrasWeb' !default;
 
+/**
+ * Extra fonts list
+ * 
+ * @type List
+ */
 $guss-webfonts-extras: 'Guardian Compact Web',
                        'Guardian Titlepiece Web',
                        'Guardian Weekend Condensed Web' !default;
@@ -51,6 +80,11 @@ $guss-webfonts-extras: 'Guardian Compact Web',
 // Font registry
 // =============================================================================
 
+/**
+ * Font registry
+ * 
+ * @type Map
+ */
 $guss-webfonts: (
     'Guardian Agate Sans 1 Web': (
         (weight: 'regular', style: 'normal'),
