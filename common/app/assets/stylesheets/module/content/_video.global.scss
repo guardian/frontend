@@ -300,9 +300,3 @@
         }
     }
 }
-
-.content-footer--video {
-    @include rem((
-        margin-top: $gs-baseline
-    ));
-}

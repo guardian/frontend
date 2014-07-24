@@ -5,13 +5,13 @@
     <script>
     jQuery(function($) {
         $("#switchFronts").click(function() {
-            $('.facia-container').removeClass("facia-container--layout-article").addClass("facia-container--layout-front");
+            $('.facia-container').removeClass("facia-container--layout-content").addClass("facia-container--layout-front");
             $('#switchArticles').removeClass('current');
             $(this).addClass('current');
             return false;
         });
         $("#switchArticles").click(function() {
-            $('.facia-container').removeClass("facia-container--layout-front").addClass("facia-container--layout-article");
+            $('.facia-container').removeClass("facia-container--layout-front").addClass("facia-container--layout-content");
             $('#switchFronts').removeClass('current');
             $(this).addClass('current');
             return false;
@@ -79,7 +79,7 @@
 
         <h2>DFP Templates</h2>
     </div>
-    <div class="facia-container facia-container--layout-article facia-container--commercial">
+    <div class="facia-container facia-container--layout-content facia-container--commercial">
 
         <div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-name="merchandising-high" data-desktop="888,88" data-refresh="false" data-label="false" data-node-uid="9">
             <style type="text/css">
@@ -189,7 +189,7 @@
     </div>
 
 
-    <div class="facia-container facia-container--layout-article facia-container--commercial">
+    <div class="facia-container facia-container--layout-content facia-container--commercial">
         <div class="commercial commercial--dfp commercial--dfp-1234567890 commercial--dfp-multiple commercial--items-dfp-4" role="complementary">
                 <div class="facia-container__inner">
                     <div class="commercial__head container__title">
@@ -358,7 +358,7 @@
         <h3>Low relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/travel/offers.json", function( json ) {
@@ -372,7 +372,7 @@
         <h3>High relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/travel/offers-high.json", function( json ) {
@@ -387,7 +387,7 @@
         <h3>Low relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/jobs.json", function( json ) {
@@ -401,7 +401,7 @@
         <h3>High relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/jobs-high.json", function( json ) {
@@ -416,7 +416,7 @@
         <h3>Low relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/masterclasses.json", function( json ) {
@@ -430,7 +430,7 @@
         <h3>High relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/masterclasses-high.json", function( json ) {
@@ -445,7 +445,7 @@
         <h3>Low relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/soulmates/mixed.json", function( json ) {
@@ -459,7 +459,7 @@
         <h3>High relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/soulmates/mixed-high.json", function( json ) {
@@ -474,7 +474,7 @@
         <h3>Low relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/money/bestbuys.json", function( json ) {
@@ -488,7 +488,7 @@
         <h3>High relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/money/bestbuys-high.json", function( json ) {
@@ -503,7 +503,7 @@
         <h3>Low relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers.json", function( json ) {
@@ -517,7 +517,7 @@
         <h3>Medium relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-medium ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers-medium.json", function( json ) {
@@ -531,7 +531,7 @@
         <h3>High relevance</h3>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers-high.json", function( json ) {

@@ -146,7 +146,7 @@ define([
         },
         addLabel = function($slot) {
             if (shouldRenderLabel($slot)) {
-                $slot.prepend('<div class="ad-slot__label">Advertisement</div>');
+                $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
             }
         },
         removeLabel = function($slot) {
@@ -280,6 +280,7 @@ define([
                     '<div id="dfp-ad--{{name}}" ' +
                         'class="ad-slot ad-slot--dfp ad-slot--{{name}} {{types}}" ' +
                         'data-link-name="ad slot {{name}}" ' +
+                        'data-test-id="ad-slot-{{name}}" ' +
                         'data-name="{{name}}"' +
                         '{{sizeMappings}}></div>',
                     {

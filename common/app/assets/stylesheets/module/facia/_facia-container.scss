@@ -1,3 +1,6 @@
+.facia-container {
+    @include clearfix;
+}
 @mixin facia-container-head-common {
     .facia-container__inner {
         overflow: hidden;
@@ -126,8 +129,8 @@
         }
     }
 }
-@mixin facia-container--layout-article {
-    .facia-container--layout-article {
+@mixin facia-container--layout-content {
+    .facia-container--layout-content {
         .facia-container__inner {
             @include rem((
                 margin-bottom: $gs-baseline*2

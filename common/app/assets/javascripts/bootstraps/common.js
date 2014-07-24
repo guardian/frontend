@@ -22,7 +22,7 @@ define([
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
-    'common/modules/navigation/newNavigation',
+    'common/modules/navigation/navigation',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/ui/dropdowns',
@@ -68,7 +68,7 @@ define([
     images,
     Profile,
     Search,
-    newNavigation,
+    Navigation,
 
     Tabs,
     Toggles,
@@ -119,8 +119,8 @@ define([
             search.init(header);
         },
 
-        initialiseNewNavigation: function (config) {
-            newNavigation.init(config);
+        initialiseNavigation: function (config) {
+            Navigation.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -438,7 +438,7 @@ define([
             modules.upgradeImages();
             modules.showTabs();
             modules.initialiseTopNavItems(config);
-            modules.initialiseNewNavigation(config);
+            modules.initialiseNavigation(config);
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();

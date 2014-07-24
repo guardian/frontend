@@ -147,8 +147,8 @@ Comments.prototype.prerender = function() {
         });
 
         if (this.user.isStaff) {
-            $('.d-discussion').removeClass('d-discussion--not-staff');
-            $('.d-discussion').addClass('d-discussion--is-staff');
+            $('.d-discussion', this).removeClass('d-discussion--not-staff');
+            $('.d-discussion', this).addClass('d-discussion--is-staff');
         }
     }
 

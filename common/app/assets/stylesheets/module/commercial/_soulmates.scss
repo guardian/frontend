@@ -350,7 +350,7 @@ $c-soulmates-high: $c-neutral1;
     }
 }
 /* article */
-.facia-container--layout-article .commercial--soulmates {
+.facia-container--layout-content .commercial--soulmates {
     @include mq(tablet) {
         .lineitems {
             @include rem((
