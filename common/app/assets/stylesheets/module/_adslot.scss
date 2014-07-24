@@ -245,9 +245,6 @@
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {
     min-height: 88px;
-    @include rem((
-        margin-top: $gs-baseline
-    ));
 
     @include mq(wide) {
         .has-page-skin & {
@@ -265,6 +262,11 @@
     @include mq(desktop) {
         display: block;
     }
+}
+.ad-slot--commercial-component {
+    @include rem((
+        margin-top: $gs-baseline
+    ));
 }
 
 /**
