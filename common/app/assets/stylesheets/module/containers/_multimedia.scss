@@ -37,7 +37,7 @@
     }
     .facia-slice-wrapper--position-1 .facia-slice__item:first-child {
         .item__title {
-            @include fs-headline(2, $size-only: true);
+            @include fs-headline(3, $size-only: true);
         }
     }
     @include mq($to: tablet) {

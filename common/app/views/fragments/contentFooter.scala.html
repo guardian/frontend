@@ -10,7 +10,7 @@
         </div>
     }
 
-    @if(content.isArticle && !content.shouldHideAdverts) {
+    @if(!content.shouldHideAdverts) {
         <div class="facia-container facia-container--layout-content facia-container--commercial">
             @fragments.commercial.commercialComponent("merchandising-high", Seq("commercial-component-high"))
         </div>
@@ -32,7 +32,7 @@
         @fragments.mostPopularPlaceholder(content.section, content.visualTone)
     </div>
 
-    @if(content.isArticle && !content.shouldHideAdverts) {
+    @if(!content.shouldHideAdverts) {
         <div class="facia-container facia-container--layout-content facia-container--commercial">
             @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
         </div>
