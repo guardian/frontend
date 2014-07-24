@@ -271,6 +271,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
     lazy val configBeforePressTimeout: Int = 1000
 
+    lazy val oauthClientId: String = configuration.getMandatoryStringProperty("faciatool.oauth.clientid")
+    lazy val oauthSecret: String = configuration.getMandatoryStringProperty("faciatool.oauth.secret")
+    lazy val oauthCallback: String = configuration.getMandatoryStringProperty("faciatool.oauth.callback")
+
     //It's not possible to take a batch size above 10
     lazy val pressJobBatchSize: Int =
       Try(configuration.getStringProperty("faciapress.batch.size").get.toInt)
