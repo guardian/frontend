@@ -231,10 +231,7 @@ define([
                                 url: modules.getVastUrl()
                             });
                             if(/desktop|wide/.test(detect.getBreakpoint())) {
-                                player.endcard({
-                                    getRelatedContent: modules.fetchEndSlateContent,
-                                    getNextVid: function() { return []; }
-                                });
+                                modules.initEndSlate(player);
                             }
                         });
                     });
@@ -268,6 +265,20 @@ define([
             var seriesId = config.page.seriesId;
             var sectionId = config.page.section;
             return (seriesId)  ? '/video/end-slate/series/' + seriesId + '.json' : '/video/end-slate/section/' + sectionId + '.json';
+        },
+        initEndSlate: function(player) {
+            var endSlate = new Component(),
+                endState = 'vjs-has-ended';
+
+            endSlate.endpoint = modules.generateEndSlateUrl();
+            endSlate.fetch(player.el(), 'html');
+
+            player.on('ended', function() {
+                bonzo(player.el()).addClass(endState);
+            });
+            player.on('playing', function() {
+                bonzo(player.el()).removeClass(endState);
+            });
         },
         fetchEndSlateContent: function(callback) {
              ajax({
