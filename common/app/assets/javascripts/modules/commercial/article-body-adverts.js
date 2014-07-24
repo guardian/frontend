@@ -43,7 +43,7 @@ define([
 
             var breakpoint  = detect.getBreakpoint(),
                 rules = {
-                    minAbove: 250,
+                    minAbove: (/mobile|tablet/).test(breakpoint) ? 300 : 700,
                     minBelow: 300,
                     selectors: {
                         ' > h2': {minAbove: breakpoint === 'mobile' ? 20 : 0, minBelow: 250},

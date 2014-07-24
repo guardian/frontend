@@ -3,7 +3,7 @@
     @include rem((
         margin-bottom: $gs-baseline*3.5
     ));
-    @include fs-bodyCopy(3);
+    @include fs-bodyCopy(2);
 }
 
 .article__zone {
@@ -136,7 +136,7 @@
         @include f-headlineSans;
     }
     .from-content-api {
-        @include f-textsans;
+        @include f-textSans;
     }
 }
 

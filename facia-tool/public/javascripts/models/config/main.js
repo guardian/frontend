@@ -4,6 +4,8 @@ define([
     'knockout',
     'modules/vars',
     'modules/authed-ajax',
+    'modules/list-manager',
+    'modules/droppable',
     'utils/fetch-settings',
     'utils/update-scrollables',
     'utils/clean-clone',
@@ -11,15 +13,17 @@ define([
     'utils/find-first-by-id',
     'utils/terminate',
     'models/group',
-    'models/config/droppable',
     'models/config/front',
     'models/config/collection',
+    'models/config/new-items',
     'models/config/persistence'
 ], function(
     pageConfig,
     ko,
     vars,
     authedAjax,
+    listManager,
+    droppable,
     fetchSettings,
     updateScrollables,
     cleanClone,
@@ -27,9 +31,9 @@ define([
     findFirstById,
     terminate,
     Group,
-    droppable,
     Front,
     Collection,
+    newItems,
     persistence
 ) {
     return function() {
@@ -53,7 +57,6 @@ define([
 
         model.clipboard = new Group({
             parentType: 'Clipboard',
-            reflow: updateScrollables,
             keepCopy:  true
         });
 
@@ -143,8 +146,6 @@ define([
         }
 
         this.init = function() {
-            droppable.init();
-
             persistence.registerCallback(function () {
                 bootstrap({
                     force: true
@@ -163,6 +164,9 @@ define([
                 updateScrollables();
                 window.onresize = updateScrollables;
             });
+
+            listManager.init(newItems);
+            droppable.init();
         };
     };
 });

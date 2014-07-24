@@ -19,10 +19,10 @@ object JobsApi extends XmlAdsApi[Job] {
   protected def url = {
 
     /*
-     * Using London time because this appears to be how the URL is constructed.
+     * Using offset time because this appears to be how the URL is constructed.
      * With UTC time we lose the feed for an hour at midnight every day.
      */
-    val feedDate = new LocalDateTime(DateTimeZone.forID("Europe/London")).toString("yyyy-MM-dd")
+    val feedDate = new LocalDateTime(DateTimeZone.forOffsetHours(-1)).toString("yyyy-MM-dd")
 
     val urlTemplate = CommercialConfiguration.getProperty("jobs.api.url.template")
     urlTemplate map (_ replace("yyyy-MM-dd", feedDate))

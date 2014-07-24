@@ -6,6 +6,7 @@
 GET        /assets/internal/*file                                                              controllers.Assets.at(path="/public", file)
 GET        /assets/*path                                                                       dev.DevAssetsController.at(path)
 
+GET        /_healthcheck                                                                       conf.HealthCheck.healthcheck()
 
 # Travel offers
 GET        /commercial/travel/offers                                                           controllers.commercial.TravelOffers.travelOffersLowHtml

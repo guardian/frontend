@@ -16,6 +16,8 @@ object Management extends GuManagement {
 
   lazy val pages = List(
     new ManifestPage,
+
+    // NOTE - this is not currently used by load balancer, no need to replace it
     new UrlPagesHealthcheckManagementPage(
       "/uk",
       "/sport/2012/sep/23/world-road-race-championship-gilbert-cavendish",

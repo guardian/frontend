@@ -1,6 +1,8 @@
 /* global _: true */
 define([
     'modules/vars',
+    'knockout',
+    'utils/mediator',
     'utils/url-abs-path',
     'utils/as-observable-props',
     'utils/populate-observables',
@@ -8,13 +10,15 @@ define([
     'utils/deep-get',
     'utils/snap',
     'utils/human-time',
-    'models/group',
+    'modules/copied-article',
     'modules/authed-ajax',
     'modules/content-api',
-    'knockout'
+    'models/group'
 ],
     function (
         vars,
+        ko,
+        mediator,
         urlAbsPath,
         asObservableProps,
         populateObservables,
@@ -22,11 +26,11 @@ define([
         deepGet,
         snap,
         humanTime,
-        Group,
+        copiedArticle,
         authedAjax,
         contentApi,
-        ko
-        ){
+        Group
+    ) {
         function Article(opts) {
             var self = this;
 
@@ -34,8 +38,8 @@ define([
 
             this.id = ko.observable(opts.id);
 
-            this.parent = opts.parent;
-            this.parentType = opts.parentType;
+            this.group = opts.group;
+
             this.uneditable = opts.uneditable;
 
             this.frontPublicationDate = opts.frontPublicationDate;
@@ -123,24 +127,41 @@ define([
             this.populate(opts);
 
             // Populate supporting
-            if (this.parentType !== 'Article') {
+            if (this.group && this.group.parentType !== 'Article') {
                 this.meta.supporting = new Group({
-                    items: _.map((opts.meta || {}).supporting, function(item) {
-                        return new Article(_.extend(item, {
-                            parent: self,
-                            parentType: 'Article'
-                        }));
-                    }),
                     parent: self,
                     parentType: 'Article',
                     omitItem: self.save.bind(self)
                 });
 
-                contentApi.decorateItems(self.meta.supporting.items());
+                this.meta.supporting.items(_.map((opts.meta || {}).supporting, function(item) {
+                    return new Article(_.extend(item, {
+                        group: self.meta.supporting
+                    }));
+                }));
+
+                contentApi.decorateItems(this.meta.supporting.items());
             }
 
             this.setFrontPublicationTime();
         }
+
+        Article.prototype.copy = function() {
+            copiedArticle.set(this);
+        };
+
+        Article.prototype.paste = function () {
+            var sourceItem = copiedArticle.get();
+
+            if(!sourceItem || sourceItem.id === this.id()) { return; }
+
+            mediator.emit('collection:updates', {
+                sourceItem: sourceItem,
+                sourceGroup: sourceItem.group,
+                targetItem: this,
+                targetGroup: this.group
+            });
+        };
 
         Article.prototype.overrider = function(key) {
             return ko.computed({
@@ -163,7 +184,7 @@ define([
             };
         };
 
-        Article.prototype.populate = function(opts, validateMe) {
+        Article.prototype.populate = function(opts, validate) {
             var missingProps;
 
             populateObservables(this.props,  opts);
@@ -171,7 +192,7 @@ define([
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
 
-            if (validateMe) {
+            if (validate || opts.webUrl) {
                  missingProps = [
                     'webUrl',
                     'fields',
@@ -290,23 +311,23 @@ define([
             var timestamp,
                 itemMeta;
 
-            if (!this.parent) {
+            if (!this.group.parent) {
                 return;
             }
 
-            if (this.parentType === 'Article') {
-                this.parent._save();
+            if (this.group.parentType === 'Article') {
+                this.group.parent._save();
                 return;
             }
 
-            if (this.parentType === 'Collection') {
+            if (this.group.parentType === 'Collection') {
 
                 itemMeta = this.getMeta();
                 timestamp = Math.floor(new Date().getTime()/1000);
 
                 authedAjax.updateCollections({
                     update: {
-                        collection: this.parent,
+                        collection: this.group.parent,
                         item:       this.id(),
                         position:   this.id(),
                         itemMeta:   itemMeta,
@@ -315,7 +336,7 @@ define([
                     }
                 });
 
-                this.parent.setPending(true);
+                this.group.parent.setPending(true);
             }
         };
 

@@ -82,7 +82,7 @@ define([
                 it('should call \'getParaWithSpace\' with correct arguments', function() {
                     articleBodyAdverts.init(config);
                     expect(getParaWithSpaceStub).toHaveBeenCalledWith({
-                        minAbove: 250,
+                        minAbove: 700,
                         minBelow: 300,
                         selectors: {
                             ' > h2': {minAbove: 0, minBelow: 250},

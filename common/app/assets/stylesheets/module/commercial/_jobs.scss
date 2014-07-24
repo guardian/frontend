@@ -17,7 +17,7 @@
         margin: 0;
         text-transform: lowercase;
         color: $c-newsDefault;
-        @include fs-headline(3);
+        @include fs-headline(4);
     }
     .commercial__title__last-word {
         font-style: italic;
@@ -103,7 +103,7 @@
         color: $c-neutral1;
         display: block;
         border-top: 1px solid $c-neutral4;
-        @include fs-headline(1);
+        @include fs-headline(2);
         @include rem((
             padding-top: $gs-baseline/3,
         ));
@@ -152,7 +152,7 @@
         color: $c-newsDefault;
     }
     .commercial--jobs__job__title {
-        @include fs-headline(1);
+        @include fs-headline(2);
         margin: 0;
     }
     .commercial--jobs__job__logo {
@@ -168,7 +168,7 @@
     }
     .commercial--jobs__job__salary,
     .commercial--jobs__job__recruiter {
-        @include fs-textsans(1);
+        @include fs-textSans(1);
     }
     .commercial--jobs__job__salary {
         margin-bottom: 0;
@@ -256,7 +256,7 @@
     }
 }
 /* article */
-.facia-container--layout-article .commercial--jobs {
+.facia-container--layout-content .commercial--jobs {
     @include mq(tablet) {
         .commercial--jobs__sectors {
             float: left;

@@ -1,6 +1,5 @@
 @(page: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
-@import dev.HttpSwitch
 @import common.{LinkTo, Navigation, Edition}
 
 @*<!--
@@ -105,5 +104,5 @@ to apply any necessary changes to non-shared code there too.
             }
         </div>
     </div>
-    @fragments.nav.newNavigation(page)
+    @fragments.nav.navigation(page)
 </header>

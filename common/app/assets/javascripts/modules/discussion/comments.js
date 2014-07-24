@@ -147,8 +147,8 @@ Comments.prototype.prerender = function() {
         });
 
         if (this.user.isStaff) {
-            this.removeState('not-staff');
-            this.setState('is-staff');
+            $('.d-discussion', this.elem).removeClass('d-discussion--not-staff');
+            $('.d-discussion', this.elem).addClass('d-discussion--is-staff');
         }
     }
 
@@ -181,7 +181,7 @@ Comments.prototype.ready = function() {
         if (comment.attr('hidden')) {
             bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
         }
-        
+
         window.location.replace('#comment-'+ this.options.commentId);
     }
 
