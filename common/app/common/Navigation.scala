@@ -13,8 +13,6 @@ case class SectionLink(zone: String, title: String, breadcumbTitle: String, href
   def currentForIncludingAllTags(page: MetaData): Boolean = page.tags.exists(t => s"/${t.id}" == href)
 }
 
-case class Zone(name: SectionLink, sections: Seq[SectionLink])
-
 case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
   def currentFor(page: MetaData): Boolean = name.currentFor(page) ||
     links.exists(_.currentFor(page)) || exactFor(page)
@@ -221,48 +219,4 @@ object Navigation {
   def isEditionFront(topSection: NavItem): Boolean = ("/" :: Edition.editionFronts).contains(topSection.name.href)
 
   def localLinks(navigation: Seq[NavItem], metaData: MetaData): Seq[SectionLink] = Navigation.topLevelItem(navigation, metaData).map(_.links).getOrElse(List())
-}
-
-trait Zones extends Navigation {
-
-  val newsZone = Zone(news,
-    Seq(world, uk, us, politics, technology, environment, media, education, society, development,
-      science, law, blogs, inpictures)
-  )
-
-  val sportZone = Zone(sport,
-    Seq(football, cricket, sportblog, rugbyunion, motorsport, tennis, golf, rugbyLeague, horseracing)
-  )
-
-  val sportsZone = Zone(sports,
-    Seq(football, cricket, sportblog, rugbyunion, motorsport, tennis, golf, rugbyLeague, horseracing)
-  )
-
-  val cifZone = Zone(cif,
-    Seq(cifbelief, cifgreen)
-  )
-
-  val cultureZone = Zone(culture,
-    Seq(artanddesign, books, film, music, stage, televisionAndRadio)
-  )
-
-  val technologyZone = Zone(technology,
-    Seq(technologyblog, games, gamesblog, appsblog, askjack, internet, mobilephones, gadgets)
-  )
-
-  val businessZone = Zone(economy,
-    Seq(economics, useconomy, recession, investing, banking, marketforceslive, businessblog)
-  )
-
-  val moneyZone = Zone(money,
-    Seq(property, houseprices, pensions, savings, borrowing, insurance, careers, consumeraffairs)
-  )
-
-  val lifeandstyleZone = Zone(lifeandstyle,
-    Seq(fashion, foodanddrink, family, lostinshowbiz)
-  )
-
-  val travelZone = Zone(travel,
-    Seq(shortbreaks, hotels, resturants, budget)
-  )
 }
