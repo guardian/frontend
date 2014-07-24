@@ -310,9 +310,9 @@
     }
 
     .video-item__headline {
-        @include text-clamp(3, 18px);
+        @include text-clamp(3, get-line-height($fs-headlines, 1));
         @include rem((
-            height: 18px * 3
+            height: get-line-height($fs-headlines, 1) * 3
         ));
     }
 }

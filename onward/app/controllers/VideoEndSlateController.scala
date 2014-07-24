@@ -1,6 +1,5 @@
 package controllers
 
-import feed.MostViewedVideoAgent
 import play.api.mvc.{ Controller, Action, RequestHeader }
 import common._
 import model._
@@ -9,11 +8,8 @@ import implicits.Requests
 import conf.LiveContentApi
 import com.gu.openplatform.contentapi.ApiError
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
-import views.support.{TemplateDeduping}
 
 object VideoEndSlateController extends Controller with Logging with Paging with ExecutionContexts with Requests {
-
-  implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
   def renderSection(sectionId: String) = Action.async { implicit request =>
     val response = lookupSection(Edition(request), sectionId) map { seriesItems =>
