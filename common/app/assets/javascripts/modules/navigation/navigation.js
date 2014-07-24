@@ -7,7 +7,7 @@ define([
     bean,
     $
 ) {
-    var NewNavigation = {
+    var Navigation = {
         init: function(){
             this.addMegaNavMenu();
             this.enableMegaNavToggle();
@@ -37,5 +37,5 @@ define([
         }
     };
 
-    return NewNavigation;
+    return Navigation;
 });
