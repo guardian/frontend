@@ -1,6 +1,5 @@
 package controllers
 
-import controllers.SeriesController._
 import feed.MostViewedVideoAgent
 import play.api.mvc.{ Controller, Action, RequestHeader }
 import common._
@@ -10,7 +9,7 @@ import implicits.Requests
 import conf.LiveContentApi
 import com.gu.openplatform.contentapi.ApiError
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
-import views.support.{SeriesContainer, MultimediaContainer, TemplateDeduping}
+import views.support.{TemplateDeduping}
 
 object VideoEndSlateController extends Controller with Logging with Paging with ExecutionContexts with Requests {
 
@@ -18,7 +17,7 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
 
   def renderSection(sectionId: String) = Action.async { implicit request =>
     val response = lookupSection(Edition(request), sectionId) map { seriesItems =>
-      seriesItems map { trail => renderSectionTrails(trail, sectionId) }
+      seriesItems map { trail => renderSectionTrails(trail) }
     }
     response map { _ getOrElse NotFound }
   }
@@ -51,32 +50,34 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
       }
   }
 
-  private def renderSectionTrails(trails: Seq[Video], sectionId: String)(implicit request: RequestHeader) = {
-    val response = () => views.html.fragments.videoEndSlate(trails)
+  private def renderSectionTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
+    val sectionName = trails.headOption.map(t => t.sectionName).getOrElse("")
+    val response = () => views.html.fragments.videoEndSlate(trails.take(4), "section", s"More ${sectionName} videos")
     renderFormat(response, response, 1)
   }
 
   def renderSeries(seriesId: String) = Action.async { implicit request =>
     val response = lookupSeries(Edition(request), seriesId) map { seriesItems =>
-      seriesItems map { trail => renderSeriesTrails(trail, seriesId) }
+      seriesItems map { trail => renderSeriesTrails(trail) }
     }
     response map { _ getOrElse NotFound }
   }
 
-  private def lookupSeries( edition: Edition, seriesId: String)(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
+  private def lookupSeries( edition: Edition, seriesId: String)(implicit request: RequestHeader): Future[Option[Seq[Video]]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
     log.info(s"Fetching content in series: ${seriesId} the ShortUrl ${currentShortUrl}" )
 
     def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{shortUrl => !shortUrl.equals(currentShortUrl)}.getOrElse(false)
 
     val promiseOrResponse = LiveContentApi.item(seriesId, edition)
+      .tag("type/video")
       .showTags("all")
       .showFields("all")
       .response
       .map {
       response =>
         response.results filter { content => isCurrentStory(content) } map { result =>
-          Content(result)
+          Video(result)
         } match {
           case Nil => None
           case results => Some(results)
@@ -89,21 +90,8 @@ object VideoEndSlateController extends Controller with Logging with Paging with 
     }
   }
 
-  private def renderSeriesTrails(trails: Seq[Content], seriesId: String)(implicit request: RequestHeader) = {
-    val series = request.getQueryString("series").getOrElse("")
-    implicit val config = Config(id = series, href = Option(seriesId), displayName = Some("More from this series") )
-    val response = () => views.html.fragments.containers.series(Collection(trails.take(7)), SeriesContainer(), 0)
+  private def renderSeriesTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
+    val response = () => views.html.fragments.videoEndSlate(trails.take(4), "series", "More from this series")
     renderFormat(response, response, 1)
-  }
-
-  def renderMostViewed() = Action { implicit request =>
-
-    val videos = MostViewedVideoAgent.mostViewedVideo().take(6)
-
-    Cached(900) {
-      JsonComponent(
-        "html" -> views.html.fragments.mostViewedVideo(videos)
-      )
-    }
   }
 }
