@@ -281,15 +281,6 @@ define([
                 bonzo(player.el()).removeClass(endState);
             });
         },
-        fetchEndSlateContent: function(callback) {
-             ajax({
-                url: modules.generateEndSlateUrl(),
-                crossOrigin: true,
-                type: 'json'
-             }).then(function(resp){
-                 callback(bonzo.create(resp.html));
-             });
-        },
         initMoreInSection: function() {
             var section = new Component(),
                 parentEl = $('.js-onward')[0];
