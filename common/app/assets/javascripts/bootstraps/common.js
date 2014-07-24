@@ -441,6 +441,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.testCookie();
             modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
@@ -465,7 +466,6 @@ define([
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
             modules.initDiscussion();
-            modules.testCookie();
         }
         mediator.emit('page:common:ready', config, context);
     };
