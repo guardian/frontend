@@ -39,19 +39,6 @@
         }
     }
 
-    .stars {
-        @include rem((
-            margin-top: 0 - $gs-baseline * .75,
-            margin-bottom: $gs-baseline * 1.25
-        ));
-
-        @include mq(tablet) {
-            @include rem((
-                margin-bottom: $gs-baseline * 1.5
-            ));
-        }
-    }
-
 
     /* Meta
        ====================================================================== */

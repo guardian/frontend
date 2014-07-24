@@ -14,11 +14,6 @@
                 min-height: 86px
             ));
         }
-        .stars {
-            @include rem((
-                margin-bottom: $gs-baseline / 2
-            ));
-        }
         @include mq($to: tablet) {
             .facia-slice__item {
                 border-bottom: 1px solid #ffffff;
