@@ -3,9 +3,8 @@ package model
 import com.gu.openplatform.contentapi.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
+import ophan.SurgingContentAgent
 import org.joda.time.DateTime
-import org.scala_tools.time.Imports._
-import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
@@ -13,13 +12,12 @@ import play.api.libs.json.JsValue
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
-import ophan.SurgingContentAgent
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
   lazy val delegate: ApiContent = apiContent.delegate
 
-  lazy val publication: String = fields.get("publication").getOrElse("")
+  lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
@@ -72,7 +70,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val seriesMeta = {
     series.headOption.map( series =>
       Seq(("series", series.name), ("series-id", series.id))
-    )getOrElse(Nil)
+    )getOrElse Nil
   }
 
   private lazy val fields: Map[String, String] = delegate.safeFields
@@ -371,6 +369,10 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
     .orElse(mainPicture).orElse(videos.headOption)
 
+  override def hasInlineMerchandise = {
+    isbn.isDefined || super.hasInlineMerchandise
+  }
+
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = {
     val bookReviewIsbns = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
@@ -380,7 +382,8 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       ("isLiveBlog", isLiveBlog),
       ("inBodyInternalLinkCount", linkCounts.internal),
       ("inBodyExternalLinkCount", linkCounts.external),
-      ("shouldHideAdverts", shouldHideAdverts)
+      ("shouldHideAdverts", shouldHideAdverts),
+      ("hasInlineMerchandise", hasInlineMerchandise)
     ) ++ bookReviewIsbns
   }
 

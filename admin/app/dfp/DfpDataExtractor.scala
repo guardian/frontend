@@ -20,6 +20,14 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     }.distinct
   }
 
+  val inlineMerchandisingSponsorships: Seq[Sponsorship] = {
+    lineItems.withFilter { lineItem =>
+      lineItem.inlineMerchandisingTargettedTags.nonEmpty && lineItem.isCurrent
+    }.map { lineItem =>
+      Sponsorship(lineItem.inlineMerchandisingTargettedTags, lineItem.sponsor)
+    }.distinct
+  }
+
   val pageSkinSponsorships: Seq[PageSkinSponsorship] = {
     lineItems withFilter { lineItem =>
       lineItem.isPageSkin && lineItem.isCurrent
