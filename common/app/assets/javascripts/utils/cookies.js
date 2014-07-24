@@ -58,6 +58,10 @@ define(function () {
         }
     }
 
+    function addSessionCookie(name, value) {
+        document.cookie = name + '=' + value + '; path=/; domain=' + getShortDomain() + ';';
+    }
+
     function getCookieValues(name) {
         var cookieVals = [],
             nameEq = name + '=',
@@ -90,6 +94,7 @@ define(function () {
         cleanUp: cleanUp,
         cleanUpDuplicates: cleanUpDuplicates,
         add: add,
+        addSessionCookie: addSessionCookie,
         addForMinutes: addForMinutes,
         remove: remove,
         get: get

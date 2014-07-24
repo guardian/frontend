@@ -7,6 +7,7 @@ define([
     'common/utils/deferToLoad',
     'common/utils/ajax',
     'common/modules/userPrefs',
+    'common/utils/url',
     //Vendor libraries
     'bonzo',
     'bean',
@@ -53,6 +54,7 @@ define([
     deferToLoadEvent,
     ajax,
     userPrefs,
+    Url,
 
     bonzo,
     bean,
@@ -407,6 +409,13 @@ define([
                     discussionLoader.attachTo($('.discussion')[0]);
                 }
             });
+        },
+
+        testCookie: function() {
+            var queryParams = Url.getUrlVars();
+            if (queryParams.test) {
+                Cookies.addSessionCookie('GU_TEST', queryParams.test);
+            }
         }
     };
 
@@ -456,6 +465,7 @@ define([
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
             modules.initDiscussion();
+            modules.testCookie();
         }
         mediator.emit('page:common:ready', config, context);
     };
