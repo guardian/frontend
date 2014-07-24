@@ -3,12 +3,11 @@ define([
 ], function(
     config
 ) {
-
-    var outbrainUrl = (document.location.protocol) + 'widgets.outbrain.com/outbrain.js';
+    var outbrainUrl = (document.location.protocol) + '//widgets.outbrain.com/outbrain.js';
 
     function load() {
         if (config.switches.outbrain) {
-            return require(['js!' + outbrainUrl]);
+            return require(['js!' + outbrainUrl + '!exports=outbrain']);
         }
     }
 
