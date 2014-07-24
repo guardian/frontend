@@ -8,7 +8,7 @@ import com.gu.integration.test.config.WebdriverInitialiser.augmentWebDriver
 
 abstract class SeleniumTestSuite extends WebDriverFeatureSpec with Matchers {
 
-  override protected def startDriver(testName: String, extraCapabilities: Map[String, String] = Map()): WebDriver = {
-    augmentWebDriver(super.startDriver(testName, extraCapabilities))
+  override protected def startDriver(testName: String): WebDriver = {
+    augmentWebDriver(super.startDriver(testName))
   }
 }
