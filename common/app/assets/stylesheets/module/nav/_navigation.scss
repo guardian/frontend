@@ -520,8 +520,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
         vertical-align: top;
     }
     .navigation__scroll {
-        overflow-x: scroll;
-        -webkit-overflow-scrolling: touch;
+        @include mq($to: navigationBreakOnTwoLevels) {
+            overflow-x: scroll;
+            -webkit-overflow-scrolling: touch;
+        }
 
         &::-webkit-scrollbar {
             display: none;

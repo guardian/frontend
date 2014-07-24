@@ -29,7 +29,7 @@
         display: none;
         border: 0;
         color: #ffffff;
-        @include fs-headline(1, $size-only: true);
+        @include fs-headline(2, $size-only: true);
 
         .search__submit__cta {
             background-color: #68b8cb;
