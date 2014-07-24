@@ -4,7 +4,7 @@ import common.Logging
 import org.apache.commons.io.IOUtils
 import play.api.{ Mode, Play }
 import play.api.libs.json.{ JsString, Json, JsObject }
-import conf.Configuration
+import conf.{Switches, Configuration}
 import collection.mutable.{ Map => MutableMap }
 
 case class Asset(path: String) {
@@ -101,9 +101,29 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
   object js {
 
+    private def cleanRelativeJsPaths(s: String): String = {
+      // prevent googlebot trying to index relative path js files, eg;
+      // "../foo"
+      // "./foo"
+      // and any that are inside single quotes too
+      val regex = """["'](\.{1,2}\/){1,}\w*(\/){0,}\w*(\/)?['"]""".r
+
+      var newString = s
+
+      regex.findAllIn(s).foreach { pathToFix =>
+        newString = newString.replace(pathToFix, pathToFix.replace("./", ".\" + \"/\" + \""))
+      }
+
+      newString
+    }
+
     lazy val curl: String = {
       val url = Play.classloader(Play.current).getResource(s"assets/curl-domReady.js")
-      IOUtils.toString(url)
+      if (Switches.SeoBlockGooglebotFromJSPathsSwitch.isSwitchedOn) {
+        cleanRelativeJsPaths(IOUtils.toString(url))
+      } else {
+        IOUtils.toString(url)
+      }
     }
 
   }

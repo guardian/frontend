@@ -423,6 +423,12 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 9, 30)
   )
 
+  // google crawler switches
+  val SeoBlockGooglebotFromJSPathsSwitch = Switch("SEO Switches", "seo-block-googlebot-js-paths",
+    "If switched on, relative paths in JS files become concatenated string segments to stop googlebot following them",
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 29)
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -493,7 +499,8 @@ object Switches extends Collections {
     FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
     FaciaToolDraftContent,
-    GuShiftCookieSwitch
+    GuShiftCookieSwitch,
+    SeoBlockGooglebotFromJSPathsSwitch
   )
 
   val httpSwitches: List[Switch] = List(
