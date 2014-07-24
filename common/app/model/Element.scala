@@ -18,6 +18,7 @@ object Element {
     theDelegate.elementType match {
       case "image" => new ImageElement(theDelegate, elementIndex)
       case "video" => new VideoElement(theDelegate, elementIndex)
+      case "audio" => new AudioElement(theDelegate, elementIndex)
       case "embed" => new EmbedElement(theDelegate, elementIndex)
       case _ => new Element{
         lazy val delegate = theDelegate
@@ -60,6 +61,11 @@ trait VideoContainer extends Element {
   lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
 }
 
+trait AudioContainer extends Element {
+
+  lazy val audioAssets: List[AudioAsset] = delegate.assets.filter(_.assetType == "audio").map( v => AudioAsset(v))
+}
+
 trait EmbedContainer extends Element {
 
    lazy val embedAssets: Seq[EmbedAsset] = delegate.assets.filter(_.assetType == "embed").map(EmbedAsset(_))
@@ -67,4 +73,5 @@ trait EmbedContainer extends Element {
 
 class ImageElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer
 class VideoElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer with VideoContainer
+class AudioElement(val delegate: ApiElement, val index: Int) extends Element with AudioContainer
 class EmbedElement(val delegate: ApiElement, val index: Int) extends Element with EmbedContainer

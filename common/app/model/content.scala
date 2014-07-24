@@ -419,6 +419,12 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
     }.sorted
   }
 
+  lazy val audioEncodings: Seq[Encoding] = {
+    audioAssets.toList.collect {
+      case audio: AudioAsset => Encoding(audio.url.getOrElse(""), audio.mimeType.getOrElse(""))
+    }.sorted
+  }
+
   // if you change these rules make sure you update IMAGES.md (in this project)
   override def mainPicture: Option[ImageContainer] = (images ++ videos).find(_.isMain)
 
