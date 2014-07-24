@@ -1,30 +1,26 @@
 /* global _: true */
 define([
     'knockout',
-    'utils/parse-query-params',
-    'utils/url-abs-path',
-    'utils/remove-by-id',
-    'models/group'
+    'models/group',
+    'utils/mediator',
+    'utils/parse-query-params'
 ], function(
     ko,
-    parseQueryParams,
-    urlAbsPath,
-    removeById,
-    Group
+    Group,
+    mediator,
+    parseQueryParams
 ) {
-    var storage = window.localStorage,
-        storageKey ='gu.fronts-tool.drag-source';
 
-    window.addEventListener('dragover', function(event) {
-        event.preventDefault();
-    },false);
+    function init() {
+        var sourceGroup;
 
-    window.addEventListener('drop', function(event) {
-        event.preventDefault();
-    },false);
+        window.addEventListener('dragover', function(event) {
+            event.preventDefault();
+        },false);
 
-    function droppable(opts) {
-        var sourceList;
+        window.addEventListener('drop', function(event) {
+            event.preventDefault();
+        },false);
 
         ko.bindingHandlers.makeDropabble = {
             init: function(element) {
@@ -33,20 +29,20 @@ define([
                     var sourceItem = ko.dataFor(event.target);
 
                     if (_.isFunction(sourceItem.get)) {
-                        storage.setItem(storageKey, JSON.stringify(sourceItem.get()));
+                        event.dataTransfer.setData('sourceItem', JSON.stringify(sourceItem.get()));
                     }
-                    sourceList = ko.dataFor(element);
+                    sourceGroup = ko.dataFor(element);
                 }, false);
 
                 element.addEventListener('dragover', function(event) {
-                    var targetList = ko.dataFor(element),
+                    var targetGroup = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target);
 
                     event.preventDefault();
                     event.stopPropagation();
 
-                    targetList.underDrag(targetItem.constructor === Group);
-                    _.each(targetList.items(), function(item) {
+                    targetGroup.underDrag(targetItem.constructor === Group);
+                    _.each(targetGroup.items(), function(item) {
                         var underDrag = (item === targetItem);
                         if (underDrag !== item.state.underDrag()) {
                             item.state.underDrag(underDrag);
@@ -55,13 +51,13 @@ define([
                 }, false);
 
                 element.addEventListener('dragleave', function(event) {
-                    var targetList = ko.dataFor(element);
+                    var targetGroup = ko.dataFor(element);
 
                     event.preventDefault();
                     event.stopPropagation();
 
-                    targetList.underDrag(false);
-                    _.each(targetList.items(), function(item) {
+                    targetGroup.underDrag(false);
+                    _.each(targetGroup.items(), function(item) {
                         if (item.state.underDrag()) {
                             item.state.underDrag(false);
                         }
@@ -69,7 +65,7 @@ define([
                 }, false);
 
                 element.addEventListener('drop', function(event) {
-                    var targetList = ko.dataFor(element),
+                    var targetGroup = ko.dataFor(element),
                         targetItem = ko.dataFor(event.target),
                         id = event.dataTransfer.getData('Text'),
                         knownQueryParams = parseQueryParams(id, {
@@ -82,31 +78,28 @@ define([
                             excludeNamespace: true
                         }),
                         sourceItem,
-                        position,
-                        newItems,
                         groups,
-                        insertAt,
                         isAfter = false;
 
                     event.preventDefault();
                     event.stopPropagation();
 
-                    if (!targetList) { return; }
+                    if (!targetGroup) { return; }
 
-                    targetList.underDrag(false);
-                    _.each(targetList.items(), function(item) {
+                    targetGroup.underDrag(false);
+                    _.each(targetGroup.items(), function(item) {
                         item.state.underDrag(false);
                     });
 
                     // If the item isn't dropped onto an item, assume it's to be appended *after* the other items in this group,
                     if (targetItem.constructor === Group) {
-                        targetItem = _.last(targetList.items());
+                        targetItem = _.last(targetGroup.items());
                         if (targetItem) {
                             isAfter = true;
                         // or if there arent't any other items, after those in the first preceding group that contains items.
-                        } else if (targetList.parentType === 'Collection') {
-                            groups = targetList.parent.groups;
-                            for (var i = groups.indexOf(targetList) - 1; i >= 0; i -= 1) {
+                        } else if (targetGroup.parentType === 'Collection') {
+                            groups = targetGroup.parent.groups;
+                            for (var i = groups.indexOf(targetGroup) - 1; i >= 0; i -= 1) {
                                 targetItem = _.last(groups[i].items());
                                 if (targetItem) {
                                     isAfter = true;
@@ -116,24 +109,24 @@ define([
                         }
                     }
 
-                    position = targetItem && _.isFunction(targetItem.id) ? targetItem.id() : undefined;
-
                     if (!id) {
-                        alertBadContent();
+                        window.alert('Sorry, you can\'t add that to a front');
                         return;
                     }
 
-                    try {
-                        sourceItem = JSON.parse(storage.getItem(storageKey));
-                    } catch(e) {}
-                    storage.removeItem(storageKey);
+                    sourceItem = event.dataTransfer.getData('sourceItem');
 
-                    if (!sourceItem || sourceItem.id !== urlAbsPath(id)) {
-                        sourceItem = {meta: knownQueryParams};
-                        sourceList = undefined;
+                    if (sourceItem) {
+                        sourceItem = JSON.parse(sourceItem);
+                    } else {
                         id = id.split('?')[0] + (_.isEmpty(unknownQueryParams) ? '' : '?' + _.map(unknownQueryParams, function(val, key) {
                             return key + (val ? '=' + val : '');
                         }).join('&'));
+                        sourceItem = {
+                            id: id,
+                            meta: knownQueryParams
+                        };
+                        sourceGroup = undefined;
                     }
 
                     // Parse url from links such as http://www.google.co.uk/?param-name=http://www.theguardian.com/foobar
@@ -144,44 +137,20 @@ define([
                         }
                     });
 
-                    removeById(targetList.items, urlAbsPath(id));
-
-                    insertAt = targetList.items().indexOf(targetItem) + isAfter;
-                    insertAt = insertAt === -1 ? targetList.items().length : insertAt;
-
-                    newItems = opts.newItemsConstructor(id, sourceItem, targetList);
-
-                    if (!newItems[0]) {
-                        alertBadContent(id);
-                        return;
-                    }
-
-                    targetList.items.splice(insertAt, 0, newItems[0]);
-
-                    opts.newItemsValidator(newItems)
-                    .fail(function(err) {
-                        _.each(newItems, function(item) { targetList.items.remove(item); });
-                        alertBadContent(id, err);
-                    })
-                    .done(function() {
-                        if (_.isFunction(targetList.reflow)) {
-                            targetList.reflow();
-                        }
-
-                        if (!targetList.parent) {
-                            return;
-                        }
-
-                        opts.newItemsPersister(newItems, sourceList, targetList, position, isAfter);
+                    mediator.emit('collection:updates', {
+                        sourceItem: sourceItem,
+                        sourceGroup: sourceGroup,
+                        targetItem: targetItem,
+                        targetGroup: targetGroup,
+                        isAfter: isAfter
                     });
+
                 }, false);
             }
         };
     }
 
-    function alertBadContent(id, msg) {
-        window.alert(msg ? msg + '. ' + id : 'Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
-    }
-
-    return droppable;
+    return {
+        init: _.once(init)
+    };
 });
