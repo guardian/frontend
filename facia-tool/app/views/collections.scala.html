@@ -1,6 +1,6 @@
-@(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
+@(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity], avatarUrl: Option[String] = None)
 
-@admin_main("fronts", env, Some(priority), isAuthed = true, identity) {
+@admin_main("fronts", env, Some(priority), isAuthed = true, identity, avatarUrl) {
 
 <div style="display: none;" data-bind="visible: true">
 
