@@ -3,43 +3,43 @@
 # ~~~~
 
 # For dev machines
-GET        /assets/*path                                                            dev.DevAssetsController.at(path)
+GET         /assets/*path                                                       dev.DevAssetsController.at(path)
 
-GET        /humans.txt                                                              controllers.Assets.at(path="/public", file="humans.txt")
+GET        /humans.txt                                                          controllers.Assets.at(path="/public", file="humans.txt")
 
-GET        /index/subjects/$index<\w>                                               controllers.TagIndexController.keyword(index)
-GET        /index/contributors/$contributor<\w>                                     controllers.TagIndexController.contributor(contributor)
+GET        /index/keywords/$index<\w>                                           controllers.TagIndexController.keyword(index)
+GET        /index/contributors/$contributor<\w>                                 controllers.TagIndexController.contributor(contributor)
 
-GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                          controllers.AllIndexController.on(path)
-GET        /$path<.+>/latest                                                        controllers.LatestIndexController.latest(path)
-GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all                 controllers.AllIndexController.allOn(path, day, month, year)
-GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer               controllers.AllIndexController.newer(path, day, month, year)
-GET        /$path<.+>/all                                                           controllers.AllIndexController.all(path)
+GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
+GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all             controllers.AllIndexController.allOn(path, day, month, year)
+GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/newer           controllers.AllIndexController.newer(path, day, month, year)
+GET        /$path<.+>/all                                                       controllers.AllIndexController.all(path)
 
 # Gallery paths
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                    controllers.GalleryController.renderLightbox(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                             controllers.GalleryController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                                  controllers.GalleryController.render(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                controllers.GalleryController.renderLightbox(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                         controllers.GalleryController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                              controllers.GalleryController.render(path)
 
 # Image Content paths
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json           controllers.ImageContentController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>                controllers.ImageContentController.render(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>.json       controllers.ImageContentController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|picture|graphic)/.*>            controllers.ImageContentController.render(path)
 
 # Video paths
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                               controllers.VideoController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                    controllers.VideoController.render(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                           controllers.VideoController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                controllers.VideoController.render(path)
 
 # Interactive paths
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json        controllers.InteractiveController.renderInteractiveJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>             controllers.InteractiveController.renderInteractive(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json    controllers.InteractiveController.renderInteractiveJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>         controllers.InteractiveController.renderInteractive(path)
 
 # Note: culture|sport|australia are already routed to front.
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                     controllers.IndexController.renderTrailsJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                          controllers.IndexController.renderTrails(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                            controllers.IndexController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/rss                             controllers.IndexController.renderRss(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                                 controllers.IndexController.render(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails.json                 controllers.IndexController.renderTrailsJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/trails                      controllers.IndexController.renderTrails(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>.json                        controllers.IndexController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>/rss                         controllers.IndexController.renderRss(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?(/[\w\d-]*)?>                             controllers.IndexController.render(path)
 
 # Tag combiners
-GET        /$leftSide<[^+]+>+*rightSide/rss                                         controllers.IndexController.renderCombinerRss(leftSide, rightSide)
-GET        /$leftSide<[^+]+>+*rightSide                                             controllers.IndexController.renderCombiner(leftSide, rightSide)
+GET        /$leftSide<[^+]+>+*rightSide/rss                                     controllers.IndexController.renderCombinerRss(leftSide, rightSide)
+GET        /$leftSide<[^+]+>+*rightSide                                         controllers.IndexController.renderCombiner(leftSide, rightSide)
