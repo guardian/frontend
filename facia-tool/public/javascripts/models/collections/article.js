@@ -3,7 +3,6 @@ define([
     'modules/vars',
     'knockout',
     'utils/mediator',
-    'utils/copied-article',
     'utils/url-abs-path',
     'utils/as-observable-props',
     'utils/populate-observables',
@@ -11,6 +10,7 @@ define([
     'utils/deep-get',
     'utils/snap',
     'utils/human-time',
+    'modules/copied-article',
     'modules/authed-ajax',
     'modules/content-api',
     'models/group'
@@ -19,7 +19,6 @@ define([
         vars,
         ko,
         mediator,
-        copiedArticle,
         urlAbsPath,
         asObservableProps,
         populateObservables,
@@ -27,6 +26,7 @@ define([
         deepGet,
         snap,
         humanTime,
+        copiedArticle,
         authedAjax,
         contentApi,
         Group
@@ -151,7 +151,7 @@ define([
         };
 
         Article.prototype.paste = function () {
-            var sourceItem = copiedArticle.get(vars.model.collections());
+            var sourceItem = copiedArticle.get();
 
             if(!sourceItem || sourceItem.id === this.id()) { return; }
 

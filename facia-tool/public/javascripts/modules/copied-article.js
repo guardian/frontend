@@ -1,5 +1,9 @@
 /* global _: true */
-define([], function() {
+define([
+    'modules/vars'
+], function(
+    vars
+) {
     var storage = window.localStorage,
         storageKeyCopied ='gu.fronts-tool.copied';
 
@@ -13,7 +17,7 @@ define([], function() {
             }));
         },
 
-        get: function(fromCollections) {
+        get: function() {
             var obj = storage.getItem(storageKeyCopied),
                 sourceCollection;
 
@@ -21,7 +25,7 @@ define([], function() {
 
             obj = JSON.parse(obj);
 
-            sourceCollection = _.find(fromCollections, function(collection) {
+            sourceCollection = _.find(vars.model.collections(), function(collection) {
                 return collection.id === obj.groupParentId;
             });
 

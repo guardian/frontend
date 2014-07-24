@@ -2,13 +2,13 @@
 define([
     'knockout',
     'modules/vars',
-    'utils/mediator',
-    'utils/copied-article'
+    'modules/copied-article',
+    'utils/mediator'
 ], function(
     ko,
     vars,
-    mediator,
-    copiedArticle
+    copiedArticle,
+    mediator
 ) {
     function Group(opts) {
         var self = this;
@@ -16,19 +16,16 @@ define([
         opts = opts || {};
 
         this.items = ko.isObservable(opts.items) && opts.items.push ? opts.items : ko.observableArray(opts.items);
-
         this.underDrag  = ko.observable();
         this.index      = opts.index || 0;
         this.name       = opts.name || '';
-
         this.parent     = opts.parent;
         this.parentType = opts.parentType;
-
         this.keepCopy   = opts.keepCopy;
         this.reflow     = opts.reflow  || function() {};
 
         this.pasteItem = function() {
-            var sourceItem = copiedArticle.get(vars.model.collections());
+            var sourceItem = copiedArticle.get();
 
             if(!sourceItem) { return; }
 
