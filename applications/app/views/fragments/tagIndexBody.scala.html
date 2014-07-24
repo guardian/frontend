@@ -1,0 +1,48 @@
+@(page: model.TagIndexPage, subTitle: String, indexListing: Seq[Char])(implicit request: RequestHeader)
+
+@import common.LinkTo
+
+<div class="l-side-margins l-side-margins--layout-content">
+    <article id="article" class="content content--article tone-news tone-news--article section-info">
+        <header class="content__head tone-accent-border u-cf">
+            <div class="gs-container">
+                <div class="content__head__border-top"></div>
+                <div class="content__main-column">
+                    <div class="content__section">
+                        @subTitle
+                    </div>
+                    <h1 itemprop="headline" class="content__headline js-score">@page.indexCharacter.toUpper</h1>
+                </div>
+
+                <div class="content__standfirst" data-link-name="standfirst" data-component="standfirst">
+
+                </div>
+            </div>
+        </header>
+
+        <div class="gs-container">
+            <div class="content__main-column content__main-column--article">
+                <div class="page-listing">
+                    <ul class="inline-list">
+                    @for(char <- indexListing) {
+                        <li class="inline-list__item">
+                        @if(char != page.indexCharacter) {
+                            <a href="@LinkTo(char.toString)">@char.toUpper</a>
+                        } else {
+                            @char.toUpper
+                        }
+                        </li>
+                    }
+                    </ul>
+                </div>
+
+                <ul class="tag-list">
+                @for(tag <- page.tags) {
+                    <li class="tag-list__item"><a href="@LinkTo("/" + tag.id)">@tag.webTitle</a></li>
+                }
+                </ul>
+            </div>
+        </div>
+
+    </article>
+</div>

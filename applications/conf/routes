@@ -9,6 +9,9 @@ GET        /_healthcheck                                                        
 
 GET        /humans.txt                                                          controllers.Assets.at(path="/public", file="humans.txt")
 
+GET        /index/keywords/$index<\w>                                           controllers.TagIndexController.keyword(index)
+GET        /index/contributors/$contributor<\w>                                 controllers.TagIndexController.contributor(contributor)
+
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
 GET        /$path<.+>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\d\d>/all             controllers.AllIndexController.allOn(path, day, month, year)
