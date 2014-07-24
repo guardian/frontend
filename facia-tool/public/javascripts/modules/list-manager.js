@@ -53,15 +53,9 @@ define([
             alertBadContent(opts.sourceItem.id, err);
         })
         .done(function() {
-            if (_.isFunction(opts.targetGroup.reflow)) {
-                opts.targetGroup.reflow();
+            if (opts.targetGroup.parent) {
+                opts.newItemsPersister(newItems, opts.sourceGroup, opts.targetGroup, position, opts.isAfter);
             }
-
-            if (!opts.targetGroup.parent) {
-                return;
-            }
-
-            opts.newItemsPersister(newItems, opts.sourceGroup, opts.targetGroup, position, opts.isAfter);
         });
     }
 

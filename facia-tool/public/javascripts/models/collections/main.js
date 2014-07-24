@@ -67,7 +67,6 @@ define([
 
         model.clipboard = new Group({
             parentType: 'Clipboard',
-            reflow: updateScrollables,
             keepCopy:  true
         });
 

@@ -22,7 +22,6 @@ define([
         this.parent     = opts.parent;
         this.parentType = opts.parentType;
         this.keepCopy   = opts.keepCopy;
-        this.reflow     = opts.reflow  || function() {};
 
         this.pasteItem = function() {
             var sourceItem = copiedArticle.get();
@@ -40,7 +39,6 @@ define([
 
         this.omitItem   = function(item) {
             self.items.remove(item);
-            self.reflow();
             if (_.isFunction(opts.omitItem)) { opts.omitItem(item); }
         };
     }
