@@ -68,7 +68,7 @@
             display: block;
         }
         .item--imageadjust-boost,
-        .item--imageadjust-default .item__title {
+        .item--imageadjust-default .item__header {
             @include rem((
                 min-height: get-line-height($fs-headlines, 1) * 3
             ));
@@ -95,13 +95,13 @@
         }
     }
     .l-row--layout-m {
-        .item--imageadjust-default .item__title {
+        .item--imageadjust-default .item__header {
             @include rem((
                 min-height: get-line-height($fs-headlines, 1) * 4
             ));
         }
         .l-row__item--break-m {
-            .item--imageadjust-default .item__title {
+            .item--imageadjust-default .item__header {
                 @include rem((
                     min-height: get-line-height($fs-headlines, 2) * 3
                 ));
