@@ -1,15 +1,9 @@
 @(tags: Seq[model.Tag])(implicit request: RequestHeader)
 
-@import common.LinkTo
-@import views.support.ListTemplate.zipWithIsLast
+@import views.html.fragments.keywordList
 
 @if(tags.nonEmpty) {
     <div class="related-keywords">
-        <ul class="inline-list">
-            <li class="inline-list__item">See also:</li>
-            @zipWithIsLast(tags).map { case (tag, isLast) =>
-                <li class="inline-list__item"><a href="@LinkTo{/@tag.id}">@tag.name</a>@if(!isLast){, }</li>
-            }
-        </ul>
+        @keywordList(tags, title = "See also")
     </div>
 }

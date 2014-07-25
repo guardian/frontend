@@ -4,7 +4,7 @@
         margin: $gs-baseline 0
     ));
 
-    @include fs-textsans(4);
+    @include fs-data(4);
 
     @include mq(leftCol) {
         float: right;
