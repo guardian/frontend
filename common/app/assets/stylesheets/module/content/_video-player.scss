@@ -166,6 +166,7 @@ $vjs-control-height: $gs-baseline*4;
     transition-delay: .2s;
 
     .vjs-fullscreen & {
+        z-index: 2;
         transition-delay: .5s;
     }
 
