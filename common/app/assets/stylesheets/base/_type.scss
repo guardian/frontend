@@ -14,11 +14,12 @@ body {
 
 /**
  * Turn on kerning and ligatures
+ * Causes issues in Chrome at the moment
  */
 
 html,
 body {
-    -webkit-font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-feature-settings: normal;
     -moz-font-feature-settings: "kern" 1, "liga" 1;
     font-feature-settings: "kern" 1, "liga" 1;
 }
@@ -30,9 +31,9 @@ body {
 
 pre,
 code {
-    -webkit-font-feature-settings: "kern" 0, "liga" 0;
-    -moz-font-feature-settings: "kern" 0, "liga" 0;
-    font-feature-settings: "kern" 0, "liga" 0;
+    -webkit-font-feature-settings: normal;
+    -moz-font-feature-settings: normal;
+    font-feature-settings: normal;
 }
 
 
