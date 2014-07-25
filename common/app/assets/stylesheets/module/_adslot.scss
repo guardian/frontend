@@ -397,6 +397,7 @@
         padding: 0;
         margin: 0;
         float: left;
+        min-height: 0;
         @include rem((
             margin-top: 4px
         ));
@@ -436,6 +437,22 @@
         .has-page-skin .container--has-toggle & {
             @include rem((
                 margin-right: gs-span(1)
+            ));
+        }
+    }
+}
+.facia-container--sponsored .container:first-child,
+.facia-container--advertisement-feature .container:first-child,
+.container--sponsored,
+.container--advertisement-feature {
+    .container__header + .container__body {
+        @include rem((
+            margin-top: 104px
+        ));
+
+        @include mq(tablet) {
+            @include rem((
+                margin-top: 78px
             ));
         }
     }
