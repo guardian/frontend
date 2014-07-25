@@ -1,9 +1,9 @@
-package com.gu.integration.test.features
+package com.gu.integration.test.steps
 
 import com.gu.automation.support.TestLogging
 import org.openqa.selenium.WebDriver
 import com.gu.integration.test.pages.article.ArticlePage
-import com.gu.fronts.integration.test.PageLoader._
+import com.gu.integration.test.util.PageLoader._
 import org.scalatest.Matchers
 import com.gu.integration.test.pages.common.AdvertiseModule
 
@@ -43,6 +43,7 @@ case class ArticleSteps(implicit driver: WebDriver) extends TestLogging with Mat
   }
 
   def checkThatBottomMerchandisingAdIsDisplayedProperly(articlePage: ArticlePage) = {
+    //observe that this ad location is UK only so wont work when browser is from outside UK, such as SauceLabs etc
     logger.step("Check that bottom merchandising ad is displayed on the page")
     val bottomMerchandisingAd = articlePage.bottomMerchandisingAdModule
     bottomMerchandisingAd.adLabel.isDisplayed() should be (true)
