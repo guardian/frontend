@@ -16,30 +16,38 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   val maxAuthAge: Long = if (Play.isDev) 10.minutes.toSeconds else 0
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "antiForgeryToken"
-  val googleAuthConfig =
-    GoogleAuthConfig(
-      Configuration.faciatool.oauthClientId,       // The client ID from the dev console
-      Configuration.faciatool.oauthSecret,         // The client secret from the dev console
-      Configuration.faciatool.oauthCallback,       // The redirect URL Google send users back to (must be the same as
-                                                   // that configured in the developer console)
-      Some("guardian.co.uk"),                      // Google App domain to restrict login
-      Some(0)
-    )
+  val forbiddenNoCredentials = Forbidden("You do not have OAuth credentials set")
+  val googleAuthConfig: Option[GoogleAuthConfig] = Configuration.faciatool.oauthCredentials.map { cred =>
+      GoogleAuthConfig(
+        cred.oauthClientId,     // The client ID from the dev console
+        cred.oauthSecret,       // The client secret from the dev console
+        cred.oauthCallback,     // The redirect URL Google send users back to (must be the same as
+                                // that configured in the developer console)
+        Some("guardian.co.uk"), // Google App domain to restrict login
+        Some(0)
+      )
+  }
 
   // this is the only place we use LoginAuthAction - to prevent authentication redirect loops
   def login = Action { request =>
-    val error = request.flash.get("error")
-    Ok(views.html.auth.login(error, "Test"))
+    googleAuthConfig.map { _ =>
+        val error = request.flash.get("error")
+        Ok(views.html.auth.login(error, "Test"))
+    }.getOrElse(forbiddenNoCredentials)
   }
 
   /*
   Redirect to Google with anti forgery token (that we keep in session storage - note that flashing is NOT secure)
    */
   def loginAction = Action.async { implicit request =>
-    val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
-    GoogleAuth.redirectToGoogle(googleAuthConfig, antiForgeryToken).map {
-      _.withSession { request.session + (ANTI_FORGERY_KEY -> antiForgeryToken) }
-    }
+    googleAuthConfig.map { config =>
+        val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
+        GoogleAuth.redirectToGoogle(config, antiForgeryToken).map {
+          _.withSession {
+            request.session + (ANTI_FORGERY_KEY -> antiForgeryToken)
+          }
+        }
+    }.getOrElse(Future.successful(forbiddenNoCredentials))
   }
 
   /*
@@ -48,38 +56,41 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   will return a Future[UserIdentity] if the authentication is successful. If unsuccessful then the Future will fail.
    */
   def oauth2Callback = Action.async { implicit request =>
-    request.session.get(ANTI_FORGERY_KEY) match {
-      case None =>
-        Future.successful(Redirect(routes.OAuthLoginController.login())
-          .withNewSession
-          .flashing("error" -> "Anti forgery token missing in session")
-        )
-      case Some(token) =>
-        GoogleAuth.executeGoogleAuth(googleAuthConfig, token).map { googleAuthResult: GoogleAuthResult =>
-        // We store the URL a user was trying to get to in the LOGIN_ORIGIN_KEY in AuthAction
-        // Redirect a user back there now if it exists
-          val identity: UserIdentity = googleAuthResult.userIdentity
-          val redirect = request.session.get(LOGIN_ORIGIN_KEY) match {
-            case Some(url) => Redirect(url)
-            case None => Redirect(routes.FaciaToolController.priorities())
-          }
-          // Store the JSON representation of the identity in the session - this is checked by AuthAction later
-          val sessionAdd: Seq[(String, String)] = Seq(
-            Option((UserIdentity.KEY, Json.toJson(identity).toString())),
-            Option((Configuration.cookies.lastSeenKey, DateTime.now.toString())),
-            googleAuthResult.userInfo.picture.map("avatarUrl" -> _)
-          ).flatten
-          redirect
-            .addingToSession(sessionAdd:_*)
-            .removingFromSession(ANTI_FORGERY_KEY, LOGIN_ORIGIN_KEY)
-        } recover {
-          case t =>
-            // you might want to record login failures here - we just redirect to the login page
-            Redirect(routes.OAuthLoginController.login())
-              .withSession(request.session - ANTI_FORGERY_KEY)
-              .flashing("error" -> s"Login failure: ${t.toString}")
+    googleAuthConfig.map { config =>
+        request.session.get(ANTI_FORGERY_KEY) match {
+          case None =>
+            Future.successful(Redirect(routes.OAuthLoginController.login())
+              .withNewSession
+              .flashing("error" -> "Anti forgery token missing in session")
+            )
+          case Some(token) =>
+            GoogleAuth.executeGoogleAuth(config, token).map {
+              googleAuthResult: GoogleAuthResult =>
+              // We store the URL a user was trying to get to in the LOGIN_ORIGIN_KEY in AuthAction
+              // Redirect a user back there now if it exists
+                val identity: UserIdentity = googleAuthResult.userIdentity
+                val redirect = request.session.get(LOGIN_ORIGIN_KEY) match {
+                  case Some(url) => Redirect(url)
+                  case None => Redirect(routes.FaciaToolController.priorities())
+                }
+                // Store the JSON representation of the identity in the session - this is checked by AuthAction later
+                val sessionAdd: Seq[(String, String)] = Seq(
+                  Option((UserIdentity.KEY, Json.toJson(identity).toString())),
+                  Option((Configuration.cookies.lastSeenKey, DateTime.now.toString())),
+                  googleAuthResult.userInfo.picture.map("avatarUrl" -> _)
+                ).flatten
+                redirect
+                  .addingToSession(sessionAdd: _*)
+                  .removingFromSession(ANTI_FORGERY_KEY, LOGIN_ORIGIN_KEY)
+            } recover {
+              case t =>
+                // you might want to record login failures here - we just redirect to the login page
+                Redirect(routes.OAuthLoginController.login())
+                  .withSession(request.session - ANTI_FORGERY_KEY)
+                  .flashing("error" -> s"Login failure: ${t.toString}")
+            }
         }
-    }
+    }.getOrElse(Future.successful(forbiddenNoCredentials))
   }
 
   def logout = Action { implicit request =>
