@@ -9,7 +9,7 @@
     text-align: center; // prevents poster from loading to left then centering
 }
 
-.gu-video-wrapper {
+.gu-media-wrapper {
     background: #000000;
     @include rem((
         margin-bottom: $gs-baseline * 1.5
@@ -31,6 +31,7 @@
 $vjs-control-colour: rgba(25, 25, 25, .8);
 $vjs-control-height: $gs-baseline*4;
 
+
 .vjs-tech {
     cursor: pointer;
 
@@ -43,10 +44,21 @@ $vjs-control-height: $gs-baseline*4;
     }
 }
 
-.gu-video { // aspect ratio fix (this element gets given a fixed height by video.js)
+.gu-media {
     width: auto !important;
+}
+.gu-media--video { // aspect ratio fix (this element gets given a fixed height by video.js)
     height: auto !important;
     cursor: pointer;
+}
+.gu-media-wrapper--audio {
+    @include rem((
+        height: $vjs-control-height
+    ));
+}
+.gu-media--audio {
+    position: relative;
+    height: 100% !important;
 }
 
 .vjs-big-play-button {
@@ -59,6 +71,9 @@ $vjs-control-height: $gs-baseline*4;
     @include box-sizing(border-box);
     text-align: center;
 
+    .gu-media--audio & {
+        display: none;
+    }
     .vjs-has-started & {
         @include rem((
             padding-bottom: $vjs-control-height
@@ -94,7 +109,7 @@ $vjs-control-height: $gs-baseline*4;
 
         background-color: rgba(51, 51, 51, .8);
 
-        .gu-video-wrapper:hover & {
+        .gu-media-wrapper:hover & {
             background-color: $c-mediaDefault;
         }
 
@@ -114,7 +129,7 @@ $vjs-control-height: $gs-baseline*4;
             margin-top: -.9em;
             margin-left: 2.2em;
 
-            .gu-video-wrapper:hover & {
+            .gu-media-wrapper:hover & {
                 border-left-color: #333333;
             }
         }
@@ -159,19 +174,23 @@ $vjs-control-height: $gs-baseline*4;
     @include fs-data(2);
     font-weight: bold;
     @include rem((
-        height: $vjs-control-height,
-        bottom: $gs-baseline*-5
+        height: $vjs-control-height
     ));
     @include transition(bottom .8s);
     transition-delay: .2s;
 
+    .gu-media--video & {
+        @include rem((
+            bottom: $gs-baseline*-5
+        ));
+    }
     .vjs-fullscreen & {
         z-index: 2;
         transition-delay: .5s;
     }
 
-    .gu-video-wrapper:hover .vjs-playing:not(.vjs-fullscreen) &,
-    .gu-video-wrapper:hover .vjs-fullscreen.vjs-mousemoved &,
+    .gu-media-wrapper:hover .vjs-playing:not(.vjs-fullscreen) &,
+    .gu-media-wrapper:hover .vjs-fullscreen.vjs-mousemoved &,
     .vjs-paused & {
         bottom: 0;
         @include transition(bottom 0s);
@@ -246,10 +265,13 @@ $vjs-control-height: $gs-baseline*4;
     float: right;
     box-sizing: border-box;
     @include rem((
-        margin: 8px
+        margin: 8px 8px 8px 0
     ));
-
     @include icon(expand-white);
+
+    .gu-media--audio & {
+        display: none;
+    }
     &:hover {
         @include icon(expand-yellow);
     }
@@ -316,7 +338,8 @@ $vjs-progress-inset-bottom: 4px;
     float: right;
     @include rem((
         width: $gs-gutter*5,
-        margin-top: $gs-baseline * 1.5
+        margin-top: $gs-baseline * 1.5,
+        margin-right: 8px
     ));
     position: relative;
     height: 100%;
@@ -403,6 +426,10 @@ $vjs-progress-inset-bottom: 4px;
     width: 100%;
     top: 40%;
     display: none;
+
+    .gu-media--audio {
+        display: none;
+    }
     .vjs-error & {
         display: block;
     }
@@ -488,7 +515,7 @@ $vjs-progress-inset-bottom: 4px;
     @include transition(top .8s);
     transition-delay: .2s;
 
-    .gu-video-wrapper:hover &,
+    .gu-media-wrapper:hover &,
     .vjs-paused & {
         top: 0;
         @include transition(top 0s);

@@ -3,7 +3,7 @@
 
 @defining(page.media, page.storyPackage){ case (media, storyPackage) =>
 <div class="l-side-margins l-side-margins--layout-content">
-    <article class="content content--video tone-@media.visualTone"
+    <article class="content content--media tone-@media.visualTone"
         itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
 
         @fragments.headDefault(media)
@@ -13,21 +13,22 @@
 
                 <div class="media-primary player">
 
-                    <div class="gu-video-wrapper">
-                        <div class="u-responsive-ratio u-responsive-ratio--hd">
-                            @media match {
-                                case audio: Audio => { @fragments.media.audio(audio) }
-                                case video: Video => { @fragments.media.video(video) }
-                            }
-                        </div>
-                    </div>
+                    @media match {
+                        case audio: Audio => { @fragments.media.audio(audio) }
+                        case video: Video => { @fragments.media.video(video) }
+                    }
                 </div>
 
-                <div data-component="body">
-                    <div class="video-standfirst">
-                        @fragments.standfirst(media)
-                    </div>
-                </div>
+                @media match {
+                    case v: Video => {
+                        <div data-component="body">
+                            <div class="video-standfirst">
+                                @fragments.standfirst(media)
+                            </div>
+                        </div>
+                    }
+                    case _ => { }
+                }
 
                 @fragments.contentMeta(media)
 
