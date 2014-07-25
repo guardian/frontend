@@ -274,7 +274,8 @@ define([
                 a       : audienceScience.getSegments(),
                 at      : cookies.get('adtest') || '',
                 gdncrm  : userAdTargeting.getUserSegments(),
-                ab      : ab.makeOmnitureTag()
+                ab      : ab.makeOmnitureTag(),
+                co      : parseContributors(page.author)
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         createAdSlot = function(name, types, keywords) {
@@ -310,6 +311,12 @@ define([
                 .split(',').map(function (keyword) {
                     return keyword.split('/').pop();
                 });
+        };
+        parseContributors = function(contributors) {
+            var contributorArray = parseKeywords(contributors);
+            return contributorArray.map(function(contrib) {
+               return keywords.format(contrib);
+            });
         };
 
     /**
