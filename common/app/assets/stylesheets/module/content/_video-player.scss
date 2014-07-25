@@ -133,8 +133,10 @@ $vjs-control-height: $gs-baseline*4;
     left: 50%;
     margin-left: -23px;
     margin-top: -15px;
+    display: none;
 
-    .vjs-using-native-controls & {
+    .vjs-using-native-controls &,
+    .vjs-paused & {
         display: none !important;
     }
 
