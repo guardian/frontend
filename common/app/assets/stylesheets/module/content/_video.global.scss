@@ -80,28 +80,7 @@
 
     .content__headline:before {
         content: '';
-        @include icon(video-icon);
         @include background-size(auto 100%);
-        @include rem((
-            margin-right: $gs-gutter/3,
-            height: 20px !important,
-            width: 34px !important
-        ));
-
-        @include mq(mobileLandscape) {
-            @include rem((
-                height: 25px !important,
-                width: 40px !important,
-                margin-right: $gs-gutter/2
-            ));
-        }
-
-        @include mq(tablet) {
-            @include rem((
-                height: 27px !important,
-                width: 43px !important
-            ));
-        }
     }
 
     .social-wrapper {
@@ -175,6 +154,60 @@
                 height: $video-most-viewed-container
             ));
             border-left: 1px solid $c-neutral2;
+        }
+    }
+}
+.content__headline {
+    &:before {
+        @include rem((
+            height: 20px !important,
+            margin-right: $gs-gutter/3
+        ));
+
+        @include mq(mobileLandscape) {
+            @include rem((
+                height: 25px !important,
+                margin-right: $gs-gutter/2
+            ));
+        }
+        @include mq(tablet) {
+            @include rem((
+                height: 27px !important,
+            ));
+        }
+    }
+    .content--media--audio &:before {
+        @include icon(volume-high-yellow);
+        @include rem((
+            width: 24px !important,
+        ));
+
+        @include mq(mobileLandscape) {
+            @include rem((
+                width: 30px !important,
+            ));
+        }
+        @include mq(tablet) {
+            @include rem((
+                width: 33px !important
+            ));
+        }
+    }
+    .content--media--video &:before {
+        @include icon(video-icon);
+        @include rem((
+            width: 34px !important,
+        ));
+
+        @include mq(mobileLandscape) {
+            @include rem((
+                width: 40px !important,
+            ));
+        }
+        @include mq(tablet) {
+            @include rem((
+                width: 43px !important
+            ));
         }
     }
 }

@@ -427,10 +427,7 @@ $vjs-progress-inset-bottom: 4px;
     top: 40%;
     display: none;
 
-    .gu-media--audio {
-        display: none;
-    }
-    .vjs-error & {
+    .gu-media--video.vjs-error & {
         display: block;
     }
     > div {
