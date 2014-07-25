@@ -9,7 +9,6 @@ import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import conf.Configuration
 import tools.FaciaApi
 import model.{NoCache, Cached}
-import com.gu.googleauth.UserIdentity
 import services._
 import auth.ExpiringActions
 
@@ -17,18 +16,18 @@ import auth.ExpiringActions
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
 
   def priorities() = ExpiringActions.ExpiringAuthAction { request =>
-    val identity = UserIdentity.fromRequestHeader(request).get
+    val identity = request.identity.get
     Cached(60) { Ok(views.html.priority(Configuration.environment.stage, "", Option(identity))) }
   }
 
   def collectionEditor(priority: String) = ExpiringActions.ExpiringAuthAction { request =>
-    val identity = UserIdentity.fromRequestHeader(request).get
+    val identity = request.identity.get
     val avatarUrl: Option[String] = request.session.get("avatarUrl")
     Cached(60) { Ok(views.html.collections(Configuration.environment.stage, priority, Option(identity), avatarUrl)) }
   }
 
   def configEditor(priority: String) = ExpiringActions.ExpiringAuthAction { request =>
-    val identity = UserIdentity.fromRequestHeader(request).get
+    val identity = request.identity.get
     Cached(60) { Ok(views.html.config(Configuration.environment.stage, priority, Option(identity))) }
   }
 
@@ -58,7 +57,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
             ConfigAgent.refreshWith(json)
           }
 
-          val identity = UserIdentity.fromRequestHeader(request).get
+          val identity = request.identity.get
           UpdateActions.putMasterConfig(update, identity)
           Ok
         }
@@ -77,7 +76,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def publishCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
-    val identity = UserIdentity.fromRequestHeader(request).get
+    val identity = request.identity.get
     FaciaToolMetrics.DraftPublishCount.increment()
     val block = FaciaApi.publishBlock(id, identity)
     block foreach { b =>
@@ -89,7 +88,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def discardCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
-    val identity = UserIdentity.fromRequestHeader(request).get
+    val identity = request.identity.get
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
       UpdateActions.archiveDiscardBlock(id, b, identity)
@@ -103,7 +102,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     NoCache {
       request.body.asJson flatMap(_.asOpt[CollectionMetaUpdate]) map {
         case update: CollectionMetaUpdate => {
-          val identity = UserIdentity.fromRequestHeader(request).get
+          val identity = request.identity.get
           UpdateActions.updateCollectionMeta(id, update, identity)
           ContentApiPush.notifyContentApi(Set(id))
           Ok
@@ -118,7 +117,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     NoCache {
       request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
         case update: Map[String, UpdateList] =>
-          val identity: UserIdentity = UserIdentity.fromRequestHeader(request).get
+          val identity = request.identity.get
           val updatedCollections: Map[String, Block] = update.collect {
             case ("update", updateList) =>
               UpdateActions.updateCollectionList(updateList.id, updateList, identity).map(updateList.id -> _)
