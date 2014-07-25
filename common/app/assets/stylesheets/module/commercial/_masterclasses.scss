@@ -18,7 +18,7 @@
         margin: 0;
         text-transform: lowercase;
         color: $c-newsDefault;
-        @include fs-headline(2);
+        @include fs-headline(3);
         float: none;
     }
     .commercial__title__last-word {
@@ -262,7 +262,7 @@
     }
 }
 /* article */
-.facia-container--layout-article .commercial--masterclasses {
+.facia-container--layout-content .commercial--masterclasses {
     @include mq(tablet) {
         .commercial__home-link {
             @include rem((

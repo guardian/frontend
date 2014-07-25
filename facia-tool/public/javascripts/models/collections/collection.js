@@ -72,7 +72,7 @@ define([
 
         return _.map(_.isArray(groupNames) ? groupNames : [undefined], function(name, index) {
             return new Group({
-                group: index,
+                index: index,
                 name: name,
                 parent: self,
                 parentType: 'Collection',
@@ -209,13 +209,13 @@ define([
         });
 
         _.each(list, function(item) {
-            (_.find(self.groups, function(g){
-                return (parseInt((item.meta || {}).group, 10) || 0) === g.group;
-            }) || self.groups[0])
-            .items.push(
+            var group = _.find(self.groups, function(g) {
+                return (parseInt((item.meta || {}).group, 10) || 0) === g.index;
+            }) || self.groups[0];
+
+            group.items.push(
                 new Article(_.extend(item, {
-                    parent: self,
-                    parentType: 'Collection'
+                    group: group
                 }))
             );
         });

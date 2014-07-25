@@ -23,7 +23,7 @@ a {
     margin: 2em;
 }
 
-@include guss-generate-colour-classes($property: background, $prefix: b-);
+@include guss-generate-colour-classes($property: background-color, $prefix: b-);
 
 [class^=b-] {
     display: inline-block;
@@ -38,6 +38,15 @@ a {
     box-shadow: 0 5px 9px rgba(#000000, .3);
     color: #333333;
 }
+.colour-name,
+.colour-value {
+    font-size: 1.125em;
+    width: 90%;
+    display: inline-block;
+}
+.colour-name {
+    margin-top: calc(50% - 2.75em);
+}
 
 @mixin show-colour-meta($palette: $guss-colours, $prefix: b-) {
     @each $name, $color in $palette {
@@ -47,18 +56,9 @@ a {
                 font-weight: 200;
                 color: #ffffff;
             }
-            &:before,
-            &:after {
-                font-size: 1.125em;
-                width: 90%;
-                display: inline-block;
-            }
             &:before {
-                margin-top: calc(50% - 1.5em);
+                visibility: hidden;
                 content: "#{$name}";
-            }
-            &:after {
-                content: "#{$color}";
             }
         }
     }

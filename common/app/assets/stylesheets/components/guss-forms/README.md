@@ -23,7 +23,7 @@ bower install guss-forms --save
 - Install Bower dependencies: `bower install --save`
 - Add the element to the `demo/index.html` page
 - Edit `_forms.scss`
-- Compile styles using `sass demo/styles.scss:demo/styles.css`
+- Compile styles using `sass demo/demo.scss:demo/demo.css`
 
 ### Commit and deploy
 

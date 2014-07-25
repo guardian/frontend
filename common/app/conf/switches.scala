@@ -316,6 +316,11 @@ object Switches extends Collections {
 
   // A/B Tests
 
+  val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
+    "Switch for the High Commercial Component A/B test.",
+    safeState = Off, sellByDate = never
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -427,6 +432,12 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 9, 30)
   )
 
+  // google crawler switches
+  val SeoBlockGooglebotFromJSPathsSwitch = Switch("Feature Switches", "seo-block-googlebot-js-paths",
+    "If switched on, relative paths in JS files become concatenated string segments to stop googlebot following them",
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 29)
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -498,7 +509,9 @@ object Switches extends Collections {
     FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
     FaciaToolDraftContent,
-    GuShiftCookieSwitch
+    GuShiftCookieSwitch,
+    ABHighCommercialComponent,
+    SeoBlockGooglebotFromJSPathsSwitch
   )
 
   val httpSwitches: List[Switch] = List(

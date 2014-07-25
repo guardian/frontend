@@ -47,7 +47,7 @@
 
 .l-row--items-4 {
     .item__byline {
-        @include fs-headline(1, true);
+        @include fs-headline(2, true);
     }
     .item__standfirst,
     .item__media-wrapper,
@@ -68,7 +68,7 @@
             display: block;
         }
         .item--imageadjust-boost,
-        .item--imageadjust-default .item__title {
+        .item--imageadjust-default .item__header {
             @include rem((
                 min-height: get-line-height($fs-headlines, 1) * 3
             ));
@@ -76,7 +76,7 @@
     }
     @include mq(desktop) {
         .item--has-no-image .item__title {
-            @include fs-headline(2, true);
+            @include fs-headline(3, true);
         }
     }
 }
@@ -95,13 +95,13 @@
         }
     }
     .l-row--layout-m {
-        .item--imageadjust-default .item__title {
+        .item--imageadjust-default .item__header {
             @include rem((
                 min-height: get-line-height($fs-headlines, 1) * 4
             ));
         }
         .l-row__item--break-m {
-            .item--imageadjust-default .item__title {
+            .item--imageadjust-default .item__header {
                 @include rem((
                     min-height: get-line-height($fs-headlines, 2) * 3
                 ));
@@ -113,7 +113,7 @@
 @include mq(tablet) {
     .row-of-two--boost-both {
         .item__title {
-            @include fs-headline(3, true);
+            @include fs-headline(4, true);
         }
     }
     .row-of-two--boost-none {
@@ -134,7 +134,7 @@
 
         .item__title {
             padding-top: 0;
-            @include fs-headline(4, true);
+            @include fs-headline(5, true);
         }
         .item__standfirst {
             display: block;
@@ -185,7 +185,7 @@
     .row-of-two--boost-none {
         .item__title {
             padding-top: 0;
-            @include fs-headline(2, true);
+            @include fs-headline(3, true);
         }
         .item--imageadjust-default {
             .item__media-wrapper {

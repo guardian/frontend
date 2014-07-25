@@ -13,7 +13,7 @@
             @include item--hide-tone-border;
 
             .item__title {
-                @include fs-headline(2, $size-only: true);
+                @include fs-headline(3, $size-only: true);
             }
         }
         .facia-slice-wrapper--position-2 .item__title {
@@ -43,7 +43,7 @@
                     @include rem((
                         min-height: $gs-baseline*4
                     ));
-                    @include fs-headline(3, true);
+                    @include fs-headline(4, true);
                 }
             }
             @if $browser-supports-flexbox {

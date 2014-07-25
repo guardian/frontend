@@ -5,6 +5,8 @@
 # For dev machines
 GET        /                                controllers.Application.front
 
+GET        /_healthcheck                    conf.HealthCheck.healthcheck()
+
 GET        /js.gif                          controllers.DiagnosticsController.js
 GET        /ab.gif                          controllers.DiagnosticsController.ab
 

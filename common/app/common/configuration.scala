@@ -34,8 +34,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     val stage = apply("STAGE", "unknown")
 
-    val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
-    val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
+    lazy val projectName = Play.application.configuration.getString("guardian.projectName").getOrElse("frontend")
+    lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
   }
@@ -214,6 +214,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-tags-v2.json"
     lazy val dfpAdvertisementFeatureTagsDataKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-tags-v2.json"
+    lazy val inlineMerchandisingSponsorshipsDataKey =
+      s"${environment.stage.toUpperCase}/commercial/dfp/inline-merchandising-tags-v2.json"
     lazy val dfpPageSkinnedAdUnitsKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/pageskinned-adunits-v3.json"
     lazy val dfpLineItemsKey =
@@ -344,7 +346,7 @@ object ManifestData {
 
 // AWSCredentialsProviderChain relies on these being null if not configured.
 private class NullableAWSCredentials(accessKeyId: Option[String], secretKey: Option[String]) extends AWSCredentials{
-  def getAWSAccessKeyId: String = accessKeyId.getOrElse(null)
-  def getAWSSecretKey: String = secretKey.getOrElse(null)
+  def getAWSAccessKeyId: String = accessKeyId.orNull
+  def getAWSSecretKey: String = secretKey.orNull
 }
 

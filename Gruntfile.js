@@ -9,7 +9,8 @@ module.exports = function (grunt) {
         staticHashDir = './static/hash/',
         testConfDir = './common/test/assets/javascripts/conf/',
         requirejsDir = './static/requirejs',
-        propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
+        propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties',
+        webfontsDir = './common/app/assets/stylesheets/components/guss-webfonts/webfonts/';
 
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
@@ -160,7 +161,7 @@ module.exports = function (grunt) {
                         videojsads: {
                             deps: ['videojs']
                         },
-                        videojsvast :{
+                        videojsvast: {
                              deps: ['vast', 'videojs']
                         }
                     },
@@ -185,207 +186,208 @@ module.exports = function (grunt) {
 
         // Create JSON web font files from fonts. See https://github.com/ahume/grunt-webfontjson
         webfontjson: {
-            WebAgateSansWoff: {
+            GuardianAgateSans1WebWoff: {
                 options: {
-                    filename: staticTargetDir + 'fonts/WebAgateSans.woff.json',
+                    filename: staticTargetDir + 'fonts/GuardianAgateSans1Web.woff.json',
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'AgateSans',
-                            file: 'resources/fonts/AgateSans-Regular.woff',
+                            'font-family': '"Guardian Agate Sans 1 Web"',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'AgateSans',
+                            'font-family': '"Guardian Agate Sans 1 Web"',
                             'font-weight': '700',
-                            file: 'resources/fonts/AgateSans-Bold.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.woff',
                             format: 'woff'
                         }
                     ]
                 }
             },
-            WebAgateSansTtf: {
+            GuardianAgateSans1WebTtf: {
                 options: {
-                    filename: staticTargetDir + 'fonts/WebAgateSans.ttf.json',
+                    filename: staticTargetDir + 'fonts/GuardianAgateSans1Web.ttf.json',
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'AgateSans',
-                            file: 'resources/fonts/AgateSans-Regular.ttf',
+                            'font-family': '"Guardian Agate Sans 1 Web"',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'AgateSans',
+                            'font-family': '"Guardian Agate Sans 1 Web"',
                             'font-weight': '700',
-                            file: 'resources/fonts/AgateSans-Bold.ttf'
+                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.ttf',
+                            format: 'ttf'
                         }
                     ]
                 }
             },
-            WebEgyptianWoff: {
+            GuardianEgyptianWebWoff: {
                 options: {
-                    filename: staticTargetDir + 'fonts/WebEgyptian.woff.json',
+                    filename: staticTargetDir + 'fonts/GuardianEgyptianWeb.woff.json',
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'EgyptianText',
-                            file: 'resources/fonts/EgyptianText-Regular.woff',
+                            'font-family': '"Guardian Text Egyptian Web"',
+                            file: webfontsDir + 'hinting-off-latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'EgyptianText',
+                            'font-family': '"Guardian Text Egyptian Web"',
                             'font-style': 'italic',
-                            file: 'resources/fonts/EgyptianText-RegularItalic.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'EgyptianText',
+                            'font-family': '"Guardian Text Egyptian Web"',
                             'font-weight': '700',
-                            file: 'resources/fonts/EgyptianText-Medium.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'EgyptianHeadline',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '200',
-                            file: 'resources/fonts/EgyptianHeadline-Light.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'EgyptianHeadline',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '400',
-                            file: 'resources/fonts/EgyptianHeadline-Regular.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
                             format: 'woff'
                         },
                         // This weight contains only a certain set of chars
                         // since it is used only in one place (section names)
                         {
-                            'font-family': 'EgyptianHeadline',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '900',
-                            file: 'resources/fonts/EgyptianHeadline-Semibold-redux.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff',
                             format: 'woff'
                         }
                     ]
                 }
             },
-            WebEgyptianTtf: {
+            GuardianEgyptianWebTtf: {
                 options: {
-                    filename: staticTargetDir + 'fonts/WebEgyptian.ttf.json',
+                    filename: staticTargetDir + 'fonts/GuardianEgyptianWeb.ttf.json',
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'EgyptianText',
-                            file: 'resources/fonts/EgyptianText-Regular.ttf',
+                            'font-family': '"Guardian Text Egyptian Web"',
+                            file: webfontsDir + 'hinting-off-latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'EgyptianText',
+                            'font-family': '"Guardian Text Egyptian Web"',
                             'font-style': 'italic',
-                            file: 'resources/fonts/EgyptianText-RegularItalic.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'EgyptianText',
+                            'font-family': '"Guardian Text Egyptian Web"',
                             'font-weight': '700',
-                            file: 'resources/fonts/EgyptianText-Medium.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'EgyptianHeadline',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '200',
-                            file: 'resources/fonts/EgyptianHeadline-Light.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'EgyptianHeadline',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '400',
-                            file: 'resources/fonts/EgyptianHeadline-Regular.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         // This weight contains only a certain set of chars
                         // since it is used only in one place (section names)
                         {
-                            'font-family': 'EgyptianHeadline',
+                            'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '900',
-                            file: 'resources/fonts/EgyptianHeadline-Semibold-redux.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.ttf',
                             format: 'ttf'
                         }
                     ]
                 }
             },
-            WebTextSansWoff: {
+            GuardianTextSansWebWoff: {
                 options: {
-                    filename: staticTargetDir + 'fonts/WebTextSans.woff.json',
+                    filename: staticTargetDir + 'fonts/GuardianTextSansWeb.woff.json',
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'TextSans',
-                            file: 'resources/fonts/TextSans-Regular.woff',
+                            'font-family': '"Guardian Text Sans Web"',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'TextSans',
+                            'font-family': '"Guardian Text Sans Web"',
                             'font-style': 'italic',
-                            file: 'resources/fonts/TextSans-RegularIt.woff',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff',
                             format: 'woff'
                         },
                         {
-                            'font-family': 'TextSans',
+                            'font-family': '"Guardian Text Sans Web"',
                             'font-weight': '700',
-                            file: 'resources/fonts/TextSans-Medium.woff',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff',
                             format: 'woff'
                         }
                     ]
                 }
             },
-            WebTextSansTtf: {
+            GuardianTextSansWebTtf: {
                 options: {
-                    filename: staticTargetDir + 'fonts/WebTextSans.ttf.json',
+                    filename: staticTargetDir + 'fonts/GuardianTextSansWeb.ttf.json',
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'TextSans',
-                            file: 'resources/fonts/TextSans-Regular.ttf',
+                            'font-family': '"Guardian Text Sans Web"',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'TextSans',
+                            'font-family': '"Guardian Text Sans Web"',
                             'font-style': 'italic',
-                            file: 'resources/fonts/TextSans-RegularIt.ttf',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.ttf',
                             format: 'ttf'
                         },
                         {
-                            'font-family': 'TextSans',
+                            'font-family': '"Guardian Text Sans Web"',
                             'font-weight': '700',
-                            file: 'resources/fonts/TextSans-Medium.ttf',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.ttf',
                             format: 'ttf'
                         }
                     ]
                 }
             },
-            WebHeadlineSansTtf: {
+            GuardianSansWebWoff: {
                 options: {
-                    filename: staticTargetDir + 'fonts/WebHeadlineSans.ttf.json',
+                    filename: staticTargetDir + 'fonts/GuardianSansWeb.woff.json',
                     callback: 'guFont',
                     fonts: [
                         {
-                            'font-family': 'HeadlineSans',
-                            file: 'resources/fonts/HeadlineSans-Light.ttf',
-                            'font-weight': '200',
-                            format: 'ttf'
-                        }
-                    ]
-                }
-            },
-            WebHeadlineSansWoff: {
-                options: {
-                    filename: staticTargetDir + 'fonts/WebHeadlineSans.woff.json',
-                    callback: 'guFont',
-                    fonts: [
-                        {
-                            'font-family': 'HeadlineSans',
-                            file: 'resources/fonts/HeadlineSans-Light.woff',
+                            'font-family': '"Guardian Sans Web"',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianSansWeb/GuardianSansWeb-Light.woff',
                             'font-weight': '200',
                             format: 'woff'
+                        }
+                    ]
+                }
+            },
+            GuardianSansWebTtf: {
+                options: {
+                    filename: staticTargetDir + 'fonts/GuardianSansWeb.ttf.json',
+                    callback: 'guFont',
+                    fonts: [
+                        {
+                            'font-family': '"Guardian Sans Web"',
+                            file: webfontsDir + 'hinting-off-ascii/GuardianSansWeb/GuardianSansWeb-Light.ttf',
+                            'font-weight': '200',
+                            format: 'ttf'
                         }
                     ]
                 }
@@ -814,7 +816,12 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
-    grunt.registerTask('compile:js', ['requirejs', 'copy:javascript', 'uglify:javascript']);
+    grunt.registerTask('compile:js', function() {
+        grunt.task.run(['requirejs', 'copy:javascript']);
+        if (!isDev) {
+            grunt.task.run('uglify:javascript');
+        }
+    });
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap']);

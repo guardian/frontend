@@ -7,6 +7,7 @@ define([
     'common/utils/deferToLoad',
     'common/utils/ajax',
     'common/modules/userPrefs',
+    'common/utils/url',
     //Vendor libraries
     'bonzo',
     'bean',
@@ -22,8 +23,7 @@ define([
     'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
-    'common/modules/navigation/servicesNav',
-    'common/modules/navigation/newNavigation',
+    'common/modules/navigation/navigation',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/ui/dropdowns',
@@ -54,6 +54,7 @@ define([
     deferToLoadEvent,
     ajax,
     userPrefs,
+    Url,
 
     bonzo,
     bean,
@@ -69,8 +70,7 @@ define([
     images,
     Profile,
     Search,
-    ServicesNav,
-    newNavigation,
+    Navigation,
 
     Tabs,
     Toggles,
@@ -119,12 +119,10 @@ define([
             }
 
             search.init(header);
-
-            ServicesNav.init(config);
         },
 
-        initialiseNewNavigation: function (config) {
-            newNavigation.init(config);
+        initialiseNavigation: function (config) {
+            Navigation.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -411,6 +409,13 @@ define([
                     discussionLoader.attachTo($('.discussion')[0]);
                 }
             });
+        },
+
+        testCookie: function() {
+            var queryParams = Url.getUrlVars();
+            if (queryParams.test) {
+                Cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
+            }
         }
     };
 
@@ -436,13 +441,14 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.testCookie();
             modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
             modules.initialiseTopNavItems(config);
-            modules.initialiseNewNavigation(config);
+            modules.initialiseNavigation(config);
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();
