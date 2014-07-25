@@ -230,6 +230,9 @@ define([
                             player.vast({
                                 url: modules.getVastUrl()
                             });
+                            if(/desktop|wide/.test(detect.getBreakpoint())) {
+                                modules.initEndSlate(player);
+                            }
                         });
                     });
 
@@ -256,6 +259,26 @@ define([
 
                     vjs.persistvolume({namespace: 'gu.vjs'});
                 });
+            });
+        },
+        generateEndSlateUrl: function() {
+            var seriesId = config.page.seriesId;
+            var sectionId = config.page.section;
+            var url = (seriesId)  ? '/video/end-slate/series/' + seriesId : '/video/end-slate/section/' + sectionId;
+            return url + '.json?shortUrl=' + config.page.shortUrl;
+        },
+        initEndSlate: function(player) {
+            var endSlate = new Component(),
+                endState = 'vjs-has-ended';
+
+            endSlate.endpoint = modules.generateEndSlateUrl();
+            endSlate.fetch(player.el(), 'html');
+
+            player.on('ended', function() {
+                bonzo(player.el()).addClass(endState);
+            });
+            player.on('playing', function() {
+                bonzo(player.el()).removeClass(endState);
             });
         },
         initMoreInSection: function() {

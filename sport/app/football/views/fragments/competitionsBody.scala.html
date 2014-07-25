@@ -1,35 +1,36 @@
 @(competitions: Map[String, Seq[CompetitionFilter]], page: model.Page, competitionList: List[String])(implicit request: RequestHeader)
+<div class="l-side-margins l-side-margins--layout-content">
+    <div class="monocolumn-wrapper tone-news">
 
-<div class="monocolumn-wrapper tone-news">
-
-    @renderFilter(name: String) = {
-        @competitions.get(name).map{ filters =>
-            <section class="component" data-link-name="Football | Competitions | @HtmlFormat.raw(name)">
-                <h2 class="page-sub-header">@HtmlFormat.raw(name)</h2>
-                <ul class="nav nav--columns nav--no-horizontal-spacing u-cf">
-                @filters.map{ competition =>
-                    <li class="nav__item">
-                        <a href="@LinkTo{@competition.url}" class="nav__link" data-link-name="@HtmlFormat.raw(competition.name)">
-                        @HtmlFormat.raw(competition.name)
-                        </a>
-                    </li>
-                }
-                </ul>
-            </section>
+        @renderFilter(name: String) = {
+            @competitions.get(name).map{ filters =>
+                <section class="component" data-link-name="Football | Competitions | @HtmlFormat.raw(name)">
+                    <h2 class="page-sub-header">@HtmlFormat.raw(name)</h2>
+                    <ul class="nav nav--columns nav--no-horizontal-spacing u-cf">
+                    @filters.map{ competition =>
+                        <li class="nav__item">
+                            <a href="@LinkTo{@competition.url}" class="nav__link" data-link-name="@HtmlFormat.raw(competition.name)">
+                            @HtmlFormat.raw(competition.name)
+                            </a>
+                        </li>
+                    }
+                    </ul>
+                </section>
+            }
         }
-    }
 
-    <h2 class="article__zone sport-header tone-accent-border hide-on-mobile-if-localnav">
-        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
-    </h2>
-    <h1 class="page-header">@page.webTitle</h1>
+        <h2 class="article__zone sport-header tone-accent-border hide-on-mobile-if-localnav">
+            <a class="tone-colour" data-link-name="article section" href="@LinkTo{/football}">football</a>
+        </h2>
+        <h1 class="page-header">@page.webTitle</h1>
 
-    @competitionList.map{ comp =>
-        @renderFilter(comp)
-    }
+        @competitionList.map{ comp =>
+            @renderFilter(comp)
+        }
 
-    @fragments.footballNav(page)
-</div>
-<div class="facia-container facia-container--layout-article">
-    @fragments.mostPopularPlaceholder("sport")
+        @fragments.footballNav(page)
+    </div>
+    <div class="facia-container facia-container--layout-content">
+        @fragments.mostPopularPlaceholder("sport")
+    </div>
 </div>

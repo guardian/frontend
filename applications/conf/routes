@@ -5,6 +5,8 @@
 # For dev machines
 GET         /assets/*path                                                       dev.DevAssetsController.at(path)
 
+GET        /_healthcheck                                                        conf.HealthCheck.healthcheck()
+
 GET        /humans.txt                                                          controllers.Assets.at(path="/public", file="humans.txt")
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)

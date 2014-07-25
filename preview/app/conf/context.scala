@@ -42,6 +42,11 @@ class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(u
   def isOk = status.get
 }
 
+object HealthCheck extends AllGoodHealthcheckController(
+  "/world/2012/sep/11/barcelona-march-catalan-independence",
+  "/uk"
+)
+
 object HealthcheckPage extends HealthcheckPage("/world/2012/sep/11/barcelona-march-catalan-independence") {
 
   // the preview server has an nginx running on port 80

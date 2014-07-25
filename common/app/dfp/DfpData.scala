@@ -11,6 +11,8 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isSponsoredSlot = isSlot("spbadge")
 
   val isAdvertisementFeatureSlot = isSlot("adbadge")
+  
+  val isInlineMerchandisingSlot = isSlot("im")
 
   val isTag = isPositive("k") || isPositive("se")
 }
@@ -26,6 +28,8 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val sponsoredTags = filterTags(_.isSponsoredSlot)
 
   val advertisementFeatureTags = filterTags(_.isAdvertisementFeatureSlot)
+  
+  val inlineMerchandisingTargettedTags = filterTags(_.isInlineMerchandisingSlot)
 }
 
 
@@ -51,4 +55,6 @@ case class GuLineItem(id: Long,
   val sponsoredTags: Seq[String] = targeting.customTargetSets.flatMap(_.sponsoredTags).distinct
 
   val advertisementFeatureTags: Seq[String] = targeting.customTargetSets.flatMap(_.advertisementFeatureTags).distinct
+
+  val inlineMerchandisingTargettedTags: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargettedTags).distinct
 }

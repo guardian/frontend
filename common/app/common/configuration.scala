@@ -214,6 +214,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       s"${environment.stage.toUpperCase}/commercial/dfp/sponsored-tags-v2.json"
     lazy val dfpAdvertisementFeatureTagsDataKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/advertisement-feature-tags-v2.json"
+    lazy val inlineMerchandisingSponsorshipsDataKey =
+      s"${environment.stage.toUpperCase}/commercial/dfp/inline-merchandising-tags-v2.json"
     lazy val dfpPageSkinnedAdUnitsKey =
       s"${environment.stage.toUpperCase}/commercial/dfp/pageskinned-adunits-v3.json"
     lazy val dfpLineItemsKey =
@@ -348,7 +350,7 @@ object ManifestData {
 
 // AWSCredentialsProviderChain relies on these being null if not configured.
 private class NullableAWSCredentials(accessKeyId: Option[String], secretKey: Option[String]) extends AWSCredentials{
-  def getAWSAccessKeyId: String = accessKeyId.getOrElse(null)
-  def getAWSSecretKey: String = secretKey.getOrElse(null)
+  def getAWSAccessKeyId: String = accessKeyId.orNull
+  def getAWSSecretKey: String = secretKey.orNull
 }
 

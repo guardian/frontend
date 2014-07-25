@@ -2,12 +2,11 @@ package common.editions
 
 import common._
 import org.joda.time.DateTimeZone
-import model.MetaData
 import contentapi.QueryDefaults
 import common.NavItem
 
 object Us extends Edition(id = "US", displayName = "US edition", timezone = DateTimeZone.forID("America/New_York"))
-  with Zones with QueryDefaults {
+  with QueryDefaults {
 
   implicit val US = Us
 

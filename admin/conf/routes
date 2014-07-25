@@ -2,6 +2,9 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+
+GET         /_healthcheck                 controllers.HealthCheck.healthcheck()
+
 # authentication endpoints
 GET         /login                        controllers.admin.Login.login
 POST        /login                        controllers.admin.Login.loginPost

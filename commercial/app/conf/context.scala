@@ -5,6 +5,15 @@ import com.gu.management.play.{Management => GuManagement}
 import com.gu.management.{PropertiesPage, StatusPage, ManifestPage}
 import common.Metrics
 
+object HealthCheck extends AnyGoodHealthcheckController(
+  "/commercial/soulmates/mixed.json",
+  "/commercial/masterclasses.json",
+  "/commercial/travel/offers.json",
+  "/commercial/jobs.json",
+  "/commercial/money/bestbuys.json",
+  "/commercial/books/bestsellers.json"
+)
+
 object Management extends GuManagement {
   val applicationName = "frontend-commercial"
   val metrics = Metrics.contentApi ++ Metrics.common

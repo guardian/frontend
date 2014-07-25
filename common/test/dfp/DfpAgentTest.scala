@@ -21,6 +21,11 @@ class DfpAgentTest extends FlatSpec with Matchers {
       Sponsorship(Seq("film"), None)
     )
 
+    override protected def inlineMerchandisingDeals: Seq[Sponsorship] = Seq(
+      Sponsorship(Seq("ad-feature"), None),
+      Sponsorship(Seq("film"), None)
+    )
+
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] =
       Seq(
         PageSkinSponsorship("lineItemName",
