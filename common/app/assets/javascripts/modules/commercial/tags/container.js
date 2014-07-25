@@ -11,7 +11,8 @@ define([
     'common/modules/commercial/tags/criteo',
     'common/modules/commercial/tags/remarketing',
     'common/modules/commercial/tags/amaa',
-    'common/modules/commercial/tags/effective-measure'
+    'common/modules/commercial/tags/effective-measure',
+    'common/modules/commercial/outbrain'
 ], function(
     defaults,
     globalConfig,
@@ -22,7 +23,8 @@ define([
     criteo,
     remarketing,
     amaa,
-    effectiveMeasure
+    effectiveMeasure,
+    outbrain
 ) {
 
     function init(c) {
@@ -56,6 +58,7 @@ define([
         criteo.load();
         imrWorldwide.load();
         remarketing.load();
+        outbrain.load();
     }
 
     return {
