@@ -1,4 +1,8 @@
-@(keywords: Seq[Tag], visibleKeywords: Int = 5)(implicit request: RequestHeader)
+@(keywords: Seq[model.Tag], visibleKeywords: Int = 5, title: String = "Tags")(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import model.Tag
+@import views.support.{RowInfo, Seq2zipWithRowInfo}
 
 @renderItem(keyword: Tag, row: RowInfo, clazz: String = "", trailingComma: Boolean = false) = {
     <li class="inline-list__item @clazz">
@@ -13,7 +17,7 @@
     @defining(keywords.filterNot(_.isSectionTag).drop(visibleKeywords)) { hiddenKeywords =>
         @if(shownKeywords.nonEmpty) {
             <ul class="inline-list">
-                <li class="inline-list__item">Tags:</li>
+                <li class="inline-list__item">@title:</li>
                 @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
                     @renderItem(keyword, row, trailingComma = hiddenKeywords.nonEmpty)
                 }
