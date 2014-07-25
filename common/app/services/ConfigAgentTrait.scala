@@ -37,9 +37,9 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   }
 
   def getConfigsUsingCollectionId(id: String): Seq[String] = {
-    getConfigCollectionMap.collect{
+    (getConfigCollectionMap collect {
       case (configId, collectionIds) if collectionIds.contains(id) => configId
-    }.toSeq
+    }).toSeq
   }
 
   def getConfigForId(id: String): Option[List[Config]] = {
@@ -71,8 +71,6 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       collectionMap.keys.toList
     } getOrElse Nil
   }
-
-  def close() = configAgent.close()
 
   def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 
@@ -108,8 +106,6 @@ trait ConfigAgentLifecycle extends GlobalSettings {
 
   override def onStop(app: Application) {
     Jobs.deschedule("ConfigAgentJob")
-    ConfigAgent.close()
-
     super.onStop(app)
   }
 }

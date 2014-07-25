@@ -4,6 +4,7 @@
 
 $c-commercial-travel-light: #2cace7;
 $c-commercial-travel-dark: #002b6c;
+$travelBlue: #066ec9;
 
 .commercial--travel {
     .commercial__head {
@@ -147,7 +148,7 @@ $c-commercial-travel-dark: #002b6c;
             }
         }
         @include mq(rightCol) {
-            .facia-container--layout-article & {
+            .facia-container--layout-content & {
                 .commercial__head {
                     float: none;
                     position: static;
@@ -172,7 +173,7 @@ $c-commercial-travel-dark: #002b6c;
             }
         }
         @include mq(leftCol) {
-            .facia-container--layout-article & {
+            .facia-container--layout-content & {
                 .commercial__head {
                     float: left;
                 }
@@ -210,7 +211,7 @@ $c-commercial-travel-dark: #002b6c;
                     bottom: 0;
                 }
             }
-            .facia-container--layout-article & {
+            .facia-container--layout-content & {
                 .commercial__search {
                     bottom: 0;
                 }
@@ -370,7 +371,7 @@ $c-commercial-travel-dark: #002b6c;
 
 /* Articles */
 
-.facia-container--layout-article .commercial--travel {
+.facia-container--layout-content .commercial--travel {
     @include mq(leftCol) {
         @include c-travel-leftCol;
         

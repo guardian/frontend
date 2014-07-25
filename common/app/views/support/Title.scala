@@ -1,7 +1,7 @@
 package views.support
 
 import model.{Tag, Content, MetaData}
-import play.api.templates.Html
+import play.twirl.api.Html
 import play.api.mvc.RequestHeader
 import common.{Edition, Navigation}
 

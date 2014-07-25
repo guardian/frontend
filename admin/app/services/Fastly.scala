@@ -20,6 +20,7 @@ case class FastlyStatistic(service: String, region: String, timestamp: Long, nam
 }
 
 object Fastly extends ExecutionContexts with Logging {
+  import play.api.Play.current
 
   private val regions = List("usa", "europe", "ausnz", "apac")
 

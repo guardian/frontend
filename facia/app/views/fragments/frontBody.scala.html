@@ -2,28 +2,29 @@
 @import common.Edition
 
 @if(faciaPage.collections.nonEmpty) {
-    <div class="@RenderClasses(Map(
-            "facia-container" -> true,
-            "facia-container--layout-front" -> true,
-            "facia-container--sponsored" -> faciaPage.isSponsored,
-            "facia-container--advertisement-feature" -> (faciaPage.isAdvertisementFeature && !faciaPage.isSponsored)))"
-        data-link-name="Front | @request.path"
-        @faciaPage.sponsor.map { sponsor =>
-            data-sponsor="@sponsor"
-        }
-        role="main">
-
-        @if(faciaPage.hasPageSkin(Edition(request))) {
-            @fragments.commercial.pageSkin()
-        }
-
-        @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
-            @collections.zipWithIndex.map{ case(block, index) =>
-                @fragments.frontCollection(faciaPage, block, collections.size, index)
+    <div class="l-side-margins l-side-margins--layout-front">
+        <div class="@RenderClasses(Map(
+                "facia-container" -> true,
+                "facia-container--layout-front" -> true,
+                "facia-container--sponsored" -> faciaPage.isSponsored,
+                "facia-container--advertisement-feature" -> (faciaPage.isAdvertisementFeature && !faciaPage.isSponsored)))"
+            data-link-name="Front | @request.path"
+            @faciaPage.sponsor.map { sponsor =>
+                data-sponsor="@sponsor"
             }
-        }
+            role="main">
 
-        @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
+            @if(faciaPage.hasPageSkin(Edition(request))) {
+                @fragments.commercial.pageSkin()
+            }
+
+            @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
+                @collections.zipWithIndex.map{ case(block, index) =>
+                    @fragments.frontCollection(faciaPage, block, collections.size, index)
+                }
+            }
+
+            @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
+        </div>
     </div>
 }
-

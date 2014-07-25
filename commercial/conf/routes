@@ -6,6 +6,8 @@
 GET        /assets/*path                                             dev.DevAssetsController.at(path)
 GET        /commercial/test-page                                     controllers.commercial.CreativeTestPage.allComponents
 
+GET        /_healthcheck                                             conf.HealthCheck.healthcheck()
+
 # Travel offers
 GET        /commercial/travel/offers                                 controllers.commercial.TravelOffers.travelOffersLowHtml
 GET        /commercial/travel/offers.json                            controllers.commercial.TravelOffers.travelOffersLowJson
@@ -47,5 +49,9 @@ GET        /commercial/books/bestsellers-medium                      controllers
 GET        /commercial/books/bestsellers-medium.json                 controllers.commercial.BookOffers.bestsellersMediumJson
 GET        /commercial/books/bestsellers-high                        controllers.commercial.BookOffers.bestsellersHighHtml
 GET        /commercial/books/bestsellers-high.json                   controllers.commercial.BookOffers.bestsellersHighJson
-GET        /commercial/books/book/*pageId.json                       controllers.commercial.BookOffers.singleBookJson(pageId)
-GET        /commercial/books/book/*pageId                            controllers.commercial.BookOffers.singleBookHtml(pageId)
+GET        /commercial/books/book.json                               controllers.commercial.BookOffers.bestsellersSuperHighJson
+GET        /commercial/books/book                                    controllers.commercial.BookOffers.bestsellersSuperHighHtml
+
+# Content API offers
+GET        /commercial/capi/*contentId.json                          controllers.commercial.ContentApiOffers.itemJson(contentId)
+GET        /commercial/capi/*contentId                               controllers.commercial.ContentApiOffers.itemHtml(contentId)

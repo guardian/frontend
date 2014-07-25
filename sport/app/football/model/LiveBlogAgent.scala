@@ -41,10 +41,6 @@ trait LiveBlogAgent extends ExecutionContexts with Logging {
   private def isClockWatch(content: Content) = content.tags.exists(_.id == "football/series/saturday-clockwatch")
 
   def blogFor(edition: Edition) = agents(edition.id)
-
-  def stop() {
-    agents.values.foreach(_.close())
-  }
 }
 
 object LiveBlogAgent extends LiveBlogAgent {

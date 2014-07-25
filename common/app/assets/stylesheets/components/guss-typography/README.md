@@ -10,43 +10,43 @@ bower install guss-typography --save
 
 ```scss
 // Override defaults if needed
-$sans-serif: "AgateSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-$serif: "EgyptianText", georgia, serif;
-$serifheadline: "EgyptianHeadline", georgia, serif;
-$text-sans: "TextSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-$headline-sans: "HeadlineSans", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+$f-data: 'Guardian Agate Sans 1 Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+$f-serif-text: 'Guardian Text Egyptian Web', Georgia, serif;
+$f-serif-headline: 'Guardian Egyptian Web', Georgia, serif;
+$f-sans-serif-text: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+$f-sans-serif-headline: 'Guardian Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 
 $fs-headers: (
     16 20, // 1
     18 24, // 2
     20 28, // 3
     22 28, // 4
-    24 28  // 5
+    24 28, // 5
 );
 
 $fs-headlines: (
-    16 20, // 1
-    20 24, // 2
-    24 28, // 3
-    28 32, // 4
-    32 36, // 5
-    36 40, // 6
-    40 44, // 7
-    44 48  // 8
+    14 18, // 1
+    16 20, // 2
+    20 24, // 3
+    24 28, // 4
+    28 32, // 5
+    32 36, // 6
+    36 40, // 7
+    40 44, // 8
+    44 48, // 9
 );
 
 $fs-bodyHeadings: (
     14 22, // 1
     16 24, // 2
     18 28, // 3
-    20 28  // 4
+    20 28, // 4
 );
 
 $fs-bodyCopy: (
     14 20, // 1
-    14 22, // 2
-    16 24, // 3
-    18 28  // 4
+    16 24, // 2
+    18 28, // 3
 );
 
 $fs-data: (
@@ -55,14 +55,14 @@ $fs-data: (
     13 16, // 3
     14 18, // 4
     16 20, // 5
-    18 22  // 6
+    18 22, // 6
 );
 
-$fs-textsans: (
+$fs-textSans: (
     12 16, // 1
     13 18, // 2
     14 20, // 3
-    14 22  // 4
+    14 22, // 4
 );
 
 @import "path/to/_helpers.scss";
@@ -75,23 +75,21 @@ To kick start a project with scalable typography,
 here are the suggested default global type settings:
 
 ```scss
+@include guss-typography-defaults;
+```
+
+Compiles to:
+
+```css
 html {
-    font-family: $serif;
-    // Make type rendering look crisper
+    font-family: "Guardian Text Egyptian Web", Georgia, serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-
-    // Set baseline font size to 10px
-    // This is used as a baseline for rem (root ems) values
     font-size: 62.5%;
-
-    // For IE11 to do the math properly
-    // See http://bit.ly/1g4X0bX — thanks @7studio and @dawitti
     font-size: calc(1em * .625);
 }
 body {
-    color: $c-neutral1;
-    font-size: 1.6em; // Bump font-size back up to 16px
+    font-size: 1.6em;
     line-height: 1.5;
 }
 ```
@@ -125,4 +123,4 @@ Provides Sass mixins and values for the Guardian typography & font scale.
 
 ### Nota Bene
 
-`HeadlineSans` is not currently integrated into our font scale, hence no `fs-` mixin; currently we're just using it as a replacement font in a few places.
+`Guardian Sans Web` is not currently integrated into our font scale, hence no `fs-` mixin; currently we're just using it as a replacement font in a few places.

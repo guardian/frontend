@@ -37,7 +37,7 @@
     }
     .facia-slice-wrapper--position-1 .facia-slice__item:first-child {
         .item__title {
-            @include fs-headline(2, $size-only: true);
+            @include fs-headline(3, $size-only: true);
         }
     }
     @include mq($to: tablet) {
@@ -61,6 +61,17 @@
                 @include flex-grow(2);
                 @if not $browser-supports-flexbox {
                     width: 66%;
+                }
+            }
+        }
+    }
+    @include mq(rightCol) {
+        .facia-slice-wrapper--position-1 {
+            .facia-slice__item:nth-child(2),
+            .facia-slice__item:nth-child(3) {
+                .item__standfirst {
+                    display: block;
+                    color: $c-neutral4;
                 }
             }
         }

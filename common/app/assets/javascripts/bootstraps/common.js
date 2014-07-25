@@ -7,6 +7,7 @@ define([
     'common/utils/deferToLoad',
     'common/utils/ajax',
     'common/modules/userPrefs',
+    'common/utils/url',
     //Vendor libraries
     'bonzo',
     'bean',
@@ -21,9 +22,8 @@ define([
     'common/modules/onward/onward-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
-    'common/modules/navigation/sections',
     'common/modules/navigation/search',
-    'common/modules/navigation/newNavigation',
+    'common/modules/navigation/navigation',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/ui/dropdowns',
@@ -54,6 +54,7 @@ define([
     deferToLoadEvent,
     ajax,
     userPrefs,
+    Url,
 
     bonzo,
     bean,
@@ -68,9 +69,8 @@ define([
     Onward,
     images,
     Profile,
-    Sections,
     Search,
-    newNavigation,
+    Navigation,
 
     Tabs,
     Toggles,
@@ -105,9 +105,8 @@ define([
             images.listen();
         },
 
-        initialiseNavigation: function (config) {
-            var sections = new Sections(config),
-                search = new Search(config),
+        initialiseTopNavItems: function(config){
+            var search = new Search(config),
                 header = document.getElementById('header');
 
             if (header) {
@@ -119,12 +118,11 @@ define([
                 }
             }
 
-            sections.init(document);
             search.init(header);
         },
 
-        initialiseNewNavigation: function (config) {
-            newNavigation.init(config);
+        initialiseNavigation: function (config) {
+            Navigation.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -209,8 +207,7 @@ define([
         initRightHandComponent: function(config) {
             if(config.page.contentType === 'Article' &&
                 detect.getBreakpoint() !== 'mobile' &&
-                parseInt(config.page.wordCount, 10) > 500 &&
-                !config.page.isLiveBlog) {
+                parseInt(config.page.wordCount, 10) > 500) {
                 new GeoMostPopular({});
             }
         },
@@ -232,7 +229,7 @@ define([
                         mediator.on('scrolldepth:data', ophan.record);
 
                         new ScrollDepth({
-                            isContent: config.page.contentType === 'Article'
+                            isContent: /Article|LiveBlog/.test(config.page.contentType)
                         });
                     }
                 });
@@ -412,6 +409,13 @@ define([
                     discussionLoader.attachTo($('.discussion')[0]);
                 }
             });
+        },
+
+        testCookie: function() {
+            var queryParams = Url.getUrlVars();
+            if (queryParams.test) {
+                Cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
+            }
         }
     };
 
@@ -437,16 +441,14 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.testCookie();
             modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
-            if(config.switches.responsiveNav){
-                modules.initialiseNewNavigation(config);
-            } else {
-                modules.initialiseNavigation(config);
-            }
+            modules.initialiseTopNavItems(config);
+            modules.initialiseNavigation(config);
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();
@@ -477,3 +479,4 @@ define([
         init: init
     };
 });
+

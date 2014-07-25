@@ -2,7 +2,6 @@
 define([
     'qwery',
     'common/utils/mediator',
-    'common/utils/ajax',
     'common/utils/detect',
     'common/utils/config',
     'common/utils/context',
@@ -18,6 +17,7 @@ define([
 
     'common/bootstraps/football',
     'common/bootstraps/article',
+    'common/bootstraps/liveblog',
     'common/bootstraps/video',
     'common/bootstraps/gallery',
     'common/bootstraps/identity',
@@ -25,7 +25,6 @@ define([
 ], function (
     qwery,
     mediator,
-    ajax,
     detect,
     config,
     Context,
@@ -41,6 +40,7 @@ define([
 
     Football,
     Article,
+    LiveBlog,
     Video,
     Gallery,
     Identity,
@@ -48,10 +48,6 @@ define([
 ) {
 
     var modules = {
-
-        initialiseAjax: function(config) {
-            ajax.init(config);
-        },
 
         initialiseDiscussionApi: function(config) {
             DiscussionApi.init(config);
@@ -81,7 +77,6 @@ define([
         var context = document.getElementById('js-context');
         Context.set(context);
 
-        modules.initialiseAjax(config);
         modules.initialiseDiscussionApi(config);
         modules.loadFonts(config, navigator.userAgent);
         modules.initId(config, context);
@@ -99,6 +94,10 @@ define([
 
             if(config.page.contentType === 'Article') {
                 Article.init(config, context);
+            }
+
+            if(config.page.contentType === 'LiveBlog') {
+                LiveBlog.init(config, context);
             }
 
             if (config.page.contentType === 'Video' || qwery('video').length) {

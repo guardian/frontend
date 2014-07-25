@@ -14,20 +14,22 @@ define([
     detect,
     dfp,
     spacefinder
-) {
+    ) {
 
     var ads = [],
+        adNames = [['inline1', 'inline'], ['inline2', 'inline']],
         insertAdAtP = function(para) {
             if (para) {
-                var $ad = $.create(dfp.createAdSlot('inline' + (ads.length + 1), 'inline'))
-                    .insertBefore(para);
+                var adName = adNames[ads.length],
+                    $ad = $.create(dfp.createAdSlot(adName[0], adName[1]))
+                        .insertBefore(para);
                 ads.push($ad);
             }
         },
         init = function(c) {
 
             var config = defaults(
-                c || {},
+                    c || {},
                 globalConfig,
                 {
                     switches: {}
@@ -35,17 +37,13 @@ define([
             );
 
             // is the switch off, or not an article, or a live blog
-            if (
-                !config.switches.standardAdverts ||
-                config.page.contentType !== 'Article' ||
-                config.page.isLiveBlog
-            ) {
+            if (!config.switches.standardAdverts || config.page.contentType !== 'Article' || config.page.isLiveBlog) {
                 return false;
             }
 
             var breakpoint  = detect.getBreakpoint(),
                 rules = {
-                    minAbove: 250,
+                    minAbove: (/mobile|tablet/).test(breakpoint) ? 300 : 700,
                     minBelow: 300,
                     selectors: {
                         ' > h2': {minAbove: breakpoint === 'mobile' ? 20 : 0, minBelow: 250},
@@ -54,13 +52,13 @@ define([
                     }
                 };
 
-            if ((/wide|desktop|tablet/).test(breakpoint)) {
+            if (config.page.hasInlineMerchandise) {
+                adNames.unshift(['im', 'im']);
                 insertAdAtP(spacefinder.getParaWithSpace(rules));
-                if (window.innerWidth < 900) {
-                    insertAdAtP(spacefinder.getParaWithSpace(rules));
-                }
-            } else {
-                insertAdAtP(spacefinder.getParaWithSpace(rules));
+            }
+            insertAdAtP(spacefinder.getParaWithSpace(rules));
+
+            if (breakpoint === 'mobile' || ((/wide|desktop|tablet/).test(breakpoint) && (config.innerWidth || window.innerWidth) < 900)) {
                 insertAdAtP(spacefinder.getParaWithSpace(rules));
             }
         };

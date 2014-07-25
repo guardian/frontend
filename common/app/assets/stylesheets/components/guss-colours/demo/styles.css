@@ -20,106 +20,106 @@ a {
   margin: 2em; }
 
 .b-guardian-brand {
-  background: #214583; }
+  background-color: #214583; }
 
 .b-guardian-brand-light {
-  background: #94b1ca; }
+  background-color: #94b1ca; }
 
 .b-error {
-  background: #d61d00; }
+  background-color: #d61d00; }
 
 .b-success {
-  background: #4a7801; }
+  background-color: #4a7801; }
 
 .b-neutral-1 {
-  background: #333333; }
+  background-color: #333333; }
 
 .b-neutral-2 {
-  background: #767676; }
+  background-color: #767676; }
 
 .b-neutral-3 {
-  background: #bdbdbd; }
+  background-color: #bdbdbd; }
 
 .b-neutral-4 {
-  background: gainsboro; }
+  background-color: gainsboro; }
 
 .b-neutral-5 {
-  background: #dfdfdf; }
+  background-color: #dfdfdf; }
 
 .b-neutral-6 {
-  background: #eaeaea; }
+  background-color: #eaeaea; }
 
 .b-neutral-7 {
-  background: #f1f1f1; }
+  background-color: #f1f1f1; }
 
 .b-neutral-8 {
-  background: #f6f6f6; }
+  background-color: #f6f6f6; }
 
 .b-neutral-1-warm {
-  background: #333333; }
+  background-color: #333333; }
 
 .b-neutral-2-warm {
-  background: #767676; }
+  background-color: #767676; }
 
 .b-neutral-3-warm {
-  background: #bdbdbd; }
+  background-color: #bdbdbd; }
 
 .b-neutral-4-warm {
-  background: gainsboro; }
+  background-color: gainsboro; }
 
 .b-neutral-5-warm {
-  background: #e3e3db; }
+  background-color: #e3e3db; }
 
 .b-neutral-6-warm {
-  background: #edede7; }
+  background-color: #edede7; }
 
 .b-neutral-7-warm {
-  background: #f4f4ee; }
+  background-color: #f4f4ee; }
 
 .b-neutral-8-warm {
-  background: #f6f6f6; }
+  background-color: #f6f6f6; }
 
 .b-tone-news-1 {
-  background: #005689; }
+  background-color: #005689; }
 
 .b-tone-news-2 {
-  background: #4bc6df; }
+  background-color: #4bc6df; }
 
 .b-tone-features-1 {
-  background: #951c55; }
+  background-color: #951c55; }
 
 .b-tone-features-2 {
-  background: #f66980; }
+  background-color: #f66980; }
 
 .b-tone-features-3 {
-  background: #b82266; }
+  background-color: #b82266; }
 
 .b-tone-features-4 {
-  background: #7d0068; }
+  background-color: #7d0068; }
 
 .b-tone-comment-1 {
-  background: #e6711b; }
+  background-color: #e6711b; }
 
 .b-tone-comment-2 {
-  background: #ffbb00; }
+  background-color: #ffbb00; }
 
 .b-tone-comment-3 {
-  background: #ffcf4c; }
+  background-color: #ffcf4c; }
 
 .b-tone-media-1 {
-  background: #333333; }
+  background-color: #333333; }
 
 .b-tone-media-2 {
-  background: #484848; }
+  background-color: #484848; }
 
 .b-tone-media-3 {
-  background: #ffbb00; }
+  background-color: #ffbb00; }
 
 .b-tone-live-1 {
-  background: #b51800; }
+  background-color: #b51800; }
 
 .b-tone-live-2 {
-  background: #cc2b12; }
+  background-color: #cc2b12; }
 
 [class^=b-] {
   display: inline-block;
@@ -134,430 +134,235 @@ a {
   box-shadow: 0 5px 9px rgba(0, 0, 0, 0.3);
   color: #333333; }
 
+.colour-name,
+.colour-value {
+  font-size: 1.125em;
+  width: 90%;
+  display: inline-block; }
+
+.colour-name {
+  margin-top: calc(50% - 2.75em); }
+
 .b-guardian-brand {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-guardian-brand:before, .b-guardian-brand:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-guardian-brand:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "guardian-brand"; }
-  .b-guardian-brand:after {
-    content: "#214583"; }
 
 .b-guardian-brand-light {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-guardian-brand-light:before, .b-guardian-brand-light:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-guardian-brand-light:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "guardian-brand-light"; }
-  .b-guardian-brand-light:after {
-    content: "#94b1ca"; }
 
 .b-error {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-error:before, .b-error:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-error:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "error"; }
-  .b-error:after {
-    content: "#d61d00"; }
 
 .b-success {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-success:before, .b-success:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-success:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "success"; }
-  .b-success:after {
-    content: "#4a7801"; }
 
 .b-neutral-1 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-neutral-1:before, .b-neutral-1:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-neutral-1:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "neutral-1"; }
-  .b-neutral-1:after {
-    content: "#333333"; }
 
 .b-neutral-2 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-neutral-2:before, .b-neutral-2:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-neutral-2:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "neutral-2"; }
-  .b-neutral-2:after {
-    content: "#767676"; }
 
-.b-neutral-3:before, .b-neutral-3:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-3:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-3"; }
-.b-neutral-3:after {
-  content: "#bdbdbd"; }
 
-.b-neutral-4:before, .b-neutral-4:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-4:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-4"; }
-.b-neutral-4:after {
-  content: "gainsboro"; }
 
-.b-neutral-5:before, .b-neutral-5:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-5:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-5"; }
-.b-neutral-5:after {
-  content: "#dfdfdf"; }
 
-.b-neutral-6:before, .b-neutral-6:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-6:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-6"; }
-.b-neutral-6:after {
-  content: "#eaeaea"; }
 
-.b-neutral-7:before, .b-neutral-7:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-7:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-7"; }
-.b-neutral-7:after {
-  content: "#f1f1f1"; }
 
-.b-neutral-8:before, .b-neutral-8:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-8:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-8"; }
-.b-neutral-8:after {
-  content: "#f6f6f6"; }
 
 .b-neutral-1-warm {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-neutral-1-warm:before, .b-neutral-1-warm:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-neutral-1-warm:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "neutral-1-warm"; }
-  .b-neutral-1-warm:after {
-    content: "#333333"; }
 
 .b-neutral-2-warm {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-neutral-2-warm:before, .b-neutral-2-warm:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-neutral-2-warm:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "neutral-2-warm"; }
-  .b-neutral-2-warm:after {
-    content: "#767676"; }
 
-.b-neutral-3-warm:before, .b-neutral-3-warm:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-3-warm:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-3-warm"; }
-.b-neutral-3-warm:after {
-  content: "#bdbdbd"; }
 
-.b-neutral-4-warm:before, .b-neutral-4-warm:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-4-warm:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-4-warm"; }
-.b-neutral-4-warm:after {
-  content: "gainsboro"; }
 
-.b-neutral-5-warm:before, .b-neutral-5-warm:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-5-warm:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-5-warm"; }
-.b-neutral-5-warm:after {
-  content: "#e3e3db"; }
 
-.b-neutral-6-warm:before, .b-neutral-6-warm:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-6-warm:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-6-warm"; }
-.b-neutral-6-warm:after {
-  content: "#edede7"; }
 
-.b-neutral-7-warm:before, .b-neutral-7-warm:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-7-warm:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-7-warm"; }
-.b-neutral-7-warm:after {
-  content: "#f4f4ee"; }
 
-.b-neutral-8-warm:before, .b-neutral-8-warm:after {
-  font-size: 1.125em;
-  width: 90%;
-  display: inline-block; }
 .b-neutral-8-warm:before {
-  margin-top: calc(50% - 1.5em);
+  visibility: hidden;
   content: "neutral-8-warm"; }
-.b-neutral-8-warm:after {
-  content: "#f6f6f6"; }
 
 .b-tone-news-1 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-news-1:before, .b-tone-news-1:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-news-1:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-news-1"; }
-  .b-tone-news-1:after {
-    content: "#005689"; }
 
 .b-tone-news-2 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-news-2:before, .b-tone-news-2:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-news-2:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-news-2"; }
-  .b-tone-news-2:after {
-    content: "#4bc6df"; }
 
 .b-tone-features-1 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-features-1:before, .b-tone-features-1:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-features-1:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-features-1"; }
-  .b-tone-features-1:after {
-    content: "#951c55"; }
 
 .b-tone-features-2 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-features-2:before, .b-tone-features-2:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-features-2:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-features-2"; }
-  .b-tone-features-2:after {
-    content: "#f66980"; }
 
 .b-tone-features-3 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-features-3:before, .b-tone-features-3:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-features-3:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-features-3"; }
-  .b-tone-features-3:after {
-    content: "#b82266"; }
 
 .b-tone-features-4 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-features-4:before, .b-tone-features-4:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-features-4:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-features-4"; }
-  .b-tone-features-4:after {
-    content: "#7d0068"; }
 
 .b-tone-comment-1 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-comment-1:before, .b-tone-comment-1:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-comment-1:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-comment-1"; }
-  .b-tone-comment-1:after {
-    content: "#e6711b"; }
 
 .b-tone-comment-2 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-comment-2:before, .b-tone-comment-2:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-comment-2:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-comment-2"; }
-  .b-tone-comment-2:after {
-    content: "#ffbb00"; }
 
 .b-tone-comment-3 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-comment-3:before, .b-tone-comment-3:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-comment-3:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-comment-3"; }
-  .b-tone-comment-3:after {
-    content: "#ffcf4c"; }
 
 .b-tone-media-1 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-media-1:before, .b-tone-media-1:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-media-1:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-media-1"; }
-  .b-tone-media-1:after {
-    content: "#333333"; }
 
 .b-tone-media-2 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-media-2:before, .b-tone-media-2:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-media-2:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-media-2"; }
-  .b-tone-media-2:after {
-    content: "#484848"; }
 
 .b-tone-media-3 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-media-3:before, .b-tone-media-3:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-media-3:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-media-3"; }
-  .b-tone-media-3:after {
-    content: "#ffbb00"; }
 
 .b-tone-live-1 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-live-1:before, .b-tone-live-1:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-live-1:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-live-1"; }
-  .b-tone-live-1:after {
-    content: "#b51800"; }
 
 .b-tone-live-2 {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-tone-live-2:before, .b-tone-live-2:after {
-    font-size: 1.125em;
-    width: 90%;
-    display: inline-block; }
   .b-tone-live-2:before {
-    margin-top: calc(50% - 1.5em);
+    visibility: hidden;
     content: "tone-live-2"; }
-  .b-tone-live-2:after {
-    content: "#cc2b12"; }

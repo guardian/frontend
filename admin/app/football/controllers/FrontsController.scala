@@ -1,8 +1,8 @@
 package controllers.admin
 
-import play.api.mvc.{RequestHeader, Action, Controller, SimpleResult}
+import play.api.mvc.{RequestHeader, Action, Controller, Result => PlayResult}
 import play.api.libs.ws.WS
-import play.api.templates.Html
+import play.twirl.api.Html
 import common.{Logging, ExecutionContexts}
 import football.services.GetPaClient
 import football.model.{SnapFields, PA}
@@ -11,12 +11,10 @@ import conf.Configuration
 import scala.concurrent.Future
 import pa._
 import concurrent.FutureOpt
-import org.joda.time.DateMidnight
+import org.joda.time.LocalDate
 import football.model.SnapFields
-import scala.Some
 import pa.Season
 import pa.Fixture
-import play.api.mvc.SimpleResult
 import pa.Result
 import pa.LiveMatch
 import play.api.libs.json.JsResultException
@@ -164,8 +162,8 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
     }
   }
 
-  private def getMatchesFor(competitionId: String, team1IdOpt: Option[String], team2IdOpt: Option[String]): Future[(List[LiveMatch], List[Fixture], List[Result])] = {
-    val today = DateMidnight.now
+  private def getMatchesFor(competitionId: String, team1IdOpt: Option[String], team2IdOpt: Option[String]): Future[(List[LiveMatch], List[Fixture], List[pa.Result])] = {
+    val today = LocalDate.now
     val fLiveMatches = client.liveMatches(competitionId)
     val fFixtures = client.fixtures(competitionId)
     val fResults = client.results(competitionId, today.minusDays(2))
@@ -193,7 +191,8 @@ object FrontsController extends Controller with ExecutionContexts with GetPaClie
   }
   private def hasTeam(m: FootballMatch, teamId: String) = m.homeTeam.id == teamId || m.awayTeam.id == teamId
 
-  private def previewFrontsComponent(snapFields: SnapFields): Future[SimpleResult] = {
+  private def previewFrontsComponent(snapFields: SnapFields): Future[PlayResult] = {
+    import play.api.Play.current
     val result = (for {
       previewResponse <- WS.url(snapFields.uri).get()
     } yield {

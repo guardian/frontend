@@ -1,16 +1,15 @@
 package dfp
 
 import common.ExecutionContexts
-import implicits.Dates
-import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.json.Json.{toJson, _}
 import play.api.libs.json.{JsValue, Json, Writes}
 import tools.Store
 
 import scala.concurrent.future
 
-object DfpDataCacheJob extends ExecutionContexts with Dates{
+object DfpDataCacheJob extends ExecutionContexts {
 
   private implicit val customTargetWrites = new Writes[CustomTarget] {
     def writes(target: CustomTarget): JsValue = {
@@ -123,18 +122,23 @@ object DfpDataCacheJob extends ExecutionContexts with Dates{
     }
   }
 
+  private val londonTimeFormatter = DateTimeFormat.longDateTime().withZone(DateTimeZone.forID("Europe/London"))
+
   def run() {
     future {
       val data = DfpDataExtractor(DfpDataHydrator.loadCurrentLineItems())
 
       if (data.isValid) {
-        val now = DateTime.now().toHttpDateTimeString
+        val now = londonTimeFormatter.print(DateTime.now())
 
         val sponsorships = data.sponsorships
         Store.putDfpSponsoredTags(stringify(toJson(SponsorshipReport(now, sponsorships))))
 
         val advertisementFeatureSponsorships = data.advertisementFeatureSponsorships
         Store.putDfpAdvertisementFeatureTags(stringify(toJson(SponsorshipReport(now, advertisementFeatureSponsorships))))
+
+        val inlineMerchandisingSponsorships = data.inlineMerchandisingSponsorships
+        Store.putInlineMerchandisingSponsorships(stringify(toJson(SponsorshipReport(now, inlineMerchandisingSponsorships))))
 
         val pageSkinSponsorships = data.pageSkinSponsorships
         Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))

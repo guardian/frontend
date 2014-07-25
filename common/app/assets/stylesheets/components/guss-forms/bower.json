@@ -1,6 +1,6 @@
 {
   "name": "guss-forms",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "main": [
     "_forms.scss"
   ],
@@ -9,6 +9,6 @@
     "demo"
   ],
   "dependencies": {
-    "guss": "~1"
+    "guss": "~2"
   }
 }

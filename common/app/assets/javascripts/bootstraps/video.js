@@ -6,11 +6,13 @@ define([
     'common/utils/config',
     'common/utils/deferToAnalytics',
     'common/utils/url',
+    'common/modules/ui/images',
     'common/modules/commercial/dfp',
     'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
     'bean',
-    'bonzo'
+    'bonzo',
+    'common/modules/component'
 ], function(
     $,
     ajax,
@@ -18,11 +20,13 @@ define([
     config,
     deferToAnalytics,
     urlUtils,
+    images,
     dfp,
     OmnitureMedia,
     _throttle,
     bean,
-    bonzo
+    bonzo,
+    Component
 ) {
 
     var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
@@ -226,6 +230,9 @@ define([
                             player.vast({
                                 url: modules.getVastUrl()
                             });
+                            if(/desktop|wide/.test(detect.getBreakpoint())) {
+                                modules.initEndSlate(player);
+                            }
                         });
                     });
 
@@ -253,11 +260,50 @@ define([
                     vjs.persistvolume({namespace: 'gu.vjs'});
                 });
             });
+        },
+        generateEndSlateUrl: function() {
+            var seriesId = config.page.seriesId;
+            var sectionId = config.page.section;
+            var url = (seriesId)  ? '/video/end-slate/series/' + seriesId : '/video/end-slate/section/' + sectionId;
+            return url + '.json?shortUrl=' + config.page.shortUrl;
+        },
+        initEndSlate: function(player) {
+            var endSlate = new Component(),
+                endState = 'vjs-has-ended';
+
+            endSlate.endpoint = modules.generateEndSlateUrl();
+            endSlate.fetch(player.el(), 'html');
+
+            player.on('ended', function() {
+                bonzo(player.el()).addClass(endState);
+            });
+            player.on('playing', function() {
+                bonzo(player.el()).removeClass(endState);
+            });
+        },
+        initMoreInSection: function() {
+            var section = new Component(),
+                parentEl = $('.js-onward')[0];
+            section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+            section.fetch(parentEl).then(function() {
+                images.upgrade(parentEl);
+            });
+        },
+        initMostViewedVideo: function() {
+            var mostViewed = new Component();
+
+            mostViewed.endpoint = '/video/most-viewed.json';
+            mostViewed.fetch($('.js-video-components-container')[0], 'html');
         }
     };
 
     var ready = function () {
         modules.initPlayer();
+
+        if(config.page.contentType === 'Video') {
+            modules.initMoreInSection();
+            modules.initMostViewedVideo();
+        }
     };
 
     return {

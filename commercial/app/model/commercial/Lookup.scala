@@ -10,19 +10,15 @@ import scala.concurrent.Future
 
 object Lookup extends ExecutionContexts with Logging {
 
-  def mainPicture(contentId: String): Future[Option[ImageContainer]] = {
-    for {
-      response <- LiveContentApi.item(contentId, defaultEdition).response
-    } yield {
-      for {
-        content <- response.content
-        mainPicture <- Content(content).mainPicture
-      } yield {
-        mainPicture
-      }
+  def content(contentId: String): Future[Option[Content]] = {
+    LiveContentApi.item(contentId, defaultEdition).response map {
+      _.content map (Content(_))
     }
   }
 
+  def mainPicture(contentId: String): Future[Option[ImageContainer]] = {
+    content(contentId) map (_ flatMap (_.mainPicture))
+  }
 
   def keyword(term: String, section: Option[String] = None): Future[Seq[Tag]] = {
     val baseQuery = LiveContentApi.tags.q(term).tagType("keyword").pageSize(50)

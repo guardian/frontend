@@ -1,7 +1,7 @@
 package implicits
 
 import pa._
-import org.joda.time.{ DateTime, DateMidnight }
+import org.joda.time.{ DateTime, LocalDate }
 import model._
 import views.MatchStatus
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
@@ -37,7 +37,7 @@ trait Football extends Collections {
   }
 
   implicit class Match2isOn(m: FootballMatch) {
-    def isOn(date: DateMidnight) = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
+    def isOn(date: LocalDate) = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
   }
 
   implicit class Match2status(m: FootballMatch) {

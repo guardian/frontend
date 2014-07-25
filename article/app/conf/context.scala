@@ -1,15 +1,29 @@
 package conf
 
-import _root_.play.api.libs.ws.WS
+import _root_.play.api.mvc.{Results, Action}
+import play.api.libs.ws.WS
 import common.Metrics
-import com.gu.management._
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import scala.concurrent.{ExecutionContext, Await, Future}
-import com.gu.management.HttpRequest
-import com.gu.management.PlainTextResponse
+import com.gu.management._
 import scala.concurrent.duration._
 import java.util.concurrent.atomic.AtomicBoolean
+
+
+object HealthCheck extends AllGoodHealthcheckController("/world/2012/sep/11/barcelona-march-catalan-independence") with Results {
+
+  // this is for an "offline" healthcheck that the CDN hits
+  private val status = new AtomicBoolean(false)
+
+  override def healthcheck() = Action.async{ request =>
+    val result = super.healthcheck()(request)
+    result.foreach(r => status.set(r.header.status == 200))
+    result
+  }
+
+  def isOk = status.get
+}
 
 class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(urls:_*) {
 
@@ -19,6 +33,7 @@ class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(u
 
 
   override def get(req: HttpRequest) = {
+    import _root_.play.api.Play.current
     def fetch(url: String) = WS.url(url).withHeaders("X-Gu-Management-Healthcheck" -> "true").get()
 
     val checks = urls map { base + _ } map { url => fetch(url).map{ response => url -> response } }

@@ -18,10 +18,6 @@ trait AdAgent[T <: Ad] extends BaseAdAgent[T] with Logging {
       oldAds
     }
   }
-
-  def stop() {
-    agent.close()
-  }
 }
 
 trait BaseAdAgent[T <: Ad] {

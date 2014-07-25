@@ -3,26 +3,26 @@ package model
 import conf.Switches.DoubleCacheTimesSwitch
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
-import play.api.mvc.SimpleResult
+import play.api.mvc.Result
 import scala.concurrent.duration.Duration
 
 object Cached extends implicits.Dates {
 
   private val cacheableStatusCodes = Seq(200, 404)
 
-  def apply(seconds: Int)(result: SimpleResult): SimpleResult = {
+  def apply(seconds: Int)(result: Result): Result = {
     if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(seconds, result) else result
   }
 
-  def apply(duration: Duration)(result: SimpleResult): SimpleResult = {
+  def apply(duration: Duration)(result: Result): Result = {
     apply(duration.toSeconds.asInstanceOf[Int])(result)
   }
 
-  def apply(metaData: MetaData)(result: SimpleResult): SimpleResult = {
+  def apply(metaData: MetaData)(result: Result): Result = {
     if (cacheableStatusCodes.exists(_ == result.header.status)) cacheHeaders(metaData.cacheSeconds, result) else result
   }
 
-  private def cacheHeaders(seconds: Int, result: SimpleResult) = {
+  private def cacheHeaders(seconds: Int, result: Result) = {
     val now = DateTime.now
     val expiresTime = now + seconds.seconds
     val maxAge = if (DoubleCacheTimesSwitch.isSwitchedOn) seconds * 2 else seconds
@@ -39,5 +39,5 @@ object Cached extends implicits.Dates {
 }
 
 object NoCache {
-  def apply(result: SimpleResult): SimpleResult = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
+  def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
 }

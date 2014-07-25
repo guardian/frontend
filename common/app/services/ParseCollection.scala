@@ -1,6 +1,5 @@
 package services
 
-import common.FaciaMetrics.S3AuthorizationError
 import common._
 import conf.LiveContentApi
 import conf.Configuration
@@ -15,10 +14,11 @@ import performance._
 import org.apache.commons.codec.digest.DigestUtils._
 import ParseCollectionJsonImplicits._
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
-import play.api.libs.ws.Response
+import play.api.libs.ws.WSResponse
 import play.api.libs.json.JsObject
 import scala.concurrent.duration._
 import conf.Switches.{FaciaToolCachedContentApiSwitch, FaciaToolCachedZippingContentApiSwitch}
+import common.S3Metrics.S3AuthorizationError
 
 
 object Path {
@@ -81,7 +81,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     val isSnap: Boolean = id.startsWith("snap/")
   }
 
-  def requestCollection(id: String): Future[Response] = {
+  def requestCollection(id: String): Future[WSResponse] = {
     val s3BucketLocation: String = s"${S3FrontsApi.location}/collection/$id/collection.json"
     log.info(s"loading running order configuration from: ${Configuration.frontend.store}/$s3BucketLocation")
     val request = SecureS3Request.urlGet(s3BucketLocation)
@@ -125,19 +125,19 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         (collectionJson \ "href").asOpt[String]
     )
 
-  private def responseToJson(response: Response): JsValue = {
+  private def responseToJson(response: WSResponse): JsValue = {
     response.status match {
       case 200 =>
         Try(parse(response.body)).getOrElse(JsNull)
       case 403 =>
         S3AuthorizationError.increment()
-        val errorString: String = s"Request failed to authenticate with S3: ${response.getAHCResponse.getUri}"
+        val errorString: String = s"Request failed to authenticate with S3 ${response.status} ${response.statusText}"
         log.warn(errorString)
         throw new Exception(errorString)
       case httpResponseCode: Int if httpResponseCode >= 500 =>
         throw new Exception("S3 returned a 5xx")
       case _ =>
-        log.warn(s"Could not load running order: ${response.status} ${response.statusText} ${response.getAHCResponse.getUri}")
+        log.warn(s"Could not load running order: ${response.status} ${response.statusText}")
         // NOTE: better way of handling fallback
         JsNull
     }

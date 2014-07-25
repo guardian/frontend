@@ -114,7 +114,7 @@ h1 {
 .front-priorities {
     position: absolute;
     top: 60px;
-    left: 60px;
+    left: 20px;
 }
 
 .front-priorities--priority {
@@ -132,7 +132,7 @@ h1 {
 
 .title {
     font-size: 18px;
-    color: #666666;
+    color: #333333;
     padding: 0 0 0 4px;
 }
 
@@ -162,7 +162,8 @@ h1 {
 
 .supporting .droppable {
     padding: 0 0 15px 0;
-    border-top: 1px dashed #dddddd;
+    border-top: 1px solid #e9e9e9;
+    margin-top: 2px;
 }
 
 .droppable.underDrag {
@@ -336,6 +337,11 @@ h1 {
     background-color: #eeeeee;
 }
 
+.article:hover .article__time,
+.article:hover .article__spark {
+    display: none;
+}
+
 .supporting .article {
     border-color: #dddddd;
     background: #dddddd;
@@ -368,7 +374,7 @@ h1 {
 }
 
 .article_content {
-    margin: 1px 130px 0 85px;
+    margin: 1px 100px 0 85px;
     line-height: 0;
 }
 
@@ -377,7 +383,17 @@ h1 {
     opacity: 0.5;
 }
 
-.headline {
+.article .copy-paste {
+    display: none;
+}
+
+.article:hover .copy-paste {
+    display: inline-block;
+    color: #CCCCCC;
+    font-size: 12px;
+}
+
+a.headline {
     font-size: 14px;
     line-height: 16px;
     color: #000000;
@@ -386,7 +402,7 @@ h1 {
     text-decoration: none;
 }
 
-.headline:hover {
+a.headline:hover {
     color: #000000;
 }
 
@@ -443,7 +459,7 @@ h1 {
 
 .article__time {
     position: absolute;
-    right: 28px;
+    right: 0;
     top: 1px;
     font-size: 9px;
     line-height: 12px;
@@ -479,6 +495,7 @@ h1 {
 
 .article__overrides .tools {
     float: right;
+    margin: 5px 26px 0 0;
 }
 
 .article__overrides__fields {
@@ -490,8 +507,9 @@ h1 {
 }
 
 .misc__overrides {
-    margin: 0 0 0 6px;
-    height: 25px;
+    margin: 5px 0 5px 6px;
+    font-size: 12px;
+    line-height: 15px;
 }
 
 .misc__overrides .selected {
@@ -573,16 +591,24 @@ input[type="text"] {
     padding: 0 10px 0 2px;
 }
 
+textarea.headline,
 textarea.trailtext {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     width: 100%;
-    font-size: 12px;
-    line-height: 14px;
-    padding: 3px 5px 0 5px;
-    min-height: 35px;
-    margin: 0;
-    color: #333333;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 2px 5px 0 5px;
+    margin: 1px 0;
+    color: #000000;
+}
+
+textarea.headline {
+    height: 54px;
+}
+
+textarea.trailtext {
+    height: 70px;
 }
 
 button {
@@ -599,21 +625,21 @@ button {
 }
 
 .collection-overrides {
-    margin: -6px 0 0 3px;
+    margin: -2px 0 0 3px;
 }
 
-.article .spark {
+.article__spark {
     position: absolute;
     top: 13px;
-    right: 28px;
+    right: 0;
 }
 
 .group-name {
     padding: 2px 0 0 0;
     margin: 5px 0 2px 4px;
-    font-size: 11px;
+    font-size: 12px;
     line-height: 12px;
-    color: #666666;
+    color: #333333;
     border-top: 1px dotted #cccccc;
     text-transform: uppercase;
     width: 143px;
@@ -706,11 +732,6 @@ button {
     z-index: 2;
 }
 
-.article__overrides .tool,
-.collection-overrides .tool {
-    margin-top: 5px;
-}
-
 .tool {
     display: inline-block;
     padding: 0 10px;
@@ -752,10 +773,6 @@ button {
     background: #148ad2;
 }
 
-.collection .tools {
-    margin: 0 0 2px 4px;
-}
-
 .tools .tool.draft-publish {
     background: #ffc107;
 }
@@ -791,13 +808,34 @@ button {
     color: #333333;
 }
 
+.article__tools {
+    display: none;
+    position: absolute;
+    right: 0;
+    width: 88px;
+    height: 51px;
+}
+
+.latest-articles .article__tools {
+    width: 45px;
+}
+
+.article:hover > .closed > .article__tools {
+    display: block;
+}
+
 .tool--small {
-    background: inherit;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    padding: 2px 4px 0 4px;
-    margin: 0 1px 0 3px;
-    line-height: 19px;
+    background: #CCCCCC;
+    text-align: center;
+    font-size: 12px;
+    line-height: 22px;
+    color: #333333;
+    width: 42px;
+    height: 23px;
+    padding: 0;
+    opacity: 0.7;
 }
 
 .tool--small i {
@@ -805,27 +843,23 @@ button {
 }
 
 .article > .closed .tool--small {
+    float: left;
+    margin: 1px 0 0 1px;
+}
+
+.latest-articles .tool--small--remove,
+.latest-articles .tool--small--paste {
     display: none;
-    position: absolute;
-    right: 2px;
-    background: #dddddd;
-}
-
-.article > .closed .tool--small--href {
-    top: 4px;
-}
-
-.article > .closed .tool--small--remove {
-    top: 27px;
-}
-
-.article:hover > .closed .tool--small {
-    display: block;
-    opacity: 0.6;
 }
 
 .article > .closed .tool--small:hover {
     opacity: 1;
+    background: #999999;
+    color: #ffffff;
+}
+
+.article > .closed .tool--small:active{
+    background: #148ad2;
 }
 
 .latest-articles .tool--small--remove {
@@ -1064,7 +1098,7 @@ button {
     .left-col .article .article_content {
         margin-right: 40px;
     }
-    .left-col .article .spark {
+    .left-col .article__spark {
         display: none;
     }
     .left-col .article__time {
@@ -1096,20 +1130,22 @@ button {
     .front-selector {
         right: 10px;
     }
+    .col__inner {
+        padding: 5px 0 0 5px;
+    }
     .log-in-out,
-    .article .spark {
+    .article__time,
+    .article__spark {
         display: none;
     }
     .article .article_content {
-        margin-right: 25px;
+        margin-right: 5px;
     }
     .article > .closed .tool--remove {
         top: 0;
     }
-    .article__time {
-        position: inherit;
-        right: 0;
-        top: 2px;
+    .article:hover > .closed > .article__tools {
+        background-color: #eeeeee;
     }
 }
 

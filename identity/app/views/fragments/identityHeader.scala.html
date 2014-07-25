@@ -4,9 +4,9 @@
 <header id="header" class="l-header l-header--identity" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
     <div class="l-header-pre">
         <div class="l-header-pre__inner gs-container u-cf">
-            <div class="top-nav">
+            <div class="top-bar">
                 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                    <div class="top-nav__item">
+                    <div class="top-bar__item">
                         <div class="js-profile-nav js-hidden">
                             <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
                                class="control control--profile">
@@ -25,14 +25,14 @@
     <div class="l-header-main">
         <div class="gs-container">
             <meta itemprop="logo" content="http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
-            <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="guardian-logo-wrapper" itemprop="url">
+            <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url">
                 <span class="u-h">The Guardian</span>
                 <i class="i i-guardian-logo-160 mobile-only"></i>
                 <i class="i i-guardian-logo-big hide-on-mobile"></i>
             </a>
 
             @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                <div class="nav-popup--profile nav-popup--profile-docked-left nav-popup--small js-profile-nav-popup nav-popup is-off"></div>
+                <div class="nav-popup nav-popup--profile nav-popup--profile-docked-left js-profile-nav-popup is-off"></div>
             }
         </div>
     </div>
