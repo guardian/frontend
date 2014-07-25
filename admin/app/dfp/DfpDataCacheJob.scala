@@ -138,6 +138,9 @@ object DfpDataCacheJob extends ExecutionContexts {
         val advertisementFeatureSponsorships = data.advertisementFeatureSponsorships
         Store.putDfpAdvertisementFeatureTags(stringify(toJson(SponsorshipReport(now, advertisementFeatureSponsorships))))
 
+        val inlineMerchandisingSponsorships = data.inlineMerchandisingSponsorships
+        Store.putInlineMerchandisingSponsorships(stringify(toJson(SponsorshipReport(now, inlineMerchandisingSponsorships))))
+
         val pageSkinSponsorships = data.pageSkinSponsorships
         Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
 

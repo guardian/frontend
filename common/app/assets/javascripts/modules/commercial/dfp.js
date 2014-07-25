@@ -94,6 +94,13 @@ define([
                     tabletlandscape: '300,250|300,600'
                 }
             },
+            im: {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    mobile: '88,89'
+                }
+            },
             inline1: {
                 sizeMappings: {
                     mobile: '300,50',

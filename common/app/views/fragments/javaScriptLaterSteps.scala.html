@@ -145,8 +145,9 @@
                 }
             ).install();
 
-            require(['common/modules/experiments/ab'], function(ab) {
+            require(['common/utils/ajax', 'common/modules/experiments/ab'], function(ajax, ab) {
 
+                ajax.init();
                 ab.segmentUser();
                 ab.run();
 

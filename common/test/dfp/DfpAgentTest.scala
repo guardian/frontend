@@ -32,7 +32,6 @@ class DfpAgentTest extends FlatSpec with Matchers {
   )
 
   private object testDfpAgent extends DfpAgent {
-
     override protected def sponsorships: Seq[Sponsorship] = Seq(
       Sponsorship(Seq("spon-page"), Some("spon")),
       Sponsorship(Seq("media"), None),
@@ -46,6 +45,10 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
 
+    override protected def inlineMerchandisingDeals: Seq[Sponsorship] = Seq(
+      Sponsorship(Seq("ad-feature"), None),
+      Sponsorship(Seq("film"), None)
+    )
 
     override def isProd = true
   }
@@ -58,6 +61,8 @@ class DfpAgentTest extends FlatSpec with Matchers {
     override protected def advertisementFeatureSponsorships: Seq[Sponsorship] = Nil
 
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
+
+    override protected def inlineMerchandisingDeals: Seq[Sponsorship] = Nil
   }
 
   def apiQuery(apiQuery: String) = {

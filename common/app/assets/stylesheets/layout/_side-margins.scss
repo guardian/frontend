@@ -7,17 +7,9 @@
  */
 
 @mixin side-margins-position($container-width) {
-    $negative-offset: (($container-width + $gs-gutter * 2) / 2) * -1;
-
-    &:before {
-        @include rem((
-            left: $negative-offset
-        ));
-    }
+    &:before,
     &:after {
-        @include rem((
-            right: $negative-offset
-        ));
+        width: calc((100% - #{rem($container-width + $gs-gutter * 2)}) / 2);
     }
 }
 
@@ -33,13 +25,18 @@
         &:after,
         &:before {
             content: '';
-            display: block;
             position: absolute;
             z-index: 1;
             background: rgba($c-neutral4, .2);
             top: 0;
             height: 100%;
-            width: 50%;
+            width: 0;
+        }
+        &:before {
+            left: 0;
+        }
+        &:after {
+            right: 0;
         }
         @include side-margins-position(gs-span(9));
     }
