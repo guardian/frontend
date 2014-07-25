@@ -1,7 +1,6 @@
 package com.gu.integration.test.util
 
 import scala.collection.JavaConverters.asScalaBufferConverter
-
 import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
@@ -9,14 +8,37 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.ExpectedCondition
-import org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf
+import org.openqa.selenium.support.ui.ExpectedConditions._
 import org.openqa.selenium.support.ui.WebDriverWait
-
 import com.gu.automation.support.TestLogging
+import org.openqa.selenium.support.ui.ExpectedConditions
 
 object ElementLoader extends TestLogging {
 
   val TestAttributeName = "data-test-id"
+
+  implicit class ElementEnhancer(webElement: WebElement)(implicit driver: WebDriver) {
+
+    def findHiddenDirectElements(childElementName: String): List[WebElement] = {
+      notDisplayed(findDirectElements(childElementName))
+    }
+    
+    def findVisibleDirectElements(childElementName: String): List[WebElement] = {
+      displayed(findDirectElements(childElementName))
+    }
+
+    def findDirectElements(childElementName: String): List[WebElement] = {
+      webElement.findElements(By.xpath(s"./${childElementName}")).asScala.toList
+    }
+  }
+
+  def notDisplayed(elementsToCheck: List[WebElement])(implicit driver: WebDriver): List[WebElement] = {
+    elementsToCheck.filter(element => !element.isDisplayed())
+  }
+
+  def displayed(elementsToCheck: List[WebElement])(implicit driver: WebDriver): List[WebElement] = {
+    elementsToCheck.filter(element => element.isDisplayed())
+  }
 
   /**
    * Will find the element with the provided test attribute id and, if provided, using the provided webelement as search context
@@ -88,7 +110,7 @@ object ElementLoader extends TestLogging {
    *  was proven to be a bit flaky. So calling this method, before calling is displayed, will make sure the elements are loaded and
    *  visible
    */
-  private def waitUntil(expectedCondition: ExpectedCondition[WebElement], timeoutInSeconds: Int = 2)(implicit driver: WebDriver): Boolean = {
+  def waitUntil[T](expectedCondition: ExpectedCondition[T], timeoutInSeconds: Int = 2)(implicit driver: WebDriver): Boolean = {
     try {
       new WebDriverWait(driver, timeoutInSeconds).until(expectedCondition)
     } catch {

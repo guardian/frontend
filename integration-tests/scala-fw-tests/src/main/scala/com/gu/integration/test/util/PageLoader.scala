@@ -1,4 +1,4 @@
-package com.gu.fronts.integration.test
+package com.gu.integration.test.util
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import org.openqa.selenium.By
