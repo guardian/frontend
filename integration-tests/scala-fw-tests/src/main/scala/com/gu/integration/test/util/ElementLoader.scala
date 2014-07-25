@@ -17,7 +17,7 @@ object ElementLoader extends TestLogging {
 
   val TestAttributeName = "data-test-id"
 
-  implicit class ElementEnhancer(webElement: WebElement) {
+  implicit class ElementEnhancer(val webElement: WebElement) extends AnyVal {
 
     def findHiddenDirectElements(childElementName: String): List[WebElement] = {
       notDisplayed(findDirectElements(childElementName))
