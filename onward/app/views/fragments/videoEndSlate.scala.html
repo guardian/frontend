@@ -5,16 +5,18 @@
         <div class="video-end-slate__header">
             <h3 class="video-end-slate__heading">@heading</h3>
         </div>
-        <ul class="video-items video-items--end-slate u-unstyled u-cf" data-link-name="Video end slate">
-            @videos.map(item(_))
+        <ul class="video-items video-items--end-slate u-unstyled u-cf" data-link-name="end slate">
+            @videos.zipWithRowInfo.map{ case (video, row) =>
+                @item(video, row.rowNum)
+            }
         </ul>
     </div>
 </div>
 
-    @item(content: model.Video) = {
+    @item(content: model.Video, index: Number) = {
         <li class="video-item">
             <div class="video-item__container">
-                <a class="video-item__action" href="@LinkTo{@content.url}">
+                <a class="video-item__action" href="@LinkTo{@content.url}" data-link-name="item @index">
                     @content.trailPicture(5, 3).map{ image =>
                         <div class="video-item__img u-responsive-ratio">
                             <img class="responsiveimg" src="@Item140.bestFor(image)" alt="" />
