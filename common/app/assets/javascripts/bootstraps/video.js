@@ -74,7 +74,7 @@ define([
             var events = {
                 end: function() {
                     player.trigger('video:preroll:end');
-                    modules.bindContentEvents(player);
+                    modules.bindContentEvents(player, true);
                 },
                 play: function() {
                     var duration = player.duration();
@@ -87,8 +87,8 @@ define([
                 ready: function() {
                     player.trigger('video:preroll:ready');
 
-                    player.one('play', events.play);
-                    player.one('ended', events.end);
+                    player.one('adstart', events.play);
+                    player.one('adend', events.end);
 
                     if (autoplay) {
                         player.play();
@@ -103,7 +103,7 @@ define([
             });
         },
 
-        bindContentEvents: function(player, instant) {
+        bindContentEvents: function(player) {
             var events = {
                 end: function() {
                     player.trigger('video:content:end');
@@ -139,12 +139,7 @@ define([
                     }
                 }
             };
-
-            if(instant) {
-                events.ready();
-            } else {
-                player.one('loadstart', events.ready);
-            }
+            events.ready();
         },
 
         getVastUrl: function() {
