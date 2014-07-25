@@ -21,19 +21,15 @@ define([
             return player.currentTime();
         };
 
-        this.playPreroll = function() {
-            mediaName = '[preroll] ' + config.page.webTitle;
-            contentStarted = true;
-        };
-
-        this.playContent = function() {
-            mediaName = config.page.webTitle;
-            contentStarted = true;
+        this.firstPlay = function() {
+            if (!contentStarted) { // ensure we only open once
+                s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
+                contentStarted = true;
+            }
         };
 
         this.play = function() {
             if (contentStarted) {
-                s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
                 s.Media.play(mediaName, this.getPosition());
             }
         };
@@ -97,8 +93,8 @@ define([
 
             player.on('video:preroll:ready', this.trackVideoAdvertReady.bind(this));
             player.on('video:content:ready', this.trackVideoContentReady.bind(this));
-            player.on('video:preroll:play', this.playPreroll.bind(this));
-            player.on('video:content:play', this.playContent.bind(this));
+            player.on('video:preroll:play', this.firstPlay.bind(this));
+            player.on('video:content:play', this.firstPlay.bind(this));
         };
     }
     return OmnitureMedia;
