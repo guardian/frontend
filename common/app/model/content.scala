@@ -417,8 +417,6 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
   lazy val duration: Int = 0
   lazy val mediaId: Option[String] = None
 
-  override lazy val contentType = GuardianContentTypes.MEDIA
-
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "video",
@@ -440,6 +438,8 @@ class Audio(content: ApiContentWithMeta) extends Media(content) {
   override lazy val duration: Int = audioAssets.headOption.map(_.duration).getOrElse(0)
   override lazy val mediaId: Option[String] = mainAudio.map(_.id)
 
+  override lazy val contentType = GuardianContentTypes.AUDIO
+
   override lazy val metaData: Map[String, Any] =
     super.metaData + ("content-type" -> contentType, "blockVideoAds" -> blockVideoAds)
 }
@@ -458,6 +458,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
 
   override lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
   override lazy val mediaId: Option[String] = mainVideo.map(_.id)
+
+  override lazy val contentType = GuardianContentTypes.VIDEO
 
   override lazy val metaData: Map[String, Any] =
     super.metaData + ("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))

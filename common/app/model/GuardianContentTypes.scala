@@ -20,6 +20,7 @@ object GuardianContentTypes {
   val IMAGE_CONTENT = "ImageContent"
   val INTERACTIVE = "Interactive"
   val GALLERY = "Gallery"
-  val MEDIA = "Media"
+  val VIDEO = "Video"
+  val AUDIO = "Audio"
   val LIVEBLOG = "LiveBlog"
 }
