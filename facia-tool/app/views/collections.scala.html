@@ -378,7 +378,7 @@
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
                     <a class="headline" target="article" data-bind="
-                        html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : id),
+                        html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
                         css: {'is-empty': isSnap() && !meta.headline()},
                         attr: {href: id},
                         click: open"></a>
