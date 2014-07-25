@@ -131,10 +131,12 @@
 
     $video-most-viewed-container: 531px;
 
-    .content__main-column--video {
-        @include rem((
-            min-height: $video-most-viewed-container
-        ));
+    .content__main-column--media {
+        @include mq(rightCol) {
+            @include rem((
+                min-height: $video-most-viewed-container
+            ));
+        }
     }
 
     .content__secondary-column--video {

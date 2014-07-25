@@ -1,15 +1,15 @@
 @(page: MediaPage)(implicit request: RequestHeader)
 @import conf.Switches._
 
-@defining(page.media, page.storyPackage){ case (media, storyPackage) =>
+@defining(page.media, page.storyPackage, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, storyPackage, mediaType) =>
 <div class="l-side-margins l-side-margins--layout-content">
-    <article class="content content--media content--media--@{media match{ case _: Audio => {"audio"} case _ => {"video"} }} tone-@media.visualTone"
+    <article class="content content--media content--media--@mediaType tone-@media.visualTone"
         itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
 
         @fragments.headDefault(media)
 
         <div class="gs-container">
-            <div class="content__main-column content__main-column--video">
+            <div class="content__main-column content__main-column--media">
 
                 <div class="media-primary player">
                     @media match {
