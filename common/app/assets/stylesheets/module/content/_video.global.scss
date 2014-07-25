@@ -365,9 +365,11 @@
 
     .vjs-fullscreen & {
         position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
         width: 100%;
-        top: 25%;
-        left: -2.5%;
+        height: 100%;
     }
 
     @include mq($to: tablet) {
@@ -393,11 +395,16 @@
     }
 
     .vjs-fullscreen & {
-        position: relative;
-        margin: 0 auto;
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
         @include rem((
-            padding-bottom: $gs-baseline,
-            max-width: gs-span(11)
+            top: -1 * (gs-height(1) + $gs-baseline),
+            height: gs-height(6),
+            max-width: gs-span(11),
+            padding-bottom: $gs-baseline
         ));
     }
 }
