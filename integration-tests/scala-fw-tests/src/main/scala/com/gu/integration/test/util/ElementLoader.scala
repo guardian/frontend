@@ -17,12 +17,12 @@ object ElementLoader extends TestLogging {
 
   val TestAttributeName = "data-test-id"
 
-  implicit class ElementEnhancer(webElement: WebElement)(implicit driver: WebDriver) {
+  implicit class ElementEnhancer(webElement: WebElement) {
 
     def findHiddenDirectElements(childElementName: String): List[WebElement] = {
       notDisplayed(findDirectElements(childElementName))
     }
-    
+
     def findVisibleDirectElements(childElementName: String): List[WebElement] = {
       displayed(findDirectElements(childElementName))
     }
@@ -32,11 +32,11 @@ object ElementLoader extends TestLogging {
     }
   }
 
-  def notDisplayed(elementsToCheck: List[WebElement])(implicit driver: WebDriver): List[WebElement] = {
+  def notDisplayed(elementsToCheck: List[WebElement]): List[WebElement] = {
     elementsToCheck.filter(element => !element.isDisplayed())
   }
 
-  def displayed(elementsToCheck: List[WebElement])(implicit driver: WebDriver): List[WebElement] = {
+  def displayed(elementsToCheck: List[WebElement]): List[WebElement] = {
     elementsToCheck.filter(element => element.isDisplayed())
   }
 
