@@ -5,6 +5,6 @@ import conf.HealthcheckPage
 
 object ArticleHealthcheckController extends Controller {
 
-  def healthcheck() = Action(if (HealthcheckPage.isOk) Ok("OK") else ServiceUnavailable("Service Unavailable"))
+  def healthcheck() = Action(Ok("OK"))
 
 }
