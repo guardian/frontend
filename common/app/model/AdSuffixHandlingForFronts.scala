@@ -9,7 +9,7 @@ trait AdSuffixHandlingForFronts extends MetaData{
   }
 
   def extractAdUnitSuffixFrom(path: String) = {
-    val frontSuffixList = List("front")
+    val frontSuffixList = List("front", "ng")
     path.split("/").toList match {
       case cc :: Nil  if supportedCountries contains cc => (cc :: frontSuffixList).mkString("/")
       case cc :: pathList if supportedCountries contains cc => (pathList ::: frontSuffixList).mkString("/")
