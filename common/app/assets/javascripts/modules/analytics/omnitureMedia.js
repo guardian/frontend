@@ -11,7 +11,19 @@ define([
         var mediaName = config.page.webTitle,
             contentStarted = false,
             provider = config.page.source || '',
-            restricted = config.page.blockVideoAds || '';
+            restricted = config.page.blockVideoAds || '',
+            continuousEventTimer,
+            events = { // this is the expected ordering of events
+                'video:request': '98',
+                'preroll:request': '97',
+                'preroll:play': '59',
+                'preroll:end': '64',
+                'video:play': '17',
+                'video:25': '21',
+                'video:50': '22',
+                'video:75': '23',
+                'video:end': '18'
+            };
 
         this.getDuration = function() {
             return player.duration();
@@ -21,84 +33,109 @@ define([
             return player.currentTime();
         };
 
-        this.playPreroll = function() {
-            mediaName = '[preroll] ' + config.page.webTitle;
-            contentStarted = true;
-        };
-
-        this.playContent = function() {
-            mediaName = config.page.webTitle;
-            contentStarted = true;
-        };
-
         this.play = function() {
             if (contentStarted) {
-                s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
-                s.Media.play(mediaName, this.getPosition());
+                this.startContinuousEventTimer();
             }
         };
 
         this.pause = function() {
-            s.Media.stop(mediaName, this.getPosition());
-        };
-
-        this.buffer = function() {
-            s.Media.stop(mediaName, this.getPosition());
+            this.stopContinuousEventTimer();
         };
 
         this.seeking = function() {
-            s.Media.stop(mediaName, this.getPosition());
+            this.stopContinuousEventTimer();
         };
 
-        this.seeked = function() {
-            s.Media.play(mediaName, this.getPosition());
+        this.sendEventName = function(eventName, ad) {
+            var omnitureEvent = 'event' + events[eventName];
+            this.sendEvent(omnitureEvent, eventName, ad);
         };
 
-        this.trackUserInteraction = function(type, name) {
-            var event;
-            switch(type){
-                case 'Play':
-                    event = 'event98';
-                    break;
-                case 'Advert':
-                    event = 'event97';
-                    break;
+        this.sendEvent = function(event, eventName, ad) {
+            s.eVar74 = ad ?  'video ad' : 'video content';
+            if (eventName) {
+                s.prop41 = eventName;
             }
-            s.prop41 = type;
             s.linkTrackVars = 'events,eVar11,prop41,eVar43,prop43,eVar44,prop44';
             s.linkTrackEvents = event;
             s.events = event;
-            s.tl(true, 'o', name);
+            s.tl(true, 'o', eventName || event);
         };
 
-        this.trackVideoAdvertReady = function() {
-            s.trackVideoAd();
-            this.trackUserInteraction('Advert', 'Video advert is ready');
+        this.hitSegment = function(segment) {
+            this.sendEventName('video:' + segment);
         };
 
-        this.trackVideoContentReady = function() {
-            s.trackVideoContent(provider, restricted);
-            this.trackUserInteraction('Play', 'Video content is ready');
+        this.firstPlay = function() {
+            this.sendEvent('video:request');
+            this.sendEvent('preroll:request');
+        };
+
+        this.omnitureInit= function() {
+            s.loadModule('Media');
+            s.Media.autoTrack=false;
+            s.Media.trackWhilePlaying = false;
+            s.Media.trackVars='events,eVar7,eVar43,eVar44,prop44,eVar47,eVar48,eVar56,eVar61';
+            s.Media.trackEvents='event17,event18,event21,event22,event23,event57,event63';
+            s.Media.segmentByMilestones = false;
+            s.Media.trackUsingContextData = false;
+
+            s.eVar11 = s.prop11 = config.page.sectionName || '';
+            s.eVar43 = s.prop43 = 'Video';
+            s.eVar44 = s.prop44 = mediaName;
+            s.eVar7 = s.pageName;
+            s.eVar61 = restricted;
+            s.eVar56 = provider;
+
+            s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
+        };
+
+        this.startContinuousEventTimer = function() {
+            this.stopContinuousEventTimer();
+            var t = new Date();
+            var sendContinuousEvent = function() {
+                var n = new Date(),
+                    delta = (n - t)  / 1000.0;
+                t = n;
+                this.sendEvent('event57=' + delta.toFixed(0));
+            };
+            continuousEventTimer = window.setInterval(sendContinuousEvent.bind(this), 10000);
+        };
+
+        this.stopContinuousEventTimer = function() {
+            if (continuousEventTimer) {
+                window.clearInterval(continuousEventTimer);
+            }
+            continuousEventTimer = false;
         };
 
         this.init = function() {
-            s.loadMediaModule(provider, restricted);
+            var self = this;
 
-            s.prop11 = config.page.sectionName || '';
-            s.prop43 = 'Video';
-            s.eVar11 = s.prop11;
-            s.eVar43 = s.prop43;
+            this.omnitureInit();
+
+            player.one('play', this.firstPlay.bind(this));
 
             player.on('play', this.play.bind(this));
             player.on('pause', this.pause.bind(this));
-            player.on('seeking', this.seeking.bind(this));
-            player.on('seeked', this.seeked.bind(this));
-            player.on('volumechange', throttle(this.trackUserInteraction.bind(this, 'Volume', 'User Changed Volume'), 250));
 
-            player.on('video:preroll:ready', this.trackVideoAdvertReady.bind(this));
-            player.on('video:content:ready', this.trackVideoContentReady.bind(this));
-            player.on('video:preroll:play', this.playPreroll.bind(this));
-            player.on('video:content:play', this.playContent.bind(this));
+            player.on('seeking', this.seeking.bind(this));
+
+            player.one('video:preroll:play', this.sendEventName.bind(this, 'preroll:play', true));
+            player.one('video:preroll:end', this.sendEventName.bind(this, 'preroll:end', true));
+
+            player.one('video:content:play', function() {
+                contentStarted = true;
+                self.sendEventName('video:play');
+                self.startContinuousEventTimer();
+            });
+
+            player.one('video:content:end', this.sendEventName.bind(this, 'video:end'));
+
+            player.one('video:play:25', this.hitSegment.bind(this, 25));
+            player.one('video:play:50', this.hitSegment.bind(this, 50));
+            player.one('video:play:75', this.hitSegment.bind(this, 75));
         };
     }
     return OmnitureMedia;
