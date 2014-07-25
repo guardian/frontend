@@ -7,10 +7,13 @@ import scala.concurrent.Future
 import play.api.libs.json.Json
 import conf.Configuration
 import org.joda.time.DateTime
+import play.Play
+import scala.concurrent.duration._
 
 object OAuthLoginController extends Controller with ExecutionContexts {
   import play.api.Play.current
 
+  val maxAuthAge: Long = if (Play.isDev) 10.minutes.toSeconds else 0
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "antiForgeryToken"
   val googleAuthConfig =
