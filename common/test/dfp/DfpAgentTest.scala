@@ -8,8 +8,30 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class DfpAgentTest extends FlatSpec with Matchers {
 
-  private object testDfpAgent extends DfpAgent {
+  val examplePageSponsorships = Seq(
+    PageSkinSponsorship("lineItemName",
+      1234L,
+      Seq(s"$dfpAdUnitRoot/business/front"),
+      Seq(Country("United Kingdom", "UK")),
+      false),
+    PageSkinSponsorship("lineItemName2",
+      12345L,
+      Seq(s"$dfpAdUnitRoot/music/front"),
+      Nil,
+      false),
+    PageSkinSponsorship("lineItemName3",
+      123456L,
+      Seq(s"$dfpAdUnitRoot/sport"),
+      Nil,
+      false),
+    PageSkinSponsorship("lineItemName4",
+      1234567L,
+      Seq(s"$dfpAdUnitRoot/testSport/front"),
+      Seq(Country("United Kingdom", "UK")),
+      true)
+  )
 
+  private object testDfpAgent extends DfpAgent {
     override protected def sponsorships: Seq[Sponsorship] = Seq(
       Sponsorship(Seq("spon-page"), Some("spon")),
       Sponsorship(Seq("media"), None),
@@ -21,26 +43,26 @@ class DfpAgentTest extends FlatSpec with Matchers {
       Sponsorship(Seq("film"), None)
     )
 
+    override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
+
     override protected def inlineMerchandisingDeals: Seq[Sponsorship] = Seq(
       Sponsorship(Seq("ad-feature"), None),
       Sponsorship(Seq("film"), None)
     )
 
-    override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] =
-      Seq(
-        PageSkinSponsorship("lineItemName",
-          1234L,
-          Seq(s"$dfpAdUnitRoot/business/front"),
-          Seq(Country("United Kingdom", "UK"))),
-        PageSkinSponsorship("lineItemName2",
-          12345L,
-          Seq(s"$dfpAdUnitRoot/music/front"),
-          Nil),
-        PageSkinSponsorship("lineItemName3",
-          123456L,
-          Seq(s"$dfpAdUnitRoot/sport"),
-          Nil)
-      )
+    override def isProd = true
+  }
+
+  private object notProductionTestDfpAgent extends DfpAgent {
+    override def isProd = false
+
+    override protected def sponsorships: Seq[Sponsorship] = Nil
+
+    override protected def advertisementFeatureSponsorships: Seq[Sponsorship] = Nil
+
+    override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
+
+    override protected def inlineMerchandisingDeals: Seq[Sponsorship] = Nil
   }
 
   def apiQuery(apiQuery: String) = {
@@ -246,5 +268,13 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
   "isPageSkinned" should "be false for any content (non-front) page" in {
     testDfpAgent.isPageSkinned("sport", Edition.defaultEdition) should be(false)
+  }
+
+  "production DfpAgent" should "should not recognise adtest targetted line items" in {
+    testDfpAgent.isPageSkinned("testSport/front", Edition.defaultEdition) should be(false)
+  }
+
+  "non production DfpAgent" should "should recognise adtest targetted line items" in {
+    notProductionTestDfpAgent.isPageSkinned("testSport/front", Edition.defaultEdition) should be(true)
   }
 }

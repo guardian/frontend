@@ -10,6 +10,7 @@ import play.api.{Application, GlobalSettings}
 import services.S3
 
 import scala.io.Codec.UTF8
+import conf.Configuration
 
 trait DfpAgent {
 
@@ -46,19 +47,29 @@ trait DfpAgent {
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
+  def isProd = !Configuration.environment.isNonProd
 
   def hasInlineMerchandise(tags: Seq[Tag]): Boolean = getPrimaryKeywordSeriesOrSectionTag(tags)  exists (tag => hasInlineMerchandise(tag.id))
   def hasInlineMerchandise(tagId: String): Boolean = inlineMerchandisingDeals exists (_.hasTag(tagId))
   def hasInlineMerchandise(config: Config): Boolean = isSponsoredContainer(config, hasInlineMerchandise)
 
-
   def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
     if (adUnitWithoutRoot endsWith "front") {
       val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
-      pageSkinSponsorships.exists { sponsorship =>
+      def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
         sponsorship.adUnits.contains(adUnitWithRoot) &&
           (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id))
+      }
+
+      if (isProd) {
+        pageSkinSponsorships.exists { sponsorship =>
+          targetsAdUnitAndMatchesTheEdition(sponsorship) && !sponsorship.targetsAdTest
+        }
+      } else {
+        pageSkinSponsorships.exists { sponsorship =>
+          targetsAdUnitAndMatchesTheEdition(sponsorship)
+        }
       }
     } else {
       false

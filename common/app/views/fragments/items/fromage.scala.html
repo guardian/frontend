@@ -31,6 +31,9 @@
                 }
                 @fragments.items.elements.title(trail, index, 0)
             </a>
+
+            @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
                     <p class="fromage__byline tone-colour">@Html(byLine)</p>
@@ -53,9 +56,7 @@
             @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
 
             @trail.trailText.map { text =>
-                <div class="fromage__standfirst">@Html(text)
-                    @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
-                </div>
+                <div class="fromage__standfirst">@Html(text)</div>
             }
 
             @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")

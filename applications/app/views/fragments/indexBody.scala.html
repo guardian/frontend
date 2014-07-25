@@ -1,5 +1,9 @@
-@(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+
 @import common.Edition
+@import model.{Collection, Config}
+@import views.support.NewsContainer
+@import views.support.RenderClasses
 
 <div class="l-side-margins l-side-margins--layout-front">
     <div class="@RenderClasses(Map(

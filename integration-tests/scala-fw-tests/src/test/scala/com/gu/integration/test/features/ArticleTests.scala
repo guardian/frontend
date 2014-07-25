@@ -3,6 +3,8 @@ package com.gu.integration.test.features
 import org.openqa.selenium.WebDriver
 import com.gu.integration.test.SeleniumTestSuite
 import com.gu.integration.test.tags.ReadyForProd
+import com.gu.integration.test.steps.ArticleSteps
+import com.gu.integration.test.steps.LiveBlogSteps
 
 class ArticleTests extends SeleniumTestSuite {
 
@@ -12,6 +14,13 @@ class ArticleTests extends SeleniumTestSuite {
         val articlePage = ArticleSteps().goToArticle("/world/2014/jul/13/voodoo-big-problem-haiti-cardinal-chibly-langlois")
         ArticleSteps().checkMostPopularDisplayedProperly(articlePage)
         ArticleSteps().checkMostRelatedContentDisplayedProperly(articlePage)
+    }
+    
+    scenarioWeb("checking that expand button works properly on live blog page") {
+      implicit driver: WebDriver =>
+        val liveBlogPage = LiveBlogSteps().goToLiveBlog("/world/2014/jul/22/gaza-crisis-john-kerry-and-ban-ki-moon-step-up-attempts-to-broker-ceasefire-live-updates")
+        LiveBlogSteps().openExpandSection(liveBlogPage)
+        LiveBlogSteps().checkExpandedSectionContent(liveBlogPage)
     }
   }
 }

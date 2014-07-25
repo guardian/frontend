@@ -1,4 +1,10 @@
-@(page: MetaData, collection: Collection, style: NewsContainer, containerIndex: Int, pagination: Option[Pagination] = None)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(page: model.MetaData, collection: model.Collection, style: views.support.NewsContainer, containerIndex: Int, pagination: Option[common.Pagination] = None)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+
+@import common.LinkTo
+@import model.FaciaComponentName
+@import views.html.fragments.seeAlsoTags
+@import views.support.GetClasses
+@import views.support.MostPopularTags.topTags
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
 
@@ -30,7 +36,9 @@
                     @fragments.collections.tag(collection.items, style, containerIndex)
                 </div>
                 @pagination.map{ paginate => @fragments.pagination(page, paginate)}
+
+                @seeAlsoTags(topTags(collection.items).filterNot(_.id == page.id))
             </div>
         </section>
     }
-    }
+}

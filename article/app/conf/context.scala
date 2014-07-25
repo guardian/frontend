@@ -15,6 +15,7 @@ object HealthCheck extends AllGoodHealthcheckController("/world/2012/sep/11/barc
 
   // this is for an "offline" healthcheck that the CDN hits
   private val status = new AtomicBoolean(false)
+  def break() = status.set(false)
 
   override def healthcheck() = Action.async{ request =>
     val result = super.healthcheck()(request)
@@ -30,6 +31,8 @@ class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(u
   import ExecutionContext.Implicits.global
 
   private lazy val status = new AtomicBoolean(false)
+
+  def break() = status.set(false)
 
 
   override def get(req: HttpRequest) = {
