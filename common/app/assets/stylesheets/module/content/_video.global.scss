@@ -331,8 +331,8 @@
         }
 
         .video-item__headline {
-            @include rem ((
-                height: gs-height(2)
+            @include rem((
+                min-height: gs-height(2)
             ));
         }
     }
@@ -363,6 +363,15 @@
         display: block;
     }
 
+    .vjs-fullscreen & {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+
     @include mq($to: tablet) {
         .vjs-has-ended & {
             display: none;
@@ -382,6 +391,20 @@
     @include mq($from: leftCol, $to: wide) {
         @include rem((
             top: $gs-baseline*3.5
+        ));
+    }
+
+    .vjs-fullscreen & {
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        @include rem((
+            top: -1 * (gs-height(1) + $gs-baseline),
+            height: gs-height(6),
+            max-width: gs-span(11),
+            padding-bottom: $gs-baseline
         ));
     }
 }
