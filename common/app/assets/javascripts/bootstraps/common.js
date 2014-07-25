@@ -414,7 +414,7 @@ define([
         testCookie: function() {
             var queryParams = Url.getUrlVars();
             if (queryParams.test) {
-                Cookies.addSessionCookie('GU_TEST', queryParams.test);
+                Cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
             }
         }
     };
