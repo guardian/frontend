@@ -358,6 +358,17 @@
         border-bottom-width: 0;
         border-top: 1px dotted $c-neutral5;
     }
+    // magic numbers, height of the ad badge
+    &.ad-slot--spbadge {
+        @include rem((
+            min-height: 135px
+        ));
+    }
+    &.ad-slot--adbadge {
+        @include rem((
+            min-height: 155px
+        ));
+    }
 }
 .ad-slot--paid-for-badge--live-blog {
     @include mq(rightCol) {
