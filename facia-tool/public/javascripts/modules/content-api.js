@@ -4,6 +4,7 @@ define([
     'modules/authed-ajax',
     'modules/cache',
     'utils/internal-content-code',
+    'utils/url-host',
     'utils/url-abs-path',
     'utils/snap'
 ],
@@ -12,6 +13,7 @@ function (
     authedAjax,
     cache,
     internalContentCode,
+    urlHost,
     urlAbsPath,
     snap
 ){
@@ -53,18 +55,22 @@ function (
                         err = 'Sorry, that article is malformed (has no internalContentCode)';
                     }
 
-                // Snap, but they're disabled
+                // A link off of the tool itself
+                } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
+                    err = 'Sorry, adding that is a silly idea';
+
+                // A snap, but they're disabled
                 } else if (!vars.model.switches()['facia-tool-snaps']) {
                     err = 'Sorry, that link wasn\'t recognised. It cannot be added to a front';
 
-                // Snap, but cannot be added in live mode if it has no headline
+                // A snap, but cannot be added in live mode if it has no headline
                 } else if (vars.model.liveMode() &&
                     item.parentType !== 'Clipboard' &&
                     !item.fields.headline() &&
                     !item.meta.headline()) {
                     err = 'Sorry, snaps without headlines can\'t be added in live mode';
 
-                // Snap!
+                // A snap that's legitimate
                 } else {
                     item.convertToSnap();
                 }

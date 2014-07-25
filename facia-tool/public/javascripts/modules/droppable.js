@@ -84,7 +84,14 @@ define([
                     event.preventDefault();
                     event.stopPropagation();
 
-                    if (!targetGroup) { return; }
+                    if (!targetGroup) {
+                        return;
+                    }
+
+                    if (!id) {
+                        window.alert('Sorry, you can\'t add that to a front');
+                        return;
+                    }
 
                     targetGroup.underDrag(false);
                     _.each(targetGroup.items(), function(item) {
@@ -109,33 +116,24 @@ define([
                         }
                     }
 
-                    if (!id) {
-                        window.alert('Sorry, you can\'t add that to a front');
-                        return;
-                    }
-
                     sourceItem = event.dataTransfer.getData('sourceItem');
 
                     if (sourceItem) {
                         sourceItem = JSON.parse(sourceItem);
+
+                    } else if ((unknownQueryParams.url || '').match(/^http:\/\/www.theguardian.com/)) {
+                        sourceItem = { id: unknownQueryParams.url };
+                        sourceGroup = undefined;
+
                     } else {
-                        id = id.split('?')[0] + (_.isEmpty(unknownQueryParams) ? '' : '?' + _.map(unknownQueryParams, function(val, key) {
-                            return key + (val ? '=' + val : '');
-                        }).join('&'));
                         sourceItem = {
-                            id: id,
+                            id: id.split('?')[0] + (_.isEmpty(unknownQueryParams) ? '' : '?' + _.map(unknownQueryParams, function(val, key) {
+                                return key + (val ? '=' + val : '');
+                            }).join('&')),
                             meta: knownQueryParams
                         };
                         sourceGroup = undefined;
                     }
-
-                    // Parse url from links such as http://www.google.co.uk/?param-name=http://www.theguardian.com/foobar
-                    _.each(unknownQueryParams, function(val, key) {
-                        // Grab the last query param val that looks like a Guardian url
-                        if (key === 'url' && (val + '').match(/^http:\/\/www.theguardian.com/)) {
-                            id = val;
-                        }
-                    });
 
                     mediator.emit('collection:updates', {
                         sourceItem: sourceItem,
