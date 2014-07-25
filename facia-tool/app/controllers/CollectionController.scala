@@ -6,7 +6,6 @@ import util.Requests._
 import play.api.mvc.Controller
 import config.UpdateManager
 import play.api.libs.json.Json
-import com.gu.googleauth.UserIdentity
 import auth.ExpiringActions
 
 object CollectionRequest {
@@ -28,7 +27,7 @@ object CollectionController extends Controller {
   def create = ExpiringActions.ExpiringAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
-        val identity = UserIdentity.fromRequestHeader(request).get
+        val identity = request.identity.get
         val collectionId = UpdateManager.addCollection(frontIds, collection, identity)
         PressAndNotify(Set(collectionId))
         Ok(Json.toJson(CreateCollectionResponse(collectionId)))
@@ -40,7 +39,7 @@ object CollectionController extends Controller {
   def update(collectionId: String) = ExpiringActions.ExpiringAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
-        val identity = UserIdentity.fromRequestHeader(request).get
+        val identity = request.identity.get
         UpdateManager.updateCollection(collectionId, frontIds, collection, identity)
         PressAndNotify(Set(collectionId))
         Ok
