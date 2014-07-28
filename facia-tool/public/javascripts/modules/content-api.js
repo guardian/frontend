@@ -55,13 +55,13 @@ function (
                         err = 'Sorry, that article is malformed (has no internalContentCode)';
                     }
 
-                // A link off of the tool itself
-                } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
-                    err = 'Sorry, adding that is a silly idea';
-
                 // A snap, but they're disabled
                 } else if (!vars.model.switches()['facia-tool-snaps']) {
-                    err = 'Sorry, that link wasn\'t recognised. It cannot be added to a front';
+                    err = 'Sorry, snaps are disabled';
+
+                // A snap, but a link off of the tool itself
+                } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
+                    err = 'Sorry, that link cannot be added to a front';
 
                 // A snap, but cannot be added in live mode if it has no headline
                 } else if (vars.model.liveMode() &&
