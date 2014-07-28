@@ -3,8 +3,8 @@ package test
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 
-class VideoFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
-  feature("Video") {
+class MediaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+  feature("Media") {
 
     info("In order to experience all the wonderful videos the Guardian publish")
     info("As a sighted Guardian reader")
@@ -30,7 +30,7 @@ class VideoFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         $(".player object") should have size (1)
 
         And("the ultimate fallback should be an image")
-        findFirst(".player object img").getAttribute("src") should endWith ("/Chloe-Grace-Moretz-talks--027.jpg?width=620&height=-&quality=95")
+        findFirst(".player object img").getAttribute("src") should endWith ("/Chloe-Grace-Moretz-talks--027.jpg")
       }
     }
 

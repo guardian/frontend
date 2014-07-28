@@ -17,7 +17,7 @@ class ArticleTests extends SeleniumTestSuite {
         ArticleSteps().checkMostRelatedContentDisplayedProperly(articlePage)
     }
 
-    scenarioWeb("checking that async content such as expand button and Popular in.. works properly on live blog page") {
+    scenarioWeb("checking that async content such as expand button and Popular in.. works properly on live blog page", ReadyForProd) {
       implicit driver: WebDriver =>
         val liveBlogPage = LiveBlogSteps().goToLiveBlog("/world/2014/jul/22/gaza-crisis-john-kerry-and-ban-ki-moon-step-up-attempts-to-broker-ceasefire-live-updates")
         LiveBlogSteps().checkPopularInContentIsDisplayedProperly(liveBlogPage)
