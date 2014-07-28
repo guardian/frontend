@@ -151,7 +151,7 @@ define([
         };
 
         Article.prototype.paste = function () {
-            var sourceItem = copiedArticle.get();
+            var sourceItem = copiedArticle.get(true);
 
             if(!sourceItem || sourceItem.id === this.id()) { return; }
 

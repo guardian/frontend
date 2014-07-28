@@ -17,13 +17,19 @@ define([
             }));
         },
 
-        get: function() {
+        get: function(detachFromSource) {
             var obj = storage.getItem(storageKeyCopied),
                 sourceCollection;
 
             if (!obj) { return; }
 
             obj = JSON.parse(obj);
+
+            if (detachFromSource) {
+                storage.setItem(storageKeyCopied, JSON.stringify({
+                    article: obj.article
+                }));
+            }
 
             sourceCollection = _.find(vars.model.collections(), function(collection) {
                 return collection.id === obj.groupParentId;
