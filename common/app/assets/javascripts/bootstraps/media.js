@@ -221,7 +221,6 @@ define([
 
                             modules.initOmnitureTracking(player);
                             modules.initOphanTracking(player, mediaId);
-                            modules.bindPrerollEvents(player);
 
                             // Init plugins
                             player.adCountDown();
@@ -230,9 +229,12 @@ define([
                             });
                             // preroll for videos only
                             if (config.page.contentType === 'Video') {
+                                modules.bindPrerollEvents(player);
                                 player.vast({
                                     url: modules.getVastUrl()
                                 });
+                            } else {
+                                modules.bindContentEvents(player);
                             }
                             if(/desktop|wide/.test(detect.getBreakpoint())) {
                                 modules.initEndSlate(player);
