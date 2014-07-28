@@ -39,14 +39,6 @@ define([
             }
         };
 
-        this.pause = function() {
-            this.stopContinuousEventTimer();
-        };
-
-        this.seeking = function() {
-            this.stopContinuousEventTimer();
-        };
-
         this.sendEventName = function(eventName, ad) {
             var omnitureEvent = 'event' + events[eventName];
             this.sendEvent(omnitureEvent, eventName, ad);
@@ -68,8 +60,8 @@ define([
         };
 
         this.firstPlay = function() {
-            this.sendEvent('video:request');
-            this.sendEvent('preroll:request');
+            this.sendEventName('video:request');
+            this.sendEventName('preroll:request');
         };
 
         this.omnitureInit= function() {
@@ -77,7 +69,7 @@ define([
             s.Media.autoTrack=false;
             s.Media.trackWhilePlaying = false;
             s.Media.trackVars='events,eVar7,eVar43,eVar44,prop44,eVar47,eVar48,eVar56,eVar61';
-            s.Media.trackEvents='event17,event18,event21,event22,event23,event57,event63';
+            s.Media.trackEvents='event17,event18,event21,event22,event23,event57,event59,event63,event64,event97,event98';
             s.Media.segmentByMilestones = false;
             s.Media.trackUsingContextData = false;
 
@@ -116,11 +108,10 @@ define([
             this.omnitureInit();
 
             player.one('play', this.firstPlay.bind(this));
-
             player.on('play', this.play.bind(this));
-            player.on('pause', this.pause.bind(this));
-
-            player.on('seeking', this.seeking.bind(this));
+            player.on('pause', this.stopContinuousEventTimer.bind(this));
+            player.on('seeking', this.stopContinuousEventTimer.bind(this));
+            player.on('seeked', this.startContinuousEventTimer.bind(this));
 
             player.one('video:preroll:play', this.sendEventName.bind(this, 'preroll:play', true));
             player.one('video:preroll:end', this.sendEventName.bind(this, 'preroll:end', true));
