@@ -38,6 +38,8 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
     !idParts.exists(_ != section)
   }
 
+  lazy val isKeyword = tagType == "keyword"
+
   override lazy val tags = Seq(this)
 
   lazy val isFootballTeam = delegate.references.exists(_.`type` == "pa-football-team")

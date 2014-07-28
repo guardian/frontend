@@ -173,6 +173,10 @@ object Switches extends Collections {
     "Enable Remarketing tracking",
     safeState = Off, sellByDate = never)
 
+  val OutbrainSwitch = Switch("Content Recommendation", "outbrain",
+    "Enable the Outbrain content recommendation widget.",
+    safeState = Off, sellByDate = never)
+
   // Commercial Feeds
 
   val TravelOffersFeedSwitch = Switch("Performance Switches", "gu-travel-offers",
@@ -471,6 +475,7 @@ object Switches extends Collections {
     ForeseeSwitch,
     MediaMathSwitch,
     RemarketingSwitch,
+    OutbrainSwitch,
     DiagnosticsLogging,
     TravelOffersFeedSwitch,
     JobFeedSwitch,

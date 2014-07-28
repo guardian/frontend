@@ -1,30 +1,37 @@
 define([
     'lodash/functions/throttle',
-    'common/utils/config',
-    'bean'
+    'common/utils/config'
 ], function(
     throttle,
-    config,
-    bean
+    config
     ) {
 
-    function OmnitureMedia(videoEl) {
+    function OmnitureMedia(player) {
 
         var mediaName = config.page.webTitle,
+            contentStarted = false,
             provider = config.page.source || '',
             restricted = config.page.blockVideoAds || '';
 
         this.getDuration = function() {
-            return videoEl.duration;
+            return player.duration();
         };
 
         this.getPosition = function() {
-            return videoEl.currentTime;
+            return player.currentTime();
+        };
+
+        this.firstPlay = function() {
+            if (!contentStarted) { // ensure we only open once
+                s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
+                contentStarted = true;
+            }
         };
 
         this.play = function() {
-            s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
-            s.Media.play(mediaName, this.getPosition());
+            if (contentStarted) {
+                s.Media.play(mediaName, this.getPosition());
+            }
         };
 
         this.pause = function() {
@@ -78,14 +85,16 @@ define([
             s.eVar11 = s.prop11;
             s.eVar43 = s.prop43;
 
-            bean.on(videoEl, 'pause', this.pause.bind(this));
-            bean.on(videoEl, 'seeking', this.seeking.bind(this));
-            bean.on(videoEl, 'seeked', this.seeked.bind(this));
-            bean.on(videoEl, 'volumechange', throttle(this.trackUserInteraction.bind(this, 'Volume', 'User Changed Volume'), 250));
+            player.on('play', this.play.bind(this));
+            player.on('pause', this.pause.bind(this));
+            player.on('seeking', this.seeking.bind(this));
+            player.on('seeked', this.seeked.bind(this));
+            player.on('volumechange', throttle(this.trackUserInteraction.bind(this, 'Volume', 'User Changed Volume'), 250));
 
-            bean.on(videoEl, 'video:preroll:ready', this.trackVideoAdvertReady.bind(this));
-            bean.on(videoEl, 'video:content:ready', this.trackVideoContentReady.bind(this));
-            bean.on(videoEl, 'video:preroll:play video:content:play', this.play.bind(this));
+            player.on('video:preroll:ready', this.trackVideoAdvertReady.bind(this));
+            player.on('video:content:ready', this.trackVideoContentReady.bind(this));
+            player.on('video:preroll:play', this.firstPlay.bind(this));
+            player.on('video:content:play', this.firstPlay.bind(this));
         };
     }
     return OmnitureMedia;

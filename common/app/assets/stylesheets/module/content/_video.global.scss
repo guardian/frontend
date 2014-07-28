@@ -329,12 +329,6 @@
         &:nth-child(-n+3) {
             border-right: 1px solid $c-neutral2;
         }
-
-        .video-item__headline {
-            @include rem((
-                min-height: gs-height(2)
-            ));
-        }
     }
 
     @include mq($from: tablet, $to: wide) {
@@ -365,6 +359,7 @@
 
     .vjs-fullscreen & {
         position: absolute;
+        z-index: 1;
         top: 0;
         left: 0;
         margin: 0;
@@ -402,7 +397,7 @@
         bottom: 0;
         @include rem((
             top: -1 * (gs-height(1) + $gs-baseline),
-            height: gs-height(6),
+            height: gs-height(5),
             max-width: gs-span(11),
             padding-bottom: $gs-baseline
         ));

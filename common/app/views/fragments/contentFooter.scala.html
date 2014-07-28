@@ -32,6 +32,10 @@
         @fragments.mostPopularPlaceholder(content.section, content.visualTone)
     </div>
 
+    <div class="facia-container facia-container--layout-content facia-container--default-heading">
+        @fragments.outbrainPlaceholder()
+    </div>
+
     @if(!content.shouldHideAdverts) {
         <div class="facia-container facia-container--layout-content facia-container--commercial">
             @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
