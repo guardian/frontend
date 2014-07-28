@@ -7,10 +7,10 @@
 }
 
 .content--video {
-
     background-color: $c-neutral1;
     color: $c-neutral7;
     @include rem((
+        padding-bottom: $gs-baseline*2,
         padding-top: $gs-baseline/2
     ));
 

@@ -99,3 +99,29 @@
         }
     }
 }
+
+.item--video {
+    .item__title:before {
+        content: '';
+        @include icon(video-icon-black);
+        @include background-size(auto 100%);
+        @include rem((
+                margin-right: $gs-gutter/4,
+                height: 12px !important,
+                width: 18px !important
+        ));
+    }
+}
+
+.container--multimedia {
+    .item__title:before {
+        content: '';
+        @include icon(video-icon);
+        @include background-size(auto 100%);
+        @include rem((
+                margin-right: $gs-gutter/4,
+                height: 12px !important,
+                width: 18px !important
+        ));
+    }
+}
