@@ -466,6 +466,9 @@
                 margin-top: 78px
             ));
         }
+        @include mq(faciaLeftCol) {
+            margin-top: 0;
+        }
     }
 }
 
