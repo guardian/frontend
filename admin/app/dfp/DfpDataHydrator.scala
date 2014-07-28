@@ -9,16 +9,18 @@ import common.Logging
 import conf.{AdminConfiguration, Configuration}
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 import java.io.Serializable
+import scala.util.{Failure, Try, Success}
+import dfp.DfpApiWrapper.DfpSessionException
 
 object DfpDataHydrator extends Logging {
 
 
   private lazy val dfpSession: Option[DfpSession] = try {
     for {
-                                     clientId <- AdminConfiguration.dfpApi.clientId
-                                     clientSecret <- AdminConfiguration.dfpApi.clientSecret
-                                     refreshToken <- AdminConfiguration.dfpApi.refreshToken
-                                     appName <- AdminConfiguration.dfpApi.appName
+      clientId <- AdminConfiguration.dfpApi.clientId
+      clientSecret <- AdminConfiguration.dfpApi.clientSecret
+      refreshToken <- AdminConfiguration.dfpApi.refreshToken
+      appName <- AdminConfiguration.dfpApi.appName
     } yield {
       val credential = new OfflineCredentials.Builder()
         .forApi(Api.DFP)
@@ -59,13 +61,13 @@ object DfpDataHydrator extends Logging {
       dfpLineItems map { dfpLineItem =>
 
         val sponsor = for {
-                                         sponsorFieldId <- optSponsorFieldId
-                                         customFieldValues <- Option(dfpLineItem.getCustomFieldValues)
-                                         sponsor <- customFieldValues.collect {
-                                           case fieldValue: CustomFieldValue
-                                           if fieldValue.getCustomFieldId == sponsorFieldId =>
-                                             fieldValue.getValue.asInstanceOf[TextValue].getValue
-                                         }.headOption
+          sponsorFieldId <- optSponsorFieldId
+          customFieldValues <- Option(dfpLineItem.getCustomFieldValues)
+          sponsor <- customFieldValues.collect {
+            case fieldValue: CustomFieldValue
+              if fieldValue.getCustomFieldId == sponsorFieldId =>
+              fieldValue.getValue.asInstanceOf[TextValue].getValue
+          }.headOption
         } yield sponsor
 
         val dfpTargeting = dfpLineItem.getTargeting
@@ -80,10 +82,10 @@ object DfpDataHydrator extends Logging {
           Option(geoTargeting.getTargetedLocations) map { locations =>
             locations.map { location =>
               GeoTarget(
-              location.getId,
-              optJavaInt(location.getCanonicalParentId),
-              location.getType,
-              location.getDisplayName
+                location.getId,
+                optJavaInt(location.getCanonicalParentId),
+                location.getType,
+                location.getDisplayName
               )
             }.toSeq
           }
@@ -94,18 +96,18 @@ object DfpDataHydrator extends Logging {
         } getOrElse Nil
 
         GuLineItem(
-        id = dfpLineItem.getId,
-        name = dfpLineItem.getName,
-        startTime = toJodaTime(dfpLineItem.getStartDateTime),
-        endTime = if (dfpLineItem.getUnlimitedEndDateTime) None else Some(toJodaTime(dfpLineItem.getEndDateTime)),
-        isPageSkin = isPageSkin(dfpLineItem),
-        sponsor = sponsor,
-        targeting = GuTargeting(adUnits, geoTargets, customTargetSets)
+          id = dfpLineItem.getId,
+          name = dfpLineItem.getName,
+          startTime = toJodaTime(dfpLineItem.getStartDateTime),
+          endTime = if (dfpLineItem.getUnlimitedEndDateTime) None else Some(toJodaTime(dfpLineItem.getEndDateTime)),
+          isPageSkin = isPageSkin(dfpLineItem),
+          sponsor = sponsor,
+          targeting = GuTargeting(adUnits, geoTargets, customTargetSets)
         )
       }
 
     } catch {
-      case e:Exception =>
+      case e: Exception =>
         log.error(e.getStackTraceString)
         Nil
     }
@@ -148,8 +150,19 @@ object DfpDataHydrator extends Logging {
         GuAdUnit(adUnit.getId, fullpath.tail)
       }
 
-      allUnits.filter( au => au.path.last == "ng")
+      allUnits.filter(au => au.path.last == "ng")
   }
+
+  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = dfpSession.map {
+    session =>
+      val adUnitsList: String = adUnits.mkString(",")
+
+      val statementBuilder = new StatementBuilder()
+        .where(s"id in ($adUnitsList)")
+
+      DfpApiWrapper.approveTheseAdUnits(session, statementBuilder)
+  }.getOrElse(Failure(new DfpSessionException()))
+
 
   def loadAllCustomTargetKeys(): Map[Long, String] = dfpSession.fold(Map[Long, String]()) { session =>
     DfpApiWrapper.fetchCustomTargetingKeys(session, new StatementBuilder()).map { k =>
@@ -162,7 +175,6 @@ object DfpDataHydrator extends Logging {
       v.getId.longValue() -> v.getName
     }.toMap
   }
-
 
 
   private def isPageSkin(dfpLineItem: LineItem) = {
@@ -180,9 +192,9 @@ object DfpDataHydrator extends Logging {
       hasA1x1Pixel(dfpLineItem.getCreativePlaceholders)
   }
 
-  private def buildCustomTargetSets(customCriteriaSet:CustomCriteriaSet,
-                         targetingKeys: Map[Long, String],
-                         targetingValues: Map[Long, String]): Seq[CustomTargetSet] = {
+  private def buildCustomTargetSets(customCriteriaSet: CustomCriteriaSet,
+                                    targetingKeys: Map[Long, String],
+                                    targetingValues: Map[Long, String]): Seq[CustomTargetSet] = {
 
     def buildTargetSet(crits: CustomCriteriaSet): Option[CustomTargetSet] = {
       val targets = crits.getChildren.flatMap(crit => buildTarget(crit.asInstanceOf[CustomCriteria]))

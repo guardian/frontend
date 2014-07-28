@@ -8,12 +8,23 @@
 
 <h1>Next Gen Ad Units for approval</h1>
 <p>The following ad units have been submitted to DFP and require approval before they are recorded by DFP.</p>
-<p>DFP account: @dfpAccount</p>
-<ol>
-    @for(adunit <- adunits) {
-    <li>@adunit.path.mkString("/")  </li>
-    }
-</ol>
 
+<form id="adunitstoapprove" action="/commercialtools/adunits/toapprove" method="POST">
+    <h4>Ad units for: @dfpAccount</h4>
+    <div class="well">
+        @for(adunit <- adunits) {
+        <div class="row-fluid">
+            <fieldset>
+                <legend>
+                    <input class="status" id="switch-@adunit.id" name="@adunit.id" type="checkbox" value="true"/>
+                    <label for="switch-@adunit.id">@adunit.path.mkString("/")</label>
+                </legend>
+            </fieldset>
+        </div>
+        }
+    </div>
+
+    <input class="btn btn-large btn-success" type="submit" value="Approve">
+</form>
 
 }

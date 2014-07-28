@@ -5,8 +5,11 @@ import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
+import scala.util.{Failure, Success, Try}
 
 object DfpApiWrapper extends Logging {
+
+
   private lazy val dfpServices = new DfpServices()
 
   private def lineItemService(session: DfpSession): LineItemServiceInterface =
@@ -112,6 +115,29 @@ object DfpApiWrapper extends Logging {
       val service = suggestedAdUnitService(session)
       val page = service.getSuggestedAdUnitsByStatement(statementBuilder.toStatement)
       Page(page.getResults, page.getTotalResultSetSize)
+    }
+  }
+
+  class DfpApprovalException(message: String) extends RuntimeException
+  class DfpSessionException extends RuntimeException
+
+  def approveTheseAdUnits(session: DfpSession, statementBuilder: StatementBuilder): Try[String] = {
+    val approve: ApproveSuggestedAdUnit = new ApproveSuggestedAdUnit()
+
+    val service = suggestedAdUnitService(session)
+    try {
+      val result = Option(service.performSuggestedAdUnitAction(approve, statementBuilder.toStatement))
+      if (result.isDefined) {
+        if (result.get.getNumChanges > 0) {
+          Success("Ad units approved")
+        } else {
+          Failure(new DfpApprovalException("Apparently, nothing changed"))
+        }
+      } else {
+        Failure(new DfpApprovalException("Everything failed"))
+      }
+    } catch {
+      case e: Exception => Failure(e)
     }
   }
 
