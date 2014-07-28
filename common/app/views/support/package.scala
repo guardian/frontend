@@ -221,6 +221,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       element
         .removeClass("gu-video")
         .addClass("js-gu-media gu-media gu-media--video")
+        .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
       val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path
 
@@ -252,7 +253,6 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
                 Sorry, your browser is unable to play this video.
               </object>""")
 
-        element.wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
       })
     }
     document
