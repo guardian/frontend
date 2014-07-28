@@ -1,22 +1,13 @@
-/*  credit for this microsprite:
-    @csswizardry: http://jsfiddle.net/csswizardry/KL5Vs/
-*/
-.svg .stars,
+$starIcon-width: 14px;
+$starIcon-height: 13px;
+
 .stars {
     display: block;
     white-space: nowrap;
     overflow: hidden;
     @include rem((
         margin-top: 4px,
-        width: 70px,
-        line-height: 13px
+        width: $starIcon-width * 5,
+        line-height: $starIcon-height
     ));
-
-    .star__item {
-        display: inline-block;
-        @include rem((
-            width: 14px,
-            height: 14px
-        ));
-    }
 }
