@@ -29,7 +29,7 @@ define([
     Component
 ) {
 
-    var autoplay = config.page.contentType === 'Media' && /desktop|wide/.test(detect.getBreakpoint());
+    var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint());
     var QUARTILES = [25, 50, 75];
     // Advert and content events used by analytics. The expected order of bean events is:
     var EVENTS = [
@@ -189,7 +189,7 @@ define([
 
                 videojs.plugin('adCountDown', modules.countDown);
 
-                $('.js-gu-video').each(function (el) {
+                $('.js-gu-media').each(function (el) {
                     var mediaId = el.getAttribute('data-media-id'),
                         vjs = videojs(el, {
                         controls: true,
@@ -290,7 +290,7 @@ define([
     var ready = function () {
         modules.initPlayer();
 
-        if(config.page.contentType === 'Media') {
+        if(config.isMedia) {
             modules.initMoreInSection();
             modules.initMostViewedVideo();
         }

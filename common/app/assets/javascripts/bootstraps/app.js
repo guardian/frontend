@@ -100,7 +100,7 @@ define([
                 LiveBlog.init(config, context);
             }
 
-            if (config.page.contentType === 'Media' || qwery('video, audio').length) {
+            if (config.isMedia || qwery('video, audio').length) {
                 Media.init(config, context);
             }
 
