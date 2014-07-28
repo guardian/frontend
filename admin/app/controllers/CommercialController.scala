@@ -22,31 +22,31 @@ object CommercialController extends Controller with Logging with AuthLogging {
     jsValueMaybe(json).fold(Seq[Sponsorship]())(_.as[Seq[Sponsorship]])
   }
 
-  def renderCommercial = Authenticated { implicit request =>
+  def renderCommercial = AuthActions.AuthAction { implicit request =>
     NoCache(Ok(views.html.commercial.commercial(Configuration.environment.stage)))
   }
 
-  def renderSponsorships = Authenticated { implicit request =>
+  def renderSponsorships = AuthActions.AuthAction { implicit request =>
     val sponsoredTags = Store.getDfpSponsoredTags()
     val advertisementTags = Store.getDfpAdvertisementTags()
 
     NoCache(Ok(views.html.commercial.sponsorships(Configuration.environment.stage, sponsoredTags, advertisementTags)))
   }
 
-  def renderPageskins = Authenticated { implicit request =>
+  def renderPageskins = AuthActions.AuthAction { implicit request =>
     val pageskinnedAdUnits = Store.getDfpPageSkinnedAdUnits()
 
     NoCache(Ok(views.html.commercial.pageskins(Configuration.environment.stage, pageskinnedAdUnits)))
   }
 
-  def renderSurgingContent = Authenticated {implicit request =>
+  def renderSurgingContent = AuthActions.AuthAction {implicit request =>
     val surging: Seq[(String, Int)] = SurgingContentAgent.getSurging.toSeq
     val sortedSurging: Seq[(String, Int)] = surging.sortBy(_._2).reverse
 
     NoCache(Ok(views.html.commercial.surgingpages(Configuration.environment.stage, sortedSurging)))
   }
 
-  def renderInlineMerchandisingSponsorships = Authenticated { implicit request =>
+  def renderInlineMerchandisingSponsorships = AuthActions.AuthAction { implicit request =>
     val sponsorships = Store.getDfpInlineMerchandisingSponsorships()
     NoCache(Ok(views.html.commercial.inlineMerchandisingSponsorships(Configuration.environment.stage, sponsorships)))
   }

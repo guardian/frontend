@@ -14,7 +14,7 @@ import model.{NoCache, Cached}
 
 object PaBrowserController extends Controller with ExecutionContexts with GetPaClient {
 
-  def browserSubstitution() = Authenticated { implicit request =>
+  def browserSubstitution() =AuthActions.AuthAction { implicit request =>
     val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }
     val query = getOneOrFail(submission, "query")
     val replacements = """(\{.*?\})""".r.findAllIn(query).toList.filter("{apiKey}"!=)
@@ -32,11 +32,11 @@ object PaBrowserController extends Controller with ExecutionContexts with GetPaC
     NoCache(SeeOther("/admin/football/browser/%s".format(replacedQuery.dropWhile('/' ==))))
   }
 
-  def browse = Authenticated { implicit request =>
+  def browse =AuthActions.AuthAction { implicit request =>
     Cached(60)(Ok(views.html.football.browse()))
   }
 
-  def browser(query: String) = Authenticated.async { implicit request =>
+  def browser(query: String) =AuthActions.AuthAction.async { implicit request =>
     val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", client.apiKey)
     client.get("/" + replacedQuery).map{ content =>
       val response = Ok(content)

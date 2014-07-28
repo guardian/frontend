@@ -30,14 +30,14 @@ object RadiatorController extends Controller with Logging with AuthLogging {
   }
 
   // proxy call to github so we do not leak the access key
-  def commitDetail(hash: String) = Authenticated.async { implicit request =>
+  def commitDetail(hash: String) = AuthActions.AuthAction.async { implicit request =>
     val call = WS.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
     call.map{ c =>
       NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
     }
   }
 
-  def renderRadiator() = Authenticated { implicit request =>
+  def renderRadiator() = AuthActions.AuthAction { implicit request =>
     val graphs = (CloudWatch.shortStackLatency ++ CloudWatch.fastlyErrors).map(_.withFormat(ChartFormat.SingleLineBlack))
     val multilineGraphs = CloudWatch.fastlyHitMissStatistics.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
     val jsErrors = CloudWatch.jsErrors.withFormat(ChartFormat.MultiLine)
@@ -45,7 +45,7 @@ object RadiatorController extends Controller with Logging with AuthLogging {
     NoCache(Ok(views.html.radiator(graphs, multilineGraphs, jsErrors, CloudWatch.cost, switches, Configuration.environment.stage)))
   }
 
-  def pingdom() = Authenticated.async { implicit request =>
+  def pingdom() = AuthActions.AuthAction.async { implicit request =>
   
     val url = Configuration.pingdom.url + "/checks" 
     val user = Configuration.pingdom.user

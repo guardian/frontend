@@ -3,29 +3,28 @@ package controllers.admin
 import com.gu.googleauth.{GoogleAuth, GoogleAuthConfig, GoogleAuthResult, UserIdentity}
 import common.ExecutionContexts
 import conf.Configuration
-import org.joda.time.DateTime
+import org.joda.time.{Duration, DateTime}
 import play.Play
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
 
 object OAuthLoginController extends Controller with ExecutionContexts {
   import play.api.Play.current
 
-  val maxAuthAge: Long = if (Play.isDev) 10.minutes.toSeconds else 0
+  val maxAuthAge: Duration = if (Play.isDev) Duration.standardMinutes(10) else Duration.standardSeconds(0)
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "antiForgeryToken"
   val forbiddenNoCredentials = Forbidden("You do not have OAuth credentials set")
-  val googleAuthConfig: Option[GoogleAuthConfig] = Configuration.faciatool.oauthCredentials.map { cred =>
+  val googleAuthConfig: Option[GoogleAuthConfig] = Configuration.admin.oauthCredentials.map { cred =>
     GoogleAuthConfig(
       cred.oauthClientId,     // The client ID from the dev console
       cred.oauthSecret,       // The client secret from the dev console
       cred.oauthCallback,     // The redirect URL Google send users back to (must be the same as
       // that configured in the developer console)
       Some("guardian.co.uk"), // Google App domain to restrict login
-      Some(0)
+      Some(maxAuthAge)
     )
   }
 
@@ -72,7 +71,7 @@ object OAuthLoginController extends Controller with ExecutionContexts {
               val identity: UserIdentity = googleAuthResult.userIdentity
               val redirect = request.session.get(LOGIN_ORIGIN_KEY) match {
                 case Some(url) => Redirect(url)
-                case None => Redirect(routes.FaciaToolController.priorities())
+                case None => Redirect(routes.IndexController.index())
               }
               // Store the JSON representation of the identity in the session - this is checked byAuthActions.AuthAction later
               val sessionAdd: Seq[(String, String)] = Seq(

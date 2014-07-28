@@ -14,7 +14,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
-  def renderSwitchboard() = Authenticated.async { implicit request =>
+  def renderSwitchboard() = AuthActions.AuthAction.async { implicit request =>
     log("loaded Switchboard", request)
 
     Future { Store.getSwitchesWithLastModified } map { switchesWithLastModified =>
@@ -33,7 +33,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     }
   }
 
-  def save() = Authenticated.async { implicit request =>
+  def save() = AuthActions.AuthAction.async { implicit request =>
     val form = request.body.asFormUrlEncoded
 
     val localLastModified = form.get("lastModified").head.toLong
