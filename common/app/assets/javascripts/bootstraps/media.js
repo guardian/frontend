@@ -192,10 +192,10 @@ define([
                 $('.js-gu-media').each(function (el) {
                     var mediaId = el.getAttribute('data-media-id'),
                         vjs = videojs(el, {
-                        controls: true,
-                        autoplay: false,
-                        preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
-                    });
+                            controls: true,
+                            autoplay: false,
+                            preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
+                        });
 
                     if (config.page.contentType === 'Audio') {
                         vjs.playlist({
@@ -228,9 +228,12 @@ define([
                             player.ads({
                                 timeout: 3000
                             });
-                            player.vast({
-                                url: modules.getVastUrl()
-                            });
+                            // preroll for videos only
+                            if (config.page.contentType === 'Video') {
+                                player.vast({
+                                    url: modules.getVastUrl()
+                                });
+                            }
                             if(/desktop|wide/.test(detect.getBreakpoint())) {
                                 modules.initEndSlate(player);
                             }
@@ -284,7 +287,7 @@ define([
         initMostViewedVideo: function() {
             var mostViewed = new Component();
 
-            mostViewed.endpoint = '/video/most-viewed.json?size=' + (config.page.contentType === 'Video' ? '6' : '4');
+            mostViewed.endpoint = '/video/most-viewed.json';
             mostViewed.fetch($('.js-video-components-container')[0], 'html');
         }
     };

@@ -18,16 +18,20 @@
                     }
                 </div>
 
-                @media match {
-                    case v: Video => {
-                        <div data-component="body">
+                <div data-component="body">
+                    @media match {
+                        case v: Video => {
                             <div class="video-standfirst">
-                                @fragments.standfirst(media)
+                                @fragments.standfirst(v)
                             </div>
-                        </div>
+                        }
+                        case a: Audio => {
+                            <div class="from-content-api">
+                                @Html(a.body)
+                            </div>
+                        }
                     }
-                    case _ => { }
-                }
+                </div>
 
                 @fragments.contentMeta(media)
 
