@@ -627,38 +627,47 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Display breadcrumbs correctly") {
       Given("I am on a piece of content with a primary nav, secondary nav and a key woro")
       HtmlUnit("/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism") { browser =>
-          import browser._
-          Then("I should see three breadcrumbs")
-          $(".breadcrumb-keyword").size() should be (3)
+        import browser._
+        Then("I should see three breadcrumbs")
+        $(".breadcrumb-keyword").size() should be (3)
 
-          val link = find(".breadcrumb-keyword a", withText().contains("Culture"))
-          link.length should be > 0
-          val link2 = find(".breadcrumb-keyword a", withText().contains("Books"))
-          link2.length should be > 0
-          val link3 = find(".breadcrumb-keyword a", withText().contains("Orwell prize"))
-          link3.length should be > 0
+        val link = find(".breadcrumb-keyword a", withText().contains("Culture"))
+        link.length should be > 0
+        val link2 = find(".breadcrumb-keyword a", withText().contains("Books"))
+        link2.length should be > 0
+        val link3 = find(".breadcrumb-keyword a", withText().contains("Orwell prize"))
+        link3.length should be > 0
       }
 
       Given("I am on a piece of content with a primary nav and a key woro")
       HtmlUnit("/commentisfree/2013/jan/07/blue-plaque-english-heritage") { browser =>
-          import browser._
-          Then("I should see three breadcrumbs")
-          $(".breadcrumb-keyword").size() should be (2)
+        import browser._
+        Then("I should see three breadcrumbs")
+        $(".breadcrumb-keyword").size() should be (2)
 
-          val link = find(".breadcrumb-keyword a", withText().contains("Comment"))
-          link.length should be > 0
-          val link2 = find(".breadcrumb-keyword a", withText().contains("Heritage"))
-          link2.length should be > 0
+        val link = find(".breadcrumb-keyword a", withText().contains("Comment"))
+        link.length should be > 0
+        val link2 = find(".breadcrumb-keyword a", withText().contains("Heritage"))
+        link2.length should be > 0
       }
 
       Given("I am on a piece of content with no primary nav and a no key words")
       HtmlUnit("/observer-ethical-awards/shortlist-2014") { browser =>
-          import browser._
-          Then("I should see one breadcrumbs")
-          $(".breadcrumb-keyword").size() should be (1)
+        import browser._
+        Then("I should see one breadcrumbs")
+        $(".breadcrumb-keyword").size() should be (1)
 
-          val link = find(".breadcrumb-keyword a", withText().contains("Observer Ethical Awards"))
-          link.length should be > 0
+        val link = find(".breadcrumb-keyword a", withText().contains("Observer Ethical Awards"))
+        link.length should be > 0
+      }
+    }
+
+    scenario("More on this story gallery lightbox") {
+      Given("I see a gallery trail")
+      HtmlUnit("/culture/2014/jul/27/-sp-jennifer-hudson-the-only-constant-is-my-voice-grief") { browser =>
+        import browser._
+        Then("it should have a relative data gallery url attribute")
+        $("div[data-gallery-url]").getAttribute("data-gallery-url") should be ("/music/gallery/2014/jul/27/jennifer-hudson-in-pictures")
       }
     }
   }
