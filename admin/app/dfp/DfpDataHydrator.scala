@@ -142,11 +142,13 @@ object DfpDataHydrator extends Logging {
 
       val suggestedAdUnits = DfpApiWrapper.fetchSuggestedAdUnits(session, statementBuilder)
 
-      suggestedAdUnits.map { adUnit =>
+      val allUnits = suggestedAdUnits.map { adUnit =>
         val fullpath: List[String] = adUnit.getParentPath.map(_.getName).toList ::: adUnit.getPath.toList
 
         GuAdUnit(adUnit.getId, fullpath.tail)
       }
+
+      allUnits.filter( au => au.path.last == "ng")
   }
 
   def loadAllCustomTargetKeys(): Map[Long, String] = dfpSession.fold(Map[Long, String]()) { session =>
