@@ -101,7 +101,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see a large byline image")
-        $(".byline-img img").getAttribute("src") should endWith("Pix/pictures/2014/3/13/1394733740842/JonathanFreedland.png?width=140&height=-&quality=95")
+        $(".byline-img img").getAttribute("src") should endWith("Pix/pictures/2014/3/13/1394733740842/JonathanFreedland.png")
       }
     }
 
@@ -156,7 +156,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Poster image on embedded video", ArticleComponents) {
       HtmlUnit("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
         import browser._
-        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--016.jpg?width=640&height=-&quality=95")
+        findFirst("video").getAttribute("poster") should endWith ("Westgate-shopping-centre--016.jpg")
       }
     }
 
@@ -234,7 +234,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         ImageServerSwitch.switchOn()
         inBodyImage.getAttribute("class") should include("img--extended")
         inBodyImage.findFirst("[itemprop=contentURL]").getAttribute("src") should
-          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg?width=620&height=-&quality=95")
+          endWith("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         And("I should see the image caption")
         inBodyImage.findFirst("[itemprop=description]").getText should
@@ -406,7 +406,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309869688/Jeremy-Hunt-announcing-ch-016.jpg?width=640&height=-&quality=95")
+        findFirst("video").getAttribute("poster") should endWith("/2013/3/26/1364309869688/Jeremy-Hunt-announcing-ch-016.jpg")
       }
     }
 
@@ -572,7 +572,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         $("meta[property='twitter:site']").getAttributes("content").head  should be ("@guardian")
         $("meta[property='twitter:card']").getAttributes("content").head  should be ("summary_large_image")
         $("meta[property='twitter:app:url:googleplay']").getAttributes("content").head should startWith ("guardian://www.theguardian.com/world")
-        $("meta[property='twitter:image:src']").getAttributes("content").head should endWith ("/Irans-President-Hassan-Ro-011.jpg?width=-&height=-&quality=95")
+        $("meta[property='twitter:image:src']").getAttributes("content").head should endWith ("/Irans-President-Hassan-Ro-011.jpg")
       }
     }
 
