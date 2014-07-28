@@ -132,9 +132,6 @@
 @mixin facia-container--layout-content {
     .facia-container--layout-content {
         .facia-container__inner {
-            @include rem((
-                margin-bottom: $gs-baseline*2
-            ));
 
             @include mq(tablet) {
                 margin-left: auto;

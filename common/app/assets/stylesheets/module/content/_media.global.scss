@@ -39,15 +39,6 @@
                 display: none;
             }
         }
-        .meta__comment-count--bottom {
-            display: none;
-        }
-        .meta__comment-count--top {
-            display: block;
-            .commentcount {
-                display: block;
-            }
-        }
     }
 
     .player {
@@ -171,14 +162,17 @@
 
     @include mq(tablet, rightCol) {
         .content__meta-container {
-            float: left;
-            width: gs-span(5) + $gs-gutter*2;
+            float: right;
             @include rem((
+                width: 404px, //Magic, as video items below are off grid at 33.3% width
                 margin-right: $gs-gutter
             ));
         }
         .social-wrapper--bottom {
             float: left;
+            @include rem((
+                width: 192px
+            ));
         }
     }
 
@@ -233,10 +227,24 @@
     }
 }
 
+//This is temporary until facia headings are consistent.
+.onward {
+    .container--multimedia {
+        .container__title {
+            @include fs-header(3, true);
+        }
+    }
+}
+
 /* Most viewed container
    ========================================================================== */
 .most-viewed-video-container {
+    @include rem((
+        padding-top: $gs-baseline*2
+    ));
+
     @include mq(tablet) {
+        padding-top: 0;
         border-top: 1px solid $c-mediaDefault;
     }
 }
@@ -257,7 +265,8 @@
 
 .most-viewed-video {
     @include rem((
-        margin-left: -$gs-gutter/2
+        margin-left: -$gs-gutter/2,
+        margin-right: -$gs-gutter/2
     ));
 }
 
@@ -299,9 +308,9 @@
         @include icon(video-icon);
         @include background-size(auto 100%);
         @include rem((
-            margin-right: $gs-gutter/4,
-            height: 12px !important,
-            width: 18px !important
+            margin-right: $gs-gutter/5,
+            height: 10px !important,
+            width: 15px !important
         ));
     }
 }
@@ -331,12 +340,13 @@
             &:nth-child(odd) {
                 border-right: 1px solid $c-neutral2;
             }
+            &:nth-child(n+5) {
+                margin-bottom: 0;
+            }
         }
 
         @include mq($from: tablet, $to: rightCol) {
-            @include rem((
-                width: gs-span(3) - $gs-gutter/2
-            ));
+            width: 33.3%;
 
             &:nth-child(-n+3) {
                 .video-item__container {
@@ -359,6 +369,10 @@
 
             &:nth-child(odd) {
                 border-right: 1px solid $c-neutral2;
+            }
+
+            &:nth-child(n+5) {
+                margin-bottom: 0;
             }
         }
     }
@@ -473,10 +487,4 @@
     @include fs-header(1);
     font-weight: bold;
     text-align: left;
-}
-
-.content-footer--media {
-    @include rem((
-        margin-top: $gs-baseline
-    ));
 }
