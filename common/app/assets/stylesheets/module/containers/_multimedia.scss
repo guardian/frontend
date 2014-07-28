@@ -80,7 +80,7 @@
             .facia-slice__item:first-child {
                 .item__title {
                     @include rem((
-                            min-height: $gs-baseline*4
+                        min-height: $gs-baseline*4
                     ));
                     @include fs-headline(4, true);
                 }
