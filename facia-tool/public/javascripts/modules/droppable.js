@@ -121,7 +121,7 @@ define([
                     if (sourceItem) {
                         sourceItem = JSON.parse(sourceItem);
 
-                    } else if ((unknownQueryParams.url || '').match(/^http:\/\/www.theguardian.com/)) {
+                    } else if ((unknownQueryParams.url || '').indexOf('http://www.theguardian.com/') === 0) {
                         sourceItem = { id: unknownQueryParams.url };
                         sourceGroup = undefined;
 
