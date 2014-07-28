@@ -65,15 +65,14 @@ object ElementLoader extends TestLogging {
   /**
    * Find maxElements of displayed and visible link elements, including nested, from the provided SearchContext
    */
-  def displayedLinks(searchContext: SearchContext, maxElements: Int = 3)(implicit driver: WebDriver): List[WebElement] = {
+  def displayedLinks(searchContext: SearchContext, maxElements: Int = Int.MaxValue)(implicit driver: WebDriver): List[WebElement] = {
     val visibleLinks = searchContext.findElements(By.cssSelector("a")).asScala
       .toList
       .view
-      .filter(element => element.isDisplayed() && waitUntil(visibilityOf(element)))
+      .filter(element => waitUntil(visibilityOf(element)))
       .take(maxElements)
       .toList
-    visibleLinks
-    //    visibleLinks.filter(element => element.isDisplayed())
+    visibleLinks.filter(element => element.isDisplayed())
   }
 
   /**
