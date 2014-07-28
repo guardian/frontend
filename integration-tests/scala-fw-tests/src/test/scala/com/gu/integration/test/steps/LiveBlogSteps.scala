@@ -16,6 +16,11 @@ case class LiveBlogSteps(implicit driver: WebDriver) extends TestLogging with Ma
     goTo(fromRelativeUrl(relativeLiveArticleUrl), liveArticle)
   }
 
+  def checkPopularInContentIsDisplayedProperly(liveBlogPage: LiveBlogPage) = {
+    logger.step("Check Popular in ... content is displayed properly")
+    liveBlogPage.popularInModule.displayedLinks(3).size should be > 2
+  }
+
   def openExpandSection(liveBlogPage: LiveBlogPage) = {
     logger.step("Clicking the expand button")
     liveBlogPage.liveBlogBlocks.findVisibleDirectElements("div") should not be empty
@@ -25,7 +30,7 @@ case class LiveBlogSteps(implicit driver: WebDriver) extends TestLogging with Ma
 
   def checkExpandedSectionContent(liveBlogPage: LiveBlogPage) = {
     logger.step("Checking expanded content")
-	liveBlogPage.expandButtonNotPresent should be (true)
-    liveBlogPage.liveBlogBlocks.findHiddenDirectElements("div") should be (empty)
+    liveBlogPage.expandButtonNotPresent should be(true)
+    liveBlogPage.liveBlogBlocks.findHiddenDirectElements("div") should be(empty)
   }
 }
