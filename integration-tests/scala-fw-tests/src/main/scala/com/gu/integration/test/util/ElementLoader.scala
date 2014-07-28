@@ -17,21 +17,6 @@ object ElementLoader extends TestLogging {
 
   val TestAttributeName = "data-test-id"
 
-  implicit class ElementEnhancer(val webElement: WebElement) extends AnyVal {
-
-    def findHiddenDirectElements(childElementName: String): List[WebElement] = {
-      notDisplayed(findDirectElements(childElementName))
-    }
-
-    def findVisibleDirectElements(childElementName: String): List[WebElement] = {
-      displayed(findDirectElements(childElementName))
-    }
-
-    def findDirectElements(childElementName: String): List[WebElement] = {
-      webElement.findElements(By.xpath(s"./${childElementName}")).asScala.toList
-    }
-  }
-
   def notDisplayed(elementsToCheck: List[WebElement]): List[WebElement] = {
     elementsToCheck.filter(element => !element.isDisplayed())
   }
@@ -107,6 +92,14 @@ object ElementLoader extends TestLogging {
   def displayedIFrames(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
     val visibileFrames = searchContext.findElements(By.cssSelector("iframe")).asScala.toList.filter(element => waitUntil(visibilityOf(element)))
     visibileFrames.filter(element => element.isDisplayed())
+  }
+
+  def firstDisplayedIframe(rootElement: WebElement)(implicit driver: WebDriver): WebElement = {
+    val iframeElements = displayedIFrames(rootElement)
+    if (iframeElements.size != 1) {
+      throw new RuntimeException(s"Unexpected number of iframes ${iframeElements.size} inside element: ${rootElement}")
+    }
+    iframeElements.last
   }
 
   /**
