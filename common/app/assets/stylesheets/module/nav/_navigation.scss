@@ -120,10 +120,12 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
 
         @include mq(tablet) {
+            @include box-sizing(border-box);
             padding-top: 0;
             float: right;
             text-align: right;
             @include rem((
+                min-height: $gs-row-height,
                 padding-top: 7px,
                 width: gs-span(3)
             ));

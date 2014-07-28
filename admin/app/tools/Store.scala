@@ -47,9 +47,14 @@ trait Store extends Logging with Dates {
 
   val now: String = DateTime.now().toHttpDateTimeString
 
-  def getDfpSponsoredTags() = S3.get(dfpSponsoredTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse(SponsorshipReport(now, Nil))
-  def getDfpAdvertisementTags() = S3.get(dfpAdvertisementFeatureTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse(SponsorshipReport(now, Nil))
-  def getDfpPageSkinnedAdUnits() = S3.get(dfpPageSkinnedAdUnitsKey).flatMap(PageSkinSponsorshipReportParser(_)) getOrElse(PageSkinSponsorshipReport(now, Nil))
+  def getDfpSponsoredTags() =
+    S3.get(dfpSponsoredTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
+  def getDfpAdvertisementTags() =
+    S3.get(dfpAdvertisementFeatureTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
+  def getDfpPageSkinnedAdUnits() =
+    S3.get(dfpPageSkinnedAdUnitsKey).flatMap(PageSkinSponsorshipReportParser(_)) getOrElse PageSkinSponsorshipReport(now, Nil)
+  def getDfpInlineMerchandisingSponsorships() =
+    S3.get(inlineMerchandisingSponsorshipsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
   def getDfpLineItemsReport() = S3.get(dfpLineItemsKey)
 }
 
