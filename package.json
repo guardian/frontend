@@ -41,5 +41,8 @@
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
+  },
+  "dependencies": {
+    "grunt-scss-lint": "^0.3.0"
   }
 }
