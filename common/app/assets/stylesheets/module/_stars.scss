@@ -1,33 +1,22 @@
 /*  credit for this microsprite:
     @csswizardry: http://jsfiddle.net/csswizardry/KL5Vs/
 */
+.svg .stars,
 .stars {
     display: block;
-    width: 70px;
-    position: relative;
-    text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
-    margin-top: 4px;
+    @include rem((
+        margin-top: 4px,
+        width: 70px,
+        line-height: 13px
+    ));
 
-    &,
-    &:after {
-        height: 13px;
-    }
-
-    &:after {
-        content: '';
-        background-position: 0 -14px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
+    .star__item {
+        display: inline-block;
+        @include rem((
+            width: 14px,
+            height: 14px
+        ));
     }
 }
-
-
-.s-1:after { width: 14px; }
-.s-2:after { width: 28px; }
-.s-3:after { width: 42px; }
-.s-4:after { width: 56px; }
-.s-5:after { width: 70px; }
