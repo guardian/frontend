@@ -78,9 +78,62 @@
         overflow: visible; // opacity cuts borders off on chrome otherwise
     }
 
-    .content__headline:before {
-        content: '';
-        @include background-size(auto 100%);
+    .content__headline {
+        &:before {
+            content: '';
+            @include background-size(auto 100%);
+
+            @include rem((
+                height: 20px !important,
+                margin-right: $gs-gutter/3
+            ));
+
+            @include mq(mobileLandscape) {
+                @include rem((
+                    height: 25px !important,
+                    margin-right: $gs-gutter/2
+                ));
+            }
+            @include mq(tablet) {
+                @include rem((
+                    height: 27px !important
+                ));
+            }
+        }
+        .content--media--audio &:before {
+            @include icon(volume-high-yellow);
+            @include rem((
+                width: 24px !important
+            ));
+
+            @include mq(mobileLandscape) {
+                @include rem((
+                    width: 30px !important
+                ));
+            }
+            @include mq(tablet) {
+                @include rem((
+                    width: 33px !important
+                ));
+            }
+        }
+        .content--media--video &:before {
+            @include icon(video-icon);
+            @include rem((
+                width: 34px !important
+            ));
+
+            @include mq(mobileLandscape) {
+                @include rem((
+                    width: 40px !important
+                ));
+            }
+            @include mq(tablet) {
+                @include rem((
+                    width: 43px !important
+                ));
+            }
+        }
     }
 
     .social-wrapper {
@@ -130,16 +183,23 @@
     }
 
     $video-most-viewed-container: 531px;
+    $audio-most-viewed-container: 376px;
 
-    .content__main-column--media {
+    .content__main-column--video {
         @include mq(rightCol) {
             @include rem((
                 min-height: $video-most-viewed-container
             ));
         }
     }
-
-    .content__secondary-column--video {
+    .content__main-column--audio {
+        @include mq(rightCol) {
+            @include rem((
+                min-height: $audio-most-viewed-container
+            ));
+        }
+    }
+    .content__secondary-column--media {
         @include mq($to: rightCol) {
             display: block;
             position: relative;
@@ -152,63 +212,22 @@
 
         @include mq(rightCol) {
             @include rem((
-                padding-left: $gs-gutter/2,
-                height: $video-most-viewed-container
+                padding-left: $gs-gutter/2
             ));
             border-left: 1px solid $c-neutral2;
         }
     }
-}
-.content__headline {
-    &:before {
-        @include rem((
-            height: 20px !important,
-            margin-right: $gs-gutter/3
-        ));
-
-        @include mq(mobileLandscape) {
+    .content__secondary-column--video {
+        @include mq(rightCol) {
             @include rem((
-                height: 25px !important,
-                margin-right: $gs-gutter/2
-            ));
-        }
-        @include mq(tablet) {
-            @include rem((
-                height: 27px !important,
+                height: $video-most-viewed-container
             ));
         }
     }
-    .content--media--audio &:before {
-        @include icon(volume-high-yellow);
-        @include rem((
-            width: 24px !important,
-        ));
-
-        @include mq(mobileLandscape) {
+    .content__secondary-column--audio {
+        @include mq(rightCol) {
             @include rem((
-                width: 30px !important,
-            ));
-        }
-        @include mq(tablet) {
-            @include rem((
-                width: 33px !important
-            ));
-        }
-    }
-    .content--media--video &:before {
-        @include icon(video-icon);
-        @include rem((
-            width: 34px !important,
-        ));
-
-        @include mq(mobileLandscape) {
-            @include rem((
-                width: 40px !important,
-            ));
-        }
-        @include mq(tablet) {
-            @include rem((
-                width: 43px !important
+                height: $audio-most-viewed-container
             ));
         }
     }

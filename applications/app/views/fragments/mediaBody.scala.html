@@ -9,7 +9,7 @@
         @fragments.headDefault(media)
 
         <div class="gs-container">
-            <div class="content__main-column content__main-column--media">
+            <div class="content__main-column content__main-column--media content__main-column--@mediaType">
 
                 <div class="media-primary player">
                     @media match {
@@ -37,7 +37,8 @@
 
             </div>
 
-            <div class="content__secondary-column content__secondary-column--video" aria-hidden="true">
+            <div class="content__secondary-column content__secondary-column--media content__secondary-column--@mediaType"
+                aria-hidden="true">
                 <div class="js-video-components-container"></div>
             </div>
 

@@ -282,7 +282,7 @@ define([
         initMostViewedVideo: function() {
             var mostViewed = new Component();
 
-            mostViewed.endpoint = '/video/most-viewed.json';
+            mostViewed.endpoint = '/video/most-viewed.json?size=' + (config.page.contentType === 'Video' ? '6' : '4');
             mostViewed.fetch($('.js-video-components-container')[0], 'html');
         }
     };
@@ -290,7 +290,7 @@ define([
     var ready = function () {
         modules.initPlayer();
 
-        if (config.page.contentType === 'Video') {
+        if (config.isMedia) {
             modules.initMoreInSection();
             modules.initMostViewedVideo();
         }
