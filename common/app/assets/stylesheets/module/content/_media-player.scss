@@ -11,7 +11,7 @@
 
 .gu-media-wrapper {
     background: #000000;
-    @include transform(translateZ(0));
+    -webkit-transform: translateZ(0); // fixes iOS hover bug
     @include rem((
         margin-bottom: $gs-baseline * 1.5
     ));
