@@ -252,7 +252,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         And("The review is marked up with the correct schema")
         val review = findFirst("article[itemtype='http://schema.org/Review']")
 
-        review.findFirst(".stars").getText should be("3 / 5 stars")
+        review.findFirst("[itemprop=reviewRating]").getText should be("3 / 5 stars")
         review.findFirst("[itemprop=ratingValue]").getText should be("3")
       }
     }
