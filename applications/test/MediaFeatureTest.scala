@@ -3,8 +3,8 @@ package test
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
 
-class VideoFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
-  feature("Video") {
+class MediaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+  feature("Media") {
 
     info("In order to experience all the wonderful videos the Guardian publish")
     info("As a sighted Guardian reader")

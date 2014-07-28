@@ -149,7 +149,8 @@ module.exports = function (grunt) {
                         videojs: 'components/videojs/video',
                         videojsads: 'components/videojs-contrib-ads/videojs.ads',
                         videojsvast: 'components/videojs-vast/videojs.vast',
-                        videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume'
+                        videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
+                        videojsplaylist: 'components/videojs-playlist-audio/videojs.playlist'
                     },
                     shim: {
                         vast: {
@@ -163,6 +164,9 @@ module.exports = function (grunt) {
                         },
                         videojsvast: {
                              deps: ['vast', 'videojs']
+                        },
+                        videojsplaylist: {
+                            deps: ['videojs']
                         }
                     },
                     wrapShim: true,

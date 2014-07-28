@@ -20,7 +20,7 @@
     "grunt-karma": "^0.8.3",
     "grunt-mkdir": "~0.1.1",
     "grunt-pagespeed": "^0.2.0",
-    "grunt-scss-lint": "^0.1.7",
+    "grunt-scss-lint": "0.3.0",
     "grunt-shell": "^0.7.0",
     "grunt-text-replace": "~0.3.11",
     "grunt-webfontjson": "~0.0.3",

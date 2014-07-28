@@ -1,4 +1,4 @@
-.content__main-column--video {
+.content__main-column--media {
     @include mq(wide) {
         @include rem((
             width: gs-span(9)
@@ -6,7 +6,7 @@
     }
 }
 
-.content--video {
+.content--media {
 
     background-color: $c-neutral1;
     color: $c-neutral7;
