@@ -121,7 +121,7 @@
             }
             @include mq(tablet) {
                 @include rem((
-                    width: 43px !important
+                    width: 44px !important
                 ));
             }
         }
@@ -162,7 +162,7 @@
 
     @include mq(tablet, rightCol) {
         .content__meta-container {
-            float: right;
+            float: left;
             @include rem((
                 width: 404px, //Magic, as video items below are off grid at 33.3% width
                 margin-right: $gs-gutter

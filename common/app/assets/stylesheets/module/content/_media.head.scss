@@ -1,5 +1,4 @@
 .content__main-column--media {
-    overflow: hidden;
     @include mq(wide) {
         @include rem((
             width: gs-span(9)
