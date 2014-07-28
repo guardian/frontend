@@ -61,8 +61,6 @@ define([
             $content = bonzo(this.dom.content),
             $popup = bonzo(this.dom.popup);
 
-        $container.removeClass('js-hidden');
-
         if (user) {
             $content.text(user.displayName);
             $container.addClass('is-signed-in');
