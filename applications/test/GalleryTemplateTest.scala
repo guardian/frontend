@@ -55,7 +55,7 @@ class GalleryTemplateTest extends FlatSpec with Matchers {
     import browser._
     $("meta[property='twitter:card']").getAttributes("content").head should be ("gallery")
     $("meta[property='twitter:title']").getAttributes("content").head should be ("Southbank Centre's Sounds Venezuela festival - in pictures")
-    $("meta[property='twitter:image3:src']").getAttributes("content").head should endWith ("/Bassoons-in-the-Symphony--003.jpg?width=-&height=-&quality=95")
+    $("meta[property='twitter:image3:src']").getAttributes("content").head should endWith ("/Bassoons-in-the-Symphony--003.jpg")
   }
 
   it should "include the index parameter in direct links" in HtmlUnit("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre?index=2") { browser =>
