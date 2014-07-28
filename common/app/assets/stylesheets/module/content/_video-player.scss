@@ -11,6 +11,7 @@
 
 .gu-video-wrapper {
     background: #000000;
+    @include transform(translateZ(0));
     @include rem((
         margin-bottom: $gs-baseline * 1.5
     ));

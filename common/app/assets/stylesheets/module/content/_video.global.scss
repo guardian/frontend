@@ -74,7 +74,7 @@
         @include icon(video-icon);
         @include background-size(auto 100%);
         @include rem((
-            margin-right: $gs-gutter/3,
+            margin-right: $gs-gutter/5,
             height: 20px !important,
             width: 34px !important
         ));
@@ -130,7 +130,7 @@
 
     @include mq(tablet, rightCol) {
         .content__meta-container {
-            float: left;
+            float: right;
             @include rem((
                 width: 404px, //Magic, as video items below are off grid at 33.3% width
                 margin-right: $gs-gutter
@@ -254,9 +254,9 @@
         @include icon(video-icon);
         @include background-size(auto 100%);
         @include rem((
-            margin-right: $gs-gutter/4,
-            height: 12px !important,
-            width: 18px !important
+            margin-right: $gs-gutter/5,
+            height: 10px !important,
+            width: 15px !important
         ));
     }
 }

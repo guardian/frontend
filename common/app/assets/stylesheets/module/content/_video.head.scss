@@ -1,4 +1,6 @@
 .content__main-column--video {
+    overflow: hidden;
+
     @include mq(wide) {
         @include rem((
             width: gs-span(9)
@@ -20,6 +22,11 @@
 
     .byline {
         word-break: break-word;
+
+        a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
     }
 
     .byline,
