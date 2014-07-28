@@ -7,7 +7,6 @@ import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 
 object DfpApiWrapper extends Logging {
-
   private lazy val dfpServices = new DfpServices()
 
   private def lineItemService(session: DfpSession): LineItemServiceInterface =
@@ -21,6 +20,9 @@ object DfpApiWrapper extends Logging {
 
   private def inventoryService(session: DfpSession): InventoryServiceInterface =
     dfpServices.get(session, classOf[InventoryServiceInterface])
+
+  private def suggestedAdUnitService(session: DfpSession): SuggestedAdUnitServiceInterface =
+    dfpServices.get(session, classOf[SuggestedAdUnitServiceInterface])
 
   case class Page[T](rawResults: Array[T], totalResultSetSize: Int) {
     def results: Seq[T] = Option(rawResults) map (_.toSeq) getOrElse Nil
@@ -104,4 +106,13 @@ object DfpApiWrapper extends Logging {
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
+
+  def fetchSuggestedAdUnits(session: DfpSession, statementBuilder: StatementBuilder): Seq[SuggestedAdUnit] = {
+    fetch(statementBuilder) { statement =>
+      val service = suggestedAdUnitService(session)
+      val page = service.getSuggestedAdUnitsByStatement(statementBuilder.toStatement)
+      Page(page.getResults, page.getTotalResultSetSize)
+    }
+  }
+
 }

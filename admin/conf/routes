@@ -48,7 +48,7 @@ GET         /analytics/commercial/sponsorships  controllers.admin.CommercialCont
 GET         /analytics/commercial/pageskins     controllers.admin.CommercialController.renderPageskins()
 GET         /analytics/commercial/surging       controllers.admin.CommercialController.renderSurgingContent()
 GET         /analytics/commercial/im-sponsorships   controllers.admin.CommercialController.renderInlineMerchandisingSponsorships()
-GET         /commercialtools/adunits/new        controllers.admin.CommercialAdUnitController.renderNewAdUnits()
+GET         /commercialtools/adunits/toapprove        controllers.admin.CommercialAdUnitController.renderToApprove()
 
 # Metrics
 GET         /metrics/loadbalancers        controllers.admin.DashboardController.renderDashboard()

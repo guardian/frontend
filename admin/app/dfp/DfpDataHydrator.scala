@@ -8,15 +8,17 @@ import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.{AdminConfiguration, Configuration}
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
+import java.io.Serializable
 
 object DfpDataHydrator extends Logging {
 
+
   private lazy val dfpSession: Option[DfpSession] = try {
     for {
-      clientId <- AdminConfiguration.dfpApi.clientId
-      clientSecret <- AdminConfiguration.dfpApi.clientSecret
-      refreshToken <- AdminConfiguration.dfpApi.refreshToken
-      appName <- AdminConfiguration.dfpApi.appName
+                                     clientId <- AdminConfiguration.dfpApi.clientId
+                                     clientSecret <- AdminConfiguration.dfpApi.clientSecret
+                                     refreshToken <- AdminConfiguration.dfpApi.refreshToken
+                                     appName <- AdminConfiguration.dfpApi.appName
     } yield {
       val credential = new OfflineCredentials.Builder()
         .forApi(Api.DFP)
@@ -57,13 +59,13 @@ object DfpDataHydrator extends Logging {
       dfpLineItems map { dfpLineItem =>
 
         val sponsor = for {
-          sponsorFieldId <- optSponsorFieldId
-          customFieldValues <- Option(dfpLineItem.getCustomFieldValues)
-          sponsor <- customFieldValues.collect {
-            case fieldValue: CustomFieldValue
-              if fieldValue.getCustomFieldId == sponsorFieldId =>
-              fieldValue.getValue.asInstanceOf[TextValue].getValue
-          }.headOption
+                                         sponsorFieldId <- optSponsorFieldId
+                                         customFieldValues <- Option(dfpLineItem.getCustomFieldValues)
+                                         sponsor <- customFieldValues.collect {
+                                           case fieldValue: CustomFieldValue
+                                           if fieldValue.getCustomFieldId == sponsorFieldId =>
+                                             fieldValue.getValue.asInstanceOf[TextValue].getValue
+                                         }.headOption
         } yield sponsor
 
         val dfpTargeting = dfpLineItem.getTargeting
@@ -78,10 +80,10 @@ object DfpDataHydrator extends Logging {
           Option(geoTargeting.getTargetedLocations) map { locations =>
             locations.map { location =>
               GeoTarget(
-                location.getId,
-                optJavaInt(location.getCanonicalParentId),
-                location.getType,
-                location.getDisplayName
+              location.getId,
+              optJavaInt(location.getCanonicalParentId),
+              location.getType,
+              location.getDisplayName
               )
             }.toSeq
           }
@@ -92,13 +94,13 @@ object DfpDataHydrator extends Logging {
         } getOrElse Nil
 
         GuLineItem(
-          id = dfpLineItem.getId,
-          name = dfpLineItem.getName,
-          startTime = toJodaTime(dfpLineItem.getStartDateTime),
-          endTime = if (dfpLineItem.getUnlimitedEndDateTime) None else Some(toJodaTime(dfpLineItem.getEndDateTime)),
-          isPageSkin = isPageSkin(dfpLineItem),
-          sponsor = sponsor,
-          targeting = GuTargeting(adUnits, geoTargets, customTargetSets)
+        id = dfpLineItem.getId,
+        name = dfpLineItem.getName,
+        startTime = toJodaTime(dfpLineItem.getStartDateTime),
+        endTime = if (dfpLineItem.getUnlimitedEndDateTime) None else Some(toJodaTime(dfpLineItem.getEndDateTime)),
+        isPageSkin = isPageSkin(dfpLineItem),
+        sponsor = sponsor,
+        targeting = GuTargeting(adUnits, geoTargets, customTargetSets)
         )
       }
 
@@ -134,6 +136,19 @@ object DfpDataHydrator extends Logging {
       }.toMap
   }
 
+  def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] = dfpSession.fold(Seq[GuAdUnit]()) {
+    session =>
+      val statementBuilder = new StatementBuilder()
+
+      val suggestedAdUnits = DfpApiWrapper.fetchSuggestedAdUnits(session, statementBuilder)
+
+      suggestedAdUnits.map { adUnit =>
+        val fullpath: List[String] = adUnit.getParentPath.map(_.getName).toList ::: adUnit.getPath.toList
+
+        GuAdUnit(adUnit.getId, fullpath.tail)
+      }
+  }
+
   def loadAllCustomTargetKeys(): Map[Long, String] = dfpSession.fold(Map[Long, String]()) { session =>
     DfpApiWrapper.fetchCustomTargetingKeys(session, new StatementBuilder()).map { k =>
       k.getId.longValue() -> k.getName
@@ -145,6 +160,8 @@ object DfpDataHydrator extends Logging {
       v.getId.longValue() -> v.getName
     }.toMap
   }
+
+
 
   private def isPageSkin(dfpLineItem: LineItem) = {
 

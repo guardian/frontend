@@ -1,0 +1,19 @@
+@(env: String, dfpAccount: String, adunits: Seq[dfp.GuAdUnit])
+@import tools.DfpLink
+@import tools.SiteLink
+
+@admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
+
+<link rel="stylesheet" type="text/css" href="@routes.Assets.at(" css/commercial.css")">
+
+<h1>Next Gen Ad Units for approval</h1>
+<p>The following ad units have been submitted to DFP and require approval before they are recorded by DFP.</p>
+<p>DFP account: @dfpAccount</p>
+<ol>
+    @for(adunit <- adunits) {
+    <li>@adunit.path.mkString("/")  </li>
+    }
+</ol>
+
+
+}

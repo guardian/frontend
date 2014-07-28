@@ -7,16 +7,16 @@ import controllers.AuthLogging
 import conf.Configuration
 import tools.Store
 import play.api.libs.json.Json
-import dfp.{SponsorshipReport, Sponsorship}
+import dfp.{DfpDataHydrator, SponsorshipReport, Sponsorship}
 import implicits.Dates
 import org.joda.time.DateTime
 import ophan.SurgingContentAgent
 
 object CommercialAdUnitController extends Controller with Logging with AuthLogging {
 
-  def renderNewAdUnits = Authenticated { implicit request =>
-    val adunits = Nil
+  def renderToApprove = Authenticated { implicit request =>
+    val adunits = DfpDataHydrator.loadAdUnitsForApproval(Configuration.commercial.dfpAdUnitRoot)
 
-    NoCache(Ok(views.html.commercial.newadunits(Configuration.environment.stage, adunits)))
+    NoCache(Ok(views.html.commercial.adunitsforapproval(Configuration.environment.stage, Configuration.commercial.dfpAccountId, adunits)))
   }
 }
