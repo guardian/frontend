@@ -1,4 +1,4 @@
-@(keywords: Seq[model.Tag], parentClass: String = "content__keywords", visibleKeywords: Int = 5, title: String = "Tags")(implicit request: RequestHeader)
+@(keywords: Seq[model.Tag], parentClass: String = "content__keywords--more-tags", visibleKeywords: Int = 5, title: String = "Tags")(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import model.Tag
@@ -25,7 +25,7 @@
                 @if(hiddenKeywords.nonEmpty) {
 
                     <li class="inline-list__item js-more-tags js-hidden">
-                        <button class="u-button-reset u-fauxlink @parentClass--more-tags js-more-tags__link"
+                        <button class="u-button-reset u-fauxlink @parentClass js-more-tags__link"
                            data-link-name="more-tags">more…</button>
                     </li>
 
