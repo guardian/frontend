@@ -290,7 +290,7 @@ define([
     var ready = function () {
         modules.initPlayer();
 
-        if(config.isMedia) {
+        if (config.page.contentType === 'Video') {
             modules.initMoreInSection();
             modules.initMostViewedVideo();
         }
