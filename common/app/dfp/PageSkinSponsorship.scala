@@ -3,7 +3,11 @@ package dfp
 import common.editions
 import common.{Edition, Logging}
 
-case class PageSkinSponsorship(lineItemName: String, lineItemId: Long, adUnits: Seq[String], countries: Seq[Country])
+case class PageSkinSponsorship(lineItemName: String,
+                               lineItemId: Long,
+                               adUnits: Seq[String],
+                               countries: Seq[Country],
+                               targetsAdTest: Boolean)
 
 case class Country(name: String, editionId: String)
 
@@ -35,7 +39,8 @@ object PageSkinSponsorshipReportParser extends Logging {
       (JsPath \ "lineItem").read[String] and
         (JsPath \ "lineItemId").read[Long] and
         (JsPath \ "adUnits").read[Seq[String]] and
-        (JsPath \ "countries").read[Seq[Country]]
+        (JsPath \ "countries").read[Seq[Country]] and
+        (JsPath \ "isAdTest").read[Boolean]
       )(PageSkinSponsorship.apply _)
 
     implicit val reportReads: Reads[PageSkinSponsorshipReport] = (

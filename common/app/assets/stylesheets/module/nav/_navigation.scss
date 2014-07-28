@@ -7,6 +7,8 @@
 
 $c-navigation-base: #2479c3;
 
+$navigation-height: $gs-row-height;
+
 $navigation-toggler-width: 48px;
 $navigation-toggler-width-full: 130px;
 
@@ -37,8 +39,8 @@ $navigation-h-space-between-items: $gs-gutter;
 
 $c-navigation-expandable-background: guss-colour(neutral-1);
 
-$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, map-get($mq-breakpoints, desktop));
-$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map-get($mq-breakpoints, desktop) + gs-span(1) + $gs-gutter * 1.5);
+$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
+$mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(navigationBreakOnTwoLevels) + gs-span(1) + $gs-gutter * 1.5);
 
 
 /* First container page title overrides
@@ -90,7 +92,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
     .switcher {
         padding-bottom: 0;
         @include rem((
-            min-height: $gs-row-height - $gs-baseline/2 - 2
+            min-height: $navigation-height - $gs-baseline/2 - 2
         ));
     }
     .nav--guardian-services {
@@ -118,10 +120,12 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
         }
 
         @include mq(tablet) {
+            @include box-sizing(border-box);
             padding-top: 0;
             float: right;
             text-align: right;
             @include rem((
+                min-height: $gs-row-height,
                 padding-top: 7px,
                 width: gs-span(3)
             ));
@@ -140,7 +144,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
     clear: both;
     background: $c-navigation-background;
     @include rem((
-        height: $gs-row-height
+        height: $navigation-height
     ));
 
     &:before,
@@ -153,7 +157,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
         right: 0;
         background: mix(guss-colour(guardian-brand), #ffffff, 80%);
         @include rem((
-            height: $gs-row-height
+            height: $navigation-height
         ));
     }
     &:before {
@@ -178,7 +182,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
 .signposting {
     @include fs-header(1);
     @include rem((
-        line-height: $gs-row-height
+        line-height: $navigation-height
     ));
 
     a {
@@ -198,7 +202,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
 .navigation__container--first {
     background: $c-top-navigation-background;
     @include rem((
-        min-height: $gs-row-height
+        min-height: $navigation-height
     ));
 }
 .navigation__expandable {
@@ -285,7 +289,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
     color: $c-signposting-action;
     @include rem((
         font-size: 27px,
-        line-height: $gs-row-height,
+        line-height: $navigation-height,
         padding-right: $navigation-h-space-between-items/2
     ));
 }
@@ -399,7 +403,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
     border-top: 1px solid $c-global-navigation-border;
     position: relative;
     @include rem((
-        min-height: $gs-row-height
+        min-height: $navigation-height
     ));
 
     @include mq(mobileLandscape, tablet) {
@@ -459,7 +463,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
 .global-navigation__children {
     @include box-sizing(border-box);
     @include rem((
-        min-height: $gs-row-height,
+        min-height: $navigation-height,
         padding-top: $gs-baseline/4
     ));
     overflow: hidden;
@@ -500,7 +504,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
     .global-navigation__action {
         float: left;
         @include rem((
-            line-height: $gs-row-height - $gs-baseline/2,
+            line-height: $navigation-height - $gs-baseline/2,
             padding-left: $navigation-h-space-between-items/2,
             padding-right: $navigation-h-space-between-items/2
         ));
@@ -536,7 +540,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
     .signposting,
     .local-navigation {
         @include rem((
-            height: $gs-row-height
+            height: $navigation-height
         ));
     }
     .signposting,
@@ -660,7 +664,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
             left: 0;
             right: 0;
             @include rem((
-                top: $gs-row-height
+                top: $navigation-height
             ));
             height: 1px;
             background: $c-global-navigation-border;
@@ -668,7 +672,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
         }
         &.navigation--collapsed {
             @include rem((
-                height: $gs-row-height * 2
+                height: $navigation-height * 2
             ));
         }
         &.navigation--expanded {
@@ -689,13 +693,13 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
             vertical-align: top;
             display: table-cell;
             @include rem((
-                height: $gs-row-height
+                height: $navigation-height
             ));
         }
         .local-navigation__action {
             display: table-cell;
             @include rem((
-                line-height: $gs-row-height
+                line-height: $navigation-height
             ));
         }
 
@@ -706,7 +710,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
         .navigation__container--first {
             background: $c-local-navigation-background;
             @include rem((
-                border-top: $gs-row-height solid $c-top-navigation-background
+                border-top: $navigation-height solid $c-top-navigation-background
             ));
         }
         .navigation__container--second {
@@ -760,7 +764,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, map
     @include box-sizing(border-box);
     @include fs-header(1);
     @include rem((
-        line-height: $gs-row-height,
+        line-height: $navigation-height,
         padding-right: $gs-gutter/2
     ));
     @include navigation__toggle--width(small);

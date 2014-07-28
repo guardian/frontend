@@ -1,0 +1,5 @@
+{
+  "name": "Sass MQ",
+  "description": "Media Queries, with style. A simple, scalable way to set a common language for your project's breakpoints across team members.",
+  "tags": ["media-queries", "responsive", "rwd", "breakpoint", "breakpoints", "dry"]
+}

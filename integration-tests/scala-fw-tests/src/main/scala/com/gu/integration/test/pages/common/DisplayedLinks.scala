@@ -14,7 +14,7 @@ trait DisplayedLinks {
   val rootElement: WebElement
   implicit val driver: WebDriver
 
-  def displayedLinks(): List[WebElement] = {
-    ElementLoader.displayedLinks(rootElement)
+  def displayedLinks(maxElements:Int = Int.MaxValue): List[WebElement] = {
+    ElementLoader.displayedLinks(rootElement, maxElements)
   }
 }

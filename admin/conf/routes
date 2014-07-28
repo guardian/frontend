@@ -39,12 +39,13 @@ GET         /dev/switchboard              controllers.admin.SwitchboardControlle
 POST        /dev/switchboard              controllers.admin.SwitchboardController.save()
 
 # Analytics
-GET         /analytics/abtests            controllers.admin.AnalyticsController.abtests()
-GET         /analytics/confidence         controllers.admin.AnalyticsConfidenceController.renderConfidence()
-GET         /analytics/commercial         controllers.admin.CommercialController.renderCommercial()
-GET         /analytics/commercial/sponsorships  controllers.admin.CommercialController.renderSponsorships()
-GET         /analytics/commercial/pageskins     controllers.admin.CommercialController.renderPageskins()
-GET         /analytics/commercial/surging       controllers.admin.CommercialController.renderSurgingContent()
+GET         /analytics/abtests                      controllers.admin.AnalyticsController.abtests()
+GET         /analytics/confidence                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET         /analytics/commercial                   controllers.admin.CommercialController.renderCommercial()
+GET         /analytics/commercial/sponsorships      controllers.admin.CommercialController.renderSponsorships()
+GET         /analytics/commercial/pageskins         controllers.admin.CommercialController.renderPageskins()
+GET         /analytics/commercial/surging           controllers.admin.CommercialController.renderSurgingContent()
+GET         /analytics/commercial/im-sponsorships   controllers.admin.CommercialController.renderInlineMerchandisingSponsorships()
 
 
 

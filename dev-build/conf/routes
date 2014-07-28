@@ -21,6 +21,7 @@ GET         /analytics/commercial                                               
 GET         /analytics/commercial/sponsorships                                                                       controllers.admin.CommercialController.renderSponsorships()
 GET         /analytics/commercial/pageskins                                                                          controllers.admin.CommercialController.renderPageskins()
 GET         /analytics/commercial/surging                                                                            controllers.admin.CommercialController.renderSurgingContent()
+GET         /analytics/commercial/im-sponsorships                                                                    controllers.admin.CommercialController.renderInlineMerchandisingSponsorships()
 
 # Discussion
 GET         /discussion/comment-box.json                                                                             controllers.DiscussionApp.commentBox()
@@ -218,8 +219,8 @@ GET         /commercial/books/bestsellers-medium                                
 GET         /commercial/books/bestsellers-medium.json                                                                controllers.commercial.BookOffers.bestsellersMediumJson
 GET         /commercial/books/bestsellers-high                                                                       controllers.commercial.BookOffers.bestsellersHighHtml
 GET         /commercial/books/bestsellers-high.json                                                                  controllers.commercial.BookOffers.bestsellersHighJson
-GET         /commercial/books/book/*pageId.json                                                                      controllers.commercial.BookOffers.singleBookJson(pageId)
-GET         /commercial/books/book/*pageId                                                                           controllers.commercial.BookOffers.singleBookHtml(pageId)
+GET         /commercial/books/book.json                                                                              controllers.commercial.BookOffers.bestsellersSuperHighJson
+GET         /commercial/books/book                                                                                   controllers.commercial.BookOffers.bestsellersSuperHighHtml
 GET         /commercial/money/bestbuys                                                                               controllers.commercial.MoneyOffers.bestBuysLowHtml
 GET         /commercial/money/bestbuys.json                                                                          controllers.commercial.MoneyOffers.bestBuysLowJson
 GET         /commercial/money/bestbuys-high                                                                          controllers.commercial.MoneyOffers.bestBuysHighHtml
@@ -266,8 +267,8 @@ GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                             
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                                           controllers.ImageContentController.renderJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>                                                controllers.ImageContentController.render(path)
 
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                                                               controllers.VideoController.renderJson(path)
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                                                    controllers.VideoController.render(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                                       controllers.MediaController.renderJson(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                                                            controllers.MediaController.render(path)
 
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                                        controllers.InteractiveController.renderInteractiveJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                                             controllers.InteractiveController.renderInteractive(path)

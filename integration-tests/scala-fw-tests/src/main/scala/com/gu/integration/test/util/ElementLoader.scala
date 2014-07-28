@@ -1,7 +1,6 @@
 package com.gu.integration.test.util
 
 import scala.collection.JavaConverters.asScalaBufferConverter
-
 import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
@@ -9,14 +8,37 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.ExpectedCondition
-import org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf
+import org.openqa.selenium.support.ui.ExpectedConditions._
 import org.openqa.selenium.support.ui.WebDriverWait
-
 import com.gu.automation.support.TestLogging
+import org.openqa.selenium.support.ui.ExpectedConditions
 
 object ElementLoader extends TestLogging {
 
   val TestAttributeName = "data-test-id"
+
+  implicit class ElementEnhancer(val webElement: WebElement) extends AnyVal {
+
+    def findHiddenDirectElements(childElementName: String): List[WebElement] = {
+      notDisplayed(findDirectElements(childElementName))
+    }
+
+    def findVisibleDirectElements(childElementName: String): List[WebElement] = {
+      displayed(findDirectElements(childElementName))
+    }
+
+    def findDirectElements(childElementName: String): List[WebElement] = {
+      webElement.findElements(By.xpath(s"./${childElementName}")).asScala.toList
+    }
+  }
+
+  def notDisplayed(elementsToCheck: List[WebElement]): List[WebElement] = {
+    elementsToCheck.filter(element => !element.isDisplayed())
+  }
+
+  def displayed(elementsToCheck: List[WebElement]): List[WebElement] = {
+    elementsToCheck.filter(element => element.isDisplayed())
+  }
 
   /**
    * Will find the element with the provided test attribute id and, if provided, using the provided webelement as search context
@@ -41,11 +63,15 @@ object ElementLoader extends TestLogging {
   }
 
   /**
-   * Find all link elements, including nested, from the provided SearchContext and returns those that are displayed
+   * Find maxElements of displayed and visible link elements, including nested, from the provided SearchContext
    */
-  def displayedLinks(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
-    val visibleLinks = searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => waitUntil(visibilityOf(element)))
-    visibleLinks.filter(element => element.isDisplayed())
+  def displayedLinks(searchContext: SearchContext, maxElements: Int = Int.MaxValue)(implicit driver: WebDriver): List[WebElement] = {
+    searchContext.findElements(By.cssSelector("a")).asScala
+      .toList
+      .view
+      .filter(element => waitUntil(visibilityOf(element)) && element.isDisplayed())
+      .take(maxElements)
+      .toList
   }
 
   /**
@@ -88,7 +114,7 @@ object ElementLoader extends TestLogging {
    *  was proven to be a bit flaky. So calling this method, before calling is displayed, will make sure the elements are loaded and
    *  visible
    */
-  private def waitUntil(expectedCondition: ExpectedCondition[WebElement], timeoutInSeconds: Int = 2)(implicit driver: WebDriver): Boolean = {
+  def waitUntil[T](expectedCondition: ExpectedCondition[T], timeoutInSeconds: Int = 2)(implicit driver: WebDriver): Boolean = {
     try {
       new WebDriverWait(driver, timeoutInSeconds).until(expectedCondition)
     } catch {

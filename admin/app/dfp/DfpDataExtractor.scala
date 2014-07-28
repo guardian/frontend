@@ -20,6 +20,14 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     }.distinct
   }
 
+  val inlineMerchandisingSponsorships: Seq[Sponsorship] = {
+    lineItems.withFilter { lineItem =>
+      lineItem.inlineMerchandisingTargettedTags.nonEmpty && lineItem.isCurrent
+    }.map { lineItem =>
+      Sponsorship(lineItem.inlineMerchandisingTargettedTags, lineItem.sponsor)
+    }.distinct
+  }
+
   val pageSkinSponsorships: Seq[PageSkinSponsorship] = {
     lineItems withFilter { lineItem =>
       lineItem.isPageSkin && lineItem.isCurrent
@@ -28,7 +36,8 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
         adUnit.path mkString "/"
       }
       val countries = lineItem.targeting.geoTargets map (geoTarget => Country.fromName(geoTarget.name))
-      PageSkinSponsorship(lineItem.name, lineItem.id, paths, countries)
+      val targetsAdTest = lineItem.targeting.hasAdTestTargetting
+      PageSkinSponsorship(lineItem.name, lineItem.id, paths, countries, targetsAdTest)
     }
   }
 }

@@ -1,10 +1,13 @@
 @import '_webfonts';
 
-// Next Gen Webfonts
-//
-// - Egyptian, Text Egyptian and Text Sans use medium font for bold font-weight
-// - Egyptian uses semibold font for ultrablack (900) font-weight
-
+/**
+ * Next Gen Webfonts
+ *
+ * - Egyptian, Text Egyptian and Text Sans use medium font for bold font-weight
+ * - Egyptian uses semibold font for ultrablack (900) font-weight
+ * 
+ * @type Map
+ */
 @include guss-webfonts(
     (
         'Guardian Agate Sans 1 Web': (

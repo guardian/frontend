@@ -173,6 +173,10 @@ object Switches extends Collections {
     "Enable Remarketing tracking",
     safeState = Off, sellByDate = never)
 
+  val OutbrainSwitch = Switch("Content Recommendation", "outbrain",
+    "Enable the Outbrain content recommendation widget.",
+    safeState = Off, sellByDate = never)
+
   // Commercial Feeds
 
   val TravelOffersFeedSwitch = Switch("Performance Switches", "gu-travel-offers",
@@ -412,11 +416,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = never // this is a performance related switch, not a feature switch
   )
 
-  val ParameterlessImagesSwitch = Switch("Image Server", "parameterless-images",
-    "If this switch is on images then image resize fields (width, height, quality) will be in the url and not in parameters.",
-    safeState = Off, sellByDate = new LocalDate(2014, 7, 31)
-  )
-
   val SeoOptimisedContentImageSwitch = Switch("Image Server", "seo-optimised-article-image",
     "If this switch is on images then articles will get a 460px on static.guim.co.uk image as the low-res version.",
     safeState = On, sellByDate = new LocalDate(2014, 8, 30)
@@ -426,6 +425,12 @@ object Switches extends Collections {
   val GuShiftCookieSwitch = Switch("Feature Switches", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
     safeState = On, sellByDate = new LocalDate(2014, 9, 30)
+  )
+
+  // google crawler switches
+  val SeoBlockGooglebotFromJSPathsSwitch = Switch("Feature Switches", "seo-block-googlebot-js-paths",
+    "If switched on, relative paths in JS files become concatenated string segments to stop googlebot following them",
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 29)
   )
 
   val all: List[Switch] = List(
@@ -465,6 +470,7 @@ object Switches extends Collections {
     ForeseeSwitch,
     MediaMathSwitch,
     RemarketingSwitch,
+    OutbrainSwitch,
     DiagnosticsLogging,
     TravelOffersFeedSwitch,
     JobFeedSwitch,
@@ -492,14 +498,14 @@ object Switches extends Collections {
     GeoMostPopular,
     NewNavigationHighlightingSwitch,
     SmartBannerSwitch,
-    ParameterlessImagesSwitch,
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
-    ABHighCommercialComponent
+    ABHighCommercialComponent,
+    SeoBlockGooglebotFromJSPathsSwitch
   )
 
   val httpSwitches: List[Switch] = List(

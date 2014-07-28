@@ -29,7 +29,7 @@ define([
     Component
 ) {
 
-    var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
+    var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint());
     var QUARTILES = [25, 50, 75];
     // Advert and content events used by analytics. The expected order of bean events is:
     var EVENTS = [
@@ -43,8 +43,7 @@ define([
 
     var modules = {
 
-        ophanRecord: function(playerEl, event) {
-            var id = playerEl.getAttribute('data-media-id');
+        ophanRecord: function(id, event) {
             if(id) {
                 require('ophan/ng', function (ophan) {
                     ophan.record({
@@ -57,43 +56,39 @@ define([
             }
         },
 
-        initOphanTracking: function(playerEl) {
+        initOphanTracking: function(player, mediaId) {
             EVENTS.concat(QUARTILES.map(function(q) {
                 return 'video:play:' + q;
             })).forEach(function(event) {
-                bean.one(playerEl, event, function(event) {
-                    modules.ophanRecord(playerEl, event);
+                player.one(event, function(event) {
+                    modules.ophanRecord(mediaId, event);
                 });
             });
         },
 
-        initOmnitureTracking: function(playerEl) {
-            new OmnitureMedia(playerEl).init();
-            bonzo(playerEl).addClass('tracking-applied');
+        initOmnitureTracking: function(player) {
+            new OmnitureMedia(player).init();
         },
 
-        bindPrerollEvents: function(player, videoEl) {
-            var playCount = 0;
+        bindPrerollEvents: function(player) {
             var events = {
                 end: function() {
-                    bean.fire(videoEl, 'video:preroll:end');
-                    modules.bindContentEvents(player, videoEl);
+                    player.trigger('video:preroll:end');
+                    modules.bindContentEvents(player, true);
                 },
-                playWithDuration: function() {
-                    // Only fire the play event when the duration is known.
-                    if (playCount > 0) {
-                        bean.fire(videoEl, 'video:preroll:play');
-                        playCount = 0;
+                play: function() {
+                    var duration = player.duration();
+                    if (duration) {
+                        player.trigger('video:preroll:play');
                     } else {
-                        playCount++;
+                        player.one('durationchange', events.play);
                     }
                 },
                 ready: function() {
-                    bean.fire(videoEl, 'video:preroll:ready');
+                    player.trigger('video:preroll:ready');
 
-                    player.one('play', events.playWithDuration);
-                    player.one('durationchange', events.playWithDuration);
-                    player.one('ended', events.end);
+                    player.one('adstart', events.play);
+                    player.one('adend', events.end);
 
                     if (autoplay) {
                         player.play();
@@ -104,30 +99,28 @@ define([
 
             //If no preroll avaliable or preroll fails, still init content tracking
             player.one('adtimeout', function() {
-                modules.bindContentEvents(player, videoEl, true);
+                modules.bindContentEvents(player, true);
             });
         },
 
-        bindContentEvents: function(player, videoEl, instant) {
-            var playCount = 0;
+        bindContentEvents: function(player) {
             var events = {
                 end: function() {
-                    bean.fire(videoEl, 'video:content:end');
+                    player.trigger('video:content:end');
                 },
-                playWithDuration: function() {
-                    // Only fire the play event when the duration is known.
-                    if (playCount > 0 || player.duration()) {
-                        bean.fire(videoEl, 'video:content:play');
-                        playCount = 0;
+                play: function() {
+                    var duration = player.duration();
+                    if (duration) {
+                        player.trigger('video:content:play');
                     } else {
-                        playCount++;
+                        player.one('durationchange', events.play);
                     }
                 },
                 timeupdate: function() {
                     var progress = Math.round(parseInt(player.currentTime()/player.duration()*100, 10));
                     QUARTILES.reverse().some(function(quart) {
                         if (progress >= quart) {
-                            bean.fire(videoEl, 'video:play:' + quart);
+                            player.trigger('video:play:' + quart);
                             return true;
                         } else {
                             return false;
@@ -135,10 +128,9 @@ define([
                     });
                 },
                 ready: function() {
-                    bean.fire(videoEl, 'video:content:ready');
+                    player.trigger('video:content:ready');
 
-                    player.one('play', events.playWithDuration);
-                    player.one('durationchange', events.playWithDuration);
+                    player.one('play', events.play);
                     player.on('timeupdate', _throttle(events.timeupdate, 1000));
                     player.one('ended', events.end);
 
@@ -147,23 +139,16 @@ define([
                     }
                 }
             };
-
-            if(instant) {
-                events.ready();
-            } else {
-                player.one('loadstart', events.ready);
-            }
+            events.ready();
         },
 
         getVastUrl: function() {
             var adUnit = config.page.adUnit,
                 custParams = urlUtils.constructQuery(dfp.buildPageTargeting({ page: config.page })),
                 encodedCustParams = encodeURIComponent(custParams),
-                timestamp = new Date().getTime(),
-                url = 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
+                timestamp = new Date().getTime();
+            return 'http://' + config.page.dfpHost + '/gampad/ads?correlator=' + timestamp + '&gdfp_req=1&env=vp&impl=s&output=' +
                     'xml_vast2&unviewed_position_start=1&iu=' + adUnit + '&sz=400x300&scp=slot%3Dvideo&cust_params=' + encodedCustParams;
-
-            return url;
         },
 
         countDown: function() {
@@ -204,11 +189,16 @@ define([
 
                 videojs.plugin('adCountDown', modules.countDown);
 
-                $('.gu-video').each(function (el) {
-                    var vjs = videojs(el, {
+                $('.js-gu-media').each(function (el) {
+                    var mediaId = el.getAttribute('data-media-id'),
+                        vjs = videojs(el, {
                         controls: true,
                         autoplay: false,
                         preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
+                    });
+
+                    vjs.playlist({
+                        mediaType: 'audio'
                     });
 
                     vjs.ready(function () {
@@ -216,11 +206,20 @@ define([
 
                         modules.initLoadingSpinner(player);
 
+                        // unglitching the volume on first load
+                        var vol = vjs.volume();
+                        if (vol) {
+                            vjs.volume(0);
+                            vjs.volume(vol);
+                        }
+
+                        vjs.persistvolume({namespace: 'gu.vjs'});
+
                         deferToAnalytics(function () {
 
-                            modules.initOmnitureTracking(el);
-                            modules.initOphanTracking(el);
-                            modules.bindPrerollEvents(player, el);
+                            modules.initOmnitureTracking(player);
+                            modules.initOphanTracking(player, mediaId);
+                            modules.bindPrerollEvents(player);
 
                             // Init plugins
                             player.adCountDown();
@@ -249,15 +248,6 @@ define([
                             timeout = false;
                         }, 500);
                     });
-
-                    // unglitching the volume on first load
-                    var vol = vjs.volume();
-                    if (vol) {
-                        vjs.volume(0);
-                        vjs.volume(vol);
-                    }
-
-                    vjs.persistvolume({namespace: 'gu.vjs'});
                 });
             });
         },
@@ -292,7 +282,7 @@ define([
         initMostViewedVideo: function() {
             var mostViewed = new Component();
 
-            mostViewed.endpoint = '/video/most-viewed.json';
+            mostViewed.endpoint = '/video/most-viewed.json?size=' + (config.page.contentType === 'Video' ? '6' : '4');
             mostViewed.fetch($('.js-video-components-container')[0], 'html');
         }
     };
@@ -300,7 +290,7 @@ define([
     var ready = function () {
         modules.initPlayer();
 
-        if(config.page.contentType === 'Video') {
+        if (config.isMedia) {
             modules.initMoreInSection();
             modules.initMostViewedVideo();
         }

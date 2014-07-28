@@ -1,4 +1,4 @@
-.content--video {
+.content--media {
 
     .byline,
     .content__dateline,
@@ -47,7 +47,7 @@
         ));
     }
 
-    .gu-video-wrapper {
+    .gu-media-wrapper {
         margin-bottom: 0;
     }
 
@@ -69,29 +69,61 @@
         overflow: visible; // opacity cuts borders off on chrome otherwise
     }
 
-    .content__headline:before {
-        content: '';
-        @include icon(video-icon);
-        @include background-size(auto 100%);
-        @include rem((
-            margin-right: $gs-gutter/5,
-            height: 20px !important,
-            width: 34px !important
-        ));
+    .content__headline {
+        &:before {
+            content: '';
+            @include background-size(auto 100%);
 
-        @include mq(mobileLandscape) {
             @include rem((
-                height: 25px !important,
-                width: 40px !important,
-                margin-right: $gs-gutter/2
+                height: 20px !important,
+                margin-right: $gs-gutter/3
             ));
+
+            @include mq(mobileLandscape) {
+                @include rem((
+                    height: 25px !important,
+                    margin-right: $gs-gutter/2
+                ));
+            }
+            @include mq(tablet) {
+                @include rem((
+                    height: 27px !important
+                ));
+            }
         }
-
-        @include mq(tablet) {
+        .content--media--audio &:before {
+            @include icon(volume-high-yellow);
             @include rem((
-                height: 27px !important,
-                width: 43px !important
+                width: 24px !important
             ));
+
+            @include mq(mobileLandscape) {
+                @include rem((
+                    width: 30px !important
+                ));
+            }
+            @include mq(tablet) {
+                @include rem((
+                    width: 33px !important
+                ));
+            }
+        }
+        .content--media--video &:before {
+            @include icon(video-icon);
+            @include rem((
+                width: 34px !important
+            ));
+
+            @include mq(mobileLandscape) {
+                @include rem((
+                    width: 40px !important
+                ));
+            }
+            @include mq(tablet) {
+                @include rem((
+                    width: 43px !important
+                ));
+            }
         }
     }
 
@@ -145,14 +177,23 @@
     }
 
     $video-most-viewed-container: 531px;
+    $audio-most-viewed-container: 376px;
 
     .content__main-column--video {
-        @include rem((
-            min-height: $video-most-viewed-container
-        ));
+        @include mq(rightCol) {
+            @include rem((
+                min-height: $video-most-viewed-container
+            ));
+        }
     }
-
-    .content__secondary-column--video {
+    .content__main-column--audio {
+        @include mq(rightCol) {
+            @include rem((
+                min-height: $audio-most-viewed-container
+            ));
+        }
+    }
+    .content__secondary-column--media {
         @include mq($to: rightCol) {
             display: block;
             position: relative;
@@ -165,10 +206,23 @@
 
         @include mq(rightCol) {
             @include rem((
-                padding-left: $gs-gutter/2,
-                height: $video-most-viewed-container
+                padding-left: $gs-gutter/2
             ));
             border-left: 1px solid $c-neutral2;
+        }
+    }
+    .content__secondary-column--video {
+        @include mq(rightCol) {
+            @include rem((
+                height: $video-most-viewed-container
+            ));
+        }
+    }
+    .content__secondary-column--audio {
+        @include mq(rightCol) {
+            @include rem((
+                height: $audio-most-viewed-container
+            ));
         }
     }
 }
@@ -343,12 +397,6 @@
         &:nth-child(-n+3) {
             border-right: 1px solid $c-neutral2;
         }
-
-        .video-item__headline {
-            @include rem ((
-                height: gs-height(2)
-            ));
-        }
     }
 
     @include mq($from: tablet, $to: wide) {
@@ -377,6 +425,16 @@
         display: block;
     }
 
+    .vjs-fullscreen & {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+
     @include mq($to: tablet) {
         .vjs-has-ended & {
             display: none;
@@ -396,6 +454,20 @@
     @include mq($from: leftCol, $to: wide) {
         @include rem((
             top: $gs-baseline*3.5
+        ));
+    }
+
+    .vjs-fullscreen & {
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        @include rem((
+            top: -1 * (gs-height(1) + $gs-baseline),
+            height: gs-height(5),
+            max-width: gs-span(11),
+            padding-bottom: $gs-baseline
         ));
     }
 }
