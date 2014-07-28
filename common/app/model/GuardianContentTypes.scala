@@ -21,5 +21,6 @@ object GuardianContentTypes {
   val INTERACTIVE = "Interactive"
   val GALLERY = "Gallery"
   val VIDEO = "Video"
+  val AUDIO = "Audio"
   val LIVEBLOG = "LiveBlog"
 }
