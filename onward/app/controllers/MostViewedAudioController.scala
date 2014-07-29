@@ -26,7 +26,7 @@ object MostViewedAudioController extends Controller with Logging with ExecutionC
       .pageSize(50)
       .response
     response.map { response =>
-      response.results.map(Audio(_)).sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(10)
+      response.results.map(Audio(_)).sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(6)
     }
 
   }
