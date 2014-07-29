@@ -32,7 +32,7 @@ trait Requests {
     lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase  "X-Gu-Management-Healthcheck")
   }
 
-  implicit class RichRequest[A](val request: Request[A]) {
+  implicit class RichRequest[A](val request: RequestHeader) {
     //This is a header reliably set by jQuery for AJAX requests used in facia-tool
     lazy val isXmlHttpRequest: Boolean = request.headers.get("X-Requested-With").exists(_ == "XMLHttpRequest")
   }
