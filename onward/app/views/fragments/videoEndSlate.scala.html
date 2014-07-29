@@ -5,25 +5,10 @@
     <div class="end-slate-container__header">
         <h3 class="end-slate-container__heading">@heading</h3>
     </div>
-    <ul class="u-cf u-unstyled end-slate end-slate--video items--media" data-link-name="end slate">
+    <ul class="u-cf u-unstyled end-slate end-slate--video items--media items--video" data-link-name="end slate">
         @videos.zipWithRowInfo.map{ case (video, row) =>
-            @item(video, row.rowNum)
+            @fragments.mediaItem(video, row.rowNum)
         }
     </ul>
 
 </div>
-
-@item(content: model.Video, index: Number) = {
-    <li class="item">
-        <div class="item__container">
-            <a class="item__action" href="@LinkTo{@content.url}" data-link-name="item @index">
-                @content.trailPicture(5, 3).map{ image =>
-                    <div class="item__img u-responsive-ratio">
-                        <img class="responsiveimg" src="@Item140.bestFor(image)" alt="" />
-                    </div>
-                }
-                <h4 class="item__headline">@content.videoLinkText</h4>
-            </a>
-        </div>
-    </li>
-}

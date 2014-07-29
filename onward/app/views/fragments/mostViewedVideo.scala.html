@@ -5,25 +5,10 @@
     <div class="most-viewed-container__header">
         <h3 class="most-viewed-container__heading">Popular videos</h3>
     </div>
-    <ul class="u-cf u-unstyled most-viewed--media most-viewed--video items--media" data-link-name="Most viewed video">
-        @for(video <- videos) {
-            @item(video)
+    <ul class="u-cf u-unstyled most-viewed--media most-viewed--video items--media items--video" data-link-name="Most viewed video">
+        @videos.zipWithRowInfo.map{ case (video, row) =>
+            @fragments.mediaItem(video, row.rowNum)
         }
     </ul>
 
 </div>
-
-@item(content: model.Video) = {
-    <li class="item">
-        <div class="item__container">
-            <a class="item__action" href="@LinkTo{@content.url}">
-                @content.trailPicture(5, 3).map{ image =>
-                    <div class="item__img u-responsive-ratio">
-                        <img class="responsiveimg" src="@Item140.bestFor(image)" alt="" />
-                    </div>
-                }
-                <h4 class="item__headline">@content.videoLinkText</h4>
-            </a>
-        </div>
-    </li>
-}
