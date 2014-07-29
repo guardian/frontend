@@ -1,9 +1,7 @@
 define([
-    'lodash/functions/debounce',
     'lodash/objects/values',
     'common/utils/config'
 ], function(
-    _debounce,
     _values,
     config
     ) {
