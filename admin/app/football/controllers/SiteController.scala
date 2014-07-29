@@ -12,7 +12,7 @@ import model.Cached
 
 object SiteController extends Controller with ExecutionContexts {
 
-  def index =AuthActions.AuthAction { implicit request =>
+  def index =AuthActions.AuthActionTest { implicit request =>
     Cached(60)(Ok(views.html.football.index()))
   }
 

@@ -7,7 +7,7 @@ import controllers.AuthLogging
 
 object AnalyticsConfidenceController extends Controller with Logging with AuthLogging {
 
-  def renderConfidence() = AuthActions.AuthAction { request =>
+  def renderConfidence() = AuthActions.AuthActionTest { request =>
     val omniture = CloudWatch.omnitureConfidence
     val ophan = CloudWatch.ophanConfidence
     val ratio = CloudWatch.ratioConfidence

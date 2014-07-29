@@ -64,13 +64,13 @@ object OAuthLoginController extends Controller with ExecutionContexts {
         case Some(token) =>
           GoogleAuth.validatedUserIdentity(config, token).map {
             userIdentity: UserIdentity =>
-              // We store the URL a user was trying to get to in the LOGIN_ORIGIN_KEY inAuthActions.AuthAction
+              // We store the URL a user was trying to get to in the LOGIN_ORIGIN_KEY inAuthActions.AuthActionTest
               // Redirect a user back there now if it exists
               val redirect = request.session.get(LOGIN_ORIGIN_KEY) match {
                 case Some(url) => Redirect(url)
                 case None => Redirect(routes.IndexController.index())
               }
-              // Store the JSON representation of the identity in the session - this is checked byAuthActions.AuthAction later
+              // Store the JSON representation of the identity in the session - this is checked byAuthActions.AuthActionTest later
               val sessionAdd: Seq[(String, String)] = Seq(
                 Option((UserIdentity.KEY, Json.toJson(userIdentity).toString())),
                 Option((Configuration.cookies.lastSeenKey, DateTime.now.toString()))

@@ -14,7 +14,7 @@ import org.joda.time.format.DateTimeFormat
 
 object PlayerController extends Controller with ExecutionContexts with GetPaClient {
 
-  def playerIndex =AuthActions.AuthAction.async { request =>
+  def playerIndex =AuthActions.AuthActionTest.async { request =>
     for {
       competitions <- client.competitions.map(PA.filterCompetitions)
       competitionTeams <- Future.traverse(competitions){comp => client.teams(comp.competitionId, comp.startDate, comp.endDate)}
@@ -24,7 +24,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     }
   }
 
-  def redirectToCard =AuthActions.AuthAction { request =>
+  def redirectToCard =AuthActions.AuthActionTest { request =>
     val submission = request.body.asFormUrlEncoded.get
     val playerCardType = submission.get("playerCardType").get.head
     val playerId = submission.get("player").get.head
@@ -39,7 +39,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     result
   }
 
-  def playerCardCompetition(cardType: String, playerId: String, teamId: String, competitionId: String) =AuthActions.AuthAction.async { implicit request =>
+  def playerCardCompetition(cardType: String, playerId: String, teamId: String, competitionId: String) =AuthActions.AuthActionTest.async { implicit request =>
     client.competitions.map(PA.filterCompetitions).flatMap { competitions =>
       competitions.find(_.competitionId == competitionId).fold(Future.successful(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))) { competition =>
         for {
@@ -54,7 +54,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     }
   }
 
-  def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String) =AuthActions.AuthAction.async { implicit request =>
+  def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String) =AuthActions.AuthActionTest.async { implicit request =>
     val startDate = LocalDate.parse(startDateStr, DateTimeFormat.forPattern("yyyyMMdd"))
     for {
       playerProfile <- client.playerProfile(playerId)
@@ -77,7 +77,7 @@ object PlayerController extends Controller with ExecutionContexts with GetPaClie
     }
   }
 
-  def squad(teamId: String) =AuthActions.AuthAction.async { implicit request =>
+  def squad(teamId: String) =AuthActions.AuthActionTest.async { implicit request =>
     for {
       squad <- client.squad(teamId)
     } yield {
