@@ -198,17 +198,17 @@
         &:before {
             @include icon(volume-high-yellow);
             @include rem((
-                    width: 24px !important
+                width: 24px !important
             ));
 
             @include mq(mobileLandscape) {
                 @include rem((
-                        width: 30px !important
+                    width: 30px !important
                 ));
             }
             @include mq(tablet) {
                 @include rem((
-                        width: 33px !important
+                    width: 33px !important
                 ));
             }
         }
@@ -220,17 +220,17 @@
         &:before {
             @include icon(video-icon);
             @include rem((
-                    width: 34px !important
+                width: 34px !important
             ));
 
             @include mq(mobileLandscape) {
                 @include rem((
-                        width: 40px !important
+                    width: 40px !important
                 ));
             }
             @include mq(tablet) {
                 @include rem((
-                        width: 43px !important
+                    width: 43px !important
                 ));
             }
         }
