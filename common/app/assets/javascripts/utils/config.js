@@ -45,7 +45,9 @@ define([
         dateFromSlug: function() {
             var s = config.page.pageId.match(/\d{4}\/\w{3}\/\d{2}/);
             return s ? s[0] : null;
-        }
+        },
+
+        isMedia: ['Video', 'Audio'].indexOf(config.page.contentType) > -1
 
     }, config);
 });

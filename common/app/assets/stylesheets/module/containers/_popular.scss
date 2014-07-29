@@ -26,3 +26,9 @@
         }
     }
 }
+
+.container--popular {
+    @include rem((
+        margin-top: $gs-baseline*2
+    ));
+}
