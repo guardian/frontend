@@ -457,6 +457,7 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
     }.sorted
   }
 
+  override lazy val headline: String = webTitle.stripSuffix(" - video").stripSuffix(" – video")
   override lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
   override lazy val mediaId: Option[String] = mainVideo.map(_.id)
 
@@ -477,7 +478,6 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
       case other => s"Source: $other"
     }
   ).flatten.mkString(", ")).filter(_.nonEmpty)
-  lazy val videoLinkText: String = webTitle.stripSuffix(" - video").stripSuffix(" – video")
 }
 
 object Video {
