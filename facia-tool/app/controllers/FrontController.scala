@@ -27,7 +27,7 @@ object FrontController extends Controller {
   def create = ExpiringActions.ExpiringAuthAction { request =>
     request.body.read[CreateFront] match {
       case Some(createFrontRequest) =>
-        val identity = UserIdentity.fromRequestHeader(request).get
+        val identity = UserIdentity.fromRequest(request).get
         val newCollectionId = UpdateManager.createFront(createFrontRequest, identity)
         PressAndNotify(Set(newCollectionId))
         Ok
@@ -39,7 +39,7 @@ object FrontController extends Controller {
   def update(frontId: String) = ExpiringActions.ExpiringAuthAction { request =>
     request.body.read[Front] match {
       case Some(front) =>
-        val identity = UserIdentity.fromRequestHeader(request).get
+        val identity = UserIdentity.fromRequest(request).get
         UpdateManager.updateFront(frontId, front, identity)
         Ok
 
