@@ -235,7 +235,7 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': '"Guardian Text Egyptian Web"',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff',
                             format: 'woff'
                         },
                         {
@@ -280,7 +280,7 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': '"Guardian Text Egyptian Web"',
-                            file: webfontsDir + 'hinting-off-latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.ttf',
+                            file: webfontsDir + 'hinting-off-original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         {
