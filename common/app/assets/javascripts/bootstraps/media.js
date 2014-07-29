@@ -272,8 +272,10 @@ define([
             endSlate.endpoint = modules.generateEndSlateUrl();
             endSlate.fetch(player.el(), 'html');
 
-            player.on('ended', function() {
-                bonzo(player.el()).addClass(endState);
+            player.one('video:content:play', function() {
+                player.on('ended', function () {
+                    bonzo(player.el()).addClass(endState);
+                });
             });
             player.on('playing', function() {
                 bonzo(player.el()).removeClass(endState);
