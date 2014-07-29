@@ -63,9 +63,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       renderFrontPress(path)
   }
 
+  // TODO! remove 1 sec cache. It was for hack day.
   def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
     frontJson.getAsJsValue(path).map{ json =>
-      Cached(60)(JsonComponent(FrontJsonLite.get(json)))
+      Cached(1)(JsonComponent(FrontJsonLite.get(json)))
     }
   }
 

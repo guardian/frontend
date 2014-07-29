@@ -222,3 +222,22 @@ $c-guardian-services-active-background: #2479c3;
     z-index: 2;
 }
 
+/* Post-header breaking news
+   ========================================================================== */
+
+#breaking-news {
+    @include box-sizing(border-box);
+    background-color: #ff3d00;
+    padding: 10px;
+    font-weight: bold;
+    border-top: 1px solid rgba(255, 255, 255, .3);
+    
+    a {
+        display: inline-block;
+        color: #ffffff; 
+    }
+
+    @include mq(mobileLandscape) {
+        padding: 10px 20px;
+    }
+}

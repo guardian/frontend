@@ -24,6 +24,7 @@ define([
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/navigation/navigation',
+    'common/modules/ui/breaking-news',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/ui/dropdowns',
@@ -72,6 +73,7 @@ define([
     Search,
     Navigation,
 
+    breakingNews,
     Tabs,
     Toggles,
     Dropdowns,
@@ -278,6 +280,14 @@ define([
             }
         },
 
+        displayBreakingNews: function (config) {
+            breakingNews(config);
+            // TODO! This was just for hack demo:
+            setInterval(function() {
+                breakingNews(config);
+            }, 2000);
+        },
+
         displayOnboardMessage: function (config) {
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
                 bean.on(document, 'click', '.js-site-message-close', function() {
@@ -442,6 +452,7 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.testCookie();
+            modules.displayBreakingNews(config);
             modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
@@ -465,7 +476,8 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
-            modules.initDiscussion();
+            // TODO! Uncomment this. It was just for hack day.
+            //modules.initDiscussion();
         }
         mediator.emit('page:common:ready', config, context);
     };
