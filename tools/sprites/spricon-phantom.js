@@ -45,12 +45,15 @@ var datacss = phantom.args[4];
 var cssbasepath = phantom.args[9];
 var generatesvg = phantom.args[10];
 
+var rootFontSize = 10;
+
 var sprite = require( "webpage" ).create();
     sprite.viewportSize = { width: 600, height: 1 };
     sprite.content = '<html><body><div id="container" style="overflow:auto;"></div></body></html>';
 
 // add a single reference to the sprite background
 pngcssrules.push("%i, .i { background-repeat: no-repeat; display: inline-block; }");
+pngcssrules.push(".svg .i { @include background-size(contain); }");
 
 
 // increment the current file index and process it
@@ -140,8 +143,14 @@ function processFile() {
 
                     }, svgdata);
 
-
-                    pngcssrules.push( "%" + cssprefix + filenamenoext + ", ." + cssprefix + filenamenoext + " { background-position: -" + coords.x + "px -" + coords.y + "px; width: " + coords.w + "px; height: " + coords.h + "px; }\n");
+                    pngcssrules.push( "%" + cssprefix + filenamenoext + ", " +
+                                      "." + cssprefix + filenamenoext + " { " +
+                                          "background-position: -" + coords.x + "px -" + coords.y + "px; " +
+                                          "width: " + coords.w + "px; " +
+                                          "width: " + coords.w / rootFontSize + "rem; " +
+                                          "height: " + coords.h + "px; " +
+                                          "height: " + coords.h / rootFontSize + "rem; " +
+                                      "}\n");
 
                   // process the next svg
                   nextFile();

@@ -43,9 +43,11 @@ $servicesToggleArrowSize: 5px;
         &:after {
             content: 'beta';
             position: absolute;
-            top: 48px;
-            left: 128px;
-            font-size: 13px;
+            @include rem((
+                top: 48px,
+                left: 128px,
+                font-size: 13px
+            ));
         }
     }
 }

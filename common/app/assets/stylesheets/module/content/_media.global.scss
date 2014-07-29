@@ -297,7 +297,6 @@
     &:before {
         content: '';
         @include icon(video-icon);
-        @include background-size(auto 100%);
         @include rem((
             margin-right: $gs-gutter/4,
             height: 12px !important,

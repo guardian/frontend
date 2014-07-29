@@ -42,7 +42,9 @@ $avatarSize: 44px;
     @include fs-textSans(2);
     position: absolute;
     right: 0;
-    top: $gs-baseline/2;
+    @include rem((
+        top: $gs-baseline/2
+    ));
     width: auto;
 }
 
@@ -53,7 +55,9 @@ $avatarSize: 44px;
         ));
 
         .d-discussion {
-            max-width: gs-span(11);
+            @include rem((
+                max-width: gs-span(11)
+            ));
         }
     }
     @include mq(wide) {
@@ -61,7 +65,9 @@ $avatarSize: 44px;
             margin-right: -($a-leftColWide-width + ($gs-gutter * 9))
         ));
         .d-discussion {
-            max-width: gs-span(12);
+            @include rem((
+                max-width: gs-span(12)
+            ));
         }
     }
 }
@@ -163,12 +169,16 @@ $avatarSize: 44px;
     }
 }
 .d-discussion__show-more {
-    padding-top: ($gs-baseline/3)*2;
     @include fs-textSans(4);
     position: relative;
-    line-height: 24px;
+    @include rem((
+        padding-top: ($gs-baseline/3)*2,
+        line-height: $gs-baseline*2
+    ));
 
-    &:hover span { text-decoration: underline; }
+    &:hover span {
+        text-decoration: underline;
+    }
 }
 .d-discussion__show-more-button {
     @include icon-button(24px, -9px);
@@ -184,11 +194,11 @@ $avatarSize: 44px;
     @include fs-textSans(4);
     @include rem((
         height: 40px,
-        line-height: 40px
+        line-height: 40px,
+        padding-left: 55px
     ));
     display: none;
     font-weight: bold;
-    padding-left: 55px;
     position: relative;
 
     .i-show-all-comments {
@@ -497,20 +507,26 @@ $avatarSize: 44px;
 .d-comment__recommend-button {
     @include icon-button(18px, -6px);
     background-color: $c-neutral4;
-    margin-right: 2px;
-    margin-bottom: -5px;
+    @include rem((
+        margin-right: 2px,
+        margin-bottom: -5px
+    ));
 
     @include mq(rightCol) {
         margin: 0;
         position: absolute;
         top: 1.4em;
         left: 50%;
-        margin-left: -9px;
+        @include rem((
+            margin-left: -9px
+        ));
     }
 }
 .d-comment__recommend-pulse {
-    width: 18px;
-    height: 18px;
+    @include rem((
+        width: 18px,
+        height: 18px
+    ));
     @include border-radius(18px);
     position: absolute;
     top: 0;
@@ -520,15 +536,15 @@ $avatarSize: 44px;
 .d-comment__recommend-count {
     @include fs-textSans(1);
     @include rem((
-        height: 16px
+        height: 16px,
+        min-width: 12px,
+        margin-bottom: -4px
     ));
     overflow: hidden;
     color: $c-neutral2;
     font-weight: bold;
     text-align: right;
-    min-width: 12px;
     display: inline-block;
-    margin-bottom: -4px;
 
     @include mq(rightCol) {
         margin-bottom: 0;
