@@ -5,7 +5,7 @@
 /* Configuration
    ========================================================================== */
 
-$c-navigation-base: #2479c3;
+$c-navigation-base: guss-colour(neutral-5);
 
 $navigation-height: $gs-row-height;
 
@@ -14,21 +14,21 @@ $navigation-toggler-width-full: 130px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
 
-$c-signposting-action: #ffffff;
+$c-signposting-action: $c-newsDefault;
 $c-signposting-background: $c-navigation-base;
 
 $c-top-navigation-action: #ffffff;
-$c-top-navigation-background: guss-colour(guardian-brand);
+$c-top-navigation-background: #00456e; // one-off colour for nav bg
 
-$c-local-navigation-action: #ffffff;
+$c-local-navigation-action: guss-colour(neutral-1);
 $c-local-navigation-background: $c-navigation-base;
 
 $c-global-navigation-background: $c-navigation-base;
 $c-global-navigation-title: #ffffff;
-$c-global-navigation-title-background: guss-colour(guardian-brand);
+$c-global-navigation-title-background: $c-top-navigation-background;
 $global-navigation-title-width: $a-leftCol-width + $gs-gutter;
 $global-navigation-title-width-wide: $a-leftColWide-width + $gs-gutter;
-$c-global-navigation-action: #ffffff;
+$c-global-navigation-action: guss-colour(neutral-1);
 $c-global-navigation-border: rgba(#ffffff, .3);
 
 $c-navigation-toggle-background: guss-colour(neutral-1);
@@ -155,7 +155,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         top: 0;
         left: 0;
         right: 0;
-        background: mix(guss-colour(guardian-brand), #ffffff, 80%);
+        background: #1a587d; // manual tint of $c-top-navigation-background
         @include rem((
             height: $navigation-height
         ));

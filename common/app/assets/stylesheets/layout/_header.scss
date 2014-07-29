@@ -9,9 +9,8 @@ $c-services-action: #ffffff;
     position: relative;
     z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050
 
-    @include mq(tablet) {
-        background: $c-neutral8;
-    }
+    background: $c-newsDefault;
+
     @include mq(wide) {
         .has-page-skin & .gs-container {
             @include rem((
@@ -68,7 +67,6 @@ $c-services-action: #ffffff;
 
     @include mq(tablet) {
         float: none;
-        background: $c-neutral8;
     }
 }
 .l-header-pre__inner {
