@@ -22,8 +22,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
 
   def collectionEditor(priority: String) = ExpiringActions.ExpiringAuthAction { request =>
     val identity = request.user
-    val avatarUrl: Option[String] = request.session.get("avatarUrl")
-    Cached(60) { Ok(views.html.collections(Configuration.environment.stage, priority, Option(identity), avatarUrl)) }
+    Cached(60) { Ok(views.html.collections(Configuration.environment.stage, priority, Option(identity))) }
   }
 
   def configEditor(priority: String) = ExpiringActions.ExpiringAuthAction { request =>

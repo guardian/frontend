@@ -1,4 +1,4 @@
-@(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None, avatarUrl: Option[String] = None)(content: Html)
+@(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None)(content: Html)
 
 <!DOCTYPE html>
 
@@ -48,7 +48,7 @@
                     editions: [@Html(Edition.all.map(_.id.toLowerCase).mkString("'","','", "'"))],
                     navSections: [@Html(FaciaToolConfiguration.sectionsFromNav.mkString("'", "', '", "'"))],
                     email: '@identity.map(_.email).getOrElse("")',
-                    avatarUrl: '@avatarUrl.getOrElse("")'
+                    avatarUrl: '@identity.map(_.avatarUrl).getOrElse("")'
                 }
             });
         </script>
