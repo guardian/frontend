@@ -2,6 +2,8 @@
    ========================================================================== */
 
 $servicesToggleArrowSize: 5px;
+$c-services-active-background: #2479c3;
+$c-services-action: #ffffff;
 
 .l-header {
     position: relative;
@@ -129,7 +131,7 @@ a.edition {
         text-decoration: none;
     }
 }
-$c-guardian-services-active-background: #2479c3;
+
 .guardian-services {
     @include fs-header(1);
     @include rem((
@@ -147,7 +149,7 @@ $c-guardian-services-active-background: #2479c3;
     display: block;
     text-decoration: none;
     margin: 0;
-    color: $c-neutral1;
+    color: $c-services-action;
     cursor: pointer;
     @include rem((
         line-height: $headerHeight
@@ -155,10 +157,10 @@ $c-guardian-services-active-background: #2479c3;
 }
 .guardian-services__item-more {
     position: relative;
-    background: $c-guardian-services-active-background;
+    background: $c-services-active-background;
 
     .guardian-services__action {
-        color: #ffffff;
+        color: $c-services-action;
     }
     .guardian-services__action__arrow {
         display: inline-block;
@@ -183,13 +185,13 @@ $c-guardian-services-active-background: #2479c3;
         }
 
         .guardian-services__action {
-            color: $c-neutral1;
+            color: $c-services-action;
         }
 
         .guardian-services__action__arrow {
             border-bottom: 0;
             @include rem((
-                border-top: $servicesToggleArrowSize solid $c-neutral1
+                border-top: $servicesToggleArrowSize solid $c-services-action
             ));
         }
     }
@@ -197,7 +199,7 @@ $c-guardian-services-active-background: #2479c3;
 .guardian-services__item--more-menu {
     @include box-sizing(border-box);
     position: absolute;
-    background: $c-guardian-services-active-background;
+    background: $c-services-active-background;
     margin: 0;
     padding: 0;
     right: 0;
