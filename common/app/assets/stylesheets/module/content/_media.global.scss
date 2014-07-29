@@ -91,40 +91,6 @@
                 ));
             }
         }
-        .content--media--audio &:before {
-            @include icon(volume-high-yellow);
-            @include rem((
-                width: 24px !important
-            ));
-
-            @include mq(mobileLandscape) {
-                @include rem((
-                    width: 30px !important
-                ));
-            }
-            @include mq(tablet) {
-                @include rem((
-                    width: 33px !important
-                ));
-            }
-        }
-        .content--media--video &:before {
-            @include icon(video-icon);
-            @include rem((
-                width: 34px !important
-            ));
-
-            @include mq(mobileLandscape) {
-                @include rem((
-                    width: 40px !important
-                ));
-            }
-            @include mq(tablet) {
-                @include rem((
-                    width: 43px !important
-                ));
-            }
-        }
     }
 
     .social-wrapper {
@@ -223,6 +189,50 @@
             @include rem((
                 height: $audio-most-viewed-container
             ));
+        }
+    }
+}
+
+.content--media--audio {
+    .content__headline {
+        &:before {
+            @include icon(volume-high-yellow);
+            @include rem((
+                width: 24px !important
+            ));
+
+            @include mq(mobileLandscape) {
+                @include rem((
+                    width: 30px !important
+                ));
+            }
+            @include mq(tablet) {
+                @include rem((
+                    width: 33px !important
+                ));
+            }
+        }
+    }
+}
+
+.content--media--video {
+    .content__headline {
+        &:before {
+            @include icon(video-icon);
+            @include rem((
+                width: 34px !important
+            ));
+
+            @include mq(mobileLandscape) {
+                @include rem((
+                    width: 40px !important
+                ));
+            }
+            @include mq(tablet) {
+                @include rem((
+                    width: 43px !important
+                ));
+            }
         }
     }
 }
