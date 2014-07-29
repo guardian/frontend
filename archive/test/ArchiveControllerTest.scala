@@ -54,13 +54,19 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
   it should "redirect century urls correctly when enabled" in Fake {
     val aCenturyUrl = "www.theguardian.com/century"
     CenturyRedirectionSwitch.switchOn()
-    controllers.ArchiveController.newCenturyUrl(aCenturyUrl) should be (Some("www.theguardian.com/centuryTbc"))
+    controllers.ArchiveController.newCenturyUrl(aCenturyUrl) should be (Some("gu.com/p/4vaex"))
   }
 
   it should "redirect century/decade urls correctly when enabled" in Fake {
     val aCenturyDecadeUrl = "www.theguardian.com/century/1899-1909"
     CenturyRedirectionSwitch.switchOn()
-    controllers.ArchiveController.newCenturyUrl(aCenturyDecadeUrl) should be (Some("www.theguardian.com/centuryTbc/decadeTbc"))
+    controllers.ArchiveController.newCenturyUrl(aCenturyDecadeUrl) should be (Some("gu.com/p/4vaex"))
+  }
+
+  it should "not redirect a random URL that contains the word century" in Fake {
+    val aRandomUrlWithCentury = "www.theguardian.com/discover-culture/2014/jul/22/mid-century-textiles-then-and-now"
+    CenturyRedirectionSwitch.switchOn()
+    controllers.ArchiveController.newCenturyUrl(aRandomUrlWithCentury) should be (None)
   }
 
   it should "not redirect century urls when disabled" in Fake {
