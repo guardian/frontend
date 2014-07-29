@@ -195,7 +195,7 @@
 
 .content--media--audio {
     .content__headline {
-        &:before 
+        &:before {
             @include icon(volume-high-yellow);
             @include rem((
                 width: 24px !important
