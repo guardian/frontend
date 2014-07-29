@@ -235,6 +235,18 @@ define([
 
             return mapping.build();
         },
+        abParam = function() {
+            var hchTest = ab.getParticipations().HighCommercialComponent;
+            if (hchTest) {
+                switch (hchTest.variant) {
+                    case 'control':
+                        return '1';
+                    case 'variant':
+                        return '2';
+                }
+            }
+            return '3';
+        },
         /**
          * Builds the appropriate page level targeting
          *
@@ -274,7 +286,7 @@ define([
                 a       : audienceScience.getSegments(),
                 at      : cookies.get('adtest') || '',
                 gdncrm  : userAdTargeting.getUserSegments(),
-                ab      : ab.makeOmnitureTag(),
+                ab      : abParam(),
                 co      : parseContributors(page.author)
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
