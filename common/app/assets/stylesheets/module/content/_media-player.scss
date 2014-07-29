@@ -503,9 +503,9 @@ $vjs-progress-inset-bottom: 4px;
     white-space: nowrap;
     @include fs-headline(2);
     position: absolute;
-    $height: get-line-height($fs-headlines, 1);
+    $height: get-line-height($fs-headlines, 2);
     @include rem((
-        height: $height * 1px,
+        height: $height,
         padding: $gs-baseline/2,
         top: ($height + $gs-baseline) * -1
     ));
