@@ -17,13 +17,13 @@ case class ArticleSteps(implicit driver: WebDriver) extends TestLogging with Mat
 
   def checkMostPopularDisplayedProperly(articlePage: ArticlePage) = {
     logger.step("Get most popular module and check that it is properly displayed")
-    articlePage.mostPopularModule.displayedLinks should not be empty
+    articlePage.mostPopularModule.displayedLinks(3).size should be (3)
     articlePage.mostPopularModule.displayedImages should not be empty
   }
 
   def checkMostRelatedContentDisplayedProperly(articlePage: ArticlePage) = {
     logger.step("Get related content module and check that it is properly displayed")
-    articlePage.relatedContentModule.displayedLinks should not be empty
+    articlePage.relatedContentModule.displayedLinks(3).size should be (3)
     articlePage.relatedContentModule.displayedImages should not be empty
   }
 
@@ -47,14 +47,14 @@ case class ArticleSteps(implicit driver: WebDriver) extends TestLogging with Mat
     logger.step("Check that bottom merchandising ad is displayed on the page")
     val bottomMerchandisingAd = articlePage.bottomMerchandisingAdModule
     bottomMerchandisingAd.adLabel.isDisplayed() should be (true)
-    bottomMerchandisingAd.displayedLinks should not be empty
+    bottomMerchandisingAd.displayedLinks() should not be empty
     bottomMerchandisingAd.displayedImages should not be empty
   }
 
   private def checkThatAdWithIFrameIsDisplayedProperly(adModule: AdvertiseModule) = {
     adModule.adLabel.isDisplayed should be(true)
     val adIFrame = adModule.advertiseIFrameModule
-    adIFrame.displayedLinks should not be empty
+    adIFrame.displayedLink.isDisplayed should be (true)
     adIFrame.displayedImages should not be empty
     
     //this is neccessary in order to switch back to the main frame

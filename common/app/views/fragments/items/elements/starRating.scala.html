@@ -1,9 +1,12 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
 @content.starRating.map { s =>
-    <span class="stars s-@s" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+    <span class="u-h" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
         <meta itemprop="worstRating" content="1" />
         <span itemprop="ratingValue">@s</span> /
         <span itemprop="bestRating">5</span> stars
     </span>
+    <div class="stars" role="presentation">
+        @List(1,2,3,4,5).map{ i =><i class="star__item @if(i <= s){i-star-golden}else{i-star-gray} i"></i>}
+    </div>
 }

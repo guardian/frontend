@@ -1,7 +1,7 @@
 package views.support
 
 import model.{Content, MetaData, ImageContainer, ImageAsset}
-import conf.Switches.{ImageServerSwitch, ParameterlessImagesSwitch, SeoOptimisedContentImageSwitch}
+import conf.Switches.{ImageServerSwitch, SeoOptimisedContentImageSwitch}
 import java.net.URI
 import conf.Configuration
 
@@ -23,11 +23,8 @@ case class Profile(width: Option[Int] = None, height: Option[Int] = None, compre
   def altTextFor(image: ImageContainer): Option[String] =
     elementFor(image).flatMap(_.altText)
 
-  def resizeString = if (ParameterlessImagesSwitch.isSwitchedOn) {
-    s"/w-${toResizeString(width)}/h-${toResizeString(height)}/q-$compression"
-  } else {
-    s"width=${toResizeString(width)}&height=${toResizeString(height)}&quality=$compression"
-  }
+  def resizeString = s"/w-${toResizeString(width)}/h-${toResizeString(height)}/q-$compression"
+
 
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
@@ -80,21 +77,13 @@ object ImgSrc {
     val isSupportedImage = uri.getHost == "static.guim.co.uk" && !uri.getPath.toLowerCase.endsWith(".gif")
 
     if (ImageServerSwitch.isSwitchedOn && isSupportedImage)
-      if (ParameterlessImagesSwitch.isSwitchedOn) {
-        s"$imageHost${imageType.resizeString}${uri.getPath}"
-      } else {
-        s"$imageHost${uri.getPath}?${imageType.resizeString}"
-      }
+      s"$imageHost${imageType.resizeString}${uri.getPath}"
     else
       url
   }
 
   object Imager extends Profile(None, None) {
-    override def resizeString = if (ParameterlessImagesSwitch.isSwitchedOn) {
-      "/w-{width}/h--/q-95"
-    } else {
-      s"width={width}&height=-&quality=$compression"
-    }
+    override def resizeString = "/w-{width}/h--/q-95"
   }
 
   // always, and I mean ALWAYS think carefully about the size image you use

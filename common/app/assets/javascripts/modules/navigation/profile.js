@@ -61,11 +61,14 @@ define([
             $content = bonzo(this.dom.content),
             $popup = bonzo(this.dom.popup);
 
-        $container.removeClass('js-hidden');
-
         if (user) {
-            $content.text(user.displayName);
-            $container.addClass('is-signed-in');
+            // Run this code only if we haven't already inserted
+            // the username in the header
+            if (!$container.hasClass('is-signed-in')) {
+                $content.text(user.displayName);
+                $container.addClass('is-signed-in');
+            }
+
             $popup.html(
                 '<ul class="nav nav--columns" data-link-name="Sub Sections">'+
                     this.menuListItem('Comment activity', this.config.url+'/user/id/'+ user.id)+
