@@ -27,6 +27,16 @@
     .item__meta {
         display: none;
     }
+    .item__title:before {
+        content: '';
+        @include icon(video-icon);
+        @include background-size(auto 100%);
+        @include rem((
+            margin-right: $gs-gutter/4,
+            height: 12px !important,
+            width: 18px !important
+        ));
+    }
     .facia-slice__item:before {
         border-left-color: lighten($c-neutral1, 16%);
     }
@@ -67,6 +77,16 @@
     }
     @include mq(rightCol) {
         .facia-slice-wrapper--position-1 {
+            .facia-slice__item:first-child {
+                .item__title {
+                    @include rem((
+                        min-height: $gs-baseline*4
+                    ));
+                    @include fs-headline(4, true);
+                }
+            }
+        }
+        .facia-slice-wrapper--position-1 {
             .facia-slice__item:nth-child(2),
             .facia-slice__item:nth-child(3) {
                 .item__standfirst {
@@ -95,6 +115,44 @@
 
             + .container__banding {
                 background-color: lighten($c-neutral1, 8%);
+            }
+        }
+    }
+    .facia-container--layout-content & {
+        .facia-container__inner {
+            @include rem((
+                margin-bottom: $gs-baseline*2
+            ));
+        }
+    }
+}
+
+.item--video {
+    .item__title:before {
+        content: '';
+        @include icon(video-icon-black);
+        @include background-size(auto 100%);
+        @include rem((
+            margin-right: $gs-gutter/10,
+            height: 12px !important,
+            width: 18px !important
+        ));
+    }
+}
+
+.facia-slice__item--content-type-video:first-child {
+    .item--video {
+        .item__title:before {
+            @include rem((
+                height: 14px !important,
+                width: 21px !important
+            ));
+
+            @include mq(rightCol) {
+                @include rem((
+                    height: 16px !important,
+                    width: 24px !important
+                ));
             }
         }
     }

@@ -7,10 +7,10 @@
 }
 
 .content--media {
-
     background-color: $c-neutral1;
     color: $c-neutral7;
     @include rem((
+        padding-bottom: $gs-baseline*2,
         padding-top: $gs-baseline/2
     ));
 
@@ -20,6 +20,11 @@
 
     .byline {
         word-break: break-word;
+
+        a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
     }
 
     .byline,
