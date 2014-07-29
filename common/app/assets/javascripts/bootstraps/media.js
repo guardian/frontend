@@ -213,8 +213,6 @@ define([
 
                         deferToAnalytics(function () {
 
-                            modules.initOmnitureTracking(player);
-                            modules.initOphanTracking(player, mediaId);
 
                             // preroll for videos only
                             if (config.page.contentType === 'Video') {
@@ -224,20 +222,23 @@ define([
                                     timeout: 3000
                                 });
 
+                                modules.initOmnitureTracking(player);
+                                modules.initOphanTracking(player, mediaId);
                                 modules.bindPrerollEvents(player);
 
                                 player.vast({
                                     url: modules.getVastUrl()
                                 });
+
+                                if(/desktop|wide/.test(detect.getBreakpoint())) {
+                                    modules.initEndSlate(player);
+                                }
                             } else {
                                 vjs.playlist({
                                     mediaType: 'audio'
                                 });
 
                                 modules.bindContentEvents(player);
-                            }
-                            if(/desktop|wide/.test(detect.getBreakpoint())) {
-                                modules.initEndSlate(player);
                             }
                         });
                     });
