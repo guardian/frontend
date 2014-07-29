@@ -342,7 +342,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object admin {
-    val oauthCredentials: Option[OAuthCredentials] =
+    lazy val oauthCredentials: Option[OAuthCredentials] =
       for {
         oauthClientId <- configuration.getStringProperty("admin.oauth.clientid")
         oauthSecret <- configuration.getStringProperty("admin.oauth.secret")
