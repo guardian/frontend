@@ -227,7 +227,7 @@
 
 /* Most viewed container
    ========================================================================== */
-.most-viewed-video-container {
+.most-viewed-container--media {
     @include rem((
         padding-top: $gs-baseline*2
     ));
@@ -238,7 +238,7 @@
     }
 }
 
-.most-viewed-video-container__header {
+.most-viewed-container__header {
     @include rem((
         height: gs-height(1) + $gs-baseline
     ));
@@ -374,9 +374,13 @@
     }
 }
 
+
+/* End slate
+   ========================================================================== */
+
 .video-items--end-slate {
     @include rem((
-        margin-bottom: $gs-baseline*2
+            margin-bottom: $gs-baseline*2
     ));
 
     .video-item {
@@ -392,14 +396,12 @@
         .video-item__headline {
             @include text-clamp(4, get-line-height($fs-headlines, 1));
             @include rem((
-                height: get-line-height($fs-headlines, 1) * 4
+                    height: get-line-height($fs-headlines, 1) * 4
             ));
         }
     }
 }
 
-/* End slate
-   ========================================================================== */
 .video-end-slate {
     display: none;
     position: relative;
