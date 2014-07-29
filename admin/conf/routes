@@ -6,10 +6,10 @@
 GET         /_healthcheck                 controllers.HealthCheck.healthcheck()
 
 # authentication endpoints
-GET         /login                        controllers.admin.Login.login
-POST        /login                        controllers.admin.Login.loginPost
-GET         /openIDCallback               controllers.admin.Login.openIDCallback
-GET         /logout                       controllers.admin.Login.logout
+GET         /login                        controllers.admin.OAuthLoginController.login
+POST        /login                        controllers.admin.OAuthLoginController.loginAction
+GET         /oauth2callback               controllers.admin.OAuthLoginController.oauth2Callback
+GET         /logout                       controllers.admin.OAuthLoginController.logout
 
 # static files
 GET         /public/*file                 controllers.Assets.at(path="/public", file)
