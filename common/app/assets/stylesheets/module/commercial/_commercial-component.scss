@@ -166,6 +166,7 @@ $commercial-cta-diameter: (
         
         .commercial__title {
             display: none;
+            float: none;
         }
         @include mq(tablet) {
             .commercial__title {
