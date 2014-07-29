@@ -15,11 +15,11 @@ object RedirectController  extends Controller with Logging {
 
   val redirectForm = Form(mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply))
 
-  def redirect() = Authenticated { request =>
+  def redirect() = AuthActions.AuthActionTest { request =>
     Ok(views.html.redirects(redirectForm))
   }
 
-  def redirectPost() = Authenticated { implicit request =>
+  def redirectPost() = AuthActions.AuthActionTest { implicit request =>
 
     redirectForm.bindFromRequest().get.trim match {
       case PageRedirect(from, "") if from.nonEmpty  => Redirects.remove(from)

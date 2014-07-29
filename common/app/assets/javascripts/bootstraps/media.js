@@ -192,14 +192,10 @@ define([
                 $('.js-gu-media').each(function (el) {
                     var mediaId = el.getAttribute('data-media-id'),
                         vjs = videojs(el, {
-                        controls: true,
-                        autoplay: false,
-                        preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
-                    });
-
-                    vjs.playlist({
-                        mediaType: 'audio'
-                    });
+                            controls: true,
+                            autoplay: false,
+                            preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
+                        });
 
                     vjs.ready(function () {
                         var player = this;
@@ -217,20 +213,32 @@ define([
 
                         deferToAnalytics(function () {
 
-                            modules.initOmnitureTracking(player);
-                            modules.initOphanTracking(player, mediaId);
-                            modules.bindPrerollEvents(player);
 
-                            // Init plugins
-                            player.adCountDown();
-                            player.ads({
-                                timeout: 3000
-                            });
-                            player.vast({
-                                url: modules.getVastUrl()
-                            });
-                            if(/desktop|wide/.test(detect.getBreakpoint())) {
-                                modules.initEndSlate(player);
+                            // preroll for videos only
+                            if (config.page.contentType === 'Video') {
+                                // Init plugins
+                                player.adCountDown();
+                                player.ads({
+                                    timeout: 3000
+                                });
+
+                                modules.initOmnitureTracking(player);
+                                modules.initOphanTracking(player, mediaId);
+                                modules.bindPrerollEvents(player);
+
+                                player.vast({
+                                    url: modules.getVastUrl()
+                                });
+
+                                if(/desktop|wide/.test(detect.getBreakpoint())) {
+                                    modules.initEndSlate(player);
+                                }
+                            } else {
+                                vjs.playlist({
+                                    mediaType: 'audio'
+                                });
+
+                                modules.bindContentEvents(player);
                             }
                         });
                     });
@@ -264,8 +272,10 @@ define([
             endSlate.endpoint = modules.generateEndSlateUrl();
             endSlate.fetch(player.el(), 'html');
 
-            player.on('ended', function() {
-                bonzo(player.el()).addClass(endState);
+            player.one('video:content:play', function() {
+                player.on('ended', function () {
+                    bonzo(player.el()).addClass(endState);
+                });
             });
             player.on('playing', function() {
                 bonzo(player.el()).removeClass(endState);
@@ -282,7 +292,7 @@ define([
         initMostViewedVideo: function() {
             var mostViewed = new Component();
 
-            mostViewed.endpoint = '/video/most-viewed.json?size=' + (config.page.contentType === 'Video' ? '6' : '4');
+            mostViewed.endpoint = '/video/most-viewed.json';
             mostViewed.fetch($('.js-video-components-container')[0], 'html');
         }
     };

@@ -20,6 +20,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
+  lazy val internalContentCode: String = delegate.safeFields("internalContentCode")
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   lazy val webUrl: String = delegate.webUrl
@@ -430,6 +431,8 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 
 class Audio(content: ApiContentWithMeta) extends Media(content) {
 
+  lazy val body: String = delegate.safeFields.getOrElse("body", "")
+
   override lazy val encodings: Seq[Encoding] = {
     audioAssets.toList.collect {
       case audio: AudioAsset => Encoding(audio.url.getOrElse(""), audio.mimeType.getOrElse(""))
@@ -456,6 +459,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
       case video: VideoAsset => Encoding(video.url.getOrElse(""), video.mimeType.getOrElse(""))
     }.sorted
   }
+
+  override lazy val hasClassicVersion = false
 
   override lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
   override lazy val mediaId: Option[String] = mainVideo.map(_.id)

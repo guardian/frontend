@@ -7,12 +7,14 @@
             <div class="top-bar">
                 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                     <div class="top-bar__item">
-                        <div class="js-profile-nav js-hidden">
+                        <div class="js-profile-nav">
                             <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
                                class="control control--profile">
-                                <span class="control__icon">
-                                    <i class="i i-profile control--active__hide"></i>
-                                    <i class="i i-profile-active control--active__show"></i>
+                                <span class="control__icon-wrapper">
+                                    <span class="control__icon">
+                                        <i class="i i-profile control--active__hide"></i>
+                                        <i class="i i-profile-active control--active__show"></i>
+                                    </span>
                                 </span>
                                 <span class="js-profile-info control__info">Sign in</span>
                             </a>
@@ -32,7 +34,7 @@
             </a>
 
             @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                <div class="nav-popup nav-popup--profile nav-popup--profile-docked-left js-profile-nav-popup is-off"></div>
+                <div class="nav-popup nav-popup--profile js-profile-nav-popup is-off"></div>
             }
         </div>
     </div>

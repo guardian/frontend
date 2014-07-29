@@ -2,11 +2,11 @@ package com.gu.integration.test.steps
 
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
-
 import com.gu.automation.support.TestLogging
 import com.gu.integration.test.util.PageLoader._
 import com.gu.integration.test.util.ElementLoader._
 import com.gu.integration.test.pages.article.LiveBlogPage
+import com.gu.integration.test.util.WebElementEnhancer._
 
 case class LiveBlogSteps(implicit driver: WebDriver) extends TestLogging with Matchers {
 

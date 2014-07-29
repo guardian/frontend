@@ -7,7 +7,7 @@ import tools.{ChartFormat, CloudWatch}
 import ChartFormat._
 
 object FastlyController extends Controller with Logging with AuthLogging {
-  def renderFastly() = Authenticated { request =>
+  def renderFastly() =AuthActions.AuthActionTest { request =>
 
     val errors = CloudWatch.fastlyErrors.map(_.withFormat(SingleLineRed))
     val statistics = CloudWatch.fastlyHitMissStatistics.map(_.withFormat(DoubleLineBlueRed))
