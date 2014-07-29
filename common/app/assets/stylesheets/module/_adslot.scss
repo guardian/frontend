@@ -358,6 +358,17 @@
         border-bottom-width: 0;
         border-top: 1px dotted $c-neutral5;
     }
+    // magic numbers, height of the ad badge
+    &.ad-slot--spbadge {
+        @include rem((
+            min-height: 135px
+        ));
+    }
+    &.ad-slot--adbadge {
+        @include rem((
+            min-height: 155px
+        ));
+    }
 }
 .ad-slot--paid-for-badge--live-blog {
     @include mq(rightCol) {
@@ -397,6 +408,7 @@
         padding: 0;
         margin: 0;
         float: left;
+        min-height: 0;
         @include rem((
             margin-top: 4px
         ));
@@ -437,6 +449,25 @@
             @include rem((
                 margin-right: gs-span(1)
             ));
+        }
+    }
+}
+.facia-container--sponsored .container:first-child,
+.facia-container--advertisement-feature .container:first-child,
+.container--sponsored,
+.container--advertisement-feature {
+    .container__header + .container__body {
+        @include rem((
+            margin-top: 104px
+        ));
+
+        @include mq(tablet) {
+            @include rem((
+                margin-top: 78px
+            ));
+        }
+        @include mq(faciaLeftCol) {
+            margin-top: 0;
         }
     }
 }

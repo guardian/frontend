@@ -13,34 +13,34 @@ object DashboardController extends Controller with Logging with AuthLogging {
 
   val stage = Configuration.environment.stage.toUpperCase
 
-  def renderDashboard() = Authenticated { request =>
+  def renderDashboard() = AuthActions.AuthActionTest { request =>
     val latency = CloudWatch.fullStackLatency.map(_.withFormat(ChartFormat.SingleLineGreen))
     val charts = (latency ++ CloudWatch.requestOkFullStack).groupBy(_.name).flatMap(_._2).toSeq
     NoCache(Ok(views.html.lineCharts("PROD", charts)))
   }
 
-  def renderErrors() = Authenticated { request =>
+  def renderErrors() = AuthActions.AuthActionTest { request =>
     NoCache(Ok(views.html.lineCharts("PROD", Seq(HttpErrors.global4XX, HttpErrors.global5XX.withFormat(ChartFormat.SingleLineRed)))))
   }
 
-  def render4XX() = Authenticated { request =>
+  def render4XX() = AuthActions.AuthActionTest { request =>
     NoCache(Ok(views.html.lineCharts("PROD", HttpErrors.notFound)))
   }
 
-  def render5XX() = Authenticated { request =>
+  def render5XX() = AuthActions.AuthActionTest { request =>
     NoCache(Ok(views.html.lineCharts("PROD", HttpErrors.errors.map(_.withFormat(ChartFormat.SingleLineRed)))))
   }
 
-  def renderGooglebot404s() = Authenticated { request =>
+  def renderGooglebot404s() = AuthActions.AuthActionTest { request =>
     NoCache(Ok(views.html.lineCharts("PROD", HttpErrors.googlebot404s, Some("GoogleBot 404s"))))
   }
 
-  def renderMemory() = Authenticated{ request =>
+  def renderMemory() = AuthActions.AuthActionTest{ request =>
     val metrics = MemoryMetrics.memory.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
     NoCache(Ok(views.html.lineCharts(stage, metrics)))
   }
 
-  def renderAssets() = Authenticated{ request =>
+  def renderAssets() = AuthActions.AuthActionTest{ request =>
 
     val metrics = AssetMetrics.assets
     NoCache(Ok(views.html.staticAssets(stage, metrics)))

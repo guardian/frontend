@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.googleauth.UserIdentity
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import net.liftweb.json.{ Serialization, NoTypeHints }
 import net.liftweb.json.Serialization.{ read, write }
@@ -35,10 +36,10 @@ class AuthenticatedRequest(val identity: Identity, request: Request[AnyContent])
 
 trait AuthLogging {
   self: Logging =>
-  def log(msg: String, request: Request[AnyContent]) {
+  def log[U](msg: String, request: Request[AnyContent]) {
     request match {
       case auth: AuthenticatedRequest => log.info(auth.identity.email + ": " + msg)
-      case auth: com.gu.googleauth.AuthenticatedRequest[AnyContent] if auth.isAuthenticated => log.info(auth.identity.toString + ": " + msg)
+      case auth: Security.AuthenticatedRequest[AnyContent, U] => log.info(auth.user + ": " + msg)
       case _ => throw new IllegalStateException("Expected an authenticated request")
     }
   }

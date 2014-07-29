@@ -8,7 +8,7 @@ import model.NoCache
 
 object FootballTroubleshooterController extends Controller with Logging with AuthLogging {
 
-  def renderFootballTroubleshooter() = Authenticated { implicit request =>
+  def renderFootballTroubleshooter() = AuthActions.AuthActionTest { implicit request =>
     NoCache(Ok(views.html.footballTroubleshooter(Configuration.environment.stage)))
   }
 }
