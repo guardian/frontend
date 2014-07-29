@@ -12,7 +12,8 @@ define([
     'lodash/functions/throttle',
     'bean',
     'bonzo',
-    'common/modules/component'
+    'common/modules/component',
+    'common/modules/analytics/beacon'
 ], function(
     $,
     ajax,
@@ -26,7 +27,8 @@ define([
     _throttle,
     bean,
     bonzo,
-    Component
+    Component,
+    beacon
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint());
@@ -68,6 +70,22 @@ define([
 
         initOmnitureTracking: function(player) {
             new OmnitureMedia(player).init();
+        },
+
+        bindDiagnosticsEvents: function(player) {
+            player.on('video:preroll:play', function(){
+                beacon.fire('/count/vps.gif');
+            });
+            player.on('video:preroll:end', function(){
+                beacon.fire('/count/vpe.gif');
+            });
+            player.on('video:content:play', function(){
+                beacon.fire('/count/vs.gif');
+            });
+            player.on('video:content:end', function(){
+                beacon.fire('/count/ve.gif');
+            });
+
         },
 
         bindPrerollEvents: function(player) {
@@ -222,6 +240,7 @@ define([
                             modules.initOmnitureTracking(player);
                             modules.initOphanTracking(player, mediaId);
                             modules.bindPrerollEvents(player);
+                            modules.bindDiagnosticsEvents(player);
 
                             // Init plugins
                             player.adCountDown();
