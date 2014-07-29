@@ -1,9 +1,9 @@
 /* Global header and navigation
    ========================================================================== */
 
-$services-toggle-arrow-size: 4px;
-$c-services-active-background: #2479c3;
-$c-services-action: #ffffff;
+$guardian-services-toggle-arrow-size: 4px;
+$c-guardian-services-active-background: #2479c3;
+$c-guardian-services-action: #ffffff;
 
 .l-header {
     position: relative;
@@ -147,7 +147,7 @@ a.edition {
     display: block;
     text-decoration: none;
     margin: 0;
-    color: $c-services-action;
+    color: $c-guardian-services-action;
     cursor: pointer;
     @include rem((
         line-height: $headerHeight
@@ -155,10 +155,10 @@ a.edition {
 }
 .guardian-services__item-more {
     position: relative;
-    background: $c-services-active-background;
+    background: $c-guardian-services-active-background;
 
     .guardian-services__action {
-        color: $c-services-action;
+        color: $c-guardian-services-action;
     }
     .guardian-services__action__arrow {
         display: inline-block;
@@ -168,9 +168,9 @@ a.edition {
         border-top: 0;
         @include rem((
             margin: 2px,
-            border-left: $services-toggle-arrow-size solid transparent,
-            border-right: $services-toggle-arrow-size solid transparent,
-            border-bottom: $services-toggle-arrow-size solid #ffffff
+            border-left: $guardian-services-toggle-arrow-size solid transparent,
+            border-right: $guardian-services-toggle-arrow-size solid transparent,
+            border-bottom: $guardian-services-toggle-arrow-size solid #ffffff
         ));
     }
 
@@ -183,13 +183,13 @@ a.edition {
         }
 
         .guardian-services__action {
-            color: $c-services-action;
+            color: $c-guardian-services-action;
         }
 
         .guardian-services__action__arrow {
             border-bottom: 0;
             @include rem((
-                border-top: $services-toggle-arrow-size solid $c-services-action
+                border-top: $guardian-services-toggle-arrow-size solid $c-guardian-services-action
             ));
         }
     }
@@ -197,7 +197,7 @@ a.edition {
 .guardian-services__item--more-menu {
     @include box-sizing(border-box);
     position: absolute;
-    background: $c-services-active-background;
+    background: $c-guardian-services-active-background;
     margin: 0;
     padding: 0;
     right: 0;
