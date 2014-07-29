@@ -458,6 +458,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
     }.sorted
   }
 
+  override lazy val hasClassicVersion = false
+
   override lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
   override lazy val mediaId: Option[String] = mainVideo.map(_.id)
 

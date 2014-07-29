@@ -15,6 +15,9 @@ trait MetaData extends Tags {
   def description: Option[String] = None
   def rssPath: Option[String] = None
 
+  // i.e. show the link back to the desktop site
+  def hasClassicVersion: Boolean = true
+
   def title: Option[String] = None
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
