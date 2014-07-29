@@ -27,7 +27,7 @@ object CollectionController extends Controller {
   def create = ExpiringActions.ExpiringAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
-        val identity = request.identity.get
+        val identity = request.user
         val collectionId = UpdateManager.addCollection(frontIds, collection, identity)
         PressAndNotify(Set(collectionId))
         Ok(Json.toJson(CreateCollectionResponse(collectionId)))
@@ -39,7 +39,7 @@ object CollectionController extends Controller {
   def update(collectionId: String) = ExpiringActions.ExpiringAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
-        val identity = request.identity.get
+        val identity = request.user
         UpdateManager.updateCollection(collectionId, frontIds, collection, identity)
         PressAndNotify(Set(collectionId))
         Ok
