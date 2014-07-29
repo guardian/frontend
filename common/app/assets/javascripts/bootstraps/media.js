@@ -197,9 +197,11 @@ define([
                         preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
                     });
 
-                    vjs.playlist({
-                        mediaType: 'audio'
-                    });
+                    if (config.page.contentType === 'Audio') {
+                        vjs.playlist({
+                            mediaType: 'audio'
+                        });
+                    }
 
                     vjs.ready(function () {
                         var player = this;
