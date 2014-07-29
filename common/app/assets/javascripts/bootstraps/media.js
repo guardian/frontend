@@ -197,12 +197,6 @@ define([
                             preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
                         });
 
-                    if (config.page.contentType === 'Audio') {
-                        vjs.playlist({
-                            mediaType: 'audio'
-                        });
-                    }
-
                     vjs.ready(function () {
                         var player = this;
 
@@ -222,18 +216,24 @@ define([
                             modules.initOmnitureTracking(player);
                             modules.initOphanTracking(player, mediaId);
 
-                            // Init plugins
-                            player.adCountDown();
-                            player.ads({
-                                timeout: 3000
-                            });
                             // preroll for videos only
                             if (config.page.contentType === 'Video') {
+                                // Init plugins
+                                player.adCountDown();
+                                player.ads({
+                                    timeout: 3000
+                                });
+
                                 modules.bindPrerollEvents(player);
+
                                 player.vast({
                                     url: modules.getVastUrl()
                                 });
                             } else {
+                                vjs.playlist({
+                                    mediaType: 'audio'
+                                });
+
                                 modules.bindContentEvents(player);
                             }
                             if(/desktop|wide/.test(detect.getBreakpoint())) {
