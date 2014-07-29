@@ -41,7 +41,7 @@ object Frontend extends Build with Prototypes {
 
       "org.xerial.snappy" % "snappy-java" % "1.0.5.1",
 
-      "com.gu" %% "play-googleauth" % "0.1.5-SNAPSHOT",
+      "com.gu" %% "play-googleauth" % "0.1.55-SNAPSHOT",
 
       filters,
       ws
