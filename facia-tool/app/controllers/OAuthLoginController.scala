@@ -64,20 +64,17 @@ object OAuthLoginController extends Controller with ExecutionContexts {
               .flashing("error" -> "Anti forgery token missing in session")
             )
           case Some(token) =>
-            GoogleAuth.executeGoogleAuth(config, token).map {
-              googleAuthResult: GoogleAuthResult =>
+            GoogleAuth.validatedUserIdentity(config, token).map { userIdentity: UserIdentity =>
               // We store the URL a user was trying to get to in the LOGIN_ORIGIN_KEY in AuthAction
               // Redirect a user back there now if it exists
-                val identity: UserIdentity = googleAuthResult.userIdentity
                 val redirect = request.session.get(LOGIN_ORIGIN_KEY) match {
                   case Some(url) => Redirect(url)
                   case None => Redirect(routes.FaciaToolController.priorities())
                 }
                 // Store the JSON representation of the identity in the session - this is checked by AuthAction later
                 val sessionAdd: Seq[(String, String)] = Seq(
-                  Option((UserIdentity.KEY, Json.toJson(identity).toString())),
-                  Option((Configuration.cookies.lastSeenKey, DateTime.now.toString())),
-                  googleAuthResult.userInfo.picture.map("avatarUrl" -> _)
+                  Option((UserIdentity.KEY, Json.toJson(userIdentity).toString())),
+                  Option((Configuration.cookies.lastSeenKey, DateTime.now.toString()))
                 ).flatten
                 redirect
                   .addingToSession(sessionAdd: _*)
