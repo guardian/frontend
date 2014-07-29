@@ -28,10 +28,8 @@ object OAuthLoginController extends Controller with ExecutionContexts {
 
   // this is the only place we use LoginAuthAction - to prevent authentication redirect loops
   def login = Action { request =>
-    googleAuthConfig.map { _ =>
-      val error = request.flash.get("error")
-      Ok(views.html.auth.login(error, "Test"))
-    }.getOrElse(forbiddenNoCredentials)
+    val error = request.flash.get("error")
+    Ok(views.html.auth.login(error, "Test"))
   }
 
   /*
