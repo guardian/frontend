@@ -11,6 +11,7 @@
 
 <form id="adunitstoapprove" action="/commercialtools/adunits/toapprove" method="POST">
     <h4>Ad units for: @dfpAccount</h4>
+
     <div class="well">
         @for(adunit <- adunits) {
         <div class="row-fluid">
@@ -22,6 +23,11 @@
             </fieldset>
         </div>
         }
+    </div>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-default" id="select-all-adunits" >Select All</button>
+        <button type="button" class="btn btn-default" id="deselect-all-adunits" >None</button>
     </div>
 
     <input class="btn btn-large btn-success" type="submit" value="Approve">
