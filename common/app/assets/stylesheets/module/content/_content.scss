@@ -16,8 +16,8 @@
 .content-footer .gs-container {
     // scoped style for now so this only applies to refactored pages
     // this padding has historically been added to all child elements
-    // taking it off child elements and moving it here for DRY.   
-    // the intention is to move this to the global .gs-container definition 
+    // taking it off child elements and moving it here for DRY.
+    // the intention is to move this to the global .gs-container definition
     // which requires the padding to be removed from all child elements
     @include box-sizing(border-box);
     @include rem((
@@ -137,11 +137,6 @@
         margin-top: $gs-baseline,
         margin-bottom: $gs-baseline
     ));
-}
-
-.content__keywords--more-tags {
-    vertical-align: bottom;
-    display: inline-block;
 }
 
 .content__section {
