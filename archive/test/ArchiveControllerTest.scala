@@ -4,6 +4,7 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
+import conf.Switches.CenturyRedirectionSwitch
 
 class ArchiveControllerTest extends FlatSpec with Matchers {
 
@@ -48,6 +49,30 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
 
     val location = controllers.ArchiveController.lowercase("www.theguardian.com/Football/News_Story/0,1563,1655638,00.html").head.header.headers("Location")
     location should be ("http://www.theguardian.com/football/News_Story/0,1563,1655638,00.html")
+  }
+
+  it should "redirect century urls correctly when enabled" in Fake {
+    val aCenturyUrl = "www.theguardian.com/century"
+    CenturyRedirectionSwitch.switchOn()
+    controllers.ArchiveController.newCenturyUrl(aCenturyUrl) should be (Some("www.theguardian.com/centuryTbc"))
+  }
+
+  it should "redirect century/decade urls correctly when enabled" in Fake {
+    val aCenturyDecadeUrl = "www.theguardian.com/century/1899-1909"
+    CenturyRedirectionSwitch.switchOn()
+    controllers.ArchiveController.newCenturyUrl(aCenturyDecadeUrl) should be (Some("www.theguardian.com/centuryTbc/decadeTbc"))
+  }
+
+  it should "not redirect century urls when disabled" in Fake {
+    val aCenturyUrl = "www.theguardian.com/century"
+    CenturyRedirectionSwitch.switchOff()
+    controllers.ArchiveController.newCenturyUrl(aCenturyUrl) should be (None)
+  }
+
+  it should "not redirect century/decade urls when disabled" in Fake {
+    val aCenturyDecadeUrl = "www.theguardian.com/century/1899-1909"
+    CenturyRedirectionSwitch.switchOff()
+    controllers.ArchiveController.newCenturyUrl(aCenturyDecadeUrl) should be (None)
   }
 
 }

@@ -6,6 +6,7 @@ import services.{Archive, DynamoDB, Googlebot404Count}
 import java.net.URLDecoder
 import model.{NoCache, Cached}
 import scala.concurrent.Future.successful
+import conf.Switches.CenturyRedirectionSwitch
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
  
@@ -69,6 +70,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     isEncoded(path).map(url => successful(Redirect(s"http://$url", 301)))
     .getOrElse(lookupPath(path)
       .map{ _.orElse(redirectGallery(path))
+        .orElse(redirectCentury(path))
         .orElse(lowercase(path))
         .getOrElse{
           log.info(s"Not Found (404): $path")
@@ -108,4 +110,34 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     logDestination(path, "gallery", url)
     Cached(300)(Redirect(s"http://$url", 301))
   }
+
+  private def redirectCentury(path: String) = newCenturyUrl(path).map { url =>
+    logDestination(path, "century", url)
+    Cached(300)(Redirect(s"http://$url", 301))
+  }
+
+  def newCenturyUrl(path: String): Option[String] = {
+    if (CenturyRedirectionSwitch.isSwitchedOn) {
+        val centuryDecadeUrlEx = """www.theguardian.com(\/century)(\/\d{4}-\d{4})(\/)?$""".r
+        val centuryUrlEx = """www.theguardian.com(\/century)(\/)?$""".r
+
+        val newCenturyFront = "centuryTbc"
+        val newDecadeArticle = "decadeTbc"
+
+        path match {
+          case centuryDecadeUrlEx(centuryPath, centuryDecade, _) if centuryPath.nonEmpty && centuryDecade.nonEmpty => {
+            Some(s"www.theguardian.com/$newCenturyFront/$newDecadeArticle")
+          }
+          case centuryUrlEx(centuryPath, _) if centuryPath.nonEmpty => {
+            Some(s"www.theguardian.com/$newCenturyFront")
+          }
+          case _ => {
+            None
+          }
+        }
+      } else {
+        None
+    }
+  }
+
 }

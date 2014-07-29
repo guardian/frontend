@@ -438,6 +438,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 8, 29)
   )
 
+  val CenturyRedirectionSwitch = Switch("Feature Switches", "redirect-century-pages",
+    "If switched on, we redirect /century and /century/yyyy-yyyy to valid (non-R1) endpoints",
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -511,7 +516,8 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
-    SeoBlockGooglebotFromJSPathsSwitch
+    SeoBlockGooglebotFromJSPathsSwitch,
+    CenturyRedirectionSwitch
   )
 
   val httpSwitches: List[Switch] = List(
