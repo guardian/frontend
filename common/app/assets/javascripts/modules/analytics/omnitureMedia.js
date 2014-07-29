@@ -1,9 +1,9 @@
 define([
-    'lodash/functions/throttle',
+    'lodash/functions/debounce',
     'lodash/objects/values',
     'common/utils/config'
 ], function(
-    throttle,
+    _debounce,
     _values,
     config
     ) {
@@ -95,33 +95,41 @@ define([
         var lastDurationEvent,
             durationEventTimer;
 
-        this.sendDurationEvent = function(completedSegment) {
-            // this sends both duration and completed segment events simultaneously
-
-            var evts = [];
-
-            if (durationEventTimer) { // if duration timer is running then add the duration event
-                var now = new Date(),
-                    delta = (now - lastDurationEvent) / 1000.0,
-                    deltaSeconds = Math.round(delta);
-                lastDurationEvent = now;
-                if (deltaSeconds > 2) { // stops event spam when seeking and pause/playing
-                    evts.push(events.duration + '=' + deltaSeconds);
-                }
+        this.getDurationWatched = function() { // get the duration watched since this function was last called
+            var durationWatched = 0,
+                now = new Date(),
+                delta = (now - lastDurationEvent) / 1000.0;
+            if (durationEventTimer && contentStarted && delta > 1) {
+                durationWatched = Math.round(delta);
             }
+            lastDurationEvent = now;
+            return durationWatched;
+        };
 
-            if (completedSegment) { // if we completed a segment then add the segment completed events
-                evts.push(events.segment); // omniture segment completed event (uses eVar48)
-                s.eVar48 = completedSegment.omnitureName;
-                evts.push(completedSegment.event); // custom quartile completed event
-            } else { // track current segment if we didn't complete it
-                s.eVar48 = this.getSegmentInfo().omnitureName;
+        this.baseDurationEvent = function() {
+            var evts = [],
+                durationWatched = this.getDurationWatched();
+            if (durationWatched) {
+                evts.push(events.duration + '=' + durationWatched);
             }
+            return evts;
+        };
 
+        this.sendSegment = function(segment) {
+            var evts = this.baseDurationEvent();
+            evts.push(events.segment); // omniture segment completed event (uses eVar48 below)
+            s.eVar48 = segment.omnitureName;
+            evts.push(segment.event); // custom quartile completed event
+            this.sendEvent(evts.join(','));
+            s.eVar48 = undefined;
+        };
+
+        this.sendDurationEvent = function() {
+            var evts = this.baseDurationEvent();
+            s.eVar48 = this.getSegmentInfo().omnitureName;
             if (evts) {
                 this.sendEvent(evts.join(','));
             }
-
             s.eVar48 = undefined;
         };
 
@@ -146,8 +154,6 @@ define([
 
             player.on('play', this.play.bind(this));
             player.on('pause', this.stopDurationEventTimer.bind(this));
-            player.on('seeking', this.stopDurationEventTimer.bind(this));
-            player.on('seeked', this.startDurationEventTimer.bind(this));
 
             player.one('adsready', this.sendNamedEvent.bind(this, 'preroll:request', true));
             player.one('video:preroll:play', this.sendNamedEvent.bind(this, 'preroll:play', true));
@@ -158,10 +164,10 @@ define([
                 self.startDurationEventTimer();
             });
 
-            player.one('video:play:25', this.sendDurationEvent.bind(this, this.getSegmentInfo(0)));
-            player.one('video:play:50', this.sendDurationEvent.bind(this, this.getSegmentInfo(1)));
-            player.one('video:play:75', this.sendDurationEvent.bind(this, this.getSegmentInfo(2)));
-            player.one('video:content:end', this.sendDurationEvent.bind(this, this.getSegmentInfo(3)));
+            player.one('video:play:25', this.sendSegment.bind(this, this.getSegmentInfo(0)));
+            player.one('video:play:50', this.sendSegment.bind(this, this.getSegmentInfo(1)));
+            player.one('video:play:75', this.sendSegment.bind(this, this.getSegmentInfo(2)));
+            player.one('video:content:end', this.sendSegment.bind(this, this.getSegmentInfo(3)));
         };
     }
     return OmnitureMedia;
