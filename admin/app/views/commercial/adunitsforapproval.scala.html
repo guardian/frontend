@@ -1,4 +1,4 @@
-@(env: String, dfpAccount: String, adunits: Seq[dfp.GuAdUnit], totalToApprove: Int)
+@(env: String, dfpAccount: String, adunits: Seq[dfp.GuAdUnit], totalToApprove: Int)(implicit flash: Flash)
 @import tools.DfpLink
 @import tools.SiteLink
 
@@ -6,12 +6,26 @@
 
 <link rel="stylesheet" type="text/css" href="@routes.Assets.at(" css/commercial.css")">
 
+@if(flash.get("success").isDefined) {
+<div class="alert alert-success" role="alert">@flash.get("success").get</div>
+}
+@if(flash.get("failure").isDefined) {
+<div class="alert alert-danger" role="alert">@flash.get("failure").get</div>
+}
+
+
 <h1>Next Gen Ad Units for approval</h1>
 <p>The following ad units have been submitted to DFP and require approval before they are recorded by DFP.</p>
 
 <form id="adunitstoapprove" action="/commercialtools/adunits/toapprove" method="POST">
     <h4>Ad units for: @dfpAccount</h4>
     <p>Displaying @adunits.size out of @totalToApprove to approve.</p>
+
+    <div class="btn-group">
+        <button type="button" class="btn btn-default select-all-adunits" >Select All</button>
+        <button type="button" class="btn btn-default deselect-all-adunits" >None</button>
+    </div>
+
     <div class="well">
         @for(adunit <- adunits) {
         <div class="row-fluid">
@@ -26,8 +40,8 @@
     </div>
 
     <div class="btn-group">
-        <button type="button" class="btn btn-default" id="select-all-adunits" >Select All</button>
-        <button type="button" class="btn btn-default" id="deselect-all-adunits" >None</button>
+        <button type="button" class="btn btn-default select-all-adunits" >Select All</button>
+        <button type="button" class="btn btn-default deselect-all-adunits" >None</button>
     </div>
 
     <input class="btn btn-large btn-success" type="submit" value="Approve">

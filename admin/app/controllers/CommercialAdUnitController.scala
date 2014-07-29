@@ -2,16 +2,11 @@ package controllers.admin
 
 import play.api.mvc.Controller
 import common.Logging
-import model.{AdReports, NoCache}
+import model.NoCache
 import controllers.AuthLogging
 import conf.Configuration
-import tools.Store
-import play.api.libs.json.Json
-import dfp.{DfpDataHydrator, SponsorshipReport, Sponsorship}
-import implicits.Dates
-import org.joda.time.DateTime
-import ophan.SurgingContentAgent
-import scala.util.{Failure, Success, Try}
+import dfp.{DfpDataHydrator}
+import scala.util.{Failure, Success}
 
 object CommercialAdUnitController extends Controller with Logging with AuthLogging {
 
@@ -27,8 +22,11 @@ object CommercialAdUnitController extends Controller with Logging with AuthLoggi
 
     val result = DfpDataHydrator.approveTheseAdUnits(adUnitIds)
     result match {
-      case Success(message) => NoCache(Ok(message))
-      case Failure(e) => NoCache(InternalServerError(e.getMessage))
+      case Success(message) => Redirect(routes.CommercialAdUnitController.renderToApprove).flashing(
+        "success" -> s"$message")
+
+      case Failure(e) => Redirect(routes.CommercialAdUnitController.renderToApprove).flashing(
+        "failure" -> s"$e")
     }
   }
 }

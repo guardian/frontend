@@ -5,7 +5,7 @@ define([
 ], function ($, bean) {
 
     function initialise() {
-        $("#select-all-adunits").each(function (elem) {
+        $(".select-all-adunits").each(function (elem) {
             bean.on(elem, "click", function () {
                 $(".status").each(function (inner) {
                     inner.checked = true;
@@ -13,7 +13,7 @@ define([
             })
         });
 
-        $("#deselect-all-adunits").each(function (elem) {
+        $(".deselect-all-adunits").each(function (elem) {
             bean.on(elem, "click", function () {
                 $(".status").each(function (inner) {
                     inner.checked = false;
