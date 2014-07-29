@@ -138,6 +138,12 @@
             width: 18px !important
         ));
     }
+
+    .l-row--background-features & {
+        .item__title:before {
+            @include icon(video-icon);
+        }
+    }
 }
 
 .facia-slice__item--content-type-video:first-child {
