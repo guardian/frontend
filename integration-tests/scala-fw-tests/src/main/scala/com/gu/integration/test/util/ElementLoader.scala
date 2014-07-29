@@ -107,7 +107,7 @@ object ElementLoader extends TestLogging {
    *  was proven to be a bit flaky. So calling this method, before calling is displayed, will make sure the elements are loaded and
    *  visible
    */
-  def waitUntil[T](expectedCondition: ExpectedCondition[T], timeoutInSeconds: Int = 2)(implicit driver: WebDriver): Boolean = {
+  def waitUntil[T](expectedCondition: ExpectedCondition[T], timeoutInSeconds: Int = 3)(implicit driver: WebDriver): Boolean = {
     try {
       new WebDriverWait(driver, timeoutInSeconds).until(expectedCondition)
     } catch {
