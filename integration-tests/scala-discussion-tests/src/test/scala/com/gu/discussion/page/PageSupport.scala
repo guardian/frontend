@@ -5,8 +5,6 @@ import org.openqa.selenium.By._
 import org.openqa.selenium.{WebDriver}
 import org.openqa.selenium.support.ui.{ExpectedCondition}
 
-
-/** Created by glockett.  */
 class PageSupport(implicit driver: WebDriver) {
 
   private def commentRootById(commentId: String) = driver.findElement(id(s"$commentId"))
