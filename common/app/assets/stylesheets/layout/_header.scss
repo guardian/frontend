@@ -1,7 +1,7 @@
 /* Global header and navigation
    ========================================================================== */
 
-$servicesToggleArrowSize: 5px;
+$services-toggle-arrow-size: 5px;
 $c-services-active-background: #2479c3;
 $c-services-action: #ffffff;
 
@@ -170,9 +170,9 @@ a.edition {
         border-top: 0;
         @include rem((
             margin: 2px,
-            border-left: $servicesToggleArrowSize solid transparent,
-            border-right: $servicesToggleArrowSize solid transparent,
-            border-bottom: $servicesToggleArrowSize solid #ffffff
+            border-left: $services-toggle-arrow-size solid transparent,
+            border-right: $services-toggle-arrow-size solid transparent,
+            border-bottom: $services-toggle-arrow-size solid #ffffff
         ));
     }
 
@@ -191,7 +191,7 @@ a.edition {
         .guardian-services__action__arrow {
             border-bottom: 0;
             @include rem((
-                border-top: $servicesToggleArrowSize solid $c-services-action
+                border-top: $services-toggle-arrow-size solid $c-services-action
             ));
         }
     }
