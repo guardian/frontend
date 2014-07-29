@@ -2,18 +2,18 @@ package controllers
 
 import play.api.mvc.{Action, Controller}
 import common.ExecutionContexts
-import com.gu.googleauth.{GoogleAuthResult, UserIdentity, GoogleAuth, GoogleAuthConfig}
+import com.gu.googleauth.{UserIdentity, GoogleAuth, GoogleAuthConfig}
 import scala.concurrent.Future
 import play.api.libs.json.Json
 import conf.Configuration
-import org.joda.time.DateTime
+import org.joda.time.{Duration, DateTime}
 import play.Play
-import scala.concurrent.duration._
+
 
 object OAuthLoginController extends Controller with ExecutionContexts {
   import play.api.Play.current
 
-  val maxAuthAge: Long = if (Play.isDev) 10.minutes.toSeconds else 0
+  val maxAuthAge: Duration = if (Play.isDev) Duration.standardMinutes(10) else Duration.standardMinutes(0)
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "antiForgeryToken"
   val forbiddenNoCredentials = Forbidden("You do not have OAuth credentials set")
@@ -24,7 +24,7 @@ object OAuthLoginController extends Controller with ExecutionContexts {
         cred.oauthCallback,     // The redirect URL Google send users back to (must be the same as
                                 // that configured in the developer console)
         Some("guardian.co.uk"), // Google App domain to restrict login
-        Some(0)
+        Some(maxAuthAge)
       )
   }
 
