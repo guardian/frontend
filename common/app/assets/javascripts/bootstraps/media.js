@@ -286,7 +286,7 @@ define([
                 images.upgrade(parentEl);
             });
         },
-        initMostViewedVideo: function() {
+        initMostViewedMedia: function() {
             var mostViewed = new Component();
 
             mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
@@ -299,7 +299,7 @@ define([
 
         if (config.isMedia) {
             modules.initMoreInSection();
-            modules.initMostViewedVideo();
+            modules.initMostViewedMedia();
         }
     };
 
