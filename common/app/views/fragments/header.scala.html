@@ -83,59 +83,6 @@ to apply any necessary changes to non-shared code there too.
         </div>
     </div>
 
-    @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-    <script>
-    @*
-        (function(isModern) {
-            function getCookieValue(name) {
-                var cookieVals = [],
-                    nameEq = name + '=',
-                    cookies = document.cookie.split(';');
-
-                cookies.forEach(function(cookie) {
-                    while (cookie.charAt(0) === ' ') {
-                        cookie = cookie.substring(1, cookie.length);
-                    }
-
-                    if (cookie.indexOf(nameEq) === 0) {
-                        cookieVals.push(cookie.substring(nameEq.length, cookie.length));
-                    }
-                });
-
-                if (cookieVals.length > 0) {
-                    return cookieVals[0];
-                } else {
-                    return null;
-                }
-            }
-
-            function decodeBase64(str) {
-                return decodeURIComponent(escape(atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
-            };
-
-            function getUserDisplayNameFromCookie() {
-                var cookieData = getCookieValue('GU_U'),
-                userData = cookieData ? JSON.parse(decodeBase64(cookieData.split('.')[0])) : null;
-
-                if (userData) {
-                    return userData[2];
-                } else {
-                    return null;
-                }
-            };
-
-            var userDisplayName = getUserDisplayNameFromCookie();
-
-            if (userDisplayName !== null) {
-                document.querySelector('.js-profile-info').innerHTML = userDisplayName;
-            }
-        })(guardian.isModernBrowser);
-    *@
-
-    (function(b){function d(a){var b=[],c=a+"=";document.cookie.split(";").forEach(function(a){for(;" "===a.charAt(0);)a=a.substring(1,a.length);0===a.indexOf(c)&&b.push(a.substring(c.length,a.length))});return 0<b.length?b[0]:null}function e(a){return decodeURIComponent(escape(atob(a.replace(/-/g,"+").replace(/_/g,"/").replace(/,/g,"="))))}b=function(){var a=d("GU_U");return(a=a?JSON.parse(e(a.split(".")[0])):null)?a[2]:null}();null!==b&&(document.querySelector(".js-profile-info").innerHTML=b)})(guardian.isModernBrowser);
-    </script>
-    }
-
     <div class="l-header-main">
         <div class="gs-container">
             <span itemscope itemtype="http://schema.org/Organization">
