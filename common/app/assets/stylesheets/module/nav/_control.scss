@@ -73,8 +73,8 @@
    ========================================================================== */
 
 .control__icon-wrapper {
-    float: left;
     @extend %icon-holder-circle;
+    float: left;
 }
 
 .control__icon {
