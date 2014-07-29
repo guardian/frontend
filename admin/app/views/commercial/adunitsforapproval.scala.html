@@ -1,4 +1,4 @@
-@(env: String, dfpAccount: String, adunits: Seq[dfp.GuAdUnit])
+@(env: String, dfpAccount: String, adunits: Seq[dfp.GuAdUnit], totalToApprove: Int)
 @import tools.DfpLink
 @import tools.SiteLink
 
@@ -11,13 +11,13 @@
 
 <form id="adunitstoapprove" action="/commercialtools/adunits/toapprove" method="POST">
     <h4>Ad units for: @dfpAccount</h4>
-
+    <p>Displaying @adunits.size out of @totalToApprove to approve.</p>
     <div class="well">
         @for(adunit <- adunits) {
         <div class="row-fluid">
             <fieldset>
                 <legend>
-                    <input class="status" id="switch-@adunit.id" name="@adunit.id" type="checkbox" value="true"/>
+                    <input class="status" id="switch-@adunit.id" name="@adunit.id" type="checkbox" value="true" checked />
                     <label for="switch-@adunit.id">@adunit.path.mkString("/")</label>
                 </legend>
             </fieldset>

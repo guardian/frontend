@@ -150,7 +150,7 @@ object DfpDataHydrator extends Logging {
         GuAdUnit(adUnit.getId, fullpath.tail)
       }
 
-      allUnits.filter(au => au.path.last == "ng")
+      allUnits.filter(au => au.path.last == "ng").sortBy(_.id).distinct
   }
 
   def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = dfpSession.map {

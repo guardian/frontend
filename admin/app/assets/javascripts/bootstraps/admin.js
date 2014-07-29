@@ -2,6 +2,7 @@ require([
     'domReady',
     'common/utils/ajax',
     'bootstraps/abtests',
+    'bootstraps/adunitapproval',
     'bootstraps/browserstats',
     'bootstraps/radiator',
     'bootstraps/commercial'
@@ -9,6 +10,7 @@ require([
     domReady,
     ajax,
     abTests,
+    adunitapproval,
     browserstats,
     radiator,
     commercial
@@ -38,6 +40,10 @@ require([
 
             case '/radiator':
                 radiator.init();
+                break;
+
+            case '/commercialtools/adunits/toapprove':
+                adunitapproval.init();
                 break;
         }
     });

@@ -16,9 +16,10 @@ import scala.util.{Failure, Success, Try}
 object CommercialAdUnitController extends Controller with Logging with AuthLogging {
 
   def renderToApprove = Authenticated { implicit request =>
-    val adunits = DfpDataHydrator.loadAdUnitsForApproval(Configuration.commercial.dfpAdUnitRoot).sortBy(_.id)
+    val adunits = DfpDataHydrator.loadAdUnitsForApproval(Configuration.commercial.dfpAdUnitRoot)
 
-    NoCache(Ok(views.html.commercial.adunitsforapproval(Configuration.environment.stage, Configuration.commercial.dfpAccountId, adunits)))
+    NoCache(Ok(views.html.commercial.adunitsforapproval(Configuration.environment.stage,
+      Configuration.commercial.dfpAccountId, adunits.take(200), adunits.size)))
   }
 
   def approve = Authenticated { implicit request =>
