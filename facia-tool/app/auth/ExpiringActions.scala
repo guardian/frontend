@@ -1,7 +1,7 @@
 package auth
 
 import common.ExecutionContexts
-import com.gu.googleauth.{AuthenticatedRequest, Actions}
+import com.gu.googleauth.{UserIdentity, AuthenticatedRequest, Actions}
 import play.api.mvc._
 import controllers.routes
 import scala.concurrent.Future
@@ -14,9 +14,9 @@ object ExpiringActions extends implicits.Dates with implicits.Requests with Exec
   object AuthActions extends Actions {
     val loginTarget: Call = routes.OAuthLoginController.login()
 
-    override def sendForAuth[A](request:Request[A]) =
+    override def sendForAuth[A](request:RequestHeader) =
       if (request.isXmlHttpRequest)
-        Future.successful(Forbidden.withNewSession)
+        Forbidden.withNewSession
       else
         super.sendForAuth(request)
   }
@@ -24,7 +24,7 @@ object ExpiringActions extends implicits.Dates with implicits.Requests with Exec
   private def withinAllowedTime(session: Session): Boolean = session.get(Configuration.cookies.lastSeenKey).map(new DateTime(_)).exists(_.age < Configuration.cookies.sessionExpiryTime)
 
   object ExpiringAuthAction {
-    def async(f: AuthenticatedRequest[AnyContent] => Future[Result]) = AuthActions.AuthAction.async { request =>
+    def async(f: Security.AuthenticatedRequest[AnyContent, UserIdentity] => Future[Result]) = AuthActions.AuthAction.async { request =>
       if (withinAllowedTime(request.session)) {
         f(request).map(_.withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)))
       }
@@ -37,6 +37,6 @@ object ExpiringActions extends implicits.Dates with implicits.Requests with Exec
       }
     }
 
-    def apply(f: AuthenticatedRequest[AnyContent] => Result) = async(request => Future.successful(f(request)))
+    def apply(f: Security.AuthenticatedRequest[AnyContent, UserIdentity] => Result) = async(request => Future.successful(f(request)))
   }
 }
