@@ -7,7 +7,50 @@ So to reiterate the requirements for these tests:
 * They shall run as part of the normal build chain and prevent a deployment to production if the tests fails
 * There shall be a workaround to deploy a fix to prod, despite the tests failing
 
-Workflow
+
+How to write a test (quick)
+===========================
+This section will quickly go through the steps to write a new test. It is strongly recommended to read this entire readme, as it contains a lot of useful information, however if you need to write a test quickly. Follow these steps:
+
+* Put your test class under ```src/test/scala/com.gu.integration.test.features``` (or extend an existing class if you find a suitable one)
+* Write your test using XXXSteps and Page Objects (see below sections for details)
+* Add ```data-test-id``` attributes to elements which your test are targetting. (see ```ElementLoader``` class for helper methods)
+* Do a dry run of your test on a local dev-build instance to make sure it works
+* Create a pull request and merge it into master, using existing process for code change
+* Deploy your changes to PROD, using existing process. This is to make sure that the data-test-id attributes are deployed in prod
+* Once in prod, run a dry run of your test locally but this time target PROD and not local dev-build
+* Once you are confident that your test is working, against PROD, add ScalaTest tag ```ReadyForProd``` like this:
+```
+scenarioWeb("making sure that X is working", ReadyForProd) {
+...
+```
+* Create a pull request and merge into master. The test will now be picked up by the TeamCity build process
+
+Running the Tests
+=================
+To run the tests you can either load the project in your favourite IDE as an SBT project and then simply run it as a ScalaTest class or you can run it in command line by simply exeuting: ```sbt test```
+
+If you want to run the same test suite which TeamCity runs then execute: ```sbt ciTest```. This will only run the tests with tag ```ReadyForProd``` and will not fail the build if the tests fail.
+
+Configuring the tests
+=====================
+Configuration is done in two places.
+* ```src/main/resources/project.conf``` - This is a file which is checked in Git and contain various default values and are normally not changed.
+* ```/local.conf``` (meaning at the root of this project) - This file contains values which are personal for you, such as user name and passwords, and will not be checked into Git as it is in .gitignore. These have an override mechanism for overriding property values found in project.conf. As this is a framework configuration then please see [Guardian Scala Test Automation FW](https://github.com/guardian/scala-automation) for detailed info for how this works.
+* 
+An example of local.conf can look like this:
+```
+"environment" : "browserStack" //this will make the values in the browserstack object to be picked up
+"testBaseUrl" : "http://localhost:9000" //this will target a local dev-build instance. Comment out to target prod
+"sauceLabs":{
+	"webDriverRemoteUrl" : "http://guardian-shahin:XXX@ondemand.saucelabs.com:80/wd/hub"
+}
+"browserStack":{
+	"webDriverRemoteUrl" : "http://shahinkordasti1:XXX@hub.browserstack.com/wd/hub"
+}
+```
+
+Workflow (detailed)
 ===========
 The fundamental difficulty with tests running against live (post deploy) in a build chain of artifacts that are going to live (pre deploy) is that the tests are not verifying the artifacts, which it is build together with, but rather against artifacts which are already in production.
 
@@ -40,7 +83,7 @@ Then when doing a successive build, with the muted test, it will then be success
 
 This will allow you to deploy the fix to prod. Remember though to unmute it, using similar procedure, once the fix has been applied so the test  can then be (hopefully) successfuly run.
 
-Writing tests
+Writing tests (detailed)
 =================
 
 Writing new tests is fairly simple and follow these steps:
@@ -75,23 +118,3 @@ scenarioWeb("checking most popular module and related content exist on article p
 ```
 * ONLY do this if you are sure that this test does not depend on things that is likely to change in production. Not doing that is a sure way to create flaky tests.
 * NEVER have dependencies between test cases. Each test should be completely independent of each other as they may run in any order and in parallel.
-
-Running the Tests
-=================
-To run the tests you can either load the project in your favourite IDE as an SBT project and then simply run it as a ScalaTest class or you can run it in command line by simply exeuting: ```sbt test```
-
-If you want to run the same test suite which TeamCity runs then execute: ```sbt ciTest```. This will only run the tests with tag ReadyForProd and will not fail the build if the tests fail.
-
-Configuring the tests
-=====================
-Configuration is done in two places.
-* src/main/resources/project.conf - This is a file which is checked in Git and contain various default values and are normally not changed.
-* /local.conf (meaning at the root of this project) - This file contains values which are personal for you, such as user name and passwords, and will not be checked into Git as it is in .gitignore. These have an override mechanism for overriding property values found in project.conf. As this is a framework configuration then please see [Guardian Scala Test Automation FW](https://github.com/guardian/scala-automation) for detailed info for how this works.
-An example can look like this:
-```
-"environment" : "sauceLabs" //this will make sure that the sauceLabs object below is picked up. Change to local to not use sauceLabs
-"testBaseUrl" : "http://localhost:9000" //This is the root url of the application and should ONLY be found in configuration
-"sauceLabs":{
-	"webDriverRemoteUrl" : "http://guardian-shahin:XXXd@ondemand.saucelabs.com:80/wd/hub"
-}
-```
