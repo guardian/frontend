@@ -2,7 +2,7 @@
    ========================================================================== */
 
 $guardian-services-toggle-arrow-size: 4px;
-$c-guardian-services-active-background: #2479c3;
+$c-guardian-services-active-background: #ffffff;
 $c-guardian-services-action: #ffffff;
 
 .l-header {
@@ -139,7 +139,7 @@ a.edition {
 .guardian-services__action,
 .guardian-services__action:focus,
 .guardian-services__action:hover {
-    @include f-headline;
+    @include fs-bodyHeading(1);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -155,10 +155,25 @@ a.edition {
 }
 .guardian-services__item-more {
     position: relative;
-    background: $c-guardian-services-active-background;
 
     .guardian-services__action {
         color: $c-guardian-services-action;
+
+        &:after {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-top: 0;
+            position: absolute;
+            @include rem((
+                border-left: $guardian-services-toggle-arrow-size solid transparent,
+                border-right: $guardian-services-toggle-arrow-size solid transparent,
+                border-bottom: $guardian-services-toggle-arrow-size solid #ffffff,
+                top: $headerHeight - $guardian-services-toggle-arrow-size,
+                left: 50%
+            ));
+        }
     }
     .guardian-services__action__arrow {
         display: inline-block;
@@ -184,6 +199,10 @@ a.edition {
 
         .guardian-services__action {
             color: $c-guardian-services-action;
+
+            &:after {
+                display: none
+            }
         }
 
         .guardian-services__action__arrow {

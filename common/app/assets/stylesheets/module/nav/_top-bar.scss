@@ -17,13 +17,6 @@
         @include rem((
             padding-top: 2px
         ));
-
-        & + .top-bar__item {
-            @include rem((
-                padding-left: $gs-gutter/2
-            ));
-            border-left: 1px solid $c-neutral4;
-        }
     }
 }
 .top-bar__item--right {
@@ -32,7 +25,7 @@
 
     .top-bar__item {
         @include rem((
-            padding-right: $gs-gutter
+            padding-left: $gs-gutter
         ));
         margin: 0;
     }
