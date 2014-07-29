@@ -60,6 +60,15 @@ object ElementLoader extends TestLogging {
   }
 
   /**
+   * Finds one displayed link, including nested, from the provided SearchContext or, if none is provided, the driver
+   */
+  def displayedLink(searchContext: SearchContext)(implicit driver: WebDriver): WebElement = {
+    val link = searchContext.findElement(By.cssSelector("a"))
+    waitUntil(elementToBeClickable(link))
+    link
+  }
+
+  /**
    * Find all image elements, including nested, from the provided SearchContext and returns those that are displayed.
    * Observe that this method does a double check as the selenium check for visibility does not guarantee that an image is
    * actually displayed, just that an img element is not hidden
@@ -90,8 +99,8 @@ object ElementLoader extends TestLogging {
    * Find all link IFrames, including nested, from the provided SearchContext and returns those that are visible
    */
   def displayedIFrames(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
-    val visibileFrames = searchContext.findElements(By.cssSelector("iframe")).asScala.toList.filter(element => waitUntil(visibilityOf(element)))
-    visibileFrames.filter(element => element.isDisplayed())
+    searchContext.findElements(By.cssSelector("iframe")).asScala.toList.filter(
+      element => waitUntil(visibilityOf(element)) && element.isDisplayed())
   }
 
   def firstDisplayedIframe(rootElement: WebElement)(implicit driver: WebDriver): WebElement = {
