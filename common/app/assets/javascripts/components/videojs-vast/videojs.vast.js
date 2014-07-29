@@ -210,7 +210,7 @@
     };
     player.vast.createSourceObjects = function(media_files) {
       var sourcesByFormat = {}, format, i;
-      var vidFormats = ['video/mp4', 'video/webm', 'video/ogv'];
+      var vidFormats = ['video/mp4', 'video/webm', 'video/ogv', 'video/x-flv'];
       // get a list of files with unique formats
       for (i = 0; i < media_files.length; i++) {
         format = media_files[i].mimeType;
