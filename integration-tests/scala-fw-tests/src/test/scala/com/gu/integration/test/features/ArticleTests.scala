@@ -25,7 +25,7 @@ class ArticleTests extends SeleniumTestSuite {
         LiveBlogSteps().checkExpandedSectionContent(liveBlogPage)
     }
 
-    scenarioWeb("checking that interactive article page is pulling in async content properly") {
+    scenarioWeb("checking that interactive article page is pulling in async content properly", ReadyForProd) {
       implicit driver: WebDriver =>
         val liveBlogPage = InteractiveArticleSteps().goToInteractiveArticle("/global-development/ng-interactive/2014/jul/24/girl-summit-aspirations-interactive")
         InteractiveArticleSteps().checkInteractiveContentBodyIsDisplayedProperly(liveBlogPage)
