@@ -143,19 +143,11 @@
     }
 
     $video-most-viewed-container: 531px;
-    $audio-most-viewed-container: 376px;
 
-    .content__main-column--video {
+    .content__main-column--media {
         @include mq(rightCol) {
             @include rem((
                 min-height: $video-most-viewed-container
-            ));
-        }
-    }
-    .content__main-column--audio {
-        @include mq(rightCol) {
-            @include rem((
-                min-height: $audio-most-viewed-container
             ));
         }
     }
@@ -172,23 +164,10 @@
 
         @include mq(rightCol) {
             @include rem((
-                padding-left: $gs-gutter/2
-            ));
-            border-left: 1px solid $c-neutral2;
-        }
-    }
-    .content__secondary-column--video {
-        @include mq(rightCol) {
-            @include rem((
+                padding-left: $gs-gutter/2,
                 height: $video-most-viewed-container
             ));
-        }
-    }
-    .content__secondary-column--audio {
-        @include mq(rightCol) {
-            @include rem((
-                height: $audio-most-viewed-container
-            ));
+            border-left: 1px solid $c-neutral2;
         }
     }
 }

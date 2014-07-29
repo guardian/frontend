@@ -134,10 +134,11 @@ GET         /football/match-redirect/:matchId                                   
 GET         /football/world-cup-2014/r2-front-world-cup-embed                                                        football.controllers.WallchartController.renderR2FrontWorldCupEmbed()
 
 # Admin
-GET         /login                                                                                                   controllers.admin.Login.login
-POST        /login                                                                                                   controllers.admin.Login.loginPost
-GET         /openIDCallback                                                                                          controllers.admin.Login.openIDCallback
-GET         /logout                                                                                                  controllers.admin.Login.logout
+# authentication endpoints
+GET         /login                                                                                                   controllers.admin.OAuthLoginController.login
+POST        /login                                                                                                   controllers.admin.OAuthLoginController.loginAction
+GET         /oauth2callback                                                                                          controllers.admin.OAuthLoginController.oauth2Callback
+GET         /logout                                                                                                  controllers.admin.OAuthLoginController.logout
 GET         /admin                                                                                                   controllers.admin.IndexController.admin()
 GET         /api/proxy/*path                                                                                         controllers.admin.Api.proxy(path, callback)
 GET         /api/tag                                                                                                 controllers.admin.Api.tag(q, callback)

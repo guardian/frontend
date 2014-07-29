@@ -68,6 +68,34 @@ figure.element.element--supporting {
     }
 }
 
+figure.element.element--thumbnail {
+    float: left;
+    clear: left;
+    margin-bottom: 0;
+    @include rem((
+        width: gs-span(2) - $gs-gutter,
+        margin-right: $gs-gutter,
+        margin-top: $gs-baseline/2
+    ));
+
+    @include mq(tablet) {
+        @include rem((
+            width: gs-span(2)
+        ));
+    }
+
+    @include mq(leftCol) {
+        @include deport-left;
+        position: relative;
+    }
+
+    @include mq(wide) {
+        @include rem((
+            margin-left: -1 * (gs-span(2) + $gs-gutter)
+        ));
+    }
+}
+
 figure.element.element--showcase {
 
     @include mq(leftCol) {
