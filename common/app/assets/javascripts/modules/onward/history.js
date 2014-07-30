@@ -86,6 +86,7 @@ define([
 
             if (foundItem) {
                 foundItem.count = (foundItem.count || 0) + 1;
+                foundItem.timestamp = Date.now();
                 hist.unshift(foundItem);
             } else {
                 hist.unshift(new HistoryItem(newItem));
@@ -95,7 +96,7 @@ define([
                         if (item.section) {
                             summary.sections[item.section] = (summary.sections[item.section] || 0) + 1;
                         }
-                        if (item.keywords) {
+                        if (item.keywords && item.keywords[0]) {
                             summary.keywords[item.keywords[0]] = (summary.keywords[item.keywords[0]] || 0) + 1;
                         }
                         return summary;
@@ -107,14 +108,13 @@ define([
         },
 
         recentVisits: function () {
-            var sorted = _sortBy(this.get(), 'timestamp').reverse();
             var curr_timestamp = 0,
                 session_array = [],
                 a_month_ago = new Date(Date.now());
 
             a_month_ago.setMonth(a_month_ago.getMonth() - 1);
 
-            sorted.map(function (i) {
+            this.get().map(function (i) {
                 function diffInMins() {
                     var diff = (parseInt(curr_timestamp, 10) - parseInt(i.timestamp, 10));
                     return Math.ceil(diff / 1000 / 60);
