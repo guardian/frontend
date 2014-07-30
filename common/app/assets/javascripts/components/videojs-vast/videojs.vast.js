@@ -15,7 +15,8 @@
   },
 
   defaults = {
-    skip: 5 // negative disables
+    skip: 5, // negative disables
+    vidFormats: ['video/mp4', 'video/webm', 'video/ogv']
   },
 
   vastPlugin = function(options) {
@@ -210,12 +211,12 @@
     };
     player.vast.createSourceObjects = function(media_files) {
       var sourcesByFormat = {}, format, i;
-      var vidFormats = ['video/mp4', 'video/webm', 'video/ogv', 'video/x-flv'];
+      
       // get a list of files with unique formats
       for (i = 0; i < media_files.length; i++) {
         format = media_files[i].mimeType;
 
-        if (vidFormats.indexOf(format) >= 0) {
+        if (settings.vidFormats.indexOf(format) >= 0) {
           if(sourcesByFormat[format] === undefined) {
             sourcesByFormat[format] = [];
           }
@@ -230,8 +231,8 @@
 
       // Create sources in preferred format order
       var sources = [];
-      for (var j=0; j < vidFormats.length; j++) {
-        format = vidFormats[j];
+      for (var j=0; j < settings.vidFormats.length; j++) {
+        format = settings.vidFormats[j];
         if (sourcesByFormat[format] !== undefined) {
           for (i = 0; i < sourcesByFormat[format].length; i++) {
             sources.push(sourcesByFormat[format][i]);

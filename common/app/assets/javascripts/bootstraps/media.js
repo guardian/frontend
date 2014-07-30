@@ -227,7 +227,8 @@ define([
                                 modules.bindPrerollEvents(player);
 
                                 player.vast({
-                                    url: modules.getVastUrl()
+                                    url: modules.getVastUrl(),
+                                    vidFormats: ['video/mp4', 'video/webm', 'video/ogv', 'video/x-flv']
                                 });
 
                                 if(/desktop|wide/.test(detect.getBreakpoint())) {
