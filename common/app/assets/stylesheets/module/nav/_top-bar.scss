@@ -23,16 +23,15 @@
 .top-bar__item--action,
 .top-bar__item--action:focus,
 .top-bar__item--action:hover {
-    @include fs-bodyHeading(1);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    display: block;
     text-decoration: none;
     margin: 0;
-    color: $c-guardian-services-action;
     cursor: pointer;
+    color: $c-guardian-services-action;
+    display: inline-block;
     @include rem((
         line-height: $headerHeight
     ));
@@ -82,6 +81,7 @@
 }
 
 .top-bar__item--popup-toggle {
+    position: relative;
     // This is the exposed menu arrow pointing up
     // to the link. It's placed on the link to center it.
     &:before {
@@ -92,11 +92,12 @@
         border-top: 0;
         position: absolute;
         left: 50%;
+        margin-left: 0 - $guardian-services-toggle-arrow-size * 2.5;
         @include rem((
             border-left: $guardian-services-toggle-arrow-size solid transparent,
             border-right: $guardian-services-toggle-arrow-size solid transparent,
             border-bottom: $guardian-services-toggle-arrow-size solid #ffffff,
-            top: $headerHeight - $guardian-services-toggle-arrow-size
+            top: $headerHeight - $guardian-services-toggle-arrow-size - 2
         ));
     }
     // disclosure arrow
@@ -145,5 +146,6 @@
 
 .top-bar__popup-item--action,
 .top-bar__popup-item--action:hover {
+    display: block;
     color: guss-colour(neutral-1);
 }
