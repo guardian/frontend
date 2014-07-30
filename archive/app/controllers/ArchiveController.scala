@@ -119,10 +119,14 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   def newCenturyUrl(path: String): Option[String] = {
     if (CenturyRedirectionSwitch.isSwitchedOn) {
         val centuryOptDecadeUrlEx = """www.theguardian.com(\/century)(\/\d{4}-\d{4})?(\/)?$""".r
+        val centuryStoryUrlEx = """www.theguardian.com\/(\d{4}-\d{4})\/Story\/([0|1]?,[\d]*,-?\d+,[\d]*)(.*)""".r
         val newCenturyFront = "gu.com/p/4vaex"
         path match {
           case centuryOptDecadeUrlEx(centuryPath, centuryDecade, _) => {
             Some(newCenturyFront)
+          }
+          case centuryStoryUrlEx(decade, storyId, ext) => {
+            Some(s"www.theguardian.com/century/$decade/Story/$storyId$ext")
           }
           case _ => {
             None

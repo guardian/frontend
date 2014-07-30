@@ -69,6 +69,16 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
     controllers.ArchiveController.newCenturyUrl(aRandomUrlWithCentury) should be (None)
   }
 
+  it should "redirect an R1 century article to a corrected decade story endpoint when enabled" in Fake {
+    val tests = Map[String, Option[String]](
+      "www.theguardian.com/1899-1909/Story/0,,126404,00.html" -> Some("www.theguardian.com/century/1899-1909/Story/0,,126404,00.html")
+    )
+    CenturyRedirectionSwitch.switchOn()
+    tests foreach {
+      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
+    }
+  }
+
   it should "not redirect century urls when disabled" in Fake {
     val aCenturyUrl = "www.theguardian.com/century"
     CenturyRedirectionSwitch.switchOff()
@@ -79,6 +89,16 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
     val aCenturyDecadeUrl = "www.theguardian.com/century/1899-1909"
     CenturyRedirectionSwitch.switchOff()
     controllers.ArchiveController.newCenturyUrl(aCenturyDecadeUrl) should be (None)
+  }
+
+  it should "not redirect a century story url when disabled" in Fake {
+    val tests = Map[String, Option[String]](
+      "www.theguardian.com/1899-1909/Story/0,,126404,00.html" -> None
+    )
+    CenturyRedirectionSwitch.switchOff()
+    tests foreach {
+      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
+    }
   }
 
 }
