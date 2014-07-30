@@ -5,7 +5,6 @@ import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
-
 class HealthCheckTest extends FlatSpec with Matchers {
 
   import play.api.Play.current
