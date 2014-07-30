@@ -4,8 +4,7 @@ define([
     'bonzo',
     'common/utils/ajax',
     'common/utils/mediator',
-    'common/utils/storage',
-    'common/utils/config'
+    'common/utils/storage'
 ], function (
     qwery,
     bonzo,
