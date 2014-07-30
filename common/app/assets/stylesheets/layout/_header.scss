@@ -83,52 +83,6 @@ $c-guardian-services-action: #ffffff;
         ));
     }
 }
-.l-preheader__editions {
-    float: left;
-    @include rem((
-        width: gs-span(3)
-    ));
-}
-.editions {
-    @include fs-header(1);
-}
-.editions,
-.editions__title,
-.edition__item,
-.edition {
-    padding: 0;
-    margin: 0;
-    display: inline-block;
-}
-.editions__title {
-    font-weight: normal;
-}
-.editions__title,
-.edition {
-    @include rem((
-        padding: $gs-baseline/2 $gs-gutter/4
-    ));
-}
-.edition__item {
-    color: $c-brandLightBlue;
-
-    & + .edition__item {
-        @include rem((
-            margin-left: $gs-gutter/4
-        ));
-    }
-}
-.edition {
-    text-decoration: none;
-    margin: 0;
-}
-a.edition {
-    &:hover,
-    &:focus {
-        color: $c-brandLightBlue;
-        text-decoration: none;
-    }
-}
 
 
 /* Main header (logo, actions)
