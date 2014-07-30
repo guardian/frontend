@@ -1,6 +1,7 @@
 package com.gu.integration.test.util
 
 import scala.collection.JavaConverters.asScalaBufferConverter
+
 import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
@@ -8,10 +9,11 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.ExpectedCondition
-import org.openqa.selenium.support.ui.ExpectedConditions._
+import org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable
+import org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf
 import org.openqa.selenium.support.ui.WebDriverWait
+
 import com.gu.automation.support.TestLogging
-import org.openqa.selenium.support.ui.ExpectedConditions
 
 object ElementLoader extends TestLogging {
 
@@ -27,12 +29,10 @@ object ElementLoader extends TestLogging {
 
   /**
    * Will find the element with the provided test attribute id and, if provided, using the provided webelement as search context
-   * otherwise it will use the WebDriver, which has to be in scope. Waits until element is displayed before returning
+   * otherwise it will use the WebDriver, which has to be in scope.
    */
   def findByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): WebElement = {
-    val foundElement = contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
-    waitUntil(visibilityOf(foundElement), 3)
-    foundElement
+    contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
   }
 
   /**

@@ -447,9 +447,9 @@
 
 .item__cta {
     position: absolute;
-    width: ($gs-baseline/3)*11;  //44px
-    height: ($gs-baseline/3)*11;
     @include rem((
+        width: ($gs-baseline/3)*11,  //44px
+        height: ($gs-baseline/3)*11,
         top: ($gs-baseline/3)*2,
         left: $gs-gutter/2.5
     ));
@@ -480,27 +480,36 @@ $cta-icon-gap: 2px;
 .item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
-        top: $gs-baseline/3;
-        left: $gs-baseline/3;
+        @include rem((
+            top: $gs-baseline/3,
+            left: $gs-baseline/3
+        ));
     }
     .i {
-        margin-bottom: $cta-icon-gap;
         position: relative;
+        @include rem((
+            margin-bottom: $cta-icon-gap
+        ));
     }
     &:hover,
     &:focus {
         .item__cta--gallery {
             background-color: $c-neutral1;
+
             .i {
-                top: -1 * (map-get($gallery-cta-icon, height) + $cta-icon-gap);
+                @include rem((
+                    top: -1 * (map-get($gallery-cta-icon, height) + $cta-icon-gap)
+                ));
             }
         }
     }
 }
 .item__cta--gallery,
 .item__cta--video {
-    width: 36px;
-    height: 36px;
+    @include rem((
+        width: 36px,
+        height: 36px
+    ));
     background-color: $c-media-icon;
 }
 .item__cta__icon {
@@ -511,17 +520,21 @@ $cta-icon-gap: 2px;
     font-size: 0;
 
     .item__cta--gallery & {
-        width: map-get($gallery-cta-icon, width);
-        height: map-get($gallery-cta-icon, height);
-        margin-left: -1 * (map-get($gallery-cta-icon, width) / 2);
-        margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2);
+        @include rem((
+            width: map-get($gallery-cta-icon, width),
+            height: map-get($gallery-cta-icon, height),
+            margin-left: -1 * (map-get($gallery-cta-icon, width) / 2),
+            margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2)
+        ));
     }
     .item__cta--video & {
-        width: map-get($video-cta-icon, width);
-        height: map-get($video-cta-icon, height);
-        // don't want icon to be exactly in the middle
-        margin-left: -1 * (map-get($video-cta-icon, width) / 3);
-        margin-top: -1 * (map-get($video-cta-icon, height) / 2);
+        @include rem((
+            width: map-get($video-cta-icon, width),
+            height: map-get($video-cta-icon, height),
+            // don't want icon to be exactly in the middle
+            margin-left: -1 * (map-get($video-cta-icon, width) / 3),
+            margin-top: -1 * (map-get($video-cta-icon, height) / 2)
+        ));
     }
 }
 .item--dark {

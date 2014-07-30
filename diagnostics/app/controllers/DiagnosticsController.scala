@@ -23,4 +23,10 @@ object DiagnosticsController extends Controller with Logging {
     OnePix()
   }
 
+  // e.g.  .../counts?c=pv&c=vv&c=ve
+  def analyticsCounts() = Action { request =>
+    request.queryString.getOrElse("c", Nil).foreach(Analytics.report)
+    OnePix()
+  }
+
 }

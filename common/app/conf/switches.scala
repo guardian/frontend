@@ -299,11 +299,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 8, 10)
   )
 
-  val ProfileCommentsSearchSwitch = Switch("Feature Switches", "profile-comments-search",
-    "If this switch is on, you will be able to search for a user's comments.",
-    safeState = Off, sellByDate = new LocalDate(2014, 7, 31)
-  )
-
   val SentimentalCommentsSwitch = Switch("Feature Switches", "sentimental-comments",
     "When this switch is on, you will be able to put sentiment into your comments.",
     safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
@@ -319,6 +314,11 @@ object Switches extends Collections {
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
+  )
+
+  val ABRightMostPopularText = Switch("A/B Tests", "ab-right-most-popular-text",
+    "If this switch is turned on, run the RightMostPopularText A/B test",
+   safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
   // Dummy Switches
@@ -488,7 +488,6 @@ object Switches extends Collections {
     EnhanceTweetsSwitch,
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
-    ProfileCommentsSearchSwitch,
     SentimentalCommentsSwitch,
     GuardianServicesLinksSwitch,
     IndiaRegionSwitch,
@@ -505,7 +504,8 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
-    SeoBlockGooglebotFromJSPathsSwitch
+    SeoBlockGooglebotFromJSPathsSwitch,
+    ABRightMostPopularText
   )
 
   val httpSwitches: List[Switch] = List(

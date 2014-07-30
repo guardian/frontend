@@ -12,7 +12,8 @@ define([
     'lodash/functions/throttle',
     'bean',
     'bonzo',
-    'common/modules/component'
+    'common/modules/component',
+    'common/modules/analytics/beacon'
 ], function(
     $,
     ajax,
@@ -26,7 +27,8 @@ define([
     _throttle,
     bean,
     bonzo,
-    Component
+    Component,
+    beacon
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint());
@@ -68,6 +70,28 @@ define([
 
         initOmnitureTracking: function(player) {
             new OmnitureMedia(player).init();
+        },
+
+        bindDiagnosticsEvents: function(player) {
+            player.on('video:preroll:play', function(){
+                beacon.fire('/count/vps.gif');
+            });
+            player.on('video:preroll:end', function(){
+                beacon.fire('/count/vpe.gif');
+            });
+            player.on('video:content:play', function(){
+                beacon.fire('/count/vs.gif');
+            });
+            player.on('video:content:end', function(){
+                beacon.fire('/count/ve.gif');
+            });
+
+            // count the number of video starts that happen after a preroll
+            player.on('video:preroll:play', function(){
+                player.on('video:content:play', function(){
+                    beacon.fire('/count/vsap.gif');
+                });
+            });
         },
 
         bindPrerollEvents: function(player) {
@@ -225,9 +249,11 @@ define([
                                 modules.initOmnitureTracking(player);
                                 modules.initOphanTracking(player, mediaId);
                                 modules.bindPrerollEvents(player);
+                                modules.bindDiagnosticsEvents(player);
 
                                 player.vast({
-                                    url: modules.getVastUrl()
+                                    url: modules.getVastUrl(),
+                                    vidFormats: ['video/mp4', 'video/webm', 'video/ogv', 'video/x-flv']
                                 });
 
                                 if(/desktop|wide/.test(detect.getBreakpoint())) {
@@ -289,10 +315,10 @@ define([
                 images.upgrade(parentEl);
             });
         },
-        initMostViewedVideo: function() {
+        initMostViewedMedia: function() {
             var mostViewed = new Component();
 
-            mostViewed.endpoint = '/video/most-viewed.json';
+            mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
             mostViewed.fetch($('.js-video-components-container')[0], 'html');
         }
     };
@@ -302,7 +328,7 @@ define([
 
         if (config.isMedia) {
             modules.initMoreInSection();
-            modules.initMostViewedVideo();
+            modules.initMostViewedMedia();
         }
     };
 

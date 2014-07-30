@@ -1,12 +1,16 @@
 .top .i-arrow-small-up {
-    margin-left: ($gs-baseline/3)*2;
+    @include rem((
+        margin-left: ($gs-baseline/3)*2,
+        top: -1px
+    ));
     position: relative;
-    top: -1px;
 }
 
 .i-sport-arrow--small {
     @include transform(scale(.6));
-    margin: 3px 0 0 3px;
+    @include rem((
+        margin: 3px 0 0 3px
+    ));
     vertical-align: top;
 }
 
@@ -24,20 +28,25 @@
     @if ($svg-support) {
         .svg & {
             background-size: 100%;
-            width: 10px;
-            height: 10px;
+            @include rem((
+                width: 10px,
+                height: 10px
+            ));
         }
     }
 }
 
 .caption:before,
 figcaption:before {
+    @include background-size(contain);
     @extend %i;
     @extend %i-image;
     display: inline-block;
     content: '';
     vertical-align: top;
-    margin: 1px 4px 0 0;
+    @include rem((
+        margin: 1px 4px 0 0
+    ));
 
     @if ($svg-support) {
         .svg & {
@@ -48,12 +57,15 @@ figcaption:before {
 
 // Quotes
 .from-content-api blockquote.quoted:before {
+    @include background-size(contain);
     @extend %i;
     @extend %i-quote-marks;
     content: '';
     position: absolute;
     left: 0;
-    margin-top: -2px;
+    @include rem((
+        margin-top: -2px
+    ));
     @include transform(scale(.65));
     @include transform-origin(0);
 

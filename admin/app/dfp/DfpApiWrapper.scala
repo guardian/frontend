@@ -5,6 +5,7 @@ import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
+import scala.util.{Failure, Success, Try}
 
 object DfpApiWrapper extends Logging {
 
@@ -21,6 +22,9 @@ object DfpApiWrapper extends Logging {
 
   private def inventoryService(session: DfpSession): InventoryServiceInterface =
     dfpServices.get(session, classOf[InventoryServiceInterface])
+
+  private def suggestedAdUnitService(session: DfpSession): SuggestedAdUnitServiceInterface =
+    dfpServices.get(session, classOf[SuggestedAdUnitServiceInterface])
 
   case class Page[T](rawResults: Array[T], totalResultSetSize: Int) {
     def results: Seq[T] = Option(rawResults) map (_.toSeq) getOrElse Nil
@@ -104,4 +108,36 @@ object DfpApiWrapper extends Logging {
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
+
+  def fetchSuggestedAdUnits(session: DfpSession, statementBuilder: StatementBuilder): Seq[SuggestedAdUnit] = {
+    fetch(statementBuilder) { statement =>
+      val service = suggestedAdUnitService(session)
+      val page = service.getSuggestedAdUnitsByStatement(statementBuilder.toStatement)
+      Page(page.getResults, page.getTotalResultSetSize)
+    }
+  }
+
+  class DfpApprovalException(message: String) extends RuntimeException
+  class DfpSessionException extends RuntimeException
+
+  def approveTheseAdUnits(session: DfpSession, statementBuilder: StatementBuilder): Try[String] = {
+    val approve: ApproveSuggestedAdUnit = new ApproveSuggestedAdUnit()
+
+    val service = suggestedAdUnitService(session)
+    try {
+      val result = Option(service.performSuggestedAdUnitAction(approve, statementBuilder.toStatement))
+      if (result.isDefined) {
+        if (result.get.getNumChanges > 0) {
+          Success("Ad units approved")
+        } else {
+          Failure(new DfpApprovalException("Apparently, nothing changed"))
+        }
+      } else {
+        Failure(new DfpApprovalException("Everything failed"))
+      }
+    } catch {
+      case e: Exception => Failure(e)
+    }
+  }
+
 }

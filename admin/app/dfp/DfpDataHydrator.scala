@@ -8,8 +8,12 @@ import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.{AdminConfiguration, Configuration}
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
+import java.io.Serializable
+import scala.util.{Failure, Try, Success}
+import dfp.DfpApiWrapper.DfpSessionException
 
 object DfpDataHydrator extends Logging {
+
 
   private lazy val dfpSession: Option[DfpSession] = try {
     for {
@@ -103,7 +107,7 @@ object DfpDataHydrator extends Logging {
       }
 
     } catch {
-      case e:Exception =>
+      case e: Exception =>
         log.error(e.getStackTraceString)
         Nil
     }
@@ -134,6 +138,32 @@ object DfpDataHydrator extends Logging {
       }.toMap
   }
 
+  def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] = dfpSession.fold(Seq[GuAdUnit]()) {
+    session =>
+      val statementBuilder = new StatementBuilder()
+
+      val suggestedAdUnits = DfpApiWrapper.fetchSuggestedAdUnits(session, statementBuilder)
+
+      val allUnits = suggestedAdUnits.map { adUnit =>
+        val fullpath: List[String] = adUnit.getParentPath.map(_.getName).toList ::: adUnit.getPath.toList
+
+        GuAdUnit(adUnit.getId, fullpath.tail)
+      }
+
+      allUnits.filter(au => au.path.last == "ng" && au.path.size < 5).sortBy(_.id).distinct
+  }
+
+  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = dfpSession.map {
+    session =>
+      val adUnitsList: String = adUnits.mkString(",")
+
+      val statementBuilder = new StatementBuilder()
+        .where(s"id in ($adUnitsList)")
+
+      DfpApiWrapper.approveTheseAdUnits(session, statementBuilder)
+  }.getOrElse(Failure(new DfpSessionException()))
+
+
   def loadAllCustomTargetKeys(): Map[Long, String] = dfpSession.fold(Map[Long, String]()) { session =>
     DfpApiWrapper.fetchCustomTargetingKeys(session, new StatementBuilder()).map { k =>
       k.getId.longValue() -> k.getName
@@ -145,6 +175,7 @@ object DfpDataHydrator extends Logging {
       v.getId.longValue() -> v.getName
     }.toMap
   }
+
 
   private def isPageSkin(dfpLineItem: LineItem) = {
 
@@ -161,9 +192,9 @@ object DfpDataHydrator extends Logging {
       hasA1x1Pixel(dfpLineItem.getCreativePlaceholders)
   }
 
-  private def buildCustomTargetSets(customCriteriaSet:CustomCriteriaSet,
-                         targetingKeys: Map[Long, String],
-                         targetingValues: Map[Long, String]): Seq[CustomTargetSet] = {
+  private def buildCustomTargetSets(customCriteriaSet: CustomCriteriaSet,
+                                    targetingKeys: Map[Long, String],
+                                    targetingValues: Map[Long, String]): Seq[CustomTargetSet] = {
 
     def buildTargetSet(crits: CustomCriteriaSet): Option[CustomTargetSet] = {
       val targets = crits.getChildren.flatMap(crit => buildTarget(crit.asInstanceOf[CustomCriteria]))

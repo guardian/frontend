@@ -204,7 +204,7 @@
             left: 0;
         }
     }
-    @include mq($from: faciaLeftCol, $to: wide) {
+    @include mq(faciaLeftCol, wide) {
         .commercial__title__last-word {
             margin-left: 0;
         }
@@ -295,7 +295,7 @@
             ));
         }
     }
-    @include mq($from: leftCol, $to: wide) {
+    @include mq(leftCol, wide) {
         .commercial__home-link {
             width: gs-span(2);
             line-height: 1.2;
