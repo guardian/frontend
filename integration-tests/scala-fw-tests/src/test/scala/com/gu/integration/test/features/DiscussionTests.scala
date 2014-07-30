@@ -1,8 +1,8 @@
 package com.gu.integration.test.features
 
 import org.openqa.selenium.WebDriver
+
 import com.gu.integration.test.SeleniumTestSuite
-import com.gu.integration.test.tags.ReadyForProd
 import com.gu.integration.test.steps.ArticleSteps
 import com.gu.integration.test.steps.DiscussionSteps
 
