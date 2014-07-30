@@ -13,6 +13,7 @@ GET         /assets/*path                                                       
 GET         /ab.gif                                                                                                  controllers.DiagnosticsController.ab
 GET         /js.gif                                                                                                  controllers.DiagnosticsController.js
 GET         /count/$prefix<.+>.gif                                                                                   controllers.DiagnosticsController.analytics(prefix)
+GET         /counts.gif                                                                                              controllers.DiagnosticsController.analyticsCounts()
 
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()

@@ -3,7 +3,7 @@ package model
 import play.api.{Application => PlayApp, GlobalSettings}
 import tools.{LoadBalancer, CloudWatch}
 import common.{AkkaAsync, Jobs}
-import jobs.{AnalyticsSanityCheckJob, FastlyCloudwatchLoadJob}
+import jobs.{VideoSanityCheckJob, AnalyticsSanityCheckJob, FastlyCloudwatchLoadJob}
 
 trait AdminLifecycle extends GlobalSettings {
 
@@ -24,6 +24,10 @@ trait AdminLifecycle extends GlobalSettings {
       AnalyticsSanityCheckJob.run()
     }
 
+    Jobs.schedule("VideoSanityCheckJob", "0 0/15 * * * ?") {
+      VideoSanityCheckJob.run()
+    }
+
     AkkaAsync{
       LoadBalancer.refresh()
     }
@@ -34,6 +38,7 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("LoadBalancerLoadJob")
     Jobs.deschedule("FastlyCloudwatchLoadJob")
     Jobs.deschedule("AnalyticsSanityCheckJob")
+    Jobs.deschedule("VideoSanityCheckJob")
   }
 
   override def onStart(app: play.api.Application) {
