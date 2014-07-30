@@ -13,7 +13,7 @@ import play.Play
 object OAuthLoginController extends Controller with ExecutionContexts {
   import play.api.Play.current
 
-  val maxAuthAge: Duration = if (Play.isDev) Duration.standardMinutes(10) else Duration.standardMinutes(0)
+  val maxAuthAge: Duration = if (Play.isDev) Duration.standardMinutes(10) else Duration.ZERO
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "antiForgeryToken"
   val forbiddenNoCredentials = Forbidden("You do not have OAuth credentials set")
