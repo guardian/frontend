@@ -84,7 +84,9 @@
 
     .right-most-popular-item__count {
         position: absolute;
-        top: $gs-baseline/6;
+        @include rem((
+            top: $gs-baseline/6
+        ));
         left: 0;
         color: $c-neutral4;
         @include font($f-serif-headline, 200, 44px);
