@@ -47,5 +47,4 @@ object VideoSanityCheckJob extends ExecutionContexts with implicits.Futures with
   private def sanitise(result: GetMetricStatisticsResult) =
     result.getDatapoints.headOption.map(_.getSum.doubleValue()).getOrElse(0.0)
 
-
 }
