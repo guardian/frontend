@@ -10,7 +10,7 @@ object AnalyticsController extends Controller with Logging with AuthLogging {
 
   // We only do PROD analytics
 
-  def abtests() = Authenticated { request =>
+  def abtests() = AuthActions.AuthActionTest { request =>
     NoCache(Ok(views.html.abtests("PROD",
       model.abtests.AbTests.getAbCharts().filter(_.hasData)
     )))

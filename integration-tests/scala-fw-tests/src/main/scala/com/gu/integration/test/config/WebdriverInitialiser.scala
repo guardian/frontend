@@ -18,8 +18,7 @@ import com.gu.automation.support.CookieManager
 object WebdriverInitialiser extends TestLogging {
 
   def augmentWebDriver(implicit webDriver: WebDriver): WebDriver = {
-    webDriver.manage().timeouts().implicitlyWait(10, SECONDS)
-    CookieManager.addCookie("gu.test", "true")
+    webDriver.manage().timeouts().implicitlyWait(15, SECONDS)
     webDriver
   }
 }

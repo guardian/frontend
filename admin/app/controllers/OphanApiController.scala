@@ -8,15 +8,15 @@ import model.NoCache
 
 object OphanApiController extends Controller with ExecutionContexts {
 
-  def pageViews(path: String) = Authenticated.async { request =>
+  def pageViews(path: String) = AuthActions.AuthActionTest.async { request =>
     OphanApi.getBreakdown(path) map (body => NoCache(Ok(body) as "application/json"))
   }
 
-  def platformPageViews = Authenticated.async { request =>
+  def platformPageViews = AuthActions.AuthActionTest.async { request =>
     OphanApi.getBreakdown(platform = "next-gen", hours = 2) map (body => NoCache(Ok(body) as "application/json"))
   }
 
-  def adsRenderTime = Authenticated.async { request =>
+  def adsRenderTime = AuthActions.AuthActionTest.async { request =>
     OphanApi.getAdsRenderTime(request.queryString) map (body => NoCache(Ok(body) as "application/json"))
   }
 

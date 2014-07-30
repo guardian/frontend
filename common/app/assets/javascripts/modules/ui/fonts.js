@@ -29,7 +29,10 @@ define([
 
             // If no URL, then load from standard static assets path.
             url = url || '';
+            // NOTE - clearing old fonts, can be removed after a certain amount of time
+            storage.local.clearByPrefix('gu.fonts.Web');
             for (var i = 0, j = styleNodes.length; i < j; ++i) {
+                clearOldFonts(styleNodes[i]);
                 var style = styleNodes[i];
                 if (fontIsRequired(style)) {
                     var that = this;
@@ -49,7 +52,7 @@ define([
 
                                 var nameAndCacheKey = getNameAndCacheKey(style);
 
-                                that.clearFont(nameAndCacheKey[0]);
+                                that.clearFont(nameAndCacheKey[1]);
                                 storage.local.set(storagePrefix + nameAndCacheKey[1] + '.' + nameAndCacheKey[0], json.css);
                                 mediator.emit('modules:fonts:loaded', [json.name]);
                             };
@@ -106,6 +109,21 @@ define([
 
         function isAdvertisementFeature() {
             return qwery('.facia-container--advertisement-feature').length > 0;
+        }
+
+        /**
+         * NOTE: temp method, to fix bug with removal of old fonts - can be removed if font files update
+         */
+        function clearOldFonts(style) {
+            var key = getNameAndCacheKey(style),
+                fontPrefix = 'gu.fonts.' + key[1],
+                fontName = fontPrefix + '.' + key[0];
+            for (var i = storage.local.length() - 1; i > -1; --i) {
+                var name = storage.local.getKey(i);
+                if (name.indexOf(fontPrefix) === 0 && name.indexOf(fontName) !== 0) {
+                    storage.local.remove(name);
+                }
+            }
         }
 
     }

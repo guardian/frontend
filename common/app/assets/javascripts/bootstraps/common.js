@@ -269,7 +269,7 @@ define([
             var releaseMessage = new Message('alpha');
 
             // Do not show the release message on -sp- based paths.
-            var spRegExp = new RegExp('.*/-sp-.*');
+            var spRegExp = new RegExp('.*-sp-.*');
 
             if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path)) {
                 // force the visitor in to the alpha release for subsequent visits

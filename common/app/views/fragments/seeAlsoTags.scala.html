@@ -1,9 +1,0 @@
-@(tags: Seq[model.Tag])(implicit request: RequestHeader)
-
-@import views.html.fragments.keywordList
-
-@if(tags.nonEmpty) {
-    <div class="related-keywords">
-        @keywordList(tags, title = "See also")
-    </div>
-}

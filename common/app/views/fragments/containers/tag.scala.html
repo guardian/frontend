@@ -2,7 +2,7 @@
 
 @import common.LinkTo
 @import model.FaciaComponentName
-@import views.html.fragments.seeAlsoTags
+@import views.html.fragments.keywordList
 @import views.support.GetClasses
 @import views.support.MostPopularTags.topTags
 
@@ -37,7 +37,13 @@
                 </div>
                 @pagination.map{ paginate => @fragments.pagination(page, paginate)}
 
-                @seeAlsoTags(topTags(collection.items).filterNot(_.id == page.id))
+                @defining(topTags(collection.items).filterNot(_.id == page.id)) { tags =>
+                    @if(tags.nonEmpty) {
+                        <div class="related-keywords">
+                        @keywordList(tags, 5, "See also")
+                        </div>
+                    }
+                }
             </div>
         </section>
     }

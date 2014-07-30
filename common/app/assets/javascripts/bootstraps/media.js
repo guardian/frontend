@@ -12,7 +12,8 @@ define([
     'lodash/functions/throttle',
     'bean',
     'bonzo',
-    'common/modules/component'
+    'common/modules/component',
+    'common/modules/analytics/beacon'
 ], function(
     $,
     ajax,
@@ -26,10 +27,11 @@ define([
     _throttle,
     bean,
     bonzo,
-    Component
+    Component,
+    beacon
 ) {
 
-    var autoplay = config.page.contentType === 'Video' && /desktop|wide/.test(detect.getBreakpoint());
+    var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint());
     var QUARTILES = [25, 50, 75];
     // Advert and content events used by analytics. The expected order of bean events is:
     var EVENTS = [
@@ -68,6 +70,28 @@ define([
 
         initOmnitureTracking: function(player) {
             new OmnitureMedia(player).init();
+        },
+
+        bindDiagnosticsEvents: function(player) {
+            player.on('video:preroll:play', function(){
+                beacon.fire('/count/vps.gif');
+            });
+            player.on('video:preroll:end', function(){
+                beacon.fire('/count/vpe.gif');
+            });
+            player.on('video:content:play', function(){
+                beacon.fire('/count/vs.gif');
+            });
+            player.on('video:content:end', function(){
+                beacon.fire('/count/ve.gif');
+            });
+
+            // count the number of video starts that happen after a preroll
+            player.on('video:preroll:play', function(){
+                player.on('video:content:play', function(){
+                    beacon.fire('/count/vsap.gif');
+                });
+            });
         },
 
         bindPrerollEvents: function(player) {
@@ -189,13 +213,13 @@ define([
 
                 videojs.plugin('adCountDown', modules.countDown);
 
-                $('.gu-video').each(function (el) {
+                $('.js-gu-media').each(function (el) {
                     var mediaId = el.getAttribute('data-media-id'),
                         vjs = videojs(el, {
-                        controls: true,
-                        autoplay: false,
-                        preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
-                    });
+                            controls: true,
+                            autoplay: false,
+                            preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
+                        });
 
                     vjs.ready(function () {
                         var player = this;
@@ -213,20 +237,33 @@ define([
 
                         deferToAnalytics(function () {
 
-                            modules.initOmnitureTracking(player);
-                            modules.initOphanTracking(player, mediaId);
-                            modules.bindPrerollEvents(player);
 
-                            // Init plugins
-                            player.adCountDown();
-                            player.ads({
-                                timeout: 3000
-                            });
-                            player.vast({
-                                url: modules.getVastUrl()
-                            });
-                            if(/desktop|wide/.test(detect.getBreakpoint())) {
-                                modules.initEndSlate(player);
+                            // preroll for videos only
+                            if (config.page.contentType === 'Video') {
+                                // Init plugins
+                                player.adCountDown();
+                                player.ads({
+                                    timeout: 3000
+                                });
+
+                                modules.initOmnitureTracking(player);
+                                modules.initOphanTracking(player, mediaId);
+                                modules.bindPrerollEvents(player);
+                                modules.bindDiagnosticsEvents(player);
+
+                                player.vast({
+                                    url: modules.getVastUrl()
+                                });
+
+                                if(/desktop|wide/.test(detect.getBreakpoint())) {
+                                    modules.initEndSlate(player);
+                                }
+                            } else {
+                                vjs.playlist({
+                                    mediaType: 'audio'
+                                });
+
+                                modules.bindContentEvents(player);
                             }
                         });
                     });
@@ -260,8 +297,10 @@ define([
             endSlate.endpoint = modules.generateEndSlateUrl();
             endSlate.fetch(player.el(), 'html');
 
-            player.on('ended', function() {
-                bonzo(player.el()).addClass(endState);
+            player.one('video:content:play', function() {
+                player.on('ended', function () {
+                    bonzo(player.el()).addClass(endState);
+                });
             });
             player.on('playing', function() {
                 bonzo(player.el()).removeClass(endState);
@@ -275,10 +314,10 @@ define([
                 images.upgrade(parentEl);
             });
         },
-        initMostViewedVideo: function() {
+        initMostViewedMedia: function() {
             var mostViewed = new Component();
 
-            mostViewed.endpoint = '/video/most-viewed.json';
+            mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
             mostViewed.fetch($('.js-video-components-container')[0], 'html');
         }
     };
@@ -286,9 +325,9 @@ define([
     var ready = function () {
         modules.initPlayer();
 
-        if(config.page.contentType === 'Video') {
+        if (config.isMedia) {
             modules.initMoreInSection();
-            modules.initMostViewedVideo();
+            modules.initMostViewedMedia();
         }
     };
 
