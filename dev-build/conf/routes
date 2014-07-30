@@ -68,8 +68,9 @@ GET         /tagged.json                                                        
 
 GET         /video/section/*sectionId.json                                                                           controllers.VideoInSectionController.renderSectionVideos(sectionId)
 GET         /video/most-viewed.json                                                                                  controllers.MostViewedVideoController.renderMostViewed()
-GET         /video/end-slate/series/*seriesId.json    								     controllers.VideoEndSlateController.renderSeries(seriesId)
-GET         /video/end-slate/section/*sectionId.json   								     controllers.VideoEndSlateController.renderSection(sectionId)
+GET         /audio/most-viewed.json                                                                                  controllers.MostViewedAudioController.renderMostViewed()
+GET         /video/end-slate/series/*seriesId.json                                                                   controllers.VideoEndSlateController.renderSeries(seriesId)
+GET         /video/end-slate/section/*sectionId.json                                                                 controllers.VideoEndSlateController.renderSection(sectionId)
 
 # Sport
 GET         /sport/cricket/match/:matchId                                                                            controllers.CricketMatchController.renderMatchId(matchId)
@@ -134,10 +135,11 @@ GET         /football/match-redirect/:matchId                                   
 GET         /football/world-cup-2014/r2-front-world-cup-embed                                                        football.controllers.WallchartController.renderR2FrontWorldCupEmbed()
 
 # Admin
-GET         /login                                                                                                   controllers.admin.Login.login
-POST        /login                                                                                                   controllers.admin.Login.loginPost
-GET         /openIDCallback                                                                                          controllers.admin.Login.openIDCallback
-GET         /logout                                                                                                  controllers.admin.Login.logout
+# authentication endpoints
+GET         /login                                                                                                   controllers.admin.OAuthLoginController.login
+POST        /login                                                                                                   controllers.admin.OAuthLoginController.loginAction
+GET         /oauth2callback                                                                                          controllers.admin.OAuthLoginController.oauth2Callback
+GET         /logout                                                                                                  controllers.admin.OAuthLoginController.logout
 GET         /admin                                                                                                   controllers.admin.IndexController.admin()
 GET         /api/proxy/*path                                                                                         controllers.admin.Api.proxy(path, callback)
 GET         /api/tag                                                                                                 controllers.admin.Api.tag(q, callback)

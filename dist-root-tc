@@ -34,7 +34,9 @@ do
 
     rm -rf $app_folder
 
+    set +o xtrace
     echo "##teamcity[publishArtifacts 'dist/$config.zip']"
+    set -o xtrace
 done
 
 echo "Done disting."

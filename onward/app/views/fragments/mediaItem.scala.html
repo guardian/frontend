@@ -1,0 +1,17 @@
+@(content: model.Media, index: Number)(implicit request: RequestHeader)
+
+<li class="item">
+    <div class="item__container">
+        <a class="item__action" href="@LinkTo{@content.url}" data-link-name="item @index">
+            @content.trailPicture(5, 3).map{ image =>
+                <div class="item__img u-responsive-ratio">
+                    <img class="responsiveimg" src="@Item140.bestFor(image)" alt="" />
+                </div>
+            }
+            <h4 class="item__headline">@content match{
+                case a: Audio => { @a.webTitle }
+                case v: Video => { @v.videoLinkText }
+            }</h4>
+        </a>
+    </div>
+</li>
