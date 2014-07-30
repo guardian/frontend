@@ -20,8 +20,8 @@ GET         /assets/*path                 dev.DevAssetsController.at(path)
 #######################################################
 
 #Index page
-GET         /                             controllers.admin.IndexController.index()
-GET         /admin                        controllers.admin.IndexController.admin()
+GET         /                             controllers.admin.AdminIndexController.index()
+GET         /admin                        controllers.admin.AdminIndexController.admin()
 
 # API endpoint proxying for https
 GET         /api/proxy/*path              controllers.admin.Api.proxy(path, callback)
