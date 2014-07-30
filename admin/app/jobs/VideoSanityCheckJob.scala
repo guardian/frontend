@@ -17,24 +17,20 @@ object VideoSanityCheckJob extends ExecutionContexts with implicits.Futures with
     val prerollStarts = CloudWatch.videoPrerollStarts.map(sanitise)
     val prerollEnds = CloudWatch.videoPrerollEnds.map(sanitise)
 
-    def sensible(what :Double) : Double = {
-      if (what > 200) 200.0 else what
-    }
-
     val videoStartsConfidence = sequence(Seq(videoPageViews, videoStarts)).map{
-      case (raw :: starts:: Nil) => sensible(starts / raw * 100)
+      case (raw :: starts:: Nil) => starts / raw * 100
     }
 
     val videoEndsConfidence = sequence(Seq(videoPageViews, videoEnds)).map{
-      case (raw :: ends:: Nil) => sensible(ends / raw * 100)
+      case (raw :: ends:: Nil) => ends / raw * 100
     }
 
     val prerollStartsConfidence = sequence(Seq(videoPageViews, prerollStarts)).map{
-      case (raw :: starts:: Nil) => sensible(starts / raw * 100)
+      case (raw :: starts:: Nil) => starts / raw * 100
     }
 
     val prerollEndsConfidence = sequence(Seq(videoPageViews, prerollEnds)).map{
-      case (raw :: ends:: Nil) => sensible(ends / raw * 100)
+      case (raw :: ends:: Nil) => ends / raw * 100
     }
 
     sequence(Seq(videoStartsConfidence, videoEndsConfidence, prerollStartsConfidence, prerollEndsConfidence)).foreach{
@@ -48,8 +44,8 @@ object VideoSanityCheckJob extends ExecutionContexts with implicits.Futures with
     }
  }
 
-  private def sanitise: (GetMetricStatisticsResult) => Double = {
-    _.getDatapoints.headOption.map(_.getSum.doubleValue()).getOrElse(0.0)
-  }
+  private def sanitise(result: GetMetricStatisticsResult) =
+    result.getDatapoints.headOption.map(_.getSum.doubleValue()).getOrElse(0.0)
+
 
 }
