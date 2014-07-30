@@ -6,13 +6,12 @@
 
 <link rel="stylesheet" type="text/css" href="@routes.Assets.at(" css/commercial.css")">
 
-@if(flash.get("success").isDefined) {
-<div class="alert alert-success" role="alert">@flash.get("success").get</div>
+@flash.get("success").map { message =>
+<div class="alert alert-success" role="alert">@message</div>
 }
-@if(flash.get("failure").isDefined) {
-<div class="alert alert-danger" role="alert">@flash.get("failure").get</div>
+@flash.get("failure").map { message =>
+<div class="alert alert-danger" role="alert">@message</div>
 }
-
 
 <h1>Next Gen Ad Units for approval</h1>
 <p>The following ad units have been submitted to DFP and require approval before they are recorded by DFP.</p>

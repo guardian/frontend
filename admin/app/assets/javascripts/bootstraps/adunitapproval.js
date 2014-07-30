@@ -1,7 +1,6 @@
 define([
     'common/utils/$',
     'bean'
-
 ], function ($, bean) {
 
     function initialise() {

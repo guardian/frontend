@@ -9,7 +9,6 @@ import scala.util.{Failure, Success, Try}
 
 object DfpApiWrapper extends Logging {
 
-
   private lazy val dfpServices = new DfpServices()
 
   private def lineItemService(session: DfpSession): LineItemServiceInterface =
