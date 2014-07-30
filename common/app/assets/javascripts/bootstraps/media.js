@@ -86,6 +86,12 @@ define([
                 beacon.fire('/count/ve.gif');
             });
 
+            // count the number of video starts that happen after a preroll
+            player.on('video:preroll:play', function(){
+                player.on('video:content:play', function(){
+                    beacon.fire('/count/vsap.gif');
+                });
+            });
         },
 
         bindPrerollEvents: function(player) {

@@ -19,6 +19,7 @@ object Metric extends Logging {
     ("vpv", CountMetric("kpis", "video-page-views")),     // user has landed on a video page
     ("vps", CountMetric("kpis", "video-preroll-start")),  // user has started the pre-roll advert
     ("vpe", CountMetric("kpis", "video-preroll-end")),    // user has ended the pre-roll advert
+    ("vsap", CountMetric("kpis", "video-preroll-end")),   // user has started a video after a pre-roll advert
 
     // page views
     ("pv", CountMetric("kpis", "page-views")),            // raw page views - simple <img> in body, no javascript involved
