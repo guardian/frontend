@@ -14,8 +14,8 @@ define([
             var widgetIds = {
                 mobile: 'MB_2',
                 tablet: 'MB_1',
-                desktop: 'AR_',
-                wide: 'AR_'
+                desktop: 'AR_11',
+                wide: 'AR_11'
             };
             $('.OUTBRAIN')
                 .first()
