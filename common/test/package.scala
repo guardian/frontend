@@ -17,7 +17,6 @@ import com.gargoylesoftware.htmlunit.BrowserVersion
 
 trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
-  def port: String
   def testPlugins: Seq[String] = Nil
   def disabledPlugins: Seq[String] = Seq(
     classOf[InternalManagementPlugin].getName,
@@ -71,7 +70,7 @@ trait TestSettings {
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
  */
-class EditionalisedHtmlUnit(override val port: String) extends TestSettings {
+class EditionalisedHtmlUnit(val port: String) extends TestSettings {
 
   // the default is I.E 7 which we do not support
   BrowserVersion.setDefault(BrowserVersion.CHROME)
@@ -109,14 +108,14 @@ class EditionalisedHtmlUnit(override val port: String) extends TestSettings {
 /**
  * Executes a block of code in a FakeApplication.
  */
-class FakeApp(override val port: String) extends TestSettings {
+class FakeApp extends TestSettings {
 
   def apply[T](block: => T): T = running(
     FakeApplication(
       withoutPlugins = disabledPlugins,
       withGlobal = globalSettingsOverride,
       additionalPlugins = testPlugins,
-      additionalConfiguration = Map("application.secret" -> "test-secret", "http.port" -> port)
+      additionalConfiguration = Map("application.secret" -> "test-secret")
     )
   ) { block }
 }
@@ -128,4 +127,4 @@ object TestRequest {
   }
 }
 
-object Fake extends FakeApp("9002")
+object Fake extends FakeApp()
