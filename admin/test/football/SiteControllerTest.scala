@@ -2,10 +2,8 @@ import common.ExecutionContexts
 import org.scalatest.{ShouldMatchers, FreeSpec}
 import play.api.test._
 import play.api.test.Helpers._
-import scala.concurrent.{Await, Future}
 import football.services.GetPaClient
 import test.Fake
-
 
 class SiteControllerTest extends FreeSpec with GetPaClient with ExecutionContexts with ShouldMatchers {
 
