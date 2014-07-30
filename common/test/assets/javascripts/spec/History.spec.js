@@ -2,7 +2,7 @@ define([
     'common/modules/onward/history',
     'fixtures/history/contains',
     'fixtures/history/max',
-], function(History, contains, max) {
+], function(hist, contains, max) {
 
     var setStorageItem = function(item) {
         window.localStorage.setItem('gu.history', JSON.stringify({
@@ -23,9 +23,8 @@ define([
     describe('History', function() {
 
         beforeEach(function() {
-            window.localStorage.removeItem('gu.history');
+            hist.reset();
             setStorageItem(contains);
-            hist = new History();
         });
 
         it('should get history from local storage', function() {
@@ -65,15 +64,19 @@ define([
             expect(hist.getSize()).toEqual(100);
         });
 
-        it('should set the history summary to local storage', function() {
-            hist.log(item);
+        it('should set the section count in the summary, once per article', function() {
             hist.log(item);
             hist.log(item);
 
-            expect(hist.getSummary().sections.foobar).toEqual(3);
-            expect(hist.getSummary().keywords.foo).toEqual(3);
-            expect(hist.getSummary().keywords.bar).toEqual(3);
+            expect(hist.getSummary().sections.foobar).toEqual(1);
         });
 
+        it('should set the (first) keyword count in the summary, once per article', function() {
+            hist.log(item);
+            hist.log(item);
+
+            expect(hist.getSummary().keywords.foo).toEqual(1);
+            expect(hist.getSummary().keywords.bar).toEqual(undefined);
+        });
     });
 });

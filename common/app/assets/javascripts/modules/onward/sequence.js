@@ -16,7 +16,7 @@ define([
     storage,
     config,
     _filter,
-    History
+    history
     ){
 
     var currentPageId,
@@ -55,11 +55,11 @@ define([
     }
 
     function dedupeSequence(sequence) {
-        var history = new History({}).get().map(function(i){
+        var histIDs = history.get().map(function(i){
             return i.id;
         });
         return _filter(sequence, function(item) {
-            return history.indexOf(item.url) < 0 && item.url !== currentPageId;
+            return histIDs.indexOf(item.url) < 0 && item.url !== currentPageId;
         });
     }
 

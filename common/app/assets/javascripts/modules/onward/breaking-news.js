@@ -9,7 +9,7 @@ define([
     $,
     mediator,
     ajax,
-    History,
+    history,
     assign,
     bonzo
 ) {
@@ -18,7 +18,7 @@ define([
         header,
         matchers,
         editionSection,
-        hist,
+        summary,
         histCount;
 
     return function (config) {
@@ -52,9 +52,9 @@ define([
                 }); 
             }
 
-            hist = new History();
-            assign(matchers, hist.getSummary().sections);
-            assign(matchers, hist.getSummary().keywords);
+            summary = history.getSummary();
+            assign(matchers, summary.sections);
+            assign(matchers, summary.keywords);
         }
 
         ajax({

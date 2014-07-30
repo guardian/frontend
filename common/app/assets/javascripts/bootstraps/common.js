@@ -37,7 +37,6 @@ define([
     'common/modules/discussion/comment-count',
     'common/modules/gallery/lightbox',
     'common/modules/onward/history',
-    'common/modules/onward/sequence',
     'common/modules/onward/breaking-news',
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
@@ -85,8 +84,7 @@ define([
     ab,
     CommentCount,
     LightboxGallery,
-    History,
-    sequence,
+    history,
     breakingNews,
     Message,
     AutoSignin,
@@ -324,16 +322,13 @@ define([
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
                 if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
-                    new History().log({
+                    history.log({
                         id: '/' + config.page.pageId,
                         meta: {
                             section: config.page.section,
                             keywords: config.page.keywordIds.split(',').slice(0, 5)
                         }
                     });
-                }
-                if (config.page.section !== 'identity') {
-                    sequence.init('/' + config.page.pageId);
                 }
             });
         },
