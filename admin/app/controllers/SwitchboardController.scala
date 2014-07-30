@@ -3,7 +3,7 @@ package controllers.admin
 import com.gu.googleauth.UserIdentity
 import common._
 import common.AdminMetrics.{ SwitchesUpdateCounter, SwitchesUpdateErrorCounter }
-import controllers.{AuthLogging}
+import controllers.AuthLogging
 import conf.{ Switches, Configuration }
 import play.api.mvc._
 import scala.concurrent.Future
