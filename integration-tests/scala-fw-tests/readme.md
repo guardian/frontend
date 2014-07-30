@@ -29,6 +29,7 @@ This section will quickly go through the steps to write a new test. It is strong
 scenarioWeb("making sure that X is working", ReadyForProd) {
 ...
 ```
+Only do this if you are sure that the test does not depend on things that are likely to change in PROD. That will make the whole test suite flaky
 * Create a pull request and merge into master. The test will now be picked up by the TeamCity build process
 
 How to prepare to run the tests against a local installation
@@ -128,7 +129,7 @@ Writing new tests is fairly simple and follow these steps:
 * When finding new elements it is strongly ENCOURAGED to tag those elements with data-test-id="some-value" e.g. data-test-id="article-root"
 * It is strongly DISCOURAGED to use existing DOM elements and structure. This is a sure way to create flaky tests.
 * ElementLoader contains various useful helper methods for dealing with WebElements. Please look at it before implementing a potential duplicate method.
-* If the test is to run against production then you need to add the tag ```ReadyForProd```. For example:
+* If the test is to run continously in TeamCity then you need to add the tag ```ReadyForProd```. For example:
 ```
 scenarioWeb("checking most popular module and related content exist on article page", ReadyForProd) {
 ```
