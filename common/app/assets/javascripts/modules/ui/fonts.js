@@ -49,7 +49,7 @@ define([
 
                                 var nameAndCacheKey = getNameAndCacheKey(style);
 
-                                that.clearFont(nameAndCacheKey[0]);
+                                that.clearFont(nameAndCacheKey[1]);
                                 storage.local.set(storagePrefix + nameAndCacheKey[1] + '.' + nameAndCacheKey[0], json.css);
                                 mediator.emit('modules:fonts:loaded', [json.name]);
                             };
@@ -62,6 +62,8 @@ define([
         };
 
         this.loadFromServerAndApply = function (url) {
+            // NOTE - can be removed after a certain amount of time
+            clearOldFonts();
             var that = this;
             this.loadFromServer(url, function (style, json) {
                 that.view.showFont(style, json);
@@ -106,6 +108,21 @@ define([
 
         function isAdvertisementFeature() {
             return qwery('.facia-container--advertisement-feature').length > 0;
+        }
+
+        /**
+         * NOTE: temp method, to fix bug with removal of old fonts
+         */
+        function clearOldFonts() {
+            storage.local.clearByPrefix('gu.fonts.Web');
+            [
+                'GuardianAgateSans1Web.6039df171383a14539ca392b36ff8e0f',
+                'GuardianEgyptianWeb.541baa51240ee94f8b0b3f82cb07ee27',
+                'GuardianEgyptianWeb.887c81381d18500ac73a9009a353801a',
+                'GuardianTextSansWeb.80e709a96a230177b3e41312391b848b'
+            ].forEach(function(key) {
+                    storage.local.clearByPrefix('gu.fonts.' + key);
+                });
         }
 
     }
