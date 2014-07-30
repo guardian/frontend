@@ -99,7 +99,7 @@ define([
 
             //If no preroll avaliable or preroll fails, still init content tracking
             player.one('adtimeout', function() {
-                modules.bindContentEvents(player, true);
+                modules.bindContentEvents(player);
             });
         },
 
@@ -219,7 +219,6 @@ define([
 
                                 modules.initOmnitureTracking(player);
                                 modules.initOphanTracking(player, mediaId);
-                                modules.bindPrerollEvents(player);
 
                                 // Init plugins
                                 if(config.switches.videoAdverts) {
@@ -230,6 +229,9 @@ define([
                                     player.vast({
                                         url: modules.getVastUrl()
                                     });
+                                    modules.bindPrerollEvents(player);
+                                } else {
+                                    modules.bindContentEvents(player);
                                 }
 
                                 if(/desktop|wide/.test(detect.getBreakpoint())) {
