@@ -3,8 +3,7 @@ package controllers
 import com.gu.googleauth.{GoogleAuth, GoogleAuthConfig, UserIdentity}
 import common.ExecutionContexts
 import conf.Configuration
-import org.joda.time.{DateTime, Duration}
-import play.Play
+import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import scala.concurrent.Future
@@ -12,18 +11,17 @@ import scala.concurrent.Future
 object OAuthLoginController extends Controller with ExecutionContexts {
   import play.api.Play.current
 
-  val maxAuthAge: Duration = if (Play.isDev) Duration.standardMinutes(10) else Duration.ZERO
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "antiForgeryToken"
   val forbiddenNoCredentials = Forbidden("You do not have OAuth credentials set")
-  val googleAuthConfig: Option[GoogleAuthConfig] = Option {
+  val googleAuthConfig: Option[GoogleAuthConfig] = Configuration.preview.oauthCredentials.map { cred =>
     GoogleAuthConfig(
-      "768784040766-20a2pv5c0qc2n4n8vab37r6o6kf07st1.apps.googleusercontent.com",     // The client ID from the dev console
-      "QX8Z59AfALOJIL8Dhvdipb21",       // The client secret from the dev console
-      "http://localhost:9000/oauth2callback",     // The redirect URL Google send users back to (must be the same as
+      cred.oauthClientId,     // The client ID from the dev console
+      cred.oauthSecret,       // The client secret from the dev console
+      cred.oauthCallback,     // The redirect URL Google send users back to (must be the same as
       // that configured in the developer console)
       Some("guardian.co.uk"), // Google App domain to restrict login
-      Some(maxAuthAge)
+      None
     )
   }
 
