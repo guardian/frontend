@@ -73,20 +73,21 @@ define([
         hist.unshift(new HistoryItem(item));
         this.set(hist);
 
-        if (item.meta) {
+        if (item.meta && item.meta.section) {
             summary = this.getSummary();
-            if (item.meta.section) {
-                summary.sections[item.meta.section] = (summary.sections[item.meta.section] || 0) + 1;
-            }
-            if (item.meta.keywords) {
-                [].concat(item.meta.keywords).forEach(function(keyword) {
-                    summary.keywords[keyword] = (summary.keywords[keyword] || 0) + 1;
-                });
-            }
-            this.setSummary(summary);
+            summary.sections[item.meta.section] = (summary.sections[item.meta.section] || 0) + 1;
         }
 
-        return hist;
+        if (item.meta && item.meta.keywords) {
+            summary = summary || this.getSummary();
+            [].concat(item.meta.keywords).forEach(function(keyword) {
+                summary.keywords[keyword] = (summary.keywords[keyword] || 0) + 1;
+            });
+        }
+
+        if (summary) {
+            this.setSummary(summary);
+        }
     };
 
 
