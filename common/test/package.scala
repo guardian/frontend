@@ -108,7 +108,7 @@ class EditionalisedHtmlUnit(val port: String) extends TestSettings {
 /**
  * Executes a block of code in a FakeApplication.
  */
-class FakeApp extends TestSettings {
+object Fake extends TestSettings {
 
   def apply[T](block: => T): T = running(
     FakeApplication(
@@ -126,5 +126,3 @@ object TestRequest {
     FakeRequest("GET", if (!path.startsWith("/")) s"/$path" else path)
   }
 }
-
-object Fake extends FakeApp
