@@ -3,16 +3,18 @@ define([
     'common/utils/mediator',
     'common/utils/ajax',
     'common/modules/onward/history',
+    'lodash/objects/assign',
     'bonzo'
 ], function (
     $,
     mediator,
     ajax,
     History,
+    assign,
     bonzo
 ) {
     var breakignNewsSource = '/breaking-news/lite.json',
-        historyThreshold = 2,
+        threshold = 2,
         header,
         matchers,
         editionSection,
@@ -29,39 +31,30 @@ define([
             editionSection = [];
             histCount = {};
         
-            matchers[window.location.pathname.slice(1)] = true;
+            matchers[window.location.pathname.slice(1)] = threshold;
 
             if (page.edition) {
-                matchers[page.edition.toLowerCase()] = true;
+                matchers[page.edition.toLowerCase()] = threshold;
                 editionSection.push(page.edition.toLowerCase());
             }
 
             if (page.section) {
-                matchers[page.section.toLowerCase()] = true;
+                matchers[page.section.toLowerCase()] = threshold;
                 editionSection.push(page.section.toLowerCase());
             }
            
-            matchers[editionSection.join('/')] = true;
+            matchers[editionSection.join('/')] = threshold;
             
             if (page.keywordIds) {
                 page.keywordIds.split(',').forEach(function(keyword) {
-                    matchers[keyword.toLowerCase()] = true;
-                    matchers[keyword.split('/')[0].toLowerCase()] = true;
+                    matchers[keyword.toLowerCase()] = threshold;
+                    matchers[keyword.split('/')[0].toLowerCase()] = threshold;
                 }); 
             }
 
             hist = new History();
-            hist.get().forEach(function(article) {
-                var s = article.section;
-
-                histCount[s] = (histCount[s] || 0) + 1;
-
-                if (histCount[s] >= historyThreshold) {
-                    matchers[s] = true;
-                } 
-            });
-
-            window.console.log('Breaking news matchers: ' + Object.keys(matchers).join(', '));
+            assign(matchers, hist.getSummary().sections);
+            assign(matchers, hist.getSummary().keywords);
         }
 
         ajax({
@@ -73,9 +66,9 @@ define([
                 var articles = [];
 
                 resp.collections.forEach(function(coll) {
-                    var collName = coll.displayName.toLowerCase();
+                    var href = coll.href.toLowerCase().trim();
 
-                    if (coll.content.length && (collName === 'global' || matchers[collName])) {
+                    if (coll.content.length && (href === 'global' || matchers[href] >= threshold)) {
                        articles = articles.concat(coll.content);
                     }
                 });

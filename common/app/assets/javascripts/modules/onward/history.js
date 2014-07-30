@@ -7,12 +7,14 @@ define([
     'lodash/collections/map',
     'lodash/collections/sortBy',
     'lodash/collections/filter',
+    'lodash/collections/reduce',
     'common/utils/storage'
 ], function(
     _assign,
     _map,
     _sortBy,
     _filter,
+    _reduce,
     storage
     ) {
 
@@ -67,27 +69,17 @@ define([
     };
 
     History.prototype.log = function(item) {
-        var hist = this.capToSize(this.config.maxSize -1),
-            summary;
+        var hist = [new HistoryItem(item)].concat(this.capToSize(this.config.maxSize -1))
 
-        hist.unshift(new HistoryItem(item));
         this.set(hist);
 
-        if (item.meta && item.meta.section) {
-            summary = this.getSummary();
-            summary.sections[item.meta.section] = (summary.sections[item.meta.section] || 0) + 1;
-        }
-
-        if (item.meta && item.meta.keywords) {
-            summary = summary || this.getSummary();
-            [].concat(item.meta.keywords).forEach(function(keyword) {
-                summary.keywords[keyword] = (summary.keywords[keyword] || 0) + 1;
-            });
-        }
-
-        if (summary) {
-            this.setSummary(summary);
-        }
+        this.setSummary(
+            _reduce(hist, function(summary, item) {
+                summary.sections[item.section] = (summary.sections[item.section] || 0) + 1;
+                summary.keywords[item.keywords[0]] = (summary.keywords[item.keywords[0]] || 0) + 1;
+                return summary;
+            }, {sections: {}, keywords: {}, count: hist.length})
+        );
     };
 
 
