@@ -4,7 +4,7 @@
     &:hover {
         background: darken($c-neutral8, 4%);
 
-        @include mq($from: desktop) {
+        @include mq(desktop) {
             .football-match__report {
                 visibility: visible;
 

@@ -59,7 +59,7 @@ $c-money-high: #63007f;
     .tabs__content {
         padding: 0;
         border: 0;
-        
+
         .commercial__head,
         .commercial__body {
             @include rem((
@@ -75,7 +75,7 @@ $c-money-high: #63007f;
         + .tabs__tab a {
             border-left: 0;
         }
-        
+
         a {
             background-color: transparent;
             @include fs-data(4);
@@ -128,7 +128,7 @@ $c-money-high: #63007f;
         display: block;
         font-weight: bold;
         @include fs-bodyHeading(1);
-        
+
         .i-double-arrow-right-blue {
             @include rem((
                 margin-left: $gs-gutter/4,
@@ -144,7 +144,7 @@ $c-money-high: #63007f;
     }
     .commercial__home-link {
         color: $c-money-high;
-        
+
         .commercial__home-link__cta {
             background-color: $c-money-high;
         }
@@ -207,7 +207,7 @@ $c-money-high: #63007f;
         .commercial__body {
             margin-left: 25%;
             padding-left: 0;
-        }        
+        }
         .commercial__home-link {
             position: absolute;
             margin-left: 0;
@@ -228,22 +228,22 @@ $c-money-high: #63007f;
                 margin-left: gs-span(2) + $gs-gutter
             ));
             padding-left: 0;
-        }        
+        }
     }
-    @include mq($from: faciaLeftCol, $to: wide) {
+    @include mq(faciaLeftCol, wide) {
         .commercial__home-link {
             line-height: 1;
             @include rem((
                 width: gs-span(1) + $gs-gutter*2
-            ));            
-        }        
+            ));
+        }
     }
     @include mq(wide) {
         .tools__calculators {
             @include rem((
                 right: gs-span(1) + $gs-gutter
             ));
-        }            
+        }
         .tabs__container,
         .commercial__body {
             @include rem((
@@ -263,7 +263,7 @@ $c-money-high: #63007f;
             right: $gs-gutter;
         }
     }
-    @include mq($from: tablet, $to: rightCol) {
+    @include mq(tablet, rightCol) {
         .tabs__content {
             @include rem((
                 padding-bottom: $comercial-comp-baseline
@@ -306,7 +306,7 @@ $c-money-high: #63007f;
             ));
         }
     }
-    @include mq($from: rightCol, $to: leftCol) {
+    @include mq(rightCol, leftCol) {
         .tabs__container {
             margin-left: 25%;
         }
@@ -321,15 +321,15 @@ $c-money-high: #63007f;
                 margin-left: gs-span(2) + $gs-gutter
             ));
             padding-left: 0;
-        }    
+        }
     }
-    @include mq($from: leftCol, $to: wide) {
+    @include mq(leftCol, wide) {
         .commercial__home-link {
             line-height: 1;
             @include rem((
                 width: gs-span(1) + $gs-gutter*2
-            ));            
-        }        
+            ));
+        }
     }
     @include mq(wide) {
         .tabs__container,
