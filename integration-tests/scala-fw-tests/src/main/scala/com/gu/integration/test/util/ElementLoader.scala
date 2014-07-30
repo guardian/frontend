@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.ExpectedCondition
+import org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable
 import org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf
 import org.openqa.selenium.support.ui.WebDriverWait
 
@@ -18,14 +19,20 @@ object ElementLoader extends TestLogging {
 
   val TestAttributeName = "data-test-id"
 
+  def notDisplayed(elementsToCheck: List[WebElement]): List[WebElement] = {
+    elementsToCheck.filter(element => !element.isDisplayed())
+  }
+
+  def displayed(elementsToCheck: List[WebElement]): List[WebElement] = {
+    elementsToCheck.filter(element => element.isDisplayed())
+  }
+
   /**
    * Will find the element with the provided test attribute id and, if provided, using the provided webelement as search context
-   * otherwise it will use the WebDriver, which has to be in scope. Waits until element is displayed before returning
+   * otherwise it will use the WebDriver, which has to be in scope.
    */
   def findByTestAttribute(testAttributeValue: String, contextElement: Option[SearchContext] = None)(implicit driver: WebDriver): WebElement = {
-    val foundElement = contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
-    waitUntil(visibilityOf(foundElement), 3)
-    foundElement
+    contextElement.getOrElse(driver).findElement(byTestAttributeId(testAttributeValue))
   }
 
   /**
@@ -41,11 +48,24 @@ object ElementLoader extends TestLogging {
   }
 
   /**
-   * Find all link elements, including nested, from the provided SearchContext and returns those that are displayed
+   * Find maxElements of displayed and visible link elements, including nested, from the provided SearchContext
    */
-  def displayedLinks(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
-    val visibleLinks = searchContext.findElements(By.cssSelector("a")).asScala.toList.filter(element => waitUntil(visibilityOf(element)))
-    visibleLinks.filter(element => element.isDisplayed())
+  def displayedLinks(searchContext: SearchContext, maxElements: Int = Int.MaxValue)(implicit driver: WebDriver): List[WebElement] = {
+    searchContext.findElements(By.cssSelector("a")).asScala
+      .toList
+      .view
+      .filter(element => waitUntil(visibilityOf(element)) && element.isDisplayed())
+      .take(maxElements)
+      .toList
+  }
+
+  /**
+   * Finds one displayed link, including nested, from the provided SearchContext or, if none is provided, the driver
+   */
+  def displayedLink(searchContext: SearchContext)(implicit driver: WebDriver): WebElement = {
+    val link = searchContext.findElement(By.cssSelector("a"))
+    waitUntil(elementToBeClickable(link))
+    link
   }
 
   /**
@@ -79,8 +99,16 @@ object ElementLoader extends TestLogging {
    * Find all link IFrames, including nested, from the provided SearchContext and returns those that are visible
    */
   def displayedIFrames(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
-    val visibileFrames = searchContext.findElements(By.cssSelector("iframe")).asScala.toList.filter(element => waitUntil(visibilityOf(element)))
-    visibileFrames.filter(element => element.isDisplayed())
+    searchContext.findElements(By.cssSelector("iframe")).asScala.toList.filter(
+      element => waitUntil(visibilityOf(element)) && element.isDisplayed())
+  }
+
+  def firstDisplayedIframe(rootElement: WebElement)(implicit driver: WebDriver): WebElement = {
+    val iframeElements = displayedIFrames(rootElement)
+    if (iframeElements.size != 1) {
+      throw new RuntimeException(s"Unexpected number of iframes ${iframeElements.size} inside element: ${rootElement}")
+    }
+    iframeElements.last
   }
 
   /**
@@ -88,7 +116,7 @@ object ElementLoader extends TestLogging {
    *  was proven to be a bit flaky. So calling this method, before calling is displayed, will make sure the elements are loaded and
    *  visible
    */
-  private def waitUntil(expectedCondition: ExpectedCondition[WebElement], timeoutInSeconds: Int = 2)(implicit driver: WebDriver): Boolean = {
+  def waitUntil[T](expectedCondition: ExpectedCondition[T], timeoutInSeconds: Int = 3)(implicit driver: WebDriver): Boolean = {
     try {
       new WebDriverWait(driver, timeoutInSeconds).until(expectedCondition)
     } catch {

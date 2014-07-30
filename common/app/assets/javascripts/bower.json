@@ -16,10 +16,11 @@
     "enhancer": "0.1.1",
     "videojs": "git://github.com/guardian/video.js.git#59d4443682bd578e03c3925ed40a623c466476c6",
     "videojs-contrib-ads": "guardian/videojs-contrib-ads#798b8a93cb293a95ede9af385c2354aa2c129216",
-    "videojs-vast": "~0.1.5",
+    "videojs-vast": "guardian/videojs-vast-plugin#0a9b9de064f5ed31d436fc05b1d8dd6f504b6f96",
     "videojs-persistvolume": "~0.1.0",
     "socket.io-client": "1.0.6",
-    "raven-js": "~1.1.15"
+    "raven-js": "~1.1.15",
+    "videojs-playlist-audio": "*"
   },
   "resolutions": {
     "videojs": "59d4443682bd578e03c3925ed40a623c466476c6",
@@ -43,7 +44,8 @@
       ],
       "socket.io-client": "bower_components/socket.io-client/socket.io.js",
       "videojs": "bower_components/videojs/dist/video-js/video.js",
-      "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js"
+      "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",
+      "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js"
     }
   }
 }

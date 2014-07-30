@@ -245,6 +245,13 @@ define([
                         'data-link-name="ad slot right" data-test-id="ad-slot-right" data-name="right" data-tabletlandscape="300,250|300,600"></div>'
                 },
                 {
+                    name: 'im',
+                    type: 'im',
+                    html: '<div id="dfp-ad--im" class="ad-slot ad-slot--dfp ad-slot--im ad-slot--im" ' +
+                        'data-link-name="ad slot im" data-test-id="ad-slot-im" data-name="im" data-mobile="88,85" ' +
+                        'data-refresh="false" data-label="false"></div>'
+                },
+                {
                     name: 'inline1',
                     type: 'inline',
                     html: '<div id="dfp-ad--inline1" class="ad-slot ad-slot--dfp ad-slot--inline1 ad-slot--inline" ' +

@@ -249,7 +249,7 @@ $c-commercial-books-dark: #630d4c;
             ));
         }
     }
-    @include mq($from: faciaLeftCol, $to: wide) {
+    @include mq(faciaLeftCol, wide) {
         .commercial__title {
             line-height: 1;
             @include rem((
@@ -307,7 +307,7 @@ $c-commercial-books-dark: #630d4c;
             padding-left: 0;
         }
     }
-    @include mq($from: rightCol, $to: leftCol) {
+    @include mq(rightCol, leftCol) {
         &.commercial--high .commercial__head {
             @include rem((
                 padding-right: 16px

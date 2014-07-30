@@ -10,10 +10,14 @@ trait AdSuffixHandlingForFronts extends MetaData{
 
   def extractAdUnitSuffixFrom(path: String) = {
     val frontSuffixList = List("front")
+    val tagPageSuffixList = List("subsection")
+
     path.split("/").toList match {
       case cc :: Nil  if supportedCountries contains cc => (cc :: frontSuffixList).mkString("/")
-      case cc :: pathList if supportedCountries contains cc => (pathList ::: frontSuffixList).mkString("/")
-      case pathList => (pathList ::: frontSuffixList).mkString("/")
+      case cc :: bitsAfterTheEdition if (supportedCountries.contains(cc) &&
+        bitsAfterTheEdition == List(section))=> (section :: frontSuffixList).mkString("/")
+      case nonEditionalisedPath if nonEditionalisedPath == List(section) => (section :: frontSuffixList).mkString("/")
+      case _  => (section :: tagPageSuffixList).mkString("/")
     }
   }
 }

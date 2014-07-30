@@ -110,7 +110,7 @@ $commercial-cta-diameter: (
     }
     
     &.commercial--high {
-        @include mq($from: tablet, $to: leftCol) {
+        @include mq(tablet, leftCol) {
             .lineitem {
                 width: 100%;
                 
@@ -166,13 +166,14 @@ $commercial-cta-diameter: (
         
         .commercial__title {
             display: none;
+            float: none;
         }
         @include mq(tablet) {
             .commercial__title {
                 display: block;
             }
         }
-        @include mq($from: leftCol, $to: wide) {
+        @include mq(leftCol, wide) {
             .i-bookshop-logo--bookshop {
                 margin-left: 0;
             }

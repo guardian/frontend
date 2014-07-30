@@ -1,16 +1,27 @@
-.content__main-column--video {
+.content__main-column--media {
     @include mq(wide) {
         @include rem((
             width: gs-span(9)
         ));
     }
+
+    .content__main-column__body a {
+        color: $c-neutral7;
+        text-decoration: underline;
+    }
+}
+.content__main-column--audio .content__main-column__body {
+    @include rem((
+        margin-top: $gs-baseline,
+        max-width: gs-span(8)
+    ));
 }
 
-.content--video {
-
+.content--media {
     background-color: $c-neutral1;
     color: $c-neutral7;
     @include rem((
+        padding-bottom: $gs-baseline*2,
         padding-top: $gs-baseline/2
     ));
 
@@ -20,6 +31,11 @@
 
     .byline {
         word-break: break-word;
+
+        a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
     }
 
     .byline,

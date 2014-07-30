@@ -98,7 +98,7 @@ define([
                 label: false,
                 refresh: false,
                 sizeMappings: {
-                    mobile: '88,89'
+                    mobile: '88,85'
                 }
             },
             inline1: {
@@ -235,6 +235,18 @@ define([
 
             return mapping.build();
         },
+        abParam = function() {
+            var hchTest = ab.getParticipations().HighCommercialComponent;
+            if (hchTest) {
+                switch (hchTest.variant) {
+                    case 'control':
+                        return '1';
+                    case 'variant':
+                        return '2';
+                }
+            }
+            return '3';
+        },
         /**
          * Builds the appropriate page level targeting
          *
@@ -272,9 +284,10 @@ define([
                 su      : page.isSurging ? '1' : '0',
                 bp      : detect.getBreakpoint(),
                 a       : audienceScience.getSegments(),
-                at      : cookies.get('adtest') || '',
+                at      : cookies.get('adtest') || cookies.get('GU_TEST') || '',
                 gdncrm  : userAdTargeting.getUserSegments(),
-                ab      : ab.makeOmnitureTag()
+                ab      : abParam(),
+                co      : parseContributors(page.author)
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         createAdSlot = function(name, types, keywords) {
@@ -310,6 +323,12 @@ define([
                 .split(',').map(function (keyword) {
                     return keyword.split('/').pop();
                 });
+        },
+        parseContributors = function(contributors) {
+            var contributorArray = parseKeywords(contributors);
+            return contributorArray.map(function(contrib) {
+               return keywords.format(contrib);
+            });
         };
 
     /**

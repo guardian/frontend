@@ -16,8 +16,8 @@
 .content-footer .gs-container {
     // scoped style for now so this only applies to refactored pages
     // this padding has historically been added to all child elements
-    // taking it off child elements and moving it here for DRY.   
-    // the intention is to move this to the global .gs-container definition 
+    // taking it off child elements and moving it here for DRY.
+    // the intention is to move this to the global .gs-container definition
     // which requires the padding to be removed from all child elements
     @include box-sizing(border-box);
     @include rem((
@@ -57,7 +57,7 @@
         ));
     }
 
-    &.content__main-column--video,
+    &.content__main-column--media,
     &.content__main-column--gallery,
     &.content__main-column--wide {
         @include mq(rightCol) {
@@ -137,11 +137,6 @@
         margin-top: $gs-baseline,
         margin-bottom: $gs-baseline
     ));
-}
-
-.content__keywords--more-tags {
-    vertical-align: bottom;
-    display: inline-block;
 }
 
 .content__section {
@@ -423,13 +418,13 @@
         line-height: 16px
     ));
 
-    @include mq($from: tablet) {
+    @include mq(tablet) {
         @include rem((
             padding-top: $gs-baseline/2
         ));
     }
     .content__head & {
-        @include mq($from: tablet, $to: leftCol) {
+        @include mq(tablet, leftCol) {
             border-top: 1px dotted $c-neutral5;
         }
     }

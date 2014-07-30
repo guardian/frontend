@@ -19,11 +19,11 @@ object TestFailed{
 
 object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def index() = Authenticated{ request =>
+  def index() =AuthActions.AuthActionTest{ request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
-  def test(id: String, testPath: String) = Authenticated.async{ request =>
+  def test(id: String, testPath: String) = AuthActions.AuthActionTest.async{ request =>
 
     val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
 

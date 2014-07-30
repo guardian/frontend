@@ -104,6 +104,10 @@ case class MostReferredContainer(showMore: Boolean = true) extends Container {
   val containerType = "most-referred"
   val tone = "news"
 }
+case class HeadlineContainer(showMore: Boolean = true) extends Container {
+  val containerType = "headline"
+  val tone = "news"
+}
 
 
 /**
@@ -217,6 +221,12 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
     }
 
     document.getElementsByClass("gu-video").foreach { element: Element =>
+
+      element
+        .removeClass("gu-video")
+        .addClass("js-gu-media gu-media gu-media--video")
+        .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
+
       val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path
 
       val mediaId = element.attr("data-media-id")
@@ -247,7 +257,6 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
                 Sorry, your browser is unable to play this video.
               </object>""")
 
-        element.wrap("<div class=\"gu-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
       })
     }
     document

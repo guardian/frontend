@@ -72,6 +72,7 @@ GET        /tagged.json                                                         
 
 GET        /video/section/*sectionId.json                                                      controllers.VideoInSectionController.renderSectionVideos(sectionId)
 GET        /video/most-viewed.json                                                             controllers.MostViewedVideoController.renderMostViewed()
+GET        /audio/most-viewed.json                                                             controllers.MostViewedAudioController.renderMostViewed()
 
 # Sport
 GET        /sport/cricket/match/:matchId                                                       controllers.CricketMatchController.renderMatchId(matchId)
@@ -166,8 +167,8 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                              
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>.json                      controllers.ImageContentController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>                           controllers.ImageContentController.render(path)
 
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>.json                                          controllers.VideoController.renderJson(path)
-GET        /$path<[\w\d-]*(/[\w\d-]*)?/video/.*>                                               controllers.VideoController.render(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                  controllers.MediaController.renderJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                                       controllers.MediaController.render(path)
 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                   controllers.InteractiveController.renderInteractiveJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                        controllers.InteractiveController.renderInteractive(path)
