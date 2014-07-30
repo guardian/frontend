@@ -18,7 +18,7 @@ object HealthCheck extends AllGoodHealthcheckController("/login") {
     super.healthcheck()
   }
 
-  val testPort = 9003
+  val testPort = 9001
 
   override lazy val port = {
     Play.current.mode match {

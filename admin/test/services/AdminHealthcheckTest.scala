@@ -6,7 +6,7 @@ import test.HtmlUnit
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
-class HealthCheckTest extends FlatSpec with Matchers {
+class AdminHealthCheckTest extends FlatSpec with Matchers {
 
   import play.api.Play.current
 
