@@ -29,9 +29,7 @@
                 }
                 </div>
                 <div class="container__body container--rolled-up-hide">
-                @defining(collection.items.slice(0, 6)) { firstSix =>
-                    @fragments.collections._3_by_2_with_thumbnails(firstSix, style)
-                }
+                    @fragments.collections._3_by_2_with_thumbnails(collection.items, style)
                 </div>
             </div>
         </section>

@@ -61,18 +61,18 @@
 
 .linkslist--without-top-borders .linkslist__item {
     &:nth-child(1) {
-        border-top: none;
+        border-top: 0;
     }
 
     @include mq(tablet) {
         &:nth-child(2) {
-            border-top: none;
+            border-top: 0;
         }
     }
 
     @include mq(desktop) {
         &:nth-child(3) {
-            border-top: none;
+            border-top: 0;
         }
     }
 }
