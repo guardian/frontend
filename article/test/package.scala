@@ -1,12 +1,11 @@
 package test
 
 import org.scalatest.Tag
+import conf.HealthCheck
 
 object ArticleComponents extends Tag("article components")
 
 object `package` {
 
-  object HtmlUnit extends EditionalisedHtmlUnit("9001")
-
-  object Fake extends FakeApp("9001")
+  object HtmlUnit extends EditionalisedHtmlUnit(HealthCheck.testPort.toString)
 }

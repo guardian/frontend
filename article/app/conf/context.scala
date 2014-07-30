@@ -24,9 +24,11 @@ object HealthCheck extends AllGoodHealthcheckController("/world/2012/sep/11/barc
     result
   }
 
+  val testPort = 9004
+
   override lazy val port = {
     Play.current.mode match {
-      case Mode.Test => 9001
+      case Mode.Test => testPort
       case _ => 9000
     }
   }

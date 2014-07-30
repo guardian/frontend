@@ -127,4 +127,4 @@ object TestRequest {
   }
 }
 
-object Fake extends FakeApp()
+object Fake extends FakeApp
