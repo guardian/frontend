@@ -330,7 +330,7 @@ define([
     };
 
     var ready = function () {
-        if(config.switches.enhancedVideoPlayer) {
+        if(config.switches.enhancedMediaPlayer) {
             modules.initPlayer();
         }
 
