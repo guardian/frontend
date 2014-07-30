@@ -2,23 +2,29 @@ define([
     'common/modules/onward/history',
     'fixtures/history/contains',
     'fixtures/history/max',
-], function(History, contains, max) {
+], function(hist, contains, max) {
 
     var setStorageItem = function(item) {
         window.localStorage.setItem('gu.history', JSON.stringify({
             'value' : item
         }));
+        window.localStorage.removeItem('gu.history.summary');
     };
 
-    var item = {"id":"/p/3jbcb", meta: { "foo": "bar"}},
+    var item = {
+            id:"/p/3jbcb",
+            meta: {
+                section: "foobar",
+                keywords: ['foo', 'bar']
+            }
+        },
         hist;
 
     describe('History', function() {
 
         beforeEach(function() {
-            window.localStorage.removeItem('gu.history');
+            hist.reset();
             setStorageItem(contains);
-            hist = new History();
         });
 
         it('should get history from local storage', function() {
@@ -41,8 +47,8 @@ define([
         it('should extend any optional meta data directly onto the logged items object', function() {
             hist.log(item);
 
-            expect(hist.get()[0].foo).toBeDefined();
-            expect(hist.get()[0].foo).toEqual("bar");
+            expect(hist.get()[0].section).toBeDefined();
+            expect(hist.get()[0].section).toEqual("foobar");
         });
 
         it('should be able to check if an item id exists', function() {
@@ -58,5 +64,19 @@ define([
             expect(hist.getSize()).toEqual(100);
         });
 
+        it('should set the section count in the summary, once per article', function() {
+            hist.log(item);
+            hist.log(item);
+
+            expect(hist.getSummary().sections.foobar).toEqual(1);
+        });
+
+        it('should set the (first) keyword count in the summary, once per article', function() {
+            hist.log(item);
+            hist.log(item);
+
+            expect(hist.getSummary().keywords.foo).toEqual(1);
+            expect(hist.getSummary().keywords.bar).toEqual(undefined);
+        });
     });
 });
