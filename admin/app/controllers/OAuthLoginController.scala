@@ -66,7 +66,7 @@ object OAuthLoginController extends Controller with ExecutionContexts {
               // Redirect a user back there now if it exists
               val redirect = request.session.get(LOGIN_ORIGIN_KEY) match {
                 case Some(url) => Redirect(url)
-                case None => Redirect(routes.IndexController.index())
+                case None => Redirect(routes.AdminIndexController.admin())
               }
               // Store the JSON representation of the identity in the session - this is checked byAuthActions.AuthActionTest later
               val sessionAdd: Seq[(String, String)] = Seq(

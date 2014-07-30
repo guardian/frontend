@@ -166,7 +166,7 @@ figure {
     position: relative;
 
     .responsive-img {
-        @include mq($from: rightCol) {
+        @include mq(rightCol) {
             top: -25%;
         }
         height: auto;
