@@ -17,11 +17,13 @@
         </a>
         @books.take(1).map { book =>
             <div class="commercial--v-high__head">
-                <h4 itemprop="name" class="lineitem__title">
-                    @book.title
-                </h4>
-                <meta itemprop="isbn" content="@{book.isbn}" />
-                <p itemprop="author" class="lineitem__meta">@book.author</p>
+                <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-@{book.isbn}-@{book.author}-@{book.title}-title">
+                    <h4 itemprop="name" class="lineitem__title">
+                        @book.title
+                    </h4>
+                    <meta itemprop="isbn" content="@{book.isbn}" />
+                    <p itemprop="author" class="lineitem__meta">@book.author</p>
+                </a>
             </div>
             <div class="commercial--v-high__body">
                 <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-@{book.isbn}-@{book.author}-@{book.title}">
