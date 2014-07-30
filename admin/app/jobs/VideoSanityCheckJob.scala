@@ -33,8 +33,6 @@ object VideoSanityCheckJob extends ExecutionContexts with implicits.Futures with
       case (raw :: starts:: Nil) => sensible(starts / raw * 100)
     }
 
-    videoStarts.foreach(println)
-
     val prerollEndsConfidence = sequence(Seq(videoPageViews, prerollEnds)).map{
       case (raw :: ends:: Nil) => sensible(ends / raw * 100)
     }
