@@ -7,6 +7,7 @@ import com.gu.integration.test.pages.common.ParentPage
 import com.gu.integration.test.util.ElementLoader.findByTestAttribute
 import com.gu.integration.test.pages.common.RelatedContentModule
 import com.gu.integration.test.pages.common.AdvertiseModule
+import com.gu.integration.test.pages.common.DiscussionsContainerModule
 
 class ArticlePage(implicit driver: WebDriver) extends ParentPage {
 
@@ -39,5 +40,9 @@ class ArticlePage(implicit driver: WebDriver) extends ParentPage {
 
   def bottomMerchandisingAdModule(): AdvertiseModule = {
     new AdvertiseModule(bottomMerchandisingAdElement)
+  }
+  
+  def commentsContainerModule(): DiscussionsContainerModule = {
+    new DiscussionsContainerModule()
   }
 }
