@@ -24,7 +24,6 @@ define([
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/navigation/navigation',
-    'common/modules/ui/breaking-news',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/ui/dropdowns',
@@ -39,6 +38,7 @@ define([
     'common/modules/gallery/lightbox',
     'common/modules/onward/history',
     'common/modules/onward/sequence',
+    'common/modules/onward/breaking-news',
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
     'common/modules/analytics/foresee-survey',
@@ -73,7 +73,6 @@ define([
     Search,
     Navigation,
 
-    breakingNews,
     Tabs,
     Toggles,
     Dropdowns,
@@ -88,6 +87,7 @@ define([
     LightboxGallery,
     History,
     sequence,
+    breakingNews,
     Message,
     AutoSignin,
     Foresee,
@@ -282,10 +282,6 @@ define([
 
         displayBreakingNews: function (config) {
             breakingNews(config);
-            // TODO! This was just for hack demo:
-            setInterval(function() {
-                breakingNews(config);
-            }, 2000);
         },
 
         displayOnboardMessage: function (config) {
@@ -476,8 +472,7 @@ define([
             modules.repositionComments();
             modules.showMoreTagsLink();
             modules.showSmartBanner(config);
-            // TODO! Uncomment this. It was just for hack day.
-            //modules.initDiscussion();
+            modules.initDiscussion();
         }
         mediator.emit('page:common:ready', config, context);
     };

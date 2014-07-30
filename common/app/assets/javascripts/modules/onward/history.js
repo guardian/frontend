@@ -30,6 +30,7 @@ define([
 
     History.prototype.DEFAULTS = {
         storageKey: 'gu.history',
+        storageKeySummary: 'gu.history.summary',
         maxSize: 100
     };
 
@@ -38,8 +39,15 @@ define([
     };
 
     History.prototype.get = function() {
-        var hist = storage.local.get(this.config.storageKey);
-        return (hist === null) ? [] : hist;
+        return storage.local.get(this.config.storageKey) || [];
+    };
+
+    History.prototype.setSummary = function(data) {
+        return storage.local.set(this.config.storageKeySummary, data);
+    };
+
+    History.prototype.getSummary = function() {
+        return storage.local.get(this.config.storageKeySummary) || {sections: {}, keywords: {}};
     };
 
     History.prototype.getSize = function() {
@@ -60,10 +68,25 @@ define([
 
     History.prototype.log = function(item) {
         var hist = this.capToSize(this.config.maxSize -1),
-            newItem = new HistoryItem(item);
+            summary;
 
-        hist.unshift(newItem);
+        hist.unshift(new HistoryItem(item));
         this.set(hist);
+
+        if (item.meta) {
+            summary = this.getSummary();
+            if (item.meta.section) {
+                summary.sections[item.meta.section] = (summary.sections[item.meta.section] || 0) + 1;
+            }
+            if (item.meta.keywords) {
+                [].concat(item.meta.keywords).forEach(function(keyword) {
+                    summary.keywords[keyword] = (summary.keywords[keyword] || 0) + 1;
+                });
+            }
+            this.setSummary(summary);
+        }
+
+        return hist;
     };
 
 
