@@ -216,19 +216,21 @@ define([
 
                             // preroll for videos only
                             if (config.page.contentType === 'Video') {
-                                // Init plugins
-                                player.adCountDown();
-                                player.ads({
-                                    timeout: 3000
-                                });
 
                                 modules.initOmnitureTracking(player);
                                 modules.initOphanTracking(player, mediaId);
                                 modules.bindPrerollEvents(player);
 
-                                player.vast({
-                                    url: modules.getVastUrl()
-                                });
+                                // Init plugins
+                                if(config.switches.videoAdverts) {
+                                    player.adCountDown();
+                                    player.ads({
+                                        timeout: 3000
+                                    });
+                                    player.vast({
+                                        url: modules.getVastUrl()
+                                    });
+                                }
 
                                 if(/desktop|wide/.test(detect.getBreakpoint())) {
                                     modules.initEndSlate(player);
@@ -298,7 +300,9 @@ define([
     };
 
     var ready = function () {
-        modules.initPlayer();
+        if(config.switches.enhancedVideoPlayer) {
+            modules.initPlayer();
+        }
 
         if (config.isMedia) {
             modules.initMoreInSection();
