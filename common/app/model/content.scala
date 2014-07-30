@@ -431,6 +431,8 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 
 class Audio(content: ApiContentWithMeta) extends Media(content) {
 
+  lazy val body: String = delegate.safeFields.getOrElse("body", "")
+
   override lazy val encodings: Seq[Encoding] = {
     audioAssets.toList.collect {
       case audio: AudioAsset => Encoding(audio.url.getOrElse(""), audio.mimeType.getOrElse(""))

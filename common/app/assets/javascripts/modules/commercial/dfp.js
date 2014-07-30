@@ -98,7 +98,7 @@ define([
                 label: false,
                 refresh: false,
                 sizeMappings: {
-                    mobile: '88,89'
+                    mobile: '88,85'
                 }
             },
             inline1: {
