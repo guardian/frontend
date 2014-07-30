@@ -180,7 +180,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .local-navigation,
 .global-navigation,
 .signposting {
-    @include fs-header(1);
+    @include fs-headline(2);
     @include rem((
         line-height: $navigation-height
     ));
@@ -325,6 +325,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         margin-right: $gs-gutter/2
     ));
 }
+
 @mixin navigation-items-shrink-spacing {
     @include rem((
         padding-right: $navigation-h-space-between-items/2 - 3,
@@ -370,6 +371,32 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             @include rem((
                 padding-left: $navigation-h-space-between-items/2
             ));
+        }
+    }
+}
+
+/* Top navigation home icon
+   ========================================================================== */
+
+.top-navigation__item--home {
+    display: none;
+
+    .svg & {
+        @include mq(navigationBreakOnTwoLevels) {
+            display: table-cell;
+        }
+    }
+}
+.top-navigation__icon {
+    position: relative;
+    @include rem((
+        top: 3px
+    ));
+}
+.top-navigation__action--icon {
+    &:active {
+        svg polygon {
+            fill: $c-newsAccent;
         }
     }
 }
@@ -546,12 +573,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     .signposting,
     .local-navigation {
         display: table-cell;
-    }
-    .local-navigation__item,
-    .top-navigation__item {
-        white-space: nowrap;
-        display: table-cell;
-        position: relative;
     }
     .top-navigation {
         @include mq(navigationBreakOnTwoLevels) {
