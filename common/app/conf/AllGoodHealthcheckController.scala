@@ -9,8 +9,8 @@ import scala.concurrent.Future
 trait HealthcheckController extends Controller with Results with ExecutionContexts {
   import play.api.Play.current
 
-  val port = 9000
-  val baseUrl = s"http://localhost:$port"
+  lazy val port = 9000
+  lazy val baseUrl = s"http://localhost:$port"
 
   def healthcheck(): Action[AnyContent]
 

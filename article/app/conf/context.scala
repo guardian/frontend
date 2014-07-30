@@ -1,5 +1,6 @@
 package conf
 
+import _root_.play.api.{Mode, Play}
 import _root_.play.api.mvc.{Results, Action}
 import play.api.libs.ws.WS
 import common.Metrics
@@ -23,6 +24,13 @@ object HealthCheck extends AllGoodHealthcheckController("/world/2012/sep/11/barc
     result
   }
 
+  override lazy val port = {
+    Play.current.mode match {
+      case Mode.Test => 9001
+      case _ => 9000
+    }
+  }
+
   def isOk = status.get
 }
 
@@ -33,7 +41,6 @@ class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(u
   private lazy val status = new AtomicBoolean(false)
 
   def break() = status.set(false)
-
 
   override def get(req: HttpRequest) = {
     import _root_.play.api.Play.current
@@ -59,7 +66,6 @@ class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(u
 }
 
 object HealthcheckPage extends HealthcheckPage("/world/2012/sep/11/barcelona-march-catalan-independence")
-
 
 object Management extends GuManagement {
   val applicationName = "frontend-article"
