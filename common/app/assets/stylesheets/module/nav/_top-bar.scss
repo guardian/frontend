@@ -1,5 +1,7 @@
 .top-bar,
 .top-bar__item {
+    color: $c-guardian-services-action;
+    @include fs-bodyHeading(1);
     @include rem((
         height: $headerHeight
     ));
