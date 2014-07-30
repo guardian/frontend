@@ -1,8 +1,9 @@
 package controllers.admin
 
+import com.gu.googleauth.UserIdentity
 import common._
 import common.AdminMetrics.{ SwitchesUpdateCounter, SwitchesUpdateErrorCounter }
-import controllers.{AuthLogging, Identity}
+import controllers.AuthLogging
 import conf.{ Switches, Configuration }
 import play.api.mvc._
 import scala.concurrent.Future
@@ -46,7 +47,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     } else {
       log("saving switchboard", request)
 
-      val requester = Identity(request).get.fullName
+      val requester = UserIdentity.fromRequest(request).get.fullName
       val updates = request.body.asFormUrlEncoded.map { params =>
           Switches.all map { switch =>
               switch.name + "=" + params.get(switch.name).map(v => "on").getOrElse("off")
