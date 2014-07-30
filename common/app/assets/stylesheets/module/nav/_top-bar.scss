@@ -37,3 +37,93 @@
 .top-bar__item--search {
     padding-left: 0;
 }
+
+.top-bar__item--has-popup {
+    position: relative;
+
+    &.is-off {
+        display: block;
+
+        .top-bar__item--popup-toggle {
+            &:before {
+                display: none
+            }
+            &:after {
+                border-bottom: 0;
+                @include rem((
+                    border-top: $guardian-services-toggle-arrow-size solid $c-guardian-services-action
+                ));
+            }
+        }
+
+        .top-bar__popup {
+            display: none;
+        }
+    }
+}
+
+.top-bar__item--popup-toggle {
+    // This is the exposed menu arrow pointing up
+    // to the link. It's placed on the link to center it.
+    &:before {
+        content: '';
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-top: 0;
+        position: absolute;
+        left: 50%;
+        @include rem((
+            border-left: $guardian-services-toggle-arrow-size solid transparent,
+            border-right: $guardian-services-toggle-arrow-size solid transparent,
+            border-bottom: $guardian-services-toggle-arrow-size solid #ffffff,
+            top: $headerHeight - $guardian-services-toggle-arrow-size
+        ));
+    }
+    // disclosure arrow
+    &:after {
+        content: '';
+        display: inline-block;
+        pointer-events: none;
+        width: 0;
+        height: 0;
+        border-top: 0;
+        @include rem((
+            margin: 2px,
+            border-left: $guardian-services-toggle-arrow-size solid transparent,
+            border-right: $guardian-services-toggle-arrow-size solid transparent,
+            border-bottom: $guardian-services-toggle-arrow-size solid #ffffff
+        ));
+    }
+}
+
+.top-bar__popup {
+    @include box-sizing(border-box);
+    position: absolute;
+    background: $c-guardian-services-active-background;
+    margin: 0;
+    padding: 0;
+    right: 0;
+    list-style: none;
+    @include rem((
+        top: $headerHeight,
+        padding: 0 $gs-gutter/2,
+        width: gs-span(2)
+    ));
+    @include mq(desktop) {
+        @include rem((
+            width: gs-span(3)
+        ));
+    }
+
+    .guardian-services__action {
+        color: guss-colour(neutral-1);
+    }
+}
+
+.top-bar__popup-item {
+    border-bottom: 1px solid guss-colour(neutral-5);
+    &:last-child {
+        border-bottom: 0;
+    }
+}
