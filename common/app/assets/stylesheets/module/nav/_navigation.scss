@@ -184,6 +184,12 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     @include rem((
         line-height: $navigation-height
     ));
+    // Make fonts look a bit bolder (instead of loading a new webfont)
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+
+    // Restore opentype kerning settings in WebKit / Blink
+    -webkit-font-feature-settings: "kern" 1;
 
     a {
         &,
