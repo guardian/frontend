@@ -316,6 +316,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ABRightMostPopularText = Switch("A/B Tests", "ab-right-most-popular-text",
+    "If this switch is turned on, run the RightMostPopularText A/B test",
+   safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -499,7 +504,8 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
-    SeoBlockGooglebotFromJSPathsSwitch
+    SeoBlockGooglebotFromJSPathsSwitch,
+    ABRightMostPopularText
   )
 
   val httpSwitches: List[Switch] = List(

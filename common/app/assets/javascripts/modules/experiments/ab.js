@@ -4,18 +4,21 @@ define([
     'common/utils/mediator',
     'common/utils/config',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/high-commercial-component'
+    'common/modules/experiments/tests/high-commercial-component',
+    'common/modules/experiments/tests/right-most-popular-text'
 ], function (
     assign,
     store,
     mediator,
     globalConfig,
     mvtCookie,
-    HighCommercialComponent
+    HighCommercialComponent,
+    RightMostPopularText
     ) {
 
     var TESTS = [
-            new HighCommercialComponent()
+            new HighCommercialComponent(),
+            new RightMostPopularText()
         ],
         participationsKey = 'gu.ab.participations';
 
