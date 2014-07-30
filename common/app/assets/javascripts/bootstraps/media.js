@@ -255,7 +255,8 @@ define([
                                         timeout: 3000
                                     });
                                     player.vast({
-                                        url: modules.getVastUrl()
+                                        url: modules.getVastUrl(),
+                                        vidFormats: ['video/mp4', 'video/webm', 'video/ogv', 'video/x-flv']
                                     });
                                     modules.bindPrerollEvents(player);
                                 } else {

@@ -95,9 +95,11 @@ $vjs-control-height: $gs-baseline*4;
 
     > span {
         @mixin video-play-button-size($size) {
-            width: $size;
-            height: $size;
-            font-size: $size/6; // play triangle is em based so this scales it
+            @include rem((
+                width: $size,
+                height: $size,
+                font-size: $size/6 // play triangle is em based so this scales it
+            ));
         }
 
         display: inline-block;
@@ -148,8 +150,10 @@ $vjs-control-height: $gs-baseline*4;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-left: -23px;
-    margin-top: -15px;
+    @include rem((
+        margin-left: -23px,
+        margin-top: -15px
+    ));
     display: none;
 
     .vjs-using-native-controls &,
@@ -251,11 +255,15 @@ $vjs-control-height: $gs-baseline*4;
 .vjs-time-divider,
 .vjs-duration {
     float: left;
-    line-height: $gs-baseline*4;
+    @include rem((
+        line-height: $gs-baseline*4
+    ));
 }
 
 .vjs-time-divider {
-    padding: 0 $gs-gutter/4;
+    @include rem((
+        padding: 0 $gs-gutter/4
+    ));
 }
 
 .vjs-duration {
@@ -299,7 +307,9 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .vjs-progress-holder {
-    height: $vjs-progress-hitbox-height;
+    @include rem((
+        height: $vjs-progress-hitbox-height
+    ));
     cursor: pointer;
     position: relative;
 
@@ -504,9 +514,9 @@ $vjs-progress-inset-bottom: 4px;
     white-space: nowrap;
     @include fs-headline(2);
     position: absolute;
-    $height: nth(nth($fs-headlines, 1), 2);
+    $height: get-line-height($fs-headlines, 2);
     @include rem((
-        height: $height * 1px,
+        height: $height,
         padding: $gs-baseline/2,
         top: ($height + $gs-baseline) * -1
     ));

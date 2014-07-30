@@ -284,7 +284,7 @@ define([
                 su      : page.isSurging ? '1' : '0',
                 bp      : detect.getBreakpoint(),
                 a       : audienceScience.getSegments(),
-                at      : cookies.get('adtest') || '',
+                at      : cookies.get('adtest') || cookies.get('GU_TEST') || '',
                 gdncrm  : userAdTargeting.getUserSegments(),
                 ab      : abParam(),
                 co      : parseContributors(page.author)
