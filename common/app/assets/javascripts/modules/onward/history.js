@@ -69,12 +69,6 @@ define([
             });
         },
 
-        capToSize: function(desiredSize) {
-            var arr = this.get();
-            if (arr.length > desiredSize) { arr.length = desiredSize; }
-            return arr;
-        },
-
         log: function(newItem) {
             var foundItem,
                 hist = this.get().filter(function(item) {

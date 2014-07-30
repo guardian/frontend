@@ -151,7 +151,7 @@ define([
         };
 
         Article.prototype.paste = function () {
-            var sourceItem = copiedArticle.get();
+            var sourceItem = copiedArticle.get(true);
 
             if(!sourceItem || sourceItem.id === this.id()) { return; }
 
@@ -308,9 +308,6 @@ define([
         };
 
         Article.prototype._save = function() {
-            var timestamp,
-                itemMeta;
-
             if (!this.group.parent) {
                 return;
             }
@@ -321,22 +318,18 @@ define([
             }
 
             if (this.group.parentType === 'Collection') {
-
-                itemMeta = this.getMeta();
-                timestamp = Math.floor(new Date().getTime()/1000);
+                this.group.parent.setPending(true);
 
                 authedAjax.updateCollections({
                     update: {
                         collection: this.group.parent,
                         item:       this.id(),
                         position:   this.id(),
-                        itemMeta:   itemMeta,
+                        itemMeta:   this.getMeta(),
                         live:       vars.state.liveMode(),
                         draft:     !vars.state.liveMode()
                     }
                 });
-
-                this.group.parent.setPending(true);
             }
         };
 

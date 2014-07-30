@@ -141,7 +141,7 @@ GET         /login                                                              
 POST        /login                                                                                                   controllers.admin.OAuthLoginController.loginAction
 GET         /oauth2callback                                                                                          controllers.admin.OAuthLoginController.oauth2Callback
 GET         /logout                                                                                                  controllers.admin.OAuthLoginController.logout
-GET         /admin                                                                                                   controllers.admin.IndexController.admin()
+GET         /admin                                                                                                   controllers.admin.AdminIndexController.admin()
 GET         /api/proxy/*path                                                                                         controllers.admin.Api.proxy(path, callback)
 GET         /api/tag                                                                                                 controllers.admin.Api.tag(q, callback)
 GET         /api/item/*path                                                                                          controllers.admin.Api.item(path, callback)
@@ -234,6 +234,8 @@ GET         /commercial/money/credit-cards/:creditCardType                      
 GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
 GET         /commercial/capi/*contentId.json                                                                         controllers.commercial.ContentApiOffers.itemJson(contentId)
 GET         /commercial/capi/*contentId                                                                              controllers.commercial.ContentApiOffers.itemHtml(contentId)
+GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
+POST        /commercialtools/adunits/toapprove                                                                      controllers.admin.CommercialAdUnitController.approve()
 
 # Onward journeys
 GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)

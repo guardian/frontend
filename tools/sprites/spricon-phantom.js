@@ -51,6 +51,7 @@ var sprite = require( "webpage" ).create();
 
 // add a single reference to the sprite background
 pngcssrules.push("%i, .i { background-repeat: no-repeat; display: inline-block; }");
+pngcssrules.push(".svg .i { @include background-size(contain); }");
 
 
 // increment the current file index and process it
@@ -140,8 +141,14 @@ function processFile() {
 
                     }, svgdata);
 
-
-                    pngcssrules.push( "%" + cssprefix + filenamenoext + ", ." + cssprefix + filenamenoext + " { background-position: -" + coords.x + "px -" + coords.y + "px; width: " + coords.w + "px; height: " + coords.h + "px; }\n");
+                    pngcssrules.push( "%" + cssprefix + filenamenoext + ", " +
+                                      "." + cssprefix + filenamenoext + " { " +
+                                          "background-position: -" + coords.x + "px -" + coords.y + "px; " +
+                                          "@include rem((" +
+                                              "width: " + coords.w + "px, " +
+                                              "height: " + coords.h + "px" +
+                                          "));" +
+                                      "}\n");
 
                   // process the next svg
                   nextFile();

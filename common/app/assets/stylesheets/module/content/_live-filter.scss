@@ -55,8 +55,8 @@
 }
 .live-toggler__value {
     display: block;
-    min-width: $gs-gutter*2.5;
     @include rem((
+        min-width: $gs-gutter*2.5,
         padding-bottom: 2px
     ));
     border-right: 1px solid $c-neutral5;

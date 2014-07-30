@@ -15,13 +15,15 @@ $show-more-icon: (
 .collection__show-more {
     display: block;
     border: 0;
-    width: map-get($show-more-icon, width);
-    height: map-get($show-more-icon, height);
+    @include rem((
+        width: map-get($show-more-icon, width),
+        height: map-get($show-more-icon, height),
+        margin-top: $gs-baseline,
+        margin-left: -1 * map-get($show-more-icon, width) / 2
+    ));
     @include border-radius(50%);
     position: relative;
     left: 50%;
-    margin-top: $gs-baseline;
-    margin-left: -1 * map-get($show-more-icon, width) / 2;
     padding: 0;
     overflow: hidden;
     -webkit-transform: translateZ(0);
@@ -30,12 +32,17 @@ $show-more-icon: (
     &:focus,
     &[disabled] {
         .collection__show-more__icon {
-            margin-top: -1 * (map-get($show-more-icon, height) + map-get($show-more-icon, space-between));
+            @include rem((
+                margin-top: -1 * (map-get($show-more-icon, height) + map-get($show-more-icon, space-between))
+            ));
         }
     }
     .i {
         display: block;
-        margin-bottom: map-get($show-more-icon, space-between); // a bit of space between icons to avoid
+        @include rem((
+            // a bit of space between icons to avoid bleeding pixels
+            margin-bottom: map-get($show-more-icon, space-between)
+        ));
     }
     &[disabled] {
         -webkit-animation: spin 3s cubic-bezier(.680, -.550, .265, 1.550) forwards infinite;
@@ -43,6 +50,8 @@ $show-more-icon: (
 }
 .collection__show-more__icon {
     display: block;
-    height: (map-get($show-more-icon, height) + map-get($show-more-icon, space-between)) * 2;
-    width: map-get($show-more-icon, width);
+    @include rem((
+        height: (map-get($show-more-icon, height) + map-get($show-more-icon, space-between)) * 2,
+        width: map-get($show-more-icon, width)
+    ));
 }
