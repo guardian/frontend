@@ -4,7 +4,8 @@ define([
     'bonzo',
     'common/utils/ajax',
     'common/utils/mediator',
-    'common/utils/storage'
+    'common/utils/storage',
+    'common/utils/config'
 ], function (
     qwery,
     bonzo,
@@ -29,7 +30,10 @@ define([
 
             // If no URL, then load from standard static assets path.
             url = url || '';
+            // NOTE - clearing old fonts, can be removed after a certain amount of time
+            storage.local.clearByPrefix('gu.fonts.Web');
             for (var i = 0, j = styleNodes.length; i < j; ++i) {
+                clearOldFonts(styleNodes[i]);
                 var style = styleNodes[i];
                 if (fontIsRequired(style)) {
                     var that = this;
@@ -62,8 +66,6 @@ define([
         };
 
         this.loadFromServerAndApply = function (url) {
-            // NOTE - can be removed after a certain amount of time
-            clearOldFonts();
             var that = this;
             this.loadFromServer(url, function (style, json) {
                 that.view.showFont(style, json);
@@ -113,16 +115,16 @@ define([
         /**
          * NOTE: temp method, to fix bug with removal of old fonts
          */
-        function clearOldFonts() {
-            storage.local.clearByPrefix('gu.fonts.Web');
-            [
-                'GuardianAgateSans1Web.6039df171383a14539ca392b36ff8e0f',
-                'GuardianEgyptianWeb.541baa51240ee94f8b0b3f82cb07ee27',
-                'GuardianEgyptianWeb.887c81381d18500ac73a9009a353801a',
-                'GuardianTextSansWeb.80e709a96a230177b3e41312391b848b'
-            ].forEach(function(key) {
-                    storage.local.clearByPrefix('gu.fonts.' + key);
-                });
+        function clearOldFonts(style) {
+            var key = getNameAndCacheKey(style),
+                fontPrefix = 'gu.fonts.' + key[1],
+                fontName = fontPrefix + '.' + key[0];
+            for (var i = storage.local.length() - 1; i > -1; --i) {
+                var name = storage.local.getKey(i);
+                if (name.indexOf(fontPrefix) === 0 && name.indexOf(fontName) !== 0) {
+                    storage.local.remove(name);
+                }
+            }
         }
 
     }
