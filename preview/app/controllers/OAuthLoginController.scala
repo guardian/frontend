@@ -27,7 +27,7 @@ object OAuthLoginController extends Controller with ExecutionContexts {
 
   // this is the only place we use LoginAuthAction - to prevent authentication redirect loops
   def login = Action { request =>
-      Ok(views.html.admin_main("preview", "Dev", UserIdentity.fromRequest(request)))
+      Ok(views.html.preview_auth("preview", "Dev", UserIdentity.fromRequest(request)))
   }
 
   /*
