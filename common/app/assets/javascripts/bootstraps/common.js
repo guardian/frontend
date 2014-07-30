@@ -315,12 +315,12 @@ define([
 
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
-                if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
+                if(!/Network Front|LiveBlog/.test(config.page.contentType)) {
                     history.log({
                         id: '/' + config.page.pageId,
                         meta: {
                             section: config.page.section,
-                            keywords: config.page.keywordIds.split(',').slice(0, 5)
+                            keywords: config.page.keywordIds ? config.page.keywordIds.split(',').slice(0, 5) : undefined
                         }
                     });
                 }

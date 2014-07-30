@@ -7,45 +7,57 @@ define([
     'lodash/collections/map',
     'lodash/collections/sortBy',
     'lodash/collections/filter',
-    'lodash/collections/reduce',
     'common/utils/storage'
 ], function(
     _assign,
     _map,
     _sortBy,
     _filter,
-    _reduce,
     storage
     ) {
 
     var history,
         summary,
-        storageKey = 'gu.history',
+        storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
-        maxSize = 100,
-        HistoryItem = function(item) {
-            _assign(this, item.meta);
-            this.id = item.id;
-            this.timestamp = Date.now();
-            this.count = 1;
-            return this;
-        };
+        maxSize = 100;
 
+    function HistoryItem(item) {
+        _assign(this, item.meta);
+        this.id = item.id;
+        this.timestamp = Date.now();
+        this.count = 1;
+        return this;
+    }
+
+    function updateSummary(summary, meta) {
+        var section = meta.section,
+            keyword = (meta.keywords || [])[0];
+
+        if (section) {
+            summary.sections[section] = (summary.sections[section] || 0) + 1;
+        }
+
+        if (keyword) {
+            summary.keywords[keyword] = (summary.keywords[keyword] || 0) + 1;
+        }
+    }
+    
     return {
         set: function(data) {
             history = data;
-            return storage.local.set(storageKey, data);
+            return storage.local.set(storageKeyHistory, data);
         },
 
         get: function() {
-            history = history || storage.local.get(storageKey) || [];
+            history = history || storage.local.get(storageKeyHistory) || [];
             return history;
         },
 
         reset: function() {
             history = undefined;
             summary = undefined;
-            storage.local.remove(storageKey);
+            storage.local.remove(storageKeyHistory);
             storage.local.remove(storageKeySummary);
         },
 
@@ -71,9 +83,11 @@ define([
 
         log: function(newItem) {
             var foundItem,
+                summary = {sections: {}, keywords: {}},
                 hist = this.get().filter(function(item) {
                     var found = (item.id === newItem.id);
 
+                    updateSummary(summary, item);
                     foundItem = found ? item : foundItem;
                     return !found;
                 });
@@ -83,21 +97,13 @@ define([
                 foundItem.timestamp = Date.now();
                 hist.unshift(foundItem);
             } else {
+                updateSummary(summary, newItem.meta);
                 hist.unshift(new HistoryItem(newItem));
                 hist = hist.slice(0, maxSize);
-                this.setSummary(
-                    _reduce(hist, function(summary, item) {
-                        if (item.section) {
-                            summary.sections[item.section] = (summary.sections[item.section] || 0) + 1;
-                        }
-                        if (item.keywords && item.keywords[0]) {
-                            summary.keywords[item.keywords[0]] = (summary.keywords[item.keywords[0]] || 0) + 1;
-                        }
-                        return summary;
-                    }, {sections: {}, keywords: {}, count: hist.length})
-                );
             }
 
+            summary.count = hist.length;
+            this.setSummary(summary);
             this.set(hist);
         },
 
