@@ -7,6 +7,11 @@ So to reiterate the requirements for these tests:
 * They shall run as part of the normal build chain and prevent a deployment to production if the tests fails
 * There shall be a workaround to deploy a fix to prod, despite the tests failing
 
+Furthermore, at the time when this readme was written, the tests in this module target these two areas:
+* Content and modules which are asynchronously loaded by AJAX
+* Content and modules related to advertisting
+
+The reason for this is that other aspects of the applications can be tested by lower level tests such as component tests using HtmlUnit and JavaScript tests. Those are preferred to these tests as they are quicker.
 
 How to write a test (quick)
 ===========================
@@ -26,21 +31,25 @@ scenarioWeb("making sure that X is working", ReadyForProd) {
 ```
 * Create a pull request and merge into master. The test will now be picked up by the TeamCity build process
 
-Running the Tests
-=================
-To run the tests you can either load the project in your favourite IDE as an SBT project and then simply run it as a ScalaTest class or you can run it in command line by simply exeuting: ```sbt test```
+How to prepare to run the tests against a local installation
+=======================================
+The main target of these tests are to target a production instance. However, for various reasons such as developing or debugging tests, it is sometimes beneficial to run the test against a local dev-prod instance. So below are steps needed, on top of the steps to run a local dev-build instance as explained on the root readme:
 
-If you want to run the same test suite which TeamCity runs then execute: ```sbt ciTest```. This will only run the tests with tag ```ReadyForProd``` and will not fail the build if the tests fail.
+* Set the property: ```facia.stage=PROD```
+* Make sure the advertising modules are turned on. Get help from a member of the commercial frontend team if you dont know how to do this.
+* Make sure that the discussion module is pointing to the prod discussion API. A way to do that is to copy the ```discussion.XXX``` properties from ```frontend/common/conf/env/PROD.properties``` to your local frontend property override file.
+
+That should be it. Start the server on dev-build and you are ready to configure and run the tests.
 
 Configuring the tests
 =====================
-Configuration is done in two places.
-* ```src/main/resources/project.conf``` - This is a file which is checked in Git and contain various default values and are normally not changed.
+Configuration of the test module can be done in two places.
+* ```src/main/resources/project.conf``` - This is a file which is checked in Git and contain various default values and are normally not changed unless it is to be changed for everyone running the tests.
 * ```/local.conf``` (meaning at the root of this project) - This file contains values which are personal for you, such as user name and passwords, and will not be checked into Git as it is in .gitignore. These have an override mechanism for overriding property values found in project.conf. As this is a framework configuration then please see [Guardian Scala Test Automation FW](https://github.com/guardian/scala-automation) for detailed info for how this works.
 * 
 An example of local.conf can look like this:
 ```
-"environment" : "browserStack" //this will make the values in the browserstack object to be picked up
+"environment" : "browserStack" //this will make the values in the browserstack object to be picked up. Change to local if you want to target a local dev-build instance
 "testBaseUrl" : "http://localhost:9000" //this will target a local dev-build instance. Comment out to target prod
 "sauceLabs":{
 	"webDriverRemoteUrl" : "http://guardian-shahin:XXX@ondemand.saucelabs.com:80/wd/hub"
@@ -49,6 +58,13 @@ An example of local.conf can look like this:
 	"webDriverRemoteUrl" : "http://shahinkordasti1:XXX@hub.browserstack.com/wd/hub"
 }
 ```
+
+Running the Tests
+=================
+To run the tests you can either load the project in your favourite IDE as an SBT project and then simply run it as a ScalaTest class or you can run it in command line by simply exeuting: ```sbt test```
+
+If you want to run the same test suite which TeamCity runs then execute: ```sbt ciTest```. This will only run the tests with tag ```ReadyForProd``` and will not fail the build if the tests fail.
+
 
 Workflow (detailed)
 ===========
