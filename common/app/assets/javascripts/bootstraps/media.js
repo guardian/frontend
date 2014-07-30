@@ -289,10 +289,10 @@ define([
                 images.upgrade(parentEl);
             });
         },
-        initMostViewedVideo: function() {
+        initMostViewedMedia: function() {
             var mostViewed = new Component();
 
-            mostViewed.endpoint = '/video/most-viewed.json';
+            mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
             mostViewed.fetch($('.js-video-components-container')[0], 'html');
         }
     };
@@ -302,7 +302,7 @@ define([
 
         if (config.isMedia) {
             modules.initMoreInSection();
-            modules.initMostViewedVideo();
+            modules.initMostViewedMedia();
         }
     };
 
