@@ -1,0 +1,9 @@
+@(items: Seq[model.Trail], style: views.support.Container)(implicit request: RequestHeader)
+
+<div class="linkslist-container--without-top-border tone-@{style.tone}">
+    <ul class="l-columns linkslist linkslist--with-images linkslist--without-top-borders">
+    @items.zipWithIndex.map{ case (trail, index) =>
+        @fragments.items.linksList.trail(trail, index, Some("boost"))
+    }
+    </ul>
+</div>

@@ -7,7 +7,6 @@
  * - hide/default: hidden image
  * - boost: shows image at desktop breakpoint
  */
-
 .linkslist-container {
     position: relative;
     padding-top: 1px;
@@ -47,6 +46,37 @@
         }
     }
 }
+
+.linkslist-container--without-top-border {
+    position: relative;
+    padding-top: 1px;
+
+    &.show-more--hidden {
+        &,
+        &:before {
+            display: none;
+        }
+    }
+}
+
+.linkslist--without-top-borders .linkslist__item {
+    &:nth-child(1) {
+        border-top: none;
+    }
+
+    @include mq(tablet) {
+        &:nth-child(2) {
+            border-top: none;
+        }
+    }
+
+    @include mq(desktop) {
+        &:nth-child(3) {
+            border-top: none;
+        }
+    }
+}
+
 .linkslist {
     @extend %u-unstyled;
 }
