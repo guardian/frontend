@@ -234,6 +234,8 @@ GET         /commercial/money/credit-cards/:creditCardType                      
 GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
 GET         /commercial/capi/*contentId.json                                                                         controllers.commercial.ContentApiOffers.itemJson(contentId)
 GET         /commercial/capi/*contentId                                                                              controllers.commercial.ContentApiOffers.itemHtml(contentId)
+GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
+POST        /commercialtools/adunits/toapprove                                                                      controllers.admin.CommercialAdUnitController.approve()
 
 # Onward journeys
 GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)
