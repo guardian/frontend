@@ -130,8 +130,8 @@
 /**
  * Inline ads
  */
-.ad-slot--inline,
-.ad-slot--container-inline {
+.ad-slot--container-inline,
+.ad-slot--inline {
     min-height: 50 + $mpu-ad-label-height;
 
     @include mq(mobileLandscape) {
@@ -142,7 +142,7 @@
         width: 300px;
     }
     .ad-slot__label {
-        width: 300px;
+        max-width: 300px;
         margin: 0 auto;
 
         @include mq(mobileLandscape, tablet) {
@@ -150,6 +150,7 @@
             width: 50%;
             height: 50px;
             z-index: -1;
+            text-align: left;
             @include rem((
                 padding-left: 2px,
                 font-size: 10px
@@ -171,6 +172,7 @@
     }
 }
 .ad-slot--inline {
+    text-align: center;
     @include rem((
         margin-bottom: $gs-baseline
     ));

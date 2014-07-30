@@ -33,6 +33,8 @@ case class FaciaPage(
   override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
   override def sponsor = DfpAgent.getSponsor(id)
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
+
+  def allItems = collections.map(_._2).flatMap(_.items).distinct
 }
 
 object FaciaPage {
