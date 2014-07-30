@@ -73,7 +73,6 @@
         &:before {
             content: '';
             @include background-size(auto 100%);
-
             @include rem((
                 height: 20px !important,
                 margin-right: $gs-gutter/3
@@ -104,7 +103,6 @@
             @include rem((
                 margin-top: $gs-baseline/4
             ));
-
         }
 
         .social {
@@ -161,7 +159,6 @@
             ));
             margin: auto;
         }
-
         @include mq(rightCol) {
             @include rem((
                 padding-left: $gs-gutter/2,
@@ -228,6 +225,7 @@
 
 /* Media item
    ========================================================================== */
+
 .items--media {
     .item {
         position: relative;
@@ -302,6 +300,7 @@
 
 /* Most viewed container
    ========================================================================== */
+
 .most-viewed-container--media {
     @include rem((
         padding-top: $gs-baseline*2
@@ -339,7 +338,7 @@
                 margin-bottom: 0;
             }
         }
-        @include mq($from: tablet, $to: rightCol) {
+        @include mq(tablet, rightCol) {
             width: 33.3%;
 
             &:nth-child(-n+3) {
@@ -411,7 +410,7 @@
             display: none;
         }
     }
-    @include mq($from: leftCol, $to: wide) {
+    @include mq(leftCol, wide) {
         @include rem((
             top: $gs-baseline*3.5
         ));
@@ -445,7 +444,7 @@
             border-right: 1px solid $c-neutral2;
         }
     }
-    @include mq($from: tablet, $to: wide) {
+    @include mq(tablet, wide) {
         .item__headline {
             @include text-clamp(4, get-line-height($fs-headlines, 1));
             @include rem((

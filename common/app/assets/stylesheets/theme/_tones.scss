@@ -65,13 +65,14 @@
 @mixin article-header-tone($tone, $colour, $accentColour, $textColour, $commentIcon) {
     .tone-#{$tone} .content__head--tonal {
         .content__section {
-            @include mq($from: tablet, $to: leftCol) {
-                border-top: 1px dotted $c-neutral5 !important;
-            }
             @include rem((
                 padding-top: $gs-baseline/3
             ));
-            @include mq($from: leftCol) {
+
+            @include mq(tablet, leftCol) {
+                border-top: 1px dotted $c-neutral5 !important;
+            }
+            @include mq(leftCol) {
                 @include rem((
                     padding-top: $gs-baseline/2
                 ));
@@ -79,7 +80,8 @@
         }
         .content__section .tone-colour {
             color: $colour;
-            @include mq($from: leftCol) {
+
+            @include mq(leftCol) {
                 color: $textColour;
             }
         }

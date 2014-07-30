@@ -946,17 +946,15 @@ $timeline-width: 14px;
 
     &.tone-live .content__head--tonal .content__section {
 
-        @include mq($from: rightCol) {
+        @include mq(rightCol) {
             border-top: 0 !important;
             float: left;
             @include rem((
                 width: gs-span(3)
             ));
-        }
 
-        .tone-colour {
-            // overriding tonal head style here as liveblog section breaks differently
-            @include mq($from: rightCol) {
+            .tone-colour {
+                // overriding tonal head style here as liveblog section breaks differently
                 color: #ffffff;
             }
         }

@@ -147,7 +147,7 @@
 
     .tone-feature--article,
     .tone-comment--article {
-        @include mq($from: tablet) {
+        @include mq(tablet) {
             .content__main-column--article {
                 @include rem((
                     margin-top: $gs-baseline*2

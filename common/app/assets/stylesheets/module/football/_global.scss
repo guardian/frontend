@@ -4,7 +4,7 @@
 }
 
 .football-filters {
-    @include mq($from: leftCol) {
+    @include mq(leftCol) {
         @include rem((
             margin-top: -$gs-baseline*2
         ));
