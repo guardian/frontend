@@ -45,23 +45,24 @@ $vjs-control-height: $gs-baseline*4;
     }
 }
 
-.gu-media {
-    width: auto !important;
+.vjs {
+    &.gu-media {
+        width: auto !important;
+    }
+    &.gu-media--video { // aspect ratio fix (this element gets given a fixed height by video.js)
+        height: auto !important;
+        cursor: pointer;
+    }
+    &.gu-media-wrapper--audio {
+        @include rem((
+            height: $vjs-control-height
+        ));
+    }
+    &.gu-media--audio {
+        position: relative;
+        height: 100% !important;
+    }
 }
-.gu-media--video { // aspect ratio fix (this element gets given a fixed height by video.js)
-    height: auto !important;
-    cursor: pointer;
-}
-.gu-media-wrapper--audio {
-    @include rem((
-        height: $vjs-control-height
-    ));
-}
-.gu-media--audio {
-    position: relative;
-    height: 100% !important;
-}
-
 .vjs-big-play-button {
     cursor: pointer;
     position: absolute;

@@ -190,6 +190,9 @@ define([
                 videojs.plugin('adCountDown', modules.countDown);
 
                 $('.js-gu-media').each(function (el) {
+
+                    bonzo(el).addClass('vjs');
+                    
                     var mediaId = el.getAttribute('data-media-id'),
                         vjs = videojs(el, {
                             controls: true,
