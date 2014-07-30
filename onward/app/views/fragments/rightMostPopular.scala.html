@@ -1,4 +1,4 @@
-@(popular: model.MostPopular, hideTrailPic: Boolean = false)(implicit request: RequestHeader)
+@(popular: model.MostPopular)(implicit request: RequestHeader)
 
 <div class="right-most-popular right-most-popular--image component--rhc" data-component="right-most-popular" data-importance="-1">
     <h3 class="article__meta-heading">Most popular</h3>
@@ -6,18 +6,12 @@
         @popular.trails.take(5).zipWithRowInfo.map{ case(trail, row) =>
             <li class="right-most-popular-item" data-link-name="trail | @row.rowNum">
                 <a class="right-most-popular-item__url media u-cf" href="@LinkTo{@trail.url}">
-                    @if(hideTrailPic) {
-                        <span class="headline-list__count">@row.rowNum</span>
-                    } else {
-                        @trail.trailPicture(5, 3).map { image =>
-                            <div class="right-most-popular-item__img media__img">
-                                <img class="responsiveimg" src="@Item120.bestFor(image)" alt="" />
-                            </div>
-                        }
+                    @trail.trailPicture(5, 3).map{ image =>
+                        <div class="right-most-popular-item__img media__img">
+                            <img class="responsiveimg" src="@Item120.bestFor(image)" alt="" />
+                        </div>
                     }
-                    <h4 class="right-most-popular-item__headline media__body">
-                        @trail.linkText
-                    </h4>
+                    <h4 class="right-most-popular-item__headline media__body">@trail.linkText</h4>
                 </a>
             </li>
         }

@@ -8,12 +8,12 @@ define([
     return function() {
 
         this.id = 'RightMostPopularText';
-        this.start = '2014-07-28';
-        this.expiry = '2014-08-14';
+        this.start = '2014-07-30';
+        this.expiry = '2014-08-12';
         this.author = 'Nathaniel Bennett';
         this.description = 'Displays right most popular items as two lines of text';
         this.audience = 0.2;
-        this.audienceOffset = 0.6;
+        this.audienceOffset = 0.1;
         this.successMeasure = 'Increased CTR on component';
         this.audienceCriteria = 'Everyone';
         this.dataLinkNames = 'referred-content';
@@ -24,14 +24,11 @@ define([
         this.variants = [
             {
                 id: 'control',
-                test: function () {
-                    console.log("+ Most popular - control")
-                }
+                test: function () {}
             },
             {
                 id: 'two-line-most-popular',
                 test: function () {
-                    console.log("+ Line most popular");
                     GeoMostPopular.hideThumbnail();
                 }
             }

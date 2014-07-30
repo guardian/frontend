@@ -15,7 +15,6 @@ define([
     ) {
 
     function GeoMostPopular(config) {
-        console.log("++ Geo most-popular");
         mediator.emit('register:begin', 'geo-most-popular');
         this.config = extend(this.config, config);
         this.fetch(qwery('.js-components-container'), 'rightHtml');

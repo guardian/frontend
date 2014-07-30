@@ -22,11 +22,9 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
   def renderHtml(path: String) = render(path)
   def render(path: String) = Action.async { implicit request =>
-
     val edition = Edition(request)
     val globalPopular = MostPopular("The Guardian", "", MostPopularAgent.mostPopular(edition))
     val sectionPopular: Future[List[MostPopular]] = if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
-
 
     sectionPopular.map { sectionPopular =>
       sectionPopular :+ globalPopular match {
@@ -49,7 +47,6 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     "IN" -> "India")
 
   def renderPopularGeo() = Action { implicit request =>
-
 
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:ROW").replace("country:","")
