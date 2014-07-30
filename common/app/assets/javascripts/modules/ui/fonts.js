@@ -113,7 +113,7 @@ define([
         }
 
         /**
-         * NOTE: temp method, to fix bug with removal of old fonts
+         * NOTE: temp method, to fix bug with removal of old fonts - can be removed if font files update
          */
         function clearOldFonts(style) {
             var key = getNameAndCacheKey(style),
