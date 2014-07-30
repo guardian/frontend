@@ -19,6 +19,25 @@
         ));
     }
 }
+
+.top-bar__item--action,
+.top-bar__item--action:focus,
+.top-bar__item--action:hover {
+    @include fs-bodyHeading(1);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    display: block;
+    text-decoration: none;
+    margin: 0;
+    color: $c-guardian-services-action;
+    cursor: pointer;
+    @include rem((
+        line-height: $headerHeight
+    ));
+}
+
 .top-bar__item--right {
     @include box-sizing(border-box);
     float: right;
@@ -115,10 +134,6 @@
             width: gs-span(3)
         ));
     }
-
-    .guardian-services__action {
-        color: guss-colour(neutral-1);
-    }
 }
 
 .top-bar__popup-item {
@@ -126,4 +141,9 @@
     &:last-child {
         border-bottom: 0;
     }
+}
+
+.top-bar__popup-item--action,
+.top-bar__popup-item--action:hover {
+    color: guss-colour(neutral-1);
 }
