@@ -32,9 +32,9 @@
                     </li>
                 </ul>
             </div>
-            <div class="top-bar__item top-bar__item--has-popup is-off hide-on-mobile top-bar__item-edition" data-component="edition">
+            <div class="top-bar__item top-bar__item--has-popup top-bar__item--edition is-off hide-on-mobile top-bar__item-edition" data-component="edition" data-toggle="top-bar__item-edition">
                 edition:
-                <a href="#guardian-edition-menu" class="top-bar__item--action top-bar__item--popup-toggle" data-toggle="top-bar__item-edition" data-link-name="topNav : edition">
+                <a href="#guardian-edition-menu" class="top-bar__item--action top-bar__item--popup-toggle" data-link-name="topNav : edition">
                     @common.Region(request).filter(r => conf.Switches.IndiaRegionSwitch.isSwitchedOn).map{ region =>
                         @region.id
                     }.getOrElse{
