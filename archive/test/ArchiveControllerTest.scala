@@ -52,21 +52,33 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
   }
 
   it should "redirect century urls correctly when enabled" in Fake {
-    val aCenturyUrl = "www.theguardian.com/century"
+    val tests = Map[String, Option[String]](
+      "www.theguardian.com/century" -> Some("gu.com/p/4vaex")
+    )
     CenturyRedirectionSwitch.switchOn()
-    controllers.ArchiveController.newCenturyUrl(aCenturyUrl) should be (Some("gu.com/p/4vaex"))
+    tests foreach {
+      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
+    }
   }
 
   it should "redirect century/decade urls correctly when enabled" in Fake {
-    val aCenturyDecadeUrl = "www.theguardian.com/century/1899-1909"
+    val tests = Map[String, Option[String]](
+      "www.theguardian.com/century/1899-1909" -> Some("gu.com/p/4vaex")
+    )
     CenturyRedirectionSwitch.switchOn()
-    controllers.ArchiveController.newCenturyUrl(aCenturyDecadeUrl) should be (Some("gu.com/p/4vaex"))
+    tests foreach {
+      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
+    }
   }
 
   it should "not redirect a random URL that contains the word century" in Fake {
-    val aRandomUrlWithCentury = "www.theguardian.com/discover-culture/2014/jul/22/mid-century-textiles-then-and-now"
+    val tests = Map[String, Option[String]](
+      "www.theguardian.com/discover-culture/2014/jul/22/mid-century-textiles-then-and-now" -> None
+    )
     CenturyRedirectionSwitch.switchOn()
-    controllers.ArchiveController.newCenturyUrl(aRandomUrlWithCentury) should be (None)
+    tests foreach {
+      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
+    }
   }
 
   it should "redirect an R1 century article to a corrected decade story endpoint when enabled" in Fake {
@@ -80,15 +92,23 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
   }
 
   it should "not redirect century urls when disabled" in Fake {
-    val aCenturyUrl = "www.theguardian.com/century"
+    val tests = Map[String, Option[String]](
+      "www.theguardian.com/century" -> None
+    )
     CenturyRedirectionSwitch.switchOff()
-    controllers.ArchiveController.newCenturyUrl(aCenturyUrl) should be (None)
+    tests foreach {
+      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
+    }
   }
 
   it should "not redirect century/decade urls when disabled" in Fake {
-    val aCenturyDecadeUrl = "www.theguardian.com/century/1899-1909"
+    val tests = Map[String, Option[String]](
+      "www.theguardian.com/century/1899-1909" -> None
+    )
     CenturyRedirectionSwitch.switchOff()
-    controllers.ArchiveController.newCenturyUrl(aCenturyDecadeUrl) should be (None)
+    tests foreach {
+      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
+    }
   }
 
   it should "not redirect a century story url when disabled" in Fake {
