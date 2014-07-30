@@ -365,7 +365,7 @@ define([
 
         augmentInteractive: function() {
             mediator.on('page:common:ready', function(config, context) {
-                if (/Article|Interactive/.test(config.page.contentType)) {
+                if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
                     $('figure.interactive').each(function (el) {
                         enhancer.render(el, context, config, mediator);
                     });

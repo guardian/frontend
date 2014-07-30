@@ -8,7 +8,6 @@ define([
         window.localStorage.setItem('gu.history', JSON.stringify({
             'value' : item
         }));
-        window.localStorage.removeItem('gu.history.summary');
     };
 
     var item = {
