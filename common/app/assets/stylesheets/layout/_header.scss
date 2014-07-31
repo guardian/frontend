@@ -38,7 +38,8 @@ $c-guardian-services-action: #ffffff;
     }
     @include mq(tablet) {
         @include rem((
-            margin-top: 7px
+            margin-top: $gs-baseline * .5,
+            margin-bottom: $gs-baseline * .5
         ));
 
         &:after {
