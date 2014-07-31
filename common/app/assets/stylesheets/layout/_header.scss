@@ -41,21 +41,7 @@ $c-guardian-services-action: #ffffff;
             margin-top: $gs-baseline * .5,
             margin-bottom: $gs-baseline * .5
         ));
-
-        &:after {
-            content: 'beta';
-            position: absolute;
-            @include rem((
-                top: 48px,
-                left: 128px,
-                font-size: 13px
-            ));
-        }
     }
-}
-
-.logo-wrapper--observer:after {
-    display: none;
 }
 
 
