@@ -228,6 +228,11 @@ define([
                 this.state.ophanUrl(
                     vars.CONST.ophanBase + '?path=/' + path
                 );
+            }
+        };
+
+        Article.prototype.refreshSparkline = function() {
+            if (vars.model.switches()['facia-tool-sparklines']) {
                 this.state.sparkUrl.valueHasMutated();
             }
         };
