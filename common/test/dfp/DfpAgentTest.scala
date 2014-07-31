@@ -190,7 +190,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
   it should "be true if section tag exists" in {
     val tags = Seq(
-      new Tag(new ApiTag("media/media", "keyword", webTitle="", webUrl="", apiUrl="", sectionId=Some("media")))
+      new Tag(new ApiTag("media/media", "keyword", webTitle="", webUrl="", apiUrl=""))
     )
     testDfpAgent.isSponsored(tags) should be(true)
   }
@@ -208,7 +208,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
   it should "be false for unsponsored tags" in {
     val tags = Seq(
-      new Tag(new ApiTag("media/media", "keyword", webTitle="", webUrl="", apiUrl="", sectionId=Some("culture")))
+      new Tag(new ApiTag("culture/books", "keyword", webTitle="", webUrl="", apiUrl=""))
     )
     testDfpAgent.isSponsored(tags) should be(false)
   }

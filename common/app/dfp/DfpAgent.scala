@@ -33,11 +33,11 @@ trait DfpAgent {
 
   private def getKeywordTags(tags: Seq[Tag]): Seq[Tag] = tags filter(_.tagType == "keyword")
 
-  private def getSectionOrSeriesTags(tags: Seq[Tag]): Seq[Tag] = tags filter{ tag =>
-    tag.isSectionTag || tag.tagType == "series"
+  private def getKeywordOrSeriesTags(tags: Seq[Tag]): Seq[Tag] = tags filter{ tag =>
+    Seq("keyword", "series").contains(tag.tagType)
   }
 
-  def isSponsored(tags: Seq[Tag]): Boolean = getSectionOrSeriesTags(tags) exists (tag => isSponsored(tag.id))
+  def isSponsored(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isSponsored(tag.id))
   def isSponsored(tagId: String): Boolean = sponsorships exists (_.hasTag(tagId))
   def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
 
