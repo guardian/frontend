@@ -307,6 +307,24 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .local-navigation {
     background: $c-local-navigation-background;
 }
+// Expand touchable zone on navigation actions
+.signposting__action,
+.local-navigation__action,
+.top-navigation__action,
+.global-navigation__action {
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        @include rem((
+            right: -$gs-gutter/4,
+            left: -$gs-gutter/4
+        ));
+    }
+}
 .local-navigation__action,
 .top-navigation__action {
     color: $c-local-navigation-action;
@@ -319,9 +337,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     color: $c-global-navigation-action;
     display: block;
 }
-.local-navigation__action,
-.top-navigation__action,
-.global-navigation__action {
+.local-navigation__item,
+.top-navigation__item,
+.global-navigation__item {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -538,8 +556,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         float: left;
         @include rem((
             line-height: $navigation-height - $gs-baseline/2,
-            padding-left: $navigation-h-space-between-items/2,
-            padding-right: $navigation-h-space-between-items/2
+            margin-left: $navigation-h-space-between-items/2,
+            margin-right: $navigation-h-space-between-items/2
         ));
     }
 }
