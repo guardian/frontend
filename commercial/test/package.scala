@@ -1,8 +1,7 @@
 package test
 
-import conf.Configuration
+import conf.HealthCheck
 
 object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit
-  object Fake extends FakeApp
+  object HtmlUnit extends EditionalisedHtmlUnit(HealthCheck.testPort.toString)
 }

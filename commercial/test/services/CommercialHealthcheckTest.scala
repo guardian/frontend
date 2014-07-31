@@ -1,20 +1,18 @@
 package services
 
-import model.commercial.books.BestsellersAgent
-import model.commercial.jobs.JobsAgent
-import model.commercial.masterclasses.MasterClassAgent
-import model.commercial.money.BestBuysAgent
-import model.commercial.soulmates.SoulmatesAggregatingAgent
-import model.commercial.travel.TravelOffersAgent
+import org.scalatest.{Matchers, FlatSpec}
+import play.api.libs.ws.WS
+import test._
 
-class CommercialHealthcheckTest extends HealthcheckTest("/") {
+import scala.concurrent.duration._
+import scala.concurrent.Await
 
-  override def prepareForTest() {
-    SoulmatesAggregatingAgent.refresh()
-    MasterClassAgent.refresh()
-    TravelOffersAgent.refresh()
-    JobsAgent.refresh()
-    BestBuysAgent.refresh()
-    BestsellersAgent.refresh()
+class CommercialHealthcheckTest extends FlatSpec with Matchers {
+
+  import play.api.Play.current
+
+  "Healthchecks" should "pass" in HtmlUnit("/"){ browser =>
+
+    Await.result(WS.url(s"http://localhost:${HtmlUnit.port}/_healthcheck").get(), 10.seconds).status should be (200)
   }
 }
