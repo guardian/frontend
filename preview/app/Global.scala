@@ -17,7 +17,9 @@ object FilterExemptions {
   lazy val loginExemption: FilterExemption = FilterExemption("/login")
   lazy val exemptions: Seq[FilterExemption] = List(
     FilterExemption("/oauth2callback"),
-    FilterExemption("/assets")
+    FilterExemption("/assets"),
+    FilterExemption("/_healthcheck"),
+    FilterExemption("/world/2012/sep/11/barcelona-march-catalan-independence")
   )
 }
 
