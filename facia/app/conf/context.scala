@@ -5,9 +5,19 @@ import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage, ManagementP
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import com.gu.management.HttpRequest
+import play.api.{Mode, Play}
 import services.ConfigAgent
 
-object HealthCheck extends AllGoodHealthcheckController("/uk")
+object HealthCheck extends AllGoodHealthcheckController("/uk") {
+  val testPort = 9008
+
+  override lazy val port = {
+    Play.current.mode match {
+      case Mode.Test => testPort
+      case _ => 9000
+    }
+  }
+}
 
 object Management extends GuManagement {
   val applicationName = "frontend-facia"
