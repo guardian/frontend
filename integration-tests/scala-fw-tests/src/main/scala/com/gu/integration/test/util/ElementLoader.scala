@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedCondition
 import org.openqa.selenium.support.ui.ExpectedConditions._
 import org.openqa.selenium.support.ui.WebDriverWait
 import com.gu.automation.support.TestLogging
-import org.openqa.selenium.support.ui.ExpectedConditions
 
 object ElementLoader extends TestLogging {
 
