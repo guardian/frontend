@@ -2,6 +2,7 @@ package auth
 
 import common.ExecutionContexts
 import com.gu.googleauth.{UserIdentity, AuthenticatedRequest, Actions}
+import common.FaciaToolMetrics.ExpiredRequestCount
 import play.api.mvc._
 import controllers.routes
 import scala.concurrent.Future
@@ -29,6 +30,7 @@ object ExpiringActions extends implicits.Dates with implicits.Requests with Exec
         f(request).map(_.withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)))
       }
       else {
+        ExpiredRequestCount.increment()
         if (request.isXmlHttpRequest)
           Future.successful(Forbidden.withNewSession)
         else {
