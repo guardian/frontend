@@ -358,6 +358,15 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthCallback <- configuration.getStringProperty("admin.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
   }
+
+  object preview {
+    lazy val oauthCredentials: Option[OAuthCredentials] =
+      for {
+        oauthClientId <- configuration.getStringProperty("preview.oauth.clientid")
+        oauthSecret <- configuration.getStringProperty("preview.oauth.secret")
+        oauthCallback <- configuration.getStringProperty("preview.oauth.callback")
+      } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+  }
 }
 
 object ManifestData {
