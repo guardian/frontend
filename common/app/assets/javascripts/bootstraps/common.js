@@ -315,12 +315,12 @@ define([
 
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
-                if(!/Network Front/.test(config.page.contentType)) {
+                if(config.page.contentType !== 'Network Front') {
                     history.log({
                         id: '/' + config.page.pageId,
                         meta: {
                             section: config.page.section,
-                            keywords: config.page.keywordIds ? config.page.keywordIds.split(',').slice(0, 5) : undefined
+                            keywords: config.page.keywordIds && (config.page.keywordIds + '').split(',').slice(0, 5)
                         }
                     });
                 }
