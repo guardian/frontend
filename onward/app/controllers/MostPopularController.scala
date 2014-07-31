@@ -50,13 +50,14 @@ object MostPopularController extends Controller with Logging with ExecutionConte
 
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:ROW").replace("country:","")
+    val hideThumb = request.getQueryString("hideThumb")
 
     val countryPopular = MostPopular("The Guardian", "", GeoMostPopularAgent.mostPopular(countryCode))
 
     Cached(900) {
       JsonComponent(
         "html" -> views.html.fragments.collections.popular(Seq(countryPopular)),
-        "rightHtml" -> views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode),
+        "rightHtml" -> views.html.fragments.rightMostPopularGeo(countryPopular, countryNames.get(countryCode), countryCode, hideThumb.isDefined),
         "country" -> countryCode
       )
     }
