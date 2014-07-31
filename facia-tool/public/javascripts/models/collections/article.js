@@ -221,7 +221,6 @@ define([
         Article.prototype.sparkline = function() {
             var path = urlAbsPath(this.props.webUrl());
 
-            this.state.sparkUrl(undefined);
             if (vars.model.switches()['facia-tool-sparklines']) {
                 this.state.sparkUrl(
                     vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':46C430' : '')
@@ -229,6 +228,7 @@ define([
                 this.state.ophanUrl(
                     vars.CONST.ophanBase + '?path=/' + path
                 );
+                this.state.sparkUrl.valueHasMutated();
             }
         };
 
