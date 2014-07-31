@@ -5,7 +5,6 @@ import org.apache.commons.io.IOUtils
 import play.api.{ Mode, Play }
 import play.api.libs.json.{ JsString, Json, JsObject }
 import conf.Configuration
-import conf.Switches.SeoBlockGooglebotFromJSPathsSwitch
 import collection.mutable.{ Map => MutableMap }
 
 case class Asset(path: String) {
@@ -103,7 +102,6 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
   object js {
 
     private def escapeRelativeJsPaths(unescaped: String): String = {
-
       // We are getting Googlebot 404 because Google is incorrectly seeing paths in the curl js
       // we need to escape them out.
       // "../foo"
@@ -118,12 +116,8 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
       }
     }
 
-    private lazy val curlScript = IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js"))
-    private lazy val escapedCurlScript = escapeRelativeJsPaths(curlScript)
-
-    // TODO make this a val again when we get rid of the switch
-    def curl: String = if (SeoBlockGooglebotFromJSPathsSwitch.isSwitchedOn) escapedCurlScript else curlScript
-
+    lazy val curl: String =
+      escapeRelativeJsPaths(IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js")))
 
   }
 
