@@ -28,25 +28,20 @@ phantom args sent from app.js:
 */
 
 var fs = require( "fs" );
-var gm = require( "gm" );
 var inputdir = phantom.args[0];
 var imgOutputdir = phantom.args[1];
 var cssOutputdir  = phantom.args[2];
 var spritepath =  phantom.args[7];
 var cssprefix = phantom.args[8];
-var files = fs.list( inputdir).sort(function(fileOne, fileTwo) {
-//    var fileOneHeight = 0,
-//        fileTwoHeight = 0;
-//    gm(fileOne).size(function(err, size) {
-//        if (!err) {
-//            fileOneHeight = size.height;
-//        }
-//    });
-//    gm(fileOne).size(function(err, size) {
-//        fileTwoHeight = size.height;
-//    });
-//    return fileOneHeight - fileTwoHeight
-});
+var files = fs.list(inputdir)
+    .filter(function(file) {
+        return file.match(/\.svg$/i);
+    })
+    .sort(function(fileOne, fileTwo) {
+        var fileOneExec = /height="([^"]+)"/.exec(fs.read(inputdir + fileOne));
+        var fileTwoExec = /height="([^"]+)"/.exec(fs.read(inputdir + fileTwo));
+        return (fileOneExec ? fileOneExec[1] : 0) - (fileTwoExec ? fileTwoExec[1] : 0);
+    });
 var currfile = 0;
 var pngcssrules = [];
 var pngdatacssrules = [];
