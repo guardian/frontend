@@ -108,7 +108,7 @@ class EditionalisedHtmlUnit(val port: String) extends TestSettings {
 /**
  * Executes a block of code in a FakeApplication.
  */
-object Fake extends TestSettings {
+trait FakeApplication extends TestSettings {
 
   def apply[T](block: => T): T = running(
     FakeApplication(
@@ -119,6 +119,8 @@ object Fake extends TestSettings {
     )
   ) { block }
 }
+
+object Fake extends FakeApplication
 
 object TestRequest {
   // MOST of the time we do not care what path is set on the request - only need to override where we do
