@@ -1,6 +1,6 @@
 package test
 
 object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit
-  object Fake extends FakeApp
+
+  object HtmlUnit extends EditionalisedHtmlUnit(conf.HealthCheck.testPort.toString)
 }
