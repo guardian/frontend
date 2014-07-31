@@ -1,4 +1,5 @@
 @(article: Article)(implicit request: RequestHeader)
+@import views.support.{Item640, SeoOptimisedContentImage}
 
 @if(article.hasMainEmbed) {
     <div class="media-primary">
@@ -8,23 +9,40 @@
     @if(!article.hasVideoAtTop) {
         @if(article.hasMainVideo) {
             @article.mainVideo.map{ mainVideo =>
-                <div class="gu-video-wrapper">
-                    <div class="u-responsive-ratio u-responsive-ratio--hd">
-                        <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
-                            @for(videoAsset <- mainVideo.videoAssets) {
-                                <source src="@videoAsset.url" type="@videoAsset.mimeType" />
+                @defining(mainVideo.videoAssets.flatMap(_.image)) { posters =>
+
+                    <figure itemprop="associatedMedia video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
+                    class="media-primary media-content">
+
+                        <div class="gu-media-wrapper gu-media-wrapper--video">
+                            <div class="u-responsive-ratio u-responsive-ratio--hd">
+                                <video data-media-id="@mainVideo.id" class="gu-media gu-media--video js-gu-media" controls="controls"
+                                        data-duration="@mainVideo.videoAssets.take(1).map(_.duration.toString())"
+                                        @posters.flatMap(Item640.bestFor).map { src => poster="@src" }
+                                        data-title="@article.headline">
+
+                                    @for(videoAsset <- mainVideo.videoAssets) {
+                                        <source src="@videoAsset.url" type="@videoAsset.mimeType" />
+                                    }
+                                    @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map { encoding =>
+                                        <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
+                                            <param name="allowFullScreen" value="true" />
+                                            <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
+                                            <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
+                                            Sorry, your browser is unable to play this video.
+                                        </object>
+                                    }
+                                </video>
+                            </div>
+                        </div>
+
+                        @posters.take(1).map { image =>
+                            @SeoOptimisedContentImage.captionFor(image).map { caption =>
+                                <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
                             }
-                            @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
-                                <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
-                                    <param name="allowFullScreen" value="true" />
-                                    <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
-                                    <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
-                                    Sorry, your browser is unable to play this video.
-                                </object>
-                            }
-                        </video>
-                    </div>
-                </div>
+                        }
+                    </figure>
+                }
             }
         } else {
             @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature)
