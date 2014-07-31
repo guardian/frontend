@@ -1,6 +1,5 @@
 package conf
 
-import play.api.{Mode, Play}
 import play.api.libs.ws.WS
 import common.Metrics
 import com.gu.management.{ErrorResponse, ManifestPage, StatusPage, PropertiesPage}
@@ -45,8 +44,7 @@ class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(u
 
 object HealthCheck extends AllGoodHealthcheckController(
   9012,
-  "/world/2012/sep/11/barcelona-march-catalan-independence",
-  "/uk"
+  "/world/2012/sep/11/barcelona-march-catalan-independence"
 )
 
 object HealthcheckPage extends HealthcheckPage("/world/2012/sep/11/barcelona-march-catalan-independence") {

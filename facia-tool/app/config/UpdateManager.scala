@@ -1,10 +1,11 @@
 package config
 
-import controllers.{Identity, CreateFront}
+import controllers.CreateFront
 import frontsapi.model.{UpdateActions, Collection, Config, Front}
 import services.S3FrontsApi
 import play.api.libs.json.Json
 import util.SanitizeInput
+import com.gu.googleauth.UserIdentity
 
 object UpdateManager {
   /**
@@ -19,7 +20,7 @@ object UpdateManager {
    *
    * @param transform The transformation to apply
    */
-  private def transformConfig(transform: Config => Config, identity: Identity) {
+  private def transformConfig(transform: Config => Config, identity: UserIdentity): Unit = {
     S3FrontsApi.getMasterConfig map { configJson =>
       val config = Json.parse(configJson).asOpt[Config] getOrElse {
         throw new RuntimeException(s"Unable to de-serialize config from S3: $configJson")
@@ -30,23 +31,23 @@ object UpdateManager {
     }
   }
 
-  def createFront(request: CreateFront, identity: Identity) = {
+  def createFront(request: CreateFront, identity: UserIdentity): String = {
     val newCollectionId = Collection.nextId
     transformConfig(Transformations.createFront(request, newCollectionId), identity)
     newCollectionId
   }
 
-  def updateFront(id: String, newVersion: Front, identity: Identity) {
+  def updateFront(id: String, newVersion: Front, identity: UserIdentity): Unit = {
     transformConfig(Transformations.updateFront(id, newVersion), identity)
   }
 
-  def addCollection(frontIds: List[String], collection: Collection, identity: Identity) = {
+  def addCollection(frontIds: List[String], collection: Collection, identity: UserIdentity): String = {
     val newCollectionId = Collection.nextId
     transformConfig(Transformations.updateCollection(frontIds, newCollectionId, collection), identity)
     newCollectionId
   }
 
-  def updateCollection(id: String, frontIds: List[String], collection: Collection, identity: Identity) {
+  def updateCollection(id: String, frontIds: List[String], collection: Collection, identity: UserIdentity): Unit = {
     transformConfig(Transformations.updateCollection(frontIds, id, collection), identity)
   }
 }

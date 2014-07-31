@@ -4,6 +4,7 @@ import java.io.File
 import play.api._
 import play.api.mvc.WithFilters
 import services.ConfigAgentLifecycle
+import conf.{Configuration => GuardianConfiguration}
 
 object Global extends WithFilters(Gzipper)
   with GlobalSettings
@@ -28,8 +29,10 @@ object Global extends WithFilters(Gzipper)
     ("s3-client-exceptions", S3Metrics.S3ClientExceptionsMetric.getAndReset.toDouble)
   )
 
+  def secureCookie(mode: Mode.Mode): Boolean = mode == Mode.Dev || GuardianConfiguration.environment.stage == "dev"
+
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {
-    val newConfig: Configuration = if (mode == Mode.Dev) config ++ devConfig else config
+    val newConfig: Configuration = if (secureCookie(mode)) config ++ devConfig else config
     super.onLoadConfig(newConfig, path, classloader, mode)
   }
 }
