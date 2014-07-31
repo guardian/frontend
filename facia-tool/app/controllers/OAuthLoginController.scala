@@ -70,12 +70,11 @@ object OAuthLoginController extends Controller with ExecutionContexts {
                   case None => Redirect(routes.FaciaToolController.priorities())
                 }
                 // Store the JSON representation of the identity in the session - this is checked by AuthAction later
-                val sessionAdd: Seq[(String, String)] = Seq(
-                  Option((UserIdentity.KEY, Json.toJson(userIdentity).toString())),
-                  Option((Configuration.cookies.lastSeenKey, DateTime.now.toString()))
-                ).flatten
                 redirect
-                  .addingToSession(sessionAdd: _*)
+                  .addingToSession(
+                    (UserIdentity.KEY, Json.toJson(userIdentity).toString()),
+                    (Configuration.cookies.lastSeenKey, DateTime.now.toString())
+                  )
                   .removingFromSession(ANTI_FORGERY_KEY, LOGIN_ORIGIN_KEY)
             } recover {
               case t =>

@@ -14,12 +14,12 @@ object Metric extends Logging {
   lazy val metrics = Map(
 
     // video metrics
-    ("vs", CountMetric("kpis", "video-starts")),          // user has started the video
-    ("ve", CountMetric("kpis", "video-ends")),            // user has got to the end of the video
-    ("vpv", CountMetric("kpis", "video-page-views")),     // user has landed on a video page
-    ("vps", CountMetric("kpis", "video-preroll-start")),  // user has started the pre-roll advert
-    ("vpe", CountMetric("kpis", "video-preroll-end")),    // user has ended the pre-roll advert
-    ("vsap", CountMetric("kpis", "video-preroll-end")),   // user has started a video after a pre-roll advert
+    ("vs", CountMetric("kpis", "video-starts")),                   // user has started the video
+    ("ve", CountMetric("kpis", "video-ends")),                     // user has got to the end of the video
+    ("vpv", CountMetric("kpis", "video-page-views")),              // user has landed on a video page
+    ("vps", CountMetric("kpis", "video-preroll-start")),           // user has started the pre-roll advert
+    ("vpe", CountMetric("kpis", "video-preroll-end")),             // user has ended the pre-roll advert
+    ("vsap", CountMetric("kpis", "video-starts-after-preroll")),   // user has started a video after a pre-roll advert
 
     // page views
     ("pv", CountMetric("kpis", "page-views")),            // raw page views - simple <img> in body, no javascript involved

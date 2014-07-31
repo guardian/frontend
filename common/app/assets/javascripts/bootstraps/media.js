@@ -123,7 +123,7 @@ define([
 
             //If no preroll avaliable or preroll fails, still init content tracking
             player.one('adtimeout', function() {
-                modules.bindContentEvents(player, true);
+                modules.bindContentEvents(player);
             });
         },
 
@@ -214,6 +214,9 @@ define([
                 videojs.plugin('adCountDown', modules.countDown);
 
                 $('.js-gu-media').each(function (el) {
+
+                    bonzo(el).addClass('vjs');
+
                     var mediaId = el.getAttribute('data-media-id'),
                         vjs = videojs(el, {
                             controls: true,
@@ -240,21 +243,25 @@ define([
 
                             // preroll for videos only
                             if (config.page.contentType === 'Video') {
-                                // Init plugins
-                                player.adCountDown();
-                                player.ads({
-                                    timeout: 3000
-                                });
 
                                 modules.initOmnitureTracking(player);
                                 modules.initOphanTracking(player, mediaId);
-                                modules.bindPrerollEvents(player);
                                 modules.bindDiagnosticsEvents(player);
 
-                                player.vast({
-                                    url: modules.getVastUrl(),
-                                    vidFormats: ['video/mp4', 'video/webm', 'video/ogv', 'video/x-flv']
-                                });
+                                // Init plugins
+                                if(config.switches.videoAdverts) {
+                                    player.adCountDown();
+                                    player.ads({
+                                        timeout: 3000
+                                    });
+                                    player.vast({
+                                        url: modules.getVastUrl(),
+                                        vidFormats: ['video/mp4', 'video/webm', 'video/ogv', 'video/x-flv']
+                                    });
+                                    modules.bindPrerollEvents(player);
+                                } else {
+                                    modules.bindContentEvents(player);
+                                }
 
                                 if(/desktop|wide/.test(detect.getBreakpoint())) {
                                     modules.initEndSlate(player);
@@ -324,7 +331,9 @@ define([
     };
 
     var ready = function () {
-        modules.initPlayer();
+        if(config.switches.enhancedMediaPlayer) {
+            modules.initPlayer();
+        }
 
         if (config.isMedia) {
             modules.initMoreInSection();
