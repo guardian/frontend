@@ -1,4 +1,4 @@
-@(env: String, priority: String, identity: Option[Identity])
+@(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
 
 @admin_main("fronts", env, Some(priority), isAuthed = true, identity) {
 

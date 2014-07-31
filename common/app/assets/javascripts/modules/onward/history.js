@@ -4,54 +4,60 @@
  */
 define([
     'lodash/objects/assign',
-    'lodash/collections/map',
-    'lodash/collections/sortBy',
-    'lodash/collections/filter',
-    'lodash/collections/reduce',
     'common/utils/storage'
 ], function(
     _assign,
-    _map,
-    _sortBy,
-    _filter,
-    _reduce,
     storage
     ) {
 
     var history,
         summary,
-        storageKey = 'gu.history',
+        storageKeyHistory = 'gu.history',
         storageKeySummary = 'gu.history.summary',
-        maxSize = 100,
-        HistoryItem = function(item) {
-            _assign(this, item.meta);
-            this.id = item.id;
-            this.timestamp = Date.now();
-            this.count = 1;
-            return this;
-        };
+        maxSize = 100;
 
+    function HistoryItem(item) {
+        _assign(this, item.meta);
+        this.id = item.id;
+        this.timestamp = Date.now();
+        this.count = 1;
+        return this;
+    }
+
+    function setHistory(data) {
+        history = data;
+        return storage.local.set(storageKeyHistory, data);
+    }
+
+    function setSummary(data) {
+        summary = data;
+        return storage.local.set(storageKeySummary, data);
+    }
+
+    function updateSummary(summary, meta) {
+        var section = meta.section,
+            keyword = (meta.keywords || [])[0];
+
+        if (section) {
+            summary.sections[section] = (summary.sections[section] || 0) + 1;
+        }
+
+        if (keyword) {
+            summary.keywords[keyword] = (summary.keywords[keyword] || 0) + 1;
+        }
+    }
+    
     return {
-        set: function(data) {
-            history = data;
-            return storage.local.set(storageKey, data);
-        },
-
-        get: function() {
-            history = history || storage.local.get(storageKey) || [];
-            return history;
-        },
-
         reset: function() {
             history = undefined;
             summary = undefined;
-            storage.local.remove(storageKey);
+            storage.local.remove(storageKeyHistory);
             storage.local.remove(storageKeySummary);
         },
 
-        setSummary: function(data) {
-            summary = data;
-            return storage.local.set(storageKeySummary, data);
+        get: function() {
+            history = history || storage.local.get(storageKeyHistory) || [];
+            return history;
         },
 
         getSummary: function() {
@@ -71,9 +77,11 @@ define([
 
         log: function(newItem) {
             var foundItem,
+                summary = {sections: {}, keywords: {}},
                 hist = this.get().filter(function(item) {
                     var found = (item.id === newItem.id);
 
+                    updateSummary(summary, item);
                     foundItem = found ? item : foundItem;
                     return !found;
                 });
@@ -83,49 +91,15 @@ define([
                 foundItem.timestamp = Date.now();
                 hist.unshift(foundItem);
             } else {
+                updateSummary(summary, newItem.meta);
                 hist.unshift(new HistoryItem(newItem));
                 hist = hist.slice(0, maxSize);
-                this.setSummary(
-                    _reduce(hist, function(summary, item) {
-                        if (item.section) {
-                            summary.sections[item.section] = (summary.sections[item.section] || 0) + 1;
-                        }
-                        if (item.keywords && item.keywords[0]) {
-                            summary.keywords[item.keywords[0]] = (summary.keywords[item.keywords[0]] || 0) + 1;
-                        }
-                        return summary;
-                    }, {sections: {}, keywords: {}, count: hist.length})
-                );
             }
 
-            this.set(hist);
-        },
+            summary.count = hist.length;
 
-        recentVisits: function () {
-            var curr_timestamp = 0,
-                session_array = [],
-                a_month_ago = new Date(Date.now());
-
-            a_month_ago.setMonth(a_month_ago.getMonth() - 1);
-
-            this.get().map(function (i) {
-                function diffInMins() {
-                    var diff = (parseInt(curr_timestamp, 10) - parseInt(i.timestamp, 10));
-                    return Math.ceil(diff / 1000 / 60);
-                }
-
-                if (diffInMins() >= 30) {
-                    session_array.push(i.timestamp);
-                }
-                curr_timestamp = i.timestamp;
-            });
-            return session_array;
-        },
-
-        numberOfSessionsSince: function (date) {
-            var aMonthAgoInMillis = date.getTime(), sessions = this.recentVisits();
-            var sessionsInLastMonth = _filter(sessions, function(timestamp) { return parseInt(timestamp,10) > aMonthAgoInMillis; });
-            return sessionsInLastMonth.length;
+            setSummary(summary);
+            setHistory(hist);
         }
     };
 });

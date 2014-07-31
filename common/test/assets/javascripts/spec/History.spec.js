@@ -70,7 +70,7 @@ define([
             expect(hist.getSummary().sections.foobar).toEqual(1);
         });
 
-        it('should set the (first) keyword count in the summary, once per article', function() {
+        it('should set the first keyword\'s count in the summary, once per article', function() {
             hist.log(item);
             hist.log(item);
 

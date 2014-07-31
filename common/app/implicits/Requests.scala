@@ -1,11 +1,11 @@
 package implicits
 
-import play.api.mvc.RequestHeader
+import play.api.mvc.{Request, RequestHeader}
 import play.api.http.MediaRange
 import conf.Configuration.ajax._
 
 trait Requests {
-  implicit class Request2rich(r: RequestHeader) {
+  implicit class RichRequestHeader(r: RequestHeader) {
 
     def getParameter(name: String): Option[String] = r.queryString.get(name).flatMap(_.headOption)
 
@@ -30,5 +30,10 @@ trait Requests {
     lazy val hasParameters: Boolean = !r.queryString.isEmpty
 
     lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase  "X-Gu-Management-Healthcheck")
+  }
+
+  implicit class RichRequest[A](val request: RequestHeader) {
+    //This is a header reliably set by jQuery for AJAX requests used in facia-tool
+    lazy val isXmlHttpRequest: Boolean = request.headers.get("X-Requested-With").exists(_ == "XMLHttpRequest")
   }
 }

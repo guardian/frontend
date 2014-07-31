@@ -309,6 +309,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
   )
 
+  val EnhancedMediaPlayerSwitch = Switch("Feature Switches", "enhanced-media-player",
+    "If this is switched on then videos are enhanced using our JavaScript player",
+    safeState = On, sellByDate = never
+  )
+
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -505,6 +510,7 @@ object Switches extends Collections {
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
     SeoBlockGooglebotFromJSPathsSwitch,
+    EnhancedMediaPlayerSwitch,
     ABRightMostPopularText
   )
 
