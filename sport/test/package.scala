@@ -18,11 +18,11 @@ import org.joda.time.LocalDate
 import scala.concurrent.Future
 
 object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit with implicits.Football {
+  object HtmlUnit extends EditionalisedHtmlUnit(conf.HealthCheck.testPort.toString) with implicits.Football {
     override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
     override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
   }
-  object Fake extends FakeApp {
+  object FakeSport extends FakeApplication {
     override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
     override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
   }

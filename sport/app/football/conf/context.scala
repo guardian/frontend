@@ -8,7 +8,7 @@ import com.gu.management.logback.LogbackLevelPage
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}
 import pa.{Http, PaClient}
-import play.api.{Application => PlayApp, Plugin}
+import play.api.{Application => PlayApp, Mode, Play, Plugin}
 import play.api.libs.ws.WS
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -112,7 +112,16 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
 object HealthCheck extends AllGoodHealthcheckController(
   "/football/live",
   "/football/premierleague/results"
-)
+) {
+  val testPort = 9013
+
+  override lazy val port = {
+    Play.current.mode match {
+      case Mode.Test => testPort
+      case _ => 9000
+    }
+  }
+}
 
 object Management extends GuManagement {
   val applicationName = "frontend-sport"
