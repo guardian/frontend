@@ -1,16 +1,11 @@
 import common.ExecutionContexts
-import football.model.PA
 import org.scalatest.{ShouldMatchers, FreeSpec}
-import play.api.libs.json.{JsString, JsObject, JsArray}
-import play.api.mvc.{AnyContentAsFormUrlEncoded, MultipartFormData}
+import play.api.libs.json.{JsString, JsObject}
+import play.api.mvc.{AnyContentAsFormUrlEncoded}
 import play.api.test._
 import play.api.test.Helpers._
-import scala.concurrent.{Await, Future}
-import scala.concurrent.duration._
 import football.services.GetPaClient
 import test.Fake
-import xml.Utility.escape
-
 
 class PlayerControllerTest extends FreeSpec with ShouldMatchers with GetPaClient with ExecutionContexts {
 

@@ -90,8 +90,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         $("[itemprop=author]").last.getText should be("Phelim O'Neill")
 
         And("I should see a link to the author's page")
-        $("[itemprop=author] a[itemprop='url name']")(0).getAttribute("href") should be(WithHost("/profile/ben-arnold"))
-        $("[itemprop=author] a[itemprop='url name']").last.getAttribute("href") should be(WithHost("/profile/phelimoneill"))
+        $("[itemprop=author] a[itemprop='url name']")(0).getAttribute("href") should be(HtmlUnit.withHost("/profile/ben-arnold"))
+        $("[itemprop=author] a[itemprop='url name']").last.getAttribute("href") should be(HtmlUnit.withHost("/profile/phelimoneill"))
       }
     }
 
@@ -371,7 +371,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
 
         Then("I should see a link to the corresponding classic article")
-        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
+        findFirst(".js-main-site-link").getAttribute("href") should be(HtmlUnit.classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
       }
     }
 
@@ -383,7 +383,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         Then("I should see a link to the corresponding classic article")
         findFirst(".js-main-site-link").getAttribute("href") should
-          be(ClassicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
+          be(HtmlUnit.classicVersionLink("/environment/2012/feb/22/capitalise-low-carbon-future"))
       }
     }
 
@@ -468,10 +468,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
-        val mailShareUrl = "mailto:?subject=Mark%20Kermode%27s%20DVD%20round-up&body=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
-        val fbShareUrl = "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
+        val mailShareUrl = s"mailto:?subject=Mark%20Kermode%27s%20DVD%20round-up&body=http%3A%2F%2Flocalhost%3A${HtmlUnit.port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review"
+        val fbShareUrl = s"https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A${HtmlUnit.port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&ref=responsive"
         val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark+Kermode%27s+DVD+round-up&url=http%3A%2F%2Fgu.com%2Fp%2F3bk2f%2Ftw"
-        val gplusShareUrl = "https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A9000%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
+        val gplusShareUrl = s"https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A${HtmlUnit.port}%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review&hl=en-GB&wwc=1"
 
         Then("I should see buttons for my favourite social network")
         findFirst(".social__item[data-link-name=email] .social__action").getAttribute("href") should be(mailShareUrl)
@@ -483,15 +483,12 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       Given("I want to track the responsive share buttons using Facebook Insights")
 
       HtmlUnit("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
-        import browser._
 
         val fbShareTrackingToken = "ref=responsive"
 
         Then("I should pass Facebook a tracking token")
-        findFirst(".social__item[data-link-name=facebook] .social__action").getAttribute("href") should include(fbShareTrackingToken)
+        browser.findFirst(".social__item[data-link-name=facebook] .social__action").getAttribute("href") should include(fbShareTrackingToken)
       }
-
-
     }
 
     // http://www.w3.org/WAI/intro/aria
@@ -582,15 +579,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
         Then("There should be a canonical url")
         findFirst("link[rel='canonical']").getAttribute("href")  should endWith ("/world/2013/sep/15/obama-rouhani-united-nations-meeting")
-      }
-    }
-
-    ignore("Health check"){
-      HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
-        import play.api.Play.current
-        Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (503)
-        HealthcheckPage.get(com.gu.management.HttpRequest(com.gu.management.GET, "/management/healthcheck", "http://localhost:10808", Map.empty))
-        Await.result(WS.url("http://localhost:9000/_cdn_healthcheck").get(), 10.seconds).status should be (200)
       }
     }
 

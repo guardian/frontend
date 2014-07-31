@@ -8,7 +8,7 @@ import com.gu.management.logback.LogbackLevelPage
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}
 import pa.{Http, PaClient}
-import play.api.{Application => PlayApp, Plugin}
+import play.api.{Application => PlayApp, Mode, Play, Plugin}
 import play.api.libs.ws.WS
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -110,6 +110,7 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
 }
 
 object HealthCheck extends AllGoodHealthcheckController(
+  9013,
   "/football/live",
   "/football/premierleague/results"
 )
