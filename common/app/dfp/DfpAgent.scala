@@ -31,25 +31,23 @@ trait DfpAgent {
     containerSponsoredTag(config, p).isDefined
   }
 
-  private def getPrimaryKeywordOrSeriesTag(tags: Seq[Tag]): Option[Tag] = tags find { tag =>
-    tag.tagType == "keyword" || tag.tagType == "series"
+  private def getKeywordTags(tags: Seq[Tag]): Seq[Tag] = tags filter(_.tagType == "keyword")
+
+  private def getSectionOrSeriesTags(tags: Seq[Tag]): Seq[Tag] = tags filter{ tag =>
+    tag.isSectionTag || tag.tagType == "series"
   }
 
-  private def getPrimaryKeywordSeriesOrSectionTag(tags: Seq[Tag]): Option[Tag] =  {
-    tags find {_.isSectionTag} orElse getPrimaryKeywordOrSeriesTag(tags)
-  }
-
-  def isSponsored(tags: Seq[Tag]): Boolean = getPrimaryKeywordOrSeriesTag(tags) exists (tag => isSponsored(tag.id))
+  def isSponsored(tags: Seq[Tag]): Boolean = getSectionOrSeriesTags(tags) exists (tag => isSponsored(tag.id))
   def isSponsored(tagId: String): Boolean = sponsorships exists (_.hasTag(tagId))
   def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
 
-  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = getPrimaryKeywordOrSeriesTag(tags) exists (tag => isAdvertisementFeature(tag.id))
+  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = getKeywordTags(tags) exists (tag => isAdvertisementFeature(tag.id))
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
   def isProd = !Configuration.environment.isNonProd
 
-  def hasInlineMerchandise(tags: Seq[Tag]): Boolean = getPrimaryKeywordSeriesOrSectionTag(tags)  exists (tag => hasInlineMerchandise(tag.id))
+  def hasInlineMerchandise(tags: Seq[Tag]): Boolean = getKeywordTags(tags)  exists (tag => hasInlineMerchandise(tag.id))
   def hasInlineMerchandise(tagId: String): Boolean = inlineMerchandisingDeals exists (_.hasTag(tagId))
   def hasInlineMerchandise(config: Config): Boolean = isSponsoredContainer(config, hasInlineMerchandise)
 
@@ -80,7 +78,7 @@ trait DfpAgent {
     containerSponsoredTag(config, isSponsored) orElse containerSponsoredTag(config, isAdvertisementFeature)
   }
 
-  def getSponsor(tags: Seq[Tag]): Option[String] = getPrimaryKeywordOrSeriesTag(tags) flatMap (tag => getSponsor(tag.id))
+  def getSponsor(tags: Seq[Tag]): Option[String] = tags.flatMap(tag => getSponsor(tag.id)).headOption
 
   def getSponsor(tagId: String): Option[String] = {
     def sponsorOf(sponsorships: Seq[Sponsorship]) = sponsorships.find(_.hasTag(tagId)).flatMap(_.sponsor)
