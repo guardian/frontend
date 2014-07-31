@@ -135,6 +135,9 @@ $avatarSize: 44px;
     .d-discussion--sentimental & {
         display: block;
     }
+    .d-discussion--shut & {
+        display: none;
+    }
 }
 .d-discussion__sentiment {
     @include box-sizing(border-box);
