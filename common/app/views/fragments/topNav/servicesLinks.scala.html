@@ -5,59 +5,59 @@
 @import common.editions._
 
 @if(HttpSwitch(GuardianServicesLinksSwitch).isSwitchedOn){
+    <div class="top-bar__item--right hide-on-mobile" data-component="guardian-services">
     @if(Edition(request) == Uk){
-        <div class="top-bar__item--right hide-on-mobile" data-component="guardian-services">
-            <div class="top-bar__item">
-                <a class="top-bar__item--action" data-link-name="topNav : jobs"
-                   href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS">jobs</a>
-            </div>
-            <div class="top-bar__item hide-on-tablet">
-                <a class="top-bar__item--action" data-link-name="topNav : soulmates"
-                   href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">soulmates</a>
-            </div>
-            <div class="top-bar__item top-bar__item--has-popup is-off guardian-services__item-more">
-                <a href="#guardian-services-top-menu" class="top-bar__item--action top-bar__item--popup-toggle" data-toggle="guardian-services__item-more" data-link-name="topNav : more">more</a>
-                <ul class="top-bar__popup" id="guardian-services-top-menu">
-                    <li class="top-bar__popup-item tablet-only">
-                        <a class="top-bar__item--action top-bar__popup-item--action" data-link-name="topNav : soulmates"
-                           href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">soulmates</a>
-                    </li>
-                    <li class="top-bar__popup-item">
-                        <a class="top-bar__item--action top-bar__popup-item--action" data-link-name="topNav : masterclasses"
-                           href="http://www.theguardian.com/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES">masterclasses</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="top-bar__item top-bar__item--has-popup top-bar__item--edition is-off hide-on-mobile top-bar__item-edition" data-component="edition" data-toggle="top-bar__item-edition">
-                edition:
-                <a href="#guardian-edition-menu" class="top-bar__item--action top-bar__item--popup-toggle" data-link-name="topNav : edition">
-                    @common.Region(request).filter(r => conf.Switches.IndiaRegionSwitch.isSwitchedOn).map{ region =>
-                        @region.id
-                    }.getOrElse{
-                        @Edition(request).id
-                    }
-                </a>
-                <ul class="top-bar__popup editions" id="guardian-edition-menu">
-                    @Edition.others(request).map{ edition =>
-                        <li class="top-bar__popup-item">
-                            <a class="top-bar__item--action top-bar__popup-item--action" data-edition="@edition.id"
-                                data-link-name="switch to @edition.id edition"
-                                href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
-                                @edition.id
-                            </a>
-                        </li>
-                    }
-                    @common.Region.others(request).map{ region =>
-                        <li class="top-bar__item--action top-bar__popup-item--action">
-                            <a class="" data-edition="@region.id"
-                                data-link-name="switch to @region.id region"
-                                href="@LinkTo(s"/preference/edition/${region.id.toLowerCase}")">
-                                @region.id
-                            </a>
-                        </li>
-                    }
-                </ul>
-            </div>
+        <div class="top-bar__item">
+            <a class="top-bar__item--action" data-link-name="topNav : jobs"
+               href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS">jobs</a>
+        </div>
+        <div class="top-bar__item hide-on-tablet">
+            <a class="top-bar__item--action" data-link-name="topNav : soulmates"
+               href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">soulmates</a>
+        </div>
+        <div class="top-bar__item top-bar__item--has-popup is-off guardian-services__item-more">
+            <a href="#guardian-services-top-menu" class="top-bar__item--action top-bar__item--popup-toggle" data-toggle="guardian-services__item-more" data-link-name="topNav : more">more</a>
+            <ul class="top-bar__popup" id="guardian-services-top-menu">
+                <li class="top-bar__popup-item tablet-only">
+                    <a class="top-bar__item--action top-bar__popup-item--action" data-link-name="topNav : soulmates"
+                       href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">soulmates</a>
+                </li>
+                <li class="top-bar__popup-item">
+                    <a class="top-bar__item--action top-bar__popup-item--action" data-link-name="topNav : masterclasses"
+                       href="http://www.theguardian.com/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES">masterclasses</a>
+                </li>
+            </ul>
         </div>
     }
+    <div class="top-bar__item top-bar__item--has-popup top-bar__item--edition is-off hide-on-mobile top-bar__item-edition" data-component="edition" data-toggle="top-bar__item-edition">
+        edition:
+        <a href="#guardian-edition-menu" class="top-bar__item--action top-bar__item--popup-toggle" data-link-name="topNav : edition">
+            @common.Region(request).filter(r => conf.Switches.IndiaRegionSwitch.isSwitchedOn).map{ region =>
+                @region.id
+            }.getOrElse{
+                @Edition(request).id
+            }
+        </a>
+        <ul class="top-bar__popup editions" id="guardian-edition-menu">
+            @Edition.others(request).map{ edition =>
+                <li class="top-bar__popup-item">
+                    <a class="top-bar__item--action top-bar__popup-item--action" data-edition="@edition.id"
+                        data-link-name="switch to @edition.id edition"
+                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
+                        @edition.id
+                    </a>
+                </li>
+            }
+            @common.Region.others(request).map{ region =>
+                <li class="top-bar__item--action top-bar__popup-item--action">
+                    <a class="" data-edition="@region.id"
+                        data-link-name="switch to @region.id region"
+                        href="@LinkTo(s"/preference/edition/${region.id.toLowerCase}")">
+                        @region.id
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
 }
