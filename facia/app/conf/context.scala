@@ -8,16 +8,7 @@ import com.gu.management.HttpRequest
 import play.api.{Mode, Play}
 import services.ConfigAgent
 
-object HealthCheck extends AllGoodHealthcheckController("/uk") {
-  val testPort = 9008
-
-  override lazy val port = {
-    Play.current.mode match {
-      case Mode.Test => testPort
-      case _ => 9000
-    }
-  }
-}
+object HealthCheck extends AllGoodHealthcheckController(9008, "/uk")
 
 object Management extends GuManagement {
   val applicationName = "frontend-facia"

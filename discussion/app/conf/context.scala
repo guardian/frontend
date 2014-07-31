@@ -6,16 +6,7 @@ import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import play.api.{Mode, Play}
 
-object HealthCheck extends AllGoodHealthcheckController("/discussion/p/37v3a") {
-  val testPort = 9007
-
-  override lazy val port = {
-    Play.current.mode match {
-      case Mode.Test => testPort
-      case _ => 9000
-    }
-  }
-}
+object HealthCheck extends AllGoodHealthcheckController(9007, "/discussion/p/37v3a")
 
 object Management extends GuManagement {
   val applicationName = "frontend-discussion"

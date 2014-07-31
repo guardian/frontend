@@ -6,7 +6,7 @@ import conf.AllGoodHealthcheckController
 import play.api.{Mode, Play}
 import play.api.mvc.Action
 
-object HealthCheck extends AllGoodHealthcheckController("/login") {
+object HealthCheck extends AllGoodHealthcheckController(9001, "/login") {
 
   private val status = new AtomicBoolean(true)
   def isOK = status.get
@@ -16,14 +16,5 @@ object HealthCheck extends AllGoodHealthcheckController("/login") {
     Action(InternalServerError("JAXP00010001"))
   } else {
     super.healthcheck()
-  }
-
-  val testPort = 9001
-
-  override lazy val port = {
-    Play.current.mode match {
-      case Mode.Test => testPort
-      case _ => 9000
-    }
   }
 }

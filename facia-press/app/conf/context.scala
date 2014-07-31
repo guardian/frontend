@@ -16,6 +16,8 @@ object HealthCheck extends HealthcheckController with Results {
 
   import Future.successful
 
+  override lazy val testPort = 9014
+
   val ConsecutiveProcessingErrorsThreshold = 5
 
   override def healthcheck() = Action.async{

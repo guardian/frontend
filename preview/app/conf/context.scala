@@ -44,18 +44,10 @@ class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(u
 }
 
 object HealthCheck extends AllGoodHealthcheckController(
+  9012,
   "/world/2012/sep/11/barcelona-march-catalan-independence",
   "/uk"
-) {
-  val testPort = 9012
-
-  override lazy val port = {
-    Play.current.mode match {
-      case Mode.Test => testPort
-      case _ => 9000
-    }
-  }
-}
+)
 
 object HealthcheckPage extends HealthcheckPage("/world/2012/sep/11/barcelona-march-catalan-independence") {
 

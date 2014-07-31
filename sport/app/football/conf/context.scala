@@ -110,18 +110,10 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
 }
 
 object HealthCheck extends AllGoodHealthcheckController(
+  9013,
   "/football/live",
   "/football/premierleague/results"
-) {
-  val testPort = 9013
-
-  override lazy val port = {
-    Play.current.mode match {
-      case Mode.Test => testPort
-      case _ => 9000
-    }
-  }
-}
+)
 
 object Management extends GuManagement {
   val applicationName = "frontend-sport"

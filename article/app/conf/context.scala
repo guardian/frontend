@@ -12,7 +12,7 @@ import scala.concurrent.duration._
 import java.util.concurrent.atomic.AtomicBoolean
 
 
-object HealthCheck extends AllGoodHealthcheckController("/world/2012/sep/11/barcelona-march-catalan-independence") with Results {
+object HealthCheck extends AllGoodHealthcheckController(9004, "/world/2012/sep/11/barcelona-march-catalan-independence") with Results {
 
   // this is for an "offline" healthcheck that the CDN hits
   private val status = new AtomicBoolean(false)
@@ -22,15 +22,6 @@ object HealthCheck extends AllGoodHealthcheckController("/world/2012/sep/11/barc
     val result = super.healthcheck()(request)
     result.foreach(r => status.set(r.header.status == 200))
     result
-  }
-
-  val testPort = 9004
-
-  override lazy val port = {
-    Play.current.mode match {
-      case Mode.Test => testPort
-      case _ => 9000
-    }
   }
 
   def isOk = status.get
