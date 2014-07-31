@@ -83,9 +83,9 @@ class CompetitionAgent(_competition: Competition) extends Fixtures with Results 
   }
 
   object MatchStatusOrdering extends Ordering[FootballMatch] {
-      private def statusValue(m: FootballMatch) = if (m.isResult) 1 else if (m.isLive) 2 else 3
-      def compare(a: FootballMatch, b: FootballMatch) = statusValue(a) - statusValue(b)
-    }
+    private def statusValue(m: FootballMatch) = if (m.isResult) 1 else if (m.isLive) 2 else 3
+    def compare(a: FootballMatch, b: FootballMatch) = statusValue(a) - statusValue(b)
+  }
 
   def addMatches(newMatches: Seq[FootballMatch]) = agent.send{ comp =>
 
