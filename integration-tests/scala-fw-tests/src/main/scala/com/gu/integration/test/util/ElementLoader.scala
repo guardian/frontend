@@ -80,8 +80,10 @@ object ElementLoader extends TestLogging {
     //with the subsequent findElements
     waitUntil(visibilityOfElementLocated(By.cssSelector("img")), 5)
     
-    val preDisplayedImages = searchContext.findElements(By.cssSelector("img")).asScala.toList.filter(element =>
-      waitUntil(visibilityOf(element)))
+    val imageElements = searchContext.findElements(By.cssSelector("img"))
+    logger.info(s"Found ${imageElements.size()} image elements")
+    
+    val preDisplayedImages = imageElements.asScala.toList.filter(element => waitUntil(visibilityOf(element)))
     preDisplayedImages.filter(element => isImageDisplayed(element))
   }
 
