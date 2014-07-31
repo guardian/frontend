@@ -4,15 +4,9 @@
  */
 define([
     'lodash/objects/assign',
-    'lodash/collections/map',
-    'lodash/collections/sortBy',
-    'lodash/collections/filter',
     'common/utils/storage'
 ], function(
     _assign,
-    _map,
-    _sortBy,
-    _filter,
     storage
     ) {
 
@@ -30,6 +24,16 @@ define([
         return this;
     }
 
+    function setHistory(data) {
+        history = data;
+        return storage.local.set(storageKeyHistory, data);
+    }
+
+    function setSummary(data) {
+        summary = data;
+        return storage.local.set(storageKeySummary, data);
+    }
+
     function updateSummary(summary, meta) {
         var section = meta.section,
             keyword = (meta.keywords || [])[0];
@@ -44,16 +48,6 @@ define([
     }
     
     return {
-        set: function(data) {
-            history = data;
-            return storage.local.set(storageKeyHistory, data);
-        },
-
-        get: function() {
-            history = history || storage.local.get(storageKeyHistory) || [];
-            return history;
-        },
-
         reset: function() {
             history = undefined;
             summary = undefined;
@@ -61,9 +55,9 @@ define([
             storage.local.remove(storageKeySummary);
         },
 
-        setSummary: function(data) {
-            summary = data;
-            return storage.local.set(storageKeySummary, data);
+        get: function() {
+            history = history || storage.local.get(storageKeyHistory) || [];
+            return history;
         },
 
         getSummary: function() {
@@ -103,35 +97,9 @@ define([
             }
 
             summary.count = hist.length;
-            this.setSummary(summary);
-            this.set(hist);
-        },
 
-        recentVisits: function () {
-            var curr_timestamp = 0,
-                session_array = [],
-                a_month_ago = new Date(Date.now());
-
-            a_month_ago.setMonth(a_month_ago.getMonth() - 1);
-
-            this.get().map(function (i) {
-                function diffInMins() {
-                    var diff = (parseInt(curr_timestamp, 10) - parseInt(i.timestamp, 10));
-                    return Math.ceil(diff / 1000 / 60);
-                }
-
-                if (diffInMins() >= 30) {
-                    session_array.push(i.timestamp);
-                }
-                curr_timestamp = i.timestamp;
-            });
-            return session_array;
-        },
-
-        numberOfSessionsSince: function (date) {
-            var aMonthAgoInMillis = date.getTime(), sessions = this.recentVisits();
-            var sessionsInLastMonth = _filter(sessions, function(timestamp) { return parseInt(timestamp,10) > aMonthAgoInMillis; });
-            return sessionsInLastMonth.length;
+            setSummary(summary);
+            setHistory(hist);
         }
     };
 });

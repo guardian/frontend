@@ -315,7 +315,7 @@ define([
 
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
-                if(!/Network Front|LiveBlog/.test(config.page.contentType)) {
+                if(!/Network Front/.test(config.page.contentType)) {
                     history.log({
                         id: '/' + config.page.pageId,
                         meta: {
