@@ -403,6 +403,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
    ========================================================================== */
 
 .top-navigation__item--home {
+    @include rem((
+        min-width: 15px
+    ));
+
     .navigation--has-signposting & {
         display: none;
     }
@@ -411,14 +415,24 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         display: table-cell;
     }
 }
-.top-navigation__icon {
+.top-navigation__icon-wrapper {
     position: relative;
     display: inline-block;
     @include rem((
-        top: 3px,
+        top: 3px
+    ));
+}
+.top-navigation__icon {
+    display: inline-block;
+    @include rem((
         width: 15px,
         height: 18px
     ));
+    background-repeat: no-repeat;
+    @include background-size(cover);
+}
+.top-navigation__icon--home {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAQAAAAul0yEAAAAO0lEQVQoz9XPsQ0AIAwDwYzuzZ8iQjIQUiLh9r5xhA0BinqInDqsggX34EAPSpzBFTOg3Su2o3+wGtYAGI94niPCbrMAAAAASUVORK5CYII=');
 }
 
 

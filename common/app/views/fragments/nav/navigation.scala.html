@@ -33,10 +33,14 @@
                             <ul class="top-navigation">
                                 <li class="top-navigation__item top-navigation__item--home">
                                     <a href="@LinkTo{/}"
-                                       class="top-navigation__action"
+                                       class="top-navigation__action top-navigation__action--has-icon"
                                        data-link-name="nav : primary : home"
                                        title="Back to homepage">
-                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAkCAQAAAA02ELiAAAAa0lEQVRIx+3VwQrAMAgD0Dj24e2XWzY2KCW26q3QHIV3EYyAGS36pCCej2Z4R6N8oBFOqJcb1MMndMUXdMYd1OJOyniAjjxIe56gP0/Sl4sq0rmAg/fANxuKkMPRs7CDN8M1bSvtT/qMSPU27G/0WcVc6j0AAAAASUVORK5CYII=" alt="home" class="top-navigation__icon" />
+                                        <span class="top-navigation__icon-wrapper">
+                                            <span class="u-low-dpi-only top-navigation__icon top-navigation__icon--home"></span>
+                                            <svg class="u-high-dpi-only top-navigation__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 18"><path d="m8 0-1 0-7 7 0 10 1 1 4 0 0-7 5 0 0 7 4 0 1-1 0-10z" fill="#fff" /></svg>
+                                        </span>
+                                        <span class="u-h">home</span>
                                     </a>
                                 </li>
                                 @defining(Navigation.topLevelItem(navigation, metaData)){ topSection =>
