@@ -17,6 +17,8 @@ function (
     urlAbsPath,
     snap
 ){
+    var standardQueryParams = 'page-size=50&format=json&show-fields=all';
+
     function validateItem (item) {
         var defer = $.Deferred(),
             snapId = snap.validateId(item.id()),
@@ -37,7 +39,7 @@ function (
             defer.resolve();
 
         } else {
-            fetchContentByIds([capiId])
+            fetchContentById(capiId)
             .done(function(results) {
                 var capiItem,
                     icc,
@@ -63,12 +65,14 @@ function (
                 } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
                     err = 'Sorry, that link cannot be added to a front';
 
-                // A snap, but cannot be added in live mode if it has no headline
+                // A snap, but a link to unavailable guardian content
+                } else if (urlHost(item.id()) === 'www.theguardian.com' && results.length === 0) {
+                    err = 'Sorry, that content is unavailable';
+
+                // A snap, but snaps cannot be added to collections in live mode
                 } else if (vars.model.liveMode() &&
-                    item.parentType !== 'Clipboard' &&
-                    !item.fields.headline() &&
-                    !item.meta.headline()) {
-                    err = 'Sorry, snaps without headlines can\'t be added in live mode';
+                    item.parentType !== 'Clipboard') {
+                    err = 'Sorry, snaps cannot be added in live mode';
 
                 // A snap that's legitimate
                 } else {
@@ -137,10 +141,14 @@ function (
             .value();
 
         if (capiIds.length) {
-            return fetchContent('search?ids=' + capiIds.join(',') + '&page-size=50&format=json&show-fields=all');
+            return fetchContent('search?ids=' + capiIds.join(',') + '&' + standardQueryParams);
         } else {
             return $.Deferred().resolve([]);
         }
+    }
+
+    function fetchContentById(id) {
+        return fetchContent(id + '?' + standardQueryParams);
     }
 
     function fetchContent(apiUrl) {
@@ -149,12 +157,17 @@ function (
         authedAjax.request({
             url: vars.CONST.apiSearchBase + '/' + apiUrl
         }).always(function(resp) {
-            defer.resolve(resp.response ?
-               _.chain(['editorsPicks', 'results', 'mostViewed'])
-                .filter(function(key) { return _.isArray(resp.response[key]); })
-                .map(function(key) { return resp.response[key]; })
-                .flatten()
-                .value() : []);
+            if (!resp.response) {
+                defer.resolve([]);
+            } else if (resp.response.content) {
+                defer.resolve([resp.response.content]);
+            } else {
+                defer.resolve(_.chain(['editorsPicks', 'results', 'mostViewed'])
+                    .filter(function(key) { return _.isArray(resp.response[key]); })
+                    .map(function(key) { return resp.response[key]; })
+                    .flatten()
+                    .value());
+            }
         });
 
         return defer.promise();
