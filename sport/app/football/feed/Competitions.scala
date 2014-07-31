@@ -67,7 +67,7 @@ trait CompetitionSupport extends implicits.Football {
   }
 
   def matchFor(date: LocalDate, homeTeamId: String, awayTeamId: String) =
-    matches.find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId)
+    matches.find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId && m.date.toLocalDate == date)
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
   def matchFor(interval: Interval, team1: String, team2: String): Option[FootballMatch] = matches
