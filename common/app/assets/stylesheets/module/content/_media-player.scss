@@ -16,6 +16,11 @@
         margin-bottom: $gs-baseline * 1.5
     ));
 }
+.gu-media-wrapper--audio {
+    @include rem((
+        height: $vjs-control-height
+    ));
+}
 .video-standfirst {
     @include rem((
         margin-bottom: ($gs-baseline/3)*4
@@ -52,11 +57,6 @@ $vjs-control-height: $gs-baseline*4;
     &.gu-media--video { // aspect ratio fix (this element gets given a fixed height by video.js)
         height: auto !important;
         cursor: pointer;
-    }
-    &.gu-media-wrapper--audio {
-        @include rem((
-            height: $vjs-control-height
-        ));
     }
     &.gu-media--audio {
         position: relative;
