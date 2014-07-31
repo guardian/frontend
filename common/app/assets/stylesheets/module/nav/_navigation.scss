@@ -403,33 +403,22 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
    ========================================================================== */
 
 .top-navigation__item--home {
-    display: none;
+    .navigation--has-signposting & {
+        display: none;
+    }
 
-    .svg & {
-        @include mq(navigationBreakOnTwoLevels) {
-            display: table-cell;
-        }
+    @include mq(navigationBreakOnTwoLevels) {
+        display: table-cell;
     }
 }
 .top-navigation__icon {
     position: relative;
-    @include rem((
-        top: 3px
-    ));
-}
-.top-navigation__icon--home {
     display: inline-block;
     @include rem((
+        top: 3px,
         width: 15px,
         height: 18px
     ));
-}
-.top-navigation__action--icon {
-    &:active {
-        svg polygon {
-            fill: $c-newsAccent;
-        }
-    }
 }
 
 
