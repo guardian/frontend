@@ -53,7 +53,7 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
 
   it should "redirect century urls correctly when enabled" in Fake {
     val tests = Map[String, Option[String]](
-      "www.theguardian.com/century" -> Some("gu.com/p/4vaex")
+      "www.theguardian.com/century" -> Some("www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century")
     )
     CenturyRedirectionSwitch.switchOn()
     tests foreach {
@@ -63,7 +63,7 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
 
   it should "redirect century/decade urls correctly when enabled" in Fake {
     val tests = Map[String, Option[String]](
-      "www.theguardian.com/century/1899-1909" -> Some("gu.com/p/4vaex")
+      "www.theguardian.com/century/1899-1909" -> Some("www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century")
     )
     CenturyRedirectionSwitch.switchOn()
     tests foreach {

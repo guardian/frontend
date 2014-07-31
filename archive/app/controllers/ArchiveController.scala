@@ -120,10 +120,10 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     if (CenturyRedirectionSwitch.isSwitchedOn) {
         val centuryOptDecadeUrlEx = """www.theguardian.com(\/century)(\/\d{4}-\d{4})?(\/)?$""".r
         val centuryStoryUrlEx = """www.theguardian.com\/(\d{4}-\d{4})\/Story\/([0|1]?,[\d]*,-?\d+,[\d]*)(.*)""".r
-        val newCenturyFront = "gu.com/p/4vaex"
+        val ngCenturyFront = "www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century"
         path match {
           case centuryOptDecadeUrlEx(centuryPath, centuryDecade, _) => {
-            Some(newCenturyFront)
+            Some(ngCenturyFront)
           }
           case centuryStoryUrlEx(decade, storyId, ext) => {
             Some(s"www.theguardian.com/century/$decade/Story/$storyId$ext")
