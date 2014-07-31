@@ -24,7 +24,7 @@ define([
         this.keepCopy   = opts.keepCopy;
 
         this.pasteItem = function() {
-            var sourceItem = copiedArticle.get();
+            var sourceItem = copiedArticle.get(true);
 
             if(!sourceItem) { return; }
 

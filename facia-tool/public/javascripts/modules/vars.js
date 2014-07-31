@@ -15,6 +15,8 @@ define([
             {name: 'news/most-popular'},
             {name: 'news/people'},
             {name: 'news/special'},
+            {name: 'news/headline', groups: ['standard', 'big']},
+            {name: 'news/small-list'},
             {name: 'features'},
             {name: 'features/auto'},
             {name: 'features/multimedia'},

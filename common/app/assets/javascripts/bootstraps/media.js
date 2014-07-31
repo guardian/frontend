@@ -12,7 +12,8 @@ define([
     'lodash/functions/throttle',
     'bean',
     'bonzo',
-    'common/modules/component'
+    'common/modules/component',
+    'common/modules/analytics/beacon'
 ], function(
     $,
     ajax,
@@ -26,7 +27,8 @@ define([
     _throttle,
     bean,
     bonzo,
-    Component
+    Component,
+    beacon
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint());
@@ -70,6 +72,28 @@ define([
             new OmnitureMedia(player).init();
         },
 
+        bindDiagnosticsEvents: function(player) {
+            player.on('video:preroll:play', function(){
+                beacon.fire('/count/vps.gif');
+            });
+            player.on('video:preroll:end', function(){
+                beacon.fire('/count/vpe.gif');
+            });
+            player.on('video:content:play', function(){
+                beacon.fire('/count/vs.gif');
+            });
+            player.on('video:content:end', function(){
+                beacon.fire('/count/ve.gif');
+            });
+
+            // count the number of video starts that happen after a preroll
+            player.on('video:preroll:play', function(){
+                player.on('video:content:play', function(){
+                    beacon.fire('/count/vsap.gif');
+                });
+            });
+        },
+
         bindPrerollEvents: function(player) {
             var events = {
                 end: function() {
@@ -99,7 +123,7 @@ define([
 
             //If no preroll avaliable or preroll fails, still init content tracking
             player.one('adtimeout', function() {
-                modules.bindContentEvents(player, true);
+                modules.bindContentEvents(player);
             });
         },
 
@@ -190,6 +214,9 @@ define([
                 videojs.plugin('adCountDown', modules.countDown);
 
                 $('.js-gu-media').each(function (el) {
+
+                    bonzo(el).addClass('vjs');
+
                     var mediaId = el.getAttribute('data-media-id'),
                         vjs = videojs(el, {
                             controls: true,
@@ -216,19 +243,25 @@ define([
 
                             // preroll for videos only
                             if (config.page.contentType === 'Video') {
-                                // Init plugins
-                                player.adCountDown();
-                                player.ads({
-                                    timeout: 3000
-                                });
 
                                 modules.initOmnitureTracking(player);
                                 modules.initOphanTracking(player, mediaId);
-                                modules.bindPrerollEvents(player);
+                                modules.bindDiagnosticsEvents(player);
 
-                                player.vast({
-                                    url: modules.getVastUrl()
-                                });
+                                // Init plugins
+                                if(config.switches.videoAdverts) {
+                                    player.adCountDown();
+                                    player.ads({
+                                        timeout: 3000
+                                    });
+                                    player.vast({
+                                        url: modules.getVastUrl(),
+                                        vidFormats: ['video/mp4', 'video/webm', 'video/ogv', 'video/x-flv']
+                                    });
+                                    modules.bindPrerollEvents(player);
+                                } else {
+                                    modules.bindContentEvents(player);
+                                }
 
                                 if(/desktop|wide/.test(detect.getBreakpoint())) {
                                     modules.initEndSlate(player);
@@ -298,7 +331,9 @@ define([
     };
 
     var ready = function () {
-        modules.initPlayer();
+        if(config.switches.enhancedMediaPlayer) {
+            modules.initPlayer();
+        }
 
         if (config.isMedia) {
             modules.initMoreInSection();

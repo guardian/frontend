@@ -37,7 +37,6 @@ define([
     'common/modules/discussion/comment-count',
     'common/modules/gallery/lightbox',
     'common/modules/onward/history',
-    'common/modules/onward/sequence',
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
     'common/modules/analytics/foresee-survey',
@@ -84,8 +83,7 @@ define([
     ab,
     CommentCount,
     LightboxGallery,
-    History,
-    sequence,
+    history,
     Message,
     AutoSignin,
     Foresee,
@@ -269,7 +267,7 @@ define([
             var releaseMessage = new Message('alpha');
 
             // Do not show the release message on -sp- based paths.
-            var spRegExp = new RegExp('.*/-sp-.*');
+            var spRegExp = new RegExp('.*-sp-.*');
 
             if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path)) {
                 // force the visitor in to the alpha release for subsequent visits
@@ -317,17 +315,14 @@ define([
 
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
-                if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
-                    new History().log({
+                if(config.page.contentType !== 'Network Front') {
+                    history.log({
                         id: '/' + config.page.pageId,
                         meta: {
                             section: config.page.section,
-                            keywords: config.page.keywordIds.split(',').slice(0, 5)
+                            keywords: config.page.keywordIds && (config.page.keywordIds + '').split(',').slice(0, 5)
                         }
                     });
-                }
-                if (config.page.section !== 'identity') {
-                    sequence.init('/' + config.page.pageId);
                 }
             });
         },
@@ -370,7 +365,7 @@ define([
 
         augmentInteractive: function() {
             mediator.on('page:common:ready', function(config, context) {
-                if (/Article|Interactive/.test(config.page.contentType)) {
+                if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
                     $('figure.interactive').each(function (el) {
                         enhancer.render(el, context, config, mediator);
                     });

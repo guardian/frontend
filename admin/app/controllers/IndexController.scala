@@ -17,7 +17,7 @@ object AuthActions extends Actions {
   object AuthActionTest extends AuthenticatedBuilder(r => UserIdentity.fromRequest(r).orElse(testUser), r => sendForAuth(r))
 }
 
-object IndexController extends Controller {
+object AdminIndexController extends Controller {
 
   def index() = Action { Redirect("/admin") }
 

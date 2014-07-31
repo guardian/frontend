@@ -32,8 +32,10 @@
     position: relative;
     display: block;
     overflow: hidden;
-    width: 30px;
-    height: 30px;
+    @include rem((
+        width: 30px,
+        height: 30px
+    ));
     border: 1px solid $c-neutral1;
     padding: 0;
     @include border-radius(50%);

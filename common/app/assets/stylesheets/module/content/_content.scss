@@ -418,13 +418,13 @@
         line-height: 16px
     ));
 
-    @include mq($from: tablet) {
+    @include mq(tablet) {
         @include rem((
             padding-top: $gs-baseline/2
         ));
     }
     .content__head & {
-        @include mq($from: tablet, $to: leftCol) {
+        @include mq(tablet, leftCol) {
             border-top: 1px dotted $c-neutral5;
         }
     }

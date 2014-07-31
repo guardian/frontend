@@ -20,6 +20,7 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "_edition", //allows us to spoof edition in tests
     "k", // keywords in commercial component requests
     "s", // section in commercial component requests
+    "c", // used for counts in the Diagnostics server
     "seg", // user segments in commercial component requests
     "build", // used by Forsee surveys
     "google_console", // two params for dfp console
@@ -41,7 +42,7 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
       if (
         !isProd &&
         !request.isJson &&
-        !request.uri.startsWith("/openIDCallback") &&
+        !request.uri.startsWith("/oauth2callback") &&
         !request.uri.startsWith("/px.gif")  && // diagnostics box
         !request.uri.startsWith("/ab.gif") &&
         !request.uri.startsWith("/js.gif")

@@ -76,7 +76,7 @@ td {
 }
 
 .table--responsive-font {
-    @include mq($from: desktop) {
+    @include mq(desktop) {
         th,
         td,
         thead td {
