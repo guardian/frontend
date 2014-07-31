@@ -1,3 +1,13 @@
+/** Give the link the same colour whatever its state */
+@mixin fix-link-colour($colour) {
+    &,
+    &:active,
+    &:focus,
+    &:hover {
+        color: $colour;
+    }
+}
+
 .tag-index__main-column {
     position: relative;
 
@@ -38,20 +48,6 @@
             padding-top: $gs-baseline/6
         ));
         border-top: 0;
-    }
-    a {
-        &,
-        &:hover,
-        &:active,
-        &:focus {
-            color: $c-neutral1;
-        }
-    }
-    em {
-        font-style: normal;
-    }
-    strong {
-        font-weight: normal;
     }
 }
 
@@ -113,15 +109,6 @@
     }
 }
 
-@mixin fix-link-colour($colour) {
-    &,
-    &:active,
-    &:focus,
-    &:hover {
-        color: $colour;
-    }
-}
-
 .tag-index__parent__link {
     @include fix-link-colour($c-brandBlue);
 }
@@ -136,7 +123,7 @@
     @include mq($to: tablet) {
         display: none;
     }
-    @include mq($from:tablet, $to: rightCol) {
+    @include mq(tablet, rightCol) {
         @include rem((
             max-width: gs-span(8)
         ));
