@@ -417,6 +417,13 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         top: 3px
     ));
 }
+.top-navigation__icon--home {
+    display: inline-block;
+    @include rem((
+        width: 15px,
+        height: 18px
+    ));
+}
 .top-navigation__action--icon {
     &:active {
         svg polygon {
