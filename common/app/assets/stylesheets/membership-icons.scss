@@ -4,5 +4,7 @@
 
 $svg-support: true;
 
+@import '_mixins';
+
 @import 'icons/membership-icons-sprite';
 @import 'icons/membership-icons-svg';

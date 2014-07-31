@@ -309,11 +309,21 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
   )
 
+  val EnhancedMediaPlayerSwitch = Switch("Feature Switches", "enhanced-media-player",
+    "If this is switched on then videos are enhanced using our JavaScript player",
+    safeState = On, sellByDate = never
+  )
+
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
+  )
+
+  val ABRightMostPopularText = Switch("A/B Tests", "ab-right-most-popular-text",
+    "If this switch is turned on, run the RightMostPopularText A/B test",
+   safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
   // Dummy Switches
@@ -499,7 +509,9 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
-    SeoBlockGooglebotFromJSPathsSwitch
+    SeoBlockGooglebotFromJSPathsSwitch,
+    EnhancedMediaPlayerSwitch,
+    ABRightMostPopularText
   )
 
   val httpSwitches: List[Switch] = List(
