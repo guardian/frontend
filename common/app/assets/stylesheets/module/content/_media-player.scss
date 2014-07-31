@@ -1,6 +1,9 @@
 @import '../../icons/video-icons-sprite';
 @import '../../icons/video-icons-svg';
 
+$vjs-control-colour: rgba(25, 25, 25, .8);
+$vjs-control-height: $gs-baseline*4;
+
 .player {
     @include rem((
         margin-bottom: $gs-row-height
@@ -33,11 +36,6 @@
 
 /* VJS
    ========================================================================== */
-
-$vjs-control-colour: rgba(25, 25, 25, .8);
-$vjs-control-height: $gs-baseline*4;
-
-
 .vjs-tech {
     cursor: pointer;
 
