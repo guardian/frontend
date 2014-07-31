@@ -1,7 +1,6 @@
 package com.gu.integration.test.util
 
 import scala.collection.JavaConverters.asScalaBufferConverter
-
 import org.openqa.selenium.By
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.SearchContext
@@ -9,11 +8,10 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebDriverException
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.ExpectedCondition
-import org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable
-import org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf
+import org.openqa.selenium.support.ui.ExpectedConditions._
 import org.openqa.selenium.support.ui.WebDriverWait
-
 import com.gu.automation.support.TestLogging
+import org.openqa.selenium.support.ui.ExpectedConditions
 
 object ElementLoader extends TestLogging {
 
@@ -51,6 +49,10 @@ object ElementLoader extends TestLogging {
    * Find maxElements of displayed and visible link elements, including nested, from the provided SearchContext
    */
   def displayedLinks(searchContext: SearchContext, maxElements: Int = Int.MaxValue)(implicit driver: WebDriver): List[WebElement] = {
+    //this is needed because sometimes it takes a while for AJAX to load the links so a race condition may occur
+    //with the subsequent findElements
+    waitUntil(visibilityOfElementLocated(By.cssSelector("a")), 5)
+    
     searchContext.findElements(By.cssSelector("a")).asScala
       .toList
       .view
@@ -74,6 +76,10 @@ object ElementLoader extends TestLogging {
    * actually displayed, just that an img element is not hidden
    */
   def displayedImages(searchContext: SearchContext)(implicit driver: WebDriver): List[WebElement] = {
+    //this is needed because sometimes it takes a while for AJAX to load the images so a race condition may occur
+    //with the subsequent findElements
+    waitUntil(visibilityOfElementLocated(By.cssSelector("img")), 5)
+    
     val preDisplayedImages = searchContext.findElements(By.cssSelector("img")).asScala.toList.filter(element =>
       waitUntil(visibilityOf(element)))
     preDisplayedImages.filter(element => isImageDisplayed(element))
@@ -88,6 +94,7 @@ object ElementLoader extends TestLogging {
     val result = driver.asInstanceOf[JavascriptExecutor].
       executeScript("return arguments[0].complete && typeof arguments[0].naturalWidth != \"undefined\" && arguments[0].naturalWidth > 0",
         imageElement)
+    logger.info(s"isImageDisplayed result: ${result}")
     if (result.isInstanceOf[java.lang.Boolean]) {
       result.asInstanceOf[java.lang.Boolean]
     } else {
