@@ -667,8 +667,8 @@ $avatarSize: 44px;
     }
 }
 .d-comment__reply-button {
-    position: absolute;
     @include icon-button(18px, -5px, -6px);
+    position: absolute; // override relative position of icon-button
     background-color: $c-newsDefault;
 }
 .d-comment__action--reply-text {
