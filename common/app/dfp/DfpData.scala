@@ -17,23 +17,25 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val targetsAdTest = isPositive("at")
 
   val isTag = isPositive("k") || isPositive("se")
+
+  val isContributor = isPositive("co")
 }
 
 
 case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
-  def filterTags(bySlotType: CustomTarget => Boolean) = {
+  def filterTags(tagCriteria: CustomTarget => Boolean)(bySlotType: CustomTarget => Boolean) = {
     if (targets exists bySlotType) {
-      targets.filter(_.isTag).flatMap(_.values).distinct
+      targets.filter(tagCriteria).flatMap(_.values).distinct
     } else Nil
   }
 
-  val sponsoredTags = filterTags(_.isSponsoredSlot)
+  val sponsoredTags = filterTags(_.isTag)(_.isSponsoredSlot)
 
-  val advertisementFeatureTags = filterTags(_.isAdvertisementFeatureSlot)
+  val advertisementFeatureTags = filterTags(_.isTag)(_.isAdvertisementFeatureSlot)
+
+  val inlineMerchandisingTargettedTags = filterTags(target => target.isTag || target.isContributor)(_.isInlineMerchandisingSlot)
 
   val targetsAdTest = targets.find(_.targetsAdTest).isDefined
-
-  val inlineMerchandisingTargettedTags = filterTags(_.isInlineMerchandisingSlot)
 }
 
 
