@@ -435,7 +435,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     overflow: hidden;
     position: relative;
     // draws border across elements without content
-    box-shadow: inset 0 1px $c-global-navigation-border;
+    @include box-shadow(inset 0 1px $c-global-navigation-border);
     @include rem((
         min-height: $navigation-height
     ));
