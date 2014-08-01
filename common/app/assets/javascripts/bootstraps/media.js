@@ -13,7 +13,8 @@ define([
     'bean',
     'bonzo',
     'common/modules/component',
-    'common/modules/analytics/beacon'
+    'common/modules/analytics/beacon',
+    'raven'
 ], function(
     $,
     ajax,
@@ -28,7 +29,8 @@ define([
     bean,
     bonzo,
     Component,
-    beacon
+    beacon,
+    Raven
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint());
@@ -332,7 +334,13 @@ define([
 
     var ready = function () {
         if(config.switches.enhancedMediaPlayer) {
-            modules.initPlayer();
+            Raven.context(function(){
+                Raven.setTagsContext({
+                    feature: 'media',
+                    contentType: config.page.contentType
+                });
+                modules.initPlayer();
+            });
         }
 
         if (config.isMedia) {
