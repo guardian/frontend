@@ -6,9 +6,9 @@
    ========================================================================== */
 
 .control {
-    float: left;
-    font-family: $f-serif-headline;
-    color: $c-neutral1;
+    // float: left;
+    // font-family: $f-serif-headline;
+    // color: $c-neutral1;
 }
 
 
@@ -16,13 +16,13 @@
    ========================================================================== */
 
 .is-signed-in {
-    .control--profile {
-        color: $c-brandBlue;
+    // .control--profile {
+    //     color: $c-brandBlue;
 
-        .control__icon-wrapper {
-            border-color: $c-brandBlue;
-        }
-    }
+    //     .control__icon-wrapper {
+    //         border-color: $c-brandBlue;
+    //     }
+    // }
 }
 
 
@@ -33,11 +33,7 @@
     &:active,
     &:focus,
     &.is-active {
-        color: $c-brandLightBlue;
-
-        .control__icon-wrapper {
-            border-color: $c-brandLightBlue;
-        }
+        // color: $c-brandLightBlue;
     }
 }
 
@@ -74,6 +70,7 @@
 
 .control__icon-wrapper {
     @extend %icon-holder-circle;
+    border-color: #ffffff;
     float: left;
 }
 

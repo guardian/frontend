@@ -12,20 +12,18 @@ to apply any necessary changes to non-shared code there too.
         <div class="l-header-pre__inner gs-container u-cf">
             <div class="top-bar">
                 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                    <div class="top-bar__item" data-component="identity-profile">
-                        <div class="js-profile-nav">
-                            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
-                               class="top-bar__item--action">
-                                <span class="control__icon-wrapper">
-                                    <span class="control__icon">
-                                        <i class="i i-profile control--active__hide"></i>
-                                        <i class="i i-profile-active control--active__show"></i>
-                                    </span>
+                    <div class="top-bar__item has-nav-popup nav-popup--profile is-off js-profile-nav" data-component="identity-profile">
+                        <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
+                           class="top-bar__item--action nav-popup__toggle">
+                            <span class="control__icon-wrapper">
+                                <span class="control__icon">
+                                    <i class="i i-profile control--active__hide"></i>
+                                    <i class="i i-profile-active control--active__show"></i>
                                 </span>
-                                <span class="js-profile-info control__info">sign in</span>
-                            </a>
-                            <div class="nav-popup nav-popup--profile js-profile-nav-popup is-off"></div>
-                        </div>
+                            </span>
+                            <span class="js-profile-info control__info">sign in</span>
+                        </a>
+                        <div class="js-profile-nav-popup"></div>
                     </div>
                 }
                 <div class="top-bar__item" data-component="subscribe">
@@ -42,7 +40,7 @@ to apply any necessary changes to non-shared code there too.
                 @if(SearchSwitch.isSwitchedOn) {
                     <div class="top-bar__item top-bar__item--search" data-component="search">
                         <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
-                            class="top-bar__item--action control control--search js-search-toggle" data-toggle="nav-popup--search">
+                           class="top-bar__item--action js-search-toggle" data-toggle="nav-popup--search">
                             <span class="control__icon-wrapper">
                                 <span class="control__icon">
                                     <i class="i i-search-white"></i>
