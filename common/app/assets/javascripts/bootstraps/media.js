@@ -55,7 +55,7 @@ define([
             if(id) {
                 require('ophan/ng', function (ophan) {
                     ophan.record({
-                        'video': {
+                        media: {
                             id: id,
                             eventType: event.type
                         }
