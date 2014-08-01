@@ -883,7 +883,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('commonjs', ['requirejs:common', 'copy:javascript', 'asset_hash']);
+    grunt.registerTask('compile:js:common', ['requirejs:common', 'copy:javascript', 'asset_hash']);
 
 
 };
