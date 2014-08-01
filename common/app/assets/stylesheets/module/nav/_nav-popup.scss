@@ -2,7 +2,11 @@
    Nav pop-up
    ========================================================================== */
 $nav-popup-toggle-arrow-size: 4px;
+$nav-popup-top: $headerHeight + $gs-baseline/2;
 $c-nav-popup-bg: #ffffff;
+// popups align with the label, so if there's a control icon, we need to account
+// for it.
+$control-offset: 32 + $gs-gutter/2;
 
 .nav-popup {
     @include box-sizing(border-box);
@@ -10,58 +14,31 @@ $c-nav-popup-bg: #ffffff;
     background: $c-nav-popup-bg;
     margin: 0;
     padding: 0;
-    right: 0;
+    left: 0;
     list-style: none;
     @include rem((
-        top: $headerHeight + $gs-baseline/2,
+        top: $nav-popup-top + $gs-baseline/2,
         padding: 0 $gs-gutter/2
     ));
+
+    .top-bar__item--has-control & {
+        @include rem((
+            left: $control-offset
+        ))
+    }
+
+    .top-bar__item--right & {
+        left: auto;
+        right: 0;
+    }
 }
 
 .has-nav-popup {
     position: relative;
-
-    &.is-off {
-        display: block;
-
-        .nav-popup__toggle {
-            &:before {
-                display: none
-            }
-            &:after {
-                border-bottom: 0;
-                @include rem((
-                    border-top: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
-                ));
-            }
-        }
-
-        .nav-popup {
-            display: none;
-        }
-    }
 }
 
 .nav-popup__toggle {
     position: relative;
-    // This is the exposed menu arrow pointing up
-    // to the link. It's placed on the link to center it.
-    &:before {
-        content: '';
-        display: inline-block;
-        width: 0;
-        height: 0;
-        border-top: 0;
-        position: absolute;
-        left: 50%;
-        margin-left: 0 - $nav-popup-toggle-arrow-size * 2.5;
-        @include rem((
-            border-left: $nav-popup-toggle-arrow-size solid transparent,
-            border-right: $nav-popup-toggle-arrow-size solid transparent,
-            border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg,
-            top: $headerHeight - $nav-popup-toggle-arrow-size
-        ));
-    }
     // disclosure arrow
     &:after {
         content: '';
@@ -69,13 +46,51 @@ $c-nav-popup-bg: #ffffff;
         pointer-events: none;
         width: 0;
         height: 0;
-        border-top: 0;
+        border-bottom: 0;
         @include rem((
             margin: 2px,
+            margin-left: 4px,
             border-left: $nav-popup-toggle-arrow-size solid transparent,
             border-right: $nav-popup-toggle-arrow-size solid transparent,
-            border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
+            border-top: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
         ));
+    }
+    &.is-active,
+    .is-active > & {
+        &:after {
+            border-top: 0;
+            @include rem((
+                border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
+            ));
+        }
+        // This is the exposed menu arrow pointing up
+        // to the link. It's placed on the link to center it.
+        &:before {
+            content: '';
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-top: 0;
+            position: absolute;
+            left: 50%;
+            @include rem((
+                margin-left: 0 - $nav-popup-toggle-arrow-size * .5,
+                border-left: $nav-popup-toggle-arrow-size solid transparent,
+                border-right: $nav-popup-toggle-arrow-size solid transparent,
+                border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg,
+                top: $headerHeight - $nav-popup-toggle-arrow-size + $gs-baseline/2
+            ));
+            .top-bar__item--has-control & {
+                @include rem((
+                    margin-left: $control-offset * .5 - $nav-popup-toggle-arrow-size * .5
+                ))
+            }
+            .top-bar__item--right & {
+                @include rem((
+                    margin-left: 0 - $nav-popup-toggle-arrow-size * 2.5
+                ));
+            }
+        }
     }
 }
 
@@ -90,11 +105,26 @@ $c-nav-popup-bg: #ffffff;
 .nav-popup .top-bar__item--action,
 .nav-popup .top-bar__item--action:hover {
     display: block;
+    white-space: nowrap;
     color: guss-colour(neutral-1);
     @include rem((
         line-height: 36
     ))
 }
+
+/* Profile Menu
+   ========================================================================== */
+// .top-bar__item--profile {
+//     .nav-popup__toggle:before,
+//     .nav-popup__toggle:after {
+//         display: none;
+//     }
+//     &.is-signed-in .nav-popup__toggle {
+//         @extend .nav-popup__toggle;
+//     }
+// }
+
+
 
 /* Search Menu
    ========================================================================== */

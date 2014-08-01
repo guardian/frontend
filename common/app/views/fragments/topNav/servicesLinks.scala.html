@@ -15,9 +15,9 @@
             <a class="top-bar__item--action" data-link-name="topNav : soulmates"
                href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">soulmates</a>
         </div>
-        <div class="top-bar__item has-nav-popup is-off guardian-services__item-more">
-            <a href="#guardian-services-top-menu" class="top-bar__item--action nav-popup__toggle" data-toggle="guardian-services__item-more" data-link-name="topNav : more">more</a>
-            <ul class="nav-popup" id="guardian-services-top-menu">
+        <div class="top-bar__item has-nav-popup">
+            <a href="#guardian-services-top-menu" class="top-bar__item--action nav-popup__toggle" data-toggle="top-bar__popup--more" data-link-name="topNav : more">more</a>
+            <ul class="nav-popup is-off top-bar__popup--more" id="guardian-services-top-menu">
                 <li class="nav-popup__item tablet-only">
                     <a class="top-bar__item--action" data-link-name="topNav : soulmates"
                        href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">soulmates</a>
@@ -29,7 +29,7 @@
             </ul>
         </div>
     }
-    <div class="top-bar__item has-nav-popup top-bar__item--edition is-off hide-on-mobile" data-component="edition" data-toggle="top-bar__item-edition">
+    <div class="top-bar__item has-nav-popup hide-on-mobile" data-component="edition" data-toggle="top-bar__popup--edition">
         edition:
         <a href="#guardian-edition-menu" class="top-bar__item--action nav-popup__toggle" data-link-name="topNav : edition">
             @common.Region(request).filter(r => conf.Switches.IndiaRegionSwitch.isSwitchedOn).map{ region =>
@@ -38,7 +38,7 @@
                 @Edition(request).id
             }
         </a>
-        <ul class="nav-popup editions" id="guardian-edition-menu">
+        <ul class="nav-popup is-off top-bar__popup--edition" id="guardian-edition-menu">
             @Edition.others(request).map{ edition =>
                 <li class="nav-popup__item">
                     <a class="top-bar__item--action" data-edition="@edition.id"
