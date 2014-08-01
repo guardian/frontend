@@ -202,7 +202,7 @@ define([
 
         fullscreener: function() {
             var player = this,
-                clickbox = document.createElement('div'),
+                clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
                 events = {
                     click: function(e) {
                         this.paused() ? this.play() : this.pause();
@@ -215,7 +215,6 @@ define([
                 };
 
             bonzo(clickbox)
-                .addClass('vjs-fullscreen-clickbox')
                 .appendTo(player.contentEl());
 
             bean.on(clickbox, 'click', events.click.bind(player));
