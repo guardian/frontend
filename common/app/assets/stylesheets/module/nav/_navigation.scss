@@ -29,7 +29,7 @@ $c-global-navigation-title-background: $c-top-navigation-background;
 $global-navigation-title-width: $a-leftCol-width + $gs-gutter;
 $global-navigation-title-width-wide: $a-leftColWide-width + $gs-gutter;
 $c-global-navigation-action: guss-colour(neutral-1);
-$c-global-navigation-border: rgba(#ffffff, .3);
+$c-global-navigation-border: mix($c-local-navigation-background, #fff, 60%);
 
 $c-navigation-toggle-background: guss-colour(neutral-1);
 $c-navigation-toggle-icon: #ffffff;
@@ -433,7 +433,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     clear: both;
     margin-right: 0;
     overflow: hidden;
-    border-top: 1px solid $c-global-navigation-border;
     position: relative;
     @include rem((
         min-height: $navigation-height
@@ -459,6 +458,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .global-navigation__title {
     color: $c-global-navigation-title;
     background: $c-global-navigation-title-background;
+    border-top: 1px solid mix($c-global-navigation-title-background, #fff, 80%);
     float: left;
 
     @include mq($to: tablet) {
@@ -501,6 +501,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     ));
     overflow: hidden;
     background: $c-local-navigation-background;
+    border-top: 1px solid $c-global-navigation-border;
 
     @include mq($to: tablet) {
         @include rem((
