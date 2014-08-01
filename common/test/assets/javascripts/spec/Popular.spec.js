@@ -1,4 +1,4 @@
-define(['common/common', 'bonzo', 'common/utils/ajax', 'common/modules/onward/popular'], function(common, bonzo, ajax, popular) {
+define(['common/utils/mediator', 'bonzo', 'common/utils/ajax', 'common/modules/onward/popular'], function(mediator, bonzo, ajax, popular) {
 
     describe("Popular", function() {
         var popularLoadedCallback,
@@ -11,7 +11,7 @@ define(['common/common', 'bonzo', 'common/utils/ajax', 'common/modules/onward/po
                 edition: "UK"
             }});
             popularLoadedCallback = sinon.stub();
-            common.mediator.on('modules:popular:loaded', popularLoadedCallback);
+            mediator.on('modules:popular:loaded', popularLoadedCallback);
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;

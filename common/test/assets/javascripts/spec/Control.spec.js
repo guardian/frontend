@@ -1,7 +1,6 @@
-define([ 'common/common',
-         'bean',
+define([ 'bean',
          'common/modules/ui/toggles',
-         'helpers/fixtures'], function(common, bean, Toggles, fixtures) {
+         'helpers/fixtures'], function(bean, Toggles, fixtures) {
 
         describe("Controls", function() {
 

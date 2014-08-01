@@ -5,6 +5,13 @@
     animation: $args;
 }
 
+// https://developer.mozilla.org/en-US/docs/Web/CSS/animation-delay
+@mixin animation-delay($args) {
+    -webkit-animation-delay: $args;
+    -moz-animation-delay: $args;
+    animation-delay: $args;
+}
+
 // https://developer.mozilla.org/en-US/docs/Web/CSS/background-size
 @mixin background-size($args...) {
     -webkit-background-size: $args;

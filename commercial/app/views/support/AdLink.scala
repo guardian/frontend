@@ -1,6 +1,6 @@
 package views.support
 
-import play.api.templates.Html
+import play.twirl.api.Html
 import play.api.Play
 import play.api.Play.current
 

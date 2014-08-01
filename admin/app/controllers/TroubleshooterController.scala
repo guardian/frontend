@@ -7,7 +7,7 @@ import controllers.AuthLogging
 import tools.LoadBalancer
 import play.api.libs.ws.WS
 import scala.concurrent.Future
-import conf.ContentApi
+import conf.LiveContentApi
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
 object TestPassed{
@@ -19,11 +19,11 @@ object TestFailed{
 
 object TroubleshooterController extends Controller with Logging with AuthLogging with ExecutionContexts {
 
-  def index() = Authenticated{ request =>
+  def index() =AuthActions.AuthActionTest{ request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
-  def test(id: String, testPath: String) = Authenticated.async{ request =>
+  def test(id: String, testPath: String) = AuthActions.AuthActionTest.async{ request =>
 
     val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
 
@@ -64,7 +64,7 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
 
   private def testOnContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Content API"
-    val request = ContentApi.item(testPath, "UK").showFields("all")
+    val request = LiveContentApi.item(testPath, "UK").showFields("all")
     request.response.map {
       response =>
         if (response.status == "ok") {
@@ -82,6 +82,7 @@ object TroubleshooterController extends Controller with Logging with AuthLogging
   }
 
   private def httpGet(testName: String, url: String) =  {
+    import play.api.Play.current
     WS.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(2000).get().map {
       response =>
         if (response.status == 200) {

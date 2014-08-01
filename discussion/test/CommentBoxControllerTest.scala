@@ -12,7 +12,7 @@ import org.scalatest.Matchers
 import play.api.mvc.Headers
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.api.libs.ws.Response
+import play.api.libs.ws.WSResponse
 
 class CommentBoxControllerTest extends FlatSpec with Matchers {
 
@@ -107,11 +107,11 @@ class CommentBoxControllerTest extends FlatSpec with Matchers {
   val typicalTom = profile("Typical Tom", canPost = true, isPremod = false)
 
   def profile(name: String, canPost: Boolean, isPremod: Boolean): Profile = {
-    Profile(name, "", name, privateFields = Some(PrivateProfileFields(canPost, isPremod, isSocial = false)))
+    Profile(name, "", "", name, privateFields = Some(PrivateProfileFields(canPost, isPremod, isSocial = false)))
   }
 
   object FakeApi extends DiscussionApi {
-    override protected def GET(url: String, headers: (String, String)*): Future[Response] = null
+    override protected def GET(url: String, headers: (String, String)*): Future[WSResponse] = null
     protected val apiRoot: String = ""
     protected val clientHeaderValue: String = ""
 

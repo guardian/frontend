@@ -1,6 +1,6 @@
 @(trail: Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader, config: Config)
 
-@defining((VisualTone(trail), containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
+@defining((trail.visualTone, containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
         class="@GetClasses.forItem(trail, isFirstContainer, true)"
         data-link-name="trail | @{index + 1}">
@@ -9,11 +9,6 @@
 
             <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
                 <div class="item__media-wrapper item__media-wrapper--has-icon">
-                    <div class="item__cta item__cta--video">
-                        <span class="item__cta__icon">
-                            <span class="i i-play-black"></span>
-                        </span>
-                    </div>
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                             <div class="item__image-container u-responsive-ratio js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc">
@@ -28,8 +23,7 @@
                         </div>
                     }
                 </div>
-                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--has-icon-mobile">
-                    <span class="i i-video-yellow-small"></span>
+                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon">
                     @RemoveOuterParaHtml(trail.headline)
                 </h@if(isFirstContainer && index == 0){1}else{2}>
             </a>

@@ -11,11 +11,14 @@
             @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
             @fragments.items.elements.title(trail, index, 0)
         </a>
+
+        @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+
         @trail.trailText.map { text =>
             <div class="baguette__standfirst">@Html(text)</div>
         }
     </div>
 
-    @fragments.items.elements.supporting(trail.supporting, style = "fullwidth")
+    @fragments.items.elements.supporting(trail.supporting, trail, style = "fullwidth")
 
 </div>

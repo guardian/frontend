@@ -1,4 +1,4 @@
-define(['analytics/clickstream', 'bean', 'common/common', 'helpers/fixtures'], function(Clickstream, bean, common, fixtures) {
+define(['analytics/clickstream', 'bean', 'common/utils/mediator', 'helpers/fixtures'], function(Clickstream, bean, mediator, fixtures) {
 
     var fixtureId = 'clickstream-fixture',
         clickIds = ['click-me', 'click-me-ancestor', 'click-me-descendant', 'click-me-quick', 'click-me-internal', 'click-me-external'];
@@ -57,30 +57,7 @@ define(['analytics/clickstream', 'bean', 'common/common', 'helpers/fixtures'], f
             bean.remove(document.body, 'click');
 
             // clean listeners
-            common.mediator.removeEvent('module:clickstream:click');
-        });
-
-        it("should derive analytics tag name from the dom ancestors of the source element", function(){
-
-            var cs  = new Clickstream({ filter: ["button"], withEvent: false }),
-                object = { method: function (p) {} },
-                spy = sinon.spy(object, "method"),
-                el = document.getElementById('click-me-button'),
-                clickSpec = {
-                    target: el,
-                    samePage: true,
-                    sameHost: true,
-                    tag: 'outer div | the button'
-                };
-
-            common.mediator.on('module:clickstream:click', spy);
-
-            bean.fire(el, 'click');
-
-            runs(function(){
-                expect(spy.withArgs(clickSpec)).toHaveBeenCalledOnce();
-            });
-
+            mediator.removeEvent('module:clickstream:click');
         });
 
         it("should report the ancestor 'clickable' element, not the element that actually received the click", function(){
@@ -97,7 +74,7 @@ define(['analytics/clickstream', 'bean', 'common/common', 'helpers/fixtures'], f
                     tag: 'outer div | the ancestor | the descendant'
                 };
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(el, 'click');
 
@@ -113,7 +90,7 @@ define(['analytics/clickstream', 'bean', 'common/common', 'helpers/fixtures'], f
                 object = { method: function (tag) {} },
                 spy = sinon.spy(object, "method");
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(document.getElementById('not-inside-a-link'), 'click');
 
@@ -136,7 +113,7 @@ define(['analytics/clickstream', 'bean', 'common/common', 'helpers/fixtures'], f
                     tag: 'outer div | paragraph'
                 };
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(el, 'click');
 
@@ -158,7 +135,7 @@ define(['analytics/clickstream', 'bean', 'common/common', 'helpers/fixtures'], f
                     tag: 'outer div | internal link'
                 };
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(el, 'click');
 
@@ -180,7 +157,7 @@ define(['analytics/clickstream', 'bean', 'common/common', 'helpers/fixtures'], f
                     tag: 'outer div | external link'
                 };
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(el, 'click');
 
@@ -195,7 +172,7 @@ define(['analytics/clickstream', 'bean', 'common/common', 'helpers/fixtures'], f
                 object = { method: function (tag) {} },
                 spy = sinon.spy(object, "method");
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(document.getElementById('click-me'), 'click');
 
@@ -220,7 +197,7 @@ define(['analytics/clickstream', 'bean', 'common/common', 'helpers/fixtures'], f
                     linkContextName: 'the inner context name'
                 };
 
-            common.mediator.on('module:clickstream:click', spy);
+            mediator.on('module:clickstream:click', spy);
 
             bean.fire(el, 'click');
 

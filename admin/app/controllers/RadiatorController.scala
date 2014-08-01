@@ -5,13 +5,14 @@ import common.Logging
 import controllers.AuthLogging
 import tools.{ChartFormat, CloudWatch}
 import play.api.libs.ws.WS
-import com.ning.http.client.Realm
+import play.api.libs.ws.WSAuthScheme
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
 import conf.Configuration
 import model.NoCache
 import conf.Switches
-import org.joda.time.DateTime
+import org.joda.time.LocalDate
+import play.api.Play.current
 
 object RadiatorController extends Controller with Logging with AuthLogging {
 
@@ -24,19 +25,19 @@ object RadiatorController extends Controller with Logging with AuthLogging {
 
   def switchesExpiringThisWeek() = {  
     Switches.all.filter { switch =>
-      switch.sellByDate.isBefore(new DateTime().plusDays(7))
+      switch.sellByDate.isBefore(new LocalDate().plusDays(7))
     }
   }
 
   // proxy call to github so we do not leak the access key
-  def commitDetail(hash: String) = Authenticated.async { implicit request =>
+  def commitDetail(hash: String) = AuthActions.AuthActionTest.async { implicit request =>
     val call = WS.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
     call.map{ c =>
       NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
     }
   }
 
-  def renderRadiator() = Authenticated { implicit request =>
+  def renderRadiator() = AuthActions.AuthActionTest { implicit request =>
     val graphs = (CloudWatch.shortStackLatency ++ CloudWatch.fastlyErrors).map(_.withFormat(ChartFormat.SingleLineBlack))
     val multilineGraphs = CloudWatch.fastlyHitMissStatistics.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
     val jsErrors = CloudWatch.jsErrors.withFormat(ChartFormat.MultiLine)
@@ -44,7 +45,7 @@ object RadiatorController extends Controller with Logging with AuthLogging {
     NoCache(Ok(views.html.radiator(graphs, multilineGraphs, jsErrors, CloudWatch.cost, switches, Configuration.environment.stage)))
   }
 
-  def pingdom() = Authenticated.async { implicit request =>
+  def pingdom() = AuthActions.AuthActionTest.async { implicit request =>
   
     val url = Configuration.pingdom.url + "/checks" 
     val user = Configuration.pingdom.user
@@ -52,7 +53,7 @@ object RadiatorController extends Controller with Logging with AuthLogging {
     val apiKey = Configuration.pingdom.apiKey
 
     WS.url(url)
-      .withAuth(user, password,  Realm.AuthScheme.BASIC)
+      .withAuth(user, password,  WSAuthScheme.BASIC)
       .withHeaders("App-Key" ->  apiKey)
       .get().map { response =>
         NoCache(Ok(Json.toJson(response.body)))

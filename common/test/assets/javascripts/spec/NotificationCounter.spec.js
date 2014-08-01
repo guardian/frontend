@@ -1,7 +1,7 @@
-define([ 'common/common',
+define([ 'common/utils/mediator',
          'bean',
          'common/modules/ui/notification-counter',
-       ], function(common, bean, NotificationCounter) {
+       ], function(mediator, bean, NotificationCounter) {
 
 
         describe("Notification Counter", function() {
@@ -26,7 +26,7 @@ define([ 'common/common',
             });
 
             it("should show an unread count when modules:autoupdate:unread is fired", function() {
-                common.mediator.emit('modules:autoupdate:unread', 5);
+                mediator.emit('modules:autoupdate:unread', 5);
                 expect(document.title).toContain('(5)');
             });
         });

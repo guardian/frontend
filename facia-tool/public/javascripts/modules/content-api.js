@@ -1,18 +1,24 @@
 /* global _: true */
 define([
-    'modules/authed-ajax',
     'modules/vars',
+    'modules/authed-ajax',
     'modules/cache',
+    'utils/internal-content-code',
+    'utils/url-host',
     'utils/url-abs-path',
     'utils/snap'
 ],
 function (
-    authedAjax,
     vars,
+    authedAjax,
     cache,
+    internalContentCode,
+    urlHost,
     urlAbsPath,
     snap
 ){
+    var standardQueryParams = 'page-size=50&format=json&show-fields=all';
+
     function validateItem (item) {
         var defer = $.Deferred(),
             snapId = snap.validateId(item.id()),
@@ -23,37 +29,57 @@ function (
             item.id(snapId);
             defer.resolve();
 
+        } else if (item.meta.snapType()) {
+            item.convertToSnap();
+            defer.resolve();
+
         } else if (data) {
             item.id(capiId);
-            populate(data, item);
+            populate(item, data);
             defer.resolve();
 
         } else {
-            fetchContentByIds([capiId])
-            .done(function(result) {
+            fetchContentById(capiId)
+            .done(function(results) {
+                var capiItem,
+                    icc,
+                    err;
+
                 // ContentApi item
-                if (result.length === 1) {
-                    item.id(capiId);
-                    cache.put('contentApi', capiId, result[0]);
-                    populate(result[0], item);
-                    defer.resolve();
+                if (results.length === 1) {
+                    capiItem = results[0];
+                    icc = internalContentCode(capiItem);
+                    if (icc) {
+                        populate(item, capiItem);
+                        cache.put('contentApi', icc, capiItem);
+                        item.id(icc);
+                    } else {
+                        err = 'Sorry, that article is malformed (has no internalContentCode)';
+                    }
 
-                // Snap, but they're disabled
+                // A snap, but they're disabled
                 } else if (!vars.model.switches()['facia-tool-snaps']) {
-                    defer.resolve(true, 'Sorry, that link wasn\'t recognised. It cannot be added to a front.');
+                    err = 'Sorry, snaps are disabled';
 
-                // Snap, but cannot be added in live mode if it has no headline
+                // A snap, but a link off of the tool itself
+                } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
+                    err = 'Sorry, that link cannot be added to a front';
+
+                // A snap, but a link to unavailable guardian content
+                } else if (urlHost(item.id()) === 'www.theguardian.com' && results.length === 0) {
+                    err = 'Sorry, that content is unavailable';
+
+                // A snap, but snaps cannot be added to collections in live mode
                 } else if (vars.model.liveMode() &&
-                    item.parentType !== 'Clipboard' &&
-                    !item.fields.headline() &&
-                    !item.meta.headline()) {
-                    defer.resolve(true, 'Sorry, snaps without headlines can\'t be added in live mode.');
+                    item.parentType !== 'Clipboard') {
+                    err = 'Sorry, snaps cannot be added in live mode';
 
-                // Snap!
+                // A snap that's legitimate
                 } else {
                     item.convertToSnap();
-                    defer.resolve();
                 }
+
+                defer[err ? 'reject' : 'resolve'](err);
             });
         }
 
@@ -74,7 +100,7 @@ function (
         articles.forEach(function(article){
             var data = cache.get('contentApi', article.id());
             if(data) {
-                populate(data, article);
+                populate(article, data);
             } else {
                 ids.push(article.id());
             }
@@ -83,12 +109,17 @@ function (
         fetchContentByIds(ids)
         .done(function(results){
             results.forEach(function(result) {
-                cache.put('contentApi', result.id, result);
-                _.filter(articles, function(article){
-                    return article.id() === result.id;
-                }).forEach(function(article){
-                    populate(result, article);
-                });
+                var icc = internalContentCode(result);
+
+                if(icc) {
+                    cache.put('contentApi', icc, result);
+
+                    _.filter(articles, function(article) {
+                        return article.id() === icc || article.id() === result.id; // TODO: remove 2nd clause after full transition to internal-code/content/ ids
+                    }).forEach(function(article) {
+                        populate(article, result);
+                    });
+                }
             });
 
            _.chain(articles)
@@ -99,7 +130,7 @@ function (
         });
     }
 
-    function populate(opts, article) {
+    function populate(article, opts) {
         article.populate(opts, true);
     }
 
@@ -110,10 +141,14 @@ function (
             .value();
 
         if (capiIds.length) {
-            return fetchContent('search?ids=' + capiIds.join(',') + '&page-size=50&format=json&show-fields=all');
+            return fetchContent('search?ids=' + capiIds.join(',') + '&' + standardQueryParams);
         } else {
             return $.Deferred().resolve([]);
         }
+    }
+
+    function fetchContentById(id) {
+        return fetchContent(id + '?' + standardQueryParams);
     }
 
     function fetchContent(apiUrl) {
@@ -122,12 +157,17 @@ function (
         authedAjax.request({
             url: vars.CONST.apiSearchBase + '/' + apiUrl
         }).always(function(resp) {
-            defer.resolve(resp.response ?
-               _.chain(['editorsPicks', 'results', 'mostViewed'])
-                .filter(function(key) { return _.isArray(resp.response[key]); })
-                .map(function(key) { return resp.response[key]; })
-                .flatten()
-                .value() : []);
+            if (!resp.response) {
+                defer.resolve([]);
+            } else if (resp.response.content) {
+                defer.resolve([resp.response.content]);
+            } else {
+                defer.resolve(_.chain(['editorsPicks', 'results', 'mostViewed'])
+                    .filter(function(key) { return _.isArray(resp.response[key]); })
+                    .map(function(key) { return resp.response[key]; })
+                    .flatten()
+                    .value());
+            }
         });
 
         return defer.promise();

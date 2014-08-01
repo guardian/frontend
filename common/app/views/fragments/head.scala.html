@@ -2,8 +2,15 @@
 
 <meta charset="utf-8" />
 <title>@views.support.Title(metaData)</title>
-@fragments.metaData(metaData)
+
+@fragments.metaDataCritical(metaData)
+
+@fragments.javaScriptFirstSteps(metaData, curlPaths)
+
 @fragments.commonCssSetup(projectName)
-@fragments.commonJavaScriptSetup(metaData, curlPaths)
+
+@fragments.javaScriptLaterSteps(metaData, curlPaths)
 
 @head
+
+@fragments.metaDataAdditional(metaData)

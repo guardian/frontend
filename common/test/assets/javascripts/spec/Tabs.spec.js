@@ -1,4 +1,4 @@
-define(['common/common', 'common/modules/ui/tabs', 'bean', 'helpers/fixtures'], function(common, Tabs, bean, fixtures) {
+define(['common/modules/ui/tabs', 'bean', 'helpers/fixtures'], function(Tabs, bean, fixtures) {
 
     var t,
         tab1,

@@ -3,11 +3,11 @@
     Description: Used to make a list of items expand and contract
 */
 define([
-    'common/common',
+    'common/utils/$',
     'bean',
     'bonzo'
 ], function (
-    common,
+    $,
     bean,
     bonzo
 ) {
@@ -21,7 +21,7 @@ define([
     var Expandable = function (options) {
 
         var opts = options || {},
-            dom = common.$g(opts.dom), // root element of the trailblock
+            dom = $(opts.dom), // root element of the trailblock
             expanded = (opts.expanded === false) ? false : true, // true = open, false = closed
             cta = document.createElement('button'),
             showCount = (opts.showCount === false) ? false : true;

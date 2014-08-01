@@ -1,6 +1,6 @@
 {
     "packages":{
-        "frontend-facia-tool":{
+        "facia-tool":{
             "type":"autoscaling",
             "apps":[ "frontend::facia-tool" ],
             "data":{
@@ -19,10 +19,10 @@
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-facia-tool.deploy"]
+            "actionsBeforeApp": ["facia-tool.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-facia-tool.uploadArtifacts"]
+            "actionsBeforeApp": ["facia-tool.uploadArtifacts"]
         }
     }
 }

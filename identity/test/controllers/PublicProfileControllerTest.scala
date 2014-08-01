@@ -48,7 +48,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
     when(api.user(userId)) thenReturn Future.successful(Right(user))
 
     "with valid user Id" - {
-      val result = controller.renderProfileFromId(userId)(request)
+      val result = controller.renderProfileFromId(userId, "discussions")(request)
 
       "then should return status 200" in {
         status(result) should be(200)
@@ -59,24 +59,12 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
         content should include(user.publicFields.displayName.get)
       }
       "then rendered profile should include account creation date" in {
-        content should include("Joined: " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
-      }
-      "then rendered profile should include location" in {
-        content should include(user.publicFields.location.get)
-      }
-      "then rendered profile should include about me" in {
-        content should include(user.publicFields.aboutMe.get)
-      }
-      "then rendered profile should include interests" in {
-        content should include(user.publicFields.interests.get)
-      }
-      "then rendered profile should include web page" in {
-        content should include(user.publicFields.webPage.get)
+        content should include("Member since " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
       }
     }
 
     "with invalid user Id" - {
-      val result = controller.renderProfileFromId("notAUser")(request)
+      val result = controller.renderProfileFromId("notAUser", "discussions")(request)
 
       "then the status should be 404" in {
         status(result) should be(404)
@@ -89,7 +77,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
     when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(user))
 
     "with valid user Id" - {
-      val result = controller.renderProfileFromVanityUrl(vanityUrl)(request)
+      val result = controller.renderProfileFromVanityUrl(vanityUrl, "discussions")(request)
 
       "then should return status 200" in {
         status(result) should be(200)
@@ -100,24 +88,12 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
         content should include(user.publicFields.displayName.get)
       }
       "then rendered profile should include account creation date" in {
-        content should include("Joined: " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
-      }
-      "then rendered profile should include location" in {
-        content should include(user.publicFields.location.get)
-      }
-      "then rendered profile should include about me" in {
-        content should include(user.publicFields.aboutMe.get)
-      }
-      "then rendered profile should include interests" in {
-        content should include(user.publicFields.interests.get)
-      }
-      "then rendered profile should include web page" in {
-        content should include(user.publicFields.webPage.get)
+        content should include("Member since " + user.dates.accountCreatedDate.get.toString("d MMM yyyy"))
       }
     }
 
     "with invalid user Id" - {
-      val result = controller.renderProfileFromVanityUrl("notAUser")(request)
+      val result = controller.renderProfileFromVanityUrl("notAUser", "discussions")(request)
 
       "then the status should be 404" in {
         status(result) should be(404)

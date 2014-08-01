@@ -1,15 +1,14 @@
-@charset "UTF-8";
+@charset 'UTF-8';
 
 .gallery {
     position: relative;
-    margin-bottom: $gs-baseline*2;
 }
 
 i.gallery__watermark {
     display: none;
     position: absolute;
     top: ($gs-baseline/3)*2;
-    left: $gutter;
+    left: $gs-gutter;
 
     @include mq(tablet) {
         display: block;
@@ -118,7 +117,7 @@ i.gallery__watermark {
         text-align: center;
     }
 
-    @include mq($and: "(orientation: portrait)") {
+    @include mq($and: '(orientation: portrait)') {
         .gallery__item--landscape .gallery__img {
             width: 100% !important;
             height: auto !important;
@@ -181,7 +180,7 @@ i.gallery__watermark {
     width: 20%;
 
     .gallery__arrow-cta {
-        left: $gutter;
+        left: $gs-gutter;
     }
 }
 
@@ -190,7 +189,7 @@ i.gallery__watermark {
     width: 80%;
 
     .gallery__arrow-cta {
-        right: $gutter;
+        right: $gs-gutter;
     }
 }
 
@@ -252,7 +251,7 @@ i.gallery__watermark {
 
 .gallerycaption__inner {
     @include transparent-background(rgb(34, 34, 34), .9);
-    padding: ($gs-baseline/3)*4 $gutter;
+    padding: ($gs-baseline/3)*4 $gs-gutter;
 }
 
 .gallerycaption__text {
@@ -315,7 +314,7 @@ i.gallery__watermark {
 }
 
 .gallery__counter--current-image {
-    color: #FFFFFF;
+    color: #ffffff;
 }
 
 

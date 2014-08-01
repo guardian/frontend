@@ -1,6 +1,6 @@
 {
     "packages":{
-        "frontend-identity":{
+        "identity":{
             "type":"autoscaling",
             "apps":[ "frontend::identity" ],
             "data":{
@@ -27,10 +27,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-identity.deploy"]
+            "actionsBeforeApp": ["identity.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-identity.uploadArtifacts"]
+            "actionsBeforeApp": ["identity.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

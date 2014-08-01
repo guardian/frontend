@@ -1,11 +1,11 @@
-define(['common/common', 'common/modules/ui/overlay', 'bean'], function(common, Overlay, bean) {
+define(['common/utils/$', 'common/utils/mediator', 'common/modules/ui/overlay', 'bean'], function($, mediator, Overlay, bean) {
 
     describe("Overlay", function() {
 
         var overlay;
 
         beforeEach(function() {
-            common.$g('.overlay').remove();
+            $('.overlay').remove();
             overlay = new Overlay();
         });
 
@@ -77,18 +77,18 @@ define(['common/common', 'common/modules/ui/overlay', 'bean'], function(common, 
         });
 
         it("should fire the appropriate mediator events (show/hide/close)", function() {
-            sinon.spy(common.mediator, 'emit');
+            sinon.spy(mediator, 'emit');
 
             overlay.show();
-            expect(common.mediator.emit).toHaveBeenCalledWith('modules:overlay:show');
+            expect(mediator.emit).toHaveBeenCalledWith('modules:overlay:show');
 
             overlay.hide();
-            expect(common.mediator.emit).toHaveBeenCalledWith('modules:overlay:hide');
+            expect(mediator.emit).toHaveBeenCalledWith('modules:overlay:hide');
 
             bean.fire(document.querySelector('.js-overlay-close'), 'click');
-            expect(common.mediator.emit).toHaveBeenCalledWith('modules:overlay:close');
+            expect(mediator.emit).toHaveBeenCalledWith('modules:overlay:close');
 
-            common.mediator.emit.restore();
+            mediator.emit.restore();
         });
 
         it("should delete itself from the DOM on remove()", function() {

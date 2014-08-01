@@ -3,22 +3,91 @@ package controllers.front
 import model._
 import scala.concurrent.Future
 import play.api.libs.ws.{Response, WS}
-import play.api.libs.json.{JsNull, JsValue, Json}
-import common.ExecutionContexts
+import play.api.libs.json.{JsObject, JsNull, JsValue, Json}
+import common.{Logging, S3Metrics, ExecutionContexts}
 import model.FaciaPage
 import services.SecureS3Request
 import conf.Configuration
 
-trait FrontJson extends ExecutionContexts {
+
+trait FrontJsonLite extends ExecutionContexts{
+  def get(json: JsValue): JsObject = {
+    Json.obj(
+      "webTitle" -> (json \ "seoData" \ "webTitle"),
+      "collections" -> getCollections(json)
+    )
+  }
+
+  private def getCollections(json: JsValue): Seq[JsValue] = {
+    (json \ "collections").asOpt[Seq[Map[String, JsObject]]].getOrElse(Nil).flatMap{ c => c.values.map(getCollection) }
+  }
+
+  private def getCollection(json: JsValue): JsValue = {
+    Json.obj(
+        "displayName" -> (json \ "displayName"),
+        "href" -> (json \ "href"),
+        "content" -> getContent(json)
+    )
+  }
+
+  private def getContent(json: JsValue): Seq[JsValue] = {
+    val curated = (json \ "curated").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val editorsPicks = (json \ "editorsPicks").asOpt[Seq[JsObject]].getOrElse(Nil)
+    val results = (json \ "results").asOpt[Seq[JsObject]].getOrElse(Nil)
+
+    (curated ++ editorsPicks ++ results)
+    .filterNot{ j =>
+      (j \ "id").asOpt[String].exists(_.startsWith("snap/"))
+     }
+    .take(3).map{ j =>
+      Json.obj(
+        "headline" -> (j \ "safeFields" \ "headline"),
+        "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
+        "internalContentCode" -> (j \ "safeFields" \ "internalContentCode"),
+        "id" -> (j \ "id")
+      )
+    }
+  }
+}
+
+object FrontJsonLite extends FrontJsonLite
+
+
+trait FrontJson extends ExecutionContexts with Logging {
 
   val stage: String = Configuration.facia.stage.toUpperCase
-  val bucketLocation: String = s"$stage/frontsapi/pressed"
+  val bucketLocation: String
 
   private def getAddressForPath(path: String): String = s"$bucketLocation/$path/pressed.json"
 
   def get(path: String): Future[Option[FaciaPage]] = {
     val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
-    parseResponse(response)
+    response.map { r =>
+      r.status match {
+        case 200 => parsePressedJson(r.body)
+        case 403 =>
+          S3Metrics.S3AuthorizationError.increment()
+          log.warn(s"Got 403 trying to load path: $path")
+          None
+        case 404 =>
+          log.warn(s"Got 404 trying to load path: $path")
+          None
+        case responseCode =>
+          log.warn(s"Got $responseCode trying to load path: $path")
+          None
+      }
+    }
+  }
+
+  def getAsJsValue(path: String): Future[JsValue] = {
+    val response = SecureS3Request.urlGet(getAddressForPath(path)).get()
+
+    response.map { r =>
+      r.status match {
+        case 200 => Json.parse(r.body)
+        case _   => JsObject(Nil)
+      }
+    }
   }
 
   private def parseCollection(json: JsValue): Collection = {
@@ -83,19 +152,10 @@ trait FrontJson extends ExecutionContexts {
     )
   }
 
-  private def parseResponse(response: Future[Response]): Future[Option[FaciaPage]] = {
-    response.map { r =>
-      r.status match {
-        case 200 => parsePressedJson(r.body)
-        case _   => None
-      }
-    }
-  }
-
   private def parseSeoData(id: String, seoJson: JsValue): SeoData = {
     val seoDataJson = SeoDataJson(
       id,
-      (seoJson \ "section").asOpt[String].filter(_.nonEmpty),
+      (seoJson \ "navSection").asOpt[String].filter(_.nonEmpty),
       (seoJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
       (seoJson \ "title").asOpt[String].filter(_.nonEmpty),
       (seoJson \ "description").asOpt[String].filter(_.nonEmpty)
@@ -105,7 +165,7 @@ trait FrontJson extends ExecutionContexts {
 
     SeoData(
       id,
-      seoDataJson.section.getOrElse(seoDataFromPath.section),
+      seoDataJson.navSection.getOrElse(seoDataFromPath.navSection),
       seoDataJson.webTitle.getOrElse(seoDataFromPath.webTitle),
       seoDataJson.title,
       seoDataJson.description.orElse(seoDataFromPath.description)
@@ -114,4 +174,6 @@ trait FrontJson extends ExecutionContexts {
 
 }
 
-object FrontJson extends FrontJson
+object FrontJsonLive extends FrontJson {
+  val bucketLocation: String = s"$stage/frontsapi/pressed/live"
+}

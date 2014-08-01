@@ -2,13 +2,12 @@ package controllers
 
 import play.api.mvc.{RequestHeader, Action, Controller}
 import scala.concurrent.Future
-import conf.ContentApi
+import conf.LiveContentApi
 import model.{Cached, Tag, Content, Section}
 import services.IndexPage
 import common._
 
 object LatestIndexController extends Controller with ExecutionContexts with implicits.ItemResponses with Logging {
-
   def latest(path: String) = Action.async { implicit request =>
 
     loadLatest(path).map { _.map { index =>
@@ -23,7 +22,7 @@ object LatestIndexController extends Controller with ExecutionContexts with impl
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
-    val result = ContentApi.item(s"/$path", Edition(request)).pageSize(1).orderBy("newest").response.map{ item =>
+    val result = LiveContentApi.item(s"/$path", Edition(request)).pageSize(1).orderBy("newest").response.map{ item =>
       item.section.map( section =>
         IndexPage(Section(section), item.results.map(Content(_)))
       ).orElse(item.tag.map( tag =>

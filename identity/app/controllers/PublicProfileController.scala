@@ -19,16 +19,16 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
   with ExecutionContexts
   with SafeLogging{
 
-  def page(url: String) = IdentityPage(url, "Public profile", "public profile")
+  def page(url: String, username: Option[String]) = IdentityPage(url, username.get +"'s public profile", "public profile")
 
-  def renderProfileFromVanityUrl(vanityUrl: String) = renderPublicProfilePage(
+  def renderProfileFromVanityUrl(vanityUrl: String, activityType: String) = renderPublicProfilePage(
     "/user/" + vanityUrl,
+    activityType,
     identityApiClient.userFromVanityUrl(vanityUrl)
   )
 
-  def renderProfileFromId(id: String) = renderPublicProfilePage("/user/id/"+id, identityApiClient.user(id))
-
-  def renderPublicProfilePage(url: String, futureUser: => Future[Response[User]]) = Action.async {
+  def renderProfileFromId(id: String, activityType: String) = renderPublicProfilePage("/user/id/"+id, activityType, identityApiClient.user(id))
+  def renderPublicProfilePage(url: String, activityType: String, futureUser: => Future[Response[User]]) = Action.async {
     implicit request =>
       futureUser map {
         case Left(errors) =>
@@ -37,7 +37,8 @@ class PublicProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
 
         case Right(user) =>
           val idRequest = idRequestParser(request)
-          Cached(60)(Ok(views.html.public_profile_page(page(url), idRequest, idUrlBuilder, user)))
+          Cached(60)(Ok(views.html.publicProfilePage(
+            page(url, user.publicFields.displayName), idRequest, idUrlBuilder, user, activityType)))
       }
   }
 }

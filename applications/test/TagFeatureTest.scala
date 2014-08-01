@@ -1,7 +1,6 @@
 package test
 
-import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.Matchers
+import org.scalatest.{ FeatureSpec, GivenWhenThen, Matchers}
 import collection.JavaConversions._
 import conf.{Switches, Configuration}
 import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
@@ -15,13 +14,10 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       Given("I visit a tag page")
 
       HtmlUnit("/technology/askjack") { browser =>
-        import browser._
-        val trails = $(".fromage, .facia-slice__item, .linkslist__item")
+        val trails = browser.$(".fromage, .facia-slice__item, .linkslist__item")
         trails.length should be(20)
       }
-
     }
-
   }
 
   feature("Contributor pages") {
@@ -32,19 +28,18 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       Switches.ImageServerSwitch.switchOn()
 
       HtmlUnit("/profile/jemimakiss") { browser =>
-        import browser._
         Then("I should see her profile image")
-        val profileImage = findFirst(".profile__img img")
-        profileImage.getAttribute("src") should be(s"${Configuration.images.path}/sys-images/Media/Columnists/Columnists/2013/11/8/1383915783233/Jemima-Kiss-2-003.jpg?width=140&height=140&quality=95")
+        val profileImage = browser.findFirst(".profile__img img")
+        profileImage.getAttribute("src") should endWith(s"42593747/Jemima-Kiss.jpg")
       }
     }
 
     scenario("Should not not display profiles where they don't exist") {
+
       Given("I visit the 'Sam Jones' contributor page")
       HtmlUnit("/profile/samjones") { browser =>
-        import browser._
         Then("I should not see her profile image")
-        val profileImages = find(".profile__img img")
+        val profileImages = browser.find(".profile__img img")
         profileImages.length should be(0)
       }
 
@@ -58,11 +53,9 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       Given("I visit the 'Premier League' tag page")
 
       HtmlUnit("/football/premierleague") { browser =>
-        import browser._
-        val teamsPageLink = findFirst("ul.nav a[data-link-name='teams']")
+        val teamsPageLink = browser.findFirst("ul.nav a[data-link-name='teams']")
         teamsPageLink.getAttribute("href") should endWith("/football/teams#premierleague")
       }
-
     }
 
     scenario("Tags that are football compeitions but don't have teams don't link to the teams page") {
@@ -70,16 +63,14 @@ class TagFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       Given("I visit the 'Capital One Cup' tag page")
 
       HtmlUnit("/football/capital-one-cup") { browser =>
-        import browser._
-        val teamsPageLinks = $("ul.nav a[data-link-name='teams']")
+        val teamsPageLinks = browser.$("ul.nav a[data-link-name='teams']")
         teamsPageLinks.length should be(0)
       }
 
       Given("I visit the 'Scottish League Cup' tag page")
 
       HtmlUnit("/football/cis-insurance-cup") { browser =>
-        import browser._
-        val teamsPageLinks = $("ul.nav a[data-link-name='teams']")
+        val teamsPageLinks = browser.$("ul.nav a[data-link-name='teams']")
         teamsPageLinks.length should be(0)
       }
 

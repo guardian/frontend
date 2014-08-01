@@ -40,6 +40,7 @@ define([
      *     {Date} expires - When should the storage expire
      */
     Storage.prototype.set = function(key, data, options) {
+        if (!w[this.type]) { return; }
         var opts = options || {},
             value = JSON.stringify({
                 'value': data,
@@ -52,6 +53,7 @@ define([
     };
 
     Storage.prototype.get = function(key) {
+        if (!w[this.type]) { return; }
         var data = w[this.type].getItem(key);
         if (data === null) {
             return null;

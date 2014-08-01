@@ -1,9 +1,7 @@
 define([
-    'common/common',
     'common/utils/ajax',
     'common/utils/cookies'
 ], function(
-    common,
     ajax,
     cookies
 ) {
@@ -69,6 +67,15 @@ Api.postComment = function(discussionId, comment) {
 };
 
 /**
+ * @param {string} comment
+ * @return {Reqwest} a promise
+ */
+Api.previewComment = function(comment) {
+   var endpoint = '/comment/preview';
+   return Api.send(endpoint, 'post', comment);
+};
+
+/**
  * @param {number} id the comment ID
  * @return {Reqwest} a promise
  */
@@ -93,6 +100,17 @@ Api.pickComment = function(id) {
 Api.unPickComment = function(id) {
     var endpoint = '/comment/'+ id +'/unhighlight';
     return Api.send(endpoint, 'post');
+};
+
+/**
+ * @param {number} id the comment ID
+ * @param {Object.<string.string>} report the report info in the form of:
+          { reason: string, emailAddress: string, categoryId: number }
+ * @return {Reqwest} a promise
+ */
+Api.reportComment = function(id, report) {
+    var endpoint = '/comment/'+ id +'/reportAbuse';
+    return Api.send(endpoint, 'post', report);
 };
 
 /**

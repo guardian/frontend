@@ -2,12 +2,16 @@ define([
     'bean',
     'qwery',
     'bonzo',
-    'common/utils/ajax'
+    'common/utils/ajax',
+    'lodash/objects/assign',
+    'lodash/objects/clone'
 ], function(
     bean,
     qwery,
     bonzo,
-    ajax
+    ajax,
+    assign,
+    clone
     ) {
 
     /**
@@ -70,6 +74,9 @@ define([
     /** @type {Number} id of autoupdate timer */
     Component.prototype.t = null;
 
+    /** @type {Object.<string.*>} data to send with fetch */
+    Component.prototype.fetchData = null;
+
     /** @type {String} */
     Component.prototype.manipulationType = 'append';
 
@@ -120,7 +127,7 @@ define([
     Component.prototype.fetch = function(parent, key) {
         this.checkAttached();
 
-        this.responseDataKey = key || 'html';
+        this.responseDataKey = key || this.responseDataKey;
         var self = this;
 
         return this._fetch().then(function render(resp) {
@@ -151,7 +158,8 @@ define([
             url: endpoint,
             type: 'json',
             method: 'get',
-            crossOrigin: true
+            crossOrigin: true,
+            data: this.fetchData
         });
     };
 
@@ -186,6 +194,8 @@ define([
                 if (self.autoupdated) {
                     self.t = setTimeout(update, self.updateEvery*1000);
                 }
+            }, function() {
+                self.t = setTimeout(update, self.updateEvery*1000);
             });
         }
 
@@ -321,11 +331,7 @@ define([
      * @param {Object} options
      */
     Component.prototype.setOptions = function(options) {
-        options = options || {};
-        this.options = {};
-        for (var prop in this.defaultOptions) {
-            this.options[prop] = options.hasOwnProperty(prop) ? options[prop] : this.defaultOptions[prop];
-        }
+        this.options = assign(clone(this.defaultOptions), this.options||{}, options);
     };
 
     /**

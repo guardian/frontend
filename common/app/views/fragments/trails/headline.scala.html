@@ -13,7 +13,9 @@
 
     <h@headingLevel class="trail__headline">
         <a href="@LinkTo{@trail.url}" @if(related){itemprop="relatedLink"} data-link-name="@rowNum | text">
-            @cleanTrailText(trail.headline)(Edition(request))
+            @defining(Edition(request)) { edition =>
+                @cleanTrailText(trail.headline)
+            }
         </a>
     </h@headingLevel>
 

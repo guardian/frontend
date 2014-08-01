@@ -8,5 +8,7 @@ package object commercial {
     def apply(s: String): Option[String] = Option(s) filter (_.trim.nonEmpty)
   }
 
-  def encode(keywords: Seq[String]) = keywords map (_.toLowerCase.replace(" ", "-"))
+  def lastPart(keywordId: String): String = keywordId.split('/').takeRight(1)(0)
+
+  def lastPart(keywordIds: Seq[String]): Seq[String] = (keywordIds map lastPart).distinct
 }

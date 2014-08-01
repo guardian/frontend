@@ -1,4 +1,5 @@
 @(competition: model.Competition, groupStage: _root_.football.model.Groups)(implicit request: RequestHeader)
+@import implicits.Football._
 
 <ul class="football-groups u-unstyled u-cf">
     @groupStage.groupTables.zipWithRowInfo.map{ case ((round, leagueTableEntries), row) =>
@@ -10,6 +11,7 @@
                             <div class="football-group__table">
                                 @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
                                     heading = round.name,
+                                    headingLink = groupTag(competition.id, round),
                                     striped = true,
                                     withCrests = true
                                 )
@@ -20,7 +22,7 @@
                                     @competitionMatches.map { case (competition, matches) =>
                                         @football.views.html.matchList.matchesList(matches, competition, date,
                                             linkToCompetition = false,
-                                            heading = if(info.isFirst) Option("Fixtures and results") else None
+                                            heading = if(info.isFirst) Option(("Fixtures and results", None)) else None
                                         )
                                     }
                                 }

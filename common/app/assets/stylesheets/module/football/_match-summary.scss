@@ -11,6 +11,12 @@ $football-crest--large: 60px;
     color: $c-neutral1;
     display: block;
     position: relative;
+    .content__head & {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+
+    }
 }
 
 .match-summary__teams {
@@ -28,7 +34,7 @@ $football-crest--large: 60px;
 }
 
 .team__info {
-    @include fs-headline(5);
+    @include fs-headline(6);
     @include rem((
         margin-left: $gs-gutter/2+$football-crest--small
     ));
@@ -87,12 +93,28 @@ $football-crest--large: 60px;
     top: 0;
 }
 
-.team__scorers {
-    @include fs-data(5);
-
+.match-summary {
     dd {
         margin: 0;
-        padding: 0;
+    }
+}
+
+.team__scorers {
+    @include fs-data(5);
+}
+
+.match-summary--report .team__scorers dd {
+    @include mq(mobile) {
+        @include rem((
+            margin: 0 56px 0 10px,
+            padding: 0
+        ))
+    }
+    @include mq(tablet) {
+        @include rem((
+            margin: 0 56px 0 64px,
+            padding: 0
+        ));
     }
 }
 
@@ -139,13 +161,13 @@ $football-crest--large: 60px;
     width: 200%;
 
     &:after {
-        content: "\2013";
+        content: '\2013';
     }
 }
 .match-summary--fixture {
     .team__battle-line {
         &:after {
-            content: "v";
+            content: 'v';
         }
     }
 }
@@ -199,6 +221,7 @@ $football-crest--large: 60px;
 
     .match-summary__teams {
         border-top: 0 none;
+        white-space: nowrap;
     }
     .match-summary__team {
         @include box-sizing(border-box);
@@ -239,7 +262,7 @@ $football-crest--large: 60px;
     }
 
     .team__info {
-        @include fs-headline(7, true);
+        @include fs-headline(8, true);
     }
 
     .team__crest {
@@ -335,10 +358,10 @@ $football-crest--large: 60px;
     }
 
     .team__info {
-        @include fs-headline(3, true);
+        @include fs-headline(4, true);
     }
     .team__scorers {
-        @include fs-data(2, true);
+        @include fs-data(3, true);
     }
     .team__crest {
         @include rem((

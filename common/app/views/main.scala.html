@@ -1,37 +1,49 @@
 @(metaData: model.MetaData, projectName: Option[String] = None, curlPaths: Map[String, String] = Map())(head: Html)(body: Html)(implicit request: RequestHeader)
 @import conf.Switches._
+@import common.Edition
 
 @* Identity pages use identityMain.scala.html, most of which is shared fragments,
    be sure to apply any necessary changes to non-shared code there too. *@
 
 <!DOCTYPE html>
-<html class="js-off id--signed-out" lang="en-GB">
+<html id="js-context" class="js-off id--signed-out" lang="en-GB" data-page-path="@request.path">
 <head>
     @fragments.head(metaData, projectName, head, curlPaths)
 </head>
-<body
-    @Navigation.topLevelItem(Edition(request).navigation, metaData).filter(_.links.nonEmpty).map{ localNav => class="has-localnav" }
-    id="top"
-    itemscope itemtype="http://schema.org/WebPage">
+@defining(metaData match {
+    case c: model.Content if c.shouldHideAdverts => { false }
+    case _ => { true }
+}) { showAdverts =>
+@defining(Edition(request)) { edition =>
+    <body
+        id="top"
+        class="@RenderClasses(Map(
+            ("has-page-skin", metaData.hasPageSkin(edition)),
+            ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
+        itemscope itemtype="http://schema.org/WebPage">
 
-    @fragments.message(metaData)
+        @fragments.message(metaData)
 
-    @fragments.header(metaData)
+        @if(showAdverts) {
+            @fragments.commercial.topBanner(metaData)
+        }
 
-    <div id="js-context">
-        <div class="top-banner-ad-container">
-            @fragments.commercial.standardAd(name="top", adType="top-banner-ad", sizeMapping=Map("mobile" -> Seq("300,50", "320,50"), "tabletportrait" -> Seq("728,90"), "tabletlandscape" -> Seq("728,90", "900,250"), "desktop" -> Seq("728,90", "900,250", "970,250")), showLabel=false)
-        </div>
+        @fragments.header(metaData)
 
-        @fragments.localNav(metaData)
+        @if(showAdverts) {
+            @fragments.commercial.topBannerMobile()
+        }
 
         @body
-    </div>
 
-    @fragments.footer(metaData)
+        @fragments.footer(metaData)
 
-    @fragments.loadCss()
+        @fragments.loadCss()
 
-    @fragments.analytics(metaData)
-</body>
-</html>
+        @fragments.analytics(metaData)
+
+        @fragments.footerJavaScript()
+    </body>
+    </html>
+}
+}

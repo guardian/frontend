@@ -15,7 +15,7 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
 
   implicit val request: RequestHeader = TestRequest()
 
-  val testContent = Content("the/id", None, None, new DateTime(), "the title", "http://www.guardian.co.uk/canonical",
+  val testContent = Content("the/id", None, None, Some(new DateTime()), "the title", "http://www.guardian.co.uk/canonical",
     "http://foo.bar", elements = None)
 
   val articleTag = new Tag("type/article", "type", webTitle = "the title", webUrl = "http://foo.bar", apiUrl = "http://foo.bar")
@@ -94,7 +94,7 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
     }
 
     status(notFound) should be(200)
-    headers(notFound).apply("X-Accel-Redirect") should be("/type/tag/type/article")
+    headers(notFound).apply("X-Accel-Redirect") should be("/facia/type/article") //Back to facia in case it is overridden
   }
 
   it should "internal redirect to a section if it has shown up at the wrong server" in {
@@ -106,6 +106,6 @@ class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
     }
 
     status(notFound) should be(200)
-    headers(notFound).apply("X-Accel-Redirect") should be("/type/section/water")
+    headers(notFound).apply("X-Accel-Redirect") should be("/facia/water")
   }
 }

@@ -1,4 +1,4 @@
-define(['common/common', 'common/utils/ajax', 'common/modules/onward/related', 'helpers/fixtures'], function(common, ajax, Related, fixtures) {
+define(['common/utils/mediator', 'common/utils/ajax', 'common/modules/onward/related', 'helpers/fixtures'], function(mediator, ajax, Related, fixtures) {
 
     describe("Related", function() {
 
@@ -7,10 +7,11 @@ define(['common/common', 'common/utils/ajax', 'common/modules/onward/related', '
         beforeEach(function() {
             ajax.init({page: {
                 ajaxUrl: "",
-                edition: "UK"
+                edition: "UK",
+                showRelatedContent: true
             }});
             callback = sinon.stub();
-            common.mediator.on('modules:related:loaded', callback);
+            mediator.on('modules:related:loaded', callback);
             // set up fake server
             server = sinon.fakeServer.create();
             server.autoRespond = true;
@@ -39,7 +40,7 @@ define(['common/common', 'common/utils/ajax', 'common/modules/onward/related', '
             runs(function() {
                 var r = new Related();
                 r.renderRelatedComponent(
-                    {page: {pageId: pageId}, switches: {relatedContent: true}},
+                    {page: {pageId: pageId, showRelatedContent: true}, switches: {relatedContent: true}},
                     document
                 );
             });
@@ -60,6 +61,29 @@ define(['common/common', 'common/utils/ajax', 'common/modules/onward/related', '
             runs(function() {
                 new Related(
                     {switches: {relatedContent: false}, page: {}},
+                    document
+                );
+            });
+
+            waits(500);
+
+            runs(function(){
+                expect(appendTo.innerHTML).toBe('');
+            });
+        });
+
+        it("should not request related links if we do not want related content for this article", function(){
+
+            var pageId = 'some/news';
+
+            server.respondWith('/related/' + pageId + '.json', [200, {}, '{ "html": "<b>1</b>" }']);
+
+            appendTo = document.querySelector('.js-related');
+
+            runs(function() {
+                var r = new Related();
+                r.renderRelatedComponent(
+                    {page: {pageId: pageId, showRelatedContent: false}, switches: {relatedContent: true}},
                     document
                 );
             });

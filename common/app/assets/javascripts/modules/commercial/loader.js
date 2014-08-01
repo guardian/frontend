@@ -3,23 +3,21 @@
     Description: Loads our commercial components
 */
 define([
-    'common/$',
+    'bonzo',
+    'common/utils/$',
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/lazyload',
     'common/modules/component',
-    'common/modules/onward/history',
-    'common/modules/ui/images',
     'bean',
     'common/modules/ui/tabs'
 ], function (
+    bonzo,
     $,
     mediator,
     storage,
     LazyLoad,
     Component,
-    History,
-    images,
     bean,
     Tabs
 ) {
@@ -44,26 +42,28 @@ define([
         var conf = options.config.page || {};
 
         this.pageId             = conf.pageId;
-        this.keywords           = conf.keywords || '';
+        this.keywordIds         = conf.keywordIds || '';
         this.section            = conf.section;
         this.host               = conf.ajaxUrl + '/commercial/';
         this.desktopUserVariant = conf.ab_commercialInArticleDesktop || '';
         this.mobileUserVariant  = conf.ab_commercialInArticleMobile || '';
         this.oastoken           = options.oastoken || '';
         this.adType             = options.adType || 'desktop';
-        this.userSegments       = 'seg=' + (new History().getSize() <= 1 ? 'new' : 'repeat');
         this.components         = {
-            bestbuy:           this.host + 'money/bestbuys.json?'           + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            book:              this.host + 'books/book/' + this.pageId      + '.json',
-            books:             this.host + 'books/bestsellers.json?'        + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            booksHigh:         this.host + 'books/bestsellers-high.json?'   + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            jobs:              this.host + 'jobs.json?'                     + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            jobsHigh:          this.host + 'jobs-high.json?'                + this.userSegments + '&s=' + this.section + '&' + this.getKeywords(),
-            masterclasses:     this.host + 'masterclasses.json?'            + this.userSegments + '&s=' + this.section,
-            masterclassesHigh: this.host + 'masterclasses-high.json?'       + this.userSegments + '&s=' + this.section,
-            soulmates:         this.host + 'soulmates/mixed.json?'          + this.userSegments + '&s=' + this.section,
-            soulmatesHigh:     this.host + 'soulmates/mixed-high.json?'     + this.userSegments + '&s=' + this.section,
-            travel:            this.host + 'travel/offers.json?'            + this.userSegments + '&s=' + this.section + '&' + this.getKeywords()
+            bestbuy:           this.host + 'money/bestbuys.json',
+            bestbuyHigh:       this.host + 'money/bestbuys-high.json',
+            book:              this.host + 'books/book.json?'               + this.getKeywords(),
+            books:             this.host + 'books/bestsellers.json?'        + this.getKeywords(),
+            booksMedium:       this.host + 'books/bestsellers-medium.json?' + this.getKeywords(),
+            booksHigh:         this.host + 'books/bestsellers-high.json?'   + this.getKeywords(),
+            jobs:              this.host + 'jobs.json?'                     + this.getKeywords(),
+            jobsHigh:          this.host + 'jobs-high.json?'                + this.getKeywords(),
+            masterclasses:     this.host + 'masterclasses.json?'            + this.getKeywords(),
+            masterclassesHigh: this.host + 'masterclasses-high.json?'       + this.getKeywords(),
+            soulmates:         this.host + 'soulmates/mixed.json',
+            soulmatesHigh:     this.host + 'soulmates/mixed-high.json',
+            travel:            this.host + 'travel/offers.json?'            + 's=' + this.section + '&' + this.getKeywords(),
+            travelHigh:        this.host + 'travel/offers-high.json?'       + 's=' + this.section + '&' + this.getKeywords()
         };
         this.postLoadEvents = {
             books: function(el) {
@@ -90,10 +90,14 @@ define([
 
     Component.define(Loader);
 
-    Loader.prototype.getKeywords = function() {
-        return this.keywords.split(',').map(function(keyword){
-           return 'k=' + encodeURIComponent(keyword.replace(/\s/g, '-').toLowerCase());
-        }).join('&');
+    Loader.prototype.getKeywords = function () {
+        if (this.keywordIds) {
+            return this.keywordIds.split(',').map(function (keywordId) {
+                return 'k=' + encodeURIComponent(keywordId.split('/').pop());
+            }).join('&');
+        } else {
+            return 'k=' + this.pageId.split('/').pop();
+        }
     };
 
     /**
@@ -109,11 +113,9 @@ define([
             beforeInsert: function (html) {
                 // Currently we are replacing the OmnitureToken with nothing. This will change once
                 // commercial components have properly been setup in the lovely mess that is Omniture!
-                return html.replace(/%OASToken%/g, self.oastoken).replace(/%OmnitureToken%/g, '');
+                return html ? html.replace(/%OASToken%/g, self.oastoken).replace(/%OmnitureToken%/g, '') : html;
             },
             success: function () {
-                images.upgrade(target);
-
                 if(name in self.postLoadEvents) {
                     self.postLoadEvents[name](target);
                 }

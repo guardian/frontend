@@ -1,0 +1,177 @@
+@(item: model.MetaData, curlPaths: Map[String, String] = Map())(implicit request: RequestHeader)
+@import conf.Switches._
+@import conf.Static
+@import conf.Configuration
+
+@* Scripts that should be executed after CSS is loaded *@
+
+<script>
+
+    var curl = {
+        baseUrl: '@{Configuration.assets.path}javascripts',
+        apiName: 'require',
+        paths: {
+            @curlPaths.map { case (module, path) =>
+                '@module': '@Static(path)',
+            }
+            facebook: '//connect.facebook.net/en_US/all.js',
+            swipe: '@Static("javascripts/components/swipe/swipe.js")',
+            zxcvbn: '@Static("javascripts/components/zxcvbn/index.js")',
+            'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',
+            foresee: '@Static("javascripts/vendor/foresee2/foresee-trigger.js")',
+            googletag: '@{Configuration.javascript.config("googletagJsUrl")}',
+            core: '@Static("javascripts/core.js")',
+            'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")',
+            'bootstraps/commercial' : '@Static("javascripts/bootstraps/commercial.js")',
+            'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")',
+            'bootstraps/dev' : '@Static("javascripts/bootstraps/dev.js")'
+        }
+    };
+
+    (function(isModern) {
+
+        if (!isModern) { return false; }
+
+        function loadFontsAsynchronously() {
+            @if(FontSwitch.isSwitchedOff) {
+                return;
+            }
+            var f, x;
+
+            x = document.getElementById('gu');
+            f = document.createElement('link');
+            f.rel = 'stylesheet';
+            f.href = '@Static("stylesheets/webfonts.css")';
+            window.setTimeout(function() {
+                x.parentNode.insertBefore(f, x);
+            }, 0);
+        }
+
+        function loadFontsFromStorage(prefs, key) {
+
+            var showFonts = false,
+                fontPreference = localStorage['gu.prefs.switch.font-family'],
+                fontSwitch = (fontPreference) ? JSON.parse(fontPreference).value : undefined;
+
+            @if(FontSwitch.isSwitchedOn) {
+                showFonts = true;
+            }
+
+            if (fontSwitch === true) {
+                showFonts = true;
+            } else if (fontSwitch === false && fontPreference) {
+                showFonts = false;
+            }
+
+            if (showFonts) {
+                var styleNodes = document.querySelectorAll('[data-cache-name]');
+                for (var i = 0, j = styleNodes.length; i<j; ++i) {
+                    var style = styleNodes[i],
+                        nameAndCacheKey = style.getAttribute('data-cache-file-woff').match(/fonts\/([^/]*?)\/?([^/]*)\.woff.json$/),
+                        cachedCss = localStorage.getItem('gu.fonts.' + nameAndCacheKey[2] + '.' + nameAndCacheKey[1]);
+                        @* try to parse it (should really use the storage module) *@
+                        try {
+                            cachedCss = JSON.parse(cachedCss).value;
+                        } catch(e) {}
+                    if (cachedCss) {
+                        style.innerHTML = cachedCss;
+                        style.setAttribute('data-cache-full', 'true');
+                    }
+                }
+            }
+        }
+
+        @* Display hinted fonts (loaded asynchronously) in these platforms: *@
+        var loadsHintedFonts = /Windows/;
+        @* But exclude these platforms (and load non-hinted fonts from localStorage): *@
+        var loadsNonHintedFonts = /W(indows Phone|PDesktop)/;
+
+        guardian.shouldLoadFontsAsynchronously = loadsHintedFonts.test(navigator.userAgent)
+                                                 && !loadsNonHintedFonts.test(navigator.userAgent);
+
+        if (guardian.shouldLoadFontsAsynchronously) {
+            loadFontsAsynchronously();
+        } else {
+            loadFontsFromStorage();
+        }
+
+        @if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
+            function loadCssFromStorage() {
+                var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, head;
+                if(c) {
+                    s = document.createElement('style');
+                    head = document.getElementsByTagName('head')[0];
+                    s.innerHTML = c;
+                    s.setAttribute('data-loaded-from', 'local');
+                    head.appendChild(s);
+                    guardian.css.loaded = true;
+                }
+            }
+
+            loadCssFromStorage();
+        }
+
+    })(guardian.isModernBrowser);
+
+    @* inline curl *@
+    @Html(Static.js.curl)
+
+    require([
+        'core',
+        'domReady!'
+    ], function (core) {
+
+        require(['raven', 'common/utils/config'], function(raven, config) {
+
+            raven.config(
+                'http://' + config.page.sentryApiKey + '@@' + config.page.sentryHost,
+                {
+                    logger: 'javascript',
+                    whitelistUrls: [
+                        /localhost/,
+                        /assets\.guim\.co\.uk/,
+                        /ophan\.co\.uk/,
+                        /api\.nextgen\.guardianapps\.co\.uk/
+                    ],
+                    tags: {
+                        edition: config.page.edition,
+                        contentType: config.page.contentType,
+                        buildNumber: config.page.buildNumber
+                    },
+                    shouldSendCallback: function(data) {
+                        return Math.random() < 0.1;
+                    }
+                }
+            ).install();
+
+            require(['common/utils/ajax', 'common/modules/experiments/ab'], function(ajax, ab) {
+
+                ajax.init();
+                ab.segmentUser();
+                ab.run();
+
+                if (guardian.config.switches.commercial) {
+
+                    require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
+                        commercial.init();
+                    });
+                }
+
+                if (guardian.isModernBrowser) {
+
+                    @if(play.Play.isDev()) {
+                        require(['bootstraps/dev'], function (devmode) { devmode.init(); });
+                    }
+
+                    require(['bootstraps/app'], function(bootstrap) {
+                        bootstrap.go();
+                    });
+
+                }
+
+            });
+
+        });
+
+    });
+</script>

@@ -1,2 +1,0 @@
-@(headline: String, classes: List[String] = Nil)(implicit request: RequestHeader)
-<h1 itemprop="headline" class="article__headline @if(classes.nonEmpty){ @classes.mkString(" ")}">@Html(headline)</h1>

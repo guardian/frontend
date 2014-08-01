@@ -17,7 +17,7 @@
     ));
 }
 .supporting__action {
-    @include font-size(14, 18);
+    @include fs-headline(1, true)
 }
 
 @include mq(tablet) {
@@ -77,7 +77,7 @@
             padding-right: 0;
 
             &:before {
-                content: "";
+                content: '';
                 border-top: 1px solid $c-neutral5;
                 position: absolute;
                 top: -1px;

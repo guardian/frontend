@@ -1,22 +1,24 @@
 define([
-    'common/common',
+    'lodash/objects/assign',
     'common/utils/storage',
     'common/utils/mediator',
+    'common/utils/config',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/searchText',
-    'common/modules/experiments/tests/high-relevance-commercial-component'
+    'common/modules/experiments/tests/high-commercial-component',
+    'common/modules/experiments/tests/right-most-popular-text'
 ], function (
-    common,
+    assign,
     store,
     mediator,
+    globalConfig,
     mvtCookie,
-    ABHeaderSearchText,
-    ABHighRelevanceCommercialComponent
+    HighCommercialComponent,
+    RightMostPopularText
     ) {
 
     var TESTS = [
-            new ABHeaderSearchText(),
-            new ABHighRelevanceCommercialComponent()
+            new HighCommercialComponent(),
+            new RightMostPopularText()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -48,7 +50,7 @@ define([
         // renamed/deleted from the backend
         var participations = getParticipations();
         Object.keys(participations).forEach(function (k) {
-            if (typeof(config.switches['ab' + k]) === 'undefined') {
+            if (typeof(assign({}, globalConfig, config).switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
             } else {
                 var testExists = TESTS.some(function (element) {
@@ -151,7 +153,7 @@ define([
     }
 
     function isTestSwitchedOn(test, config) {
-        return config.switches['ab' + test.id];
+        return assign({}, globalConfig, config).switches['ab' + test.id];
     }
 
     function getTestVariant(testId) {

@@ -2,28 +2,28 @@
 /* TODO - fix module constructors so we can remove the above jshint override */
 define([
     //Commmon libraries
-    'common/$',
+    'common/utils/$',
     'common/utils/mediator',
     'common/utils/deferToLoad',
     'common/utils/ajax',
     'common/modules/userPrefs',
+    'common/utils/url',
     //Vendor libraries
     'bonzo',
     'bean',
     'qwery',
     'enhancer',
-    'lodash/objects/assign',
     'lodash/functions/debounce',
     //Modules
     'common/utils/storage',
     'common/utils/detect',
-    'common/modules/onward/popular',
+    'common/modules/onward/most-popular-factory',
     'common/modules/onward/related',
     'common/modules/onward/onward-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
-    'common/modules/navigation/sections',
     'common/modules/navigation/search',
+    'common/modules/navigation/navigation',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/ui/dropdowns',
@@ -32,52 +32,44 @@ define([
     'common/modules/analytics/omniture',
     'common/modules/analytics/scrollDepth',
     'common/utils/cookies',
-    'common/modules/analytics/omnitureMedia',
     'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
-    'common/modules/adverts/video',
     'common/modules/discussion/comment-count',
     'common/modules/gallery/lightbox',
     'common/modules/onward/history',
-    'common/modules/onward/sequence',
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
-    'common/modules/adverts/article-body-adverts',
-    'common/modules/adverts/article-aside-adverts',
-    'common/modules/adverts/slice-adverts',
-    'common/modules/adverts/front-commercial-components',
-    'common/modules/adverts/dfp',
-    'common/modules/analytics/commercial/tags/container',
     'common/modules/analytics/foresee-survey',
     'common/modules/onward/geo-most-popular',
     'common/modules/analytics/register',
-    'common/modules/commercial/loader',
     'common/modules/onward/tonal',
     'common/modules/identity/api',
-    'common/modules/onward/more-tags'
+    'common/modules/onward/more-tags',
+    'common/modules/ui/smartAppBanner',
+    'common/modules/discussion/loader'
 ], function (
     $,
     mediator,
     deferToLoadEvent,
     ajax,
     userPrefs,
+    Url,
 
     bonzo,
     bean,
     qwery,
     enhancer,
-    extend,
     debounce,
 
     storage,
     detect,
-    popular,
+    MostPopularFactory,
     Related,
     Onward,
     images,
     Profile,
-    Sections,
     Search,
+    Navigation,
 
     Tabs,
     Toggles,
@@ -87,29 +79,21 @@ define([
     Omniture,
     ScrollDepth,
     Cookies,
-    OmnitureMedia,
     liveStats,
     ab,
-    VideoAdvert,
     CommentCount,
     LightboxGallery,
-    History,
-    sequence,
+    history,
     Message,
     AutoSignin,
-    ArticleBodyAdverts,
-    ArticleAsideAdverts,
-    SliceAdverts,
-    frontCommercialComponents,
-    dfp,
-    TagContainer,
     Foresee,
     GeoMostPopular,
     register,
-    CommercialLoader,
     TonalComponent,
     id,
-    MoreTags
+    MoreTags,
+    smartAppBanner,
+    DiscussionLoader
 ) {
 
     var modules = {
@@ -119,9 +103,8 @@ define([
             images.listen();
         },
 
-        initialiseNavigation: function (config) {
-            var sections = new Sections(config),
-                search = new Search(config),
+        initialiseTopNavItems: function(config){
+            var search = new Search(config),
                 header = document.getElementById('header');
 
             if (header) {
@@ -133,8 +116,11 @@ define([
                 }
             }
 
-            sections.init(document);
             search.init(header);
+        },
+
+        initialiseNavigation: function (config) {
+            Navigation.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -142,10 +128,8 @@ define([
             r.renderRelatedComponent(config, context);
         },
 
-        transcludePopular: function () {
-            mediator.on('page:common:ready', function(config, context) {
-                popular(config, context);
-            });
+        transcludePopular: function (config) {
+            new MostPopularFactory(config);
         },
 
         transcludeOnwardContent: function(config, context){
@@ -170,9 +154,8 @@ define([
             toggles.init(document);
             mediator.on('page:common:ready', function() {
                 toggles.reset();
+                Dropdowns.init();
             });
-
-            Dropdowns.init();
         },
 
         showRelativeDates: function () {
@@ -222,8 +205,7 @@ define([
         initRightHandComponent: function(config) {
             if(config.page.contentType === 'Article' &&
                 detect.getBreakpoint() !== 'mobile' &&
-                parseInt(config.page.wordCount, 10) > 500 &&
-                !config.page.isLiveBlog) {
+                parseInt(config.page.wordCount, 10) > 500) {
                 new GeoMostPopular({});
             }
         },
@@ -232,22 +214,10 @@ define([
             liveStats.log(config);
         },
 
-        loadAnalytics: function (config, context) {
+        loadAnalytics: function (config) {
             var omniture = new Omniture();
 
-            omniture.go(config, function(){
-                // callback:
-
-                Array.prototype.forEach.call(context.getElementsByTagName('video'), function(video){
-                    if (!bonzo(video).hasClass('tracking-applied')) {
-                        bonzo(video).addClass('tracking-applied');
-                        new OmnitureMedia({
-                            el: video,
-                            config: config
-                        }).init();
-                    }
-                });
-            });
+            omniture.go(config);
 
             if (config.switches.ophan && !config.page.isSSL) {
                 require('ophan/ng', function (ophan) {
@@ -257,71 +227,16 @@ define([
                         mediator.on('scrolldepth:data', ophan.record);
 
                         new ScrollDepth({
-                            isContent: config.page.contentType === 'Article'
+                            isContent: /Article|LiveBlog/.test(config.page.contentType)
                         });
                     }
                 });
             }
         },
 
-        loadAdverts: function (config) {
-
-            var showAds =
-                !userPrefs.isOff('adverts') &&
-                !config.page.shouldHideAdverts &&
-                !config.page.isSSL &&
-                (
-                    config.switches.standardAdverts || config.switches.commercialComponents
-                );
-
-            if (showAds) {
-
-
-                // if it's an article, excluding live blogs, create our inline adverts
-                if (config.switches.standardAdverts && config.page.contentType === 'Article') {
-                    new ArticleAsideAdverts(config).init();
-                    // no inline adverts on live
-                    if (!config.page.isLiveBlog) {
-                        new ArticleBodyAdverts().init();
-                    }
-                }
-
-                new SliceAdverts(config).init();
-
-                frontCommercialComponents.init(config);
-
-                var options = {};
-
-                if (!config.switches.standardAdverts) {
-                    options.adSlotSelector = '.ad-slot--commercial-component';
-                } else if (!config.switches.commercialComponents) {
-                    options.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
-                }
-                dfp.init(extend(config, options));
-            }
-        },
-
-        loadVideoAdverts: function() {
-            mediator.on('page:common:ready', function(config, context) {
-                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
-                    Array.prototype.forEach.call(context.querySelectorAll('video'), function(el) {
-                        var support = detect.getVideoFormatSupport();
-                        new VideoAdvert({
-                            el: el,
-                            support: support,
-                            config: config,
-                            context: context
-                        }).init(config.page);
-                    });
-                } else {
-                    mediator.emit('video:ads:finished', config, context);
-                }
-            });
-        },
-
         cleanupCookies: function() {
-            Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA']);
-            Cookies.cleanUpDuplicates(['GU_ALPHA','GU_VIEW']);
+            Cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA']);
+            Cookies.cleanUpDuplicates(['GU_VIEW']);
         },
 
         // opt-in to the responsive alpha
@@ -352,7 +267,7 @@ define([
             var releaseMessage = new Message('alpha');
 
             // Do not show the release message on -sp- based paths.
-            var spRegExp = new RegExp('.*/-sp-.*');
+            var spRegExp = new RegExp('.*-sp-.*');
 
             if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path)) {
                 // force the visitor in to the alpha release for subsequent visits
@@ -365,11 +280,9 @@ define([
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
                 bean.on(document, 'click', '.js-site-message-close', function() {
                     Cookies.add('GU_VIEW', 'responsive', 365);
-                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 bean.on(document, 'click', '.js-site-message', function() {
                     Cookies.add('GU_VIEW', 'responsive', 365);
-                    Cookies.add('GU_ALPHA', '2', 365);
                 });
                 var message = new Message('onboard', { type: 'modal' }),
                     path = (document.location.pathname) ? document.location.pathname : '/',
@@ -402,17 +315,14 @@ define([
 
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
-                if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
-                    new History().log({
+                if(config.page.contentType !== 'Network Front') {
+                    history.log({
                         id: '/' + config.page.pageId,
                         meta: {
                             section: config.page.section,
-                            keywords: config.page.keywordIds.split(',').slice(0, 5)
+                            keywords: config.page.keywordIds && (config.page.keywordIds + '').split(',').slice(0, 5)
                         }
                     });
-                }
-                if (config.page.section !== 'identity') {
-                    sequence.init('/' + config.page.pageId);
                 }
             });
         },
@@ -421,14 +331,6 @@ define([
            mediator.on('page:common:ready', function(config) {
                 if (config.switches && config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
                     new AutoSignin(config).init();
-                }
-            });
-        },
-
-        loadTags : function() {
-            mediator.on('page:common:ready', function(config) {
-                if (config.page.contentType !== 'Identity' && config.page.section !== 'identity') {
-                    TagContainer.init(config);
                 }
             });
         },
@@ -463,7 +365,7 @@ define([
 
         augmentInteractive: function() {
             mediator.on('page:common:ready', function(config, context) {
-                if (/Article|Interactive/.test(config.page.contentType)) {
+                if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
                     $('figure.interactive').each(function (el) {
                         enhancer.render(el, context, config, mediator);
                     });
@@ -477,31 +379,38 @@ define([
             }
         },
 
-        loadCommercialComponent: function(config) {
-            [
-                ['commercial-component', 'merchandising'],
-                ['commercial-component-high', 'merchandising-high']
-            ].forEach(function(data) {
-                var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
-                    slot = qwery('[data-name="' + data[1] + '"]').shift();
-                if (commercialComponent && slot) {
-                    new CommercialLoader({ config: config })
-                        .init(commercialComponent[1], slot);
-                }
-            });
-        },
-
         repositionComments: function() {
             mediator.on('page:common:ready', function() {
                 if(!id.isUserLoggedIn()) {
-                    $('.js-comments').insertBefore(qwery('.js-popular'));
-                    $('.discussion').addClass('discussion--lowered');
+                    $('.js-comments').appendTo(qwery('.js-repositioned-comments'));
                 }
             });
         },
 
         showMoreTagsLink: function() {
             new MoreTags().init();
+        },
+
+        showSmartBanner: function(config) {
+            if(config.switches.smartBanner) {
+                smartAppBanner.init();
+            }
+        },
+
+        initDiscussion: function() {
+            mediator.on('page:common:ready', function(config, context) {
+                if (config.page.commentable && config.switches.discussion) {
+                    var discussionLoader = new DiscussionLoader(context, mediator, { 'switches': config.switches });
+                    discussionLoader.attachTo($('.discussion')[0]);
+                }
+            });
+        },
+
+        testCookie: function() {
+            var queryParams = Url.getUrlVars();
+            if (queryParams.test) {
+                Cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
+            }
         }
     };
 
@@ -515,11 +424,10 @@ define([
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
                 modules.runAbTests(config, context);
-                modules.loadAdverts(config);
+                modules.transcludePopular(config);
                 modules.transcludeRelated(config, context);
                 modules.transcludeOnwardContent(config, context);
                 modules.initRightHandComponent(config, context);
-                modules.loadCommercialComponent(config, context);
             }
             mediator.emit('page:common:deferred:loaded', config, context);
         });
@@ -528,16 +436,16 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.testCookie();
             modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
+            modules.initialiseTopNavItems(config);
             modules.initialiseNavigation(config);
             modules.showToggles();
             modules.showRelativeDates();
-            modules.transcludePopular();
-            modules.loadVideoAdverts(config);
             modules.initClickstream();
             modules.transcludeCommentCounts();
             modules.initLightboxGalleries();
@@ -546,12 +454,13 @@ define([
             modules.logReadingHistory();
             modules.unshackleParagraphs(config, context);
             modules.initAutoSignin(config);
-            modules.loadTags(config);
             modules.augmentInteractive();
             modules.runForseeSurvey(config);
             modules.startRegister(config);
             modules.repositionComments();
             modules.showMoreTagsLink();
+            modules.showSmartBanner(config);
+            modules.initDiscussion();
         }
         mediator.emit('page:common:ready', config, context);
     };
@@ -565,3 +474,4 @@ define([
         init: init
     };
 });
+

@@ -1,11 +1,11 @@
 define([
     'common/utils/mediator',
-    'common/$',
+    'common/utils/$',
     'qwery',
     'bonzo',
     'bean',
     'lodash/functions/throttle',
-    'common/_',
+    'common/utils/_',
     'common/utils/scroller',
     'common/utils/detect',
     'common/modules/ui/autoupdate',
@@ -14,7 +14,8 @@ define([
     'common/modules/experiments/affix',
     'common/utils/template',
     'common/utils/url',
-    'common/utils/context'
+    'common/utils/context',
+    'common/bootstraps/article'
 ], function (
     mediator,
     $,
@@ -31,7 +32,8 @@ define([
     Affix,
     template,
     url,
-    getContext
+    getContext,
+    Article
 ) {
     'use strict';
 
@@ -119,63 +121,6 @@ define([
         return createKeyEventHTML(getFirstBlock()) + html + createKeyEventHTML(getLastBlock());
     }
 
-    function createTimeline() {
-        mediator.on('page:article:ready', function(config, context) {
-            var allEvents = getKeyEvents();
-            var timelineHTML = wrapWithFirstAndLast(getTimelineHTML(allEvents));
-
-            $('.js-live-blog__timeline', context).append(timelineHTML);
-            $('.js-live-blog__timeline li:first-child .timeline__title').text('Latest post');
-            $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
-
-            if(/desktop|wide/.test(detect.getBreakpoint()) && config.page.keywordIds.indexOf('football/football') < 0) {
-                var topMarker = qwery('.js-top-marker')[0];
-                affix = new Affix({
-                    element: qwery('.js-live-blog__timeline-container')[0],
-                    topMarker: topMarker,
-                    bottomMarker: qwery('.js-bottom-marker')[0],
-                    containerElement: qwery('.js-live-blog__key-events')[0]
-                });
-            }
-            createScrollTransitions();
-        });
-    }
-
-    function createAutoRefresh(){
-        mediator.on('page:article:ready', function(config, context) {
-            if (config.page.isLive) {
-
-                var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000;
-                autoUpdate = new AutoUpdate({
-                    path: getUpdatePath,
-                    delay: timerDelay,
-                    attachTo: $('.article-body', context)[0],
-                    switches: config.switches,
-                    manipulationType: 'prepend'
-                });
-                autoUpdate.init();
-            }
-        });
-
-        mediator.on('module:filter:toggle', function(orderedByOldest) {
-            if (!autoUpdate) {
-                return;
-            }
-            if (orderedByOldest) {
-                autoUpdate.setManipulationType('append');
-            } else {
-                autoUpdate.setManipulationType('prepend');
-            }
-        });
-    }
-
-    function createFilter() {
-        mediator.on('page:article:ready', function(config, context) {
-            new LiveFilter($('.js-blog-blocks', context)[0]).render($('.js-live-filter')[0]);
-            new NotificationCounter().init();
-        });
-    }
-
     function getUpdatePath() {
         var blocks = qwery('.article-body .block', getContext()),
             newestBlock = null;
@@ -191,13 +136,76 @@ define([
         return window.location.pathname + '.json?lastUpdate=' + id;
     }
 
-    return {
-        init: function () {
-            createAutoRefresh();
-            createFilter();
-            if(getKeyEvents().length > 0) {
-                createTimeline();
+    var modules = {
+
+        createFilter: function(config, context) {
+            new LiveFilter($('.js-blog-blocks', context)[0]).render($('.js-live-filter')[0]);
+            new NotificationCounter().init();
+        },
+
+        createTimeline: function(config, context) {
+            var allEvents = getKeyEvents();
+            if(allEvents.length > 0) {
+                var timelineHTML = wrapWithFirstAndLast(getTimelineHTML(allEvents));
+
+                $('.js-live-blog__timeline', context).append(timelineHTML);
+                $('.js-live-blog__timeline li:first-child .timeline__title').text('Latest post');
+                $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
+
+                if (/desktop|wide/.test(detect.getBreakpoint()) && config.page.keywordIds.indexOf('football/football') < 0) {
+                    var topMarker = qwery('.js-top-marker')[0];
+                    affix = new Affix({
+                        element: qwery('.js-live-blog__timeline-container')[0],
+                        topMarker: topMarker,
+                        bottomMarker: qwery('.js-bottom-marker')[0],
+                        containerElement: qwery('.js-live-blog__key-events')[0]
+                    });
+                }
+                createScrollTransitions();
             }
+        },
+
+        createAutoRefresh: function(config, context){
+
+            if (config.page.isLive) {
+
+                var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000;
+                autoUpdate = new AutoUpdate({
+                    path: getUpdatePath,
+                    delay: timerDelay,
+                    attachTo: $('.article-body', context)[0],
+                    switches: config.switches,
+                    manipulationType: 'prepend'
+                });
+                autoUpdate.init();
+            }
+
+            mediator.on('module:filter:toggle', function(orderedByOldest) {
+                if (!autoUpdate) {
+                    return;
+                }
+                if (orderedByOldest) {
+                    autoUpdate.setManipulationType('append');
+                } else {
+                    autoUpdate.setManipulationType('prepend');
+                }
+            });
+        }
+    };
+
+    function bindModulesToReadyEvent(obj) {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                mediator.on('page:liveblog:ready', obj[key]);
+            }
+        }
+    }
+
+    return {
+        init: function (config, context) {
+            bindModulesToReadyEvent(modules);
+            bindModulesToReadyEvent(Article.modules);
+            mediator.emit('page:liveblog:ready', config, context);
         }
     };
 });

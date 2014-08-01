@@ -3,6 +3,7 @@ package contentapi
 import com.gu.openplatform.contentapi.connection.{HttpResponse, Http}
 import scala.concurrent.Future
 import conf.Configuration
+import conf.Configuration.contentApi.previewAuth
 import common.{SimpleCountMetric, FrontendTimingMetric, ExecutionContexts}
 import java.util.concurrent.TimeoutException
 import play.api.libs.ws.WS
@@ -10,10 +11,12 @@ import com.gu.management.TimingMetric
 import common.ContentApiMetrics.ContentApi404Metric
 import java.net.InetAddress
 import scala.util.Try
+import play.api.libs.ws.WSAuthScheme
 
 class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCountMetric) extends Http[Future]
                                                                                               with ExecutionContexts {
 
+  import play.api.Play.current
   import System.currentTimeMillis
 
   override def GET(url: String, headers: Iterable[(String, String)]) = {
@@ -25,18 +28,20 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCo
 
     val start = currentTimeMillis
 
-    val response = WS.url(urlWithDebugInfo).withHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
+    val baseRequest = WS.url(urlWithDebugInfo)
+    val request = previewAuth.fold(baseRequest)(auth => baseRequest.withAuth(auth.user, auth.password, WSAuthScheme.BASIC))
+    val response = request.withHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
 
     // record metrics
     response.onSuccess {
-      case r => {
-        if (r.status == 404) ContentApi404Metric.increment()
-        httpTimingMetric.recordTimeSpent(currentTimeMillis - start)
-      }
+      case r if r.status == 404 => ContentApi404Metric.increment()
+      case r if r.status == 200 => httpTimingMetric.recordTimeSpent(currentTimeMillis - start)
     }
+
     response.onFailure {
-      case e: Throwable if isTimeout(e) => httpTimeoutMetric.increment
+      case e: Throwable if isTimeout(e) => httpTimeoutMetric.increment()
     }
+
     response
   }.map {
     r => HttpResponse(r.body, r.status, r.statusText)

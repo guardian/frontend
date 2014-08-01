@@ -21,6 +21,17 @@ s.linkLeaveQueryString=false;
 s.linkTrackVars="None";
 s.linkTrackEvents="None";
 
+/* Plugin Config */
+s._tpDST = {
+    2012:'3/25,10/28',
+    2013:'3/31,10/27',
+    2014:'3/30,10/26',
+    2015:'3/29,10/25',
+    2016:'3/27,10/30',
+    2017:'3/26,10/29',
+    2018:'3/25,10/28',
+    2019:'3/31,10/27'
+};
 
 /************************ DO PLUGINS SECTION ************************/
 s.usePlugins=true;
@@ -42,7 +53,6 @@ function s_doPlugins(s) {
         s.eVar38=s.getQueryParam('CMP');
     }
     s.eVar38=s.getValOnce(s.eVar38,'s_eVar38',0);
-
 
     /* Users with a Daily Habit Diary */
     var dtmNow=new Date();
@@ -67,7 +77,7 @@ function s_doPlugins(s) {
 //    s.eVar40=s.crossVisitParticipation(s.campaign,'s_ev40','30','5','>','',1);
 
     /* Days Since Last Visit */
-//    s.eVar10=s.getDaysSinceLastVisit('s_lv');
+    s.eVar10=s.getDaysSinceLastVisit('s_lv');
 
     /* New/Repeat Status */
 //    s.prop16=s.eVar16=s.getNewRepeat(365);
@@ -109,7 +119,9 @@ s.loadMediaModule = function(provider,restricted) {
     var s = this;
     s.loadModule("Media");
     s.Media.autoTrack=false;
-    s.Media.trackVars="events,prop44,eVar7,eVar43,eVar44,eVar45,eVar48,eVar61,eVar56,eVar47";
+    s.Media.trackWhilePlaying = true;
+    s.Media.trackSeconds = 15;
+    s.Media.trackVars="events,eVar7,eVar43,eVar44,prop44,eVar47,eVar48,eVar56,eVar61";
     s.Media.trackEvents="event17,event18,event21,event22,event23,event57,event63";
     s.Media.trackMilestones="25,50,75";
     s.Media.segmentByMilestones = true;
@@ -152,7 +164,7 @@ s.loadMediaModule = function(provider,restricted) {
 s.trackVideoContent = function(provider,restricted) {
     var s = this;
     s.Media.autoTrack=false;
-    s.Media.trackVars="events,prop44,eVar7,eVar11,eVar43,eVar44,eVar45,eVar48,eVar61,eVar56,eVar47";
+    s.Media.trackVars="events,eVar7,eVar11,eVar43,eVar44,prop44,eVar47,eVar48,eVar56,eVar61";
     s.Media.trackEvents="event17,event18,event21,event22,event23,event57,event63";
     s.Media.trackMilestones="25,50,75";
     s.Media.segmentByMilestones = true;
@@ -179,8 +191,8 @@ s.trackVideoContent = function(provider,restricted) {
 s.trackVideoAd = function() {
     var s = this;
     s.Media.autoTrack=false;
-    s.Media.trackVars="events,prop44,eVar7,eVar11,eVar43,eVar44,eVar45,eVar61,eVar56,eVar47";
-    s.Media.trackEvents="event64,event57,event59";
+    s.Media.trackVars="events,eVar7,eVar11,eVar43,prop44,eVar44,eVar47,eVar56,eVar61";
+    s.Media.trackEvents="event57,event59,event64";
     s.Media.segmentByMilestones = false;
     s.Media.trackUsingContextData = true;
     s.Media.contextDataMapping = {
@@ -327,6 +339,24 @@ s.apl=new Function("l","v","d","u",""
 s.split=new Function("l","d",""
     +"var i,x=0,a=new Array;while(l){i=l.indexOf(d);i=i>-1?i:l.length;a[x"
     +"++]=l.substring(0,i);l=l.substring(i+d.length);}return a");
+
+/*
+ * Plugin: getTimeParting 3.3
+ */
+s.getTimeParting=new Function("h","z",""
+    +"var s=this,od;od=new Date('1/1/2000');if(od.getDay()!=6||od.getMont"
+    +"h()!=0){return'Data Not Available';}else{var H,M,D,W,U,ds,de,tm,tt,"
+    +"da=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Sa"
+    +"turday'],d=new Date(),a=[];z=z?z:0;z=parseFloat(z);if(s._tpDST){var"
+    +" dso=s._tpDST[d.getFullYear()].split(/,/);ds=new Date(dso[0]+'/'+d."
+    +"getFullYear());de=new Date(dso[1]+'/'+d.getFullYear());if(h=='n'&&d"
+    +">ds&&d<de){z=z+1;}else if(h=='s'&&(d>de||d<ds)){z=z+1;}}d=d.getTime"
+    +"()+(d.getTimezoneOffset()*60000);d=new Date(d+(3600000*z));H=d.getH"
+    +"ours();M=d.getMinutes();M=(M<10)?'0'+M:M;D=d.getDay();U='AM';W='Wee"
+    +"kday';if(H>=12){U='PM';H=H-12;}if(H==0){H=12;}if(D==6||D==0){W='Wee"
+    +"kend';}D=da[D];tm=H+':'+M+U;tt=H+':'+((M>30)?'30':'00')+U;a=[tm,tt,"
+    +"D,W];return a;}");
+
 
 /****************************** MODULES *****************************/
 /* Module: Survey */

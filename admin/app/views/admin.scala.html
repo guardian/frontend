@@ -1,100 +1,129 @@
 @(env: String)
 
 @admin_main("Front editor", env, isAuthed = true) {
-    <div class="row-fluid">
+    <div class="row">
 
-        <div class="span3">
+        <div class="col-md-3">
             <h3>Analytics</h3>
-            <div class="well well--front">
-                <ul class="nav nav-list">
-                    <li class="nav-header">See Ophan for neartime data.</li>
-                    <li><a href="@controllers.admin.routes.AnalyticsController.kpis()">KPIs</a></li>
-                    <li><a href="@controllers.admin.routes.AnalyticsController.pageviews()">Pageviews</a></li>
-                    <li><a href="@controllers.admin.routes.AnalyticsController.browsers()">Browser support tables</a></li>
-                    <li><a href="@controllers.admin.routes.AnalyticsController.abtests()">A/B Tests</a></li>
-                    <li><a href="@controllers.admin.routes.AnalyticsConfidenceController.renderConfidence()">Confidence</a></li>
-                </ul>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">See Ophan for neartime data.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.routes.AnalyticsController.abtests()">A/B Tests</a></li>
+                        <li><a href="@controllers.admin.routes.AnalyticsConfidenceController.renderConfidence()">Confidence</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderCommercial()">Commercial</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div class="span3">
+        <div class="col-md-3">
             <h3>Development tools</h3>
-            <div class="well well--front">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Tools for the development team</li>
-                    <li><a href="/dev/switchboard">Switchboard</a></li>
-                </ul>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Tools for the development team.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="/dev/switchboard">Switchboard</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div class="span3">
+        <div class="col-md-3">
             <h3>Metrics</h3>
-            <div class="well well--front">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Ops metrics (is the site healthy?)</li>
-                    <li><a href="@controllers.admin.routes.DashboardController.renderDashboard()">Load Balancers</a></li>
-                    <li><a href="@controllers.admin.routes.FastlyController.renderFastly()">Fastly</a></li>
-                    <li>
-                        <a href="@controllers.admin.routes.DashboardController.renderErrors()">Errors</a>
-                        <ul>
-                            <li><a href="@controllers.admin.routes.DashboardController.render4XX()">4XX</a></li>
-                            <li><a href="@controllers.admin.routes.DashboardController.render5XX()">5XX</a></li>
-                            <li><a href="@controllers.admin.routes.DashboardController.renderGooglebot404s()">Googlebot 404s</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="@controllers.admin.routes.DashboardController.renderMemory()">JVM Memory</a></li>
-                    <li><a href="@controllers.admin.routes.DashboardController.renderAssets()">Static assets</a></li>
-                </ul>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Ops metrics (is the site healthy?).</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.routes.DashboardController.renderDashboard()">Load Balancers</a></li>
+                        <li><a href="@controllers.admin.routes.FastlyController.renderFastly()">Fastly</a></li>
+                        <li>
+                            <a href="@controllers.admin.routes.DashboardController.renderErrors()">Errors</a>
+                            <ul>
+                                <li><a href="@controllers.admin.routes.DashboardController.render4XX()">4XX</a></li>
+                                <li><a href="@controllers.admin.routes.DashboardController.render5XX()">5XX</a></li>
+                                <li><a href="@controllers.admin.routes.DashboardController.renderGooglebot404s()">Googlebot 404s</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="@controllers.admin.routes.DashboardController.renderMemory()">JVM Memory</a></li>
+                        <li><a href="@controllers.admin.routes.DashboardController.renderAssets()">Static assets</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div class="span3">
+        <div class="col-md-3">
             <h3>Radiator</h3>
-            <div class="well well--front">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Big screen display.</li>
-                    <li><a href="@controllers.admin.routes.RadiatorController.renderRadiator()">Radiator</a></li>
-                </ul>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Big screen display.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.routes.RadiatorController.renderRadiator()">Radiator</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
     </div>
 
-    <div class="row-fluid">
+    <div class="row">
 
-        <div class="span3">
+        <div class="col-md-3">
             <h3>Troubleshoot</h3>
-            <div class="well well--front">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Diagnose problems with features.</li>
-                    <li><a href="@controllers.admin.routes.TroubleshooterController.index()">Site outages</a></li>
-                    <li><a href="@controllers.admin.routes.FootballTroubleshooterController.renderFootballTroubleshooter()">Football feeds</a></li>
-                </ul>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Diagnose problems with features.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.routes.TroubleshooterController.index()">Site outages</a></li>
+                        <li><a href="@controllers.admin.routes.FootballTroubleshooterController.renderFootballTroubleshooter()">Football feeds</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div class="span3">
+        <div class="col-md-3">
             <h3>Tools</h3>
-            <div class="well well--front">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Site tools.</li>
-                    <li><a href="@controllers.admin.routes.RedirectController.redirect()">Redirects</a></li>
-                </ul>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Site tools.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.routes.RedirectController.redirect()">Redirects</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div class="span3">
+        <div class="col-md-3">
             <h3>Football admin</h3>
-            <div class="well well--front">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Tools for including football statistics on pages.</li>
-                    <li><a href="@controllers.admin.routes.SiteController.index()">Main page</a></li>
-                    <li><a href="@controllers.admin.routes.TablesController.tablesIndex()">League tables</a></li>
-                    <li><a href="@controllers.admin.routes.PlayerController.playerIndex()">Players</a></li>
-                    <li><a href="@controllers.admin.routes.FrontsController.index()">Fronts</a></li>
-                </ul>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Tools for including football statistics on pages.</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.routes.SiteController.index()">Main page</a></li>
+                        <li><a href="@controllers.admin.routes.TablesController.tablesIndex()">League tables</a></li>
+                        <li><a href="@controllers.admin.routes.PlayerController.playerIndex()">Players</a></li>
+                        <li><a href="@controllers.admin.routes.FrontsController.index()">Fronts</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
+        <div class="col-md-3">
+            <h3>Commercial Tools</h3>
+            <div class="panel panel-default well--front">
+                <div class="panel-heading">Tools for the commercial team</div>
+                <div class="panel-body">
+                    <ul>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderSponsorships()">Content Sponsorships</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderInlineMerchandisingSponsorships()">Inline Merchandising Sponsorships</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderPageskins()">Pageskins</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialController.renderSurgingContent()">Surging Content</a></li>
+                        <li><a href="http://m.code.dev-theguardian.com/commercial/test-page">Components test page</a>, (on dev)</li>
+                        <li><a href="http://adimage.theguardian.com/cookietest/cookies.html">Adserver test cookies</a></li>
+                        <li><a href="@controllers.admin.routes.CommercialAdUnitController.renderToApprove()">NG Ad Units for approval</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 }

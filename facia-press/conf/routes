@@ -1,0 +1,3 @@
+GET        /_healthcheck        conf.HealthCheck.healthcheck()
+GET        /                    controllers.Application.index
+GET        /debug/config        controllers.Application.showCurrentConfig

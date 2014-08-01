@@ -1,6 +1,8 @@
 package dfp
 
-case class Target(name: String, op: String, values: Seq[String]) {
+import org.joda.time.DateTime
+
+case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   def isPositive(targetName: String) = name == targetName && op == "IS"
 
@@ -9,38 +11,60 @@ case class Target(name: String, op: String, values: Seq[String]) {
   val isSponsoredSlot = isSlot("spbadge")
 
   val isAdvertisementFeatureSlot = isSlot("adbadge")
+  
+  val isInlineMerchandisingSlot = isSlot("im")
 
-  val isKeyword = isPositive("k")
+  val targetsAdTest = isPositive("at")
+
+  val isTag = isPositive("k") || isPositive("se")
+
+  val isContributor = isPositive("co")
 }
 
-case class TargetSet(op: String, targets: Seq[Target]) {
 
-  def keywords(p: Target => Boolean): Seq[String] = {
-    if (targets exists p) {
-      targets.filter(_.isKeyword).flatMap(_.values).distinct
-    }
-    else Nil
+case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
+  def filterTags(tagCriteria: CustomTarget => Boolean)(bySlotType: CustomTarget => Boolean) = {
+    if (targets exists bySlotType) {
+      targets.filter(tagCriteria).flatMap(_.values).distinct
+    } else Nil
   }
 
-  val sponsoredKeywords = keywords(_.isSponsoredSlot)
+  val sponsoredTags = filterTags(_.isTag)(_.isSponsoredSlot)
 
-  val advertisementFeatureKeywords = keywords(_.isAdvertisementFeatureSlot)
+  val advertisementFeatureTags = filterTags(_.isTag)(_.isAdvertisementFeatureSlot)
+
+  val inlineMerchandisingTargettedTags = filterTags(target => target.isTag || target.isContributor)(_.isInlineMerchandisingSlot)
+
+  val targetsAdTest = targets.find(_.targetsAdTest).isDefined
 }
 
-case class LineItem(id: Long, targetSets: Seq[TargetSet]) {
 
-  val sponsoredKeywords = targetSets.flatMap(_.sponsoredKeywords).distinct
+case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name: String)
 
-  val advertisementFeatureKeywords = targetSets.flatMap(_.advertisementFeatureKeywords).distinct
+
+case class GuAdUnit(id: String, path: Seq[String])
+
+
+case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargets: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet]) {
+  def hasAdTestTargetting = {
+    customTargetSets.find(_.targetsAdTest).isDefined
+  }
 }
 
-case class DfpData(lineItems: Seq[LineItem]) {
 
-  val sponsoredKeywords = lineItems.flatMap(_.sponsoredKeywords).distinct
+case class GuLineItem(id: Long,
+                      name: String,
+                      startTime: DateTime,
+                      endTime: Option[DateTime],
+                      isPageSkin: Boolean,
+                      sponsor: Option[String],
+                      targeting: GuTargeting) {
 
-  val advertisementFeatureKeywords = lineItems.flatMap(_.advertisementFeatureKeywords).distinct
+  val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
 
-  def isSponsored(keyword: String) = sponsoredKeywords contains keyword
+  val sponsoredTags: Seq[String] = targeting.customTargetSets.flatMap(_.sponsoredTags).distinct
 
-  def isAdvertisementFeature(keyword: String) = advertisementFeatureKeywords contains keyword
+  val advertisementFeatureTags: Seq[String] = targeting.customTargetSets.flatMap(_.advertisementFeatureTags).distinct
+
+  val inlineMerchandisingTargettedTags: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargettedTags).distinct
 }

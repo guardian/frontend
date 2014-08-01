@@ -4,8 +4,8 @@ import model._
 import play.api.libs.json._
 import play.api.libs.json.Json.toJson
 import conf.Switches.AutoRefreshSwitch
-import play.api.mvc.{ RequestHeader, Results, SimpleResult }
-import play.api.templates.Html
+import play.api.mvc.{ RequestHeader, Results, Result }
+import play.twirl.api.Html
 import play.api.http.ContentTypes._
 
 object JsonComponent extends Results with implicits.Requests {
@@ -14,27 +14,27 @@ object JsonComponent extends Results with implicits.Requests {
 
   private val ValidCallback = """([a-zA-Z0-9_]+)""".r
 
-  def apply(html: Html)(implicit request: RequestHeader): SimpleResult = {
+  def apply(html: Html)(implicit request: RequestHeader): Result = {
     val json = jsonFor("html" -> html)
     resultFor(request, json)
   }
 
-  def apply(metaData: MetaData, html: Html)(implicit request: RequestHeader): SimpleResult = {
+  def apply(metaData: MetaData, html: Html)(implicit request: RequestHeader): Result = {
     val json = jsonFor(metaData, "html" -> html)
     resultFor(request, json)
   }
 
-  def apply(items: (String, Any)*)(implicit request: RequestHeader): SimpleResult = {
+  def apply(items: (String, Any)*)(implicit request: RequestHeader): Result = {
     val json = jsonFor(items: _*)
     resultFor(request, json)
   }
   
-  def apply(metaData: MetaData, items: (String, Any)*)(implicit request: RequestHeader): SimpleResult = {
+  def apply(metaData: MetaData, items: (String, Any)*)(implicit request: RequestHeader): Result = {
     val json = jsonFor(metaData, items: _*)
     resultFor(request, json)
   }
 
-  def apply(obj: JsObject)(implicit request: RequestHeader): SimpleResult = resultFor(request,
+  def apply(obj: JsObject)(implicit request: RequestHeader): Result = resultFor(request,
     Json.stringify(obj + ("refreshStatus" -> toJson(AutoRefreshSwitch.isSwitchedOn))))
 
 
@@ -60,16 +60,18 @@ object JsonComponent extends Results with implicits.Requests {
     ))
   }
 
-  private def resultFor(request: RequestHeader, json: String): SimpleResult = jsonp(request, json)
+  // Note we are not setting Vary headers here as they get set in CorsVaryHeadersFilter
+  // otherwise they get overwritten by the Gzip Filter
+  private def resultFor(request: RequestHeader, json: String): Result = jsonp(request, json)
     .orElse(cors(request, json))
-    .getOrElse(Ok(json).as(JSON)).withHeaders("Vary" -> "Accept, Origin")
+    .getOrElse(Ok(json).as(JSON))
 
   private def cors(request: RequestHeader, json: String) = request.headers.get("Origin").map { origin =>
       Cors(Ok(json).as(JSON).withHeaders("Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With"))(request)
   }
 
   // TODO we probably want to kill off JsonP - I do not think we intend to use it again
-  private def jsonp(request: RequestHeader, json: String): Option[SimpleResult] = request.getQueryString("callback").map{
+  private def jsonp(request: RequestHeader, json: String): Option[Result] = request.getQueryString("callback").map{
     case ValidCallback(callback) => Ok(s"$callback($json);").as(withCharset("application/javascript"))
     case badCallback => Forbidden("bad callback name")
   }
@@ -81,7 +83,7 @@ object JsonNotFound {
 
   private val ValidCallback = """([a-zA-Z0-9_]+)""".r
 
-  def apply()(implicit request: RequestHeader): SimpleResult = jsonp(request).orElse(cors(request)).getOrElse(NotFound)
+  def apply()(implicit request: RequestHeader): Result = jsonp(request).orElse(cors(request)).getOrElse(NotFound)
 
   private def cors(request: RequestHeader) = request.headers.get("Origin").map { origin =>
     Cors(NotFound.as(JSON).withHeaders("Access-Control-Allow-Headers" -> "GET,POST,X-Requested-With"))(request)

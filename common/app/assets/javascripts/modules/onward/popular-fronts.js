@@ -1,10 +1,9 @@
 define([
-    'common/$',
+    'common/utils/$',
     'common/utils/mediator',
     'common/utils/ajax',
     'bonzo',
     'common/modules/ui/relativedates',
-    'common/modules/ui/collection-show-more',
     'common/modules/ui/images',
     'common/modules/discussion/comment-count'
 ], function (
@@ -13,7 +12,6 @@ define([
     ajax,
     bonzo,
     relativeDates,
-    CollectionShowMore,
     images,
     commentCount
 ) {
@@ -21,7 +19,6 @@ define([
     return  {
         render:  function (config, options) {
             var opts = options || {},
-                insertAfter = opts.insertAfter || $('.container').last(),
                 hasSection = config.page && config.page.section && config.page.section !== 'global';
             return ajax({
                 url: '/most-read' + (hasSection ? '/' + config.page.section : '') + '.json',
@@ -34,10 +31,8 @@ define([
                         return false;
                     }
                     bonzo(container)
-                        .insertAfter(insertAfter);
-                    // add show more button
-                    new CollectionShowMore($('.facia-slice', container)[0])
-                        .addShowMore();
+                        .insertAfter(opts.insertAfter || $('.container, .ad-slot--commercial-component-high').last());
+
                     commentCount.init(container);
                     // relativise timestamps
                     relativeDates.init(container);

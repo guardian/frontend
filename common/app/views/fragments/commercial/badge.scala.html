@@ -1,6 +1,18 @@
-@(name: String, adType: String, sizeMapping: Map[String, Seq[String]])
+@(content: model.Content)
 @import conf.Switches._
 
-@if(SponsoredSwitch.isSwitchedOn) {
-    @fragments.commercial.adSlot(name, adType, sizeMapping, showLabel=false, refresh=false)
+@if(SponsoredSwitch.isSwitchedOn && (content.isSponsored || content.isAdvertisementFeature)) {
+    @defining((
+        content match { case c if c.isSponsored => {"spbadge"} case _ => {"adbadge"} },
+        content match { case _: LiveBlog => {"live-blog"} case _ => {"article"} },
+        content match { case _: Gallery | _: Video => "141" case _ => "140" }
+    )) { case (name, badgeType, adSlotWidth) =>
+        @fragments.commercial.adSlot(
+            name,
+            Seq("paid-for-badge", s"paid-for-badge--$badgeType"),
+            Map("mobile" -> Seq(s"${adSlotWidth},90")),
+            showLabel=false,
+            refresh=false
+        )
+    }
 }

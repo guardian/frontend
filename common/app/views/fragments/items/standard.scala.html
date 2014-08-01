@@ -1,6 +1,6 @@
 @(trail: Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader, config: Config)
 
-@defining((VisualTone(trail), containerIndex == 0)) { case (tone, isFirstContainer) =>
+@defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
     <@element
         class="@GetClasses.forItem(trail, isFirstContainer)"
         @if(trail.isCommentable) {
@@ -16,10 +16,10 @@
 
             <a @LinkTo(trail).map{url=>href=@url} class="item__link tone-accent-border" data-link-name="article">
                 @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
-
-                @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
-
-                @fragments.items.elements.title(trail, index, containerIndex)
+                <div class="item__header">
+                    @fragments.items.elements.title(trail, index, containerIndex)
+                    @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+                </div>
             </a>
 
             @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }

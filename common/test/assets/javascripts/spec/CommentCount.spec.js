@@ -1,9 +1,11 @@
 define([
-    'common/common',
+    'common/utils/$',
+    'common/utils/mediator',
     'common/utils/ajax',
     'common/modules/discussion/comment-count',
     'fixtures/commentcounts'], function(
-    common,
+    $,
+    mediator,
     ajax,
     commentCount,
     testData) {
@@ -25,9 +27,9 @@ define([
 
         beforeEach(function() {
 
-            common.$g('body').append(fixtureTrails);
+            $('body').append(fixtureTrails);
 
-            sinon.spy(common.mediator, 'emit');
+            sinon.spy(mediator, 'emit');
             sinon.spy(commentCount, 'getCommentCounts');
 
             server = sinon.fakeServer.create();
@@ -41,9 +43,9 @@ define([
         });
 
         afterEach(function() {
-            common.$g('.comment-trails').remove();
+            $('.comment-trails').remove();
             commentCount.getCommentCounts.restore();
-            common.mediator.emit.restore();
+            mediator.emit.restore();
             server.restore();
         });
 
@@ -55,7 +57,7 @@ define([
         it("should get comment counts from ajax end-point", function(){
             commentCount.init(document);
             waits(function() {
-                expect(common.mediator.emit).toHaveBeenCalledWith('modules:commentcount:loaded');
+                expect(mediator.emit).toHaveBeenCalledWith('modules:commentcount:loaded');
             });
         });
 
@@ -69,7 +71,7 @@ define([
         it("re run when new trail appear in DOM", function(){
             commentCount.init(document);
             waits(function() {
-                //common.mediator.emit('module:trailblock-show-more:render');
+                //mediator.emit('module:trailblock-show-more:render');
                 expect(commentCount.getCommentCounts.calledTwice).toBe(true)
             });
         });

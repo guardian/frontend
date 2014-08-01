@@ -1,0 +1,27 @@
+{
+  "name": "guss-layout",
+  "version": "1.2.2",
+  "main": [
+    "_row.scss",
+    "_columns.scss"
+  ],
+  "ignore": [
+    "CHANGELOG.md"
+  ],
+  "dependencies": {
+    "guss-rem": "~1",
+    "guss-css3": "~2",
+    "guss-grid-system": "~1",
+    "sass-mq": "~2"
+  },
+  "homepage": "https://github.com/guardian/guss-layout",
+  "_release": "1.2.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.2.2",
+    "commit": "63e435f79f6f52495f3315fe0f74afbda2acc79f"
+  },
+  "_source": "git://github.com/guardian/guss-layout.git",
+  "_target": "~1",
+  "_originalSource": "guss-layout"
+}

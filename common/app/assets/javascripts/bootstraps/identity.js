@@ -1,5 +1,5 @@
 define([
-	'common/$',
+	'common/utils/$',
     'common/modules/identity/forms',
     'common/modules/identity/formstack', // oldskool inside
     'common/modules/identity/formstack-iframe', // oldskool outside
@@ -8,7 +8,7 @@ define([
     'common/modules/identity/validation-email',
     'common/modules/identity/api',
     'common/modules/identity/account-profile',
-    'common/modules/adverts/userAdTargeting',
+    'common/modules/commercial/user-ad-targeting',
     'common/modules/discussion/user-avatars',
     'common/utils/mediator',
     'common/modules/ui/tabs'
@@ -29,14 +29,14 @@ define([
 ) {
 
     var modules = {
-        idInit: function (config) {
+        idInit: function(config) {
             Id.init(config);
             // Used to show elements that need signin. Use .sign-in-required
             if (Id.isUserLoggedIn()) {
                 document.documentElement.className = document.documentElement.className.replace(/\bid--signed-out\b/, 'id--signed-in');
             }
         },
-        initFormstack: function () {
+        initFormstack: function() {
             mediator.on('page:identity:ready', function(config, context) {
                 var attr = 'data-formstack-id';
                 $('[' + attr + ']').each(function(el) {
@@ -58,29 +58,29 @@ define([
                 });
             });
         },
-        forgottenEmail: function () {
+        forgottenEmail: function() {
             mediator.on('page:identity:ready', function(config, context) {
                 Identity.forgottenEmail(config, context);
             });
         },
-        forgottenPassword: function () {
+        forgottenPassword: function() {
             mediator.on('page:identity:ready', function(config, context) {
                 Identity.forgottenPassword(config, context);
             });
         },
-        passwordStrength: function () {
+        passwordStrength: function() {
             mediator.on('page:identity:ready', function(config, context) {
                 $('.js-password-strength').each(function(el) {
                     new PasswordStrength(el, context, config).init();
                 });
             });
         },
-        passwordToggle: function () {
+        passwordToggle: function() {
             mediator.on('page:identity:ready', function(config, context) {
                 Identity.passwordToggle(config, context);
             });
         },
-        userAdTargeting : function () {
+        userAdTargeting : function() {
             mediator.on('page:identity:ready', function() {
                 UserAdTargeting.requestUserSegmentsFromId();
             });
@@ -96,14 +96,14 @@ define([
             });
         },
 
-        tabs: function () {
+        tabs: function() {
             var tabs = new Tabs();
             mediator.on('page:identity:ready', function(config, context) {
                 tabs.init(context);
             });
         },
 
-        accountProfile: function () {
+        accountProfile: function() {
             var accountProfile = new AccountProfile();
             mediator.on('page:identity:ready', function(config, context) {
                 accountProfile.init(context);

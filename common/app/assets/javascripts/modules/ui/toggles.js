@@ -1,9 +1,7 @@
 define([
-    'common/common',
     'bean',
     'bonzo'
 ], function (
-    common,
     bean,
     bonzo
 ) {

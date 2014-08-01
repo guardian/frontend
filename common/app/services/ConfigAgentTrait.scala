@@ -37,9 +37,9 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   }
 
   def getConfigsUsingCollectionId(id: String): Seq[String] = {
-    getConfigCollectionMap.collect{
+    (getConfigCollectionMap collect {
       case (configId, collectionIds) if collectionIds.contains(id) => configId
-    }.toSeq
+    }).toSeq
   }
 
   def getConfigForId(id: String): Option[List[Config]] = {
@@ -72,8 +72,6 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     } getOrElse Nil
   }
 
-  def close() = configAgent.close()
-
   def contentsAsJsonString: String = Json.prettyPrint(configAgent.get)
 
   def getSeoDataJsonFromConfig(path: String): SeoDataJson = {
@@ -81,15 +79,12 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     val frontJson = (json \ "fronts" \ path).as[JsValue]
     SeoDataJson(
       path,
-      section   = (frontJson \ "section").asOpt[String].filter(_.nonEmpty),
-      webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty).map(webTitleCase),
+      navSection   = (frontJson \ "navSection").asOpt[String].filter(_.nonEmpty),
+      webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
       title  = (frontJson \ "title").asOpt[String].filter(_.nonEmpty),
       description  = (frontJson \ "description").asOpt[String].filter(_.nonEmpty)
     )
   }
-
-  private def webTitleCase(webTitle: String): String = webTitle.split(' ').map(_.capitalize).mkString(" ")
-
 }
 
 object ConfigAgent extends ConfigAgentTrait
@@ -111,8 +106,6 @@ trait ConfigAgentLifecycle extends GlobalSettings {
 
   override def onStop(app: Application) {
     Jobs.deschedule("ConfigAgentJob")
-    ConfigAgent.close()
-
     super.onStop(app)
   }
 }

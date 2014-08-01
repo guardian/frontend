@@ -25,16 +25,29 @@
     }
 
     .item__title {
-        @include fs-headline(2, $size-only: true);
+        @include fs-headline(3, $size-only: true);
         padding-top: 0;
         @include rem((
             margin-bottom: $gs-baseline
         ));
 
         @include mq(tablet) {
-            @include fs-headline(4, true);
+            @include fs-headline(6, true);
             @include rem((
                 margin-bottom: $gs-baseline*1.25
+            ));
+        }
+    }
+
+    .stars {
+        @include rem((
+            margin-top: 0 - $gs-baseline * .75,
+            margin-bottom: $gs-baseline * 1.25
+        ));
+
+        @include mq(tablet) {
+            @include rem((
+                margin-bottom: $gs-baseline * 1.5
             ));
         }
     }
@@ -124,11 +137,7 @@
 .fromage__image-container {}
 
 .fromage__standfirst {
-    @include f-headline;
-    @include rem((
-        font-size: 14px,
-        line-height: 18px
-    ));
+    @include fs-headline(1);
     color: $c-neutral2;
 
     p {
@@ -210,10 +219,10 @@
         }
     }
     .item__title {
-        @include fs-headline(3, true);
+        @include fs-headline(4, true);
 
         @include mq(tablet) {
-            @include fs-headline(5, true);
+            @include fs-headline(6, true);
         }
     }
     .fromage__byline,

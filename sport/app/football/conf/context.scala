@@ -8,7 +8,7 @@ import com.gu.management.logback.LogbackLevelPage
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}
 import pa.{Http, PaClient}
-import play.api.{Application => PlayApp, Plugin}
+import play.api.{Application => PlayApp, Mode, Play, Plugin}
 import play.api.libs.ws.WS
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -70,14 +70,12 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin with ExecutionContexts {
 
   override def onStop() {
     descheduleJobs()
-
-    Competitions.stop()
-    LiveBlogAgent.stop()
-    TeamMap.stop()
   }
 }
 
 object FootballClient extends PaClient with Http with Logging with ExecutionContexts {
+
+  import play.api.Play.current
 
   override lazy val base = Configuration.pa.host
 
@@ -110,6 +108,12 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
     _http.GET(urlString)
   }
 }
+
+object HealthCheck extends AllGoodHealthcheckController(
+  9013,
+  "/football/live",
+  "/football/premierleague/results"
+)
 
 object Management extends GuManagement {
   val applicationName = "frontend-sport"

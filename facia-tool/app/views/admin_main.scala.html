@@ -1,10 +1,10 @@
-@(title: String, env: String, isAuthed: Boolean = false, identity: Option[Identity] = None)(content: Html)
+@(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None)(content: Html)
 
 <!DOCTYPE html>
 
 <html ng-app>
     <head>
-        <title>@title</title>
+        <title>@priority @title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="utf-8"/>
 
@@ -15,17 +15,19 @@
         <link rel="apple-touch-icon" sizes="72x72" href="@routes.Assets.at("images/72x72.png")" />
         <link rel="apple-touch-icon-precomposed" href="@routes.Assets.at("images/57x57.png")" />
 
+        <meta name="apple-mobile-web-app-title" content="Guardian" />
         <meta name="application-name" content="The Guardian" />
-        <meta name="msapplication-TileColor" content="#004983" />
+        <meta name="msapplication-TileColor" content="#214583" />
         <meta name="msapplication-TileImage" content="@routes.Assets.at("images/windows_tile_144_b.png")" />
 
         <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet">
-        <link href="@routes.Assets.at("css/style.css")" rel="stylesheet">
+        <link href="@routes.Assets.at("css/style.css?v2")" rel="stylesheet">
         <script>
             var curl = {
                 baseUrl: '/assets/javascripts',
                 paths: {
                     knockout:              'components/knockout.js/knockout.js',
+                    EventEmitter:          'components/eventEmitter/EventEmitter',
                     reqwest:               'components/reqwest/reqwest',
                     bean:                  'components/bean/bean',
                     bonzo:                 'components/bonzo/bonzo',
@@ -42,7 +44,11 @@
             define('config', function() {
                 return {
                     env: '@env.toLowerCase',
-                    email: '@identity.map(_.email).getOrElse("")'
+                    priority: '@priority',
+                    editions: [@Html(Edition.all.map(_.id.toLowerCase).mkString("'","','", "'"))],
+                    navSections: [@Html(FaciaToolConfiguration.sectionsFromNav.mkString("'", "', '", "'"))],
+                    email: '@identity.map(_.email).getOrElse("")',
+                    avatarUrl: '@identity.map(_.avatarUrl).getOrElse("")'
                 }
             });
         </script>
@@ -50,34 +56,30 @@
     </head>
     <body class="@if(isAuthed){is-authed}">
 
-    <img class="logo" src="@routes.Assets.at("images/logo.png")" />
-
-    <h1 class="tool-title">Fronts Editor</h1>
-
     @if(Switches.ToolDisable.isSwitchedOn) {
         <span class="message message--important">Temporarily disabled. Please try again shortly.</span>
     } else {
-        @if(isAuthed) {
-            <span class="message message--loading" data-bind="visible: false">loading...</span>
-
-            @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") {
-                <span class="message message--important">Editing @Configuration.facia.stage.toUpperCase!</span>
+        <header>
+            <a href="/">
+                <img class="logo" src="@routes.Assets.at("images/plane.png")" />
+                <h1>
+                    <span data-bind="text: title()">fronts</span>
+                    @if(Play.isDev && Configuration.facia.stage.toLowerCase != "dev") { : @Configuration.facia.stage }
+                </h1>
+            </a>
+            @if(isAuthed) {
+                <div class="log-in-out"><a href="/logout">Logout</a></div>
             }
+        </header>
 
-            <a class="log-in-out" href="/logout">Logout</a>
+        @if(isAuthed) {
             @content
         } else {
-            <form action="@routes.Login.loginPost()" method="post" class="login-form tools">
+            <form action="@routes.OAuthLoginController.loginAction()" method="post" class="login-form tools">
                 <input value="Log In" class="tool" type="submit" id="login-button">
             </form>
         }
     }
-
-    <script>
-        curl(['js!omniture']).then(function () {
-            s.tl();
-        })
-    </script>
 
     </body>
 </html>

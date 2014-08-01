@@ -10,6 +10,7 @@ class ProfileTest extends FlatSpec with Matchers{
   "Profile" should "parse JSON Profile with no optional fields" in{
     val jsonStr = """{"userProfile": {
       |  "userId": "Bob1",
+      |  "secureAvatarUrl": "http://foo.com/pic",
       |  "avatar": "http://foo.com/pic",
       |  "displayName": "Bob"
       |}}""".stripMargin
@@ -27,6 +28,7 @@ class ProfileTest extends FlatSpec with Matchers{
     val jsonStr = """{"userProfile": {
                     |  "userId": "Bob1",
                     |  "avatar": "http://foo.com/pic",
+                    |  "secureAvatarUrl": "http://foo.com/pic",
                     |  "displayName": "Bob",
                     |  "badge": [{"name": "Staff"}],
                     |  "privateFields":

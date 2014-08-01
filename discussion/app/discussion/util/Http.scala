@@ -1,6 +1,6 @@
 package discussion.util
 
-import play.api.libs.ws.{WS, Response}
+import play.api.libs.ws.{WS, WSResponse}
 import play.api.libs.json.{Json, JsValue}
 import java.lang.System._
 import common.DiscussionMetrics.DiscussionHttpTimingMetric
@@ -8,10 +8,9 @@ import common.Logging
 import scala.concurrent._
 import ExecutionContext.Implicits.global
 
-
 trait Http extends Logging {
 
-  protected def getJsonOrError(url: String, onError: (Response) => String, headers: (String, String)*): Future[JsValue] = {
+  protected def getJsonOrError(url: String, onError: (WSResponse) => String, headers: (String, String)*): Future[JsValue] = {
     val start = currentTimeMillis()
     GET(url, headers: _*) map {
       response =>
@@ -28,7 +27,8 @@ trait Http extends Logging {
     }
   }
 
-  protected def GET(url: String, headers: (String, String)*): Future[Response] = {
+  protected def GET(url: String, headers: (String, String)*): Future[WSResponse] = {
+    import play.api.Play.current
     log.debug(s"GET $url")
     WS.url(url).withHeaders(headers: _*).withRequestTimeout(2000).get()
   }

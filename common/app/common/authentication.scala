@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.googleauth.UserIdentity
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
 import net.liftweb.json.{ Serialization, NoTypeHints }
 import net.liftweb.json.Serialization.{ read, write }
@@ -35,9 +36,10 @@ class AuthenticatedRequest(val identity: Identity, request: Request[AnyContent])
 
 trait AuthLogging {
   self: Logging =>
-  def log(msg: String, request: Request[AnyContent]) {
+  def log[U](msg: String, request: Request[AnyContent]) {
     request match {
       case auth: AuthenticatedRequest => log.info(auth.identity.email + ": " + msg)
+      case auth: Security.AuthenticatedRequest[AnyContent, U] => log.info(auth.user + ": " + msg)
       case _ => throw new IllegalStateException("Expected an authenticated request")
     }
   }
@@ -46,11 +48,11 @@ trait AuthLogging {
 class ExpiringAuthAction(loginUrl: String) extends AuthAction(loginUrl) with implicits.Dates {
   import Play.current
 
-  def authFailResult(request: Request[AnyContent]): SimpleResult = Redirect(loginUrl).withSession(("loginFromUrl", request.uri))
+  def authFailResult(request: Request[AnyContent]): Result = Redirect(loginUrl).withSession(("loginFromUrl", request.uri))
 
-  override def apply(f: Request[AnyContent] => SimpleResult) = async(request => Future.apply(f(request)))
+  override def apply(f: Request[AnyContent] => Result) = async(request => Future.apply(f(request)))
 
-  override def async(f: Request[AnyContent] => Future[SimpleResult]): Action[AnyContent] = super.async { request =>
+  override def async(f: Request[AnyContent] => Future[Result]): Action[AnyContent] = super.async { request =>
 
     if (withinAllowedTime(request) || Play.isTest) {
       f(request).map(_.withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)))
@@ -68,9 +70,9 @@ class ExpiringAuthAction(loginUrl: String) extends AuthAction(loginUrl) with imp
 class AuthAction(loginUrl: String) extends ExecutionContexts {
   import Play.current
 
-  def apply(f: Request[AnyContent] => SimpleResult): Action[AnyContent] = async(request => Future { f(request) })
+  def apply(f: Request[AnyContent] => Result): Action[AnyContent] = async(request => Future { f(request) })
 
-  def async(f: Request[AnyContent] => Future[SimpleResult]): Action[AnyContent] = Action.async {
+  def async(f: Request[AnyContent] => Future[Result]): Action[AnyContent] = Action.async {
 
       request: Request[AnyContent] =>
 
@@ -124,8 +126,8 @@ trait LoginController extends ExecutionContexts { self: Controller =>
       val isTestUser = (credentials.email == "test.automation@gutest.com" && Configuration.environment.isNonProd)
 
       if (credentials.emailDomain == "guardian.co.uk" || isTestUser) {
-        Redirect(session.get("loginFromUrl").getOrElse(baseUrl)).withSession {
-          session +
+        Redirect(request.session.get("loginFromUrl").getOrElse(baseUrl)).withSession {
+          request.session +
            (Identity.KEY -> credentials.writeJson) +
             (Configuration.cookies.lastSeenKey -> DateTime.now.toString) -
             "loginFromUrl"
@@ -133,7 +135,7 @@ trait LoginController extends ExecutionContexts { self: Controller =>
       } else {
         Redirect(loginUrl).flashing(
           ("error" -> "You can only log in using a Guardian Google Account")
-        ).withSession(session - Identity.KEY)
+        ).withSession(request.session - Identity.KEY)
       }
     }.recover {
       case error => Redirect(loginUrl).flashing(("error" -> "Unknown error: %s ".format(error.getMessage)))

@@ -13,6 +13,19 @@
 }
 .container--first {
     margin-top: 0;
+    padding-top: 0;
+
+    @include mq($to: tablet) {
+        .container__border,
+        .container__header {
+            display: none;
+        }
+    }
+    @include mq(tablet) {
+        @include rem((
+            padding-top: $gs-row-height*.5
+        ));
+    }
 }
 .container__border {
     border-top-style: solid;
@@ -59,10 +72,10 @@
 
     .today__sub {
         @include mq(faciaLeftCol) {
-            @include fs-headline(1);
+            @include fs-headline(2);
         }
         @include mq(wide) {
-            @include fs-headline(2, $size-only: true);
+            @include fs-headline(3, $size-only: true);
         }
     }
     a {
@@ -71,7 +84,7 @@
 }
 .container__updated {
     display: block;
-    @include fs-headline(1);
+    @include fs-headline(2);
     margin-top: ($gs-baseline/3)*5;
     padding-top: $gs-baseline/3;
     border-top: 1px solid $c-neutral5;
@@ -140,6 +153,10 @@
         text-align: right;
         color: $c-neutral2;
 
+        .facia-container--advertisement &,
+        .container--advertisement-feature & {
+            border-left-width: 0;
+        }
         &:hover,
         &:focus {
             color: $c-neutral1;
@@ -156,28 +173,34 @@
     }
 }
 .facia-slice {
-    font-size: 0;
     overflow: hidden;
-    @include rem((
-        margin-left: -$gs-gutter/2,
-        margin-right: -$gs-gutter/2
-    ));
-}
-.item {
-    position: relative;
-    @include box-sizing(border-box);
-    @include rem((
-        margin-top: $gs-baseline,
-        padding-left: $gs-gutter/2,
-        padding-right: $gs-gutter/2,
-        padding-bottom: 18px
-    ));
-
-    @include vertical-item-separator;
+    margin-left: auto;
+    margin-right: auto;
 
     @include mq(tablet) {
-        display: inline-block;
-        vertical-align: top;
+        overflow: visible; // Prevents height issue in Firefox < 22
+    }
+}
+.item {
+    @include box-sizing(border-box);
+    display: block;
+    @include clearfix;
+    @include rem((
+        padding-left: $gs-gutter/2,
+        padding-right: $gs-gutter/2,
+        margin-bottom: $gs-baseline/2
+    ));
+
+    .stars {
+        @include rem((
+            margin-top: $gs-baseline * .25
+        ));
+
+        @include mq(tablet) {
+            @include rem((
+                margin-bottom: $gs-baseline * 1.25
+            ));
+        }
     }
 }
 .item__link {
@@ -185,9 +208,6 @@
     border-top: $item-top-border-height solid $c-newsAccent;
     color: $c-neutral1;
 
-    .item:first-child & {
-        border-top-style: none;
-    }
     &:visited {
         &,
         .item__title {
@@ -218,6 +238,24 @@
     }
 }
 
+.item__media-wrapper,
+.item__image-container {
+    display: none;
+}
+.item__media-wrapper {
+    position: relative;
+}
+.item--has-image {
+    .item__media-wrapper,
+    .item__image-container {
+        display: block;
+
+        .js-off & {
+            display: none !important;
+        }
+    }
+}
+
 .item__live-indicator {
     color: #ffffff;
     background-color: $c-live;
@@ -234,7 +272,8 @@
 .item__standfirst {
     @include f-headline;
 }
-.facia-container--advertisement-feature {
+.facia-container--advertisement-feature,
+.container--advertisement-feature {
     background-color: $c-neutral8;
 
     .linkslist__action:visited,
@@ -253,12 +292,13 @@
         @include f-headlineSans;
     }
 }
+
 .item__title {
     position: relative;
     @include rem((
         padding-top: $gs-baseline/6
     ));
-    @include fs-headline(2, $size-only: true);
+    @include fs-headline(2, true);
     word-wrap: break-word;
 
     .i-quote-orange {
@@ -305,7 +345,7 @@
     }
 }
 .item__byline {
-    @include fs-headline(2);
+    @include fs-headline(3);
     @include rem((
         margin-bottom: $gs-baseline/3
     ));
@@ -327,7 +367,7 @@
     }
 }
 .item__tag {
-    @include fs-headline(1);
+    @include fs-headline(2);
 }
 .item__meta {
     position: absolute;
@@ -407,9 +447,9 @@
 
 .item__cta {
     position: absolute;
-    width: ($gs-baseline/3)*11;  //44px
-    height: ($gs-baseline/3)*11;
     @include rem((
+        width: ($gs-baseline/3)*11,  //44px
+        height: ($gs-baseline/3)*11,
         top: ($gs-baseline/3)*2,
         left: $gs-gutter/2.5
     ));
@@ -440,27 +480,36 @@ $cta-icon-gap: 2px;
 .item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
-        top: $gs-baseline/3;
-        left: $gs-baseline/3;
+        @include rem((
+            top: $gs-baseline/3,
+            left: $gs-baseline/3
+        ));
     }
     .i {
-        margin-bottom: $cta-icon-gap;
         position: relative;
+        @include rem((
+            margin-bottom: $cta-icon-gap
+        ));
     }
     &:hover,
     &:focus {
         .item__cta--gallery {
             background-color: $c-neutral1;
+
             .i {
-                top: -1 * (map-get($gallery-cta-icon, height) + $cta-icon-gap);
+                @include rem((
+                    top: -1 * (map-get($gallery-cta-icon, height) + $cta-icon-gap)
+                ));
             }
         }
     }
 }
 .item__cta--gallery,
 .item__cta--video {
-    width: 36px;
-    height: 36px;
+    @include rem((
+        width: 36px,
+        height: 36px
+    ));
     background-color: $c-media-icon;
 }
 .item__cta__icon {
@@ -471,17 +520,21 @@ $cta-icon-gap: 2px;
     font-size: 0;
 
     .item__cta--gallery & {
-        width: map-get($gallery-cta-icon, width);
-        height: map-get($gallery-cta-icon, height);
-        margin-left: -1 * (map-get($gallery-cta-icon, width) / 2);
-        margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2);
+        @include rem((
+            width: map-get($gallery-cta-icon, width),
+            height: map-get($gallery-cta-icon, height),
+            margin-left: -1 * (map-get($gallery-cta-icon, width) / 2),
+            margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2)
+        ));
     }
     .item__cta--video & {
-        width: map-get($video-cta-icon, width);
-        height: map-get($video-cta-icon, height);
-        // don't want icon to be exactly in the middle
-        margin-left: -1 * (map-get($video-cta-icon, width) / 3);
-        margin-top: -1 * (map-get($video-cta-icon, height) / 2);
+        @include rem((
+            width: map-get($video-cta-icon, width),
+            height: map-get($video-cta-icon, height),
+            // don't want icon to be exactly in the middle
+            margin-left: -1 * (map-get($video-cta-icon, width) / 3),
+            margin-top: -1 * (map-get($video-cta-icon, height) / 2)
+        ));
     }
 }
 .item--dark {
@@ -519,54 +572,6 @@ $cta-icon-gap: 2px;
     }
 }
 
-$show-more-icon: (
-    width: 32px,
-    height: 32px,
-    space-between: 2px // to avoid overlaps/bleeding on zoom
-);
-
-@-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    25% { -webkit-transform: rotate(90deg); }
-    50% { -webkit-transform: rotate(180deg); }
-    75% { -webkit-transform: rotate(270deg); }
-    100% { -webkit-transform: rotate(360deg); }
-}
-
-.collection__show-more {
-    display: block;
-    border: 0;
-    width: map-get($show-more-icon, width);
-    height: map-get($show-more-icon, height);
-    @include border-radius(50%);
-    position: relative;
-    left: 50%;
-    margin-top: $gs-baseline;
-    margin-left: -1 * map-get($show-more-icon, width) / 2;
-    padding: 0;
-    overflow: hidden;
-    -webkit-transform: translateZ(0);
-
-    &:hover,
-    &:focus,
-    &[disabled] {
-        .collection__show-more__icon {
-            margin-top: -1 * (map-get($show-more-icon, height) + map-get($show-more-icon, space-between));
-        }
-    }
-    .i {
-        display: block;
-        margin-bottom: map-get($show-more-icon, space-between); // a bit of space between icons to avoid
-    }
-    &[disabled] {
-        -webkit-animation: spin 3s cubic-bezier(.680, -.550, .265, 1.550) forwards infinite;
-    }
-}
-.collection__show-more__icon {
-    display: block;
-    height: (map-get($show-more-icon, height) + map-get($show-more-icon, space-between)) * 2;
-    width: map-get($show-more-icon, width);
-}
 .container--rolled-up .container--rolled-up-hide {
     display: none;
 }

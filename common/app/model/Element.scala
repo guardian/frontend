@@ -11,9 +11,6 @@ trait Element {
   lazy val isBody = delegate.relation == "body"
   lazy val isGallery = delegate.relation == "gallery"
   lazy val isThumbnail = delegate.relation == "thumbnail"
-
-  lazy val isImage = delegate.elementType == "image"
-  lazy val isVideo = delegate.elementType == "video"
 }
 
 object Element {
@@ -21,6 +18,8 @@ object Element {
     theDelegate.elementType match {
       case "image" => new ImageElement(theDelegate, elementIndex)
       case "video" => new VideoElement(theDelegate, elementIndex)
+      case "audio" => new AudioElement(theDelegate, elementIndex)
+      case "embed" => new EmbedElement(theDelegate, elementIndex)
       case _ => new Element{
         lazy val delegate = theDelegate
         lazy val index = elementIndex
@@ -48,6 +47,8 @@ object ImageContainer {
 
 trait VideoContainer extends Element {
 
+  protected implicit val ordering = EncodingOrdering
+
   lazy val videoAssets: List[VideoAsset] = {
 
     val images = delegate.assets.filter(_.assetType == "image").zipWithIndex.map{ case (asset, index) =>
@@ -59,8 +60,33 @@ trait VideoContainer extends Element {
     delegate.assets.filter(_.assetType == "video").map( v => VideoAsset(v, container)).sortBy(-_.width)
   }
 
+  lazy val encodings: Seq[Encoding] = {
+    videoAssets.toList.collect {
+      case video: VideoAsset => Encoding(video.url.getOrElse(""), video.mimeType.getOrElse(""))
+    }.sorted
+  }
+  lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
+
   lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
+}
+
+trait AudioContainer extends Element {
+  protected implicit val ordering = EncodingOrdering
+  lazy val audioAssets: List[AudioAsset] = delegate.assets.filter(_.assetType == "audio").map( v => AudioAsset(v))
+  lazy val duration: Int = audioAssets.headOption.map(_.duration).getOrElse(0)
+  lazy val encodings: Seq[Encoding] = {
+    audioAssets.toList.collect {
+      case audio: AudioAsset => Encoding(audio.url.getOrElse(""), audio.mimeType.getOrElse(""))
+    }.sorted
+  }
+}
+
+trait EmbedContainer extends Element {
+
+   lazy val embedAssets: Seq[EmbedAsset] = delegate.assets.filter(_.assetType == "embed").map(EmbedAsset(_))
 }
 
 class ImageElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer
 class VideoElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer with VideoContainer
+class AudioElement(val delegate: ApiElement, val index: Int) extends Element with AudioContainer
+class EmbedElement(val delegate: ApiElement, val index: Int) extends Element with EmbedContainer

@@ -54,4 +54,10 @@ trait Collections {
       builder.result
     }
   }
+
+  implicit class SeqToStringPimpin(seq: Seq[String]) {
+    def toStringWithRoundBrackets() = {
+      "('" + seq.mkString("', '") + "')"
+    }
+  }
 }

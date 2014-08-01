@@ -1,6 +1,6 @@
 {
     "packages":{
-        "frontend-discussion":{
+        "discussion":{
             "type":"autoscaling",
             "apps":[ "frontend::discussion" ],
             "data":{
@@ -27,10 +27,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-discussion.deploy"]
+            "actionsBeforeApp": ["discussion.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-discussion.uploadArtifacts"]
+            "actionsBeforeApp": ["discussion.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

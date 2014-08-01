@@ -1,6 +1,6 @@
 package test
 
-import conf.{ContentApi, Configuration}
+import conf.{LiveContentApi, Configuration}
 import java.net.URLEncoder
 import play.api.test._
 import play.api.test.Helpers._
@@ -44,16 +44,18 @@ trait TestSettings {
     val originalHttp = http
 
     verify(
-      Configuration.contentApi.elasticSearchHost,
+      Configuration.contentApi.contentApiLiveHost,
       "37f3bee67d016a9fec7959aa5bc5e53fa7fdc688f987c0dea6fa0f6af6979079",
-      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH CONTENT API HOST"
+      "YOU ARE NOT USING THE CORRECT ELASTIC SEARCH LIVE CONTENT API HOST"
     )
 
-    verify(
-      Configuration.contentApi.key,
-      "a4eb3e728596c7d6ba43e3885c80afcb16bc24d22fc0215409392bac242bed96",
-      "YOU ARE NOT USING THE CORRECT CONTENT API KEY"
-    )
+    Configuration.contentApi.key.map { k =>
+        verify(
+          k,
+          "a4eb3e728596c7d6ba43e3885c80afcb16bc24d22fc0215409392bac242bed96",
+          "YOU ARE NOT USING THE CORRECT CONTENT API KEY"
+        )
+    }
 
     override def GET(url: String, headers: scala.Iterable[scala.Tuple2[java.lang.String, java.lang.String]]) = {
       recorder.load(url, headers.toMap) {
@@ -62,21 +64,18 @@ trait TestSettings {
     }
   }
 
-  ContentApi.http = toRecorderHttp(ContentApi.http)
+  LiveContentApi.http = toRecorderHttp(LiveContentApi.http)
 }
 
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
  */
-class EditionalisedHtmlUnit extends TestSettings {
+class EditionalisedHtmlUnit(val port: String) extends TestSettings {
 
   // the default is I.E 7 which we do not support
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 
-  val host = "http://localhost:9000"
-
-
-  val Port = """.*:(\d*)$""".r
+  val host = s"http://localhost:${port}"
 
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 
@@ -87,15 +86,9 @@ class EditionalisedHtmlUnit extends TestSettings {
     goTo(editionPath, host)(block)
   }
 
-
   protected def goTo[T](path: String, host: String)(block: TestBrowser => T): T = {
 
-    val port = host match {
-      case Port(p) => p.toInt
-      case _ => 9000
-    }
-
-    running(TestServer(port,
+    running(TestServer(port.toInt,
       FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins,
                       withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
 
@@ -106,22 +99,16 @@ class EditionalisedHtmlUnit extends TestSettings {
       block(browser)
     }
   }
-}
 
-object WithHost {
-  def apply(path: String): String = UK(path)
-  def UK(path: String): String = s"http://localhost:9000$path"
-  def US(path: String): String = s"http://127.0.0.1:9000$path"
-}
+  def withHost(path: String) = s"http://localhost:$port$path"
 
-object ClassicVersionLink {
-  def apply(path: String) = s"http://localhost:9000/preference/platform/classic?page=${URLEncoder.encode(s"$path?view=classic", "UTF-8")}"
+  def classicVersionLink(path: String) = s"http://localhost:$port/preference/platform/classic?page=${URLEncoder.encode(s"$path?view=classic", "UTF-8")}"
 }
 
 /**
  * Executes a block of code in a FakeApplication.
  */
-trait FakeApp extends TestSettings {
+trait FakeApplication extends TestSettings {
 
   def apply[T](block: => T): T = running(
     FakeApplication(
@@ -132,6 +119,8 @@ trait FakeApp extends TestSettings {
     )
   ) { block }
 }
+
+object Fake extends FakeApplication
 
 object TestRequest {
   // MOST of the time we do not care what path is set on the request - only need to override where we do

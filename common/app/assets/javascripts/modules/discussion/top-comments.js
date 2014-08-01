@@ -1,21 +1,21 @@
 define([
-'common/utils/ajax',
-'bonzo',
-'qwery',
-'common/modules/component',
-'common/modules/identity/api',
-'common/modules/discussion/comment-box',
-'common/modules/discussion/recommend-comments',
-'common/$'
+    'common/utils/ajax',
+    'bonzo',
+    'qwery',
+    'common/modules/component',
+    'common/modules/identity/api',
+    'common/modules/discussion/comment-box',
+    'common/modules/discussion/recommend-comments',
+    'common/utils/$'
 ], function(
-ajax,
-bonzo,
-qwery,
-Component,
-Id,
-CommentBox,
-RecommendComments,
-$
+    ajax,
+    bonzo,
+    qwery,
+    Component,
+    Id,
+    CommentBox,
+    RecommendComments,
+    $
 ) {
 
 /* =================================================================
@@ -32,6 +32,10 @@ var TopComments = function(context, mediator, options) {
     this.context = context || document;
     this.mediator = mediator;
     this.setOptions(options);
+
+    this.fetchData = {
+        topComments: true
+    };
 };
 Component.define(TopComments);
 
@@ -63,7 +67,7 @@ TopComments.prototype.classes = {
  * @type {string}
  * @override
  */
-TopComments.prototype.endpoint = '/discussion/top:discussionId.json';
+TopComments.prototype.endpoint = '/discussion/:discussionId.json';
 
 /** @type {Object.<string.*>} */
 TopComments.prototype.defaultOptions = {
@@ -101,14 +105,13 @@ TopComments.prototype.fetch = function(parent) {
         url: endpoint,
         type: 'json',
         method: 'get',
-        crossOrigin: true
+        crossOrigin: true,
+        data: this.fetchData
     }).then(
         function render(resp) {
             // Success: Render Top or Regular comments
             if (resp.currentCommentCount > 0) {
-
                 // Render Top Comments
-
                 self.topCommentsAmount = resp.currentCommentCount;
                 self.parent = parent;
                 self.elem = bonzo.create(resp.html);
@@ -117,20 +120,17 @@ TopComments.prototype.fetch = function(parent) {
                 self.elems = {};
                 self.prerender();
                 self.ready();
-
-                self.mediator.emit('module:topcomments:loadcomments', { amount: 0 });
+                self.mediator.emit('module:topcomments:loadcomments');
             } else {
-
-                $('.discussion__comments--top-comments').remove();
-
                 // Render Regular Comments
-                self.mediator.emit('module:topcomments:loadcomments', { amount: 2, showLoader: true });
+                $('.discussion__comments--top-comments').remove();
+                self.mediator.emit('module:topcomments:loadcomments', { showLoader: true });
             }
         },
         function () {
             // Error: Render Regular Comments
             $('.discussion__comments--top-comments').remove();
-            self.mediator.emit('module:topcomments:loadcomments', { amount: 2, showLoader: true });
+            self.mediator.emit('module:topcomments:loadcomments', { showLoader: true });
         }
     );
 };

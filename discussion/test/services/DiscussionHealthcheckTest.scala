@@ -1,3 +1,18 @@
 package services
 
-class DiscussionHealthcheckTest extends HealthcheckTest("/discussion/p/37v3a")
+import org.scalatest.{Matchers, FlatSpec}
+import play.api.libs.ws.WS
+import test._
+
+import scala.concurrent.duration._
+import scala.concurrent.Await
+
+class DiagnosticsHealthcheckTest extends FlatSpec with Matchers {
+
+  import play.api.Play.current
+
+  "Healthchecks" should "pass" in HtmlUnit("/discussion/p/37v3a"){ _ =>
+
+    Await.result(WS.url(s"http://localhost:${HtmlUnit.port}/_healthcheck").get(), 10.seconds).status should be (200)
+  }
+}

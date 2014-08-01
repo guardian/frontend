@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'common/utils/ajax',
     'bonzo',
     'qwery',
@@ -11,7 +11,8 @@ define([
     'common/modules/discussion/api',
     'common/modules/discussion/comments',
     'common/modules/discussion/top-comments',
-    'common/modules/discussion/comment-box'
+    'common/modules/discussion/comment-box',
+    'common/modules/discussion/activity-stream'
 ], function(
     $,
     ajax,
@@ -25,14 +26,15 @@ define([
     DiscussionApi,
     Comments,
     TopComments,
-    CommentBox
+    CommentBox,
+    ActivityStream
 ) {
 
 /**
  * We have a few rendering hacks in here
  * We'll move the rendering to the play app once we
  * have the discussion stack up that can read cookies
- * This is true for the comment-box / sigin / closed discussion
+ * This is true for the comment-box / signin / closed discussion
  * And also the premod / banned state of the user
  * @constructor
  * @extends Component
@@ -64,7 +66,6 @@ Loader.prototype.classes = {
     comments: 'discussion__comments',
     commentBox: 'discussion__comment-box',
     commentBoxBottom: 'discussion__comment-box--bottom',
-    joinDiscussion: 'd-discussion__show-all-comments',
     topComments: 'discussion__comments--top-comments'
 };
 
@@ -128,7 +129,6 @@ Loader.prototype.ready = function() {
         var commentId = self.getCommentIdFromHash();
         if (commentId) {
             self.comments.gotoComment(commentId);
-            bonzo(self.getElem('joinDiscussion')).addClass('u-h');
         }
     });
 
@@ -141,13 +141,17 @@ Loader.prototype.ready = function() {
 };
 
 Loader.prototype.loadComments = function(args) {
+    args = args || {};
     var self = this,
         commentsContainer = this.getElem('commentsContainer'),
         commentsElem = this.getElem('comments'),
-        loadingElem = bonzo.create('<div class="preload-msg">Loading comments…<div class="is-updating"></div></div>')[0],
+        loadingElem = bonzo.create(
+            '<div class="preload-msg d-discussion__loader--comments">'+
+                'Loading comments…'+
+                '<div class="is-updating"></div>'+
+            '</div>')[0],
         commentId = this.getCommentIdFromHash(),
         showComments = args.showLoader || commentId || window.location.hash === '#comments';
-
 
     if (args.showLoader) {
         // Comments are being loaded in the no-top-comments-available context
@@ -155,41 +159,84 @@ Loader.prototype.loadComments = function(args) {
     }
 
     bonzo(self.topLoadingElem).addClass('u-h');
-    bonzo(loadingElem).insertAfter(commentsElem);
+    bonzo(loadingElem).insertAfter(commentsContainer);
 
     if (commentId) {
         this.mediator.emit('discussion:seen:comment-permalink');
     }
 
     this.comments = new Comments(this.context, this.mediator, {
-        initialShow: commentId ? 10 : args.amount,
         discussionId: this.getDiscussionId(),
         user: this.user,
         commentId: commentId ? commentId : null,
-        order: this.getDiscussionClosed() ? 'oldest' : 'newest'
+        order: this.getDiscussionClosed() ? 'oldest' : 'newest',
+        state: this.topComments.topCommentsAmount > 0 ? 'shut' : 'partial'
     });
 
     // Doing this makes sure there is only one redraw
     // Within comments there is adding of reply buttons etc
     this.comments.fetch(commentsElem)
         .then(function killLoadingMessage() {
-            bonzo(loadingElem).remove();
+            bonzo(loadingElem).addClass('u-h');
             self.renderCommentBar(self.user);
 
             if (showComments) {
                 // Comments are being loaded in the no-top-comments-available context
-                bonzo(self.getElem('joinDiscussion')).remove();
-                bonzo([self.comments.getElem('showMore'), self.comments.getElem('header')]).removeClass('u-h');
-            } else {
-                bonzo(self.comments.getElem('showMore')).addClass('u-h');
+                bonzo(self.comments.getElem('header')).removeClass('u-h');
+                self.comments.removeState('shut');
             }
 
-            self.on('click', self.getElem('joinDiscussion'), function (e) {
-                self.comments.showHiddenComments(e);
-                self.cleanUpOnShowComments();
-            });
             bonzo(commentsContainer).removeClass('js-hidden');
+            self.initUnthreaded();
         }).fail(self.loadingError.bind(self));
+};
+
+Loader.prototype.initUnthreaded = function() {
+    var self = this;
+    // Non threaded view
+    var $discussionContainer = $('.js-discussion-container', this.elem),
+        $nonThreadedContainer = $('.js-discussion__non-threaded', this.elem),
+        $loader = $('.d-discussion__loader--comments', this.elem),
+        $state = $('.discussion__show-threaded-state', this.elem);
+
+    this.on('click', '.js-show-threaded', function(e) {
+        var $el = bonzo(e.currentTarget);
+
+        $state.toggleClass('u-h');
+        $nonThreadedContainer.toggleClass('u-h');
+        $discussionContainer.toggleClass('u-h');
+
+        if (!$el.data('loaded')) {
+            var activityStream = new ActivityStream();
+
+            $el.data('loaded', true);
+            $loader.removeClass('u-h');
+            activityStream.endpoint = '/discussion/non-threaded'+ this.getDiscussionId() + '.json?page=:page';
+            activityStream
+                .fetch($nonThreadedContainer[0])
+                .then(function() {
+                    $loader.addClass('u-h');
+                });
+        }
+    });
+
+    this.on('click', '.js-comment-permalink', function(e) {
+        var promise = self.comments.gotoComment(e.currentTarget.getAttribute('data-comment-id'));
+        e.preventDefault();
+        $nonThreadedContainer.addClass('u-h');
+        $state.removeClass('u-h');
+        self.comments.showHiddenComments();
+
+        if (promise) {
+            $loader.removeClass('u-h');
+            promise.then(function() {
+                $loader.addClass('u-h');
+                $discussionContainer.removeClass('u-h');
+            });
+        } else {
+            $discussionContainer.removeClass('u-h');
+        }
+    });
 };
 
 /** @return {Reqwest|null} */
@@ -298,8 +345,7 @@ Loader.prototype.commentPosted = function () {
 
 /* Configure DOM for viewing of comments once some have been shown */
 Loader.prototype.cleanUpOnShowComments = function () {
-    bonzo([this.comments.getElem('showMore'), this.comments.getElem('header')]).removeClass('u-h');
-    bonzo(this.getElem('joinDiscussion')).addClass('u-h');
+    bonzo(this.comments.getElem('header')).removeClass('u-h');
 };
 
 Loader.prototype.renderUserBanned = function() {

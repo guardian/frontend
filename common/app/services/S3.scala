@@ -9,13 +9,13 @@ import com.amazonaws.util.StringInputStream
 import scala.io.{Codec, Source}
 import org.joda.time.DateTime
 import play.Play
-import play.api.libs.ws.WS
+import play.api.libs.ws.{WSRequestHolder, WS}
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import sun.misc.BASE64Encoder
 import com.amazonaws.auth.AWSSessionCredentials
-import controllers.Identity
 import common.S3Metrics.S3ClientExceptionsMetric
+import com.gu.googleauth.UserIdentity
 
 trait S3 extends Logging {
 
@@ -106,8 +106,11 @@ object S3FrontsApi extends S3 {
   val namespace = "frontsapi"
   lazy val location = s"$stage/$namespace"
 
-  def getPressedKeyForPath(path: String): String =
-    s"$location/pressed/$path/pressed.json"
+  def getLivePressedKeyForPath(path: String): String =
+    s"$location/pressed/live/$path/pressed.json"
+
+  def getDraftPressedKeyForPath(path: String): String =
+    s"$location/pressed/draft/$path/pressed.json"
 
   def getSchema = get(s"$location/schema.json")
   def getMasterConfig: Option[String] = get(s"$location/config/config.json")
@@ -117,7 +120,7 @@ object S3FrontsApi extends S3 {
   def putBlock(id: String, json: String) =
     putPublic(s"$location/collection/$id/collection.json", json, "application/json")
 
-  def archive(id: String, json: String, identity: Identity) = {
+  def archive(id: String, json: String, identity: UserIdentity) = {
     val now = DateTime.now
     putPrivate(s"$location/history/collection/$id/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
   }
@@ -125,9 +128,9 @@ object S3FrontsApi extends S3 {
   def putMasterConfig(json: String) =
     putPublic(s"$location/config/config.json", json, "application/json")
 
-  def archiveMasterConfig(json: String, identity: Identity) = {
+  def archiveMasterConfig(json: String, identity: UserIdentity) = {
     val now = DateTime.now
-    putPublic(s"${location}/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
+    putPublic(s"$location/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
   }
 
   private def getListing(prefix: String, dropText: String): List[String] = {
@@ -144,21 +147,25 @@ object S3FrontsApi extends S3 {
   def getConfigIds(prefix: String): List[String] = getListing(prefix, "/config.json")
   def getCollectionIds(prefix: String): List[String] = getListing(prefix, "/collection.json")
 
-  def putPressedJson(path: String, json: String) =
-    putPrivate(getPressedKeyForPath(path), json, "application/json")
+  def putLivePressedJson(path: String, json: String) =
+    putPrivate(getLivePressedKeyForPath(path), json, "application/json")
+
+  def putDraftPressedJson(path: String, json: String) =
+    putPrivate(getDraftPressedKeyForPath(path), json, "application/json")
 
   def getPressedLastModified(path: String): Option[String] =
-    getLastModified(getPressedKeyForPath(path)).map(_.toString)
+    getLastModified(getLivePressedKeyForPath(path)).map(_.toString)
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {
+  import play.api.Play.current
   val algorithm: String = "HmacSHA1"
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
 
-  def urlGet(id: String): WS.WSRequestHolder = url("GET", id)
+  def urlGet(id: String): WSRequestHolder = url("GET", id)
 
-  private def url(httpVerb: String, id: String): WS.WSRequestHolder = {
+  private def url(httpVerb: String, id: String): WSRequestHolder = {
 
     // we are working with a credentials provider here - this needs to be scoped inside the function
     // i.e. we need a new one each request

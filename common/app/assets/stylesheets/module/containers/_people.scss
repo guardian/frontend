@@ -1,34 +1,28 @@
 .container--people {
-    .container__body {
-        @include rem((
-            padding-top: $gs-baseline/3
-        ));
-        @include mq(tablet, desktop) {
-            padding-top: 0;
-        }
-    }
     .linkslist-container {
         @include mq($to: desktop) {
             margin-top: 0;
         }
     }
     .ad-slot--inline {
-        margin-top: $gs-baseline/2;
-        margin-bottom: $gs-baseline/2;
+        @include rem((
+            margin-top: $gs-baseline/2,
+            margin-bottom: $gs-baseline/2
+        ));
     }
     .facia-slice-wrapper--position-1 {
         .item__title,
         .item__byline {
-            @include fs-headline(1, true);
+            @include fs-headline(2, true);
 
             @include mq(tablet) {
-                @include fs-headline(2, true);
+                @include fs-headline(3, true);
             }
         }
         .facia-slice__item:first-child {
             .item__title,
             .item__byline {
-                @include fs-headline(2, true);
+                @include fs-headline(3, true);
             }
             @include item--hide-tone-border;
         }
@@ -48,7 +42,7 @@
         .item--has-no-image {
             .item__title,
             .item__byline {
-                @include fs-headline(3, true);
+                @include fs-headline(4, true);
             }
             @include mq(tablet) {
                 .item__standfirst {

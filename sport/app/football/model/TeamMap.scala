@@ -1,7 +1,7 @@
 package model
 
 import common._
-import conf.ContentApi
+import conf.LiveContentApi
 import pa._
 import org.joda.time.DateTime
 
@@ -107,7 +107,7 @@ object TeamMap extends ExecutionContexts with Logging {
 
   def refresh(page: Int = 1) { //pages are 1 based
     log.info(s"Refreshing team tag mappings - page $page")
-    ContentApi.tags
+    LiveContentApi.tags
       .page(page)
       .pageSize(50)
       .referenceType("pa-football-team")
@@ -120,10 +120,6 @@ object TeamMap extends ExecutionContexts with Logging {
       val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag(tag)) }.toMap
       teamAgent.send(old => old ++ tagReferences)
     }
-  }
-
-  def stop() {
-    teamAgent.close()
   }
 }
 

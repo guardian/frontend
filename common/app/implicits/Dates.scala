@@ -1,16 +1,21 @@
 package implicits
 
-import org.joda.time.{DateTime, DateMidnight, Days}
+import org.joda.time.{Duration => JodaDuration, DateTime, LocalDate, Days}
 import org.scala_tools.time.Imports._
 import org.joda.time.format.ISODateTimeFormat
+import scala.concurrent.duration.Duration
 
 trait Dates {
-  object Epoch {
-    lazy val zero: DateMidnight = new DateMidnight(0)
-    def day(dayOfEpoch: Int): DateMidnight = zero.plusDays(dayOfEpoch)
+  implicit class RichDuration(duration: Duration) {
+    def toJoda = new JodaDuration(duration.toMillis)
   }
 
-  def today(): DateMidnight = DateMidnight.now()
+  object Epoch {
+    lazy val zero: LocalDate = new LocalDate(0)
+    def day(dayOfEpoch: Int): LocalDate = zero.plusDays(dayOfEpoch)
+  }
+
+  def today(): LocalDate = LocalDate.now()
 
   implicit class DateTime2SameDay(date: DateTime) {
     def sameDay(other: DateTime): Boolean =  {
@@ -19,14 +24,15 @@ trait Dates {
     }
   }
 
-  implicit class DateMidnight2DayOfEpoch(datetime: DateMidnight) {
+  implicit class LocalDate2DayOfEpoch(datetime: LocalDate) {
     lazy val dayOfEpoch: Int = Days.daysBetween(Epoch.zero, datetime).getDays
   }
 
-  implicit val dateOrdering: Ordering[DateMidnight] = Ordering[Long] on { _.getMillis }
+  implicit val dateOrdering: Ordering[LocalDate] = Ordering[Long] on { _.toDateTimeAtStartOfDay.getMillis }
 
   implicit class DateTimeWithExpiry(d: DateTime) {
     def age: Long = DateTime.now.getMillis - d.getMillis
+    def isOlderThan(period: Period): Boolean = d.plus(period).isBeforeNow
   }
 
   //http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1

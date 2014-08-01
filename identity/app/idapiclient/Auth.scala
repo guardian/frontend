@@ -3,9 +3,11 @@ package idapiclient
 import client.{Auth, Parameters}
 import java.net.URLEncoder
 
-
-case class EmailPassword(email: String, password: String) extends Auth {
-  override def parameters: Parameters = List(("email", email), ("password", password))
+case class EmailPassword(email: String, password: String, ipOpt: Option[String]) extends Auth {
+  override def parameters: Parameters = List(
+    "email" -> email,
+    "password" -> password
+  ) ++ (ipOpt map { "ip" -> _ })
 }
 
 case class UserToken(userAccessToken: String) extends Auth {

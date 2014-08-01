@@ -1,5 +1,11 @@
 # Guss Utilities: rem
 
+Part of the [Guss](https://github.com/guardian/guss) collection.
+
+## Requirements
+
+- Sass 3.3.0 or higher
+
 ## Installation
 
 ```
@@ -9,6 +15,7 @@ bower install guss-rem --save
 ```scss
 @import "path/to/_rem.scss";
 ```
+
 
 ## Features
 
@@ -52,3 +59,20 @@ Outputs:
   height: 2rem;
 }
 ```
+
+
+## Contribute
+
+Install the test dependencies:
+
+```bash
+$ bower install
+```
+
+Run the tests (specs are located in specs/rem.scss):
+
+```bash
+$ sass tests.scss -I './bower_components/bootcamp/dist'
+```
+
+Make sure tests pass before you commit any changes.

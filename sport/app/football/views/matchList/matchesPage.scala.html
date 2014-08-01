@@ -1,9 +1,11 @@
 @(page: model.Page, matchesList: football.model.MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader)
 
+@import conf.Switches
 @import football.model._
 
 @main(page, "football"){
 }{
+<div class="l-side-margins l-side-margins--layout-content">
     <div class="gs-container">
         <div class="article__zone left-col-deport tone-news tone-accent-border hide-on-mobile-if-localnav">
             <h2 class="page-heading--football left-col-deport__body">
@@ -33,14 +35,15 @@
                                 <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
                                 @competitionMatches.map { case (competition, matches) =>
                                     <div class="football-table__container">
-                                        <div class="article__container u-cf">
+                                        <div class="u-cf">
                                             @football.views.html.matchList.matchesList(
                                                 matches,
                                                 competition,
                                                 date,
                                                 responsiveFont = true,
                                                 matchType = matchesList.pageType,
-                                                heading = Option(competition.fullName)
+                                                // this is a special case for the world cup, remove it afterwards
+                                                heading = Some(competition.fullName, Option(competition.url))
                                             )
                                         </div>
                                     </div>
@@ -83,10 +86,7 @@
                         }
                     </div>
 
-                    <div class="article__secondary-column" aria-hidden="true">
-                        <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically">
-                        </div>
-                    </div>
+                    <div class="article__secondary-column" aria-hidden="true"></div>
                 </div>
             </article>
             @football.views.html.fragments.footballCompetitionNav(matchesList match {
@@ -95,7 +95,8 @@
             })
         </div>
     </div>
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         @views.html.fragments.mostPopularPlaceholder("sport")
     </div>
+</div>
 }

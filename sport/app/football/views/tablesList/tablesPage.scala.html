@@ -2,6 +2,7 @@
 
 @main(page.page, "football"){
 }{
+<div class="l-side-margins l-side-margins--layout-content">
     <div class="gs-container">
         <div class="article__zone left-col-deport tone-news tone-accent-border hide-on-mobile-if-localnav">
             <@if(!page.singleCompetition){h1}else{h2} class="page-heading--football left-col-deport__body">
@@ -18,7 +19,7 @@
                         @page.tables.map { table =>
                             @if(page.singleCompetition){<h1 class="u-h">@table.competition.fullName</h1>}else{<h2 class="u-h">@table.competition.fullName</h2>}
                             <div class="football-table__container@if(page.tables.size == 1) { football-table__container--single}">
-                                <div class="article__container u-cf">
+                                <div class="u-cf">
                                     @table.groups.zipWithRowInfo.map{ case (group, info) =>
                                         @if(table.multiGroup){
                                             @group.round.name.map { name =>
@@ -37,7 +38,7 @@
                                                 striped = true,
                                                 responsiveFont = true,
                                                 heading = Option(table.competition.fullName),
-                                                linkToCompetition = true
+                                                linkToCompetition = !page.singleCompetition
                                             )
                                         }
                                     }
@@ -46,16 +47,15 @@
                         }
                     </div>
 
-                    <div class="article__secondary-column" aria-hidden="true">
-                        <div class="article__secondary-column__inner article__secondary-column__inner--fill-vertically"></div>
-                    </div>
+                    <div class="article__secondary-column" aria-hidden="true"></div>
                 </div>
             </article>
             @football.views.html.fragments.footballCompetitionNav(page.comp)
         </div>
     </div>
 
-    <div class="facia-container facia-container--layout-article">
+    <div class="facia-container facia-container--layout-content">
         @views.html.fragments.mostPopularPlaceholder("sport")
     </div>
+</div>
 }

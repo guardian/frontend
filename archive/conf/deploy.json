@@ -1,6 +1,6 @@
 {
     "packages":{
-        "frontend-archive":{
+        "archive":{
             "type":"autoscaling",
             "apps":[ "frontend::archive" ],
             "data":{
@@ -27,10 +27,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-archive.deploy"]
+            "actionsBeforeApp": ["archive.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-archive.uploadArtifacts"]
+            "actionsBeforeApp": [ "archive.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

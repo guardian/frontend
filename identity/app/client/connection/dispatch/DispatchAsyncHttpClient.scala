@@ -6,6 +6,7 @@ import com.ning.http.client.{AsyncHttpClient, AsyncHttpClientConfig, ProxyServer
 import com.ning.http.client.providers.netty.{NettyAsyncHttpProvider, NettyConnectionsPool}
 import client.{Error, Parameters, Response}
 import client.connection.{Http, Proxy, HttpResponse}
+import org.jboss.netty.util.HashedWheelTimer
 
 
 trait DispatchAsyncHttpClient extends Http {
@@ -30,7 +31,7 @@ trait DispatchAsyncHttpClient extends Http {
   }
   class Client(client: AsyncHttpClient) extends dispatch.Http(client)
   val asyncHttpClient = {
-    val connectionPool = new NettyConnectionsPool(new NettyAsyncHttpProvider(config))
+    val connectionPool = new NettyConnectionsPool(new NettyAsyncHttpProvider(config), new HashedWheelTimer())
     new AsyncHttpClient(new AsyncHttpClientConfig.Builder(config).setConnectionsPool(connectionPool).build)
   }
   val client = new Client(asyncHttpClient)

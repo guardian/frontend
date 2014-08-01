@@ -1,0 +1,11 @@
+@function guss-colour($name, $palette: $guss-colours) {
+    @return map-get($guss-colours, $name);
+}
+
+@mixin guss-generate-colour-classes($palette: $guss-colours, $prefix: c-, $property: color) {
+    @each $name, $color in $palette {
+        .#{$prefix}#{$name} {
+            #{$property}: $color;
+        }
+    }
+}

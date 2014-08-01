@@ -7,7 +7,7 @@ import idapiclient.IdApiClient
 import play.api.mvc.{AnyContent, Request, Controller}
 import common.ExecutionContexts
 import utils.SafeLogging
-import model.{AvatarData, NoCache, IdentityPage}
+import model._
 import play.filters.csrf.{CSRFCheck, CSRFAddToken}
 import form._
 import scala.concurrent.Future
@@ -18,8 +18,8 @@ import conf.Switches._
 import play.api.libs.ws.WS
 import actions.AuthRequest
 import services.IdentityRequest
-import model.AvatarUploadData
 import conf.Configuration
+import common.JsonComponent
 
 @Singleton
 class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
@@ -32,28 +32,30 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
 
   type OmniPage = IdentityPage with Omniture
 
-  protected val accountPage =IdentityPage("/account/edit", "Edit Account Details", "edit account details")
-  protected val publicPage =IdentityPage("/public/edit", "Edit Public Profile", "edit public profile")
+  protected val accountPage = IdentityPage("/account/edit", "Edit Account Details", "edit account details")
+  protected val publicPage = IdentityPage("/public/edit", "Edit Public Profile", "edit public profile")
+  protected val membershipPage = IdentityPage("/membership/edit", "Membership", "edit membership details")
 
   lazy val AvatarSigningService = new AvatarSigningService(Configuration.avatars.signingKey)
 
-  def displayPublicProfileForm = displayForm(publicPage, isPublicFormActive = true)
-  def displayAccountForm = displayForm(accountPage, isPublicFormActive = false)
+  def displayPublicProfileForm = displayForm(publicPage)
+  def displayAccountForm = displayForm(accountPage)
+  def displayMembershipForm = displayForm(membershipPage)
 
-  protected def displayForm(page: OmniPage, isPublicFormActive: Boolean) = CSRFAddToken {
+  protected def displayForm(page: OmniPage) = CSRFAddToken {
     authActionWithUser.async { implicit request =>
-      profileFormsView(page.tracking, ProfileForms(request.user, isPublicFormActive))
+      profileFormsView(page.tracking, ProfileForms(request.user, false))
     }
   }
 
-  def submitPublicProfileForm() = submitForm(publicPage, isProfileForm = true)
-  def submitAccountForm() = submitForm(accountPage, isProfileForm = false)
+  def submitPublicProfileForm() = submitForm(publicPage)
+  def submitAccountForm() = submitForm(accountPage)
 
-  def submitForm(page: OmniPage, isProfileForm: Boolean) = CSRFCheck {
+  def submitForm(page: OmniPage) = CSRFCheck {
     authActionWithUser.async {
       implicit request =>
         val idRequest = idRequestParser(request)
-        val forms = ProfileForms(request.user, isProfileForm).bindFromRequest(request)
+        val forms = ProfileForms(request.user, page == publicPage).bindFromRequest(request)
         val futureFormOpt = forms.activeForm.value map {
           data: UserFormData =>
             identityApiClient.saveUser(request.user.id, data.toUserUpdate(request.user), request.auth) map {
@@ -85,7 +87,13 @@ class EditProfileController @Inject()(idUrlBuilder: IdentityUrlBuilder,
            pageWithTrackingParamsFor(idRequest),
            user, forms, idRequest, idUrlBuilder,
            Some(avatarUploadDataFor(user)),
-           avatarUploadStatus))))    
+           avatarUploadStatus))))
+  }
+
+  def renderMembershipTab() = authActionWithUser { implicit request =>
+    Cached(60)(JsonComponent(
+      "html" -> views.html.fragments.profile.membershipDetailsForm()
+    ))
   }
 
   private def avatarUploadDataFor(user: User) = AvatarUploadData(AvatarSigningService.sign(AvatarData(user)))

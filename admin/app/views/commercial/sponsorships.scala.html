@@ -1,0 +1,49 @@
+@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport)
+
+@admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
+
+<link rel="stylesheet" type="text/css" href="@routes.Assets.at(" css/commercial.css")">
+
+<h1>Content Sponsorships:</h1>
+<p><a href="#criteria">Criteria for sponsorship</a></p>
+
+<h3>Sponsored Tags</h3>
+<p>Last updated: @sponsoredTags.updatedTimeStamp</p>
+<ol>
+    @for(sponsorship <- sponsoredTags.sponsorships) {
+    <li>@{sponsorship.tags.mkString(", ")}@{sponsorship.sponsor.map(sponsor =>
+        <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[sponsored by <b>{sponsor}</b>]</small>
+        )}
+    </li>
+    }
+</ol>
+
+<h3>Advertisement Feature Tags</h3>
+<p>Last updated: @advertisementTags.updatedTimeStamp</p>
+
+<ol>
+    @for(sponsorship <- advertisementTags.sponsorships) {
+    <li>@{sponsorship.tags.mkString(", ")}@{sponsorship.sponsor.map(sponsor =>
+        <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[sponsored by <b>{sponsor}</b>]</small>
+        )}
+    </li>
+    }
+</ol>
+
+<h3><a name="criteria">Criteria:</a></h3>
+<p>Pages will be sponsored if you set up a LineItem in DFP with the following parameters.</p>
+<ol>
+    <li>Targets a <em>slot</em> of either:
+        <ul>
+            <li>adbadge</li>
+            <li>spbadge</li>
+        </ul>
+    </li>
+    <li>Targets a tag of either:
+        <ul>
+            <li>keyword: <em>k</em></li>
+            <li>series: <em>se</em></li>
+        </ul>
+    </li>
+</ol>
+}

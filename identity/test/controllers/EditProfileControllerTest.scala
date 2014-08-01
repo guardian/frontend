@@ -12,8 +12,7 @@ import scala.concurrent.Future
 import com.gu.identity.model.{PrivateFields, PublicFields, StatusFields, User}
 import play.api.test.Helpers._
 import actions.AuthRequest
-import scala.Some
-import play.api.mvc.SimpleResult
+import play.api.mvc.Result
 import services.IdentityRequest
 import idapiclient.TrackingData
 import test.{FakeCSRFRequest, Fake}
@@ -35,7 +34,7 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
   val testAuth = new ScGuU("abc")
 
   val authActionWithUser = new AuthActionWithUser(authService, api, idRequestParser) {
-    override protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]): Future[SimpleResult] = {
+    override def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[Result]): Future[Result] = {
       block(AuthRequest(request, user, testAuth))
     }
   }

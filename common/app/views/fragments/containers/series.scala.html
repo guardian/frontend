@@ -1,19 +1,21 @@
-@(collection: Collection, style: SeriesContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
     @defining(templateDeduping(5, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
-                class="@RenderClasses(Map(
-                    "container" -> true,
-                    "container--row-pattern" -> true,
-                    s"container--${style.containerType}" -> true,
-                    "js-container--toggle" -> (containerIndex > 0 && title.nonEmpty),
-                    "container--first" -> (containerIndex == 0)))"
-                data-link-name="block | @config.id"
+                class="facia-container--default-heading
+                    @RenderClasses(Map(
+                    ("container", true),
+                    (s"container--${style.containerType}", true),
+                    ("js-container--toggle", (containerIndex > 0 && title.nonEmpty))))"
+                data-link-name="@FaciaComponentName(config, collection)"
                 data-id="@config.id"
                 data-type="@style.containerType"
+                @config.sponsorshipKeyword.map { keyword =>
+                    data-keywords="@keyword"
+                }
                 data-component="@style.containerType">
                 <div class="facia-container__inner">
                     <div class="container__border"></div>
@@ -28,7 +30,12 @@
 
                         @config.href.map { link =>
                             <div class="container__meta">
-                                @fragments.meta.series(link, config.id)
+                                <dl class="content-meta">
+                                    <dt class="content-meta__label">Series</dt>
+                                    <dd class="content-meta__item">
+                                        <a href="@LinkTo{/@link}" class="tone-colour">@config.id</a>
+                                    </dd>
+                                </dl>
                             </div>
                         }
                     }

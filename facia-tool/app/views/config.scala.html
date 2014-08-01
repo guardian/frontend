@@ -1,6 +1,6 @@
-@(env: String, identity: Option[Identity])
+@(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
 
-@admin_main("Fronts editor", env, isAuthed = true, identity) {
+@admin_main("config", env, Some(priority), isAuthed = true, identity=identity) {
 
 <div style="display: none;" data-bind="
     visible: true,
@@ -11,36 +11,42 @@
     <div class="updating">Updating</div>
 
     <div class="left-col">
-        <div class="title">Containers</div>
-        <div class="scrollable cnf-collections" data-bind="
-            template: {name: 'template_minimal_collection', foreach: collections}"></div>
+        <div class="col__inner scrollable">
+            <div class="title">Containers</div>
+            <div class="cnf-collections" data-bind="
+                template: {name: 'template_minimal_collection', foreach: collections}"></div>
+        </div>
     </div>
 
     <div class="right-col">
-        <div class="title">
-            Fronts
-            <span data-bind="click: createFront" class="linky">+</span>
+        <div class="col__inner scrollable">
+            <div class="title">
+                Fronts
+                <span data-bind="click: createFront" class="linky">+</span>
+            </div>
+            <div class="cnf-fronts" data-bind="
+                template: {name: 'template_front', foreach: fronts}"></div>
         </div>
-        <div class="scrollable cnf-fronts" data-bind="
-            template: {name: 'template_front', foreach: fronts}"></div>
     </div>
 
     <script type="text/html" id="template_minimal_collection">
+      <!-- ko if: state.withinPriority -->
         <div class="cnf-collection">
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
-                attr: {href: id, title: id},
+                attr: {href: '/' + id, title: id},
                 text: meta.displayName() || '(no title)'"></a>
 
             <span class="placements">
                 on
                 <span data-bind="foreach: parents">
-                    <a class="cnf-collection__also-on" data-bind="
+                    <a data-bind="
                         click: $root.openFront,
                         text: id"></a>
                 </span>
             </span>
         </div>
+      <!-- /ko -->
     </script>
 
     <script type="text/html" id="template_collection">
@@ -53,7 +59,7 @@
 
             <a class="cnf-collection__name" data-bind="
                 click: toggleOpen,
-                attr: {href: id, title: id},
+                attr: {href: '/' + id, title: id},
                 text: meta.displayName() || '(no title)'"></a>
 
             <span class="placements" data-bind="
@@ -101,25 +107,26 @@
 
                 <label>Type</label>
                 <select data-bind="
+                    optionsCaption: 'Choose...',
                     options: $root.types,
                     value: meta.type"></select>
 
-                <label>Groups</label>
-                <select data-bind="
-                    options: $root.groups,
-                    value: meta.groups"></select>
+                <!-- ko if: meta.groups -->
+                    <label>Groups</label>
+                    <span class="cnf-form__value" data-bind="text: meta.groups"></span>
+                <!-- /ko -->
+
+                <!-- ko if: $root.switches()['facia-tool-tags'] -->
+                    <label for="showTags" >Show tags</label>
+                    <input id="showTags" type="checkbox" data-bind="checked: meta.showTags" />
+
+                    <label for="showSections" >Show sections</label>
+                    <input id="showSections" type="checkbox" data-bind="checked: meta.showSections" />
+                <!-- /ko -->
 
                 <label>No curation</label>
                 <input type="checkbox" data-bind="
                     checked: meta.uneditable" />
-
-                @defining(if(Switches.FaciaToolContainerTagsSwitch.isSwitchedOn) "" else "style=display:none") { showTags =>
-                <label @showTags for="showTags" >Show tags</label>
-                <input @showTags id="showTags" type="checkbox" data-bind="checked: meta.showTags" />
-
-                <label @showTags for="showSections" >Show sections</label>
-                <input @showTags id="showSections" type="checkbox" data-bind="checked: meta.showSections" />
-                }
 
                 <div class="tools">
                     <button class="tool" data-bind="
@@ -135,6 +142,7 @@
     </script>
 
     <script type="text/html" id="template_front">
+      <!-- ko if: state.withinPriority -->
         <div class="cnf-front" data-bind="
             css: {open: state.isOpen}">
 
@@ -145,12 +153,6 @@
 
             <!-- ko if: !id() -->
                 <div class="cnf-front__inner cnf-form">
-                    <label>Type</label>
-                    <input type="radio" name="group01" data-bind="checkedValue: undefined, checked: props.priority" />
-                    <span class="radio-label">editorial</span>
-                    <input type="radio" name="group01" value="commercial" data-bind="checked: props.priority" />
-                    <span class="radio-label">commercial</span>
-
                     <label>URL path</label>
                     <input type="text" placeholder="eg. world/middleeast" data-bind="value: id"/>
 
@@ -163,17 +165,21 @@
             <div class="cnf-front__inner" data-bind="if: state.isOpen">
                 <!-- ko if: state.isOpenProps() -->
                     <div class="cnf-form">
-                        <label>Section</label>
-                        <input type="text" data-bind="
-                            attr: {placeholder: placeholders.section},
-                            value: props.section"/>
+                        <label>Nav section</label>
+                        <select data-bind="
+                            css: {
+                                'is-placeholder': !props.navSection()
+                            },
+                            optionsCaption: placeholders.navSection() || '...',
+                            options: $root.navSections,
+                            value: props.navSection"></select>
 
                         <label>Name</label>
                         <input type="text" data-bind="
                             attr: {placeholder: placeholders.webTitle},
                             value: props.webTitle"/>
 
-                        <label>SEO Title</label>
+                        <label>SEO title</label>
                         <textarea data-bind="
                             attr: {placeholder: placeholders.title},
                             value: props.title"></textarea>
@@ -200,11 +206,11 @@
                         <!-- ko if: !state.isOpenProps() -->
                             <span class="linky" data-bind="click: openProps">Edit metadata</span>
                             &middot;
-                            <a data-bind="attr: {href: '/?front=' + id()}">content</a>
+                            <a data-bind="attr: {href: '/@{priority}?front=' + id()}">content</a>
                         <!-- /ko -->
                     </div>
 
-                    <div data-bind="with: collections">
+                    <div class="cnf-front__collections" data-bind="with: collections">
                         <div class="droppable" data-bind="
                             makeDropabble: true,
                             css: {underDrag: underDrag},
@@ -218,6 +224,7 @@
            </div>
 
         </div>
+      <!-- /ko -->
     </script>
 
 </div>

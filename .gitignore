@@ -17,10 +17,11 @@ frontend-applications.properties
 *.box
 *.log
 
-.*
-!.scss-lint.yml
-!.editorconfig
-!.bowerrc
+.DS_Store
+.idea
+.sass-cache
+.tm_properties
+.vagrant
 
 log
 logs
@@ -28,6 +29,7 @@ logs
 tmp
 old
 target
+.target
 /*/bin/
 
 RUNNING_PID
@@ -49,12 +51,21 @@ developer.properties
 
 *-spec-runner.html
 
-static/requirejs
-static/abtests.json
+static
 
-common/app/assets/stylesheets/theme/_commercial-icons-sprite.scss
-common/app/assets/stylesheets/theme/_commercial-icons-svg.scss
-common/app/assets/stylesheets/theme/_global-icons-sprite.scss
-common/app/assets/stylesheets/theme/_global-icons-svg.scss
+common/app/assets/stylesheets/icons/*
 
 ivy-sbt
+
+# Eclipse #
+.project
+.classpath
+.settings/
+.metadata
+.classpath
+.springBeans
+.cache
+bower_components
+
+#Scala test framework
+local.conf

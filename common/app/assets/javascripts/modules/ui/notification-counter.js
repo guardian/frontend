@@ -1,7 +1,7 @@
 define([
-    'common/common'
+    'common/utils/mediator'
 ], function (
-    common
+    mediator
 ) {
     'use strict';
 
@@ -14,7 +14,7 @@ define([
     NotificationCounter.prototype.init = function() {
         var self = this;
 
-        common.mediator.on('modules:autoupdate:unread', function(count) {
+        mediator.on('modules:autoupdate:unread', function(count) {
             self.setCount(count);
         });
     };

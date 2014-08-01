@@ -3,10 +3,9 @@ package com.gu
 import com.gu.versioninfo.VersionInfo
 import sbt._
 import sbt.Keys._
-import play.Project._
-import sbtassembly.Plugin.AssemblyKeys._
-import sbtassembly.Plugin._
+import play._
 import com.typesafe.sbt.SbtNativePackager._
+import play.twirl.sbt.Import._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -21,7 +20,9 @@ trait Prototypes {
     ),
     scalacOptions := Seq("-unchecked", "-optimise", "-deprecation",
       "-Xcheckinit", "-encoding", "utf8", "-feature", "-Yinline-warnings",
-      "-Xfatal-warnings")
+      "-Xfatal-warnings"
+    ),
+    doc in Compile <<= target.map(_ / "none")
   )
 
   val frontendDependencyManagementSettings = Seq(
@@ -34,6 +35,7 @@ trait Prototypes {
 
     resolvers := Seq(
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
+      "Guardian Github Snapshots" at "http://guardian.github.com/maven/repo-snapshots",
       Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
       "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
       "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
@@ -49,11 +51,7 @@ trait Prototypes {
   )
 
   val frontendClientSideSettings = Seq(
-    // Effectively disable built in Play javascript compiler
-    javascriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
-    lessEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
-
-    templatesImport ++= Seq(
+    TwirlKeys.templateImports ++= Seq(
       "common._",
       "model._",
       "views._",
@@ -68,68 +66,34 @@ trait Prototypes {
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
 
-    // APP_SECRET system property not passed to forked?
-    sbt.Keys.fork in Test := false,
-
-    concurrentRestrictions in Global := Seq(Tags.limitAll(1)),
+    // Dev experiments suggested 4 concurrent test tasks gave the best results, at the time.
+    concurrentRestrictions in Global += Tags.limit(Tags.Test, 4),
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.0.RC1" % "test",
+      "org.scalatest" %% "scalatest" % "2.2.0" % "test",
       "org.mockito" % "mockito-all" % "1.9.5" % "test"
     ),
 
-    (javaOptions in test) += "-DAPP_SECRET=secret"
+    // These settings are needed for forking, which in turn is needed for concurrent restrictions.
+    javaOptions in Test += "-DAPP_SECRET=secret",
+    baseDirectory in Test := file(".")
   )
 
-  val frontendAssemblySettings = assemblySettings ++ Seq(
-    test in assembly := {},
-    jarName in assembly <<= (name) map { "frontend-%s.jar" format _ },
-    aggregate in assembly := false,
-    mainClass in assembly := Some("play.core.server.NettyServer"),
-
-    mergeStrategy in assembly <<= (mergeStrategy in assembly) { current =>
-      {
-        case s: String if s.startsWith("org/mozilla/javascript/") => MergeStrategy.first
-        case s: String if s.startsWith("org/jdom/") || s.startsWith("JDOM") => MergeStrategy.last
-        case s: String if s.startsWith("jargs/gnu/") => MergeStrategy.first
-        case s: String if s.startsWith("scala/concurrent/stm") => MergeStrategy.first
-        case s: String if s.endsWith("ServerWithStop.class") => MergeStrategy.first  // There is a scala trait and a Java interface
-
-        // Take ours, i.e. MergeStrategy.last...
-        case "logger.xml" => MergeStrategy.last
-        case "version.txt" => MergeStrategy.last
-
-        // Merge play.plugins because we need them all
-        case "play.plugins" => MergeStrategy.filterDistinctLines
-
-        // Try to be helpful...
-        case "overview.html" => MergeStrategy.discard
-        case "NOTICE" => MergeStrategy.discard
-        case "README" => MergeStrategy.discard
-        case "CHANGELOG" => MergeStrategy.discard
-        case meta if meta.startsWith("META-INF/") => MergeStrategy.discard
-
-        case other => current(other)
-      }
-    }
-  )
-
-  def root() = Project("root", base = file("."))
+  def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
 
   def application(applicationName: String) = {
-    play.Project(applicationName, version, path = file(applicationName))
+    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)
     .settings(frontendDependencyManagementSettings:_*)
     .settings(frontendCompilationSettings:_*)
     .settings(frontendClientSideSettings:_*)
     .settings(frontendTestSettings:_*)
     .settings(VersionInfo.settings:_*)
-    .settings(frontendAssemblySettings:_*)
     .settings(
       libraryDependencies ++= Seq(
-        "com.gu" %% "management-play" % "6.1",
+        "com.gu" %% "management-play" % "7.0",
         "commons-io" % "commons-io" % "2.4"
       )
     )

@@ -1,6 +1,6 @@
 {
     "packages":{
-        "frontend-image":{
+        "image":{
             "type":"autoscaling",
             "apps":[ "frontend::image" ],
             "data":{
@@ -13,16 +13,17 @@
                 ]
             }
         }
+
     },
     "recipes":{
         "default":{
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-image.deploy"]
+            "actionsBeforeApp": ["image.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-image.uploadArtifacts"]
+            "actionsBeforeApp": ["image.uploadArtifacts"]
         }
     }
 }

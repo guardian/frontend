@@ -1,12 +1,16 @@
-@(matchesList: List[FootballMatch],
+@(matchesList: List[pa.FootballMatch],
     competition: model.Competition,
-    date: org.joda.time.DateMidnight,
+    date: org.joda.time.LocalDate,
     responsiveFont: Boolean = false,
     matchType: String = "",
     linkToCompetition: Boolean = false,
-    heading: Option[String] = None,
+    heading: Option[(String, Option[String])] = None,
     link: Option[(String, String)] = None)(implicit request: RequestHeader)
 @import implicits.Football._
+@import common.LinkTo
+@import views.support.RenderClasses
+@import views.MatchStatus
+@import conf.Switches
 
 <table class="table table--football football-matches@if(responsiveFont){ table--responsive-font}">
     <thead hidden>
@@ -32,7 +36,9 @@
                 ))">
                 <td class="football-match__status football-match__status--@MatchStatus(theMatch.matchStatus).toString.toLowerCase table-column--sub">
                     @if(theMatch.isFixture){
-                        @theMatch.date.toString("HH:mm")
+                        <time datetime="@theMatch.date.toString("yyyy-MM-dd'T'HH:mm:ssZ")" data-timestamp="@theMatch.date.getMillis"
+                            class="js-locale-timestamp">
+                            @theMatch.date.toString("HH:mm")</time>
                     }else{
                         @MatchStatus(theMatch.matchStatus)
                     }
@@ -74,9 +80,21 @@
         }
     </tbody>
     <caption class="table__caption table__caption--top">
-        @heading.map{ h => <a href="@competition.url" data-link-name="view @competition.fullName" class="football-matches__heading">@h</a>}
+        @heading.map{ case(text, link) =>
+            @link.map{ href =>
+                <a href="@href" data-link-name="view @text" class="football-matches__heading">@text</a>
+            }.getOrElse{
+                <span class="football-matches__heading">@text</span>
+            }
+        }
         <span class="football-matches__date">@date.toString("E d MMMM")</span>
     </caption>
     @if(linkToCompetition && link == None){<caption class="table__caption table__caption--bottom"><a href="@competition.url@if(matchType!=""){/@matchType}" data-link-name="view @competition.fullName matches" class="full-table-link">Show more <span class="competition-name">@competition.fullName</span> @matchType</a></caption>}
-    @link.map{ case (text, href) => <caption class="table__caption table__caption--bottom"><a href="@href" data-link-name="view matches" class="full-table-link">@text</a></caption>}
+    @link.map{ case (text, href) =>
+        @defining(if (Switches.WorldCupWallchartEmbedSwitch.isSwitchedOn)
+          "/football/ng-interactive/2014/may/23/-sp-world-cup-2014-brazil-results-fixtures-live-scores-tables-schedule"
+        else href){ matchesHref =>
+            <caption class="table__caption table__caption--bottom"><a href="@matchesHref" data-link-name="view matches" class="full-table-link">@text</a></caption>
+        }
+    }
 </table>

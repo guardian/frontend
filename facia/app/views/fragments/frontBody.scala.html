@@ -1,13 +1,44 @@
-@(faciaPage: FaciaPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(faciaPage: model.FaciaPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+
+@import common.Edition
+@import views.support.RenderClasses
+@import views.html.fragments.keywordList
+@import views.support.MostPopularTags.topTags
 
 @if(faciaPage.collections.nonEmpty) {
-    <div class="facia-container facia-container--layout-front @if(faciaPage.isAdvertisementFeature && !faciaPage.isSponsored){facia-container--advertisement-feature}" data-link-name="Front" role="main">
-        @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
-            @collections.zipWithIndex.map{ case(block, index) =>
-                @fragments.frontCollection(faciaPage, block, collections.size, index)
+    <div class="l-side-margins l-side-margins--layout-front">
+        <div class="@RenderClasses(Map(
+                "facia-container" -> true,
+                "facia-container--layout-front" -> true,
+                "facia-container--sponsored" -> faciaPage.isSponsored,
+                "facia-container--advertisement-feature" -> (faciaPage.isAdvertisementFeature && !faciaPage.isSponsored)))"
+            data-link-name="Front | @request.path"
+            @faciaPage.sponsor.map { sponsor =>
+                data-sponsor="@sponsor"
             }
-        }
-        @fragments.commercial.adSlot(name="merchandising", adType="commercial-component", sizeMapping=Map("mobile" -> Seq("888,88")), showLabel=false, refresh=false)
+            role="main">
+
+            @if(faciaPage.hasPageSkin(Edition(request))) {
+                @fragments.commercial.pageSkin()
+            }
+
+            @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
+                @collections.zipWithIndex.map{ case(block, index) =>
+                    @fragments.frontCollection(faciaPage, block, collections.size, index)
+                }
+            }
+
+            @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
+
+            @defining(topTags(faciaPage.allItems).take(20)) { tags =>
+                @if(tags.nonEmpty) {
+                    <div class="facia-container__related-keywords">
+                        <div class="facia-container__related-keywords__body">
+                            @keywordList(tags, 5, "See also")
+                        </div>
+                    </div>
+                }
+            }
+        </div>
     </div>
 }
-

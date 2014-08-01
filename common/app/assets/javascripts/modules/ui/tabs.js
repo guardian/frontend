@@ -1,9 +1,9 @@
 define([
-    'common/common',
+    'common/utils/$',
     'bean',
     'bonzo'
 ], function (
-    common,
+    $,
     bean,
     bonzo
 ) {
@@ -33,7 +33,7 @@ define([
                 var classes = 'tabs__tab--selected tone-colour tone-accent-border';
 
                 // find the active tab in the set. returns an array of 1 item, hence [0]
-                var currentTab = common.$g('.tabs__tab--selected a', container)[0];
+                var currentTab = $('.tabs__tab--selected a', container)[0];
 
                 // trim the leading # and find the matching panel element
                 var paneToShow = container.querySelector('#' + clickedTab.getAttribute('href').substring(1));
@@ -56,7 +56,7 @@ define([
 
             Array.prototype.forEach.call(context.querySelectorAll('.tabs'), function(container) {
 
-                var tabSet = common.$g('.js-tabs', container)[0],
+                var tabSet = $('.js-tabs', container)[0],
                     tabSetHeight = 0,
                     vPos = 0,
                     vHeight = 0,

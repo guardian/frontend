@@ -1,4 +1,4 @@
-define(['common/common', 'common/modules/ui/expandable', 'bonzo', 'helpers/fixtures'], function(common, Expandable, bonzo, fixtures) {
+define(['common/utils/$', 'common/modules/ui/expandable', 'bonzo', 'helpers/fixtures'], function($, Expandable, bonzo, fixtures) {
 
     describe("Expandable", function() {
 
@@ -69,15 +69,15 @@ define(['common/common', 'common/modules/ui/expandable', 'bonzo', 'helpers/fixtu
             var a = new Expandable({ dom: document.querySelector('#trail-a') }).init();
             var b = new Expandable({ dom: document.querySelector('#trail-b') }).init();
 
-            expect(common.$g('#trail-a .cta')[0].innerHTML).toContain('5');
-            expect(common.$g('#trail-b .cta')[0].innerHTML).toContain('3');
+            expect($('#trail-a .cta')[0].innerHTML).toContain('5');
+            expect($('#trail-b .cta')[0].innerHTML).toContain('3');
         });
 
         it("should correctly render the default shut state", function(){
             var a = new Expandable({ dom: document.querySelector('#trail-c'), expanded: false }).init();
 
-            expect(common.$g('#trail-c')[0].className).toContain('shut');
-            expect(common.$g('#trail-c .cta').text()).toBe('Show 3 more');
+            expect($('#trail-c')[0].className).toContain('shut');
+            expect($('#trail-c .cta').text()).toBe('Show 3 more');
         });
 
         it("should expand and contract a panel", function(){
@@ -96,17 +96,17 @@ define(['common/common', 'common/modules/ui/expandable', 'bonzo', 'helpers/fixtu
 
         it("should visually represent the number of items in the panel", function(){
             var x = new Expandable({ dom: document.querySelector('#trail-e') }).init();
-            expect(common.$g('#trail-e .cta')[0].innerHTML).toContain('3');
+            expect($('#trail-e .cta')[0].innerHTML).toContain('3');
         });
 
         it("should not enable expandables where there are less than three hidden trails", function(){
             var x = new Expandable({ dom: document.querySelector('#trail-g') }).init();
-            expect(common.$g('#trail-g .cta').length).toBe(0);
+            expect($('#trail-g .cta').length).toBe(0);
         });
 
         it("should be able to turn off the trail count", function(){
             var x = new Expandable({ dom: document.querySelector('#trail-h'), showCount: false }).init();
-            expect(common.$g('#trail-h .cta')[0].innerHTML).not.toContain('3');
+            expect($('#trail-h .cta')[0].innerHTML).not.toContain('3');
         });
 
     });

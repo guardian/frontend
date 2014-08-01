@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'bonzo',
     'bean',
     'common/utils/context'
@@ -9,7 +9,6 @@ define([
     bean,
     context
 ) {
-    context = context();
     var s = {
         container: '.dropdown',
         button: '.dropdown__button',
@@ -17,7 +16,7 @@ define([
     };
     function init() {
 
-        if(!$(s.container).length) { return false; }
+        context = context();
 
         function ancestor(el, c) {
             if (!el.parentNode || bonzo(el.parentNode).hasClass(c.substring(1))) {

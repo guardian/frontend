@@ -1,17 +1,24 @@
 package com.gu
 
+import akka.remote.transport.TestAssociationHandle
 import sbt._
 import sbt.Keys._
-import play.Project._
+import play.Play.autoImport._
+import PlayKeys._
+import play._
+import play.twirl.sbt.Import._
+import com.typesafe.sbt.web.Import._
 
 object Frontend extends Build with Prototypes {
+
+  scalaVersion := "2.11.1"
 
   val common = application("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
-      "com.gu.openplatform" %% "content-api-client" % "2.9",
+      "com.gu" %% "content-api-client" % "2.18",
 
-      "com.typesafe.akka" %% "akka-agent" % "2.1.0",
+      "com.typesafe.akka" %% "akka-agent" % "2.3.4",
 
       "org.jsoup" % "jsoup" % "1.6.3",
 
@@ -32,14 +39,29 @@ object Frontend extends Build with Prototypes {
       "rome" % "rome" % "1.0",
       "org.rometools" % "rome-modules" % "1.0",
 
-      filters
+      "org.xerial.snappy" % "snappy-java" % "1.0.5.1",
+
+      "com.gu" %% "play-googleauth" % "0.1.56-SNAPSHOT",
+
+      filters,
+      ws
     )
+  ).settings(
+      mappings in TestAssets ~= filterAssets
   )
-  val paVersion = "4.9"
+
+  private def filterAssets(testAssets: Seq[(File, String)]) = testAssets.filterNot{ case (file, fileName) =>
+    // built in sbt plugins did not like the bower files
+    fileName.endsWith("bower.json")
+  }
+
+  val paVersion = "5.0.1-NG"
 
   def withTests(project: Project) = project % "test->test;compile->compile"
 
   val commonWithTests = withTests(common)
+  
+  val sanityTest = application("sanity-tests")
 
   val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
@@ -47,7 +69,7 @@ object Frontend extends Build with Prototypes {
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies += "com.gu" %% "pa-client" % paVersion,
-    templatesImport ++= Seq(
+    TwirlKeys.templateImports ++= Seq(
       "pa._",
       "feed._",
       "football.controllers._"
@@ -57,7 +79,7 @@ object Frontend extends Build with Prototypes {
   val image = application("image")
 
   val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
-    templatesImport ++= Seq("discussion._", "discussion.model._")
+    TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
   )
 
   val router = application("router")
@@ -73,11 +95,14 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       "com.typesafe.slick" %% "slick" % "1.0.0",
       "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar",
-      "com.gu" %% "pa-client" % paVersion
+      "com.gu" %% "pa-client" % paVersion,
+      "com.google.api-ads" % "dfp-axis" % "1.27.0"
     )
   )
 
   val faciaTool = application("facia-tool").dependsOn(commonWithTests)
+
+  val faciaPress = application("facia-press").dependsOn(commonWithTests)
 
   val identityLibVersion = "3.21"
   val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
@@ -88,12 +113,11 @@ object Frontend extends Build with Prototypes {
       "com.gu.identity" %% "identity-cookie" % identityLibVersion,
       "com.tzavellas" % "sse-guice" % "0.7.1",
       "com.google.inject" % "guice" % "3.0",
-      "joda-time" % "joda-time" % "1.6",
       "net.liftweb" %% "lift-json" % "2.5",
       "commons-httpclient" % "commons-httpclient" % "3.1",
-      "net.databinder.dispatch" %% "dispatch-core" % "0.11.0",
       "org.slf4j" % "slf4j-ext" % "1.7.5",
-      "com.gu" %% "exact-target-client" % "2.23"
+      "com.gu" %% "exact-target-client" % "2.23",
+      "com.github.nscala-time" %% "nscala-time" % "1.2.0"
     )
   )
 
@@ -143,7 +167,6 @@ object Frontend extends Build with Prototypes {
       archive,
       sport,
       discussion,
-      router,
       diagnostics,
       identity,
       admin,
@@ -151,10 +174,23 @@ object Frontend extends Build with Prototypes {
       onward
     )
 
+  // this app has a very limited set.
+  // it is designed to get all other services (e.g. onwards) from PROD
+  val preview = application("preview").dependsOn(
+    withTests(common),
+    article,
+    facia,
+    applications,
+    sport,
+    commercial,
+    onward
+  )
+
   val main = root().aggregate(
     common,
     facia,
     faciaTool,
+    faciaPress,
     article,
     applications,
     sport,
@@ -166,6 +202,7 @@ object Frontend extends Build with Prototypes {
     identity,
     commercial,
     onward,
-    archive
+    archive,
+    preview
   )
 }

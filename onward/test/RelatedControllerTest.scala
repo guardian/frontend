@@ -13,7 +13,7 @@ class RelatedControllerTest extends FlatSpec with Matchers {
   val callback = "aFunction"
 
   it should "serve the correct headers when given a callback parameter" in Fake {
-    val fakeRequest = FakeRequest(GET, s"/related/${article}?callback=$callback")
+    val fakeRequest = FakeRequest(GET, s"/related/${article}.json?callback=$callback")
       .withHeaders("host" -> "http://localhost:9000")
         
     val Some(result) = route(fakeRequest)

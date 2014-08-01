@@ -1,6 +1,6 @@
 {
     "packages":{
-        "frontend-router":{
+        "router":{
             "type":"autoscaling",
             "apps":[ "frontend::router" ],
             "data":{
@@ -13,16 +13,17 @@
                 ]
             }
         }
+
     },
     "recipes":{
         "default":{
             "depends" : ["artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-router.deploy"]
+            "actionsBeforeApp": ["router.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-router.uploadArtifacts"]
+            "actionsBeforeApp": ["router.uploadArtifacts"]
         }
     }
 }

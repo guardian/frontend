@@ -1,23 +1,27 @@
 package discussion
 
 import _root_.model.Page
-import model.{Comment, Switch}
-import play.api.libs.json.JsObject
+import discussion.model.DiscussionComments
+import common.Pagination
 
-case class CommentPage(
-                        override val id: String,
-                        commentPageTitle: String,
-                        comments: Seq[Comment],
-                        commentCount: Int,
-                        topLevelCommentCount: Int,
-                        commenterCount: Int,
-                        contentUrl: String,
-                        currentPage: Int,
-                        pages: Int,
-                        orderBy: String,
-                        isClosedForRecommendation: Boolean,
-                        switches: Seq[Switch]
-                        ) extends Page(id = id, section = "Global", webTitle = commentPageTitle, analyticsName = s"GFE:Article:Comment discussion page $currentPage") {
+case class CommentPage(discussionComments: DiscussionComments)
+  extends Page(
+    id = discussionComments.discussion.key,
+    section = "Global",
+    webTitle = discussionComments.discussion.title,
+    analyticsName = s"GFE:Article:Comment discussion page ${discussionComments.pagination.currentPage}"
+  ) {
 
-  lazy val hasMore: Boolean = currentPage < pages
+  override lazy val url = s"/discussion/$orderBy$id"
+  override val pagination = Some(discussionComments.pagination)
+  lazy val discussion = discussionComments.discussion
+  lazy val comments = discussionComments.comments
+  lazy val commentPageTitle = discussion.title
+  lazy val commentCount = discussionComments.commentCount
+  lazy val topLevelCommentCount = discussionComments.topLevelCommentCount
+  lazy val commenterCount = discussionComments.commenterCount
+  lazy val contentUrl = discussion.webUrl
+  lazy val orderBy = discussionComments.orderBy
+  lazy val isClosedForRecommendation = discussion.isClosedForRecommendation
+  lazy val switches = discussionComments.switches
 }

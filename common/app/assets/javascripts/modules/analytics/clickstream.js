@@ -1,10 +1,10 @@
 define([
-    'common/common',
+    'common/utils/mediator',
     'common/utils/detect',
     'bean',
     'common/modules/experiments/ab'
 ], function (
-    common,
+    mediator,
     detect,
     bean,
     ab
@@ -95,7 +95,7 @@ define([
 
         // delegate, emit the derived tag
         if (opts.addListener !== false) {
-            bean.add(document.body, 'click', function (event) {
+            bean.add(document.body, 'click touchstart', function (event) {
                 var clickSpec = {el: event.target};
 
                 if (opts.withEvent !== false) {
@@ -114,7 +114,7 @@ define([
                 }
 
                 if (clickSpec) {
-                    common.mediator.emit('module:clickstream:click', clickSpec);
+                    mediator.emit('module:clickstream:click', clickSpec);
                 }
             });
         }

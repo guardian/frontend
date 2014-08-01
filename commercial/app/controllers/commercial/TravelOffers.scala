@@ -1,26 +1,36 @@
 package controllers.commercial
 
+import model.commercial.travel.{TravelOffer, TravelOffersAgent}
+import model.{NoCache, Cached}
+import performance.MemcachedAction
 import play.api.mvc._
-import model.commercial.travel.OffersAgent
-import common.{JsonNotFound, JsonComponent}
-import model.Cached
+import scala.concurrent.Future
 
 object TravelOffers extends Controller {
 
-  def renderOffer = Action {
-    implicit request =>
-      OffersAgent.adsTargetedAt(segment) match {
-        case Nil => NotFound
-        case offers => Cached(60)(Ok(views.html.travelOffers(offers take 4)))
-      }
+  object lowRelevance extends Relevance[TravelOffer] {
+    def view(offers: Seq[TravelOffer])(implicit request: RequestHeader) = views.html.travelOffers(offers)
   }
 
-  def listOffers = Action {
-    implicit request =>
-      OffersAgent.adsTargetedAt(segment) match {
-        case Nil => JsonNotFound.apply()
-        case offers => Cached(60)(JsonComponent(views.html.travelOffers(offers take 4)))
-      }
+  object highRelevance extends Relevance[TravelOffer] {
+    def view(offers: Seq[TravelOffer])(implicit request: RequestHeader) = views.html.travelOffersHigh(offers)
   }
 
+  private def renderTravelOffers(relevance: Relevance[TravelOffer], format: Format) =
+    MemcachedAction { implicit request =>
+      Future.successful {
+        (TravelOffersAgent.specificTravelOffers(specificIds) ++ TravelOffersAgent.adsTargetedAt(segment)).distinct match {
+          case Nil => NoCache(format.nilResult)
+          case offers => Cached(componentMaxAge) {
+            format.result(relevance.view(offers take 4))
+          }
+        }
+      }
+    }
+
+  def travelOffersLowHtml = renderTravelOffers(lowRelevance, htmlFormat)
+  def travelOffersLowJson = renderTravelOffers(lowRelevance, jsonFormat)
+
+  def travelOffersHighHtml = renderTravelOffers(highRelevance, htmlFormat)
+  def travelOffersHighJson = renderTravelOffers(highRelevance, jsonFormat)
 }

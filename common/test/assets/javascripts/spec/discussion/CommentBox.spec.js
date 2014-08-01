@@ -1,5 +1,4 @@
 define([
-    'common/common',
     'common/modules/identity/api',
     'common/utils/ajax',
     'common/utils/context',
@@ -10,7 +9,6 @@ define([
     'fixtures/discussion/api-post-comment-valid',
     'common/modules/discussion/comment-box'
 ], function(
-    common,
     Id,
     ajax,
     context,
@@ -51,11 +49,16 @@ define([
                                 '<span class="u-fauxlink d-comment-box__hide-parent" role="button">Hide comment</span>' +
                             '</div>' +
                         '</div>' +
+                        '<input type="hidden" name="sentiment" />' +
                         '<div class="d-comment-box__content">'+
                             '<div class="d-comment-box__messages"></div>'+
                             '<div class="d-comment-box__error d-comment-box__premod">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</div>'+
                             '<textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…"></textarea>'+
                             '<button type="submit" class="submit-input d-comment-box__submit">Post comment</button>'+
+                        '</div>'+
+                        '<div class="d-comment-box__preview-wrapper">'+
+                            '<div class="d-comment-box__preview-body"></div>'+
+                            '<button type="submit" class="submit-input d-comment-box__submit d-comment-box__preview-submit">Post your comment</button>'+
                         '</div>'+
                     '</form>'
                 ]

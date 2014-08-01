@@ -1,25 +1,34 @@
 .baguette {
     @include clearfix;
 
+    .item__title {
+        @include fs-headline(5, $size-only: true);
+    }
+
+    .stars {
+        @include rem((
+            margin-top: $gs-baseline * .25,
+            margin-bottom: $gs-baseline * 1.5
+        ));
+    }
+
+    @include mq($to: tablet) {
+        .facia-slice-wrapper:first-child & {
+            @include item--hide-tone-border;
+        }
+    }
+
     @include mq(tablet) {
         @include rem((
             margin-bottom: $gs-baseline*2 !important,
         ));
-    }
-    .item__link {
-        border-top-style: none !important;
-    }
-    .item__title {
-        @include fs-headline(4, $size-only: true);
 
-        @include mq(tablet) {
-            @include fs-headline(6, $size-only: true);
+        .item__title {
+            @include fs-headline(7, $size-only: true);
             @include rem((
                 max-width: gs-span(11)
             ));
         }
-    }
-    @include mq(tablet) {
         .item__media-wrapper {
             overflow: hidden;
         }
@@ -34,7 +43,7 @@
     }
 }
 .baguette__standfirst {
-    @include fs-headline(1);
+    @include fs-headline(2);
     color: $c-neutral2;
     @include rem((
         margin-top: $gs-baseline,

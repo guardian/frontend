@@ -4,7 +4,7 @@
     &:hover {
         background: darken($c-neutral8, 4%);
 
-        @include mq($from: desktop) {
+        @include mq(desktop) {
             .football-match__report {
                 visibility: visible;
 
@@ -113,17 +113,15 @@
 }
 
 .football-teams__battleline {
-    @include rem((
-        top: 0
-    ));
-    color: $c-neutral2;
-    left: 0;
     position: absolute;
-    text-align: center;
+    top: 0;
+    left: 0;
     width: 100%;
+    text-align: center;
+    color: $c-neutral2;
 
     &:after {
-        content: "\2013";
+        content: '\2013';
     }
 }
 
@@ -136,7 +134,7 @@
 .football-match--fixture {
     .football-teams__battleline {
         &:after {
-            content: "v";
+            content: 'v';
         }
     }
 }

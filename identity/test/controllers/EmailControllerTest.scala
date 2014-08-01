@@ -7,21 +7,20 @@ import idapiclient.{ScGuU, IdApiClient}
 import conf.{FrontendIdentityCookieDecoder, IdentityConfiguration}
 import org.scalatest.mock.MockitoSugar
 import test.{FakeCSRFRequest, TestRequest, Fake}
-import play.api.mvc.{RequestHeader, Request, SimpleResult}
+import play.api.mvc.{RequestHeader, Request, Result}
 import scala.concurrent.Future
 import com.gu.identity.model.{StatusFields, User}
 import org.mockito.Mockito._
-import org.mockito.Matchers
+import org.mockito.Matchers.{any, anyString}
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.JsonDSL._
 import com.gu.identity.model.Subscriber
 import services.IdentityRequest
-import client.Error
+import client.{Auth, Error}
 import idapiclient.TrackingData
 import actions.AuthRequest
-
 
 class EmailControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
@@ -35,18 +34,20 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
   val trackingData = mock[TrackingData]
 
   val userId = "123"
-  val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
+  val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = None, receiveGnmMarketing = None))
   val testAuth = new ScGuU("abc")
   val error = Error("Test message", "Test description", 500)
+  val errors = List(error)
 
   val authAction  = new actions.AuthenticatedAction(authService) {
-    override protected def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[SimpleResult]): Future[SimpleResult] = {
+    override def invokeBlock[A](request: Request[A], block: (AuthRequest[A]) => Future[Result]): Future[Result] = {
       block(AuthRequest(request, user, testAuth))
     }
   }
-  when(idRequestParser.apply(Matchers.any[RequestHeader])) thenReturn idRequest
+  when(idRequestParser.apply(any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
 
+  when(idUrlBuilder.buildUrl(any[String], any[IdentityRequest], any[(String, String)])) thenReturn "/email-prefs"
   val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authAction)
 
   "The preferences method" - Fake {
@@ -55,8 +56,8 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
 
     "when the api calls succeed" - {
       val subscriber = Subscriber("Text", Nil)
-      when(api.multiple(Matchers.any[Future[client.Response[User]]], Matchers.any[Future[client.Response[Subscriber]]]))
-        .thenReturn(Future.successful(Right((user, subscriber))))
+      when(api.user(anyString(), any[Auth])) thenReturn Future.successful(Right(user))
+      when(api.userEmails(anyString(), any[TrackingData])) thenReturn Future.successful(Right(subscriber))
 
       "should lookup user data and email info" in {
         emailController.preferences()(authRequest)
@@ -67,12 +68,17 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
       "should display form" in {
         val result = emailController.preferences()(authRequest)
         status(result) should equal(OK)
+        val content = contentAsString(result)
+        content should include("""<form class="form" novalidate action="/email-prefs" role="main" method="post">""")
+        content should include("""<input type="checkbox" name="statusFields.receiveGnmMarketing" """)
+        content should include("""<input type="checkbox" name="statusFields.receive3rdPartyMarketing" """)
+//        content should not include("checked")
       }
     }
 
     "when the API calls fail" - {
-      when(api.multiple(Matchers.any[Future[client.Response[User]]], Matchers.any[Future[client.Response[Subscriber]]]))
-        .thenReturn(Future.successful(Left(List(error))))
+      when(api.user(anyString(), any[Auth])) thenReturn Future.successful(Left(List(error)))
+      when(api.userEmails(anyString(), any[TrackingData])) thenReturn Future.successful(Left(List(error)))
 
       "should include the error message on the page" in {
         val result = emailController.preferences()(authRequest)
@@ -91,9 +97,11 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
       val authRequest = AuthRequest(fakeRequest, user, testAuth)
 
       "with successful api calls" - {
-        val statusFields = ("receiveGnmMarketing" -> gnmMarketing) ~ ("receive3rdPartyMarketing" -> thirdPartyMarketing)
-        when(api.multiple(Matchers.any[Future[client.Response[JValue]]], Matchers.any[Future[client.Response[Unit]]]))
-          .thenReturn(Future.successful(Right((statusFields, ()))))
+        val updatedStatus = user.statusFields.copy(receiveGnmMarketing = Some(true), receive3rdPartyMarketing = Some(true))
+        val updatedUser = user.copy(statusFields = updatedStatus)
+        // Crazy Unit return type!
+        when(api.updateUserEmails(anyString(), any[Subscriber], any[Auth], any[TrackingData])) thenReturn Future.successful(Right(()))
+        when(api.updateUser(anyString(), any[Auth], any[TrackingData], anyString(), any[JValue])) thenReturn Future.successful(Right(updatedUser))
 
         "should call updateUser and updateUserEmails" in {
           emailController.savePreferences()(authRequest)
@@ -101,16 +109,30 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
           verify(api).updateUserEmails(userId, Subscriber(emailFormat, Nil), testAuth, trackingData)
         }
 
-        "should redirect back to the form" in {
-          when(idUrlBuilder.buildUrl(Matchers.any[String], Matchers.any[IdentityRequest], Matchers.any[(String, String)])) thenReturn "/email-prefs"
+        "should re-render the form" in {
           val result = emailController.savePreferences()(authRequest)
-          redirectLocation(result).get should endWith ("/email-prefs")
+          status(result) should be(200)
+          val content = contentAsString(result)
+          content should include("""<form class="form" novalidate action="/email-prefs" role="main" method="post">""")
+          content should include("""<input type="checkbox" name="statusFields.receiveGnmMarketing" """)
+          content should include("""<input type="checkbox" name="statusFields.receive3rdPartyMarketing" """)
+          content should include("checked")
         }
       }
 
-      "with failed API calls" - {
-        when(api.multiple(Matchers.any[Future[client.Response[JValue]]], Matchers.any[Future[client.Response[Unit]]]))
-          .thenReturn(Future.successful(Left(List(error))))
+      "with failed API user call" - {
+        when(api.updateUserEmails(anyString(), any[Subscriber], any[Auth], any[TrackingData])) thenReturn Future.successful(Left(errors))
+        when(api.updateUser(anyString(), any[Auth], any[TrackingData], anyString(), any[JValue])) thenReturn Future.successful(Right(user))
+
+        "should include the error message on the page" in {
+          val result = emailController.savePreferences()(authRequest)
+          contentAsString(result).contains(error.description) should equal(true)
+        }
+      }
+
+      "with failed API userEmails call" - {
+        when(api.updateUser(anyString(), any[Auth], any[TrackingData], anyString(), any[JValue])) thenReturn Future.successful(Left(errors))
+        when(api.updateUserEmails(anyString(), any[Subscriber], any[Auth], any[TrackingData])) thenReturn Future.successful(Right(()))
 
         "should include the error message on the page" in {
           val result = emailController.savePreferences()(authRequest)

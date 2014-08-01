@@ -1,12 +1,14 @@
 define([
-    'common/common',
+    'lodash/objects/assign',
+    'common/utils/mediator',
     'common/utils/ajax',
     'bonzo',
     'bean',
     'common/utils/detect',
     'common/modules/identity/api'
 ], function(
-    common,
+    assign,
+    mediator,
     ajax,
     bonzo,
     bean,
@@ -21,7 +23,7 @@ define([
      */
     function Profile(context, config) {
         this.context = context;
-        this.config = common.extend(this.config, config);
+        this.config = assign(this.config, config);
         this.dom.container = context.querySelector('.' + Profile.CONFIG.classes.container);
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
         this.dom.popup = context.querySelector('.' + Profile.CONFIG.classes.popup);
@@ -59,13 +61,17 @@ define([
             $content = bonzo(this.dom.content),
             $popup = bonzo(this.dom.popup);
 
-        $container.removeClass('js-hidden');
-
         if (user) {
-            $content.text(user.displayName);
-            $container.addClass('is-signed-in');
+            // Run this code only if we haven't already inserted
+            // the username in the header
+            if (!$container.hasClass('is-signed-in')) {
+                $content.text(user.displayName);
+                $container.addClass('is-signed-in');
+            }
+
             $popup.html(
                 '<ul class="nav nav--columns" data-link-name="Sub Sections">'+
+                    this.menuListItem('Comment activity', this.config.url+'/user/id/'+ user.id)+
                     this.menuListItem('Edit profile', this.config.url+'/public/edit')+
                     this.menuListItem('Email preferences', this.config.url+'/email-prefs')+
                     this.menuListItem('Change password', this.config.url+'/password/change')+
@@ -89,14 +95,14 @@ define([
      * @param {Object} resp response from the server
      */
     Profile.prototype.emitLoadedEvent = function(user) {
-        common.mediator.emit(Profile.CONFIG.eventName + ':loaded', user);
+        mediator.emit(Profile.CONFIG.eventName + ':loaded', user);
     };
 
     /**
      * @param {Object} resp response from the server
      */
     Profile.prototype.emitErrorEvent = function() {
-        common.mediator.emit(Profile.CONFIG.eventName + ':error');
+        mediator.emit(Profile.CONFIG.eventName + ':error');
     };
 
     return Profile;

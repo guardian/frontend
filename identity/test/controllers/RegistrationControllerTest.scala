@@ -66,12 +66,11 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
       val email = "test@example.com"
       val username = "username"
       val password = "password"
-      val auth = EmailPassword(email, password)
       val fakeRequest = FakeRequest(POST, "/register")
         .withFormUrlEncodedBody("user.primaryEmailAddress" -> email, "user.publicFields.username" -> username, "user.password" -> password )
         .withHeaders("X-Forwarded-For" -> xForwardedFor)
       when(api.register(Matchers.same(user), Matchers.same(trackingData))).thenReturn(Future.successful(Right(createdUser)))
-      when(api.authBrowser(EmailPassword(email, password), trackingData)).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
+      when(api.authBrowser(EmailPassword(email, password, identityRequest.clientIp), trackingData)).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
       when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
 
       "should create the user with the username, email and password required" in Fake {
@@ -152,7 +151,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
 
       when(api.register(Matchers.same(user), Matchers.same(trackingData)))
         .thenReturn(Future.successful(Right(createdUser)))
-      when(api.authBrowser(EmailPassword(email, password), trackingData)).thenReturn(Future.successful(Left(errors)))
+      when(api.authBrowser(EmailPassword(email, password, identityRequest.clientIp), trackingData)).thenReturn(Future.successful(Left(errors)))
       when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
       when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
 

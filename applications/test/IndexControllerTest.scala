@@ -2,13 +2,21 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
+import org.scalatest.{BeforeAndAfterAll, Matchers, FlatSpec}
+import conf.Switches.MemcachedSwitch
 
-class IndexControllerTest extends FlatSpec with Matchers {
+class IndexControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll {
 
   val section = "books"
   val callbackName = "aFunction"
+
+  override def beforeAll(): Unit = {
+    MemcachedSwitch.switchOff()
+  }
+
+  override def afterAll(): Unit = {
+    MemcachedSwitch.switchOn()
+  }
 
   "Index Controller" should "200 when content type is front" in Fake {
     val result = controllers.IndexController.render(section)(TestRequest(s"/$section"))
@@ -55,16 +63,7 @@ class IndexControllerTest extends FlatSpec with Matchers {
     header("Location", result).get should be ("/video")
   }
 
-  it should "include pagination in the redirect" in Fake {
-
-    val result = controllers.IndexController.render("type/video")(TestRequest("/type/video?page=3"))
-
-    status(result) should be (302)
-    header("Location", result).get should be ("/video?page=3")
-  }
-
-  // ignore while content api fixes a field in elastic search...
-  ignore should "correctly redirect short urls to other servers" in Fake {
+  it should "correctly redirect short urls to other servers" in Fake {
 
     val result = controllers.IndexController.render("p/3jdag")(TestRequest("/p/3jdag"))
 
@@ -113,4 +112,27 @@ class IndexControllerTest extends FlatSpec with Matchers {
     status(result) should be (302)
     header("Location", result).get should endWith ("/books+tone/reviews")
   }
+
+  "Normalise tags" should "convert content/gallery to type/gallery" in {
+    val tag = "content/gallery"
+    val result = controllers.IndexController.normaliseTag(tag)
+    result should be ("type/gallery")
+  }
+
+  it should "not touch other tags that don't match content exactly" in {
+    val tags = Seq("conten/gallery", "contentt/gallery", "content",
+      "type/gallery", "media/media", "media", "content", "type")
+    tags.map{ tag =>
+      val result = controllers.IndexController.normaliseTag(tag)
+      result should be (tag)
+    }
+  }
+
+  it should "serve RSS for a section" in Fake {
+    val result = controllers.IndexController.render("film")(TestRequest("/film/rss"))
+    status(result) should be(200)
+    contentType(result) should be(Some("text/xml"))
+    contentAsString(result) should startWith("<?xml")
+  }
+
 }

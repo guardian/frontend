@@ -3,8 +3,10 @@
    ========================================================================== */
 
 .search-placeholder {
-    min-height: 50px;
-    padding-top: $gs-baseline/2;
+    @include rem((
+        min-height: 50px,
+        padding-top: $gs-baseline/2
+    ));
 }
 .search-box {
     @include rem((
@@ -19,17 +21,25 @@
     }
 }
 .gsc-control-cse {
-    padding: 0 $gs-gutter/2 !important;
+    @include rem((
+        padding: 0 $gs-gutter/2 !important
+    ));
 
     @include mq(mobileLandscape) {
-        padding: 0 $gs-gutter !important;
+        @include rem((
+            padding: 0 $gs-gutter !important
+        ));
     }
 }
 // Align "×" icon (cancel search button)
 span.gscb_a {
-    font: normal 24px/16px Georgia, serif !important;
     position: relative;
-    top: 2px;
+    font: normal 24px/16px Georgia, serif !important;
+    @include rem((
+        top: 2px,
+        font-size: 24px,
+        line-height: 16px
+    ));
 }
 .gsc-search-box {
     padding: 0;
@@ -44,16 +54,20 @@ span.gscb_a {
 }
 td.gsc-search-button {
     margin: 0 !important;
-    padding: 5px 0 0 !important;
+    @include rem((
+        padding: 5px 0 0 !important
+    ));
 }
 .gsc-search-button-v2 {
     @include border-radius(0 !important);
     margin: 0 !important;
-    padding: 7px 9px 8px !important;
+    @include rem((
+        padding: 7px 9px 8px !important
+    ));
 }
 .gsc-completion-container,
 .gsc-input {
-    font-family: $sans-serif;
+    font-family: $f-data;
 }
 
 .gsc-result-info {
@@ -83,10 +97,14 @@ td.gsc-search-button {
 
 // Add space between pagination links to make them more touch friendly
 .gsc-results .gsc-cursor-box {
-    margin: 0 0 ($gs-baseline/3)*4 !important;
+    @include rem((
+        margin: 0 0 ($gs-baseline/3)*4 !important
+    ));
 }
 .gsc-results .gsc-cursor-box .gsc-cursor-page {
-    margin-right: 22px !important;
+    @include rem((
+        margin-right: 22px !important
+    ));
 }
 
 // Remove border on thumbnails
@@ -97,13 +115,17 @@ td.gsc-search-button {
 // Thumbnails are on the grid
 .gs-web-image-box-landscape img.gs-image {
     margin-top: 1px; // align with top of text
-    width: gs-span(2) !important;
-    height: 84px !important;
+    @include rem((
+        width: gs-span(2) !important,
+        height: 84px !important
+    ));
     max-width: none !important;
     max-height: none !important;
 }
 .gs-image-box.gs-web-image-box.gs-web-image-box-landscape {
-    width: gs-span(2) + $gs-gutter/2 !important;
+    @include rem((
+        width: gs-span(2) + $gs-gutter/2 !important
+    ));
 }
 // Float image to the left
 .gsc-table-result {
@@ -119,8 +141,10 @@ td.gsc-search-button {
 .gs-webResult .gs-snippet,
 .gs-imageResult .gs-snippet {
     @include f-headline;
-    font-size: 14px !important; // out of the font-scale to add some hierarchy
-    line-height: 18px !important;
+    @include rem((
+        font-size: get-font-size($fs-headlines, 1) !important,
+        line-height: get-line-height($fs-headlines, 1) !important
+    ));
     color: $c-neutral2 !important;
 }
 // Hide URLs
@@ -130,8 +154,10 @@ td.gsc-search-button {
 // Make titles look like story headlines
 .gsc-thumbnail-inside a.gs-title {
     display: block;
-    @include fs-headline(1);
-    padding-bottom: 10px;
+    @include fs-headline(2);
+    @include rem((
+        padding-bottom: 10px
+    ));
 }
 .gs-webResult.gs-result a.gs-title,
 .gs-imageResult a.gs-title {
@@ -162,6 +188,8 @@ td.gsc-search-button {
     border-top: 1px solid $c-neutral5 !important;
 }
 .gsc-webResult .gsc-result {
-    padding-top: 2px;
-    padding-bottom: 20px;
+    @include rem((
+        padding-top: 2px,
+        padding-bottom: 20px
+    ));
 }

@@ -3,7 +3,7 @@ package feed
 import pa._
 import model._
 import conf.FootballClient
-import org.joda.time.DateMidnight
+import org.joda.time.LocalDate
 import common._
 import model.Competition
 import scala.concurrent.Future
@@ -18,7 +18,7 @@ trait Lineups extends ExecutionContexts with Logging {
 }
 
 trait LiveMatches extends ExecutionContexts with Logging {
-  def getLiveMatches: Future[Map[String, Seq[MatchDay]]] = FootballClient.matchDay(DateMidnight.now).map{ todaysMatches: List[MatchDay] =>
+  def getLiveMatches: Future[Map[String, Seq[MatchDay]]] = FootballClient.matchDay(LocalDate.now).map{ todaysMatches: List[MatchDay] =>
 
     val matchesWithCompetitions = todaysMatches.filter(_.competition.isDefined)
 
@@ -34,7 +34,7 @@ trait LiveMatches extends ExecutionContexts with Logging {
 }
 
 trait LeagueTables extends ExecutionContexts with Logging {
-  def getLeagueTable(competition: Competition) = FootballClient.leagueTable(competition.id, new DateMidnight).map{_.map{ t =>
+  def getLeagueTable(competition: Competition) = FootballClient.leagueTable(competition.id, new LocalDate).map{_.map{ t =>
     log.info(s"refreshing table for ${competition.id}")
     val team = t.team.copy(name = TeamName(t.team))
     t.copy(team = team)
@@ -56,7 +56,7 @@ trait Results extends ExecutionContexts with Logging with implicits.Collections 
     log.info(s"refreshing results for ${competition.id} with startDate: ${competition.startDate}")
     //it is possible that we do not know the startdate of the competition yet (concurrency)
     //in that case just get the last 30 days results, the start date will catch up soon enough
-    val startDate = competition.startDate.getOrElse(new DateMidnight().minusDays(30))
+    val startDate = competition.startDate.getOrElse(new LocalDate().minusDays(30))
     FootballClient.results(competition.id, startDate).map { _.map{ r =>
         val homeTeam = r.homeTeam.copy(name = TeamName(r.homeTeam))
         val awayTeam = r.awayTeam.copy(name = TeamName(r.awayTeam))
@@ -83,9 +83,9 @@ class CompetitionAgent(_competition: Competition) extends Fixtures with Results 
   }
 
   object MatchStatusOrdering extends Ordering[FootballMatch] {
-      private def statusValue(m: FootballMatch) = if (m.isResult) 1 else if (m.isLive) 2 else 3
-      def compare(a: FootballMatch, b: FootballMatch) = statusValue(a) - statusValue(b)
-    }
+    private def statusValue(m: FootballMatch) = if (m.isResult) 1 else if (m.isLive) 2 else 3
+    def compare(a: FootballMatch, b: FootballMatch) = statusValue(a) - statusValue(b)
+  }
 
   def addMatches(newMatches: Seq[FootballMatch]) = agent.send{ comp =>
 
@@ -106,10 +106,6 @@ class CompetitionAgent(_competition: Competition) extends Fixtures with Results 
     refreshFixtures()
     refreshResults()
     refreshLeagueTable()
-  }
-
-  def stop() {
-    agent.close()
   }
 }
 

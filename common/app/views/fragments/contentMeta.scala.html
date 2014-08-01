@@ -9,26 +9,29 @@
 }
 
 @metaBody() = {
-    @byline(content)
-    @fragments.meta.dateline(content.webPublicationDate, secondary=true)
-    <div class="js-comment-count"></div>
+    <div class="js-comment-count meta__comment-count--top"></div>
+    @if(!content.hasTonalHeaderByline) {
+        @byline(content)
+    }
+    @if(!content.shouldHidePublicationDate) {
+        @fragments.meta.dateline(content.webPublicationDate, secondary = true)
+    }
+    <div class="js-comment-count meta__comment-count--bottom"></div>
     <div class="social-wrapper social-wrapper--aside" data-component="share">
         <h2 class="social__head">Share this article</h2>
-        @fragments.social(content, "top")
+        @fragments.social(content, "top", iconModifier = if(content.isVideo) "white" else "")
     </div>
 
 }
 
-<div class="article__meta-container js-football-meta u-cf@if(content.byline.isEmpty){ article__meta-container--no-byline}">
-    @if(content.isSponsored) {
-        @fragments.commercial.badge(name="spbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
-    } else {
-        @if(content.isAdvertisementFeature) {
-            @fragments.commercial.badge(name="adbadge", adType="paid-for-badge", sizeMapping=Map("mobile" -> Seq("140,90")))
-        }
-    }
+<div class="content__meta-container js-football-meta u-cf
+    @if(content.byline.isEmpty){ content__meta-container--no-byline}
+    @if(content.hasShowcaseMainPicture){ content__meta-container--showcase}
+    @if(!content.hasMainPicture && !content.hasMainVideo && !content.hasMainAudio && !content.hasMainEmbed){ content__meta-container--float}">
 
-    @if(content.hasLargeContributorImage) {
+    @fragments.commercial.badge(content)
+
+    @if(content.hasLargeContributorImage && content.contributors.length == 1 && !content.hasTonalHeaderByline) {
         <div class="media__img meta__image">
             @fragments.meta.bylineImage(content)
         </div>

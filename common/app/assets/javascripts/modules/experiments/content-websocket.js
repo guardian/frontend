@@ -1,8 +1,14 @@
 define([
-    'common/common',
+    'common/utils/$',
+    'common/utils/mediator',
     'bonzo',
     'common/utils/detect'
-], function (common, bonzo, detect) {
+], function (
+    $,
+    mediator,
+    bonzo,
+    detect
+) {
 
     function connect(config) {
 
@@ -22,10 +28,10 @@ define([
                 } else {
                     var $pushedContent = bonzo.create('<div>' + data.headline + ' ' + data.url + '</div>');
                     bonzo($pushedContent).addClass('pushed-content lazyloaded');
-                    common.$g('.monocolumn-wrapper').after($pushedContent);
+                    $('.monocolumn-wrapper').after($pushedContent);
                 }
             } else {
-                common.mediator.emit('module:error', 'Invalid data returned from socket, module/websocket.js');
+                mediator.emit('module:error', 'Invalid data returned from socket, module/websocket.js');
             }
         };
 

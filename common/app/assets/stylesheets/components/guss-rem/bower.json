@@ -1,8 +1,13 @@
 {
   "name": "guss-rem",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "main": "_rem.scss",
   "ignore": [
-    "CHANGELOG.md"
-  ]
+    "CHANGELOG.md",
+    "specs",
+    "tests.scss"
+  ],
+  "devDependencies": {
+    "bootcamp": "~1.1.6"
+  }
 }

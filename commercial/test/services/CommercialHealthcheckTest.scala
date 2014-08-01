@@ -1,10 +1,18 @@
 package services
 
-import model.commercial.masterclasses.MasterClassAgent
+import org.scalatest.{Matchers, FlatSpec}
+import play.api.libs.ws.WS
+import test._
 
-class CommercialHealthcheckTest extends HealthcheckTest("/commercial/masterclasses?s=music") {
+import scala.concurrent.duration._
+import scala.concurrent.Await
 
-  override def prepareForTest() {
-    MasterClassAgent.getUpcoming
+class CommercialHealthcheckTest extends FlatSpec with Matchers {
+
+  import play.api.Play.current
+
+  "Healthchecks" should "pass" in HtmlUnit("/"){ browser =>
+
+    Await.result(WS.url(s"http://localhost:${HtmlUnit.port}/_healthcheck").get(), 10.seconds).status should be (200)
   }
 }

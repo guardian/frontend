@@ -1,6 +1,7 @@
 package football.controllers
 
 import common._
+import model.TeamMap.findTeamIdByUrlName
 import model._
 import conf._
 import play.api.mvc.{ Controller, Action }
@@ -41,15 +42,13 @@ object MatchController extends Controller with Football with Requests with Loggi
   def renderMatchId(matchId: String) = render(Competitions().findMatch(matchId))
 
   def renderMatchJson(year: String, month: String, day: String, home: String, away: String) = renderMatch(year, month, day, home, away)
-  def renderMatch(year: String, month: String, day: String, home: String, away: String) = {
-
-    val date = dateFormat.parseDateTime(year + month + day).toDateMidnight
-
-    (TeamMap.findTeamIdByUrlName(home), TeamMap.findTeamIdByUrlName(away)) match {
-      case (Some(homeId), Some(awayId)) => render(Competitions().matchFor(date, homeId, awayId))
+  def renderMatch(year: String, month: String, day: String, home: String, away: String) =
+    (findTeamIdByUrlName(home), findTeamIdByUrlName(away)) match {
+      case (Some(homeId), Some(awayId)) =>
+        val date = dateFormat.parseDateTime(year + month + day).toLocalDate
+        render(Competitions().matchFor(date, homeId, awayId))
       case _ => render(None)
     }
-  }
 
   private def render(maybeMatch: Option[FootballMatch]) = Action.async { implicit request =>
     val response = maybeMatch map { theMatch =>

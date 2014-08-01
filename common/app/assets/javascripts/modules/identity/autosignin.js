@@ -1,7 +1,6 @@
 define([
     'common/utils/ajax',
     'bonzo',
-    'common/common',
     'common/modules/identity/api',
     'common/modules/identity/facebook-authorizer',
     'common/modules/navigation/profile',
@@ -13,7 +12,6 @@ define([
 function(
     ajax,
     bonzo,
-    common,
     Id,
     FacebookAuthorizer,
     Profile,

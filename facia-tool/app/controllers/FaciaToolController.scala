@@ -1,50 +1,41 @@
 package controllers
 
+import util.SanitizeInput
 import frontsapi.model._
 import frontsapi.model.UpdateList
-import jobs.FrontPressJob
-import play.api.mvc.{AnyContent, Action, Controller}
+import play.api.mvc._
 import play.api.libs.json._
 import common.{FaciaToolMetrics, ExecutionContexts, Logging}
-import conf.{Switches, Configuration}
+import conf.Configuration
 import tools.FaciaApi
-import services.{ContentApiRefresh, ConfigAgent, ContentApiWrite, S3FrontsApi}
-import play.api.libs.ws.Response
-import scala.concurrent.Future
-import conf.Switches.ContentApiPutSwitch
 import model.{NoCache, Cached}
-import scala.util.{Failure, Success}
-import play.api.libs.Comet
+import services._
+import auth.ExpiringActions
+
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
-  implicit val collectionRead = Json.reads[Collection]
-  implicit val frontRead = Json.reads[Front]
-  implicit val configRead = Json.reads[Config]
-  implicit val collectionWrite = Json.writes[Collection]
-  implicit val frontWrite= Json.writes[Front]
-  implicit val configWrite = Json.writes[Config]
 
-  implicit val updateListRead = Json.reads[UpdateList]
-  implicit val collectionMetaRead = Json.reads[CollectionMetaUpdate]
-  implicit val trailWrite = Json.writes[Trail]
-  implicit val blockWrite = Json.writes[Block]
-
-  def collectionsEditor() = ExpiringAuthentication { request =>
-    val identity = Identity(request).get
-    Cached(60) { Ok(views.html.collections(Configuration.environment.stage, Option(identity))) }
+  def priorities() = ExpiringActions.ExpiringAuthAction { request =>
+    val identity = request.user
+    Cached(60) { Ok(views.html.priority(Configuration.environment.stage, "", Option(identity))) }
   }
 
-  def configEditor() = ExpiringAuthentication { request =>
-    val identity = Identity(request).get
-    Cached(60) { Ok(views.html.config(Configuration.environment.stage, Option(identity))) }
+  def collectionEditor(priority: String) = ExpiringActions.ExpiringAuthAction { request =>
+    val identity = request.user
+    Cached(60) { Ok(views.html.collections(Configuration.environment.stage, priority, Option(identity))) }
   }
 
-  def listCollections = AjaxExpiringAuthentication { request =>
+  def configEditor(priority: String) = ExpiringActions.ExpiringAuthAction { request =>
+    val identity = request.user
+    Cached(60) { Ok(views.html.config(Configuration.environment.stage, priority, Option(identity))) }
+  }
+
+  def listCollections = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache { Ok(Json.toJson(S3FrontsApi.listCollectionIds)) }
   }
 
-  def getConfig = AjaxExpiringAuthentication { request =>
+  def getConfig = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache {
       S3FrontsApi.getMasterConfig map { json =>
@@ -53,11 +44,11 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
-  def updateConfig(): Action[AnyContent] = AjaxExpiringAuthentication { request =>
+  def updateConfig(): Action[AnyContent] = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     val configJson: Option[JsValue] = request.body.asJson
     NoCache {
-      configJson flatMap(_.asOpt[Config]) map {
+      configJson.flatMap(_.asOpt[Config]).map(SanitizeInput.fromConfigSeo).map {
         case update: Config => {
 
           //Only update if it is a valid Config object
@@ -65,7 +56,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
             ConfigAgent.refreshWith(json)
           }
 
-          val identity = Identity(request).get
+          val identity = request.user
           UpdateActions.putMasterConfig(update, identity)
           Ok
         }
@@ -74,7 +65,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
-  def readBlock(id: String) = AjaxExpiringAuthentication { request =>
+  def readBlock(id: String) = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache {
       S3FrontsApi.getBlock(id) map { json =>
@@ -83,46 +74,36 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
-  def publishAll() = ExpiringAuthentication { request =>
-    Ok(views.html.publish_all(Configuration.environment.stage, Identity(request)))
-  }
-
-  def publishAllStream() = ExpiringAuthentication { request =>
-    Ok.chunked((ContentApiRefresh.refresh() map {
-      case (collectionId, Success(_)) => s"Successfully published $collectionId"
-      case (collectionId, Failure(error)) => s"Failed to publish $collectionId: ${error.getMessage}"
-    }) through Comet(callback = "parent.cometMessage"))
-  }
-
-  def publishCollection(id: String) = AjaxExpiringAuthentication { request =>
-    val identity = Identity(request).get
+  def publishCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
+    val identity = request.user
     FaciaToolMetrics.DraftPublishCount.increment()
     val block = FaciaApi.publishBlock(id, identity)
-    block.foreach{ b =>
+    block foreach { b =>
       UpdateActions.archivePublishBlock(id, b, identity)
-      pressCollectionId(id)
+      FaciaPress.press(PressCommand.forOneId(id).withPressDraft().withPressLive())
     }
-    notifyContentApi(id)
+    ContentApiPush.notifyContentApi(Set(id))
     NoCache(Ok)
   }
 
-  def discardCollection(id: String) = AjaxExpiringAuthentication { request =>
-    val identity = Identity(request).get
+  def discardCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
+    val identity = request.user
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
       UpdateActions.archiveDiscardBlock(id, b, identity)
+      FaciaPress.press(PressCommand.forOneId(id).withPressDraft())
     }
     NoCache(Ok)
   }
 
-  def updateCollectionMeta(id: String): Action[AnyContent] = AjaxExpiringAuthentication { request =>
+  def updateCollectionMeta(id: String): Action[AnyContent] = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache {
       request.body.asJson flatMap(_.asOpt[CollectionMetaUpdate]) map {
         case update: CollectionMetaUpdate => {
-          val identity = Identity(request).get
+          val identity = request.user
           UpdateActions.updateCollectionMeta(id, update, identity)
-          notifyContentApi(id)
+          ContentApiPush.notifyContentApi(Set(id))
           Ok
         }
         case _ => NotFound
@@ -130,12 +111,12 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
-  def collectionEdits(): Action[AnyContent] = AjaxExpiringAuthentication { request =>
+  def collectionEdits(): Action[AnyContent] = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache {
       request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
         case update: Map[String, UpdateList] =>
-          val identity: Identity = Identity(request).get
+          val identity = request.user
           val updatedCollections: Map[String, Block] = update.collect {
             case ("update", updateList) =>
               UpdateActions.updateCollectionList(updateList.id, updateList, identity).map(updateList.id -> _)
@@ -143,8 +124,16 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
               UpdateActions.updateCollectionFilter(updateList.id, updateList, identity).map(updateList.id -> _)
           }.flatten.toMap
 
-          pressCollectionIds(updatedCollections.keySet)
-          updatedCollections.keys.foreach(notifyContentApi)
+          val shouldUpdateLive: Boolean = update.exists(_._2.live)
+
+          val collectionIds = updatedCollections.keySet
+
+          FaciaPress.press(PressCommand(
+            collectionIds,
+            live = shouldUpdateLive,
+            draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || update.exists(_._2.draft)
+          ))
+          ContentApiPush.notifyContentApi(collectionIds)
 
           if (updatedCollections.nonEmpty)
             Ok(Json.toJson(updatedCollections)).as("application/json")
@@ -154,25 +143,23 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
-  def updateCollection(id: String) = AjaxExpiringAuthentication { request =>
-    pressCollectionId(id)
-    notifyContentApi(id)
+  def pressLivePath(path: String) = ExpiringActions.ExpiringAuthAction { request =>
+    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Live))
     NoCache(Ok)
   }
 
-  def notifyContentApi(id: String): Option[Future[Response]] =
-    if (ContentApiPutSwitch.isSwitchedOn)
-      ConfigAgent.getConfig(id)
-        .map {config => ContentApiWrite.writeToContentapi(config)}
-    else None
+  def pressDraftPath(path: String) = ExpiringActions.ExpiringAuthAction { request =>
+    FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft))
+    NoCache(Ok)
+  }
+  
+  def updateCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
+    FaciaPress.press(PressCommand.forOneId(id).withPressDraft().withPressLive())
+    ContentApiPush.notifyContentApi(Set(id))
+    NoCache(Ok)
+  }
 
-  def pressCollectionId(id: String): Unit = pressCollectionIds(Set(id))
-  def pressCollectionIds(ids: Set[String]): Unit =
-    if (Switches.FaciaToolPressSwitch.isSwitchedOn) {
-      FrontPressJob.pressByCollectionIds(ids)
-    }
-
-  def getLastModified(path: String) = AjaxExpiringAuthentication { request =>
+  def getLastModified(path: String) = ExpiringActions.ExpiringAuthAction { request =>
     val now: Option[String] = S3FrontsApi.getPressedLastModified(path)
     now.map(Ok(_)).getOrElse(NotFound)
   }

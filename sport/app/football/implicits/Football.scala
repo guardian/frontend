@@ -1,10 +1,12 @@
 package implicits
 
 import pa._
-import org.joda.time.{ DateTime, DateMidnight }
+import org.joda.time.{ DateTime, LocalDate }
 import model._
 import views.MatchStatus
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import conf.Switches.WorldCupWallchartEmbedSwitch
+
 
 trait Football extends Collections {
 
@@ -35,7 +37,7 @@ trait Football extends Collections {
   }
 
   implicit class Match2isOn(m: FootballMatch) {
-    def isOn(date: DateMidnight) = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
+    def isOn(date: LocalDate) = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
   }
 
   implicit class Match2status(m: FootballMatch) {
@@ -119,6 +121,7 @@ trait Football extends Collections {
       else t.name
     }
 
+    WorldCupWallchartEmbedSwitch.isSwitchedOn  // ghost team IDs correct for world-cup 2014, should go after that
     // PA knockout placeholder teams
     // e.g. "Winner Group A", "Wnr Gp G/R-Up Gp H", "Loser SF1"
     private val ghostTeamIds = List(
@@ -137,6 +140,13 @@ trait Football extends Collections {
       "Runner-up Group" -> "Runner-up"
     )
   }
+
+  WorldCupWallchartEmbedSwitch.isSwitchedOn  // "700" is for world-cup 2014 - remove that entry when it is done (leave the impls for other tournaments)
+
+  val roundLinks = Map[String, Round => Option[String]](
+    "700" -> ((round: Round) => round.name.map{ n => s"/football/world-cup-2014-${n.toLowerCase.replace(" ", "-")}" })
+  )
+  def groupTag(competitionId: String, round: Round) = roundLinks.get(competitionId).flatMap(_(round))
 }
 
 object Football extends Football

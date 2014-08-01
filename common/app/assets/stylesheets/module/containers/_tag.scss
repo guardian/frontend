@@ -1,20 +1,17 @@
 .container--tag {
-
     .container__border {
         display: block;
     }
     .container__title {
         display: block;
-        color: #FFFFFF;
+        color: #ffffff;
+
         @include mq(tablet) {
             color: $c-newsDefault;
             @include rem((
                 margin-bottom: 12px
             ));
         }
-    }
-    .facia-slice-wrapper:first-child .fromage {
-        border-top-width: 0;
     }
     @include mq(faciaLeftCol, wide) {
         .container__title {
@@ -27,5 +24,4 @@
             ));
         }
     }
-
 }

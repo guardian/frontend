@@ -72,6 +72,12 @@
 // This is everything on the standalone pages
 // i.e. /football/tables or /football/results
 .football-table__container {
+    @include mq($to: rightCol) {
+        @include rem((
+            max-width: gs-span(7)
+        ));
+    }
+
     @include rem((
         margin-bottom: $gs-baseline*3
     ));

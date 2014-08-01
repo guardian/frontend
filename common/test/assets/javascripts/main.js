@@ -17,15 +17,16 @@ requirejs.config({
         helpers:      '/base/common/test/assets/javascripts/helpers',
         analytics:    '/base/common/app/assets/javascripts/modules/analytics',
         bean:         '/base/common/app/assets/javascripts/components/bean/bean',
-        bonzo:        '/base/common/app/assets/javascripts/components/bonzo/src/bonzo',
+        bonzo:        '/base/common/app/assets/javascripts/components/bonzo/bonzo',
         domReady:     '/base/common/app/assets/javascripts/components/domready/ready',
         EventEmitter: '/base/common/app/assets/javascripts/components/eventEmitter/EventEmitter',
-        qwery:        '/base/common/app/assets/javascripts/components/qwery/mobile/qwery-mobile',
-        reqwest:      '/base/common/app/assets/javascripts/components/reqwest/src/reqwest',
-        lodash:       '/base/common/app/assets/javascripts/components/lodash-amd/modern',
-        imager:       '/base/common/app/assets/javascripts/components/imager.js/src/strategies/container',
+        qwery:        '/base/common/app/assets/javascripts/components/qwery/qwery-mobile',
+        reqwest:      '/base/common/app/assets/javascripts/components/reqwest/reqwest',
+        lodash:       '/base/common/app/assets/javascripts/components/lodash-amd',
+        imager:       '/base/common/app/assets/javascripts/components/imager.js/container',
         enhancer:     '/base/common/app/assets/javascripts/components/enhancer/enhancer',
-        googletag:    'empty:'
+        stripe:       '/base/common/app/assets/javascripts/components/stripe/stripe.min',
+        Squire:       '/base/common/test/assets/javascripts/components/squire/src/Squire'
     },
     map: {
         '*': {
@@ -36,7 +37,7 @@ requirejs.config({
     },
     shim: {
         imager: {
-            deps: ['/base/common/app/assets/javascripts/components/imager.js/src/imager.js'],
+            deps: ['/base/common/app/assets/javascripts/components/imager.js/imager.js'],
             exports: 'Imager'
         },
         googletag: {

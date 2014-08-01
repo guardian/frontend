@@ -2,11 +2,13 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+GET           /_healthcheck              controllers.HealthCheck.healthcheck()
+
 # authentication endpoints
-GET           /login                     controllers.Login.login
-POST          /login                     controllers.Login.loginPost
-GET           /openIDCallback            controllers.Login.openIDCallback
-GET           /logout                    controllers.Login.logout
+GET           /login                     controllers.OAuthLoginController.login
+POST          /login                     controllers.OAuthLoginController.loginAction
+GET           /oauth2callback            controllers.OAuthLoginController.oauth2Callback
+GET           /logout                    controllers.OAuthLoginController.logout
 
 # static files
 GET           /assets/*file              controllers.Assets.at(path="/public", file)
@@ -16,14 +18,21 @@ GET           /assets/*file              controllers.Assets.at(path="/public", f
 #######################################################
 
 # Fronts
-GET           /                          controllers.FaciaToolController.collectionsEditor()
-GET           /configuration             controllers.FaciaToolController.configEditor()
-GET           /publish-all               controllers.FaciaToolController.publishAll()
-GET           /publish-all/comet         controllers.FaciaToolController.publishAllStream()
+GET           /                          controllers.FaciaToolController.priorities()
+GET           /editorial                 controllers.FaciaToolController.collectionEditor(priority="editorial")
+GET           /commercial                controllers.FaciaToolController.collectionEditor(priority="commercial")
+
+GET           /editorial/config          controllers.FaciaToolController.configEditor(priority="editorial")
+GET           /commercial/config         controllers.FaciaToolController.configEditor(priority="commercial")
+
+GET           /publish-all               controllers.ContentApiPressController.publishAll()
+GET           /publish-all/comet         controllers.ContentApiPressController.publishAllStream()
 
 POST          /collection/publish/*id    controllers.FaciaToolController.publishCollection(id)
 POST          /collection/discard/*id    controllers.FaciaToolController.discardCollection(id)
-POST          /collection/update/*id     controllers.FaciaToolController.updateCollection(id)
+
+POST          /press/live/*path          controllers.FaciaToolController.pressLivePath(path)
+POST          /press/draft/*path         controllers.FaciaToolController.pressDraftPath(path)
 
 GET           /front/lastmodified/*path  controllers.FaciaToolController.getLastModified(path)
 
@@ -31,7 +40,6 @@ GET           /collection/*id            controllers.FaciaToolController.readBlo
 POST          /edits                     controllers.FaciaToolController.collectionEdits
 GET           /collection                controllers.FaciaToolController.listCollections
 GET           /config                    controllers.FaciaToolController.getConfig
-POST          /config                    controllers.FaciaToolController.updateConfig
 
 POST          /collectionmeta/*id        controllers.FaciaToolController.updateCollectionMeta(id)
 
@@ -39,3 +47,11 @@ POST          /collectionmeta/*id        controllers.FaciaToolController.updateC
 GET           /switches                  controllers.SwitchesProxy.getSwitches()
 GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)
 GET           /json/proxy/*absUrl        controllers.FaciaContentApiProxy.json(absUrl)
+
+# Updating config
+
+POST          /config/fronts             controllers.FrontController.create()
+POST          /config/fronts/*path       controllers.FrontController.update(path)
+
+POST          /config/collections        controllers.CollectionController.create()
+POST          /config/collections/*id    controllers.CollectionController.update(id)

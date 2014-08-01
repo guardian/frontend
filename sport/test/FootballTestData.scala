@@ -9,7 +9,9 @@ import feed.Competitions
 
 trait FootballTestData {
 
-  private val today = new org.joda.time.DateTime()
+  private val zone = DateTimeZone.forID("Europe/London")
+
+  private val today = new org.joda.time.DateTime(zone)
 
   private val team = new MatchDayTeam("1", "Team name", None, None, None, None)
 
@@ -19,7 +21,7 @@ trait FootballTestData {
 
   private val _result = Result("1234", today.toDateTime, Stage("1"), Round("1", None), "1", false, None, team, team,None, None, None)
 
-  private val matchWithReport = Result("1010", new org.joda.time.DateTime(2012, 12, 1, 15, 0), Stage("1"), Round("1", None), "", false, None,
+  private val matchWithReport = Result("1010", new org.joda.time.DateTime(2012, 12, 1, 15, 0, zone), Stage("1"), Round("1", None), "", false, None,
     MatchDayTeam("1006", "", None, None, None, None),
     MatchDayTeam("65", "", None, None, None, None),
     None, None, None)
@@ -28,7 +30,7 @@ trait FootballTestData {
   val competitions = Seq(
     Competition("100", "/football/premierleague", "Premier League", "Premier League", "English",
       showInTeamsList = true,
-      startDate = Some((today - 2.months).toDateMidnight),
+      startDate = Some((today - 2.months).toLocalDate),
       matches = Seq(
         matchWithReport,
         result("Derby", "Blackburn", 0, 1, today - 5.days).copy(id = "3518296"),
@@ -56,7 +58,7 @@ trait FootballTestData {
 
     ),
     Competition("500", "/football/championsleague", "Champions League", "Champions League", "European",
-      startDate = Some((today - 2.months).toDateMidnight),
+      startDate = Some((today - 2.months).toLocalDate),
       matches = Seq(
         result("Bolton", "Derby", 1, 1, today - 1.day, Some("Bolton win 4-2 on penalties.")),
         liveMatch("Cardiff", "Brighton", 2, 0, today.withTime(15, 0, 0, 0)),

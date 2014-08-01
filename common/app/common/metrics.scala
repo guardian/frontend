@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong
 import com.amazonaws.services.cloudwatch.model.Dimension
 import common.FaciaToolMetrics.InvalidContentExceptionMetric
 import scala.collection.JavaConversions._
+import scala.util.Try
 
 trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
@@ -139,24 +140,17 @@ object S3Metrics {
     "Number of times the AWS S3 client has thrown an Exception"
   )
 
-  val all: Seq[Metric] = Seq(S3ClientExceptionsMetric)
+  object S3AuthorizationError extends SimpleCountMetric(
+    "facia-front",
+    "facia-s3-authorization-403",
+    "Facia S3 403 (Unauthorized) error count",
+    "Number of requests to S3 by facia that have resulted in a 403"
+  )
+
+  val all: Seq[Metric] = Seq(S3ClientExceptionsMetric, S3AuthorizationError)
 }
 
 object ContentApiMetrics {
-  object HttpTimingMetric extends FrontendTimingMetric(
-    "performance",
-    "content-api-calls",
-    "Content API calls",
-    "outgoing requests to content api"
-  ) with TimingMetricLogging
-
-  object HttpTimeoutCountMetric extends SimpleCountMetric(
-    "timeout",
-    "content-api-timeouts",
-    "Content API timeouts",
-    "Content api calls that timeout"
-  )
-
   object ElasticHttpTimingMetric extends FrontendTimingMetric(
     "performance",
     "elastic-content-api-calls",
@@ -194,8 +188,6 @@ object ContentApiMetrics {
 
 
   val all: Seq[Metric] = Seq(
-    HttpTimingMetric,
-    HttpTimeoutCountMetric,
     ElasticHttpTimeoutCountMetric,
     ElasticHttpTimingMetric,
     ContentApi404Metric,
@@ -260,22 +252,146 @@ object FaciaMetrics {
     "Number of errors whilst parsing JSON out of S3"
   )
 
-  object S3AuthorizationError extends SimpleCountMetric(
+  object FaciaToApplicationRedirectMetric extends SimpleCountMetric(
     "facia-front",
-    "facia-s3-authorization-403",
-    "Facia S3 403 (Unauthorized) error count",
-    "Number of requests to S3 by facia that have resulted in a 403"
+    "facia-applications-redirects",
+    "Facia to Applications X-Accel-Redirect count",
+    "Number of requests to facia that have been redirected to Applications via X-Accel-Redirect"
   )
 
   val all: Seq[Metric] = Seq(
     JsonParsingErrorCount,
-    S3AuthorizationError,
-    InvalidContentExceptionMetric
+    InvalidContentExceptionMetric,
+    FaciaToApplicationRedirectMetric
+  ) ++ S3Metrics.all
+}
+
+object FaciaPressMetrics {
+  object FrontPressSuccess extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-success",
+    "Facia front press success count",
+    "Number of times facia-tool has successfully pressed"
+  )
+
+  object FrontPressLiveSuccess extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-live-success",
+    "Facia front press live success count",
+    "Number of times facia-tool has successfully pressed live"
+  )
+
+  object FrontPressLiveFailure extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-live-failure",
+    "Facia front press live success count",
+    "Number of times facia-tool has had a failure in pressing live"
+  )
+
+  object FrontPressFailure extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-failure",
+    "Facia front press failue count",
+    "Number of times facia-tool has had a failure in pressing"
+  )
+
+  object FrontPressDraftSuccess extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-draft-success",
+    "Facia front press draft success count",
+    "Number of times facia-tool has successfully pressed draft"
+  )
+
+  object FrontPressDraftFailure extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-draft-failure",
+    "Facia front press draft failure count",
+    "Number of times facia-tool has had a failure in pressing draft"
+  )
+
+  object FrontPressCronSuccess extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-cron-success",
+    "Facia front press cron success count",
+    "Number of times facia-tool cron job has successfully pressed"
+  )
+
+  object FrontPressCronFailure extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-front-press-cron-failure",
+    "Facia front press cron failure count",
+    "Number of times facia-tool cron job has had a failure in pressing"
+  )
+
+  object MemcachedFallbackMetric extends SimpleCountMetric(
+    "facia-press-content-api",
+    "facia-press-memcached-fallbacks",
+    "Facia Tool Memcached Fall Backs",
+    "Number of times the Memcached Fallback was used"
+  )
+
+  object ContentApiSeoRequestSuccess extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-seo-request-success",
+    "Facia SEO Request Success count",
+    "Number of times facia-tool has successfully made the request for SEO purposes of webTitle and section"
+  )
+
+  object ContentApiSeoRequestFailure extends SimpleCountMetric(
+    "facia-front-press",
+    "facia-seo-request-failure",
+    "Facia SEO Request Failure count",
+    "Number of times facia-tool has failed to made the request for SEO purposes of webTitle and section"
+  )
+
+  object FrontPressLatency extends FrontendTimingMetric(
+    "facia-front-press",
+    "front-press-latency",
+    "Front Press Latency",
+    "Time from press command being queued to being processed"
+  )
+
+  object UkFrontPressLatency extends FrontendTimingMetric(
+    "facia-front-press",
+    "uk-network-front-press-latency",
+    "UK Network Front Press Latency",
+    "Time from press command for UK front being queued to being processed"
+  )
+
+  object UsFrontPressLatency extends FrontendTimingMetric(
+    "facia-front-press",
+    "us-network-front-press-latency",
+    "US Network Front Press Latency",
+    "Time from press command for US front being queued to being processed"
+  )
+
+  object AuFrontPressLatency extends FrontendTimingMetric(
+    "facia-front-press",
+    "au-network-front-press-latency",
+    "AU Network Front Press Latency",
+    "Time from press command for AU front being queued to being processed"
+  )
+
+  val all: Seq[Metric] = Seq(
+    FrontPressSuccess,
+    FrontPressLiveSuccess,
+    FrontPressLiveFailure,
+    FrontPressFailure,
+    FrontPressDraftSuccess,
+    FrontPressDraftFailure,
+    FrontPressCronSuccess,
+    FrontPressCronFailure,
+    MemcachedFallbackMetric,
+    ContentApiSeoRequestSuccess,
+    ContentApiSeoRequestFailure,
+    FrontPressLatency,
+    UkFrontPressLatency,
+    UsFrontPressLatency,
+    AuFrontPressLatency
   )
 }
 
 object FaciaToolMetrics {
-
   object ApiUsageCount extends SimpleCountMetric(
     "facia-api",
     "facia-api-usage",
@@ -318,34 +434,6 @@ object FaciaToolMetrics {
     "Number of PUT requests that have failed to the content api"
   )
 
-  object FrontPressSuccess extends SimpleCountMetric(
-    "facia-front-press",
-    "facia-front-press-success",
-    "Facia front press success count",
-    "Number of times facia-tool has successfully pressed"
-  )
-
-  object FrontPressFailure extends SimpleCountMetric(
-    "facia-front-press",
-    "facia-front-press-failure",
-    "Facia front press failue count",
-    "Number of times facia-tool has has a failure in pressing"
-  )
-
-  object FrontPressCronSuccess extends SimpleCountMetric(
-    "facia-front-press",
-    "facia-front-press-cron-success",
-    "Facia front press cron success count",
-    "Number of times facia-tool has successfully pressed"
-  )
-
-  object FrontPressCronFailure extends SimpleCountMetric(
-    "facia-front-press",
-    "facia-front-press-cron-failure",
-    "Facia front press cron failue count",
-    "Number of times facia-tool has has a failure in pressing"
-  )
-
   object InvalidContentExceptionMetric extends SimpleCountMetric(
     "facia",
     "facia-invalid-content",
@@ -353,11 +441,30 @@ object FaciaToolMetrics {
     "Number of times facia/facia-tool has thrown InvalidContent exceptions"
   )
 
+  object EnqueuePressSuccess extends SimpleCountMetric(
+    "facia-api",
+    "faciatool-enqueue-press-success",
+    "Successful enqueueing of press command",
+    "Number of successful enqueuing of press commands"
+  )
+
+  object EnqueuePressFailure extends SimpleCountMetric(
+    "facia-api",
+    "faciatool-enqueue-press-failure",
+    "Failed enqueueing of press command",
+    "Number of failed enqueuing of press commands"
+  )
+
   val all: Seq[Metric] = Seq(
-    ApiUsageCount, ProxyCount, ExpiredRequestCount,
-    DraftPublishCount, ContentApiPutSuccess, ContentApiPutFailure,
-    FrontPressSuccess, FrontPressFailure, FrontPressCronSuccess,
-    FrontPressCronFailure, InvalidContentExceptionMetric
+    ApiUsageCount,
+    ProxyCount,
+    ExpiredRequestCount,
+    DraftPublishCount,
+    ContentApiPutSuccess,
+    ContentApiPutFailure,
+    InvalidContentExceptionMetric,
+    EnqueuePressSuccess,
+    EnqueuePressFailure
   ) ++ ContentApiMetrics.all ++ S3Metrics.all
 }
 
@@ -421,6 +528,7 @@ object Metrics {
   lazy val admin = AdminMetrics.all
   lazy val facia = FaciaMetrics.all
   lazy val faciaTool = FaciaToolMetrics.all
+  lazy val faciaPress = FaciaPressMetrics.all
 }
 
 case class SimpleCountMetric(
@@ -433,15 +541,27 @@ case class SimpleCountMetric(
   val currentCount = new AtomicLong(0)
   val `type` = "counter"
 
-  def increment() {
+  def increment(): Long = {
     count.incrementAndGet()
     currentCount.incrementAndGet()
   }
 
+  def add(value: Long): Long = {
+    count.addAndGet(value)
+    currentCount.getAndAdd(value)
+  }
+
+
   def getAndReset = currentCount.getAndSet(0)
   val getValue: () => Long = count.get
+  val getResettingValue: () => Long = currentCount.get
 
   override def asJson: StatusMetric = super.asJson.copy(count = Some(getValue().toString))
+
+}
+
+object SimpleCountMetric {
+  def apply(group: String, name: String, title: String): SimpleCountMetric = SimpleCountMetric(group, name, title, title)
 }
 
 class FrontendTimingMetric(
@@ -464,6 +584,7 @@ class FrontendTimingMetric(
   override val getValue = () => totalTimeInMillis
 
   def getAndReset: Long = currentCount.getAndSet(0)
+  def getAndResetTime: Long = Try(timeInMillis.getAndSet(0) / currentCount.getAndSet(0)).getOrElse(0L)
 }
 
 object PerformanceMetrics {
@@ -519,9 +640,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     val systemMetrics  = this.systemMetrics
     val applicationMetrics  = this.applicationMetrics
     CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
-    if (applicationMetrics.nonEmpty) {
-      CloudWatch.putWithDimensions(applicationMetricsNamespace, applicationMetrics, Seq(applicationDimension))
-    }
+    for (metrics <- applicationMetrics.grouped(20))
+      CloudWatch.putWithDimensions(applicationMetricsNamespace, metrics, Seq(applicationDimension))
   }
 
   override def onStart(app: PlayApp) {

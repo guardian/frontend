@@ -3,7 +3,7 @@ package common
 import conf.Switches.AutoRefreshSwitch
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
-import play.api.templates.Html
+import play.twirl.api.Html
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.api.libs.json.Json._
@@ -13,7 +13,7 @@ class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
 
   "JsonComponent" should "not allow script injection" in {
     val request = FakeRequest("GET", "http://foo.bar.com?callback=some<script>")
-    (JsonComponent(Html("<html></html>"))(request)).header.status should be(403)
+    JsonComponent(Html("<html></html>"))(request).header.status should be(403)
   }
 
   it should "build json output with standard name" in {
@@ -65,17 +65,7 @@ class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
 
     contentType(result) should be(Some("application/javascript"))
     status(result) should be(200)
-    contentAsString(result) should be("""callbackName3({"name":"foo","refreshStatus":true});""")
-  }
-
-  it should "Vary on Accept and Origin" in {
-    val result = Future {
-      val request = FakeRequest("GET", "http://foo.bar.com?callback=callbackName3")
-      JsonComponent(obj("name" -> "foo"))(request)
-    }
-
-    status(result) should be(200)
-    header("Vary", result) should be (Some("Accept, Origin"))
+    contentAsString(result) should be( """callbackName3({"name":"foo","refreshStatus":true});""")
   }
 
   it should "disable refreshing if auto refresh switch is off" in {

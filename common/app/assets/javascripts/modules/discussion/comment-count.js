@@ -1,9 +1,9 @@
 define([
-    'common/common',
+    'common/utils/mediator',
     'bonzo',
     'common/utils/ajax'
 ], function (
-    common,
+    mediator,
     bonzo,
     ajax
 ) {
@@ -63,7 +63,7 @@ define([
             success: function(response) {
                 if(response && response.counts) {
                     renderCounts(response.counts, context);
-                    common.mediator.emit('modules:commentcount:loaded', response.counts);
+                    mediator.emit('modules:commentcount:loaded', response.counts);
                 }
             }
         });
@@ -75,8 +75,8 @@ define([
         }
 
         //Load new counts when more trails are loaded
-        common.mediator.on('module:trailblock-show-more:render', function() { getCommentCounts(context); });
-        common.mediator.on('modules:related:loaded', function() { getCommentCounts(context); });
+        mediator.on('module:trailblock-show-more:render', function() { getCommentCounts(context); });
+        mediator.on('modules:related:loaded', function() { getCommentCounts(context); });
     }
 
     return {

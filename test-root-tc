@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -o nounset
+set -o errexit
+
+
+./grunt-tc clean validate test:unit compile
+./sbt-tc "project root" test
+
+echo "Tested everything."

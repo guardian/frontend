@@ -1,6 +1,6 @@
-@import "_tones";
+@import '_tones';
 
 @include tone-global(news, $c-newsDefault, $c-newsAccent);
 @include tone-global(comment, $c-commentDefault, $c-commentAccent);
 @include tone-global(feature, $c-featureDefault, $c-featureAccent);
-@include tone-head-comment-icon(feature, "white");
+@include tone-head-comment-icon(feature, 'white');

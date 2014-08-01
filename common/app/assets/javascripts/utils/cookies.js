@@ -48,6 +48,20 @@ define(function () {
         document.cookie = name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
     }
 
+    function addForMinutes(name, value, minutesToLive) {
+        if (minutesToLive) {
+            var expires = new Date();
+            expires.setMinutes(expires.getMinutes() + minutesToLive);
+            document.cookie = name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
+        } else {
+            add(name, value);
+        }
+    }
+
+    function addSessionCookie(name, value) {
+        document.cookie = name + '=' + value + '; path=/; domain=' + getShortDomain() + ';';
+    }
+
     function getCookieValues(name) {
         var cookieVals = [],
             nameEq = name + '=',
@@ -80,6 +94,8 @@ define(function () {
         cleanUp: cleanUp,
         cleanUpDuplicates: cleanUpDuplicates,
         add: add,
+        addSessionCookie: addSessionCookie,
+        addForMinutes: addForMinutes,
         remove: remove,
         get: get
     };

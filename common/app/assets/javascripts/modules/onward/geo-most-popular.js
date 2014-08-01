@@ -6,26 +6,30 @@ define([
     'qwery',
     'lodash/objects/assign',
     'common/modules/component',
-    'common/modules/analytics/register'
+    'common/utils/mediator'
 ], function (
     qwery,
     extend,
     Component,
-    register
+    mediator
     ) {
 
     function GeoMostPopular(config) {
-        register.begin('geo-most-popular');
+        mediator.emit('register:begin', 'geo-most-popular');
         this.config = extend(this.config, config);
-        this.fetch(qwery('.mpu-context'), 'rightHtml');
+        this.fetch(qwery('.js-components-container'), 'rightHtml');
     }
 
     Component.define(GeoMostPopular);
 
+    GeoMostPopular.hideThumbnail = function() {
+      GeoMostPopular.prototype.endpoint = '/most-read-geo.json?hideThumb=true';
+    };
+
     GeoMostPopular.prototype.endpoint = '/most-read-geo.json';
 
     GeoMostPopular.prototype.ready = function() {
-        register.end('geo-most-popular');
+        mediator.emit('register:begin', 'geo-most-popular');
     };
 
     return GeoMostPopular;

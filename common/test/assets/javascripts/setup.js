@@ -2,7 +2,7 @@
 sinon.FakeXMLHttpRequest.prototype.withCredentials = false;
 
 
-// Silly phantomJS doesn't have this yet
+// Silly phantomJS doesn't have this yetz
 if (!Function.prototype.bind) {
   Function.prototype.bind = function (oThis) {
     if (typeof this !== "function") {
@@ -26,3 +26,21 @@ if (!Function.prototype.bind) {
     return fBound;
   };
 }
+
+guardian = {
+    config: {
+        beaconUrl: '',
+        stripePublicToken: "testToken123",
+        switches: {},
+        page: {
+            tones: 'foo',
+            series: 'bar',
+            references: [{baz: 'one'}, {baz: 'two'}],
+            webPublicationDate: '2013-03-20T17:07:00.000Z'
+        }
+    }
+};
+
+require(['common/utils/ajax'], function(ajax) {
+    ajax.init();
+});

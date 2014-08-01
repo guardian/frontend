@@ -1,62 +1,146 @@
-.ad-slot--dfp {
-    width: 100%;
-    text-align: center;
-    min-height: 56px;
-    // For expandables
-    position: relative;
+.ad-slot {
     z-index: 1000;
-    @include rem((
-        padding: ($gs-baseline/6)*5 0 ($gs-baseline/3) 0
-    ));
+    overflow: hidden;
 
-    iframe {
-        margin: 0 auto;
-    }
-    .no-js & {
+    .js-off & {
         display: none;
     }
-    @include mq(desktopAd) {
-        min-height: 96px;
-    }
 }
-.top-banner-ad-container {
-    margin: 0 auto;
 
-    @include mq(faciaLeftCol) {
+/**
+ * Banner ads
+ */
+.top-banner-ad-container--mobile {
+    text-align: center;
+    background-color: #f0f0f0;
+
+    .ad-slot--top-banner-ad {
+        height: 50px;
         @include rem((
-            width: gs-span(14)
+            padding: $gs-baseline 0
         ));
+
+        @include mq(tablet) {
+            display: none;
+        }
     }
 }
-.ad-slot--top-banner-ad {
-    background-color: #f0f0f0;
-    min-height: 50px;
-    @include rem((
-        padding: $gs-baseline 0
-    ));
+.top-banner-ad-container--desktop {
+    background-color: $c-neutral8;
+    border-bottom: 2px solid $c-neutral4;
+    display: none;
 
     @include mq(tablet) {
-        background-color: transparent;
-        min-height: 90px;
+        .js-on & {
+            display: block;
+        }
+    }
+    .ad-slot--top-banner-ad {
+        display: none;
+        min-height: 90 + ($gs-row-height/2);
+        @include rem((
+            padding-bottom: $gs-row-height/2
+        ));
+
+        @include mq(tablet) {
+            .js-on & {
+                display: block;
+            }
+        }
+    }
+    .ad-slot__label {
+        text-align: left;
+        border-top: 0;
+        padding: 0;
+        height: $gs-row-height/2;
+    }
+    iframe {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        @include transition(height 1s cubic-bezier(0, 0, 0, .985));
+    }
+    @include mq(wide) {
+        .has-page-skin & {
+            .ad-slot--top-banner-ad {
+                width: 970px;
+                padding-left: 0;
+                text-align: center;
+            }
+            .ad-slot__label {
+                width: 720px;
+                margin: 0 auto;
+            }
+        }
+    }
+}
+.top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
+    @include mq(mobile, $to: faciaLeftCol) {
+        text-align: center;
     }
     @include mq(faciaLeftCol) {
-        width: auto;
-        margin-left: gs-span(2) + $gs-gutter;
-        text-align: left;
+        margin: 0 auto;
+        @include rem((
+            width: gs-span(14) - (gs-span(2) + $gs-gutter),
+            padding-left: gs-span(2) + $gs-gutter
+        ));
+    }
+    @include mq(wide) {
+        @include rem((
+            width: gs-span(16) - (gs-span(3) + $gs-gutter),
+            padding-left: gs-span(3) + $gs-gutter
+        ));
+    }
+    @include mq(tablet, faciaLeftCol) {
+        .ad-slot__label {
+            width: 728px;
+            margin: 0 auto;
+        }
     }
 }
-.mpu-context {
-    // Provides context to sticky positioned blocks
-    height: 100%;
+.top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
+    @include mq(mobile, $to: rightCol) {
+        text-align: center;
+    }
+    @include mq(rightCol) {
+        @include rem((
+            margin: 0 0 0 $gs-gutter,
+        ));
+    }
+    @include mq(leftCol) {
+        margin: 0 auto;
+        @include rem((
+            max-width: gs-span(14) + ($gs-gutter*2) - (gs-span(2) + ($gs-gutter*2)),
+            padding-left: gs-span(2) + ($gs-gutter*2)
+        ));
+    }
+    @include mq(wide) {
+        @include rem((
+            max-width: gs-span(16) + ($gs-gutter*2) - (gs-span(3) + ($gs-gutter*2)),
+            padding-left: gs-span(3) + ($gs-gutter*2)
+        ));
+    }
+    @include mq(tablet, rightCol) {
+        .ad-slot__label {
+            width: 728px;
+            margin: 0 auto;
+        }
+    }
 }
-.ad-slot--container-inline {
-    min-height: 50px;
-    @include box-sizing(border-box);
-    @include rem((
-        margin: $gs-baseline 0 $gs-baseline/2,
-        padding: 0 $gs-gutter/2 0
-    ));
 
+/**
+ * Inline ads
+ */
+.ad-slot--container-inline,
+.ad-slot--inline {
+    min-height: 50 + $mpu-ad-label-height;
+
+    @include mq(mobileLandscape) {
+        min-height: 50px;
+    }
+    @include mq(tablet) {
+        height: 250px + $mpu-ad-label-height;
+        width: 300px;
+    }
     .ad-slot__label {
         max-width: 300px;
         margin: 0 auto;
@@ -64,83 +148,115 @@
         @include mq(mobileLandscape, tablet) {
             position: absolute;
             width: 50%;
-            height: 100%;
-            text-align: left;
+            height: 50px;
             z-index: -1;
+            text-align: left;
             @include rem((
                 padding-left: 2px,
                 font-size: 10px
             ));
         }
     }
+}
+.ad-slot--container-inline {
+    @include rem((
+        margin: $gs-baseline 0 $gs-baseline/2,
+    ));
+
     @include mq(tablet) {
         position: absolute;
-        left: 0;
+        top: 1px;
         right: 0;
-        @if $browser-supports-flexbox {
-            @include rem((
-                bottom: $mpu-align-offset
-            ));
-        } @else {
-            bottom: 0;
-        }
-        top: 0;
-        padding: 0;
-        width: auto;
+        margin: 0;
         background-color: $c-neutral8;
-        @include rem((
-            margin: 0 $gs-gutter / 2
-        ));
-
-        .ad-slot__container {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-        }
     }
 }
 .ad-slot--inline {
-    min-width: 300px;
-    max-width: 100%;
-    padding: 0;
+    text-align: center;
+    @include rem((
+        margin-bottom: $gs-baseline
+    ));
 
-    .ad-slot__container {
-        line-height: 0;
-    }
-    .ad-slot__label {
-        max-width: 300px;
-        margin: 0 auto;
-
-        @include mq(mobileLandscape, tablet) {
-            position: absolute;
-            width: 100%;
-            height: 50px;
-            z-index: -1;
-            text-align: left;
-        }
-    }
     @include mq(tablet) {
-        width: auto;
-        height: auto;
-        padding-top: $gs-baseline/3;
-        padding-left: $gs-gutter;
         float: right;
+        @include rem((
+            margin-top: $gs-baseline/3,
+            margin-left: $gs-gutter
+        ))
     }
 }
 .ad-slot--mpu-banner-ad {
-    padding: 0;
-    width: 300px;
-    min-height: 284px;
+    display: none;
+    min-height: 250 + $mpu-ad-label-height;
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
+
+    @include mq(rightCol) {
+        display: block;
+    }
 }
+.ad-slot--sponsored,
+.ad-slot--sponsored__header {
+    border-top: 1px solid $c-neutral5;
+    @include rem((
+        padding-top: $gs-baseline/4
+    ));
+}
+.ad-slot--sponsored {
+    overflow: hidden;
+}
+.ad-slot--sponsored__label,
+.ad-slot--sponsored__header,
+.ad-slot--sponsored__image,
+.ad-slot--sponsored__text {
+    @include rem((
+        padding-left: $gs-gutter/2,
+        padding-right: $gs-gutter/2
+    ));
+}
+.ad-slot--sponsored__label,
+.ad-slot--sponsored__text {
+    color: $c-neutral2;
+}
+.ad-slot--sponsored__label {
+    float: left;
+    @include fs-data(3);
+}
+.ad-slot--sponsored__image {
+    float: left;
+}
+.ad-slot--sponsored__link {
+    float: right;
+}
+.ad-slot--sponsored__header {
+    @include f-headlineSans;
+    @include font-size(16, 20);
+}
+.ad-slot--sponsored__text {
+    @include f-textSans;
+    @include font-size(14, 18);
+}
+.ad-slot--sponsored__header {
+    clear: both;
+}
+
+/**
+ * Commercial Components
+ */
 .ad-slot--commercial-component,
 .ad-slot--commercial-component-high {
-    width: 100%;
-    min-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    @include rem((
-        margin-top: $gs-baseline
-    ));
+    min-height: 88px;
+
+    @include mq(wide) {
+        .has-page-skin & {
+            margin-left: auto;
+            margin-right: auto;
+            @include rem((
+                width: gs-span(12) + ($gs-gutter*2)
+            ));
+        }
+    }
 }
 .ad-slot--commercial-component-high {
     display: none;
@@ -149,27 +265,29 @@
         display: block;
     }
 }
+.ad-slot--commercial-component {
+    @include rem((
+        margin-top: $gs-baseline
+    ));
+}
+
+/**
+ * Badges
+ */
 .ad-slot--paid-for-badge {
-    min-height: 0;
-    text-align: left;
-    border-bottom: 1px dotted $c-neutral5;
     @include rem((
         padding: 2px 0 $gs-baseline
     ));
 
-    @include mq(leftCol) {
-        border-bottom-width: 0;
-        border-top: 1px dotted $c-neutral5;
-    }
-    .ad-slot__container {
-        width: 100%;
-        display: block;
+    // badges are always broken out, so hide the actual ad
+    iframe {
+        display: none;
     }
     .ad-slot--paid-for-badge__inner {
         overflow: hidden;
 
         @include mq(leftCol) {
-            .article__meta-container--no-byline & {
+            .content__meta-container--no-byline & {
                 @include rem((
                     padding-top: $gs-baseline / 3
                 ));
@@ -183,12 +301,10 @@
     }
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
-        color: $c-neutral2;
         margin: 0;
-
-        .facia-container--advertisement-feature & {
-            color: $c-neutral2-contrasted;
-        }
+    }
+    .ad-slot--paid-for-badge__header {
+        font-weight: bold;
     }
     .ad-slot--paid-for-badge__link,
     .ad-slot--paid-for-badge__help {
@@ -205,65 +321,168 @@
         display: block;
     }
     .ad-slot--paid-for-badge__help {
-        @include fs-textsans(1, $size-only: true);
+        @include fs-textSans(1, $size-only: true);
         @include rem((
             margin-top: $gs-baseline/3
         ));
     }
-
-    // badges in containers
-    .container & {
-        @include clearfix;
-        position: relative;
-        min-height: 90px;
-        border-top: 0;
-        z-index: 99;
-        border-bottom-width: 0;
-
-        .ad-slot--paid-for-badge__link {
-            position: relative;
-            float: right;
+}
+.ad-slot--adbadge {
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label {
+        color: $c-neutral2-contrasted;
+    }
+    @include mq(mobile, $to: faciaLeftCol) {
+        &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
+            @include rem((
+                margin-top: get-line-height($fs-data, 3)*-2
+            ));
+        }
+    }
+}
+.ad-slot--spbadge {
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label {
+        color: $c-neutral2;
+    }
+    @include mq(mobile, $to: faciaLeftCol) {
+        &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             @include rem((
                 margin-top: get-line-height($fs-data, 3)*-1
             ));
         }
-        + .container__body .facia-slice-wrapper:first-child .fromage {
-            border-top-width: 2px;
+    }
+}
+.ad-slot--paid-for-badge--article {
+    border-bottom: 1px dotted $c-neutral5;
+
+    @include mq(leftCol) {
+        border-bottom-width: 0;
+        border-top: 1px dotted $c-neutral5;
+    }
+    // magic numbers, height of the ad badge
+    &.ad-slot--spbadge {
+        @include rem((
+            min-height: 135px
+        ));
+    }
+    &.ad-slot--adbadge {
+        @include rem((
+            min-height: 155px
+        ));
+    }
+}
+.ad-slot--paid-for-badge--live-blog {
+    @include mq(rightCol) {
+        @include rem((
+            padding-top: $gs-baseline*2
+        ));
+    }
+}
+.ad-slot--paid-for-badge--front {
+    @include clearfix;
+    position: relative;
+    min-height: 90px;
+    z-index: 99;
+
+    .ad-slot--paid-for-badge__link {
+        position: relative;
+        float: right;
+    }
+    @include mq(tablet) {
+        margin-left: 50%;
+        padding-top: 0;
+        @include rem((
+            margin-top: -$gs-row-height
+        ));
+    }
+    @include mq(desktop) {
+        margin-left: 62%;
+    }
+    @include mq(tablet, $to: faciaLeftCol) {
+        .container--has-toggle & {
+            @include rem((
+                margin-right: gs-span(1)
+            ));
         }
-        @include mq(tablet) {
+    }
+    @include mq(faciaLeftCol) {
+        padding: 0;
+        margin: 0;
+        float: left;
+        min-height: 0;
+        @include rem((
+            margin-top: 4px
+        ));
+
+        .ad-slot--paid-for-badge__link {
+            float: none;
+            @include rem((
+                margin-top: $gs-row-height/4
+            ));
+        }
+    }
+    @include mq(wide) {
+        clear: left;
+
+        .has-page-skin & {
             margin-left: 50%;
             width: auto;
-            padding-top: 0;
+            float: none;
             @include rem((
                 margin-top: -$gs-row-height
             ));
+
+            .ad-slot--paid-for-badge__link {
+                float: right;
+            }
+            &.ad-slot--adbadge .ad-slot--paid-for-badge__link {
+                @include rem((
+                    margin-top: get-line-height($fs-data, 3)*-2
+                ));
+            }
+            &.ad-slot--spbadge .ad-slot--paid-for-badge__link {
+                @include rem((
+                    margin-top: get-line-height($fs-data, 3)*-1
+                ));
+            }
         }
-        @include mq(desktop) {
+        .has-page-skin .container--has-toggle & {
             @include rem((
-                padding-left: $gs-gutter/2
+                margin-right: gs-span(1)
+            ));
+        }
+    }
+}
+.facia-container--sponsored .container:first-child,
+.facia-container--advertisement-feature .container:first-child,
+.container--sponsored,
+.container--advertisement-feature {
+    .container__header + .container__body {
+        @include rem((
+            margin-top: 104px
+        ));
+
+        @include mq(tablet) {
+            @include rem((
+                margin-top: 78px
             ));
         }
         @include mq(faciaLeftCol) {
-            padding: 0;
-            margin: 0;
-            float: left;
-            @include rem((
-                margin-top: 4px
-            ));
+            margin-top: 0;
+        }
+    }
+}
 
-            .ad-slot--paid-for-badge__link {
-                float: none;
-                @include rem((
-                    margin-top: $gs-row-height/4
-                ));
-            }
-            + .container__body .facia-slice-wrapper:first-child .fromage {
-                border-top-width: 0;
-            }
-        }
-        @include mq(wide) {
-            clear: left;
-        }
+/**
+ * Page Skins
+ */
+.ad-slot--page-skin {
+    height: 0;
+}
+@include mq(mobile, $to: wide) {
+    .has-page-skin {
+        background-image: none !important;
     }
 }
 .ad-slot__label {
@@ -271,14 +490,9 @@
     background-color: $c-neutral8;
     padding: 0 ($gs-baseline/3)*2;
     border-top: 1px solid $c-neutral5;
-    color: $c-neutral2;
+    color: $c-neutral2-contrasted;
     text-align: right;
     @include box-sizing(border-box);
     @include f-data;
     @include font-size(12, 20);
-}
-.ad-slot__container {
-    display: inline-block;
-    width: auto;
-    margin: 0 auto !important;
 }

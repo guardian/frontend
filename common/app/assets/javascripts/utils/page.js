@@ -1,5 +1,5 @@
 define([
-    'common/$',
+    'common/utils/$',
     'common/utils/config',
     'lodash/objects/assign',
     'lodash/collections/find'
@@ -28,6 +28,7 @@ function(
         assign(match, {
             date: config.webPublicationDateAsUrlPart(),
             teams: teams,
+            isLive: config.page.isLive,
             pageType: find([
                 ['minbymin', config.page.isLiveBlog],
                 ['report', config.hasTone('Match reports')],
@@ -63,7 +64,7 @@ function(
 
     function belowArticleVisible(yes, no) {
         var el = $('.js-after-article')[0],
-            vis = window.getComputedStyle(el).getPropertyValue('display') !== 'none';
+            vis = el ? window.getComputedStyle(el).getPropertyValue('display') !== 'none' : false;
 
         return isit(vis, yes, no, el);
     }

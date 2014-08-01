@@ -21,9 +21,6 @@ trait MostReadLifecycle extends GlobalSettings {
 
   override def onStop(app: PlayApp) {
     Jobs.deschedule("MostReadAgentRefreshJob")
-
-    MostReadAgent.stop()
-
     super.onStop(app)
   }
 }

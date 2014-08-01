@@ -30,7 +30,7 @@ class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData w
         val allowedDates = List(today, today.plusDays(1), today.plusDays(3))  // look at the test data to see why
 
         fixtures.relevantMatches.foreach { case (fMatch, _) =>
-          allowedDates should contain(fMatch.date.toDateMidnight)
+          allowedDates should contain(fMatch.date.toLocalDate)
         }
       }
 
@@ -65,7 +65,7 @@ class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData w
         val allowedDates = List(targetDate, targetDate.plusDays(1), targetDate.plusDays(7))  // look at the test data to see why
 
         fixtures.relevantMatches.foreach { case (fMatch, _) =>
-          allowedDates should contain(fMatch.date.toDateMidnight)
+          allowedDates should contain(fMatch.date.toLocalDate)
         }
       }
 

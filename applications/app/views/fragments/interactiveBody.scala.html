@@ -1,30 +1,29 @@
-@(interactive: Interactive, storyPackage: List[Trail], index: Int, trail: Boolean)(implicit request: RequestHeader)
+@(page: InteractivePage)(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
-<div class="gs-container">
-    <h2 class="article__zone tone-@VisualTone(interactive) tone-accent-border hide-on-mobile">
-        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@interactive.section}">@Html(interactive.sectionName.toLowerCase)</a>
-    </h2>
 
-    <div class="article-wrapper monocolumn-wrapper">
-        <article id="article" class="article"
-            itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
+@defining((page.interactive, page.storyPackage)) { case (interactive, storyPackage) =>
 
-            <div class="article__inner article__inner--head">
-                <header class="article__head">
-                    @fragments.dateline(interactive.webPublicationDate)
-                    @fragments.headline(interactive.headline)
-                    @fragments.standfirst(interactive)
-                </header>
-                <div class="after-header"></div>
-            </div>
+    <article class="content content--interactive tone-@interactive.visualTone"
+    itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
 
-            <div class="article__container">
-                @interactive.body.map { body =>
-                    @HtmlFormat.raw(body)
-                }.getOrElse {
-                    <figure class="interactive" data-interactive="@conf.Configuration.interactive.url@request.path.drop(1)/boot.js"></figure>
-                }
-            </div>
-        </article>
+        @fragments.headDefault(interactive)
+
+    <div class="gs-container u-cf">
+        @fragments.contentMeta(interactive)
     </div>
-</div>
+
+    <div class="gs-container" data-test-id="interactive-content-body">
+        <div class="content__main-column content__main-column--interactive">
+
+        @interactive.body.map { body =>
+            @HtmlFormat.raw(body)
+        }.getOrElse {
+            <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
+        }
+        </div>
+    </div>
+    </article>
+
+    @fragments.contentFooter(interactive, storyPackage)
+
+}

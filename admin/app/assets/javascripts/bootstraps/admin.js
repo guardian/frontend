@@ -2,14 +2,18 @@ require([
     'domReady',
     'common/utils/ajax',
     'bootstraps/abtests',
+    'bootstraps/adunitapproval',
     'bootstraps/browserstats',
-    'bootstraps/radiator'
+    'bootstraps/radiator',
+    'bootstraps/commercial'
 ], function(
     domReady,
     ajax,
     abTests,
+    adunitapproval,
     browserstats,
-    radiator
+    radiator,
+    commercial
 ) {
     var config = {
         page: {
@@ -21,16 +25,27 @@ require([
     ajax.init(config);
 
     domReady(function() {
-        var location = window.location.pathname;
+        switch(window.location.pathname) {
+            case '/analytics/abtests':
+                abTests.init();
+                break;
 
-        if (location === "/analytics/abtests") {
-            abTests.init();
-        }
-        if (location === "/analytics/browsers") {
-            browserstats.init();
-        }
-        if (location === "/radiator") {
-            radiator.init();
+            case '/analytics/browsers':
+                browserstats.init();
+                break;
+
+            case '/analytics/commercial':
+                commercial.init();
+                break;
+
+            case '/radiator':
+                radiator.init();
+                break;
+
+            case '/commercialtools/adunits/toapprove':
+                adunitapproval.init();
+                break;
         }
     });
+
 });

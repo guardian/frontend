@@ -23,12 +23,6 @@
     }
 }
 
-.mobile-and-tablet-only {
-    @include mq(leftCol) {
-        display: none !important;
-    }
-}
-
 .hide-on-mobile {
     display: none !important;
 
@@ -44,8 +38,18 @@
     }
 }
 
-.is-invisible {
-    visibility: hidden !important;
+.tablet-only {
+    @include mq($to: mobile) {
+        display: none !important;
+    }
+    @include mq(desktop) {
+        display: none !important;
+    }
+}
+.hide-on-tablet {
+    @include mq(mobile, desktop) {
+        display: none !important;
+    }
 }
 
 .u-cf {
@@ -80,6 +84,10 @@
     padding-bottom: aspect-ratio-height(16, 9);
 }
 
+.u-responsive-ratio--letterbox {
+    padding-bottom: aspect-ratio-height(5, 2);
+}
+
 
 /**
  * Text hyphenation
@@ -95,33 +103,6 @@
     -moz-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
-}
-
-
-/**
- * Fake table
- */
-
-.u-table {
-    display: table;
-}
-.u-table__row {
-    display: table-row;
-}
-.u-table__cell {
-    display: table-cell;
-    width: 10000px;
-    max-width: 100%;
-}
-.u-table__cell--top {
-    vertical-align: top;
-}
-.u-table__cell--bottom {
-    vertical-align: bottom;
-}
-.u-table__cell--collapse {
-    // Cell / row will only take the height it needs
-    height: 1px;
 }
 
 

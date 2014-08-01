@@ -5,24 +5,37 @@ import org.apache.commons.io.IOUtils
 import play.api.{ Mode, Play }
 import play.api.libs.json.{ JsString, Json, JsObject }
 import conf.Configuration
+import conf.Switches.SeoBlockGooglebotFromJSPathsSwitch
 import collection.mutable.{ Map => MutableMap }
 
 case class Asset(path: String) {
   val asModulePath = path.replace(".js", "")
-  lazy val md5Key = path.split('.').dropRight(1).last
+  lazy val md5Key = path.split('/').dropRight(1).last
 
   override def toString = path
 }
 
 class AssetMap(base: String, assetMap: String) {
   def apply(path: String): Asset = {
-    // Don't use hashed files in DEV
-    if (Play.current.mode == Mode.Dev) Asset(base + path) else memoizedAssets(path)
+
+    // Avoid memoizing the asset map in Dev.
+    if (Play.current.mode == Mode.Dev) {
+      assets()(path)
+    } else {
+      memoizedAssets(path)
+    }
   }
 
   private def assets(): Map[String, Asset] = {
-    val url = Play.classloader(Play.current).getResource(assetMap)
-    val json = IOUtils.toString(url)
+
+    // Use the grunt-generated asset map in Dev.
+    val json: String = if (Play.current.mode == Mode.Dev) {
+      val assetMapUri = new java.io.File(s"static/hash/" + assetMap).toURI
+      IOUtils.toString(assetMapUri)
+    } else {
+      val url = Play.classloader(Play.current).getResource(assetMap)
+      IOUtils.toString(url)
+    }
     val js: JsObject = Json.parse(json).asInstanceOf[JsObject]
 
     val paths = js.fields.toMap mapValues { _.asInstanceOf[JsString].value }
@@ -32,7 +45,6 @@ class AssetMap(base: String, assetMap: String) {
 
   private lazy val memoizedAssets = assets()
 }
-
 
 class Assets(base: String, assetMap: String = "assets/assets.map") extends Logging {
   val lookup = new AssetMap(base, assetMap)
@@ -87,4 +99,32 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
       }
     }
   }
+
+  object js {
+
+    private def escapeRelativeJsPaths(unescaped: String): String = {
+
+      // We are getting Googlebot 404 because Google is incorrectly seeing paths in the curl js
+      // we need to escape them out.
+      // "../foo"
+      // "./foo"
+      // and any that are inside single quotes too
+      val regex = """["'](\.{1,2}\/){1,}\w*(\/){0,}\w*(\/)?['"]""".r
+
+      val matches = regex.findAllIn(unescaped).toSeq
+
+      matches.foldLeft(unescaped){ case (result:String, matched: String) =>
+        result.replace(matched, matched.replace("./", ".\" + \"/\" + \""))
+      }
+    }
+
+    private lazy val curlScript = IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js"))
+    private lazy val escapedCurlScript = escapeRelativeJsPaths(curlScript)
+
+    // TODO make this a val again when we get rid of the switch
+    def curl: String = if (SeoBlockGooglebotFromJSPathsSwitch.isSwitchedOn) escapedCurlScript else curlScript
+
+
+  }
+
 }

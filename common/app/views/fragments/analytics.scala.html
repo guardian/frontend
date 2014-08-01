@@ -1,4 +1,5 @@
 @(page: model.MetaData)( implicit request:RequestHeader)
+@import org.joda.time.DateTime
 @import conf.Configuration
 
 @*<!-- TODO temporary till after dotcom switch -->*@
@@ -60,7 +61,17 @@
     }
 }
 
+@* google remarketing fallback *@
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/971225648/?value=0&amp;guid=ON&amp;script=0"/>
+    </div>
+</noscript>
+
 @* there is currently no SSL version of the beacon *@
-@if(!Configuration.environment.secure){
-    <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display: none;" rel="nofollow"/>
+@if(!Configuration.environment.secure) {
+    @page match {
+        case v: model.Video => { <img src="@Configuration.debug.beaconUrl/counts.gif?c=pv&c=vpv" alt="" style="display : none ;" rel="nofollow"/> }
+        case _ => { <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/> }
+    }
 }

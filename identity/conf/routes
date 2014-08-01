@@ -1,6 +1,8 @@
 # For dev machines
 GET         /assets/*path                          dev.DevAssetsController.at(path)
 
+GET         /_healthcheck                          conf.HealthCheck.healthcheck()
+
 GET         /signin                                 @controllers.SigninController.renderForm
 POST        /signin                                 @controllers.SigninController.processForm
 GET         /signout                                @controllers.SignoutController.signout
@@ -15,10 +17,13 @@ GET         /register                               @controllers.RegistrationCon
 POST        /register                               @controllers.RegistrationController.processForm
 GET         /email-prefs                            @controllers.EmailController.preferences
 POST        /email-prefs                            @controllers.EmailController.savePreferences
-GET         /user/id/:id                            @controllers.PublicProfileController.renderProfileFromId(id: String)
-GET         /user/:vanityUrl                        @controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String)
+GET         /user/id/:id                            @controllers.PublicProfileController.renderProfileFromId(id: String, activityType = "discussions")
+GET         /user/id/:id/:activityType              @controllers.PublicProfileController.renderProfileFromId(id: String, activityType: String)
+GET         /user/:vanityUrl                        @controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType = "discussions")
+GET         /user/:vanityUrl/:activityType          @controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType: String)
 GET         /public/edit                            @controllers.EditProfileController.displayPublicProfileForm
 GET         /account/edit                           @controllers.EditProfileController.displayAccountForm
+GET         /membership/edit                        @controllers.EditProfileController.displayMembershipForm
 POST        /public/edit                            @controllers.EditProfileController.submitPublicProfileForm
 POST        /account/edit                           @controllers.EditProfileController.submitAccountForm
 GET         /verify-email/:token                    @controllers.EmailVerificationController.verify(token: String)
@@ -29,3 +34,5 @@ GET         /form/:formReference                    @controllers.FormstackContro
 GET         /form/embed/:formReference              @controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
 
 GET         /et/subscribe/:subDefId                 @controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)
+
+GET         /membership.json                        @controllers.EditProfileController.renderMembershipTab

@@ -1,4 +1,4 @@
-define(['fixtures/config', 'analytics/omniture', 'common/common'], function(testConfigData, Omniture, common) {
+define(['analytics/omniture', 'common/utils/mediator'], function(Omniture, mediator) {
 
     describe("Omniture", function() {
 
@@ -16,7 +16,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
             };
             config.switches = {};
 
-            s = { t: function(){}, tl: function(){}, apl: function(){}, getQueryParam: function(){ return 'test'; }, getValOnce: function(){ return 'test'; } };
+            s = { t: function(){}, tl: function(){}, apl: function(){}, getQueryParam: function(){ return 'test'; }, getValOnce: function(){ return 'test'; }, getTimeParting: function(){ return ["4:03PM", "4:00PM", "Thursday", "Weekday"]; } };
             sinon.spy(s, "t");
             sinon.spy(s, "tl");
             sinon.spy(s, "apl");
@@ -71,6 +71,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
 
             expect(s.linkInternalFilters).toBe("guardian.co.uk,guardiannews.co.uk,localhost,gucode.co.uk,gucode.com,guardiannews.com,int.gnl,proxylocal.com,theguardian.com");
             expect(s.pageName).toBe("GFE:theworld:a-really-long-title-a-really-long-title-a-really-long-title-a-really-long");
+            expect(s.eVar1).toMatch("\\d\\d\\d\\d/\\d\\d/\\d\\d");  // in reality todays date e.g. 2014/05/21
             expect(s.prop9).toBe("Article");
             expect(s.channel).toBe("theworld");
             expect(s.prop4).toBe("Syria,Yemen,Egypt,Bahrain");
@@ -140,7 +141,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
             o.go(config);
             waits(100);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', clickSpec);
+                mediator.emit('module:clickstream:click', clickSpec);
                 expect(s.tl).toHaveBeenCalledOnce();
             });
         });
@@ -157,7 +158,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
             o.go(config);
             waits(100);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', clickSpec);
+                mediator.emit('module:clickstream:click', clickSpec);
                 expect(s.apl).toHaveBeenCalled();
                 expect(s.apl.args[0][1]).toBe('event16');
             });
@@ -176,7 +177,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
 
             o.go(config);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', clickSpecSamePage);  // same page  (non-delayed s.tl call)
+                mediator.emit('module:clickstream:click', clickSpecSamePage);  // same page  (non-delayed s.tl call)
                 expect(s.tl.withArgs(true, 'o', 'tag')).toHaveBeenCalledOnce();
             });
 
@@ -195,7 +196,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
 
             o.go(config);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', clickSpec);
+                mediator.emit('module:clickstream:click', clickSpec);
                 expect(JSON.parse(sessionStorage.getItem('gu.analytics.referrerVars')).value.tag).toEqual('tag in localstorage')
             });
 
@@ -214,7 +215,7 @@ define(['fixtures/config', 'analytics/omniture', 'common/common'], function(test
 
             o.go(config);
             runs(function() {
-                common.mediator.emit('module:clickstream:click', clickSpec);
+                mediator.emit('module:clickstream:click', clickSpec);
                 expect(s.tl.withArgs(el,   'o', 'tag')).toHaveBeenCalledOnce();
             });
 

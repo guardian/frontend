@@ -8,11 +8,12 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
+import conf.Configuration
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
 
   //NOTE - do NOT add body to this list
-  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,commentable,commentCloseDate,starRating"
+  val trailFields = "headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,commentable,commentCloseDate,starRating,productionOffice"
 
   val references = "pa-football-competition,pa-football-team,witness-assignment,esa-cricket-match"
 
@@ -25,13 +26,13 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
     def apply(result: Future[ItemResponse]): Future[Seq[Trail]] =
       result.map{ r =>
 
-        val leadContentCutOff = DateTime.now.toDateMidnight - leadContentMaxAge
+        val leadContentCutOff = DateTime.now.toLocalDate - leadContentMaxAge
 
         var results = r.results.map(Content(_))
         var editorsPicks = r.editorsPicks.map(Content(_))
 
         val leadContent = if (editorsPicks.isEmpty)
-            r.leadContent.filter(_.webPublicationDate >= leadContentCutOff).map(Content(_)).take(1)
+            r.leadContent.filter(_.webPublicationDate >= leadContentCutOff.toDateTimeAtStartOfDay).map(Content(_)).take(1)
           else
             Nil
 
@@ -43,7 +44,7 @@ trait QueryDefaults extends implicits.Collections with ExecutionContexts {
     val tag = "tag=type/gallery|type/article|type/video|type/sudoku"
     val editorsPicks = "show-editors-picks=true"
     val showInlineFields = s"show-fields=$trailFields"
-    val showFields = "trailText,headline,shortUrl,liveBloggingNow,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent"
+    val showFields = "internalContentCode,trailText,headline,shortUrl,liveBloggingNow,thumbnail,commentable,commentCloseDate,shouldHideAdverts,lastModified,byline,standfirst,starRating,showInRelatedContent"
     val showFieldsWithBody = showFields + ",body"
 
     val all = Seq(tag, editorsPicks, showInlineFields, showFields)
@@ -85,7 +86,7 @@ trait ApiQueryDefaults extends QueryDefaults with implicits.Collections with Log
 trait ContentApiClient extends FutureAsyncApi with ApiQueryDefaults with DelegateHttp
 with Logging {
 
-  apiKey = Some(contentApi.key)
+  apiKey = contentApi.key
 
   override def fetch(url: String, parameters: Map[String, String]) = {
     checkQueryIsEditionalized(url, parameters)
@@ -102,8 +103,8 @@ with Logging {
   private def isTagQuery(url: String) = url.endsWith("/tags")
 }
 
-class ElasticSearchContentApiClient extends ContentApiClient {
+class ElasticSearchLiveContentApiClient extends ContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
-  override val targetUrl = contentApi.elasticSearchHost
+  override val targetUrl = contentApi.contentApiLiveHost
 }

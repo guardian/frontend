@@ -1,47 +1,15 @@
 @(content: model.Content)(implicit request: RequestHeader)
-@import common.{Navigation, LinkTo, Edition}
+@import common.{Navigation, LinkTo, Edition, Breadcrumbs, BreadcrumbItem}
 
 <ul class="breadcrumb-list inline-list">
-    @defining(Edition(request).navigation, content.primaryKeyWordTag.get.url) { case (navigation, primaryKeywordLink ) =>
-        @defining(Navigation.topLevelItem(navigation, content)) { topLevelSelected =>
-            @*
-            * See here for more info on Breadcrumbs
-            * https://support.google.com/webmasters/answer/185417?hl=en
-            *@
-
-            @navigation.map { nav =>
-                @if(topLevelSelected.exists(_ == nav) && nav.name.href != primaryKeywordLink) {
-                    <li class="breadcrumb-list__item inline-list__item">
-                        <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                            <a itemprop="url" href="@LinkTo{@nav.name.href}" data-link-name="@nav.name.href"><span itemprop="title">@Html(nav.name.title)</span></a>
-                        </div>
-                    </li>
-                }
-            }
-            @* Secondary nav item *@
-            @Navigation.localNav(navigation, content).map { localNav =>
-                @defining(localNav.find(_.currentFor(content))){ currentSubSection =>
-                    @localNav.map { nav =>
-                        @if( currentSubSection.exists(_ == nav) && nav.href != primaryKeywordLink) {
-                            <li class="breadcrumb-list__item inline-list__item">
-                                <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                                    <a itemprop="url" href="@LinkTo{@nav.href}" data-link-name="@nav.href"><span itemprop="title">@Html(nav.title)</span></a>
-                                </div>
-                            </li>
-                        }
-                    }
-                }
-            }
-        }
-    }
-    @content.primaryKeyWordTag.map { keyword =>
-        <li class="breadcrumb-list__item inline-list__item">
-            <div itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-                <a itemprop="url" href="@LinkTo {@keyword.url}" data-link-name="@keyword.url"><span itemprop="title">@Html(keyword.name.toLowerCase)</span></a>
-            </div>
-        </li>
+    @defining(Breadcrumbs.items(Edition(request).navigation, content)) { breadcrumbs =>
+      @breadcrumbs.map { breadcrumb =>
+          <li class="breadcrumb-list__item inline-list__item">
+              <div class="breadcrumb-keyword" itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
+                  <a itemprop="url" href="@LinkTo{@breadcrumb.href}" data-link-name="@breadcrumb.href"><span itemprop="title">@Html(breadcrumb.title)</span></a>
+              </div>
+          </li>
+      }
     }
 </ul>
-
-
 

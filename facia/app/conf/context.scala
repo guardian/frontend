@@ -5,7 +5,10 @@ import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage, ManagementP
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 import com.gu.management.HttpRequest
+import play.api.{Mode, Play}
 import services.ConfigAgent
+
+object HealthCheck extends AllGoodHealthcheckController(9008, "/uk")
 
 object Management extends GuManagement {
   val applicationName = "frontend-facia"

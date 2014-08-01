@@ -15,7 +15,7 @@ object TestContent {
     id="",
     sectionId=None,
     sectionName=None,
-    webPublicationDate=DateTime.now,
+    webPublicationDateOption=Some(DateTime.now),
     webTitle="",
     webUrl="",
     apiUrl="",

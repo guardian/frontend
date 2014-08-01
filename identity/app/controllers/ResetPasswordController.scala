@@ -43,12 +43,12 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
 
   def renderPasswordResetRequestForm = Action { implicit request =>
     val idRequest = idRequestParser(request)
-    Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, requestPasswordResetForm, Nil))
+    Ok(views.html.password.requestPasswordReset(page, idRequest, idUrlBuilder, requestPasswordResetForm, Nil))
   }
 
   def requestNewToken = Action { implicit request =>
     val idRequest = idRequestParser(request)
-    Ok(views.html.password.reset_password_request_new_token(page, idRequest, idUrlBuilder, requestPasswordResetForm))
+    Ok(views.html.password.resetPasswordRequestNewToken(page, idRequest, idUrlBuilder, requestPasswordResetForm))
   }
 
 
@@ -56,62 +56,62 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
     val idRequest = idRequestParser(request)
     val boundForm = requestPasswordResetForm.bindFromRequest
 
-    def onError(formWithErrors: Form[(String)]): Future[SimpleResult] = {
+    def onError(formWithErrors: Form[(String)]): Future[Result] = {
       logger.info("bad password reset request form submission")
       Future {
-        Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, formWithErrors, Nil))
+        Ok(views.html.password.requestPasswordReset(page, idRequest, idUrlBuilder, formWithErrors, Nil))
       }
     }
 
-    def onSuccess(email: (String)): Future[SimpleResult] = {
+    def onSuccess(email: (String)): Future[Result] = {
         api.sendPasswordResetEmail(email, idRequest.trackingData) map {
           case Left(errors) =>
             logger.info(s"Request new password returned errors ${errors.toString()}")
             val formWithError = errors.foldLeft(boundForm) { (form, error) =>
               form.withError(error.context.getOrElse(""), error.description)
             }
-            Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, formWithError, errors))
+            Ok(views.html.password.requestPasswordReset(page, idRequest, idUrlBuilder, formWithError, errors))
 
-          case Right(apiOk) => Ok(views.html.password.email_sent(page, idRequest, idUrlBuilder,  email))
+          case Right(apiOk) => Ok(views.html.password.emailSent(page, idRequest, idUrlBuilder,  email))
         }
     }
 
-    boundForm.fold[Future[SimpleResult]](onError, onSuccess)
+    boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
   def resetPassword(token : String) = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromRequest
 
-    def onError(formWithErrors: Form[(String, String, String)]): Future[SimpleResult] = {
+    def onError(formWithErrors: Form[(String, String, String)]): Future[Result] = {
       logger.info("form errors in reset password attempt")
       Future {
-        Ok(views.html.password.reset_password(page, idRequest, idUrlBuilder, formWithErrors, token))
+        Ok(views.html.password.resetPassword(page, idRequest, idUrlBuilder, formWithErrors, token))
       }
     }
 
-    def onSuccess(form: (String, String, String)): Future[SimpleResult] = form match {
+    def onSuccess(form: (String, String, String)): Future[Result] = form match {
       case (password, password_confirm, email_address) =>
         api.resetPassword(token,password) map {
           case Left(errors) =>
             logger.info(s"reset password errors, ${errors.toString()}")
             if (errors.exists("Token expired" == _.message))
-              Ok(views.html.password.reset_password_request_new_token(page, idRequest, idUrlBuilder, requestPasswordResetForm))
+              Ok(views.html.password.resetPasswordRequestNewToken(page, idRequest, idUrlBuilder, requestPasswordResetForm))
             else {
               val formWithError = errors.foldLeft(requestPasswordResetForm) { (form, error) =>
                 form.withError(error.context.getOrElse(""), error.description)
               }
-              Ok(views.html.password.request_password_reset(page, idRequest, idUrlBuilder, formWithError, errors))
+              Ok(views.html.password.requestPasswordReset(page, idRequest, idUrlBuilder, formWithError, errors))
             }
 
           case Right(ok) => {
             val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
-            Ok(views.html.password.password_reset_confirmation(page, idRequest, idUrlBuilder, userIsLoggedIn))
+            Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn))
           }
         }
     }
 
-    boundForm.fold[Future[SimpleResult]](onError, onSuccess)
+    boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
   def processUpdatePasswordToken( token : String) = Action.async { implicit request =>
@@ -119,11 +119,11 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
       api.userForToken(token) map {
         case Left(errors) =>
           logger.warn(s"Could not retrieve password reset request for token: $token, errors: ${errors.toString()}")
-          Ok(views.html.password.reset_password_request_new_token(page, idRequest, idUrlBuilder, requestPasswordResetForm))
+          Ok(views.html.password.resetPasswordRequestNewToken(page, idRequest, idUrlBuilder, requestPasswordResetForm))
 
         case Right(user) =>
           val filledForm = passwordResetForm.fill("","", user.primaryEmailAddress)
-          Ok(views.html.password.reset_password(page, idRequest, idUrlBuilder, filledForm, token))
+          Ok(views.html.password.resetPassword(page, idRequest, idUrlBuilder, filledForm, token))
      }
   }
 }

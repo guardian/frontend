@@ -1,6 +1,6 @@
 {
     "packages":{
-        "frontend-facia":{
+        "facia":{
             "type":"autoscaling",
             "apps":[ "frontend::facia" ],
             "data":{
@@ -27,10 +27,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-facia.deploy"]
+            "actionsBeforeApp": ["facia.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-facia.uploadArtifacts"]
+            "actionsBeforeApp": ["facia.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]

@@ -2,7 +2,7 @@ package controllers
 
 import play.api.mvc.{RequestHeader, Action, Controller}
 import scala.concurrent.Future
-import conf.ContentApi
+import conf.LiveContentApi
 import common.{Logging, ExecutionContexts, Edition}
 import model.{Cached, Tag, Content, Section}
 import services.IndexPage
@@ -14,11 +14,11 @@ import implicits.{ItemResponses, Dates}
 object AllIndexController extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
 
   // no need to set the zone here, it gets it from the date.
-  private val dateFormat = DateTimeFormat.forPattern("yyyy/MMM/dd")
+  private val dateFormat = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(Edition.defaultEdition.timezone)
 
   def newer(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
     val edition = Edition(request)
-    val requestedDate: DateTime = dateFormat.parseDateTime(s"$year/$month/$day").withZone(edition.timezone)
+    val requestedDate: DateTime = dateFormat.withZone(edition.timezone).parseDateTime(s"$year/$month/$day")
     findNewer(path, requestedDate).map{ _.map{ date =>
       val foundDate = date.withZone(edition.timezone)
       Found(s"/$path/${urlFormat(foundDate)}/all")
@@ -43,8 +43,8 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   def allOn(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
     implicit val dedupe = TemplateDeduping()
     val edition = Edition(request)
-    val requestedDate = dateFormat.parseDateTime(s"$year/$month/$day").withZone(edition.timezone)
-      .toDateMidnight.plusDays(1).toDateTime.minusSeconds(1)
+    val requestedDate = dateFormat.withZone(edition.timezone).parseDateTime(s"$year/$month/$day")
+      .withTimeAtStartOfDay().plusDays(1).minusSeconds(1)
 
     loadLatest(path, requestedDate).map { _.map { index =>
 
@@ -76,7 +76,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
-    val result = ContentApi.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest").response.map{ item =>
+    val result = LiveContentApi.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest").response.map{ item =>
       item.section.map( section =>
         IndexPage(Section(section), item.results.map(Content(_)), date)
       ).orElse(item.tag.map( tag =>
@@ -91,7 +91,7 @@ object AllIndexController extends Controller with ExecutionContexts with ItemRes
   }
 
   private def findNewer(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[DateTime]] = {
-    val result = ContentApi.item(s"/$path", Edition(request)).pageSize(1).fromDate(date).orderBy("oldest").response.map{ item =>
+    val result = LiveContentApi.item(s"/$path", Edition(request)).pageSize(1).fromDate(date).orderBy("oldest").response.map{ item =>
       item.results.headOption.map(_.webPublicationDate.withZone(Edition(request).timezone))
     }
     result.recover{ case e: Exception =>

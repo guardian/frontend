@@ -1,6 +1,6 @@
 {
     "packages":{
-        "frontend-commercial":{
+        "commercial":{
             "type":"autoscaling",
             "apps":[ "frontend::commercial" ],
             "data":{
@@ -27,10 +27,10 @@
             "depends" : ["staticFilesUpload", "artifactUpload", "deploy"]
         },
         "deploy":{
-            "actionsBeforeApp": ["frontend-commercial.deploy"]
+            "actionsBeforeApp": ["commercial.deploy"]
         },
         "artifactUpload":{
-            "actionsBeforeApp": ["frontend-commercial.uploadArtifacts"]
+            "actionsBeforeApp": ["commercial.uploadArtifacts"]
         },
         "staticFilesUpload":{
             "actionsBeforeApp": ["frontend-static.uploadStaticFiles"]
