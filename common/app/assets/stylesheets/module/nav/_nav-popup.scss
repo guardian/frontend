@@ -114,15 +114,22 @@ $control-offset: 32 + $gs-gutter/2;
 
 /* Profile Menu
    ========================================================================== */
-// .top-bar__item--profile {
-//     .nav-popup__toggle:before,
-//     .nav-popup__toggle:after {
-//         display: none;
-//     }
-//     &.is-signed-in .nav-popup__toggle {
-//         @extend .nav-popup__toggle;
-//     }
-// }
+.top-bar__item--profile {
+    @if ($old-ie == true) {
+        .nav-popup__toggle:before,
+        .nav-popup__toggle:after {
+            display: none;
+        }
+        // if only
+        &.is-signed-in .nav-popup__toggle {
+            @extend .nav-popup__toggle;
+        }
+    } @else {
+        &:not(.is-signed-in) .nav-popup__toggle {
+            &:before, &:after {display: none;}
+        }
+    }
+}
 
 
 
