@@ -757,6 +757,11 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
                 height: $navigation-height
             ));
         }
+        .local-navigation {
+            // Fill the maximum available width (otherwise the element
+            // only fills half the width, shared with the signposting)
+            width: 100%;
+        }
         .local-navigation__action {
             display: table-cell;
             @include rem((
@@ -766,7 +771,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
         // Re-order top nav on top of local nav
         .navigation__container {
-            display: block !important;
+            display: table !important;
+            width: 100%;
         }
         .navigation__container--first {
             background: $c-local-navigation-background;
