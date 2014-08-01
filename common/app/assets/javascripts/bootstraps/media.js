@@ -200,6 +200,28 @@ define([
             this.one('video:preroll:play', events.init.bind(player));
         },
 
+        fullscreener: function() {
+            var player = this,
+                clickbox = document.createElement('div'),
+                events = {
+                    click: function(e) {
+                        this.paused() ? this.play() : this.pause();
+                        e.stop();
+                    },
+                    dblclick: function(e) {
+                        e.stop();
+                        this.isFullScreen() ? this.exitFullscreen() : this.requestFullscreen();
+                    }
+                };
+
+            bonzo(clickbox)
+                .addClass('vjs-fullscreen-clickbox')
+                .appendTo(player.contentEl());
+
+            bean.on(clickbox, 'click', events.click.bind(player));
+            bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
+        },
+
         initLoadingSpinner: function(player) {
             player.loadingSpinner.contentEl().innerHTML =
                 '<div class="pamplemousse">' +
@@ -214,6 +236,7 @@ define([
             require('bootstraps/video-player', function () {
 
                 videojs.plugin('adCountDown', modules.countDown);
+                videojs.plugin('fullscreener', modules.fullscreener);
 
                 $('.js-gu-media').each(function (el) {
 
@@ -242,7 +265,6 @@ define([
 
                         deferToAnalytics(function () {
 
-
                             // preroll for videos only
                             if (config.page.contentType === 'Video') {
 
@@ -253,6 +275,7 @@ define([
                                 // Init plugins
                                 if(config.switches.videoAdverts) {
                                     player.adCountDown();
+                                    player.fullscreener();
                                     player.ads({
                                         timeout: 3000
                                     });

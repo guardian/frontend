@@ -22,6 +22,8 @@
     "browser"  : true,
     "jquery"   : true,
 
+    "expr"     : true,
+
     "globals"   : {
         "require": false,
         "define" : false,
