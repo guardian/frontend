@@ -124,7 +124,7 @@
         require(['raven', 'common/utils/config'], function(raven, config) {
 
             raven.config(
-                'http://' + config.page.sentryApiKey + '@@' + config.page.sentryHost,
+                'http://' + config.page.sentryPublicApiKey + '@@' + config.page.sentryHost,
                 {
                     logger: 'javascript',
                     whitelistUrls: [
@@ -139,7 +139,7 @@
                         buildNumber: config.page.buildNumber
                     },
                     shouldSendCallback: function(data) {
-                        return Math.random() < 0.1;
+                        return Math.random() < 0.1 && guardian.config.switches.enableDiagnosticsLogging;
                     }
                 }
             ).install();
