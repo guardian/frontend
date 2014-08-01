@@ -55,7 +55,7 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
         import browser._
 
         Then("the 'Classic version' link should point to '/football/live?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/live"))
+        findFirst(".js-main-site-link").getAttribute("href") should be(HtmlUnit.classicVersionLink("/football/live"))
       }
 
       Given("I visit the live page")
@@ -64,7 +64,7 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
         import browser._
 
         Then("the 'Classic version' link should point to '/football/matches?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/live"))
+        findFirst(".js-main-site-link").getAttribute("href") should be(HtmlUnit.classicVersionLink("/football/live"))
       }
     }
   }

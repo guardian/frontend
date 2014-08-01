@@ -6,7 +6,7 @@ import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
 
 
-object HealthCheck extends AllGoodHealthcheckController("/404/www.theguardian.com/Adzip/adzip-fb.html")
+object HealthCheck extends AllGoodHealthcheckController(9003, "/404/www.theguardian.com/Adzip/adzip-fb.html")
 
 object Management extends GuManagement {
   val applicationName = "frontend-archive"

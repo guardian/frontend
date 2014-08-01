@@ -68,9 +68,9 @@ class DiscussionApiStub(app: Application) extends DiscussionApi with Plugin{
 }
 
 object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit
+  object HtmlUnit extends EditionalisedHtmlUnit(conf.HealthCheck.testPort.toString)
 
-  object Fake extends FakeApp {
+  object FakeDiscussion extends FakeApplication {
 
     override def disabledPlugins = super.disabledPlugins :+ classOf[DiscussionApiPlugin].getName
     override def testPlugins = super.testPlugins :+ "test.DiscussionApiStub"

@@ -2,12 +2,10 @@ import common.ExecutionContexts
 import controllers.admin.TablesController
 import football.model.PA
 import org.scalatest.{ShouldMatchers, FreeSpec}
-import play.api.mvc.{AnyContentAsFormUrlEncoded, MultipartFormData}
+import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
 import play.api.test.Helpers._
 import scala.annotation.tailrec
-import scala.concurrent.{Await, Future}
-import scala.concurrent.duration._
 import football.services.GetPaClient
 import test.Fake
 import scala.language.postfixOps

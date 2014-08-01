@@ -4,8 +4,10 @@ import common.Metrics
 import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
 import com.gu.management.play.{ Management => GuManagement }
 import com.gu.management.logback.LogbackLevelPage
+import play.api.{Mode, Play}
 
 object HealthCheck extends AllGoodHealthcheckController(
+  9011,
   "/top-stories.json?callback=navigation",
   "/most-read/society.json?callback=showMostPopular",
   "/related/theobserver/2012/nov/18/the-big-issue-cyclists-versus-motorists.json?callback=showRelated"

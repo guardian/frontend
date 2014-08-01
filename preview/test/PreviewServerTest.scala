@@ -2,8 +2,7 @@ package test
 
 import org.scalatest.{FlatSpec, Matchers}
 
-object HtmlUnit extends EditionalisedHtmlUnit
-
+object HtmlUnit extends EditionalisedHtmlUnit(conf.HealthCheck.testPort.toString)
 
 class PreviewServerTest extends FlatSpec with Matchers {
 
@@ -11,7 +10,6 @@ class PreviewServerTest extends FlatSpec with Matchers {
   // preview server can start up and serve a page
 
   "Preview Server" should "be able to serve an article" in HtmlUnit("/technology/2014/may/18/de-rosa-idol-bicycle-review-martin-love") { browser =>
-    import browser.$
-    $("body").getText should include ("Debating the pros and cons of each of these materials is the kind of thing that keeps passionate cyclists awake at night")
+    browser.$("body").getText should include ("Debating the pros and cons of each of these materials is the kind of thing that keeps passionate cyclists awake at night")
   }
 }

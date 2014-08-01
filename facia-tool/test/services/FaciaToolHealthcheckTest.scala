@@ -1,3 +1,18 @@
 package services
 
-class FaciaToolHealthcheckTest extends HealthcheckTest("/discussion/login")
+import org.scalatest.{Matchers, FlatSpec}
+import play.api.libs.ws.WS
+import test._
+
+import scala.concurrent.duration._
+import scala.concurrent.Await
+
+class FaciaToolHealthcheckTest extends FlatSpec with Matchers {
+
+  import play.api.Play.current
+
+  "Healthchecks" should "pass" in HtmlUnit("/login"){ _ =>
+
+    Await.result(WS.url(s"http://localhost:${HtmlUnit.port}/_healthcheck").get(), 10.seconds).status should be (200)
+  }
+}
