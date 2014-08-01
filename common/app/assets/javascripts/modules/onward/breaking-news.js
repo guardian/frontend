@@ -4,58 +4,49 @@ define([
     'common/utils/ajax',
     'common/modules/onward/history',
     'lodash/objects/assign',
+    'lodash/arrays/flatten',
     'bonzo'
 ], function (
     $,
     mediator,
     ajax,
     history,
-    assign,
+    _assign,
+    _flatten,
     bonzo
 ) {
     var breakignNewsSource = '/breaking-news/lite.json',
         threshold = 2,
-        header,
-        matchers,
-        editionSection,
-        summary,
-        histCount;
+        maxDisplayed = 1,
+        header;
+
+    function slashDelimit() {
+        return Array.prototype.slice.call(arguments).filter(function(str) { return str;}).join('/');
+    }
 
     return function (config) {
-        var page = (config || {}).page;
+        var page = (config || {}).page,
+            keyword = page.keywordIds ? (page.keywordIds + '').split(',')[0] : '',
+            matchers;
 
         if (!page) { return; }
 
-        if (!matchers) {
-            matchers = {};
-            editionSection = [];
-            histCount = {};
-        
-            matchers[window.location.pathname.slice(1)] = threshold;
+        matchers = [
+            page.edition,
+            page.section,
+            slashDelimit(page.edition, page.section),
+            window.location.pathname.slice(1),
+            keyword,
+            keyword.split('/')[0]
+        ]
+        .filter(function(match) { return match; })
+        .reduce(function(matchers, str) {
+            matchers[str.toLowerCase()] = threshold;
+            return matchers;
+        }, {});
 
-            if (page.edition) {
-                matchers[page.edition.toLowerCase()] = threshold;
-                editionSection.push(page.edition.toLowerCase());
-            }
-
-            if (page.section) {
-                matchers[page.section.toLowerCase()] = threshold;
-                editionSection.push(page.section.toLowerCase());
-            }
-           
-            matchers[editionSection.join('/')] = threshold;
-            
-            if (page.keywordIds) {
-                page.keywordIds.split(',').forEach(function(keyword) {
-                    matchers[keyword.toLowerCase()] = threshold;
-                    matchers[keyword.split('/')[0].toLowerCase()] = threshold;
-                }); 
-            }
-
-            summary = history.getSummary();
-            assign(matchers, summary.sections);
-            assign(matchers, summary.keywords);
-        }
+        _assign(matchers, history.getSummary().sections);
+        _assign(matchers, history.getSummary().keywords);
 
         ajax({
             url: breakignNewsSource,
@@ -63,23 +54,20 @@ define([
             crossOrigin: true
         }).then(
             function(resp) {
-                var articles = [];
-
-                resp.collections.forEach(function(coll) {
-                    var href = coll.href.toLowerCase().trim();
-
-                    if (coll.content.length && (href === 'global' || matchers[href] >= threshold)) {
-                       articles = articles.concat(coll.content);
-                    }
+                _flatten(
+                    resp.collections
+                    .filter(function(collection) {
+                        return (collection.content.length && (collection.href === 'global' || matchers[collection.href] >= threshold))
+                    })
+                    .map(function(collection) {
+                        return collection.content;
+                    })
+                )
+                .slice(0, maxDisplayed)
+                .forEach(function(article) {
+                    header = header || bonzo(document.querySelector('#header'));
+                    header.after('<div id="breaking-news" class="gs-container"><a href="/' + article.id + '">' + article.headline + '</a></div>');
                 });
-
-                $('#breaking-news').remove();
-
-                header = header || bonzo(document.querySelector('#header'));
-                
-                if (articles.length) {
-                     header.after('<div id="breaking-news" class="gs-container"><a href="/' + articles[0].id + '">' + articles[0].headline + '</a></div>');
-                }
             },
             function() {
                 mediator.emit(
