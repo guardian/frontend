@@ -91,10 +91,14 @@ define([
         };
 
         model.previewUrl = ko.computed(function() {
-            return vars.CONST.viewer +
-                '#env=' + pageConfig.env +
-                '&mode=' + (model.liveMode() ? 'live' : 'draft' ) +
-                '&url=' + model.front() + encodeURIComponent('?view=mobile');
+            if (pageConfig.env === 'prod' && !model.liveMode()) {
+                return vars.CONST.previewBase + '/responsive-viewer/' + model.front();
+            } else {
+                return vars.CONST.viewer +
+                    '#env=' + pageConfig.env +
+                    '&mode=' + (model.liveMode() ? 'live' : 'draft' ) +
+                    '&url=' + model.front();
+            }
         });
 
         model.detectPressFailureCount = 0;
