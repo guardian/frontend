@@ -331,7 +331,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 }
 .top-navigation__action {
     color: $c-top-navigation-action;
-    display: table-cell;
+    display: block;
 }
 .global-navigation__action {
     color: $c-global-navigation-action;
