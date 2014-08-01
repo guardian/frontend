@@ -46,7 +46,7 @@ define([
         latestArticlesPollMs:  30000,
         configSettingsPollMs:  30000,
         cacheExpiryMs:         60000,
-        sparksRefreshMs:       300000,
+        sparksRefreshMs:       5000,
         pubTimeRefreshMs:      30000,
 
         apiBase:               '',
