@@ -139,7 +139,7 @@
                         buildNumber: config.page.buildNumber
                     },
                     shouldSendCallback: function(data) {
-                        return Math.random() < 0.1;
+                        return Math.random() < 0.1 && guardian.config.switches.enableDiagnosticsLogging;
                     }
                 }
             ).install();
