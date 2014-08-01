@@ -1,11 +1,11 @@
 @(video: Option[VideoElement], poster: Option[ImageContainer], title: String)
 
-@video.map { video =>
+@video.map{ video =>
     <div class="gu-media-wrapper gu-media-wrapper--video">
         <div class="u-responsive-ratio u-responsive-ratio--hd">
-            <video controls="controls" class="gu-media gu-media--video js-gu-media"
-                @poster.map { img => poster="@Item620.bestFor(img)"} data-title="@title"
-            data-duration="@video.duration.toString()" data-media-id="@video.id">
+            <video controls="controls" class="gu-media gu-media--video js-gu-media" data-title="@title"
+                @poster.map { img => poster="@Item620.bestFor(img)"}
+                data-duration="@video.duration.toString()" data-media-id="@video.id">
 
                 @video.encodings.map { encoding =>
                     <source src="@encoding.url" type="@encoding.format" />

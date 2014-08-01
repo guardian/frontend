@@ -419,6 +419,9 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
   lazy val duration: Int = 0
   lazy val mediaId: Option[String] = None
 
+  // if you change these rules make sure you update IMAGES.md (in this project)
+  override def mainPicture: Option[ImageContainer] = (images ++ videos).find(_.isMain)
+
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "video",
@@ -451,9 +454,6 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
 
   override lazy val metaData: Map[String, Any] =
     super.metaData + ("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
-
-  // if you change these rules make sure you update IMAGES.md (in this project)
-  override def mainPicture: Option[ImageContainer] = (images ++ videos).find(_.isMain)
 
   lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
   // I know its not too pretty

@@ -19,11 +19,6 @@ $vjs-control-height: $gs-baseline*4;
         margin-bottom: $gs-baseline * 1.5
     ));
 }
-.gu-media-wrapper--audio {
-    @include rem((
-        height: $vjs-control-height
-    ));
-}
 .video-standfirst {
     @include rem((
         margin-bottom: ($gs-baseline/3)*4
@@ -48,18 +43,10 @@ $vjs-control-height: $gs-baseline*4;
     }
 }
 
-.vjs {
-    &.gu-media {
-        width: auto !important;
-    }
-    &.gu-media--video { // aspect ratio fix (this element gets given a fixed height by video.js)
-        height: auto !important;
-        cursor: pointer;
-    }
-    &.gu-media--audio {
-        position: relative;
-        height: 100% !important;
-    }
+.vjs.gu-media {
+    width: auto !important;
+    height: auto !important;
+    cursor: pointer;
 }
 .vjs-big-play-button {
     cursor: pointer;
@@ -72,9 +59,6 @@ $vjs-control-height: $gs-baseline*4;
     @include box-sizing(border-box);
     text-align: center;
 
-    .gu-media--audio & {
-        display: none;
-    }
     .vjs-has-started & {
         @include rem((
             padding-bottom: $vjs-control-height
@@ -184,7 +168,6 @@ $vjs-control-height: $gs-baseline*4;
 
 .vjs-control-bar {
     cursor: default;
-    display: none;
     width: 100%;
     position: absolute;
     z-index: 3;
@@ -194,16 +177,12 @@ $vjs-control-height: $gs-baseline*4;
     @include fs-data(2);
     font-weight: bold;
     @include rem((
-        height: $vjs-control-height
+        height: $vjs-control-height,
+        bottom: $gs-baseline*-5
     ));
     @include transition(bottom .8s);
-    transition-delay: .2s;
+    transition-delay: 1s;
 
-    .gu-media--video & {
-        @include rem((
-            bottom: $gs-baseline*-5
-        ));
-    }
     .vjs-fullscreen & {
         transition-delay: .5s;
     }
@@ -214,10 +193,6 @@ $vjs-control-height: $gs-baseline*4;
         bottom: 0;
         @include transition(bottom 0s);
         transition-delay: 0s;
-    }
-
-    .vjs-has-started & {
-        display: block;
     }
 
     .vjs-using-native-controls & {
@@ -246,6 +221,10 @@ $vjs-control-height: $gs-baseline*4;
     background-size: cover;
     top: 0;
     left: 0;
+
+    .gu-media--audio & {
+        display: block !important;
+    }
 }
 
 .vjs-play-control {
@@ -452,7 +431,7 @@ $vjs-progress-inset-bottom: 4px;
     top: 40%;
     display: none;
 
-    .gu-media--video.vjs-error & {
+    .vjs-error & {
         display: block;
     }
     > div {
