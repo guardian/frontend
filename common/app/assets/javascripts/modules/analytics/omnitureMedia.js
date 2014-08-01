@@ -1,9 +1,11 @@
 define([
     'lodash/objects/values',
-    'common/utils/config'
+    'common/utils/config',
+    'qwery'
 ], function(
     _values,
-    config
+    config,
+    qwery
     ) {
 
     function OmnitureMedia(player) {
@@ -31,7 +33,8 @@ define([
             segmentEvents = ['event21', 'event22', 'event23', 'event18'];
 
         this.getDuration = function() {
-            return player.duration();
+            var el = qwery('*[data-duration]', player.contentEl())[0];
+            return el ? parseInt(el.getAttribute('data-duration'), 10) : undefined;
         };
 
         this.getPosition = function() {
