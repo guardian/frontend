@@ -848,6 +848,8 @@ module.exports = function (grunt) {
         'compile:conf'
     ]);
 
+    grunt.registerTask('compile:js:common', ['requirejs:common', 'copy:javascript', 'asset_hash']);
+
     /**
      * Test tasks
      */
@@ -882,8 +884,4 @@ module.exports = function (grunt) {
             grunt.task.run(['requirejs:' + project, 'copy:javascript', 'asset_hash']);
         }
     });
-
-    grunt.registerTask('compile:js:common', ['requirejs:common', 'copy:javascript', 'asset_hash']);
-
-
 };
