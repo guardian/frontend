@@ -18,6 +18,7 @@ define([
             {name: 'news/headline', groups: ['standard', 'big']},
             {name: 'features'},
             {name: 'features/auto'},
+            {name: 'features/volumes', groups: ['standard', 'big', 'very big', 'huge']},
             {name: 'features/multimedia'},
             {name: 'comment/comment-and-debate'}
         ],
