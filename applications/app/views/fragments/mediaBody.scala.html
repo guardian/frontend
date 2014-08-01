@@ -13,8 +13,8 @@
 
                 <div class="media-primary player">
                     @media match {
-                        case audio: Audio => { @fragments.media.audio(audio.mainAudio, audio.mainPicture, audio.headline) }
-                        case video: Video => { @fragments.media.video(video.mainVideo, video.mainPicture, video.headline) }
+                        case audio: Audio => { @fragments.media.audio(audio.mainAudio, audio.headline) }
+                        case video: Video => { @fragments.media.video(video.mainVideo, video.headline) }
                     }
                 </div>
 

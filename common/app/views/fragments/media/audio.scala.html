@@ -1,10 +1,9 @@
-@(audio: Option[AudioElement], poster: Option[ImageContainer], title: String)
+@(audio: Option[AudioElement], title: String)
 
 @audio.map{ audio =>
     <div class="gu-media-wrapper gu-media-wrapper--audio">
         <div class="u-responsive-ratio u-responsive-ratio--hd">
             <audio controls="controls" class="gu-media gu-media--audio js-gu-media" data-title="@title"
-                poster="@poster.map(Item620.bestFor(_)).getOrElse(Static("images/media-holding.jpg"))"
                 data-duration="@audio.duration.toString()" data-media-id="@audio.id">
 
                 @audio.encodings.map { encoding =>
