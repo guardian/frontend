@@ -11,6 +11,13 @@
         <div class="gs-container">
             <div class="content__main-column content__main-column--media content__main-column--@mediaType">
 
+                @media match {
+                    case audio: Audio if audio.mainAudio.filter(_.imageCrops.nonEmpty).nonEmpty => {
+                        @fragments.img(media.mainAudio, false, false)
+                    }
+                    case _ => { }
+                }
+
                 <div class="media-primary player">
                     @media match {
                         case audio: Audio => { @fragments.media.audio(audio.mainAudio, audio.headline) }
