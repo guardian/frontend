@@ -217,7 +217,7 @@ object Switches extends Collections {
 
   val DiagnosticsLogging = Switch("Diagnostics", "enable-diagnostics-logging",
     "If this switch is on, then js error reports and requests sent to the Diagnostics servers will be logged.",
-    safeState = Off, never
+    safeState = On, never
   )
 
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
