@@ -19,7 +19,7 @@
     "videojs-vast": "guardian/videojs-vast-plugin#0a9b9de064f5ed31d436fc05b1d8dd6f504b6f96",
     "videojs-persistvolume": "~0.1.0",
     "socket.io-client": "1.0.6",
-    "raven-js": "~1.1.15",
+    "raven-js": "~1.1.16",
     "videojs-playlist-audio": "*"
   },
   "resolutions": {
