@@ -41,6 +41,8 @@ object Frontend extends Build with Prototypes {
 
       "org.xerial.snappy" % "snappy-java" % "1.0.5.1",
 
+      "net.liftweb" %% "lift-json" % "2.5-M4",
+
       "com.gu" %% "play-googleauth" % "0.1.56-SNAPSHOT",
 
       filters,

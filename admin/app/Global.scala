@@ -1,6 +1,6 @@
 import commercial.TravelOffersCacheJob
 import common.{AkkaAsync, Jobs, CloudWatchApplicationMetrics}
-import conf.{Configuration, Gzipper, Management}
+import conf.{Configuration, Gzipper}
 import dfp.DfpDataCacheJob
 import jobs.RefreshFrontsJob
 import model.AdminLifecycle
@@ -13,7 +13,7 @@ with AdminLifecycle
 with CloudWatchApplicationMetrics
 with Results
 with SurgingContentAgentLifecycle {
-  override lazy val applicationName = Management.applicationName
+  override lazy val applicationName = "frontend-admin"
 
   val adminPressJobPushRateInMinutes: Int = Configuration.faciatool.adminPressJobPushRateInMinutes
 

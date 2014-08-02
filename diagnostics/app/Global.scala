@@ -1,8 +1,8 @@
 
 import common.{CloudWatchApplicationMetrics, DiagnosticsLifecycle}
-import conf.{Gzipper, Management}
+import conf.{Configuration, Gzipper}
 import play.api.mvc.WithFilters
 
 object Global extends WithFilters(Gzipper) with DiagnosticsLifecycle with CloudWatchApplicationMetrics {
-  override lazy val applicationName = Management.applicationName
+  override lazy val applicationName = "frontend-diagnostics"
 }

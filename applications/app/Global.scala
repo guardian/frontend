@@ -1,5 +1,5 @@
 import common.CloudWatchApplicationMetrics
-import conf.{Management, Filters}
+import conf.{Configuration, Filters}
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import ophan.SurgingContentAgentLifecycle
@@ -10,5 +10,5 @@ object Global extends WithFilters(Filters.common: _*)
                       with CloudWatchApplicationMetrics
                       with DfpAgentLifecycle
                       with SurgingContentAgentLifecycle{
-  override lazy val applicationName = Management.applicationName
+  override lazy val applicationName = "frontend-applications"
 }
