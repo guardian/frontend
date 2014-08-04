@@ -443,7 +443,6 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.testCookie();
-            modules.displayBreakingNews(config);
             modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
@@ -451,6 +450,7 @@ define([
             modules.showTabs();
             modules.initialiseTopNavItems(config);
             modules.initialiseNavigation(config);
+            modules.displayBreakingNews(config);
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();

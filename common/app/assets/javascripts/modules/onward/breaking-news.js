@@ -1,5 +1,4 @@
 define([
-    'common/utils/$',
     'common/utils/mediator',
     'common/utils/ajax',
     'common/modules/onward/history',
@@ -10,7 +9,6 @@ define([
     'bean',
     'bonzo'
 ], function (
-    $,
     mediator,
     ajax,
     history,
@@ -33,7 +31,6 @@ define([
 
     return function (config) {
         var page = (config || {}).page,
-            keyword = page.keywordIds ? (page.keywordIds + '').split(',')[0] : '',
             hidden = storage.local.get(storageKeyHidden) || [];
 
         if (!page || hidden.indexOf(page.pageId) > -1) { return; }
@@ -44,7 +41,9 @@ define([
             crossOrigin: true
         }).then(
             function(resp) {
-                var matchers = [
+                var keyword = page.keywordIds ? (page.keywordIds + '').split(',')[0] : '',
+
+                    matchers = [
                         page.edition,
                         page.section,
                         slashDelimit(page.edition, page.section),
@@ -53,8 +52,8 @@ define([
                         keyword.split('/')[0]
                     ]
                     .filter(function(match) { return match; })
-                    .reduce(function(matchers, key) {
-                        matchers[key.toLowerCase()] = interestThreshold;
+                    .reduce(function(matchers, term) {
+                        matchers[term] = interestThreshold;
                         return matchers;
                     }, _assign(history.getSummary().sections, history.getSummary().keywords)),
 
@@ -83,7 +82,7 @@ define([
                 })
                 .slice(0, maxSimultaneousAlerts)
                 .forEach(function(article) {
-                    var alert = bonzo.create('<div class="breaking-news" data-link-name="breaking news"><a data-link-name="article" href="/' + article.id + '">Breaking news: ' + article.headline + '</a> </div>'),
+                    var alert = bonzo.create('<div class="breaking-news" data-link-name="breaking news"><a data-link-name="article" href="/' + article.id + '">Breaking news: ' + article.headline + '</a></div>'),
                         close = bonzo.create('<i class="breaking-news__close i-close-icon-white" data-link-name="close"></i>');
 
                     bonzo(alert).append(close);
