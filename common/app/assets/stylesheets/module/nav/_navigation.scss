@@ -113,7 +113,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     &:after {
         top: auto;
         bottom: 0;
-        background: mix($c-navigation-expandable-background, #ffffff, 80%);
         z-index: -1;
     }
     &.navigation--collapsed:after {
