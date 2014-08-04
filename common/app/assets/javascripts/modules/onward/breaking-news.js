@@ -31,9 +31,9 @@ define([
 
     return function (config) {
         var page = (config || {}).page,
-            hidden = storage.local.get(storageKeyHidden) || [];
+            hiddenIds = storage.local.get(storageKeyHidden) || [];
 
-        if (!page || hidden.indexOf(page.pageId) > -1) { return; }
+        if (!page || hiddenIds.indexOf(page.pageId) > -1) { return; }
 
         ajax({
             url: breakignNewsSource,
@@ -70,15 +70,15 @@ define([
                     articleIds = articles.map(function(article) { return article.id; });
 
                 if (articleIds.indexOf(page.pageId) > -1) {
-                    hidden.unshift(page.pageId);
-                    storage.local.set(storageKeyHidden, _intersection(hidden, articleIds));
+                    hiddenIds.unshift(page.pageId);
+                    storage.local.set(storageKeyHidden, _intersection(hiddenIds, articleIds));
                     // when displaying a breaking news item, don't show and other breaking news:
                     return;
                 }
 
                 articles
                 .filter(function(collection) {
-                    return (hidden.indexOf(collection.id) === -1);
+                    return (hiddenIds.indexOf(collection.id) === -1);
                 })
                 .slice(0, maxSimultaneousAlerts)
                 .forEach(function(article) {
@@ -91,7 +91,7 @@ define([
 
                     bean.on(close[0], 'click', function() {
                         bonzo(alert).hide();
-                        storage.local.set(storageKeyHidden, _intersection(hidden.concat(article.id), articleIds));
+                        storage.local.set(storageKeyHidden, _intersection(hiddenIds.concat(article.id), articleIds));
                     });
                 });
             },
