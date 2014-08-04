@@ -6,6 +6,7 @@ define([
     'common/utils/storage',
     'lodash/objects/assign',
     'lodash/arrays/flatten',
+    'lodash/arrays/intersection',
     'bonzo'
 ], function (
     $,
@@ -15,10 +16,11 @@ define([
     storage,
     _assign,
     _flatten,
+    _intersection,
     bonzo
 ) {
     var breakignNewsSource = '/breaking-news/lite.json',
-        storageKeyOmit = 'gu.breaking-news.omit',
+        storageKeyHidden = 'gu.breaking-news.hidden',
         threshold = 2,
         maxDisplayed = 1,
         header;
@@ -29,9 +31,10 @@ define([
 
     return function (config) {
         var page = (config || {}).page,
-            keyword = page.keywordIds ? (page.keywordIds + '').split(',')[0] : '';
+            keyword = page.keywordIds ? (page.keywordIds + '').split(',')[0] : '',
+            hidden = storage.local.get(storageKeyHidden) || [];
 
-        if (!page) { return; }
+        if (!page || hidden.indexOf(page.pageId) > -1) { return; }
 
         ajax({
             url: breakignNewsSource,
@@ -48,10 +51,10 @@ define([
                         keyword.split('/')[0]
                     ]
                     .filter(function(match) { return match; })
-                    .reduce(function(matchers, str) {
-                        matchers[str.toLowerCase()] = threshold;
+                    .reduce(function(matchers, key) {
+                        matchers[key.toLowerCase()] = threshold;
                         return matchers;
-                    }, {}),
+                    }, _assign(history.getSummary().sections, history.getSummary().keywords)),
 
                     articles = _flatten(
                         (resp.collections || [])
@@ -63,20 +66,18 @@ define([
                         })
                     ),
 
-                    articleIds = articles.map(function(article) { return article.id; }),
+                    articleIds = articles.map(function(article) { return article.id; });
 
-                    omitted = storage.local.get(storageKeyOmit) || [];
-
-                _assign(matchers, history.getSummary().sections);
-                _assign(matchers, history.getSummary().keywords);
-
-                //console.log(matchers);
-                //console.log(articles);
-                //console.log(articleIds);
+                if (articleIds.indexOf(page.pageId) > -1) {
+                    hidden.unshift(page.pageId);
+                    storage.local.set(storageKeyHidden, _intersection(hidden, articleIds));
+                    // when displaying a breaking news item, don't show and other breaking news:
+                    return;
+                }
 
                 articles
-                .filter(function(article) {
-                    return [page.pageId].concat(omitted).indexOf(article.id) === -1;
+                .filter(function(collection) {
+                    return (hidden.indexOf(collection.id) === -1);
                 })
                 .slice(0, maxDisplayed)
                 .forEach(function(article) {
