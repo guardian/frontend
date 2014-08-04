@@ -314,6 +314,15 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  // Facia containers
+  // These are principally reminders to evaluate the value brought by each new container
+  // But don't necessarily mean the containers are behind a switch
+
+  val FaciaContainerSmallListSwitch = Switch("Facia containers", "facia-container-small-list",
+    "Reminder to keep/remove the news/small-list container after 6 weeks",
+    safeState = On, sellByDate = new LocalDate(2014, 9, 11)
+  )
+
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -517,7 +526,8 @@ object Switches extends Collections {
     SeoBlockGooglebotFromJSPathsSwitch,
     EnhancedMediaPlayerSwitch,
     ABRightMostPopularText,
-    CenturyRedirectionSwitch
+    CenturyRedirectionSwitch,
+    FaciaContainerSmallListSwitch
   )
 
   val httpSwitches: List[Switch] = List(
