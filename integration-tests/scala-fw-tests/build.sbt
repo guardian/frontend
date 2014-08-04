@@ -4,6 +4,7 @@ version := "0.1.0-SNAPSHOT"
 
 resolvers ++= Seq(
   "Sonatype OSS Staging" at "https://oss.sonatype.org/content/repositories/staging"
+)
 
 libraryDependencies ++= Seq(
   "com.gu" %% "scala-automation" % "1.27"
