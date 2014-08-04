@@ -22,8 +22,9 @@
     }
 
     .c-football-matches {
+        $slice-innerHeight: gs-height(5) - $gs-baseline / 3;
         @include rem((
-            height: gs-height(5) - $gs-baseline / 3
+            height: $slice-innerHeight
         ));
         overflow: hidden;
         position: relative;
