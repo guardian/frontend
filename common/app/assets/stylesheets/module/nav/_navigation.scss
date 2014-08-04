@@ -852,8 +852,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
     @if not $old-ie {
         @include transform-origin(60%);
+
         .navigation--expanded & {
             @include transform-origin(50%);
+
             &:nth-child(1) {
                 @include transform(translateY(rem(4px)) rotate(45deg));
             }
@@ -865,10 +867,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             }
         }
         @include mq(tablet) {
-            @include transition(
-                opacity 100ms,
-                transform 100ms ease-in
-            );
+            -webkit-transition: opacity .1s, -webkit-transform .1s ease-in;
+            transition: opacity .1s, transform .1s ease-in;
         }
     }
 }
