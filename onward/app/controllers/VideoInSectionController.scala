@@ -57,7 +57,7 @@ object VideoInSectionController extends Controller with Logging with Paging with
       case "uk-news" => "uk"
       case _ => sectionId
     }
-    val tagCombinedHref = s"$sectionTag+content/video"
+    val tagCombinedHref = s"$sectionTag/$sectionTag+content/video"
     implicit val config = Config(id = sectionId, href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} videos") )
     val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1)
     renderFormat(response, response, 1)
