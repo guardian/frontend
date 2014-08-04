@@ -529,7 +529,7 @@
     font-weight: 200;
     @include box-sizing(border-box);
     @include rem((
-        height: 2*get-line-height($fs-bodyCopy, 3),
+        height: 2*get-line-height($fs-bodyCopy, 2),
         padding-top: 1px,
         margin-right: 4px
     ));
@@ -550,7 +550,7 @@
         font-weight: 200;
         @include rem((
             margin-right: 5px,
-            height: 3*get-line-height($fs-bodyCopy, 3)
+            height: 3*get-line-height($fs-bodyCopy, 2)
         ));
 
         .drop-cap__inner {
