@@ -45,4 +45,4 @@ object PressJob {
   implicit val jsonFormat = Json.format[PressJob]
 }
 
-case class PressJob(path: FrontPath, pressType: PressType, creationDate: DateTime = DateTime.now)
+case class PressJob(path: FrontPath, pressType: PressType, creationTime: DateTime = DateTime.now)
