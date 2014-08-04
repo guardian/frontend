@@ -64,6 +64,7 @@ $vjs-control-height: $gs-baseline*4;
 .vjs-big-play-button {
     cursor: pointer;
     position: absolute;
+    z-index: 1;
     top: 0;
     left: 0;
     width: 100%;
@@ -144,6 +145,17 @@ $vjs-control-height: $gs-baseline*4;
     }
 }
 
+.vjs-fullscreen-clickbox {
+    @include box-sizing(border-box);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    padding-bottom: $vjs-control-height;
+    position: absolute;
+    z-index: 2;
+}
+
 .vjs-loading-spinner {
     position: absolute;
     top: 50%;
@@ -172,6 +184,7 @@ $vjs-control-height: $gs-baseline*4;
     display: none;
     width: 100%;
     position: absolute;
+    z-index: 3;
     left: 0;
     background-color: $vjs-control-colour;
     color: #ffffff;
@@ -189,7 +202,6 @@ $vjs-control-height: $gs-baseline*4;
         ));
     }
     .vjs-fullscreen & {
-        z-index: 2;
         transition-delay: .5s;
     }
 
