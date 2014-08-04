@@ -3,7 +3,7 @@ package controllers.front
 import model._
 import scala.concurrent.Future
 import play.api.libs.ws.{Response, WS}
-import play.api.libs.json.{JsObject, JsNull, JsValue, Json}
+import play.api.libs.json.{JsObject, JsNull, JsValue, JsString, Json}
 import common.{Logging, S3Metrics, ExecutionContexts}
 import model.FaciaPage
 import services.SecureS3Request
@@ -41,7 +41,10 @@ trait FrontJsonLite extends ExecutionContexts{
      }
     .take(3).map{ j =>
       Json.obj(
-        "headline" -> (j \ "safeFields" \ "headline"),
+        ("headline" -> {
+          val x = (j \ "meta" \ "headline").asOpt[JsString].getOrElse(j \ "safeFields" \ "headline")
+          x
+        }),
         "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
         "internalContentCode" -> (j \ "safeFields" \ "internalContentCode"),
         "id" -> (j \ "id")
