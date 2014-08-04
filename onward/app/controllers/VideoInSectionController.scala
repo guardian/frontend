@@ -51,7 +51,14 @@ object VideoInSectionController extends Controller with Logging with Paging with
 
   private def renderSectionTrails(trails: Seq[Content], sectionId: String)(implicit request: RequestHeader) = {
     val sectionName = trails.headOption.map(t => t.sectionName).getOrElse("")
-    implicit val config = Config(id = sectionId, href = Option(sectionId), displayName = Some(s"More ${sectionName} videos") )
+
+    // Content API doesn't understand the alias 'uk-news'.
+    val sectionTag = sectionId match {
+      case "uk-news" => "uk"
+      case _ => sectionId
+    }
+    val tagCombinedHref = s"$sectionTag+content/video"
+    implicit val config = Config(id = sectionId, href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} videos") )
     val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1)
     renderFormat(response, response, 1)
   }
