@@ -29,7 +29,7 @@ $c-global-navigation-title-background: $c-top-navigation-background;
 $global-navigation-title-width: $a-leftCol-width + $gs-gutter;
 $global-navigation-title-width-wide: $a-leftColWide-width + $gs-gutter;
 $c-global-navigation-action: guss-colour(neutral-1);
-$c-global-navigation-border: mix($c-local-navigation-background, #fff, 60%);
+$c-global-navigation-border: mix($c-local-navigation-background, #ffffff, 60%);
 
 $c-navigation-toggle-background: guss-colour(neutral-1);
 $c-navigation-toggle-icon: #ffffff;
@@ -73,7 +73,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .navigation__expandable {
     .global-navigation__title--guardian-services {
         background-color: $c-newsDefault;
-        border-top: 1px solid mix($c-newsDefault, #fff, 80%);
+        border-top: 1px solid mix($c-newsDefault, #ffffff, 80%);
     }
 }
 
@@ -462,7 +462,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         left: 0;
         background: $c-global-navigation-title-background;
         @include rem((
-            border-top: 1px solid mix($c-global-navigation-title-background, #fff, 80%),
+            border-top: 1px solid mix($c-global-navigation-title-background, #ffffff, 80%),
             width: $global-navigation-title-width,
             padding-left: $gs-gutter
         ));

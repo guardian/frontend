@@ -142,14 +142,14 @@ $bp-header-wrap: 544px;
 /* Profile Menu
    ========================================================================== */
 .top-bar__item--profile {
+    // stupid having to reset this, but :not was :not available to all in 2009
     @if ($old-ie == true) {
         .nav-popup__toggle:before,
         .nav-popup__toggle:after {
             display: none;
         }
-        // if only
         &.is-signed-in .nav-popup__toggle {
-            @extend .nav-popup__toggle;
+            display: inline-block;
         }
     } @else {
         &:not(.is-signed-in) .nav-popup__toggle {
