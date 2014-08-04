@@ -77,20 +77,20 @@ define([
                 }
 
                 articles
-                .filter(function(collection) {
-                    return (hiddenIds.indexOf(collection.id) === -1);
+                .filter(function(article) {
+                    return (hiddenIds.indexOf(article.id) === -1);
                 })
                 .slice(0, maxSimultaneousAlerts)
                 .forEach(function(article) {
-                    var alert = bonzo.create('<div class="breaking-news" data-link-name="breaking news"><a data-link-name="article" href="/' + article.id + '">Breaking news: ' + article.headline + '</a></div>'),
-                        close = bonzo.create('<i class="breaking-news__close i-close-icon-white" data-link-name="close"></i>');
+                    var el = bonzo.create('<div class="breaking-news" data-link-name="breaking news"><a data-link-name="article" href="/' + article.id + '">Breaking news: ' + article.headline + '</a></div>'),
+                        closer = bonzo.create('<i class="breaking-news__close i-close-icon-white" data-link-name="close"></i>');
 
-                    bonzo(alert).append(close);
+                    bonzo(el).append(closer);
                     container = container || bonzo(document.querySelector('#breaking-news'));
-                    container.append(alert);
+                    container.append(el);
 
-                    bean.on(close[0], 'click', function() {
-                        bonzo(alert).hide();
+                    bean.on(closer[0], 'click', function() {
+                        bonzo(el).hide();
                         storage.local.set(storageKeyHidden, _intersection(hiddenIds.concat(article.id), articleIds));
                     });
                 });
