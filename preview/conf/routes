@@ -8,12 +8,14 @@ GET        /assets/*path                                                        
 
 GET        /_healthcheck                                                                       conf.HealthCheck.healthcheck()
 
+GET        /responsive-viewer/*path                                                            controllers.ResponsiveViewerController.preview(path)
+
 #Login
 # authentication endpoints
-GET           /login                     controllers.OAuthLoginController.login
-POST          /login                     controllers.OAuthLoginController.loginAction
-GET           /oauth2callback            controllers.OAuthLoginController.oauth2Callback
-GET           /logout                    controllers.OAuthLoginController.logout
+GET           /login                                                                           controllers.OAuthLoginController.login
+POST          /login                                                                           controllers.OAuthLoginController.loginAction
+GET           /oauth2callback                                                                  controllers.OAuthLoginController.oauth2Callback
+GET           /logout                                                                          controllers.OAuthLoginController.logout
 
 # Travel offers
 GET        /commercial/travel/offers                                                           controllers.commercial.TravelOffers.travelOffersLowHtml

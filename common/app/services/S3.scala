@@ -1,5 +1,6 @@
 package services
 
+import com.gu.googleauth.UserIdentity
 import conf.Configuration
 import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client

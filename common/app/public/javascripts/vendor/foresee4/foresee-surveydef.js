@@ -233,12 +233,7 @@ FSR.properties = {
         Beta_Site: {
 			source: 'function',
 			value: function(){
-				if (typeof window.guardian.r2 === "undefined") {
-				}
-				if (window.guardian.r2) {
-					return 'N'
-				}
-				return 'Y';
+                return (window.guardian && window.guardian.r2) ? 'N' : 'Y';
 			}
 		}
     },
