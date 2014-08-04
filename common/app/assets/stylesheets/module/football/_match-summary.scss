@@ -186,7 +186,7 @@ $football-crest--large: 60px;
 
 .match-summary__comment {
     @include rem((
-        bottom: -$gs-baseline * 2
+        bottom: $gs-baseline / 3
     ));
     position: absolute;
 }

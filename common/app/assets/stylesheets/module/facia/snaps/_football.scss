@@ -1,3 +1,5 @@
+$slice-innerHeight: gs-height(5) - $gs-baseline / 3;
+
 .facia-snap--football {
     // Dealing with the double embedding of snaps
     overflow: hidden;
@@ -7,7 +9,7 @@
     // Generic
     &.facia-snap-embed {
         @include rem((
-            height: gs-height(5) - $gs-baseline / 3,
+            height: $slice-innerHeight,
             margin: 0 $gs-gutter/2
         ));
         background: #ffffff;
@@ -22,7 +24,6 @@
     }
 
     .c-football-matches {
-        $slice-innerHeight: gs-height(5) - $gs-baseline / 3;
         @include rem((
             height: $slice-innerHeight
         ));
