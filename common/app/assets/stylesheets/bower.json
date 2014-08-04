@@ -1,7 +1,8 @@
 {
   "name": "frontend-common-css",
-  "version": "0.6.0 ",
+  "version": "0.7.0 ",
   "dependencies": {
-    "guss": "~2.0.0"
+    "guss": "~2.0.0",
+    "guss-webfonts": "2.0.0-rc.1"
   }
 }
