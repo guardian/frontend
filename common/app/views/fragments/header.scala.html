@@ -38,9 +38,9 @@ to apply any necessary changes to non-shared code there too.
                     </a>
                 </div>
                 @if(SearchSwitch.isSwitchedOn) {
-                    <div class="top-bar__item top-bar__item--search" data-component="search">
+                    <div class="top-bar__item has-nav-popup top-bar__item--has-control top-bar__item--search" data-component="search">
                         <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
-                           class="top-bar__item--action js-search-toggle" data-toggle="nav-popup--search">
+                           class="top-bar__item--action nav-popup__toggle js-search-toggle" data-toggle="nav-popup--search">
                             <span class="control__icon-wrapper">
                                 <span class="control__icon">
                                     <i class="i i-search-white"></i>
@@ -49,13 +49,14 @@ to apply any necessary changes to non-shared code there too.
                             </span>
                             <span class="control__info hide-on-mobile">search</span>
                         </a>
-                        <div class="nav-popup nav-popup--search is-off"><div class="js-search-placeholder"></div></div>
                     </div>
                 }
                 @fragments.topNav.servicesLinks(page)
             </div>
         </div>
     </div>
+
+    <div class="nav-popup nav-popup--search is-off"><div class="js-search-placeholder"></div></div>
 
     <div class="l-header-main">
         <div class="gs-container">

@@ -7,25 +7,34 @@ $c-nav-popup-bg: #ffffff;
 // popups align with the label, so if there's a control icon, we need to account
 // for it.
 $control-offset: 32 + $gs-gutter/2;
+$bp-header-wrap: 558px;
 
 .nav-popup {
     @include box-sizing(border-box);
     position: absolute;
+    left: 0;
     background: $c-nav-popup-bg;
     margin: 0;
     padding: 0;
-    left: 0;
     list-style: none;
+    @include box-shadow(0 rem((2px 2px)) 0 rgba(0, 0, 0, .2));
     @include rem((
-        min-width: 200,
-        top: $nav-popup-top + $gs-baseline/2,
+        min-width: 150,
+        top: $nav-popup-top,
         padding: 0 $gs-gutter/2
     ));
 
+    @include mq(mobileLandscape) {
+        right: auto;
+        bottom: auto;
+    }
+
     .top-bar__item--has-control & {
-        @include rem((
-            left: $control-offset
-        ))
+        @include mq($bp-header-wrap) {
+            @include rem((
+                left: $control-offset
+            ))
+        }
     }
 
     .top-bar__item--right & {
@@ -35,35 +44,39 @@ $control-offset: 32 + $gs-gutter/2;
 }
 
 .has-nav-popup {
-    position: relative;
     cursor: pointer;
+    position: relative;
 }
 
 .nav-popup__toggle {
     position: relative;
     // disclosure arrow
-    &:after {
-        content: '';
-        display: inline-block;
-        pointer-events: none;
-        width: 0;
-        height: 0;
-        border-bottom: 0;
-        @include rem((
-            margin: 2px,
-            margin-left: 4px,
-            border-left: $nav-popup-toggle-arrow-size solid transparent,
-            border-right: $nav-popup-toggle-arrow-size solid transparent,
-            border-top: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
-        ));
+    @include mq($bp-header-wrap) {
+        &:after {
+            content: '';
+            display: inline-block;
+            pointer-events: none;
+            width: 0;
+            height: 0;
+            border-bottom: 0;
+            @include rem((
+                margin: 2px,
+                margin-left: 4px,
+                border-left: $nav-popup-toggle-arrow-size solid transparent,
+                border-right: $nav-popup-toggle-arrow-size solid transparent,
+                border-top: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
+            ));
+        }
     }
     &.is-active,
     .is-active > & {
-        &:after {
-            border-top: 0;
-            @include rem((
-                border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
-            ));
+        @include mq($bp-header-wrap) {
+            &:after {
+                border-top: 0;
+                @include rem((
+                    border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
+                ));
+            }
         }
         // This is the exposed menu arrow pointing up
         // to the link. It's placed on the link to center it.
@@ -76,20 +89,29 @@ $control-offset: 32 + $gs-gutter/2;
             position: absolute;
             left: 50%;
             @include rem((
-                margin-left: 0 - $nav-popup-toggle-arrow-size * .5,
+                margin-left: 0 - $nav-popup-toggle-arrow-size,
                 border-left: $nav-popup-toggle-arrow-size solid transparent,
                 border-right: $nav-popup-toggle-arrow-size solid transparent,
                 border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg,
-                top: $headerHeight - $nav-popup-toggle-arrow-size + $gs-baseline/2
+                top: $nav-popup-top - $nav-popup-toggle-arrow-size - $gs-baseline/2
             ));
             .top-bar__item--has-control & {
-                @include rem((
-                    margin-left: $control-offset * .5 - $nav-popup-toggle-arrow-size * .5
-                ))
+                @include mq($bp-header-wrap) {
+                    @include rem((
+                        margin-left: $control-offset * .5 - $nav-popup-toggle-arrow-size
+                    ))
+                }
+            }
+            .top-bar__item--search & {
+                @include mq($to: tablet) {
+                    @include rem((
+                        margin-left: 0 - $nav-popup-toggle-arrow-size
+                    ))
+                }
             }
             .top-bar__item--right & {
                 @include rem((
-                    margin-left: 0 - $nav-popup-toggle-arrow-size * 2.5
+                    margin-left: 0 - $nav-popup-toggle-arrow-size * 3
                 ));
             }
         }
@@ -139,8 +161,10 @@ $control-offset: 32 + $gs-gutter/2;
    ========================================================================== */
 
 .nav-popup--search {
+    z-index: 10;
     @include rem((
-        padding-top: $gs-baseline
+        padding-top: $gs-baseline,
+        top: $headerHeight + $gs-baseline / 2
     ));
 
     @include mq(tablet) {

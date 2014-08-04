@@ -2,40 +2,7 @@
    Navigation controls
    ========================================================================== */
 
-/* Control
-   ========================================================================== */
-
-.control {
-    // float: left;
-    // font-family: $f-serif-headline;
-    // color: $c-neutral1;
-}
-
-
-/* Profile control overrides
-   ========================================================================== */
-
-.is-signed-in {
-    // .control--profile {
-    //     color: $c-brandBlue;
-
-    //     .control__icon-wrapper {
-    //         border-color: $c-brandBlue;
-    //     }
-    // }
-}
-
-
-/* Active state
-   ========================================================================== */
-
-.control {
-    &:active,
-    &:focus,
-    &.is-active {
-        // color: $c-brandLightBlue;
-    }
-}
+$control-size: 32px;
 
 
 /* Label next to the icon
@@ -44,19 +11,18 @@
 .control__info {
     display: none;
     @include rem((
-        height: 30px
+        height: 30px,
+        margin-left: $gs-gutter/2
     ));
     vertical-align: top;
     white-space: nowrap;
 
-    @include mq(544px) {
+    @include mq(558px) {
         display: block;
         overflow: hidden;
         float: left;
         @include rem((
-            line-height: 32px,
-            margin-left: $gs-gutter/2,
-            margin-right: $gs-gutter/2,
+            line-height: $control-size,
             max-width: 200px
         ));
         text-overflow: ellipsis;
