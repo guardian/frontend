@@ -237,7 +237,8 @@ $c-guardian-services-active-background: #2479c3;
     
     a {
         display: inline-block;
-        color: #ffffff; 
+        color: #ffffff;
+        margin-right: 25px;
     }
 
     @include mq(mobileLandscape) {
@@ -247,6 +248,6 @@ $c-guardian-services-active-background: #2479c3;
 
 .breaking-news__close {
   position: absolute;
-  right: 8px;
-  top: 6px;
+  right: 10px;
+  top: 12px;
 }

@@ -84,7 +84,7 @@ define([
                 .slice(0, maxAlerts)
                 .forEach(function(article) {
                     var alert = bonzo.create('<div class="breaking-news" data-link-name="breaking news"><a data-link-name="article" href="/' + article.id + '">' + article.headline + '</a> </div>'),
-                        close = bonzo.create('<button class="breaking-news__close" data-link-name="close">x</button>');
+                        close = bonzo.create('<i class="breaking-news__close i-close-icon-white" data-link-name="close"></i>');
 
                     bonzo(alert).append(close);
                     header = header || bonzo(document.querySelector('#header'));
@@ -105,5 +105,3 @@ define([
     };
 
 });
-
-gs-container
