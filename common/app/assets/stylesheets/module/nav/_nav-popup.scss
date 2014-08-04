@@ -17,6 +17,7 @@ $control-offset: 32 + $gs-gutter/2;
     left: 0;
     list-style: none;
     @include rem((
+        min-width: 200,
         top: $nav-popup-top + $gs-baseline/2,
         padding: 0 $gs-gutter/2
     ));
@@ -35,6 +36,7 @@ $control-offset: 32 + $gs-gutter/2;
 
 .has-nav-popup {
     position: relative;
+    cursor: pointer;
 }
 
 .nav-popup__toggle {

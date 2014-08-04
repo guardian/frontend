@@ -28,6 +28,7 @@
     cursor: pointer;
     color: $c-guardian-services-action;
     display: inline-block;
+    text-decoration: none;
     @include rem((
         line-height: $headerHeight
     ));
