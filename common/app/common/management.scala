@@ -90,15 +90,6 @@ class GaugeMetric[T](
   val `type`: String = "gauge"
 }
 
-class StopWatch {
-  val startTime = System.currentTimeMillis
-  def elapsed = System.currentTimeMillis - startTime
-}
-
-object StopWatch{
-  def apply(): StopWatch = new StopWatch
-}
-
 object Timing {
 
   def time[T](activity: String,

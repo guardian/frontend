@@ -11,8 +11,6 @@ import com.typesafe.sbt.web.Import._
 
 object Frontend extends Build with Prototypes {
 
-  scalaVersion := "2.11.1"
-
   val common = application("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
