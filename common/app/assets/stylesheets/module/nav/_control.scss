@@ -2,7 +2,7 @@
    Navigation controls
    ========================================================================== */
 
-$control-size: 32px;
+$control-size: 36px;
 
 
 /* Label next to the icon
@@ -38,13 +38,17 @@ $control-size: 32px;
     @extend %icon-holder-circle;
     border-color: #ffffff;
     float: left;
+    @include rem((
+        height: 34,
+        width: 34
+    ));
 }
 
 .control__icon {
     display: block;
     text-align: center;
     @include rem((
-        height: 24px,
+        height: 32px,
         padding-top: 5px
     ));
 
