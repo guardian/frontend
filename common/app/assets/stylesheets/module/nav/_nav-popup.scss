@@ -17,7 +17,7 @@ $bp-header-wrap: 544px;
     margin: 0;
     padding: 0;
     list-style: none;
-    @include box-shadow(0 rem((2px 2px)) 0 rgba(0, 0, 0, .2));
+    @include box-shadow(0 rem((2px 2px)) 0 rgba(0, 0, 0, .25));
     @include rem((
         min-width: 150,
         top: $nav-popup-top,
@@ -162,8 +162,9 @@ $bp-header-wrap: 544px;
 
 .nav-popup--search {
     z-index: 10;
+    padding: 0;
     @include rem((
-        padding-top: $gs-baseline,
+        padding-top: 5px, // manual amount, determined by google, not gu-grid
         top: $headerHeight + $gs-baseline / 2
     ));
 
@@ -173,7 +174,15 @@ $bp-header-wrap: 544px;
             width: gs-span(8) + $gs-gutter,
             min-height: 68px,
             left: $gs-gutter/2,
-            padding-bottom: $gs-baseline/2
+            padding: $gs-gutter,
+            padding-top: $gs-gutter + 5px, // manual amount, determined by google, not gu-grid
         ));
+    }
+
+    // account for google search sizes.
+    .search-box {
+        @include rem((
+            margin-bottom: -1px
+        ))
     }
 }
