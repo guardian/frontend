@@ -18,9 +18,8 @@ package object commercial {
     Segment(Context(section, keywords), userSegments)
   }
 
-  def specificIds(implicit request: RequestHeader) = {
-    request.queryString.getOrElse("t", Nil).reverse
-  }
+  def specificId(implicit request: RequestHeader): Option[String] = request.queryString.get("t").map(_.head)
+  def specificIds(implicit request: RequestHeader): Seq[String] = request.queryString.getOrElse("t", Nil).reverse
 
   trait Relevance[T] {
     def view(ads: Seq[T])(implicit request: RequestHeader): Html
