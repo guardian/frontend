@@ -234,25 +234,24 @@ $c-guardian-services-active-background: #2479c3;
 .breaking-news {
     @include box-sizing(border-box);
     @include gs-container;
-    padding: 10px 40px 10px 10px;
     position: relative;
-    background-color: #b51800;
+    padding: $gs-baseline $gs-gutter*2 $gs-baseline $gs-gutter/2;
+    background-color: guss-colour(tone-live-1);
     margin-top: 1px;
-    font-weight: 800;
 
     a {
         color: #ffffff;
     }
 
     .breaking-news__close {
-      position: absolute;
-      right: 12px;
-      top: 12px;
-      cursor: pointer;
+        position: absolute;
+        top: $gs-baseline ;
+        right: $gs-baseline ;
+        cursor: pointer;
     }
 
     @include mq(mobileLandscape) {
-        padding-left: 20px;
+        padding-left: $gs-gutter;
     }
 }
 
