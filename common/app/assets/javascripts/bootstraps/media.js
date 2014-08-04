@@ -348,10 +348,14 @@ define([
             });
         },
         initMostViewedMedia: function() {
-            var mostViewed = new Component();
 
-            mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
-            mostViewed.fetch($('.js-video-components-container')[0], 'html');
+            if (config.page.sectionName === 'Children\'s books' && config.switches.childrensBooksHidePopular) {
+                $('.content__secondary-column--media').addClass('u-h');
+            } else {
+                var mostViewed = new Component();
+                mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
+                mostViewed.fetch($('.js-video-components-container')[0], 'html');
+            }
         }
     };
 
