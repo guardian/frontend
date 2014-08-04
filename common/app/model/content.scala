@@ -373,7 +373,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = {
-    val bookReviewIsbns = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
+    val bookReviewIsbn = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
 
     super.metaData ++ Map(
       ("content-type", contentType),
@@ -382,7 +382,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       ("inBodyExternalLinkCount", linkCounts.external),
       ("shouldHideAdverts", shouldHideAdverts),
       ("hasInlineMerchandise", hasInlineMerchandise)
-    ) ++ bookReviewIsbns
+    ) ++ bookReviewIsbn
   }
 
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
