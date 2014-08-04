@@ -33,6 +33,41 @@
                         }
                     </li>
                 }
+                <li class="global-navigation__section">
+                    <span class="global-navigation__title global-navigation__title--guardian-services">from the guardian</span>
+                    <ul class="global-navigation__children">
+                        <li class="global-navigation__child">
+                            <a class="global-navigation__action" href="https://soulmates.theguardian.com/?INTCMP=NGW_NAVBAR_UK_GU_SOULMATES" target="_blank" data-link-name="Soulmates">soulmates</a>
+                        </li>
+                        <li class="global-navigation__child">
+                            <a class="global-navigation__action" href="http://jobs.theguardian.com/?INTCMP=NGW_NAVBAR_UK_GU_JOBS" target="_blank" data-link-name="Jobs">jobs</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="global-navigation__section">
+                    <span class="global-navigation__title global-navigation__title--guardian-services">edition</span>
+                    <ul class="global-navigation__children">
+                        @Edition.others(request).map{ edition =>
+                            <li class="global-navigation__child">
+                                <a class="global-navigation__action" data-edition="@edition.id"
+                                    data-link-name="switch to @edition.id edition"
+                                    href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
+                                    @edition.id
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+                @if(ClassicLink.hasClassicVersion()) {
+                    <li class="global-navigation__section">
+                        <span class="global-navigation__title global-navigation__title--guardian-services">view website</span>
+                        <ul class="global-navigation__children">
+                            <li class="global-navigation__child">
+                                <span class="global-navigation__action">@fragments.mainSiteLink(metaData, "current version")</span>
+                            </li>
+                        </ul>
+                    </li>
+                }
             </ul>
         </nav>
     }
