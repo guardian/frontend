@@ -17,7 +17,7 @@ $control-size: 32px;
     vertical-align: top;
     white-space: nowrap;
 
-    @include mq(558px) {
+    @include mq(544px) {
         display: block;
         overflow: hidden;
         float: left;
