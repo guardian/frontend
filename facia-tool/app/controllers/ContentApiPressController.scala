@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.googleauth.UserIdentity
 import common.ExecutionContexts
 import conf.Configuration
 import play.api.libs.Comet
@@ -7,6 +8,7 @@ import play.api.mvc.Controller
 import services.ContentApiRefresh
 
 import scala.util.{Failure, Success}
+import auth.ExpiringActions
 
 /** Utility endpoint for forcing updates to Content API.
   *
@@ -16,11 +18,11 @@ import scala.util.{Failure, Success}
   * Tool.
   */
 object ContentApiPressController extends Controller with ExecutionContexts {
-  def publishAll() = ExpiringAuthentication { request =>
-    Ok(views.html.publish_all(Configuration.environment.stage, Identity(request)))
+  def publishAll() = ExpiringActions.ExpiringAuthAction { request =>
+    Ok(views.html.publish_all(Configuration.environment.stage, UserIdentity.fromRequest(request)))
   }
 
-  def publishAllStream() = ExpiringAuthentication { request =>
+  def publishAllStream() = ExpiringActions.ExpiringAuthAction { request =>
     Ok.chunked((ContentApiRefresh.refresh() map {
       case (collectionId, Success(_)) => s"Successfully published $collectionId"
       case (collectionId, Failure(error)) => s"Failed to publish $collectionId: ${error.getMessage}"

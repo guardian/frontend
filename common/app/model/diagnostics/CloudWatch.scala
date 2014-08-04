@@ -27,7 +27,7 @@ trait CloudWatch extends Logging {
     }
     def onSuccess(request: PutMetricDataRequest, result: Void )
     {
-      log.info("CloudWatch PutMetricDataRequest - sucess")
+      log.info("CloudWatch PutMetricDataRequest - success")
     }
   }
 

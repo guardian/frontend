@@ -1,6 +1,6 @@
-@(env: String, priority: String, identity: Option[Identity])
+@(env: String, priority: String, identity: Option[com.gu.googleauth.UserIdentity])
 
-@admin_main("config", env, Some(priority), isAuthed = true, identity) {
+@admin_main("config", env, Some(priority), isAuthed = true, identity=identity) {
 
 <div style="display: none;" data-bind="
     visible: true,

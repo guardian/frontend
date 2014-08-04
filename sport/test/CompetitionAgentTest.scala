@@ -15,7 +15,7 @@ class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Footbal
 
   lazy val seasonStart = Some(new LocalDate(2012, 8, 1))
 
-  "CompetitionAgentTest" should "load fixtures" in Fake {
+  "CompetitionAgentTest" should "load fixtures" in FakeSport {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(
@@ -32,7 +32,7 @@ class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Footbal
     )
   }
 
-  it should "load results" in Fake {
+  it should "load results" in FakeSport {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(
@@ -48,7 +48,7 @@ class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Footbal
     )
   }
 
-  it should "load live matches" in Fake {
+  it should "load live matches" in FakeSport {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(
@@ -63,7 +63,7 @@ class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Footbal
 
   }
 
-  it should "load league tables" in Fake {
+  it should "load league tables" in FakeSport {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(

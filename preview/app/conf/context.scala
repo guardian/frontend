@@ -43,8 +43,8 @@ class HealthcheckPage(urls: String*) extends UrlPagesHealthcheckManagementPage(u
 }
 
 object HealthCheck extends AllGoodHealthcheckController(
-  "/world/2012/sep/11/barcelona-march-catalan-independence",
-  "/uk"
+  9012,
+  "/world/2012/sep/11/barcelona-march-catalan-independence"
 )
 
 object HealthcheckPage extends HealthcheckPage("/world/2012/sep/11/barcelona-march-catalan-independence") {

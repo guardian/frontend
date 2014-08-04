@@ -28,7 +28,6 @@
             padding: 0 $gs-gutter
         ));
     }
-
 }
 
 .content__main-column {
@@ -192,7 +191,6 @@
         @include fs-headline(7, true);
     }
     @include mq(tablet) {
-        -webkit-font-smoothing: antialiased;
         @include fs-headline(8, true);
         @include rem((
             padding-bottom: $gs-row-height,
@@ -530,7 +528,7 @@
     font-weight: 200;
     @include box-sizing(border-box);
     @include rem((
-        height: 2*get-line-height($fs-bodyCopy, 3),
+        height: 2*get-line-height($fs-bodyCopy, 2),
         padding-top: 1px,
         margin-right: 4px
     ));
@@ -551,7 +549,7 @@
         font-weight: 200;
         @include rem((
             margin-right: 5px,
-            height: 3*get-line-height($fs-bodyCopy, 3)
+            height: 3*get-line-height($fs-bodyCopy, 2)
         ));
 
         .drop-cap__inner {

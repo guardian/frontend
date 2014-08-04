@@ -24,6 +24,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       .getOrElse(throw new BadConfigurationException(property))
   }
 
+  object indexes {
+    lazy val tagIndexesBucket =
+      configuration.getMandatoryStringProperty("tag_indexes.bucket")
+
+    lazy val adminRebuildIndexRateInMinutes =
+      configuration.getIntegerProperty("tag_indexes.rebuild_rate_in_minutes").getOrElse(60)
+  }
+
   object environment {
     private val installVars = new File("/etc/gu/install_vars") match {
       case f if f.exists => IOUtils.toString(new FileInputStream(f))
@@ -275,6 +283,15 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
     lazy val configBeforePressTimeout: Int = 1000
 
+
+    case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
+    val oauthCredentials: Option[OAuthCredentials] =
+      for {
+        oauthClientId <- configuration.getStringProperty("faciatool.oauth.clientid")
+        oauthSecret <- configuration.getStringProperty("faciatool.oauth.secret")
+        oauthCallback <- configuration.getStringProperty("faciatool.oauth.callback")
+      } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+
     //It's not possible to take a batch size above 10
     lazy val pressJobBatchSize: Int =
       Try(configuration.getStringProperty("faciapress.batch.size").get.toInt)
@@ -347,6 +364,15 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthClientId <- configuration.getStringProperty("admin.oauth.clientid")
         oauthSecret <- configuration.getStringProperty("admin.oauth.secret")
         oauthCallback <- configuration.getStringProperty("admin.oauth.callback")
+      } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
+  }
+
+  object preview {
+    lazy val oauthCredentials: Option[OAuthCredentials] =
+      for {
+        oauthClientId <- configuration.getStringProperty("preview.oauth.clientid")
+        oauthSecret <- configuration.getStringProperty("preview.oauth.secret")
+        oauthCallback <- configuration.getStringProperty("preview.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
   }
 }

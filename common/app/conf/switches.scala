@@ -217,7 +217,7 @@ object Switches extends Collections {
 
   val DiagnosticsLogging = Switch("Diagnostics", "enable-diagnostics-logging",
     "If this switch is on, then js error reports and requests sent to the Diagnostics servers will be logged.",
-    safeState = Off, never
+    safeState = On, never
   )
 
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
@@ -413,7 +413,7 @@ object Switches extends Collections {
 
   val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
     "If this switch is on the container configuration will allow articles to show their tags or sections",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 5)
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
   )
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
@@ -436,6 +436,11 @@ object Switches extends Collections {
   val SeoBlockGooglebotFromJSPathsSwitch = Switch("Feature Switches", "seo-block-googlebot-js-paths",
     "If switched on, relative paths in JS files become concatenated string segments to stop googlebot following them",
     safeState = Off, sellByDate = new LocalDate(2014, 8, 29)
+  )
+
+  val CenturyRedirectionSwitch = Switch("Feature Switches", "redirect-century-pages",
+    "If switched on, we redirect /century and /century/yyyy-yyyy to valid (non-R1) endpoints",
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
   val all: List[Switch] = List(
@@ -511,7 +516,8 @@ object Switches extends Collections {
     ABHighCommercialComponent,
     SeoBlockGooglebotFromJSPathsSwitch,
     EnhancedMediaPlayerSwitch,
-    ABRightMostPopularText
+    ABRightMostPopularText,
+    CenturyRedirectionSwitch
   )
 
   val httpSwitches: List[Switch] = List(
