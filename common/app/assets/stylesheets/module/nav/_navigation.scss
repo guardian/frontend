@@ -851,23 +851,24 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     ));
 
     @if not $old-ie {
+        @include transform-origin(60%);
         .navigation--expanded & {
+            @include transform-origin(50%);
             &:nth-child(1) {
-                position: relative;
-                top: rem(4px);
-                @include transform(rotate(-45deg));
+                @include transform(translateY(rem(4px)) rotate(45deg));
             }
             &:nth-child(2) {
-                display: none;
+                opacity: 0;
             }
             &:nth-child(3) {
-                position: relative;
-                top: -rem(4px);
-                @include transform(rotate(45deg));
+                @include transform(translateY(rem(-4px)) rotate(-45deg));
             }
         }
         @include mq(tablet) {
-            @include transition(all .1s ease-in);
+            @include transition(
+                opacity 100ms,
+                transform 100ms ease-in
+            );
         }
     }
 }
