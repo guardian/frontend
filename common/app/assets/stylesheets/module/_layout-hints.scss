@@ -117,7 +117,7 @@ figure.element.element--supporting {
             position: absolute;
             top: 100%;
             @include rem((
-                padding-top: 21px
+                padding-top: ($gs-baseline/6)*5
             ));
             @include reduce-left;
         }
