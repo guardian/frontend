@@ -20,13 +20,16 @@ $bp-header-wrap: 544px;
     @include box-shadow(0 rem((2px 2px)) 0 rgba(0, 0, 0, .25));
     @include rem((
         min-width: 150,
-        top: $nav-popup-top,
+        top: $nav-popup-top - 2,
         padding: 0 $gs-gutter/2
     ));
 
     @include mq(mobileLandscape) {
         right: auto;
         bottom: auto;
+        @include rem((
+            top: $nav-popup-top
+        ))
     }
 
     .top-bar__item--has-control & {
