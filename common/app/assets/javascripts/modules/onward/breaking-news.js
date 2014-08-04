@@ -7,6 +7,7 @@ define([
     'lodash/objects/assign',
     'lodash/arrays/flatten',
     'lodash/arrays/intersection',
+    'bean',
     'bonzo'
 ], function (
     $,
@@ -17,12 +18,13 @@ define([
     _assign,
     _flatten,
     _intersection,
+    bean,
     bonzo
 ) {
     var breakignNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
         threshold = 2,
-        maxDisplayed = 1,
+        maxAlerts = 1,
         header;
 
     function slashDelimit() {
@@ -79,10 +81,19 @@ define([
                 .filter(function(collection) {
                     return (hidden.indexOf(collection.id) === -1);
                 })
-                .slice(0, maxDisplayed)
+                .slice(0, maxAlerts)
                 .forEach(function(article) {
+                    var alert = bonzo.create('<div class="breaking-news" data-link-name="breaking news"><a data-link-name="article" href="/' + article.id + '">' + article.headline + '</a> </div>'),
+                        close = bonzo.create('<button class="breaking-news__close" data-link-name="close">x</button>');
+
+                    bonzo(alert).append(close);
                     header = header || bonzo(document.querySelector('#header'));
-                    header.after('<div id="breaking-news" class="gs-container"><a href="/' + article.id + '">' + article.headline + '</a></div>');
+                    header.after(alert);
+
+                    bean.on(close[0], 'click', function() {
+                        bonzo(alert).hide();
+                        storage.local.set(storageKeyHidden, _intersection(hidden.concat(article.id), articleIds));
+                    });
                 });
             },
             function() {
@@ -94,3 +105,5 @@ define([
     };
 
 });
+
+gs-container

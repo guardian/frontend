@@ -227,8 +227,9 @@ $c-guardian-services-active-background: #2479c3;
 /* Post-header breaking news
    ========================================================================== */
 
-#breaking-news {
+.breaking-news {
     @include box-sizing(border-box);
+    @include gs-container;
     background-color: #ff3d00;
     padding: 10px;
     font-weight: bold;
@@ -242,4 +243,10 @@ $c-guardian-services-active-background: #2479c3;
     @include mq(mobileLandscape) {
         padding: 10px 20px;
     }
+}
+
+.breaking-news__close {
+  position: absolute;
+  right: 8px;
+  top: 6px;
 }
