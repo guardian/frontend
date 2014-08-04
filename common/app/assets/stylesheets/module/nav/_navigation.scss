@@ -378,8 +378,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     margin-right: 0;
     overflow: hidden;
     position: relative;
-    // draws border across elements without content
+    // draws border without adding height
     @include box-shadow(inset 0 1px $c-global-navigation-border);
+    background: $c-local-navigation-background;
     @include rem((
         min-height: $navigation-height
     ));
@@ -446,8 +447,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         padding-top: $gs-baseline/4
     ));
     overflow: hidden;
-    background: $c-local-navigation-background;
-    border-top: 1px solid $c-global-navigation-border;
 
     @include mq($to: tablet) {
         @include rem((
