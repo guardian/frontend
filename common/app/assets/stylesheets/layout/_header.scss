@@ -224,30 +224,35 @@ $c-guardian-services-active-background: #2479c3;
     z-index: 2;
 }
 
-/* Post-header breaking news
+/* Breaking news
    ========================================================================== */
+
+#breaking-news {
+    background-color: #bc3f2c;
+}
 
 .breaking-news {
     @include box-sizing(border-box);
     @include gs-container;
-    background-color: #ff3d00;
-    padding: 10px;
-    font-weight: bold;
-    border-top: 1px solid rgba(255, 255, 255, .3);
-    
+    padding: 10px 40px 10px 10px;
+    position: relative;
+    background-color: #b51800;
+    margin-top: 1px;
+    font-weight: 800;
+
     a {
-        display: inline-block;
         color: #ffffff;
-        margin-right: 25px;
+    }
+
+    .breaking-news__close {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      cursor: pointer;
     }
 
     @include mq(mobileLandscape) {
-        padding: 10px 20px;
+        padding-left: 20px;
     }
 }
 
-.breaking-news__close {
-  position: absolute;
-  right: 10px;
-  top: 12px;
-}
