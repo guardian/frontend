@@ -438,7 +438,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .global-navigation__title {
     color: $c-global-navigation-title;
     background: $c-global-navigation-title-background;
-    border-top: 1px solid mix($c-global-navigation-title-background, #fff, 80%);
     float: left;
 
     @include mq($to: tablet) {
@@ -463,6 +462,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         left: 0;
         background: $c-global-navigation-title-background;
         @include rem((
+            border-top: 1px solid mix($c-global-navigation-title-background, #fff, 80%),
             width: $global-navigation-title-width,
             padding-left: $gs-gutter
         ));
