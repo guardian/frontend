@@ -100,13 +100,30 @@ define([
     }
 
     function getFontFormatSupport(ua) {
-        var format = 'woff';
-            ua = ua.toLowerCase();
+        ua = ua.toLowerCase();
+        var browserSupportsWoff2 = false;
+
+        // for now only Chrome 36+ supports WOFF 2.0.
+        // Opera/Chromium also support it but their share on theguardian.com is around 0.5%
+        var woff2browsers = /Chrome\/([0-9]+)/i;
+
+        if (woff2browsers.test(ua)) {
+            var chromeVersion = parseInt(woff2browsers.exec(ua)[1], 10);
+
+            if (chromeVersion >= 36) {
+                browserSupportsWoff2 = true;
+            }
+        }
+
+        if (browserSupportsWoff2) {
+            return 'woff2';
+        }
 
         if (ua.indexOf('android') > -1) {
-            format = 'ttf';
+            return 'ttf';
         }
-        return format;
+
+        return 'woff';
     }
 
     function hasTouchScreen() {
