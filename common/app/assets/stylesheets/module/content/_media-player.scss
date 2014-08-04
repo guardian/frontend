@@ -125,12 +125,15 @@ $vjs-control-height: $gs-baseline*4;
             border-style: solid;
             border-width: 1em 0 1em 2.4em;
             border-color: transparent transparent transparent $c-neutral7;
-            border-radius: .2em;
             -moz-transform: scale(.99999); // fix for diagonal border aliasing in firefox
             top: 50%;
             left: 0;
             margin-top: -.9em;
             margin-left: 2.2em;
+            
+            @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
+                @include border-radius(.2em);
+            }
 
             .gu-media-wrapper:hover & {
                 border-left-color: #333333;

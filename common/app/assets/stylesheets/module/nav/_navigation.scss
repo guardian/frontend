@@ -708,7 +708,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             width: 100%;
         }
         .local-navigation__action {
-            display: table-cell;
+            display: block;
             @include rem((
                 line-height: $navigation-height
             ));
