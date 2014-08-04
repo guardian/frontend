@@ -7,7 +7,7 @@ $c-nav-popup-bg: #ffffff;
 // popups align with the label, so if there's a control icon, we need to account
 // for it.
 $control-offset: 32 + $gs-gutter/2;
-$bp-header-wrap: 558px;
+$bp-header-wrap: 544px;
 
 .nav-popup {
     @include box-sizing(border-box);
