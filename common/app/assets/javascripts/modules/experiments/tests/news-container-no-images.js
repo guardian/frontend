@@ -12,8 +12,8 @@ define([
         this.expiry = '2014-08-15';
         this.author = 'James Gorrie';
         this.description = 'Hide images on standard items in the news container';
-        this.audience = 0.2;
-        this.audienceOffset = 0.1;
+        this.audience = 0.5;
+        this.audienceOffset = 0.75;
         this.successMeasure = 'More clickthroughs on the news container';
         this.audienceCriteria = 'Everyone';
         this.dataLinkNames = 'new-containers-no-images';
