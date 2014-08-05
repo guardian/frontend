@@ -279,7 +279,9 @@ define([
         },
 
         displayBreakingNews: function (config) {
-            breakingNews(config);
+            if (config.switches.breakingNews) {
+                breakingNews(config);
+            }
         },
 
         displayOnboardMessage: function (config) {
