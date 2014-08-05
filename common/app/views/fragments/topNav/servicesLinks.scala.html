@@ -4,8 +4,7 @@
 @import common.Edition
 @import common.editions._
 
-@if(HttpSwitch(GuardianServicesLinksSwitch).isSwitchedOn){
-    <div class="top-bar__item--right hide-on-mobile" data-component="guardian-services">
+<div class="top-bar__item--right hide-on-mobile" data-component="guardian-services">
     @if(Edition(request) == Uk){
         <div class="top-bar__item">
             <a class="top-bar__item--action" data-link-name="topNav : jobs"
@@ -60,4 +59,3 @@
         </ul>
     </div>
 </div>
-}

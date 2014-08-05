@@ -279,10 +279,6 @@ object Switches extends Collections {
     sellByDate = new LocalDate(2014, 10, 30)
   )
 
-  val GuardianServicesLinksSwitch = Switch("Feature Switches", "guardian-services-links",
-    "If this switch is switched on then Jobs and Soulmates links will be displayed on page headers",
-    safeState = Off,sellByDate = new LocalDate(2014, 8, 12))
-
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
     safeState = Off, sellByDate = never
@@ -503,7 +499,6 @@ object Switches extends Collections {
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
     SentimentalCommentsSwitch,
-    GuardianServicesLinksSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,
@@ -526,7 +521,6 @@ object Switches extends Collections {
   )
 
   val httpSwitches: List[Switch] = List(
-    GuardianServicesLinksSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
