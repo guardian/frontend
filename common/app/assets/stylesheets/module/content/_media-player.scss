@@ -552,6 +552,7 @@ $vjs-progress-inset-bottom: 4px;
     left: 0;
     top: 0;
     display: none;
+    z-index: 3;
 
     .vjs-playing & {
         display: block;
