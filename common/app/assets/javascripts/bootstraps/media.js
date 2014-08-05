@@ -354,7 +354,7 @@ define([
         },
         initMostViewedMedia: function() {
 
-            if (config.page.sectionName === 'Children\'s books' && config.switches.childrensBooksHidePopular) {
+            if (config.page.section === 'childrens-books-site' && config.switches.childrensBooksHidePopular) {
                 $('.content__secondary-column--media').addClass('u-h');
             } else {
                 var mostViewed = new Component();
