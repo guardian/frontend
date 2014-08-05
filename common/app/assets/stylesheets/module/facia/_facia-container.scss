@@ -18,8 +18,8 @@
             ));
         }
         @include mq(tablet) {
-            margin-left: 0;
-            margin-right: 0;
+            margin-left: auto;
+            margin-right: auto;
             @include rem((
                 padding-left: $gs-gutter,
                 padding-right: $gs-gutter
@@ -40,8 +40,6 @@
                 @include rem((
                     width: gs-span(9)
                 ));
-                margin-left: auto;
-                margin-right: auto;
             }
             @include mq(desktop) {
                 @include rem((
@@ -140,10 +138,7 @@
 @mixin facia-container--layout-content {
     .facia-container--layout-content {
         .facia-container__inner {
-
             @include mq(tablet) {
-                margin-left: auto;
-                margin-right: auto;
                 @include rem((
                     padding-left: $gs-gutter,
                     padding-right: $gs-gutter
@@ -196,6 +191,11 @@
             }
             .container__body {
                 padding-top: 0; // Top spacing at this breakpoint is done by .facia-slice-wrapper
+            }
+            .container__border {
+                @include rem((
+                    margin-right: -(gs-span(1) + $gs-gutter*2)
+                ));
             }
         }
     }
