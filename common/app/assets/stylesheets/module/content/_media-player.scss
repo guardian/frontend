@@ -157,6 +157,9 @@ $vjs-control-height: $gs-baseline*4;
     padding-bottom: $vjs-control-height;
     position: absolute;
     z-index: 2;
+    .vjs-using-native-controls & {
+        display: none;
+    }
 }
 
 .vjs-loading-spinner {
