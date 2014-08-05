@@ -35,17 +35,17 @@
                                     <meta itemprop="about" content="@StripHtmlTags(t)" />
                                 }
 
-                                <meta itemprop="datePublished" content="@video.webPublicationDate.toString("yyyy-MM-dd")"/>
-                                <meta itemprop="name" content="@video.webTitle"/>
-                                <meta itemprop="uploadDate" content="@video.webPublicationDate.toString("yyyy-MM-dd")"/>
+                                <meta itemprop="datePublished" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
+                                <meta itemprop="name" content="@video.webTitle" />
+                                <meta itemprop="uploadDate" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
                                 @video.mainVideo.map { mv =>
-                                    <meta itemprop="duration" content="@mv.duration.toString()"/>
-                                    <meta itemprop="height" content="@mv.height"/>
-                                    <meta itemprop="width" content="@mv.width"/>
+                                    <meta itemprop="duration" content="@mv.duration.toString()" />
+                                    <meta itemprop="height" content="@mv.height" />
+                                    <meta itemprop="width" content="@mv.width" />
                                 }
-                                <meta itemprop="requiresSubscription" content="no"/>
-                                <meta itemprop="image" content="@video.openGraphImage"/>
-                                <meta itemprop="thumbnail" content="@video.thumbnailPath"/>
+                                <meta itemprop="requiresSubscription" content="no" />
+                                <meta itemprop="image" content="@video.openGraphImage" />
+                                <meta itemprop="thumbnail" content="@video.thumbnailPath" />
                                 @fragments.media.video(video.mainVideo,  video.headline)
                             </figure>
                         }
