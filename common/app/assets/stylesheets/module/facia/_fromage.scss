@@ -15,7 +15,7 @@
     @include rem((
         margin: 0 $gs-gutter/2 $gs-baseline
     ));
-    border-top-width: 2px;
+    border-top-width: 1px;
     border-top-style: solid;
 
     @include mq(tablet) {

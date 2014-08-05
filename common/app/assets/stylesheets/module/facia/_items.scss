@@ -29,10 +29,13 @@
 }
 .container__border {
     border-top-style: solid;
-    border-top-width: 4px;
+    border-top-width: 1px;
 
     @include mq(tablet) {
-        border-top-width: 2px;
+        @include rem((
+            margin-left: -$gs-gutter,
+            margin-right: -$gs-gutter
+        ));
     }
 }
 .container__header {
