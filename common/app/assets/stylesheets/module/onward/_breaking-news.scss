@@ -9,7 +9,9 @@ $breaking-news-height: $gs-row-height;
 .breaking-news-item {
     @include box-sizing(border-box);
     @include gs-container;
-    @include rem(( padding: $gs-baseline/2 $gs-gutter*2 $gs-baseline/2 $gs-gutter/2 ));
+    @include rem((
+        padding: $gs-baseline/2 $gs-gutter*2 $gs-baseline/2 $gs-gutter/2
+    ));
     position: relative;
     background-color: $breaking-news-bg;
     margin-top: 1px;
