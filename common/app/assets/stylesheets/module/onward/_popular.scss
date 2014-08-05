@@ -1,9 +1,16 @@
+.facia-container--layout-content .container--popular .container__border {
+    display: none;
+
+    @include mq(rightCol) {
+        display: block;
+    }
+}
+
 @include mq(rightCol) {
 
     @include guss-columns('.headline-column', $column-min-width: 190px);
 
     .container--popular {
-
         .page-sub-header {
             display: none;
         }
