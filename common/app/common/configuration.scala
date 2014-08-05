@@ -3,7 +3,6 @@ package common
 import com.amazonaws.auth._
 import com.amazonaws.internal.StaticCredentialsProvider
 import com.gu.conf.ConfigurationFactory
-import com.gu.management.{ Manifest => ManifestFile }
 import conf.{Switches, Configuration}
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils

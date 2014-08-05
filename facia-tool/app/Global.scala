@@ -1,10 +1,10 @@
-import common._
-import conf.{Gzipper, Management}
 import java.io.File
+
+import common._
+import conf.{Gzipper, Configuration => GuardianConfiguration}
 import play.api._
 import play.api.mvc.WithFilters
 import services.ConfigAgentLifecycle
-import conf.{Configuration => GuardianConfiguration}
 
 object Global extends WithFilters(Gzipper)
   with GlobalSettings
@@ -12,7 +12,7 @@ object Global extends WithFilters(Gzipper)
   with ConfigAgentLifecycle {
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
 
-  override lazy val applicationName = Management.applicationName
+  override lazy val applicationName = "frontend-facia-tool"
   override def applicationMetrics: Map[String, Double] = Map(
     ("api-usage", FaciaToolMetrics.ApiUsageCount.getAndReset.toDouble),
     ("api-proxy-usage", FaciaToolMetrics.ProxyCount.getAndReset.toDouble),

@@ -238,6 +238,7 @@ define([
                 videojs.plugin('fullscreener', modules.fullscreener);
 
                 $('.js-gu-media').each(function (el) {
+                    var mediaType = el.tagName.toLowerCase();
 
                     bonzo(el).addClass('vjs');
 
@@ -265,7 +266,7 @@ define([
                         deferToAnalytics(function () {
 
                             // preroll for videos only
-                            if (config.page.contentType === 'Video') {
+                            if (mediaType === 'video') {
 
                                 modules.initOmnitureTracking(player);
                                 modules.initOphanTracking(player, mediaId);

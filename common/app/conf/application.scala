@@ -2,7 +2,6 @@ package conf
 
 import common.Assets.Assets
 import common.{ExecutionContexts, GuardianConfiguration}
-import com.gu.management.play.RequestMetrics
 import contentapi.ElasticSearchLiveContentApiClient
 import play.api.mvc._
 import play.filters.gzip.GzipFilter
@@ -14,8 +13,6 @@ object Configuration extends GuardianConfiguration("frontend", webappConfDirecto
 object LiveContentApi extends ElasticSearchLiveContentApiClient()
 
 object Static extends Assets(Configuration.assets.path)
-
-object RequestMeasurementMetrics extends RequestMetrics.Standard
 
 object Gzipper extends GzipFilter(
   shouldGzip = (req, resp) => !resp.headers.get("Content-Type").exists(_.startsWith("image/"))
@@ -43,5 +40,5 @@ object  JsonVaryHeadersFilter extends Filter with ExecutionContexts with implici
 object Filters {
                                      // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
                                      // which effectively means "JsonVaryHeaders goes around Gzipper"
-  lazy val common: List[EssentialFilter] =  JsonVaryHeadersFilter :: Gzipper :: RequestMeasurementMetrics.asFilters
+  lazy val common: List[EssentialFilter] =  JsonVaryHeadersFilter :: Gzipper :: Nil
 }
