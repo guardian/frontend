@@ -1,6 +1,5 @@
 package conf
 
-import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
 import implicits.Collections
 import org.joda.time.{Days, DateTime, LocalDate}

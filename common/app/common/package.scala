@@ -1,11 +1,11 @@
 package common
 
 import com.gu.openplatform.contentapi.ApiError
+import conf.Switch
 import play.api.Logger
 import play.api.mvc.{ Result, RequestHeader }
 import play.twirl.api.Html
 import model.{NoCache, Cached}
-import com.gu.management.Switchable
 import java.util.concurrent.TimeoutException
 
 object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results {
@@ -35,7 +35,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       Ok(htmlResponse())
   }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData, switches: Seq[Switchable])(implicit request: RequestHeader) = Cached(metaData) {
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData, switches: Seq[Switch])(implicit request: RequestHeader) = Cached(metaData) {
     if (request.isJson)
       JsonComponent(metaData, jsonResponse())
     else

@@ -93,7 +93,6 @@ trait Prototypes {
     .settings(VersionInfo.settings:_*)
     .settings(
       libraryDependencies ++= Seq(
-        "com.gu" %% "management-play" % "7.0",
         "commons-io" % "commons-io" % "2.4"
       )
     )

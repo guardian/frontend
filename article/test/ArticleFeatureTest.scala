@@ -1,6 +1,6 @@
 package test
 
-import conf.{Switches, HealthcheckPage, Configuration}
+import conf.{Switches, Configuration}
 import conf.Switches._
 import org.scalatest.Matchers
 import org.scalatest.{ GivenWhenThen, FeatureSpec }
