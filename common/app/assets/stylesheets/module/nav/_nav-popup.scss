@@ -4,8 +4,11 @@
 $nav-popup-toggle-arrow-size: 4px;
 $nav-popup-top: $headerHeight + $gs-baseline/2;
 $c-nav-popup-bg: #ffffff;
-// popups align with the label, so if there's a control icon, we need to account
-// for it.
+
+// Popups align with the label, so if there's a control icon, we need to account
+// for it. The number is derived from the icon size on the control.
+// TODO:
+// use a proper icon size variabe when the icons are redrawn at mulptile sizes
 $control-offset: 36 + $gs-gutter/2;
 $bp-header-wrap: 544px;
 
