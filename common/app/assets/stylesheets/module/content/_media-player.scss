@@ -184,7 +184,6 @@ $vjs-control-height: $gs-baseline*4;
 
 .vjs-control-bar {
     cursor: default;
-    display: none;
     width: 100%;
     position: absolute;
     z-index: 3;
@@ -197,7 +196,7 @@ $vjs-control-height: $gs-baseline*4;
         height: $vjs-control-height
     ));
     @include transition(bottom .8s);
-    transition-delay: .2s;
+    transition-delay: 1s;
 
     .gu-media--video & {
         @include rem((
@@ -214,10 +213,6 @@ $vjs-control-height: $gs-baseline*4;
         bottom: 0;
         @include transition(bottom 0s);
         transition-delay: 0s;
-    }
-
-    .vjs-has-started & {
-        display: block;
     }
 
     .vjs-using-native-controls & {

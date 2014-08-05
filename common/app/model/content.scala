@@ -413,12 +413,6 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 
-  protected implicit val ordering = EncodingOrdering
-
-  lazy val encodings: Seq[Encoding] = Nil
-  lazy val duration: Int = 0
-  lazy val mediaId: Option[String] = None
-
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "video",
@@ -449,13 +443,9 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
 
   override lazy val contentType = GuardianContentTypes.VIDEO
 
+  lazy val source: Option[String] = videos.find(_.isMain).flatMap(_.source)
   override lazy val metaData: Map[String, Any] =
     super.metaData + ("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
-
-  // if you change these rules make sure you update IMAGES.md (in this project)
-  override def mainPicture: Option[ImageContainer] = (images ++ videos).find(_.isMain)
-
-  lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
   // I know its not too pretty
   lazy val bylineWithSource: Option[String] = Some(Seq(
     byline,
