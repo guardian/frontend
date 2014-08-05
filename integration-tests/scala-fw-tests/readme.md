@@ -100,7 +100,7 @@ To do this, go to the build, with the test failure in question, and mute it. The
 
 ![Alt text](doc/build_mute_test_1.png?raw=true "Build chain with tests failing")
 
------->
+--------------------------------------------------------------------------------------------
 
 ![Alt text](doc/build_mute_test_2.png?raw=true "Build chain with tests failing")
 
