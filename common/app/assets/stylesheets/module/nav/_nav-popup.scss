@@ -159,7 +159,10 @@ $bp-header-wrap: 544px;
         }
     } @else {
         &:not(.is-signed-in) .nav-popup__toggle {
-            &:before, &:after {display: none;}
+            &:before,
+            &:after {
+                display: none;
+            }
         }
     }
 }

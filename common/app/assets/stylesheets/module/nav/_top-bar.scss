@@ -58,7 +58,9 @@
 .top-bar__item--search {
     padding-left: 0;
 
-    .nav-popup__toggle:after { display: none;}
+    .nav-popup__toggle:after {
+        display: none;
+    }
 }
 
 .top-bar__item--edition {
