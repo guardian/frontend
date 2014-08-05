@@ -30,4 +30,12 @@ $breaking-news-height: $gs-row-height;
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
     }
+
+    @include mq(wide) {
+        .has-page-skin & {
+            @include rem((
+                width: gs-span(12) + ($gs-gutter*2)
+            ));
+        }
+    }
 }
