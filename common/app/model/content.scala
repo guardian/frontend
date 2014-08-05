@@ -373,7 +373,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = {
-    val bookReviewIsbns = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
+    val bookReviewIsbn = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
 
     super.metaData ++ Map(
       ("content-type", contentType),
@@ -382,7 +382,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       ("inBodyExternalLinkCount", linkCounts.external),
       ("shouldHideAdverts", shouldHideAdverts),
       ("hasInlineMerchandise", hasInlineMerchandise)
-    ) ++ bookReviewIsbns
+    ) ++ bookReviewIsbn
   }
 
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
@@ -433,15 +433,6 @@ class Audio(content: ApiContentWithMeta) extends Media(content) {
 
   lazy val body: String = delegate.safeFields.getOrElse("body", "")
 
-  override lazy val encodings: Seq[Encoding] = {
-    audioAssets.toList.collect {
-      case audio: AudioAsset => Encoding(audio.url.getOrElse(""), audio.mimeType.getOrElse(""))
-    }.sorted
-  }
-
-  override lazy val duration: Int = audioAssets.headOption.map(_.duration).getOrElse(0)
-  override lazy val mediaId: Option[String] = mainAudio.map(_.id)
-
   override lazy val contentType = GuardianContentTypes.AUDIO
 
   override lazy val metaData: Map[String, Any] =
@@ -454,16 +445,7 @@ object Audio {
 
 class Video(content: ApiContentWithMeta) extends Media(content) {
 
-  override lazy val encodings: Seq[Encoding] = {
-    videoAssets.toList.collect {
-      case video: VideoAsset => Encoding(video.url.getOrElse(""), video.mimeType.getOrElse(""))
-    }.sorted
-  }
-
   override lazy val hasClassicVersion = false
-
-  override lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
-  override lazy val mediaId: Option[String] = mainVideo.map(_.id)
 
   override lazy val contentType = GuardianContentTypes.VIDEO
 

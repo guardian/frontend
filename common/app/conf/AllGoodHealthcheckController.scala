@@ -1,6 +1,7 @@
 package conf
 
 import common.ExecutionContexts
+import play.api.{Mode, Play}
 import play.api.libs.ws.WS
 import play.api.mvc._
 
@@ -9,8 +10,16 @@ import scala.concurrent.Future
 trait HealthcheckController extends Controller with Results with ExecutionContexts {
   import play.api.Play.current
 
-  val port = 9000
-  val baseUrl = s"http://localhost:$port"
+  def testPort: Int
+
+  lazy val port = {
+    Play.current.mode match {
+      case Mode.Test => testPort
+      case _ => 9000
+    }
+  }
+
+  lazy val baseUrl = s"http://localhost:$port"
 
   def healthcheck(): Action[AnyContent]
 
@@ -23,7 +32,7 @@ trait HealthcheckController extends Controller with Results with ExecutionContex
 }
 
 // expects ALL of the paths to return 200. If one fails the entire healthcheck fails
-class AllGoodHealthcheckController(paths: String*) extends HealthcheckController {
+class AllGoodHealthcheckController(override val testPort: Int, paths: String*) extends HealthcheckController {
 
   override def healthcheck() = Action.async{
 
@@ -38,7 +47,7 @@ class AllGoodHealthcheckController(paths: String*) extends HealthcheckController
 }
 
 // expects ONE of the paths to return 200. If one passes the entire healthcheck passes regardless of other failures
-class AnyGoodHealthcheckController(paths: String*) extends HealthcheckController {
+class AnyGoodHealthcheckController(override val testPort: Int, paths: String*) extends HealthcheckController {
   override def healthcheck() = Action.async{
 
     val healthCheckResults = fetchResults(paths:_*)

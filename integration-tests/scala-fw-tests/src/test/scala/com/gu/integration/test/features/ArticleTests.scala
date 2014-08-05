@@ -6,8 +6,9 @@ import com.gu.integration.test.steps.ArticleSteps
 import com.gu.integration.test.steps.LiveBlogSteps
 import com.gu.integration.test.tags.ReadyForProd
 import com.gu.integration.test.steps.InteractiveArticleSteps
+import com.gu.automation.support.TestRetries
 
-class ArticleTests extends SeleniumTestSuite {
+class ArticleTests extends SeleniumTestSuite with TestRetries {
 
   feature("Articles") {
     scenarioWeb("checking most popular module and related content exist on standard article page", ReadyForProd) {

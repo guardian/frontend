@@ -97,7 +97,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
         import browser._
 
         Then("the 'Classic version' link should point to '/football/results?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/results"))
+        findFirst(".js-main-site-link").getAttribute("href") should be(HtmlUnit.classicVersionLink("/football/results"))
       }
 
       Given("I visit the results page")
@@ -106,7 +106,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
         import browser._
 
         Then("the 'Classic version' link should point to '/football/results?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/results"))
+        findFirst(".js-main-site-link").getAttribute("href") should be(HtmlUnit.classicVersionLink("/football/results"))
       }
 
     }

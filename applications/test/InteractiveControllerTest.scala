@@ -1,8 +1,7 @@
 package test
 
 import play.api.test.Helpers._
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
+import org.scalatest.{Matchers, FlatSpec}
 
 class InteractiveControllerTest extends FlatSpec with Matchers {
  

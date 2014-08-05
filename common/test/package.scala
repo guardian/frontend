@@ -9,7 +9,6 @@ import java.net.{ HttpURLConnection, URL }
 import java.io.File
 import com.gu.openplatform.contentapi.connection.Http
 import recorder.ContentApiHttpRecorder
-import com.gu.management.play.InternalManagementPlugin
 import play.api.GlobalSettings
 import scala.concurrent.Future
 import org.apache.commons.codec.digest.DigestUtils
@@ -19,7 +18,6 @@ trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
   def testPlugins: Seq[String] = Nil
   def disabledPlugins: Seq[String] = Seq(
-    classOf[InternalManagementPlugin].getName,
     "conf.SwitchBoardPlugin"
   )
 
@@ -70,15 +68,12 @@ trait TestSettings {
 /**
  * Executes a block of code in a running server, with a test HtmlUnit browser.
  */
-class EditionalisedHtmlUnit extends TestSettings {
+class EditionalisedHtmlUnit(val port: String) extends TestSettings {
 
   // the default is I.E 7 which we do not support
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 
-  val host = "http://localhost:9000"
-
-
-  val Port = """.*:(\d*)$""".r
+  val host = s"http://localhost:${port}"
 
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 
@@ -89,15 +84,9 @@ class EditionalisedHtmlUnit extends TestSettings {
     goTo(editionPath, host)(block)
   }
 
-
   protected def goTo[T](path: String, host: String)(block: TestBrowser => T): T = {
 
-    val port = host match {
-      case Port(p) => p.toInt
-      case _ => 9000
-    }
-
-    running(TestServer(port,
+    running(TestServer(port.toInt,
       FakeApplication(additionalPlugins = testPlugins, withoutPlugins = disabledPlugins,
                       withGlobal = globalSettingsOverride)), HTMLUNIT) { browser =>
 
@@ -108,22 +97,16 @@ class EditionalisedHtmlUnit extends TestSettings {
       block(browser)
     }
   }
-}
 
-object WithHost {
-  def apply(path: String): String = UK(path)
-  def UK(path: String): String = s"http://localhost:9000$path"
-  def US(path: String): String = s"http://127.0.0.1:9000$path"
-}
+  def withHost(path: String) = s"http://localhost:$port$path"
 
-object ClassicVersionLink {
-  def apply(path: String) = s"http://localhost:9000/preference/platform/classic?page=${URLEncoder.encode(s"$path?view=classic", "UTF-8")}"
+  def classicVersionLink(path: String) = s"http://localhost:$port/preference/platform/classic?page=${URLEncoder.encode(s"$path?view=classic", "UTF-8")}"
 }
 
 /**
  * Executes a block of code in a FakeApplication.
  */
-trait FakeApp extends TestSettings {
+trait FakeApplication extends TestSettings {
 
   def apply[T](block: => T): T = running(
     FakeApplication(
@@ -135,11 +118,11 @@ trait FakeApp extends TestSettings {
   ) { block }
 }
 
+object Fake extends FakeApplication
+
 object TestRequest {
   // MOST of the time we do not care what path is set on the request - only need to override where we do
   def apply(path: String = "/does-not-matter"): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
     FakeRequest("GET", if (!path.startsWith("/")) s"/$path" else path)
   }
 }
-
-object Fake extends FakeApp

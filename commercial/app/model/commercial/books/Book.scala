@@ -39,6 +39,7 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
     FoodDrinkBestsellersFeed
   )
 
+  def getSpecificBook(isbn: String) = currentAds find(_.isbn == isbn)
   def getSpecificBooks(specifics: Seq[String]) = currentAds.filter(specifics contains _.isbn)
 
   override def adsTargetedAt(segment: Segment): Seq[Book] = super.adsTargetedAt(segment).sortBy(_.position).take(10)

@@ -12,6 +12,10 @@ module.exports = function (grunt) {
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties',
         webfontsDir = './common/app/assets/stylesheets/components/guss-webfonts/webfonts/';
 
+    function isOnlyTask(task) {
+        return grunt.cli.tasks.length === 1 && grunt.cli.tasks[0] === task.name;
+    }
+
     if (isDev) {
         grunt.log.subhead('Running Grunt in DEV mode');
     }
@@ -460,7 +464,6 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: 'common/app/public/javascripts/vendor',
                         src: [
-                            'foresee*/foresee-trigger.js',
                             'formstack-interactive/0.1/boot.js',
                             'vast-client.js'
                         ],
@@ -825,6 +828,11 @@ module.exports = function (grunt) {
         if (!isDev) {
             grunt.task.run('uglify:javascript');
         }
+
+        if (isOnlyTask(this)) {
+            grunt.task.run('asset_hash');
+        }
+
     });
     grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
     grunt.registerTask('compile:flash', ['copy:flash']);
@@ -838,6 +846,8 @@ module.exports = function (grunt) {
         'asset_hash',
         'compile:conf'
     ]);
+
+    grunt.registerTask('compile:js:common', ['requirejs:common', 'copy:javascript', 'asset_hash']);
 
     /**
      * Test tasks
@@ -873,5 +883,4 @@ module.exports = function (grunt) {
             grunt.task.run(['requirejs:' + project, 'copy:javascript', 'asset_hash']);
         }
     });
-
 };

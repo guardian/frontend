@@ -13,6 +13,7 @@ case class DiscussionSteps(implicit driver: WebDriver) extends TestLogging with 
 
   def checkDiscussionContentIsProperlyLoaded(commentsModule: DiscussionsContainerModule) = {
     logger.step("Check that discussionc content is displayed properly")
+    waitUntil(visibilityOf(commentsModule.commentsContainer), 10)
     commentsModule.commentsContainer.isDisplayed should be (true)
     commentsModule.viewAllComments.isDisplayed should be (true)
     

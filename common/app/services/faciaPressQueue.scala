@@ -1,5 +1,6 @@
 package services
 
+import org.joda.time.DateTime
 import play.api.libs.json._
 
 object PressType {
@@ -44,4 +45,4 @@ object PressJob {
   implicit val jsonFormat = Json.format[PressJob]
 }
 
-case class PressJob(path: FrontPath, pressType: PressType)
+case class PressJob(path: FrontPath, pressType: PressType, creationTime: DateTime = DateTime.now)

@@ -1,6 +1,6 @@
 import common._
-import conf.{Configuration => GuardianConfiguration, Management}
-import frontpress.{ToolPressQueueWorker, FrontPressCron}
+import conf.{Configuration => GuardianConfiguration}
+import frontpress.{FrontPressCron, ToolPressQueueWorker}
 import play.api.GlobalSettings
 import services.ConfigAgentLifecycle
 
@@ -15,7 +15,7 @@ object Global extends GlobalSettings
   private def getTotalPressFailureCount: Long =
     FaciaPressMetrics.FrontPressLiveFailure.getResettingValue() + FaciaPressMetrics.FrontPressDraftFailure.getResettingValue()
 
-  override def applicationName = Management.applicationName
+  override def applicationName = "frontend-facia-press"
 
   override def applicationMetrics = Map(
     ("front-press-failure", getTotalPressFailureCount.toDouble),
