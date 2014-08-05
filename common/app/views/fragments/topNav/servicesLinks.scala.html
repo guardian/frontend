@@ -29,9 +29,9 @@
             </ul>
         </div>
     }
-    <div class="top-bar__item has-nav-popup hide-on-mobile" data-component="edition" data-toggle="top-bar__popup--edition">
+    <div class="top-bar__item has-nav-popup hide-on-mobile" data-component="edition">
+        <a href="#guardian-edition-menu" class="top-bar__item--action nav-popup__toggle" data-link-name="topNav : edition" data-toggle="top-bar__popup--edition">
         edition:
-        <a href="#guardian-edition-menu" class="top-bar__item--action nav-popup__toggle" data-link-name="topNav : edition">
             @common.Region(request).filter(r => conf.Switches.IndiaRegionSwitch.isSwitchedOn).map{ region =>
                 @region.id
             }.getOrElse{
