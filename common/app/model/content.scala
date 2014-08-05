@@ -443,7 +443,7 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
 
   override lazy val contentType = GuardianContentTypes.VIDEO
 
-  lazy val source: Option[String] = videos.filter(_.isMain).headOption.flatMap(_.source)
+  lazy val source: Option[String] = videos.find(_.isMain).flatMap(_.source)
   override lazy val metaData: Map[String, Any] =
     super.metaData + ("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
   // I know its not too pretty
