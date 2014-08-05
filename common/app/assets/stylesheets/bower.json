@@ -3,6 +3,6 @@
   "version": "0.7.0 ",
   "dependencies": {
     "guss": "~2.0.0",
-    "guss-webfonts": "2.0.0-rc.1"
+    "guss-webfonts": "2.0.0-rc.2"
   }
 }

@@ -11,6 +11,7 @@
   ],
   "license": "Apache 2.0",
   "ignore": [
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "webfonts"
   ]
 }

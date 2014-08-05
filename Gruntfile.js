@@ -10,7 +10,7 @@ module.exports = function (grunt) {
         testConfDir = './common/test/assets/javascripts/conf/',
         requirejsDir = './static/requirejs',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties',
-        webfontsDir = './common/app/assets/stylesheets/components/guss-webfonts/webfonts/';
+        webfontsDir = './resources/fonts/';
 
     function isOnlyTask(task) {
         return grunt.cli.tasks.length === 1 && grunt.cli.tasks[0] === task.name;
