@@ -1,12 +1,12 @@
 package com.gu.integration.test.features
 
-import org.openqa.selenium.WebDriver
-import com.gu.integration.test.SeleniumTestSuite
-import com.gu.integration.test.tags.ReadyForProd
-import com.gu.integration.test.steps.ArticleSteps
 import com.gu.automation.support.TestRetries
+import com.gu.integration.test.features.util.IntegrationSeleniumTestSuite
+import com.gu.integration.test.steps.ArticleSteps
+import com.gu.integration.test.tags.ReadyForProd
+import org.openqa.selenium.WebDriver
 
-class CommercialTests extends SeleniumTestSuite with TestRetries{
+class CommercialTests extends IntegrationSeleniumTestSuite with TestRetries{
   
   feature("Commercial") { 
     scenarioWeb("checking ad slots are properly displayed on a specific article page", ReadyForProd) { implicit driver: WebDriver =>
