@@ -311,6 +311,18 @@
         @include show-only-if-svg-is-supported;
     }
 }
+
+/** This is for when the accompanying media element is a video - otherwise the h2 or h3 link stretches over the top of
+  * the video, meaning that you can only click underneath it to start playing it.
+  */
+.item__title--inline {
+    display: inline;
+}
+
+.item__media-wrapper .gu-media-wrapper {
+    margin-bottom: 0;
+}
+
 .item--video,
 .item--gallery {
     .item__title .i {

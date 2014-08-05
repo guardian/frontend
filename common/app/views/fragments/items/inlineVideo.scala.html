@@ -1,9 +1,13 @@
-@(video: model.VideoElement, poster: Option[String], title: String, width: Int, height: Int)
+@(video: model.VideoElement, poster: Option[String], title: String, width: Int, height: Int, use16_9AspectRatio: Boolean = true)
 
 @import conf.Static
+@import views.support.RenderClasses
 
 <div class="gu-media-wrapper gu-media-wrapper--video">
-    <div class="u-responsive-ratio u-responsive-ratio--hd">
+    <div class="@RenderClasses(Map(
+        "u-responsive-ratio" -> true,
+        "u-responsive-ratio--hd" -> use16_9AspectRatio
+    ))">
         <video controls="controls" class="gu-media gu-media--video js-gu-media"
             @poster.map { img => poster="@img"} data-title="@title"
         data-duration="@video.duration.toString()" data-media-id="@video.id">
