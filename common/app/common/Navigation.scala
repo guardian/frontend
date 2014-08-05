@@ -21,15 +21,11 @@ case class NavItem(name: SectionLink, links: Seq[SectionLink] = Nil) {
     links.exists(_.currentForIncludingAllTags(page))
 
   def searchForCurrentSublink(page: MetaData)(implicit request: RequestHeader): Option[SectionLink] = {
-    lazy val oldCurrentSublink = links.find(_.currentFor(page))
+    val localHrefs = links.map(_.href)
+    val currentHref = page.tags.find(tag => localHrefs.contains(tag.url)).map(_.url).getOrElse("")
+    links.find(_.href == currentHref)
+      .orElse(links.find(_.currentFor(page)))
       .orElse(links.find(_.currentForIncludingAllTags(page)))
-    if (HttpSwitch(NewNavigationHighlightingSwitch).isSwitchedOn) {
-      val localHrefs = links.map(_.href)
-      val currentHref = page.tags.find(tag => localHrefs.contains(tag.url)).map(_.url).getOrElse("")
-      links.find(_.href == currentHref)
-        .orElse(oldCurrentSublink)
-    }
-    else oldCurrentSublink
   }
 
   def exactFor(page: MetaData): Boolean = page.section == name.href.dropWhile(_ == '/') || page.url == name.href
@@ -61,6 +57,8 @@ trait Navigation {
   val asia = SectionLink("world", "asia", "Asia", "/world/asia")
   val africa = SectionLink("world", "africa", "Africa", "/world/africa")
   val middleEast = SectionLink("world", "middle east", "Middle east", "/world/middleeast")
+  val video = SectionLink("video", "video", "Video", "/video")
+  val observer = SectionLink("observer", "observer", "Observer", "/observer")
 
   val health = SectionLink("society", "health", "Health", "/society/health")
 
@@ -108,6 +106,7 @@ trait Navigation {
   val music = SectionLink("culture", "music", "Music", "/music")
   val stage = SectionLink("culture", "stage", "Stage", "/stage")
   val televisionAndRadio = SectionLink("culture", "tv & radio", "TV & radio", "/tv-and-radio")
+  val classicalMusic = SectionLink("classical", "classical", "Classical", "/music/classicalmusicandopera")
 
   //Technology
   val technologyblog = SectionLink("technology", "technology blog", "Technology blog", "/technology/blog")

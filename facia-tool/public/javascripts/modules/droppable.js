@@ -2,11 +2,13 @@
 define([
     'knockout',
     'models/group',
+    'modules/copied-article',
     'utils/mediator',
     'utils/parse-query-params'
 ], function(
     ko,
     Group,
+    copiedArticle,
     mediator,
     parseQueryParams
 ) {
@@ -83,6 +85,8 @@ define([
 
                     event.preventDefault();
                     event.stopPropagation();
+
+                    copiedArticle.flush();
 
                     if (!targetGroup) {
                         return;

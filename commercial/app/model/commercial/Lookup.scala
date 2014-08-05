@@ -16,6 +16,15 @@ object Lookup extends ExecutionContexts with Logging {
     }
   }
 
+  def contentByShortUrls(shortUrls: Seq[String]): Future[Seq[Content]] = {
+    if (shortUrls.nonEmpty) {
+      val shortIds = shortUrls map (_.stripPrefix("http://").stripPrefix("gu.com").stripPrefix("/")) mkString ","
+      LiveContentApi.search(defaultEdition).ids(shortIds).response map {
+        _.results map (Content(_))
+      }
+    } else Future.successful(Nil)
+  }
+
   def mainPicture(contentId: String): Future[Option[ImageContainer]] = {
     content(contentId) map (_ flatMap (_.mainPicture))
   }
