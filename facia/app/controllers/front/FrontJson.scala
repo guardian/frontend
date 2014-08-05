@@ -41,10 +41,7 @@ trait FrontJsonLite extends ExecutionContexts{
      }
     .take(3).map{ j =>
       Json.obj(
-        ("headline" -> {
-          val x = (j \ "meta" \ "headline").asOpt[JsString].getOrElse(j \ "safeFields" \ "headline")
-          x
-        }),
+        "headline" -> ((j \ "meta" \ "headline").asOpt[JsString].getOrElse(j \ "safeFields" \ "headline"): JsValue),
         "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
         "internalContentCode" -> (j \ "safeFields" \ "internalContentCode"),
         "id" -> (j \ "id")
