@@ -180,11 +180,15 @@ $bp-header-wrap: 544px;
     padding: 0;
     @include rem((
         padding-top: 5px, // manual amount, determined by google, not guss-grid-system
-        top: $headerHeight + $gs-baseline / 2
+        top: $headerHeight -2 + $gs-baseline / 2
     ));
+    @include mq(mobileLandscape) {
+        @include rem((
+            top: $headerHeight + $gs-baseline / 2
+        ));
+    }
 
     @include mq(tablet) {
-        border: 1px solid $c-neutral4;
         @include rem((
             width: gs-span(8) + $gs-gutter,
             min-height: 68px,
