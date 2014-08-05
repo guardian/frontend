@@ -30,14 +30,14 @@ $c-guardian-services-action: #ffffff;
         @include rem((
             margin-right: $gs-gutter
         ));
-    };
+    }
 
     @include mq(tablet) {
         @include rem((
             margin-top: $gs-baseline * .5,
             margin-bottom: $gs-baseline * .5
         ));
-    };
+    }
 
     i {
         display: block;
