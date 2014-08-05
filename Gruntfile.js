@@ -847,7 +847,14 @@ module.exports = function (grunt) {
         'compile:conf'
     ]);
 
-    grunt.registerTask('compile:js:common', ['requirejs:common', 'copy:javascript', 'asset_hash']);
+    /**
+     * compile:js:<requiretask> tasks. Generate one for each require task
+     */
+    for (var requireTaskName in grunt.config('requirejs')) {
+        if (requireTaskName !== 'options') {
+            grunt.registerTask('compile:js:' + requireTaskName, ['requirejs:' + requireTaskName, 'copy:javascript', 'asset_hash']);
+        }
+    }
 
     /**
      * Test tasks
