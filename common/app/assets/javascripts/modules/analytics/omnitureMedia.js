@@ -57,8 +57,14 @@ define([
         };
 
         this.play = function() {
-            if (contentStarted) {
+            if (mediaType === 'video' && contentStarted) {
                 this.startDurationEventTimer();
+            }
+        };
+
+        this.pause = function() {
+            if (mediaType === 'video') {
+                this.stopDurationEventTimer();
             }
         };
 
@@ -94,7 +100,9 @@ define([
 
             s.Media.open(mediaName, this.getDuration(), 'HTML5 Video');
 
-            this.sendNamedEvent('video:request');
+            if (mediaType === 'video') {
+                this.sendNamedEvent('video:request');
+            }
         };
 
         var lastDurationEvent,
@@ -158,21 +166,23 @@ define([
             this.omnitureInit();
 
             player.on('play', this.play.bind(this));
-            player.on('pause', this.stopDurationEventTimer.bind(this));
+            player.on('pause', this.pause.bind(this));
 
             player.one('adsready', this.sendNamedEvent.bind(this, 'preroll:request', true));
             player.one('video:preroll:play', this.sendNamedEvent.bind(this, 'preroll:play', true));
             player.one('video:preroll:end', this.sendNamedEvent.bind(this, 'preroll:end', true));
-            player.one(mediaType + ':content:play', function() {
+            player.one('video:content:play', function() {
                 contentStarted = true;
                 self.sendNamedEvent('video:play');
                 self.startDurationEventTimer();
             });
+            player.one('audio:content:play', this.sendNamedEvent.bind(this, 'audio:play'));
 
             player.one('video:play:25', this.sendSegment.bind(this, this.getSegmentInfo(0)));
             player.one('video:play:50', this.sendSegment.bind(this, this.getSegmentInfo(1)));
             player.one('video:play:75', this.sendSegment.bind(this, this.getSegmentInfo(2)));
-            player.one(mediaType + ':content:end', this.sendSegment.bind(this, this.getSegmentInfo(3)));
+            player.one('video:content:end', this.sendSegment.bind(this, this.getSegmentInfo(3)));
+            player.one('audio:content:end', this.sendNamedEvent.bind(this, 'audio:end'));
         };
     }
     return OmnitureMedia;
