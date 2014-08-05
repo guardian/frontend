@@ -1,6 +1,7 @@
 @(page: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
 @import common.{LinkTo, Navigation, Edition}
+@import common.editions._
 
 @*<!--
 Identity pages use identityHeader.scala.html, be sure
@@ -25,12 +26,14 @@ to apply any necessary changes to non-shared code there too.
                         <ul class="nav-popup nav-popup--profile js-profile-nav-popup" data-link-name="Sub Sections"></ul>
                     </div>
                 }
-                <div class="top-bar__item top-bar__item--subscribe hide-on-tablet" data-component="subscribe">
-                    <a class="top-bar__item--action" data-link-name="topNav : subscribe" href="http://subscribe.theguardian.com??INTCMP=NGW_TOPNAV_UK_GU_SUBSCRIBE">
-                        <i class="i i-g-white-36"></i>
-                        <span class="control__info">subscribe</span>
-                    </a>
-                </div>
+                @if(Edition(request) == Uk){
+                    <div class="top-bar__item top-bar__item--subscribe hide-on-tablet" data-component="subscribe">
+                        <a class="top-bar__item--action" data-link-name="topNav : subscribe" href="http://subscribe.theguardian.com??INTCMP=NGW_TOPNAV_UK_GU_SUBSCRIBE">
+                            <i class="i i-g-white-36"></i>
+                            <span class="control__info">subscribe</span>
+                        </a>
+                    </div>
+                }
                 @if(SearchSwitch.isSwitchedOn) {
                     <div class="top-bar__item has-nav-popup top-bar__item--has-control top-bar__item--search" data-component="search">
                         <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
