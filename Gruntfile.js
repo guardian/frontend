@@ -850,9 +850,15 @@ module.exports = function (grunt) {
     /**
      * compile:js:<requiretask> tasks. Generate one for each require task
      */
+    function compileSpecificJs(requirejsName) {
+        if (!isDev && requirejsName !== 'common') {
+            grunt.task.run('requirejs:common');
+        }
+        grunt.task.run(['requirejs:' + requirejsName, 'copy:javascript', 'asset_hash']);
+    }
     for (var requireTaskName in grunt.config('requirejs')) {
         if (requireTaskName !== 'options') {
-            grunt.registerTask('compile:js:' + requireTaskName, ['requirejs:' + requireTaskName, 'copy:javascript', 'asset_hash']);
+            grunt.registerTask('compile:js:' + requireTaskName, compileSpecificJs.bind(this, requireTaskName) );
         }
     }
 
