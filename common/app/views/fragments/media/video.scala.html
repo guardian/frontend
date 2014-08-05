@@ -1,11 +1,11 @@
 @(video: Option[VideoElement], title: String)
 
-@video.map{ video =>
+@video.map { video =>
     @defining(Item620.bestFor(video).getOrElse(Static("images/media-holding.jpg"))) { poster =>
         <div class="gu-media-wrapper gu-media-wrapper--video">
             <div class="u-responsive-ratio u-responsive-ratio--hd">
                 <video controls="controls" class="gu-media gu-media--video js-gu-media" data-title="@title"
-                poster="@poster" data-duration="@video.duration.toString()" data-media-id="@video.id">
+                    poster="@poster" data-duration="@video.duration.toString()" data-media-id="@video.id">
 
                     @video.encodings.map { encoding =>
                         <source src="@encoding.url" type="@encoding.format" />
