@@ -1,0 +1,41 @@
+define([
+    'common/utils/$',
+    'common/utils/config'
+], function(
+    $,
+    config
+) {
+    return function() {
+
+        this.id = 'NewsContainerNoImages';
+        this.start = '2014-08-04';
+        this.expiry = '2014-08-15';
+        this.author = 'James Gorrie';
+        this.description = 'Hide images on standard items in the news container';
+        this.audience = 0.2;
+        this.audienceOffset = 0.1;
+        this.successMeasure = 'More clickthroughs on the news container';
+        this.audienceCriteria = 'Everyone';
+        this.dataLinkNames = 'new-containers-no-images';
+        this.idealOutcome = 'Clicks do not drop on the news container, and hopefully increase on the stories above.';
+        this.canRun = function () { return config.page.contentType === 'Network Front'; };
+
+        this.variants = [
+            {
+                id: 'control',
+                test: function () {}
+            },
+            {
+                id: 'no-images-standard',
+                test: function () {
+                    $('.container--news').each(function(el) {
+                        $('.linkslist-container .linkslist__media-wrapper, .l-row--items-4 .item__media-wrapper', el)
+                            .css('display', 'none');
+                        $('.action--has-image', el).removeClass('action--has-image');
+                        $('.action--has-image', el).removeClass('action--has-image');
+                    });
+                }
+            }
+        ];
+    };
+});
