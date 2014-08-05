@@ -29,11 +29,7 @@
 }
 .container__border {
     border-top-style: solid;
-    border-top-width: 4px;
-
-    @include mq(tablet) {
-        border-top-width: 2px;
-    }
+    border-top-width: 1px;
 }
 .container__header {
     position: relative;
