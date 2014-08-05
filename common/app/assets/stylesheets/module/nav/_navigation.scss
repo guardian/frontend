@@ -13,6 +13,7 @@ $navigation-toggler-width: 48px;
 $navigation-toggler-width-full: 130px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
+$c-navigation-background-side-bar: #1a587d; // manual tint of $c-top-navigation-background
 
 $c-signposting-action: $c-newsDefault;
 $c-signposting-background: $c-navigation-base;
@@ -105,7 +106,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     }
 
     &:before {
-        background: #1a587d; // manual tint of $c-top-navigation-background
+        background: $c-navigation-background-side-bar;
         border-bottom: 1px solid $c-global-navigation-border;
         -moz-background-clip: padding-box;
         -webkit-background-clip: padding-box;
