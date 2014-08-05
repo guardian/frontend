@@ -11,6 +11,7 @@
     case Some("news/special")               => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
     case Some("news/headline")              => { @containers.headline(block._2, HeadlineContainer(), index)(request, block._1) }
     case Some("features")                   => { @containers.features(block._2, FeaturesContainer(), index)(request, templateDeduping, block._1) }
+    case Some("features/volumes")           => { @containers.featuresvolumes(front, block._2, FeaturesVolumesContainer(), index)(request, templateDeduping, block._1) }
     case Some("features/multimedia")        => { @containers.multimedia(block._2, MultimediaContainer(), index)(request, templateDeduping, block._1) }
     case Some("features/auto")              => { @containers.featuresauto(block._2, FeaturesAutoContainer(), index)(request, templateDeduping, block._1) }
     case Some("comment/comment-and-debate") => { @containers.commentanddebate(block._2, CommentAndDebateContainer(), index)(request, templateDeduping, block._1) }

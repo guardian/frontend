@@ -11,10 +11,17 @@
         <div class="gs-container">
             <div class="content__main-column content__main-column--media content__main-column--@mediaType">
 
+                @media match {
+                    case audio: Audio if audio.mainAudio.exists(_.imageCrops.nonEmpty) => {
+                        @fragments.img(media.mainAudio, false, false)
+                    }
+                    case _ => { }
+                }
+
                 <div class="media-primary player">
                     @media match {
                         case audio: Audio => { @fragments.media.audio(audio.mainAudio, audio.headline) }
-                        case video: Video => { @fragments.media.video(video.mainVideo, video.mainPicture, video.headline) }
+                        case video: Video => { @fragments.media.video(video.mainVideo, video.headline) }
                     }
                 </div>
 

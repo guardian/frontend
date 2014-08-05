@@ -17,6 +17,14 @@
                 margin-right: $gs-gutter
             ));
         }
+        @include mq(tablet) {
+            margin-left: 0;
+            margin-right: 0;
+            @include rem((
+                padding-left: $gs-gutter,
+                padding-right: $gs-gutter
+            ));
+        }
     }
 }
 @mixin facia-container--layout-front {
