@@ -151,6 +151,16 @@
     }
 }
 
+.fromage__video-container .vjs-big-play-button > span {
+    @include mq(tablet) {
+        @include video-play-button-size($vjs-small-button-size);
+    }
+
+    @include mq(desktop) {
+        @include video-play-button-size($vjs-large-button-size);
+    }
+}
+
 .fromage__media-wrapper {
     @include mq(tablet) {
         float: left;
