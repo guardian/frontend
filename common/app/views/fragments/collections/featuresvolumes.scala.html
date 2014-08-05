@@ -13,7 +13,8 @@
     hugeItems.isEmpty && veryBigItems.isEmpty && bigItems.nonEmpty && standardItems.nonEmpty,
     hugeItems.isEmpty && veryBigItems.isEmpty && bigItems.isEmpty && standardItems.size > 3
 ) { case (showMoreAtVeryBig, showMoreAtBig, showMoreAtStandard, showMoreAtStandardLinks) =>
-
+@defining(showMoreAtVeryBig && showMoreAtBig && showMoreAtStandard && showMoreAtStandardLinks) { showMore =>
+        
     @hugeItems.zipWithIndex.map { case (trail, index) =>
         <div class="facia-slice-wrapper">
             @fragments.items.baguette(trail, index)
@@ -100,5 +101,5 @@
             </div>
         }
     }
-    </div>
-}}
+    @if(showMore){</div>}
+}}}
