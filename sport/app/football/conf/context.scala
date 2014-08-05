@@ -2,9 +2,6 @@ package conf
 
 import common.PaMetrics._
 import common._
-import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
-import com.gu.management.play.{ Management => GuManagement }
-import com.gu.management.logback.LogbackLevelPage
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}
 import pa.{Http, PaClient}
@@ -114,19 +111,3 @@ object HealthCheck extends AllGoodHealthcheckController(
   "/football/live",
   "/football/premierleague/results"
 )
-
-object Management extends GuManagement {
-  val applicationName = "frontend-sport"
-  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.pa
-
-  lazy val pages = List(
-    new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(
-      "/football/live",
-      "/football/premierleague/results"
-    ),
-    StatusPage(applicationName, metrics),
-    new PropertiesPage(Configuration.toString),
-    new LogbackLevelPage(applicationName)
-  )
-}
