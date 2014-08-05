@@ -7,6 +7,7 @@ define([
     'lodash/arrays/uniq',
     'lodash/functions/once',
     'lodash/objects/defaults',
+    'lodash/objects/forOwn',
     'lodash/objects/isArray',
     'lodash/objects/pairs',
     'common/utils/$',
@@ -29,6 +30,7 @@ define([
     uniq,
     once,
     defaults,
+    forOwn,
     isArray,
     pairs,
     $,
@@ -338,12 +340,9 @@ define([
             googletag.pubads().addEventListener('slotRenderEnded', parseAd);
         },
         setPageTargeting = function() {
-            var targets = buildPageTargeting(config);
-            for (var target in targets) {
-                if (targets.hasOwnProperty(target)) {
-                    googletag.pubads().setTargeting(target, targets[target]);
-                }
-            }
+            forOwn(buildPageTargeting(config), function(value, key) {
+                googletag.pubads().setTargeting(key, value);
+            });
         },
         /**
          * Loop through each slot detected on the page and define it based on the data
