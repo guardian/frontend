@@ -330,6 +330,11 @@ object Switches extends Collections {
    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
+  val ABNewsContainerNoImages = Switch("A/B Tests", "ab-news-container-no-images",
+    "If this switch is turned on, run the NewsContainerNoImages A/B test",
+   safeState = Off, sellByDate = new LocalDate(2014, 8, 15)
+  )
+
   // Dummy Switches
 
   val IntegrationTestSwitch = Switch("Unwired Test Switch", "integration-test-switch",
@@ -522,6 +527,7 @@ object Switches extends Collections {
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
     ABRightMostPopularText,
+    ABNewsContainerNoImages,
     CenturyRedirectionSwitch
   )
 
