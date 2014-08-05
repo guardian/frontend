@@ -16,7 +16,6 @@ define([
         this.audienceOffset = 0.75;
         this.successMeasure = 'More clickthroughs on the news container';
         this.audienceCriteria = 'Everyone';
-        this.dataLinkNames = 'new-containers-no-images';
         this.idealOutcome = 'Clicks do not drop on the news container, and hopefully increase on the stories above.';
         this.canRun = function () { return config.page.contentType === 'Network Front'; };
 
@@ -31,7 +30,6 @@ define([
                     $('.container--news').each(function(el) {
                         $('.linkslist-container .linkslist__media-wrapper, .l-row--items-4 .item__media-wrapper', el)
                             .css('display', 'none');
-                        $('.action--has-image', el).removeClass('action--has-image');
                         $('.action--has-image', el).removeClass('action--has-image');
                     });
                 }
