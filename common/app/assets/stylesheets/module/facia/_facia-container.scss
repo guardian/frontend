@@ -204,9 +204,6 @@
     .facia-container--layout-discussion {
         .container__title {
             font-weight: normal;
-            a {
-                color: $c-newsDefault;
-            }
         }
     }
 }
@@ -219,8 +216,8 @@
 
         .container__title,
         .container__title.tone-background {
-            color: $c-neutral1;
             background: transparent;
+            color: $c-neutral1;
 
             @include mq($to: tablet) {
                 @include fs-header(3, true);
