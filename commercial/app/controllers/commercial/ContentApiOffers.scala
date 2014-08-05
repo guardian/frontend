@@ -8,16 +8,16 @@ import play.api.mvc._
 
 object ContentApiOffers extends Controller with ExecutionContexts {
 
-  private def renderItem(contentId: String, format: Format) = MemcachedAction { implicit request =>
-    Lookup.content(contentId) map {
-      case Some(content) => Cached(componentMaxAge) {
-        format.result(views.html.contentapi.item(content))
+  private def renderItem(format: Format) = MemcachedAction { implicit request =>
+    Lookup.contentByShortUrls(specificIds) map {
+      case Nil => NoCache(format.nilResult)
+      case contents => Cached(componentMaxAge) {
+        format.result(views.html.contentapi.items(contents))
       }
-      case None => NoCache(format.nilResult)
     }
   }
 
-  def itemHtml(contentId: String) = renderItem(contentId, htmlFormat)
+  def itemHtml = renderItem(htmlFormat)
 
-  def itemJson(contentId: String) = renderItem(contentId, jsonFormat)
+  def itemJson = renderItem(jsonFormat)
 }
