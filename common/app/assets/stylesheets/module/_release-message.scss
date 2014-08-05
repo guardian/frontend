@@ -1,7 +1,13 @@
 .site-message {
-    background: darken($c-neutral8, 3%);
+    background: guss-colour(tone-news-1);
     display: block;
-    border-bottom: 1px solid $c-neutral5;
+}
+
+.site-message--banner {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 100;
 }
 
 .site-message--modal {
@@ -96,7 +102,8 @@
             @include mq(desktop) {
                 float: right;
                 margin-right: 0;
-                margin-top: 2px; }
+                margin-top: 2px;
+            }
         }
     }
 
@@ -107,23 +114,101 @@
 
 .site-message__inner {
     @include rem((
-        padding: $gs-baseline 42px $gs-baseline $gs-gutter/2
+        padding: 0 $gs-gutter/2
     ));
 
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+    @include mq(tablet) {
+        display: table;
+        width: 100%;
+        padding: 0;
+        @include rem((
+            min-height: gs-height(2) - $gs-baseline
+        ));
+    }
+
+    @include mq(leftCol) {
+        @include rem((
+            min-height: gs-height(2) - $gs-baseline*2
+        ));
+    }
+
+    @include mq(wide) {
+        @include rem((
+            min-height: gs-height(1) + $gs-baseline
+        ));
     }
 }
 
+.site-message__media {
+    display: none;
+    @include rem((
+        width: 36px,
+        height: $gs-baseline*3,
+        padding-left: $gs-gutter/2
+    ));
+
+    .i {
+        display: block;
+    }
+
+    @include mq(rightCol) {
+        @include rem((
+            padding-left: $gs-gutter
+        ));
+    }
+
+    @include mq(wide) {
+        padding-left: 0;
+    }
+}
+
+.site-message__media,
+.site-message__copy {
+    @include mq(tablet) {
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+
 .site-message__message {
-    @include fs-headline(3);
-    color: $c-neutral2;
+    @include fs-headline(2);
+    color: #ffffff;
     margin-bottom: 0;
-    margin-right: $gs-gutter*2;
+    @include rem((
+        padding-top: $gs-baseline,
+        margin-right: $gs-gutter/2,
+        margin-left: $gs-gutter/2
+    ));
+
+    a {
+        color: #ffffff;
+        text-decoration: underline;
+    }
 
     .site-message--permanent & {
         margin-right: 0;
+    }
+
+    @include mq(tablet) {
+        display: table-cell;
+        vertical-align: middle;
+        padding-top: 0;
+        @include rem((
+            padding-left: $gs-gutter/2,
+            padding-right: $gs-gutter/2,
+            max-width: gs-span(5) - $gs-gutter
+        ));
+    }
+
+    @include mq(leftCol) {
+        @include rem((
+            max-width: gs-span(7) - $gs-gutter*2
+        ));
+    }
+
+    @include mq(wide) {
+        max-width: none;
     }
 }
 
@@ -132,36 +217,118 @@
 }
 
 .site-message__actions {
-    width: 100%;
-    border-top: 1px dotted $c-neutral2;
-    margin-top: $gs-baseline*2;
+    @include rem((
+        margin-top: $gs-baseline,
+        margin-bottom: $gs-baseline
+    ));
     overflow: hidden;
+
+    @include mq(tablet) {
+        display: table-cell;
+        vertical-align: middle;
+        margin-top: 0;
+    }
 }
+
+$btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message__actions__item {
     float: left;
-    @include fs-data(4);
-    margin-right: $gs-gutter;
+    @include rem((
+        height: $btn-height,
+        padding-left: $gs-gutter/2,
+        margin-right: $gs-gutter/2
+    ));
+    @include fs-textSans(2);
+    color: #ffffff;
+    border: 1px solid rgba(#ffffff, .3);
+    @include border-radius(50%);
+
+    &:hover {
+        border-color: #ffffff;
+    }
 
     a {
-        color: $c-neutral2;
+        float: left;
+        color: #ffffff;
+        @include rem((
+            line-height: $btn-height
+        ));
+
+        &:hover {
+            text-decoration: none;
+        }
     }
+
     i {
-        margin-bottom: -2px;
-        margin-right: 5px;
+        float: right;
+        @include rem((
+            margin-bottom: -2px,
+            margin-right: $gs-gutter/4
+        ));
     }
 }
 
 .site-message__close {
-    display: block;
-    position: absolute;
-    top: $gs-baseline;
-    right: $gs-gutter*3/4;
+    display: table-cell;
+    vertical-align: middle;
+    @include rem((
+        padding-right: $gs-gutter/2
+    ));
+
+    @include mq(rightCol) {
+        @include rem((
+            padding-right: $gs-gutter
+        ));
+    }
+
+    @include mq(wide) {
+        padding-right: 0;
+    }
+}
+
+.site-message__close-btn {
+    position: relative;
     padding: 0;
-    width: 22px;
-    height: 22px;
-    background-color: transparent;
+    @include fs-textSans(2);
+    @include rem((
+        height: $btn-height,
+        line-height: $btn-height,
+        padding-right: $btn-height + $gs-gutter/2
+    ));
+    background: transparent;
+    color: #ffffff;
     border: 0;
+
+    .i {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: 1px solid rgba(#ffffff, .3);
+        @include border-radius(50%);
+
+        &:hover {
+            border-color: #ffffff;
+        }
+    }
+
+    &:hover {
+        border-color: #ffffff;
+    }
+
+    @include mq($to: tablet) {
+        position: absolute;
+        right: 0;
+        @include rem((
+            right: $gs-gutter,
+            bottom: $gs-baseline
+        ));
+    }
+
+    @include mq(tablet) {
+        display: table-cell;
+    }
+
 }
 
 /* App onboarding messages
