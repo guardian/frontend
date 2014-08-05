@@ -178,10 +178,13 @@ $bp-header-wrap: 544px;
 .nav-popup--search {
     z-index: 10;
     padding: 0;
+    right: 0;
     @include rem((
         padding-top: 5px, // manual amount, determined by google, not guss-grid-system
-        top: $headerHeight -2 + $gs-baseline / 2
+        min-height: 51px, // manual amount, determined by google, not guss-grid-system
+        top: $headerHeight -2 + $gs-baseline / 2,
     ));
+
     @include mq(mobileLandscape) {
         @include rem((
             top: $headerHeight + $gs-baseline / 2
@@ -189,6 +192,8 @@ $bp-header-wrap: 544px;
     }
 
     @include mq(tablet) {
+        right: auto;
+        min-height: auto;
         @include rem((
             width: gs-span(8) + $gs-gutter,
             min-height: 68px,
