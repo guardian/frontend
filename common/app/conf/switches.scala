@@ -303,11 +303,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
   )
 
-  val NewNavigationHighlightingSwitch = Switch("Feature Switches", "nav-highlight",
-    "When this switch is on, navigation highlighting will become more relevant as they will be based on tags.",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
-  )
-
   val EnhancedMediaPlayerSwitch = Switch("Feature Switches", "enhanced-media-player",
     "If this is switched on then videos are enhanced using our JavaScript player",
     safeState = On, sellByDate = never
@@ -514,7 +509,6 @@ object Switches extends Collections {
     MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
-    NewNavigationHighlightingSwitch,
     SmartBannerSwitch,
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
@@ -532,7 +526,6 @@ object Switches extends Collections {
   )
 
   val httpSwitches: List[Switch] = List(
-    NewNavigationHighlightingSwitch,
     GuardianServicesLinksSwitch
   )
 
