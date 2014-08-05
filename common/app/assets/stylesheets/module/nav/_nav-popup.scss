@@ -30,14 +30,14 @@ $bp-header-wrap: 544px;
         @include rem((
             top: $nav-popup-top
         ))
-    }
+    };
 
     .top-bar__item--has-control & {
         @include mq($bp-header-wrap) {
             @include rem((
                 left: $control-offset
             ))
-        }
+        };
     }
 
     .top-bar__item--right & {
@@ -70,7 +70,8 @@ $bp-header-wrap: 544px;
                 border-top: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
             ));
         }
-    }
+    };
+
     &.is-active,
     .is-active > & {
         @include mq($bp-header-wrap) {
@@ -80,7 +81,8 @@ $bp-header-wrap: 544px;
                     border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
                 ));
             }
-        }
+        };
+
         // This is the exposed menu arrow pointing up
         // to the link. It's placed on the link to center it.
         &:before {
@@ -98,20 +100,23 @@ $bp-header-wrap: 544px;
                 border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg,
                 top: $nav-popup-top - $nav-popup-toggle-arrow-size - $gs-baseline/2
             ));
+
             .top-bar__item--has-control & {
                 @include mq($bp-header-wrap) {
                     @include rem((
                         margin-left: $control-offset * .5 - $nav-popup-toggle-arrow-size
                     ))
-                }
+                };
             }
+
             .top-bar__item--search & {
                 @include mq($to: tablet) {
                     @include rem((
                         margin-left: 0 - $nav-popup-toggle-arrow-size
                     ))
-                }
+                };
             }
+
             .top-bar__item--right & {
                 @include rem((
                     margin-left: 0 - $nav-popup-toggle-arrow-size * 3
@@ -124,9 +129,10 @@ $bp-header-wrap: 544px;
 
 .nav-popup__item {
     border-bottom: 1px solid guss-colour(neutral-5);
+
     &:last-child {
         border-bottom: 0;
-    }
+    };
 }
 
 .nav-popup .top-bar__item--action,
@@ -136,7 +142,7 @@ $bp-header-wrap: 544px;
     color: guss-colour(neutral-1);
     @include rem((
         line-height: 36
-    ))
+    ));
 }
 
 /* Profile Menu
@@ -186,6 +192,6 @@ $bp-header-wrap: 544px;
     .search-box {
         @include rem((
             margin-bottom: -1px
-        ))
+        ));
     }
 }

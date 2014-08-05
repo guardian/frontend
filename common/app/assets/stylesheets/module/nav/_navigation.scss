@@ -104,17 +104,20 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             height: $navigation-height
         ));
     }
+
     &:before {
         border-bottom: 1px solid $c-global-navigation-border;
         -moz-background-clip: padding-box;
         -webkit-background-clip: padding-box;
         background-clip: padding-box;
     }
+
     &:after {
         top: auto;
         bottom: 0;
         z-index: -1;
     }
+
     &.navigation--collapsed:after {
         display: none;
     }
@@ -186,11 +189,13 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             padding-left: $navigation-h-space-between-items/2
         ));
     }
+
     .navigation--expanded.navigation--has-local-navigation & {
         @include mq($to: navigationBreakOnTwoLevels) {
             border-bottom: 1px solid $c-global-navigation-border;
         }
     }
+
     @include mq(tablet) {
         border-right-width: 0;
 

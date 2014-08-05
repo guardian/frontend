@@ -22,7 +22,7 @@
     @include mq(tablet) {
         @include rem((
             margin-right: $gs-gutter
-        ))
+        ));
     }
 }
 
@@ -49,6 +49,7 @@
             margin-left: $gs-gutter
         ));
     }
+
     .top-bar__item:last-child {
         padding-right: 0;
     }
