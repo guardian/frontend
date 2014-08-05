@@ -14,7 +14,8 @@ define([
     'bonzo',
     'common/modules/component',
     'common/modules/analytics/beacon',
-    'raven'
+    'raven',
+    'common/modules/ui/message'
 ], function(
     $,
     ajax,
@@ -30,7 +31,8 @@ define([
     bonzo,
     Component,
     beacon,
-    Raven
+    Raven,
+    Message
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint());
@@ -352,6 +354,24 @@ define([
 
             mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
             mostViewed.fetch($('.js-video-components-container')[0], 'html');
+        },
+        displayReleaseMessage: function() {
+            var msg = '<p class="site-message__message" id="site-message__message">' +
+                    'We\'ve redesigned our video pages to make it easier to find and experience our best video content. We\'d love to hear what you think' +
+                    '</p>' +
+                    '<ul class="site-message__actions u-unstyled">' +
+                    '<li class="site-message__actions__item">' +
+                    '<i class="i i-arrow-white-right"></i>' +
+                    '<a href="">Leave feedback</a>' +
+                    '</li>' +
+                    '<li class="site-message__actions__item">' +
+                    '<i class="i i-arrow-white-right"></i>' +
+                    '<a href="http://next.theguardian.com">Find out more</a>' +
+                    '</li>' +
+                    '</ul>';
+
+            var releaseMessage = new Message('video');
+                releaseMessage.show(msg);
         }
     };
 
@@ -369,6 +389,10 @@ define([
         if (config.isMedia) {
             modules.initMoreInSection();
             modules.initMostViewedMedia();
+        }
+
+        if(config.page.contentType === 'Video') {
+            modules.displayReleaseMessage();
         }
     };
 
