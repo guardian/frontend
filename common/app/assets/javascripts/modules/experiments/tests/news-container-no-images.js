@@ -28,8 +28,8 @@ define([
                 id: 'no-images-standard',
                 test: function () {
                     $('.container--news').each(function(el) {
-                        $('.linkslist-container .linkslist__media-wrapper, .l-row--items-4 .item__media-wrapper', el)
-                            .css('display', 'none');
+                        $('.linkslist-container .linkslist__media-wrapper, .l-row--items-4 .item__media-wrapper, .l-row--items-4 .item__image-container', el)
+                            .remove();
                         $('.action--has-image', el).removeClass('action--has-image');
                     });
                 }
