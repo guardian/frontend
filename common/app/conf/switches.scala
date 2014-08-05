@@ -452,6 +452,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
+  val ChildrensBooksSwitch = Switch("Feature Switches", "childrens-books-hide-popular",
+    "If switched on, video pages in the childrens books section will not show popular videos",
+    safeState = On, sellByDate = new LocalDate(2014, 8, 12)
+  )
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -528,7 +533,8 @@ object Switches extends Collections {
     BreakingNewsSwitch,
     ABRightMostPopularText,
     ABNewsContainerNoImages,
-    CenturyRedirectionSwitch
+    CenturyRedirectionSwitch,
+    ChildrensBooksSwitch
   )
 
   val httpSwitches: List[Switch] = List(

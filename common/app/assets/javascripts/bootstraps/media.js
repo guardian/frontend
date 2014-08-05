@@ -342,16 +342,25 @@ define([
         initMoreInSection: function() {
             var section = new Component(),
                 parentEl = $('.js-onward')[0];
-            section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+
+            if ('seriesId' in config.page) {
+                section.endpoint = '/video/section/' + config.page.section + '/' + config.page.seriesId + '.json?shortUrl=' + config.page.shortUrl;
+            } else {
+                section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+            }
             section.fetch(parentEl).then(function() {
                 images.upgrade(parentEl);
             });
         },
         initMostViewedMedia: function() {
-            var mostViewed = new Component();
 
-            mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
-            mostViewed.fetch($('.js-video-components-container')[0], 'html');
+            if (config.page.section === 'childrens-books-site' && config.switches.childrensBooksHidePopular) {
+                $('.content__secondary-column--media').addClass('u-h');
+            } else {
+                var mostViewed = new Component();
+                mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
+                mostViewed.fetch($('.js-video-components-container')[0], 'html');
+            }
         }
     };
 
