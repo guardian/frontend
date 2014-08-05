@@ -149,10 +149,6 @@ GET        /football/world-cup-2014/r2-front-world-cup-embed                    
 GET        /series/*path.json                                                                  controllers.SeriesController.renderSeriesStories(path)
 
 
-GET        /$path<.*/(interactive|ng-interactive)/.*>.json                                     controllers.InteractiveController.renderInteractiveJson(path)
-GET        /$path<.*?/(interactive|ng-interactive)/.*>                                         controllers.InteractiveController.renderInteractive(path)
-
-
 # Facia
 GET        /                                                                                   controllers.preview.FaciaDraftController.editionRedirect(path = "")
 GET        /$path<(culture|sport|commentisfree|business|money|rss)>                            controllers.preview.FaciaDraftController.editionRedirect(path)
@@ -182,6 +178,9 @@ GET        /$path<[\w\d-]*(/[\w\d-]*)?/(cartoon|graphic|picture)/.*>            
 
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>.json                                  controllers.MediaController.renderJson(path)
 GET        /$path<[\w\d-]*(/[\w\d-]*)?/(video|audio)/.*>                                       controllers.MediaController.render(path)
+
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>.json                   controllers.InteractiveController.renderInteractiveJson(path)
+GET        /$path<[\w\d-]*(/[\w\d-]*)?/(interactive|ng-interactive)/.*>                        controllers.InteractiveController.renderInteractive(path)
 
 # Articles
 GET        /*path.json                                                                         controllers.ArticleController.renderLatest(path, lastUpdate: Option[String])
