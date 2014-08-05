@@ -1,4 +1,7 @@
-@(video: Option[VideoElement], title: String)
+@(video: Option[model.VideoElement], title: String)
+
+@import conf.Static
+@import views.support.Item620
 
 @video.map { video =>
     @defining(Item620.bestFor(video).getOrElse(Static("images/media-holding.jpg"))) { poster =>

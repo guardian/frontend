@@ -1,4 +1,8 @@
-@(trail: Trail, index: Int, imageAdjustOverride: Option[String] = None)(implicit request: RequestHeader, config: Config)
+@(trail: model.Trail, index: Int, imageAdjustOverride: Option[String] = None)(implicit request: RequestHeader, config: model.Config)
+
+@import common.LinkTo
+@import model.Video
+@import views.support.{GetClasses, ImgSrc, Item220, Item300, Item620, SnapData}
 
 @defining((trail.visualTone, imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
     <div
@@ -13,24 +17,36 @@
         @SnapData(trail)>
 
         <div class="fromage__container">
-            <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
-                @if(imageAdjust != Some("hide")) {
-                    @trail.trailPicture(5,3).map{ imageContainer =>
-                        @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                            <div class="fromage__media-wrapper fromage__media-wrapper--first">
-                                <div class="fromage__image-container u-responsive-ratio@if(imageAdjust == "boost"){ js-image-upgrade inlined-image" data-src="@imgSrc}">
+            @trail match {
+                case v: Video if v.mainVideo.isDefined && imageAdjust == "boost" => {
+                    @fromageVideo(v, true, true)
+
+                    <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
+                        @fragments.items.elements.title(trail, index, 0)
+                    </a>
+                }
+
+                case _ => {
+                    <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
+                    @if(imageAdjust != Some("hide")) {
+                        @trail.trailPicture(5,3).map{ imageContainer =>
+                            @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
+                                <div class="fromage__media-wrapper fromage__media-wrapper--first">
+                                    <div class="fromage__image-container u-responsive-ratio@if(imageAdjust == "boost"){ js-image-upgrade inlined-image" data-src="@imgSrc}">
                                     @if(imageAdjust == "boost") {
                                         @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
                                     } else {
                                         @Item220.bestFor(imageContainer).map{ url => <img src="@url" alt="" /> }
                                     }
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
                     }
+                    @fragments.items.elements.title(trail, index, 0)
+                    </a>
                 }
-                @fragments.items.elements.title(trail, index, 0)
-            </a>
+            }
 
             @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
 
@@ -39,6 +55,7 @@
                     <p class="fromage__byline tone-colour">@Html(byLine)</p>
                 }
             }
+
             @if(imageAdjust == "default") {
                 @trail.trailPicture(5,3).map{ imageContainer =>
                     @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
