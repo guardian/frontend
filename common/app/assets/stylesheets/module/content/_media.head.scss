@@ -44,10 +44,6 @@
         color: $c-neutral7;
     }
 
-    .content__head__border-top {
-        display: none;
-    }
-
     .content-meta--inline {
         border-top: 0;
         @include rem((
