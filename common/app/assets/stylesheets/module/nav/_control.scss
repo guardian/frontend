@@ -27,7 +27,7 @@ $control-size: 36px;
         ));
         text-overflow: ellipsis;
         text-align: left;
-    };
+    }
 }
 
 
@@ -39,8 +39,8 @@ $control-size: 36px;
     border-color: #ffffff;
     float: left;
     @include rem((
-        height: 34,
-        width: 34
+        height: 34px,
+        width: 34px
     ));
 }
 

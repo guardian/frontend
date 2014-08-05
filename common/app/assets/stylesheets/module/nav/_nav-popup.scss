@@ -17,9 +17,9 @@ $bp-header-wrap: 544px;
     margin: 0;
     padding: 0;
     list-style: none;
-    @include box-shadow(0 rem((2px 2px)) 0 rgba(0, 0, 0, .15));
+    @include box-shadow(0 rem(2px 2px) 0 rgba(0, 0, 0, .15));
     @include rem((
-        min-width: 150,
+        min-width: gs-span(2) + $gs-gutter/2,
         top: $nav-popup-top - 2,
         padding: 0 $gs-gutter/2
     ));
@@ -29,8 +29,8 @@ $bp-header-wrap: 544px;
         bottom: auto;
         @include rem((
             top: $nav-popup-top
-        ))
-    };
+        ));
+    }
 
     .top-bar__item--has-control & {
         @include mq($bp-header-wrap) {
