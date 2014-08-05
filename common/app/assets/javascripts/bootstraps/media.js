@@ -342,7 +342,12 @@ define([
         initMoreInSection: function() {
             var section = new Component(),
                 parentEl = $('.js-onward')[0];
-            section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+
+            if ('seriesId' in config.page) {
+                section.endpoint = '/video/section/' + config.page.section + '/' + config.page.seriesId + '.json?shortUrl=' + config.page.shortUrl;
+            } else {
+                section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+            }
             section.fetch(parentEl).then(function() {
                 images.upgrade(parentEl);
             });
