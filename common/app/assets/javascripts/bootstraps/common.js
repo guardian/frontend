@@ -262,7 +262,7 @@ define([
                            '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                                       'data-link-name="opt-out">Opt-out and return to our current site </a>' +
+                                       'data-link-name="opt-out">Return to our current site </a>' +
                            '</li>' +
                       '</ul>';
 
@@ -271,7 +271,7 @@ define([
             // Do not show the release message on -sp- based paths.
             var spRegExp = new RegExp('.*-sp-.*');
 
-            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path)) {
+            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path) && config.page.contentType !== 'Video') {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
                 releaseMessage.show(msg);
