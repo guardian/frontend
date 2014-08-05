@@ -17,7 +17,7 @@ $bp-header-wrap: 544px;
     margin: 0;
     padding: 0;
     list-style: none;
-    @include box-shadow(0 rem((2px 2px)) 0 rgba(0, 0, 0, .25));
+    @include box-shadow(0 rem((2px 2px)) 0 rgba(0, 0, 0, .15));
     @include rem((
         min-width: 150,
         top: $nav-popup-top - 2,
