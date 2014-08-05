@@ -36,9 +36,9 @@ trait Prototypes {
     resolvers := Seq(
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Guardian Github Snapshots" at "http://guardian.github.com/maven/repo-snapshots",
-      Resolver.url("Typesafe Ivy Releases", url("https://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
+      "Typesafe Ivy Releases" at "http://repo.typesafe.com/typesafe/releases",
       "JBoss Releases" at "https://repository.jboss.org/nexus/content/repositories/releases",
-      "Typesafe repository" at "https://repo.typesafe.com/typesafe/releases/",
+      "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
       "Akka" at "http://repo.akka.io/releases"
     ),
 

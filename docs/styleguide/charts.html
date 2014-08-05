@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Charts | Front-end Styleguide | The Guardian</title>
+
+        <style>
+            .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(/static/target/images/global/sprite.png); }
+            .svg .i,.svg .caption:before,.svg figcaption:before,.svg blockquote.quoted:before { background-image: none; }
+            .is-updating { background-image: url(/static/target/images/auto-update-activity.gif); }
+            .is-updating--dark { background-image: url(/static/target/images/auto-update-activity-dark.gif); }
+            .tweet { background-image: url(/static/target/images/twitter/bird.png); }
+            .svg .tweet { background-image: url(/static/target/images/twitter/bird.svg); }
+        </style>
+
+        <link rel="stylesheet" href="/static/target/stylesheets/global.css">
+        <link rel="stylesheet" href="/static/target/stylesheets/head.default.css">
+        <link rel="stylesheet" href="/static/target/stylesheets/webfonts.css">
+
+        <link rel="stylesheet" href="/docs/styleguide/assets/css/syntax.css">
+    </head>
+
+    <body id="top">
+        <header id="header" class="l-header u-cf" role="banner">
+            <h1>Front-end Styleguide</h1>
+
+            <div class="l-header-main">
+                <div class="gs-container">
+                    <span itemscope="" itemtype="http://schema.org/Organization">
+                        <meta itemprop="logo" content="https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png">
+                        <a href="http://www.theguardian.com/uk" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
+                            <span class="u-h" itemprop="name">The Guardian</span>
+                            <i class="i i-guardian-logo-160-header mobile-only"></i>
+                            <i class="i i-guardian-logo-big hide-on-mobile"></i>
+                        </a>
+                    </span>
+                </div>
+            </div>
+
+            <div class="navigation navigation--collapsed navigation--has-signposting">
+                <div class="gs-container">
+                    <div class="navigation__inner">
+                        <div class="navigation__scroll">
+                            <nav class="navigation__container navigation__container--first" aria-label="Current section" role="navigation">
+                                <ul class="signposting">
+                                
+                                    <li class="signposting__item signposting__item--home">
+                                        <a class="signposting__action" href="doughnut">Doughnut</a>
+                                    </li>
+                                
+                                </ul>
+                            </nav>
+
+                            <nav class="navigation__container navigation__container--second" role="navigation">
+                                <ul class="top-navigation">
+                                    <li class="top-navigation__item top-navigation__item--home">
+                                        <a href="/" class="top-navigation__action top-navigation__action--has-icon" title="Back to homepage">
+                                            <span class="top-navigation__icon-wrapper">
+                                                <span class="top-navigation__icon top-navigation__icon--home"></span>
+                                            </span>
+                                            <span class="u-h">Home</span>
+                                        </a>
+                                    </li>
+                                
+                                    <li class="top-navigation__item">
+                                        <a class="top-navigation__action" href="charts.html">Charts</a>
+                                    </li>
+                                
+                                    <li class="top-navigation__item">
+                                        <a class="top-navigation__action" href="common.html">Common</a>
+                                    </li>
+                                
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section>
+            <div class="gs-container">
+<h1 id="doughnut">Doughnut</h1>
+<div class="codeExample"><div class="exampleOutput"><svg class="chart chart--doughnut" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200" viewbox="0 0 200 200">
+    <g class="chart__arc">
+        <path d="M 100 0 A 100 100 0 0 1 172.90 168.45 L 125.51 123.96 A 35 35 0 0 0 100 65 Z" fill="#6cf"/>
+        <text class="chart__label" transform="translate(161.95, 73.19)">
+            <tspan class="chart__label-text" x="0" dy="0">ARG</tspan>
+            <tspan class="chart__label-value" x="0" dy="1em">37</tspan>
+        </text>
+    </g>
+    <g class="chart__arc">
+        <path d="M 172.90 168.45 A 100 100 0 1 1 100 0 L 100 65 A 35 35 0 1 0 125.51 123.96 Z" fill="#eee"/>
+        <text class="chart__label" transform="translate(38.05, 126.81)">
+            <tspan class="chart__label-text" x="0" dy="0">DEU</tspan>
+            <tspan class="chart__label-value" x="0" dy="1em">63</tspan>
+        </text>
+    </g>
+    <text class="chart__unit" transform="translate(100,100)" dy="0.4em">%</text>
+</svg>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;svg</span> <span class="na">class=</span><span class="s">"chart chart--doughnut"</span> <span class="na">xmlns=</span><span class="s">"http://www.w3.org/2000/svg"</span> <span class="na">xmlns:xlink=</span><span class="s">"http://www.w3.org/1999/xlink"</span> <span class="na">width=</span><span class="s">"200"</span> <span class="na">height=</span><span class="s">"200"</span> <span class="na">viewbox=</span><span class="s">"0 0 200 200"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;g</span> <span class="na">class=</span><span class="s">"chart__arc"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M 100 0 A 100 100 0 0 1 172.90 168.45 L 125.51 123.96 A 35 35 0 0 0 100 65 Z"</span> <span class="na">fill=</span><span class="s">"#6cf"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;text</span> <span class="na">class=</span><span class="s">"chart__label"</span> <span class="na">transform=</span><span class="s">"translate(161.95, 73.19)"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;tspan</span> <span class="na">class=</span><span class="s">"chart__label-text"</span> <span class="na">x=</span><span class="s">"0"</span> <span class="na">dy=</span><span class="s">"0"</span><span class="nt">&gt;</span>ARG<span class="nt">&lt;/tspan&gt;</span>
+            <span class="nt">&lt;tspan</span> <span class="na">class=</span><span class="s">"chart__label-value"</span> <span class="na">x=</span><span class="s">"0"</span> <span class="na">dy=</span><span class="s">"1em"</span><span class="nt">&gt;</span>37<span class="nt">&lt;/tspan&gt;</span>
+        <span class="nt">&lt;/text&gt;</span>
+    <span class="nt">&lt;/g&gt;</span>
+    <span class="nt">&lt;g</span> <span class="na">class=</span><span class="s">"chart__arc"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;path</span> <span class="na">d=</span><span class="s">"M 172.90 168.45 A 100 100 0 1 1 100 0 L 100 65 A 35 35 0 1 0 125.51 123.96 Z"</span> <span class="na">fill=</span><span class="s">"#eee"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;text</span> <span class="na">class=</span><span class="s">"chart__label"</span> <span class="na">transform=</span><span class="s">"translate(38.05, 126.81)"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;tspan</span> <span class="na">class=</span><span class="s">"chart__label-text"</span> <span class="na">x=</span><span class="s">"0"</span> <span class="na">dy=</span><span class="s">"0"</span><span class="nt">&gt;</span>DEU<span class="nt">&lt;/tspan&gt;</span>
+            <span class="nt">&lt;tspan</span> <span class="na">class=</span><span class="s">"chart__label-value"</span> <span class="na">x=</span><span class="s">"0"</span> <span class="na">dy=</span><span class="s">"1em"</span><span class="nt">&gt;</span>63<span class="nt">&lt;/tspan&gt;</span>
+        <span class="nt">&lt;/text&gt;</span>
+    <span class="nt">&lt;/g&gt;</span>
+    <span class="nt">&lt;text</span> <span class="na">class=</span><span class="s">"chart__unit"</span> <span class="na">transform=</span><span class="s">"translate(100,100)"</span> <span class="na">dy=</span><span class="s">"0.4em"</span><span class="nt">&gt;</span>%<span class="nt">&lt;/text&gt;</span>
+<span class="nt">&lt;/svg&gt;</span>
+</pre></div></div></div>            </div>
+        </section>
+
+        <footer>
+            <div class="gs-container">
+                <p>This documentation generated using <a href="http://github.com/trulia/hologram">Hologram</a>
+            </div>
+        </footer>
+    </body>
+</html>
