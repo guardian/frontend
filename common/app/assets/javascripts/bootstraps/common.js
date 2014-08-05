@@ -37,6 +37,7 @@ define([
     'common/modules/discussion/comment-count',
     'common/modules/gallery/lightbox',
     'common/modules/onward/history',
+    'common/modules/onward/breaking-news',
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
     'common/modules/analytics/foresee-survey',
@@ -84,6 +85,7 @@ define([
     CommentCount,
     LightboxGallery,
     history,
+    breakingNews,
     Message,
     AutoSignin,
     Foresee,
@@ -276,6 +278,12 @@ define([
             }
         },
 
+        displayBreakingNews: function (config) {
+            if (config.switches.breakingNews) {
+                breakingNews(config);
+            }
+        },
+
         displayOnboardMessage: function (config) {
             if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
                 bean.on(document, 'click', '.js-site-message-close', function() {
@@ -444,6 +452,7 @@ define([
             modules.showTabs();
             modules.initialiseTopNavItems(config);
             modules.initialiseNavigation(config);
+            modules.displayBreakingNews(config);
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();

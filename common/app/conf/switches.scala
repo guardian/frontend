@@ -313,6 +313,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val BreakingNewsSwitch = Switch("Feature Switches", "breaking-news",
+    "If this is switched on then the breaking news feed is requested and articles are displayed",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 30)
+  )
+
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -515,6 +520,7 @@ object Switches extends Collections {
     ABHighCommercialComponent,
     SeoBlockGooglebotFromJSPathsSwitch,
     EnhancedMediaPlayerSwitch,
+    BreakingNewsSwitch,
     ABRightMostPopularText,
     CenturyRedirectionSwitch
   )
