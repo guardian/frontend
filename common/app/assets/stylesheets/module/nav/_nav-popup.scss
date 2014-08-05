@@ -173,7 +173,7 @@ $bp-header-wrap: 544px;
     z-index: 10;
     padding: 0;
     @include rem((
-        padding-top: 5px, // manual amount, determined by google, not gu-grid
+        padding-top: 5px, // manual amount, determined by google, not guss-grid-system
         top: $headerHeight + $gs-baseline / 2
     ));
 
@@ -184,7 +184,7 @@ $bp-header-wrap: 544px;
             min-height: 68px,
             left: $gs-gutter/2,
             padding: $gs-gutter,
-            padding-top: $gs-gutter + 5px, // manual amount, determined by google, not gu-grid
+            padding-top: $gs-gutter + 5px // manual amount, determined by google, not guss-grid-system
         ));
     }
 
