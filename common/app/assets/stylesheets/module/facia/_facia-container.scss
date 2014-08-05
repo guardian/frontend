@@ -7,11 +7,19 @@
         position: relative;
 
         @include rem((
-            padding-left: $gs-gutter / 2,
-            padding-right: $gs-gutter / 2
+            margin-left: $gs-gutter / 2,
+            margin-right: $gs-gutter / 2
         ));
 
         @include mq(mobileLandscape) {
+            @include rem((
+                margin-left: $gs-gutter,
+                margin-right: $gs-gutter
+            ));
+        }
+        @include mq(tablet) {
+            margin-left: 0;
+            margin-right: 0;
             @include rem((
                 padding-left: $gs-gutter,
                 padding-right: $gs-gutter
