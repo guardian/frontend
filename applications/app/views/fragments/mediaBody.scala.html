@@ -39,7 +39,7 @@
                                 <meta itemprop="name" content="@video.webTitle" />
                                 <meta itemprop="uploadDate" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
                                 @video.mainVideo.map { mv =>
-                                    <meta itemprop="duration" content="@mv.duration.toString()" />
+                                    <meta itemprop="duration" content="@mv.ISOduration" />
                                     <meta itemprop="height" content="@mv.height" />
                                     <meta itemprop="width" content="@mv.width" />
                                 }
