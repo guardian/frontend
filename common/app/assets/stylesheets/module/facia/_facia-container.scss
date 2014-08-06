@@ -179,7 +179,6 @@
             .container__body {
                 overflow: hidden;
                 @include rem((
-                    padding-top: $gs-baseline/4, // Top spacing at this breakpoint is removed by .facia-slice-wrapper
                     margin-left: gs-span(2) + $gs-gutter
                 ));
             }
