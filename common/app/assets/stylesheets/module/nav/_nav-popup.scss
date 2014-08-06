@@ -66,7 +66,8 @@ $bp-header-wrap: 544px;
             height: 0;
             border-bottom: 0;
             @include rem((
-                margin: 2px,
+                margin-top: 2px,
+                margin-bottom: 2px,
                 margin-left: 4px,
                 border-left: $nav-popup-toggle-arrow-size solid transparent,
                 border-right: $nav-popup-toggle-arrow-size solid transparent,
