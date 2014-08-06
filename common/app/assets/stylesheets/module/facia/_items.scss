@@ -589,6 +589,7 @@ $cta-icon-gap: 2px;
         background: transparent;
         color: $c-neutral1;
     }
+    
 
     @include mq($to: tablet) {
         &[data-link-name=top-stories] .container__header {
@@ -599,5 +600,10 @@ $cta-icon-gap: 2px;
         @include rem((
             padding-top: $gs-baseline/2
         ));
+    }
+    @include mq(faciaLeftCol, wide) {
+        .facia-slice-wrapper:first-child {
+            padding-top: 0;
+        }
     }
 }
