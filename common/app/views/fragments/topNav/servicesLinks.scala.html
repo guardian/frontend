@@ -42,7 +42,8 @@
                 <li class="nav-popup__item">
                     <a class="top-bar__item--action" data-edition="@edition.id"
                         data-link-name="switch to @edition.id edition"
-                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
+                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+                        title="switch to the @edition.id edition">
                         <span class="u-h">switch to the </span>@edition.id edition
                     </a>
                 </li>
@@ -51,7 +52,8 @@
                 <li class="top-bar__item--action">
                     <a class="" data-edition="@region.id"
                         data-link-name="switch to @region.id region"
-                        href="@LinkTo(s"/preference/edition/${region.id.toLowerCase}")">
+                        href="@LinkTo(s"/preference/edition/${region.id.toLowerCase}")"
+                        title="switch to the @region.id edition">
                         <span class="u-h">switch to the </span>@region.id edition
                     </a>
                 </li>
