@@ -8,14 +8,16 @@ import scala.concurrent.duration._
 
 class LookupTest extends FlatSpec with Matchers {
 
+  private val timeout = 10.seconds
+
   private def contentsOf(shortUrls: String*) = {
     val futureContents = Lookup.contentByShortUrls(shortUrls)
-    Await.result(futureContents, 2.seconds)
+    Await.result(futureContents, timeout)
   }
 
   private def contentsForKeyword(keywordId: String) = {
     val futureContents = Lookup.latestContentByKeyword(keywordId, 4)
-    Await.result(futureContents, 2.seconds)
+    Await.result(futureContents, timeout)
   }
 
   "contentByShortUrls" should "find content for genuine URLs" in Fake {
