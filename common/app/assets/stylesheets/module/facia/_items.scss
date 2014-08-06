@@ -12,8 +12,7 @@
     }
 }
 .container__border {
-    border-top-style: solid;
-    border-top-width: 1px;
+    border-top: 1px solid $c-neutral4;
 
     @include mq(tablet) {
         @include rem((
