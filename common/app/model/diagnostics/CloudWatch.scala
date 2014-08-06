@@ -1,14 +1,15 @@
 package model.diagnostics
 
-import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
 import com.amazonaws.handlers.AsyncHandler
-import conf.Configuration
+import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
 import com.amazonaws.services.cloudwatch.model._
-import metrics.FrontendMetric
-import scala.collection.JavaConversions._
 import common.Logging
-import Configuration._
+import conf.Configuration
+import conf.Configuration._
+import metrics.{DataPoint, FrontendMetric}
 import services.AwsEndpoints
+
+import scala.collection.JavaConversions._
 
 trait CloudWatch extends Logging {
 
@@ -69,22 +70,22 @@ trait CloudWatch extends Logging {
   def putMetrics(metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
     for {
       metric <- metrics
-      dataPoints <- metric.getDataPoints.grouped(20)
-      dataPoint <- dataPoints
+      dataPointGroup <- metric.getAndResetDataPoints.grouped(20)
     } {
       val request = new PutMetricDataRequest()
         .withNamespace("Application")
         .withMetricData {
-        val metricDatum = new MetricDatum()
-          .withValue(dataPoint.value)
-          .withUnit(metric.metricUnit)
-          .withMetricName(metric.name)
-          .withDimensions(dimensions)
+          for (dataPoint <- dataPointGroup) yield {
+            val metricDatum = new MetricDatum()
+              .withValue(dataPoint.value)
+              .withUnit(metric.metricUnit)
+              .withMetricName(metric.name)
+              .withDimensions(dimensions)
 
-        dataPoint.time.fold(metricDatum) { t => metricDatum.withTimestamp(t.toDate)}
-      }
-
-      CloudWatch.cloudwatch.putMetricDataAsync(request, asyncHandler)
+            dataPoint.time.fold(metricDatum) { t => metricDatum.withTimestamp(t.toDate)}
+          }
+        }
+      CloudWatch.cloudwatch.putMetricDataAsync(request, asyncHandlerForMetric(metric, dataPointGroup))
     }
   }
 
