@@ -21,14 +21,12 @@
                 <div class="media-primary player">
                     @media match {
                         case audio: Audio => {
-                            <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio"
-                            class="media-primary media-content">
+                            <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio">
                             @fragments.media.audio(audio.mainAudio, audio.headline)
                             </figure>
                         }
                         case video: Video => {
-                            <figure itemprop="video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
-                            class="media-primary media-content">
+                            <figure itemprop="video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video">
                                 <meta itemprop="name" content="@video.headline"/>
                                 <meta itemprop="url" content="@video.url"/>
                                 @video.trailText.map{ t =>
