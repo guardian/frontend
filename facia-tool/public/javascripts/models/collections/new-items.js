@@ -34,7 +34,28 @@ define([
     }
 
     function newItemsValidator(newItems) {
-        return contentApi.validateItem(newItems[0]);
+        var defer = $.Deferred();
+
+        contentApi.validateItem(newItems[0])
+        .fail(function(err) {
+            defer.reject(err);
+        })
+        .done(function(item) {
+            var err;
+
+            if ('breaking-news' === vars.model.front()) {
+                err = (item.meta.headline() || item.fields.headline()).length > 60 ? 'Sorry, a breaking-news headline must be 30 characters or less. To edit it, place it in the clipboard.' : err;
+                err = vars.model.liveMode() ? 'Sorry, breaking-news items must be created/edited in Draft' : err;
+            }
+
+            if (err) {
+                defer.reject(err);
+            } else {
+                defer.resolve(item);
+            }
+        });
+
+        return defer.promise();
     }
 
     function newItemsPersister(newItems, sourceGroup, targetGroup, position, isAfter) {
