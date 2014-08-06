@@ -152,10 +152,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     border: 1px solid rgba(#ffffff, .3);
     @include border-radius(50%);
 
-    &:hover {
-        border-color: #ffffff;
-    }
-
     @include mq(tablet) {
         float: right;
     }
@@ -166,6 +162,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         ));
     }
 
+    &:hover {
+        border-color: #ffffff;
+    }
+
     a {
         float: left;
         color: #ffffff;
@@ -173,7 +173,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             line-height: $btn-height + 1px
         ));
 
-        &:hover {
+        &:hover,
+        &:focus,
+        &:active {
             text-decoration: none;
         }
     }
@@ -205,19 +207,13 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     ));
     @include fs-textSans(2);
     background: transparent;
+    border: 1px solid rgba(#ffffff, .3);
+    @include border-radius(50%);
     color: #ffffff;
-    border: 0;
 
-    .i {
-        border: 1px solid rgba(#ffffff, .3);
-        @include border-radius(50%);
-
-        &:hover {
-            border-color: #ffffff;
-        }
-    }
-
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
         border-color: #ffffff;
     }
 

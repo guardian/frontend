@@ -385,7 +385,8 @@ define([
                     '</ul>';
 
             var releaseMessage = new Message('video');
-                releaseMessage.show(msg);
+
+            releaseMessage.show(msg);
         }
     };
 
