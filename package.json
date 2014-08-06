@@ -38,7 +38,7 @@
     "mkdirp": "^0.5.0",
     "moment": "^2.7.0",
     "phantomjs": "~1.9.1",
-    "svgo": "^0.4.4"
+    "svgo": "0.4.4"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"

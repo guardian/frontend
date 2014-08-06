@@ -7,16 +7,15 @@ GEM
     rainbow (2.0.0)
     redcarpet (3.1.2)
     rouge (1.6.1)
-    sass (3.3.11)
-    scss-lint (0.25.1)
+    sass (3.3.14)
+    scss-lint (0.26.2)
       rainbow (~> 2.0)
-      sass (~> 3.3.0)
+      sass (~> 3.3.0, >= 3.3.7)
 
 PLATFORMS
-  java
   ruby
 
 DEPENDENCIES
   hologram (= 1.2.0)
-  sass (~> 3.3.7)
-  scss-lint (= 0.25.1)
+  sass (~> 3.3.14)
+  scss-lint (= 0.26.2)

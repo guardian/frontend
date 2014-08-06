@@ -1,15 +1,18 @@
+.facia-container--layout-content .container--popular .container__border {
+    display: none;
+
+    @include mq(rightCol) {
+        display: block;
+    }
+}
+
 @include mq(rightCol) {
 
     @include guss-columns('.headline-column', $column-min-width: 190px);
 
     .container--popular {
-
         .page-sub-header {
             display: none;
-        }
-
-        .tabs__container {
-            border-top: 1px solid $c-neutral4;
         }
 
         .tabs__tab:first-child {
@@ -148,11 +151,6 @@
             left: 0;
             top: 0;
         }
-
-        .tabs__content {
-            border-top: 1px solid $c-neutral4;
-        }
-
     }
 }
 

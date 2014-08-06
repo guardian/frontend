@@ -1,0 +1,56 @@
+.codeExample {
+    //margin: base-px(0, -1, 4, -1);
+}
+
+.exampleOutput,
+.codeBlock {
+    &::before {
+        //color: color(shade-3);
+        //font-family: $agate-sans;
+        text-transform: uppercase;
+        //@include meta(0.9);
+        //padding: base-px(0, 0, 1, 0);
+        display: block;
+        position: relative;
+    }
+}
+
+.exampleOutput {
+    //background-image:
+    //    linear-gradient(45deg, fade-out(color(shade-5), 0.25) 25%, transparent 25%, transparent 75%, fade-out(color(shade-5), 0.25) 75%, fade-out(color(shade-5), 0.25)),
+    //    linear-gradient(45deg, fade-out(color(shade-5), 0.25) 25%, transparent 25%, transparent 75%, fade-out(color(shade-5), 0.25) 75%, fade-out(color(shade-5), 0.25));
+    background-size: 44px 44px;
+    background-position: 0 0, 22px 22px;
+    //padding: base-px(1, 0, 0, 0);
+
+    &::before {
+        content: 'Example:';
+        //padding: base-px(0, 0, 1, 1);
+    }
+
+    &::after {
+        content: '';
+        display: table;
+    }
+
+    &::after {
+        clear: both;
+    }
+}
+
+.exampleOutput__heading {
+    //color: color(shade-2);
+    //font-family: $agate-sans;
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    clear: both;
+}
+
+.codeBlock {
+    //background-color: fade-out(color(shade-5), 0.25);
+    //padding: base-px(1);
+
+    &::before {
+        content: 'Markup:';
+    }
+} 

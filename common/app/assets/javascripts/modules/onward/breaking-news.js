@@ -86,7 +86,7 @@ define([
                         $closer = bonzo.create('<i class="breaking-news-item__close i-close-icon-white" data-link-name="close"></i>');
 
                     bonzo($el).append($closer);
-                    container = container || bonzo(document.querySelector('.breaking-news'));
+                    container = container || bonzo(document.querySelector('.js-breaking-news-placeholder'));
                     container.append($el);
 
                     bean.on($closer[0], 'click', function() {

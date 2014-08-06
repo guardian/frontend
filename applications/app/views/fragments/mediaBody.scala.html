@@ -21,17 +21,17 @@
                 <div class="media-primary player">
                     @media match {
                         case audio: Audio => {
-                            <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio"
-                            class="media-primary media-content">
+                            <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio">
                             @fragments.media.audio(audio.mainAudio, audio.headline)
                             </figure>
                         }
                         case video: Video => {
-                            <figure itemprop="video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
-                            class="media-primary media-content">
-                                <meta itemprop="name" content="@video.headline"/>
+                            <figure itemprop="video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video">
+                                <meta itemprop="name" content="@Html(video.headline)"/>
+                                <meta itemprop="headline" content="@Html(video.headline)"/>
                                 <meta itemprop="url" content="@video.url"/>
                                 @video.trailText.map{ t =>
+                                    <meta itemprop="description" content="@StripHtmlTags(t)" />
                                     <meta itemprop="about" content="@StripHtmlTags(t)" />
                                 }
 
@@ -39,13 +39,13 @@
                                 <meta itemprop="name" content="@video.webTitle" />
                                 <meta itemprop="uploadDate" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
                                 @video.mainVideo.map { mv =>
-                                    <meta itemprop="duration" content="@mv.duration.toString()" />
+                                    <meta itemprop="duration" content="@mv.ISOduration" />
                                     <meta itemprop="height" content="@mv.height" />
                                     <meta itemprop="width" content="@mv.width" />
                                 }
                                 <meta itemprop="requiresSubscription" content="no" />
                                 <meta itemprop="image" content="@video.openGraphImage" />
-                                <meta itemprop="thumbnail" content="@video.thumbnailPath" />
+                                @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
                                 @fragments.media.video(video.mainVideo,  video.headline)
                             </figure>
                         }
