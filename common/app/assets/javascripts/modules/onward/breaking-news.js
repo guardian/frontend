@@ -55,7 +55,7 @@ define([
                     .reduce(function(matchers, term) {
                         matchers[term] = interestThreshold;
                         return matchers;
-                    }, _assign((history.getSummary().sections || {}), history.getSummary().keywords)),
+                    }, _assign(history.getSummary().sections, history.getSummary().keywords)),
 
                     articles = _flatten(
                         (resp.collections || [])
