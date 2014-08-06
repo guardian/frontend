@@ -284,37 +284,6 @@ define([
             }
         },
 
-        displayOnboardMessage: function (config) {
-            if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
-                bean.on(document, 'click', '.js-site-message-close', function() {
-                    Cookies.add('GU_VIEW', 'responsive', 365);
-                });
-                bean.on(document, 'click', '.js-site-message', function() {
-                    Cookies.add('GU_VIEW', 'responsive', 365);
-                });
-                var message = new Message('onboard', { type: 'modal' }),
-                    path = (document.location.pathname) ? document.location.pathname : '/',
-                    exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
-                    msg = '<h2 class="site-message__header">Thanks for joining us.</h2>' +
-                    '<div class="site-message__message" id="site-message__message">' +
-                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Current version" at the bottom of the page. <a href="http://next.theguardian.com/">Find out more</a>.</p>' +
-                    '<ul class="site-message__list">' +
-                    '<li class="site-message__list__item">We love feedback - <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback">let us know yours</a>.</li>' +
-                    '<li class="site-message__list__item">Stay up to date with new releases on <a href="http://next.theguardian.com/blog/">our blog</a>.</li>' +
-                    '</ul>' +
-                    '<ul class="site-message__actions u-unstyled">' +
-                    '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+
-                    '<a class="js-site-message-close" data-link-name="R2 alpha opt in" href="#" tabindex=1>Got it</a>' +
-                    '<li class="site-message__actions__item">' +
-                    '<i class="i i-back-white"></i>' +
-                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                    'data-link-name="R2 alpha opt out">Opt-out and return to the current site </a>' +
-                    '</li>' +
-                    '</ul>';
-                message.show(msg);
-            }
-        },
-
         unshackleParagraphs: function (config, context) {
             if (userPrefs.isOff('para-indents')) {
                 $('.paragraph-spacing--indents', context).removeClass('paragraph-spacing--indents');
@@ -445,7 +414,6 @@ define([
         if (!this.initialised) {
             this.initialised = true;
             modules.testCookie();
-            modules.displayOnboardMessage(config);
             modules.windowEventListeners();
             modules.checkIframe();
             modules.upgradeImages();
