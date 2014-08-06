@@ -44,29 +44,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint
 $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(navigationBreakOnTwoLevels) + gs-span(1) + $gs-gutter * 1.5);
 
 
-/* First container page title overrides
-   ========================================================================== */
-
-@include mq($to: tablet) {
-    // Note the double chained selectors to avoid use of !important
-
-    // Display the first container header everywhere
-    .container--first.container--first .container__header,
-    .js-on .has-localnav .container--first .container__title {
-        display: block;
-    }
-    // But not on the homepage
-    .container--first[data-link-name=top-stories] .container__header {
-        display: none;
-    }
-    // And restyle the title to look less bulky
-    .container--first.container--first .container__title {
-        padding-left: 0;
-        background: transparent;
-    }
-}
-
-
 /* Meganav footer overrides (edition switcher and Guardian services)
    ========================================================================== */
 

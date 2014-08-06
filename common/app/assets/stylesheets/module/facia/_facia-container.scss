@@ -187,9 +187,6 @@
                     width: $a-leftColWide-width !important
                 ));
             }
-            .container__body {
-                padding-top: 0; // Top spacing at this breakpoint is done by .facia-slice-wrapper
-            }
             .container__border {
                 @include rem((
                     margin-right: -(gs-span(1) + $gs-gutter*2)
