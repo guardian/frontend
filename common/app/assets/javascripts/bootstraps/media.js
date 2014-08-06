@@ -46,8 +46,9 @@ define([
             'content:play',
             'content:end'
         ],
+        contentType = config.page.contentType.toLowerCase(),
         constructEventName = function(eventName) {
-            return config.page.contentType.toLowerCase() + ':' + eventName;
+            return contentType + ':' + eventName;
         };
 
 
@@ -56,12 +57,12 @@ define([
         ophanRecord: function(id, event) {
             if(id) {
                 require('ophan/ng', function (ophan) {
-                    ophan.record({
-                        media: {
-                            id: id,
-                            eventType: event.type
-                        }
-                    });
+                    var eventObject = {};
+                    eventObject[contentType] = {
+                        id: id,
+                        eventType: event.type
+                    };
+                    ophan.record(eventObject);
                 });
             }
         },

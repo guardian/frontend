@@ -27,7 +27,7 @@
             content: '';
             position: absolute;
             z-index: 1;
-            background: rgba(darken($c-neutral4, 8%), .2);
+            background: rgba($c-neutral1, .05);
             top: 0;
             height: 100%;
             width: 0;
