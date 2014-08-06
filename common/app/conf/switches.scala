@@ -488,7 +488,6 @@ object Switches extends Collections {
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
-    NetworkFrontOptIn,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
