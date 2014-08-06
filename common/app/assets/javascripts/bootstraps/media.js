@@ -278,11 +278,11 @@ define([
                             if (mediaType === 'video') {
 
                                 modules.bindDiagnosticsEvents(player);
+                                player.fullscreener();
 
                                 // Init plugins
-                                if(config.switches.videoAdverts) {
+                                if (config.switches.videoAdverts && !config.page.shouldHideAdverts) {
                                     player.adCountDown();
-                                    player.fullscreener();
                                     player.ads({
                                         timeout: 3000
                                     });
@@ -295,7 +295,7 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if(/desktop|wide/.test(detect.getBreakpoint())) {
+                                if (/desktop|wide/.test(detect.getBreakpoint())) {
                                     modules.initEndSlate(player);
                                 }
                             } else {
@@ -402,11 +402,13 @@ define([
         }
 
         if (config.isMedia) {
-            modules.initMoreInSection();
+            if (config.page.showRelatedContent) {
+                modules.initMoreInSection();
+            }
             modules.initMostViewedMedia();
         }
 
-        if(config.page.contentType === 'Video' && detect.getBreakpoint() !== 'mobile') {
+        if (config.page.contentType === 'Video' && detect.getBreakpoint() !== 'mobile') {
             modules.displayReleaseMessage();
         }
     };
