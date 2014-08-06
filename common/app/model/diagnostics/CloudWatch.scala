@@ -20,7 +20,7 @@ trait CloudWatch extends Logging {
     client
   }
 
-  object asyncHandler extends AsyncHandler[PutMetricDataRequest, Void] with Logging
+  trait asyncHandler extends AsyncHandler[PutMetricDataRequest, Void] with Logging
   {
     def onError(exception: Exception)
     {
@@ -30,6 +30,16 @@ trait CloudWatch extends Logging {
     {
       log.info("CloudWatch PutMetricDataRequest - success")
     }
+  }
+
+  object asyncHandler extends asyncHandler
+
+  case class asyncHandlerForMetric(metric: FrontendMetric, points: List[DataPoint]) extends asyncHandler {
+    override def onError(exception: Exception) = {
+      metric.putDataPoints(points)
+      super.onError(exception)
+    }
+    override def onSuccess(request: PutMetricDataRequest, result: Void ) = super.onSuccess(request, result)
   }
 
   def put(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]): Any = {
