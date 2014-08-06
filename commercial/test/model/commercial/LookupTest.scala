@@ -10,7 +10,7 @@ class LookupTest extends FlatSpec with Matchers {
 
   private def contentsOf(shortUrls: String*) = {
     val futureContents = Lookup.contentByShortUrls(shortUrls)
-    Await.result(futureContents, 2.seconds)
+    Await.result(futureContents, 10.seconds)
   }
 
   "contentByShortUrls" should "find content for genuine URLs" in Fake {
