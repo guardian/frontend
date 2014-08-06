@@ -1,5 +1,6 @@
 package model
 
+import org.joda.time.Duration
 import com.gu.openplatform.contentapi.model.{Element => ApiElement}
 
 trait Element {
@@ -66,6 +67,7 @@ trait VideoContainer extends Element {
     }.sorted
   }
   lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
+  lazy val ISOduration: String = new Duration(duration*1000.toLong).toString()
   lazy val height: String = videoAssets.headOption.map(_.height).getOrElse(0).toString
   lazy val width: String = videoAssets.headOption.map(_.width).getOrElse(0).toString
 
