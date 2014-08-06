@@ -15,13 +15,13 @@
             case v: Video if v.mainVideo.isDefined => {
                 @inlineVideo(v.mainVideo.get, v.mainVideo.flatMap(Item620.bestFor), v.webTitle, 620, 350)
                 <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
-                @fragments.items.elements.title(trail, index, 0)
+                    @fragments.items.elements.title(trail, index, 0)
                 </a>
             }
             case _ => {
                 <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
-                @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
-                @fragments.items.elements.title(trail, index, 0)
+                    @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
+                    @fragments.items.elements.title(trail, index, 0)
                 </a>
             }
         }

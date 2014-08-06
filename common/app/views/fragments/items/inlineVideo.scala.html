@@ -10,7 +10,7 @@
     ))">
         <video controls="controls" class="gu-media gu-media--video js-gu-media"
             @poster.map { img => poster="@img"} data-title="@title"
-        data-duration="@video.duration.toString()" data-media-id="@video.id">
+            data-duration="@video.duration.toString()" data-media-id="@video.id">
 
             @video.encodings.map { encoding =>
                 <source src="@encoding.url" type="@encoding.format" />
