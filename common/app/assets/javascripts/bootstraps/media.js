@@ -376,11 +376,11 @@ define([
                     '<ul class="site-message__actions u-unstyled">' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback">Leave feedback</a>' +
+                    '<a href="https://www.surveymonkey.com/s/guardianvideo" target="_blank">Leave feedback</a>' +
                     '</li>' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="http://next.theguardian.com/">Find out more</a>' +
+                    '<a href="http://next.theguardian.com/" target="_blank">Find out more</a>' +
                     '</li>' +
                     '</ul>';
 
