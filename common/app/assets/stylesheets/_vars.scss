@@ -63,6 +63,10 @@ $mq-breakpoints: (
     // Facia layout
     faciaLeftCol: $facia-leftCol-trigger
 );
+// Uncomment to show the current breakpoint in the top right
+// See https://github.com/guardian/sass-mq/tree/sassdoc#seeing-the-currently-active-breakpoint
+//$mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
+
 
 // Guss defaults overrides
 // =============================================================================
