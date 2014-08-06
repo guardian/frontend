@@ -312,10 +312,13 @@
     }
 }
 
-/** This is for when the accompanying media element is a video - otherwise the h2 or h3 link stretches over the top of
-  * the video, meaning that you can only click underneath it to start playing it.
+/** This is for when the accompanying media element is a video and the h2/h3 element is displaying to the left of the
+  * video - the h2/h3 should show inline, otherwise the link stretches over the video, preventing the user from clicking
+  * the play button.
+  *
+  * It should NOT, however, display inline otherwise, as it messes up padding, etc.
   */
-.item__title--inline {
+.row-of-two--boost-first .item__title--inline-video, .row-of-two--boost-second .item__title--inline-video {
     display: inline;
 }
 
