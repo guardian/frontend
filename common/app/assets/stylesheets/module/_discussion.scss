@@ -937,8 +937,14 @@ $avatarSize: 44px;
     border-top: 1px solid $c-neutral4;
     margin-bottom: 0;
     @include rem((
-        padding-top: $gs-baseline/10
+        padding-top: $gs-baseline/3
     ));
+
+    @include mq(tablet) {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+    }
 }
 .discussion__comments--top-comments {
     .d-thread { // for the max-height fade effect
