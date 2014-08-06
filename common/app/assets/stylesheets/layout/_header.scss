@@ -7,7 +7,6 @@ $c-guardian-services-action: #ffffff;
 
 .l-header {
     position: relative;
-    z-index: 1051; // On top of Google "Adchoices" label which has z-index: 1050
     background: $c-newsDefault;
 
     @include mq(wide) {

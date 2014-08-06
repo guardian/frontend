@@ -84,7 +84,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
 .navigation {
     position: relative;
-    z-index: 1;
     overflow: hidden;
     clear: both;
     background: $c-navigation-background;
