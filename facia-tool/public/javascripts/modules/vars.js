@@ -20,6 +20,7 @@ define([
             {name: 'features'},
             {name: 'features/auto'},
             {name: 'features/volumes', groups: ['standard', 'big', 'very big', 'huge']},
+            {name: 'features/picks', groups: ['standard', 'big']},
             {name: 'features/multimedia'},
             {name: 'comment/comment-and-debate'}
         ],
