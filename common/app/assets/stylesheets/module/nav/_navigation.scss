@@ -61,7 +61,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     }
     // And restyle the title to look less bulky
     .container--first.container--first .container__title {
-        color: #333333;
         padding-left: 0;
         background: transparent;
     }
@@ -84,7 +83,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
 .navigation {
     position: relative;
-    z-index: 1;
     overflow: hidden;
     clear: both;
     background: $c-navigation-background;

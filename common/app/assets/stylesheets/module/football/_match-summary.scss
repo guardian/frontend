@@ -185,10 +185,16 @@ $football-crest--large: 60px;
 }
 
 .match-summary__comment {
+    text-align: right;
     @include rem((
-        bottom: $gs-baseline / 3
+        bottom: $gs-baseline / 3,
+        padding-bottom: $gs-baseline / 2
     ));
-    position: absolute;
+    
+    @include mq(tablet) {
+        padding-bottom: 0;
+        position: absolute;
+    }
 }
 
 .match-info {

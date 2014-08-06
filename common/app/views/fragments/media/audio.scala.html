@@ -1,6 +1,6 @@
 @(audio: Option[AudioElement], title: String)
 
-@audio.map{ audio =>
+@audio.map { audio =>
     <div class="gu-media-wrapper gu-media-wrapper--audio">
         <audio controls="controls" class="gu-media gu-media--audio js-gu-media" data-title="@title"
             data-duration="@audio.duration.toString()" data-media-id="@audio.id">
