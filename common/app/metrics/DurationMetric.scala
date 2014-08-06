@@ -4,8 +4,9 @@ import akka.agent.Agent
 import com.amazonaws.services.cloudwatch.model.StandardUnit
 import common.AkkaAgent
 import org.joda.time.DateTime
+import scala.concurrent.Future
 
-trait DataPoint {
+sealed trait DataPoint {
   val value: Long
   val time: Option[DateTime]
 }
@@ -15,19 +16,25 @@ case class DurationDataPoint(value: Long, time: Option[DateTime] = None) extends
 trait FrontendMetric {
   val name: String
   val metricUnit: StandardUnit
-  def getDataPoints: List[DurationDataPoint]
+  def getAndResetDataPoints: List[DataPoint]
+  def putDataPoints(points: List[DataPoint]): Future[List[DataPoint]]
 }
 
 case class DurationMetric(name: String, metricUnit: StandardUnit) extends FrontendMetric {
 
-  private val dataPoints: Agent[List[DurationDataPoint]] = AkkaAgent(List[DurationDataPoint]())
+  private val dataPoints: Agent[List[DataPoint]] = AkkaAgent(List[DurationDataPoint]())
 
-  def getDataPoints: List[DurationDataPoint] = dataPoints.get()
+  def getAndResetDataPoints: List[DataPoint] = {
+    val points = dataPoints.get()
+    dataPoints.alter(_.dropWhile(points.contains(_)))
+    points
+  }
 
-  def record(dataPoint: DurationDataPoint) = dataPoints.alter(dataPoint :: _)
+  def putDataPoints(points: List[DataPoint]): Future[List[DataPoint]] = dataPoints.alter(_ ::: points)
 
-  def recordDuration(timeInMillis: Long) = record(DurationDataPoint(timeInMillis, Option(DateTime.now)))
+  def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: _)
 
+  def recordDuration(timeInMillis: Long): Unit = record(DurationDataPoint(timeInMillis, Option(DateTime.now)))
 }
 
 object UkPressLatencyMetric extends DurationMetric("uk-press-latency", StandardUnit.Milliseconds)
