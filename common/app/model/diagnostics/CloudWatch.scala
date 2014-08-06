@@ -12,7 +12,7 @@ import services.AwsEndpoints
 
 trait CloudWatch extends Logging {
 
-  lazy val stage = new Dimension().withName("Stage").withValue(environment.stage)
+  lazy val stageDimension = new Dimension().withName("Stage").withValue(environment.stage)
 
   lazy val cloudwatch = {
     val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
@@ -46,12 +46,15 @@ trait CloudWatch extends Logging {
     cloudwatch.putMetricDataAsync(request, asyncHandler)
   }
 
-  def put(namespace: String, metrics: Map[String, Double]): Any =
-    put(namespace, metrics, Seq(stage))
+  def put(namespace: String, metrics: Map[String, Double]): Unit =
+    put(namespace, metrics, Seq(stageDimension))
 
-  def putWithDimensions(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]) =
-    put(namespace, metrics, Seq(stage) ++ dimensions)
+  def putWithDimensions(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]): Unit =
+    put(namespace, metrics, Seq(stageDimension) ++ dimensions)
 
+
+  def putMetricsWithStage(metrics: List[FrontendMetric], applicationDimension: Dimension): Unit =
+    putMetrics(metrics, List(stageDimension, applicationDimension))
 
   def putMetrics(metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
     for {
