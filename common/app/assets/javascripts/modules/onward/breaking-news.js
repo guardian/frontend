@@ -21,7 +21,7 @@ define([
 ) {
     var breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
-        interestThreshold = 3,
+        interestThreshold = 5,
         maxSimultaneousAlerts = 1,
         container;
 
@@ -41,7 +41,7 @@ define([
             crossOrigin: true
         }).then(
             function(resp) {
-                var keyword = page.keywordIds ? (page.keywordIds + '').split(',')[0] : '',
+                var keyword = page.keywordIds ? page.keywordIds.split(',')[0] : '',
 
                     matchers = [
                         page.edition,
@@ -53,14 +53,16 @@ define([
                     ]
                     .filter(function(match) { return match; })
                     .reduce(function(matchers, term) {
-                        matchers[term] = interestThreshold;
+                        matchers[term.toLowerCase()] = interestThreshold;
                         return matchers;
                     }, _assign(history.getSummary().sections, history.getSummary().keywords)),
 
                     articles = _flatten(
                         (resp.collections || [])
                         .filter(function(collection) {
-                            return (collection.content.length && (collection.href === 'global' || matchers[collection.href] >= interestThreshold));
+                            var term = collection.href.toLowerCase();
+
+                            return (collection.content.length && (term === 'global' || matchers[term] >= interestThreshold));
                         })
                         .map(function(collection) {
                             return collection.content;
@@ -70,7 +72,7 @@ define([
                     articleIds = articles.map(function(article) { return article.id; });
 
                 if (articleIds.indexOf(page.pageId) > -1) {
-                    hiddenIds.unshift(page.pageId);
+                    hiddenIds.push(page.pageId);
                     storage.local.set(storageKeyHidden, _intersection(hiddenIds, articleIds));
                     // when displaying a breaking news item, don't show any other breaking news:
                     return;
@@ -91,7 +93,8 @@ define([
 
                     bean.on($closer[0], 'click', function() {
                         bonzo($el).hide();
-                        storage.local.set(storageKeyHidden, _intersection(hiddenIds.concat(article.id), articleIds));
+                        hiddenIds.push(article.id);
+                        storage.local.set(storageKeyHidden, _intersection(hiddenIds, articleIds));
                     });
                 });
             },
