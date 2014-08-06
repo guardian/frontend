@@ -71,7 +71,7 @@ trait CloudWatch extends Logging {
         dataPoint.time.fold(metricDatum) { t => metricDatum.withTimestamp(t.toDate)}
       }
 
-      CloudWatch.cloudwatch.putMetricDataAsync(request)
+      CloudWatch.cloudwatch.putMetricDataAsync(request, asyncHandler)
     }
   }
 
