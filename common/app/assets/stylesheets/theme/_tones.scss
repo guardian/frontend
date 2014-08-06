@@ -69,9 +69,6 @@
                 padding-top: $gs-baseline/3
             ));
 
-            @include mq(tablet, leftCol) {
-                border-top: 1px dotted $c-neutral5 !important;
-            }
             @include mq(leftCol) {
                 @include rem((
                     padding-top: $gs-baseline/2
