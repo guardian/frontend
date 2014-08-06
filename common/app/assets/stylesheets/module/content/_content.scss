@@ -89,35 +89,6 @@
     ));
 }
 
-.content__head__border-top {
-    border-top: 1px dotted $c-neutral5;
-    @include rem((
-        height: $gs-baseline/2
-    ));
-
-    @include mq($to: tablet) {
-        display: none;
-    }
-    @include mq($from:tablet, $to: rightCol) {
-        @include rem((
-            max-width: gs-span(8)
-        ));
-        margin: auto;
-    }
-}
-
-.content__head {
-    @include mq($to: tablet) {
-        border-top-style: solid;
-        border-top-width: 2px;
-
-        .has-localnav & {
-            border-top: 0;
-        }
-    }
-}
-
-
 .content__head__comment-count {
     @include rem((
         height: 16px + $gs-baseline //font-size + $gs-baseline
