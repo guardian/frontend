@@ -66,7 +66,7 @@ define([
 
         initOphanTracking: function(player, mediaId) {
             EVENTS.concat(QUARTILES.map(function(q) {
-                return constructEventName('play:' + q);
+                return 'play:' + q;
             })).forEach(function(event) {
                 player.one(constructEventName(event), function(event) {
                     modules.ophanRecord(mediaId, event);
