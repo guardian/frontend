@@ -67,7 +67,7 @@
         .content__section {
             @include mq(leftCol) {
                 @include rem((
-                    padding-top: $gs-baseline/2
+                    padding-top: $content-top-padding
                 ));
             }
         }

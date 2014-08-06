@@ -115,7 +115,6 @@
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     @include rem((
-        padding-top: $gs-baseline/3,
         padding-bottom: $gs-baseline
     ));
 
@@ -427,11 +426,6 @@
     @include mq(tablet) {
         @include rem((
             margin: 0 0 $gs-baseline/2
-        ));
-    }
-    @include mq(leftCol) {
-        @include rem((
-            padding-top: $gs-baseline
         ));
     }
 }
