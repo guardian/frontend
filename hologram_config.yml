@@ -10,7 +10,7 @@ destination: ./docs/styleguide
 # The assets needed to build the docs (includes header.html,
 # footer.html, etc)
 # You may put doc related assets here too: images, css, etc.
-documentation_assets: ./docs/styleguide/assets
+documentation_assets: ./docs/styleguide_assets
 
 # Any other asset folders that need to be copied to the destination
 # folder. Typically this will include the css that you are trying to

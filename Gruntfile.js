@@ -43,6 +43,23 @@ module.exports = function (grunt) {
                     noCache: true,
                     quiet: (isDev) ? false : true
                 }
+            },
+            compile: {
+                files: [{
+                    expand: true,
+                    cwd: 'docs/styleguide/assets/scss/',
+                    src: ['*.scss', '!_*'],
+                    dest: 'docs/styleguide/assets/css/',
+                    rename: function(dest, src) {
+                        return dest + src.replace('scss', 'css');
+                    }
+                }],
+                options: {
+                    style: 'compressed',
+                    sourcemap: true,
+                    noCache: true,
+                    quiet: (isDev) ? false : true
+                }
             }
         },
 
@@ -707,6 +724,17 @@ module.exports = function (grunt) {
         },
 
         /*
+         * Documentation (builds syleguide)
+         */
+        hologram: {
+            generate: {
+                options: {
+                    config: 'hologram_config.yml'
+                }
+            }
+        },
+
+        /*
          * Miscellaneous
          */
         mkdir: {
@@ -740,7 +768,7 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['common/app/assets/stylesheets/**/*.scss'],
-                tasks: ['compile:css', 'asset_hash'],
+                tasks: ['compile:css', 'asset_hash', 'hologram'],
                 options: {
                     spawn: false
                 }
@@ -756,6 +784,13 @@ module.exports = function (grunt) {
             fonts: {
                 files: ['resources/fonts/**/*'],
                 tasks: ['compile:fonts']
+            },
+            styleguide: {
+                files: ['common/app/assets/stylesheets/**/*.scss', 'docs/styleguide_assets/**/*.*'],
+                tasks: ['compile:css', 'hologram'],
+                options: {
+                    spawn: false
+                }
             }
         },
 
@@ -801,6 +836,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-pagespeed');
     grunt.loadNpmTasks('grunt-csdevmode');
+    grunt.loadNpmTasks('grunt-hologram');
 
     // Default task
     grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
