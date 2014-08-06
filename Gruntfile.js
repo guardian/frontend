@@ -315,7 +315,7 @@ module.exports = function (grunt) {
                         {
                             'font-family': '"Guardian Text Egyptian Web"',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
                             format: 'woff'
                         },
                         {
@@ -327,7 +327,7 @@ module.exports = function (grunt) {
                         {
                             'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '400',
-                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
                             format: 'woff'
                         },
                         // This weight contains only a certain set of chars
@@ -360,7 +360,7 @@ module.exports = function (grunt) {
                         {
                             'font-family': '"Guardian Text Egyptian Web"',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
                             format: 'ttf'
                         },
                         {
@@ -372,7 +372,7 @@ module.exports = function (grunt) {
                         {
                             'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '400',
-                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         // This weight contains only a certain set of chars
