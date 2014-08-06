@@ -4,7 +4,7 @@ import java.net.URLDecoder
 
 import akka.agent.Agent
 import common._
-import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey}
+import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey,inlineMerchandisingSponsorshipsDataKey}
 import model.{Config, Tag}
 import play.api.{Application, GlobalSettings}
 import services.S3
@@ -139,6 +139,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
     update(sponsoredTagsAgent, grabSponsorshipsFromStore(dfpSponsoredTagsDataKey))
     update(advertisementFeatureTagsAgent, grabSponsorshipsFromStore(dfpAdvertisementFeatureTagsDataKey))
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
+    update(inlineMerchandisingTagsAgent, grabSponsorshipsFromStore(inlineMerchandisingSponsorshipsDataKey))
   }
 }
 
