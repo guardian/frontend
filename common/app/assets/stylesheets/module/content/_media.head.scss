@@ -31,14 +31,13 @@
 
     .byline {
         word-break: break-word;
+        color: $c-neutral3;
 
         a {
             color: #ffffff;
-            text-decoration: underline;
         }
     }
 
-    .byline,
     .byline .tone-colour,
     .social__head {
         color: $c-neutral7;
@@ -47,12 +46,16 @@
     .content-meta--inline {
         border-top: 0;
         @include rem((
-            padding-top: $gs-baseline/3
+            padding-top: ($gs-baseline/3)*2
         ));
     }
 
     .content-meta__item .tone-colour {
         color: $c-commentAccent;
+    }
+
+    .content-meta__label {
+        color: $c-neutral3;
     }
 
     .ad-slot--paid-for-badge__header,
