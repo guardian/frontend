@@ -357,16 +357,16 @@ define([
         },
         displayReleaseMessage: function() {
             var msg = '<p class="site-message__message" id="site-message__message">' +
-                    'We\'ve redesigned our video pages to make it easier to find and experience our best video content. We\'d love to hear what you think' +
+                    'We\'ve redesigned our video pages to make it easier to find and experience our best video content. We\'d love to hear what you think.' +
                     '</p>' +
                     '<ul class="site-message__actions u-unstyled">' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="">Leave feedback</a>' +
+                    '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback">Leave feedback</a>' +
                     '</li>' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="http://next.theguardian.com">Find out more</a>' +
+                    '<a href="http://next.theguardian.com/">Find out more</a>' +
                     '</li>' +
                     '</ul>';
 
