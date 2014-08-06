@@ -8,6 +8,9 @@ define([
         storageKeyCopied ='gu.fronts-tool.copied';
 
     return {
+        flush: function() {
+            storage.removeItem(storageKeyCopied);
+        },
 
         set: function(article) {
             storage.setItem(storageKeyCopied, JSON.stringify({

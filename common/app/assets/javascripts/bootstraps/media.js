@@ -13,7 +13,8 @@ define([
     'bean',
     'bonzo',
     'common/modules/component',
-    'common/modules/analytics/beacon'
+    'common/modules/analytics/beacon',
+    'raven'
 ], function(
     $,
     ajax,
@@ -28,7 +29,8 @@ define([
     bean,
     bonzo,
     Component,
-    beacon
+    beacon,
+    Raven
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint());
@@ -198,6 +200,27 @@ define([
             this.one('video:preroll:play', events.init.bind(player));
         },
 
+        fullscreener: function() {
+            var player = this,
+                clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0],
+                events = {
+                    click: function(e) {
+                        this.paused() ? this.play() : this.pause();
+                        e.stop();
+                    },
+                    dblclick: function(e) {
+                        e.stop();
+                        this.isFullScreen() ? this.exitFullscreen() : this.requestFullscreen();
+                    }
+                };
+
+            bonzo(clickbox)
+                .appendTo(player.contentEl());
+
+            bean.on(clickbox, 'click', events.click.bind(player));
+            bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
+        },
+
         initLoadingSpinner: function(player) {
             player.loadingSpinner.contentEl().innerHTML =
                 '<div class="pamplemousse">' +
@@ -212,8 +235,10 @@ define([
             require('bootstraps/video-player', function () {
 
                 videojs.plugin('adCountDown', modules.countDown);
+                videojs.plugin('fullscreener', modules.fullscreener);
 
                 $('.js-gu-media').each(function (el) {
+                    var mediaType = el.tagName.toLowerCase();
 
                     bonzo(el).addClass('vjs');
 
@@ -240,9 +265,8 @@ define([
 
                         deferToAnalytics(function () {
 
-
                             // preroll for videos only
-                            if (config.page.contentType === 'Video') {
+                            if (mediaType === 'video') {
 
                                 modules.initOmnitureTracking(player);
                                 modules.initOphanTracking(player, mediaId);
@@ -251,6 +275,7 @@ define([
                                 // Init plugins
                                 if(config.switches.videoAdverts) {
                                     player.adCountDown();
+                                    player.fullscreener();
                                     player.ads({
                                         timeout: 3000
                                     });
@@ -317,22 +342,37 @@ define([
         initMoreInSection: function() {
             var section = new Component(),
                 parentEl = $('.js-onward')[0];
-            section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+
+            if ('seriesId' in config.page) {
+                section.endpoint = '/video/section/' + config.page.section + '/' + config.page.seriesId + '.json?shortUrl=' + config.page.shortUrl;
+            } else {
+                section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+            }
             section.fetch(parentEl).then(function() {
                 images.upgrade(parentEl);
             });
         },
         initMostViewedMedia: function() {
-            var mostViewed = new Component();
 
-            mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
-            mostViewed.fetch($('.js-video-components-container')[0], 'html');
+            if (config.page.section === 'childrens-books-site' && config.switches.childrensBooksHidePopular) {
+                $('.content__secondary-column--media').addClass('u-h');
+            } else {
+                var mostViewed = new Component();
+                mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
+                mostViewed.fetch($('.js-video-components-container')[0], 'html');
+            }
         }
     };
 
     var ready = function () {
         if(config.switches.enhancedMediaPlayer) {
-            modules.initPlayer();
+            Raven.context(function(){
+                Raven.setTagsContext({
+                    feature: 'media',
+                    contentType: config.page.contentType
+                });
+                modules.initPlayer();
+            });
         }
 
         if (config.isMedia) {

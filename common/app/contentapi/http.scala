@@ -4,10 +4,9 @@ import com.gu.openplatform.contentapi.connection.{HttpResponse, Http}
 import scala.concurrent.Future
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
-import common.{SimpleCountMetric, FrontendTimingMetric, ExecutionContexts}
+import common.{TimingMetric, SimpleCountMetric, FrontendTimingMetric, ExecutionContexts}
 import java.util.concurrent.TimeoutException
 import play.api.libs.ws.WS
-import com.gu.management.TimingMetric
 import common.ContentApiMetrics.ContentApi404Metric
 import java.net.InetAddress
 import scala.util.Try

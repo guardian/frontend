@@ -1,5 +1,6 @@
 package services
 
+import com.gu.googleauth.UserIdentity
 import conf.Configuration
 import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client
@@ -122,7 +123,7 @@ object S3FrontsApi extends S3 {
 
   def archive(id: String, json: String, identity: UserIdentity) = {
     val now = DateTime.now
-    putPrivate(s"$location/history/collection/$id/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
+    putPrivate(s"$location/history/collection/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/$id/${now}.${identity.email}.json", json, "application/json")
   }
 
   def putMasterConfig(json: String) =

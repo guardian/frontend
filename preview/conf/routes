@@ -8,12 +8,14 @@ GET        /assets/*path                                                        
 
 GET        /_healthcheck                                                                       conf.HealthCheck.healthcheck()
 
+GET        /responsive-viewer/*path                                                            controllers.ResponsiveViewerController.preview(path)
+
 #Login
 # authentication endpoints
-GET           /login                     controllers.OAuthLoginController.login
-POST          /login                     controllers.OAuthLoginController.loginAction
-GET           /oauth2callback            controllers.OAuthLoginController.oauth2Callback
-GET           /logout                    controllers.OAuthLoginController.logout
+GET           /login                                                                           controllers.OAuthLoginController.login
+POST          /login                                                                           controllers.OAuthLoginController.loginAction
+GET           /oauth2callback                                                                  controllers.OAuthLoginController.oauth2Callback
+GET           /logout                                                                          controllers.OAuthLoginController.logout
 
 # Travel offers
 GET        /commercial/travel/offers                                                           controllers.commercial.TravelOffers.travelOffersLowHtml
@@ -77,7 +79,8 @@ GET        /preference/front-alphas/:optAction                                  
 GET        /cards/opengraph/*path.json                                                         controllers.CardController.opengraph(path)
 GET        /tagged.json                                                                        controllers.TaggedContentController.renderJson(tag: String)
 
-GET        /video/section/*sectionId.json                                                      controllers.VideoInSectionController.renderSectionVideos(sectionId)
+GET        /video/section/:sectionId/*seriesId.json                                            controllers.VideoInSectionController.renderSectionVideosWithSeries(sectionId, seriesId)
+GET        /video/section/:sectionId.json                                                      controllers.VideoInSectionController.renderSectionVideos(sectionId)
 GET        /video/most-viewed.json                                                             controllers.MostViewedVideoController.renderMostViewed()
 GET        /audio/most-viewed.json                                                             controllers.MostViewedAudioController.renderMostViewed()
 

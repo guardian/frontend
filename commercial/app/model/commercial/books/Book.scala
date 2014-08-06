@@ -39,6 +39,7 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
     FoodDrinkBestsellersFeed
   )
 
+  def getSpecificBook(isbn: String) = currentAds find(_.isbn == isbn)
   def getSpecificBooks(specifics: Seq[String]) = currentAds.filter(specifics contains _.isbn)
 
   override def adsTargetedAt(segment: Segment): Seq[Book] = super.adsTargetedAt(segment).sortBy(_.position).take(10)
@@ -46,10 +47,6 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
   override def defaultAds: Seq[Book] = currentAds filter (_.category.exists(_ == "General"))
 
   def refresh() {
-
-    def takeFromEachList(allBooks: Seq[Seq[Book]], n: Int): Seq[Seq[Book]] = {
-      for (books <- allBooks) yield books take n
-    }
 
     val bookListsLoading: Future[Seq[Seq[Book]]] = Future.sequence {
       feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
@@ -61,7 +58,7 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
     }
 
     for (books <- bookListsLoading) {
-      updateCurrentAds(takeFromEachList(books, 5).flatten)
+      updateCurrentAds(books.flatten.distinct)
     }
   }
 }

@@ -9,7 +9,6 @@ import java.net.{ HttpURLConnection, URL }
 import java.io.File
 import com.gu.openplatform.contentapi.connection.Http
 import recorder.ContentApiHttpRecorder
-import com.gu.management.play.InternalManagementPlugin
 import play.api.GlobalSettings
 import scala.concurrent.Future
 import org.apache.commons.codec.digest.DigestUtils
@@ -19,7 +18,6 @@ trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
   def testPlugins: Seq[String] = Nil
   def disabledPlugins: Seq[String] = Seq(
-    classOf[InternalManagementPlugin].getName,
     "conf.SwitchBoardPlugin"
   )
 

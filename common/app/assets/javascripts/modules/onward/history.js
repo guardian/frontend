@@ -61,7 +61,7 @@ define([
         },
 
         getSummary: function() {
-            summary = summary || storage.local.get(storageKeySummary) || [];
+            summary = summary || storage.local.get(storageKeySummary) || {};
             return summary;
         },
 

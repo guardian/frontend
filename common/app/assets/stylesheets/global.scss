@@ -38,8 +38,6 @@
 @import 'module/charts/_doughnuts';
 
 @import 'module/nav/_nav-popup';
-@import 'module/nav/_navigation-aside';
-@import 'module/nav/_switcher';
 @import 'module/_search';
 
 @import 'module/content/_media-player';
@@ -59,6 +57,7 @@
 
 @import 'module/onward/_right-hand-most-popular';
 @import 'module/onward/_popular';
+@import 'module/onward/_breaking-news';
 @import 'module/_clamp';
 
 
@@ -103,6 +102,7 @@
 
 @import 'module/containers/_features';
 @import 'module/containers/_featuresauto';
+@import 'module/containers/_featuresvolumes';
 @import 'module/containers/_special';
 @import 'module/containers/_commentanddebate';
 @import 'module/containers/_people';

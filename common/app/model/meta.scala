@@ -1,6 +1,6 @@
 package model
 
-import common.{Edition, ManifestData, Pagination}
+import common.{NavItem, Edition, ManifestData, Pagination}
 import conf.Configuration
 import dfp.DfpAgent
 
@@ -64,6 +64,8 @@ trait MetaData extends Tags {
   )
 
   def cacheSeconds = 60
+
+  def customSignPosting: Option[NavItem] = None
 }
 
 class Page(

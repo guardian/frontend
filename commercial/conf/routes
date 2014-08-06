@@ -53,5 +53,5 @@ GET        /commercial/books/book.json                               controllers
 GET        /commercial/books/book                                    controllers.commercial.BookOffers.bestsellersSuperHighHtml
 
 # Content API offers
-GET        /commercial/capi/*contentId.json                          controllers.commercial.ContentApiOffers.itemJson(contentId)
-GET        /commercial/capi/*contentId                               controllers.commercial.ContentApiOffers.itemHtml(contentId)
+GET        /commercial/capi.json                                     controllers.commercial.ContentApiOffers.itemJson
+GET        /commercial/capi                                          controllers.commercial.ContentApiOffers.itemHtml

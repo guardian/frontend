@@ -14,7 +14,7 @@
                     <figure itemprop="associatedMedia video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
                     class="media-primary media-content">
 
-                        @fragments.media.video(article.mainVideo, posters.headOption, article.headline)
+                        @fragments.media.video(article.mainVideo, article.headline)
 
                         @posters.headOption.map { image =>
                             @SeoOptimisedContentImage.captionFor(image).map { caption =>
@@ -27,8 +27,8 @@
         } else {
             @if(article.hasMainAudio) {
                 <figure itemprop="associatedMedia audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio"
-                class="media-primary media-content">
-                @fragments.media.audio(article.mainAudio, article.headline)
+                    class="media-primary media-content">
+                    @fragments.media.audio(article.mainAudio, article.headline)
                 </figure>
             } else {
                 @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature)

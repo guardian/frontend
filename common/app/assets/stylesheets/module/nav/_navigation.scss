@@ -5,7 +5,7 @@
 /* Configuration
    ========================================================================== */
 
-$c-navigation-base: #2479c3;
+$c-navigation-base: guss-colour(neutral-5);
 
 $navigation-height: $gs-row-height;
 
@@ -13,23 +13,24 @@ $navigation-toggler-width: 48px;
 $navigation-toggler-width-full: 130px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
+$c-navigation-background-side-bar: #1a587d; // manual tint of $c-top-navigation-background
 
-$c-signposting-action: #ffffff;
+$c-signposting-action: $c-newsDefault;
 $c-signposting-background: $c-navigation-base;
 
 $c-top-navigation-action: #ffffff;
-$c-top-navigation-background: guss-colour(guardian-brand);
+$c-top-navigation-background: #00456e; // one-off colour for nav bg
 
-$c-local-navigation-action: #ffffff;
+$c-local-navigation-action: guss-colour(neutral-1);
 $c-local-navigation-background: $c-navigation-base;
 
 $c-global-navigation-background: $c-navigation-base;
 $c-global-navigation-title: #ffffff;
-$c-global-navigation-title-background: guss-colour(guardian-brand);
+$c-global-navigation-title-background: $c-top-navigation-background;
 $global-navigation-title-width: $a-leftCol-width + $gs-gutter;
 $global-navigation-title-width-wide: $a-leftColWide-width + $gs-gutter;
-$c-global-navigation-action: #ffffff;
-$c-global-navigation-border: rgba(#ffffff, .3);
+$c-global-navigation-action: guss-colour(neutral-1);
+$c-global-navigation-border: mix($c-local-navigation-background, #ffffff, 60%);
 
 $c-navigation-toggle-background: guss-colour(neutral-1);
 $c-navigation-toggle-icon: #ffffff;
@@ -71,65 +72,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
    ========================================================================== */
 
 .navigation__expandable {
-    .switcher,
-    .switcher__option,
-    .switcher__option a:link,
-    .switcher__option a:visited {
-        color: mix($c-navigation-expandable-background, #ffffff, 5%);
-    }
-    .switcher__option--active:link,
-    .switcher__option--active:visited {
-        color: #ffffff;
-    }
-    .switcher__option--active:before {
-        background: #ffffff;
-    }
-    .navigation-aside {
-        @include rem((
-            margin-top: 2px
-        ));
-    }
-    .switcher {
-        padding-bottom: 0;
-        @include rem((
-            min-height: $navigation-height - $gs-baseline/2 - 2
-        ));
-    }
-    .nav--guardian-services {
-        @include rem((
-            padding-top: $gs-baseline/2
-        ));
-
-        .nav__link {
-            border-top: 0;
-            @include rem((
-                padding-bottom: $gs-baseline/2
-            ));
-            font-weight: 400;
-
-            @include mq(tablet) {
-                padding-bottom: 0;
-                @include rem((
-                    padding-top: 1px
-                ));
-            }
-        }
-        .nav__item .nav__link:link,
-        .nav__item .nav__link:visited {
-            color: mix($c-navigation-expandable-background, #ffffff, 5%);
-        }
-
-        @include mq(tablet) {
-            @include box-sizing(border-box);
-            padding-top: 0;
-            float: right;
-            text-align: right;
-            @include rem((
-                min-height: $gs-row-height,
-                padding-top: 7px,
-                width: gs-span(3)
-            ));
-        }
+    .global-navigation__title--guardian-services {
+        background-color: $c-newsDefault;
+        border-top: 1px solid mix($c-newsDefault, #ffffff, 80%);
     }
 }
 
@@ -155,23 +100,25 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         top: 0;
         left: 0;
         right: 0;
-        background: mix(guss-colour(guardian-brand), #ffffff, 80%);
         @include rem((
             height: $navigation-height
         ));
     }
+
     &:before {
+        background: $c-navigation-background-side-bar;
         border-bottom: 1px solid $c-global-navigation-border;
         -moz-background-clip: padding-box;
         -webkit-background-clip: padding-box;
         background-clip: padding-box;
     }
+
     &:after {
         top: auto;
         bottom: 0;
-        background: mix($c-navigation-expandable-background, #ffffff, 80%);
         z-index: -1;
     }
+
     &.navigation--collapsed:after {
         display: none;
     }
@@ -243,11 +190,13 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             padding-left: $navigation-h-space-between-items/2
         ));
     }
+
     .navigation--expanded.navigation--has-local-navigation & {
         @include mq($to: navigationBreakOnTwoLevels) {
             border-bottom: 1px solid $c-global-navigation-border;
         }
     }
+
     @include mq(tablet) {
         border-right-width: 0;
 
@@ -331,7 +280,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 }
 .top-navigation__action {
     color: $c-top-navigation-action;
-    display: table-cell;
+    display: block;
 }
 .global-navigation__action {
     color: $c-global-navigation-action;
@@ -467,8 +416,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     clear: both;
     margin-right: 0;
     overflow: hidden;
-    border-top: 1px solid $c-global-navigation-border;
     position: relative;
+    // draws border without adding height
+    @include box-shadow(inset 0 1px $c-global-navigation-border);
+    background: $c-local-navigation-background;
     @include rem((
         min-height: $navigation-height
     ));
@@ -494,6 +445,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     color: $c-global-navigation-title;
     background: $c-global-navigation-title-background;
     float: left;
+    @include rem((
+        border-top: 1px solid mix($c-global-navigation-title-background, #ffffff, 80%)
+    ));
 
     @include mq($to: tablet) {
         @include rem((
@@ -534,7 +488,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         padding-top: $gs-baseline/4
     ));
     overflow: hidden;
-    background: $c-local-navigation-background;
 
     @include mq($to: tablet) {
         @include rem((
@@ -757,8 +710,13 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
                 height: $navigation-height
             ));
         }
+        .local-navigation {
+            // Fill the maximum available width (otherwise the element
+            // only fills half the width, shared with the signposting)
+            width: 100%;
+        }
         .local-navigation__action {
-            display: table-cell;
+            display: block;
             @include rem((
                 line-height: $navigation-height
             ));
@@ -766,7 +724,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
         // Re-order top nav on top of local nav
         .navigation__container {
-            display: block !important;
+            display: table !important;
+            width: 100%;
         }
         .navigation__container--first {
             background: $c-local-navigation-background;
@@ -939,23 +898,24 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     ));
 
     @if not $old-ie {
+        @include transform-origin(60%);
+
         .navigation--expanded & {
+            @include transform-origin(50%);
+
             &:nth-child(1) {
-                position: relative;
-                top: rem(4px);
-                @include transform(rotate(-45deg));
+                @include transform(translateY(rem(4px)) rotate(45deg));
             }
             &:nth-child(2) {
-                display: none;
+                opacity: 0;
             }
             &:nth-child(3) {
-                position: relative;
-                top: -rem(4px);
-                @include transform(rotate(45deg));
+                @include transform(translateY(rem(-4px)) rotate(-45deg));
             }
         }
         @include mq(tablet) {
-            @include transition(all .1s ease-in);
+            -webkit-transition: opacity .1s, -webkit-transform .1s ease-in;
+            transition: opacity .1s, transform .1s ease-in;
         }
     }
 }

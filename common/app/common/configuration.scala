@@ -3,7 +3,6 @@ package common
 import com.amazonaws.auth._
 import com.amazonaws.internal.StaticCredentialsProvider
 import com.gu.conf.ConfigurationFactory
-import com.gu.management.{ Manifest => ManifestFile }
 import conf.{Switches, Configuration}
 import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
@@ -22,6 +21,14 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   private implicit class OptionalString2MandatoryString(conf: com.gu.conf.Configuration) {
     def getMandatoryStringProperty(property: String) = configuration.getStringProperty(property)
       .getOrElse(throw new BadConfigurationException(property))
+  }
+
+  object indexes {
+    lazy val tagIndexesBucket =
+      configuration.getMandatoryStringProperty("tag_indexes.bucket")
+
+    lazy val adminRebuildIndexRateInMinutes =
+      configuration.getIntegerProperty("tag_indexes.rebuild_rate_in_minutes").getOrElse(60)
   }
 
   object environment {
