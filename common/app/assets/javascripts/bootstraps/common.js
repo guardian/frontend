@@ -262,7 +262,7 @@ define([
                            '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                                       'data-link-name="opt-out">Return to our current site </a>' +
+                                       'data-link-name="opt-out">Opt-out and return to our current site </a>' +
                            '</li>' +
                       '</ul>';
 

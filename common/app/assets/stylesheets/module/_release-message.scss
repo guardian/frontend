@@ -40,7 +40,7 @@
 .site-message__media {
     display: none;
     @include rem((
-        width: 36px,
+        width: 36px, // Icon size
         height: $gs-baseline*3,
         padding-left: $gs-gutter/2
     ));
