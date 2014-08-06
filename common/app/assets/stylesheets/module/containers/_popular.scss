@@ -1,5 +1,4 @@
 .container.container--popular {
-
     #most-popular-head {
         display: none;
     }
@@ -25,10 +24,4 @@
             ));
         }
     }
-}
-
-.container--popular {
-    @include rem((
-        margin-top: $gs-baseline*2
-    ));
 }

@@ -21,7 +21,7 @@
 .l-side-margins {
     position: relative;
 
-    @include mq(tablet) {
+    @include mq(desktop) {
         &:after,
         &:before {
             content: '';
@@ -38,9 +38,6 @@
         &:after {
             right: 0;
         }
-        @include side-margins-position(gs-span(9));
-    }
-    @include mq(desktop) {
         @include side-margins-position(gs-span(12));
     }
     @include mq(wide) {
@@ -60,9 +57,6 @@
     }
 }
 .l-side-margins--layout-content {
-    @include mq(tablet, desktop) {
-        @include side-margins-position(gs-span(8));
-    }
     @include mq(rightCol, leftCol) {
         &:before,
         &:after {
