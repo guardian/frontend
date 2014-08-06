@@ -76,7 +76,8 @@ to apply any necessary changes to non-shared code there too.
     </div>
     @fragments.nav.navigation(page)
 
-    @if(BreakingNewsSwitch.isSwitchedOn) {
-        <div class="breaking-news"></div>
-    }
 </header>
+
+@if(BreakingNewsSwitch.isSwitchedOn) {
+    <div class="js-breaking-news-placeholder breaking-news"></div>
+}
