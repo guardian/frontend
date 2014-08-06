@@ -1,8 +1,12 @@
 @import '../../icons/video-icons-sprite';
 @import '../../icons/video-icons-svg';
 
+// parameterising these as they're used in a few places
 $vjs-control-colour: rgba(25, 25, 25, .8);
 $vjs-control-height: $gs-baseline*4;
+$vjs-progress-hitbox-height: $gs-baseline;
+$vjs-progress-visual-height-resting: $gs-baseline/2;
+$vjs-progress-inset-bottom: 4px;
 
 .player {
     @include rem((
@@ -21,7 +25,8 @@ $vjs-control-height: $gs-baseline*4;
 }
 .gu-media-wrapper--audio {
     @include rem((
-        height: $vjs-control-height
+        height: $vjs-control-height,
+        padding-top: $vjs-progress-visual-height-resting
     ));
 }
 .video-standfirst {
@@ -157,6 +162,10 @@ $vjs-control-height: $gs-baseline*4;
     padding-bottom: $vjs-control-height;
     position: absolute;
     z-index: 2;
+    
+    .vjs-using-native-controls & {
+        display: none;
+    }
 }
 
 .vjs-loading-spinner {
@@ -184,10 +193,9 @@ $vjs-control-height: $gs-baseline*4;
 
 .vjs-control-bar {
     cursor: default;
-    display: none;
     width: 100%;
     position: absolute;
-    z-index: 3;
+    z-index: 4;
     left: 0;
     background-color: $vjs-control-colour;
     color: #ffffff;
@@ -197,7 +205,7 @@ $vjs-control-height: $gs-baseline*4;
         height: $vjs-control-height
     ));
     @include transition(bottom .8s);
-    transition-delay: .2s;
+    transition-delay: 1s;
 
     .gu-media--video & {
         @include rem((
@@ -214,10 +222,6 @@ $vjs-control-height: $gs-baseline*4;
         bottom: 0;
         @include transition(bottom 0s);
         transition-delay: 0s;
-    }
-
-    .vjs-has-started & {
-        display: block;
     }
 
     .vjs-using-native-controls & {
@@ -302,11 +306,6 @@ $vjs-control-height: $gs-baseline*4;
 
 /* VJS: PROGRESS BAR
    ========================================================================== */
-
-// parameterising these as they're used in a few places
-$vjs-progress-hitbox-height: $gs-baseline;
-$vjs-progress-visual-height-resting: $gs-baseline/2;
-$vjs-progress-inset-bottom: 4px;
 
 .vjs-progress-control {
     width: 100%;
@@ -552,6 +551,7 @@ $vjs-progress-inset-bottom: 4px;
     left: 0;
     top: 0;
     display: none;
+    z-index: 3;
 
     .vjs-playing & {
         display: block;

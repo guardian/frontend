@@ -16,7 +16,8 @@
 
   defaults = {
     skip: 5, // negative disables
-    vidFormats: ['video/mp4', 'video/webm', 'video/ogv']
+    vidFormats: ['video/mp4', 'video/webm', 'video/ogv'],
+    formatMap: {'video/x-mp4': 'video/mp4'}
   },
 
   vastPlugin = function(options) {
@@ -215,6 +216,7 @@
       // get a list of files with unique formats
       for (i = 0; i < media_files.length; i++) {
         format = media_files[i].mimeType;
+        format = settings.formatMap[format] || format;
 
         if (settings.vidFormats.indexOf(format) >= 0) {
           if(sourcesByFormat[format] === undefined) {

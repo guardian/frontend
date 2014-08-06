@@ -1,26 +1,27 @@
-@(video: Option[VideoElement], poster: Option[ImageContainer], title: String)
+@(video: Option[VideoElement], title: String)
 
 @video.map { video =>
-    <div class="gu-media-wrapper gu-media-wrapper--video">
-        <div class="u-responsive-ratio u-responsive-ratio--hd">
-            <video controls="controls" class="gu-media gu-media--video js-gu-media"
-                @poster.map { img => poster="@Item620.bestFor(img)"} data-title="@title"
-            data-duration="@video.duration.toString()" data-media-id="@video.id">
+    @defining(Item620.bestFor(video).getOrElse(Static("images/media-holding.jpg"))) { poster =>
+        <div class="gu-media-wrapper gu-media-wrapper--video">
+            <div class="u-responsive-ratio u-responsive-ratio--hd">
+                <video controls="controls" class="gu-media gu-media--video js-gu-media" data-title="@title"
+                    poster="@poster" data-duration="@video.duration.toString()" data-media-id="@video.id">
 
-                @video.encodings.map { encoding =>
-                    <source src="@encoding.url" type="@encoding.format" />
-                }
+                    @video.encodings.map { encoding =>
+                        <source src="@encoding.url" type="@encoding.format" />
+                    }
 
-                @video.encodings.find(_.format == "video/mp4").map { encoding =>
-                    <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
-                        <param name="allowFullScreen" value="true" />
-                        <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
-                        <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
-                        <img @poster.map { img => src="@Item620.bestFor(img).map(Html(_))"} alt="" width="620" height="350" />
-                        Sorry, your browser is unable to play this video.
-                    </object>
-                }
-            </video>
+                    @video.encodings.find(_.format == "video/mp4").map { encoding =>
+                        <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
+                            <param name="allowFullScreen" value="true" />
+                            <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
+                            <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
+                            <img src="@poster" alt="" width="620" height="350" />
+                            Sorry, your browser is unable to play this video.
+                        </object>
+                    }
+                </video>
+            </div>
         </div>
-    </div>
+    }
 }

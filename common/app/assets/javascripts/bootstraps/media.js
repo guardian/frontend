@@ -14,7 +14,8 @@ define([
     'bonzo',
     'common/modules/component',
     'common/modules/analytics/beacon',
-    'raven'
+    'raven',
+    'common/modules/ui/message'
 ], function(
     $,
     ajax,
@@ -30,20 +31,25 @@ define([
     bonzo,
     Component,
     beacon,
-    Raven
+    Raven,
+    Message
 ) {
 
-    var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint());
-    var QUARTILES = [25, 50, 75];
-    // Advert and content events used by analytics. The expected order of bean events is:
-    var EVENTS = [
-        'video:preroll:ready',
-        'video:preroll:play',
-        'video:preroll:end',
-        'video:content:ready',
-        'video:content:play',
-        'video:content:end'
-    ];
+    var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint()),
+        QUARTILES = [25, 50, 75],
+        // Advert and content events used by analytics. The expected order of bean events is:
+        EVENTS = [
+            'preroll:ready',
+            'preroll:play',
+            'preroll:end',
+            'content:ready',
+            'content:play',
+            'content:end'
+        ],
+        constructEventName = function(eventName) {
+            return config.page.contentType.toLowerCase() + ':' + eventName;
+        };
+
 
     var modules = {
 
@@ -51,7 +57,7 @@ define([
             if(id) {
                 require('ophan/ng', function (ophan) {
                     ophan.record({
-                        'video': {
+                        media: {
                             id: id,
                             eventType: event.type
                         }
@@ -62,9 +68,9 @@ define([
 
         initOphanTracking: function(player, mediaId) {
             EVENTS.concat(QUARTILES.map(function(q) {
-                return 'video:play:' + q;
+                return 'play:' + q;
             })).forEach(function(event) {
-                player.one(event, function(event) {
+                player.one(constructEventName(event), function(event) {
                     modules.ophanRecord(mediaId, event);
                 });
             });
@@ -75,22 +81,22 @@ define([
         },
 
         bindDiagnosticsEvents: function(player) {
-            player.on('video:preroll:play', function(){
+            player.on(constructEventName('preroll:play'), function(){
                 beacon.fire('/count/vps.gif');
             });
-            player.on('video:preroll:end', function(){
+            player.on(constructEventName('preroll:end'), function(){
                 beacon.fire('/count/vpe.gif');
             });
-            player.on('video:content:play', function(){
+            player.on(constructEventName('content:play'), function(){
                 beacon.fire('/count/vs.gif');
             });
-            player.on('video:content:end', function(){
+            player.on(constructEventName('content:end'), function(){
                 beacon.fire('/count/ve.gif');
             });
 
             // count the number of video starts that happen after a preroll
-            player.on('video:preroll:play', function(){
-                player.on('video:content:play', function(){
+            player.on(constructEventName('preroll:play'), function(){
+                player.on(constructEventName('content:play'), function(){
                     beacon.fire('/count/vsap.gif');
                 });
             });
@@ -99,19 +105,19 @@ define([
         bindPrerollEvents: function(player) {
             var events = {
                 end: function() {
-                    player.trigger('video:preroll:end');
+                    player.trigger(constructEventName('preroll:end'));
                     modules.bindContentEvents(player, true);
                 },
                 play: function() {
                     var duration = player.duration();
                     if (duration) {
-                        player.trigger('video:preroll:play');
+                        player.trigger(constructEventName('preroll:play'));
                     } else {
                         player.one('durationchange', events.play);
                     }
                 },
                 ready: function() {
-                    player.trigger('video:preroll:ready');
+                    player.trigger(constructEventName('preroll:ready'));
 
                     player.one('adstart', events.play);
                     player.one('adend', events.end);
@@ -132,12 +138,12 @@ define([
         bindContentEvents: function(player) {
             var events = {
                 end: function() {
-                    player.trigger('video:content:end');
+                    player.trigger(constructEventName('content:end'));
                 },
                 play: function() {
                     var duration = player.duration();
                     if (duration) {
-                        player.trigger('video:content:play');
+                        player.trigger(constructEventName('content:play'));
                     } else {
                         player.one('durationchange', events.play);
                     }
@@ -146,7 +152,7 @@ define([
                     var progress = Math.round(parseInt(player.currentTime()/player.duration()*100, 10));
                     QUARTILES.reverse().some(function(quart) {
                         if (progress >= quart) {
-                            player.trigger('video:play:' + quart);
+                            player.trigger(constructEventName('play:' + quart));
                             return true;
                         } else {
                             return false;
@@ -154,7 +160,7 @@ define([
                     });
                 },
                 ready: function() {
-                    player.trigger('video:content:ready');
+                    player.trigger(constructEventName('content:ready'));
 
                     player.one('play', events.play);
                     player.on('timeupdate', _throttle(events.timeupdate, 1000));
@@ -192,12 +198,12 @@ define([
                     init: function() {
                         $(this.el()).append($.create(tmp));
                         this.on('timeupdate', events.update.bind(this));
-                        this.one('video:preroll:end', events.destroy.bind(player));
-                        this.one('video:content:play', events.destroy.bind(player));
+                        this.one(constructEventName('preroll:end'), events.destroy.bind(player));
+                        this.one(constructEventName('content:play'), events.destroy.bind(player));
                         this.one('adtimeout', events.destroy.bind(player));
                     }
                 };
-            this.one('video:preroll:play', events.init.bind(player));
+            this.one(constructEventName('preroll:play'), events.init.bind(player));
         },
 
         fullscreener: function() {
@@ -265,17 +271,18 @@ define([
 
                         deferToAnalytics(function () {
 
+                            modules.initOmnitureTracking(player);
+                            modules.initOphanTracking(player, mediaId);
+
                             // preroll for videos only
                             if (mediaType === 'video') {
 
-                                modules.initOmnitureTracking(player);
-                                modules.initOphanTracking(player, mediaId);
                                 modules.bindDiagnosticsEvents(player);
+                                player.fullscreener();
 
                                 // Init plugins
-                                if(config.switches.videoAdverts) {
+                                if (config.switches.videoAdverts && !config.page.shouldHideAdverts) {
                                     player.adCountDown();
-                                    player.fullscreener();
                                     player.ads({
                                         timeout: 3000
                                     });
@@ -288,12 +295,13 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if(/desktop|wide/.test(detect.getBreakpoint())) {
+                                if (/desktop|wide/.test(detect.getBreakpoint())) {
                                     modules.initEndSlate(player);
                                 }
                             } else {
                                 vjs.playlist({
-                                    mediaType: 'audio'
+                                    mediaType: 'audio',
+                                    continuous: false
                                 });
 
                                 modules.bindContentEvents(player);
@@ -330,7 +338,7 @@ define([
             endSlate.endpoint = modules.generateEndSlateUrl();
             endSlate.fetch(player.el(), 'html');
 
-            player.one('video:content:play', function() {
+            player.one(constructEventName('content:play'), function() {
                 player.on('ended', function () {
                     bonzo(player.el()).addClass(endState);
                 });
@@ -342,16 +350,43 @@ define([
         initMoreInSection: function() {
             var section = new Component(),
                 parentEl = $('.js-onward')[0];
-            section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+
+            if ('seriesId' in config.page) {
+                section.endpoint = '/video/section/' + config.page.section + '/' + config.page.seriesId + '.json?shortUrl=' + config.page.shortUrl;
+            } else {
+                section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+            }
             section.fetch(parentEl).then(function() {
                 images.upgrade(parentEl);
             });
         },
         initMostViewedMedia: function() {
-            var mostViewed = new Component();
+            if (config.page.section === 'childrens-books-site' && config.switches.childrensBooksHidePopular) {
+                $('.content__secondary-column--media').addClass('u-h');
+            } else {
+                var mostViewed = new Component();
+                mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
+                mostViewed.fetch($('.js-video-components-container')[0], 'html');
+            }
+        },
+        displayReleaseMessage: function() {
+            var msg = '<p class="site-message__message" id="site-message__message">' +
+                    'We\'ve redesigned our video pages to make it easier to find and experience our best video content. We\'d love to hear what you think.' +
+                    '</p>' +
+                    '<ul class="site-message__actions u-unstyled">' +
+                    '<li class="site-message__actions__item">' +
+                    '<i class="i i-arrow-white-right"></i>' +
+                    '<a href="https://www.surveymonkey.com/s/guardianvideo" target="_blank">Leave feedback</a>' +
+                    '</li>' +
+                    '<li class="site-message__actions__item">' +
+                    '<i class="i i-arrow-white-right"></i>' +
+                    '<a href="http://next.theguardian.com/" target="_blank">Find out more</a>' +
+                    '</li>' +
+                    '</ul>';
 
-            mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
-            mostViewed.fetch($('.js-video-components-container')[0], 'html');
+            var releaseMessage = new Message('video');
+
+            releaseMessage.show(msg);
         }
     };
 
@@ -367,8 +402,14 @@ define([
         }
 
         if (config.isMedia) {
-            modules.initMoreInSection();
+            if (config.page.showRelatedContent) {
+                modules.initMoreInSection();
+            }
             modules.initMostViewedMedia();
+        }
+
+        if (config.page.contentType === 'Video' && detect.getBreakpoint() !== 'mobile') {
+            modules.displayReleaseMessage();
         }
     };
 

@@ -17,6 +17,16 @@
                 margin-right: $gs-gutter
             ));
         }
+        @include mq(tablet) {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @include mq(desktop) {
+            @include rem((
+                padding-left: $gs-gutter,
+                padding-right: $gs-gutter
+            ));
+        }
     }
 }
 @mixin facia-container--layout-front {
@@ -32,8 +42,6 @@
                 @include rem((
                     width: gs-span(9)
                 ));
-                margin-left: auto;
-                margin-right: auto;
             }
             @include mq(desktop) {
                 @include rem((
@@ -132,10 +140,7 @@
 @mixin facia-container--layout-content {
     .facia-container--layout-content {
         .facia-container__inner {
-
-            @include mq(tablet) {
-                margin-left: auto;
-                margin-right: auto;
+            @include mq(desktop) {
                 @include rem((
                     padding-left: $gs-gutter,
                     padding-right: $gs-gutter
@@ -189,6 +194,11 @@
             .container__body {
                 padding-top: 0; // Top spacing at this breakpoint is done by .facia-slice-wrapper
             }
+            .container__border {
+                @include rem((
+                    margin-right: -(gs-span(1) + $gs-gutter*2)
+                ));
+            }
         }
     }
 }
@@ -196,9 +206,6 @@
     .facia-container--layout-discussion {
         .container__title {
             font-weight: normal;
-            a {
-                color: $c-newsDefault;
-            }
         }
     }
 }
@@ -211,8 +218,8 @@
 
         .container__title,
         .container__title.tone-background {
-            color: $c-neutral1;
             background: transparent;
+            color: $c-neutral1;
 
             @include mq($to: tablet) {
                 @include fs-header(3, true);

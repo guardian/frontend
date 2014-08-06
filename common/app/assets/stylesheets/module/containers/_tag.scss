@@ -4,10 +4,8 @@
     }
     .container__title {
         display: block;
-        color: #ffffff;
 
         @include mq(tablet) {
-            color: $c-newsDefault;
             @include rem((
                 margin-bottom: 12px
             ));

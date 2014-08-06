@@ -222,7 +222,7 @@ Additional Documentation
 ------------------------
 Further documentation notes and useful items can be found in `docs`.
 
-
+[Integration testing documentation](integration-tests/scala-fw-tests/readme.md) 
 [sbt]: http://www.scala-sbt.org
 [play2-console]: https://github.com/playframework/Play20/wiki/PlayConsole
 [play2-wiki]: https://github.com/playframework/Play20/wiki

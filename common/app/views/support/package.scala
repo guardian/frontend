@@ -76,6 +76,10 @@ case class FeaturesContainer(showMore: Boolean = true) extends Container {
   val containerType = "features"
   val tone = "feature"
 }
+case class FeaturesVolumesContainer(showMore: Boolean = true) extends Container {
+  val containerType = "featuresvolumes"
+  val tone = "feature"
+}
 case class FeaturesAutoContainer(showMore: Boolean = true) extends Container {
   val containerType = "featuresauto"
   val tone = "feature"

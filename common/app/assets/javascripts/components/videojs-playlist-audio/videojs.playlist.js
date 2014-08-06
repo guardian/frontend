@@ -3,10 +3,10 @@
  videojs.plugin('playlist', function(options) {
   //this.L="vjs_common_one";
   
-  
-  if(typeof this.L!="undefined") var id=this.L;
+  var id=this.id();
+ // if(typeof this.L!="undefined") var id=this.L;
   //else workData.myPlayer.id=this.tag.id;
-  else var id=this.id_;
+  //else var id=this.id_;
   //console.log('begin playlist plugin with video id:'+id);
 
  //console.log(this);
@@ -17,18 +17,19 @@
       player=this,
       currentTrack=tracks[0],
       index=0,
-      play=true;
+      play=true,
+      onTrackSelected=options.onTrackSelected;
 
     //manually selecting track
-    for(var i=0; i<trackCount; i++){ 
-       tracks[i].onclick = function(){ 
+    for(var i=0; i<trackCount; i++){
+       tracks[i].onclick = function(){
           //var track=this;
           //index=this.getAttribute('data-index');
-          //console.log("a is clicked and index position is"+this.getAttribute('data-index')+"the data-src is "+this.getAttribute('data-src')); 
-          //console.log("a is clicked and index position is"+index+"the data-src is "+this.getAttribute('data-src')); 
+          //console.log("a is clicked and index position is"+this.getAttribute('data-index')+"the data-src is "+this.getAttribute('data-src'));
+          //console.log("a is clicked and index position is"+index+"the data-src is "+this.getAttribute('data-src'));
 
           trackSelect(this);
-       } 
+       }
     }
 
     // for continuous play
@@ -36,8 +37,8 @@
         //console.log('options.continuous==true');
 
         player.on("ended", function(){
-            //console.log('on ended');   
-             
+            //console.log('on ended');
+
             index++;
             if(index>=trackCount){
               //console.log('go to beginning');
@@ -45,56 +46,57 @@
             }
             else;// console.log('trigger click next track');
             tracks[index].click();
-          
-        });// on ended     
-    }   
+
+        });// on ended
+    }
     else;// console.log('dont play next!');
 
     //track select function for onended and manual selecting tracks
     var trackSelect=function(track){
-               
+
        //get new src
         var src=track.getAttribute('data-src');
-        index=parseInt(track.getAttribute('data-index'));
-        console.log('track select click src:'+src);
+        index=parseInt(track.getAttribute('data-index')) || index;
+        //console.log('track select click src:'+src);
 
-        if(player.techName=='youtube'){       
+        if(player.techName=='youtube'){
            player.src([
             { type: type="video/youtube", src:  src}
-          ]);         
+          ]);
         }
         else{
-            if(player.tag.tagName=="AUDIO" || (typeof options.mediaType!='undefined' && options.mediaType=="audio") ){
+            if((player.tag && player.tag.tagName=="AUDIO") || (typeof options.mediaType!='undefined' && options.mediaType=="audio") ){
             player.src([
                 { type: "audio/mp4", src:  src+".m4a" },
                 { type: "audio/webm", src: src+".webm" },
                 { type: "audio/ogg", src: src+".ogg" }
                 /*{ type: "audio/mpeg", src:  src+".mp3" },
                 { type: "audio/ogg", src: src+".oga" }*/
-             ]);            
+             ]);
             }
             else{
-            console.log("video");
+            //console.log("video");
               player.src([
-                { type: "video/mp4", src:  src+".m4v" },
-                { type: "video/webm", src: src+".webm" },
-                { type: "video/ogv", src: src+".ogv" }
-              ]);                     
-            }                 
+                { type: "video/mp4", src:  src+".mp4" },
+                { type: "video/webm", src: src+".webm" }
+                //{ type: "video/ogv", src: src+".ogv" }
+              ]);
+            }
         }
 
 
-          
+
         if(play) player.play();
 
-        //remove 'currentTrack' CSS class 
-        for(var i=0; i<trackCount; i++){ 
+        //remove 'currentTrack' CSS class
+        for(var i=0; i<trackCount; i++){
             if(tracks[i].classList.contains('currentTrack')){
                 tracks[i].className=tracks[i].className.replace(/\bcurrentTrack\b/,'nonPlayingTrack');
             }
         }
-        //add 'currentTrack' CSS class 
+        //add 'currentTrack' CSS class
         track.className = track.className + " currentTrack";
+        if(typeof onTrackSelected === 'function') onTrackSelected.apply(track);
     }
 
     //if want to start at track other than 1st track
@@ -122,7 +124,7 @@
         //console.log('j'+j);
         if(j<0 || j>trackCount) j=0;
         trackSelect(tracks[j]);
-      },      
+      },
       next:function(){
         var j=index+1;
         //console.log('j'+j);
