@@ -581,7 +581,9 @@ $cta-icon-gap: 2px;
         display: none;
     }
 
-    // And restyle the title to look less bulky
+    // Restyle the title to look less bulky
+    // TODO: remove when container titles all look the same
+    // at all breakpoints
     .container__title {
         padding-left: 0;
         background: transparent;
