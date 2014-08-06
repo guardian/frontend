@@ -128,7 +128,7 @@ define([
         this.sendDurationEvent = function() {
             var evts = this.baseDurationEvent();
             s.eVar48 = this.getSegmentInfo().omnitureName;
-            if (evts) {
+            if (evts && evts.length > 0) {
                 this.sendEvent(evts.join(','));
             }
             s.eVar48 = undefined;
