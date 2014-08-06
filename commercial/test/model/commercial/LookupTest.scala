@@ -13,6 +13,11 @@ class LookupTest extends FlatSpec with Matchers {
     Await.result(futureContents, 2.seconds)
   }
 
+  private def contentsForKeyword(keywordId: String) = {
+    val futureContents = Lookup.latestContentByKeyword(keywordId, 4)
+    Await.result(futureContents, 2.seconds)
+  }
+
   "contentByShortUrls" should "find content for genuine URLs" in Fake {
     val contents = contentsOf("http://gu.com/p/3qeqm", "http://gu.com/p/4v86p", "http://gu.com/p/4vf6t")
     contents.map(_.webTitle) should be(Seq(
@@ -32,5 +37,15 @@ class LookupTest extends FlatSpec with Matchers {
 
   "contentByShortUrls" should "not find content for empty seq of URLs" in {
     contentsOf() should be(Nil)
+  }
+
+  "latestContentByKeyword" should "find content ordered reverse chronologically for an existing keyword" in Fake {
+    val contents = contentsForKeyword("technology/apple")
+    contents should have size 4
+    contents.sortBy(_.webPublicationDate.getMillis).reverse should be(contents)
+  }
+
+  "latestContentByKeyword" should "not find content for a non-existent keyword" in Fake {
+    contentsForKeyword("jklkl") should be(Nil)
   }
 }
