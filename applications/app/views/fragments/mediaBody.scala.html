@@ -30,8 +30,10 @@
                             <figure itemprop="video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
                             class="media-primary media-content">
                                 <meta itemprop="name" content="@video.headline"/>
+                                <meta itemprop="headline" content="@video.headline"/>
                                 <meta itemprop="url" content="@video.url"/>
                                 @video.trailText.map{ t =>
+                                    <meta itemprop="description" content="@StripHtmlTags(t)" />
                                     <meta itemprop="about" content="@StripHtmlTags(t)" />
                                 }
 
@@ -45,7 +47,7 @@
                                 }
                                 <meta itemprop="requiresSubscription" content="no" />
                                 <meta itemprop="image" content="@video.openGraphImage" />
-                                <meta itemprop="thumbnail" content="@video.thumbnailPath" />
+                                @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
                                 @fragments.media.video(video.mainVideo,  video.headline)
                             </figure>
                         }
