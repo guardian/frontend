@@ -128,7 +128,6 @@
     @include mq(tablet) {
         float: left;
         position: relative;
-
         @include rem((
             width: gs-span(3),
             margin-left: (gs-span(3) + $gs-gutter) * -1
