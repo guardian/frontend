@@ -17,11 +17,9 @@
                 margin-right: $gs-gutter
             ));
         }
-        @include mq(tablet) {
+        @include mq(desktop) {
             margin-left: auto;
             margin-right: auto;
-        }
-        @include mq(desktop) {
             @include rem((
                 padding-left: $gs-gutter,
                 padding-right: $gs-gutter
@@ -32,11 +30,14 @@
 @mixin facia-container--layout-front {
     .facia-container--layout-front {
         .facia-container__inner {
+            @include mq(gs-span(7) + $gs-gutter*3) {
+                margin-left: auto;
+                margin-right: auto;
+            }
             @include mq(gs-span(7) + $gs-gutter*3, tablet) {
                 @include rem((
                     width: gs-span(7)
                 ));
-                margin: 0 auto;
             }
             @include mq(tablet) {
                 @include rem((
@@ -140,16 +141,12 @@
 @mixin facia-container--layout-content {
     .facia-container--layout-content {
         .facia-container__inner {
-            @include mq(desktop) {
-                @include rem((
-                    padding-left: $gs-gutter,
-                    padding-right: $gs-gutter
-                ));
-            }
             @include mq(tablet, rightCol) {
                 @include rem((
                     max-width: gs-span(8)
                 ));
+                margin-left: auto;
+                margin-right: auto;
             }
             @include mq(leftCol) {
                 @include rem((
