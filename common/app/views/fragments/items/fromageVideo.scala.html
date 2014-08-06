@@ -11,9 +11,9 @@
 ))">
     <div class="fromage__video-container">
     @if(boost) {
-        @inlineVideo(video.mainVideo.get, video.mainPicture.flatMap(Item300.bestFor), video.webTitle, 300, 180)
+        @inlineVideo(video.mainVideo.get, video.mainVideo.flatMap(Item300.bestFor), video.webTitle, 300, 180)
     } else {
-        @inlineVideo(video.mainVideo.get, video.mainPicture.flatMap(Item220.bestFor), video.webTitle, 220, 132)
+        @inlineVideo(video.mainVideo.get, video.mainVideo.flatMap(Item220.bestFor), video.webTitle, 220, 132)
     }
     </div>
 </div>

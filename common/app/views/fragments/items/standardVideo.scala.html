@@ -15,7 +15,7 @@
             @trail match {
                 case video: Video if video.mainVideo.isDefined && trail.imageAdjust == "boost" => {
                     <div class="item__media-wrapper item__media-wrapper--has-icon">
-                        @inlineVideo(video.mainVideo.get, video.mainPicture.flatMap(Item300.bestFor), video.webTitle, 300, 180, false)
+                        @inlineVideo(video.mainVideo.get, video.mainVideo.flatMap(Item300.bestFor), video.webTitle, 300, 180, false)
                     </div>
 
                     <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">

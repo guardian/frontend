@@ -13,7 +13,7 @@
     <div class="item__container">
         @trail match {
             case v: Video if v.mainVideo.isDefined => {
-                @inlineVideo(v.mainVideo.get, v.mainPicture.flatMap(Item620.bestFor), v.webTitle, 620, 350)
+                @inlineVideo(v.mainVideo.get, v.mainVideo.flatMap(Item620.bestFor), v.webTitle, 620, 350)
                 <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
                 @fragments.items.elements.title(trail, index, 0)
                 </a>
