@@ -66,6 +66,8 @@ trait VideoContainer extends Element {
     }.sorted
   }
   lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
+  lazy val height: String = videoAssets.headOption.map(_.height).getOrElse(0).toString
+  lazy val width: String = videoAssets.headOption.map(_.width).getOrElse(0).toString
 
   lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
 

@@ -12,6 +12,7 @@ define([
     'modules/list-manager',
     'modules/droppable',
     'modules/authed-ajax',
+    'modules/copied-article',
     'models/group',
     'models/collections/collection',
     'models/collections/article',
@@ -30,6 +31,7 @@ define([
     listManager,
     droppable,
     authedAjax,
+    copiedArticle,
     Group,
     Collection,
     Article,
@@ -292,6 +294,7 @@ define([
 
             listManager.init(newItems);
             droppable.init();
+            copiedArticle.flush();
         };
     };
 });

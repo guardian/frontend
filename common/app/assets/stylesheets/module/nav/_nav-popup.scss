@@ -203,6 +203,19 @@ $bp-header-wrap: 544px;
         ));
     }
 
+    @include mq(faciaLeftCol) {
+        left: 50%;
+        @include rem((
+            margin-left: 0 - (gs-span(7) + $gs-gutter)
+        ));
+    }
+
+    @include mq(wide) {
+        @include rem((
+            margin-left: 0 - (gs-span(8) + $gs-gutter)
+        ));
+    }
+
     // account for google search sizes.
     .search-box {
         @include rem((
