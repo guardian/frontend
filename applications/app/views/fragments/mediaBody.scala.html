@@ -1,5 +1,7 @@
 @(page: MediaPage)(implicit request: RequestHeader)
 @import conf.Switches._
+@import model.{Audio, Video}
+@import views.support.{Item620, StripHtmlTags}
 
 @defining(page.media, page.storyPackage, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, storyPackage, mediaType) =>
 <div class="l-side-margins l-side-margins--layout-content">
@@ -46,7 +48,9 @@
                                 <meta itemprop="requiresSubscription" content="no" />
                                 <meta itemprop="image" content="@video.openGraphImage" />
                                 @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
-                                @fragments.media.video(video.mainVideo,  video.headline)
+                                @video.mainVideo.map { videoElement =>
+                                    @fragments.media.video(videoElement, Item620, video.headline, 620, 350)
+                                }
                             </figure>
                         }
                     }

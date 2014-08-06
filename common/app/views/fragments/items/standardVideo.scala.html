@@ -3,7 +3,7 @@
 @import common.LinkTo
 @import conf.Static
 @import model.Video
-@import views.html.fragments.items.inlineVideo
+@import views.html.fragments.media.video
 @import views.support.{GetClasses, ImgSrc, Item300, Item620, RemoveOuterParaHtml}
 
 @defining((trail.visualTone, containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
@@ -13,9 +13,9 @@
 
         <div class="item__container">
             @trail match {
-                case video: Video if video.mainVideo.isDefined && trail.imageAdjust == "boost" => {
+                case videoItem: Video if videoItem.mainVideo.isDefined && trail.imageAdjust == "boost" => {
                     <div class="item__media-wrapper item__media-wrapper--has-icon">
-                        @inlineVideo(video.mainVideo.get, video.mainVideo.flatMap(Item300.bestFor), video.webTitle, 300, 180, false)
+                        @video(videoItem.mainVideo.get, Item300, videoItem.webTitle, 300, 180, false)
                     </div>
 
                     <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">

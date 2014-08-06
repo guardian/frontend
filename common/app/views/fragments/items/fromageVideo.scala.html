@@ -1,6 +1,6 @@
-@(video: model.Video, boost: Boolean, isFirst: Boolean)
+@(videoElement: model.VideoElement, title: String, boost: Boolean, isFirst: Boolean)
 
-@import views.html.fragments.items.inlineVideo
+@import views.html.fragments.media.video
 @import views.support.{Item300, Item220, RenderClasses}
 
 <div class="@RenderClasses(Map(
@@ -11,9 +11,9 @@
 ))">
     <div class="fromage__video-container">
     @if(boost) {
-        @inlineVideo(video.mainVideo.get, video.mainVideo.flatMap(Item300.bestFor), video.webTitle, 300, 180)
+        @video(videoElement, Item300, title, 300, 180)
     } else {
-        @inlineVideo(video.mainVideo.get, video.mainVideo.flatMap(Item220.bestFor), video.webTitle, 220, 132)
+        @video(videoElement, Item220, title, 220, 132)
     }
     </div>
 </div>
