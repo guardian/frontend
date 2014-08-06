@@ -34,11 +34,12 @@
         .control {
             border-color: $c-neutral5;
             float: right;
+            position: relative;
         }
 
         .i {
             background-color: $c-neutral2;
-            left: -1px;
+            right: 0;
             top: -1px;
             position: absolute;
         }
