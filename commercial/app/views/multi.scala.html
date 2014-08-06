@@ -1,0 +1,8 @@
+@(ads: Seq[model.commercial.Ad])(implicit request: RequestHeader)
+
+<h1>TEST!!!!</h1>
+
+@ads.map { ad =>
+    <h2>@ad</h2>
+}
+
