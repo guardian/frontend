@@ -822,7 +822,12 @@ module.exports = function (grunt) {
      * Compile tasks
      */
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
-    grunt.registerTask('compile:css', ['sass:compile', 'replace:cssSourceMaps', 'copy:css']);
+    grunt.registerTask('compile:css', function() {
+        grunt.task.run('sass:compile');
+        if (isDev) {
+            grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
+        }
+    });
     grunt.registerTask('compile:js', function() {
         grunt.task.run(['requirejs', 'copy:javascript']);
         if (!isDev) {
