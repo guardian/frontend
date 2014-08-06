@@ -41,9 +41,16 @@ define([
             crossOrigin: true
         }).then(
             function(resp) {
-                var keyword = page.keywordIds ? page.keywordIds.split(',')[0] : '',
+                var collections = (resp.collections || [])
+                    .filter(function(collection) { return [].concat(collection.content).length; })
+                    .map(function(collection) {
+                        collection.href = collection.href.toLowerCase();
+                        return collection;
+                    }),
 
-                    matchers = [
+                    keyword = page.keywordIds ? page.keywordIds.split(',')[0] : '',
+
+                    pageMatchers = [
                         page.edition,
                         page.section,
                         slashDelimit(page.edition, page.section),
@@ -53,21 +60,17 @@ define([
                     ]
                     .filter(function(match) { return match; })
                     .reduce(function(matchers, term) {
-                        matchers[term.toLowerCase()] = interestThreshold;
+                        matchers[term.toLowerCase()] = true;
                         return matchers;
-                    }, _assign(history.getSummary().sections, history.getSummary().keywords)),
+                    }, {}),
 
-                    articles = _flatten(
-                        (resp.collections || [])
-                        .filter(function(collection) {
-                            var term = collection.href.toLowerCase();
+                    historyMatchers = _assign({}, _assign(history.getSummary().sections, history.getSummary().keywords)),
 
-                            return (collection.content.length && (term === 'global' || matchers[term] >= interestThreshold));
-                        })
-                        .map(function(collection) {
-                            return collection.content;
-                        })
-                    ),
+                    articles = _flatten([
+                        collections.filter(function(c) { return c.href === 'global'; }).map(function(c) { return c.content; }),
+                        collections.filter(function(c) { return pageMatchers[c.href]; }).map(function(c) { return c.content; }),
+                        collections.filter(function(c) { return historyMatchers[c.href] >= interestThreshold; }).map(function(c) { return c.content; })
+                    ]),
 
                     articleIds = articles.map(function(article) { return article.id; });
 
