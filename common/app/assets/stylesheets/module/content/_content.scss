@@ -89,18 +89,6 @@
     ));
 }
 
-.content__head {
-    @include mq($to: tablet) {
-        border-top-style: solid;
-        border-top-width: 2px;
-
-        .has-localnav & {
-            border-top: 0;
-        }
-    }
-}
-
-
 .content__head__comment-count {
     @include rem((
         height: 16px + $gs-baseline //font-size + $gs-baseline
