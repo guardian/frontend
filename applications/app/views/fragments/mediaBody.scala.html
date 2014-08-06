@@ -29,8 +29,8 @@
                         case video: Video => {
                             <figure itemprop="video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
                             class="media-primary media-content">
-                                <meta itemprop="name" content="@video.headline"/>
-                                <meta itemprop="headline" content="@video.headline"/>
+                                <meta itemprop="name" content="@Html(video.headline)"/>
+                                <meta itemprop="headline" content="@Html(video.headline)"/>
                                 <meta itemprop="url" content="@video.url"/>
                                 @video.trailText.map{ t =>
                                     <meta itemprop="description" content="@StripHtmlTags(t)" />
