@@ -411,7 +411,7 @@
 .content-meta--inline {
     margin: 0;
     @include rem((
-        padding-top: $gs-baseline/2
+        padding-top: ($gs-baseline/3)*2
     ));
 
     .content-meta__label,
@@ -429,7 +429,6 @@
     }
 
     @include mq(tablet) {
-        padding-top: 0;
         @include rem((
             margin: 0 0 $gs-baseline/2
         ));
