@@ -526,6 +526,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             margin-left: $navigation-h-space-between-items/2,
             margin-right: $navigation-h-space-between-items/2
         ));
+        white-space: nowrap;
     }
 }
 
