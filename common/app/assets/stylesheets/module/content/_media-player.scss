@@ -1,8 +1,12 @@
 @import '../../icons/video-icons-sprite';
 @import '../../icons/video-icons-svg';
 
+// parameterising these as they're used in a few places
 $vjs-control-colour: rgba(25, 25, 25, .8);
 $vjs-control-height: $gs-baseline*4;
+$vjs-progress-hitbox-height: $gs-baseline;
+$vjs-progress-visual-height-resting: $gs-baseline/2;
+$vjs-progress-inset-bottom: 4px;
 
 .player {
     @include rem((
@@ -21,7 +25,8 @@ $vjs-control-height: $gs-baseline*4;
 }
 .gu-media-wrapper--audio {
     @include rem((
-        height: $vjs-control-height
+        height: $vjs-control-height,
+        padding-top: $vjs-progress-visual-height-resting
     ));
 }
 .video-standfirst {
@@ -301,11 +306,6 @@ $vjs-control-height: $gs-baseline*4;
 
 /* VJS: PROGRESS BAR
    ========================================================================== */
-
-// parameterising these as they're used in a few places
-$vjs-progress-hitbox-height: $gs-baseline;
-$vjs-progress-visual-height-resting: $gs-baseline/2;
-$vjs-progress-inset-bottom: 4px;
 
 .vjs-progress-control {
     width: 100%;
