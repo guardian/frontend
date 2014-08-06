@@ -391,7 +391,7 @@ define([
             modules.initMostViewedMedia();
         }
 
-        if(config.page.contentType === 'Video') {
+        if(config.page.contentType === 'Video' && detect.getBreakpoint() !== 'mobile') {
             modules.displayReleaseMessage();
         }
     };
