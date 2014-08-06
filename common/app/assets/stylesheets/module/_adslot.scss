@@ -6,6 +6,17 @@
         display: none;
     }
 }
+.ad-slot__label {
+    height: $mpu-ad-label-height;
+    background-color: $c-neutral8;
+    padding: 0 ($gs-baseline/3)*2;
+    border-top: 1px solid $c-neutral5;
+    color: $c-neutral2-contrasted;
+    text-align: right;
+    @include box-sizing(border-box);
+    @include f-data;
+    @include font-size(12, 20);
+}
 
 /**
  * Banner ads
@@ -484,15 +495,4 @@
     .has-page-skin {
         background-image: none !important;
     }
-}
-.ad-slot__label {
-    height: $mpu-ad-label-height;
-    background-color: $c-neutral8;
-    padding: 0 ($gs-baseline/3)*2;
-    border-top: 1px solid $c-neutral5;
-    color: $c-neutral2-contrasted;
-    text-align: right;
-    @include box-sizing(border-box);
-    @include f-data;
-    @include font-size(12, 20);
 }

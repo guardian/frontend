@@ -66,8 +66,12 @@ trait VideoContainer extends Element {
     }.sorted
   }
   lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
+  lazy val height: String = videoAssets.headOption.map(_.height).getOrElse(0).toString
+  lazy val width: String = videoAssets.headOption.map(_.width).getOrElse(0).toString
 
   lazy val largestVideo: Option[VideoAsset] = videoAssets.headOption
+
+  lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
 }
 
 trait AudioContainer extends Element {
@@ -88,5 +92,5 @@ trait EmbedContainer extends Element {
 
 class ImageElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer
 class VideoElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer with VideoContainer
-class AudioElement(val delegate: ApiElement, val index: Int) extends Element with AudioContainer
+class AudioElement(val delegate: ApiElement, val index: Int) extends Element with ImageContainer with AudioContainer
 class EmbedElement(val delegate: ApiElement, val index: Int) extends Element with EmbedContainer

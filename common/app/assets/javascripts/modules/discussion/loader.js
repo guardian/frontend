@@ -1,6 +1,7 @@
 define([
     'common/utils/$',
     'common/utils/ajax',
+    'common/utils/config',
     'bonzo',
     'qwery',
     'bean',
@@ -16,6 +17,7 @@ define([
 ], function(
     $,
     ajax,
+    config,
     bonzo,
     qwery,
     bean,
@@ -135,6 +137,17 @@ Loader.prototype.ready = function() {
     // More for analytics than anything
     if (window.location.hash === '#comments') {
         this.mediator.emit('discussion:seen:comments-anchor');
+    }
+
+    // The check on this should be done through the discussion API
+    // for now though this is a good (enough) check
+    if (config.switches.sentimentalComments) {
+        setTimeout(function() {
+            $('.open a[href="#comments"]').each(function () {
+                $('.d-discussion').addClass('d-discussion--sentimental');
+                $('.discussion__show-threaded').remove();
+            }.bind(this));
+        }.bind(this), 500); // used as we don't know when the open module loads.
     }
 
     register.end('discussion');
@@ -325,6 +338,7 @@ Loader.prototype.renderCommentBox = function() {
             switches: this.options.switches
         });
         this.commentBox.render(this.getElem('commentBox'));
+
         this.commentBox.on('post:success', this.commentPosted.bind(this));
         this.canComment = true;
     }

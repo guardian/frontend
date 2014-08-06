@@ -48,10 +48,6 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
 
   def refresh() {
 
-    def takeFromEachList(allBooks: Seq[Seq[Book]], n: Int): Seq[Seq[Book]] = {
-      for (books <- allBooks) yield books take n
-    }
-
     val bookListsLoading: Future[Seq[Seq[Book]]] = Future.sequence {
       feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
         (soFar, feed) =>
@@ -62,7 +58,7 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
     }
 
     for (books <- bookListsLoading) {
-      updateCurrentAds(takeFromEachList(books, 5).flatten)
+      updateCurrentAds(books.flatten.distinct)
     }
   }
 }

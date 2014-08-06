@@ -135,6 +135,9 @@ $avatarSize: 44px;
     .d-discussion--sentimental & {
         display: block;
     }
+    .d-discussion--shut & {
+        display: none;
+    }
 }
 .d-discussion__sentiment {
     @include box-sizing(border-box);
@@ -389,14 +392,14 @@ $avatarSize: 44px;
 
 .d-comment__sentiment {
     @include border-radius(8px);
-    float: left;
     @include rem((
         height: 8px,
         width: 8px,
-        margin-right: $gs-gutter/3,
+        margin-right: $gs-gutter/4,
         margin-top: $gs-baseline/2
     ));
     background-color: $c-neutral4;
+    float: left;
 }
 .d-comment__sentiment--for {
     background-color: $c-statusPositive;
