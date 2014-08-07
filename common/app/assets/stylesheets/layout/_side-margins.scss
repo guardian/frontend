@@ -1,8 +1,8 @@
 /**
  * Position pseudo elements on left and right of the content
- * 
+ *
  * $container-width {Number} - width of the content
- * 
+ *
  * @output pseudo element with left/right offset
  */
 
@@ -65,5 +65,18 @@
     }
     @include mq(leftCol, wide) {
         @include side-margins-position(gs-span(14));
+    }
+}
+
+.l-side-margins--media {
+    @include mq(desktop) {
+        &:after,
+        &:before {
+            background: rgba(#333, .3);
+
+            .container__banding + .container__banding & {
+                background: rgba(#333, .15);
+            }
+        }
     }
 }
