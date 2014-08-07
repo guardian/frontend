@@ -16,7 +16,13 @@ define([
     deepGet,
     removeById
 ) {
-    var maxChars = vars.CONST.headlineLength;
+    var maxChars = vars.CONST.headlineLength || 90,
+        restrictedHeadlineLength = [
+            'breaking-news'
+        ],
+        restrictedLiveMode = [
+            'breaking-news'
+        ];
 
     function newItemsConstructor(id, sourceItem, targetGroup) {
         var items = [_.extend(_.isObject(sourceItem) ? sourceItem : {}, { id: id })];
@@ -42,11 +48,16 @@ define([
             defer.reject(err);
         })
         .done(function(item) {
-            var err;
+            var front = vars.model.front(),
+                err;
 
-            if ('breaking-news' === vars.model.front() && item.group.parentType === 'Collection') {
-                err = (item.meta.headline() || item.fields.headline()).length > maxChars ? 'Sorry, a breaking-news headline must be ' + maxChars + ' characters or less. Edit it first within the clipboard.' : err;
-                err = vars.model.liveMode() ? 'Sorry, breaking-news items cannot be put onto a Live Front. Switch to the Draft Front then try again.' : err;
+            if(item.group.parentType === 'Collection') {
+                if (restrictedHeadlineLength.indexOf(front) > -1 && (item.meta.headline() || item.fields.headline()).length > maxChars) {
+                    err = 'Sorry, a ' + front + ' headline must be ' + maxChars + ' characters or less. Edit it first within the clipboard.';
+                }
+                if (restrictedLiveMode.indexOf(front) > -1 && vars.model.liveMode()) {
+                    err = 'Sorry, ' + front + ' items cannot be added in Live Front mode. Switch to Draft Front then try again.';
+                }
             }
 
             if (err) {

@@ -463,7 +463,7 @@ a.headline:hover {
 
 .article__time {
     position: absolute;
-    right: 0;
+    right: 3px;
     top: 1px;
     font-size: 9px;
     line-height: 12px;
@@ -499,7 +499,7 @@ a.headline:hover {
 
 .article__overrides .tools {
     float: right;
-    margin: 5px 26px 0 0;
+    margin: 5px 1px 0 0;
 }
 
 .article__image-src {
@@ -643,7 +643,7 @@ button {
 .article__spark {
     position: absolute;
     top: 13px;
-    right: 0;
+    right: 3px;
 }
 
 .group-name {
