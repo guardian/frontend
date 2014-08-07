@@ -15,19 +15,17 @@ define([
     }
 
     var FootballSnaps = {
-    
         /**
          * All the football snaps sitting in a "big" slice (if any) will take the height of their trail trails
          */
         resizeIfPresent: function(el){
             var $el = !!el && bonzo(el),
-                parent = !!el && findParentByClassName($el, "row-of-two"),
-                trail = !!parent && $('.facia-slice__item:not(.facia-snap)', parent);
+                parent = !!el && $el.parent();
 
-            if(trail){
+            if(parent){
                 $el.css({
-                    height: trail.css('height')
-                })
+                    height: parent.css('height')
+                });
 
             }
         }
