@@ -18,6 +18,6 @@
     "commit": "908553ff8e93eee37101bb6025c9e926e6ff0ece"
   },
   "_source": "git://github.com/guardian/guss-webfonts.git",
-  "_target": "~1.0.0",
+  "_target": "~1",
   "_originalSource": "guss-webfonts"
 }
