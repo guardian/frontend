@@ -1,26 +1,33 @@
+$primary-footer-height: 44px;
+
+$c-primary-footer-background: guss-colour(guardian-brand);
+$c-primary-footer-background-side-bar: mix($c-primary-footer-background, white, 90%);
+
 /* Elements modifiers specific to the footer
    ========================================================================== */
 
 .guardian-logo-footer {
     @include rem((
-        margin-left: $gs-gutter
+        margin-top: $gs-baseline / 2,
+        margin-right: $gs-gutter,
+        margin-bottom: $gs-baseline / 2,
     ));
-    float: left;
+    float: right;
+    line-height: 0;
 }
 .top--footer {
     &,
     &:active {
-        color: $c-neutral2;
+        color: #ffffff;
     }
+    width: auto;
     @include mq(tablet) {
-        float: right;
+        float: left;
         @include rem((
-            width: gs-span(2),
-            padding-top: ($gs-baseline/3)*2,
             margin-right: $gs-gutter,
-            padding-bottom: $gs-baseline*3
+            padding-top: $gs-baseline,
+            padding-bottom: $gs-baseline
         ));
-        padding-left: 0;
     }
 }
 
@@ -33,26 +40,27 @@
         margin-top: $gs-baseline*3,
         padding: 0 0 ($gs-baseline/3)*4,
     ));
-    background: $c-neutral8;
+    background: $c-neutral6;
 
     .hide-in-footer {
         display: none !important;
     }
 }
 .l-footer__primary {
-    background: #ffffff;
-}
-.l-footer__banner {
-    border-top: 2px solid $c-brandBlue;
-    @include rem((
-        margin-bottom: ($gs-baseline/3)*2
-    ));
+    position: relative;
+    overflow: hidden;
+    background: $c-primary-footer-background-side-bar;
 }
 @include mq(tablet) {
     .js-on .l-footer__navigation-wrapper {
         display: none;
     }
 }
+
+.l-footer__banner {
+    background: $c-primary-footer-background;
+}
+
 .l-footer__secondary {
     @include box-sizing(border-box);
     @include font($f-data, normal, 13, 19);
