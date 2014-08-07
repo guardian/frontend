@@ -588,13 +588,7 @@ $cta-icon-gap: 2px;
         background: transparent;
         color: $c-neutral1;
     }
-    
 
-    @include mq($to: tablet) {
-        &[data-link-name=top-stories] .container__header {
-            display: none;
-        }
-    }
     @include mq(tablet) {
         @include rem((
             padding-top: $gs-baseline/2
