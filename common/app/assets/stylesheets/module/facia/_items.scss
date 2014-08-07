@@ -199,6 +199,9 @@
         }
     }
 }
+.item__top-border {
+    border-top: $item-top-border-height solid $c-newsAccent;
+}
 .item__link {
     display: block;
     border-top: $item-top-border-height solid $c-newsAccent;
@@ -225,6 +228,9 @@
 }
 .item__link--no-border {
     border-width: 0;
+}
+.item__video-container {
+    margin-top: 4px;
 }
 .item__image-container {
     margin-top: 4px;
@@ -603,7 +609,7 @@ $cta-icon-gap: 2px;
         background: transparent;
         color: $c-neutral1;
     }
-    
+
 
     @include mq($to: tablet) {
         &[data-link-name=top-stories] .container__header {

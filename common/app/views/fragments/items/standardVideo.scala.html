@@ -14,16 +14,20 @@
         <div class="item__container">
             @trail match {
                 case videoItem: Video if videoItem.mainVideo.isDefined && trail.imageAdjust == "boost" => {
-                    <div class="item__media-wrapper item__media-wrapper--has-icon">
-                        @video(videoItem.mainVideo.get, Item300, videoItem.webTitle, 300, 180, false, false)
+                    <div class="item__top-border tone-accent-border">
+                        <div class="item__media-wrapper item__media-wrapper--has-icon">
+                            <div class="item__video-container">
+                                @video(videoItem.mainVideo.get, Item300, videoItem.webTitle, 300, 180, false, false)
+                            </div>
+                        </div>
+
+                        <a href="@LinkTo{@trail.url}" class="item__link item__link--no-border" data-link-name="article">
+                            <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon item__title--inline-video">
+
+                            @RemoveOuterParaHtml(trail.headline)
+                            </h@if(isFirstContainer && index == 0){1}else{2}>
+                        </a>
                     </div>
-
-                    <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
-                        <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon item__title--inline-video">
-
-                        @RemoveOuterParaHtml(trail.headline)
-                        </h@if(isFirstContainer && index == 0){1}else{2}>
-                    </a>
                 }
 
                 case _ => {
@@ -55,7 +59,6 @@
             @trail.trailText.map { text =>
                 <div class="item__standfirst">@Html(text)</div>
             }
-
         </div>
 
     </@element>
