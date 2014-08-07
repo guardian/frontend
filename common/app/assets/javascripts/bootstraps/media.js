@@ -393,13 +393,7 @@ define([
 
     var ready = function () {
         if(config.switches.enhancedMediaPlayer) {
-            Raven.context(function(){
-                Raven.setTagsContext({
-                    feature: 'media',
-                    contentType: config.page.contentType
-                });
-                modules.initPlayer();
-            });
+            modules.initPlayer();
         }
 
         if (config.isMedia) {
