@@ -135,7 +135,7 @@ $vjs-progress-inset-bottom: 4px;
             left: 0;
             margin-top: -.9em;
             margin-left: 2.2em;
-            
+
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
                 @include border-radius(.2em);
             }
@@ -162,7 +162,7 @@ $vjs-progress-inset-bottom: 4px;
     padding-bottom: $vjs-control-height;
     position: absolute;
     z-index: 2;
-    
+
     .vjs-using-native-controls & {
         display: none;
     }
@@ -451,8 +451,12 @@ $vjs-progress-inset-bottom: 4px;
     top: 40%;
     display: none;
 
-    .gu-media--video.vjs-error & {
+    .gu-media--video.vjs-error &,
+    .gu-media__flash-fallback & {
         display: block;
+    }
+    .gu-media__flash-fallback & {
+        background-color: #000000;
     }
     > div {
         color: #ffffff;
@@ -477,6 +481,11 @@ $vjs-progress-inset-bottom: 4px;
                 margin-top: -22px // half icon height for centering
             ));
         }
+    }
+
+    a {
+        color: #ffffff;
+        text-decoration: underline;
     }
 }
 
