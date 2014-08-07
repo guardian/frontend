@@ -25,7 +25,7 @@ define([
             {name: 'comment/comment-and-debate'}
         ],
 
-        breakingNewsHeadlineMaxLength: 90,
+        headlineLength: 90,
 
         detectPressFailureMs: 10000,
 

@@ -16,7 +16,7 @@ define([
     deepGet,
     removeById
 ) {
-    var bnMax = vars.CONST.breakingNewsHeadlineMaxLength;
+    var maxChars = vars.CONST.headlineLength;
 
     function newItemsConstructor(id, sourceItem, targetGroup) {
         var items = [_.extend(_.isObject(sourceItem) ? sourceItem : {}, { id: id })];
@@ -45,7 +45,7 @@ define([
             var err;
 
             if ('breaking-news' === vars.model.front() && item.group.parentType === 'Collection') {
-                err = (item.meta.headline() || item.fields.headline()).length > bnMax ? 'Sorry, a breaking-news headline must be ' + bnMax + ' characters or less. Put it onto the clipboard, then edit it.' : err;
+                err = (item.meta.headline() || item.fields.headline()).length > maxChars ? 'Sorry, a breaking-news headline must be ' + maxChars + ' characters or less. Edit it first within the clipboard.' : err;
                 err = vars.model.liveMode() ? 'Sorry, breaking-news items cannot be put onto a Live Front. Switch to the Draft Front then try again.' : err;
             }
 

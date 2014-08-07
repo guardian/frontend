@@ -502,10 +502,6 @@ a.headline:hover {
     margin: 5px 26px 0 0;
 }
 
-.article__overrides__fields {
-    padding: 0 25px 0 0;
-}
-
 .article__image-src {
     overflow: hidden;
 }
@@ -564,11 +560,23 @@ a.headline:hover {
 }
 
 .revert--headline {
-    top: 2px;
+    top: 20px;
 }
 
 .revert--trailtext {
-    top: 30px;
+    top: 58px;
+}
+
+.headline-length {
+    position: absolute;
+    right: 6px;
+    top: 4px;
+    color: #999999;
+}
+
+.headline-length--alert {
+    font-weight: bold;
+    color: #DD4B39;
 }
 
 input[type="text"],
@@ -602,7 +610,7 @@ textarea.trailtext {
     width: 100%;
     font-size: 14px;
     line-height: 16px;
-    padding: 2px 5px 0 5px;
+    padding: 2px 30px 0 5px;
     margin: 1px 0;
     color: #000000;
 }

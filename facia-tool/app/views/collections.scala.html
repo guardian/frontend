@@ -247,16 +247,21 @@
                 <div class="article__overrides">
                     <div class="article__overrides__fields">
                         <textarea class="headline" data-bind="
+                            valueUpdate:'afterkeydown',
                             hasFocus: true,
                             event: {blur: save},
                             value: headlineInput,
                             attr: {placeholder: fields.headline() || 'Link text'}"></textarea>
+                        <span class="headline-length" data-bind="
+                            css: {'headline-length--alert': headlineLengthAlert},
+                            text: headlineLength"></span>
                         <a class="revert revert--headline" data-bind="
                             click: headlineRevert,
                             attr: {title: 'Revert to: ' + fields.headline()},
                             visible: meta.headline"><i class="icon-fast-backward"></i></a>
 
                         <textarea class="trailtext" data-bind="
+                            valueUpdate:'afterkeydown',
                             event: {blur: save},
                             value: trailTextInput,
                             attr: {placeholder: fields.trailText() || 'Trail text'}"></textarea>
