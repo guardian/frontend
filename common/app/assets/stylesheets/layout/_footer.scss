@@ -1,4 +1,8 @@
 $primary-footer-height: 44px;
+
+$c-primary-footer-background: guss-colour(guardian-brand);
+$c-primary-footer-background-side-bar: mix($c-primary-footer-background, white, 90%);
+
 /* Elements modifiers specific to the footer
    ========================================================================== */
 
@@ -36,7 +40,7 @@ $primary-footer-height: 44px;
         margin-top: $gs-baseline*3,
         padding: 0 0 ($gs-baseline/3)*4,
     ));
-    background: $c-neutral8;
+    background: $c-neutral6;
 
     .hide-in-footer {
         display: none !important;
