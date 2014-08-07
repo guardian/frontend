@@ -15,6 +15,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 }
 .top--footer {
     width: auto;
+
     @include mq(tablet) {
         float: left;
         @include rem((
