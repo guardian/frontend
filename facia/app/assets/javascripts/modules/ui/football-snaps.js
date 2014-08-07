@@ -1,19 +1,8 @@
 define([
-    'bonzo',
-    'common/utils/$'
+    'bonzo'
 ], function(
-    bonzo,
-    $
+    bonzo
 ){
-    function findParentByClassName(elem, cssClass){
-        var $elem = bonzo(elem);
-        if($elem[0]){
-            if($elem.hasClass(cssClass)) return elem;
-            else return findParentByClassName($elem.parent(), cssClass);
-        }
-        return false;
-    }
-
     var FootballSnaps = {
         /**
          * All the football snaps sitting in a "big" slice (if any) will take the height of their trail trails
@@ -29,7 +18,7 @@ define([
 
             }
         }
-    }
+    };
 
-    return FootballSnaps
+    return FootballSnaps;
 });
