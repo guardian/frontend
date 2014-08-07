@@ -7,7 +7,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class DurationMetricTest extends FlatSpec with Matchers with Eventually {
 
-  implicit val localPatience: PatienceConfig = PatienceConfig(scaled(Span(1000, Millis)), scaled(Span(100, Millis)))
+  implicit val localPatience: PatienceConfig = PatienceConfig(scaled(Span(10000, Millis)), scaled(Span(100, Millis)))
 
   "DurationMetric" should "start off empty" in {
     val durationMetric: DurationMetric = DurationMetric("TestMetric", StandardUnit.Count)
