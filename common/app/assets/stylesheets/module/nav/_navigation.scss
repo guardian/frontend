@@ -12,8 +12,8 @@ $navigation-height: $gs-row-height;
 $navigation-toggler-width: 48px;
 $navigation-toggler-width-full: 130px;
 
-$c-navigation-background: guss-colour(guardian-brand-dark);
-$c-navigation-background-side-bar: mix($c-navigation-background, white, 85%);
+$c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
+$c-navigation-background-side-bar: mix(guss-colour(guardian-brand-dark), #ffffff, 85%);
 
 $c-signposting-action: $c-newsDefault;
 $c-signposting-background: $c-navigation-base;
