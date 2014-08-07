@@ -5,7 +5,8 @@ define([
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/to-array',
-    'common/modules/ui/relativedates'
+    'common/modules/ui/relativedates',
+    'modules/ui/football-snaps'
 ], function(
     $,
     bonzo,
@@ -13,7 +14,8 @@ define([
     mediator,
     template,
     toArray,
-    relativeDates
+    relativeDates,
+    FootballSnaps
 ) {
 
     function init() {
@@ -25,9 +27,14 @@ define([
 
         if (snaps.length) {
             mediator.on('window:resize', function() {
-                snaps.forEach(function(el) { setSnapPoint(el, true); });
+                snaps.forEach(function(el) { addCss(el, true); });
             });
         }
+    }
+
+    function addCss(el, isResize){
+        setSnapPoint(el, isResize);
+        FootballSnaps.resizeIfPresent(el);
     }
 
     function setSnapPoint(el, isResize) {
@@ -79,7 +86,7 @@ define([
 
     function fetchSnap(el) {
         bonzo(el).addClass('facia-snap-embed');
-        setSnapPoint(el);
+        addCss(el);
 
         switch (el.getAttribute('data-snap-type')) {
             case 'document':
