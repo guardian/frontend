@@ -578,7 +578,7 @@ $commercial-cta-diameter: (
     }
 }
 
-@include mq($to: mobileLandscape){
+@include mq($to: mobileLandscape) {
     .highitem__img {
         width: 100px;
         float: none;
@@ -588,7 +588,7 @@ $commercial-cta-diameter: (
     }
 }
 
-@include mq($from: leftCol, $to: wide){
+@include mq(leftCol, wide) {
     .highitem__img {
         width: 100%;
         float: none;
