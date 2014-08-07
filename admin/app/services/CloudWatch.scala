@@ -1,13 +1,15 @@
 package services
 
-import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
 import com.amazonaws.handlers.AsyncHandler
-import conf.{AdminHealthCheckPage, Configuration}
+import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
 import com.amazonaws.services.cloudwatch.model._
-import scala.collection.JavaConversions._
 import common.Logging
-import org.joda.time.DateTime
+import conf.Configuration
 import conf.Configuration.environment
+import controllers.HealthCheck
+import org.joda.time.DateTime
+
+import scala.collection.JavaConversions._
 import scala.concurrent.Future
 
 trait CloudWatch extends implicits.Futures {
@@ -76,7 +78,7 @@ trait CloudWatch extends implicits.Futures {
       exception match {
         // temporary till JVM bug fix comes out
         // see https://blogs.oracle.com/joew/entry/jdk_7u45_aws_issue_123
-        case e: Exception if e.getMessage.contains("JAXP00010001") => AdminHealthCheckPage.setUnhealthy()
+        case e: Exception if e.getMessage.contains("JAXP00010001") => HealthCheck.setUnhealthy()
         case _ =>
       }
     }

@@ -2,37 +2,23 @@
     position: relative;
     overflow: hidden;
     @include rem((
-        margin-top: $gs-baseline
+        margin-bottom: $gs-baseline
     ));
 
     @include mq(tablet) {
         @include rem((
-            margin-top: $gs-baseline*2
-        ));
-    }
-}
-.container--first {
-    margin-top: 0;
-    padding-top: 0;
-
-    @include mq($to: tablet) {
-        .container__border,
-        .container__header {
-            display: none;
-        }
-    }
-    @include mq(tablet) {
-        @include rem((
-            padding-top: $gs-row-height*.5
+            margin-bottom: $gs-baseline*2
         ));
     }
 }
 .container__border {
-    border-top-style: solid;
-    border-top-width: 4px;
+    border-top: 1px solid $c-neutral4;
 
     @include mq(tablet) {
-        border-top-width: 2px;
+        @include rem((
+            margin-left: -$gs-gutter,
+            margin-right: -$gs-gutter
+        ));
     }
 }
 .container__header {
@@ -42,33 +28,11 @@
     position: relative;
     @include fs-header(5);
     @include rem((
-        padding: $gs-baseline/3 gs-span(1)+$gs-gutter/5 $gs-baseline/3 $gs-gutter/5,
+        padding: $gs-baseline/3 (gs-span(1) + $gs-gutter/5) $gs-baseline/3 $gs-gutter/5,
         min-height: gs-height(1) - $gs-baseline*(2/3)
     ));
     background-color: $c-newsDefault;
     color: #ffffff;
-
-    @include mq(tablet) {
-        @include fs-header(3, true);
-        min-height: 0;
-        padding-left: 0;
-        padding-right: 0;
-        background-color: transparent !important;
-        @include rem((
-            margin-bottom: $gs-baseline
-        ));
-        line-height: 1;
-
-        &.tone-news {
-            color: $c-newsDefault;
-        }
-        &.tone-comment {
-            color: $c-commentDefault;
-        }
-        &.tone-feature {
-            color: $c-featureDefault;
-        }
-    }
 
     .today__sub {
         @include mq(faciaLeftCol) {
@@ -80,6 +44,36 @@
     }
     a {
         color: inherit;
+    }
+
+    @include mq(tablet) {
+        @include fs-header(3, true);
+        min-height: 0;
+        padding-left: 0;
+        padding-right: 0;
+        background-color: transparent !important;
+        @include rem((
+            padding-top: $gs-baseline/2,
+            margin-bottom: $gs-baseline
+        ));
+        line-height: 1;
+        color: $c-neutral1;
+
+        a {
+            color: inherit;
+        }
+    }
+    @include mq(desktop) {
+        @include rem((
+            padding-top: $gs-baseline*.75
+        ));
+    }
+}
+.container__body {
+    @include mq(leftCol) {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
     }
 }
 .container__updated {
@@ -136,7 +130,9 @@
         position: absolute;
         top: 13px;
         left: 50%;
-        margin-left: -12px;
+        @include rem((
+            margin-left: -12px
+        ));
 
         .container--rolled-up & {
             @include transform(rotate(0));
@@ -146,7 +142,7 @@
         display: none;
         position: relative;
         @include rem((
-            top: -6px
+            top: -2px
         ));
     }
     @include mq(tablet) {
@@ -574,4 +570,39 @@ $cta-icon-gap: 2px;
 
 .container--rolled-up .container--rolled-up-hide {
     display: none;
+}
+
+.container--first {
+    margin-top: 0;
+    padding-top: 0;
+
+    .container__border {
+        display: none;
+    }
+
+    // Restyle the title to look less bulky
+    // TODO: remove when container titles all look the same
+    // at all breakpoints
+    .container__title {
+        padding-left: 0;
+        background: transparent;
+        color: $c-neutral1;
+    }
+    
+
+    @include mq($to: tablet) {
+        &[data-link-name=top-stories] .container__header {
+            display: none;
+        }
+    }
+    @include mq(tablet) {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+    }
+    @include mq(faciaLeftCol, wide) {
+        .facia-slice-wrapper:first-child {
+            padding-top: 0;
+        }
+    }
 }

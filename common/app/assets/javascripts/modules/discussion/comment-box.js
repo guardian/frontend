@@ -174,14 +174,10 @@ CommentBox.prototype.ready = function() {
         this.getElem('body').focus();
     }
 
-    // The check on this should be done through the discussion API
-    // for now though this is a good (enough) check
     if (config.switches.sentimentalComments) {
         setTimeout(function() {
-            var sentimentActiveClass = 'd-comment-box__sentiment--active';
             $('.open a[href="#comments"]').each(function (openLink) {
-                $('.d-discussion').addClass('d-discussion--sentimental');
-                $('.discussion__show-threaded').remove();
+                var sentimentActiveClass = 'd-comment-box__sentiment--active';
                 this.setState('sentimental');
                 this.options.maxLength = 350;
 
@@ -201,7 +197,7 @@ CommentBox.prototype.ready = function() {
                     this.getElem('body').focus();
                 }.bind(this));
             }.bind(this));
-        }.bind(this), 500); // used as we don't know when the open module loads.
+        }.bind(this), 500);
     }
 };
 

@@ -16,7 +16,10 @@ trait MetaData extends Tags {
   def rssPath: Option[String] = None
 
   // i.e. show the link back to the desktop site
-  def hasClassicVersion: Boolean = true
+  def hasClassicVersion: Boolean = !special
+
+  // Special means "Next Gen platform only".
+  def special = id.contains("-sp-")
 
   def title: Option[String] = None
   // this is here so it can be included in analytics.
@@ -186,9 +189,7 @@ trait Tags {
 
   def isSponsored = DfpAgent.isSponsored(tags)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
-  def hasInlineMerchandise = {
-    DfpAgent.hasInlineMerchandise(tags)
-  }
+  def hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags)
   def sponsor = DfpAgent.getSponsor(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly

@@ -1,6 +1,5 @@
 package conf
 
-import com.gu.management.{ DefaultSwitch, Switchable }
 import common._
 import implicits.Collections
 import org.joda.time.{Days, DateTime, LocalDate}
@@ -267,11 +266,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
-    "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 31)
-  )
-
   val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
     "If this switch is switched on then the India region will be enabled",
     safeState = Off,
@@ -279,10 +273,6 @@ object Switches extends Collections {
     // the planets align for the rest of the project
     sellByDate = new LocalDate(2014, 10, 30)
   )
-
-  val GuardianServicesLinksSwitch = Switch("Feature Switches", "guardian-services-links",
-    "If this switch is switched on then Jobs and Soulmates links will be displayed on page headers",
-    safeState = Off,sellByDate = new LocalDate(2014, 8, 12))
 
   val EnhanceTweetsSwitch = Switch("Feature Switches", "enhance-tweets",
     "If this switch is turned on then embedded tweets will be enhanced using Twitter's widgets.",
@@ -304,14 +294,14 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
   )
 
-  val NewNavigationHighlightingSwitch = Switch("Feature Switches", "nav-highlight",
-    "When this switch is on, navigation highlighting will become more relevant as they will be based on tags.",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
-  )
-
   val EnhancedMediaPlayerSwitch = Switch("Feature Switches", "enhanced-media-player",
     "If this is switched on then videos are enhanced using our JavaScript player",
     safeState = On, sellByDate = never
+  )
+
+  val BreakingNewsSwitch = Switch("Feature Switches", "breaking-news",
+    "If this is switched on then the breaking news feed is requested and articles are displayed",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 30)
   )
 
   // A/B Tests
@@ -324,6 +314,11 @@ object Switches extends Collections {
   val ABRightMostPopularText = Switch("A/B Tests", "ab-right-most-popular-text",
     "If this switch is turned on, run the RightMostPopularText A/B test",
    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
+  )
+
+  val ABNewsContainerNoImages = Switch("A/B Tests", "ab-news-container-no-images",
+    "If this switch is turned on, run the NewsContainerNoImages A/B test",
+   safeState = Off, sellByDate = new LocalDate(2014, 8, 15)
   )
 
   // Dummy Switches
@@ -413,7 +408,7 @@ object Switches extends Collections {
 
   val FaciaToolContainerTagsSwitch = Switch("Facia Tool", "facia-tool-tags",
     "If this switch is on the container configuration will allow articles to show their tags or sections",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 5)
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
   )
 
   val ImageServerSwitch = Switch("Image Server", "image-server",
@@ -441,6 +436,11 @@ object Switches extends Collections {
   val CenturyRedirectionSwitch = Switch("Feature Switches", "redirect-century-pages",
     "If switched on, we redirect /century and /century/yyyy-yyyy to valid (non-R1) endpoints",
     safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
+  )
+
+  val ChildrensBooksSwitch = Switch("Feature Switches", "childrens-books-hide-popular",
+    "If switched on, video pages in the childrens books section will not show popular videos",
+    safeState = On, sellByDate = new LocalDate(2014, 8, 12)
   )
 
   val all: List[Switch] = List(
@@ -489,7 +489,6 @@ object Switches extends Collections {
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
-    NetworkFrontOptIn,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
@@ -499,13 +498,11 @@ object Switches extends Collections {
     WorldCupWallchartEmbedSwitch,
     WorldCupArticleContainerSwitch,
     SentimentalCommentsSwitch,
-    GuardianServicesLinksSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
-    NewNavigationHighlightingSwitch,
     SmartBannerSwitch,
     SeoOptimisedContentImageSwitch,
     FaciaToolCachedContentApiSwitch,
@@ -516,13 +513,14 @@ object Switches extends Collections {
     ABHighCommercialComponent,
     SeoBlockGooglebotFromJSPathsSwitch,
     EnhancedMediaPlayerSwitch,
+    BreakingNewsSwitch,
     ABRightMostPopularText,
-    CenturyRedirectionSwitch
+    ABNewsContainerNoImages,
+    CenturyRedirectionSwitch,
+    ChildrensBooksSwitch
   )
 
   val httpSwitches: List[Switch] = List(
-    NewNavigationHighlightingSwitch,
-    GuardianServicesLinksSwitch
   )
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }

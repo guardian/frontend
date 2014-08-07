@@ -89,35 +89,6 @@
     ));
 }
 
-.content__head__border-top {
-    border-top: 1px dotted $c-neutral5;
-    @include rem((
-        height: $gs-baseline/2
-    ));
-
-    @include mq($to: tablet) {
-        display: none;
-    }
-    @include mq($from:tablet, $to: rightCol) {
-        @include rem((
-            max-width: gs-span(8)
-        ));
-        margin: auto;
-    }
-}
-
-.content__head {
-    @include mq($to: tablet) {
-        border-top-style: solid;
-        border-top-width: 2px;
-
-        .has-localnav & {
-            border-top: 0;
-        }
-    }
-}
-
-
 .content__head__comment-count {
     @include rem((
         height: 16px + $gs-baseline //font-size + $gs-baseline
@@ -146,6 +117,7 @@
     @include rem((
         padding-bottom: $gs-baseline
     ));
+
     @include mq($to: tablet) {
         border-bottom: 1px solid $c-neutral7;
 
@@ -440,7 +412,7 @@
 .content-meta--inline {
     margin: 0;
     @include rem((
-        padding-top: $gs-baseline/2
+        padding-top: ($gs-baseline/3)*2
     ));
 
     .content-meta__label,
@@ -451,14 +423,7 @@
         ));
     }
 
-    @include mq($to: tablet) {
-        .has-localnav & {
-            padding-top: 0;
-        }
-    }
-
     @include mq(tablet) {
-        padding-top: 0;
         @include rem((
             margin: 0 0 $gs-baseline/2
         ));
@@ -528,7 +493,7 @@
     font-weight: 200;
     @include box-sizing(border-box);
     @include rem((
-        height: 2*get-line-height($fs-bodyCopy, 3),
+        height: 2*get-line-height($fs-bodyCopy, 2),
         padding-top: 1px,
         margin-right: 4px
     ));
@@ -549,7 +514,7 @@
         font-weight: 200;
         @include rem((
             margin-right: 5px,
-            height: 3*get-line-height($fs-bodyCopy, 3)
+            height: 3*get-line-height($fs-bodyCopy, 2)
         ));
 
         .drop-cap__inner {

@@ -19,16 +19,15 @@
    ========================================================================== */
 
 .l-side-margins {
-    overflow: hidden;
     position: relative;
 
-    @include mq(tablet) {
+    @include mq(desktop) {
         &:after,
         &:before {
             content: '';
             position: absolute;
             z-index: 1;
-            background: rgba($c-neutral4, .2);
+            background: rgba($c-neutral1, .05);
             top: 0;
             height: 100%;
             width: 0;
@@ -39,9 +38,6 @@
         &:after {
             right: 0;
         }
-        @include side-margins-position(gs-span(9));
-    }
-    @include mq(desktop) {
         @include side-margins-position(gs-span(12));
     }
     @include mq(wide) {
@@ -61,9 +57,6 @@
     }
 }
 .l-side-margins--layout-content {
-    @include mq(tablet, desktop) {
-        @include side-margins-position(gs-span(8));
-    }
     @include mq(rightCol, leftCol) {
         &:before,
         &:after {

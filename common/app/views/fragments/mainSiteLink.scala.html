@@ -2,10 +2,8 @@
 @import common._
 @import common.ClassicLink
 
-@if(item.hasClassicVersion) {
-    <a class="js-main-site-link" rel="nofollow"
-        href="@ClassicLink(item)"
-        data-link-name="classic version @Edition(request).id">
-        @label
-    </a>
-}
+<a class="js-main-site-link" rel="nofollow"
+    href="@ClassicLink(item)"
+    data-link-name="classic version @Edition(request).id">
+    @label
+</a>
