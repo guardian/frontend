@@ -4,6 +4,7 @@ define([
     'common/modules/onward/history',
     'common/utils/storage',
     'lodash/objects/assign',
+    'lodash/objects/isArray',
     'lodash/arrays/flatten',
     'lodash/arrays/intersection',
     'bean',
@@ -13,9 +14,10 @@ define([
     ajax,
     history,
     storage,
-    _assign,
-    _flatten,
-    _intersection,
+    assign,
+    isArray,
+    flatten,
+    intersection,
     bean,
     bonzo
 ) {
@@ -42,7 +44,7 @@ define([
         }).then(
             function(resp) {
                 var collections = (resp.collections || [])
-                    .filter(function(collection) { return [].concat(collection.content).length; })
+                    .filter(function(collection) { return isArray(collection.content) && collection.content.length; })
                     .map(function(collection) {
                         collection.href = collection.href.toLowerCase();
                         return collection;
@@ -64,9 +66,9 @@ define([
                         return matchers;
                     }, {}),
 
-                    historyMatchers = _assign({}, _assign(history.getSummary().sections, history.getSummary().keywords)),
+                    historyMatchers = assign({}, assign(history.getSummary().sections, history.getSummary().keywords)),
 
-                    articles = _flatten([
+                    articles = flatten([
                         collections.filter(function(c) { return c.href === 'global'; }).map(function(c) { return c.content; }),
                         collections.filter(function(c) { return pageMatchers[c.href]; }).map(function(c) { return c.content; }),
                         collections.filter(function(c) { return historyMatchers[c.href] >= interestThreshold; }).map(function(c) { return c.content; })
@@ -76,7 +78,7 @@ define([
 
                 if (articleIds.indexOf(page.pageId) > -1) {
                     hiddenIds.push(page.pageId);
-                    storage.local.set(storageKeyHidden, _intersection(hiddenIds, articleIds));
+                    storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
                     // when displaying a breaking news item, don't show any other breaking news:
                     return;
                 }
@@ -97,7 +99,7 @@ define([
                     bean.on($closer[0], 'click', function() {
                         bonzo($el).hide();
                         hiddenIds.push(article.id);
-                        storage.local.set(storageKeyHidden, _intersection(hiddenIds, articleIds));
+                        storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
                     });
                 });
             },
