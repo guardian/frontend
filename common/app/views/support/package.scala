@@ -112,6 +112,10 @@ case class HeadlineContainer(showMore: Boolean = true) extends Container {
   val containerType = "headline"
   val tone = "news"
 }
+case class PicksContainer(showMore: Boolean = true) extends Container {
+  val containerType = "picks"
+  val tone = "news"
+}
 
 
 /**
