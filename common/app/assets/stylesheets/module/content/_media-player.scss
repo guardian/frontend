@@ -1,8 +1,12 @@
 @import '../../icons/video-icons-sprite';
 @import '../../icons/video-icons-svg';
 
+// parameterising these as they're used in a few places
 $vjs-control-colour: rgba(25, 25, 25, .8);
 $vjs-control-height: $gs-baseline*4;
+$vjs-progress-hitbox-height: $gs-baseline;
+$vjs-progress-visual-height-resting: $gs-baseline/2;
+$vjs-progress-inset-bottom: 4px;
 
 .player {
     @include rem((
@@ -21,7 +25,8 @@ $vjs-control-height: $gs-baseline*4;
 }
 .gu-media-wrapper--audio {
     @include rem((
-        height: $vjs-control-height
+        height: $vjs-control-height,
+        padding-top: $vjs-progress-visual-height-resting
     ));
 }
 .video-standfirst {
@@ -130,7 +135,7 @@ $vjs-control-height: $gs-baseline*4;
             left: 0;
             margin-top: -.9em;
             margin-left: 2.2em;
-            
+
             @include mq(tablet) { // 0 border radius on mobile because stock android has a render bug with it here
                 @include border-radius(.2em);
             }
@@ -157,7 +162,7 @@ $vjs-control-height: $gs-baseline*4;
     padding-bottom: $vjs-control-height;
     position: absolute;
     z-index: 2;
-    
+
     .vjs-using-native-controls & {
         display: none;
     }
@@ -301,11 +306,6 @@ $vjs-control-height: $gs-baseline*4;
 
 /* VJS: PROGRESS BAR
    ========================================================================== */
-
-// parameterising these as they're used in a few places
-$vjs-progress-hitbox-height: $gs-baseline;
-$vjs-progress-visual-height-resting: $gs-baseline/2;
-$vjs-progress-inset-bottom: 4px;
 
 .vjs-progress-control {
     width: 100%;
@@ -451,8 +451,12 @@ $vjs-progress-inset-bottom: 4px;
     top: 40%;
     display: none;
 
-    .gu-media--video.vjs-error & {
+    .gu-media--video.vjs-error &,
+    .gu-media__flash-fallback & {
         display: block;
+    }
+    .gu-media__flash-fallback & {
+        background-color: #000000;
     }
     > div {
         color: #ffffff;
@@ -477,6 +481,11 @@ $vjs-progress-inset-bottom: 4px;
                 margin-top: -22px // half icon height for centering
             ));
         }
+    }
+
+    a {
+        color: #ffffff;
+        text-decoration: underline;
     }
 }
 
@@ -591,4 +600,98 @@ $vjs-progress-inset-bottom: 4px;
         top: $gs-baseline/3,
         right: $gs-gutter/2
     ));
+}
+
+/* End slate
+   ========================================================================== */
+
+.end-slate-container {
+    display: none;
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    @include box-sizing(border-box);
+    background-color: rgba(25, 25, 25, .8);
+    @include rem((
+        top: $gs-baseline*4,
+        padding-left: $gs-gutter/4,
+        padding-right: $gs-gutter/4,
+        padding-top: $gs-gutter/4,
+        max-width: gs-span(7)
+    ));
+
+    .vjs-has-ended & {
+        display: block;
+    }
+    .vjs-fullscreen & {
+        height: 100%;
+        margin: auto;
+        bottom: 0;
+        @include rem((
+            top: -1 * (gs-height(1) + $gs-baseline),
+            height: gs-height(6) + $gs-baseline*1,
+            max-width: gs-span(12) + $gs-gutter*2,
+            padding-bottom: $gs-baseline
+        ));
+    }
+    @include mq($to: tablet) {
+        .vjs-has-ended & {
+            display: none;
+        }
+    }
+    @include mq(leftCol, wide) {
+        @include rem((
+            top: $gs-baseline*3.5
+        ));
+    }
+    @include mq(desktop) {
+        @include rem((
+            max-width: gs-span(8)
+        ));
+    }
+}
+.end-slate-container__header {
+    @include rem((
+        height: gs-height(1),
+        padding-left: $gs-gutter/2,
+        margin-bottom: $gs-baseline
+    ));
+}
+.end-slate-container__heading {
+    @include rem((
+        padding-top: $gs-baseline/3
+    ));
+    @include fs-header(1);
+    font-weight: bold;
+    text-align: left;
+}
+.end-slate {
+    @include rem((
+        margin-bottom: $gs-baseline*2
+    ));
+
+    &.items--media {
+        .item {
+            width: 25%;
+            margin-bottom: 0;
+
+            &:nth-child(-n+3) {
+                border-right: 1px solid $c-neutral2;
+            }
+        }
+        .item__headline {
+            .vjs-fullscreen & {
+                @include mq(desktop) {
+                    @include fs-headline(2);
+                    @include text-clamp(4, get-line-height($fs-headlines, 2));
+                    @include rem((
+                        height: get-line-height($fs-headlines, 2) * 4
+                    ));
+                }
+            }
+        }
+    }
 }

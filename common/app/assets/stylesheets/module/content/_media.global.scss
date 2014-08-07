@@ -238,7 +238,9 @@
 .onward {
     .container--multimedia {
         .container__title {
-            @include fs-header(3, true);
+            @include rem((
+                font-size: get-font-size($fs-headers, 3)
+            ));
         }
     }
 }
@@ -410,87 +412,6 @@
     .item:nth-child(4) {
         @include mq(tablet, rightCol) {
             display: none;
-        }
-    }
-}
-
-
-/* End slate
-   ========================================================================== */
-.end-slate-container {
-    display: none;
-    position: absolute;
-    width: 100%;
-    left: 0;
-    @include box-sizing(border-box);
-    background-color: rgba(25, 25, 25, .8);
-    @include rem((
-        top: $gs-baseline*4,
-        padding-left: $gs-gutter*2,
-        padding-right: $gs-gutter*2
-    ));
-
-    .vjs-has-ended & {
-        display: block;
-    }
-    .vjs-fullscreen & {
-        z-index: 1;
-        height: 100%;
-        margin: auto;
-        right: 0;
-        bottom: 0;
-        @include rem((
-            top: -1 * (gs-height(1) + $gs-baseline),
-            height: gs-height(5),
-            max-width: gs-span(11),
-            padding-bottom: $gs-baseline
-        ));
-    }
-    @include mq($to: tablet) {
-        .vjs-has-ended & {
-            display: none;
-        }
-    }
-    @include mq(leftCol, wide) {
-        @include rem((
-            top: $gs-baseline*3.5
-        ));
-    }
-}
-.end-slate-container__header {
-    @include rem((
-        height: gs-height(1),
-        padding-left: $gs-gutter/2,
-        margin-bottom: $gs-baseline
-    ));
-}
-.end-slate-container__heading {
-    @include rem((
-        padding-top: $gs-baseline/3
-    ));
-    @include fs-header(1);
-    font-weight: bold;
-    text-align: left;
-}
-.end-slate {
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
-
-    .item {
-        width: 25%;
-        margin-bottom: 0;
-
-        &:nth-child(-n+3) {
-            border-right: 1px solid $c-neutral2;
-        }
-    }
-    @include mq(tablet, wide) {
-        .item__headline {
-            @include text-clamp(4, get-line-height($fs-headlines, 1));
-            @include rem((
-                height: get-line-height($fs-headlines, 1) * 4
-            ));
         }
     }
 }

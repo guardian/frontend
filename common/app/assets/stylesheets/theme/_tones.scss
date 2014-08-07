@@ -65,16 +65,9 @@
 @mixin article-header-tone($tone, $colour, $accentColour, $textColour, $commentIcon) {
     .tone-#{$tone} .content__head--tonal {
         .content__section {
-            @include rem((
-                padding-top: $gs-baseline/3
-            ));
-
-            @include mq(tablet, leftCol) {
-                border-top: 1px dotted $c-neutral5 !important;
-            }
             @include mq(leftCol) {
                 @include rem((
-                    padding-top: $gs-baseline/2
+                    padding-top: $content-top-padding
                 ));
             }
         }
@@ -112,6 +105,9 @@
         }
         .u-underline {
             border-bottom-color: lighten($accentColour, 25);
+
+            &:focus,
+            &:active,
             &:hover {
                 border-bottom-color: #ffffff;
             }

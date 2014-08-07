@@ -11,6 +11,7 @@
 
 .container--multimedia {
     @include item--hide-tone-border;
+    margin-bottom: 0;
 
     .container__title,
     .container__toggle__text,

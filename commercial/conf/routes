@@ -55,5 +55,5 @@ GET        /commercial/books/book                                    controllers
 GET        /commercial/multi.json                                    controllers.commercial.Multi.renderMulti
 
 # Content API offers
-GET        /commercial/capi.json                                     controllers.commercial.ContentApiOffers.itemJson
-GET        /commercial/capi                                          controllers.commercial.ContentApiOffers.itemHtml
+GET        /commercial/capi.json                                     controllers.commercial.ContentApiOffers.itemsJson
+GET        /commercial/capi                                          controllers.commercial.ContentApiOffers.itemsHtml

@@ -46,8 +46,9 @@ define([
             'content:play',
             'content:end'
         ],
+        contentType = config.page.contentType.toLowerCase(),
         constructEventName = function(eventName) {
-            return config.page.contentType.toLowerCase() + ':' + eventName;
+            return contentType + ':' + eventName;
         };
 
 
@@ -56,12 +57,12 @@ define([
         ophanRecord: function(id, event) {
             if(id) {
                 require('ophan/ng', function (ophan) {
-                    ophan.record({
-                        media: {
-                            id: id,
-                            eventType: event.type
-                        }
-                    });
+                    var eventObject = {};
+                    eventObject[contentType] = {
+                        id: id,
+                        eventType: event.type
+                    };
+                    ophan.record(eventObject);
                 });
             }
         },
@@ -278,11 +279,11 @@ define([
                             if (mediaType === 'video') {
 
                                 modules.bindDiagnosticsEvents(player);
+                                player.fullscreener();
 
                                 // Init plugins
-                                if(config.switches.videoAdverts) {
+                                if (config.switches.videoAdverts && !config.page.shouldHideAdverts) {
                                     player.adCountDown();
-                                    player.fullscreener();
                                     player.ads({
                                         timeout: 3000
                                     });
@@ -295,7 +296,7 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if(/desktop|wide/.test(detect.getBreakpoint())) {
+                                if (/desktop|wide/.test(detect.getBreakpoint())) {
                                     modules.initEndSlate(player);
                                 }
                             } else {
@@ -380,7 +381,7 @@ define([
                     '</li>' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="http://next.theguardian.com/" target="_blank">Find out more</a>' +
+                    '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
                     '</li>' +
                     '</ul>';
 
@@ -402,11 +403,13 @@ define([
         }
 
         if (config.isMedia) {
-            modules.initMoreInSection();
+            if (config.page.showRelatedContent) {
+                modules.initMoreInSection();
+            }
             modules.initMostViewedMedia();
         }
 
-        if(config.page.contentType === 'Video' && detect.getBreakpoint() !== 'mobile') {
+        if (config.page.contentType === 'Video' && detect.getBreakpoint() !== 'mobile') {
             modules.displayReleaseMessage();
         }
     };
