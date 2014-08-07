@@ -34,7 +34,9 @@ define([
 
     function addCss(el, isResize){
         setSnapPoint(el, isResize);
-        FootballSnaps.resizeIfPresent(el);
+        if($(el).hasClass('facia-snap--football')) {
+            FootballSnaps.resizeIfPresent(el);
+        }
     }
 
     function setSnapPoint(el, isResize) {
