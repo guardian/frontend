@@ -40,7 +40,8 @@ define([
             { width: 180, name: 'mini' },
             { width: 220, name: 'small' },
             { width: 300, name: 'medium' },
-            { width: 700, name: 'large' }
+            { width: 700, name: 'large' },
+            { width: 940, name: 'huge' }
         ]
         .map(function(breakpoint, i, arr) {
             var isAdd = width >= breakpoint.width && (arr[i+1] ? width < arr[i+1].width : true);
