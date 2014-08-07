@@ -28,51 +28,50 @@ object FrontPressCron extends Logging with implicits.Collections {
 
   val batchSize: Int = Configuration.faciatool.pressJobBatchSize
 
-  def newClient: AmazonSQSAsyncClient = {
-    new AmazonSQSAsyncClient(Configuration.aws.credentials).withRegion(Region.getRegion(Regions.EU_WEST_1))
+  def newClient: Option[AmazonSQSAsyncClient] = Configuration.aws.credentials.map{ credentials =>
+    new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1))
   }
 
   def run(): Unit = {
     for (queueUrl <- queueUrl) {
       if (FrontPressJobSwitch.isSwitchedOn) {
-        val client = newClient
-        try {
-          val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(batchSize))
-          Future.traverse(receiveMessageResult.getMessages.map(getConfigFromMessage).distinct) { path =>
-            val start = DateTime.now
-            val f = FrontPress.pressLiveByPathId(path)
-            f onComplete {
-              case Success(_) =>
-                if (Edition.all.map(_.id.toLowerCase).exists(_ == path))
-                  ToolPressQueueWorker.metricsByPath.get(path).foreach { metric =>
-                    metric.recordTimeSpent(DateTime.now.getMillis - start.getMillis)
-                }
-                deleteMessage(receiveMessageResult, queueUrl)
-                FrontPressCronSuccess.increment()
-              case Failure(error) =>
-                deleteMessage(receiveMessageResult, queueUrl)
-                log.warn("Error updating collection via cron", error)
-                FrontPressCronFailure.increment()
+        newClient.map{client =>
+          try {
+            val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(batchSize))
+            Future.traverse(receiveMessageResult.getMessages.map(getConfigFromMessage).distinct) { path =>
+              val start = DateTime.now
+              val f = FrontPress.pressLiveByPathId(path)
+              f onComplete {
+                case Success(_) =>
+                  if (Edition.all.map(_.id.toLowerCase).exists(_ == path)) {
+                    ToolPressQueueWorker.metricsByPath.get(path).foreach { metric =>
+                      metric.recordTimeSpent(DateTime.now.getMillis - start.getMillis)
+                    }
+                  }
+                  deleteMessage(receiveMessageResult, queueUrl)
+                  FrontPressCronSuccess.increment()
+                case Failure(error) =>
+                  deleteMessage(receiveMessageResult, queueUrl)
+                  log.warn("Error updating collection via cron", error)
+                  FrontPressCronFailure.increment()
+              }
+              f
             }
-            f
+          } catch {
+            case error: Throwable =>
+              log.error("Error updating collection via cron", error)
+              FrontPressCronFailure.increment()
           }
-        } catch {
-          case error: Throwable =>
-            log.error("Error updating collection via cron", error)
-            FrontPressCronFailure.increment()
         }
       }
     }
   }
 
-  def deleteMessage(receiveMessageResult: ReceiveMessageResult, queueUrl: String): DeleteMessageBatchResult = {
-    val client = newClient
-    client.deleteMessageBatch(
-      new DeleteMessageBatchRequest(
-        queueUrl,
-        receiveMessageResult.getMessages.map { msg => new DeleteMessageBatchRequestEntry(msg.getMessageId, msg.getReceiptHandle)}
-      )
-    )
+  private def deleteMessage(receiveMessageResult: ReceiveMessageResult, queueUrl: String) {
+    newClient.foreach(_.deleteMessageBatch( new DeleteMessageBatchRequest(
+      queueUrl,
+      receiveMessageResult.getMessages.map { msg => new DeleteMessageBatchRequestEntry(msg.getMessageId, msg.getReceiptHandle)}
+    )))
   }
 
   def getConfigFromMessage(message: Message): String =
