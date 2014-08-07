@@ -1,18 +1,17 @@
 package controllers.commercial
 
 import common.ExecutionContexts
-import model.commercial.books.{BestsellersAgent, Book}
-import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
-import play.twirl.api.Html
-
 import scala.concurrent.Future
-import model.commercial.soulmates.{SoulmatesAggregatingAgent, Member}
+
+import model.commercial.books.BestsellersAgent
+import model.{Cached, NoCache}
 import model.commercial.Ad
 import model.commercial.travel.TravelOffersAgent
 import model.commercial.jobs.JobsAgent
 import model.commercial.masterclasses.MasterClassAgent
+import model.commercial.soulmates.SoulmatesAggregatingAgent
 
 object Multi extends Controller with ExecutionContexts with implicits.Collections {
 
@@ -25,15 +24,14 @@ object Multi extends Controller with ExecutionContexts with implicits.Collection
           case "books"         => BestsellersAgent.adsTargetedAt(segment).headOption
           case "travel"        => TravelOffersAgent.adsTargetedAt(segment).headOption
           case "masterclasses" => MasterClassAgent.adsTargetedAt(segment).headOption
+          case "soulmates"     => SoulmatesAggregatingAgent.sampleMembers(segment).headOption
         }
       }
-
-      println(ads)
 
       ads.flatten match {
         case Nil => NoCache(jsonFormat.nilResult)
         case ads => Cached(componentMaxAge) {
-          htmlFormat.result(views.html.multi(ads))
+          jsonFormat.result(views.html.multi(ads))
         }
       }
     }
