@@ -105,7 +105,7 @@
     position: absolute;
     @include rem((
         min-height: gs-height(1),
-        min-width: gs-span(1),
+        min-width: gs-span(1)
     ));
     top: 0;
     right: 0;
@@ -156,7 +156,9 @@
         }
     }
     @include mq(wide) {
-        left: gs-span(15) + $gs-gutter;
+        @include rem((
+            left: gs-span(15) + $gs-gutter
+        ));
     }
 }
 .facia-slice {
@@ -417,6 +419,7 @@
     @include rem((
         margin-top: $gs-baseline*2
     ));
+
     .item--support-show & {
         display: block;
     }
@@ -579,13 +582,7 @@ $cta-icon-gap: 2px;
         background: transparent;
         color: $c-neutral1;
     }
-    
 
-    @include mq($to: tablet) {
-        &[data-link-name=top-stories] .container__header {
-            display: none;
-        }
-    }
     @include mq(tablet) {
         @include rem((
             padding-top: $gs-baseline/2
