@@ -21,7 +21,7 @@ trait CloudWatch extends Logging {
     client
   }
 
-  trait asyncHandler extends AsyncHandler[PutMetricDataRequest, Void] with Logging
+  trait LoggingAsyncHandler extends AsyncHandler[PutMetricDataRequest, Void] with Logging
   {
     def onError(exception: Exception)
     {
@@ -33,9 +33,9 @@ trait CloudWatch extends Logging {
     }
   }
 
-  object asyncHandler extends asyncHandler
+  object LoggingAsyncHandler extends LoggingAsyncHandler
 
-  case class asyncHandlerForMetric(metric: FrontendMetric, points: List[DataPoint]) extends asyncHandler {
+  case class AsyncHandlerForMetric(metric: FrontendMetric, points: List[DataPoint]) extends LoggingAsyncHandler {
     override def onError(exception: Exception) = {
       metric.putDataPoints(points)
       super.onError(exception)
@@ -54,7 +54,7 @@ trait CloudWatch extends Logging {
         .withDimensions(dimensions)
     })
 
-    cloudwatch.putMetricDataAsync(request, asyncHandler)
+    cloudwatch.putMetricDataAsync(request, LoggingAsyncHandler)
   }
 
   def put(namespace: String, metrics: Map[String, Double]): Unit =
@@ -85,7 +85,7 @@ trait CloudWatch extends Logging {
             dataPoint.time.fold(metricDatum) { t => metricDatum.withTimestamp(t.toDate)}
           }
         }
-      CloudWatch.cloudwatch.putMetricDataAsync(request, asyncHandlerForMetric(metric, dataPointGroup))
+      CloudWatch.cloudwatch.putMetricDataAsync(request, AsyncHandlerForMetric(metric, dataPointGroup))
     }
   }
 
