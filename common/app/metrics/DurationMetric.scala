@@ -26,7 +26,7 @@ case class DurationMetric(name: String, metricUnit: StandardUnit) extends Fronte
 
   def getAndResetDataPoints: List[DataPoint] = {
     val points = dataPoints.get()
-    dataPoints.alter(_.dropWhile(points.contains(_)))
+    dataPoints.alter(_.diff(points))
     points
   }
 
