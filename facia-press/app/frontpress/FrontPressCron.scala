@@ -8,6 +8,7 @@ import common.{Edition, Logging}
 import common.SQSQueues._
 import conf.Configuration
 import conf.Switches.FrontPressJobSwitch
+import metrics.DurationDataPoint
 import play.api.libs.concurrent.Akka
 import play.api.libs.json.Json
 
@@ -45,7 +46,7 @@ object FrontPressCron extends Logging with implicits.Collections {
               case Success(_) =>
                 if (Edition.all.map(_.id.toLowerCase).exists(_ == path))
                   ToolPressQueueWorker.metricsByPath.get(path).foreach { metric =>
-                    metric.recordTimeSpent(DateTime.now.getMillis - start.getMillis)
+                    metric.recordDuration(DateTime.now.getMillis - start.getMillis)
                 }
                 deleteMessage(receiveMessageResult, queueUrl)
                 FrontPressCronSuccess.increment()
