@@ -49,22 +49,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, white, 
 .l-footer__primary {
     position: relative;
     overflow: hidden;
-
-    &:before {
-        content: '';
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        @include rem((
-            height: $primary-footer-height
-        ));
-        background: $c-primary-footer-background-side-bar;
-        -moz-background-clip: padding-box;
-        -webkit-background-clip: padding-box;
-        background-clip: padding-box;
-    }
+    background: $c-primary-footer-background-side-bar;
 }
 @include mq(tablet) {
     .js-on .l-footer__navigation-wrapper {
