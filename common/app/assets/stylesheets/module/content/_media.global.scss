@@ -238,7 +238,9 @@
 .onward {
     .container--multimedia {
         .container__title {
-            @include fs-header(3, true);
+            @include rem((
+                font-size: get-font-size($fs-headers, 3)
+            ));
         }
     }
 }

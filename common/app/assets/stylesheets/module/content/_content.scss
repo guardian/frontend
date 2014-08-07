@@ -117,6 +117,7 @@
     @include rem((
         padding-bottom: $gs-baseline
     ));
+
     @include mq($to: tablet) {
         border-bottom: 1px solid $c-neutral7;
 
@@ -420,12 +421,6 @@
         @include rem((
             margin-right: $gs-gutter/10
         ));
-    }
-
-    @include mq($to: tablet) {
-        .has-localnav & {
-            padding-top: 0;
-        }
     }
 
     @include mq(tablet) {

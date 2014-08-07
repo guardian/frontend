@@ -70,6 +70,9 @@
 
         .u-underline {
             border-color: $c-neutral3;
+
+            &:focus,
+            &:active,
             &:hover {
                 border-color: $c-neutral8;
             }

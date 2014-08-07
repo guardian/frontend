@@ -947,7 +947,6 @@ $timeline-width: 14px;
     &.tone-live .content__head--tonal .content__section {
 
         @include mq(rightCol) {
-            border-top: 0 !important;
             float: left;
             @include rem((
                 width: gs-span(3)
