@@ -8,13 +8,13 @@
     items.filter(items => items.group == Option("0") || items.group == None)
 ) { case (hugeItems, veryBigItems, bigItems, standardItems) =>
 @defining(
-    hugeItems.nonEmpty && veryBigItems.nonEmpty,
-    hugeItems.isEmpty && veryBigItems.nonEmpty && bigItems.nonEmpty,
+    hugeItems.nonEmpty && (veryBigItems.nonEmpty || bigItems.nonEmpty || standardItems.nonEmpty),
+    hugeItems.isEmpty && veryBigItems.nonEmpty && (bigItems.nonEmpty || standardItems.nonEmpty),
     hugeItems.isEmpty && veryBigItems.isEmpty && bigItems.nonEmpty && standardItems.nonEmpty,
     hugeItems.isEmpty && veryBigItems.isEmpty && bigItems.isEmpty && standardItems.size > 3
 ) { case (showMoreAtVeryBig, showMoreAtBig, showMoreAtStandard, showMoreAtStandardLinks) =>
 @defining(showMoreAtVeryBig && showMoreAtBig && showMoreAtStandard && showMoreAtStandardLinks) { showMore =>
-        
+
     @hugeItems.zipWithIndex.map { case (trail, index) =>
         <div class="facia-slice-wrapper">
             @fragments.items.baguette(trail, index)
