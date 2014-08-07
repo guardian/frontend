@@ -24,6 +24,8 @@ case class DurationMetric(name: String, metricUnit: StandardUnit) extends Fronte
 
   private val dataPoints: Agent[List[DataPoint]] = AkkaAgent(List[DurationDataPoint]())
 
+  def getDataPoints: List[DataPoint] = dataPoints.get()
+
   def getAndResetDataPoints: List[DataPoint] = {
     val points = dataPoints.get()
     dataPoints.alter(_.diff(points))
