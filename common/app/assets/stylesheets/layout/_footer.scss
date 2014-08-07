@@ -1,3 +1,4 @@
+$primary-footer-height: 44px;
 /* Elements modifiers specific to the footer
    ========================================================================== */
 
@@ -40,19 +41,35 @@
     }
 }
 .l-footer__primary {
-    background: $c-brandBlue;
-}
-.l-footer__banner {
-    border-top: 2px solid $c-brandBlue;
-    @include rem((
-        margin-bottom: ($gs-baseline/3)*2
-    ));
+    position: relative;
+    overflow: hidden;
+
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        @include rem((
+            height: $primary-footer-height
+        ));
+        background: $c-primary-footer-background-side-bar;
+        -moz-background-clip: padding-box;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+    }
 }
 @include mq(tablet) {
     .js-on .l-footer__navigation-wrapper {
         display: none;
     }
 }
+
+.l-footer__banner {
+    background: $c-primary-footer-background;
+}
+
 .l-footer__secondary {
     @include box-sizing(border-box);
     @include font($f-data, normal, 13, 19);
