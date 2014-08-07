@@ -9,12 +9,11 @@ define([
     ) {
 
     function OmnitureMedia(player) {
-        function getVideoAttribute(attributeName) {
-            var element = qwery('*[' + attributeName + ']', player.contentEl())[0];
-            return element ? element.getAttribute(attributeName) : undefined;
+        function getAttribute(attributeName) {
+            return player.el().getAttribute(attributeName);
         }
 
-        var mediaName = getVideoAttribute('data-title') || config.page.webTitle,
+        var mediaName = getAttribute('data-title') || config.page.webTitle,
             // infer type (audio/video) from what element we have
             mediaType = qwery('audio', player.el()).length ? 'audio' : 'video',
             contentStarted = false,
@@ -41,8 +40,7 @@ define([
             segmentEvents = ['event21', 'event22', 'event23', events[mediaType + ':end']];
 
         this.getDuration = function() {
-            var dataDurationString = getVideoAttribute('data-duration');
-            return dataDurationString ? parseInt(dataDurationString, 10) : undefined;
+            return parseInt(getAttribute('data-duration'), 10) || undefined;
         };
 
         this.getPosition = function() {
