@@ -114,7 +114,7 @@
     position: absolute;
     @include rem((
         min-height: gs-height(1),
-        min-width: gs-span(1),
+        min-width: gs-span(1)
     ));
     top: 0;
     right: 0;
@@ -165,7 +165,9 @@
         }
     }
     @include mq(wide) {
-        left: gs-span(15) + $gs-gutter;
+        @include rem((
+            left: gs-span(15) + $gs-gutter
+        ));
     }
 }
 .facia-slice {
@@ -426,6 +428,7 @@
     @include rem((
         margin-top: $gs-baseline*2
     ));
+
     .item--support-show & {
         display: block;
     }
