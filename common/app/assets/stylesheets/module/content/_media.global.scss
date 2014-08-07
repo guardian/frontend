@@ -126,10 +126,11 @@
 
     @include mq(tablet, rightCol) {
         .content__meta-container {
-            float: right;
+            float: left;
             @include rem((
                 width: 404px, //Magic, as video items below are off grid at 33.3% width
-                margin-right: $gs-gutter
+                margin-right: $gs-gutter,
+                margin-bottom: $gs-baseline*2
             ));
         }
         .social-wrapper--bottom {
