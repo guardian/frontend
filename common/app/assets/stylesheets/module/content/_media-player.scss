@@ -8,7 +8,6 @@ $vjs-progress-hitbox-height: $gs-baseline;
 $vjs-progress-visual-height-resting: $gs-baseline/2;
 $vjs-progress-inset-bottom: 4px;
 
-
 .player {
     @include rem((
         margin-bottom: $gs-row-height
