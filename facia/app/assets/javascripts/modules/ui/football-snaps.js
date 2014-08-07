@@ -8,14 +8,16 @@ define([
          * All the football snaps sitting in a "big" slice (if any) will take the height of their trail trails
          */
         resizeIfPresent: function(el){
-            var $el = !!el && bonzo(el),
-                parent = !!el && $el.parent();
+            if(!!el){
+                var $el = bonzo(el),
+                    $parent = $el.parent();
 
-            if(parent){
-                $el.css({
-                    height: parent.css('height')
-                });
+                if(parent.length !== 0){
+                    $el.css({
+                        height: $parent.css('height')
+                    });
 
+                }
             }
         }
     };
