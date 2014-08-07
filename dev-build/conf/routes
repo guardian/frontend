@@ -233,8 +233,8 @@ GET         /commercial/money/savings/:savingsType                              
 GET         /commercial/money/current-accounts/:currentAccountType                                                   controllers.commercial.MoneyOffers.currentAccounts(currentAccountType)
 GET         /commercial/money/credit-cards/:creditCardType                                                           controllers.commercial.MoneyOffers.creditCards(creditCardType)
 GET         /commercial/money/loans/:loanType                                                                        controllers.commercial.MoneyOffers.loans(loanType)
-GET         /commercial/capi.json                                                                                    controllers.commercial.ContentApiOffers.itemJson
-GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffers.itemHtml
+GET         /commercial/capi.json                                                                                    controllers.commercial.ContentApiOffers.itemsJson
+GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffers.itemsHtml
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
 
