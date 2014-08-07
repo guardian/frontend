@@ -8,6 +8,7 @@ $vjs-progress-hitbox-height: $gs-baseline;
 $vjs-progress-visual-height-resting: $gs-baseline/2;
 $vjs-progress-inset-bottom: 4px;
 
+
 .player {
     @include rem((
         margin-bottom: $gs-row-height
@@ -28,6 +29,17 @@ $vjs-progress-inset-bottom: 4px;
         height: $vjs-control-height,
         padding-top: $vjs-progress-visual-height-resting
     ));
+
+    // crappy videojs removes classes, so have to select my element
+    audio {
+        width: 100%;
+        height: 40px;
+        @include box-sizing(border-box);
+        @include rem((
+            border-left: $gs-gutter/2 solid transparent,
+            border-right: $gs-gutter/2 solid transparent
+        ));
+    }
 }
 .video-standfirst {
     @include rem((
