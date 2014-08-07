@@ -129,8 +129,8 @@
         position: relative;
 
         @include rem((
-            width: gs-span(3),
-            margin-left: (gs-span(3) + $gs-gutter) * -1
+            width: $left-column-wide,
+            margin-left: ($left-column-wide + $gs-gutter) * -1
         ));
     }
 }
@@ -275,15 +275,15 @@
 
         @include mq(tablet) {
             @include rem((
-                padding-left: gs-span(3) + $gs-gutter
+                padding-left: $left-column-wide + $gs-gutter
             ));
         }
     }
     .fromage__media-wrapper {
         @include mq(tablet) {
             @include rem((
-                width: gs-span(3),
-                margin-left: (gs-span(3) + $gs-gutter) * -1
+                width: $left-column-wide,
+                margin-left: ($left-column-wide + $gs-gutter) * -1
             ));
         }
     }

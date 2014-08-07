@@ -7,7 +7,7 @@
 // http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables
 
 
-// Support
+// Browser support
 // =============================================================================
 
 $old-ie:      false !default;
@@ -19,13 +19,16 @@ $browser-supports-flexbox: true !default;
 // Layout dimensions
 // =============================================================================
 
-$unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
 $headerHeight: 36px;
 
 @import 'components/guss-colours/helpers';
 @import 'components/guss-colours/colours';
 @import 'components/guss-grid-system/_grid-system';
+
+$right-column:     gs-span(4);
+$left-column:      gs-span(2); // Grows to 3 columns on wide viewports
+$left-column-wide: gs-span(3);
 
 
 // Breakpoints
@@ -36,15 +39,10 @@ $headerHeight: 36px;
 // stakeholders, designers, developers, and testers.
 // NB. If these change, please update dfp.js to match
 
-// Article breakpoints
-$a-rightCol-width:    gs-span(4);
-$a-rightCol-trigger:  gs-span(11) + $gs-gutter*2; // 900px
-$a-leftCol-width:     gs-span(2); // Grows to 3 columns on wide viewports
-$a-leftCol-trigger:   gs-span(13) + $gs-gutter*2; // 1060px
-$a-leftColWide-width: gs-span(3);
 
-// Facia breakpoints
-$facia-leftCol-trigger: gs-span(14) + $gs-gutter*2; // 1140px
+// Add breakpoints and tweakpoints here
+// To add custom breakpoints directly inside of a component,
+// see https://github.com/guardian/sass-mq#adding-custom-breakpoints
 
 $mq-breakpoints: (
     mobile:  gs-span(4)  + $gs-gutter,   // 320px
@@ -55,15 +53,18 @@ $mq-breakpoints: (
     // Tweakpoints
     mobileLandscape: gs-span(6) + $gs-gutter, // 480px
 
-    // Article layout
-    rightCol: $a-rightCol-trigger,
-    leftCol: $a-leftCol-trigger,
+    // Content layout
+    rightCol: gs-span(11) + $gs-gutter*2, // 900px
+    leftCol:  gs-span(13) + $gs-gutter*2, // 1060px
 
     // Facia layout
-    faciaLeftCol: $facia-leftCol-trigger
+    faciaLeftCol: gs-span(14) + $gs-gutter*2 // 1140px
 );
-// Uncomment to show the current breakpoint in the top right
-// See https://github.com/guardian/sass-mq/tree/sassdoc#seeing-the-currently-active-breakpoint
+
+
+// Show the current breakpoint in the top right corner of the viewport:
+// see https://github.com/guardian/sass-mq#seeing-the-currently-active-breakpoint
+// Uncomment to activate during development
 //$mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
 
 
@@ -116,6 +117,7 @@ $c-liveDefault: guss-colour(tone-live-1);
 $c-liveAccent: guss-colour(tone-live-2);
 
 $c-mediaDefault: $c-commentAccent;
+
 
 // Football
 // =============================================================================

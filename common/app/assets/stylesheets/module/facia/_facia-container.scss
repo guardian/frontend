@@ -27,38 +27,35 @@
         }
     }
 }
-@mixin facia-container--layout-front {
-    .facia-container--layout-front {
-        .facia-container__inner {
-            @include mq(gs-span(7) + $gs-gutter*3) {
+
+$mobile-max-container-width: gs-span(7);
+$mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
+
+@mixin facia-container__inner--layout-front(
+    $snap-points: (
+        faciaWidestMobile: $mobile-max-container-width,
+        tablet:            gs-span(9),
+        desktop:           gs-span(12),
+        faciaLeftCol:      gs-span(14),
+        wide:              gs-span(16)
+    )
+) {
+    @each $breakpoint, $container-width in $snap-points {
+        @include mq($breakpoint) {
+            @if (index($snap-points, ($breakpoint $container-width)) == 1) {
                 margin-left: auto;
                 margin-right: auto;
             }
-            @include mq(gs-span(7) + $gs-gutter*3, tablet) {
-                @include rem((
-                    width: gs-span(7)
-                ));
-            }
-            @include mq(tablet) {
-                @include rem((
-                    width: gs-span(9)
-                ));
-            }
-            @include mq(desktop) {
-                @include rem((
-                    width: gs-span(12)
-                ));
-            }
-            @include mq(faciaLeftCol) {
-                @include rem((
-                    width: gs-span(14)
-                ));
-            }
-            @include mq(wide) {
-                @include rem((
-                    width: gs-span(16)
-                ));
-            }
+            @include rem((
+                width: $container-width
+            ));
+        }
+    }
+}
+@mixin facia-container--layout-front {
+    .facia-container--layout-front {
+        .facia-container__inner {
+            @include facia-container__inner--layout-front;
         }
         @include mq(faciaLeftCol) {
             .container__title {
@@ -67,7 +64,7 @@
             .container__body {
                 overflow: hidden;
                 @include rem((
-                    margin-left: gs-span(2) + $gs-gutter
+                    margin-left: $left-column + $gs-gutter
                 ));
             }
             .container--news {
@@ -75,7 +72,7 @@
                     display: block;
                     float: left;
                     @include rem((
-                        width: gs-span(2),
+                        width: $left-column,
                         margin-right: $gs-gutter
                     ));
                 }
@@ -91,13 +88,13 @@
             .container__title {
                 float: left;
                 @include rem((
-                    width: gs-span(3) !important,
+                    width: $left-column-wide !important,
                     margin-right: $gs-gutter
                 ));
             }
             .container__body {
                 @include rem((
-                    margin-left: gs-span(3) + $gs-gutter,
+                    margin-left: $left-column-wide + $gs-gutter,
                     width: gs-span(12)
                 ));
             }
@@ -166,7 +163,7 @@
                 margin-bottom: 0;
                 float: left;
                 @include rem((
-                    width: $a-leftCol-width !important,
+                    width: $left-column !important,
                     margin-right: $gs-gutter
                 ));
             }
@@ -176,7 +173,7 @@
             .container__body {
                 overflow: hidden;
                 @include rem((
-                    margin-left: gs-span(2) + $gs-gutter
+                    margin-left: $left-column + $gs-gutter
                 ));
             }
         }
@@ -184,7 +181,7 @@
             .container__title,
             .container__meta {
                 @include rem((
-                    width: $a-leftColWide-width !important
+                    width: $left-column-wide !important
                 ));
             }
             .container__border {

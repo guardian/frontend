@@ -27,8 +27,8 @@ $c-local-navigation-background: $c-navigation-base;
 $c-global-navigation-background: $c-navigation-base;
 $c-global-navigation-title: #ffffff;
 $c-global-navigation-title-background: $c-top-navigation-background;
-$global-navigation-title-width: $a-leftCol-width + $gs-gutter;
-$global-navigation-title-width-wide: $a-leftColWide-width + $gs-gutter;
+$global-navigation-title-width: $left-column + $gs-gutter;
+$global-navigation-title-width-wide: $left-column-wide + $gs-gutter;
 $c-global-navigation-action: guss-colour(neutral-1);
 $c-global-navigation-border: mix($c-local-navigation-background, #ffffff, 60%);
 

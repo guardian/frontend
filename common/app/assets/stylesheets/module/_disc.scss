@@ -171,7 +171,7 @@ $disc-avatar-size: 44px;
         @include fs-header(1, true);
         @include rem((
             margin-right: $gs-gutter,
-            width: $a-leftCol-width
+            width: $left-column
         ));
         float: left;
         position: relative;
@@ -180,7 +180,7 @@ $disc-avatar-size: 44px;
 
     @include mq(wide) {
         @include rem((
-            width: $a-leftColWide-width
+            width: $left-column-wide
         ));
     }
 }
@@ -189,13 +189,13 @@ $disc-avatar-size: 44px;
 
     @include mq(leftCol) {
         @include rem((
-            margin-left: $a-leftCol-width+$gs-gutter
+            margin-left: $left-column+$gs-gutter
         ));
     }
 
     @include mq(wide) {
         @include rem((
-            margin-left: $a-leftColWide-width+$gs-gutter
+            margin-left: $left-column-wide+$gs-gutter
         ));
     }
 }
