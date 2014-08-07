@@ -15,7 +15,7 @@ define([
         var _$container = bonzo(container),
             _$button = bonzo(bonzo.create(
                 '<button class="container__toggle" data-link-name="Show">'
-                    + '<i class="i i-arrow-white-large"></i>'
+                    + '<i class="i i-arrow-grey-large"></i>'
                     + '<span class="container__toggle__text">Hide</span>'
                 +'</button>'
             )),
