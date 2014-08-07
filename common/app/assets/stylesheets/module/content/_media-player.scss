@@ -211,7 +211,8 @@ $vjs-progress-inset-bottom: 4px;
 
     .gu-media-wrapper:hover .vjs-playing:not(.vjs-fullscreen) &,
     .gu-media-wrapper:hover .vjs-fullscreen.vjs-mousemoved &,
-    .vjs-paused & {
+    .vjs-paused.vjs-has-started &,
+    .gu-media--show-controls-at-start.vjs-paused &{
         bottom: 0;
         @include transition(bottom 0s);
         transition-delay: 0s;

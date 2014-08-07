@@ -1,4 +1,4 @@
-@(video: model.VideoElement, profile: views.support.Profile, title: String, width: Int, height: Int, use16_9AspectRatio: Boolean = true)
+@(video: model.VideoElement, profile: views.support.Profile, title: String, width: Int, height: Int, use16_9AspectRatio: Boolean = true, showControlsAtStart: Boolean = true)
 
 @import conf.Static
 @import views.support.RenderClasses
@@ -9,7 +9,12 @@
             "u-responsive-ratio" -> true,
             "u-responsive-ratio--hd" -> use16_9AspectRatio
         ))">
-            <video controls="controls" class="gu-media gu-media--video js-gu-media" data-title="@title"
+            <video controls="controls" class="@RenderClasses(Map(
+                "gu-media" -> true,
+                "gu-media--video" -> true,
+                "gu-media--show-controls-at-start" -> showControlsAtStart,
+                "js-gu-media" -> true
+            ))" data-title="@title"
                 poster="@poster" data-duration="@video.duration.toString()" data-media-id="@video.id">
 
                 @video.encodings.map { encoding =>
