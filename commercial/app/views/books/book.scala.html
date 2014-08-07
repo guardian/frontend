@@ -1,0 +1,24 @@
+@(book: model.commercial.books.Book)(implicit request: RequestHeader)
+
+<li class="lineitem u-cf" itemscope itemtype="http://schema.org/Book">
+    <a href="@AdLink{@book.buyUrl}" class="lineitem__link">
+        @book.jacketUrl.map { url =>
+        <img itemprop="image" class="lineitem__img" src="@url" alt="" />
+        }
+        <h4 class="lineitem__title" itemprop="name">@book.title</h4>
+    @if(book.author) {
+        <p class="lineitem__meta" itemprop="author">By @book.author</p>
+    }
+        <meta itemprop="isbn" content="@{book.isbn}" />
+        <p class="commercial--books__price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        @book.price.map { price =>
+            <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
+        }
+        @book.offerPrice.map { price =>
+            <span class="commercial--books__price__our">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
+            <meta itemprop="priceCurrency" content="GBP" />
+        }
+        </p>
+    </a>
+    <a href="@AdLink{@book.buyUrl}" class="commercial--books__buy-now-button">Buy now</a>
+</li>

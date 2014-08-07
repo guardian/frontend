@@ -1,8 +1,27 @@
 @(ads: Seq[model.commercial.Ad])(implicit request: RequestHeader)
+@import model.commercial
 
-<h1>TEST!!!!</h1>
+<div class="commercial commercial--low">
+    <div class="facia-container__inner">
+        <div class="container__body commercial__body">
 
-@ads.map { ad =>
-    <h2>@ad</h2>
-}
+            @ads.map { ad =>
+                @ad match {
+                    case job: model.commercial.jobs.Job => {
+                        @views.html.jobFragments.job(job)
+                    }
+                    case book: model.commercial.books.Book => {
+                        @views.html.books.book(book)
+                    }
+                    case travelOffer: model.commercial.travel.TravelOffer => {
+                        @views.html.travelOfferFragments.travelOffer(travelOffer)
+                    }
+                    case masterClass: model.commercial.masterclasses.MasterClass => {
+                        @views.html.masterClasses.masterClass(masterClass)
+                    }
+                }
+            }
 
+        </div>
+    </div>
+</div>

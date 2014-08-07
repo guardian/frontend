@@ -1,0 +1,11 @@
+@(job: model.commercial.jobs.Job)(implicit request: RequestHeader)
+
+<li class="commercial--jobs__job">
+    <a href="@AdLink{@job.listingUrl}"
+       class="commercial--jobs__job__link">
+        <h3 class="commercial--jobs__job__title">@job.title</h3>
+        <img src="@job.recruiterLogoUrl" class="commercial--jobs__job__logo" alt="" />
+    </a>
+    <p class="commercial--jobs__job__salary">@job.locationDescription - @job.shortSalaryDescription</p>
+    <p class="commercial--jobs__job__recruiter"><a href="@AdLink{@job.recruiterPageUrl}">@job.recruiterName</a></p>
+</li>
