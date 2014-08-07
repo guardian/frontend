@@ -510,10 +510,6 @@
                 ));
             }
 
-            .membership-tab__updated {
-                @include animation(updated 1s ease-in-out forwards);
-            }
-
             .membership-tab__upgrade {
                 margin: 0;
             }

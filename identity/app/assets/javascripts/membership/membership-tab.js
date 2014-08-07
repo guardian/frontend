@@ -35,7 +35,6 @@ define(['common/utils/$',
         NEXT: 'js-membership-payment-next',
         INTERVAL: 'js-membership-plan-interval',
         CC_SUMMARY_LAST4: 'js-membership-summary-card-lastfour',
-        CC_PAYMENT_NUM: 'js-membership-payment-card-details',
         CC_PAYMENT_LAST4: 'js-membership-payment-card-lastfour',
         CC_PAYMENT_TYPE: 'js-membership-payment-card-type',
         CC_PAYMENT_TYPE_TEXT: 'js-membership-payment-card-text',
@@ -279,7 +278,6 @@ define(['common/utils/$',
                 $(self.getElem('CC_PAYMENT_TYPE')).removeClass(self.currentCardTypeClass);
                 self.currentCardTypeClass = 'i-'+resp.cardType.toLowerCase().replace(' ', '-');
                 $(self.getElem('CC_PAYMENT_TYPE')).addClass(self.currentCardTypeClass);
-                $(self.getElem('CC_PAYMENT_NUM')).addClass('membership-tab__updated');
                 // append a success message
                 self.appendSuccessMessage(self.options.messages.CHANGE_CC_SUCCESS);
             });
