@@ -17,12 +17,8 @@ define([
     removeById
 ) {
     var maxChars = vars.CONST.headlineLength || 90,
-        restrictedHeadlineLength = [
-            'breaking-news'
-        ],
-        restrictedLiveMode = [
-            'breaking-news'
-        ];
+        restrictedHeadlineLength = vars.CONST.restrictedHeadlineLength || [],
+        restrictedLiveMode = vars.CONST.restrictedLiveMode || [];
 
     function newItemsConstructor(id, sourceItem, targetGroup) {
         var items = [_.extend(_.isObject(sourceItem) ? sourceItem : {}, { id: id })];

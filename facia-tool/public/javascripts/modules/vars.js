@@ -25,6 +25,14 @@ define([
             {name: 'comment/comment-and-debate'}
         ],
 
+        restrictedHeadlineLength: [
+            'breaking-news'
+        ],
+
+        restrictedLiveMode: [
+            'breaking-news'
+        ],
+
         headlineLength: 90,
 
         detectPressFailureMs: 10000,
