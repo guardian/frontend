@@ -1,7 +1,7 @@
 $primary-footer-height: 44px;
 
 $c-primary-footer-background: guss-colour(guardian-brand);
-$c-primary-footer-background-side-bar: mix($c-primary-footer-background, white, 90%);
+$c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff, 90%);
 
 /* Elements modifiers specific to the footer
    ========================================================================== */
@@ -16,10 +16,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, white, 
     line-height: 0;
 }
 .top--footer {
-    &,
-    &:active {
-        color: #ffffff;
-    }
     width: auto;
     @include mq(tablet) {
         float: left;
@@ -28,6 +24,11 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, white, 
             padding-top: $gs-baseline,
             padding-bottom: $gs-baseline
         ));
+    }
+
+    &,
+    &:active {
+        color: #ffffff;
     }
 }
 
