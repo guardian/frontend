@@ -1,7 +1,7 @@
 import sbt._
 import Keys._
 
-object RootBuild extends Build {
+object Build extends Build {
 
 val commonSettings: Seq[Setting[_]] = Seq(
     version +=  "0.1.0-SNAPSHOT",

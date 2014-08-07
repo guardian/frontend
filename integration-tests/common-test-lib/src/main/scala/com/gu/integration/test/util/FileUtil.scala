@@ -5,6 +5,6 @@ import java.io.File
 object FileUtil {
 
   def currentPath():String = {
-     new File(".").getAbsolutePath
+     new File(".").getCanonicalPath
   }
 }
