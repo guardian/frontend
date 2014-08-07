@@ -5,33 +5,25 @@ define([
     'common/utils/url'
 ], function (
     defaults,
-    globalConfig,
+    config,
     cookies,
     urlUtils
     ) {
 
-    var config,
-        netId = '1476',
+    var netId = '1476',
         cookieName = 'cto2_guardian',
         criteoUrl = '//rtax.criteo.com/delivery/rta/rta.js',
         varName = 'crtg_content';
 
-
-    function getSegments() {
+    function getSegments(c) {
+        c = c || config;
         var cookieValue = cookies.get(cookieName);
-        return (config.switches.criteo && cookieValue) ? urlUtils.getUrlVars({query: cookieValue}) : {};
+        return (c.switches.criteo && cookieValue) ? urlUtils.getUrlVars({query: cookieValue}) : {};
     }
 
     function load(c) {
-        config = defaults(
-            c || {},
-            globalConfig,
-            {
-                switches: {}
-            }
-        );
-
-        if (config.switches.criteo) {
+        c = c || config;
+        if (c.switches.criteo) {
             var query = urlUtils.constructQuery({
                 netid: netId,
                 cookieName: cookieName,

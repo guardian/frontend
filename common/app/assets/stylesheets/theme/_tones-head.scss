@@ -17,7 +17,7 @@
         background-color: #ffffff;
         .tone-background {
             @include rem((
-                padding-top: $gs-baseline/2
+                padding-top: $content-top-padding
             ));
         }
         .tone-background--accent {

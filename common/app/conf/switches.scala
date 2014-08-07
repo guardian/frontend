@@ -266,11 +266,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val NetworkFrontOptIn = Switch("Feature Switches", "network-front-opt-in",
-    "If this is switched on then an opt-in message will be displayed to users coming from the R2 network front",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 31)
-  )
-
   val IndiaRegionSwitch = Switch("Feature Switches", "india-region",
     "If this switch is switched on then the India region will be enabled",
     safeState = Off,
@@ -494,7 +489,6 @@ object Switches extends Collections {
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
-    NetworkFrontOptIn,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,

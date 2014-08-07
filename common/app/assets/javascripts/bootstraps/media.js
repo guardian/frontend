@@ -14,7 +14,8 @@ define([
     'bonzo',
     'common/modules/component',
     'common/modules/analytics/beacon',
-    'raven'
+    'raven',
+    'common/modules/ui/message'
 ], function(
     $,
     ajax,
@@ -30,7 +31,8 @@ define([
     bonzo,
     Component,
     beacon,
-    Raven
+    Raven,
+    Message
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint()),
@@ -44,8 +46,9 @@ define([
             'content:play',
             'content:end'
         ],
+        contentType = config.page.contentType.toLowerCase(),
         constructEventName = function(eventName) {
-            return config.page.contentType.toLowerCase() + ':' + eventName;
+            return contentType + ':' + eventName;
         };
 
 
@@ -54,19 +57,19 @@ define([
         ophanRecord: function(id, event) {
             if(id) {
                 require('ophan/ng', function (ophan) {
-                    ophan.record({
-                        media: {
-                            id: id,
-                            eventType: event.type
-                        }
-                    });
+                    var eventObject = {};
+                    eventObject[contentType] = {
+                        id: id,
+                        eventType: event.type
+                    };
+                    ophan.record(eventObject);
                 });
             }
         },
 
         initOphanTracking: function(player, mediaId) {
             EVENTS.concat(QUARTILES.map(function(q) {
-                return constructEventName('play:' + q);
+                return 'play:' + q;
             })).forEach(function(event) {
                 player.one(constructEventName(event), function(event) {
                     modules.ophanRecord(mediaId, event);
@@ -276,11 +279,11 @@ define([
                             if (mediaType === 'video') {
 
                                 modules.bindDiagnosticsEvents(player);
+                                player.fullscreener();
 
                                 // Init plugins
-                                if(config.switches.videoAdverts) {
+                                if (config.switches.videoAdverts && !config.page.shouldHideAdverts) {
                                     player.adCountDown();
-                                    player.fullscreener();
                                     player.ads({
                                         timeout: 3000
                                     });
@@ -293,7 +296,7 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if(/desktop|wide/.test(detect.getBreakpoint())) {
+                                if (/desktop|wide/.test(detect.getBreakpoint())) {
                                     modules.initEndSlate(player);
                                 }
                             } else {
@@ -359,7 +362,6 @@ define([
             });
         },
         initMostViewedMedia: function() {
-
             if (config.page.section === 'childrens-books-site' && config.switches.childrensBooksHidePopular) {
                 $('.content__secondary-column--media').addClass('u-h');
             } else {
@@ -367,6 +369,25 @@ define([
                 mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
                 mostViewed.fetch($('.js-video-components-container')[0], 'html');
             }
+        },
+        displayReleaseMessage: function() {
+            var msg = '<p class="site-message__message" id="site-message__message">' +
+                    'We\'ve redesigned our video pages to make it easier to find and experience our best video content. We\'d love to hear what you think.' +
+                    '</p>' +
+                    '<ul class="site-message__actions u-unstyled">' +
+                    '<li class="site-message__actions__item">' +
+                    '<i class="i i-arrow-white-right"></i>' +
+                    '<a href="https://www.surveymonkey.com/s/guardianvideo" target="_blank">Leave feedback</a>' +
+                    '</li>' +
+                    '<li class="site-message__actions__item">' +
+                    '<i class="i i-arrow-white-right"></i>' +
+                    '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
+                    '</li>' +
+                    '</ul>';
+
+            var releaseMessage = new Message('video');
+
+            releaseMessage.show(msg);
         }
     };
 
@@ -382,8 +403,14 @@ define([
         }
 
         if (config.isMedia) {
-            modules.initMoreInSection();
+            if (config.page.showRelatedContent) {
+                modules.initMoreInSection();
+            }
             modules.initMostViewedMedia();
+        }
+
+        if (config.page.contentType === 'Video' && detect.getBreakpoint() !== 'mobile') {
+            modules.displayReleaseMessage();
         }
     };
 

@@ -113,24 +113,6 @@
     @include fix-link-colour($c-brandBlue);
 }
 
-/** Copied from .content__head__border-top. TODO: Consolidate into a single rule if you don't change it. */
-.tag-index__head__border-top {
-    border-top: 1px dotted $c-neutral5;
-    @include rem((
-        height: $gs-baseline/2
-    ));
-
-    @include mq($to: tablet) {
-        display: none;
-    }
-    @include mq(tablet, rightCol) {
-        @include rem((
-            max-width: gs-span(8)
-        ));
-        margin: auto;
-    }
-}
-
 .tag-index__tag-link {
     @include rem((
         min-height: get-line-height($fs-headlines, 1) * 1.5

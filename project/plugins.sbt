@@ -2,9 +2,9 @@
 logLevel := Level.Warn
 
 resolvers ++= Seq(
-  "Guardian GitHub Releases" at "http://guardian.github.io/maven/repo-snapshots",
-  "Sonatype OSS" at "https://oss.sonatype.org/content/repositories/releases/",
-  Classpaths.typesafeReleases
+  Classpaths.typesafeReleases,
+  Resolver.sonatypeRepo("releases"),
+  Resolver.typesafeRepo("releases")
 )
 
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3.2")

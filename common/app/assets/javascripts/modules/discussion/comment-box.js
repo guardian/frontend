@@ -196,8 +196,8 @@ CommentBox.prototype.ready = function() {
                     this.elem.sentiment.value = e.currentTarget.getAttribute('data-value');
                     this.getElem('body').focus();
                 }.bind(this));
-            });
-        }, 500);
+            }.bind(this));
+        }.bind(this), 800);
     }
 };
 

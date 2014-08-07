@@ -71,7 +71,7 @@
         color: inherit;
     }
 
-    & + & a {
+    + & a {
         border-left: 2px solid rgba(255, 255, 255, .75);
         @include rem((
             padding-left: 6px
@@ -85,7 +85,7 @@
         background: #ffffff;
     }
 
-    & + .tabs__tab a {
+    + .tabs__tab a {
         border-left: 0;
         @include rem((
             padding-left: 8px

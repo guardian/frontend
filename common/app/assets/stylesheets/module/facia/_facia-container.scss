@@ -17,9 +17,9 @@
                 margin-right: $gs-gutter
             ));
         }
-        @include mq(tablet) {
-            margin-left: 0;
-            margin-right: 0;
+        @include mq(desktop) {
+            margin-left: auto;
+            margin-right: auto;
             @include rem((
                 padding-left: $gs-gutter,
                 padding-right: $gs-gutter
@@ -30,18 +30,19 @@
 @mixin facia-container--layout-front {
     .facia-container--layout-front {
         .facia-container__inner {
+            @include mq(gs-span(7) + $gs-gutter*3) {
+                margin-left: auto;
+                margin-right: auto;
+            }
             @include mq(gs-span(7) + $gs-gutter*3, tablet) {
                 @include rem((
                     width: gs-span(7)
                 ));
-                margin: 0 auto;
             }
             @include mq(tablet) {
                 @include rem((
                     width: gs-span(9)
                 ));
-                margin-left: auto;
-                margin-right: auto;
             }
             @include mq(desktop) {
                 @include rem((
@@ -140,19 +141,12 @@
 @mixin facia-container--layout-content {
     .facia-container--layout-content {
         .facia-container__inner {
-
-            @include mq(tablet) {
-                margin-left: auto;
-                margin-right: auto;
-                @include rem((
-                    padding-left: $gs-gutter,
-                    padding-right: $gs-gutter
-                ));
-            }
             @include mq(tablet, rightCol) {
                 @include rem((
                     max-width: gs-span(8)
                 ));
+                margin-left: auto;
+                margin-right: auto;
             }
             @include mq(leftCol) {
                 @include rem((
@@ -182,7 +176,6 @@
             .container__body {
                 overflow: hidden;
                 @include rem((
-                    padding-top: $gs-baseline/4, // Top spacing at this breakpoint is removed by .facia-slice-wrapper
                     margin-left: gs-span(2) + $gs-gutter
                 ));
             }
@@ -194,8 +187,10 @@
                     width: $a-leftColWide-width !important
                 ));
             }
-            .container__body {
-                padding-top: 0; // Top spacing at this breakpoint is done by .facia-slice-wrapper
+            .container__border {
+                @include rem((
+                    margin-right: -(gs-span(1) + $gs-gutter*2)
+                ));
             }
         }
     }
@@ -204,9 +199,6 @@
     .facia-container--layout-discussion {
         .container__title {
             font-weight: normal;
-            a {
-                color: $c-newsDefault;
-            }
         }
     }
 }
@@ -219,8 +211,8 @@
 
         .container__title,
         .container__title.tone-background {
-            color: $c-neutral1;
             background: transparent;
+            color: $c-neutral1;
 
             @include mq($to: tablet) {
                 @include fs-header(3, true);
