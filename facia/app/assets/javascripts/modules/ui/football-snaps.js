@@ -13,7 +13,7 @@ define([
                     $parent = $el.parent();
 
                 if(parent.length !== 0){
-                    $el.css("height", $parent.css('height'));
+                    $el.css('height', $parent.css('height'));
                 }
             }
         }
