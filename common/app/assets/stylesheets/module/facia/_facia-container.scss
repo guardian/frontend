@@ -208,16 +208,5 @@
         .container__border.tone-accent-border {
             border-top: 1px solid $c-neutral4;
         }
-
-        .container__title,
-        .container__title.tone-background {
-            background: transparent;
-            color: $c-neutral1;
-
-            @include mq($to: tablet) {
-                @include fs-header(3, true);
-                padding-left: 0;
-            }
-        }
     }
 }
