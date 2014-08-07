@@ -32,7 +32,7 @@ case class DurationMetric(name: String, metricUnit: StandardUnit) extends Fronte
     points
   }
 
-  def putDataPoints(points: List[DataPoint]): Future[List[DataPoint]] = dataPoints.alter(_ ::: points)
+  def putDataPoints(points: List[DataPoint]): Future[List[DataPoint]] = dataPoints.alter(points ::: _)
 
   def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: _)
 
