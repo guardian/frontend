@@ -141,11 +141,6 @@
                 }
             ).install();
 
-            if (typeof define === 'function' && define.amd) {
-                window.define = raven.wrap({deep: false}, define);
-                window.require = raven.wrap({deep: false}, require);
-            }
-
             require(['common/utils/ajax', 'common/modules/experiments/ab'], function(ajax, ab) {
 
                 ajax.init();
