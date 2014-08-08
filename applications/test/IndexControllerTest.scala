@@ -92,7 +92,7 @@ class IndexControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
     contentAsString(result) should startWith("{\"html\"")
   }
 
-  it should "redirect tag to first page if pagination goes beyond last page" in {
+  it should "redirect tag to first page if pagination goes beyond last page" in Fake {
 
     val request = FakeRequest(GET, "/sport/cycling?page=10000")
     val result = controllers.IndexController.render("/sport/cycling")(request)
@@ -103,7 +103,7 @@ class IndexControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
 
   }
 
-  it should "redirect tag combiner to first page if pagination goes beyond last page" in {
+  it should "redirect tag combiner to first page if pagination goes beyond last page" in Fake {
 
     val request = FakeRequest(GET, "/books+tone/reviews?page=10000")
     val result = controllers.IndexController.renderCombiner("books", "tone/reviews")(request)
@@ -113,13 +113,13 @@ class IndexControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
     header("Location", result).get should endWith ("/books+tone/reviews")
   }
 
-  "Normalise tags" should "convert content/gallery to type/gallery" in {
+  "Normalise tags" should "convert content/gallery to type/gallery" in Fake {
     val tag = "content/gallery"
     val result = controllers.IndexController.normaliseTag(tag)
     result should be ("type/gallery")
   }
 
-  it should "not touch other tags that don't match content exactly" in {
+  it should "not touch other tags that don't match content exactly" in Fake{
     val tags = Seq("conten/gallery", "contentt/gallery", "content",
       "type/gallery", "media/media", "media", "content", "type")
     tags.map{ tag =>
