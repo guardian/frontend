@@ -4,7 +4,7 @@ import java.io.File
 
 object FileUtil {
 
-  def currentPath():String = {
-     new File(".").getCanonicalPath
+  def currentPath(): String = {
+    new File(".").getCanonicalPath
   }
 }
