@@ -15,8 +15,8 @@ trait CloudWatch extends Logging {
 
   lazy val stageDimension = new Dimension().withName("Stage").withValue(environment.stage)
 
-  lazy val cloudwatch = {
-    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+  lazy val cloudwatch: Option[AmazonCloudWatchAsyncClient] = Configuration.aws.credentials.map{ credentials =>
+    val client = new AmazonCloudWatchAsyncClient(credentials)
     client.setEndpoint(AwsEndpoints.monitoring)
     client
   }
@@ -54,7 +54,7 @@ trait CloudWatch extends Logging {
         .withDimensions(dimensions)
     })
 
-    cloudwatch.putMetricDataAsync(request, LoggingAsyncHandler)
+    cloudwatch.foreach(_.putMetricDataAsync(request, LoggingAsyncHandler))
   }
 
   def put(namespace: String, metrics: Map[String, Double]): Unit =
@@ -85,7 +85,7 @@ trait CloudWatch extends Logging {
             dataPoint.time.fold(metricDatum) { t => metricDatum.withTimestamp(t.toDate)}
           }
         }
-      CloudWatch.cloudwatch.putMetricDataAsync(request, AsyncHandlerForMetric(metric, dataPointGroup))
+      CloudWatch.cloudwatch.foreach(_.putMetricDataAsync(request, AsyncHandlerForMetric(metric, dataPointGroup)))
     }
   }
 

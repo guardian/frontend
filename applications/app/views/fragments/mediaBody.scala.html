@@ -1,5 +1,7 @@
 @(page: MediaPage)(implicit request: RequestHeader)
 @import conf.Switches._
+@import model.{Audio, Video}
+@import views.support.{Item620, StripHtmlTags}
 
 @defining(page.media, page.storyPackage, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, storyPackage, mediaType) =>
 <div class="l-side-margins l-side-margins--layout-content">
@@ -12,8 +14,36 @@
                 <div class="content__main-column content__main-column--media content__main-column--@mediaType">
 
                     @media match {
-                        case audio: Audio if audio.mainAudio.exists(_.imageCrops.nonEmpty) => {
-                            @fragments.img(media.mainAudio, false, false)
+                        case audio: Audio => {
+                            <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio">
+                            @fragments.media.audio(audio.mainAudio, audio.headline)
+                            </figure>
+                        }
+                        case video: Video => {
+                            <figure itemprop="video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video">
+                                <meta itemprop="name" content="@Html(video.headline)"/>
+                                <meta itemprop="headline" content="@Html(video.headline)"/>
+                                <meta itemprop="url" content="@video.url"/>
+                                @video.trailText.map{ t =>
+                                    <meta itemprop="description" content="@StripHtmlTags(t)" />
+                                    <meta itemprop="about" content="@StripHtmlTags(t)" />
+                                }
+
+                                <meta itemprop="datePublished" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
+                                <meta itemprop="name" content="@video.webTitle" />
+                                <meta itemprop="uploadDate" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
+                                @video.mainVideo.map { mv =>
+                                    <meta itemprop="duration" content="@mv.ISOduration" />
+                                    <meta itemprop="height" content="@mv.height" />
+                                    <meta itemprop="width" content="@mv.width" />
+                                }
+                                <meta itemprop="requiresSubscription" content="no" />
+                                <meta itemprop="image" content="@video.openGraphImage" />
+                                @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
+                                @video.mainVideo.map { videoElement =>
+                                    @fragments.media.video(videoElement, Item620, video.headline, 620, 350)
+                                }
+                            </figure>
                         }
                         case _ => { }
                     }

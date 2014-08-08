@@ -17,7 +17,7 @@ trait CloudWatch extends implicits.Futures {
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   lazy val cloudwatch = {
-    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.mandatoryCredentials)
     client.setEndpoint(AwsEndpoints.monitoring)
     client
   }
