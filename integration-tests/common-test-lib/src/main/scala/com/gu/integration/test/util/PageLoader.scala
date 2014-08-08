@@ -18,7 +18,7 @@ object PageLoader extends TestLogging {
    * This method goes to a particular URL and then initializes the provided page object and returns it. To property use it
    * provide a lazy val page object
    */
-  def goTo[Page <: ParentPage](absoluteUrl: String, pageObject: => Page)(implicit driver: WebDriver): Page = {
+  def goTo[Page <: ParentPage](pageObject: => Page, absoluteUrl: String=frontsBaseUrl)(implicit driver: WebDriver): Page = {
     driver.get(forceBetaSite(turnOfPopups(absoluteUrl)))
     pageObject
   }

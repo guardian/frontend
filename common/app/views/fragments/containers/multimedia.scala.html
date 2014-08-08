@@ -1,4 +1,4 @@
-@(collection: model.Collection, style: views.support.MultimediaContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+@(collection: model.Collection, style: views.support.MultimediaContainer, containerIndex: Int, layoutType: String = "front")(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
 @import common.LinkTo
 @import model.{FaciaComponentName, Video}
@@ -20,7 +20,7 @@
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
 
                 <div class="container__banding">
-                    <div class="l-side-margins l-side-margins--media">
+                    <div class="l-side-margins l-side-margins--media l-side-margins--layout-@layoutType">
                         <div class="facia-container__inner">
                             @title.map { title =>
                                 <h2 class="container__title">
@@ -48,7 +48,7 @@
                 </div>
                 @if(items.size > 3) {
                     <div class="container__banding">
-                        <div class="l-side-margins l-side-margins--media">
+                        <div class="l-side-margins l-side-margins--media l-side-margins--layout-@layoutType">
                             <div class="facia-container__inner container--rolled-up-hide">
                                 <div class="container__body">
                                 @defining(items.slice(3, 7)) { items =>
@@ -69,7 +69,7 @@
                 }
                 @if(items.size > 7) {
                     <div class="container__banding">
-                        <div class="l-side-margins l-side-margins--media">
+                        <div class="l-side-margins l-side-margins--media l-side-margins--layout-@layoutType">
                             <div class="facia-container__inner container--rolled-up-hide">
                                 <div class="container__body">
                                 @defining(items.drop(7)) { items =>

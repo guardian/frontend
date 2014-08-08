@@ -432,7 +432,10 @@ object Switches extends Collections {
 
   val CenturyRedirectionSwitch = Switch("Feature Switches", "redirect-century-pages",
     "If switched on, we redirect /century and /century/yyyy-yyyy to valid (non-R1) endpoints",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
+    safeState = Off,
+
+    // extending as the owner of the switch is on holiday.
+    sellByDate = new LocalDate(2014, 8, 18)
   )
 
   val ChildrensBooksSwitch = Switch("Feature Switches", "childrens-books-hide-popular",
