@@ -20,6 +20,9 @@ $item-top-border-height: 1px;
     .item__image-container {
         margin-top: 0 !important;
     }
+    .item__top-border {
+        border-top-width: 0 !important;
+    }
 }
 @mixin show-only-if-svg-is-supported {
     display: none;
