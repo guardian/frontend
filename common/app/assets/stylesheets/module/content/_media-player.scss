@@ -609,6 +609,9 @@ $vjs-progress-inset-bottom: 4px;
 
 /* End slate
    ========================================================================== */
+.gu-media--hide-endslate .end-slate-container {
+    display: none;
+}
 
 .end-slate-container {
     display: none;

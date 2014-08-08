@@ -229,6 +229,11 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 /* App onboarding messages
    ========================================================================== */
+.site-message--android,
+.site-message--ios {
+    position: relative;
+}
+
 .site-message--android {
     @include rem((
         max-height: 140px
@@ -241,16 +246,31 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .site-message__inner {
         position: relative;
+        @include rem((
+            padding-top: $gs-baseline/2,
+            padding-bottom: $gs-baseline/2
+        ));
     }
 
     .site-message__close {
+        display: block;
+        position: absolute;
         @include rem((
             top: $gs-baseline/4,
             left: $gs-gutter/4,
             width: $gs-gutter,
             height: $gs-gutter
         ));
+    }
+
+    .site-message__close-btn {
+        position: relative;
         right: auto;
+        bottom: auto;
+        @include rem((
+            width: $gs-gutter,
+            height: $gs-gutter
+        ));
         background-color: $c-neutral1;
         @include border-radius(50%);
         @include box-shadow(0px 1px 0px $c-neutral3);
@@ -343,20 +363,30 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 
     .site-message__close {
+        display: block;
+        position: absolute;
         @include rem((
             top: $gs-baseline*2,
             left: $gs-gutter/4,
             width: $gs-gutter,
             height: $gs-gutter
         ));
+    }
+
+    .site-message__close-btn {
         right: auto;
+        bottom: auto;
+        @include rem((
+            width: $gs-gutter,
+            height: $gs-gutter
+        ));
 
         &:before {
             display: block;
             position: absolute;
             content: '×';
-            top: 0;
             @include rem((
+                top: -($gs-baseline/2),
                 left: 2px
             ));
             @include font($helvetica, 200, 24px);
