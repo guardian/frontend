@@ -316,6 +316,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val ABSoulmatesLabelling = Switch("A/B Tests", "ab-soulmates-labelling",
+    "If this switch is turned on, run the SoulmatesLabelling A/B test",
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 23)
+  )
+
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
@@ -453,6 +458,7 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
+    ABSoulmatesLabelling,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
     ChildrensBooksSwitch,
