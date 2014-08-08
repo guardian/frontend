@@ -18,8 +18,8 @@
     margin-right: auto;
     @include rem((
         max-width: gs-span(6),
-        padding-bottom: $gs-baseline * 4,
-        padding-top: $gs-baseline * 4
+        padding-bottom: $gs-baseline*4,
+        padding-top: $gs-baseline*4
     ));
 
     @include mq(desktop) {
@@ -45,8 +45,8 @@
     border-top: 1px solid $c-neutral7;
     @include box-sizing(border-box);
     @include rem((
-        margin: (($gs-baseline / 3) * 5) 0,
-        padding-top: (($gs-baseline / 3) * 5) - 1
+        margin: (($gs-baseline/3)*5) 0,
+        padding-top: (($gs-baseline/3)*5) - 1
     ));
 
     .identity-section__head {
@@ -54,7 +54,7 @@
     }
 
     .identity-section__text {
-        margin-top: ($gs-baseline / 3) * 2;
+        margin-top: ($gs-baseline/3)*2;
     }
 }
 
@@ -74,7 +74,7 @@
 
 .nav--registration {
     @include rem((
-        margin-top: ($gs-baseline / 3) * 8,
+        margin-top: ($gs-baseline/3)*8,
         font-size: 14px
     ));
     text-align: center;
@@ -95,13 +95,13 @@
 .social-signin {
     @include clearfix;
     @include rem((
-        margin: ($gs-baseline * 2) 0 (($gs-baseline / 3) * 4)
+        margin: ($gs-baseline*2) 0 (($gs-baseline/3)*4)
     ));
     text-align: center;
 
     @include mq(desktop) {
         @include rem((
-            margin: ($gs-baseline / 3) 0
+            margin: ($gs-baseline/3) 0
         ));
     }
 
@@ -109,7 +109,7 @@
         @include box-sizing(border-box);
         display: inline-block;
         @include rem((
-            margin-bottom: ($gs-baseline / 3) * 2
+            margin-bottom: ($gs-baseline/3)*2
         ));
 
         @include mq(tablet) {
@@ -136,7 +136,7 @@
 
         @include mq(tablet) {
             @include rem((
-                margin-right: $gs-gutter / 2,
+                margin-right: $gs-gutter/2,
                 width: gs-span(3)
             ));
         }
@@ -147,7 +147,7 @@
 
         @include mq(tablet) {
             @include rem((
-                margin-left: $gs-gutter / 2,
+                margin-left: $gs-gutter/2,
                 width: gs-span(3)
             ));
         }
@@ -203,14 +203,14 @@
     height: 60px;
     width: 60px;
     @include rem((
-        margin-right: $gs-gutter / 2
+        margin-right: $gs-gutter/2
     ));
 }
 
 .user-profile {
     @include mq(tablet) {
         @include rem((
-            margin-bottom: $gs-baseline * 2
+            margin-bottom: $gs-baseline*2
         ));
     }
 }
@@ -223,7 +223,7 @@
 
     @include mq(tablet) {
         @include rem((
-            margin-left: $gs-gutter * 3.5,
+            margin-left: $gs-gutter*3.5,
             margin-top: $gs-baseline,
             max-width: gs-span(6)
         ));
@@ -233,7 +233,7 @@
 
     @include mq(rightCol) {
         @include rem((
-            margin-top: $gs-baseline / 2
+            margin-top: $gs-baseline/2
         ));
         float: right;
     }
@@ -255,7 +255,7 @@
 .user-profile__web-page {
     display: block;
     @include rem((
-        margin-bottom: $gs-baseline / 3
+        margin-bottom: $gs-baseline/3
     ));
     max-width: 100%;
     overflow: hidden;
@@ -314,7 +314,7 @@
     @include mq($to: tablet) {
         a {
             @include rem((
-                padding-top: $gs-baseline / 4,
+                padding-top: $gs-baseline/4,
                 line-height: 13px !important
             ));
         }
@@ -343,12 +343,12 @@
 
 .membership-tab {
     @include rem((
-        padding-bottom: $gs-baseline * 2
+        padding-bottom: $gs-baseline*2
     ));
 
     .membership-tab__details-list {
         @include rem((
-            padding-top: $gs-baseline * 2
+            padding-top: $gs-baseline*2
         ));
 
         li {
@@ -381,7 +381,7 @@
             box-sizing: box-sizing();
             @include rem((
                 width: 120px,
-                margin: ($gs-baseline / 2) 0 0 0
+                margin: ($gs-baseline/2) 0 0 0
             ));
 
             @include mq(tablet) {
@@ -443,7 +443,7 @@
         @include rem((
             border-top: 1px solid $c-neutral4,
             padding: 15px 0 20px,
-            margin-top: $gs-gutter * 2
+            margin-top: $gs-gutter*2
         ));
     }
 

@@ -11,7 +11,7 @@ $disc-avatar-size: 44px;
 
 .disc-comment {
     @include rem((
-        padding-bottom: $gs-baseline / 2
+        padding-bottom: $gs-baseline/2
     ));
     @include fs-textSans(4);
 
@@ -23,7 +23,7 @@ $disc-avatar-size: 44px;
 }
 .disc-comment__meta {
     @include rem((
-        margin-bottom: $gs-baseline * 1.5
+        margin-bottom: $gs-baseline*1.5
     ));
     @include fs-textSans(1);
     color: $c-neutral2-contrasted;
@@ -42,7 +42,7 @@ $disc-avatar-size: 44px;
 .disc-comment__recommend {
     position: absolute;
     @include rem((
-        top: $gs-baseline / 2
+        top: $gs-baseline/2
     ));
     right: 0;
     width: auto;
@@ -51,7 +51,7 @@ $disc-avatar-size: 44px;
 .disc-comment__recommend-count {
     display: inline-block;
     @include rem((
-        margin-right: $gs-gutter / 4
+        margin-right: $gs-gutter/4
     ));
 
     .disc-comment__recommend--active & {
@@ -89,7 +89,7 @@ $disc-avatar-size: 44px;
     blockquote {
         @include rem((
             margin: $gs-baseline $gs-gutter,
-            padding-left: $gs-gutter / 2
+            padding-left: $gs-gutter/2
         ));
         border-left: 3px solid transparentize($c-neutral1, .75);
     }
@@ -121,7 +121,7 @@ $disc-avatar-size: 44px;
 }
 .disc-profile__user-info {
     @include rem((
-        padding-left: $disc-avatar-size + ($gs-gutter / 2)
+        padding-left: $disc-avatar-size + ($gs-gutter/2)
     ));
 }
 .disc-profile__badges {
