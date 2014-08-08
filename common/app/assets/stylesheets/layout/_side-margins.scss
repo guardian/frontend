@@ -56,11 +56,13 @@
         @include side-margins-position(gs-span(14));
     }
     @include mq(wide) {
-        margin-left: auto;
-        margin-right: auto;
-        @include rem((
-            width: gs-span(12) + ($gs-gutter*2)
-        ));
+        .has-page-skin & {
+            margin-left: auto;
+            margin-right: auto;
+            @include rem((
+                width: gs-span(12) + ($gs-gutter*2)
+            ));
+        }
     }
 }
 .l-side-margins--layout-content {
