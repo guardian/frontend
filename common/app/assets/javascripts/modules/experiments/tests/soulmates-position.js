@@ -29,11 +29,10 @@ define([
             {
                 id: 'move-from-the-guardian',
                 test: function () {
-                    var $fromTheGuardian = $('.global-navigation__section--from-the-guardian'),
-                        $parent = $fromTheGuardian.parent();
+                    var $fromTheGuardian = $('.global-navigation__section--from-the-guardian');
                     $fromTheGuardian
-                        .detach()
-                        .prependTo($parent);
+                        .parent()
+                        .prepend($fromTheGuardian.detach());
                 }
             }
         ];
