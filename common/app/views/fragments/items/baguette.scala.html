@@ -1,4 +1,9 @@
-@(trail: Trail, index: Int)(implicit request: RequestHeader)
+@(trail: model.Trail, index: Int)(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import model.Video
+@import views.html.fragments.media.video
+@import views.support.{GetClasses, SnapData, Item620}
 
 <div
     class="@GetClasses.forItem(trail, true) baguette"
@@ -7,10 +12,20 @@
 >
 
     <div class="item__container">
-        <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
-            @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
-            @fragments.items.elements.title(trail, index, 0)
-        </a>
+        @trail match {
+            case v: Video if v.mainVideo.isDefined => {
+                @video(v.mainVideo.get, Item620, v.webTitle, 620, 350, true, false)
+                <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
+                    @fragments.items.elements.title(trail, index, 0)
+                </a>
+            }
+            case _ => {
+                <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
+                    @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
+                    @fragments.items.elements.title(trail, index, 0)
+                </a>
+            }
+        }
 
         @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
 
