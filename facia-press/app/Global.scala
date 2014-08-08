@@ -37,7 +37,7 @@ object Global extends GlobalSettings
     ("s3-authorization-errors", S3Metrics.S3AuthorizationError.getAndReset.toDouble),
     ("content-api-seo-request-success", FaciaPressMetrics.ContentApiSeoRequestSuccess.getAndReset.toDouble),
     ("content-api-seo-request-failure", FaciaPressMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble),
-    ("content-api-fallbacks", FaciaPressMetrics.MemcachedFallbackMetric.getAndReset.toDouble)N
+    ("content-api-fallbacks", FaciaPressMetrics.MemcachedFallbackMetric.getAndReset.toDouble)
   )
 
   override def latencyMetrics: List[FrontendMetric] = List(UkPressLatencyMetric, UsPressLatencyMetric, AuPressLatencyMetric,
