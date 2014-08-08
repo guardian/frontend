@@ -50,7 +50,6 @@ trait DfpAgent {
 
     val targettedContributors = getContributorTags(tags) exists {tag =>
       val normalisedToDfpFormat: String = tag.webTitle.toLowerCase.replace(" ", "-")
-      println(s"I am $normalisedToDfpFormat")
       hasInlineMerchandise(normalisedToDfpFormat)
     }
     targettedKeywords || targettedContributors
