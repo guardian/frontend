@@ -1,6 +1,6 @@
 package test
 
-import conf.{HealthCheck}
+import conf.HealthCheck
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.test.Helpers._
 

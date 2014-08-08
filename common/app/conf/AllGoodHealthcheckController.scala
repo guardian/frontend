@@ -37,7 +37,7 @@ trait HealthcheckController extends Controller with Results with ExecutionContex
 class AllGoodHealthcheckController(override val testPort: Int, paths: String*) extends HealthcheckController {
 
   // this is for an "offline" healthcheck that the CDN hits
-  private val status = new AtomicBoolean(false)
+  protected val status = new AtomicBoolean(false)
   def break() = status.set(false)
   def isOk = status.get
 
