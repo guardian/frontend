@@ -1,9 +1,11 @@
 define([
+    'lodash/arrays/compact',
     'lodash/objects/isArray',
     'lodash/objects/pairs',
     'common/utils/detect',
     'common/utils/mediator'
 ], function(
+    compact,
     isArray,
     pairs,
     detect,
@@ -15,12 +17,12 @@ define([
     var model = {
 
         // returns a map of querystrings
-        // eg ?foo=bar&fizz=buzz returns x.foo = bar and x.fizz = buzz
+        // eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
         getUrlVars: function (options) {
             var opts = options || {},
                 vars = {},
                 hash,
-                hashes = (opts.query || model.getCurrentQueryString()).split('&'),
+                hashes = compact((opts.query || model.getCurrentQueryString()).split('&')),
                 hash_length = hashes.length;
             for (var i = 0; i < hash_length; i++) {
                 hash = hashes[i].split('=');
