@@ -1,14 +1,12 @@
 package com.gu.integration.test.features
 
-import org.openqa.selenium.WebDriver
-import com.gu.integration.test.SeleniumTestSuite
-import com.gu.integration.test.steps.ArticleSteps
-import com.gu.integration.test.steps.LiveBlogSteps
-import com.gu.integration.test.tags.ReadyForProd
-import com.gu.integration.test.steps.InteractiveArticleSteps
 import com.gu.automation.support.TestRetries
+import com.gu.integration.test.features.util.IntegrationSeleniumTestSuite
+import com.gu.integration.test.steps.{ArticleSteps, InteractiveArticleSteps, LiveBlogSteps}
+import com.gu.integration.test.tags.ReadyForProd
+import org.openqa.selenium.WebDriver
 
-class ArticleTests extends SeleniumTestSuite with TestRetries {
+class ArticleTests extends IntegrationSeleniumTestSuite {
 
   feature("Articles") {
     scenarioWeb("checking most popular module and related content exist on standard article page", ReadyForProd) {
