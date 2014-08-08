@@ -131,11 +131,7 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 8, 31)
   )
 
-  // Ad Targeting
-  /*
-    These switches are to control length of request to DFP
-    while there's a problem with the maximum length constraint
-  */
+  // Commercial Tags
 
   val AudienceScienceSwitch = Switch("Ad Targeting", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
@@ -149,12 +145,6 @@ object Switches extends Collections {
     "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
 
-  // Commercial Tags
-
-  val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
-    "Enable the IMR Worldwide audience segment tracking.",
-    safeState = Off, sellByDate = never)
-
   val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
     safeState = Off, sellByDate = never)
@@ -164,6 +154,10 @@ object Switches extends Collections {
     "Enable Foresee surveys for a sample of our audience",
     safeState = Off, sellByDate = never)
 
+  val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
+    "Enable the IMR Worldwide audience segment tracking.",
+    safeState = Off, sellByDate = never)
+
   val MediaMathSwitch = Switch("Commercial Tags", "media-math",
     "Enable Media Math audience segment tracking",
     safeState = Off, sellByDate = never)
@@ -171,6 +165,8 @@ object Switches extends Collections {
   val RemarketingSwitch = Switch("Commercial Tags", "remarketing",
     "Enable Remarketing tracking",
     safeState = Off, sellByDate = never)
+
+  // Content Recommendation
 
   val OutbrainSwitch = Switch("Content Recommendation", "outbrain",
     "Enable the Outbrain content recommendation widget.",
