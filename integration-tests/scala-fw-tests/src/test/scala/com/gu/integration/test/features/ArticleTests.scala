@@ -6,7 +6,7 @@ import com.gu.integration.test.steps.{ArticleSteps, InteractiveArticleSteps, Liv
 import com.gu.integration.test.tags.ReadyForProd
 import org.openqa.selenium.WebDriver
 
-class ArticleTests extends IntegrationSeleniumTestSuite with TestRetries {
+class ArticleTests extends IntegrationSeleniumTestSuite {
 
   feature("Articles") {
     scenarioWeb("checking most popular module and related content exist on standard article page", ReadyForProd) {
