@@ -2,32 +2,46 @@
    Multi component (AKA Frankenponent)
    ========================================================================== */
 
-.commercial--multi {
-    .commercial__head {
-        border-top: 0;
-        @include rem((
-            margin-top: $gs-baseline
-        ));
-        height: auto;
-        position: relative;
-    }
-    .lineitems {
-        @include rem((
-            margin: 0 (-$gs-gutter/2)
-        ));
-    }
-    .lineitem {
-        &:nth-child(n+3) {
-            display: none;
-        }
-	}
-    @include mq(tablet) {
-		.lineitem {
-			width: 33%;
-			
+.facia-container--layout-front,
+.facia-container--layout-content {
+	.commercial.commercial--multi {
+	    .commercial__head {
+	        border-top: 0;
+	        @include rem((
+	            margin-top: $gs-baseline
+	        ));
+	        height: auto;
+	        position: relative;
+	    }
+	    .lineitems {
+	        @include rem((
+	            margin: 0 (-$gs-gutter/2)
+	        ));
+	    }
+	    .lineitem {
 	        &:nth-child(n+3) {
-	            display: block;
+	            display: none;
 	        }
-        }
-    }
+		}
+		.lineitem__image {
+			width: 100%;
+		
+			.lineitem__soulmates & {
+				width: 50%;
+			}
+		
+		}
+		.lineitem__soulmates .lineitem__image {
+			width: initial;
+		}
+	    @include mq(tablet) {
+			.lineitem {
+				width: 33%;
+			
+				&:nth-child(n) {
+		            display: block;
+		        }
+	        }
+	    }
+	}
 }
