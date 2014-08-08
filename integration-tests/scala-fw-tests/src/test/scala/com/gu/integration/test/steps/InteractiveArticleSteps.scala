@@ -13,11 +13,11 @@ case class InteractiveArticleSteps(implicit driver: WebDriver) extends TestLoggi
   def goToInteractiveArticle(relativeLiveArticleUrl: String): InteractiveArticlePage = {
     logger.step(s"I am an Interactive Article page with relative url: $relativeLiveArticleUrl")
     lazy val interactiveArticle = new InteractiveArticlePage()
-    goTo(fromRelativeUrl(relativeLiveArticleUrl), interactiveArticle)
+    goTo(interactiveArticle, fromRelativeUrl(relativeLiveArticleUrl))
   }
 
   def checkInteractiveContentBodyIsDisplayedProperly(interactiveArticle: InteractiveArticlePage) = {
     logger.step("Check interactive article content body is displayed properly")
-    interactiveArticle.contentBodyIFrame.displayedImages.size should be > (2)
+    interactiveArticle.contentBodyIFrame().displayedImages.size should be > (2)
   }
 }

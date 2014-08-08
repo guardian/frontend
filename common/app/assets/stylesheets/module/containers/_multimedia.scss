@@ -110,13 +110,16 @@
         background-color: $c-neutral1;
 
         + .container__banding {
-            @include rem((
-                padding-top: $gs-baseline
-            ));
             background-color: lighten($c-neutral1, 4%);
 
             + .container__banding {
                 background-color: lighten($c-neutral1, 8%);
+            }
+
+            .facia-container__inner {
+                @include rem((
+                    padding-top: $gs-baseline
+                ));
             }
         }
     }
