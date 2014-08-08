@@ -32,7 +32,7 @@ trait DfpAgent {
   }
 
   private def getKeywordTags(tags: Seq[Tag]): Seq[Tag] = tags filter(_.isKeyword)
-
+  private def getContributorTags(tags: Seq[Tag]): Seq[Tag] = tags filter(_.isContributor)
   private def getKeywordOrSeriesTags(tags: Seq[Tag]): Seq[Tag] = tags.filter(t => t.isSeries || t.isKeyword)
 
   def isSponsored(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isSponsored(tag.id))
@@ -45,7 +45,16 @@ trait DfpAgent {
 
   def isProd = !Configuration.environment.isNonProd
 
-  def hasInlineMerchandise(tags: Seq[Tag]): Boolean = getKeywordTags(tags)  exists (tag => hasInlineMerchandise(tag.id))
+  def hasInlineMerchandise(tags: Seq[Tag]): Boolean = {
+    val targettedKeywords = getKeywordTags(tags)  exists (tag => hasInlineMerchandise(tag.id))
+
+    val targettedContributors = getContributorTags(tags) exists {tag =>
+      val normalisedToDfpFormat: String = tag.webTitle.toLowerCase.replace(" ", "-")
+      println(s"I am $normalisedToDfpFormat")
+      hasInlineMerchandise(normalisedToDfpFormat)
+    }
+    targettedKeywords || targettedContributors
+  }
   def hasInlineMerchandise(tagId: String): Boolean = inlineMerchandisingDeals exists (_.hasTag(tagId))
   def hasInlineMerchandise(config: Config): Boolean = isSponsoredContainer(config, hasInlineMerchandise)
 
