@@ -14,7 +14,7 @@
     <div class="item__container">
         @trail match {
             case v: Video if v.mainVideo.isDefined => {
-                @video(v.mainVideo.get, Item620, v.webTitle, 620, 350, true, false)
+                @video(v.mainVideo.get, Item620, v.webTitle, 620, 350, true, false, Some(v.endSlatePath))
                 <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
                     @fragments.items.elements.title(trail, index, 0)
                 </a>
