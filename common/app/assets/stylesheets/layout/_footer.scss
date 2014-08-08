@@ -51,11 +51,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, white, 
     overflow: hidden;
     background: $c-primary-footer-background-side-bar;
 }
-@include mq(tablet) {
-    .js-on .l-footer__navigation-wrapper {
-        display: none;
-    }
-}
 
 .l-footer__banner {
     background: $c-primary-footer-background;
