@@ -13,12 +13,12 @@ case class LiveBlogSteps(implicit driver: WebDriver) extends TestLogging with Ma
   def goToLiveBlog(relativeLiveArticleUrl: String): LiveBlogPage = {
     logger.step(s"I am an Live Article page with relative url: $relativeLiveArticleUrl")
     lazy val liveArticle = new LiveBlogPage()
-    goTo(fromRelativeUrl(relativeLiveArticleUrl), liveArticle)
+    goTo(liveArticle, fromRelativeUrl(relativeLiveArticleUrl))
   }
 
   def checkPopularInContentIsDisplayedProperly(liveBlogPage: LiveBlogPage) = {
     logger.step("Check Popular in ... content is displayed properly")
-    liveBlogPage.popularInModule.displayedLinks(3).size should be > 2
+    liveBlogPage.popularInModule().displayedLinks(3).size should be > 2
   }
 
   def openExpandSection(liveBlogPage: LiveBlogPage) = {
