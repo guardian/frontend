@@ -5,6 +5,7 @@
     @defining(Edition(request).briefNav) { briefNav =>
         <div class="@RenderClasses(Map(
                         ("navigation", true),
+                        ("js-navigation-footer", true),
                         ("navigation--collapsed", true),
                         ("navigation--has-signposting", !Edition.isEditionFront),
                         ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
@@ -44,7 +45,7 @@
                             </ul>
                         </nav>
                     </div>
-                    <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections">
+                    <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-footer">
                         <i class="navigation__toggle-burger honest-burger"><i></i><i></i><i></i></i>
                         <span class="navigation__toggle-label navigation__toggle-label--open">all<span class="navigation__toggle-label__extra"> sections</span></span>
                         <span class="navigation__toggle-label navigation__toggle-label--close">close</span>
