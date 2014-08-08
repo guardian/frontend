@@ -147,7 +147,7 @@ Loader.prototype.ready = function() {
                 $('.d-discussion').addClass('d-discussion--sentimental');
                 $('.discussion__show-threaded').remove();
             }.bind(this));
-        }.bind(this), 500); // used as we don't know when the open module loads.
+        }.bind(this), 800); // used as we don't know when the open module loads.
     }
 
     register.end('discussion');

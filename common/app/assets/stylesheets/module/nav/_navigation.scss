@@ -13,7 +13,7 @@ $navigation-toggler-width: 48px;
 $navigation-toggler-width-full: 130px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
-$c-navigation-background-side-bar: #1a587d; // manual tint of $c-top-navigation-background
+$c-navigation-background-side-bar: mix(guss-colour(guardian-brand-dark), #ffffff, 85%);
 
 $c-signposting-action: $c-newsDefault;
 $c-signposting-background: $c-navigation-base;

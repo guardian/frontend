@@ -14,7 +14,6 @@ define([
     'bonzo',
     'common/modules/component',
     'common/modules/analytics/beacon',
-    'raven',
     'common/modules/ui/message'
 ], function(
     $,
@@ -31,7 +30,6 @@ define([
     bonzo,
     Component,
     beacon,
-    Raven,
     Message
 ) {
 
@@ -393,13 +391,7 @@ define([
 
     var ready = function () {
         if(config.switches.enhancedMediaPlayer) {
-            Raven.context(function(){
-                Raven.setTagsContext({
-                    feature: 'media',
-                    contentType: config.page.contentType
-                });
-                modules.initPlayer();
-            });
+            modules.initPlayer();
         }
 
         if (config.isMedia) {

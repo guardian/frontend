@@ -1,3 +1,27 @@
+/**
+ * Guss default colours
+ * 
+ * @type Map
+ */
+/**
+ * Get a color from initial color palette
+ * 
+ * @param {String} $name                    - color to get
+ * @param {Map}    $palette ($guss-colours) - palette
+ *
+ * @requires {variable} guss-colours
+ *
+ * @return {Color | Null}
+ */
+/**
+ * Generate a color palette
+ *
+ * @param {Map}    $palette  ($guss-colours) - palette
+ * @param {String} $prefix   (c-)            - prefix
+ * @param {String} $property (color)         - property
+ *
+ * @requires {variable} guss-colours
+ */
 html {
   max-width: 60em;
   margin-left: auto;
@@ -20,10 +44,13 @@ a {
   margin: 2em; }
 
 .b-guardian-brand {
-  background-color: #214583; }
+  background-color: #005689; }
 
 .b-guardian-brand-light {
   background-color: #94b1ca; }
+
+.b-guardian-brand-dark {
+  background-color: #00456e; }
 
 .b-error {
   background-color: #d61d00; }
@@ -158,6 +185,14 @@ a {
   .b-guardian-brand-light:before {
     visibility: hidden;
     content: "guardian-brand-light"; }
+
+.b-guardian-brand-dark {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-guardian-brand-dark:before {
+    visibility: hidden;
+    content: "guardian-brand-dark"; }
 
 .b-error {
   text-shadow: 0 0 3px #000000;

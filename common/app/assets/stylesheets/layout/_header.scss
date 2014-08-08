@@ -7,7 +7,7 @@ $c-guardian-services-action: #ffffff;
 
 .l-header {
     position: relative;
-    background: $c-newsDefault;
+    background: $c-brandBlue;
 
     @include mq(wide) {
         .has-page-skin & .gs-container {

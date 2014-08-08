@@ -23,9 +23,10 @@
             font-family: $family;
             src: url('#{$url + $path + $filename}.eot'); // IE9 Compat Modes
             src: url('#{$url + $path + $filename}.eot?#iefix') format('embedded-opentype'), // IE6-IE8
+                 url('#{$url + $path + $filename}.woff2') format('woff2'), // Very Modern Browsers
                  url('#{$url + $path + $filename}.woff') format('woff'), // Modern Browsers
                  url('#{$url + $path + $filename}.ttf') format('truetype'), // Safari, Android, iOS
-                 url('#{$url + $path + $filename}.svg') format('svg'); // Legacy iOS
+                 url('#{$url + $path + $filename}.svg##{$filename}') format('svg'); // Legacy iOS
             font-weight: $weight;
             font-style: unquote($style);
             font-stretch: normal;
@@ -68,7 +69,6 @@
         $style: $font-style
     );
 }
-
 
 /**
  * Output the @font-face declaration for Guss webfonts.

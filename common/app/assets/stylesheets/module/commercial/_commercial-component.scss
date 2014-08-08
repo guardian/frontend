@@ -578,6 +578,28 @@ $commercial-cta-diameter: (
     }
 }
 
+.commercial--v-high__body {
+    @include mq($to: mobileLandscape) {
+        .highitem__img {
+            width: 100px;
+            float: none;
+            @include rem((
+                margin-bottom: $gs-baseline/2
+            ));
+        }
+    }
+
+    @include mq(leftCol, wide) {
+        .highitem__img {
+            width: 100%;
+            float: none;
+            @include rem((
+                margin-bottom: $gs-baseline/2
+            ));
+        }
+    }
+}
+
 .commercial__home-link {
     position: relative;
     display: inline-block;
