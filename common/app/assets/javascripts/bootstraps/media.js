@@ -14,7 +14,6 @@ define([
     'bonzo',
     'common/modules/component',
     'common/modules/analytics/beacon',
-    'raven',
     'common/modules/ui/message'
 ], function(
     $,
@@ -31,7 +30,6 @@ define([
     bonzo,
     Component,
     beacon,
-    Raven,
     Message
 ) {
 
