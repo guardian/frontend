@@ -9,12 +9,8 @@ define([
          */
         resizeIfPresent: function(el){
             if(!!el){
-                var $el = bonzo(el),
-                    $parent = $el.parent();
-
-                if(parent.length !== 0){
-                    $el.css('height', $parent.css('height'));
-                }
+                var $el = bonzo(el);
+                $el.css('height', $el.parent().css('height'));
             }
         }
     };
