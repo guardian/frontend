@@ -126,12 +126,9 @@
             raven.config(
                 'http://' + config.page.sentryPublicApiKey + '@@' + config.page.sentryHost,
                 {
-                    logger: 'javascript',
                     whitelistUrls: [
-                        /localhost/,
                         /assets\.guim\.co\.uk/,
                         /ophan\.co\.uk/,
-                        /api\.nextgen\.guardianapps\.co\.uk/
                     ],
                     tags: {
                         edition: config.page.edition,
@@ -144,21 +141,24 @@
                 }
             ).install();
 
+            if (typeof define === 'function' && define.amd) {
+                window.define = raven.wrap({deep: false}, define);
+                window.require = raven.wrap({deep: false}, require);
+            }
+
             require(['common/utils/ajax', 'common/modules/experiments/ab'], function(ajax, ab) {
 
                 ajax.init();
                 ab.segmentUser();
                 ab.run();
 
-                if (guardian.config.switches.commercial) {
-
+                if (config.switches.commercial) {
                     require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
                         commercial.init();
                     });
                 }
 
                 if (guardian.isModernBrowser) {
-
                     @if(play.Play.isDev()) {
                         require(['bootstraps/dev'], function (devmode) { devmode.init(); });
                     }
@@ -166,7 +166,6 @@
                     require(['bootstraps/app'], function(bootstrap) {
                         bootstrap.go();
                     });
-
                 }
 
             });
