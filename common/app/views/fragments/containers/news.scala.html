@@ -25,8 +25,10 @@
                     data-component="@FaciaComponentName(config, collection)">
                     <div class="facia-container__inner">
                         <div class="container__border tone-@style.tone tone-accent-border"></div>
-                        <div class="container__header">
-                            <h2 class="container__title tone-news tone-background">
+                        <div class="@RenderClasses(Map(
+                            ("container__header", true),
+                            ("hide-on-mobile", (FaciaComponentName(config, collection) == "top-stories"))))">
+                            <h2 class="container__title">
                                 @fragments.containers.elements.dateOrTitle(collection, items)
                             </h2>
                         </div>

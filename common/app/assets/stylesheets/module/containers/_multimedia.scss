@@ -11,6 +11,7 @@
 
 .container--multimedia {
     @include item--hide-tone-border;
+    margin-bottom: 0;
 
     .container__title,
     .container__toggle__text,
@@ -26,9 +27,6 @@
     }
     .linkslist__item {
         border-top-color: mix(#ffffff, lighten($c-neutral1, 8%), 50%);
-    }
-    .container__title {
-        background-color: transparent;
     }
     .item {
         margin-bottom: 0;

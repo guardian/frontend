@@ -4,9 +4,6 @@
         margin-left: $gs-gutter/2 * -1,
         margin-right: $gs-gutter/2 * -1
     ));
-    @include mq(tablet, wide) {
-        padding-top: 0;
-    }
 
     + .facia-slice-wrapper {
         padding-top: 0;
