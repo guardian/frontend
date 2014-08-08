@@ -136,11 +136,6 @@
                         contentType: config.page.contentType,
                         buildNumber: config.page.buildNumber
                     },
-                    dataCallback: function(data) {
-                        console.log(data);
-                        // do somethign to data
-                        return data;
-                    },
                     shouldSendCallback: function(data) {
                         return Math.random() < 0.4 && guardian.config.switches.enableDiagnosticsLogging;
                     }
