@@ -1,4 +1,4 @@
-@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li", forcePlayable: Boolean = false)(implicit request: RequestHeader, config: model.Config)
+@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader, config: model.Config)
 
 @import common.LinkTo
 @import conf.Static
@@ -13,7 +13,7 @@
 
         <div class="item__container">
             @trail match {
-                case videoItem: Video if videoItem.mainVideo.isDefined && (trail.imageAdjust == "boost" || forcePlayable) => {
+                case videoItem: Video if videoItem.mainVideo.isDefined && trail.imageAdjust == "boost" => {
                     <div class="item__top-border tone-accent-border">
                         <div class="item__media-wrapper item__media-wrapper--has-icon">
                             <div class="item__video-container">
