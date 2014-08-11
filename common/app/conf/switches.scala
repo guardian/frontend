@@ -281,11 +281,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
-  val WorldCupArticleContainerSwitch = Switch("Feature Switches", "worldcup-article-container",
-    "If this switch is turned on world cup articles will have an extra container.",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
-  )
-
   val SentimentalCommentsSwitch = Switch("Feature Switches", "sentimental-comments",
     "When this switch is on, you will be able to put sentiment into your comments.",
     safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
@@ -496,7 +491,6 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     EnhanceTweetsSwitch,
     WorldCupWallchartEmbedSwitch,
-    WorldCupArticleContainerSwitch,
     SentimentalCommentsSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
