@@ -8,7 +8,7 @@ import org.openqa.selenium.{WebDriver, WebElement}
  */
 class ContainerWithSigninModulePage(implicit driver: WebDriver) extends ParentPage {
 
-  def SignInModule(): SignInModule = {
+  def signInModule(): SignInModule = {
     new SignInModule()
   }
 }

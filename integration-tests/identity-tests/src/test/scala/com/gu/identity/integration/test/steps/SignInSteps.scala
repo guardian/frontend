@@ -9,14 +9,14 @@ import org.scalatest.Matchers
 case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matchers {
 
   def signIn() = {
-    val signInPage = new ContainerWithSigninModulePage().SignInModule().clickSignInLink()
+    val signInPage = new ContainerWithSigninModulePage().signInModule().clickSignInLink()
     signInPage.enterEmail(get("loginEmail"))
     signInPage.enterPwd(get("loginPwd"))
     signInPage.signInButton.click()
   }
 
   def checkUserIsLoggedIn() = {
-    val loginName = new ContainerWithSigninModulePage().SignInModule().signInName.getText
+    val loginName = new ContainerWithSigninModulePage().signInModule().signInName.getText
     loginName should be(get("loginName"))
 
     val loginCookie = driver.manage().getCookieNamed("GU_U")
