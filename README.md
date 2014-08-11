@@ -52,8 +52,6 @@ aws_secret_access_key=[YOUR_AWS_SECRET_ACCESS_KEY]
 region=eu-west-1
 ```
 
-
-
 Nginx
 -----
 
