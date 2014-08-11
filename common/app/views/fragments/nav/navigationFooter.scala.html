@@ -2,31 +2,27 @@
 @import common._
 
 @defining(Edition(request).navigation) { navigation =>
-    @defining(Edition(request).briefNav) { briefNav =>
-        <div class="@RenderClasses(Map(
-                        ("navigation", true),
-                        ("js-navigation-footer", true),
-                        ("navigation--collapsed", true),
-                        ("navigation--has-signposting", !Edition.isEditionFront),
-                        ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
-                    ))">
-            <div class="gs-container">
-                <div class="navigation__inner" aria-hidden="true">
-                    <div class="navigation__scroll">
-                        <nav class="navigation__container navigation__container--second">
-                            @fragments.nav.topNavigation(metaData, navigation, briefNav)
-                        </nav>
-                    </div>
-                    <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-footer">
-                        <i class="navigation__toggle-burger honest-burger"><i></i><i></i><i></i></i>
-                        <span class="navigation__toggle-label navigation__toggle-label--open">all<span class="navigation__toggle-label__extra"> sections</span></span>
-                        <span class="navigation__toggle-label navigation__toggle-label--close">close</span>
-                    </a>
+    <div class="@RenderClasses(Map(
+                    ("navigation", true),
+                    ("js-navigation-footer", true),
+                    ("navigation--collapsed", true)
+                ))">
+        <div class="gs-container">
+            <div class="navigation__inner" aria-hidden="true">
+                <div class="navigation__scroll">
+                    <nav class="navigation__container navigation__container--second">
+                        @fragments.nav.topNavigation(metaData, navigation)
+                    </nav>
                 </div>
-                <div class="js-transfuse navigation__expandable" data-transfuse-target="js-mega-nav-placeholder" data-link-name="global navigation: footer : sections">
-                    @fragments.nav.globalNavigation(metaData)
-                </div>
+                <a class="navigation__toggle js-navigation-toggle" href="#footer-nav" data-link-name="nav : allSections" data-target-nav="js-navigation-footer">
+                    <i class="navigation__toggle-burger honest-burger"><i></i><i></i><i></i></i>
+                    <span class="navigation__toggle-label navigation__toggle-label--open">all<span class="navigation__toggle-label__extra"> sections</span></span>
+                    <span class="navigation__toggle-label navigation__toggle-label--close">close</span>
+                </a>
+            </div>
+            <div class="js-transfuse navigation__expandable" data-transfuse-target="js-mega-nav-placeholder" data-link-name="global navigation: footer : sections">
+                @fragments.nav.globalNavigation(metaData)
             </div>
         </div>
-    }
+    </div>
 }
