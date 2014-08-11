@@ -11,7 +11,7 @@ object WallchartController extends Controller with Logging with ExecutionContext
   def renderWallchartEmbed(competitionTag: String) = renderWallchart(competitionTag, true)
   def renderWallchart(competitionTag: String, embed: Boolean = false) = Action { implicit request =>
     Competitions().withTag(competitionTag).map { competition =>
-      val page = new Page(
+      val page = new FootballPage(
         competition.url.stripSuffix("/"),
         "football",
         s"${competition.fullName} wallchart",
@@ -30,7 +30,7 @@ object WallchartController extends Controller with Logging with ExecutionContext
   def renderR2FrontWorldCupEmbed() = Action { implicit request =>
     conf.Switches.WorldCupWallchartEmbedSwitch.isSwitchedOn
     Competitions().withTag("world-cup-2014").map { competition =>
-      val page = new Page(
+      val page = new FootballPage(
         competition.url.stripSuffix("/"),
         "football",
         s"${competition.fullName} temp embed",

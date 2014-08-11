@@ -22,7 +22,7 @@ object MatchDayController extends MatchListController with CompetitionLiveFilter
   private def renderLiveMatches(date: LocalDate) = Action { implicit request =>
     val matches = new MatchDayList(Competitions(), date)
     val webTitle = if (date == LocalDate.now(Edition.defaultEdition.timezone)) "Live matches" else "Matches"
-    val page = new Page("football/live", "football", webTitle, "GFE:Football:automatic:live matches")
+    val page = new FootballPage("football/live", "football", webTitle, "GFE:Football:automatic:live matches")
     renderMatchList(page, matches, filters)
   }
 
@@ -38,7 +38,7 @@ object MatchDayController extends MatchListController with CompetitionLiveFilter
   private def renderCompetitionMatches(competitionTag: String, date: LocalDate): Action[AnyContent] = Action { implicit request =>
     lookupCompetition(competitionTag).map { competition =>
       val webTitle = if (date == LocalDate.now(Edition.defaultEdition.timezone)) s"Today's ${competition.fullName} matches" else s" ${competition.fullName} matches"
-      val page = new Page(s"football/$competitionTag/live", "football", webTitle, "GFE:Football:automatic:live matches")
+      val page = new FootballPage(s"football/$competitionTag/live", "football", webTitle, "GFE:Football:automatic:live matches")
       val matches = new CompetitionMatchDayList(Competitions(), competition.id, date)
       renderMatchList(page, matches, filters)
     }.getOrElse {
@@ -49,7 +49,7 @@ object MatchDayController extends MatchListController with CompetitionLiveFilter
 //  @deprecated("Use JSON version of the normal match list endpoints", "early 2014")
   def matchDayComponent = Action { implicit request =>
     val matches = new MatchDayList(Competitions(), LocalDate.now(Edition.defaultEdition.timezone))
-    val page = new Page("football", "football", "Today's matches", "GFE:Football:automatic:live matches")
+    val page = new FootballPage("football", "football", "Today's matches", "GFE:Football:automatic:live matches")
     Cached(10) {
       JsonComponent(page, football.views.html.matchList.matchesComponent(matches))
     }

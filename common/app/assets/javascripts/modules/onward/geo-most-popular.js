@@ -22,10 +22,6 @@ define([
 
     Component.define(GeoMostPopular);
 
-    GeoMostPopular.hideThumbnail = function() {
-      GeoMostPopular.prototype.endpoint = '/most-read-geo.json?hideThumb=true';
-    };
-
     GeoMostPopular.prototype.endpoint = '/most-read-geo.json';
 
     GeoMostPopular.prototype.ready = function() {
