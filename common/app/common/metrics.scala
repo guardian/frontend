@@ -4,13 +4,12 @@ import java.io.File
 import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
 import java.util.concurrent.atomic.AtomicLong
 
-import com.amazonaws.services.cloudwatch.model.{StandardUnit, Dimension}
-import metrics.{GaugeMetric, CountMetric, FrontendMetric}
+import com.amazonaws.services.cloudwatch.model.{Dimension, StandardUnit}
+import metrics.{CountMetric, FrontendMetric, FrontendTimingMetric, GaugeMetric}
 import model.diagnostics.CloudWatch
 import play.api.{GlobalSettings, Application => PlayApp}
 
 import scala.collection.JavaConversions._
-import scala.util.Try
 
 object MemcachedMetrics {
 
@@ -120,9 +119,7 @@ object S3Metrics {
 
 object ContentApiMetrics {
   object ElasticHttpTimingMetric extends FrontendTimingMetric(
-    "performance",
     "elastic-content-api-calls",
-    "Elastic Content API calls",
     "Elastic outgoing requests to content api"
   )
 
@@ -158,9 +155,7 @@ object ContentApiMetrics {
 
 object PaMetrics {
   object PaApiHttpTimingMetric extends FrontendTimingMetric(
-    "pa-api",
     "pa-api-calls",
-    "PA API calls",
     "outgoing requests to pa api"
   )
 
@@ -179,9 +174,7 @@ object PaMetrics {
 
 object DiscussionMetrics {
   object DiscussionHttpTimingMetric extends FrontendTimingMetric(
-    "performance",
     "discussion-api-calls",
-    "Discussion API calls",
     "outgoing requests to discussion api"
   )
 
@@ -337,30 +330,22 @@ object FaciaToolMetrics {
 object CommercialMetrics {
 
   object TravelOffersLoadTimingMetric extends FrontendTimingMetric(
-    "commercial",
     "commercial-travel-offers-load",
-    "Commercial Travel Offers load timing",
     "Time spent running travel offers data load jobs"
   )
 
   object MasterClassesLoadTimingMetric extends FrontendTimingMetric(
-    "commercial",
     "commercial-masterclasses-load",
-    "Commercial MasterClasses load timing",
     "Time spent running MasterClasses load jobs"
   )
 
   object JobsLoadTimingMetric extends FrontendTimingMetric(
-    "commercial",
     "commercial-jobs-load",
-    "Commercial Jobs load timing",
     "Time spent running job ad data load jobs"
   )
 
   object SoulmatesLoadTimingMetric extends FrontendTimingMetric(
-    "commercial",
     "commercial-soulmates-load",
-    "Commercial Soulmates load timing",
     "Time spent running soulmates ad data load jobs"
   )
 
@@ -369,9 +354,7 @@ object CommercialMetrics {
 
 object OnwardMetrics {
   object OnwardLoadTimingMetric extends FrontendTimingMetric(
-    "onward",
     "onward-most-popular-load",
-    "Onward Journey load timing",
     "Time spent running onward journey data load jobs"
   )
 
@@ -389,27 +372,6 @@ object Metrics {
   lazy val admin = AdminMetrics.all
   lazy val facia = FaciaMetrics.all
   lazy val faciaPress = FaciaPressMetrics.all
-}
-
-class FrontendTimingMetric(
-                            group: String,
-                            name: String,
-                            title: String,
-                            description: String) {
-
-  private val timeInMillis = new AtomicLong()
-  private val currentCount = new AtomicLong()
-
-  def recordTimeSpent(durationInMillis: Long) {
-    timeInMillis.addAndGet(durationInMillis)
-    currentCount.incrementAndGet
-  }
-  def totalTimeInMillis = timeInMillis.get
-  def count = currentCount.get
-  val getValue = () => totalTimeInMillis
-
-  def getAndReset: Long = currentCount.getAndSet(0)
-  def getAndResetTime: Long = Try(timeInMillis.getAndSet(0) / currentCount.getAndSet(0)).getOrElse(0L)
 }
 
 object PerformanceMetrics {

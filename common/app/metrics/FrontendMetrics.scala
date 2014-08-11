@@ -7,6 +7,7 @@ import com.amazonaws.services.cloudwatch.model.StandardUnit
 import common.AkkaAgent
 import org.joda.time.DateTime
 import scala.concurrent.Future
+import scala.util.Try
 
 sealed trait DataPoint {
   val value: Long
@@ -28,6 +29,24 @@ trait FrontendMetric {
   val metricUnit: StandardUnit
   def getAndResetDataPoints: List[DataPoint]
   def putDataPoints(points: List[DataPoint]): Unit
+}
+
+case class FrontendTimingMetric(name: String, description: String) extends FrontendMetric {
+
+  val metricUnit: StandardUnit = StandardUnit.Milliseconds
+
+  private val timeInMillis = new AtomicLong()
+  private val currentCount = new AtomicLong()
+
+  def recordDuration(durationInMillis: Long): Unit = {
+    timeInMillis.addAndGet(durationInMillis)
+    currentCount.incrementAndGet
+  }
+
+  def getAndResetDataPoints: List[DataPoint] = List(DurationDataPoint(Try(timeInMillis.getAndSet(0) / currentCount.getAndSet(0)).getOrElse(0L)))
+  def getAndReset: Long = getAndResetDataPoints.map(_.value).reduce(_ + _)
+
+  def putDataPoints(points: List[DataPoint]): Unit = points.map(_.value).map(recordDuration)
 }
 
 case class GaugeMetric(name: String, description: String, get: () => Long, metricUnit: StandardUnit = StandardUnit.Megabytes) extends FrontendMetric {

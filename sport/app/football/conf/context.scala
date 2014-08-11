@@ -80,7 +80,7 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
     override def GET(urlString: String): Future[pa.Response] = {
         val start = System.currentTimeMillis()
         val promiseOfResponse = WS.url(urlString).withRequestTimeout(2000).get()
-        promiseOfResponse.onComplete( r => PaApiHttpTimingMetric.recordTimeSpent(System.currentTimeMillis() - start))
+        promiseOfResponse.onComplete( r => PaApiHttpTimingMetric.recordDuration(System.currentTimeMillis() - start))
 
         promiseOfResponse.map{ r =>
 

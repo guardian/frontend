@@ -5,10 +5,10 @@ import java.util.concurrent.TimeoutException
 
 import com.gu.openplatform.contentapi.connection.{Http, HttpResponse}
 import common.ContentApiMetrics.ContentApi404Metric
-import common.{ExecutionContexts, FrontendTimingMetric}
+import common.ExecutionContexts
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
-import metrics.CountMetric
+import metrics.{CountMetric, FrontendTimingMetric}
 import play.api.libs.ws.{WS, WSAuthScheme}
 
 import scala.concurrent.Future
@@ -37,7 +37,7 @@ import play.api.Play.current
     // record metrics
     response.onSuccess {
       case r if r.status == 404 => ContentApi404Metric.increment()
-      case r if r.status == 200 => httpTimingMetric.recordTimeSpent(currentTimeMillis - start)
+      case r if r.status == 200 => httpTimingMetric.recordDuration(currentTimeMillis - start)
     }
 
     response.onFailure {
