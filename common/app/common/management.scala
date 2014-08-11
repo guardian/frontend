@@ -104,18 +104,6 @@ case class DefaultSwitch(name: String, description: String, initiallyOn: Boolean
 
 }
 
-class CountMetric(
-                   val group: String, val name: String, val title: String, val description: String,
-                   override val master: Option[Metric] = None) extends AbstractMetric[Long] {
-  val `type`: String = "counter"
-
-  private val _count = new AtomicLong()
-  def recordCount(count: Long): Long = _count.addAndGet(count)
-  def increment(): Long = recordCount(1)
-
-  def count = _count.get
-  val getValue = () => count
-}
 object ManifestFile {
 
   lazy val asStringOpt =
