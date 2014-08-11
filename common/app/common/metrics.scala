@@ -373,7 +373,7 @@ object CommercialMetrics {
     None
   )
 
-  val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric, JobsLoadTimingMetric, MasterClassesLoadTimingMetric, SoulmatesLoadTimingMetric)
+  val all = Seq(TravelOffersLoadTimingMetric, JobsLoadTimingMetric, MasterClassesLoadTimingMetric, SoulmatesLoadTimingMetric)
 }
 
 object OnwardMetrics {
@@ -385,7 +385,7 @@ object OnwardMetrics {
     None
   )
 
-  val all: Seq[Metric] = Seq(OnwardLoadTimingMetric)
+  val all = Seq(OnwardLoadTimingMetric)
 }
 
 

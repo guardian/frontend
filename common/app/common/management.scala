@@ -14,17 +14,6 @@ trait Metric {
   def name: String
 }
 
-trait AbstractMetric[T] extends Metric {
-  val `type`: String
-  val group: String
-  val name: String
-  val title: String
-  val description: String
-  val master: Option[Metric] = None
-
-  val getValue: () => T
-
-}
 trait Switchable {
   def switchOn()
   def switchOff()
@@ -46,7 +35,7 @@ trait Switchable {
 
 class TimingMetric(
                     val group: String, val name: String, val title: String, val description: String,
-                    override val master: Option[Metric] = None) extends AbstractMetric[Long] {
+                    val master: Option[Metric] = None) {
   val `type` = "timer"
 
   private val _totalTimeInMillis = new AtomicLong()
@@ -68,7 +57,7 @@ object TimingMetric {
 
 class GaugeMetric[T](
                       val group: String, val name: String, val title: String, val description: String,
-                      val getValue: () => T, override val master: Option[Metric] = None) extends AbstractMetric[T] {
+                      val getValue: () => T, val master: Option[Metric] = None) {
   val `type`: String = "gauge"
 }
 
