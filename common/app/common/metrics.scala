@@ -357,10 +357,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   private def report() {
     val systemMetrics  = this.systemMetrics
     val applicationMetrics  = this.applicationMetrics
-    CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
-    for (metrics <- applicationMetrics.grouped(20))
-      CloudWatch.putWithDimensions(applicationMetricsNamespace, metrics, Seq(applicationDimension))
-
+    CloudWatch.putSystemMetricsWithStage(systemMetrics, applicationDimension)
+    CloudWatch.putMetricsWithStage(applicationMetrics, applicationDimension)
     CloudWatch.putMetricsWithStage(latencyMetrics, applicationDimension)
   }
 
