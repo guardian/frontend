@@ -1,5 +1,7 @@
 package metrics
 
+import java.util.concurrent.atomic.AtomicLong
+
 import akka.agent.Agent
 import com.amazonaws.services.cloudwatch.model.StandardUnit
 import common.AkkaAgent
@@ -13,11 +15,27 @@ sealed trait DataPoint {
 
 case class DurationDataPoint(value: Long, time: Option[DateTime] = None) extends DataPoint
 
+case class CountDataPoint(value: Long) extends DataPoint {
+  val time: Option[DateTime] = None
+}
+
 trait FrontendMetric {
   val name: String
   val metricUnit: StandardUnit
   def getAndResetDataPoints: List[DataPoint]
-  def putDataPoints(points: List[DataPoint])
+  def putDataPoints(points: List[DataPoint]): Unit
+}
+
+case class CountMetric(name: String) extends FrontendMetric {
+  private val count: AtomicLong = new AtomicLong(0L)
+  val metricUnit = StandardUnit.Count
+
+  def getAndResetDataPoints: List[DataPoint] = List(CountDataPoint(count.getAndSet(0L)))
+  def getAndReset: Long = getAndResetDataPoints.map(_.value).reduce(_ + _)
+  def putDataPoints(points: List[DataPoint]): Unit = for(dataPoint <- points) count.addAndGet(dataPoint.value)
+
+  def record(): Unit = count.incrementAndGet()
+  def increment(): Unit = record()
 }
 
 case class DurationMetric(name: String, metricUnit: StandardUnit) extends FrontendMetric {
