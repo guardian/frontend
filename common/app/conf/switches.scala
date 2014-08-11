@@ -435,7 +435,7 @@ object Switches extends Collections {
 
   val ChildrensBooksSwitch = Switch("Feature Switches", "childrens-books-hide-popular",
     "If switched on, video pages in the childrens books section will not show popular videos",
-    safeState = On, sellByDate = new LocalDate(2014, 8, 12)
+    safeState = On, sellByDate = new LocalDate(2014, 9, 8)
   )
 
   val all: List[Switch] = List(
