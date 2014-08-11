@@ -1,4 +1,4 @@
-@(video: model.VideoElement, profile: views.support.Profile, title: String, width: Int, height: Int, use16_9AspectRatio: Boolean = true, showControlsAtStart: Boolean = true)
+@(video: model.VideoElement, profile: views.support.Profile, title: String, width: Int, height: Int, use16_9AspectRatio: Boolean = true, showControlsAtStart: Boolean = true, endSlatePath: Option[String] = None)
 
 @import conf.Static
 @import views.support.RenderClasses
@@ -16,7 +16,7 @@
                 "gu-media--hide-endslate" -> (width < 620),
                 "js-gu-media" -> true
             ))" data-title="@title"
-                poster="@poster" data-duration="@video.duration.toString()" data-media-id="@video.id">
+                poster="@poster" data-duration="@video.duration.toString()" data-media-id="@video.id" @endSlatePath.map { path => data-end-slate="@path"}>
 
                 @video.encodings.map { encoding =>
                     <source src="@encoding.url" type="@encoding.format" />

@@ -5,9 +5,7 @@ define([
     'common/modules/ui/rhc',
     'common/modules/article/truncate',
     'common/modules/article/twitter',
-    'common/modules/open/cta',
-    'common/modules/article/world-cup',
-    'lodash/collections/contains'
+    'common/modules/open/cta'
 
 ], function (
     mediator,
@@ -16,9 +14,7 @@ define([
     rhc,
     truncate,
     twitter,
-    OpenCta,
-    worldCup,
-    _contains
+    OpenCta
 ) {
 
     var modules = {
@@ -46,14 +42,6 @@ define([
             // Ensure that truncation occurs before the tweet upgrading.
             truncate();
             twitter.enhanceTweets();
-        },
-
-        initWorldCup: function(config) {
-            // Only add the world cup container on pages with the world cup keyword.
-            var pageTags = config.page.keywordIds.split(',');
-            if (config.switches.worldcupArticleContainer && _contains(pageTags,'football/world-cup-2014')) {
-                worldCup();
-            }
         }
     };
 
