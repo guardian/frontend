@@ -19,7 +19,7 @@
         <div class="fromage__container">
             @trail match {
                 case v: Video if v.mainVideo.isDefined && imageAdjust == "boost" => {
-                    @fromageVideo(v.mainVideo.get, v.webTitle, true, true)
+                    @fromageVideo(v.mainVideo.get, v.webTitle, true, true, Some(v.endSlatePath))
 
                     <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
                         @fragments.items.elements.title(trail, index, 0)

@@ -278,12 +278,12 @@ object Switches extends Collections {
 
   val WorldCupWallchartEmbedSwitch = Switch("Feature Switches", "worldcup-wallchart-embed",
     "If this switch is turned on JavaScript will load. It will be removed after the new Premier League session starts.",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 10)
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
   val WorldCupArticleContainerSwitch = Switch("Feature Switches", "worldcup-article-container",
     "If this switch is turned on world cup articles will have an extra container.",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 10)
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
   val SentimentalCommentsSwitch = Switch("Feature Switches", "sentimental-comments",
@@ -432,7 +432,10 @@ object Switches extends Collections {
 
   val CenturyRedirectionSwitch = Switch("Feature Switches", "redirect-century-pages",
     "If switched on, we redirect /century and /century/yyyy-yyyy to valid (non-R1) endpoints",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
+    safeState = Off,
+
+    // extending as the owner of the switch is on holiday.
+    sellByDate = new LocalDate(2014, 8, 18)
   )
 
   val ChildrensBooksSwitch = Switch("Feature Switches", "childrens-books-hide-popular",
