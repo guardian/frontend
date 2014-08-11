@@ -14,7 +14,7 @@ object Global extends WithFilters(Gzipper)
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
 
   override lazy val applicationName = "frontend-facia-tool"
-  override def applicationMetrics: List[FrontendMetric] = List(
+  override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
     FaciaToolMetrics.ApiUsageCount,
     FaciaToolMetrics.ProxyCount,
     FaciaToolMetrics.ContentApiPutFailure,
