@@ -33,7 +33,7 @@ correct encoding and indentation settings for the project.
 
 Configuration
 -------------
-You need 2 files on your machine.
+You need 3 files on your machine.
 
 The first file is called `/etc/gu/install_vars` and has the following contents…
 ```
@@ -44,6 +44,15 @@ The second file is called `[YOUR_HOME_DIR]/.gu/frontend.properties` and you
 can get its contents from a shared document. Ask your team mates to share it
 with you. If it has already been shared with you just search for
 "frontend.properties" in your documents.
+
+The third file is called `[YOUR_HOME_DIR]/.aws/credentials` and contains:
+```
+aws_access_key_id=[YOUR_AWS_ACCESS_KEY]
+aws_secret_access_key=[YOUR_AWS_SECRET_ACCESS_KEY]
+region=eu-west-1
+```
+
+
 
 Nginx
 -----
