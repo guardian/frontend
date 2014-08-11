@@ -14,7 +14,8 @@ define([
     'bonzo',
     'common/modules/component',
     'common/modules/analytics/beacon',
-    'common/modules/ui/message'
+    'common/modules/ui/message',
+    'raven'
 ], function(
     $,
     ajax,
@@ -30,7 +31,8 @@ define([
     bonzo,
     Component,
     beacon,
-    Message
+    Message,
+    raven
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint()),
@@ -173,6 +175,13 @@ define([
             events.ready();
         },
 
+        bindErrorHandler: function(player) {
+            var err = player.error();
+            if(err !== null) {
+                raven.captureException(new Error(err.message), {tags: { feature: 'player' }});
+            }
+        },
+
         getVastUrl: function() {
             var adUnit = config.page.adUnit,
                 custParams = urlUtils.constructQuery(dfp.buildPageTargeting({ page: config.page })),
@@ -253,6 +262,9 @@ define([
                             autoplay: false,
                             preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
                         });
+
+                    //Location of this is important
+                    modules.bindErrorHandler(vjs);
 
                     vjs.ready(function () {
                         var player = this;
