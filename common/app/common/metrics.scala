@@ -359,12 +359,7 @@ object FaciaPressMetrics {
 }
 
 object FaciaToolMetrics {
-  object ApiUsageCount extends SimpleCountMetric(
-    "facia-api",
-    "facia-api-usage",
-    "Facia API usage count",
-    "Number of requests to the Facia API from clients (The tool)"
-  )
+  object ApiUsageCount extends metrics.CountMetric("facia-api-usage")
 
   object ProxyCount extends SimpleCountMetric(
     "facia-api",
@@ -423,7 +418,6 @@ object FaciaToolMetrics {
   )
 
   val all: Seq[Metric] = Seq(
-    ApiUsageCount,
     ProxyCount,
     ExpiredRequestCount,
     DraftPublishCount,
