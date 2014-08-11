@@ -17,7 +17,7 @@ trait FrontendMetric {
   val name: String
   val metricUnit: StandardUnit
   def getAndResetDataPoints: List[DataPoint]
-  def putDataPoints(points: List[DataPoint]): Future[List[DataPoint]]
+  def putDataPoints(points: List[DataPoint])
 }
 
 case class DurationMetric(name: String, metricUnit: StandardUnit) extends FrontendMetric {
@@ -26,13 +26,15 @@ case class DurationMetric(name: String, metricUnit: StandardUnit) extends Fronte
 
   def getDataPoints: List[DataPoint] = dataPoints.get()
 
+  def getDataFuture: Future[List[DataPoint]] = dataPoints.future()
+
   def getAndResetDataPoints: List[DataPoint] = {
     val points = dataPoints.get()
     dataPoints.alter(_.diff(points))
     points
   }
 
-  def putDataPoints(points: List[DataPoint]): Future[List[DataPoint]] = dataPoints.alter(points ::: _)
+  def putDataPoints(points: List[DataPoint]): Unit = dataPoints.alter(points ::: _)
 
   def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: _)
 
