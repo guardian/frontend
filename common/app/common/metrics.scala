@@ -292,47 +292,47 @@ object FaciaPressMetrics {
 }
 
 object FaciaToolMetrics {
-  object ApiUsageCount extends metrics.CountMetric(
+  object ApiUsageCount extends CountMetric(
     "facia-api-usage",
     "Number of requests to the Facia API from clients (The tool)"
   )
 
-  object ProxyCount extends metrics.CountMetric(
+  object ProxyCount extends CountMetric(
     "facia-proxy-usage",
     "Number of requests to the Facia proxy endpoints (Ophan and Content API) from clients"
   )
 
-  object ExpiredRequestCount extends metrics.CountMetric(
+  object ExpiredRequestCount extends CountMetric(
     "facia-auth-expired",
     "Number of expired requests coming into an endpoint using ExpiringAuthAction"
   )
 
-  object DraftPublishCount extends metrics.CountMetric(
+  object DraftPublishCount extends CountMetric(
     "facia-draft-publish",
     "Number of drafts that have been published"
   )
 
-  object ContentApiPutSuccess extends metrics.CountMetric(
+  object ContentApiPutSuccess extends CountMetric(
     "faciatool-contentapi-put-success",
     "Number of PUT requests that have been successful to the content api"
   )
 
-  object ContentApiPutFailure extends metrics.CountMetric(
+  object ContentApiPutFailure extends CountMetric(
     "faciatool-contentapi-put-failure",
     "Number of PUT requests that have failed to the content api"
   )
 
-  object InvalidContentExceptionMetric extends metrics.CountMetric(
+  object InvalidContentExceptionMetric extends CountMetric(
     "facia-invalid-content",
     "Number of times facia/facia-tool has thrown InvalidContent exceptions"
   )
 
-  object EnqueuePressSuccess extends metrics.CountMetric(
+  object EnqueuePressSuccess extends CountMetric(
     "faciatool-enqueue-press-success",
     "Number of successful enqueuing of press commands"
   )
 
-  object EnqueuePressFailure extends metrics.CountMetric(
+  object EnqueuePressFailure extends CountMetric(
     "faciatool-enqueue-press-failure",
     "Number of failed enqueuing of press commands"
   )
