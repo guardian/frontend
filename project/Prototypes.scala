@@ -39,14 +39,7 @@ trait Prototypes {
       "Akka" at "http://repo.akka.io/releases",
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Guardian Github Snapshots" at "http://guardian.github.com/maven/repo-snapshots",
-<<<<<<< HEAD
-      "Typesafe Ivy Releases" at "http://repo.typesafe.com/typesafe/releases",
-      "JBoss Releases" at "https://repository.jboss.org/nexus/content/repositories/releases",
-      "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
-      "Akka" at "http://repo.akka.io/releases"
-=======
       "JBoss Releases" at "https://repository.jboss.org/nexus/content/repositories/releases"
->>>>>>> e4bfb03a04e2f819663ffe926d51e8987121d523
     ),
 
     resolvers ++= Seq(
