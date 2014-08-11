@@ -50,7 +50,9 @@
                         <span class="navigation__toggle-label navigation__toggle-label--close">close</span>
                     </a>
                 </div>
-                @fragments.sections(metaData, true)
+                <div class="js-transfuse navigation__expandable" data-transfuse-target="js-mega-nav-placeholder" data-link-name="global navigation: footer : sections">
+                    @fragments.nav.globalNavigation(metaData)
+                </div>
             </div>
         </div>
     }
