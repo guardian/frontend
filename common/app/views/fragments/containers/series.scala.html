@@ -19,14 +19,14 @@
                 data-component="@style.containerType">
                 <div class="facia-container__inner">
                     <div class="container__border"></div>
-                    <h2 class="container__display-name">@displayName</h2>
                     <div class="container__meta">
-                        <dl>
-                            <dt class="content-meta__web-title">
-                                <a href="@LinkTo{/@href}" class="tone-colour" data-link-name="series heading">@config.id</a>
+                        <h2 class="container__label hide-on-mobile">@displayName</h2>
+                        <dl class="content-meta-series">
+                            <dt class="content-meta__title">
+                                <a href="@LinkTo{/@href}" data-link-name="series heading">@config.id</a>
                             </dt>
                             @description.map { desc =>
-                                <dd class="content-meta__description">@desc</dd>
+                                <dd class="content-meta__item hide-on-mobile">@Html(desc)</dd>
                             }
                         </dl>
                     </div>
