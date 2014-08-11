@@ -4,16 +4,6 @@ import java.util.concurrent.atomic.{AtomicBoolean, AtomicLong}
 
 import scala.io.Source
 
-/**
- * TODO
- * Temporary holder for classes ported over while we get rid of the Guardian Management plugin
- */
-
-trait Metric {
-  def group: String
-  def name: String
-}
-
 trait Switchable {
   def switchOn()
   def switchOff()
@@ -34,8 +24,7 @@ trait Switchable {
 }
 
 class TimingMetric(
-                    val group: String, val name: String, val title: String, val description: String,
-                    val master: Option[Metric] = None) {
+                    val group: String, val name: String, val title: String, val description: String) {
   val `type` = "timer"
 
   private val _totalTimeInMillis = new AtomicLong()
@@ -57,7 +46,7 @@ object TimingMetric {
 
 class GaugeMetric[T](
                       val group: String, val name: String, val title: String, val description: String,
-                      val getValue: () => T, val master: Option[Metric] = None) {
+                      val getValue: () => T) {
   val `type`: String = "gauge"
 }
 

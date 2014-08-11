@@ -165,8 +165,7 @@ object PaMetrics {
     "pa-api",
     "pa-api-calls",
     "PA API calls",
-    "outgoing requests to pa api",
-    None
+    "outgoing requests to pa api"
   )
 
   object PaApiHttpOkMetric extends CountMetric(
@@ -345,32 +344,28 @@ object CommercialMetrics {
     "commercial",
     "commercial-travel-offers-load",
     "Commercial Travel Offers load timing",
-    "Time spent running travel offers data load jobs",
-    None
+    "Time spent running travel offers data load jobs"
   )
 
   object MasterClassesLoadTimingMetric extends TimingMetric(
     "commercial",
     "commercial-masterclasses-load",
     "Commercial MasterClasses load timing",
-    "Time spent running MasterClasses load jobs",
-    None
+    "Time spent running MasterClasses load jobs"
   )
 
   object JobsLoadTimingMetric extends TimingMetric(
     "commercial",
     "commercial-jobs-load",
     "Commercial Jobs load timing",
-    "Time spent running job ad data load jobs",
-    None
+    "Time spent running job ad data load jobs"
   )
 
   object SoulmatesLoadTimingMetric extends TimingMetric(
     "commercial",
     "commercial-soulmates-load",
     "Commercial Soulmates load timing",
-    "Time spent running soulmates ad data load jobs",
-    None
+    "Time spent running soulmates ad data load jobs"
   )
 
   val all = Seq(TravelOffersLoadTimingMetric, JobsLoadTimingMetric, MasterClassesLoadTimingMetric, SoulmatesLoadTimingMetric)
@@ -381,8 +376,7 @@ object OnwardMetrics {
     "onward",
     "onward-most-popular-load",
     "Onward Journey load timing",
-    "Time spent running onward journey data load jobs",
-    None
+    "Time spent running onward journey data load jobs"
   )
 
   val all = Seq(OnwardLoadTimingMetric)
@@ -405,9 +399,8 @@ class FrontendTimingMetric(
                             group: String,
                             name: String,
                             title: String,
-                            description: String,
-                            master: Option[Metric] = None)
-  extends TimingMetric(group, name, title, description, master) {
+                            description: String)
+  extends TimingMetric(group, name, title, description) {
 
   private val timeInMillis = new AtomicLong()
   private val currentCount = new AtomicLong()
