@@ -21,13 +21,13 @@ object CloudWatch extends implicits.Futures{
   val stageFilter = new DimensionFilter().withName("Stage").withValue(environment.stage)
 
   lazy val euWestClient = {
-    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.mandatoryCredentials)
     client.setEndpoint(AwsEndpoints.monitoring)
     client
   }
 
   // some metrics are only available in the 'default' region
-  lazy val defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+  lazy val defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.mandatoryCredentials)
 
   val primaryLoadBalancers: Seq[LoadBalancer] = Seq(
     LoadBalancer("frontend-router"),
@@ -87,7 +87,7 @@ object CloudWatch extends implicits.Futures{
       exception match {
         // temporary till JVM bug fix comes out
         // see https://blogs.oracle.com/joew/entry/jdk_7u45_aws_issue_123
-        case e: Exception if e.getMessage.contains("JAXP00010001") => HealthCheck.setUnhealthy()
+        case e: Exception if e.getMessage.contains("JAXP00010001") => HealthCheck.break()
         case _ =>
       }
     }

@@ -1,8 +1,8 @@
 /**
  * Position pseudo elements on left and right of the content
- * 
+ *
  * $container-width {Number} - width of the content
- * 
+ *
  * @output pseudo element with left/right offset
  */
 
@@ -55,6 +55,15 @@
     @include mq(faciaLeftCol, wide) {
         @include side-margins-position(gs-span(14));
     }
+    @include mq(wide) {
+        .has-page-skin & {
+            margin-left: auto;
+            margin-right: auto;
+            @include rem((
+                width: gs-span(12) + ($gs-gutter*2)
+            ));
+        }
+    }
 }
 .l-side-margins--layout-content {
     @include mq(rightCol, leftCol) {
@@ -65,5 +74,18 @@
     }
     @include mq(leftCol, wide) {
         @include side-margins-position(gs-span(14));
+    }
+}
+
+.l-side-margins--media {
+    @include mq(desktop) {
+        &:after,
+        &:before {
+            background: rgba($c-neutral1, .3);
+
+            .container__banding + .container__banding & {
+                background: rgba($c-neutral1, .15);
+            }
+        }
     }
 }

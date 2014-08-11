@@ -66,7 +66,8 @@ define([
             }).init();
             mediator.emit('modules:related:loaded', config, context);
 
-        } else if (config.switches && config.switches.relatedContent && config.page.showRelatedContent) {
+        } else if (config.switches && config.switches.relatedContent && config.page.showRelatedContent &&
+                   config.page.section !== 'childrens-books-site') {
             container = context.querySelector('.js-related');
             if (container) {
                 var popularInTag = this.popularInTagOverride(config),

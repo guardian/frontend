@@ -192,6 +192,9 @@
         }
     }
 }
+.item__top-border {
+    border-top: $item-top-border-height solid $c-newsAccent;
+}
 .item__link {
     display: block;
     border-top: $item-top-border-height solid $c-newsAccent;
@@ -218,6 +221,12 @@
 }
 .item__link--no-border {
     border-width: 0;
+}
+.item__video-container {
+    margin-top: 4px;
+}
+.container--news .facia-slice-wrapper:first-child .item__video-container {
+    margin-top: 0;
 }
 .item__image-container {
     margin-top: 4px;
@@ -304,6 +313,21 @@
         @include show-only-if-svg-is-supported;
     }
 }
+
+// This is for when the accompanying media element is a video and the h2/h3
+// element is displaying to the left of the video - the h2/h3 should show
+// inline, otherwise the link stretches over the video, preventing the user
+// from clicking the play button. It should NOT, however, display inline
+// otherwise, as it messes up padding, etc.
+.row-of-two--boost-first .item__title--inline-video,
+.row-of-two--boost-second .item__title--inline-video {
+    display: inline;
+}
+
+.item__media-wrapper .gu-media-wrapper {
+    margin-bottom: 0;
+}
+
 .item--video,
 .item--gallery {
     .item__title .i {
@@ -582,6 +606,7 @@ $cta-icon-gap: 2px;
         background: transparent;
         color: $c-neutral1;
     }
+
 
     @include mq(tablet) {
         @include rem((

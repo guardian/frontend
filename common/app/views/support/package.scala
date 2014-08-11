@@ -232,7 +232,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
       element
         .removeClass("gu-video")
-        .addClass("js-gu-media gu-media gu-media--video")
+        .addClass("js-gu-media gu-media gu-media--video gu-media--show-controls-at-start")
         .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
       val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path

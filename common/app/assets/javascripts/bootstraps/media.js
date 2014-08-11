@@ -14,7 +14,6 @@ define([
     'bonzo',
     'common/modules/component',
     'common/modules/analytics/beacon',
-    'raven',
     'common/modules/ui/message'
 ], function(
     $,
@@ -31,7 +30,6 @@ define([
     bonzo,
     Component,
     beacon,
-    Raven,
     Message
 ) {
 
@@ -297,7 +295,7 @@ define([
                                 }
 
                                 if (/desktop|wide/.test(detect.getBreakpoint())) {
-                                    modules.initEndSlate(player);
+                                    modules.initEndSlate(player, el.getAttribute('data-end-slate'));
                                 }
                             } else {
                                 vjs.playlist({
@@ -326,17 +324,17 @@ define([
                 });
             });
         },
-        generateEndSlateUrl: function() {
+        generateEndSlateUrlFromPage: function() {
             var seriesId = config.page.seriesId;
             var sectionId = config.page.section;
             var url = (seriesId)  ? '/video/end-slate/series/' + seriesId : '/video/end-slate/section/' + sectionId;
             return url + '.json?shortUrl=' + config.page.shortUrl;
         },
-        initEndSlate: function(player) {
+        initEndSlate: function(player, endSlatePath) {
             var endSlate = new Component(),
                 endState = 'vjs-has-ended';
 
-            endSlate.endpoint = modules.generateEndSlateUrl();
+            endSlate.endpoint = endSlatePath || modules.generateEndSlateUrlFromPage();
             endSlate.fetch(player.el(), 'html');
 
             player.one(constructEventName('content:play'), function() {
@@ -393,13 +391,7 @@ define([
 
     var ready = function () {
         if(config.switches.enhancedMediaPlayer) {
-            Raven.context(function(){
-                Raven.setTagsContext({
-                    feature: 'media',
-                    contentType: config.page.contentType
-                });
-                modules.initPlayer();
-            });
+            modules.initPlayer();
         }
 
         if (config.isMedia) {

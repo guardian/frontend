@@ -164,3 +164,11 @@
         left: 100%;
     }
 }
+
+@mixin video-play-button-size($size) {
+    @include rem((
+        width: $size,
+        height: $size,
+        font-size: $size/6 // play triangle is em based so this scales it
+    ));
+}

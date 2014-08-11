@@ -14,8 +14,11 @@ import scala.util.{Failure, Success}
 
 object ToolPressQueueWorker extends JsonQueueWorker[PressJob] with Logging {
   override val queue = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
+
+    val credentials = Configuration.aws.mandatoryCredentials
+
     JsonMessageQueue[PressJob](
-      new AmazonSQSAsyncClient(Configuration.aws.credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
+      new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
       queueUrl
     )
   }) getOrElse {
