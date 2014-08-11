@@ -124,6 +124,10 @@ case class QuicheLorraineContainer(showMore: Boolean = true) extends Container {
   val containerType = "quichelorraine"
   val tone = "feature"
 }
+case class RacletteContainer(showMore: Boolean = true) extends Container {
+  val containerType = "raclette"
+  val tone = "feature"
+}
 
 
 /**
