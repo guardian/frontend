@@ -16,6 +16,9 @@ val commonSettings: Seq[Setting[_]] = Seq(
   lazy val commonTestLib = Project(id = "common-test-lib", base = file("common-test-lib"))
     .settings(commonSettings: _*)
 
-  lazy val frontsIntegrationTests = Project(id = "fronts-integration-tests", base = file("scala-fw-tests"))
+  lazy val frontendIntegrationTests = Project(id = "frontend-integration-tests", base = file("frontend-integration-tests"))
+    .dependsOn(commonTestLib)
+
+  lazy val identityIntegrationTests = Project(id = "identity-integration-tests", base = file("identity-integration-tests"))
     .dependsOn(commonTestLib)
 }

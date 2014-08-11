@@ -13,5 +13,5 @@ trait IntegrationSeleniumTestSuite extends SeleniumTestSuite {
 object IntegrationSeleniumTestSuite {
   //this is needed because of the sbt multimodule nature of this test project
   //without it, it will try to load the local.conf from the root folder
-  setLocalConfProperty(s"${currentPath()}/scala-fw-tests/local.conf")
+  setLocalConfProperty(s"${currentPath()}/frontend-integration-tests/local.conf")
 }
