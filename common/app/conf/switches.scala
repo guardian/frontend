@@ -131,37 +131,26 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 8, 31)
   )
 
-  // Ad Targeting
-  /*
-    These switches are to control length of request to DFP
-    while there's a problem with the maximum length constraint
-  */
+  // Commercial Tags
 
-  val AudienceScienceSwitch = Switch("Ad Targeting", "audience-science",
+  val AudienceScienceSwitch = Switch("Commercial Tags", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
 
-  val AudienceScienceGatewaySwitch = Switch("Ad Targeting", "audience-science-gateway",
+  val AudienceScienceGatewaySwitch = Switch("Commercial Tags", "audience-science-gateway",
     "If this switch is on, Audience Science Gateway segments will be used to target ads.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
 
-  val CriteoSwitch = Switch("Ad Targeting", "criteo",
+  val CriteoSwitch = Switch("Commercial Tags", "criteo",
     "If this switch is on, Criteo segments will be used to target ads.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
-
-  // Commercial Tags
-
-  val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
-    "Enable the IMR Worldwide audience segment tracking.",
-    safeState = Off, sellByDate = never)
 
   val EffectiveMeasureSwitch = Switch("Commercial Tags", "effective-measure",
     "Enable the Effective Measure audience segment tracking.",
     safeState = Off, sellByDate = never)
 
-  // We don't foresee this service being switched off
-  val ForeseeSwitch = Switch("Performance Switches", "foresee",
-    "Enable Foresee surveys for a sample of our audience",
+  val ImrWorldwideSwitch = Switch("Commercial Tags", "imr-worldwide",
+    "Enable the IMR Worldwide audience segment tracking.",
     safeState = Off, sellByDate = never)
 
   val MediaMathSwitch = Switch("Commercial Tags", "media-math",
@@ -172,8 +161,16 @@ object Switches extends Collections {
     "Enable Remarketing tracking",
     safeState = Off, sellByDate = never)
 
+  // Content Recommendation
+
   val OutbrainSwitch = Switch("Content Recommendation", "outbrain",
     "Enable the Outbrain content recommendation widget.",
+    safeState = Off, sellByDate = never)
+
+
+  // We don't foresee this service being switched off
+  val ForeseeSwitch = Switch("Performance Switches", "foresee",
+    "Enable Foresee surveys for a sample of our audience",
     safeState = Off, sellByDate = never)
 
   // Commercial Feeds
@@ -281,12 +278,12 @@ object Switches extends Collections {
 
   val WorldCupWallchartEmbedSwitch = Switch("Feature Switches", "worldcup-wallchart-embed",
     "If this switch is turned on JavaScript will load. It will be removed after the new Premier League session starts.",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 10)
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
   val WorldCupArticleContainerSwitch = Switch("Feature Switches", "worldcup-article-container",
     "If this switch is turned on world cup articles will have an extra container.",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 10)
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
   val SentimentalCommentsSwitch = Switch("Feature Switches", "sentimental-comments",
@@ -435,7 +432,10 @@ object Switches extends Collections {
 
   val CenturyRedirectionSwitch = Switch("Feature Switches", "redirect-century-pages",
     "If switched on, we redirect /century and /century/yyyy-yyyy to valid (non-R1) endpoints",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
+    safeState = Off,
+
+    // extending as the owner of the switch is on holiday.
+    sellByDate = new LocalDate(2014, 8, 18)
   )
 
   val ChildrensBooksSwitch = Switch("Feature Switches", "childrens-books-hide-popular",

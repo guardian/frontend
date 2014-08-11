@@ -4,17 +4,17 @@ import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import com.amazonaws.services.sqs.model._
 import common.FaciaPressMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
-import common.{Edition, Logging}
 import common.SQSQueues._
+import common.{Edition, Logging}
 import conf.Configuration
 import conf.Switches.FrontPressJobSwitch
+import org.joda.time.DateTime
 import play.api.libs.concurrent.Akka
 import play.api.libs.json.Json
 
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
-import org.joda.time.DateTime
 
 /** TODO convert this to use JsonQueueWorker
   *
@@ -29,7 +29,7 @@ object FrontPressCron extends Logging with implicits.Collections {
   val batchSize: Int = Configuration.faciatool.pressJobBatchSize
 
   def newClient: AmazonSQSAsyncClient = {
-    new AmazonSQSAsyncClient(Configuration.aws.credentials).withRegion(Region.getRegion(Regions.EU_WEST_1))
+    new AmazonSQSAsyncClient(Configuration.aws.mandatoryCredentials).withRegion(Region.getRegion(Regions.EU_WEST_1))
   }
 
   def run(): Unit = {
@@ -45,7 +45,7 @@ object FrontPressCron extends Logging with implicits.Collections {
               case Success(_) =>
                 if (Edition.all.map(_.id.toLowerCase).exists(_ == path))
                   ToolPressQueueWorker.metricsByPath.get(path).foreach { metric =>
-                    metric.recordTimeSpent(DateTime.now.getMillis - start.getMillis)
+                    metric.recordDuration(DateTime.now.getMillis - start.getMillis)
                 }
                 deleteMessage(receiveMessageResult, queueUrl)
                 FrontPressCronSuccess.increment()

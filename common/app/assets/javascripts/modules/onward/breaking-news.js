@@ -4,6 +4,7 @@ define([
     'common/modules/onward/history',
     'common/utils/storage',
     'lodash/objects/assign',
+    'lodash/objects/isArray',
     'lodash/arrays/flatten',
     'lodash/arrays/intersection',
     'bean',
@@ -13,15 +14,16 @@ define([
     ajax,
     history,
     storage,
-    _assign,
-    _flatten,
-    _intersection,
+    assign,
+    isArray,
+    flatten,
+    intersection,
     bean,
     bonzo
 ) {
     var breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
-        interestThreshold = 3,
+        interestThreshold = 5,
         maxSimultaneousAlerts = 1,
         container;
 
@@ -41,9 +43,16 @@ define([
             crossOrigin: true
         }).then(
             function(resp) {
-                var keyword = page.keywordIds ? (page.keywordIds + '').split(',')[0] : '',
+                var collections = (resp.collections || [])
+                    .filter(function(collection) { return isArray(collection.content) && collection.content.length; })
+                    .map(function(collection) {
+                        collection.href = collection.href.toLowerCase();
+                        return collection;
+                    }),
 
-                    matchers = [
+                    keyword = page.keywordIds ? page.keywordIds.split(',')[0] : '',
+
+                    pageMatchers = [
                         page.edition,
                         page.section,
                         slashDelimit(page.edition, page.section),
@@ -53,25 +62,23 @@ define([
                     ]
                     .filter(function(match) { return match; })
                     .reduce(function(matchers, term) {
-                        matchers[term] = interestThreshold;
+                        matchers[term.toLowerCase()] = true;
                         return matchers;
-                    }, _assign(history.getSummary().sections, history.getSummary().keywords)),
+                    }, {}),
 
-                    articles = _flatten(
-                        (resp.collections || [])
-                        .filter(function(collection) {
-                            return (collection.content.length && (collection.href === 'global' || matchers[collection.href] >= interestThreshold));
-                        })
-                        .map(function(collection) {
-                            return collection.content;
-                        })
-                    ),
+                    historyMatchers = assign({}, assign(history.getSummary().sections, history.getSummary().keywords)),
+
+                    articles = flatten([
+                        collections.filter(function(c) { return c.href === 'global'; }).map(function(c) { return c.content; }),
+                        collections.filter(function(c) { return pageMatchers[c.href]; }).map(function(c) { return c.content; }),
+                        collections.filter(function(c) { return historyMatchers[c.href] >= interestThreshold; }).map(function(c) { return c.content; })
+                    ]),
 
                     articleIds = articles.map(function(article) { return article.id; });
 
                 if (articleIds.indexOf(page.pageId) > -1) {
-                    hiddenIds.unshift(page.pageId);
-                    storage.local.set(storageKeyHidden, _intersection(hiddenIds, articleIds));
+                    hiddenIds.push(page.pageId);
+                    storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
                     // when displaying a breaking news item, don't show any other breaking news:
                     return;
                 }
@@ -91,7 +98,8 @@ define([
 
                     bean.on($closer[0], 'click', function() {
                         bonzo($el).hide();
-                        storage.local.set(storageKeyHidden, _intersection(hiddenIds.concat(article.id), articleIds));
+                        hiddenIds.push(article.id);
+                        storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
                     });
                 });
             },

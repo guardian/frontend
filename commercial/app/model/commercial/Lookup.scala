@@ -25,6 +25,12 @@ object Lookup extends ExecutionContexts with Logging {
     } else Future.successful(Nil)
   }
 
+  def latestContentByKeyword(keywordId: String, maxItemCount: Int): Future[Seq[Content]] = {
+    LiveContentApi.search(defaultEdition).tag(keywordId).pageSize(maxItemCount).orderBy("newest").response map {
+      _.results map (Content(_))
+    }
+  }
+
   def mainPicture(contentId: String): Future[Option[ImageContainer]] = {
     content(contentId) map (_ flatMap (_.mainPicture))
   }

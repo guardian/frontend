@@ -1,5 +1,6 @@
 package common
 
+import metrics.FrontendMetric
 import play.api.{Application => PlayApp, GlobalSettings}
 import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
 import model.diagnostics.CloudWatch
@@ -629,12 +630,16 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     s"$applicationName-${gc.name}-gc-time-per-min" -> gc.gcTime
   )}.toMap
 
+  def latencyMetrics: List[FrontendMetric] = Nil
+
   private def report() {
     val systemMetrics  = this.systemMetrics
     val applicationMetrics  = this.applicationMetrics
     CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
     for (metrics <- applicationMetrics.grouped(20))
       CloudWatch.putWithDimensions(applicationMetricsNamespace, metrics, Seq(applicationDimension))
+
+    CloudWatch.putMetricsWithStage(latencyMetrics, applicationDimension)
   }
 
   override def onStart(app: PlayApp) {

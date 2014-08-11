@@ -10,7 +10,7 @@ module.exports = function (grunt) {
         testConfDir = './common/test/assets/javascripts/conf/',
         requirejsDir = './static/requirejs',
         propertiesFile = (isDev) ? process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties',
-        webfontsDir = './common/app/assets/stylesheets/components/guss-webfonts/webfonts/';
+        webfontsDir = './resources/fonts/';
 
     function isOnlyTask(task) {
         return grunt.cli.tasks.length === 1 && grunt.cli.tasks[0] === task.name;
@@ -211,6 +211,25 @@ module.exports = function (grunt) {
 
         // Create JSON web font files from fonts. See https://github.com/ahume/grunt-webfontjson
         webfontjson: {
+            GuardianAgateSans1WebWoff2: {
+                options: {
+                    filename: staticTargetDir + 'fonts/GuardianAgateSans1Web.woff2.json',
+                    callback: 'guFont',
+                    fonts: [
+                        {
+                            'font-family': '"Guardian Agate Sans 1 Web"',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.woff2',
+                            format: 'woff'
+                        },
+                        {
+                            'font-family': '"Guardian Agate Sans 1 Web"',
+                            'font-weight': '700',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.woff2',
+                            format: 'woff'
+                        }
+                    ]
+                }
+            },
             GuardianAgateSans1WebWoff: {
                 options: {
                     filename: staticTargetDir + 'fonts/GuardianAgateSans1Web.woff.json',
@@ -218,13 +237,13 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': '"Guardian Agate Sans 1 Web"',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': '"Guardian Agate Sans 1 Web"',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.woff',
                             format: 'woff'
                         }
                     ]
@@ -237,14 +256,59 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': '"Guardian Agate Sans 1 Web"',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Regular.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': '"Guardian Agate Sans 1 Web"',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianAgateSans1Web/GuardianAgateSans1Web-Bold.ttf',
                             format: 'ttf'
+                        }
+                    ]
+                }
+            },
+            GuardianEgyptianWebWoff2: {
+                options: {
+                    filename: staticTargetDir + 'fonts/GuardianEgyptianWeb.woff2.json',
+                    callback: 'guFont',
+                    fonts: [
+                        {
+                            'font-family': '"Guardian Text Egyptian Web"',
+                            file: webfontsDir + 'hinting-off_kerning-off/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff2',
+                            format: 'woff'
+                        },
+                        {
+                            'font-family': '"Guardian Text Egyptian Web"',
+                            'font-style': 'italic',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff2',
+                            format: 'woff'
+                        },
+                        {
+                            'font-family': '"Guardian Text Egyptian Web"',
+                            'font-weight': '700',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
+                            format: 'woff'
+                        },
+                        {
+                            'font-family': '"Guardian Egyptian Web"',
+                            'font-weight': '200',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff2',
+                            format: 'woff'
+                        },
+                        {
+                            'font-family': '"Guardian Egyptian Web"',
+                            'font-weight': '400',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff2',
+                            format: 'woff'
+                        },
+                        // This weight contains only a certain set of chars
+                        // since it is used only in one place (section names)
+                        {
+                            'font-family': '"Guardian Egyptian Web"',
+                            'font-weight': '900',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff2',
+                            format: 'woff'
                         }
                     ]
                 }
@@ -256,31 +320,31 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': '"Guardian Text Egyptian Web"',
-                            file: webfontsDir + 'hinting-off-original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': '"Guardian Text Egyptian Web"',
                             'font-style': 'italic',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': '"Guardian Text Egyptian Web"',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '200',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '400',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
                             format: 'woff'
                         },
                         // This weight contains only a certain set of chars
@@ -288,7 +352,7 @@ module.exports = function (grunt) {
                         {
                             'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '900',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.woff',
                             format: 'woff'
                         }
                     ]
@@ -301,31 +365,31 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': '"Guardian Text Egyptian Web"',
-                            file: webfontsDir + 'hinting-off-original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': '"Guardian Text Egyptian Web"',
                             'font-style': 'italic',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': '"Guardian Text Egyptian Web"',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '200',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '400',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         // This weight contains only a certain set of chars
@@ -333,8 +397,33 @@ module.exports = function (grunt) {
                         {
                             'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '900',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.ttf',
                             format: 'ttf'
+                        }
+                    ]
+                }
+            },
+            GuardianTextSansWebWoff2: {
+                options: {
+                    filename: staticTargetDir + 'fonts/GuardianTextSansWeb.woff2.json',
+                    callback: 'guFont',
+                    fonts: [
+                        {
+                            'font-family': '"Guardian Text Sans Web"',
+                            file: webfontsDir + 'hinting-off_kerning-off/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff2',
+                            format: 'woff'
+                        },
+                        {
+                            'font-family': '"Guardian Text Sans Web"',
+                            'font-style': 'italic',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff2',
+                            format: 'woff'
+                        },
+                        {
+                            'font-family': '"Guardian Text Sans Web"',
+                            'font-weight': '700',
+                            file: webfontsDir + 'hinting-off_kerning-off/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff2',
+                            format: 'woff'
                         }
                     ]
                 }
@@ -346,19 +435,19 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': '"Guardian Text Sans Web"',
-                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': '"Guardian Text Sans Web"',
                             'font-style': 'italic',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.woff',
                             format: 'woff'
                         },
                         {
                             'font-family': '"Guardian Text Sans Web"',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.woff',
                             format: 'woff'
                         }
                     ]
@@ -371,20 +460,34 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': '"Guardian Text Sans Web"',
-                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/original/GuardianTextSansWeb/GuardianTextSansWeb-Regular.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': '"Guardian Text Sans Web"',
                             'font-style': 'italic',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianTextSansWeb/GuardianTextSansWeb-RegularItalic.ttf',
                             format: 'ttf'
                         },
                         {
                             'font-family': '"Guardian Text Sans Web"',
                             'font-weight': '700',
-                            file: webfontsDir + 'hinting-off-original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/original/GuardianTextSansWeb/GuardianTextSansWeb-Medium.ttf',
                             format: 'ttf'
+                        }
+                    ]
+                }
+            },
+            GuardianSansWebWoff2: {
+                options: {
+                    filename: staticTargetDir + 'fonts/GuardianSansWeb.woff2.json',
+                    callback: 'guFont',
+                    fonts: [
+                        {
+                            'font-family': '"Guardian Sans Web"',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianSansWeb/GuardianSansWeb-Light.woff2',
+                            'font-weight': '200',
+                            format: 'woff'
                         }
                     ]
                 }
@@ -396,7 +499,7 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': '"Guardian Sans Web"',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianSansWeb/GuardianSansWeb-Light.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianSansWeb/GuardianSansWeb-Light.woff',
                             'font-weight': '200',
                             format: 'woff'
                         }
@@ -410,7 +513,7 @@ module.exports = function (grunt) {
                     fonts: [
                         {
                             'font-family': '"Guardian Sans Web"',
-                            file: webfontsDir + 'hinting-off-ascii/GuardianSansWeb/GuardianSansWeb-Light.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianSansWeb/GuardianSansWeb-Light.ttf',
                             'font-weight': '200',
                             format: 'ttf'
                         }

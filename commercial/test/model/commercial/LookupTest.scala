@@ -8,9 +8,16 @@ import scala.concurrent.duration._
 
 class LookupTest extends FlatSpec with Matchers {
 
+  private val timeout = 10.seconds
+
   private def contentsOf(shortUrls: String*) = {
     val futureContents = Lookup.contentByShortUrls(shortUrls)
-    Await.result(futureContents, 2.seconds)
+    Await.result(futureContents, timeout)
+  }
+
+  private def contentsForKeyword(keywordId: String) = {
+    val futureContents = Lookup.latestContentByKeyword(keywordId, 4)
+    Await.result(futureContents, timeout)
   }
 
   "contentByShortUrls" should "find content for genuine URLs" in Fake {
@@ -32,5 +39,15 @@ class LookupTest extends FlatSpec with Matchers {
 
   "contentByShortUrls" should "not find content for empty seq of URLs" in {
     contentsOf() should be(Nil)
+  }
+
+  "latestContentByKeyword" should "find content ordered reverse chronologically for an existing keyword" in Fake {
+    val contents = contentsForKeyword("technology/apple")
+    contents should have size 4
+    contents.sortBy(_.webPublicationDate.getMillis).reverse should be(contents)
+  }
+
+  "latestContentByKeyword" should "not find content for a non-existent keyword" in Fake {
+    contentsForKeyword("jklkl") should be(Nil)
   }
 }
