@@ -26,7 +26,7 @@ trait FrontendMetric {
   def putDataPoints(points: List[DataPoint]): Unit
 }
 
-case class CountMetric(name: String) extends FrontendMetric {
+case class CountMetric(name: String, description: String) extends FrontendMetric {
   private val count: AtomicLong = new AtomicLong(0L)
   val metricUnit = StandardUnit.Count
 
