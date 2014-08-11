@@ -289,7 +289,8 @@ define([
                 at      : cookies.get('adtest') || cookies.get('GU_TEST') || '',
                 gdncrm  : userAdTargeting.getUserSegments(),
                 ab      : abParam(),
-                co      : parseContributors(page.author)
+                co      : parseContributors(page.author),
+                bl      : parseKeywords(page.blogIds)
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         createAdSlot = function(name, types, keywords) {
