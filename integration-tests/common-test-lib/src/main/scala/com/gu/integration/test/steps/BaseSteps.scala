@@ -9,7 +9,7 @@ import org.scalatest.Matchers
 
 case class BaseSteps(implicit driver: WebDriver) extends TestLogging with Matchers {
   def goToStartPage(): ParentPage = {
-    logger.step(s"I am an Article page with relative url: ${PageLoader.frontsBaseUrl}")
+    logger.step(s"I am on base page at url: ${PageLoader.frontsBaseUrl}")
     lazy val parentPage = new ParentPage()
     goTo(parentPage)
   }
