@@ -1,7 +1,12 @@
 @(job: model.commercial.jobs.Job)(implicit request: RequestHeader)
 
 <li class="lineitem lineitem__multi lineitem__jobs u-cf">
-	<a href="#"><h4 class="commercial__title commercial--jobs">Guardian <span class="commercial__title__last-word">jobs</span></h4></a>
+	<h4 class="commercial__title commercial--jobs">
+        <a href="@AdLink{@jobsHost/}" data-link-name="merchandising-franken-jobs-visit-all">
+            Guardian 
+            <span class="commercial__title__last-word">jobs</span>
+        </a>
+    </h4>
     <a href="@AdLink{@job.listingUrl}"
        class="commercial--jobs__job__link">
         <h3 class="commercial--jobs__job__title">@job.title</h3>
