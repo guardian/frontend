@@ -96,11 +96,6 @@ object SystemMetrics extends implicits.Numbers {
     () => buildNumber,
     StandardUnit.None
   )
-
-  val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric,
-    MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric, AvailableProcessorsMetric,
-    TotalPhysicalMemoryMetric, FreePhysicalMemoryMetric, FreeDiskSpaceMetric, TotalDiskSpaceMetric
-  )
 }
 
 object S3Metrics {
@@ -113,8 +108,6 @@ object S3Metrics {
     "facia-s3-authorization-403",
     "Number of requests to S3 by facia that have resulted in a 403"
   )
-
-  val all = Seq(S3ClientExceptionsMetric, S3AuthorizationError)
 }
 
 object ContentApiMetrics {
@@ -142,15 +135,6 @@ object ContentApiMetrics {
     "content-api-mapping-exception",
     "Number of times the Content API client has thrown a MappingException"
   )
-
-
-  val all = Seq(
-    ElasticHttpTimeoutCountMetric,
-    ElasticHttpTimingMetric,
-    ContentApi404Metric,
-    ContentApiJsonParseExceptionMetric,
-    ContentApiJsonMappingExceptionMetric
-  )
 }
 
 object PaMetrics {
@@ -168,8 +152,6 @@ object PaMetrics {
     "pa-api-error",
     "AP api returned error"
   )
-
-  val all = Seq(PaApiHttpTimingMetric, PaApiHttpOkMetric, PaApiHttpErrorMetric)
 }
 
 object DiscussionMetrics {
@@ -177,8 +159,6 @@ object DiscussionMetrics {
     "discussion-api-calls",
     "outgoing requests to discussion api"
   )
-
-  val all = Seq(DiscussionHttpTimingMetric)
 }
 
 object AdminMetrics {
@@ -187,8 +167,6 @@ object AdminMetrics {
 
   object SwitchesUpdateCounter extends CountMetric("switches_updates", "number of times switches was updated")
   object SwitchesUpdateErrorCounter extends CountMetric("switches_update_errors", "number of times switches update failed")
-
-  val all = Seq(ConfigUpdateCounter, ConfigUpdateErrorCounter, SwitchesUpdateCounter, SwitchesUpdateErrorCounter)
 }
 
 object FaciaMetrics {
@@ -202,11 +180,6 @@ object FaciaMetrics {
     "facia-applications-redirects",
     "Number of requests to facia that have been redirected to Applications via X-Accel-Redirect"
   )
-
-  val all = Seq(
-    JsonParsingErrorCount,
-    FaciaToApplicationRedirectMetric
-  ) ++ S3Metrics.all
 }
 
 object FaciaPressMetrics {
@@ -265,19 +238,6 @@ object FaciaPressMetrics {
     "Number of times facia-tool has failed to made the request for SEO purposes of webTitle and section"
   )
 
-  val all = Seq(
-    FrontPressSuccess,
-    FrontPressLiveSuccess,
-    FrontPressLiveFailure,
-    FrontPressFailure,
-    FrontPressDraftSuccess,
-    FrontPressDraftFailure,
-    FrontPressCronSuccess,
-    FrontPressCronFailure,
-    MemcachedFallbackMetric,
-    ContentApiSeoRequestSuccess,
-    ContentApiSeoRequestFailure
-  )
 }
 
 object FaciaToolMetrics {
@@ -359,19 +319,6 @@ object OnwardMetrics {
   )
 
   val all = Seq(OnwardLoadTimingMetric)
-}
-
-
-object Metrics {
-  lazy val common = SystemMetrics.all
-
-  lazy val contentApi = ContentApiMetrics.all
-  lazy val pa = PaMetrics.all
-
-  lazy val discussion = DiscussionMetrics.all
-  lazy val admin = AdminMetrics.all
-  lazy val facia = FaciaMetrics.all
-  lazy val faciaPress = FaciaPressMetrics.all
 }
 
 object PerformanceMetrics {
