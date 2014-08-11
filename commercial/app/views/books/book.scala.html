@@ -1,6 +1,13 @@
 @(book: model.commercial.books.Book)(implicit request: RequestHeader)
 
-<li class="lineitem u-cf" itemscope itemtype="http://schema.org/Book">
+<li class="lineitem u-cf lineitem__multi lineitem__book u-cf" itemscope itemtype="http://schema.org/Book">
+    <h4 class="commercial__title">
+        <a href="#">
+            <span class="i i--commercial i-bookshop-logo--guardian"></span>
+            <span class="i i--commercial i-bookshop-logo--bookshop"></span>
+            <span class="u-h">Guardian bookshop</span>
+        </a>
+    </h4>
     <a href="@AdLink{@book.buyUrl}" class="lineitem__link">
         @book.jacketUrl.map { url =>
         <img itemprop="image" class="lineitem__img" src="@url" alt="" />
@@ -20,5 +27,7 @@
         }
         </p>
     </a>
-    <a href="@AdLink{@book.buyUrl}" class="commercial--books__buy-now-button">Buy now</a>
+    <a class="lineitem__link commercial--travel__description__link" href="@AdLink{@book.buyUrl}">
+        <i class="i i-arrow-white-down"></i>Buy now
+    </a>
 </li>

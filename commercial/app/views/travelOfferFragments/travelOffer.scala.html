@@ -1,7 +1,15 @@
 @(travelOffer: model.commercial.travel.TravelOffer)(implicit request: RequestHeader)
 
-<li class="lineitem lineitem__multi lineitem__travel">
-	<h4>Guardian Travel</h4>
+<li class="lineitem lineitem__multi lineitem__travel u-cf commercial--travel">
+	<h4 class="commercial__title">
+        <a href="#">
+            <span>
+                Guardian 
+                <span class="commercial__title__middle-word">Holiday</span> 
+                <span class="commercial__title__last-word">Offers</span>
+            </span>
+        </a>
+    </h4>
     <a class="lineitem__link" href="@AdLink{@travelOffer.offerUrl}">
         <img class="lineitem__image" src="@travelOffer.imageUrl" alt="" />
         <div class="lineitem__offer">

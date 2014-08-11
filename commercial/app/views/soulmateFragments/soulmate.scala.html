@@ -1,7 +1,11 @@
 @(member: model.commercial.soulmates.Member)(implicit request: RequestHeader)
 
-<li class="lineitem lineitem__multi lineitem__soulmates">
-	<h4>Guardian Soulmates</h4>
+<li class="lineitem lineitem__multi lineitem__soulmates u-cf">
+    <span class="u-h">The Guardian</span>
+	<h4 class="commercial__title container__title__wrapper i--commercial i-soulmates-title-background">
+	    <span class="i i--commercial i-soulmates-logo"></span>
+        <span class="u-h">Soulmates</span>
+	</h4>
     <a class="lineitem__link"
         href="@AdLink{@member.profileUrl}">
         <img class="lineitem__image" src="@member.profilePhoto" alt="" width="80" height="100" />
