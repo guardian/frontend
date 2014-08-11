@@ -1,22 +1,25 @@
 package contentapi
 
-import com.gu.openplatform.contentapi.connection.{HttpResponse, Http}
-import scala.concurrent.Future
+import java.net.InetAddress
+import java.util.concurrent.TimeoutException
+
+import com.gu.openplatform.contentapi.connection.{Http, HttpResponse}
+import common.ContentApiMetrics.ContentApi404Metric
+import common.{ExecutionContexts, FrontendTimingMetric, TimingMetric}
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
-import common.{TimingMetric, SimpleCountMetric, FrontendTimingMetric, ExecutionContexts}
-import java.util.concurrent.TimeoutException
-import play.api.libs.ws.WS
-import common.ContentApiMetrics.ContentApi404Metric
-import java.net.InetAddress
-import scala.util.Try
-import play.api.libs.ws.WSAuthScheme
+import metrics.CountMetric
+import play.api.libs.ws.{WS, WSAuthScheme}
 
-class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCountMetric) extends Http[Future]
+import scala.concurrent.Future
+import scala.util.Try
+
+class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: CountMetric) extends Http[Future]
                                                                                               with ExecutionContexts {
 
-  import play.api.Play.current
-  import System.currentTimeMillis
+  import java.lang.System.currentTimeMillis
+
+import play.api.Play.current
 
   override def GET(url: String, headers: Iterable[(String, String)]) = {
 
@@ -57,7 +60,7 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCo
 trait DelegateHttp extends Http[Future] with ExecutionContexts {
 
   val httpTimingMetric: FrontendTimingMetric
-  val httpTimeoutMetric: SimpleCountMetric
+  val httpTimeoutMetric: CountMetric
 
   private var _http: Http[Future] = new WsHttp(httpTimingMetric, httpTimeoutMetric)
 
