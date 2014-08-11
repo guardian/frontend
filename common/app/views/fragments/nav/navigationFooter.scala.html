@@ -9,12 +9,11 @@
                         ("navigation--collapsed", true),
                         ("navigation--has-signposting", !Edition.isEditionFront),
                         ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
-                    ))" aria-hidden="true">
+                    ))">
             <div class="gs-container">
-                <div class="navigation__inner">
+                <div class="navigation__inner" aria-hidden="true">
                     <div class="navigation__scroll">
-                        <nav class="navigation__container navigation__container--second"
-                             aria-label="Guardian sections" >
+                        <nav class="navigation__container navigation__container--second">
                             <ul class="top-navigation">
                                 <li class="top-navigation__item top-navigation__item--home">
                                     <a href="@LinkTo{/}"
