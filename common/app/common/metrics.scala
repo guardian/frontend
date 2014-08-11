@@ -344,11 +344,13 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     SystemMetrics.TotalPhysicalMemoryMetric, SystemMetrics.FreePhysicalMemoryMetric, SystemMetrics.AvailableProcessorsMetric,
     SystemMetrics.BuildNumberMetric, SystemMetrics.FreeDiskSpaceMetric, SystemMetrics.TotalDiskSpaceMetric) ++
     SystemMetrics.garbageCollectors.flatMap{ gc => List(
-      GaugeMetric(s"$applicationName-${gc.name}-gc-count-per-min" , "Used heap memory (MB)",
-        () => gc.gcCount.toLong
+      GaugeMetric(s"${gc.name}-gc-count-per-min" , "Used heap memory (MB)",
+        () => gc.gcCount.toLong,
+        StandardUnit.Count
       ),
-      GaugeMetric(s"$applicationName-${gc.name}-gc-time-per-min", "Used heap memory (MB)",
-        () => gc.gcTime.toLong
+      GaugeMetric(s"${gc.name}-gc-time-per-min", "Used heap memory (MB)",
+        () => gc.gcTime.toLong,
+        StandardUnit.Count
       )
     )}
 
