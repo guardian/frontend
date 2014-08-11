@@ -1,6 +1,6 @@
 package common
 
-import java.util.concurrent.atomic.{AtomicBoolean, AtomicLong}
+import java.util.concurrent.atomic.AtomicBoolean
 
 import scala.io.Source
 
@@ -21,12 +21,6 @@ trait Switchable {
    * effect of switching this switch
    */
   def description: String
-}
-
-class GaugeMetric[T](
-                      val group: String, val name: String, val title: String, val description: String,
-                      val getValue: () => T) {
-  val `type`: String = "gauge"
 }
 
 case class DefaultSwitch(name: String, description: String, initiallyOn: Boolean = true) extends Switchable {

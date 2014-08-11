@@ -19,11 +19,20 @@ case class CountDataPoint(value: Long) extends DataPoint {
   val time: Option[DateTime] = None
 }
 
+case class GaugeDataPoint(value: Long) extends DataPoint {
+  val time: Option[DateTime] = None
+}
+
 trait FrontendMetric {
   val name: String
   val metricUnit: StandardUnit
   def getAndResetDataPoints: List[DataPoint]
   def putDataPoints(points: List[DataPoint]): Unit
+}
+
+case class GaugeMetric(name: String, description: String, get: () => Long, metricUnit: StandardUnit = StandardUnit.Megabytes) extends FrontendMetric {
+  def getAndResetDataPoints: List[DataPoint] = List(GaugeDataPoint(get()))
+  def putDataPoints(points: List[DataPoint]): Unit = ()
 }
 
 case class CountMetric(name: String, description: String) extends FrontendMetric {

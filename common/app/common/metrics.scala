@@ -4,8 +4,8 @@ import java.io.File
 import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
 import java.util.concurrent.atomic.AtomicLong
 
-import com.amazonaws.services.cloudwatch.model.Dimension
-import metrics.{CountMetric, FrontendMetric}
+import com.amazonaws.services.cloudwatch.model.{StandardUnit, Dimension}
+import metrics.{GaugeMetric, CountMetric, FrontendMetric}
 import model.diagnostics.CloudWatch
 import play.api.{GlobalSettings, Application => PlayApp}
 
@@ -44,43 +44,43 @@ object SystemMetrics extends implicits.Numbers {
 
   // divide by 1048576 to convert bytes to MB
 
-  object MaxHeapMemoryMetric extends GaugeMetric("system", "max-heap-memory", "Max heap memory (MB)", "Max heap memory (MB)",
+  object MaxHeapMemoryMetric extends GaugeMetric("max-heap-memory", "Max heap memory (MB)",
     () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax / 1048576
   )
 
-  object UsedHeapMemoryMetric extends GaugeMetric("system", "used-heap-memory", "Used heap memory (MB)", "Used heap memory (MB)",
+  object UsedHeapMemoryMetric extends GaugeMetric("used-heap-memory", "Used heap memory (MB)",
     () => ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed / 1048576
   )
 
-  object MaxNonHeapMemoryMetric extends GaugeMetric("system", "max-non-heap-memory", "Max non heap memory (MB)", "Max non heap memory (MB)",
+  object MaxNonHeapMemoryMetric extends GaugeMetric("max-non-heap-memory", "Max non heap memory (MB)",
     () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax / 1048576
   )
 
-  object UsedNonHeapMemoryMetric extends GaugeMetric("system", "used-non-heap-memory", "Used non heap memory (MB)", "Used non heap memory (MB)",
+  object UsedNonHeapMemoryMetric extends GaugeMetric("used-non-heap-memory", "Used non heap memory (MB)",
     () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
   )
 
-  object AvailableProcessorsMetric extends GaugeMetric("system", "available-processors", "Available processors", "Available processors",
+  object AvailableProcessorsMetric extends GaugeMetric("available-processors", "Available processors",
     () => ManagementFactory.getOperatingSystemMXBean.getAvailableProcessors
   )
 
-  object FreeDiskSpaceMetric extends GaugeMetric("system", "free-disk-space", "Free disk space (MB)", "Free disk space (MB)",
-    () => new File("/").getUsableSpace.toDouble / 1048576
+  object FreeDiskSpaceMetric extends GaugeMetric("free-disk-space", "Free disk space (MB)",
+    () => new File("/").getUsableSpace / 1048576
   )
 
-  object TotalDiskSpaceMetric extends GaugeMetric("system", "total-disk-space", "Total disk space (MB)", "Total disk space (MB)",
-    () => new File("/").getTotalSpace.toDouble / 1048576
+  object TotalDiskSpaceMetric extends GaugeMetric("total-disk-space", "Total disk space (MB)",
+    () => new File("/").getTotalSpace / 1048576
   )
 
   // yeah, casting to com.sun.. ain't too pretty
-  object TotalPhysicalMemoryMetric extends GaugeMetric("system", "total-physical-memory", "Total physical memory", "Total physical memory",
+  object TotalPhysicalMemoryMetric extends GaugeMetric("total-physical-memory", "Total physical memory",
     () => ManagementFactory.getOperatingSystemMXBean match {
       case b: com.sun.management.OperatingSystemMXBean => b.getTotalPhysicalMemorySize
       case _ => -1
     }
   )
 
-  object FreePhysicalMemoryMetric extends GaugeMetric("system", "free-physical-memory", "Free physical memory", "Free physical memory",
+  object FreePhysicalMemoryMetric extends GaugeMetric("free-physical-memory", "Free physical memory",
     () => ManagementFactory.getOperatingSystemMXBean match {
       case b: com.sun.management.OperatingSystemMXBean => b.getFreePhysicalMemorySize
       case _ => -1
@@ -93,12 +93,13 @@ object SystemMetrics extends implicits.Numbers {
     case _ => -1 // dev machines do not have a build number
   }
 
-  object BuildNumberMetric extends GaugeMetric("application", "build-number", "Build number", "Build number",
-    () => buildNumber
+  object BuildNumberMetric extends GaugeMetric("build-number", "Build number",
+    () => buildNumber,
+    StandardUnit.None
   )
 
   val all = Seq(MaxHeapMemoryMetric, UsedHeapMemoryMetric,
-    MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric, LoadAverageMetric, AvailableProcessorsMetric,
+    MaxNonHeapMemoryMetric, UsedNonHeapMemoryMetric, BuildNumberMetric, AvailableProcessorsMetric,
     TotalPhysicalMemoryMetric, FreePhysicalMemoryMetric, FreeDiskSpaceMetric, TotalDiskSpaceMetric
   )
 }
@@ -434,20 +435,18 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   )
 
   def systemMetrics: Map[String, Double] = Map(
-    (s"$applicationName-max-heap-memory", SystemMetrics.MaxHeapMemoryMetric.getValue().toDouble),
-    (s"$applicationName-used-heap-memory", SystemMetrics.UsedHeapMemoryMetric.getValue().toDouble),
+    (s"$applicationName-max-heap-memory", SystemMetrics.MaxHeapMemoryMetric.get().toDouble),
+    (s"$applicationName-used-heap-memory", SystemMetrics.UsedHeapMemoryMetric.get().toDouble),
 
-    (s"$applicationName-total-physical-memory", SystemMetrics.TotalPhysicalMemoryMetric.getValue().toDouble),
-    (s"$applicationName-free-physical-memory", SystemMetrics.FreePhysicalMemoryMetric.getValue().toDouble),
+    (s"$applicationName-total-physical-memory", SystemMetrics.TotalPhysicalMemoryMetric.get().toDouble),
+    (s"$applicationName-free-physical-memory", SystemMetrics.FreePhysicalMemoryMetric.get().toDouble),
 
-    (s"$applicationName-available-processors", SystemMetrics.AvailableProcessorsMetric.getValue().toDouble),
+    (s"$applicationName-available-processors", SystemMetrics.AvailableProcessorsMetric.get().toDouble),
 
-    (s"$applicationName-load-average", SystemMetrics.LoadAverageMetric.getValue()),
+    (s"$applicationName-build-number", SystemMetrics.BuildNumberMetric.get().toDouble),
 
-    (s"$applicationName-build-number", SystemMetrics.BuildNumberMetric.getValue().toDouble),
-
-    (s"$applicationName-free-disk-space", SystemMetrics.FreeDiskSpaceMetric.getValue()),
-    (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.getValue())
+    (s"$applicationName-free-disk-space", SystemMetrics.FreeDiskSpaceMetric.get().toDouble),
+    (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.get().toDouble)
 
   ) ++ SystemMetrics.garbageCollectors.flatMap{ gc => Seq(
     s"$applicationName-${gc.name}-gc-count-per-min" -> gc.gcCount,
