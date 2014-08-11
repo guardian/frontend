@@ -19,8 +19,8 @@ object Global extends GlobalSettings
   override def applicationName = "frontend-facia-press"
 
   override def applicationMetrics = List(
-    GaugeMetric("front-press-failure", "", () => getTotalPressFailureCount),
-    GaugeMetric("front-press-success", "", () => getTotalPressSuccessCount),
+    GaugeMetric("front-press-failure", "Total number of front press failure", () => getTotalPressFailureCount),
+    GaugeMetric("front-press-success", "Total number of front press success", () => getTotalPressSuccessCount),
     FaciaPressMetrics.FrontPressDraftFailure,
     FaciaPressMetrics.FrontPressDraftSuccess,
     FaciaPressMetrics.FrontPressLiveFailure,
