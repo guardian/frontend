@@ -1,4 +1,4 @@
-@(videoElement: model.VideoElement, title: String, boost: Boolean, isFirst: Boolean)
+@(videoElement: model.VideoElement, title: String, boost: Boolean, isFirst: Boolean, endSlatePath: Option[String])
 
 @import views.html.fragments.media.video
 @import views.support.{Item300, Item220, RenderClasses}
@@ -11,9 +11,9 @@
 ))">
     <div class="fromage__video-container">
     @if(boost) {
-        @video(videoElement, Item300, title, 300, 180, true, false)
+        @video(videoElement, Item300, title, 300, 180, true, false, endSlatePath)
     } else {
-        @video(videoElement, Item220, title, 220, 132, true, false)
+        @video(videoElement, Item220, title, 220, 132, true, false, endSlatePath)
     }
     </div>
 </div>

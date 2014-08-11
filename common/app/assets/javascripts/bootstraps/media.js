@@ -280,7 +280,7 @@ define([
                                 player.fullscreener();
 
                                 // Init plugins
-                                if (config.switches.videoAdverts && !config.page.shouldHideAdverts) {
+                                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
                                     player.adCountDown();
                                     player.ads({
                                         timeout: 3000
@@ -295,7 +295,7 @@ define([
                                 }
 
                                 if (/desktop|wide/.test(detect.getBreakpoint())) {
-                                    modules.initEndSlate(player);
+                                    modules.initEndSlate(player, el.getAttribute('data-end-slate'));
                                 }
                             } else {
                                 vjs.playlist({
@@ -324,17 +324,17 @@ define([
                 });
             });
         },
-        generateEndSlateUrl: function() {
+        generateEndSlateUrlFromPage: function() {
             var seriesId = config.page.seriesId;
             var sectionId = config.page.section;
             var url = (seriesId)  ? '/video/end-slate/series/' + seriesId : '/video/end-slate/section/' + sectionId;
             return url + '.json?shortUrl=' + config.page.shortUrl;
         },
-        initEndSlate: function(player) {
+        initEndSlate: function(player, endSlatePath) {
             var endSlate = new Component(),
                 endState = 'vjs-has-ended';
 
-            endSlate.endpoint = modules.generateEndSlateUrl();
+            endSlate.endpoint = endSlatePath || modules.generateEndSlateUrlFromPage();
             endSlate.fetch(player.el(), 'html');
 
             player.one(constructEventName('content:play'), function() {

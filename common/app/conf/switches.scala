@@ -278,12 +278,7 @@ object Switches extends Collections {
 
   val WorldCupWallchartEmbedSwitch = Switch("Feature Switches", "worldcup-wallchart-embed",
     "If this switch is turned on JavaScript will load. It will be removed after the new Premier League session starts.",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 10)
-  )
-
-  val WorldCupArticleContainerSwitch = Switch("Feature Switches", "worldcup-article-container",
-    "If this switch is turned on world cup articles will have an extra container.",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 10)
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
   val SentimentalCommentsSwitch = Switch("Feature Switches", "sentimental-comments",
@@ -306,11 +301,6 @@ object Switches extends Collections {
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
-  )
-
-  val ABRightMostPopularText = Switch("A/B Tests", "ab-right-most-popular-text",
-    "If this switch is turned on, run the RightMostPopularText A/B test",
-   safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
   val ABNewsContainerNoImages = Switch("A/B Tests", "ab-news-container-no-images",
@@ -440,7 +430,7 @@ object Switches extends Collections {
 
   val ChildrensBooksSwitch = Switch("Feature Switches", "childrens-books-hide-popular",
     "If switched on, video pages in the childrens books section will not show popular videos",
-    safeState = On, sellByDate = new LocalDate(2014, 8, 12)
+    safeState = On, sellByDate = new LocalDate(2014, 9, 8)
   )
 
   val all: List[Switch] = List(
@@ -496,7 +486,6 @@ object Switches extends Collections {
     FaciaToolContainerTagsSwitch,
     EnhanceTweetsSwitch,
     WorldCupWallchartEmbedSwitch,
-    WorldCupArticleContainerSwitch,
     SentimentalCommentsSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
@@ -514,7 +503,6 @@ object Switches extends Collections {
     SeoBlockGooglebotFromJSPathsSwitch,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
-    ABRightMostPopularText,
     ABNewsContainerNoImages,
     CenturyRedirectionSwitch,
     ChildrensBooksSwitch
