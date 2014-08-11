@@ -338,29 +338,19 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
   val applicationMetricsNamespace: String = "Application"
   val applicationDimension: Dimension = new Dimension().withName("ApplicationName").withValue(applicationName)
   def applicationName: String
-  def applicationMetrics: Map[String, Double] = Map(
-    (s"$applicationName-${FilterCacheHit.name}", FilterCacheHit.getAndReset),
-    (s"$applicationName-${FilterCacheMiss.name}", FilterCacheMiss.getAndReset)
-  )
+  def applicationMetrics: List[FrontendMetric] = List(FilterCacheHit, FilterCacheMiss)
 
-  def systemMetrics: Map[String, Double] = Map(
-    (s"$applicationName-max-heap-memory", SystemMetrics.MaxHeapMemoryMetric.get().toDouble),
-    (s"$applicationName-used-heap-memory", SystemMetrics.UsedHeapMemoryMetric.get().toDouble),
-
-    (s"$applicationName-total-physical-memory", SystemMetrics.TotalPhysicalMemoryMetric.get().toDouble),
-    (s"$applicationName-free-physical-memory", SystemMetrics.FreePhysicalMemoryMetric.get().toDouble),
-
-    (s"$applicationName-available-processors", SystemMetrics.AvailableProcessorsMetric.get().toDouble),
-
-    (s"$applicationName-build-number", SystemMetrics.BuildNumberMetric.get().toDouble),
-
-    (s"$applicationName-free-disk-space", SystemMetrics.FreeDiskSpaceMetric.get().toDouble),
-    (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.get().toDouble)
-
-  ) ++ SystemMetrics.garbageCollectors.flatMap{ gc => Seq(
-    s"$applicationName-${gc.name}-gc-count-per-min" -> gc.gcCount,
-    s"$applicationName-${gc.name}-gc-time-per-min" -> gc.gcTime
-  )}.toMap
+  def systemMetrics: List[FrontendMetric] = List(SystemMetrics.MaxHeapMemoryMetric, SystemMetrics.UsedHeapMemoryMetric,
+    SystemMetrics.TotalPhysicalMemoryMetric, SystemMetrics.FreePhysicalMemoryMetric, SystemMetrics.AvailableProcessorsMetric,
+    SystemMetrics.BuildNumberMetric, SystemMetrics.FreeDiskSpaceMetric, SystemMetrics.TotalDiskSpaceMetric) ++
+    SystemMetrics.garbageCollectors.flatMap{ gc => List(
+      GaugeMetric(s"$applicationName-${gc.name}-gc-count-per-min" , "Used heap memory (MB)",
+        () => gc.gcCount.toLong
+      ),
+      GaugeMetric(s"$applicationName-${gc.name}-gc-time-per-min", "Used heap memory (MB)",
+        () => gc.gcTime.toLong
+      )
+    )}
 
   def latencyMetrics: List[FrontendMetric] = Nil
 
