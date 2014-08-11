@@ -1,16 +1,16 @@
 package common
 
-import metrics.FrontendMetric
-import play.api.{Application => PlayApp, GlobalSettings}
-import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
-import model.diagnostics.CloudWatch
 import java.io.File
+import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
 import java.util.concurrent.atomic.AtomicLong
+
 import com.amazonaws.services.cloudwatch.model.Dimension
-import common.FaciaToolMetrics.InvalidContentExceptionMetric
+import metrics.{CountMetric, FrontendMetric}
+import model.diagnostics.CloudWatch
+import play.api.{GlobalSettings, Application => PlayApp}
+
 import scala.collection.JavaConversions._
 import scala.util.Try
-import metrics.CountMetric
 
 object MemcachedMetrics {
 
@@ -429,7 +429,7 @@ object PerformanceMetrics {
 }
 
 trait CloudWatchApplicationMetrics extends GlobalSettings {
-  import MemcachedMetrics._
+  import common.MemcachedMetrics._
   val applicationMetricsNamespace: String = "Application"
   val applicationDimension: Dimension = new Dimension().withName("ApplicationName").withValue(applicationName)
   def applicationName: String
