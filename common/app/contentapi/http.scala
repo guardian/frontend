@@ -5,7 +5,7 @@ import java.util.concurrent.TimeoutException
 
 import com.gu.openplatform.contentapi.connection.{Http, HttpResponse}
 import common.ContentApiMetrics.ContentApi404Metric
-import common.{ExecutionContexts, FrontendTimingMetric, TimingMetric}
+import common.{ExecutionContexts, FrontendTimingMetric}
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
 import metrics.CountMetric
@@ -14,7 +14,7 @@ import play.api.libs.ws.{WS, WSAuthScheme}
 import scala.concurrent.Future
 import scala.util.Try
 
-class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: CountMetric) extends Http[Future]
+class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: CountMetric) extends Http[Future]
                                                                                               with ExecutionContexts {
 
   import java.lang.System.currentTimeMillis

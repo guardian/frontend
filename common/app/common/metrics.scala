@@ -161,7 +161,7 @@ object ContentApiMetrics {
 }
 
 object PaMetrics {
-  object PaApiHttpTimingMetric extends TimingMetric(
+  object PaApiHttpTimingMetric extends FrontendTimingMetric(
     "pa-api",
     "pa-api-calls",
     "PA API calls",
@@ -182,7 +182,7 @@ object PaMetrics {
 }
 
 object DiscussionMetrics {
-  object DiscussionHttpTimingMetric extends TimingMetric(
+  object DiscussionHttpTimingMetric extends FrontendTimingMetric(
     "performance",
     "discussion-api-calls",
     "Discussion API calls",
@@ -340,28 +340,28 @@ object FaciaToolMetrics {
 
 object CommercialMetrics {
 
-  object TravelOffersLoadTimingMetric extends TimingMetric(
+  object TravelOffersLoadTimingMetric extends FrontendTimingMetric(
     "commercial",
     "commercial-travel-offers-load",
     "Commercial Travel Offers load timing",
     "Time spent running travel offers data load jobs"
   )
 
-  object MasterClassesLoadTimingMetric extends TimingMetric(
+  object MasterClassesLoadTimingMetric extends FrontendTimingMetric(
     "commercial",
     "commercial-masterclasses-load",
     "Commercial MasterClasses load timing",
     "Time spent running MasterClasses load jobs"
   )
 
-  object JobsLoadTimingMetric extends TimingMetric(
+  object JobsLoadTimingMetric extends FrontendTimingMetric(
     "commercial",
     "commercial-jobs-load",
     "Commercial Jobs load timing",
     "Time spent running job ad data load jobs"
   )
 
-  object SoulmatesLoadTimingMetric extends TimingMetric(
+  object SoulmatesLoadTimingMetric extends FrontendTimingMetric(
     "commercial",
     "commercial-soulmates-load",
     "Commercial Soulmates load timing",
@@ -372,7 +372,7 @@ object CommercialMetrics {
 }
 
 object OnwardMetrics {
-  object OnwardLoadTimingMetric extends TimingMetric(
+  object OnwardLoadTimingMetric extends FrontendTimingMetric(
     "onward",
     "onward-most-popular-load",
     "Onward Journey load timing",
@@ -399,19 +399,18 @@ class FrontendTimingMetric(
                             group: String,
                             name: String,
                             title: String,
-                            description: String)
-  extends TimingMetric(group, name, title, description) {
+                            description: String) {
 
   private val timeInMillis = new AtomicLong()
   private val currentCount = new AtomicLong()
 
-  override def recordTimeSpent(durationInMillis: Long) {
+  def recordTimeSpent(durationInMillis: Long) {
     timeInMillis.addAndGet(durationInMillis)
     currentCount.incrementAndGet
   }
-  override def totalTimeInMillis = timeInMillis.get
-  override def count = currentCount.get
-  override val getValue = () => totalTimeInMillis
+  def totalTimeInMillis = timeInMillis.get
+  def count = currentCount.get
+  val getValue = () => totalTimeInMillis
 
   def getAndReset: Long = currentCount.getAndSet(0)
   def getAndResetTime: Long = Try(timeInMillis.getAndSet(0) / currentCount.getAndSet(0)).getOrElse(0L)

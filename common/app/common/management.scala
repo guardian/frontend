@@ -23,51 +23,10 @@ trait Switchable {
   def description: String
 }
 
-class TimingMetric(
-                    val group: String, val name: String, val title: String, val description: String) {
-  val `type` = "timer"
-
-  private val _totalTimeInMillis = new AtomicLong()
-  private val _count = new AtomicLong()
-
-  def recordTimeSpent(durationInMillis: Long) {
-    _totalTimeInMillis.addAndGet(durationInMillis)
-    _count.incrementAndGet
-  }
-
-  def totalTimeInMillis = _totalTimeInMillis.get
-  def count = _count.get
-  val getValue = () => totalTimeInMillis
-}
-
-object TimingMetric {
-  def empty = new TimingMetric("application", "Empty", "Empty", "Empty")
-}
-
 class GaugeMetric[T](
                       val group: String, val name: String, val title: String, val description: String,
                       val getValue: () => T) {
   val `type`: String = "gauge"
-}
-
-object Timing {
-
-  def time[T](activity: String,
-              onSuccess: String => Unit,
-              onFailure: (String, Throwable) => Unit,
-              metric: Option[TimingMetric])(block: => T): T = {
-    val stopWatch = new StopWatch
-    try {
-      val result = block
-      metric foreach (_.recordTimeSpent(stopWatch.elapsed))
-      onSuccess(activity + " completed in " + stopWatch.elapsed + " ms")
-      result
-    } catch {
-      case t: Throwable =>
-        onFailure(activity + " caused exception after " + stopWatch.elapsed + " ms", t)
-        throw t
-    }
-  }
 }
 
 case class DefaultSwitch(name: String, description: String, initiallyOn: Boolean = true) extends Switchable {
