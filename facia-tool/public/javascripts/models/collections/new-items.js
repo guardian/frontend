@@ -16,8 +16,8 @@ define([
     deepGet,
     removeById
 ) {
-    var maxChars = vars.CONST.headlineLength || 90,
-        restrictedHeadlineLength = vars.CONST.restrictedHeadlineLength || [],
+    var maxChars = vars.CONST.restrictedHeadlineLength || 90,
+        restrictHeadlinesOn = vars.CONST.restrictHeadlinesOn || [],
         restrictedLiveMode = vars.CONST.restrictedLiveMode || [];
 
     function newItemsConstructor(id, sourceItem, targetGroup) {
@@ -48,7 +48,7 @@ define([
                 err;
 
             if(item.group.parentType === 'Collection') {
-                if (restrictedHeadlineLength.indexOf(front) > -1 && (item.meta.headline() || item.fields.headline()).length > maxChars) {
+                if (restrictHeadlinesOn.indexOf(front) > -1 && (item.meta.headline() || item.fields.headline()).length > maxChars) {
                     err = 'Sorry, a ' + front + ' headline must be ' + maxChars + ' characters or less. Edit it first within the clipboard.';
                 }
                 if (restrictedLiveMode.indexOf(front) > -1 && vars.model.liveMode()) {

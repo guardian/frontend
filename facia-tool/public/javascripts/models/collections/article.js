@@ -84,7 +84,7 @@ define([
             }, this);
 
             this.headlineLengthAlert = ko.computed(function() {
-                return (this.meta.headline() || this.fields.headline() || '').length > vars.CONST.headlineLength;
+                return (this.meta.headline() || this.fields.headline() || '').length > vars.CONST.restrictedHeadlineLength;
             }, this);
 
             this.isSnap = ko.computed(function() {

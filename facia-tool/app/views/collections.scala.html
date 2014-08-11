@@ -251,7 +251,10 @@
                             hasFocus: true,
                             event: {blur: save},
                             value: headlineInput,
-                            attr: {placeholder: fields.headline() || 'Link text'}"></textarea>
+                            attr: {
+                                maxlength: $root.headlineLength,
+                                placeholder: fields.headline() || 'Link text'
+                            }"></textarea>
                         <span class="headline-length" data-bind="
                             css: {'headline-length--alert': headlineLengthAlert},
                             text: headlineLength"></span>

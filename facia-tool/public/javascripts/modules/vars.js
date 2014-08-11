@@ -25,15 +25,16 @@ define([
             {name: 'comment/comment-and-debate'}
         ],
 
-        restrictedHeadlineLength: [
+        headlineLength: 200,
+        restrictedHeadlineLength: 90,
+
+        restrictHeadlinesOn: [
             'breaking-news'
         ],
 
         restrictedLiveMode: [
             'breaking-news'
         ],
-
-        headlineLength: 90,
 
         detectPressFailureMs: 10000,
 
