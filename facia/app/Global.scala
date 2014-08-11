@@ -1,5 +1,5 @@
 import common._
-import conf.{Management, Filters}
+import conf.{Configuration, Filters}
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import ophan.SurgingContentAgentLifecycle
@@ -13,7 +13,7 @@ with DevParametersLifecycle
 with CloudWatchApplicationMetrics
 with DfpAgentLifecycle
 with SurgingContentAgentLifecycle {
-  override lazy val applicationName = Management.applicationName
+  override lazy val applicationName = "frontend-facia"
 
   override def applicationMetrics: Map[String, Double] = super.applicationMetrics ++ Map(
     ("s3-authorization-error", S3Metrics.S3AuthorizationError.getAndReset.toDouble),

@@ -1,6 +1,7 @@
 import common._
-import conf.{Configuration => GuardianConfiguration, Management}
-import frontpress.{ToolPressQueueWorker, FrontPressCron}
+import conf.{Configuration => GuardianConfiguration}
+import frontpress.{FrontPressCron, ToolPressQueueWorker}
+import metrics._
 import play.api.GlobalSettings
 import services.ConfigAgentLifecycle
 
@@ -15,7 +16,7 @@ object Global extends GlobalSettings
   private def getTotalPressFailureCount: Long =
     FaciaPressMetrics.FrontPressLiveFailure.getResettingValue() + FaciaPressMetrics.FrontPressDraftFailure.getResettingValue()
 
-  override def applicationName = Management.applicationName
+  override def applicationName = "frontend-facia-press"
 
   override def applicationMetrics = Map(
     ("front-press-failure", getTotalPressFailureCount.toDouble),
@@ -42,6 +43,9 @@ object Global extends GlobalSettings
     ("us-network-front-press-latency", FaciaPressMetrics.UsFrontPressLatency.getAndResetTime.toDouble),
     ("au-network-front-press-latency", FaciaPressMetrics.AuFrontPressLatency.getAndResetTime.toDouble)
   )
+
+  override def latencyMetrics: List[FrontendMetric] = List(UkPressLatencyMetric, UsPressLatencyMetric, AuPressLatencyMetric,
+                                     AllFrontsPressLatencyMetric)
 
   def scheduleJobs() {
     Jobs.schedule("FaciaToolPressJob", s"0/$pressJobConsumeRateInSeconds * * * * ?") {

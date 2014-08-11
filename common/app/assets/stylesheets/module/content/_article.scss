@@ -1,3 +1,27 @@
+
+.content--article.tone-news--article .content__head {
+    @include rem((
+        padding-top: $content-top-padding
+    ));
+}
+
+.media-primary {
+    @include rem((
+        margin-left: $gs-gutter / -2,
+        margin-right: $gs-gutter / -2
+    ));
+    @include mq(mobileLandscape) {
+        @include rem((
+            margin-left: $gs-gutter / -1,
+            margin-right: $gs-gutter / -1
+        ));
+    }
+}
+
+
+/* Legacy classes to be refactored out (replaced by .content*)
+   ========================================================================== */
+
 .article {
     position: relative;
     @include rem((
@@ -161,19 +185,6 @@
 .meta__body {
     @include mq(leftCol) {
         clear: left;
-    }
-}
-
-.media-primary {
-    @include rem((
-        margin-left: $gs-gutter / -2,
-        margin-right: $gs-gutter / -2
-    ));
-    @include mq(mobileLandscape) {
-        @include rem((
-            margin-left: $gs-gutter / -1,
-            margin-right: $gs-gutter / -1
-        ));
     }
 }
 

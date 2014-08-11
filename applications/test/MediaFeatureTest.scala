@@ -45,5 +45,20 @@ class MediaFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         browser.findFirst(".byline").getText should be ("Guy Turland and Mark Alston, Source: Bondi Harvest Pty Ltd")
       }
     }
+
+    scenario("The content is marked up with the correct schema") {
+      HtmlUnit("/uk-news/video/2014/aug/06/qatar-airlines-flight-escorted-raf-fighter-jet-bomb-hoax-video") { browser =>
+        import browser._
+
+        val media = findFirst("figure[itemtype='http://schema.org/VideoObject']")
+
+        And("It should have the associated meta data")
+
+        media.findFirst("[itemprop=duration]").getAttribute("content") should be("PT66S")
+        media.findFirst("[itemprop=width]").getAttribute("content") should be("480")
+        media.findFirst("[itemprop=height]").getAttribute("content") should be("360")
+        media.findFirst("[itemprop=headline]").getAttribute("content") should be("Qatar Airways flight escorted by RAF jet after bomb hoax - video")
+      }
+    }
   }
 }

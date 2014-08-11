@@ -12,7 +12,7 @@
 
     @if(!content.shouldHideAdverts) {
         <div class="facia-container facia-container--layout-content facia-container--commercial">
-            @fragments.commercial.commercialComponent("merchandising-high", Seq("commercial-component-high"))
+            @fragments.commercial.commercialComponentHigh()
         </div>
     }
 
@@ -32,13 +32,13 @@
         @fragments.mostPopularPlaceholder(content.section, content.visualTone)
     </div>
 
-    <div class="facia-container facia-container--layout-content facia-container--default-heading">
+    <div class="facia-container facia-container--layout-content facia-container--outbrain">
         @fragments.outbrainPlaceholder()
     </div>
 
     @if(!content.shouldHideAdverts) {
         <div class="facia-container facia-container--layout-content facia-container--commercial">
-            @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
+            @fragments.commercial.commercialComponent()
         </div>
     }
 

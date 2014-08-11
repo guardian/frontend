@@ -4,9 +4,7 @@ import org.fluentlenium.core.domain.FluentWebElement
 
 object `package` {
 
-  object Fake extends FakeApp
-
-  object HtmlUnit extends EditionalisedHtmlUnit
+  object HtmlUnit extends EditionalisedHtmlUnit(conf.HealthCheck.testPort.toString)
 
   implicit class WebElement2rich(element: FluentWebElement) {
     lazy val href = element.getAttribute("href")

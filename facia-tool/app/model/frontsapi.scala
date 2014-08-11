@@ -1,5 +1,6 @@
 package frontsapi.model
 
+import com.gu.googleauth.UserIdentity
 import play.api.libs.json.{Json, JsValue}
 import tools.FaciaApi
 import org.joda.time.DateTime

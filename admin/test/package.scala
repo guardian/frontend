@@ -1,5 +1,7 @@
 package test
 
+import controllers.HealthCheck
+
 object `package` {
-  object Fake extends FakeApp
+  object HtmlUnit extends EditionalisedHtmlUnit(HealthCheck.testPort.toString)
 }

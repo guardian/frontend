@@ -1,10 +1,6 @@
 .container--news {
     .container__border {
         display: none;
-
-        @include mq(faciaLeftCol) {
-            display: block;
-        }
     }
     .facia-slice-wrapper:first-child {
         .fromage {
@@ -20,7 +16,6 @@
     }
     .container__title {
         display: none;
-        color: $c-newsDefault;
         margin-bottom: 0;
     }
     @include mq(tablet) {

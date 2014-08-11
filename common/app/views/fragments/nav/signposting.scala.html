@@ -1,4 +1,7 @@
-@(metaData: MetaData, navigation: Seq[common.NavItem])(implicit request: RequestHeader)
+@(metaData: model.MetaData, navigation: Seq[common.NavItem])(implicit request: RequestHeader)
+
+@import common.{Edition, LinkTo, Navigation}
+@import views.support.RenderClasses
 
 <ul class="signposting">
     <li class="@RenderClasses(Map(

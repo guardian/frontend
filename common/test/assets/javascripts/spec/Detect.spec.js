@@ -74,6 +74,11 @@ define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
             'Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/ ...'
         ];
 
+        var woff2UserAgents = [
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2107.3 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.67 Safari/537.36'
+        ];
+
         it("should default to WOFF format", function(){
             var ua = "an unknown user agent string";
             expect(detect.getFontFormatSupport(ua)).toBe('woff');
@@ -87,6 +92,10 @@ define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
 
             woffUserAgents.forEach(function(ua){
                 expect(detect.getFontFormatSupport(ua)).toBe('woff');
+            })
+
+            woff2UserAgents.forEach(function(ua){
+                expect(detect.getFontFormatSupport(ua)).toBe('woff2');
             })
 
         });

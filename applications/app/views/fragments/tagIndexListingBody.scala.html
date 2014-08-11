@@ -1,0 +1,28 @@
+@(id: String, subTitle: String, listings: model.TagIndexListings)(implicit request: RequestHeader)
+
+@import common.LinkTo
+
+<div class="tag-index l-side-margins l-side-margins--layout-content">
+    <header class="tag-index__head tone-accent-border u-cf">
+        <div class="gs-container">
+            <div class="tag-index__main-column">
+                <div class="tag-index__parent">
+                    Index
+                </div>
+                <h1 itemprop="headline" class="tag-index__headline js-score">@subTitle</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="gs-container">
+        <div class="tag-index__main-column">
+            <ul class="linkslist">
+            @for(page <- listings.pages) {
+                <li class="linkslist__item">
+                    <a href="@LinkTo(s"/index/${id}/${page.id}")" class="linkslist__action tag-index__tag-link">@page.title</a>
+                </li>
+            }
+            </ul>
+        </div>
+    </div>
+</div>

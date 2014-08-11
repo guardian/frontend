@@ -1,12 +1,13 @@
 package tools
 
-import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
-import conf.{AdminHealthCheckPage, Configuration}
-import com.amazonaws.services.cloudwatch.model._
-import org.joda.time.DateTime
 import com.amazonaws.handlers.AsyncHandler
+import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
+import com.amazonaws.services.cloudwatch.model._
 import common.Logging
-import Configuration._
+import conf.Configuration
+import conf.Configuration._
+import controllers.HealthCheck
+import org.joda.time.DateTime
 import services.AwsEndpoints
 
 object CloudWatch extends implicits.Futures{
@@ -20,13 +21,13 @@ object CloudWatch extends implicits.Futures{
   val stageFilter = new DimensionFilter().withName("Stage").withValue(environment.stage)
 
   lazy val euWestClient = {
-    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.mandatoryCredentials)
     client.setEndpoint(AwsEndpoints.monitoring)
     client
   }
 
   // some metrics are only available in the 'default' region
-  lazy val defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+  lazy val defaultClient = new AmazonCloudWatchAsyncClient(Configuration.aws.mandatoryCredentials)
 
   val primaryLoadBalancers: Seq[LoadBalancer] = Seq(
     LoadBalancer("frontend-router"),
@@ -86,7 +87,7 @@ object CloudWatch extends implicits.Futures{
       exception match {
         // temporary till JVM bug fix comes out
         // see https://blogs.oracle.com/joew/entry/jdk_7u45_aws_issue_123
-        case e: Exception if e.getMessage.contains("JAXP00010001") => AdminHealthCheckPage.setUnhealthy()
+        case e: Exception if e.getMessage.contains("JAXP00010001") => HealthCheck.break()
         case _ =>
       }
     }

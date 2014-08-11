@@ -398,9 +398,15 @@
                             click: open,
                             text: meta.snapCss() || 'snap'"></span>
 
-                        <span class="is is--draft" data-bind="
-                            visible: fields.isLive() === 'false',
-                            click: open">Draft</span>
+                        <!-- ko if: fields.isLive() === 'false' -->
+                            <span class="is" data-bind="
+                                css: {
+                                    'is--takedown': fields.firstPublicationDate(),
+                                    'is--draft':   !fields.firstPublicationDate(),
+                                },
+                                text: fields.firstPublicationDate() ? 'Taken down' : 'Draft',
+                                click: open"></span>
+                        <!-- /ko -->
 
                         <span class="is is--breaking" data-bind="
                             visible: meta.isBreaking,

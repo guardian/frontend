@@ -124,6 +124,9 @@ linters:
   UnnecessaryMantissa:
     enabled: true
 
+  UnnecessaryParentReference:
+    enabled: true
+
   UrlFormat:
     enabled: false
 

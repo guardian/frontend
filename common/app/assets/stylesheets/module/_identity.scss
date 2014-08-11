@@ -3,16 +3,13 @@
 
 .l-header--identity {
     @include rem((
-        height: 44px
+        height: 45px
     ));
-    background-color: #ffffff;
 
     @include mq(tablet) {
         @include rem((
-            height: 133px
+            height: 113px
         ));
-        border-bottom: 2px solid #214583;
-        background: $c-neutral8;
     }
 }
 

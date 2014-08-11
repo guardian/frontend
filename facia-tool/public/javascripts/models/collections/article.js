@@ -51,6 +51,7 @@ define([
 
             this.fields = asObservableProps([
                 'isLive',
+                'firstPublicationDate',
                 'headline',
                 'trailText',
                 'thumbnail']);
@@ -221,7 +222,6 @@ define([
         Article.prototype.sparkline = function() {
             var path = urlAbsPath(this.props.webUrl());
 
-            this.state.sparkUrl(undefined);
             if (vars.model.switches()['facia-tool-sparklines']) {
                 this.state.sparkUrl(
                     vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':46C430' : '')
@@ -229,6 +229,12 @@ define([
                 this.state.ophanUrl(
                     vars.CONST.ophanBase + '?path=/' + path
                 );
+            }
+        };
+
+        Article.prototype.refreshSparkline = function() {
+            if (vars.model.switches()['facia-tool-sparklines']) {
+                this.state.sparkUrl.valueHasMutated();
             }
         };
 

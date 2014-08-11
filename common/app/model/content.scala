@@ -373,7 +373,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = {
-    val bookReviewIsbns = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
+    val bookReviewIsbn = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
 
     super.metaData ++ Map(
       ("content-type", contentType),
@@ -382,7 +382,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
       ("inBodyExternalLinkCount", linkCounts.external),
       ("shouldHideAdverts", shouldHideAdverts),
       ("hasInlineMerchandise", hasInlineMerchandise)
-    ) ++ bookReviewIsbns
+    ) ++ bookReviewIsbn
   }
 
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
@@ -413,12 +413,6 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 
-  protected implicit val ordering = EncodingOrdering
-
-  lazy val encodings: Seq[Encoding] = Nil
-  lazy val duration: Int = 0
-  lazy val mediaId: Option[String] = None
-
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
     "og:type" -> "video",
@@ -433,15 +427,6 @@ class Audio(content: ApiContentWithMeta) extends Media(content) {
 
   lazy val body: String = delegate.safeFields.getOrElse("body", "")
 
-  override lazy val encodings: Seq[Encoding] = {
-    audioAssets.toList.collect {
-      case audio: AudioAsset => Encoding(audio.url.getOrElse(""), audio.mimeType.getOrElse(""))
-    }.sorted
-  }
-
-  override lazy val duration: Int = audioAssets.headOption.map(_.duration).getOrElse(0)
-  override lazy val mediaId: Option[String] = mainAudio.map(_.id)
-
   override lazy val contentType = GuardianContentTypes.AUDIO
 
   override lazy val metaData: Map[String, Any] =
@@ -454,26 +439,13 @@ object Audio {
 
 class Video(content: ApiContentWithMeta) extends Media(content) {
 
-  override lazy val encodings: Seq[Encoding] = {
-    videoAssets.toList.collect {
-      case video: VideoAsset => Encoding(video.url.getOrElse(""), video.mimeType.getOrElse(""))
-    }.sorted
-  }
-
   override lazy val hasClassicVersion = false
-
-  override lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
-  override lazy val mediaId: Option[String] = mainVideo.map(_.id)
 
   override lazy val contentType = GuardianContentTypes.VIDEO
 
+  lazy val source: Option[String] = videos.find(_.isMain).flatMap(_.source)
   override lazy val metaData: Map[String, Any] =
     super.metaData + ("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
-
-  // if you change these rules make sure you update IMAGES.md (in this project)
-  override def mainPicture: Option[ImageContainer] = (images ++ videos).find(_.isMain)
-
-  lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
   // I know its not too pretty
   lazy val bylineWithSource: Option[String] = Some(Seq(
     byline,
@@ -483,6 +455,8 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
     }
   ).flatten.mkString(", ")).filter(_.nonEmpty)
   lazy val videoLinkText: String = webTitle.stripSuffix(" - video").stripSuffix(" – video")
+
+  def endSlatePath = EndSlateComponents.fromVideo(this).toUriPath
 }
 
 object Video {

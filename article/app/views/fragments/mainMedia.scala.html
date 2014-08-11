@@ -1,4 +1,7 @@
-@(article: Article)(implicit request: RequestHeader)
+@(article: model.Article)(implicit request: RequestHeader)
+
+@import views.support.{Item620, SeoOptimisedContentImage}
+@import views.BodyCleaner
 
 @if(article.hasMainEmbed) {
     <div class="media-primary">
@@ -7,27 +10,32 @@
 } else {
     @if(!article.hasVideoAtTop) {
         @if(article.hasMainVideo) {
-            @article.mainVideo.map{ mainVideo =>
-                <div class="gu-video-wrapper">
-                    <div class="u-responsive-ratio u-responsive-ratio--hd">
-                        <video data-media-id="@mainVideo.id" class="gu-video" controls="controls">
-                            @for(videoAsset <- mainVideo.videoAssets) {
-                                <source src="@videoAsset.url" type="@videoAsset.mimeType" />
+            @article.mainVideo.map { mainVideo =>
+                @defining(mainVideo.videoAssets.flatMap(_.image)) { posters =>
+
+                    <figure itemprop="associatedMedia video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
+                    class="media-primary media-content">
+                        @article.mainVideo.map { video =>
+                            @fragments.media.video(video, Item620, article.headline, 620, 350)
+                        }
+
+                        @posters.headOption.map { image =>
+                            @SeoOptimisedContentImage.captionFor(image).map { caption =>
+                                <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
                             }
-                            @mainVideo.videoAssets.find(_.mimeType == "video/mp4").map{ encoding =>
-                                <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="620" height="350">
-                                    <param name="allowFullScreen" value="true" />
-                                    <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
-                                    <param name="flashvars" value="file=@encoding.url&amp;controls=true" />
-                                    Sorry, your browser is unable to play this video.
-                                </object>
-                            }
-                        </video>
-                    </div>
-                </div>
+                        }
+                    </figure>
+                }
             }
         } else {
-            @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature)
+            @if(article.hasMainAudio) {
+                <figure itemprop="associatedMedia audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio"
+                    class="media-primary media-content">
+                    @fragments.media.audio(article.mainAudio, article.headline)
+                </figure>
+            } else {
+                @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature)
+            }
         }
     }
 }

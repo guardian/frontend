@@ -18,7 +18,7 @@
             swipe: '@Static("javascripts/components/swipe/swipe.js")',
             zxcvbn: '@Static("javascripts/components/zxcvbn/index.js")',
             'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',
-            foresee: '@Static("javascripts/vendor/foresee2/foresee-trigger.js")',
+            foresee: 'http://assets.guim.co.uk/javascripts/vendor/foresee4/foresee-trigger.js',
             googletag: '@{Configuration.javascript.config("googletagJsUrl")}',
             core: '@Static("javascripts/core.js")',
             'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")',
@@ -124,14 +124,11 @@
         require(['raven', 'common/utils/config'], function(raven, config) {
 
             raven.config(
-                'http://' + config.page.sentryApiKey + '@@' + config.page.sentryHost,
+                'http://' + config.page.sentryPublicApiKey + '@@' + config.page.sentryHost,
                 {
-                    logger: 'javascript',
                     whitelistUrls: [
-                        /localhost/,
                         /assets\.guim\.co\.uk/,
                         /ophan\.co\.uk/,
-                        /api\.nextgen\.guardianapps\.co\.uk/
                     ],
                     tags: {
                         edition: config.page.edition,
@@ -139,7 +136,7 @@
                         buildNumber: config.page.buildNumber
                     },
                     shouldSendCallback: function(data) {
-                        return Math.random() < 0.1;
+                        return Math.random() < 0.4 && guardian.config.switches.enableDiagnosticsLogging;
                     }
                 }
             ).install();
@@ -150,15 +147,13 @@
                 ab.segmentUser();
                 ab.run();
 
-                if (guardian.config.switches.commercial) {
-
+                if (config.switches.commercial) {
                     require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
                         commercial.init();
                     });
                 }
 
                 if (guardian.isModernBrowser) {
-
                     @if(play.Play.isDev()) {
                         require(['bootstraps/dev'], function (devmode) { devmode.init(); });
                     }
@@ -166,7 +161,6 @@
                     require(['bootstraps/app'], function(bootstrap) {
                         bootstrap.go();
                     });
-
                 }
 
             });
