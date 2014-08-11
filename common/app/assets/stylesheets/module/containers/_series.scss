@@ -6,7 +6,7 @@
     .container__label {
         @include rem((
             padding-top: $gs-baseline/2,
-            line-height: 24px
+            line-height: get-line-height($fs-headers, 2) !important
         ));
         @include fs-header(3);
         color: $c-neutral2;
@@ -22,7 +22,7 @@
         }
         @include fs-header(3);
         @include rem((
-            line-height: 24px
+            line-height: get-line-height($fs-headers, 2) !important
         ));
 
         a {
