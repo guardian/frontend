@@ -343,34 +343,6 @@ object FaciaPressMetrics {
     "Number of times facia-tool has failed to made the request for SEO purposes of webTitle and section"
   )
 
-  object FrontPressLatency extends FrontendTimingMetric(
-    "facia-front-press",
-    "front-press-latency",
-    "Front Press Latency",
-    "Time from press command being queued to being processed"
-  )
-
-  object UkFrontPressLatency extends FrontendTimingMetric(
-    "facia-front-press",
-    "uk-network-front-press-latency",
-    "UK Network Front Press Latency",
-    "Time from press command for UK front being queued to being processed"
-  )
-
-  object UsFrontPressLatency extends FrontendTimingMetric(
-    "facia-front-press",
-    "us-network-front-press-latency",
-    "US Network Front Press Latency",
-    "Time from press command for US front being queued to being processed"
-  )
-
-  object AuFrontPressLatency extends FrontendTimingMetric(
-    "facia-front-press",
-    "au-network-front-press-latency",
-    "AU Network Front Press Latency",
-    "Time from press command for AU front being queued to being processed"
-  )
-
   val all: Seq[Metric] = Seq(
     FrontPressSuccess,
     FrontPressLiveSuccess,
@@ -382,11 +354,7 @@ object FaciaPressMetrics {
     FrontPressCronFailure,
     MemcachedFallbackMetric,
     ContentApiSeoRequestSuccess,
-    ContentApiSeoRequestFailure,
-    FrontPressLatency,
-    UkFrontPressLatency,
-    UsFrontPressLatency,
-    AuFrontPressLatency
+    ContentApiSeoRequestFailure
   )
 }
 
