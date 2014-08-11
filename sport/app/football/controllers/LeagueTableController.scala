@@ -25,12 +25,12 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def renderLeagueTableJson() = renderLeagueTable()
   def renderLeagueTable() = Action { implicit request =>
 
-    val page = new Page(
+    val page = new FootballPage(
       "football/tables",
       "football",
       "All tables",
       "GFE:Football:automatic:tables"
-    ) with FootballPage
+    )
 
     val groups = loadTables.map { table =>
       if (table.multiGroup) {
@@ -49,12 +49,12 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
   def renderTeamlistJson() = renderTeamlist()
   def renderTeamlist() = Action { implicit request =>
 
-    val page = new Page(
+    val page = new FootballPage(
       "football/teams",
       "football",
       "All teams",
       "GFE:Football:automatic:teams"
-    ) with FootballPage
+    )
 
     val groups = loadTables.map { table =>
       table.copy(groups = table.groups)
@@ -73,12 +73,12 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
     val table = loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))
     table.map { table =>
 
-      val page = new Page(
+      val page = new FootballPage(
         "football/tables",
         "football",
         s"${table.competition.fullName} table",
         "GFE:Football:automatic:competition tables"
-      ) with FootballPage
+      )
 
       val smallTableGroup = table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
@@ -103,12 +103,12 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         group.round.name.exists(name => name.toLowerCase == groupReference.toLowerCase.replace("-", " "))
       }
     } yield {
-      val page = new Page(
+      val page = new FootballPage(
         "football/tables",
         "football",
         s"${table.competition.fullName} table",
         "GFE:Football:automatic:competition tables"
-      ) with FootballPage
+      )
       val groupTable = Table(table.competition, Seq(group), hasGroups = true)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(groupTable), table.competition.url, filters, Some(table.competition)))
       val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, group, multiGroup = false)

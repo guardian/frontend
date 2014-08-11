@@ -1,6 +1,7 @@
 package football.controllers
 
-import model.{ Trail, MetaData, Competition }
+import common.Pagination
+import model.{Page, Trail, MetaData, Competition}
 import org.joda.time.LocalDate
 import implicits.Football
 
@@ -23,6 +24,19 @@ case class MatchesPage(
 
 }
 
-trait FootballPage extends MetaData {
+class FootballPage(
+            id: String,
+            section: String,
+            webTitle: String,
+            analyticsName: String,
+            pagination: Option[Pagination] = None,
+            description: Option[String] = None) extends Page(
+  id,
+  section,
+  webTitle,
+  analyticsName,
+  pagination,
+  description
+) {
   override val hasClassicVersion: Boolean = false
 }
