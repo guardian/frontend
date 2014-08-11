@@ -6,7 +6,8 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component',
     'common/modules/experiments/tests/right-most-popular-text',
-    'common/modules/experiments/tests/news-container-no-images'
+    'common/modules/experiments/tests/news-container-no-images',
+    'common/modules/experiments/tests/soulmates-labelling'
 ], function (
     assign,
     store,
@@ -15,13 +16,15 @@ define([
     mvtCookie,
     HighCommercialComponent,
     RightMostPopularText,
-    NewsContainerNoImages
+    NewsContainerNoImages,
+    SoulmatesLabelling
     ) {
 
     var TESTS = [
             new HighCommercialComponent(),
             new RightMostPopularText(),
-            new NewsContainerNoImages()
+            new NewsContainerNoImages(),
+            new SoulmatesLabelling()
         ],
         participationsKey = 'gu.ab.participations';
 
