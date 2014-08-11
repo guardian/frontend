@@ -6,7 +6,7 @@
 .codeBlock {
     padding: $gs-baseline;
 
-    &::before {
+    &:before {
         color: $c-neutral2;
         @include fs-data(4);
         text-transform: uppercase;
@@ -23,17 +23,17 @@
     background-size: 44px 44px;
     background-position: 0 0, 22px 22px;
 
-    &::before {
+    &:before {
         content: 'Example:';
         padding: 0 0 $gs-baseline 0;
     }
 
-    &::after {
+    &:after {
         content: '';
         display: table;
     }
 
-    &::after {
+    &:after {
         clear: both;
     }
 }
@@ -42,7 +42,7 @@
     background-color: fade-out($c-neutral7, 0.25);
     overflow: auto;
 
-    &::before {
+    &:before {
         content: 'Markup:';
     }
 
