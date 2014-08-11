@@ -60,11 +60,6 @@ object SystemMetrics extends implicits.Numbers {
     () => ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed / 1048576
   )
 
-  //  http://docs.oracle.com/javase/6/docs/api/java/lang/management/OperatingSystemMXBean.html()
-  object LoadAverageMetric extends GaugeMetric("system", "load-average", "Load average", "Load average",
-    () => ManagementFactory.getOperatingSystemMXBean.getSystemLoadAverage
-  )
-
   object AvailableProcessorsMetric extends GaugeMetric("system", "available-processors", "Available processors", "Available processors",
     () => ManagementFactory.getOperatingSystemMXBean.getAvailableProcessors
   )
