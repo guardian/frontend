@@ -34,6 +34,8 @@ case class CountMetric(name: String, description: String) extends FrontendMetric
   def getAndReset: Long = getAndResetDataPoints.map(_.value).reduce(_ + _)
   def putDataPoints(points: List[DataPoint]): Unit = for(dataPoint <- points) count.addAndGet(dataPoint.value)
 
+  def getResettingValue(): Long = count.get()
+
   def record(): Unit = count.incrementAndGet()
   def increment(): Unit = record()
 }
