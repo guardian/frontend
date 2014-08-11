@@ -15,6 +15,7 @@
     case Some("features/auto")              => { @containers.featuresauto(block._2, FeaturesAutoContainer(), index)(request, templateDeduping, block._1) }
     case Some("features/multimedia")        => { @containers.multimedia(block._2, MultimediaContainer(), index)(request, templateDeduping, block._1) }
     case Some("features/picks")             => { @containers.picks(block._2, PicksContainer(), index)(request, templateDeduping, block._1) }
+    case Some("features/cassoulet")         => { @containers.cassoulet(block._2, CassouletContainer(), index)(request, templateDeduping, block._1) }
     case Some("features/volumes")           => { @containers.featuresvolumes(front, block._2, FeaturesVolumesContainer(), index)(request, templateDeduping, block._1) }
     case Some("comment/comment-and-debate") => { @containers.commentanddebate(block._2, CommentAndDebateContainer(), index)(request, templateDeduping, block._1) }
     case _                                  => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
