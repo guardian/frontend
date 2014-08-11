@@ -85,8 +85,8 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
         promiseOfResponse.map{ r =>
 
           r.status match {
-            case 200 => PaApiHttpOkMetric.recordCount(1)
-            case _ => PaApiHttpErrorMetric.recordCount(1)
+            case 200 => PaApiHttpOkMetric.increment()
+            case _ => PaApiHttpErrorMetric.increment()
           }
 
           //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
