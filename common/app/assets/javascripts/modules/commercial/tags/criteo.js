@@ -17,7 +17,7 @@ define([
 
     function getSegments(c) {
         c = c || config;
-        var cookieValue = cookies.get(cookieName);
+        var cookieValue = decodeURIComponent(cookies.get(cookieName));
         return (c.switches.criteo && cookieValue) ? urlUtils.getUrlVars({query: cookieValue}) : {};
     }
 

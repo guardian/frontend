@@ -5,7 +5,7 @@ import common._
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}
 import pa.{Http, PaClient}
-import play.api.{Application => PlayApp, Mode, Play, Plugin}
+import play.api.{Application => PlayApp, Plugin}
 import play.api.libs.ws.WS
 import scala.concurrent.Future
 import scala.concurrent.duration._

@@ -11,7 +11,6 @@
     @return map-get($guss-font-weights, $keyword);
 }
 
-
 /**
  * Is this font stored in `$guss-extras-directory`?
  * 
@@ -24,7 +23,6 @@
 @function is-extra($font-family) {
     @return contain($guss-webfonts-extras, $font-family);
 }
-
 
 /**
  * Replace `$search` by `$replace` in `$string`.
@@ -48,7 +46,6 @@
     @return $string;
 }
 
-
 /**
  * Remove white space in $string
  *
@@ -61,7 +58,6 @@
 @function str-remove-white-space($string) {
     @return str-replace($string, ' ', '');
 }
-
 
 /**
  * Capitalise first letter of $string
@@ -77,7 +73,6 @@
 
     @return $first-letter + $rest-of-string;
 }
-
 
 /**
  * Compose webfont filename
@@ -105,7 +100,6 @@
     @return $filename;
 }
 
-
 /**
  * Compose webfont path
  * "My Font" is in the MyFont/ directory
@@ -125,7 +119,6 @@
 
     @return $path;
 }
-
 
 /**
  * Look for `$needle` in `$haystack`.

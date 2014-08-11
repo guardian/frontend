@@ -107,7 +107,7 @@ define([
                     url = vars.CONST.apiSearchBase + '/' + self.term() + '?show-fields=all&format=json';
                     propName = 'content';
                 } else {
-                    url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';
+                    url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json&order-by=newest';
                     url += '&content-set=' + (self.showingDrafts() ? 'preview&use-date=last-modified' : 'web-live');
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();

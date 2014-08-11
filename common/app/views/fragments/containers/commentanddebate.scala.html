@@ -17,7 +17,7 @@
                     <div class="container__border tone-@style.tone tone-accent-border"></div>
                     <div class="container__header">
                         @title.map { title =>
-                            <h2 class="container__title tone-@style.tone tone-background">
+                            <h2 class="container__title">
                                 @href.map { href =>
                                     <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                                 }.getOrElse{

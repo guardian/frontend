@@ -197,7 +197,7 @@ CommentBox.prototype.ready = function() {
                     this.getElem('body').focus();
                 }.bind(this));
             }.bind(this));
-        }.bind(this), 500);
+        }.bind(this), 800);
     }
 };
 

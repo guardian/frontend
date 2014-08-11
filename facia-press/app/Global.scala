@@ -1,6 +1,7 @@
 import common._
 import conf.{Configuration => GuardianConfiguration}
 import frontpress.{FrontPressCron, ToolPressQueueWorker}
+import metrics._
 import play.api.GlobalSettings
 import services.ConfigAgentLifecycle
 
@@ -36,12 +37,11 @@ object Global extends GlobalSettings
     ("s3-authorization-errors", S3Metrics.S3AuthorizationError.getAndReset.toDouble),
     ("content-api-seo-request-success", FaciaPressMetrics.ContentApiSeoRequestSuccess.getAndReset.toDouble),
     ("content-api-seo-request-failure", FaciaPressMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble),
-    ("content-api-fallbacks", FaciaPressMetrics.MemcachedFallbackMetric.getAndReset.toDouble),
-    ("front-press-latency", FaciaPressMetrics.FrontPressLatency.getAndReset.toDouble),
-    ("uk-network-front-press-latency", FaciaPressMetrics.UkFrontPressLatency.getAndResetTime.toDouble),
-    ("us-network-front-press-latency", FaciaPressMetrics.UsFrontPressLatency.getAndResetTime.toDouble),
-    ("au-network-front-press-latency", FaciaPressMetrics.AuFrontPressLatency.getAndResetTime.toDouble)
+    ("content-api-fallbacks", FaciaPressMetrics.MemcachedFallbackMetric.getAndReset.toDouble)
   )
+
+  override def latencyMetrics: List[FrontendMetric] = List(UkPressLatencyMetric, UsPressLatencyMetric, AuPressLatencyMetric,
+                                     AllFrontsPressLatencyMetric)
 
   def scheduleJobs() {
     Jobs.schedule("FaciaToolPressJob", s"0/$pressJobConsumeRateInSeconds * * * * ?") {

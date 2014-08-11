@@ -12,6 +12,7 @@
             height: $slice-innerHeight,
             margin: 0 $gs-gutter/2
         ));
+        position: relative;
         background: #ffffff;
     }
 
@@ -24,11 +25,7 @@
     }
 
     .c-football-matches {
-        @include rem((
-            height: $slice-innerHeight
-        ));
         overflow: hidden;
-        position: relative;
         background: $c-neutral8;
     }
 
