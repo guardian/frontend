@@ -13,9 +13,18 @@ object DfpLink {
 object SiteLink {
 
   def adUnit(path: String): Option[String] = {
+
+    def getRelativePath(dropFromRight: Int) = path.split("/").drop(1).dropRight(dropFromRight).mkString("/")
+
+    lazy val relativePath = getRelativePath(1)
+    lazy val relativeEditionalisedPath = getRelativePath(2)
+
     if (path endsWith "/front") {
-      val relativePath = path.split("/").drop(1).dropRight(1).mkString("/")
       Some(s"${site.host}/${relativePath}")
+    } else if (path endsWith "/front/ng") {
+      Some(s"${site.host}/${relativeEditionalisedPath}?view=mobile")
+    } else if (path endsWith "/front/r2") {
+      Some(s"${site.host}/${relativeEditionalisedPath}?view=classic")
     } else {
       None
     }
