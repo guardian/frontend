@@ -276,7 +276,7 @@ module.exports = function (grunt) {
                         {
                             'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '200',
-                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff2',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff2',
                             format: 'woff'
                         },
                         {
@@ -321,7 +321,7 @@ module.exports = function (grunt) {
                         {
                             'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '200',
-                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.woff',
                             format: 'woff'
                         },
                         {
@@ -366,7 +366,7 @@ module.exports = function (grunt) {
                         {
                             'font-family': '"Guardian Egyptian Web"',
                             'font-weight': '200',
-                            file: webfontsDir + 'hinting-off_kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
+                            file: webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Light.ttf',
                             format: 'ttf'
                         },
                         {
