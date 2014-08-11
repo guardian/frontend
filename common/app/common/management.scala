@@ -60,24 +60,6 @@ class TimingMetric(
   def totalTimeInMillis = _totalTimeInMillis.get
   def count = _count.get
   val getValue = () => totalTimeInMillis
-
-
-  // to use this class, you can write your own wrappers
-  // and call recordTimeSpent, or you may use this one
-  // if you want.
-  // val t = TimingMetric("example")
-  // ...
-  // t measure {
-  //   code here
-  // }
-  def measure[T](block: => T) = {
-    val s = new StopWatch
-    val result = block
-    recordTimeSpent(s.elapsed)
-    result
-  }
-
-  def run(r: Runnable) { measure { r.run() } }
 }
 
 object TimingMetric {

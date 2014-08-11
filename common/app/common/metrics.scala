@@ -11,30 +11,6 @@ import common.FaciaToolMetrics.InvalidContentExceptionMetric
 import scala.collection.JavaConversions._
 import scala.util.Try
 
-trait TimingMetricLogging extends Logging { self: TimingMetric =>
-  override def measure[T](block: => T): T = {
-    var result: Option[T] = None
-    var elapsed = 0L
-    val s = StopWatch()
-
-    try {
-      result = Some(block)
-      elapsed = s.elapsed
-      log.info("%s completed after %s ms" format (name, elapsed))
-    } catch {
-      case e: Throwable =>
-        elapsed = s.elapsed
-
-        log.info("%s halted by exception after %s ms" format (name, elapsed))
-        throw e
-    } finally {
-      self.recordTimeSpent(elapsed)
-    }
-
-    result.get
-  }
-}
-
 object MemcachedMetrics {
 
   object FilterCacheHit extends SimpleCountMetric("memcache", "memcached-filter-hit", "Memcached filter hits", "Memcached filter hits")
@@ -155,7 +131,7 @@ object ContentApiMetrics {
     "elastic-content-api-calls",
     "Elastic Content API calls",
     "Elastic outgoing requests to content api"
-  ) with TimingMetricLogging
+  )
 
   object ElasticHttpTimeoutCountMetric extends SimpleCountMetric(
     "timeout",
@@ -202,7 +178,7 @@ object PaMetrics {
     "PA API calls",
     "outgoing requests to pa api",
     None
-  ) with TimingMetricLogging
+  )
 
   object PaApiHttpOkMetric extends CountMetric(
     "pa-api",
@@ -227,7 +203,7 @@ object DiscussionMetrics {
     "discussion-api-calls",
     "Discussion API calls",
     "outgoing requests to discussion api"
-  ) with TimingMetricLogging
+  )
 
   val all: Seq[Metric] = Seq(DiscussionHttpTimingMetric)
 }
@@ -412,7 +388,7 @@ object CommercialMetrics {
     "Commercial Travel Offers load timing",
     "Time spent running travel offers data load jobs",
     None
-  ) with TimingMetricLogging
+  )
 
   object MasterClassesLoadTimingMetric extends TimingMetric(
     "commercial",
@@ -420,7 +396,7 @@ object CommercialMetrics {
     "Commercial MasterClasses load timing",
     "Time spent running MasterClasses load jobs",
     None
-  ) with TimingMetricLogging
+  )
 
   object JobsLoadTimingMetric extends TimingMetric(
     "commercial",
@@ -428,7 +404,7 @@ object CommercialMetrics {
     "Commercial Jobs load timing",
     "Time spent running job ad data load jobs",
     None
-  ) with TimingMetricLogging
+  )
 
   object SoulmatesLoadTimingMetric extends TimingMetric(
     "commercial",
@@ -436,7 +412,7 @@ object CommercialMetrics {
     "Commercial Soulmates load timing",
     "Time spent running soulmates ad data load jobs",
     None
-  ) with TimingMetricLogging
+  )
 
   val all: Seq[Metric] = Seq(TravelOffersLoadTimingMetric, JobsLoadTimingMetric, MasterClassesLoadTimingMetric, SoulmatesLoadTimingMetric)
 }
@@ -448,7 +424,7 @@ object OnwardMetrics {
     "Onward Journey load timing",
     "Time spent running onward journey data load jobs",
     None
-  ) with TimingMetricLogging
+  )
 
   val all: Seq[Metric] = Seq(OnwardLoadTimingMetric)
 }
