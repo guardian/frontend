@@ -49,32 +49,14 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     base: 10,
-                    fallback: true
+                    fallback: true // set to false when Opera Mini supports rem units
                 },
-                files: {
-                    './static/target/stylesheets/global.css': ['./static/target/stylesheets/global.css'],
-                    './static/target/stylesheets/head.commercial.css': ['./static/target/stylesheets/head.commercial.css'],
-                    './static/target/stylesheets/head.default.css': ['./static/target/stylesheets/head.default.css'],
-                    './static/target/stylesheets/head.facia.css': ['./static/target/stylesheets/head.facia.css'],
-                    './static/target/stylesheets/head.football.css': ['./static/target/stylesheets/head.football.css'],
-                    './static/target/stylesheets/head.identity.css': ['./static/target/stylesheets/head.identity.css'],
-                    './static/target/stylesheets/head.index.css': ['./static/target/stylesheets/head.index.css'],
-                    './static/target/stylesheets/ie9.global.css': ['./static/target/stylesheets/ie9.global.css'],
-                    './static/target/stylesheets/ie9.head.commercial.css': ['./static/target/stylesheets/ie9.head.commercial.css'],
-                    './static/target/stylesheets/ie9.head.default.css': ['./static/target/stylesheets/ie9.head.default.css'],
-                    './static/target/stylesheets/ie9.head.facia.css': ['./static/target/stylesheets/ie9.head.facia.css'],
-                    './static/target/stylesheets/ie9.head.football.css': ['./static/target/stylesheets/ie9.head.football.css'],
-                    './static/target/stylesheets/ie9.head.identity.css': ['./static/target/stylesheets/ie9.head.identity.css'],
-                    './static/target/stylesheets/ie9.head.index.css': ['./static/target/stylesheets/ie9.head.index.css'],
-                    './static/target/stylesheets/membership-icons.css': ['./static/target/stylesheets/membership-icons.css'],
-                    './static/target/stylesheets/old-ie.global.css': ['./static/target/stylesheets/old-ie.global.css'],
-                    './static/target/stylesheets/old-ie.head.commercial.css': ['./static/target/stylesheets/old-ie.head.commercial.css'],
-                    './static/target/stylesheets/old-ie.head.default.css': ['./static/target/stylesheets/old-ie.head.default.css'],
-                    './static/target/stylesheets/old-ie.head.facia.css': ['./static/target/stylesheets/old-ie.head.facia.css'],
-                    './static/target/stylesheets/old-ie.head.football.css': ['./static/target/stylesheets/old-ie.head.football.css'],
-                    './static/target/stylesheets/old-ie.head.identity.css': ['./static/target/stylesheets/old-ie.head.identity.css'],
-                    './static/target/stylesheets/old-ie.head.index.css': ['./static/target/stylesheets/old-ie.head.index.css']
-                }
+                files: [{
+                    expand: true,
+                    cwd: staticTargetDir + 'stylesheets/',
+                    src: ['*.css', '!old-ie*'],
+                    dest: staticTargetDir + 'stylesheets/'
+                }]
             }
         },
         requirejs: {
