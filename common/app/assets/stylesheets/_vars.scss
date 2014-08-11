@@ -21,7 +21,7 @@ $browser-supports-flexbox: true !default;
 
 $unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
-$headerHeight: 34px;
+$headerHeight: 36px;
 
 @import 'components/guss-colours/helpers';
 @import 'components/guss-colours/colours';
@@ -63,6 +63,10 @@ $mq-breakpoints: (
     // Facia layout
     faciaLeftCol: $facia-leftCol-trigger
 );
+// Uncomment to show the current breakpoint in the top right
+// See https://github.com/guardian/sass-mq/tree/sassdoc#seeing-the-currently-active-breakpoint
+//$mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
+
 
 // Guss defaults overrides
 // =============================================================================
@@ -147,3 +151,11 @@ $mpu-ad-label-height: 34px;
 
 $action-icon-width: 23px;
 $action-icon-rightspace: 7px;
+$content-top-padding: ($gs-baseline/6)*5;
+
+
+// Video.JS player
+// =============================================================================
+
+$vjs-small-button-size: 50px;
+$vjs-large-button-size: 70px;

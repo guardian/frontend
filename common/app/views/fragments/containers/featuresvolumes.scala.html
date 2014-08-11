@@ -1,0 +1,47 @@
+@(page: MetaData, collection: Collection, style: FeaturesVolumesContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@import common.Edition
+
+@import org.joda.time.DateTime
+
+@defining(config.displayName.orElse(collection.displayName), config.href.orElse(collection.href)) { case (title, href) =>
+    @defining(templateDeduping(10, collection.items)) { items =>
+        @defining(Edition.editionFronts.contains(request.uri.toLowerCase)) { isEdition =>
+            @if(items.nonEmpty) {
+                <section
+                    class="@RenderClasses(Map(
+                        ("container", true),
+                        (s"container--${style.containerType}", true),
+                        (s"container--tag", !isEdition),
+                        ("js-container--toggle", (containerIndex > 0 && title.nonEmpty)),
+                        ("container--sponsored", config.isSponsored),
+                        ("container--advertisement-feature", (config.isAdvertisementFeature && !config.isSponsored)),
+                        ("container--first", (containerIndex == 0))))"
+                    data-link-name="@FaciaComponentName(config, collection)"
+                    data-id="@config.id"
+                    data-type="@style.containerType"
+                    @config.sponsorshipKeyword.map { keyword =>
+                        data-keywords="@keyword"
+                    }
+                    data-component="@FaciaComponentName(config, collection)">
+                    <div class="facia-container__inner">
+                        <div class="container__border tone-@style.tone tone-accent-border"></div>
+                        <div class="container__header">
+                            @title.map { title =>
+                                <h2 class="container__title">
+                                    @href.map { href =>
+                                        <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                                    }.getOrElse{
+                                        <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                                    }
+                                </h2>
+                            }
+                        </div>
+                        <div class="container__body container--rolled-up-hide">
+                            @fragments.collections.featuresvolumes(items, style, containerIndex)
+                        </div>
+                    </div>
+                </section>
+            }
+        }
+    }
+}

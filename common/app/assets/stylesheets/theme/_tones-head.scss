@@ -17,7 +17,7 @@
         background-color: #ffffff;
         .tone-background {
             @include rem((
-                padding-top: $gs-baseline/2
+                padding-top: $content-top-padding
             ));
         }
         .tone-background--accent {
@@ -166,7 +166,8 @@
             .content-meta__label {
                 color: $c-neutral2;
             }
-            .content__standfirst .bullet:before {
+            .bullet:before,
+            ul > li:before {
                 background-color: $c-commentDark;
             }
             .u-underline {
@@ -175,8 +176,8 @@
                     border-bottom-color: $c-neutral1;
                 }
             }
-
         }
+
         .content__headline--byline .tone-colour {
             color: $c-neutral2;
             &:hover {

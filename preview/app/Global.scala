@@ -18,6 +18,7 @@ object FilterExemptions {
   lazy val exemptions: Seq[FilterExemption] = List(
     FilterExemption("/oauth2callback"),
     FilterExemption("/assets"),
+    FilterExemption("/favicon.ico"),
     FilterExemption("/_healthcheck"),
     FilterExemption("/world/2012/sep/11/barcelona-march-catalan-independence")
   )

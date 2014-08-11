@@ -12,6 +12,7 @@ define([
     'modules/list-manager',
     'modules/droppable',
     'modules/authed-ajax',
+    'modules/copied-article',
     'models/group',
     'models/collections/collection',
     'models/collections/article',
@@ -30,6 +31,7 @@ define([
     listManager,
     droppable,
     authedAjax,
+    copiedArticle,
     Group,
     Collection,
     Article,
@@ -91,10 +93,14 @@ define([
         };
 
         model.previewUrl = ko.computed(function() {
-            return vars.CONST.viewer +
-                '#env=' + pageConfig.env +
-                '&mode=' + (model.liveMode() ? 'live' : 'draft' ) +
-                '&url=' + model.front() + encodeURIComponent('?view=mobile');
+            if (pageConfig.env === 'prod' && !model.liveMode()) {
+                return vars.CONST.previewBase + '/responsive-viewer/' + model.front();
+            } else {
+                return vars.CONST.viewer +
+                    '#env=' + pageConfig.env +
+                    '&mode=' + (model.liveMode() ? 'live' : 'draft' ) +
+                    '&url=' + model.front();
+            }
         });
 
         model.detectPressFailureCount = 0;
@@ -288,6 +294,7 @@ define([
 
             listManager.init(newItems);
             droppable.init();
+            copiedArticle.flush();
         };
     };
 });

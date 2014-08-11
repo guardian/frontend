@@ -1,17 +1,19 @@
 package common
 
+import java.io.{File, FileInputStream}
+
+import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
-import com.amazonaws.internal.StaticCredentialsProvider
+import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import com.gu.conf.ConfigurationFactory
-import com.gu.management.{ Manifest => ManifestFile }
-import conf.{Switches, Configuration}
-import java.io.{FileInputStream, File}
+import conf.{Configuration, Switches}
 import org.apache.commons.io.IOUtils
 import play.api.Play
 import play.api.Play.current
+
 import scala.util.Try
 
-class BadConfigurationException(property: String) extends RuntimeException(s"Property $property not configured")
+class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
 class GuardianConfiguration(val application: String, val webappConfDirectory: String = "env") extends Logging {
 
@@ -21,7 +23,15 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   private implicit class OptionalString2MandatoryString(conf: com.gu.conf.Configuration) {
     def getMandatoryStringProperty(property: String) = configuration.getStringProperty(property)
-      .getOrElse(throw new BadConfigurationException(property))
+      .getOrElse(throw new BadConfigurationException(s"$property not configured"))
+  }
+
+  object indexes {
+    lazy val tagIndexesBucket =
+      configuration.getMandatoryStringProperty("tag_indexes.bucket")
+
+    lazy val adminRebuildIndexRateInMinutes =
+      configuration.getIntegerProperty("tag_indexes.rebuild_rate_in_minutes").getOrElse(60)
   }
 
   object environment {
@@ -310,22 +320,36 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object aws {
-    private lazy val accessKey = configuration.getStringProperty("aws.access.key")
-    private lazy val secretKey = configuration.getStringProperty("aws.access.secret.key")
 
     lazy val region = configuration.getMandatoryStringProperty("aws.region")
     lazy val bucket = configuration.getMandatoryStringProperty("aws.bucket")
     lazy val notificationSns: String = configuration.getMandatoryStringProperty("sns.notification.topic.arn")
     lazy val frontPressSns: Option[String] = configuration.getStringProperty("frontpress.sns.topic")
 
-    lazy val credentials: AWSCredentialsProvider = new AWSCredentialsProviderChain(
-      // the first 3 are a copy n paste job from the constructor of DefaultAWSCredentialsProviderChain
-      new EnvironmentVariableCredentialsProvider(),
-      new SystemPropertiesCredentialsProvider(),
-      new InstanceProfileCredentialsProvider(),
+    def mandatoryCredentials: AWSCredentialsProvider = credentials.getOrElse(throw new BadConfigurationException("AWS credentials are not configured"))
+    val credentials: Option[AWSCredentialsProvider] = {
+      val provider = new AWSCredentialsProviderChain(
+        new EnvironmentVariableCredentialsProvider(),
+        new SystemPropertiesCredentialsProvider(),
+        new ProfileCredentialsProvider("nextgen"),
+        new InstanceProfileCredentialsProvider
+      )
 
-      new StaticCredentialsProvider(new NullableAWSCredentials(accessKey, secretKey))
-    )
+      // this is a bit of a convoluted way to check whether we actually have credentials.
+      // I guess in an ideal world there would be some sort of isConfigued() method...
+      try {
+        provider.getCredentials
+        Some(provider)
+      } catch {
+        case ex: AmazonClientException =>
+          log.error(ex.getMessage, ex)
+
+          // We really, really want to ensure that PROD is configured before saying a box is OK
+          if (Play.isProd) throw ex
+          // this means that on dev machines you only need to configure keys if you are actually going to use them
+          None
+      }
+    }
   }
 
   object pingdom {
@@ -371,11 +395,5 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
 object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
-}
-
-// AWSCredentialsProviderChain relies on these being null if not configured.
-private class NullableAWSCredentials(accessKeyId: Option[String], secretKey: Option[String]) extends AWSCredentials{
-  def getAWSAccessKeyId: String = accessKeyId.orNull
-  def getAWSSecretKey: String = secretKey.orNull
 }
 

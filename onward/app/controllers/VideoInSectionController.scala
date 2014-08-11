@@ -14,22 +14,29 @@ object VideoInSectionController extends Controller with Logging with Paging with
 
   implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
-  def renderSectionVideos(sectionId: String) = Action.async { implicit request =>
-    val response = lookup(Edition(request), sectionId) map { seriesItems =>
+  // These exist to work around the absence of default values in Play routing.
+  def renderSectionVideosWithSeries(sectionId: String, seriesId: String) = renderVideos(sectionId, Some(seriesId))
+  def renderSectionVideos(sectionId: String) = renderVideos(sectionId, None)
+
+  private def renderVideos(sectionId: String, seriesId: Option[String]) = Action.async { implicit request =>
+    val response = lookup(Edition(request), sectionId, seriesId) map { seriesItems =>
       seriesItems map { trail => renderSectionTrails(trail, sectionId) }
     }
     response map { _ getOrElse NotFound }
   }
 
-  private def lookup(edition: Edition, sectionId: String)(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
+  private def lookup(edition: Edition, sectionId: String, seriesId: Option[String])(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
-    log.info(s"Fetching video content in section: ${sectionId}" )
+    log.info(s"Fetching video content in section: ${sectionId}")
+
+    // Subtract the series id from the content type.
+    val tags = List(Some("type/video"), seriesId).flatten.mkString(",-")
 
     def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{ shortUrl => !shortUrl.equals(currentShortUrl) }.getOrElse(false)
 
     val promiseOrResponse = LiveContentApi.search(edition)
       .section(sectionId)
-      .tag("type/video")
+      .tag(tags)
       .showTags("all")
       .showFields("all")
       .response
@@ -51,8 +58,15 @@ object VideoInSectionController extends Controller with Logging with Paging with
 
   private def renderSectionTrails(trails: Seq[Content], sectionId: String)(implicit request: RequestHeader) = {
     val sectionName = trails.headOption.map(t => t.sectionName).getOrElse("")
-    implicit val config = Config(id = sectionId, href = Option(sectionId), displayName = Some(s"More ${sectionName} videos") )
-    val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1)
+
+    // Content API doesn't understand the alias 'uk-news'.
+    val sectionTag = sectionId match {
+      case "uk-news" => "uk"
+      case _ => sectionId
+    }
+    val tagCombinedHref = s"$sectionTag/$sectionTag+content/video"
+    implicit val config = Config(id = sectionId, href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} videos") )
+    val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1, "content")
     renderFormat(response, response, 1)
   }
 }

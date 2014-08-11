@@ -70,7 +70,7 @@ define([
             }
 
             $popup.html(
-                '<ul class="nav nav--columns" data-link-name="Sub Sections">'+
+                '<ul class="nav-popup nav-popup--profile" data-link-name="Sub Sections">'+
                     this.menuListItem('Comment activity', this.config.url+'/user/id/'+ user.id)+
                     this.menuListItem('Edit profile', this.config.url+'/public/edit')+
                     this.menuListItem('Email preferences', this.config.url+'/email-prefs')+
@@ -86,8 +86,8 @@ define([
     };
 
     Profile.prototype.menuListItem = function(text, url) {
-        return  '<li class="nav__item">'+
-                    '<a href="' + url + '" class="nav__link" data-link-name="' + text + '">' + text + '</a>'+
+        return  '<li class="nav-popup__item">'+
+                    '<a href="' + url + '" class="top-bar__item--action" data-link-name="' + text + '">' + text + '</a>'+
                 '</li>';
     };
 

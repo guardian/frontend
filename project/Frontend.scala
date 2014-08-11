@@ -11,8 +11,6 @@ import com.typesafe.sbt.web.Import._
 
 object Frontend extends Build with Prototypes {
 
-  scalaVersion := "2.11.1"
-
   val common = application("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
@@ -25,7 +23,7 @@ object Frontend extends Build with Prototypes {
       "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6",
       "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6",
 
-      "com.amazonaws" % "aws-java-sdk" % "1.6.10",
+      "com.amazonaws" % "aws-java-sdk" % "1.8.7",
 
       "org.quartz-scheduler" % "quartz" % "2.2.0",
 
@@ -40,6 +38,8 @@ object Frontend extends Build with Prototypes {
       "org.rometools" % "rome-modules" % "1.0",
 
       "org.xerial.snappy" % "snappy-java" % "1.0.5.1",
+
+      "net.liftweb" %% "lift-json" % "2.5-M4",
 
       "com.gu" %% "play-googleauth" % "0.1.56-SNAPSHOT",
 

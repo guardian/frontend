@@ -9,7 +9,7 @@
  */
 .linkslist-container {
     position: relative;
-    padding-top: 1px;
+
     @include mq(tablet) {
         @include rem((
             margin-top: $gs-baseline*.75
@@ -23,7 +23,7 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 2px;
+        height: 1px;
         width: 100%;
         background: $c-newsAccent;
         z-index: 1;
@@ -45,11 +45,6 @@
             display: none;
         }
     }
-}
-
-.linkslist-container--without-top-border {
-    position: relative;
-    padding-top: 1px;
 }
 
 .linkslist--without-top-borders .linkslist__item {

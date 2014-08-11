@@ -18,11 +18,6 @@ trait CompetitionSupport extends implicits.Football {
 
   val competitions: Seq[Competition]
 
-  def withMatchesOn(date: LocalDate) = CompetitionSupport {
-    val competitionsWithMatches = competitions.filter(_.matches.exists(_.isOn(date)))
-    competitionsWithMatches.map(c => c.copy(matches = c.matches.filter(_.isOn(date))))
-  }
-
   def withCompetitionFilter(path: String) = CompetitionSupport(
     competitions.filter(_.url == path)
   )
@@ -71,8 +66,8 @@ trait CompetitionSupport extends implicits.Football {
     MatchDayTeam(teamId, unclean.name, None, None, None, None)
   }
 
-  def matchFor(date: LocalDate, homeTeamId: String, awayTeamId: String) = withMatchesOn(date).matches
-    .find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId)
+  def matchFor(date: LocalDate, homeTeamId: String, awayTeamId: String) =
+    matches.find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId && m.date.toLocalDate == date)
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
   def matchFor(interval: Interval, team1: String, team2: String): Option[FootballMatch] = matches

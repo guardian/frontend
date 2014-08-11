@@ -1,8 +1,7 @@
 package common
 
+import metrics.FrontendMetric
 import play.api.{Application => PlayApp, GlobalSettings}
-import com.gu.management._
-import conf.RequestMeasurementMetrics
 import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
 import model.diagnostics.CloudWatch
 import java.io.File
@@ -16,7 +15,7 @@ trait TimingMetricLogging extends Logging { self: TimingMetric =>
   override def measure[T](block: => T): T = {
     var result: Option[T] = None
     var elapsed = 0L
-    val s = new com.gu.management.StopWatch
+    val s = StopWatch()
 
     try {
       result = Some(block)
@@ -519,7 +518,7 @@ object OnwardMetrics {
 
 
 object Metrics {
-  lazy val common = RequestMeasurementMetrics.asMetrics ++ SystemMetrics.all
+  lazy val common = SystemMetrics.all
 
   lazy val contentApi = ContentApiMetrics.all
   lazy val pa = PaMetrics.all
@@ -555,9 +554,6 @@ case class SimpleCountMetric(
   def getAndReset = currentCount.getAndSet(0)
   val getValue: () => Long = count.get
   val getResettingValue: () => Long = currentCount.get
-
-  override def asJson: StatusMetric = super.asJson.copy(count = Some(getValue().toString))
-
 }
 
 object SimpleCountMetric {
@@ -627,14 +623,14 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     (s"$applicationName-build-number", SystemMetrics.BuildNumberMetric.getValue().toDouble),
 
     (s"$applicationName-free-disk-space", SystemMetrics.FreeDiskSpaceMetric.getValue()),
-    (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.getValue()),
+    (s"$applicationName-total-disk-space", SystemMetrics.TotalDiskSpaceMetric.getValue())
 
-    (s"$applicationName-dogpile-hits", PerformanceMetrics.dogPileHitMetric.count.getAndSet(0).toDouble),
-    (s"$applicationName-dogpile-miss", PerformanceMetrics.dogPileMissMetric.count.getAndSet(0).toDouble)
   ) ++ SystemMetrics.garbageCollectors.flatMap{ gc => Seq(
     s"$applicationName-${gc.name}-gc-count-per-min" -> gc.gcCount,
     s"$applicationName-${gc.name}-gc-time-per-min" -> gc.gcTime
   )}.toMap
+
+  def latencyMetrics: List[FrontendMetric] = Nil
 
   private def report() {
     val systemMetrics  = this.systemMetrics
@@ -642,6 +638,8 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     CloudWatch.put("ApplicationSystemMetrics", systemMetrics)
     for (metrics <- applicationMetrics.grouped(20))
       CloudWatch.putWithDimensions(applicationMetricsNamespace, metrics, Seq(applicationDimension))
+
+    CloudWatch.putMetricsWithStage(latencyMetrics, applicationDimension)
   }
 
   override def onStart(app: PlayApp) {

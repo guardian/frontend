@@ -1,25 +1,27 @@
 package model.diagnostics
 
-import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
 import com.amazonaws.handlers.AsyncHandler
-import conf.Configuration
+import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
 import com.amazonaws.services.cloudwatch.model._
-import scala.collection.JavaConversions._
 import common.Logging
-import Configuration._
+import conf.Configuration
+import conf.Configuration._
+import metrics.{DataPoint, FrontendMetric}
 import services.AwsEndpoints
+
+import scala.collection.JavaConversions._
 
 trait CloudWatch extends Logging {
 
-  lazy val stage = new Dimension().withName("Stage").withValue(environment.stage)
+  lazy val stageDimension = new Dimension().withName("Stage").withValue(environment.stage)
 
-  lazy val cloudwatch = {
-    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+  lazy val cloudwatch: Option[AmazonCloudWatchAsyncClient] = Configuration.aws.credentials.map{ credentials =>
+    val client = new AmazonCloudWatchAsyncClient(credentials)
     client.setEndpoint(AwsEndpoints.monitoring)
     client
   }
 
-  object asyncHandler extends AsyncHandler[PutMetricDataRequest, Void] with Logging
+  trait LoggingAsyncHandler extends AsyncHandler[PutMetricDataRequest, Void] with Logging
   {
     def onError(exception: Exception)
     {
@@ -27,8 +29,18 @@ trait CloudWatch extends Logging {
     }
     def onSuccess(request: PutMetricDataRequest, result: Void )
     {
-      log.info("CloudWatch PutMetricDataRequest - sucess")
+      log.info("CloudWatch PutMetricDataRequest - success")
     }
+  }
+
+  object LoggingAsyncHandler extends LoggingAsyncHandler
+
+  case class AsyncHandlerForMetric(metric: FrontendMetric, points: List[DataPoint]) extends LoggingAsyncHandler {
+    override def onError(exception: Exception) = {
+      metric.putDataPoints(points)
+      super.onError(exception)
+    }
+    override def onSuccess(request: PutMetricDataRequest, result: Void ) = super.onSuccess(request, result)
   }
 
   def put(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]): Any = {
@@ -42,14 +54,40 @@ trait CloudWatch extends Logging {
         .withDimensions(dimensions)
     })
 
-    cloudwatch.putMetricDataAsync(request, asyncHandler)
+    cloudwatch.foreach(_.putMetricDataAsync(request, LoggingAsyncHandler))
   }
 
-  def put(namespace: String, metrics: Map[String, Double]): Any =
-    put(namespace, metrics, Seq(stage))
+  def put(namespace: String, metrics: Map[String, Double]): Unit =
+    put(namespace, metrics, Seq(stageDimension))
 
-  def putWithDimensions(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]) =
-    put(namespace, metrics, Seq(stage) ++ dimensions)
+  def putWithDimensions(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]): Unit =
+    put(namespace, metrics, Seq(stageDimension) ++ dimensions)
+
+
+  def putMetricsWithStage(metrics: List[FrontendMetric], applicationDimension: Dimension): Unit =
+    putMetrics(metrics, List(stageDimension, applicationDimension))
+
+  def putMetrics(metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
+    for {
+      metric <- metrics
+      dataPointGroup <- metric.getAndResetDataPoints.grouped(20)
+    } {
+      val request = new PutMetricDataRequest()
+        .withNamespace("Application")
+        .withMetricData {
+          for (dataPoint <- dataPointGroup) yield {
+            val metricDatum = new MetricDatum()
+              .withValue(dataPoint.value)
+              .withUnit(metric.metricUnit)
+              .withMetricName(metric.name)
+              .withDimensions(dimensions)
+
+            dataPoint.time.fold(metricDatum) { t => metricDatum.withTimestamp(t.toDate)}
+          }
+        }
+      CloudWatch.cloudwatch.foreach(_.putMetricDataAsync(request, AsyncHandlerForMetric(metric, dataPointGroup)))
+    }
+  }
 
 }
 

@@ -2,8 +2,11 @@
     @include rem((
         min-height: 30px
     ));
+
     .container__title {
-        min-height: gs-height(1);
+        @include rem((
+            min-height: gs-height(1)
+        ));
     }
     .item__byline {
         display: none;

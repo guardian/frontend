@@ -108,7 +108,7 @@ define([
         }
 
         function isAdvertisementFeature() {
-            return qwery('.facia-container--advertisement-feature').length > 0;
+            return qwery('.facia-container--advertisement-feature, .article--advertisement-feature').length > 0;
         }
 
         /**

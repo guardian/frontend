@@ -19,14 +19,15 @@ object MostViewedAudioController extends Controller with Logging with ExecutionC
 
   }
 
-  private def getMostViewedAudio(edition: Edition): Future[Seq[Audio]] = {
+  private def getMostViewedAudio(edition: Edition)(implicit request: RequestHeader): Future[Seq[Audio]] = {
 
+    val size = request.getQueryString("size").getOrElse("4").toInt
     val response = LiveContentApi.search(edition)
       .tag("type/audio")
       .pageSize(50)
       .response
     response.map { response =>
-      response.results.map(Audio(_)).sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(6)
+      response.results.map(Audio(_)).sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(size)
     }
 
   }

@@ -76,6 +76,10 @@ case class FeaturesContainer(showMore: Boolean = true) extends Container {
   val containerType = "features"
   val tone = "feature"
 }
+case class FeaturesVolumesContainer(showMore: Boolean = true) extends Container {
+  val containerType = "featuresvolumes"
+  val tone = "feature"
+}
 case class FeaturesAutoContainer(showMore: Boolean = true) extends Container {
   val containerType = "featuresauto"
   val tone = "feature"
@@ -106,6 +110,10 @@ case class MostReferredContainer(showMore: Boolean = true) extends Container {
 }
 case class HeadlineContainer(showMore: Boolean = true) extends Container {
   val containerType = "headline"
+  val tone = "news"
+}
+case class PicksContainer(showMore: Boolean = true) extends Container {
+  val containerType = "picks"
   val tone = "news"
 }
 
@@ -224,7 +232,7 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
       element
         .removeClass("gu-video")
-        .addClass("js-gu-media gu-media gu-media--video")
+        .addClass("js-gu-media gu-media gu-media--video gu-media--show-controls-at-start")
         .wrap("<div class=\"gu-media-wrapper gu-media-wrapper--video u-responsive-ratio u-responsive-ratio--hd\"></div>")
 
       val flashMediaElement = conf.Static.apply("flash/flashmediaelement.swf").path

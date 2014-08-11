@@ -1,8 +1,8 @@
 /**
  * Position pseudo elements on left and right of the content
- * 
+ *
  * $container-width {Number} - width of the content
- * 
+ *
  * @output pseudo element with left/right offset
  */
 
@@ -19,16 +19,15 @@
    ========================================================================== */
 
 .l-side-margins {
-    overflow: hidden;
     position: relative;
 
-    @include mq(tablet) {
+    @include mq(desktop) {
         &:after,
         &:before {
             content: '';
             position: absolute;
             z-index: 1;
-            background: rgba($c-neutral4, .2);
+            background: rgba($c-neutral1, .05);
             top: 0;
             height: 100%;
             width: 0;
@@ -39,9 +38,6 @@
         &:after {
             right: 0;
         }
-        @include side-margins-position(gs-span(9));
-    }
-    @include mq(desktop) {
         @include side-margins-position(gs-span(12));
     }
     @include mq(wide) {
@@ -59,11 +55,17 @@
     @include mq(faciaLeftCol, wide) {
         @include side-margins-position(gs-span(14));
     }
+    @include mq(wide) {
+        .has-page-skin & {
+            margin-left: auto;
+            margin-right: auto;
+            @include rem((
+                width: gs-span(12) + ($gs-gutter*2)
+            ));
+        }
+    }
 }
 .l-side-margins--layout-content {
-    @include mq(tablet, desktop) {
-        @include side-margins-position(gs-span(8));
-    }
     @include mq(rightCol, leftCol) {
         &:before,
         &:after {
@@ -72,5 +74,18 @@
     }
     @include mq(leftCol, wide) {
         @include side-margins-position(gs-span(14));
+    }
+}
+
+.l-side-margins--media {
+    @include mq(desktop) {
+        &:after,
+        &:before {
+            background: rgba($c-neutral1, .3);
+
+            .container__banding + .container__banding & {
+                background: rgba($c-neutral1, .15);
+            }
+        }
     }
 }

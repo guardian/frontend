@@ -417,6 +417,10 @@ a.headline:hover {
     color: #ffc107;
 }
 
+.is--takedown {
+    color: #DD4B39;
+}
+
 .is--football {
     color: #65b045;
 }
