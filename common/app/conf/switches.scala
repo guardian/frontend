@@ -303,11 +303,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ABRightMostPopularText = Switch("A/B Tests", "ab-right-most-popular-text",
-    "If this switch is turned on, run the RightMostPopularText A/B test",
-   safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
-  )
-
   val ABNewsContainerNoImages = Switch("A/B Tests", "ab-news-container-no-images",
     "If this switch is turned on, run the NewsContainerNoImages A/B test",
    safeState = Off, sellByDate = new LocalDate(2014, 8, 15)
@@ -508,7 +503,6 @@ object Switches extends Collections {
     SeoBlockGooglebotFromJSPathsSwitch,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
-    ABRightMostPopularText,
     ABNewsContainerNoImages,
     CenturyRedirectionSwitch,
     ChildrensBooksSwitch
