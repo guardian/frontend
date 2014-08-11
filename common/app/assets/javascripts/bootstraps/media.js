@@ -280,7 +280,7 @@ define([
                                 player.fullscreener();
 
                                 // Init plugins
-                                if (config.switches.videoAdverts && !config.page.shouldHideAdverts) {
+                                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
                                     player.adCountDown();
                                     player.ads({
                                         timeout: 3000
