@@ -260,7 +260,6 @@ object FaciaMetrics {
 
   val all: Seq[Metric] = Seq(
     JsonParsingErrorCount,
-    InvalidContentExceptionMetric,
     FaciaToApplicationRedirectMetric
   ) ++ S3Metrics.all
 }
@@ -359,74 +358,50 @@ object FaciaPressMetrics {
 }
 
 object FaciaToolMetrics {
-  object ApiUsageCount extends metrics.CountMetric("facia-api-usage")
+  object ApiUsageCount extends metrics.CountMetric(
+    "facia-api-usage",
+    "Number of requests to the Facia API from clients (The tool)"
+  )
 
-  object ProxyCount extends SimpleCountMetric(
-    "facia-api",
+  object ProxyCount extends metrics.CountMetric(
     "facia-proxy-usage",
-    "Facia proxy usage count",
     "Number of requests to the Facia proxy endpoints (Ophan and Content API) from clients"
   )
 
-  object ExpiredRequestCount extends SimpleCountMetric(
-    "facia-api",
+  object ExpiredRequestCount extends metrics.CountMetric(
     "facia-auth-expired",
-    "Facia auth endpoints expired requests",
     "Number of expired requests coming into an endpoint using ExpiringAuthAction"
   )
 
-  object DraftPublishCount extends SimpleCountMetric(
-    "facia-api",
+  object DraftPublishCount extends metrics.CountMetric(
     "facia-draft-publish",
-    "Facia draft publish count",
     "Number of drafts that have been published"
   )
 
-  object ContentApiPutSuccess extends SimpleCountMetric(
-    "facia-api",
+  object ContentApiPutSuccess extends metrics.CountMetric(
     "faciatool-contentapi-put-success",
-    "Facia tool contentapi put success count",
     "Number of PUT requests that have been successful to the content api"
   )
 
-  object ContentApiPutFailure extends SimpleCountMetric(
-    "facia-api",
+  object ContentApiPutFailure extends metrics.CountMetric(
     "faciatool-contentapi-put-failure",
-    "Facia tool contentapi put failure count",
     "Number of PUT requests that have failed to the content api"
   )
 
-  object InvalidContentExceptionMetric extends SimpleCountMetric(
-    "facia",
+  object InvalidContentExceptionMetric extends metrics.CountMetric(
     "facia-invalid-content",
-    "Facia InvalidContent count",
     "Number of times facia/facia-tool has thrown InvalidContent exceptions"
   )
 
-  object EnqueuePressSuccess extends SimpleCountMetric(
-    "facia-api",
+  object EnqueuePressSuccess extends metrics.CountMetric(
     "faciatool-enqueue-press-success",
-    "Successful enqueueing of press command",
     "Number of successful enqueuing of press commands"
   )
 
-  object EnqueuePressFailure extends SimpleCountMetric(
-    "facia-api",
+  object EnqueuePressFailure extends metrics.CountMetric(
     "faciatool-enqueue-press-failure",
-    "Failed enqueueing of press command",
     "Number of failed enqueuing of press commands"
   )
-
-  val all: Seq[Metric] = Seq(
-    ProxyCount,
-    ExpiredRequestCount,
-    DraftPublishCount,
-    ContentApiPutSuccess,
-    ContentApiPutFailure,
-    InvalidContentExceptionMetric,
-    EnqueuePressSuccess,
-    EnqueuePressFailure
-  ) ++ ContentApiMetrics.all ++ S3Metrics.all
 }
 
 object CommercialMetrics {
@@ -488,7 +463,6 @@ object Metrics {
   lazy val discussion = DiscussionMetrics.all
   lazy val admin = AdminMetrics.all
   lazy val facia = FaciaMetrics.all
-  lazy val faciaTool = FaciaToolMetrics.all
   lazy val faciaPress = FaciaPressMetrics.all
 }
 
