@@ -44,7 +44,7 @@ module.exports = function (grunt) {
                     quiet: (isDev) ? false : true
                 }
             },
-            compile: {
+            compileStyleguide: {
                 files: [{
                     expand: true,
                     cwd: 'docs/styleguide/assets/scss/',
@@ -768,7 +768,7 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['common/app/assets/stylesheets/**/*.scss'],
-                tasks: ['compile:css', 'asset_hash', 'hologram'],
+                tasks: ['sass:compile', 'asset_hash'],
                 options: {
                     spawn: false
                 }
@@ -786,7 +786,7 @@ module.exports = function (grunt) {
                 tasks: ['compile:fonts']
             },
             styleguide: {
-                files: ['common/app/assets/stylesheets/**/*.scss', 'docs/styleguide_assets/**/*.*'],
+                files: ['common/app/assets/stylesheets/**/*.scss', 'docs/styleguide/**/*.scss', 'docs/styleguide_templates/**/*.html'],
                 tasks: ['compile:css', 'hologram'],
                 options: {
                     spawn: false
@@ -844,7 +844,7 @@ module.exports = function (grunt) {
     /**
      * Validate tasks
      */
-    grunt.registerTask('validate:css', ['compile:images', 'sass:compile']);
+    grunt.registerTask('validate:css', ['compile:images', 'sass:compile', 'sass:compileStyleguide']);
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
         var target = (app) ? ':' + app : '';
@@ -860,6 +860,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', function() {
         grunt.task.run('sass:compile');
+        grunt.task.run('sass:compileStyleguide');
         if (isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }

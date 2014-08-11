@@ -1,3 +1,44 @@
+/*doc
+---
+title: Social
+name: social
+category: Common
+---
+
+```html_example
+<div class="social-wrapper social-wrapper--aside">
+    <h2 class="social__head">Share this article</h2>
+    <ul class="social u-unstyled u-cf">
+        <li class="social__item">
+            <a class="social__action social-icon-wrapper" href="#">
+                <span class="u-h">Share via Email</span>
+                <span class="social-icon"><i class="i-share-email i"></i></span>
+            </a>
+        </li>
+        <li class="social__item">
+            <a class="social__action social-icon-wrapper" href="#">
+                <span class="u-h">Share on Facebook</span>
+                <span class="social-icon"><i class="i-share-facebook i"></i></span>
+            </a>
+        </li>
+        <li class="social__item">
+            <a class="social__action social-icon-wrapper" href="#">
+                <span class="u-h">Share on Twitter</span>
+                <span class="social-icon"><i class="i-share-twitter i"></i></span>
+            </a>
+        </li>
+        <li class="social__item">
+            <a class="social__action social-icon-wrapper" href="#">
+                <span class="u-h">Share on Google+</span>
+                <span class="social-icon"><i class="i-share-gplus i"></i></span>
+            </a>
+        </li>
+    </ul>
+</div>
+```
+*/
+
+
 .social-wrapper {
     @include rem((
         padding-top: $gs-baseline,

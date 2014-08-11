@@ -4,37 +4,32 @@
         <title>Common | Front-end Styleguide | The Guardian</title>
 
         <style>
-            .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(/static/target/images/global/sprite.png); }
+            .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(../../static/target/images/global/sprite.png); }
             .svg .i,.svg .caption:before,.svg figcaption:before,.svg blockquote.quoted:before { background-image: none; }
-            .is-updating { background-image: url(/static/target/images/auto-update-activity.gif); }
-            .is-updating--dark { background-image: url(/static/target/images/auto-update-activity-dark.gif); }
-            .tweet { background-image: url(/static/target/images/twitter/bird.png); }
-            .svg .tweet { background-image: url(/static/target/images/twitter/bird.svg); }
+            .is-updating { background-image: url(../../static/target/images/auto-update-activity.gif); }
+            .is-updating--dark { background-image: url(../../static/target/images/auto-update-activity-dark.gif); }
+            .tweet { background-image: url(../../static/target/images/twitter/bird.png); }
+            .svg .tweet { background-image: url(../../static/target/images/twitter/bird.svg); }
         </style>
 
         <!-- Guardian styles -->
-        <link rel="stylesheet" href="/static/target/stylesheets/global.css">
-        <link rel="stylesheet" href="/static/target/stylesheets/head.default.css">
-        <link rel="stylesheet" href="/static/target/stylesheets/webfonts.css">
+        <link rel="stylesheet" href="../../static/target/stylesheets/head.default.css">
+        <link rel="stylesheet" href="../../static/target/stylesheets/global.css">
+        <link rel="stylesheet" href="../../static/target/stylesheets/webfonts.css">
 
         <!-- Styleguide styles -->
-        <link rel="stylesheet" href="/docs/styleguide_assets/css/styleguide.css">
+        <link rel="stylesheet" href="../../docs/styleguide/assets/css/styleguide.css">
     </head>
 
     <body id="top">
         <header id="header" class="l-header u-cf" role="banner">
-            <h1>Front-end Styleguide HELLO</h1>
-
             <div class="l-header-main">
                 <div class="gs-container">
-                    <span itemscope="" itemtype="http://schema.org/Organization">
-                        <meta itemprop="logo" content="https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png">
-                        <a href="http://www.theguardian.com/uk" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
-                            <span class="u-h" itemprop="name">The Guardian</span>
-                            <i class="i i-guardian-logo-160-header mobile-only"></i>
-                            <i class="i i-guardian-logo-big hide-on-mobile"></i>
-                        </a>
-                    </span>
+                    <a href="http://www.theguardian.com/uk" id="logo" class="logo-wrapper">
+                        <span class="u-h">The Guardian</span>
+                        <i class="i i-guardian-logo-160-header mobile-only"></i>
+                        <i class="i i-guardian-logo-big hide-on-mobile"></i>
+                    </a>
                 </div>
             </div>
 
@@ -42,15 +37,27 @@
                 <div class="gs-container">
                     <div class="navigation__inner">
                         <div class="navigation__scroll">
-                            <nav class="navigation__container navigation__container--first" aria-label="Current section" role="navigation">
+                            <nav class="navigation__container navigation__container--first" role="navigation">
                                 <ul class="signposting">
                                 
                                     <li class="signposting__item signposting__item--home">
-                                        <a class="signposting__action" href="profile">Profile</a>
+                                        <a class="signposting__action" href="#media">Media</a>
                                     </li>
                                 
                                     <li class="signposting__item signposting__item--home">
-                                        <a class="signposting__action" href="stars">Stars</a>
+                                        <a class="signposting__action" href="#profile">Profile</a>
+                                    </li>
+                                
+                                    <li class="signposting__item signposting__item--home">
+                                        <a class="signposting__action" href="#social">Social</a>
+                                    </li>
+                                
+                                    <li class="signposting__item signposting__item--home">
+                                        <a class="signposting__action" href="#stars">Stars</a>
+                                    </li>
+                                
+                                    <li class="signposting__item signposting__item--home">
+                                        <a class="signposting__action" href="#Tab">Tabs</a>
                                     </li>
                                 
                                 </ul>
@@ -58,25 +65,17 @@
 
                             <nav class="navigation__container navigation__container--second" role="navigation">
                                 <ul class="top-navigation">
-                                    <li class="top-navigation__item top-navigation__item--home">
-                                        <a href="/" class="top-navigation__action top-navigation__action--has-icon" title="Back to homepage">
-                                            <span class="top-navigation__icon-wrapper">
-                                                <span class="top-navigation__icon top-navigation__icon--home"></span>
-                                            </span>
-                                            <span class="u-h">Home</span>
-                                        </a>
-                                    </li>
                                 
                                     <li class="top-navigation__item">
                                         <a class="top-navigation__action" href="charts.html">Charts</a>
                                     </li>
                                 
                                     <li class="top-navigation__item">
-                                        <a class="top-navigation__action" href="facia.html">Facia</a>
+                                        <a class="top-navigation__action" href="common.html">Common</a>
                                     </li>
                                 
                                     <li class="top-navigation__item">
-                                        <a class="top-navigation__action" href="common.html">Common</a>
+                                        <a class="top-navigation__action" href="facia.html">Facia</a>
                                     </li>
                                 
                                 </ul>
@@ -87,11 +86,39 @@
             </div>
         </header>
 
-        <section>
-            <div class="gs-container">
+        <div class="l-side-margins l-side-margins--layout-content">
+            <article class="content content--article tone-news tone-news--article">
+                <header class="content__head u-cf">
+                    <div class="gs-container">
+                        <h1 itemprop="headline" class="content__headline">Common</h1>
+                    </div>
+                </header>
+
+                <div class="gs-container">
+
+<h1 id="media">Media</h1>
+
+<p>Nicole Sullivan&#39;s OOCSS CSS markup extraction pattern.</p>
+<div class="codeExample"><div class="exampleOutput"><div class="media">
+    <div class="media__img">
+        <img src="http://i.guim.co.uk/w-140/h-140/q-95/sys-images/Guardian/Pix/pictures/2014/4/22/1398168161144/GeorgeMonbiot.jpg" alt="George Monbiot">
+    </div>
+    <div class="media__body">
+        George Monbiot is the author of the bestselling books The Age of Consent: A Manifesto for a New World Order and Captive State: The Corporate Takeover of Britain, as well as the investigative travel books Poisoned Arrows, Amazon Watershed and No Man's Land. His latest book is <a href="http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9781846147487">Feral: Searching for Enchantment on the Frontiers of Rewilding</a> (being published in paperback as Feral: Rewilding the Land, Sea and Human Life)
+    </div>
+</div>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"media"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"media__img"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"http://i.guim.co.uk/w-140/h-140/q-95/sys-images/Guardian/Pix/pictures/2014/4/22/1398168161144/GeorgeMonbiot.jpg"</span> <span class="na">alt=</span><span class="s">"George Monbiot"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"media__body"</span><span class="nt">&gt;</span>
+        George Monbiot is the author of the bestselling books The Age of Consent: A Manifesto for a New World Order and Captive State: The Corporate Takeover of Britain, as well as the investigative travel books Poisoned Arrows, Amazon Watershed and No Man's Land. His latest book is <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9781846147487"</span><span class="nt">&gt;</span>Feral: Searching for Enchantment on the Frontiers of Rewilding<span class="nt">&lt;/a&gt;</span> (being published in paperback as Feral: Rewilding the Land, Sea and Human Life)
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div></div></div>
 <h1 id="profile">Profile</h1>
 
-<p>[Why is this .scss file called tag?] 5</p>
+<p>[Why is this .scss file called tag?]</p>
 <div class="codeExample"><div class="exampleOutput"><div class="profile media">
     <div class="profile__img media__img">
         <img src="http://i.guim.co.uk/w-140/h-140/q-95/sys-images/Guardian/Pix/pictures/2014/4/22/1398168161144/GeorgeMonbiot.jpg" alt="George Monbiot">
@@ -109,6 +136,66 @@
     <span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
 </pre></div></div></div>
+<h1 id="social">Social</h1>
+<div class="codeExample"><div class="exampleOutput"><div class="social-wrapper social-wrapper--aside">
+    <h2 class="social__head">Share this article</h2>
+    <ul class="social u-unstyled u-cf">
+        <li class="social__item">
+            <a class="social__action social-icon-wrapper" href="#">
+                <span class="u-h">Share via Email</span>
+                <span class="social-icon"><i class="i-share-email i"></i></span>
+            </a>
+        </li>
+        <li class="social__item">
+            <a class="social__action social-icon-wrapper" href="#">
+                <span class="u-h">Share on Facebook</span>
+                <span class="social-icon"><i class="i-share-facebook i"></i></span>
+            </a>
+        </li>
+        <li class="social__item">
+            <a class="social__action social-icon-wrapper" href="#">
+                <span class="u-h">Share on Twitter</span>
+                <span class="social-icon"><i class="i-share-twitter i"></i></span>
+            </a>
+        </li>
+        <li class="social__item">
+            <a class="social__action social-icon-wrapper" href="#">
+                <span class="u-h">Share on Google+</span>
+                <span class="social-icon"><i class="i-share-gplus i"></i></span>
+            </a>
+        </li>
+    </ul>
+</div>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"social-wrapper social-wrapper--aside"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;h2</span> <span class="na">class=</span><span class="s">"social__head"</span><span class="nt">&gt;</span>Share this article<span class="nt">&lt;/h2&gt;</span>
+    <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"social u-unstyled u-cf"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"social__item"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"social__action social-icon-wrapper"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"u-h"</span><span class="nt">&gt;</span>Share via Email<span class="nt">&lt;/span&gt;</span>
+                <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"social-icon"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"i-share-email i"</span><span class="nt">&gt;&lt;/i&gt;&lt;/span&gt;</span>
+            <span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"social__item"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"social__action social-icon-wrapper"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"u-h"</span><span class="nt">&gt;</span>Share on Facebook<span class="nt">&lt;/span&gt;</span>
+                <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"social-icon"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"i-share-facebook i"</span><span class="nt">&gt;&lt;/i&gt;&lt;/span&gt;</span>
+            <span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"social__item"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"social__action social-icon-wrapper"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"u-h"</span><span class="nt">&gt;</span>Share on Twitter<span class="nt">&lt;/span&gt;</span>
+                <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"social-icon"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"i-share-twitter i"</span><span class="nt">&gt;&lt;/i&gt;&lt;/span&gt;</span>
+            <span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"social__item"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"social__action social-icon-wrapper"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"u-h"</span><span class="nt">&gt;</span>Share on Google+<span class="nt">&lt;/span&gt;</span>
+                <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"social-icon"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"i-share-gplus i"</span><span class="nt">&gt;&lt;/i&gt;&lt;/span&gt;</span>
+            <span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div></div></div>
 <h1 id="stars">Stars</h1>
 <div class="codeExample"><div class="exampleOutput"><div class="stars" role="presentation">
     <i class="star__item i-star-golden i"></i>
@@ -124,12 +211,54 @@
     <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"star__item i-star-gray i"</span><span class="nt">&gt;&lt;/i&gt;</span>
     <span class="nt">&lt;i</span> <span class="na">class=</span><span class="s">"star__item i-star-gray i"</span><span class="nt">&gt;&lt;/i&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
-</pre></div></div></div>            </div>
-        </section>
+</pre></div></div></div>
+<h1 id="Tab">Tabs</h1>
+<div class="codeExample"><div class="exampleOutput"><div class="tabs u-cf">
+    <ol class="tabs__container js-tabs" id="js-popular-tabs" role="tablist">
+        <li class="tabs__tab tabs__tab--selected" role="tab" id="tabs-popular-1-tab" aria-selected="true" aria-controls="tabs-popular-1">
+            <a href="#tabs-popular-1"><span class="u-h--up-to-right-col">Popular in </span>World news</a>
+        </li>
+        <li class="tabs__tab" role="tab" id="tabs-popular-2-tab" aria-controls="tabs-popular-2">
+            <a href="#tabs-popular-2"><span class="u-h--up-to-right-col">Popular in </span>The Guardian</a>
+        </li>
+    </ol>
+    <div class="tabs__content">
+        <div id="tabs-popular-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-popular-1-tab">
+            <!-- Content of tab 1 -->
+        </div>
+        <div id="tabs-popular-2" class="tabs__pane js-hidden u-cf" role="tabpanel" aria-labelledby="tabs-popular-2-tab">
+            <!-- Content of tab 2 -->
+        </div>
+    </div>
+</div>
+</div><div class="codeBlock"><div class="highlight"><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"tabs u-cf"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ol</span> <span class="na">class=</span><span class="s">"tabs__container js-tabs"</span> <span class="na">id=</span><span class="s">"js-popular-tabs"</span> <span class="na">role=</span><span class="s">"tablist"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"tabs__tab tabs__tab--selected"</span> <span class="na">role=</span><span class="s">"tab"</span> <span class="na">id=</span><span class="s">"tabs-popular-1-tab"</span> <span class="na">aria-selected=</span><span class="s">"true"</span> <span class="na">aria-controls=</span><span class="s">"tabs-popular-1"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#tabs-popular-1"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"u-h--up-to-right-col"</span><span class="nt">&gt;</span>Popular in <span class="nt">&lt;/span&gt;</span>World news<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"tabs__tab"</span> <span class="na">role=</span><span class="s">"tab"</span> <span class="na">id=</span><span class="s">"tabs-popular-2-tab"</span> <span class="na">aria-controls=</span><span class="s">"tabs-popular-2"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#tabs-popular-2"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"u-h--up-to-right-col"</span><span class="nt">&gt;</span>Popular in <span class="nt">&lt;/span&gt;</span>The Guardian<span class="nt">&lt;/a&gt;</span>
+        <span class="nt">&lt;/li&gt;</span>
+    <span class="nt">&lt;/ol&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"tabs__content"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"tabs-popular-1"</span> <span class="na">class=</span><span class="s">"tabs__pane u-cf"</span> <span class="na">role=</span><span class="s">"tabpanel"</span> <span class="na">aria-labelledby=</span><span class="s">"tabs-popular-1-tab"</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- Content of tab 1 --&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"tabs-popular-2"</span> <span class="na">class=</span><span class="s">"tabs__pane js-hidden u-cf"</span> <span class="na">role=</span><span class="s">"tabpanel"</span> <span class="na">aria-labelledby=</span><span class="s">"tabs-popular-2-tab"</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- Content of tab 2 --&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div></div></div>
+                </div>
+            </article>
+        </div>
 
-        <footer>
-            <div class="gs-container">
-                <p>This documentation generated using <a href="http://github.com/trulia/hologram">Hologram</a>
+        <footer class="l-footer u-cf">
+            <div class="l-footer__secondary gs-container" role="contentinfo">
+                <div class="l-footer__misc">
+                    <div class="really-serious-copyright">&#169; 2014 Guardian News and Media Limited or its affiliated companies. All&nbsp;rights&nbsp;reserved.</div>
+                </div>
             </div>
         </footer>
     </body>

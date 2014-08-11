@@ -4,37 +4,32 @@
         <title>Facia | Front-end Styleguide | The Guardian</title>
 
         <style>
-            .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(/static/target/images/global/sprite.png); }
+            .i,.caption:before,figcaption:before,blockquote.quoted:before { background-image: url(../../static/target/images/global/sprite.png); }
             .svg .i,.svg .caption:before,.svg figcaption:before,.svg blockquote.quoted:before { background-image: none; }
-            .is-updating { background-image: url(/static/target/images/auto-update-activity.gif); }
-            .is-updating--dark { background-image: url(/static/target/images/auto-update-activity-dark.gif); }
-            .tweet { background-image: url(/static/target/images/twitter/bird.png); }
-            .svg .tweet { background-image: url(/static/target/images/twitter/bird.svg); }
+            .is-updating { background-image: url(../../static/target/images/auto-update-activity.gif); }
+            .is-updating--dark { background-image: url(../../static/target/images/auto-update-activity-dark.gif); }
+            .tweet { background-image: url(../../static/target/images/twitter/bird.png); }
+            .svg .tweet { background-image: url(../../static/target/images/twitter/bird.svg); }
         </style>
 
         <!-- Guardian styles -->
-        <link rel="stylesheet" href="/static/target/stylesheets/global.css">
-        <link rel="stylesheet" href="/static/target/stylesheets/head.default.css">
-        <link rel="stylesheet" href="/static/target/stylesheets/webfonts.css">
+        <link rel="stylesheet" href="../../static/target/stylesheets/head.default.css">
+        <link rel="stylesheet" href="../../static/target/stylesheets/global.css">
+        <link rel="stylesheet" href="../../static/target/stylesheets/webfonts.css">
 
         <!-- Styleguide styles -->
-        <link rel="stylesheet" href="/docs/styleguide_assets/css/styleguide.css">
+        <link rel="stylesheet" href="../../docs/styleguide/assets/css/styleguide.css">
     </head>
 
     <body id="top">
         <header id="header" class="l-header u-cf" role="banner">
-            <h1>Front-end Styleguide HELLO</h1>
-
             <div class="l-header-main">
                 <div class="gs-container">
-                    <span itemscope="" itemtype="http://schema.org/Organization">
-                        <meta itemprop="logo" content="https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png">
-                        <a href="http://www.theguardian.com/uk" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
-                            <span class="u-h" itemprop="name">The Guardian</span>
-                            <i class="i i-guardian-logo-160-header mobile-only"></i>
-                            <i class="i i-guardian-logo-big hide-on-mobile"></i>
-                        </a>
-                    </span>
+                    <a href="http://www.theguardian.com/uk" id="logo" class="logo-wrapper">
+                        <span class="u-h">The Guardian</span>
+                        <i class="i i-guardian-logo-160-header mobile-only"></i>
+                        <i class="i i-guardian-logo-big hide-on-mobile"></i>
+                    </a>
                 </div>
             </div>
 
@@ -42,11 +37,11 @@
                 <div class="gs-container">
                     <div class="navigation__inner">
                         <div class="navigation__scroll">
-                            <nav class="navigation__container navigation__container--first" aria-label="Current section" role="navigation">
+                            <nav class="navigation__container navigation__container--first" role="navigation">
                                 <ul class="signposting">
                                 
                                     <li class="signposting__item signposting__item--home">
-                                        <a class="signposting__action" href="pagination">Pagination</a>
+                                        <a class="signposting__action" href="#pagination">Pagination</a>
                                     </li>
                                 
                                 </ul>
@@ -54,25 +49,17 @@
 
                             <nav class="navigation__container navigation__container--second" role="navigation">
                                 <ul class="top-navigation">
-                                    <li class="top-navigation__item top-navigation__item--home">
-                                        <a href="/" class="top-navigation__action top-navigation__action--has-icon" title="Back to homepage">
-                                            <span class="top-navigation__icon-wrapper">
-                                                <span class="top-navigation__icon top-navigation__icon--home"></span>
-                                            </span>
-                                            <span class="u-h">Home</span>
-                                        </a>
-                                    </li>
                                 
                                     <li class="top-navigation__item">
                                         <a class="top-navigation__action" href="charts.html">Charts</a>
                                     </li>
                                 
                                     <li class="top-navigation__item">
-                                        <a class="top-navigation__action" href="facia.html">Facia</a>
+                                        <a class="top-navigation__action" href="common.html">Common</a>
                                     </li>
                                 
                                     <li class="top-navigation__item">
-                                        <a class="top-navigation__action" href="common.html">Common</a>
+                                        <a class="top-navigation__action" href="facia.html">Facia</a>
                                     </li>
                                 
                                 </ul>
@@ -83,36 +70,44 @@
             </div>
         </header>
 
-        <section>
-            <div class="gs-container">
+        <div class="l-side-margins l-side-margins--layout-content">
+            <article class="content content--article tone-news tone-news--article">
+                <header class="content__head u-cf">
+                    <div class="gs-container">
+                        <h1 itemprop="headline" class="content__headline">Facia</h1>
+                    </div>
+                </header>
+
+                <div class="gs-container">
+
 <h1 id="pagination">Pagination</h1>
 
-<p>Blah blah</p>
+<p>The user needs to view a subset of sorted data that is not easily displayed on one page.</p>
 <div class="codeExample"><div class="exampleOutput"><div class="pagination u-cf">
     <div class="pagination__legend hide-on-mobile-inline">
         About 12,345 results for Tag Name
     </div>
     <ol class="pagination__links u-unstyled">
         <li class="pagination__item pagination__item--next">
-            <a class="pagination__item-inner pagination__action" data-page="6" rel="next" href="http://www.theguardian.com/section/tag?page=6"><span class="u-h">N</span></a>
+            <a class="pagination__item-inner pagination__action" rel="next" href="#"><span class="u-h">N</span></a>
         </li>
         <li class="pagination__item pagination__item--prev">
-            <a class="pagination__item-inner pagination__action" data-page="4" rel="prev" href="http://www.theguardian.com/section/tag?page=4"><span class="u-h">P</span></a>
+            <a class="pagination__item-inner pagination__action" rel="prev" href="#"><span class="u-h">P</span></a>
         </li>
         <li class="pagination__item">
-            <a class="pagination__action" data-page="3" href="http://www.theguardian.com/section/tag?page=3">3</a>
+            <a class="pagination__action" href="#">3</a>
         </li>
         <li class="pagination__item">
-            <a class="pagination__action" data-page="4" href="http://www.theguardian.com/section/tag?page=4">4</a>
+            <a class="pagination__action" href="#">4</a>
         </li>
         <li class="pagination__item">
             <span class="pagination__action pagination__action--current">5</span>
         </li>
         <li class="pagination__item">
-            <a class="pagination__action" data-page="6" href="http://www.theguardian.com/section/tag?page=6">6</a>
+            <a class="pagination__action" href="#">6</a>
         </li>
         <li class="pagination__item">
-            <a class="pagination__action" data-page="7" href="http://www.theguardian.com/section/tag?page=7">7</a>
+            <a class="pagination__action" href="#">7</a>
         </li>
     </ol>
 </div>
@@ -122,34 +117,38 @@
     <span class="nt">&lt;/div&gt;</span>
     <span class="nt">&lt;ol</span> <span class="na">class=</span><span class="s">"pagination__links u-unstyled"</span><span class="nt">&gt;</span>
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"pagination__item pagination__item--next"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__item-inner pagination__action"</span> <span class="na">data-page=</span><span class="s">"6"</span> <span class="na">rel=</span><span class="s">"next"</span> <span class="na">href=</span><span class="s">"http://www.theguardian.com/section/tag?page=6"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"u-h"</span><span class="nt">&gt;</span>N<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__item-inner pagination__action"</span> <span class="na">rel=</span><span class="s">"next"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"u-h"</span><span class="nt">&gt;</span>N<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
         <span class="nt">&lt;/li&gt;</span>
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"pagination__item pagination__item--prev"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__item-inner pagination__action"</span> <span class="na">data-page=</span><span class="s">"4"</span> <span class="na">rel=</span><span class="s">"prev"</span> <span class="na">href=</span><span class="s">"http://www.theguardian.com/section/tag?page=4"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"u-h"</span><span class="nt">&gt;</span>P<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__item-inner pagination__action"</span> <span class="na">rel=</span><span class="s">"prev"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;&lt;span</span> <span class="na">class=</span><span class="s">"u-h"</span><span class="nt">&gt;</span>P<span class="nt">&lt;/span&gt;&lt;/a&gt;</span>
         <span class="nt">&lt;/li&gt;</span>
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"pagination__item"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__action"</span> <span class="na">data-page=</span><span class="s">"3"</span> <span class="na">href=</span><span class="s">"http://www.theguardian.com/section/tag?page=3"</span><span class="nt">&gt;</span>3<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__action"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>3<span class="nt">&lt;/a&gt;</span>
         <span class="nt">&lt;/li&gt;</span>
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"pagination__item"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__action"</span> <span class="na">data-page=</span><span class="s">"4"</span> <span class="na">href=</span><span class="s">"http://www.theguardian.com/section/tag?page=4"</span><span class="nt">&gt;</span>4<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__action"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>4<span class="nt">&lt;/a&gt;</span>
         <span class="nt">&lt;/li&gt;</span>
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"pagination__item"</span><span class="nt">&gt;</span>
             <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"pagination__action pagination__action--current"</span><span class="nt">&gt;</span>5<span class="nt">&lt;/span&gt;</span>
         <span class="nt">&lt;/li&gt;</span>
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"pagination__item"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__action"</span> <span class="na">data-page=</span><span class="s">"6"</span> <span class="na">href=</span><span class="s">"http://www.theguardian.com/section/tag?page=6"</span><span class="nt">&gt;</span>6<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__action"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>6<span class="nt">&lt;/a&gt;</span>
         <span class="nt">&lt;/li&gt;</span>
         <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">"pagination__item"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__action"</span> <span class="na">data-page=</span><span class="s">"7"</span> <span class="na">href=</span><span class="s">"http://www.theguardian.com/section/tag?page=7"</span><span class="nt">&gt;</span>7<span class="nt">&lt;/a&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">class=</span><span class="s">"pagination__action"</span> <span class="na">href=</span><span class="s">"#"</span><span class="nt">&gt;</span>7<span class="nt">&lt;/a&gt;</span>
         <span class="nt">&lt;/li&gt;</span>
     <span class="nt">&lt;/ol&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
-</pre></div></div></div>            </div>
-        </section>
+</pre></div></div></div>
+                </div>
+            </article>
+        </div>
 
-        <footer>
-            <div class="gs-container">
-                <p>This documentation generated using <a href="http://github.com/trulia/hologram">Hologram</a>
+        <footer class="l-footer u-cf">
+            <div class="l-footer__secondary gs-container" role="contentinfo">
+                <div class="l-footer__misc">
+                    <div class="really-serious-copyright">&#169; 2014 Guardian News and Media Limited or its affiliated companies. All&nbsp;rights&nbsp;reserved.</div>
+                </div>
             </div>
         </footer>
     </body>
