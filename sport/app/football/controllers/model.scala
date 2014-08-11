@@ -22,3 +22,7 @@ case class MatchesPage(
   lazy val urlBase = comp.map(c => c.url).getOrElse("/football")
 
 }
+
+trait FootballPage extends MetaData {
+  override val hasClassicVersion: Boolean = false
+}

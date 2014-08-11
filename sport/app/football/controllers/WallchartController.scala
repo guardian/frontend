@@ -16,7 +16,7 @@ object WallchartController extends Controller with Logging with ExecutionContext
         "football",
         s"${competition.fullName} wallchart",
         "GFE:Football:automatic:wallchart"
-      )
+      ) with FootballPage
       val competitionStages = CompetitionStage.stagesFromCompetition(competition)
 
       Cached(60) {

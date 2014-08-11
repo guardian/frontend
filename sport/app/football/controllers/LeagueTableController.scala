@@ -30,7 +30,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       "football",
       "All tables",
       "GFE:Football:automatic:tables"
-    )
+    ) with FootballPage
 
     val groups = loadTables.map { table =>
       if (table.multiGroup) {
@@ -54,7 +54,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
       "football",
       "All teams",
       "GFE:Football:automatic:teams"
-    )
+    ) with FootballPage
 
     val groups = loadTables.map { table =>
       table.copy(groups = table.groups)
@@ -78,7 +78,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         "football",
         s"${table.competition.fullName} table",
         "GFE:Football:automatic:competition tables"
-      )
+      ) with FootballPage
 
       val smallTableGroup = table.copy(groups = table.groups.map { group => group.copy(entries = group.entries.take(10)) }).groups(0)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(table), table.competition.url, filters, Some(table.competition)))
@@ -108,7 +108,7 @@ object LeagueTableController extends Controller with Logging with CompetitionTab
         "football",
         s"${table.competition.fullName} table",
         "GFE:Football:automatic:competition tables"
-      )
+      ) with FootballPage
       val groupTable = Table(table.competition, Seq(group), hasGroups = true)
       val htmlResponse = () => football.views.html.tablesList.tablesPage(TablesPage(page, Seq(groupTable), table.competition.url, filters, Some(table.competition)))
       val jsonResponse = () => football.views.html.tablesList.tablesComponent(table.competition, group, multiGroup = false)

@@ -21,7 +21,7 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
 
   private def renderAllFixtures(date: LocalDate) = Action { implicit request =>
     val fixtures = new FixturesList(date, Competitions())
-    val page = new Page("football/fixtures", "football", "All fixtures", "GFE:Football:automatic:fixtures")
+    val page = new Page("football/fixtures", "football", "All fixtures", "GFE:Football:automatic:fixtures") with FootballPage
     renderMatchList(page, fixtures, filters)
   }
 
@@ -45,13 +45,13 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
 
   private def renderCompetitionFixtures(competitionName: String, competition: Competition, date: LocalDate) = Action { implicit request =>
     val fixtures = new CompetitionFixturesList(date, Competitions(), competition.id)
-    val page = new Page(s"football/$competitionName/fixtures", "football", s"${competition.fullName} fixtures", "GFE:Football:automatic:competition fixtures")
+    val page = new Page(s"football/$competitionName/fixtures", "football", s"${competition.fullName} fixtures", "GFE:Football:automatic:competition fixtures") with FootballPage
     renderMatchList(page, fixtures, filters)
   }
 
   private def renderTeamFixtures(teamName: String, team: FootballTeam, date: LocalDate) = Action { implicit request =>
     val fixtures = new TeamFixturesList(date, Competitions(), team.id)
-    val page = new Page(s"football/$teamName/fixtures", "football", s"${team.name} fixtures", "GFE:Football:automatic:team fixtures")
+    val page = new Page(s"football/$teamName/fixtures", "football", s"${team.name} fixtures", "GFE:Football:automatic:team fixtures") with FootballPage
     renderMatchList(page, fixtures, filters)
   }
 
@@ -65,7 +65,7 @@ object FixturesController extends MatchListController with CompetitionFixtureFil
         "football",
         s"${team.name} fixtures",
         "GFE:Football:automatic:team fixtures"
-      )
+      ) with FootballPage
       renderMatchList(page, fixtures, filters)
     }.getOrElse(NotFound)
   }
