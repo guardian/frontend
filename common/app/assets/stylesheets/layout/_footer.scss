@@ -49,7 +49,22 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, white, 
     .global-navigation__section:nth-of-type(2) .global-navigation__title {
         border-top: 0
     }
+
+    .js-off & {
+        .navigation--collapsed {
+            height: auto;
+        }
+
+        .navigation__expandable {
+            display: block
+        }
+
+        .navigation__inner {
+            display: none
+        }
+    }
 }
+
 .l-footer__primary {
     position: relative;
     overflow: hidden;
@@ -59,6 +74,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, white, 
 .l-footer__banner {
     background: $c-primary-footer-background;
 }
+
 
 .l-footer__secondary {
     @include box-sizing(border-box);
