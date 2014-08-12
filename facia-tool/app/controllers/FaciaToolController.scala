@@ -44,27 +44,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     }
   }
 
-  def updateConfig(): Action[AnyContent] = ExpiringActions.ExpiringAuthAction { request =>
-    FaciaToolMetrics.ApiUsageCount.increment()
-    val configJson: Option[JsValue] = request.body.asJson
-    NoCache {
-      configJson.flatMap(_.asOpt[Config]).map(SanitizeInput.fromConfigSeo).map {
-        case update: Config => {
-
-          //Only update if it is a valid Config object
-          configJson.foreach { json =>
-            ConfigAgent.refreshWith(json)
-          }
-
-          val identity = request.user
-          UpdateActions.putMasterConfig(update, identity)
-          Ok
-        }
-        case _ => NotFound
-      } getOrElse NotFound
-    }
-  }
-
   def readBlock(id: String) = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache {
