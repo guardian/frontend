@@ -49,7 +49,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
   def renderPopularGeo() = Action { implicit request =>
 
     val headers = request.headers.toSimpleMap
-    val countryCode = headers.getOrElse("X-GU-GeoLocation","country:ROW").replace("country:","")
+    val countryCode = headers.getOrElse("X-GU-GeoLocation","country:GB").replace("country:","")
 
     val countryPopular = MostPopular("The Guardian", "", GeoMostPopularAgent.mostPopular(countryCode))
 
