@@ -12,12 +12,22 @@ $guss-webfonts-charset: 'original' !default;
 /**
  * Hinting
  *
- * - on: larger file but better rendering in Windows
+ * - on: larger file, better rendering in Windows
  * - off: smaller files, render well on HiDPI displays
  *
  *  @type String
  */
 $guss-webfonts-hinting: 'on' !default;
+
+/**
+ * Kerning
+ *
+ * - on: larger file, better rendering
+ * - off: smaller files
+ *
+ *  @type String
+ */
+$guss-webfonts-kerning: 'on' !default;
 
 
 /**
@@ -33,10 +43,11 @@ $guss-webfonts-base-url: './' !default;
  *
  * @requires {variable} guss-webfonts-charset
  * @requires {variable} guss-webfonts-hinting
+ * @requires {variable} guss-webfonts-kerning
  *
  * @type String
  */
-$guss-webfonts-path: 'webfonts/hinting-#{$guss-webfonts-hinting}-#{$guss-webfonts-charset}/' !default;
+$guss-webfonts-path: 'webfonts/hinting-#{$guss-webfonts-hinting}_kerning-#{$guss-webfonts-kerning}/#{$guss-webfonts-charset}/' !default;
 
 
 /**
@@ -57,8 +68,8 @@ $guss-font-weights: (
 ) !default;
 
 
-// Extra fonts
-// =============================================================================
+/* Extra fonts
+   ========================================================================== */
 
 /**
  * Extra fonts directory
@@ -74,11 +85,11 @@ $guss-extras-directory: 'GuardianExtrasWeb' !default;
  */
 $guss-webfonts-extras: 'Guardian Compact Web',
                        'Guardian Titlepiece Web',
-                       'Guardian Weekend Condensed Web' !default;
+                       'Guardian Weekend Cond Web' !default;
 
 
-// Font registry
-// =============================================================================
+/* Font registry
+   ========================================================================== */
 
 /**
  * Font registry
@@ -133,7 +144,7 @@ $guss-webfonts: (
     'Guardian Titlepiece Web': (
         (weight: 'regular', style: 'normal'),
     ),
-    'Guardian Weekend Condensed Web': (
+    'Guardian Weekend Cond Web': (
         (weight: 'black', style: 'normal'),
     )
 ) !default;

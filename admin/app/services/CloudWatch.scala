@@ -17,7 +17,7 @@ trait CloudWatch extends implicits.Futures {
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   lazy val cloudwatch = {
-    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.credentials)
+    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.mandatoryCredentials)
     client.setEndpoint(AwsEndpoints.monitoring)
     client
   }
@@ -78,7 +78,7 @@ trait CloudWatch extends implicits.Futures {
       exception match {
         // temporary till JVM bug fix comes out
         // see https://blogs.oracle.com/joew/entry/jdk_7u45_aws_issue_123
-        case e: Exception if e.getMessage.contains("JAXP00010001") => HealthCheck.setUnhealthy()
+        case e: Exception if e.getMessage.contains("JAXP00010001") => HealthCheck.break()
         case _ =>
       }
     }

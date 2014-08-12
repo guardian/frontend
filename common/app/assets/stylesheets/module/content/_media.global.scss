@@ -235,17 +235,6 @@
     }
 }
 
-//This is temporary until facia headings are consistent.
-.onward {
-    .container--multimedia {
-        .container__title {
-            @include rem((
-                font-size: get-font-size($fs-headers, 3)
-            ));
-        }
-    }
-}
-
 
 /* Media item
    ========================================================================== */

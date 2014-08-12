@@ -7,10 +7,10 @@ import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.{AdminConfiguration, Configuration}
-import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
-import java.io.Serializable
-import scala.util.{Failure, Try, Success}
 import dfp.DfpApiWrapper.DfpSessionException
+import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
+
+import scala.util.{Failure, Try}
 
 object DfpDataHydrator extends Logging {
 
@@ -54,6 +54,7 @@ object DfpDataHydrator extends Logging {
       val optSponsorFieldId = loadCustomFieldId("sponsor")
 
       val allAdUnits = loadActiveDescendantAdUnits(Configuration.commercial.dfpAdUnitRoot)
+      val placementAdUnits = loadAdUnitIdsByPlacement()
 
       val allCustomTargetingKeys = loadAllCustomTargetKeys()
       val allCustomTargetingValues = loadAllCustomTargetValues()
@@ -72,11 +73,27 @@ object DfpDataHydrator extends Logging {
 
         val dfpTargeting = dfpLineItem.getTargeting
 
-        val adUnits = Option(dfpTargeting.getInventoryTargeting.getTargetedAdUnits) map { adUnits =>
+        val directAdUnits = Option(dfpTargeting.getInventoryTargeting.getTargetedAdUnits) map { adUnits =>
           adUnits.flatMap { adUnit =>
             allAdUnits get adUnit.getAdUnitId
           }.toSeq
         } getOrElse Nil
+
+        val adUnitsDerivedFromPlacements = {
+          Option(dfpTargeting.getInventoryTargeting.getTargetedPlacementIds).map { placementIds =>
+
+            def adUnitsInPlacement(id: Long) = {
+              placementAdUnits get id map {
+                _ flatMap allAdUnits.get
+              } getOrElse Nil
+            }
+
+            placementIds.flatMap(adUnitsInPlacement).toSeq
+
+          } getOrElse Nil
+        }
+
+        val adUnits = (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
 
         val geoTargets = Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
           Option(geoTargeting.getTargetedLocations) map { locations =>
@@ -150,7 +167,7 @@ object DfpDataHydrator extends Logging {
         GuAdUnit(adUnit.getId, fullpath.tail)
       }
 
-      allUnits.filter(au => au.path.last == "ng" && au.path.size < 5).sortBy(_.id).distinct
+      allUnits.filter(au => (au.path.last == "ng" || au.path.last == "r2") && au.path.size == 4).sortBy(_.id).distinct
   }
 
   def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = dfpSession.map {
@@ -176,6 +193,11 @@ object DfpDataHydrator extends Logging {
     }.toMap
   }
 
+  def loadAdUnitIdsByPlacement(): Map[Long, Seq[String]] = dfpSession.fold(Map[Long, Seq[String]]()) { session =>
+    DfpApiWrapper.fetchPlacements(session, new StatementBuilder()).map { placement =>
+      placement.getId.toLong -> placement.getTargetedAdUnitIds.toSeq
+    }.toMap
+  }
 
   private def isPageSkin(dfpLineItem: LineItem) = {
 
