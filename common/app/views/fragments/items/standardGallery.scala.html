@@ -1,4 +1,8 @@
-@(trail: Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader, config: Config)
+@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader, config: model.Config)
+
+@import conf.Static
+@import common.LinkTo
+@import views.support.{GetClasses, ImgSrc, Item300, Item620, RemoveOuterParaHtml}
 
 @defining((trail.visualTone, containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
     <@element

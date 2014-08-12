@@ -27,7 +27,7 @@ define([
         },
         section = sectionPlacements[config.page.section] ? config.page.section : 'default',
         load = once(function() {
-            if (config.switches.audienceScience) {
+            if (config.switches.audienceScienceGateway) {
                 var placements = sectionPlacements[section],
                     query = urlUtils.constructQuery({
                         placementIdList: placements.join(','),

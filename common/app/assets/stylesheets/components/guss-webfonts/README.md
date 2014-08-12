@@ -34,28 +34,40 @@ character set available:
 #### 1. Configure and import guss-webfonts
 
 ```scss
-// HTTP path or url where the browser will look for fonts
+/**
+ * Base URL
+ * HTTP path or url where the browser will look for fonts
+ * URL can be an absolute HTTP (`//pasteup.guim.co.uk/fonts/`) or relative (`../`)
+ */
+
 // if you use an asset domain, you would set it to:
 // $guss-webfonts-base-url: '//assets.yourdomain.com/path/to/guss-webfonts';
-
 $guss-webfonts-base-url: '/path/to/guss-webfonts';
 
+/**
+ * Charset
+ *
+ * - ascii: 256 characters only, very small
+ * - latin1: latin 1 character set
+ * - original: full character set
+ */
+$guss-webfonts-charset: 'original';
 
-// Charset
-//
-// - ascii: 256 characters only, very small
-// - latin1: latin 1 character set
-// - original: full character set
+/**
+ * Hinting
+ *
+ * - on: larger file, better rendering in Windows
+ * - off: smaller files, render well on HiDPI displays
+ */
+$guss-webfonts-hinting: 'on';
 
-$guss-webfonts-charset: 'original' !default;
-
-
-// Hinting {String}
-//
-// - on: larger file but better rendering in Windows
-// - off: smaller files, render well on HiDPI displays
-
-$guss-webfonts-hinting: 'on' !default;
+/**
+ * Kerning
+ *
+ * - on: larger file, better rendering
+ * - off: smaller files
+ */
+$guss-webfonts-kerning: 'on';
 
 
 @import 'path/to/guss-webfonts/_webfonts';
@@ -125,3 +137,9 @@ in use in this project.
 Thanks to @paulrobertlloyd for his input on the API.
 
 [sassystrings]: https://github.com/HugoGiraudel/SassyStrings
+
+## Contribute
+
+- Edit _webfonts.*.scss files
+- Compile NextGen webfonts styles: `sass nextgen-webfonts.scss:nextgen-webfonts.css --style compressed`
+- Compile demo styles: `sass demo/demo.scss:demo/demo.css`

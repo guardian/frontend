@@ -14,8 +14,8 @@ define([
     'bonzo',
     'common/modules/component',
     'common/modules/analytics/beacon',
-    'raven',
-    'common/modules/ui/message'
+    'common/modules/ui/message',
+    'raven'
 ], function(
     $,
     ajax,
@@ -31,8 +31,8 @@ define([
     bonzo,
     Component,
     beacon,
-    Raven,
-    Message
+    Message,
+    raven
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint()),
@@ -46,8 +46,9 @@ define([
             'content:play',
             'content:end'
         ],
+        contentType = config.page.contentType.toLowerCase(),
         constructEventName = function(eventName) {
-            return config.page.contentType.toLowerCase() + ':' + eventName;
+            return contentType + ':' + eventName;
         };
 
 
@@ -56,12 +57,12 @@ define([
         ophanRecord: function(id, event) {
             if(id) {
                 require('ophan/ng', function (ophan) {
-                    ophan.record({
-                        media: {
-                            id: id,
-                            eventType: event.type
-                        }
-                    });
+                    var eventObject = {};
+                    eventObject[contentType] = {
+                        id: id,
+                        eventType: event.type
+                    };
+                    ophan.record(eventObject);
                 });
             }
         },
@@ -174,6 +175,30 @@ define([
             events.ready();
         },
 
+        beaconError: function(err) {
+            if(err && 'message' in err) {
+                raven.captureException(new Error(err.message), {
+                    tags: {
+                        feature: 'player',
+                        code: err.code
+                    }
+                });
+            }
+        },
+
+        handleInitialMediaError: function(player) {
+            var err = player.error();
+            if(err !== null) {
+                modules.beaconError(err);
+            }
+        },
+
+        bindErrorHandler: function(player) {
+            player.on('error', function(e){
+                modules.beaconError(e);
+            });
+        },
+
         getVastUrl: function() {
             var adUnit = config.page.adUnit,
                 custParams = urlUtils.constructQuery(dfp.buildPageTargeting({ page: config.page })),
@@ -255,9 +280,13 @@ define([
                             preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
                         });
 
+                    //Location of this is important
+                    modules.handleInitialMediaError(vjs);
+
                     vjs.ready(function () {
                         var player = this;
 
+                        modules.bindErrorHandler(player);
                         modules.initLoadingSpinner(player);
 
                         // unglitching the volume on first load
@@ -281,7 +310,7 @@ define([
                                 player.fullscreener();
 
                                 // Init plugins
-                                if (config.switches.videoAdverts && !config.page.shouldHideAdverts) {
+                                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
                                     player.adCountDown();
                                     player.ads({
                                         timeout: 3000
@@ -296,7 +325,7 @@ define([
                                 }
 
                                 if (/desktop|wide/.test(detect.getBreakpoint())) {
-                                    modules.initEndSlate(player);
+                                    modules.initEndSlate(player, el.getAttribute('data-end-slate'));
                                 }
                             } else {
                                 vjs.playlist({
@@ -325,17 +354,17 @@ define([
                 });
             });
         },
-        generateEndSlateUrl: function() {
+        generateEndSlateUrlFromPage: function() {
             var seriesId = config.page.seriesId;
             var sectionId = config.page.section;
             var url = (seriesId)  ? '/video/end-slate/series/' + seriesId : '/video/end-slate/section/' + sectionId;
             return url + '.json?shortUrl=' + config.page.shortUrl;
         },
-        initEndSlate: function(player) {
+        initEndSlate: function(player, endSlatePath) {
             var endSlate = new Component(),
                 endState = 'vjs-has-ended';
 
-            endSlate.endpoint = modules.generateEndSlateUrl();
+            endSlate.endpoint = endSlatePath || modules.generateEndSlateUrlFromPage();
             endSlate.fetch(player.el(), 'html');
 
             player.one(constructEventName('content:play'), function() {
@@ -380,7 +409,7 @@ define([
                     '</li>' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="http://next.theguardian.com/" target="_blank">Find out more</a>' +
+                    '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
                     '</li>' +
                     '</ul>';
 
@@ -392,13 +421,7 @@ define([
 
     var ready = function () {
         if(config.switches.enhancedMediaPlayer) {
-            Raven.context(function(){
-                Raven.setTagsContext({
-                    feature: 'media',
-                    contentType: config.page.contentType
-                });
-                modules.initPlayer();
-            });
+            modules.initPlayer();
         }
 
         if (config.isMedia) {

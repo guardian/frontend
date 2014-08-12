@@ -1,5 +1,6 @@
 /*global guardian:true */
 define([
+    'raven',
     'qwery',
     'common/utils/mediator',
     'common/utils/detect',
@@ -14,7 +15,6 @@ define([
     'common/bootstraps/common',
     'common/bootstraps/tag',
     'common/bootstraps/section',
-
     'common/bootstraps/football',
     'common/bootstraps/article',
     'common/bootstraps/liveblog',
@@ -23,110 +23,120 @@ define([
     'common/bootstraps/identity',
     'common/bootstraps/profile'
 ], function (
+    raven,
     qwery,
     mediator,
     detect,
     config,
-    Context,
+    context,
     userTiming,
 
     Fonts,
-    UserAdTargeting,
-    DiscussionApi,
+    userAdTargeting,
+    discussionApi,
 
     bootstrapCommon,
-    Tag,
-    Section,
-
-    Football,
-    Article,
-    LiveBlog,
-    Media,
-    Gallery,
-    Identity,
-    Profile
+    tag,
+    section,
+    football,
+    article,
+    liveBlog,
+    media,
+    gallery,
+    identity,
+    profile
 ) {
 
-    var modules = {
-
-        initialiseDiscussionApi: function(config) {
-            DiscussionApi.init(config);
+    var bootstrapContext = function(featureName, boostrap) {
+            raven.context(
+                {
+                    tags: {
+                        feature: featureName
+                    }
+                },
+                function() {
+                    boostrap.init(config, context());
+                }
+            );
         },
+        modules = {
+            initialiseDiscussionApi: function() {
+                discussionApi.init(config);
+            },
 
-        loadFonts: function(config, ua) {
-            if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
-                var fileFormat = detect.getFontFormatSupport(ua),
-                    fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-                var f = new Fonts(fontStyleNodes, fileFormat);
-                f.loadFromServerAndApply();
+            loadFonts: function(ua) {
+                if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
+                    var fileFormat = detect.getFontFormatSupport(ua),
+                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
+                    var f = new Fonts(fontStyleNodes, fileFormat);
+                    f.loadFromServerAndApply();
+                }
+            },
+
+            initId: function () {
+                identity.init(config, context());
+            },
+
+            initUserAdTargeting : function () {
+                userAdTargeting.requestUserSegmentsFromId();
             }
-        },
-
-        initId: function (config, context) {
-            Identity.init(config, context);
-        },
-
-        initUserAdTargeting : function () {
-            UserAdTargeting.requestUserSegmentsFromId();
-        }
-    };
+        };
 
     var routes = function() {
         userTiming.mark('App Begin');
 
-        var context = document.getElementById('js-context');
-        Context.set(context);
+        context.set(document.getElementById('js-context'));
 
-        modules.initialiseDiscussionApi(config);
-        modules.loadFonts(config, navigator.userAgent);
-        modules.initId(config, context);
+        modules.initialiseDiscussionApi();
+        modules.loadFonts(navigator.userAgent);
+        modules.initId();
         modules.initUserAdTargeting();
 
-        var pageRoute = function(config, context) {
-            bootstrapCommon.init(config, context);
+        var pageRoute = function() {
+            bootstrapContext('common', bootstrapCommon);
 
             // Front
             if (config.page.isFront) {
                 require('bootstraps/facia', function(facia) {
-                    facia.init(config, context);
+                    bootstrapContext('facia', facia);
                 });
             }
 
             if(config.page.contentType === 'Article') {
-                Article.init(config, context);
+                bootstrapContext('article', article);
             }
 
             if(config.page.contentType === 'LiveBlog') {
-                LiveBlog.init(config, context);
+                bootstrapContext('liveBlog', liveBlog);
             }
 
             if (config.isMedia || qwery('video, audio').length) {
-                Media.init(config, context);
+                bootstrapContext('media', media);
             }
 
             if (config.page.contentType === 'Gallery') {
-                Gallery.init(config, context);
+                bootstrapContext('gallery', gallery);
             }
 
             if (config.page.contentType === 'Tag') {
-                Tag.init(config, context);
+                bootstrapContext('tag', tag);
             }
 
             if (config.page.contentType === 'Section' && !config.page.isFront) {
-                Section.init(config, context);
+                bootstrapContext('section', section);
             }
 
             if (config.page.section === 'football') {
-                Football.init();
+                bootstrapContext('footbal', football);
             }
 
             if (config.page.section === 'identity') {
-                Profile.init();
+                bootstrapContext('profile', profile);
             }
         };
 
         mediator.on('page:ready', pageRoute);
-        mediator.emit('page:ready', config, context);
+        mediator.emit('page:ready', config, context());
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');

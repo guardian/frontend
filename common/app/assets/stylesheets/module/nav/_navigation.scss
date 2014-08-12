@@ -13,7 +13,7 @@ $navigation-toggler-width: 48px;
 $navigation-toggler-width-full: 130px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
-$c-navigation-background-side-bar: #1a587d; // manual tint of $c-top-navigation-background
+$c-navigation-background-side-bar: mix(guss-colour(guardian-brand-dark), #ffffff, 85%);
 
 $c-signposting-action: $c-newsDefault;
 $c-signposting-background: $c-navigation-base;
@@ -42,29 +42,6 @@ $c-navigation-expandable-background: guss-colour(neutral-1);
 
 $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
 $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(navigationBreakOnTwoLevels) + gs-span(1) + $gs-gutter * 1.5);
-
-
-/* First container page title overrides
-   ========================================================================== */
-
-@include mq($to: tablet) {
-    // Note the double chained selectors to avoid use of !important
-
-    // Display the first container header everywhere
-    .container--first.container--first .container__header,
-    .js-on .has-localnav .container--first .container__title {
-        display: block;
-    }
-    // But not on the homepage
-    .container--first[data-link-name=top-stories] .container__header {
-        display: none;
-    }
-    // And restyle the title to look less bulky
-    .container--first.container--first .container__title {
-        padding-left: 0;
-        background: transparent;
-    }
-}
 
 
 /* Meganav footer overrides (edition switcher and Guardian services)
@@ -526,6 +503,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             margin-left: $navigation-h-space-between-items/2,
             margin-right: $navigation-h-space-between-items/2
         ));
+        white-space: nowrap;
     }
 }
 
