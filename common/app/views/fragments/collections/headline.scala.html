@@ -1,7 +1,7 @@
 @(items: Seq[model.Trail], containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
 
 @defining(items.filter(item => item.group == Option("0") || item.group == None), items.filter(_.group == Option("1"))) { case (standardItems, bigItems) =>
-    @defining(8 - bigItems.length * 2) { standardItemCount =>
+    @defining(16 - bigItems.length * 4) { standardItemCount =>
         <div class="headline-list-container">
             <ul class="headline-list headline-list--@bigItems.length-big headline-list--big">
                 @bigItems.zipWithIndex.map { case (trail, index) =>
