@@ -1,10 +1,12 @@
 import common._
-import conf.{Configuration, Filters}
+import conf.Filters
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import ophan.SurgingContentAgentLifecycle
+import play.api.libs.json.Json
 import play.api.mvc.WithFilters
-import services.ConfigAgentLifecycle
+import services.{ConfigAgent, ConfigAgentDefaults, ConfigAgentLifecycle}
+import play.api.Application
 
 
 object Global extends WithFilters(Filters.common: _*)
@@ -26,4 +28,8 @@ with SurgingContentAgentLifecycle {
     ("redirects-to-applications", FaciaMetrics.FaciaToApplicationRedirectMetric.getAndReset.toDouble)
   )
 
+  override def onStart(app: Application) {
+    ConfigAgent.refreshWith(Json.parse(ConfigAgentDefaults.contents))
+    super.onStart(app)
+  }
 }
