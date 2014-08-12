@@ -6,8 +6,6 @@ import model.Competition
 import pa._
 import implicits.Football._
 import scala.util.Try
-import conf.Switches.WorldCupWallchartEmbedSwitch
-
 
 trait CompetitionStage {
   val matches: List[FootballMatch]
@@ -15,7 +13,7 @@ trait CompetitionStage {
 }
 object CompetitionStage {
 
-  def stagesFromCompetition(competition: Competition, orderings: Map[String, List[DateTime]] = KnockoutSpider.orderings): List[CompetitionStage] = {
+  def stagesFromCompetition(competition: Competition, orderings: Map[String, List[DateTime]] = Map.empty): List[CompetitionStage] = {
     val stagesWithMatches = competition.matches.toList.stableGroupBy(_.stage)
     val allStagesHaveStarted = stagesWithMatches.forall { case (_, matches) => matches.exists(_.hasStarted) }
     // if all stages have started, reverse order (typically at most two stages so means "show most recent first")
@@ -84,35 +82,4 @@ case class KnockoutSpider(matches: List[FootballMatch], rounds: List[Round], mat
   private def lt(match1: FootballMatch, match2: FootballMatch): Boolean = {
     matchIntervals.indexWhere(_.contains(match1.date)) < matchIntervals.indexWhere(_.contains(match2.date))
   }
-}
-object KnockoutSpider {
-
-  WorldCupWallchartEmbedSwitch.isSwitchedOn  // world-cup 2014 dates hard-coded below, remove when WC 2014 is done
-
-  // providing an ordering will enable the spider knockout display for the competition
-  // competitionId -> List of match KO times, ordered so the spider is rendered correctly
-  val orderings: Map[String, List[DateTime]] = Map(
-    // world cup 2014
-    "700" -> List(
-      new DateTime(2014, 6, 28, 17, 0), // 3689946
-      new DateTime(2014, 6, 28, 21, 0), // 3689963
-      new DateTime(2014, 6, 30, 17, 0), // 3689950
-      new DateTime(2014, 6, 30, 21, 0), // 3689951
-      new DateTime(2014, 6, 29, 17, 0), // 3689948
-      new DateTime(2014, 6, 29, 21, 0), // 3689949
-      new DateTime(2014, 7, 1, 17, 0),  // 3689952
-      new DateTime(2014, 7, 1, 21, 0),  // 3689953
-
-      new DateTime(2014, 7, 4, 21, 0),  // 3689954
-      new DateTime(2014, 7, 4, 17, 0),  // 3689955
-      new DateTime(2014, 7, 5, 21, 0),  // 3689956
-      new DateTime(2014, 7, 5, 17, 0),  // 3689957
-
-      new DateTime(2014, 7, 8, 21, 0),  // 3689958
-      new DateTime(2014, 7, 9, 21, 0),  // 3689959
-
-      new DateTime(2014, 7, 12, 21, 0), // 3689960
-      new DateTime(2014, 7, 13, 20, 0)  // 3689961
-    )
-  )
 }

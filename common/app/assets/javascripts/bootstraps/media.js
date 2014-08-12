@@ -10,11 +10,13 @@ define([
     'common/modules/commercial/dfp',
     'common/modules/analytics/omnitureMedia',
     'lodash/functions/throttle',
+    'lodash/objects/isFunction',
     'bean',
     'bonzo',
     'common/modules/component',
     'common/modules/analytics/beacon',
-    'common/modules/ui/message'
+    'common/modules/ui/message',
+    'raven'
 ], function(
     $,
     ajax,
@@ -26,11 +28,13 @@ define([
     dfp,
     OmnitureMedia,
     _throttle,
+    isFunction,
     bean,
     bonzo,
     Component,
     beacon,
-    Message
+    Message,
+    raven
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint()),
@@ -43,20 +47,24 @@ define([
             'content:ready',
             'content:play',
             'content:end'
-        ],
-        contentType = config.page.contentType.toLowerCase(),
-        constructEventName = function(eventName) {
-            return contentType + ':' + eventName;
-        };
+        ];
 
+    function getMediaType(player) {
+        var mediaEl = player && isFunction(player.el) ? player.el().children[0] : undefined;
+        return mediaEl ? mediaEl.tagName.toLowerCase() : 'video';
+    }
+
+    function constructEventName(eventName, player) {
+        return getMediaType(player) + ':' + eventName;
+    }
 
     var modules = {
 
-        ophanRecord: function(id, event) {
+        ophanRecord: function(id, event, player) {
             if(id) {
                 require('ophan/ng', function (ophan) {
                     var eventObject = {};
-                    eventObject[contentType] = {
+                    eventObject[getMediaType(player)] = {
                         id: id,
                         eventType: event.type
                     };
@@ -69,8 +77,8 @@ define([
             EVENTS.concat(QUARTILES.map(function(q) {
                 return 'play:' + q;
             })).forEach(function(event) {
-                player.one(constructEventName(event), function(event) {
-                    modules.ophanRecord(mediaId, event);
+                player.one(constructEventName(event, player), function(event) {
+                    modules.ophanRecord(mediaId, event, player);
                 });
             });
         },
@@ -80,22 +88,22 @@ define([
         },
 
         bindDiagnosticsEvents: function(player) {
-            player.on(constructEventName('preroll:play'), function(){
+            player.on(constructEventName('preroll:play', player), function(){
                 beacon.fire('/count/vps.gif');
             });
-            player.on(constructEventName('preroll:end'), function(){
+            player.on(constructEventName('preroll:end', player), function(){
                 beacon.fire('/count/vpe.gif');
             });
-            player.on(constructEventName('content:play'), function(){
+            player.on(constructEventName('content:play', player), function(){
                 beacon.fire('/count/vs.gif');
             });
-            player.on(constructEventName('content:end'), function(){
+            player.on(constructEventName('content:end', player), function(){
                 beacon.fire('/count/ve.gif');
             });
 
             // count the number of video starts that happen after a preroll
-            player.on(constructEventName('preroll:play'), function(){
-                player.on(constructEventName('content:play'), function(){
+            player.on(constructEventName('preroll:play', player), function(){
+                player.on(constructEventName('content:play', player), function(){
                     beacon.fire('/count/vsap.gif');
                 });
             });
@@ -104,19 +112,19 @@ define([
         bindPrerollEvents: function(player) {
             var events = {
                 end: function() {
-                    player.trigger(constructEventName('preroll:end'));
+                    player.trigger(constructEventName('preroll:end', player));
                     modules.bindContentEvents(player, true);
                 },
                 play: function() {
                     var duration = player.duration();
                     if (duration) {
-                        player.trigger(constructEventName('preroll:play'));
+                        player.trigger(constructEventName('preroll:play', player));
                     } else {
                         player.one('durationchange', events.play);
                     }
                 },
                 ready: function() {
-                    player.trigger(constructEventName('preroll:ready'));
+                    player.trigger(constructEventName('preroll:ready', player));
 
                     player.one('adstart', events.play);
                     player.one('adend', events.end);
@@ -137,12 +145,12 @@ define([
         bindContentEvents: function(player) {
             var events = {
                 end: function() {
-                    player.trigger(constructEventName('content:end'));
+                    player.trigger(constructEventName('content:end', player));
                 },
                 play: function() {
                     var duration = player.duration();
                     if (duration) {
-                        player.trigger(constructEventName('content:play'));
+                        player.trigger(constructEventName('content:play', player));
                     } else {
                         player.one('durationchange', events.play);
                     }
@@ -151,7 +159,7 @@ define([
                     var progress = Math.round(parseInt(player.currentTime()/player.duration()*100, 10));
                     QUARTILES.reverse().some(function(quart) {
                         if (progress >= quart) {
-                            player.trigger(constructEventName('play:' + quart));
+                            player.trigger(constructEventName('play:' + quart, player));
                             return true;
                         } else {
                             return false;
@@ -159,7 +167,7 @@ define([
                     });
                 },
                 ready: function() {
-                    player.trigger(constructEventName('content:ready'));
+                    player.trigger(constructEventName('content:ready', player));
 
                     player.one('play', events.play);
                     player.on('timeupdate', _throttle(events.timeupdate, 1000));
@@ -171,6 +179,32 @@ define([
                 }
             };
             events.ready();
+        },
+
+        beaconError: function(err) {
+            if(err && 'message' in err) {
+                raven.captureException(new Error(err.message), {
+                    tags: {
+                        feature: 'player',
+                        code: err.code
+                    }
+                });
+            }
+        },
+
+        handleInitialMediaError: function(player) {
+            var err = player.error();
+            if(err !== null) {
+                modules.beaconError(err);
+                return err.code === 4;
+            }
+            return false;
+        },
+
+        bindErrorHandler: function(player) {
+            player.on('error', function(e){
+                modules.beaconError(e);
+            });
         },
 
         getVastUrl: function() {
@@ -197,12 +231,12 @@ define([
                     init: function() {
                         $(this.el()).append($.create(tmp));
                         this.on('timeupdate', events.update.bind(this));
-                        this.one(constructEventName('preroll:end'), events.destroy.bind(player));
-                        this.one(constructEventName('content:play'), events.destroy.bind(player));
+                        this.one(constructEventName('preroll:end', player), events.destroy.bind(player));
+                        this.one(constructEventName('content:play', player), events.destroy.bind(player));
                         this.one('adtimeout', events.destroy.bind(player));
                     }
                 };
-            this.one(constructEventName('preroll:play'), events.init.bind(player));
+            this.one(constructEventName('preroll:play', player), events.init.bind(player));
         },
 
         fullscreener: function() {
@@ -235,6 +269,21 @@ define([
                 '</div>';
         },
 
+        createVideoObject: function(el, options) {
+            var vjs;
+
+            options.techOrder = ['html5', 'flash'];
+            vjs = videojs(el, options);
+
+            if(modules.handleInitialMediaError(vjs)){
+                vjs.dispose();
+                options.techOrder = ['flash', 'html5'];
+                vjs = videojs(el, options);
+            }
+
+            return vjs;
+        },
+
         initPlayer: function() {
 
             require('bootstraps/video-player', function () {
@@ -248,15 +297,19 @@ define([
                     bonzo(el).addClass('vjs');
 
                     var mediaId = el.getAttribute('data-media-id'),
-                        vjs = videojs(el, {
+                        vjs = modules.createVideoObject(el, {
                             controls: true,
                             autoplay: false,
                             preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
                         });
 
+                    //Location of this is important
+                    modules.handleInitialMediaError(vjs);
+
                     vjs.ready(function () {
                         var player = this;
 
+                        modules.bindErrorHandler(player);
                         modules.initLoadingSpinner(player);
 
                         // unglitching the volume on first load
@@ -337,7 +390,7 @@ define([
             endSlate.endpoint = endSlatePath || modules.generateEndSlateUrlFromPage();
             endSlate.fetch(player.el(), 'html');
 
-            player.one(constructEventName('content:play'), function() {
+            player.one(constructEventName('content:play', player), function() {
                 player.on('ended', function () {
                     bonzo(player.el()).addClass(endState);
                 });
@@ -401,7 +454,7 @@ define([
             modules.initMostViewedMedia();
         }
 
-        if (config.page.contentType === 'Video' && detect.getBreakpoint() !== 'mobile') {
+        if (config.page.contentType.toLowerCase() === 'video' && detect.getBreakpoint() !== 'mobile') {
             modules.displayReleaseMessage();
         }
     };

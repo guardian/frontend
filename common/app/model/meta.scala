@@ -37,7 +37,7 @@ trait MetaData extends Tags {
 
   def hasPageSkin(edition: Edition) = false
 
-  def isSurging = false
+  def isSurging = 0
 
   def metaData: Map[String, Any] = Map(
     ("page-id", id),

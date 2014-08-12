@@ -1,7 +1,7 @@
 package jobs
 
 import com.amazonaws.services.cloudwatch.model.GetMetricStatisticsResult
-import common.{Metrics, ExecutionContexts, Logging}
+import common.{ExecutionContexts, Logging}
 import services.CloudWatch
 
 import scala.collection.JavaConversions._

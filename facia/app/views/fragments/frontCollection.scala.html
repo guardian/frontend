@@ -16,6 +16,9 @@
     case Some("features/multimedia")        => { @containers.multimedia(block._2, MultimediaContainer(), index)(request, templateDeduping, block._1) }
     case Some("features/picks")             => { @containers.picks(block._2, PicksContainer(), index)(request, templateDeduping, block._1) }
     case Some("features/volumes")           => { @containers.featuresvolumes(front, block._2, FeaturesVolumesContainer(), index)(request, templateDeduping, block._1) }
+    case Some("prototype/cassoulet")        => { @containers.cassoulet(block._2, CassouletContainer(), index)(request, templateDeduping, block._1) }
+    case Some("prototype/quichelorraine")   => { @containers.quichelorraine(block._2, QuicheLorraineContainer(), index)(request, templateDeduping, block._1) }
+    case Some("prototype/raclette")         => { @containers.raclette(block._2, RacletteContainer(), index)(request, templateDeduping, block._1) }
     case Some("comment/comment-and-debate") => { @containers.commentanddebate(block._2, CommentAndDebateContainer(), index)(request, templateDeduping, block._1) }
     case _                                  => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
 }

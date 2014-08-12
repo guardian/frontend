@@ -22,7 +22,21 @@ define([
             {name: 'features/multimedia'},
             {name: 'features/picks', groups: ['standard', 'big']},
             {name: 'features/volumes', groups: ['standard', 'big', 'very big', 'huge']},
-            {name: 'comment/comment-and-debate'}
+            {name: 'comment/comment-and-debate'},
+            {name: 'prototype/cassoulet'},
+            {name: 'prototype/quichelorraine'},
+            {name: 'prototype/raclette'}
+        ],
+
+        headlineLength: 200,
+        restrictedHeadlineLength: 90,
+
+        restrictHeadlinesOn: [
+            'breaking-news'
+        ],
+
+        restrictedLiveMode: [
+            'breaking-news'
         ],
 
         detectPressFailureMs: 10000,
