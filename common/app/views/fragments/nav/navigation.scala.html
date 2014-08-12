@@ -12,8 +12,7 @@
         <div class="gs-container">
             <div class="navigation__inner">
                 <div class="navigation__scroll">
-                    <nav class="navigation__container navigation__container--first"
-                         aria-label="Current section" role="navigation">
+                    <nav class="navigation__container navigation__container--first" role="navigation" aria-label="Current section">
                         @if(!Edition.isEditionFront){
                             @fragments.nav.signposting(metaData, navigation)
 
@@ -21,15 +20,16 @@
                                 @if(Navigation.localLinks(navigation, metaData).nonEmpty) {
                                     <ul class="local-navigation">
                                         @Navigation.rotatedLocalNav(topSection, metaData).map{ link =>
-                                            <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : secondary : @link.title">@Html(link.title)</a></li>
+                                            <li class="local-navigation__item">
+                                                <a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : secondary : @link.title">@Html(link.title)</a>
+                                            </li>
                                         }
                                     </ul>
                                 }
                             }
                         }
                     </nav>
-                    <nav class="navigation__container navigation__container--second"
-                         aria-label="Guardian sections" role="navigation">
+                    <nav class="navigation__container navigation__container--second" role="navigation" aria-label="Guardian sections">
                         @fragments.nav.topNavigation(metaData, navigation)
                     </nav>
                 </div>
