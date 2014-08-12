@@ -68,9 +68,11 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
             currentMap + (countryCode -> contentSeq.flatten)
           })
 
+          log.info(s"Geo popular $countryCode updated successfully.")
+
         } else {
 
-          log.info(s"Geo popular update for ${countryCode} found nothing.")
+          log.info(s"Geo popular update for $countryCode found nothing.")
         }
       }
     }
