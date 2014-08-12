@@ -170,7 +170,7 @@ define([
             player.on('play', this.play.bind(this));
             player.on('pause', this.pause.bind(this));
 
-            player.one('adsready', this.sendNamedEvent.bind(this, 'preroll:request', true));
+            player.one('video:preroll:request', this.sendNamedEvent.bind(this, 'preroll:request', true));
             player.one('video:preroll:play', this.sendNamedEvent.bind(this, 'preroll:play', true));
             player.one('video:preroll:end', this.sendNamedEvent.bind(this, 'preroll:end', true));
             player.one('video:content:play', function() {
