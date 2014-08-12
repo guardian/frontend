@@ -175,11 +175,28 @@ define([
             events.ready();
         },
 
-        bindErrorHandler: function(player) {
+        beaconError: function(err) {
+            if(err && 'message' in err) {
+                raven.captureException(new Error(err.message), {
+                    tags: {
+                        feature: 'player',
+                        code: err.code
+                    }
+                });
+            }
+        },
+
+        handleInitialMediaError: function(player) {
             var err = player.error();
             if(err !== null) {
-                raven.captureException(new Error(err.message), {tags: { feature: 'player' }});
+                modules.beaconError(err);
             }
+        },
+
+        bindErrorHandler: function(player) {
+            player.on('error', function(e){
+                modules.beaconError(e);
+            });
         },
 
         getVastUrl: function() {
@@ -264,11 +281,12 @@ define([
                         });
 
                     //Location of this is important
-                    modules.bindErrorHandler(vjs);
+                    modules.handleInitialMediaError(vjs);
 
                     vjs.ready(function () {
                         var player = this;
 
+                        modules.bindErrorHandler(player);
                         modules.initLoadingSpinner(player);
 
                         // unglitching the volume on first load
