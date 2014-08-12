@@ -10,10 +10,10 @@
                     ("navigation--has-local-navigation", Navigation.localLinks(navigation, metaData).nonEmpty)
                 ))">
         <div class="gs-container">
-            <div class="navigation__inner">
+            <div class="navigation__inner" role="navigation">
                 <div class="navigation__scroll">
                     <nav class="navigation__container navigation__container--first"
-                         aria-label="Current section" role="navigation">
+                         aria-label="Current section">
                         @if(!Edition.isEditionFront){
                             @fragments.nav.signposting(metaData, navigation)
 
@@ -31,7 +31,7 @@
                         }
                     </nav>
                     <nav class="navigation__container navigation__container--second"
-                         aria-label="Guardian sections" role="navigation">
+                         aria-label="Guardian sections">
                         @fragments.nav.topNavigation(metaData, navigation)
                     </nav>
                 </div>
