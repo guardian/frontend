@@ -48,7 +48,8 @@ trait MetaData extends Tags {
     ("blockVideoAds", false),
     ("is-front", isFront),
     ("ad-unit", s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng"),
-    ("is-surging", isSurging)
+    ("is-surging", isSurging),
+    ("has-classic-version", hasClassicVersion)
   )
 
   def openGraph: Map[String, Any] = Map(

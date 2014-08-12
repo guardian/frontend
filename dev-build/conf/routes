@@ -134,8 +134,6 @@ GET         /football/match/:matchId                                            
 GET         /football/match-redirect/:year/:month/:day/:homeTeamId/:awayTeamId                                       football.controllers.MoreOnMatchController.redirectToMatch(year,month,day,homeTeamId,awayTeamId)
 GET         /football/match-redirect/:matchId                                                                        football.controllers.MoreOnMatchController.redirectToMatchId(matchId)
 
-GET         /football/world-cup-2014/r2-front-world-cup-embed                                                        football.controllers.WallchartController.renderR2FrontWorldCupEmbed()
-
 # Admin
 # authentication endpoints
 GET         /login                                                                                                   controllers.admin.OAuthLoginController.login
@@ -251,7 +249,7 @@ GET        /$path<.+>/all                                                       
 
 # Facia
 GET         /                                                                                                        controllers.FaciaController.editionRedirect(path = "")
-GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies)>           controllers.FaciaController.renderFrontPressSpecial(path)
+GET         /$path<(lifeandstyle/love-and-sex|lifeandstyle/home-and-garden|world/asia|business/companies|football)>           controllers.FaciaController.renderFrontPressSpecial(path)
 GET         /$path<(uk|au|us)(/(culture|sport|commentisfree|business|money|travel|rss))?>                            controllers.FaciaController.renderFrontPress(path)
 GET         /*path/lite.json                                                                                         controllers.FaciaController.renderFrontJsonLite(path)
 GET         /container/*id.json                                                                                      controllers.FaciaController.renderContainerJson(id)

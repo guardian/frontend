@@ -12,16 +12,16 @@ define([
         types: [
             {name: 'news', groups: ['standard', 'big', 'very big', 'huge']},
             {name: 'news/auto'},
+            {name: 'news/headline', groups: ['standard', 'big']},
             {name: 'news/most-popular'},
             {name: 'news/people'},
-            {name: 'news/special'},
-            {name: 'news/headline', groups: ['standard', 'big']},
             {name: 'news/small-list'},
+            {name: 'news/special'},
             {name: 'features'},
             {name: 'features/auto'},
-            {name: 'features/volumes', groups: ['standard', 'big', 'very big', 'huge']},
-            {name: 'features/picks', groups: ['standard', 'big']},
             {name: 'features/multimedia'},
+            {name: 'features/picks', groups: ['standard', 'big']},
+            {name: 'features/volumes', groups: ['standard', 'big', 'very big', 'huge']},
             {name: 'comment/comment-and-debate'}
         ],
 

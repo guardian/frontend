@@ -123,6 +123,43 @@
         color: $c-neutral2;
     }
 }
+
+.fromage__video-wrapper {
+    @include mq(tablet) {
+        float: left;
+        position: relative;
+        @include rem((
+            width: gs-span(3),
+            margin-left: (gs-span(3) + $gs-gutter) * -1
+        ));
+    }
+}
+
+.fromage__video-wrapper--boost {
+    @include mq(tablet) {
+        @include rem((
+            width: gs-span(4),
+            margin-left: (gs-span(4) + $gs-gutter) * -1
+        ));
+    }
+    @include mq(desktop) {
+        @include rem((
+            width: gs-span(6),
+            margin-left: (gs-span(6) + $gs-gutter) * -1
+        ));
+    }
+}
+
+.fromage__video-container .vjs-big-play-button > span {
+    @include mq(tablet) {
+        @include video-play-button-size($vjs-small-button-size);
+    }
+
+    @include mq(desktop) {
+        @include video-play-button-size($vjs-large-button-size);
+    }
+}
+
 .fromage__media-wrapper {
     @include mq(tablet) {
         float: left;

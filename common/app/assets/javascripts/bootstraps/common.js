@@ -196,14 +196,6 @@ define([
             });
         },
 
-        initAbTests: function (config) {
-            ab.segmentUser(config);
-        },
-
-        runAbTests: function (config, context) {
-            ab.run(config, context);
-        },
-
         initRightHandComponent: function(config) {
             if(config.page.contentType === 'Article' &&
                 detect.getBreakpoint() !== 'mobile' &&
@@ -271,7 +263,7 @@ define([
             // Do not show the release message on -sp- based paths.
             var spRegExp = new RegExp('.*-sp-.*');
 
-            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path) && config.page.contentType !== 'Video') {
+            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path) && config.page.contentType !== 'Video' && config.page.hasClassicVersion) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
                 releaseMessage.show(msg);
@@ -396,11 +388,9 @@ define([
         deferToLoadEvent(function() {
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
-                modules.initAbTests(config);
                 modules.logLiveStats(config);
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
-                modules.runAbTests(config, context);
                 modules.transcludePopular(config);
                 modules.transcludeRelated(config, context);
                 modules.transcludeOnwardContent(config, context);

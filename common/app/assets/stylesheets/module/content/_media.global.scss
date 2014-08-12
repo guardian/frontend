@@ -126,14 +126,15 @@
 
     @include mq(tablet, rightCol) {
         .content__meta-container {
-            float: right;
+            float: left;
             @include rem((
                 width: 404px, //Magic, as video items below are off grid at 33.3% width
-                margin-right: $gs-gutter
+                margin-right: $gs-gutter,
+                margin-bottom: $gs-baseline*2
             ));
         }
         .social-wrapper--bottom {
-            float: left;
+            float: right;
             @include rem((
                 width: 192px
             ));
@@ -230,17 +231,6 @@
                     width: 43px !important
                 ));
             }
-        }
-    }
-}
-
-//This is temporary until facia headings are consistent.
-.onward {
-    .container--multimedia {
-        .container__title {
-            @include rem((
-                font-size: get-font-size($fs-headers, 3)
-            ));
         }
     }
 }

@@ -12,7 +12,7 @@ object Redirects {
   private lazy val table = if (Play.isProd) "redirects" else "redirects-DEV"
 
   private lazy val client = {
-    val client = new AmazonDynamoDBClient(Configuration.aws.credentials)
+    val client = new AmazonDynamoDBClient(Configuration.aws.mandatoryCredentials)
     client.setEndpoint(AwsEndpoints.dynamoDb)
     client
   }
