@@ -9,8 +9,8 @@ define([
     removeById
 ) {
 
-    function alertBadContent(id, msg) {
-        window.alert(msg ? msg + '. ' + id : 'Sorry, but you can\'t add' + (id ? ': ' + id : ' that'));
+    function alertBadContent(msg) {
+        window.alert(msg ? msg : 'Sorry, but you can\'t add that item');
     }
 
     /* opts:
@@ -41,7 +41,7 @@ define([
         newItems = opts.newItemsConstructor(opts.sourceItem.id, opts.sourceItem, opts.targetGroup);
 
         if (!newItems[0]) {
-            alertBadContent(opts.sourceItem.id, null);
+            alertBadContent();
             return;
         }
 
@@ -50,7 +50,7 @@ define([
         opts.newItemsValidator(newItems)
         .fail(function(err) {
             _.each(newItems, function(item) { opts.targetGroup.items.remove(item); });
-            alertBadContent(opts.sourceItem.id, err);
+            alertBadContent(err);
         })
         .done(function() {
             if (opts.targetGroup.parent) {
