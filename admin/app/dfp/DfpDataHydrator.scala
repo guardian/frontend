@@ -140,16 +140,18 @@ object DfpDataHydrator extends Logging {
     session =>
 
       val statementBuilder = new StatementBuilder()
-        .where("parentId is not null and status = :status")
+        .where("status = :status")
         .withBindVariableValue("status", InventoryStatus._ACTIVE)
 
       val dfpAdUnits = DfpApiWrapper.fetchAdUnits(session, statementBuilder)
 
-      val descendantAdUnits = dfpAdUnits filter { adUnit =>
-        Option(adUnit.getParentPath) exists (path => path.length > 1 && path(1).getName == rootName)
+      val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
+        Option(adUnit.getParentPath) exists { path =>
+          (path.length == 1 && adUnit.getName == rootName) || (path.length > 1 && path(1).getName == rootName)
+        }
       }
 
-      descendantAdUnits.map { adUnit =>
+      rootAndDescendantAdUnits.map { adUnit =>
         val path = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
         (adUnit.getId, GuAdUnit(adUnit.getId, path))
       }.toMap
