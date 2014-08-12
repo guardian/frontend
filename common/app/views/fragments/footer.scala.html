@@ -5,13 +5,19 @@
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
     <div class="l-footer__primary">
         <div id="footer-nav" class="gs-container">
-                    <a href="@LinkTo{/}" data-link-name="site logo" class="guardian-logo-footer hide-on-mobile">
-                        <span class="u-h">The Guardian</span>
-                        <i class="i i-guardian-logo-160"></i>
-                    </a>
-
-                    <a class="top top--footer" data-link-name="back to top" href="#top">Back to top<i class="i i-arrow-small-up"></i></a>
             <div class="brand-bar u-cf">
+                <a href="@LinkTo{/}" data-link-name="site logo" class="guardian-logo-footer hide-on-mobile">
+                    <span class="u-h">The Guardian</span>
+                    <i class="i i-guardian-logo-160"></i>
+                </a>
+                <a class="brand-bar__item" data-link-name="back to top" href="#top">
+                    <span class="control__icon-wrapper">
+                        <span class="control__icon">
+                            <i class="i i-arrow-white-up-36"></i>
+                        </span>
+                    </span>
+                    <span class="control__info">back to top</span>
+                </a>
             </div>
             @if(showNav) {
                 <div class="l-footer__navigation-wrapper u-cf">
