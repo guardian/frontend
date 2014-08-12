@@ -172,11 +172,6 @@ object AdminMetrics {
 
 object FaciaMetrics {
 
-  object JsonParsingErrorCount extends CountMetric(
-    "json-parsing-error",
-    "Number of errors whilst parsing JSON out of S3"
-  )
-
   object FaciaToApplicationRedirectMetric extends CountMetric(
     "redirects-to-applications",
     "Number of requests to facia that have been redirected to Applications via X-Accel-Redirect"
