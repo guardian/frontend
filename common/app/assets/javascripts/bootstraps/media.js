@@ -335,9 +335,9 @@ define([
 
                                 // Init plugins
                                 if (config.switches.videoAdverts && !config.page.blockVideoAds) {
-                                    player.trigger(constructEventName('preroll:request', player));
                                     modules.bindPrerollEvents(player);
                                     player.adCountDown();
+                                    player.trigger(constructEventName('preroll:request', player));
                                     player.ads({
                                         timeout: 3000
                                     });
