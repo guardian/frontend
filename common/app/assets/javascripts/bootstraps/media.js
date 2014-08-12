@@ -41,6 +41,7 @@ define([
         QUARTILES = [25, 50, 75],
         // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [
+            'preroll:request',
             'preroll:ready',
             'preroll:play',
             'preroll:end',
@@ -334,6 +335,8 @@ define([
 
                                 // Init plugins
                                 if (config.switches.videoAdverts && !config.page.blockVideoAds) {
+                                    player.trigger(constructEventName('preroll:request', player));
+                                    modules.bindPrerollEvents(player);
                                     player.adCountDown();
                                     player.ads({
                                         timeout: 3000
@@ -342,7 +345,6 @@ define([
                                         url: modules.getVastUrl(),
                                         vidFormats: ['video/mp4', 'video/webm', 'video/ogv', 'video/x-flv']
                                     });
-                                    modules.bindPrerollEvents(player);
                                 } else {
                                     modules.bindContentEvents(player);
                                 }
