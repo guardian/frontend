@@ -1,13 +1,13 @@
 @mixin deport-left {
     @include mq(leftCol) {
         @include rem((
-            margin-left: -1 * (gs-span(2) + $gs-gutter)
+            margin-left: -1 * ($left-column + $gs-gutter)
         ));
     }
 
     @include mq(wide) {
         @include rem((
-            margin-left: -1 * (gs-span(3) + $gs-gutter)
+            margin-left: -1 * ($left-column-wide + $gs-gutter)
         ));
     }
 }
@@ -15,13 +15,13 @@
 @mixin reduce-left {
     @include mq(leftCol) {
         @include rem((
-            width: gs-span(2)
+            width: $left-column
         ));
     }
 
     @include mq(wide) {
         @include rem((
-            width: gs-span(3)
+            width: $left-column-wide
         ));
     }
 }

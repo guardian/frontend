@@ -272,7 +272,8 @@ define([
                 section     = encodeTargetValue(page.section),
                 series      = encodeTargetValue(page.series),
                 contentType = encodeTargetValue(page.contentType),
-                edition     = encodeTargetValue(page.edition);
+                edition     = encodeTargetValue(page.edition),
+                mediaSource = encodeTargetValue(page.source);
 
             return defaults({
                 url     : window.location.pathname,
@@ -289,7 +290,9 @@ define([
                 at      : cookies.get('adtest') || cookies.get('GU_TEST') || '',
                 gdncrm  : userAdTargeting.getUserSegments(),
                 ab      : abParam(),
-                co      : parseContributors(page.author)
+                co      : parseContributors(page.author),
+                bl      : parseKeywords(page.blogIds),
+                ms      : mediaSource
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         createAdSlot = function(name, types, keywords) {

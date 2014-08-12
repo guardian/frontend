@@ -276,16 +276,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val WorldCupWallchartEmbedSwitch = Switch("Feature Switches", "worldcup-wallchart-embed",
-    "If this switch is turned on JavaScript will load. It will be removed after the new Premier League session starts.",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
-  )
-
-  val WorldCupArticleContainerSwitch = Switch("Feature Switches", "worldcup-article-container",
-    "If this switch is turned on world cup articles will have an extra container.",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
-  )
-
   val SentimentalCommentsSwitch = Switch("Feature Switches", "sentimental-comments",
     "When this switch is on, you will be able to put sentiment into your comments.",
     safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
@@ -306,11 +296,6 @@ object Switches extends Collections {
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
-  )
-
-  val ABRightMostPopularText = Switch("A/B Tests", "ab-right-most-popular-text",
-    "If this switch is turned on, run the RightMostPopularText A/B test",
-   safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
   )
 
   val ABNewsContainerNoImages = Switch("A/B Tests", "ab-news-container-no-images",
@@ -424,12 +409,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 9, 30)
   )
 
-  // google crawler switches
-  val SeoBlockGooglebotFromJSPathsSwitch = Switch("Feature Switches", "seo-block-googlebot-js-paths",
-    "If switched on, relative paths in JS files become concatenated string segments to stop googlebot following them",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 29)
-  )
-
   val CenturyRedirectionSwitch = Switch("Feature Switches", "redirect-century-pages",
     "If switched on, we redirect /century and /century/yyyy-yyyy to valid (non-R1) endpoints",
     safeState = Off,
@@ -440,7 +419,7 @@ object Switches extends Collections {
 
   val ChildrensBooksSwitch = Switch("Feature Switches", "childrens-books-hide-popular",
     "If switched on, video pages in the childrens books section will not show popular videos",
-    safeState = On, sellByDate = new LocalDate(2014, 8, 12)
+    safeState = On, sellByDate = new LocalDate(2014, 9, 8)
   )
 
   val all: List[Switch] = List(
@@ -495,8 +474,6 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     FaciaToolContainerTagsSwitch,
     EnhanceTweetsSwitch,
-    WorldCupWallchartEmbedSwitch,
-    WorldCupArticleContainerSwitch,
     SentimentalCommentsSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
@@ -511,10 +488,8 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
-    SeoBlockGooglebotFromJSPathsSwitch,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
-    ABRightMostPopularText,
     ABNewsContainerNoImages,
     CenturyRedirectionSwitch,
     ChildrensBooksSwitch

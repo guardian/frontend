@@ -219,13 +219,13 @@ $c-money-high: #63007f;
     @include mq(faciaLeftCol) {
         .commercial__head {
             @include rem((
-                width: gs-span(2) + $gs-gutter
+                width: $left-column + $gs-gutter
             ));
         }
         .tabs__container,
         .commercial__body {
             @include rem((
-                margin-left: gs-span(2) + $gs-gutter
+                margin-left: $left-column + $gs-gutter
             ));
             padding-left: 0;
         }
@@ -247,7 +247,7 @@ $c-money-high: #63007f;
         .tabs__container,
         .commercial__body {
             @include rem((
-                margin-left: gs-span(3) + $gs-gutter
+                margin-left: $left-column-wide + $gs-gutter
             ));
             padding-left: 0;
         }

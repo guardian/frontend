@@ -57,6 +57,10 @@ define([
 
         model.front = ko.observable();
 
+        model.headlineLength = ko.computed(function() {
+            return _.contains(vars.CONST.restrictHeadlinesOn, model.front()) ? vars.CONST.restrictedHeadlineLength : vars.CONST.headlineLength;
+        }, this);
+
         model.title = ko.computed(function() {
             return model.front() || (pageConfig.priority + ' fronts');
         }, this);

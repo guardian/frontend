@@ -1,8 +1,5 @@
 package conf
 
-import common.Metrics
-import play.api.{Mode, Play}
-
 object HealthCheck extends AnyGoodHealthcheckController(
   9005,
   "/commercial/soulmates/mixed.json",

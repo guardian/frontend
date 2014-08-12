@@ -80,13 +80,13 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
     override def GET(urlString: String): Future[pa.Response] = {
         val start = System.currentTimeMillis()
         val promiseOfResponse = WS.url(urlString).withRequestTimeout(2000).get()
-        promiseOfResponse.onComplete( r => PaApiHttpTimingMetric.recordTimeSpent(System.currentTimeMillis() - start))
+        promiseOfResponse.onComplete( r => PaApiHttpTimingMetric.recordDuration(System.currentTimeMillis() - start))
 
         promiseOfResponse.map{ r =>
 
           r.status match {
-            case 200 => PaApiHttpOkMetric.recordCount(1)
-            case _ => PaApiHttpErrorMetric.recordCount(1)
+            case 200 => PaApiHttpOkMetric.increment()
+            case _ => PaApiHttpErrorMetric.increment()
           }
 
           //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
