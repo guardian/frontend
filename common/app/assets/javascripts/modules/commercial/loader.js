@@ -5,6 +5,7 @@
 define([
     'bonzo',
     'common/utils/$',
+    'common/utils/config',
     'common/utils/mediator',
     'common/utils/storage',
     'common/modules/lazyload',
@@ -14,6 +15,7 @@ define([
 ], function (
     bonzo,
     $,
+    config,
     mediator,
     storage,
     LazyLoad,
@@ -39,17 +41,16 @@ define([
      * @param {Object=} options
      */
     var Loader = function(options) {
-        var conf = options.config.page || {};
+        var page = (options.config && options.config.page) || config.page || {};
 
-        this.pageId             = conf.pageId;
-        this.keywordIds         = conf.keywordIds || '';
-        this.section            = conf.section;
-        this.host               = conf.ajaxUrl + '/commercial/';
-        this.desktopUserVariant = conf.ab_commercialInArticleDesktop || '';
-        this.mobileUserVariant  = conf.ab_commercialInArticleMobile || '';
-        this.isbn               = conf.isbn || '';
+        this.pageId             = page.pageId;
+        this.keywordIds         = page.keywordIds || '';
+        this.section            = page.section;
+        this.host               = page.ajaxUrl + '/commercial/';
+        this.isbn               = page.isbn || '';
         this.oastoken           = options.oastoken || '';
         this.adType             = options.adType || 'desktop';
+        this.multiComponents    = (options.components || []).map(function(c) { return 'c=' + c; }).join('&');
         this.components         = {
             bestbuy:           this.host + 'money/bestbuys.json',
             bestbuyHigh:       this.host + 'money/bestbuys-high.json',
@@ -64,13 +65,14 @@ define([
             soulmates:         this.host + 'soulmates/mixed.json',
             soulmatesHigh:     this.host + 'soulmates/mixed-high.json',
             travel:            this.host + 'travel/offers.json?'            + 's=' + this.section + '&' + this.getKeywords(),
-            travelHigh:        this.host + 'travel/offers-high.json?'       + 's=' + this.section + '&' + this.getKeywords()
+            travelHigh:        this.host + 'travel/offers-high.json?'       + 's=' + this.section + '&' + this.getKeywords(),
+            multi:             this.host + 'multi.json?'                    + this.multiComponents
         };
         this.postLoadEvents = {
             books: function(el) {
                 bean.on(el, 'click', '.commercial__search__submit', function() {
                     var str = 'merchandising-bookshop-v0_7_2014-03-12-low-'+ el.querySelector('.commercial__search__input').value,
-                        val = (conf.contentType) ? conf.contentType + ':' + str : str;
+                        val = (page.contentType) ? page.contentType + ':' + str : str;
 
                     s.linkTrackVars = 'prop22,eVar22,eVar37,events';
                     s.linkTrackEvents = 'event7,event37';

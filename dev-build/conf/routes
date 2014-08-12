@@ -235,6 +235,7 @@ GET         /commercial/capi.json                                               
 GET         /commercial/capi                                                                                         controllers.commercial.ContentApiOffers.itemsHtml
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
+GET         /commercial/multi.json                                                                                   controllers.commercial.Multi.renderMulti
 
 # Onward journeys
 GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)
