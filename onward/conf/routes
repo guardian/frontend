@@ -7,6 +7,8 @@ GET        /assets/*path                              dev.DevAssetsController.at
 
 GET        /_healthcheck                              conf.HealthCheck.healthcheck()
 
+GET        /nav.json                                  controllers.NavigationController.nav()
+
 # Onward public endpoints
 GET        /most-read.json                            controllers.MostPopularController.render(path = "")
 GET        /most-read/*path.json                      controllers.MostPopularController.render(path)

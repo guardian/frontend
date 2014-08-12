@@ -123,7 +123,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val description: Option[String] = trailText
   override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
   override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
-  override def isSurging: Boolean = SurgingContentAgent.isSurging(id)
+  override def isSurging: Int = SurgingContentAgent.getSurgingLevelFor(id)
 
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
@@ -138,6 +138,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("author", contributors.map(_.name).mkString(",")),
       ("tones", tones.map(_.name).mkString(",")),
       ("blogs", blogs.map { _.name }.mkString(",")),
+      ("blogIds", blogs.map { _.id.split("/").last }.mkString(",")),
       ("commentable", isCommentable),
       ("has-story-package", fields.get("hasStoryPackage").exists(_.toBoolean)),
       ("page-code", fields("internalPageCode")),

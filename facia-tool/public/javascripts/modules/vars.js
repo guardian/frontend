@@ -28,6 +28,17 @@ define([
             {name: 'comment/comment-and-debate'}
         ],
 
+        headlineLength: 200,
+        restrictedHeadlineLength: 90,
+
+        restrictHeadlinesOn: [
+            'breaking-news'
+        ],
+
+        restrictedLiveMode: [
+            'breaking-news'
+        ],
+
         detectPressFailureMs: 10000,
 
         maxFronts: 200,
