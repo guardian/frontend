@@ -138,6 +138,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("author", contributors.map(_.name).mkString(",")),
       ("tones", tones.map(_.name).mkString(",")),
       ("blogs", blogs.map { _.name }.mkString(",")),
+      ("blogIds", blogs.map { _.id.split("/").last }.mkString(",")),
       ("commentable", isCommentable),
       ("has-story-package", fields.get("hasStoryPackage").exists(_.toBoolean)),
       ("page-code", fields("internalPageCode")),

@@ -15,13 +15,13 @@ to apply any necessary changes to non-shared code there too.
                 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
                     <div class="top-bar__item top-bar__item--profile has-nav-popup top-bar__item--has-control js-profile-nav" data-component="identity-profile">
                         <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
-                           class="top-bar__item--action nav-popup__toggle">
+                           class="top-bar__item--action nav-popup__toggle" data-test-id="sign-in-link">
                             <span class="control__icon-wrapper">
                                 <span class="control__icon">
                                     <i class="i i-profile-white-36"></i>
                                 </span>
                             </span>
-                            <span class="js-profile-info control__info">sign in</span>
+                            <span class="js-profile-info control__info" data-test-id="sign-in-name">sign in</span>
                         </a>
                         <div class="js-profile-nav-popup"></div>
                     </div>

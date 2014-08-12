@@ -15,7 +15,8 @@ define([
     'bonzo',
     'common/modules/component',
     'common/modules/analytics/beacon',
-    'common/modules/ui/message'
+    'common/modules/ui/message',
+    'raven'
 ], function(
     $,
     ajax,
@@ -32,7 +33,8 @@ define([
     bonzo,
     Component,
     beacon,
-    Message
+    Message,
+    raven
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint()),
@@ -179,6 +181,30 @@ define([
             events.ready();
         },
 
+        beaconError: function(err) {
+            if(err && 'message' in err) {
+                raven.captureException(new Error(err.message), {
+                    tags: {
+                        feature: 'player',
+                        code: err.code
+                    }
+                });
+            }
+        },
+
+        handleInitialMediaError: function(player) {
+            var err = player.error();
+            if(err !== null) {
+                modules.beaconError(err);
+            }
+        },
+
+        bindErrorHandler: function(player) {
+            player.on('error', function(e){
+                modules.beaconError(e);
+            });
+        },
+
         getVastUrl: function() {
             var adUnit = config.page.adUnit,
                 custParams = urlUtils.constructQuery(dfp.buildPageTargeting({ page: config.page })),
@@ -260,9 +286,13 @@ define([
                             preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
                         });
 
+                    //Location of this is important
+                    modules.handleInitialMediaError(vjs);
+
                     vjs.ready(function () {
                         var player = this;
 
+                        modules.bindErrorHandler(player);
                         modules.initLoadingSpinner(player);
 
                         // unglitching the volume on first load
@@ -286,7 +316,7 @@ define([
                                 player.fullscreener();
 
                                 // Init plugins
-                                if (config.switches.videoAdverts && !config.page.shouldHideAdverts) {
+                                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
                                     player.adCountDown();
                                     player.ads({
                                         timeout: 3000

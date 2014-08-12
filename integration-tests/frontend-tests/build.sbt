@@ -1,4 +1,4 @@
-name := "fronts-integration-tests"
+name := "frontend-tests"
 
 version := "0.1.0-SNAPSHOT"
 
