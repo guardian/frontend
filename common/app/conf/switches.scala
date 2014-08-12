@@ -276,11 +276,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val WorldCupWallchartEmbedSwitch = Switch("Feature Switches", "worldcup-wallchart-embed",
-    "If this switch is turned on JavaScript will load. It will be removed after the new Premier League session starts.",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 13)
-  )
-
   val SentimentalCommentsSwitch = Switch("Feature Switches", "sentimental-comments",
     "When this switch is on, you will be able to put sentiment into your comments.",
     safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
@@ -485,7 +480,6 @@ object Switches extends Collections {
     FrontPressJobSwitch,
     FaciaToolContainerTagsSwitch,
     EnhanceTweetsSwitch,
-    WorldCupWallchartEmbedSwitch,
     SentimentalCommentsSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
