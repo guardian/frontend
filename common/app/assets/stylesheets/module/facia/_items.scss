@@ -48,6 +48,7 @@
 
     @include mq(tablet) {
         min-height: 0;
+        padding-right: 0;
         @include rem((
             padding-top: $gs-baseline/2,
             margin-bottom: $gs-baseline

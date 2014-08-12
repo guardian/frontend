@@ -24,17 +24,24 @@ object SurgingContentAgent extends Logging with ExecutionContexts {
     }
   }
 
-  def isSurging(id: String): Boolean = {
-    agent.get().contains(id)
-  }
-
   def getSurging= {
     agent.get()
   }
 
+  def getSurgingLevelFor(id: String): Int = SurgeUtils.levelProvider(agent.get().get(id))
 }
 
 object SurgeUtils {
+  def levelProvider(surgeLevel: Option[Int]) = {
+    surgeLevel match {
+      case Some(x) if x >= 400 => 1
+      case Some(x) if x >= 300 => 2
+      case Some(x) if x >= 200 => 3
+      case Some(x) if x >= 100 => 4
+      case _ => 0
+    }
+  }
+
   def parse(json: JsValue) = {
     for {
       item: JsValue <- json.asOpt[JsArray].map(_.value).getOrElse(Nil)

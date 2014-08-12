@@ -26,6 +26,9 @@ object DfpApiWrapper extends Logging {
   private def suggestedAdUnitService(session: DfpSession): SuggestedAdUnitServiceInterface =
     dfpServices.get(session, classOf[SuggestedAdUnitServiceInterface])
 
+  private def placementService(session: DfpSession): PlacementServiceInterface =
+    dfpServices.get(session, classOf[PlacementServiceInterface])
+
   case class Page[T](rawResults: Array[T], totalResultSetSize: Int) {
     def results: Seq[T] = Option(rawResults) map (_.toSeq) getOrElse Nil
   }
@@ -113,6 +116,14 @@ object DfpApiWrapper extends Logging {
     fetch(statementBuilder) { statement =>
       val service = suggestedAdUnitService(session)
       val page = service.getSuggestedAdUnitsByStatement(statementBuilder.toStatement)
+      Page(page.getResults, page.getTotalResultSetSize)
+    }
+  }
+
+  def fetchPlacements(session: DfpSession, statementBuilder: StatementBuilder): Seq[Placement] = {
+    fetch(statementBuilder) { statement =>
+      val service = placementService(session)
+      val page = service.getPlacementsByStatement(statementBuilder.toStatement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
