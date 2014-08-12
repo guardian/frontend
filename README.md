@@ -45,8 +45,9 @@ can get its contents from a shared document. Ask your team mates to share it
 with you. If it has already been shared with you just search for
 "frontend.properties" in your documents.
 
-The third file is called `[YOUR_HOME_DIR]/.aws/credentials` and contains:
+The third file called `[YOUR_HOME_DIR]/.aws/credentials` is required to render Fronts and contains:
 ```
+[nextgen]
 aws_access_key_id=[YOUR_AWS_ACCESS_KEY]
 aws_secret_access_key=[YOUR_AWS_SECRET_ACCESS_KEY]
 region=eu-west-1
