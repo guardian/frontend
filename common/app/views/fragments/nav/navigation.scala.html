@@ -21,7 +21,9 @@
                                 @if(Navigation.localLinks(navigation, metaData).nonEmpty) {
                                     <ul class="local-navigation">
                                         @Navigation.rotatedLocalNav(topSection, metaData).map{ link =>
-                                            <li class="local-navigation__item"><a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : secondary : @link.title">@Html(link.title)</a></li>
+                                            <li class="local-navigation__item">
+                                                <a class="local-navigation__action" href="@LinkTo(link.href)" data-link-name="nav : secondary : @link.title">@Html(link.title)</a>
+                                            </li>
                                         }
                                     </ul>
                                 }
