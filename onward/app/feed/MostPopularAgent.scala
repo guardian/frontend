@@ -37,7 +37,7 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
 
   // These are the only country codes passed to us from the fastly service. This allows us
   // to choose carefully the codes that give us the most impact. The trade-off is caching.
-  private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "ROW")
+  private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG")
 
   def mostPopular(country: String): Seq[Content] = ophanPopularAgent().get(country).getOrElse(Nil)
 
