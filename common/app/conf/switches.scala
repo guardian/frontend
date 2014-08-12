@@ -278,7 +278,7 @@ object Switches extends Collections {
 
   val WorldCupWallchartEmbedSwitch = Switch("Feature Switches", "worldcup-wallchart-embed",
     "If this switch is turned on JavaScript will load. It will be removed after the new Premier League session starts.",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 12)
+    safeState = Off, sellByDate = new LocalDate(2014, 8, 13)
   )
 
   val SentimentalCommentsSwitch = Switch("Feature Switches", "sentimental-comments",
