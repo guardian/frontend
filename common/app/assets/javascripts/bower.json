@@ -14,7 +14,7 @@
     "reqwest": "~1.1.0",
     "domready": "~1.0.4",
     "enhancer": "0.1.1",
-    "videojs": "git://github.com/guardian/video.js.git#59d4443682bd578e03c3925ed40a623c466476c6",
+    "videojs": "git://github.com/guardian/video.js.git#fabb393da9e139f6869bc0fdb95074d7ca062aa8",
     "videojs-contrib-ads": "guardian/videojs-contrib-ads#798b8a93cb293a95ede9af385c2354aa2c129216",
     "videojs-vast": "guardian/videojs-vast-plugin#14432837c5f454b69659e60d4c65b4203fa13de8",
     "videojs-persistvolume": "~0.1.0",
@@ -23,7 +23,7 @@
     "videojs-playlist-audio": "*"
   },
   "resolutions": {
-    "videojs": "59d4443682bd578e03c3925ed40a623c466476c6",
+    "videojs": "fabb393da9e139f6869bc0fdb95074d7ca062aa8",
     "videojs-contrib-ads": "798b8a93cb293a95ede9af385c2354aa2c129216"
   },
   "install": {

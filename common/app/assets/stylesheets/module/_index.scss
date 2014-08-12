@@ -14,18 +14,18 @@
     @include mq(tablet) {
         margin: auto;
         @include rem((
-            max-width: 620px
+            max-width: gs-span(8)
         ));
     }
 
     @include mq(leftCol) {
         @include rem((
-            margin-left: gs-span(2) + $gs-gutter
+            margin-left: $left-column + $gs-gutter
         ));
     }
     @include mq(wide) {
         @include rem((
-            margin-left: gs-span(3) + $gs-gutter
+            margin-left: $left-column-wide + $gs-gutter
         ));
     }
 }
@@ -77,19 +77,14 @@
     @include mq(leftCol) {
         float: left;
         @include rem((
-            margin-left: -(gs-span(2) + $gs-gutter),
-            width: gs-span(2)
+            margin-left: -($left-column + $gs-gutter),
+            width: $left-column
         ));
     }
     @include mq(wide) {
         @include rem((
-            margin-left: -(gs-span(3) + $gs-gutter),
-            width: gs-span(3)
-        ));
-    }
-    @include mq(leftCol, wide) {
-        @include rem((
-            width: gs-span(2)
+            margin-left: -($left-column-wide + $gs-gutter),
+            width: $left-column-wide
         ));
     }
 }
