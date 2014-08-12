@@ -355,15 +355,12 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
       )
     )}
 
-  def latencyMetrics: List[FrontendMetric] = Nil
-
   private def report() {
     val systemMetrics  = this.systemMetrics
     val applicationMetrics  = this.applicationMetrics
     if (!Configuration.environment.isNonProd || Switches.MetricsSwitch.isSwitchedOn) {
       CloudWatch.putSystemMetricsWithStage(systemMetrics, applicationDimension)
       CloudWatch.putMetricsWithStage(applicationMetrics, applicationDimension)
-      CloudWatch.putMetricsWithStage(latencyMetrics, applicationDimension)
     }
   }
 
