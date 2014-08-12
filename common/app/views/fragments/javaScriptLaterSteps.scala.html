@@ -127,6 +127,7 @@
                 'http://' + config.page.sentryPublicApiKey + '@@' + config.page.sentryHost,
                 {
                     whitelistUrls: [
+                        'localhost',
                         /assets\.guim\.co\.uk/,
                         /ophan\.co\.uk/,
                     ],
@@ -134,6 +135,9 @@
                         edition: config.page.edition,
                         contentType: config.page.contentType,
                         buildNumber: config.page.buildNumber
+                    },
+                    dataCallback: function(data) {
+                        data.tags.origin = (/j.ophan.co.uk/.test(data.culprit)) ? 'ophan' : 'app';
                     },
                     shouldSendCallback: function(data) {
                         return Math.random() < 0.4 && guardian.config.switches.enableDiagnosticsLogging;
