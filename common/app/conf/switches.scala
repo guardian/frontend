@@ -409,12 +409,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 9, 30)
   )
 
-  // google crawler switches
-  val SeoBlockGooglebotFromJSPathsSwitch = Switch("Feature Switches", "seo-block-googlebot-js-paths",
-    "If switched on, relative paths in JS files become concatenated string segments to stop googlebot following them",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 29)
-  )
-
   val CenturyRedirectionSwitch = Switch("Feature Switches", "redirect-century-pages",
     "If switched on, we redirect /century and /century/yyyy-yyyy to valid (non-R1) endpoints",
     safeState = Off,
@@ -494,7 +488,6 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
-    SeoBlockGooglebotFromJSPathsSwitch,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
     ABNewsContainerNoImages,
