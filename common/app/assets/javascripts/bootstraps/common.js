@@ -14,6 +14,7 @@ define([
     'qwery',
     'enhancer',
     'lodash/functions/debounce',
+    'fastclick',
     //Modules
     'common/utils/storage',
     'common/utils/detect',
@@ -61,6 +62,7 @@ define([
     qwery,
     enhancer,
     debounce,
+    FastClick,
 
     storage,
     detect,
@@ -71,7 +73,6 @@ define([
     Profile,
     Search,
     Navigation,
-
     Tabs,
     Toggles,
     Dropdowns,
@@ -99,6 +100,10 @@ define([
 ) {
 
     var modules = {
+
+        initFastClick: function() {
+            new FastClick(document.body);
+        },
 
         upgradeImages: function () {
             images.upgrade();
@@ -403,6 +408,7 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
             modules.checkIframe();

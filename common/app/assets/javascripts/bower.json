@@ -19,7 +19,8 @@
     "videojs-persistvolume": "~0.1.0",
     "socket.io-client": "1.0.6",
     "raven-js": "~1.1.16",
-    "videojs-playlist-audio": "*"
+    "videojs-playlist-audio": "*",
+    "fastclick": "~1.0.3"
   },
   "resolutions": {
     "videojs": "fabb393da9e139f6869bc0fdb95074d7ca062aa8",
