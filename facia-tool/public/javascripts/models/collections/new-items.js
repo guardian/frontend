@@ -16,6 +16,9 @@ define([
     deepGet,
     removeById
 ) {
+    var maxChars = vars.CONST.restrictedHeadlineLength || 90,
+        restrictHeadlinesOn = vars.CONST.restrictHeadlinesOn || [],
+        restrictedLiveMode = vars.CONST.restrictedLiveMode || [];
 
     function newItemsConstructor(id, sourceItem, targetGroup) {
         var items = [_.extend(_.isObject(sourceItem) ? sourceItem : {}, { id: id })];
@@ -34,7 +37,33 @@ define([
     }
 
     function newItemsValidator(newItems) {
-        return contentApi.validateItem(newItems[0]);
+        var defer = $.Deferred();
+
+        contentApi.validateItem(newItems[0])
+        .fail(function(err) {
+            defer.reject(err);
+        })
+        .done(function(item) {
+            var front = vars.model.front(),
+                err;
+
+            if(item.group.parentType === 'Collection') {
+                if (restrictHeadlinesOn.indexOf(front) > -1 && (item.meta.headline() || item.fields.headline()).length > maxChars) {
+                    err = 'Sorry, a ' + front + ' headline must be ' + maxChars + ' characters or less. Edit it first within the clipboard.';
+                }
+                if (restrictedLiveMode.indexOf(front) > -1 && vars.model.liveMode()) {
+                    err = 'Sorry, ' + front + ' items cannot be added in Live Front mode. Switch to Draft Front then try again.';
+                }
+            }
+
+            if (err) {
+                defer.reject(err);
+            } else {
+                defer.resolve(item);
+            }
+        });
+
+        return defer.promise();
     }
 
     function newItemsPersister(newItems, sourceGroup, targetGroup, position, isAfter) {

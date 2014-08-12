@@ -130,13 +130,13 @@
             clear: left;
             width: 50%;
             @include rem((
-                margin-left: -(gs-span(2) + $gs-gutter),
+                margin-left: -($left-column + $gs-gutter),
                 padding-right: $gs-gutter
             ));
         }
         @include mq(wide) {
             @include rem((
-                margin-left: -(gs-span(3) + $gs-gutter)
+                margin-left: -($left-column-wide + $gs-gutter)
             ));
         }
     }

@@ -27,16 +27,16 @@ function (
 
         if (snapId) {
             item.id(snapId);
-            defer.resolve();
+            defer.resolve(item);
 
         } else if (item.meta.snapType()) {
             item.convertToSnap();
-            defer.resolve();
+            defer.resolve(item);
 
         } else if (data) {
             item.id(capiId);
             populate(item, data);
-            defer.resolve();
+            defer.resolve(item);
 
         } else {
             fetchContentById(capiId)
@@ -79,7 +79,11 @@ function (
                     item.convertToSnap();
                 }
 
-                defer[err ? 'reject' : 'resolve'](err);
+                if (err) {
+                    defer.reject(err);
+                } else {
+                    defer.resolve(item);
+                }
             });
         }
 
