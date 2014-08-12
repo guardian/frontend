@@ -17,6 +17,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-csdevmode": "0.1.2",
     "grunt-css-metrics": "~0.1.1",
+    "grunt-hologram": "0.0.4",
     "grunt-karma": "^0.8.3",
     "grunt-mkdir": "~0.1.1",
     "grunt-pagespeed": "^0.2.0",

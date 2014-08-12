@@ -43,6 +43,23 @@ module.exports = function (grunt) {
                     noCache: true,
                     quiet: (isDev) ? false : true
                 }
+            },
+            compileStyleguide: {
+                files: [{
+                    expand: true,
+                    cwd: 'docs/styleguide/assets/scss/',
+                    src: ['*.scss', '!_*'],
+                    dest: 'docs/styleguide/assets/css/',
+                    rename: function(dest, src) {
+                        return dest + src.replace('scss', 'css');
+                    }
+                }],
+                options: {
+                    style: 'compressed',
+                    sourcemap: true,
+                    noCache: true,
+                    quiet: (isDev) ? false : true
+                }
             }
         },
 
@@ -810,6 +827,17 @@ module.exports = function (grunt) {
         },
 
         /*
+         * Documentation (builds syleguide)
+         */
+        hologram: {
+            generate: {
+                options: {
+                    config: 'hologram_config.yml'
+                }
+            }
+        },
+
+        /*
          * Miscellaneous
          */
         mkdir: {
@@ -843,7 +871,7 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['common/app/assets/stylesheets/**/*.scss'],
-                tasks: ['compile:css', 'asset_hash'],
+                tasks: ['sass:compile', 'asset_hash'],
                 options: {
                     spawn: false
                 }
@@ -859,6 +887,13 @@ module.exports = function (grunt) {
             fonts: {
                 files: ['resources/fonts/**/*'],
                 tasks: ['compile:fonts']
+            },
+            styleguide: {
+                files: ['common/app/assets/stylesheets/**/*.scss', 'docs/styleguide/**/*.scss', 'docs/styleguide_templates/**/*.html'],
+                tasks: ['compile:css', 'hologram'],
+                options: {
+                    spawn: false
+                }
             }
         },
 
@@ -904,6 +939,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-text-replace');
     grunt.loadNpmTasks('grunt-pagespeed');
     grunt.loadNpmTasks('grunt-csdevmode');
+    grunt.loadNpmTasks('grunt-hologram');
 
     // Default task
     grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
@@ -911,7 +947,7 @@ module.exports = function (grunt) {
     /**
      * Validate tasks
      */
-    grunt.registerTask('validate:css', ['compile:images', 'sass:compile']);
+    grunt.registerTask('validate:css', ['compile:images', 'sass:compile', 'sass:compileStyleguide']);
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
         var target = (app) ? ':' + app : '';
@@ -927,6 +963,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', function() {
         grunt.task.run('sass:compile');
+        grunt.task.run('sass:compileStyleguide');
         if (isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
