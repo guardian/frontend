@@ -1,8 +1,8 @@
 .facia-container__related-keywords {
-    margin: $gs-baseline $gs-gutter;
-
+    @include rem((
+        margin: $gs-baseline $gs-gutter
+    ));
     @include facia-container__inner--layout-front;
-
     @include fs-data(4);
 }
 
