@@ -22,6 +22,7 @@ define([
             {name: 'features/multimedia'},
             {name: 'features/cassoulet'},
             {name: 'features/quichelorraine'},
+            {name: 'features/raclette'},
             {name: 'features/picks', groups: ['standard', 'big']},
             {name: 'features/volumes', groups: ['standard', 'big', 'very big', 'huge']},
             {name: 'comment/comment-and-debate'}
