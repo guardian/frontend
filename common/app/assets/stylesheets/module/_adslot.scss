@@ -91,14 +91,14 @@
     @include mq(faciaLeftCol) {
         margin: 0 auto;
         @include rem((
-            width: gs-span(14) - (gs-span(2) + $gs-gutter),
-            padding-left: gs-span(2) + $gs-gutter
+            width: gs-span(14) - ($left-column + $gs-gutter),
+            padding-left: $left-column + $gs-gutter
         ));
     }
     @include mq(wide) {
         @include rem((
-            width: gs-span(16) - (gs-span(3) + $gs-gutter),
-            padding-left: gs-span(3) + $gs-gutter
+            width: gs-span(16) - ($left-column-wide + $gs-gutter),
+            padding-left: $left-column-wide + $gs-gutter
         ));
     }
     @include mq(tablet, faciaLeftCol) {
@@ -120,14 +120,14 @@
     @include mq(leftCol) {
         margin: 0 auto;
         @include rem((
-            max-width: gs-span(14) + ($gs-gutter*2) - (gs-span(2) + ($gs-gutter*2)),
-            padding-left: gs-span(2) + ($gs-gutter*2)
+            max-width: gs-span(14) + ($gs-gutter*2) - ($left-column + ($gs-gutter*2)),
+            padding-left: $left-column + ($gs-gutter*2)
         ));
     }
     @include mq(wide) {
         @include rem((
-            max-width: gs-span(16) + ($gs-gutter*2) - (gs-span(3) + ($gs-gutter*2)),
-            padding-left: gs-span(3) + ($gs-gutter*2)
+            max-width: gs-span(16) + ($gs-gutter*2) - ($left-column-wide + ($gs-gutter*2)),
+            padding-left: $left-column-wide + ($gs-gutter*2)
         ));
     }
     @include mq(tablet, rightCol) {

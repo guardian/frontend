@@ -66,7 +66,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     }
 
     Store.putSwitches(updates mkString "\n")
-    SwitchesUpdateCounter.recordCount(1)
+    SwitchesUpdateCounter.increment()
 
     log.info("switches successfully updated")
 
@@ -79,7 +79,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     Redirect(routes.SwitchboardController.renderSwitchboard())
   } catch { case e: Throwable =>
     log.error("exception saving switches", e)
-    SwitchesUpdateErrorCounter.recordCount(1)
+    SwitchesUpdateErrorCounter.increment()
 
     Redirect(routes.SwitchboardController.renderSwitchboard()).flashing(
       "error" -> ("Error saving switches '%s'" format e.getMessage)

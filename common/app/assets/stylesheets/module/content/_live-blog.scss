@@ -49,7 +49,7 @@ $block-padding-right: $gs-gutter;
     @include mq(rightCol) {
         @include rem((
             max-width: gs-span(8),
-            margin-left: $a-rightCol-width + $gs-gutter,
+            margin-left: $right-column + $gs-gutter,
             margin-right: 0
         ));
         max-width: none;
@@ -139,7 +139,7 @@ $block-padding-right: $gs-gutter;
     @include mq(rightCol) {
         float: left;
         @include rem((
-            margin-left: -($a-rightCol-width + $gs-gutter)
+            margin-left: -($right-column + $gs-gutter)
         ));
     }
 }
@@ -687,7 +687,7 @@ $timeline-width: 14px;
     @include mq(rightCol) {
         @include transform(translateZ(0)); //To force on GPU
         @include rem((
-            width: $a-rightCol-width
+            width: $right-column
         ));
 
         top: $gs-baseline*2;
@@ -989,8 +989,8 @@ $timeline-width: 14px;
         top: 0;
         z-index: 200;
         @include rem((
-                margin-left:($a-rightCol-width + $gs-gutter) * - 1,
-                width:$a-rightCol-width
+                margin-left:($right-column + $gs-gutter) * - 1,
+                width:$right-column
         ));
     }
 }
