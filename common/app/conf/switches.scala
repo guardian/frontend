@@ -218,7 +218,7 @@ object Switches extends Collections {
 
   val MetricsSwitch = Switch("Diagnostics", "enable-metrics-non-prod",
     "If this switch is on, then metrics will be pushed to cloudwatch on DEV and CODE",
-    safeState = On, never
+    safeState = Off, never
   )
 
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
