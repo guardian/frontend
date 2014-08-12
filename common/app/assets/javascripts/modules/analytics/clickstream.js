@@ -95,7 +95,7 @@ define([
 
         // delegate, emit the derived tag
         if (opts.addListener !== false) {
-            bean.add(document.body, 'click touchstart', function (event) {
+            bean.add(document.body, 'click', function (event) {
                 var clickSpec = {el: event.target};
 
                 if (opts.withEvent !== false) {

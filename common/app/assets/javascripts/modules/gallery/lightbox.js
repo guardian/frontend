@@ -84,8 +84,8 @@ define([
         };
 
         this.bindEvents = function() {
-            bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-grid', this.switchToGrid);
-            bean.on(overlay.toolbarNode, 'touchstart click', '.js-gallery-full', this.switchToFullImage);
+            bean.on(overlay.toolbarNode, 'click', '.js-gallery-grid', this.switchToGrid);
+            bean.on(overlay.toolbarNode, 'click', '.js-gallery-full', this.switchToFullImage);
             bean.on(overlay.toolbarNode, 'click', '.js-start-slideshow', this.startSlideshow);
             bean.on(overlay.toolbarNode, 'click', '.js-stop-slideshow', this.stopSlideshow);
             bean.on(overlay.bodyNode,    'click', '.js-gallery-prev', this.prev);
