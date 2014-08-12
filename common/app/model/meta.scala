@@ -37,7 +37,7 @@ trait MetaData extends Tags {
 
   def hasPageSkin(edition: Edition) = false
 
-  def isSurging = false
+  def isSurging = 0
 
   def metaData: Map[String, Any] = Map(
     ("page-id", id),
@@ -48,7 +48,8 @@ trait MetaData extends Tags {
     ("blockVideoAds", false),
     ("is-front", isFront),
     ("ad-unit", s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng"),
-    ("is-surging", isSurging)
+    ("is-surging", isSurging),
+    ("has-classic-version", hasClassicVersion)
   )
 
   def openGraph: Map[String, Any] = Map(

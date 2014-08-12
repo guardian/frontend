@@ -2,9 +2,9 @@ define(['lodash/arrays/compact', 'lodash/arrays/flatten', 'lodash/arrays/zip', '
         'lodash/collections/forEach', 'lodash/collections/map', 'lodash/collections/pluck', 'lodash/collections/sortBy',
         'lodash/objects/mapValues', 'lodash/collections/max', 'lodash/objects/pairs', 'lodash/objects/values',
         'lodash/objects/forOwn', 'lodash/objects/isArray', 'lodash/utilities/mixin', 'lodash/internals/lodashWrapper',
-        'lodash/objects/functions', 'lodash/collections/filter', 'lodash/arrays/first', 'lodash/arrays/last', 'lodash/collections/find', 'lodash/collections/every'],
+        'lodash/objects/functions', 'lodash/collections/filter', 'lodash/arrays/first', 'lodash/arrays/last', 'lodash/collections/find', 'lodash/collections/every', 'lodash/arrays/zipObject'],
 function(compact, flatten, zip, wrapperValueOf, forEach, map, pluck, sortBy, mapValues, max, pairs, values,
-         forOwn, isArray, mixin, LodashWrapper, functions, filter, first, last, find, every) {
+         forOwn, isArray, mixin, LodashWrapper, functions, filter, first, last, find, every, zipObject) {
 
     var arrayRef = [];
     var objectProto = Object.prototype;
@@ -55,6 +55,7 @@ function(compact, flatten, zip, wrapperValueOf, forEach, map, pluck, sortBy, map
 
     Lodash.forOwn = forOwn;
     Lodash.every = every;
+    Lodash.zipObject = zipObject;
 
     // add functions to `Lodash.prototype`
     mixin(Lodash);

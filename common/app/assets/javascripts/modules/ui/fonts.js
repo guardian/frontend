@@ -98,17 +98,10 @@ define([
                     widthMatches = false;
                 }
 
-                // if this font is only for advertisement features, make sure that's what the page is
-                var fontRequired = (bonzo(style).data('advertisement-feature') !== undefined) ? isAdvertisementFeature() : true;
-
-                return cachedValue === null && widthMatches && fontRequired;
+                return cachedValue === null && widthMatches;
             } else {
                 return false;
             }
-        }
-
-        function isAdvertisementFeature() {
-            return qwery('.facia-container--advertisement-feature, .article--advertisement-feature').length > 0;
         }
 
         /**

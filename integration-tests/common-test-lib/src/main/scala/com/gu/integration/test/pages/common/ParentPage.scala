@@ -9,5 +9,4 @@ import org.openqa.selenium.{WebElement, WebDriver}
  * not all concrete page objects need to do it explicitly. And also contains elements present on all pages.
  */
 class ParentPage(implicit driver: WebDriver) extends TestLogging {
-  def signIn: WebElement = findByTestAttribute("signin-link")
 }
