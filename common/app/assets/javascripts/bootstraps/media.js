@@ -49,7 +49,7 @@ define([
 
     function getMediaType(player) {
         var mediaEl = player && isFunction(player.el) ? player.el().children[0] : undefined;
-        return mediaEl ? mediaEl.tagName.toLowerCase() : '';
+        return mediaEl ? mediaEl.tagName.toLowerCase() : 'video';
     }
 
     function constructEventName(eventName, player) {
