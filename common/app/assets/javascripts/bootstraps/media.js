@@ -46,7 +46,7 @@ define([
             'content:play',
             'content:end'
         ],
-        contentType = config.page.contentType.toLowerCase(),
+        contentType = (config.page.contentType || '').toLowerCase(),
         constructEventName = function(eventName) {
             return contentType + ':' + eventName;
         };
