@@ -137,14 +137,14 @@
 
         .tabs {
             @include rem((
-                padding-left: $a-leftCol-width + $gs-gutter,
+                padding-left: $left-column + $gs-gutter,
             ));
             position: relative;
         }
 
         .tabs__container {
             @include rem((
-                width: $a-leftCol-width,
+                width: $left-column,
                 padding-right: $gs-gutter
             ));
             position: absolute;
@@ -160,14 +160,14 @@
 
         .tabs {
             @include rem((
-                padding-left: $a-leftColWide-width + $gs-gutter,
+                padding-left: $left-column-wide + $gs-gutter,
             ));
         }
 
         .tabs__container {
             float: left;
             @include rem((
-                width: $a-leftColWide-width
+                width: $left-column-wide
             ));
         }
 
