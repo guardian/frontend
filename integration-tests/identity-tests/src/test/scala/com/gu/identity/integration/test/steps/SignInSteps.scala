@@ -1,6 +1,6 @@
 package com.gu.identity.integration.test.steps
 
-import com.gu.automation.support.TestLogging
+import com.gu.automation.support.{Config, TestLogging}
 import com.gu.identity.integration.test.pages.{ContainerWithSigninModulePage, SignInPage}
 import com.gu.integration.test.util.UserConfig._
 import org.openqa.selenium.WebDriver
@@ -13,12 +13,14 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
   }
 
   def signIn(signInPage: SignInPage) = {
-    signInPage.enterEmail(get("loginEmail"))
-    signInPage.enterPwd(get("loginPwd"))
+    logger.step(s"I am signing in using credentials")
+    signInPage.enterEmail(Config().getLoginEmail())
+    signInPage.enterPwd(Config().getLoginPassword())
     signInPage.signInButton.click()
   }
 
   def checkUserIsLoggedIn(expectedLoginName: String) = {
+    logger.step(s"Checking that user is logged in")
     val loginName = new ContainerWithSigninModulePage().signInModule().signInName.getText
     loginName should be(expectedLoginName)
 
@@ -30,6 +32,7 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
   }
 
   def signInUsingFaceBook(signInPage: SignInPage) = {
+    logger.step(s"I am signing in using FaceBook")
     val faceBookSignInPage = signInPage.clickFaceBookSignInButton()
     faceBookSignInPage.enterEmail(get("faceBookEmail"))
     faceBookSignInPage.enterPwd(get("faceBookPwd"))
@@ -37,6 +40,7 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
   }
 
   def checkLoggedInThroughFaceBook() = {
+    logger.step(s"Checking that user is logged in through Facebook")
     val loginCookieFB1 = driver.manage().getCookieNamed("GU_MI")
     loginCookieFB1.getValue should not be empty
 
