@@ -190,7 +190,9 @@ define([
             var err = player.error();
             if(err !== null) {
                 modules.beaconError(err);
+                return err.code === 4;
             }
+            return false;
         },
 
         bindErrorHandler: function(player) {
@@ -261,6 +263,21 @@ define([
                 '</div>';
         },
 
+        createVideoObject: function(el, options) {
+            var vjs;
+
+            options.techOrder = ['html5', 'flash'];
+            vjs = videojs(el, options);
+
+            if(modules.handleInitialMediaError(vjs)){
+                vjs.dispose();
+                options.techOrder = ['flash', 'html5'];
+                vjs = videojs(el, options);
+            }
+
+            return vjs;
+        },
+
         initPlayer: function() {
 
             require('bootstraps/video-player', function () {
@@ -274,7 +291,7 @@ define([
                     bonzo(el).addClass('vjs');
 
                     var mediaId = el.getAttribute('data-media-id'),
-                        vjs = videojs(el, {
+                        vjs = modules.createVideoObject(el, {
                             controls: true,
                             autoplay: false,
                             preload: 'metadata' // preload='none' & autoplay breaks ad loading on chrome35
