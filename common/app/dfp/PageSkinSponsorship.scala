@@ -22,7 +22,13 @@ object Country {
   }
 }
 
-case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[PageSkinSponsorship])
+case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[PageSkinSponsorship]) {
+
+  val (deliverableAndTestSponsorships, legacySponsorships) = sponsorships partition {
+    _.adUnits.exists(adUnit => adUnit.endsWith("/front") || adUnit.endsWith("/front/ng"))
+  }
+  val (testSponsorships, deliverableSponsorships) = deliverableAndTestSponsorships partition (_.targetsAdTest)
+}
 
 object PageSkinSponsorshipReportParser extends Logging {
   import play.api.libs.functional.syntax._
