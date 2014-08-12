@@ -20,6 +20,7 @@
     }
     .headline-list__item {
         @include fs-headline(2);
+        @include box-sizing(border-box);
         float: none;
 
         @include mq(desktop) {
@@ -55,8 +56,12 @@
 
         .headline-item__title {
             @include rem((
-                margin-top: -4px
+                margin-top: -$gs-baseline/3
             ));
+
+            @include mq(desktop) {
+                @include fs-headline(4, true);
+            }
         }
 
         .item__media-wrapper,
@@ -82,6 +87,14 @@
                 margin-top: 0;
                 width: 100%;
             }
+        }
+    }
+
+    .headline-list--big + .headline-list--standard {
+        .headline-list__item {
+            @include rem((
+                min-height: $gs-baseline*5
+            ));
         }
     }
 
