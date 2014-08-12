@@ -87,7 +87,7 @@ define([
 
     Profile.prototype.menuListItem = function(text, url) {
         return  '<li class="nav-popup__item">'+
-                    '<a href="' + url + '" class="top-bar__item--action" data-link-name="' + text + '">' + text + '</a>'+
+                    '<a href="' + url + '" class="brand-bar__item--action" data-link-name="' + text + '">' + text + '</a>'+
                 '</li>';
     };
 
