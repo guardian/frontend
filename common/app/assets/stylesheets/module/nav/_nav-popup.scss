@@ -35,7 +35,7 @@ $bp-header-wrap: 544px;
         ));
     }
 
-    .top-bar__item--has-control & {
+    .brand-bar__item--has-control & {
         @include mq($bp-header-wrap) {
             @include rem((
                 left: $control-offset
@@ -43,7 +43,7 @@ $bp-header-wrap: 544px;
         };
     }
 
-    .top-bar__item--right & {
+    .brand-bar__item--right & {
         left: auto;
         right: 0;
     }
@@ -105,7 +105,7 @@ $bp-header-wrap: 544px;
                 top: $nav-popup-top - $nav-popup-toggle-arrow-size - $gs-baseline/2
             ));
 
-            .top-bar__item--has-control & {
+            .brand-bar__item--has-control & {
                 @include mq($bp-header-wrap) {
                     @include rem((
                         margin-left: $control-offset * .5 - $nav-popup-toggle-arrow-size
@@ -113,7 +113,7 @@ $bp-header-wrap: 544px;
                 };
             }
 
-            .top-bar__item--search & {
+            .brand-bar__item--search & {
                 @include mq($to: tablet) {
                     @include rem((
                         margin-left: 0 - $nav-popup-toggle-arrow-size
@@ -121,7 +121,7 @@ $bp-header-wrap: 544px;
                 };
             }
 
-            .top-bar__item--right & {
+            .brand-bar__item--right & {
                 @include rem((
                     margin-left: 0 - $nav-popup-toggle-arrow-size * 3
                 ));
@@ -139,8 +139,8 @@ $bp-header-wrap: 544px;
     };
 }
 
-.nav-popup .top-bar__item--action,
-.nav-popup .top-bar__item--action:hover {
+.nav-popup .brand-bar__item--action,
+.nav-popup .brand-bar__item--action:hover {
     display: block;
     white-space: nowrap;
     color: guss-colour(neutral-1);
@@ -151,7 +151,7 @@ $bp-header-wrap: 544px;
 
 /* Profile Menu
    ========================================================================== */
-.top-bar__item--profile {
+.brand-bar__item--profile {
     // stupid having to reset this, but :not was :not available to all in 2009
     @if ($old-ie == true) {
         .nav-popup__toggle:before,

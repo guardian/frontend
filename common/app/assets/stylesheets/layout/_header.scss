@@ -57,20 +57,6 @@ $c-guardian-services-action: #ffffff;
         float: none;
     }
 }
-.l-header-pre__inner {
-    @include box-sizing(border-box);
-    @include rem((
-        padding-left: $gs-gutter/2,
-        padding-right: $gs-gutter/2
-    ));
-
-    @include mq(mobileLandscape) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
-    }
-}
 
 
 /* Main header (logo, actions)
