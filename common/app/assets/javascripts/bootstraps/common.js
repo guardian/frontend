@@ -48,6 +48,7 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
+    'common/modules/ui/fauxBlockLink',
     'common/modules/discussion/loader'
 ], function (
     $,
@@ -96,6 +97,7 @@ define([
     id,
     MoreTags,
     smartAppBanner,
+    FauxBlockLink,
     DiscussionLoader
 ) {
 
@@ -110,23 +112,8 @@ define([
             images.listen();
         },
 
-        initialiseFauxBlockLinks: function(context){
-            bean.on(
-                context,
-                'mouseenter',
-                '.u-faux-block-link__overlay',
-                function(e) {
-                    $(e.currentTarget).parent().addClass('u-faux-block-link--hover');
-                }
-            );
-            bean.on(
-                context,
-                'mouseleave',
-                '.u-faux-block-link__overlay',
-                function(e) {
-                    $(e.currentTarget).parent().removeClass('u-faux-block-link--hover');
-                }
-            );
+        initialiseFauxBlockLink: function(context){
+            new FauxBlockLink(context);
         },
 
         initialiseTopNavItems: function(config){
@@ -430,7 +417,7 @@ define([
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
-            modules.initialiseFauxBlockLinks(context);
+            modules.initialiseFauxBlockLink(context);
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
