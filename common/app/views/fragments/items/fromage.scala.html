@@ -52,7 +52,9 @@
 
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
-                    <p class="fromage__byline tone-colour">@Html(byLine)</p>
+                    @trail match { case content:model.Content =>
+                        <p class="fromage__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                    }
                 }
             }
 
@@ -82,6 +84,6 @@
                 @fragments.items.elements.meta(trail)
             }
         </div>
-
+        <a @LinkTo(trail).map{url=>href=@url} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </div>
 }

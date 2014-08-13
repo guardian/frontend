@@ -811,6 +811,7 @@ object GetClasses {
     val baseClasses: Seq[String] = Seq(
       "fromage",
       s"tone-${trail.visualTone}",
+      "u-faux-block-link",
       "tone-accent-border"
     )
     val f: Seq[(Trail, String) => String] = Seq(
