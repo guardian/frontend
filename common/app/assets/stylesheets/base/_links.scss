@@ -28,13 +28,15 @@ clickable areas within it as directly nesting a tags breaks things.
 <div class="u-faux-block-link">
     <img src="" alt="This image is magically clickable" />
 
-    <h3><a href="#">headline</a></h3>
+    <h3><a href="#">This headline is clickable as a normal link</a></h3>
 
     Lorem ipsum dolor sit amet.
 
     <a href="#">another link</a>
 
     <abbr title="Hoverable!">An hoverable abbreviation</abbr>
+
+    <video class="u-faux-block-link__promote">I can interact with that video</video>
 
     <a href="#" class="u-faux-block-link__overlay">headline</a>
 </div>
@@ -46,7 +48,8 @@ clickable areas within it as directly nesting a tags breaks things.
     position: relative;
 }
 .u-faux-block-link a,
-.u-faux-block-link abbr[title] {
+.u-faux-block-link abbr[title],
+.u-faux-block-link__promote {
     position: relative;
     z-index: 1;
 }
