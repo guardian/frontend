@@ -19,7 +19,7 @@
                 <div class="story-list-columns__item">
                     @standardItems.slice(0, 3).zipWithIndex.map{ case(trail, i) =>
                         <div class="headline-item headline-item--standard" data-link-name="trail | @{index + 1}">
-                            <a @LinkTo(trail).map{url=>href=@url} class="headline-item__body" data-link-name="article">
+                            <a @LinkTo(trail).map{url=>href="@url"} class="headline-item__body" data-link-name="article">
                                 <div class="headline-item__title">@RemoveOuterParaHtml(trail.headline)</div>
                             </a>
                         </div>
@@ -34,7 +34,7 @@
             @defining(standardItems.drop(if(bigItems.nonEmpty) 3 else 0)) { items =>
                 @items.zipWithIndex.map{ case (trail, index) =>
                     <div class="story-list-columns__item headline-item @if(trail.group == Some("1")){headline-item--big}else{headline-item--standard}" data-link-name="trail | @{index + 1}">
-                        <a @LinkTo(trail).map{url=>href=@url} class="headline-item__body" data-link-name="article">
+                        <a @LinkTo(trail).map{url=>href="@url"} class="headline-item__body" data-link-name="article">
                             <div class="headline-item__title">@RemoveOuterParaHtml(trail.headline)</div>
                         </a>
                     </div>
@@ -56,7 +56,7 @@
                 <ul class="story-list-columns story-list-columns--standard story-list-columns--standard-@{standardItemCount/4}-col">
                     @standardItems.slice(0, standardItemCount).zipWithIndex.map{ case (trail, index) =>
                         <li class="story-list-columns__item headline-item headline-item--standard" data-link-name="trail | @{index + 1}">
-                            <a @LinkTo(trail).map{url=>href=@url} class="headline-item__body" data-link-name="article">
+                            <a @LinkTo(trail).map{url=>href="@url"} class="headline-item__body" data-link-name="article">
                                 <div class="headline-item__title">@RemoveOuterParaHtml(trail.headline)</div>
                             </a>
                         </li>

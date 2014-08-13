@@ -117,16 +117,6 @@
     .item__title {
         background-color: $c-featuresVariant;
     }
-    .item__link:hover,
-    .item__link:focus {
-        .item__title {
-            // Restore lost underline because of the absolute positioning
-            text-decoration: underline;
-        }
-    }
-    .item__link:active .item__title {
-        text-decoration: none;
-    }
 }
 
 .facia-container--layout-content {

@@ -6,7 +6,6 @@
     "eventEmitter": "~4.2.6",
     "imager.js": "oncletom/Imager.js#feature-separation",
     "lodash-amd": "~2.4.1",
-    "omniture": "guardian/omniture",
     "fence": "~0.2.11",
     "bonzo": "~2.0.0",
     "curl": "~0.8.9",
@@ -20,7 +19,8 @@
     "videojs-persistvolume": "~0.1.0",
     "socket.io-client": "1.0.6",
     "raven-js": "~1.1.16",
-    "videojs-playlist-audio": "*"
+    "videojs-playlist-audio": "*",
+    "fastclick": "~1.0.3"
   },
   "resolutions": {
     "videojs": "fabb393da9e139f6869bc0fdb95074d7ca062aa8",
@@ -36,7 +36,6 @@
         }
       ],
       "qwery": "bower_components/qwery/mobile/qwery-mobile.js",
-      "omniture": "bower_components/omniture/omniture.js",
       "lodash-amd": "bower_components/lodash-amd/modern/**",
       "imager.js": [
         "bower_components/imager.js/src/imager.js",

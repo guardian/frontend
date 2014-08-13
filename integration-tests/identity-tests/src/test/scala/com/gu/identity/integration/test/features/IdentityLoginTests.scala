@@ -14,14 +14,25 @@ class IdentityLoginTests extends IdentitySeleniumTestSuite {
       val signInPage = SignInSteps().openSignInPage()
       SignInSteps().signIn(signInPage)
       SignInSteps().checkUserIsLoggedIn(get("loginName"))
+      SignInSteps().checkUserIsLoggedInSecurely()
     }
 
-    scenarioWeb("should be able to login using existing facebook account") { implicit driver: WebDriver =>
+    scenarioWeb("should be able to login using existing Facebook account") { implicit driver: WebDriver =>
       BaseSteps().goToStartPage(useBetaRedirect = false)
       val signInPage = SignInSteps().openSignInPage()
       SignInSteps().signInUsingFaceBook(signInPage)
       SignInSteps().checkUserIsLoggedIn(get("faceBookLoginName"))
-      SignInSteps().checkLoggedInThroughFaceBook()
+      SignInSteps().checkUserIsLoggedInSecurely()
+      SignInSteps().checkLoggedInThroughSocialMedia()
+    }
+
+    scenarioWeb("should be able to login using existing Google account") { implicit driver: WebDriver =>
+      BaseSteps().goToStartPage(useBetaRedirect = false)
+      val signInPage = SignInSteps().openSignInPage()
+      SignInSteps().signInUsingGoogle(signInPage)
+      SignInSteps().checkUserIsLoggedIn(get("googleLoginName"))
+      SignInSteps().checkUserIsLoggedInSecurely()
+      SignInSteps().checkLoggedInThroughSocialMedia()
     }
   }
 }
