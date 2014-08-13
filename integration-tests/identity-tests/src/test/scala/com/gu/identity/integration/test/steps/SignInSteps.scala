@@ -26,9 +26,11 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
 
     val loginCookie = driver.manage().getCookieNamed("GU_U")
     loginCookie.getValue should not be empty
+  }
 
-    val loginCookieSc = driver.manage().getCookieNamed("SC_GU_U")
-    loginCookieSc.getValue should not be empty
+  def checkUserIsLoggedInSecurely() = {
+    val loginCookieSecure = driver.manage().getCookieNamed("SC_GU_U")
+    loginCookieSecure.getValue should not be empty
   }
 
   def signInUsingFaceBook(signInPage: SignInPage) = {
@@ -39,12 +41,20 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
     faceBookSignInPage.loginInButton.click()
   }
 
-  def checkLoggedInThroughFaceBook() = {
-    logger.step(s"Checking that user is logged in through Facebook")
-    val loginCookieFB1 = driver.manage().getCookieNamed("GU_MI")
-    loginCookieFB1.getValue should not be empty
+  def signInUsingGoogle(signInPage: SignInPage) = {
+    logger.step(s"I am signing in using FaceBook")
+    val googleSignInPage = signInPage.clickGoogleSignInButton()
+    googleSignInPage.enterEmail(get("googleEmail"))
+    googleSignInPage.enterPwd(get("googlePwd"))
+    googleSignInPage.loginInButton.click()
+  }
 
-    val loginCookieFB2 = driver.manage().getCookieNamed("GU_ME")
-    loginCookieFB2.getValue should not be empty
+  def checkLoggedInThroughSocialMedia() = {
+    logger.step(s"Checking that user is logged in through Social Media")
+    val loginCookieMI = driver.manage().getCookieNamed("GU_MI")
+    loginCookieMI.getValue should not be empty
+
+    val loginCookieME = driver.manage().getCookieNamed("GU_ME")
+    loginCookieME.getValue should not be empty
   }
 }
