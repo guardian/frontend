@@ -67,5 +67,8 @@ ivy-sbt
 .cache
 bower_components
 
-#Scala test framework
+# Scala test framework #
 local.conf
+
+# Generared styleguide files #
+docs/styleguide/*.html

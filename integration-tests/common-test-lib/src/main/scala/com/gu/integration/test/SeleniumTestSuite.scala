@@ -9,7 +9,6 @@ import org.scalatest.Matchers
 abstract class SeleniumTestSuite extends WebDriverFeatureSpec with Matchers with TestRetries {
 
   override protected def startDriver(testName: String, targetBrowser: Browser): WebDriver = {
-    println("local conf location " + System.getProperty("local.conf.loc"))
     augmentWebDriver(super.startDriver(testName, targetBrowser))
   }
 }

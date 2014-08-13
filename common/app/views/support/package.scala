@@ -116,6 +116,18 @@ case class PicksContainer(showMore: Boolean = true) extends Container {
   val containerType = "picks"
   val tone = "news"
 }
+case class CassouletContainer(showMore: Boolean = true) extends Container {
+  val containerType = "cassoulet"
+  val tone = "feature"
+}
+case class QuicheLorraineContainer(showMore: Boolean = true) extends Container {
+  val containerType = "quichelorraine"
+  val tone = "feature"
+}
+case class RacletteContainer(showMore: Boolean = true) extends Container {
+  val containerType = "raclette"
+  val tone = "feature"
+}
 
 
 /**
@@ -757,6 +769,7 @@ object GetClasses {
       additionalClasses,
       "l-row__item",
       "facia-slice__item",
+      "u-faux-block-link",
       s"facia-slice__item--volume-${trail.group.getOrElse("0")}"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)
@@ -799,6 +812,7 @@ object GetClasses {
     val baseClasses: Seq[String] = Seq(
       "fromage",
       s"tone-${trail.visualTone}",
+      "u-faux-block-link",
       "tone-accent-border"
     )
     val f: Seq[(Trail, String) => String] = Seq(
@@ -823,6 +837,7 @@ object GetClasses {
     val baseClasses: Seq[String] = Seq(
       "saucisson",
       s"tone-${trail.visualTone}",
+      "u-faux-block-link",
       "tone-accent-border"
     )
     val f: Seq[(Trail) => String] = Seq(

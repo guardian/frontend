@@ -135,6 +135,10 @@
                         contentType: config.page.contentType,
                         buildNumber: config.page.buildNumber
                     },
+                    dataCallback: function(data) {
+                        data.tags.origin = (/j.ophan.co.uk/.test(data.culprit)) ? 'ophan' : 'app';
+                        return data;
+                    },
                     shouldSendCallback: function(data) {
                         return Math.random() < 0.4 && guardian.config.switches.enableDiagnosticsLogging;
                     }

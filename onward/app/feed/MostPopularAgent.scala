@@ -35,9 +35,9 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
 
   private val ophanPopularAgent = AkkaAgent[Map[String, Seq[Content]]](Map.empty)
 
-  // These are the only country codes passed to us from the fastly service. This allows us
-  // to choose carefully the codes that give us the most impact. The trade-off is caching.
-  private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "ROW")
+  // These are the only country codes (row must be lower-case) passed to us from the fastly service.
+  // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
+  private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "row")
 
   def mostPopular(country: String): Seq[Content] = ophanPopularAgent().get(country).getOrElse(Nil)
 
@@ -68,9 +68,11 @@ object GeoMostPopularAgent extends Logging with ExecutionContexts {
             currentMap + (countryCode -> contentSeq.flatten)
           })
 
+          log.info(s"Geo popular $countryCode updated successfully.")
+
         } else {
 
-          log.info(s"Geo popular update for ${countryCode} found nothing.")
+          log.info(s"Geo popular update for $countryCode found nothing.")
         }
       }
     }

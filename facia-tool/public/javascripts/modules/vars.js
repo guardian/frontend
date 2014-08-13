@@ -12,7 +12,7 @@ define([
         types: [
             {name: 'news', groups: ['standard', 'big', 'very big', 'huge']},
             {name: 'news/auto'},
-            {name: 'news/headline', groups: ['standard', 'big']},
+            {name: 'news/headline', groups: ['standard', 'big', 'very big']},
             {name: 'news/most-popular'},
             {name: 'news/people'},
             {name: 'news/small-list'},
@@ -22,7 +22,10 @@ define([
             {name: 'features/multimedia'},
             {name: 'features/picks', groups: ['standard', 'big']},
             {name: 'features/volumes', groups: ['standard', 'big', 'very big', 'huge']},
-            {name: 'comment/comment-and-debate'}
+            {name: 'comment/comment-and-debate'},
+            {name: 'prototype/cassoulet'},
+            {name: 'prototype/quichelorraine'},
+            {name: 'prototype/raclette'}
         ],
 
         headlineLength: 200,

@@ -284,7 +284,7 @@ define([
                 pt      : contentType,
                 p       : 'ng',
                 k       : parseKeywords(page.keywordIds || page.pageId),
-                su      : page.isSurging ? '1' : '0',
+                su      : page.isSurging,
                 bp      : detect.getBreakpoint(),
                 a       : audienceScience.getSegments(),
                 at      : cookies.get('adtest') || cookies.get('GU_TEST') || '',

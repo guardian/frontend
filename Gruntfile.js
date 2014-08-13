@@ -3,6 +3,15 @@ var pngquant = require('imagemin-pngquant');
 
 module.exports = function (grunt) {
 
+    require('time-grunt')(grunt);
+
+    // Load the plugins
+    require('jit-grunt')(grunt, {
+        replace: 'grunt-text-replace',
+        scsslint: 'grunt-scss-lint',
+        cssmetrics: 'grunt-css-metrics'
+    });
+
     var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
         staticTargetDir = './static/target/',
@@ -43,6 +52,23 @@ module.exports = function (grunt) {
                     noCache: true,
                     quiet: (isDev) ? false : true
                 }
+            },
+            compileStyleguide: {
+                files: [{
+                    expand: true,
+                    cwd: 'docs/styleguide/assets/scss/',
+                    src: ['*.scss', '!_*'],
+                    dest: 'docs/styleguide/assets/css/',
+                    rename: function(dest, src) {
+                        return dest + src.replace('scss', 'css');
+                    }
+                }],
+                options: {
+                    style: 'compressed',
+                    sourcemap: true,
+                    noCache: true,
+                    quiet: (isDev) ? false : true
+                }
             }
         },
         px_to_rem: {
@@ -71,13 +97,14 @@ module.exports = function (grunt) {
                     reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/reqwest',
                     lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd',
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/container',
-                    omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
                     stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min',
-                    raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven'
+                    raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven',
+                    fastclick:    '../../../../common/app/assets/javascripts/components/fastclick/fastclick',
+                    omniture:     '../../../../common/app/public/javascripts/vendor/omniture'
                 },
-                optimize: 'uglify2',
+                optimize: (isDev) ? 'none' : 'uglify2',
                 generateSourceMaps: true,
                 preserveLicenseComments: false,
                 fileExclusionRegExp: /^bower_components$/
@@ -823,6 +850,17 @@ module.exports = function (grunt) {
         },
 
         /*
+         * Documentation (builds syleguide)
+         */
+        hologram: {
+            generate: {
+                options: {
+                    config: 'hologram_config.yml'
+                }
+            }
+        },
+
+        /*
          * Miscellaneous
          */
         mkdir: {
@@ -856,7 +894,7 @@ module.exports = function (grunt) {
             },
             css: {
                 files: ['common/app/assets/stylesheets/**/*.scss'],
-                tasks: ['compile:css', 'asset_hash'],
+                tasks: ['sass:compile', 'asset_hash'],
                 options: {
                     spawn: false
                 }
@@ -872,6 +910,13 @@ module.exports = function (grunt) {
             fonts: {
                 files: ['resources/fonts/**/*'],
                 tasks: ['compile:fonts']
+            },
+            styleguide: {
+                files: ['common/app/assets/stylesheets/**/*.scss', 'docs/styleguide/**/*.scss', 'docs/styleguide_templates/**/*.html'],
+                tasks: ['compile:css', 'hologram'],
+                options: {
+                    spawn: false
+                }
             }
         },
 
@@ -925,7 +970,7 @@ module.exports = function (grunt) {
     /**
      * Validate tasks
      */
-    grunt.registerTask('validate:css', ['compile:images', 'sass:compile']);
+    grunt.registerTask('validate:css', ['compile:images', 'sass:compile', 'sass:compileStyleguide']);
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
         var target = (app) ? ':' + app : '';
@@ -940,8 +985,7 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', function() {
-        grunt.task.run('sass:compile');
-        grunt.task.run('px_to_rem');
+        grunt.task.run(['sass:compile', 'sass:compileStyleguide', 'px_to_rem']);
 
         if (isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);

@@ -1,0 +1,91 @@
+/* ==========================================================================
+Multi component (AKA Frankenponent)
+========================================================================== */
+
+.facia-container--layout-front,
+.facia-container--layout-content {
+    .commercial.commercial--multi {
+        .commercial__head {
+            border-top: 0;
+            @include rem((
+                margin-top: $gs-baseline
+            ));
+            height: auto;
+            position: relative;
+            padding: 0;
+        }
+        .commercial__title {
+            margin-bottom: 0;
+            padding: 0;
+
+            &.i-soulmates-title-background {
+                background-size: cover;
+                height: auto;
+                @include rem((
+                    width: gs-span(2) - $gs-gutter,
+                    padding: ($gs-baseline * 2) 0 0 ($gs-gutter * 1.25),
+                    margin-bottom: $gs-baseline
+                ));
+            }
+        }
+        .commercial__body {
+            @include rem((
+                padding: 0 0 $gs-baseline
+            ));
+            .commercial__title {
+                float: none;
+            }
+        }
+        .lineitem {
+            float: none;
+            clear: both;
+            padding: 0 0 $gs-baseline;
+
+            &:nth-child(n+3) {
+                display: none;
+            }
+        }
+        .lineitem__image {
+            width: 100%;
+
+            .lineitem__soulmates & {
+                width: 50%;
+            }
+        }
+        .lineitem__soulmates .lineitem__image {
+            width: initial;
+        }
+        .lineitem__book .lineitem__img {
+            display: block;
+        }
+        @include mq(tablet) {
+            .lineitems {
+                @include rem((
+                    margin: 0 (-$gs-gutter/2)
+                ));
+            }
+            .lineitem {
+                float: left;
+                clear: none;
+                width: percentage(1/3);
+                @include rem((
+                    padding: 0 $gs-gutter/2
+                ));
+
+                &:nth-child(n) {
+                    display: block;
+                    @include rem((
+                        padding-left: $gs-gutter/2
+                    ));
+                }
+            }
+        }
+        @include mq(faciaLeftCol) {
+            .commercial__body {
+                @include rem((
+                    padding: $gs-baseline 0
+                ));
+            }
+        }
+    }
+}

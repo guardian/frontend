@@ -14,6 +14,7 @@ define([
     'qwery',
     'enhancer',
     'lodash/functions/debounce',
+    'fastclick',
     //Modules
     'common/utils/storage',
     'common/utils/detect',
@@ -47,6 +48,7 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
+    'common/modules/ui/fauxBlockLink',
     'common/modules/discussion/loader'
 ], function (
     $,
@@ -61,6 +63,7 @@ define([
     qwery,
     enhancer,
     debounce,
+    FastClick,
 
     storage,
     detect,
@@ -71,7 +74,6 @@ define([
     Profile,
     Search,
     Navigation,
-
     Tabs,
     Toggles,
     Dropdowns,
@@ -95,14 +97,23 @@ define([
     id,
     MoreTags,
     smartAppBanner,
+    FauxBlockLink,
     DiscussionLoader
 ) {
 
     var modules = {
 
+        initFastClick: function() {
+            new FastClick(document.body);
+        },
+
         upgradeImages: function () {
             images.upgrade();
             images.listen();
+        },
+
+        initialiseFauxBlockLink: function(context){
+            new FauxBlockLink(context);
         },
 
         initialiseTopNavItems: function(config){
@@ -403,8 +414,10 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
+            modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
+            modules.initialiseFauxBlockLink(context);
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();

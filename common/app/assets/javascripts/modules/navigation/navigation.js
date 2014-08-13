@@ -20,19 +20,9 @@ define([
         },
 
         enableMegaNavToggle: function(){
-            qwery('.js-navigation-toggle').forEach(function(elem) {
-                bean.on(elem, 'click touchstart', function (e) {
-                    e.preventDefault();
-                    if (qwery('.navigation--expanded').length > 0) {
-                        $('.navigation')
-                            .removeClass('navigation--expanded')
-                            .addClass('navigation--collapsed');
-                    } else {
-                        $('.navigation')
-                            .addClass('navigation--expanded')
-                            .removeClass('navigation--collapsed');
-                    }
-                });
+            bean.on(document, 'click', '.js-navigation-toggle', function (e) {
+                e.preventDefault();
+                $('.' + e.currentTarget.getAttribute('data-target-nav')).toggleClass('navigation--expanded navigation--collapsed');
             });
         }
     };

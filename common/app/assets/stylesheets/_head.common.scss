@@ -20,6 +20,7 @@
 @import '_extends-only';
 @import 'base/_links';
 @import 'base/_helpers';
+@import 'base/_faux-block-link';
 @import 'base/_lists';
 
 
@@ -51,7 +52,7 @@
    ========================================================================== */
 
 @import 'module/nav/_nav';
-@import 'module/nav/_top-bar';
+@import 'module/nav/_brand-bar';
 @import 'module/nav/_control';
 @import 'module/_adslot';
 @import 'module/_media';

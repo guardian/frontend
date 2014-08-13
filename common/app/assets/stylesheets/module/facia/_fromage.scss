@@ -109,12 +109,12 @@
     &:focus {
         text-decoration: none;
 
-        .item__title {
+        .u-faux-block-link__cta {
             text-decoration: underline;
         }
     }
     &:active {
-        .item__title {
+        .u-faux-block-link__cta {
             text-decoration: none;
         }
     }
