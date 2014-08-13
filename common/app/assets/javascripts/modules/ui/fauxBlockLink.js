@@ -7,7 +7,7 @@ define([
     bonzo,
     $
 ){
-    var fauxBlockLinks = function(context) {
+    var fauxBlockLink = function(context) {
         bean.on(
             context,
             'mouseenter',
@@ -25,5 +25,5 @@ define([
             }
         );
     };
-    return fauxBlockLinks;
+    return fauxBlockLink;
 });
