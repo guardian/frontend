@@ -417,7 +417,7 @@ define([
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
-            modules.initialiseFauxBlockLinks(context);
+            modules.initialiseFauxBlockLink(context);
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
