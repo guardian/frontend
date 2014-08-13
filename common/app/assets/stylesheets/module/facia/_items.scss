@@ -429,18 +429,18 @@
         }
     }
     .trail__count {
-        @include rem((
-            padding-left: 18px
-        ));
         top: 0;
 
         a {
+            @include rem((
+                padding-left: 18px
+            ));
             line-height: inherit;
             color: inherit;
         }
         i {
             @include rem((
-                top: 3px,
+                top: 2px,
                 left: 0
             ));
         }
