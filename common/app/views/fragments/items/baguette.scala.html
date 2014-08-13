@@ -21,7 +21,7 @@
                 @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
             }
         }
-        <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
+        <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article">
             @fragments.items.elements.title(trail, index, 0)
         </a>
 
@@ -34,5 +34,5 @@
 
     @fragments.items.elements.supporting(trail.supporting, trail, style = "fullwidth")
 
-    <a @LinkTo(trail).map{url=>href=@url} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
+    <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 </div>
