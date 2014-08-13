@@ -39,7 +39,7 @@ trait FrontJsonLite extends ExecutionContexts{
     .filterNot{ j =>
       (j \ "id").asOpt[String].exists(_.startsWith("snap/"))
      }
-    .take(3).map{ j =>
+    .map{ j =>
       Json.obj(
         "headline" -> ((j \ "meta" \ "headline").asOpt[JsString].getOrElse(j \ "safeFields" \ "headline"): JsValue),
         "thumbnail" -> (j \ "safeFields" \ "thumbnail"),
