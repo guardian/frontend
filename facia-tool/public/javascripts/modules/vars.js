@@ -12,7 +12,7 @@ define([
         types: [
             {name: 'news', groups: ['standard', 'big', 'very big', 'huge']},
             {name: 'news/auto'},
-            {name: 'news/headline', groups: ['standard', 'big']},
+            {name: 'news/headline', groups: ['standard', 'big', 'very big']},
             {name: 'news/most-popular'},
             {name: 'news/people'},
             {name: 'news/small-list'},
