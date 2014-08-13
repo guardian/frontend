@@ -1013,7 +1013,6 @@ module.exports = function (grunt) {
         grunt.task.run('pagespeed' + target);
     });
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
-    grunt.registerTask('analyse:monitor', ['monitor:common']);
     grunt.registerTask('analyse', ['analyse:css', 'analyse:performance']);
 
     /**
