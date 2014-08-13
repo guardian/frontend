@@ -193,12 +193,11 @@
         }
     }
 }
-.item__top-border {
+.item__tonal-border {
     border-top: $item-top-border-height solid $c-newsAccent;
 }
 .item__link {
     display: block;
-    border-top: $item-top-border-height solid $c-newsAccent;
     color: $c-neutral1;
 
     &:visited {
