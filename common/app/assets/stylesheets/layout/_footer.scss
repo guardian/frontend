@@ -61,6 +61,9 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
             display: none;
         }
     }
+    .control__info {
+        display: inline-block
+    }
 }
 
 .l-footer__primary {
