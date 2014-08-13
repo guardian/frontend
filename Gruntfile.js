@@ -3,6 +3,8 @@ var pngquant = require('imagemin-pngquant');
 
 module.exports = function (grunt) {
 
+    require('time-grunt')(grunt);
+
     var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
         staticTargetDir = './static/target/',
