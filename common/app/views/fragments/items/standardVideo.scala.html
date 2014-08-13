@@ -12,6 +12,7 @@
         data-link-name="trail | @{index + 1}">
 
         <div class="item__container">
+            <div class="item__tonal-border tone-accent-border"></div>
             @trail match {
                 case videoItem: Video if videoItem.mainVideo.isDefined && trail.imageAdjust == "boost" => {
                     <div class="item__top-border tone-accent-border">

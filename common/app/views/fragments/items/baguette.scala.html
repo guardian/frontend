@@ -12,6 +12,7 @@
 >
 
     <div class="item__container">
+        <div class="item__tonal-border tone-accent-border"></div>
         @trail match {
             case v: Video if v.mainVideo.isDefined => {
                 @video(v.mainVideo.get, Item620, v.webTitle, 620, 350, true, false, Some(v.endSlatePath))

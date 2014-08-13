@@ -13,8 +13,8 @@
         @SnapData(trail)>
 
         <div class="item__container">
-
-            <a @LinkTo(trail).map{url=>href=@url} class="item__link tone-accent-border @if(linkToneBackground){tone-background}" data-link-name="article">
+            <div class="item__tonal-border"></div>
+            <a @LinkTo(trail).map{url=>href=@url} class="item__link @if(linkToneBackground){tone-background}" data-link-name="article">
                 @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
                 <div class="item__header">
                     @fragments.items.elements.title(trail, index, containerIndex)
