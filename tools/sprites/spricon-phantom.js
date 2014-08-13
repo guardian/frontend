@@ -150,8 +150,10 @@ function processFile() {
                 pngcssrules.push( "%" + cssprefix + filenamenoext + ", " +
                                   "." + cssprefix + filenamenoext + " { " +
                                       "background-position: -" + coords.x + "px -" + coords.y + "px; " +
-                                      "width: " + coords.w + "px; " +
-                                      "height: " + coords.h + "px;" +
+                                      "@include rem((" +
+                                          "width: " + coords.w + "px, " +
+                                          "height: " + coords.h + "px" +
+                                      "));" +
                                   "}\n");
 
               // process the next svg
