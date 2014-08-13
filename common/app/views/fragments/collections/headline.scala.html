@@ -6,7 +6,7 @@
             <ul class="headline-list headline-list--@bigItems.length-big headline-list--big">
                 @bigItems.zipWithIndex.map { case (trail, index) =>
                     <li class="headline-list__item headline-item" data-link-name="trail | @{index + 1}">
-                        <a @LinkTo(trail).map{url=>href=@url} class="headline-item__body" data-link-name="article">
+                        <a @LinkTo(trail).map{url=>href="@url"} class="headline-item__body" data-link-name="article">
                             @trail.trailPicture(5,3).map{ imageContainer =>
                                 @ImgSrc.imager(imageContainer, 620).map { imgSrc =>
                                     <div class="item__image-container js-image-upgrade inlined-image" data-src="@imgSrc">
@@ -25,7 +25,7 @@
             <ul class="headline-list headline-list--standard">
                 @standardItems.slice(0, standardItemCount).zipWithIndex.map{ case (trail, index) =>
                     <li class="headline-list__item headline-item" data-link-name="trail | @{index + 1}">
-                        <a @LinkTo(trail).map{url=>href=@url} class="headline-item__body" data-link-name="article">
+                        <a @LinkTo(trail).map{url=>href="@url"} class="headline-item__body" data-link-name="article">
                             <div class="headline-item__title">@RemoveOuterParaHtml(trail.headline)</div>
                         </a>
                     </li>

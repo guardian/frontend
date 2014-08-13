@@ -58,6 +58,6 @@
                 <div class="item__standfirst">@Html(text)</div>
             }
         </div>
-        <a @LinkTo(trail).map{url=>href=@url} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
+        <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </@element>
 }
