@@ -60,6 +60,7 @@ define([
                 'href',
                 'headline',
                 'trailText',
+                'label',
                 'imageAdjust',
                 'imageSrc',
                 'imageSrcWidth',
