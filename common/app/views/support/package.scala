@@ -769,6 +769,7 @@ object GetClasses {
       additionalClasses,
       "l-row__item",
       "facia-slice__item",
+      "u-faux-block-link",
       s"facia-slice__item--volume-${trail.group.getOrElse("0")}"
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail)} ++ makeSnapClasses(trail)

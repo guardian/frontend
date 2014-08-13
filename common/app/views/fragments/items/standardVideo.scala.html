@@ -15,25 +15,21 @@
             <div class="item__tonal-border tone-accent-border"></div>
             @trail match {
                 case videoItem: Video if videoItem.mainVideo.isDefined && trail.imageAdjust == "boost" => {
-                    <div class="item__top-border tone-accent-border">
-                        <div class="item__media-wrapper item__media-wrapper--has-icon">
-                            <div class="item__video-container">
-                                @video(videoItem.mainVideo.get, Item300, videoItem.webTitle, 300, 180, false, false, Some(videoItem.endSlatePath))
-                            </div>
+                    <div class="item__media-wrapper item__media-wrapper--has-icon">
+                        <div class="item__video-container">
+                            @video(videoItem.mainVideo.get, Item300, videoItem.webTitle, 300, 180, false, false, Some(videoItem.endSlatePath))
                         </div>
-
-                        <a href="@LinkTo{@trail.url}" class="item__link item__link--no-border" data-link-name="article">
-                            <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon item__title--inline-video">
-
-                            @RemoveOuterParaHtml(trail.headline)
-                            </h@if(isFirstContainer && index == 0){1}else{2}>
-                        </a>
                     </div>
+
+                    <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
+                        <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon item__title--inline-video">
+                            <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>
+                        </h@if(isFirstContainer && index == 0){1}else{2}>
+                    </a>
                 }
 
                 case _ => {
-                    <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="article">
-                        <div class="item__media-wrapper item__media-wrapper--has-icon">
+                    <div class="item__media-wrapper item__media-wrapper--has-icon">
                         @trail.trailPicture(5,3).map{ imageContainer =>
                             @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                                 <div class="item__image-container u-responsive-ratio js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc">
@@ -47,9 +43,10 @@
                                 <img src="@Static("images/no-image.png")" class="responsive-img" alt="" />
                             </div>
                         }
-                        </div>
+                    </div>
+                    <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
                         <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon">
-                            @RemoveOuterParaHtml(trail.headline)
+                            <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>
                         </h@if(isFirstContainer && index == 0){1}else{2}>
                     </a>
                 }
@@ -61,6 +58,6 @@
                 <div class="item__standfirst">@Html(text)</div>
             }
         </div>
-
+        <a @LinkTo(trail).map{url=>href=@url} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </@element>
 }
