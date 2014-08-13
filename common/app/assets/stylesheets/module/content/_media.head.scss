@@ -21,8 +21,7 @@
     background-color: $c-neutral1;
     color: $c-neutral7;
     @include rem((
-        padding-bottom: $gs-baseline*2,
-        padding-top: $content-top-padding
+        padding-bottom: $gs-baseline*2
     ));
 
     .content__section .tone-colour {
