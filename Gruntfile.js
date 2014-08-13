@@ -9,7 +9,8 @@ module.exports = function (grunt) {
     require('jit-grunt')(grunt, {
         replace: 'grunt-text-replace',
         scsslint: 'grunt-scss-lint',
-        cssmetrics: 'grunt-css-metrics'
+        cssmetrics: 'grunt-css-metrics',
+        assetmonitor: 'grunt-asset-monitor'
     });
 
     var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
