@@ -32,7 +32,9 @@
         }
     </div>
 
-    @fragments.items.elements.supporting(trail.supporting, trail, style = "fullwidth")
+    <div class="u-faux-block-link__promote">
+        @fragments.items.elements.supporting(trail.supporting, trail, style = "fullwidth")
+    </div>
 
     <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 </div>
