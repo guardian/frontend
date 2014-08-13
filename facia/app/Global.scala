@@ -3,6 +3,7 @@ import conf.Filters
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import ophan.SurgingContentAgentLifecycle
+import play.Play
 import play.api.libs.json.Json
 import play.api.mvc.WithFilters
 import services.{ConfigAgent, ConfigAgentDefaults, ConfigAgentLifecycle}
@@ -29,7 +30,7 @@ with SurgingContentAgentLifecycle {
   )
 
   override def onStart(app: Application) {
-    ConfigAgent.refreshWith(Json.parse(ConfigAgentDefaults.contents))
+    if (Play.isDev) ConfigAgent.refreshWith(Json.parse(ConfigAgentDefaults.contents))
     super.onStart(app)
   }
 }
