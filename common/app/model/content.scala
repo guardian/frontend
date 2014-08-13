@@ -353,6 +353,10 @@ class Snap(snapId: String,
   override lazy val webPublicationDate = snapWebPublicationDate
 }
 
+object Snap {
+  def isSnap(id: String): Boolean = id.startsWith("snap/")
+}
+
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
