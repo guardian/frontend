@@ -110,6 +110,25 @@ define([
             images.listen();
         },
 
+        initialiseFauxBlockLinks: function(context){
+            bean.on(
+                context,
+                'mouseenter',
+                '.u-faux-block-link__overlay',
+                function(e) {
+                    $(e.currentTarget).parent().addClass('u-faux-block-link--hover');
+                }
+            );
+            bean.on(
+                context,
+                'mouseleave',
+                '.u-faux-block-link__overlay',
+                function(e) {
+                    $(e.currentTarget).parent().removeClass('u-faux-block-link--hover');
+                }
+            );
+        },
+
         initialiseTopNavItems: function(config){
             var search = new Search(config),
                 header = document.getElementById('header');
@@ -411,6 +430,7 @@ define([
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
+            modules.initialiseFauxBlockLinks(context);
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();

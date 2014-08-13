@@ -13,8 +13,9 @@
         @SnapData(trail)>
 
         <div class="saucisson__container">
-            <a @LinkTo(trail).map{url=>href=@url} class="saucisson__link" data-link-name="article">
-                @fragments.items.elements.image(trail)
+            @fragments.items.elements.image(trail)
+
+            <a @LinkTo(trail).map{url=>href="@url"} class="saucisson__link" data-link-name="article">
                 @fragments.items.elements.title(trail, index, 0)
             </a>
 
@@ -22,7 +23,9 @@
 
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
-                    <p class="item__byline tone-colour">@Html(byLine)</p>
+                    @trail match { case content:model.Content =>
+                        <p class="item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                    }
                 }
             }
 
@@ -38,6 +41,7 @@
                 @fragments.items.elements.meta(trail)
             }
         </div>
+        <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 
     </div>
 }

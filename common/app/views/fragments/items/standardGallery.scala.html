@@ -10,8 +10,8 @@
         data-link-name="trail | @{index + 1}">
 
         <div class="item__container">
-
-            <a href="@LinkTo{@trail.url}" class="item__link tone-accent-border" data-link-name="gallery" data-is-ajax>
+            <div class="item__tonal-border tone-accent-border"></div>
+            <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="gallery" data-is-ajax>
                 <div class="item__media-wrapper item__media-wrapper--has-icon js-gallerythumbs" data-gallery-url="@trail.url">
                     <div class="item__cta item__cta--gallery">
                         <p>Expand</p>
@@ -35,11 +35,11 @@
                     }
                 </div>
             </a>
-            <a href="@LinkTo{@trail.url}" class="item__link item__link--no-border" data-link-name="article">
+            <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
                 <div class="item__header">
                     <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--has-icon-mobile">
                         <span class="i i-gallery-yellow-small"></span>
-                        @RemoveOuterParaHtml(trail.headline)
+                        <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>
                     </h@if(isFirstContainer && index == 0){1}else{2}>
                 </div>
             </a>
@@ -51,6 +51,6 @@
             }
 
         </div>
-
+        <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </@element>
 }

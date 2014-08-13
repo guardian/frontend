@@ -6,26 +6,24 @@
 @import views.support.{GetClasses, SnapData, Item620}
 
 <div
-    class="@GetClasses.forItem(trail, true) baguette"
+    class="@GetClasses.forItem(trail, true) baguette u-faux-block-link"
     data-link-name="trail | @{index + 1}"
     @SnapData(trail)
 >
 
     <div class="item__container">
+        <div class="item__tonal-border tone-accent-border"></div>
         @trail match {
             case v: Video if v.mainVideo.isDefined => {
                 @video(v.mainVideo.get, Item620, v.webTitle, 620, 350, true, false, Some(v.endSlatePath))
-                <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
-                    @fragments.items.elements.title(trail, index, 0)
-                </a>
             }
             case _ => {
-                <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
-                    @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
-                    @fragments.items.elements.title(trail, index, 0)
-                </a>
+                @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
             }
         }
+        <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article">
+            @fragments.items.elements.title(trail, index, 0)
+        </a>
 
         @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
 
@@ -36,4 +34,5 @@
 
     @fragments.items.elements.supporting(trail.supporting, trail, style = "fullwidth")
 
+    <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 </div>
