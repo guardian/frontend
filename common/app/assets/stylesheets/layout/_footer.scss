@@ -11,23 +11,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     float: right;
     line-height: 0;
 }
-.top--footer {
-    width: auto;
-
-    @include mq(tablet) {
-        float: left;
-        @include rem((
-            margin-right: $gs-gutter,
-            padding-top: $gs-baseline,
-            padding-bottom: $gs-baseline
-        ));
-    }
-
-    &,
-    &:active {
-        color: #ffffff;
-    }
-}
 
 
 /* Footer
