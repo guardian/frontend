@@ -7,7 +7,7 @@
 ) { case (standardItems, bigItems, veryBigItems) =>
 
     @if(veryBigItems.nonEmpty){
-        <div class="headline-item headline-item--very-big">
+        <div class="headline-item headline-item--very-big u-faux-block-link">
             @fragments.items.standard(veryBigItems.head, 1, containerIndex, "div")
         </div>
 
