@@ -113,7 +113,7 @@ define([
         },
 
         initialiseFauxBlockLink: function(context){
-            new FauxBlockLink(context);
+            FauxBlockLink(context);
         },
 
         initialiseTopNavItems: function(config){
