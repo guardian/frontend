@@ -20,14 +20,8 @@
             @trail match {
                 case v: Video if v.mainVideo.isDefined && imageAdjust == "boost" => {
                     @fromageVideo(v.mainVideo.get, v.webTitle, true, true, Some(v.endSlatePath))
-
-                    <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
-                        @fragments.items.elements.title(trail, index, 0)
-                    </a>
                 }
-
                 case _ => {
-                    <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
                     @if(imageAdjust != Some("hide")) {
                         @trail.trailPicture(5,3).map{ imageContainer =>
                             @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
@@ -43,10 +37,11 @@
                             }
                         }
                     }
-                    @fragments.items.elements.title(trail, index, 0)
-                    </a>
                 }
             }
+            <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
+                @fragments.items.elements.title(trail, index, 0)
+            </a>
 
             @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
 

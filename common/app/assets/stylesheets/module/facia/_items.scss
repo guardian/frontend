@@ -210,7 +210,13 @@
     &:active {
         color: $c-neutral1;
     }
-    &:hover {
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        .u-faux-block-link__cta {
+            text-decoration: underline;
+        }
         .item__cta {
             background-color: rgba($c-neutral2, 1);
         }
@@ -219,9 +225,11 @@
             background-color: $c-media-icon;
         }
     }
-}
-.item__link--no-border {
-    border-width: 0;
+    &:active {
+        .u-faux-block-link__cta {
+            text-decoration: none;
+        }
+    }
 }
 .item__video-container {
     margin-top: 4px;
