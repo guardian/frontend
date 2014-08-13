@@ -79,6 +79,7 @@ module.exports = function (grunt) {
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
                     stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min',
                     raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven',
+                    fastclick:    '../../../../common/app/assets/javascripts/components/fastclick/fastclick',
                     omniture:     '../../../../common/app/public/javascripts/vendor/omniture'
                 },
                 optimize: 'uglify2',
