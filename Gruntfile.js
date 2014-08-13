@@ -83,7 +83,7 @@ module.exports = function (grunt) {
                     stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min',
                     raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven'
                 },
-                optimize: 'uglify2',
+                optimize: (isDev) ? 'none' : 'uglify2',
                 generateSourceMaps: true,
                 preserveLicenseComments: false,
                 fileExclusionRegExp: /^bower_components$/
