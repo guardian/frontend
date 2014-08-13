@@ -75,11 +75,11 @@ module.exports = function (grunt) {
                     reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/reqwest',
                     lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd',
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/container',
-                    omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
                     stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min',
-                    raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven'
+                    raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven',
+                    omniture:     '../../../../common/app/public/javascripts/vendor/omniture'
                 },
                 optimize: 'uglify2',
                 generateSourceMaps: true,
