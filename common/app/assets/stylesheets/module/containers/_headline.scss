@@ -26,16 +26,6 @@
         float: left;
     }
 }
-.story-list-columns--standard {
-    .headline-item {
-        @include mq(desktop) {
-            &:nth-child(-n+4) {
-                border-top: 0;
-                padding-top: 0;
-            }
-        }
-    }
-}
 .story-list-columns--big + .story-list-columns--standard {
     .story-list-columns__item {
         @include rem((
@@ -60,27 +50,26 @@
                 ));
 
                 .headline-item {
-                    @include rem((
-                        padding-top: $gs-baseline/1.5
-                    ));
-                    border-top: 1px solid $c-neutral5;
                     clear: none;
 
                     &:nth-child(#{$inverse-i}n+1) {
                         clear: both;
-                    }
-
-                    &:nth-child(-n+#{$inverse-i}) {
-                        border-top: 0;
-                        padding-top: 0;
                     }
                 }
             }
         }
     }
 }
-
 .headline-item {
+    .item__byline {
+        display: none;
+    }
+
+    .item__meta {
+        display: none;
+    }
+}
+.headline-item--standard {
     @include rem((
         padding-bottom: $gs-baseline,
         padding-top: $gs-baseline/1.5
@@ -93,7 +82,6 @@
 
 .headline-item--big {
     border-top: 0;
-    padding-bottom: 0;
     padding-top: 0;
 
     .item {
@@ -105,14 +93,6 @@
         @include mq(desktop) {
             border-top-style: none;
         }
-    }
-
-    .item__byline {
-        display: none;
-    }
-
-    .item__meta {
-        display: none;
     }
 
     .item__title {
@@ -141,5 +121,36 @@
             float: none;
             margin-top: 0;
         }
+    }
+}
+
+.headline-item--very-big {
+    @include mq(desktop) {
+        float: left;
+        width: 50%;
+    }
+
+    .item {
+        padding-left: 0;
+    }
+
+    .item__title {
+        @include fs-headline(4, true);
+    }
+
+    .item__link {
+        border-top: 0;
+    }
+}
+
+.headline-item--no-image {
+    @include rem((
+        padding-bottom: $gs-baseline,
+        padding-top: $gs-baseline/1.5
+    ));
+    border-top: 1px solid $c-neutral6;
+
+    .item__media-wrapper {
+        display: none;
     }
 }
