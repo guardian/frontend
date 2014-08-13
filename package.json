@@ -26,6 +26,7 @@
     "grunt-text-replace": "~0.3.11",
     "grunt-webfontjson": "~0.0.3",
     "imagemin-pngquant": "^0.1.2",
+    "jit-grunt": "^0.8.0",
     "karma": "^0.12.16",
     "karma-chrome-launcher": "~0.1.0",
     "karma-coffee-preprocessor": "^0.2.1",
