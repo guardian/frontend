@@ -48,6 +48,7 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
+    'common/modules/ui/fauxBlockLinks',
     'common/modules/discussion/loader'
 ], function (
     $,
@@ -96,6 +97,7 @@ define([
     id,
     MoreTags,
     smartAppBanner,
+    FauxBlockLinks,
     DiscussionLoader
 ) {
 
@@ -111,22 +113,7 @@ define([
         },
 
         initialiseFauxBlockLinks: function(context){
-            bean.on(
-                context,
-                'mouseenter',
-                '.u-faux-block-link__overlay',
-                function(e) {
-                    $(e.currentTarget).parent().addClass('u-faux-block-link--hover');
-                }
-            );
-            bean.on(
-                context,
-                'mouseleave',
-                '.u-faux-block-link__overlay',
-                function(e) {
-                    $(e.currentTarget).parent().removeClass('u-faux-block-link--hover');
-                }
-            );
+            new FauxBlockLinks(context);
         },
 
         initialiseTopNavItems: function(config){
