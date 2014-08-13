@@ -249,7 +249,6 @@
                         <textarea class="headline" data-bind="
                             valueUpdate:'afterkeydown',
                             hasFocus: true,
-                            event: {blur: save},
                             value: headlineInput,
                             attr: {
                                 maxlength: $root.headlineLength,
@@ -265,7 +264,6 @@
 
                         <textarea class="trailtext" data-bind="
                             valueUpdate:'afterkeydown',
-                            event: {blur: save},
                             value: trailTextInput,
                             attr: {placeholder: fields.trailText() || 'Trail text'}"></textarea>
                         <a class="revert revert--trailtext" data-bind="
@@ -274,7 +272,6 @@
                             visible: meta.trailText"><i class="icon-fast-backward"></i></a>
 
                         <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
-                            event: {blur: save},
                             visible: isSnap,
                             value: meta.href"/>
 
@@ -282,20 +279,16 @@
                             if: state.isOpenImage() || meta.imageSrc()">
                             <input type="text" placeholder="Image URL, eg. copied from Batch Uploader" data-bind="
                                 hasFocus: state.isOpenImage;
-                                event: {blur: save},
                                 value: provisionalImageSrc"/>
                         </div>
                     </div>
 
                     <div class="tools">
-                        <a class="tool tool--done" data-bind="click: close">Done</a>
+                        <a class="tool tool--done" data-bind="click: close">Save</a>
                     </div>
 
                     <div class="article__overrides__other">
-                        Mark as <a data-bind="
-                            click: toggleIsBreaking,
-                            css: {selected: meta.isBreaking}">breaking news</a>
-
+                        <select class="labels" data-bind="options: $root.labels, value: meta.label, optionsCaption: 'Mark as...'"></select>
                         <div class="supporting-message">Add supporting content below</div>
                     </div>
                 </div>

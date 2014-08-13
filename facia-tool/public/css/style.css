@@ -593,9 +593,12 @@ input[type="text"] {
     box-sizing: border-box;
     height: 25px;
     padding: 1px 5px;
-    margin: 1px 0 0 0;
+    margin-top: 2px;
     color: #000000;
-    border-radius: 2px;
+}
+
+select {
+    padding: 1px;
 }
 
 .radio-label {

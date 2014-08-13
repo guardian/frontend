@@ -65,7 +65,6 @@ define([
                 'imageSrc',
                 'imageSrcWidth',
                 'imageSrcHeight',
-                'isBreaking',
                 'group',
                 'snapType',
                 'snapCss',
@@ -223,11 +222,6 @@ define([
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
         };
 
-        Article.prototype.toggleIsBreaking = function() {
-            this.meta.isBreaking(!this.meta.isBreaking());
-            this._save();
-        };
-
         Article.prototype.sparkline = function() {
             var path = urlAbsPath(this.props.webUrl());
 
@@ -275,6 +269,7 @@ define([
             var self = this;
 
             _.defer(function(){
+                self._save();
                 self.state.isOpen(false);
             });
         };

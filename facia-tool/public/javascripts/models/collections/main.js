@@ -57,6 +57,8 @@ define([
 
         model.front = ko.observable();
 
+        model.labels = vars.CONST.labels;
+
         model.headlineLength = ko.computed(function() {
             return _.contains(vars.CONST.restrictHeadlinesOn, model.front()) ? vars.CONST.restrictedHeadlineLength : vars.CONST.headlineLength;
         }, this);

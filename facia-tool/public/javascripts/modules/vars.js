@@ -28,6 +28,16 @@ define([
             {name: 'prototype/raclette'}
         ],
 
+        labels: [
+            'breaking news',
+            'analysis',
+            'background',
+            'comment',
+            'opinion',
+            'gallery',
+            'ideo'
+        ],
+
         headlineLength: 200,
         restrictedHeadlineLength: 90,
 
