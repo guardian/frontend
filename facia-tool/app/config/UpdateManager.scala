@@ -2,7 +2,7 @@ package config
 
 import controllers.CreateFront
 import frontsapi.model.{UpdateActions, Collection, Config, Front}
-import services.S3FrontsApi
+import services.{ConfigAgent, S3FrontsApi}
 import play.api.libs.json.Json
 import util.SanitizeInput
 import com.gu.googleauth.UserIdentity
@@ -21,13 +21,15 @@ object UpdateManager {
    * @param transform The transformation to apply
    */
   private def transformConfig(transform: Config => Config, identity: UserIdentity): Unit = {
-    S3FrontsApi.getMasterConfig map { configJson =>
-      val config = Json.parse(configJson).asOpt[Config] getOrElse {
+    S3FrontsApi.getMasterConfig map { configString =>
+      val configJson = Json.parse(configString)
+      val config = configJson.asOpt[Config] getOrElse {
         throw new RuntimeException(s"Unable to de-serialize config from S3: $configJson")
       }
 
       val newConfig = SanitizeInput.fromConfigSeo(Transformations.prune(transform(config)))
       UpdateActions.putMasterConfig(newConfig, identity)
+      ConfigAgent.refreshWith(configJson)
     }
   }
 
