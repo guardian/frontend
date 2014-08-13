@@ -20,7 +20,7 @@ define([
         },
 
         enableMegaNavToggle: function(){
-            bean.on(document, 'click touchstart', '.js-navigation-toggle', function (e) {
+            bean.on(document, 'click', '.js-navigation-toggle', function (e) {
                 e.preventDefault();
                 $('.' + e.currentTarget.getAttribute('data-target-nav')).toggleClass('navigation--expanded navigation--collapsed');
             });
