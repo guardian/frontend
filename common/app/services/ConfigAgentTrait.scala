@@ -49,8 +49,12 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     }
   }
 
-  def getConfig(id: String): Option[Config] = {
-    val json = configAgent.get()
+  def getConfig(id: String): Option[Config] = generateConfig(configAgent.get(), id)
+
+  def getConfigAfterUpdates(id: String): Future[Option[Config]] =
+    configAgent.future().map(configJson => generateConfig(configJson, id))
+
+  private def generateConfig(json: JsValue, id: String): Option[Config] = {
     (json \ "collections" \ id).asOpt[JsValue] map { collectionJson =>
       Config(
         id,
