@@ -142,6 +142,11 @@
         border-top: 0;
     }
 }
+.headline-item--very-big + .story-list-columns {
+    @include rem((
+        padding-left: $gs-gutter/2
+    ));
+}
 
 .headline-item--no-image {
     @include rem((
