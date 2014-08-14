@@ -53,7 +53,6 @@
             padding-top: $gs-baseline/2,
             margin-bottom: $gs-baseline
         ));
-        line-height: 1;
     }
     @include mq(desktop) {
         @include rem((
