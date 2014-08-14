@@ -88,6 +88,13 @@ Content API component
 .facia-container--layout-front .commercial--capi {
     @include mq(faciaLeftCol) {
         @include c-capi-leftCol;
+        
+        .commercial__head {
+            @include rem((
+                width: gs-span(2),
+                margin-right: $gs-gutter
+            ));
+        }
     }
 }
 
