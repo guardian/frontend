@@ -548,7 +548,7 @@ module.exports = function (grunt) {
              * Using this task to copy hooks, as Grunt's own copy task doesn't preserve permissions
              */
             copyHooks: {
-                command: 'cp git-hooks/pre-commit .git/hooks/',
+                command: 'ln -s ../git-hooks .git/hooks',
                 options: {
                     stdout: true,
                     stderr: true,
@@ -866,7 +866,7 @@ module.exports = function (grunt) {
             flash      : [staticTargetDir + 'flash', staticHashDir + 'flash'],
             fonts      : [staticTargetDir + 'fonts', staticHashDir + 'fonts'],
             // Clean any pre-commit hooks in .git/hooks directory
-            hooks      : ['.git/hooks/pre-commit'],
+            hooks      : ['.git/hooks'],
             assets     : ['common/conf/assets']
         },
 
