@@ -33,9 +33,10 @@ define([
             'analysis',
             'background',
             'comment',
+            'exclusive',
             'opinion',
             'gallery',
-            'ideo'
+            'video'
         ],
 
         headlineLength: 200,
