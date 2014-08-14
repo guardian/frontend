@@ -15,7 +15,7 @@
             <div class="item__tonal-border tone-accent-border"></div>
             @trail match {
                 case videoItem: Video if videoItem.mainVideo.isDefined && trail.imageAdjust == "boost" => {
-                    <div class="item__media-wrapper item__media-wrapper--has-icon">
+                    <div class="item__media-wrapper item__media-wrapper--has-icon u-faux-block-link__promote">
                         <div class="item__video-container">
                             @video(videoItem.mainVideo.get, Item300, videoItem.webTitle, 300, 180, false, false, Some(videoItem.endSlatePath))
                         </div>
