@@ -33,7 +33,7 @@
 .content__head {
     @include mq(tablet) {
         @include rem((
-            padding-top:$content-top-padding
+            padding-top: $content-top-padding
         ));
     }
 
@@ -43,7 +43,7 @@
         .tone-background {
             @include mq(tablet) {
                 @include rem((
-                    padding-top:$content-top-padding
+                    padding-top: $content-top-padding
                 ));
             }
         }
