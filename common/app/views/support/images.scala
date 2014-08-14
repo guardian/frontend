@@ -41,7 +41,6 @@ case class Profile(
   override val compression: Int = 95) extends ElementProfile
 
 object VideoProfile {
-
   lazy val ratioHD = new Fraction(16,9)
 }
 
