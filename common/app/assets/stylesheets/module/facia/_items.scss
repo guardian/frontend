@@ -250,6 +250,7 @@
 }
 .item__media-wrapper {
     position: relative;
+    z-index: 1;
 }
 .item--has-image {
     .item__media-wrapper,
