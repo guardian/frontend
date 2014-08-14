@@ -3,9 +3,15 @@ package views.support
 import model.{Content, MetaData, ImageContainer, ImageAsset}
 import conf.Switches.{ImageServerSwitch, SeoOptimisedContentImageSwitch}
 import java.net.URI
+import org.apache.commons.math3.fraction.Fraction
+import org.apache.commons.math3.util.Precision
 import conf.Configuration
 
-case class Profile(width: Option[Int] = None, height: Option[Int] = None, compression: Int = 95) {
+abstract class ElementProfile {
+
+  def width: Option[Int]
+  def height: Option[Int]
+  def compression: Int
 
   def elementFor(image: ImageContainer): Option[ImageAsset] = {
     val sortedCorps = image.imageCrops.sortBy(_.width)
@@ -27,6 +33,26 @@ case class Profile(width: Option[Int] = None, height: Option[Int] = None, compre
 
 
   private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
+}
+
+case class Profile(
+  override val width: Option[Int] = None,
+  override val height: Option[Int] = None,
+  override val compression: Int = 95) extends ElementProfile
+
+object VideoProfile {
+
+  lazy val ratioHD = new Fraction(16,9)
+}
+
+case class VideoProfile(
+  override val width: Some[Int],
+  override val height: Some[Int],
+  override val compression: Int = 95) extends ElementProfile {
+
+  lazy val isRatioHD: Boolean = Precision.compareTo(VideoProfile.ratioHD.doubleValue, aspectRatio.doubleValue, 0.1d) == 0
+
+  private lazy val aspectRatio: Fraction = new Fraction(width.get, height.get)
 }
 
 // Configuration of our different image profiles
@@ -71,7 +97,7 @@ object ImgSrc {
 
   def imageHost = Configuration.images.path
 
-  def apply(url: String, imageType: Profile): String = {
+  def apply(url: String, imageType: ElementProfile): String = {
     val uri = new URI(url.trim)
 
     val isSupportedImage = uri.getHost == "static.guim.co.uk" && !uri.getPath.toLowerCase.endsWith(".gif")
@@ -120,3 +146,5 @@ object SeoOptimisedContentImage extends Profile(width = Some(460)) {
   }
 }
 
+object Video640 extends VideoProfile(Some(640), Some(360)) // 16:9
+object Video460 extends VideoProfile(Some(460), Some(276)) // 5:3
