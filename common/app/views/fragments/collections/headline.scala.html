@@ -31,7 +31,7 @@
                     @fragments.items.standard(trail, index, containerIndex, "div")
                 </div>
             }
-            @defining(standardItems.drop(if(bigItems.nonEmpty) 3 else 0)) { items =>
+            @defining(standardItems.drop(if(bigItems.nonEmpty) 3 else 0).slice(0, if(bigItems.nonEmpty) 4 else 10)) { items =>
                 @items.zipWithIndex.map{ case (trail, index) =>
                     <div class="story-list-columns__item headline-item @if(trail.group == Some("1")){headline-item--big}else{headline-item--standard}" data-link-name="trail | @{index + 1}">
                         <a @LinkTo(trail).map{url=>href="@url"} class="headline-item__body" data-link-name="article">
