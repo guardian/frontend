@@ -2,6 +2,10 @@
     #most-popular-head {
         display: none;
     }
+    .facia-container--layout-content & {
+        margin-bottom: 0;
+    }
+
     @include mq(rightCol, desktop) {
         .headline-list--large .headline-list__item {
             &:first-child {
