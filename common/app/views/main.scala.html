@@ -22,8 +22,6 @@
             ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
         itemscope itemtype="http://schema.org/WebPage">
 
-        @fragments.message(metaData)
-
         @if(showAdverts) {
             @fragments.commercial.topBanner(metaData)
         }
