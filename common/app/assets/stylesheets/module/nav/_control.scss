@@ -13,6 +13,7 @@ $control-size: 36px;
     display: none;
     @include rem((
         height: 30px,
+        line-height: $control-size,
         margin-left: $gs-gutter/2
     ));
     vertical-align: top;
@@ -23,7 +24,6 @@ $control-size: 36px;
         overflow: hidden;
         float: left;
         @include rem((
-            line-height: $control-size,
             max-width: 200px
         ));
         text-overflow: ellipsis;
