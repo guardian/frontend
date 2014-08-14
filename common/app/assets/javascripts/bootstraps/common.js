@@ -291,6 +291,7 @@ define([
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
                 releaseMessage.show(msg);
+                $('.js-footer-site-message-copy').html(msg);
             }
         },
 

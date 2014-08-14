@@ -57,8 +57,8 @@ define([
 
     Message.prototype.hide = function() {
         $('#header').removeClass('js-site-message');
-        $('.site-message').addClass('site-message--inline')
-            .removeAttr('role');
+        $('.site-message').addClass('is-hidden');
+        $('.site-message--footer').removeClass('is-hidden');
     };
 
     Message.prototype.hasSeen = function() {
