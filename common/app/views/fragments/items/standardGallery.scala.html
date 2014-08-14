@@ -1,4 +1,4 @@
-@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader, config: model.Config)
+@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None)(implicit request: RequestHeader, config: model.Config)
 
 @import conf.Static
 @import common.LinkTo
@@ -6,7 +6,7 @@
 
 @defining((trail.visualTone, containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
-        class="@GetClasses.forItem(trail, isFirstContainer)"
+        class="@GetClasses.forItem(trail, isFirstContainer, forceTone)"
         data-link-name="trail | @{index + 1}">
 
         <div class="item__container">
