@@ -51,6 +51,7 @@ define([
         this.oastoken           = options.oastoken || '';
         this.adType             = options.adType || 'desktop';
         this.multiComponents    = (options.components || []).map(function(c) { return 'c=' + c; }).join('&');
+        this.capi               = (options.capi || []).map(function(t) {return 't=' + t;}).join('&');
         this.components         = {
             bestbuy:           this.host + 'money/bestbuys.json',
             bestbuyHigh:       this.host + 'money/bestbuys-high.json',
@@ -66,6 +67,7 @@ define([
             soulmatesHigh:     this.host + 'soulmates/mixed-high.json',
             travel:            this.host + 'travel/offers.json?'            + 's=' + this.section + '&' + this.getKeywords(),
             travelHigh:        this.host + 'travel/offers-high.json?'       + 's=' + this.section + '&' + this.getKeywords(),
+            capi:              this.host + 'capi.json?'                     + this.capi + '&' + this.getKeywords(),
             multi:             this.host + 'multi.json?'                    + this.multiComponents
         };
         this.postLoadEvents = {
