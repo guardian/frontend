@@ -246,7 +246,7 @@
     float: left;
     width: 49.5%;
 
-    + & {
+    & + & {
         float: right;
     }
 }
@@ -281,7 +281,7 @@
     vertical-align: top;
     padding-bottom: ($gs-baseline/3)*2;
 
-    + & {
+    & + & {
         float: right;
     }
 }
