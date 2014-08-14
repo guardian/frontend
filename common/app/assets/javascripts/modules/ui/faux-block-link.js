@@ -1,0 +1,32 @@
+define([
+    'bean',
+    'bonzo',
+    'common/utils/$'
+], function(
+    bean,
+    bonzo,
+    $
+){
+    var fauxBlockLink = function() {
+        var overlayClass = '.u-faux-block-link__overlay',
+            hoverStateClassName = 'u-faux-block-link--hover';
+
+        var hoverState = {
+            add: function(e) {
+                $(e.currentTarget).parent().addClass(hoverStateClassName);
+            },
+            remove: function(e) {
+                $(e.currentTarget).parent().removeClass(hoverStateClassName);
+            }
+        };
+
+        return {
+            init: function(context) {
+                bean.on(context, 'mouseenter', overlayClass, hoverState.add);
+                bean.on(context, 'mouseleave', overlayClass, hoverState.remove);
+            }
+        };
+    };
+
+    return fauxBlockLink;
+});
