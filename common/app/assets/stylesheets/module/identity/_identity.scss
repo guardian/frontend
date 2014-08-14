@@ -635,10 +635,6 @@
             opacity: 0;
         }
 
-        .membership-tab__updated {
-            @include animation(updated 1s ease-in-out forwards);
-        }
-
         /* Stripe credit card types
            ========================================================================== */
 
