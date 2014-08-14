@@ -30,6 +30,26 @@
     }
 }
 
+.content__head {
+    @include mq(tablet) {
+        @include rem((
+            padding-top: $content-top-padding
+        ));
+    }
+
+    &.content__head--tonal {
+        padding-top: 0;
+
+        .tone-background {
+            @include mq(tablet) {
+                @include rem((
+                    padding-top: $content-top-padding
+                ));
+            }
+        }
+    }
+}
+
 .content__main-column {
     position: relative;
 
