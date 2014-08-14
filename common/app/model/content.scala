@@ -216,7 +216,7 @@ object Content {
   def fromPressedJson(json: JsValue): Option[Content] = {
     val contentFields: Option[Map[String, String]] = (json \ "safeFields").asOpt[Map[String, String]]
     val itemId: String = (json \ "id").as[String]
-    if (itemId.startsWith("snap/")) {
+    if (Snap.isSnap(itemId)) {
       val snapMeta: Map[String, JsValue] = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
       Option(
         new Snap(
@@ -351,6 +351,10 @@ class Snap(snapId: String,
 
   //Meta implementations
   override lazy val webPublicationDate = snapWebPublicationDate
+}
+
+object Snap {
+  def isSnap(id: String): Boolean = id.startsWith("snap/")
 }
 
 class Article(content: ApiContentWithMeta) extends Content(content) {
