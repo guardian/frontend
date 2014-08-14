@@ -11,7 +11,7 @@
     float: left;
     width: 49%;
 
-    + & {
+    & + & {
         float: right;
         text-align: right;
     }

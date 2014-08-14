@@ -37,7 +37,7 @@ trait FrontJsonLite extends ExecutionContexts{
 
     (curated ++ editorsPicks ++ results)
     .filterNot{ j =>
-      (j \ "id").asOpt[String].exists(_.startsWith("snap/"))
+      (j \ "id").asOpt[String].exists(Snap.isSnap)
      }
     .map{ j =>
       Json.obj(

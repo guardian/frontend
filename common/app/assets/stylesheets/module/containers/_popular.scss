@@ -2,6 +2,15 @@
     #most-popular-head {
         display: none;
     }
+    .facia-container--layout-content & {
+        margin-bottom: 0;
+    }
+    .content-footer--media & {
+        @include rem((
+            margin-top: $gs-baseline
+        ));
+    }
+
     @include mq(rightCol, desktop) {
         .headline-list--large .headline-list__item {
             &:first-child {
