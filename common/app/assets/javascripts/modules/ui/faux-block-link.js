@@ -8,7 +8,7 @@ define([
     $
 ){
     var fauxBlockLink = function() {
-        var overlayClass = '.u-faux-block-link__overlay',
+        var overlaySelector = '.u-faux-block-link__overlay',
             hoverStateClassName = 'u-faux-block-link--hover';
 
         var hoverState = {
@@ -22,8 +22,8 @@ define([
 
         return {
             init: function(context) {
-                bean.on(context, 'mouseenter', overlayClass, hoverState.add);
-                bean.on(context, 'mouseleave', overlayClass, hoverState.remove);
+                bean.on(context, 'mouseenter', overlaySelector, hoverState.add);
+                bean.on(context, 'mouseleave', overlaySelector, hoverState.remove);
             }
         };
     };
