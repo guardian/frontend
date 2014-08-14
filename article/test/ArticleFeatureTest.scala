@@ -404,7 +404,7 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/politics/2014/may/16/nigel-farage-lbc-interview-key-moments") { browser =>
         import browser._
         Then("the main media should contain a video")
-        $(".media-primary video") should have size 2
+        $(".media-primary video") should have size 1
       }
     }
 
