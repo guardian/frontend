@@ -4,7 +4,7 @@
 @import conf.Static
 @import model.Video
 @import views.html.fragments.media.video
-@import views.support.{GetClasses, ImgSrc, Item300, Item620, RemoveOuterParaHtml}
+@import views.support.{GetClasses, ImgSrc, Video640, Item620, Item300, RemoveOuterParaHtml}
 
 @defining((trail.visualTone, containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
@@ -17,7 +17,7 @@
                 case videoItem: Video if videoItem.mainVideo.isDefined && trail.imageAdjust == "boost" => {
                     <div class="item__media-wrapper item__media-wrapper--has-icon">
                         <div class="item__video-container">
-                            @video(videoItem.mainVideo.get, Item300, videoItem.webTitle, 300, 180, false, false, Some(videoItem.endSlatePath))
+                            @video(videoItem.mainVideo.get, Video640, videoItem.webTitle, false, Some(videoItem.endSlatePath))
                         </div>
                     </div>
 
