@@ -10,6 +10,18 @@
     z-index: 100;
 }
 
+.site-message--inline {
+    position: relative;
+    z-index: 1;
+    @include rem((
+        border-bottom: 1px solid #ffffff
+    ));
+
+    .site-message__close {
+        display: none;
+    }
+}
+
 .site-message__inner {
     @include rem((
         padding: 0 $gs-gutter/2
