@@ -47,6 +47,8 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   // TODO - this is only while in transition from http to https for preview
   // no copy and paste for use elsewhere, simply go full https
   private def checkIsSecure(config: GoogleAuthConfig)(implicit request: RequestHeader) = {
+
+    // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
     val isSecure = request.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))
     if (isSecure){
       val oldRedirect = config.redirectUrl
