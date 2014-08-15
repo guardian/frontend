@@ -4,16 +4,18 @@
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
-    <div class="site-message--footer js-footer-message" data-link-name="release message">
-        <div class="gs-container">
-            <div class="site-message__inner">
-                <div class="site-message__media">
-                    <i class="i i-g-white-36"></i>
+    @if(ReleaseMessageSwitch.isSwitchedOn) {
+        <div class="site-message--footer is-hidden js-footer-message" data-link-name="release message">
+            <div class="gs-container">
+                <div class="site-message__inner">
+                    <div class="site-message__media">
+                        <i class="i i-g-white-36"></i>
+                    </div>
+                    <div class="site-message__copy js-footer-site-message-copy u-cf"></div>
                 </div>
-                <div class="site-message__copy js-footer-site-message-copy u-cf"></div>
             </div>
         </div>
-    </div>
+    }
 
 
     <div class="l-footer__primary">
