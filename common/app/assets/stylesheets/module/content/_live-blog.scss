@@ -949,7 +949,8 @@ $timeline-width: 14px;
         @include mq(rightCol) {
             float: left;
             @include rem((
-                width: gs-span(3)
+                width: gs-span(3),
+                padding-top: $content-top-padding
             ));
 
             .tone-colour {
