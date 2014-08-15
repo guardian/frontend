@@ -9,7 +9,8 @@ module.exports = function (grunt) {
     require('jit-grunt')(grunt, {
         replace: 'grunt-text-replace',
         scsslint: 'grunt-scss-lint',
-        cssmetrics: 'grunt-css-metrics'
+        cssmetrics: 'grunt-css-metrics',
+        assetmonitor: 'grunt-asset-monitor'
     });
 
     var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
@@ -1013,7 +1014,6 @@ module.exports = function (grunt) {
         grunt.task.run('pagespeed' + target);
     });
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
-    grunt.registerTask('analyse:monitor', ['monitor:common']);
     grunt.registerTask('analyse', ['analyse:css', 'analyse:performance']);
 
     /**

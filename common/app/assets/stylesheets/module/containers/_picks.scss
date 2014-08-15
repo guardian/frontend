@@ -47,8 +47,11 @@
     .item__meta {
         display: none;
     }
-    .tone-accent-border {
+    .item__tonal-border {
         border: 0;
+    }
+    .stars {
+        display: none
     }
 }
 .pick-item--big {
@@ -59,6 +62,10 @@
             padding-right: $gs-gutter,
             padding-bottom: $gs-baseline*3
         ));
+    }
+
+    .stars {
+        display: block;
     }
 
     @include mq(tablet) {
@@ -79,7 +86,7 @@
         .item__header {
             @include rem((
                 padding-left: $gs-gutter/2,
-                padding-bottom: ($gs-baseline*4) - 2
+                padding-bottom: $gs-baseline
             ));
         }
     }
