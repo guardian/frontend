@@ -94,8 +94,8 @@ define([
 
             clearTimeout(deBounced);
             deBounced = setTimeout(function(){
-
-                var url, propName;
+                var url = vars.CONST.apiSearchBase + '/',
+                    propName;
 
                 if (!opts.noFlushFirst) {
                     self.flush('searching...');
@@ -104,10 +104,10 @@ define([
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
                     self.term(urlAbsPath(self.term()));
-                    url = vars.CONST.apiSearchBase + '/' + self.term() + '?show-fields=all&format=json';
+                    url += self.term() + '?' + vars.CONST.apiSearchParams;
                     propName = 'content';
                 } else {
-                    url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json&order-by=newest';
+                    url += 'search?' + vars.CONST.apiSearchParams + '&order-by=newest';
                     url += '&content-set=' + (self.showingDrafts() ? 'preview&use-date=last-modified' : 'web-live');
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
