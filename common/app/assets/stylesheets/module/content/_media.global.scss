@@ -97,53 +97,8 @@
         }
     }
 
-    .social-wrapper {
-        border-top: 1px dotted $c-neutral2;
-        padding-top: 0;
-
-        &:before {
-            content: 'Share this page';
-            @include fs-data(3);
-            color: $c-neutral3;
-            @include rem((
-                margin-top: $gs-baseline/4
-            ));
-        }
-
-        .social {
-            @include rem((
-                padding-top: $gs-baseline/3
-            ));
-        }
-
-        .social__head {
-            display: none;
-        }
-    }
-
-    .content__meta-container {
-        border-bottom: 0;
-    }
-
     .social-wrapper--bottom {
         max-width: none;
-    }
-
-    @include mq(tablet, rightCol) {
-        .content__meta-container {
-            float: left;
-            @include rem((
-                width: 404px, //Magic, as video items below are off grid at 33.3% width
-                margin-right: $gs-gutter,
-                margin-bottom: $gs-baseline*2
-            ));
-        }
-        .social-wrapper--bottom {
-            float: right;
-            @include rem((
-                width: 192px
-            ));
-        }
     }
 
     $video-most-viewed-container: 525px;
@@ -222,6 +177,29 @@
     .content__headline {
         &:before {
             @include icon(video-icon);
+            @include rem((
+                width: 34px !important
+            ));
+
+            @include mq(mobileLandscape) {
+                @include rem((
+                    width: 40px !important
+                ));
+            }
+            @include mq(tablet) {
+                @include rem((
+                    width: 43px !important
+                ));
+            }
+        }
+    }
+}
+
+
+.content--gallery {
+    .content__headline {
+        &:before {
+            @include icon(camera-yellow-large);
             @include rem((
                 width: 34px !important
             ));
@@ -408,5 +386,52 @@
         @include mq(tablet, rightCol) {
             display: none;
         }
+    }
+}
+
+.content--video {
+    @include mq(tablet, rightCol) {
+        .content__meta-container {
+            float: left;
+            @include rem((
+                width: 404px, //Magic, as video items below are off grid at 33.3% width
+                margin-right: $gs-gutter,
+                margin-bottom: $gs-baseline*2
+            ));
+        }
+        .social-wrapper--bottom {
+            float: right;
+            @include rem((
+                width: 192px
+            ));
+        }
+    }
+
+    .social-wrapper {
+        border-top: 1px dotted $c-neutral2;
+        padding-top: 0;
+
+        &:before {
+            content: 'Share this page';
+            @include fs-data(3);
+            color: $c-neutral3;
+            @include rem((
+                margin-top: $gs-baseline/4
+            ));
+        }
+
+        .social {
+            @include rem((
+                padding-top: $gs-baseline/3
+            ));
+        }
+
+        .social__head {
+            display: none;
+        }
+    }
+
+    .content__meta-container {
+        border-bottom: 0;
     }
 }
