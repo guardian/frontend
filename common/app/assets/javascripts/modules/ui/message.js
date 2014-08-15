@@ -3,13 +3,15 @@ define([
     'bean',
     'common/utils/storage',
     'common/modules/userPrefs',
-    'lodash/arrays/uniq'
+    'lodash/arrays/uniq',
+    'common/utils/mediator'
 ], function (
     $,
     bean,
     storage,
     userPrefs,
-    uniq
+    uniq,
+    mediator
 ) {
 
    /**
@@ -58,6 +60,7 @@ define([
     Message.prototype.hide = function() {
         $('#header').removeClass('js-site-message');
         $('.site-message').addClass('is-hidden');
+        mediator.emit('message:hidden:' + this.id);
     };
 
     Message.prototype.hasSeen = function() {
