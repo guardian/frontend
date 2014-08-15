@@ -19,7 +19,6 @@ define([
                 .map(function(searchQuery) {
                     return decodeURIComponent(searchQuery.split('=').pop().replace(/\\+/g, ' '));
                 })
-                .valueOf()
                 .shift();
         };
 
