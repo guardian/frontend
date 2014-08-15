@@ -71,7 +71,7 @@ $block-padding-right: $gs-gutter;
     ));
 
     @include mq(rightCol) {
-        border-top: 0 none;
+        border-top: 0;
     }
 
     @include mq(rightCol) {
@@ -450,7 +450,7 @@ $block-padding-right: $gs-gutter;
             border-bottom: 2px solid $c-neutral8;
 
             &:last-child {
-                border-bottom: 0 none;
+                border-bottom: 0;
             }
         }
 
@@ -483,7 +483,7 @@ $block-padding-right: $gs-gutter;
     border-top: 1px dotted $c-neutral3;
 
     .block-time + .block-elements .element-tweet:first-child & {
-        border-top: 0 none;
+        border-top: 0;
     }
 }
 .element-tweet {
@@ -558,7 +558,7 @@ $block-padding-right: $gs-gutter;
     position: relative;
     padding: 0;
     z-index: 100;
-    border-top: 0 none;
+    border-top: 0;
     border-bottom: 1px solid $c-neutral4;
 
     @include mq($to: rightCol) {
@@ -568,7 +568,7 @@ $block-padding-right: $gs-gutter;
     .blog__timeline &,
     &.dropdown--active,
     .blog__main-column > & {
-        border-bottom: 0 none;
+        border-bottom: 0;
     }
 
     &:before,
@@ -578,7 +578,7 @@ $block-padding-right: $gs-gutter;
         border-bottom: 1px solid $c-neutral4;
 
         .blog__timeline & {
-            border-bottom: 0 none;
+            border-bottom: 0;
         }
     }
 
@@ -586,7 +586,7 @@ $block-padding-right: $gs-gutter;
     .blog__main-column > & {
         &:before,
         &:after {
-            border-bottom: 0 none;
+            border-bottom: 0;
         }
     }
 
@@ -613,7 +613,7 @@ $block-padding-right: $gs-gutter;
         .blog__timeline & {
             @include mq(rightCol) {
                 display: block;
-                border-top: 0 none;
+                border-top: 0;
                 @include rem((
                     padding-top: 0,
                     margin-top: ($gs-baseline/3)*-1,
@@ -625,11 +625,11 @@ $block-padding-right: $gs-gutter;
 
     & + & {
         .dropdown__button {
-            border-top: 0 none;
+            border-top: 0;
 
             &:before,
             &:after {
-                border-top: 0 none;
+                border-top: 0;
             }
         }
     }
@@ -678,7 +678,7 @@ $timeline-width: 14px;
         }
 
         .dropdown {
-            border-top: 0 none;
+            border-top: 0;
         }
     }
 }
@@ -713,13 +713,13 @@ $timeline-width: 14px;
     border-bottom: 1px solid $c-neutral4;
 
     &:last-child {
-        border-bottom: 0 none;
+        border-bottom: 0;
     }
 
     @include mq(rightCol) {
         display: block;
         overflow: visible;
-        border-bottom: 0 none;
+        border-bottom: 0;
     }
 }
 .timeline__link {
@@ -774,7 +774,7 @@ $timeline-width: 14px;
         }
 
         .timeline__item:last-child & {
-            border-left: 0 none;
+            border-left: 0;
         }
     }
 }
@@ -875,7 +875,7 @@ $timeline-width: 14px;
     }
 
     .match-summary {
-        border-bottom: 0 none;
+        border-bottom: 0;
     }
 
     .element-table {

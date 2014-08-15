@@ -140,7 +140,7 @@ td {
 }
 .table__caption--bottom {
     font-weight: normal;
-    border-bottom: 0 none;
+    border-bottom: 0;
     border-top: 1px solid darken($c-neutral8, 4%);
     caption-side: bottom;
     text-align: center;
