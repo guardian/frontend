@@ -3,7 +3,7 @@
 # ~~~~
 
 GET         /humans.txt                                                                                              controllers.Assets.at(path="/public", file="humans.txt")
-GET         /foresee/*file                                                                                           controllers.Assets.at(path="/public/foresee", file)
+GET         /surveys/*file                                                                                           controllers.Assets.at(path="/public/surveys", file)
 GET         /commercial/test-page                                                                                    controllers.commercial.CreativeTestPage.allComponents
 
 # For dev machines
