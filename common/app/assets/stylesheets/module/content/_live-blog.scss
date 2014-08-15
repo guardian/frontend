@@ -848,8 +848,7 @@ $timeline-width: 14px;
         border-top: 2px solid $c-neutral4;
     }
 
-    & + &:before,
-    .item:before,
+    .item__tonal-border,
     .item__byline,
     .item__meta {
         display: none;
