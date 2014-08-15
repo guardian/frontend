@@ -26,6 +26,8 @@ define([
         this.permanent = opts.permanent || false;
         this.type = opts.type || 'banner';
         this.prefs = 'messages';
+
+        var $footerMessage = $('.js-footer-message');
     };
 
     Message.prototype.show = function(message) {
@@ -37,7 +39,7 @@ define([
         if ((!$('.site-message').hasClass('is-hidden') && !this.important) || this.hasSeen()) {
             // if we're not showing a banner message, display it in the footer
             if(this.type === 'banner') {
-                $('.js-footer-message').removeClass('is-hidden');
+                $footerMessage.removeClass('is-hidden');
             }
             return false;
         }
@@ -67,7 +69,7 @@ define([
         $('#header').removeClass('js-site-message');
         $('.site-message').addClass('is-hidden');
         if(this.type === 'banner') {
-            $('.js-footer-message').removeClass('is-hidden');
+            $footerMessage.removeClass('is-hidden');
         }
     };
 
