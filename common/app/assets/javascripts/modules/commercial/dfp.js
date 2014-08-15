@@ -14,15 +14,15 @@ define([
     'lodash/objects/pairs',
     'common/utils/$',
     'common/utils/_',
+    'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/config',
     'common/utils/template',
+    'common/modules/commercial/keywords',
     'common/modules/commercial/tags/audience-science',
     'common/modules/commercial/tags/audience-science-gateway',
     'common/modules/commercial/tags/criteo',
-    'common/modules/commercial/keywords',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
 ], function (
@@ -40,15 +40,15 @@ define([
     pairs,
     $,
     _,
+    globalConfig,
     cookies,
     detect,
     mediator,
-    globalConfig,
     template,
+    keywords,
     audienceScience,
     audienceScienceGateway,
     criteo,
-    keywords,
     userAdTargeting,
     ab
 ) {
@@ -438,9 +438,9 @@ define([
                 return bonzo(adSlot);
             })
             .filter(function ($adSlot) {
-                // bonzo needs these - default to true if unavailable (e.g. IE8)
+                // bonzo needs these - use currentStyle (not as reliable?) if unavailable (e.g. IE8)
                 return (window.document.defaultView && window.document.defaultView.getComputedStyle)
-                    ? $adSlot.css('display') !== 'none' : true;
+                    ? $adSlot.css('display') !== 'none' : $adSlot[0].currentStyle.display;
             })
             .valueOf();
 

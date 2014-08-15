@@ -100,7 +100,8 @@
         if (!isModern) { return false; }
 
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
-        var htmlClassNames = document.documentElement.className.split(' ');
+        var currentClassName = document.documentElement.className,
+            htmlClassNames = currentClassName ? currentClassName.split(' ') : [];
 
         @* http://modernizr.com/download/#-svg *@
         function hasSvgSupport() {
