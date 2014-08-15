@@ -687,10 +687,9 @@ $timeline-width: 14px;
     @include mq(rightCol) {
         @include transform(translateZ(0)); //To force on GPU
         @include rem((
-            width: $right-column
+            width: $right-column,
+            top: $gs-baseline*2
         ));
-
-        top: $gs-baseline*2;
     }
 }
 
@@ -796,7 +795,7 @@ $timeline-width: 14px;
         position: relative;
         @include rem((
             top: ($gs-baseline/3)*-1,
-            line-height: 14px
+            line-height: $timeline-width
         ));
     }
 }
@@ -929,9 +928,10 @@ $timeline-width: 14px;
 
 .blog {
     background-color: $c-neutral8;
+
     .content__headline {
         @include rem((
-                padding-bottom: $gs-baseline*3
+            padding-bottom: $gs-baseline*3
         ));
         color: $c-neutral1;
         @include fs-headline(5);
@@ -941,7 +941,7 @@ $timeline-width: 14px;
         }
         @include mq(rightCol) {
             @include rem((
-                    padding-bottom: $gs-row-height + ($gs-baseline * 2)
+                padding-bottom: $gs-row-height + ($gs-baseline * 2)
             ));
         }
     }
@@ -992,8 +992,8 @@ $timeline-width: 14px;
         top: 0;
         z-index: 200;
         @include rem((
-                margin-left:($right-column + $gs-gutter) * - 1,
-                width:$right-column
+            margin-left: ($right-column + $gs-gutter) * - 1,
+            width: $right-column
         ));
     }
 }

@@ -60,6 +60,9 @@
 }
 
 .team-result {
+    display: inline-block;
+    top: 0;
+    vertical-align: middle;
     @include border-radius(4px);
     @include rem((
         height: 8px,
@@ -67,9 +70,6 @@
         width: 8px
     ));
     cursor: help;
-    display: inline-block;
-    top: 0;
-    vertical-align: middle;
 
     &:first-child {
         margin-left: 0;
