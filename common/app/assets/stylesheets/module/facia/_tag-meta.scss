@@ -1,8 +1,9 @@
 .container__meta {
     .container__meta__label {
-        @include rem((
-            line-height: get-line-height($fs-headers, 2) !important));
         @include fs-header(3);
+        @include rem((
+            line-height: get-line-height($fs-headers, 2) !important
+        ));
         color: $c-neutral2;
     }
     .container__meta__description {
@@ -16,7 +17,8 @@
         }
         @include fs-header(3);
         @include rem((
-            line-height: get-line-height($fs-headers, 2) !important));
+            line-height: get-line-height($fs-headers, 2) !important
+        ));
 
         a {
             color: inherit;
