@@ -16,7 +16,8 @@ define([
     'common/modules/component',
     'common/modules/analytics/beacon',
     'common/modules/ui/message',
-    'raven'
+    'raven',
+    'common/utils/mediator'
 ], function(
     $,
     ajax,
@@ -34,7 +35,8 @@ define([
     Component,
     beacon,
     Message,
-    raven
+    raven,
+    mediator
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint()),
@@ -441,9 +443,20 @@ define([
                     '</li>' +
                 '</ul>';
 
-            var releaseMessage = new Message('video');
+                // add video message to the footer message
+                $('.js-footer-site-message-copy').html(msg);
 
-            releaseMessage.show(msg);
+                if(detect.getBreakpoint() !== 'mobile') {
+                    var releaseMessage = new Message('video');
+                    if(releaseMessage.show(msg) !== false) {
+                        mediator.on('message:hidden:video', function() {
+                            $('.js-footer-message').removeClass('is-hidden');
+                        });
+                    } else {
+                        $('.js-footer-message').removeClass('is-hidden');
+                    }
+                }
+            }
         }
     };
 
@@ -459,9 +472,7 @@ define([
             modules.initMostViewedMedia();
         }
 
-        if (config.page.contentType.toLowerCase() === 'video' && detect.getBreakpoint() !== 'mobile') {
-            modules.displayReleaseMessage();
-        }
+        modules.displayReleaseMessage();
     };
 
     return {

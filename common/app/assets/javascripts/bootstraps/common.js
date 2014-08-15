@@ -287,10 +287,23 @@ define([
                                        'data-link-name="opt-out">Opt-out and return to our current site </a>' +
                            '</li>' +
                       '</ul>'
-            }
 
-            // add release message to the footer message
-            $('.js-footer-site-message-copy').html(msg);
+                // add release message to the footer message
+                $('.js-footer-site-message-copy').html(msg);
+
+                if(detect.getBreakpoint() !== 'mobile') {
+                    // force the visitor in to the alpha release for subsequent visits
+                    Cookies.add('GU_VIEW', 'responsive', 365);
+                    var releaseMessage = new Message('alpha');
+                    if(releaseMessage.show(msg) !== false) {
+                        mediator.on('message:hidden:alpha', function() {
+                            $('.js-footer-message').removeClass('is-hidden');
+                        })
+                    } else {
+                        $('.js-footer-message').removeClass('is-hidden');
+                    }
+                }
+            }
         },
 
         displayBreakingNews: function (config) {
