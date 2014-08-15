@@ -845,11 +845,13 @@ $timeline-width: 14px;
     .item {
         padding: 0;
         margin: 0;
-        border-top: 2px solid $c-neutral4;
     }
 
-    & + &:before,
-    .item:before,
+    .item__tonal-border {
+        border-color: $c-neutral4;
+    }
+
+    & + &:before, // Vertical item separator
     .item__byline,
     .item__meta {
         display: none;
