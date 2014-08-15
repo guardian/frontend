@@ -12,6 +12,7 @@
 
   var win = window
     , doc = document
+    , httpsRe = /^http/
     , twoHundo = /^(20\d|1223)$/
     , byTag = 'getElementsByTagName'
     , readyState = 'readyState'
@@ -67,6 +68,10 @@
         }
       }
 
+  function succeed(request) {
+    return httpsRe.test(window.location.protocol) ? twoHundo.test(request.status) : !!request.response;
+  }
+
   function handleReadyState(r, success, error) {
     return function () {
       // use _aborted to mitigate against IE err c00c023f
@@ -74,7 +79,7 @@
       if (r._aborted) return error(r.request)
       if (r.request && r.request[readyState] == 4) {
         r.request.onreadystatechange = noop
-        if (twoHundo.test(r.request.status)) success(r.request)
+        if (succeed(r.request)) success(r.request)
         else
           error(r.request)
       }

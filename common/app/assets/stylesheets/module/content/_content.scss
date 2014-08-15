@@ -148,7 +148,7 @@
 
     @include mq(tablet) {
         @include rem((
-            padding-bottom: ($gs-baseline/2) * 3
+            padding-bottom: $gs-baseline/2
         ));
     }
 
