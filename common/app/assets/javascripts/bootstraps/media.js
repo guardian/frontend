@@ -424,7 +424,10 @@ define([
             }
         },
         displayReleaseMessage: function() {
-            var msg = '<p class="site-message__message" id="site-message__message">' +
+            if (config.page.contentType.toLowerCase() === 'video') {
+
+
+                var msg = '<p class="site-message__message" id="site-message__message">' +
                     'We\'ve redesigned our video pages to make it easier to find and experience our best video content. We\'d love to hear what you think.' +
                     '</p>' +
                     '<ul class="site-message__actions u-unstyled">' +
@@ -436,7 +439,7 @@ define([
                     '<i class="i i-arrow-white-right"></i>' +
                     '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
                     '</li>' +
-                    '</ul>';
+                '</ul>';
 
             var releaseMessage = new Message('video');
 

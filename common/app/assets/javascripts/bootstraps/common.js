@@ -267,10 +267,16 @@ define([
 
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
+            var path = (document.location.pathname) ? document.location.pathname : '/';
 
-            var path = (document.location.pathname) ? document.location.pathname : '/',
-                exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
-                msg = '<p class="site-message__message" id="site-message__message">' +
+            // Do not show the release message on -sp- based paths.
+            var spRegExp = new RegExp('.*-sp-.*');
+
+            if (config.switches.releaseMessage && !spRegExp.test(path) && config.page.contentType !== 'Video' && config.page.hasClassicVersion) {
+
+
+                var exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
+                    msg = '<p class="site-message__message" id="site-message__message">' +
                             'You’re viewing a beta release of the Guardian’s responsive website.' +
                             ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
                       '</p>' +
@@ -280,17 +286,7 @@ define([
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
                                        'data-link-name="opt-out">Opt-out and return to our current site </a>' +
                            '</li>' +
-                      '</ul>';
-
-            var releaseMessage = new Message('alpha');
-
-            // Do not show the release message on -sp- based paths.
-            var spRegExp = new RegExp('.*-sp-.*');
-
-            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path) && config.page.contentType !== 'Video' && config.page.hasClassicVersion) {
-                // force the visitor in to the alpha release for subsequent visits
-                Cookies.add('GU_VIEW', 'responsive', 365);
-                releaseMessage.show(msg);
+                      '</ul>'
             }
 
             // add release message to the footer message
