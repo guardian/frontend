@@ -19,17 +19,7 @@
                 data-component="@style.containerType">
                 <div class="facia-container__inner">
                     <div class="container__border"></div>
-                    <div class="container__meta">
-                        <h2 class="container__label hide-on-mobile">@displayName</h2>
-                        <dl class="content-meta-series">
-                            <dt class="content-meta__title">
-                                <a href="@LinkTo{/@href}" data-link-name="series heading">@config.id</a>
-                            </dt>
-                            @description.map { desc =>
-                                <dd class="content-meta__item hide-on-mobile">@Html(desc)</dd>
-                            }
-                        </dl>
-                    </div>
+                    @fragments.containers.elements.tagMeta(displayName, href, description, config.id)
                     <div class="container__body container--rolled-up-hide">
                         @fragments.collections.series(items, style, containerIndex)
                     </div>
