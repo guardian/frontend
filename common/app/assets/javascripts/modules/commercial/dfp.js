@@ -5,6 +5,7 @@ define([
     'lodash/functions/debounce',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
+    'lodash/collections/forEach',
     'lodash/collections/map',
     'lodash/functions/once',
     'lodash/objects/defaults',
@@ -30,6 +31,7 @@ define([
     debounce,
     flatten,
     uniq,
+    forEach,
     map,
     once,
     defaults,
@@ -358,7 +360,7 @@ define([
 
             var adUnit = config.page.adUnit;
 
-            adSlots.forEach(function($adSlot) {
+            forEach(adSlots, function($adSlot) {
 
                 var id          = $adSlot.attr('id'),
                     sizeMapping = defineSlotSizes($adSlot),
