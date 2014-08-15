@@ -128,8 +128,7 @@ trait UpdateActions extends Logging {
     "imageAdjust",
     "imageSrc",
     "imageSrcWidth",
-    "imageSrcHeight",
-    "isBreaking")
+    "imageSrcHeight")
   
   implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
   implicit val updateListWrite = Json.writes[UpdateList]

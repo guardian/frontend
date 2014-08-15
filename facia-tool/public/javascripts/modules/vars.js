@@ -29,14 +29,10 @@ define([
         ],
 
         labels: [
-            'breaking news',
-            'analysis',
+            'breaking-news',
             'background',
-            'comment',
             'exclusive',
-            'opinion',
-            'gallery',
-            'video'
+            'opinion'
         ],
 
         headlineLength: 200,

@@ -404,9 +404,11 @@
                                 click: open"></span>
                         <!-- /ko -->
 
-                        <span class="is is--breaking" data-bind="
-                            visible: meta.isBreaking,
-                            click: open">Breaking News</span>
+                        <span data-bind="
+                            attr: {class: 'is is--' + meta.label()}
+                            visible: meta.label,
+                            text: meta.label,
+                            click: open"></span>
 
                         <span data-bind="
                             attr: {href: id},
