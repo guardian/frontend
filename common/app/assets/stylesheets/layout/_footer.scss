@@ -66,10 +66,14 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 .site-message--footer {
     position: relative;
     z-index: 1;
-    background-color: $c-brandBlue;
+    background-color: $c-primary-footer-background-side-bar;
     @include rem((
         border-bottom: 1px solid #ffffff
     ));
+
+    .site-message__inner {
+        background-color: $c-brandBlue;
+    }
 }
 
 .l-footer__primary {
