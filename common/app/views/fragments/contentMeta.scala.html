@@ -19,7 +19,7 @@
     <div class="js-comment-count meta__comment-count--bottom"></div>
     <div class="social-wrapper social-wrapper--aside" data-component="share">
         <h2 class="social__head">Share this article</h2>
-        @fragments.social(content, "top", iconModifier = if(content.isVideo || content.isGallery) "white" else "")
+        @fragments.social(content, "top", iconModifier = if(content.isMedia) "white" else "")
     </div>
 
 }
