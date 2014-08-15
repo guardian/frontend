@@ -255,10 +255,9 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       element.getElementsByTag("source").remove()
 
       val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
-        (videoAsset.url, videoAsset.mimeType) match {
-          case (Some(url), Some(mimeType)) => s"""<source src="${url}" type="${mimeType}"></source>"""
-          case _ =>
-        }
+        videoAsset.encoding.map { encoding =>
+          s"""<source src="${encoding.url}" type="${encoding.format}"></source>"""
+        }.getOrElse("")
       }.mkString("")
 
       element.append(sourceHTML)

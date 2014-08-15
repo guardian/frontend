@@ -623,7 +623,7 @@ $block-padding-right: $gs-gutter;
         }
     }
 
-    + & {
+    & + & {
         .dropdown__button {
             border-top: 0 none;
 
@@ -848,7 +848,7 @@ $timeline-width: 14px;
         border-top: 2px solid $c-neutral4;
     }
 
-    + &:before,
+    & + &:before,
     .item:before,
     .item__byline,
     .item__meta {

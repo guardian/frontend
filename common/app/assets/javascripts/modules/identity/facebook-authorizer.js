@@ -102,10 +102,14 @@ define([''], function() {
     };
 
     FacebookAuthorizer.prototype._loadFacebookScript = function () {
-        require(['js!facebook'], this._handleScriptLoaded.bind(this));
+        require(['js!facebook!exports=FB'], this._handleScriptLoaded.bind(this));
     };
 
     FacebookAuthorizer.prototype._handleScriptLoaded = function () {
+
+        if (!FB) {
+            return;
+        }
 
         FB.init({
             appId: this.appId,

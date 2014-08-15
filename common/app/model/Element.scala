@@ -63,8 +63,8 @@ trait VideoContainer extends Element {
 
   lazy val encodings: Seq[Encoding] = {
     videoAssets.toList.collect {
-      case video: VideoAsset => Encoding(video.url.getOrElse(""), video.mimeType.getOrElse(""))
-    }.sorted
+      case video: VideoAsset => video.encoding
+    }.flatten.sorted
   }
   lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
   lazy val ISOduration: String = new Duration(duration*1000.toLong).toString()
