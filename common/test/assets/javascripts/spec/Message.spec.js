@@ -1,11 +1,13 @@
 define([
     'common/modules/ui/message',
     'helpers/fixtures',
-    'common/utils/$'
+    'common/utils/$',
+    'common/utils/mediator'
 ], function(
     Message,
     fixtures,
-    $
+    $,
+    mediator
 ) {
 
     describe("Message", function() {
@@ -37,10 +39,12 @@ define([
         });
 
         it("Hide a message", function(){
+            sinon.spy(mediator, "emit");
             var m = new Message('foo');
             m.show('hello world');
             m.hide();
             expect($('.site-message').hasClass('is-hidden')).toBeTruthy();
+            expect(mediator.emit).toHaveBeenCalledWith('message:hidden:foo');
         })
 
         it("Remember the user has acknowledged the message", function(){
