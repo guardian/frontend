@@ -100,7 +100,7 @@ category: Common
         color: inherit;
     }
 
-    + & a {
+    & + & a {
         border-left: 2px solid rgba(255, 255, 255, .75);
         @include rem((
             padding-left: 6px

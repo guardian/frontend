@@ -1,4 +1,4 @@
-@(trail: Trail, itemIndex: Int, containerIndex: Int)(implicit request: RequestHeader)
+@(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader)
 
 @defining((trail.visualTone, if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, headerLevel) =>
     <h@headerLevel class="item__title">
@@ -11,6 +11,6 @@
         @if(tone == "comment") {
             <span class="i i-quote-orange"></span>
         }
-        @RemoveOuterParaHtml(trail.headline)
+        <span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span>
     </h@headerLevel>
 }

@@ -6,29 +6,10 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
 .guardian-logo-footer {
     @include rem((
-        margin-top: $gs-baseline / 2,
-        margin-right: $gs-gutter,
-        margin-bottom: $gs-baseline / 2,
+        margin-top: $gs-baseline * .75
     ));
     float: right;
     line-height: 0;
-}
-.top--footer {
-    width: auto;
-
-    @include mq(tablet) {
-        float: left;
-        @include rem((
-            margin-right: $gs-gutter,
-            padding-top: $gs-baseline,
-            padding-bottom: $gs-baseline
-        ));
-    }
-
-    &,
-    &:active {
-        color: #ffffff;
-    }
 }
 
 
@@ -63,16 +44,15 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
             display: none;
         }
     }
+    .control__info {
+        display: inline-block;
+    }
 }
 
 .l-footer__primary {
     position: relative;
     overflow: hidden;
     background: $c-primary-footer-background-side-bar;
-}
-
-.l-footer__banner {
-    background: $c-primary-footer-background;
 }
 
 

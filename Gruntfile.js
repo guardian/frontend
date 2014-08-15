@@ -3,6 +3,16 @@ var pngquant = require('imagemin-pngquant');
 
 module.exports = function (grunt) {
 
+    require('time-grunt')(grunt);
+
+    // Load the plugins
+    require('jit-grunt')(grunt, {
+        replace: 'grunt-text-replace',
+        scsslint: 'grunt-scss-lint',
+        cssmetrics: 'grunt-css-metrics',
+        assetmonitor: 'grunt-asset-monitor'
+    });
+
     var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
         singleRun = grunt.option('single-run') !== false,
         staticTargetDir = './static/target/',
@@ -75,13 +85,14 @@ module.exports = function (grunt) {
                     reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/reqwest',
                     lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd',
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/container',
-                    omniture:     '../../../../common/app/assets/javascripts/components/omniture/omniture',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
                     stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min',
-                    raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven'
+                    raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven',
+                    fastclick:    '../../../../common/app/assets/javascripts/components/fastclick/fastclick',
+                    omniture:     '../../../../common/app/public/javascripts/vendor/omniture'
                 },
-                optimize: 'uglify2',
+                optimize: (isDev) ? 'none' : 'uglify2',
                 generateSourceMaps: true,
                 preserveLicenseComments: false,
                 fileExclusionRegExp: /^bower_components$/
@@ -538,7 +549,7 @@ module.exports = function (grunt) {
              * Using this task to copy hooks, as Grunt's own copy task doesn't preserve permissions
              */
             copyHooks: {
-                command: 'cp git-hooks/pre-commit .git/hooks/',
+                command: 'ln -s ../git-hooks .git/hooks',
                 options: {
                     stdout: true,
                     stderr: true,
@@ -856,7 +867,7 @@ module.exports = function (grunt) {
             flash      : [staticTargetDir + 'flash', staticHashDir + 'flash'],
             fonts      : [staticTargetDir + 'fonts', staticHashDir + 'fonts'],
             // Clean any pre-commit hooks in .git/hooks directory
-            hooks      : ['.git/hooks/pre-commit'],
+            hooks      : ['.git/hooks'],
             assets     : ['common/conf/assets']
         },
 
@@ -918,28 +929,6 @@ module.exports = function (grunt) {
             }
         }
     });
-
-    // Load the plugins
-    grunt.loadNpmTasks('grunt-karma');
-    grunt.loadNpmTasks('grunt-contrib-sass');
-    grunt.loadNpmTasks('grunt-scss-lint');
-    grunt.loadNpmTasks('grunt-css-metrics');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.loadNpmTasks('grunt-webfontjson');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-mkdir');
-    grunt.loadNpmTasks('grunt-contrib-imagemin');
-    grunt.loadNpmTasks('grunt-asset-hash');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-asset-monitor');
-    grunt.loadNpmTasks('grunt-text-replace');
-    grunt.loadNpmTasks('grunt-pagespeed');
-    grunt.loadNpmTasks('grunt-csdevmode');
-    grunt.loadNpmTasks('grunt-hologram');
 
     // Default task
     grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
@@ -1025,7 +1014,6 @@ module.exports = function (grunt) {
         grunt.task.run('pagespeed' + target);
     });
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
-    grunt.registerTask('analyse:monitor', ['monitor:common']);
     grunt.registerTask('analyse', ['analyse:css', 'analyse:performance']);
 
     /**

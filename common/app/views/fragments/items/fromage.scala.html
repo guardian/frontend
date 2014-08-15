@@ -19,15 +19,9 @@
         <div class="fromage__container">
             @trail match {
                 case v: Video if v.mainVideo.isDefined && imageAdjust == "boost" => {
-                    @fromageVideo(v.mainVideo.get, v.webTitle, true, true, Some(v.endSlatePath))
-
-                    <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
-                        @fragments.items.elements.title(trail, index, 0)
-                    </a>
+                    @fromageVideo(v.mainVideo.get, v.webTitle, true, Some(v.endSlatePath))
                 }
-
                 case _ => {
-                    <a @LinkTo(trail).map{url=>href=@url} class="fromage__link" data-link-name="article">
                     @if(imageAdjust != Some("hide")) {
                         @trail.trailPicture(5,3).map{ imageContainer =>
                             @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
@@ -43,23 +37,26 @@
                             }
                         }
                     }
-                    @fragments.items.elements.title(trail, index, 0)
-                    </a>
                 }
             }
+            <a @LinkTo(trail).map{url=>href="@url"} class="fromage__link" data-link-name="article">
+                @fragments.items.elements.title(trail, index, 0)
+            </a>
 
             @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
 
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
-                    <p class="fromage__byline tone-colour">@Html(byLine)</p>
+                    @trail match { case content:model.Content =>
+                        <p class="fromage__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                    }
                 }
             }
 
             @if(imageAdjust == "default") {
                 @trail.trailPicture(5,3).map{ imageContainer =>
                     @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                        <a @LinkTo(trail).map{url=>href=@url} data-link-name="article">
+                        <a @LinkTo(trail).map{url=>href="@url"} data-link-name="article">
                             <div class="fromage__media-wrapper fromage__media-wrapper--second">
                                 <div class="fromage__image-container u-responsive-ratio">
                                     @Item220.bestFor(imageContainer).map{ url => <img src="@url" alt="" /> }
@@ -76,12 +73,14 @@
                 <div class="fromage__standfirst">@Html(text)</div>
             }
 
-            @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            <div class="u-faux-block-link__promote">
+                @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            </div>
 
             @if(trail.isCommentable) {
                 @fragments.items.elements.meta(trail)
             }
         </div>
-
+        <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </div>
 }

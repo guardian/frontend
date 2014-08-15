@@ -1,11 +1,12 @@
 #!/bin/sh
 #
-# Pre-commit hooks
+# Pre-push hooks
 
+branch=$(git symbolic-ref --short HEAD)
 
 # Validate CSS
 CSS_SRC_PATTERN="\.scss"
-git diff --cached --name-only | if grep "$CSS_SRC_PATTERN"
+git diff "origin/$branch" --cached --name-only | if grep "$CSS_SRC_PATTERN"
 then
     grunt validate:css validate:sass
 fi
@@ -13,14 +14,14 @@ cssValidateResult=$?
 
 # Validate JS
 JS_SRC_PATTERN="\.js$"
-git diff --cached --name-only | if grep "$JS_SRC_PATTERN"
+git diff "origin/$branch" --cached --name-only | if grep "$JS_SRC_PATTERN"
 then
     grunt validate:js
 fi
 jsValidateResult=$?
 
 # Test JS
-git diff --cached --name-only | if grep "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN"
+git diff "origin/$branch" --cached --name-only | if grep "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN"
 then
     grunt test:unit
 fi

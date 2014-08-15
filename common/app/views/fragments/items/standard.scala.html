@@ -13,20 +13,22 @@
         @SnapData(trail)>
 
         <div class="item__container">
-
-            <a @LinkTo(trail).map{url=>href=@url} class="item__link tone-accent-border @if(linkToneBackground){tone-background}" data-link-name="article">
-                @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
-                <div class="item__header">
+            <div class="item__tonal-border"></div>
+            @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
+            <div class="item__header">
+                <a @LinkTo(trail).map{url=>href="@url"} class="item__link @if(linkToneBackground){tone-background}" data-link-name="article">
                     @fragments.items.elements.title(trail, index, containerIndex)
-                    @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
-                </div>
-            </a>
+                </a>
+                @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+            </div>
 
             @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
 
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
-                    <p class="item__byline tone-colour">@Html(byLine)</p>
+                    @trail match { case content:model.Content =>
+                        <p class="item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                    }
                 }
             }
 
@@ -36,5 +38,6 @@
 
             @fragments.items.elements.meta(trail)
         </div>
+        <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </@element>
 }

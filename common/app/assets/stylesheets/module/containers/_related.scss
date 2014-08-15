@@ -1,7 +1,11 @@
 .related {
-    .item__link {
+    .item__tonal-border {
         @include mq($to: tablet) {
             border-top: 1px solid $c-neutral5 !important;
+        }
+    }
+    .item__link {
+        @include mq($to: tablet) {
             @include rem((
                 padding-top: 7px,
                 margin-top: -12px

@@ -1,6 +1,6 @@
 @(article: model.Article)(implicit request: RequestHeader)
 
-@import views.support.{Item620, SeoOptimisedContentImage}
+@import views.support.{Video640, SeoOptimisedContentImage}
 @import views.BodyCleaner
 
 @if(article.hasMainEmbed) {
@@ -16,7 +16,7 @@
                     <figure itemprop="associatedMedia video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
                     class="media-primary media-content">
                         @article.mainVideo.map { video =>
-                            @fragments.media.video(video, Item620, article.headline, 620, 350)
+                            @fragments.media.video(video, Video640, article.headline)
                         }
 
                         @posters.headOption.map { image =>
