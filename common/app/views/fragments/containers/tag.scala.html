@@ -1,6 +1,5 @@
 @(page: model.MetaData, collection: model.Collection, style: views.support.NewsContainer, containerIndex: Int, pagination: Option[common.Pagination] = None)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
-@import common.LinkTo
 @import model.FaciaComponentName
 @import views.html.fragments.keywordList
 @import views.support.GetClasses
@@ -22,13 +21,7 @@
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
                 <div class="container__header">
                     @title.map { title =>
-                        <h2 class="container__title">
-                            @collection.href.map { href =>
-                                <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                            }.getOrElse{
-                                <span class="container__title__label u-text-hyphenate">@Html(title)</span>
-                            }
-                        </h2>
+                        @fragments.containers.elements.tagMeta(None, collection.href, page.description, title)
                     }
                 </div>
                 <div class="container__body container--rolled-up-hide">
