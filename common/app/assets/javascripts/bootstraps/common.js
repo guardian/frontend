@@ -48,7 +48,7 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
-    'common/modules/ui/fauxBlockLink',
+    'common/modules/ui/faux-block-link',
     'common/modules/discussion/loader'
 ], function (
     $,
@@ -97,7 +97,7 @@ define([
     id,
     MoreTags,
     smartAppBanner,
-    FauxBlockLink,
+    fauxBlockLink,
     DiscussionLoader
 ) {
 
@@ -113,7 +113,7 @@ define([
         },
 
         initialiseFauxBlockLink: function(context){
-            new FauxBlockLink(context);
+            fauxBlockLink().init(context);
         },
 
         initialiseTopNavItems: function(config){
