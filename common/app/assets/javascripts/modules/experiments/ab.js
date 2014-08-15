@@ -1,12 +1,22 @@
 define([
+    'lodash/collections/filter',
+    'lodash/collections/forEach',
+    'lodash/collections/map',
     'lodash/objects/assign',
+    'lodash/objects/keys',
+    'common/utils/_',
     'common/utils/storage',
     'common/utils/mediator',
     'common/utils/config',
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component'
 ], function (
+    filter,
+    forEach,
+    map,
     assign,
+    keys,
+    _,
     store,
     mediator,
     globalConfig,
@@ -46,7 +56,7 @@ define([
         // Removes any tests from localstorage that have been
         // renamed/deleted from the backend
         var participations = getParticipations();
-        Object.keys(participations).forEach(function (k) {
+        forEach(keys(participations), function (k) {
             if (typeof(assign({}, globalConfig, config).switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
             } else {
@@ -62,7 +72,7 @@ define([
     }
 
     function getActiveTests() {
-        return TESTS.filter(function(test) {
+        return filter(TESTS, function(test) {
             var expired = (new Date() - new Date(test.expiry)) > 0;
             if (expired) {
                 removeParticipation(test);
@@ -73,7 +83,7 @@ define([
     }
 
     function getExpiredTests() {
-        return TESTS.filter(function(test) {
+        return filter(TESTS, function(test) {
             return (new Date() - new Date(test.expiry)) > 0;
         });
     }
@@ -84,7 +94,7 @@ define([
     }
 
     function getTest(id) {
-        var test = TESTS.filter(function (test) {
+        var test = filter(TESTS, function (test) {
             return (test.id === id);
         });
         return (test) ? test[0] : '';
@@ -94,7 +104,7 @@ define([
         var participations = getParticipations(),
             tag = [];
 
-        Object.keys(participations).forEach(function (k) {
+        forEach(keys(participations), function (k) {
             if (testCanBeRun(getTest(k), config)) {
                 tag.push(['AB', k, participations[k].variant].join(' | '));
             }
@@ -137,7 +147,7 @@ define([
 
         if (smallestTestId <= mvtCookieId && largestTestId > mvtCookieId) {
             // This mvt test id is in the test range, so allocate it to a test variant.
-            var variantIds = test.variants.map(function(variant) {
+            var variantIds = map(test.variants, function(variant) {
                 return variant.id;
             });
             var testVariantId = mvtCookieId % variantIds.length;
@@ -169,17 +179,20 @@ define([
         },
 
         segment: function(config) {
-            getActiveTests().forEach(function(test) {
+            forEach(getActiveTests(), function(test) {
                 allocateUserToTest(test, config);
             });
         },
 
         forceSegment: function(testId, variant) {
-            getActiveTests().filter(function (test) {
-                return (test.id === testId);
-            }).forEach(function (test) {
-                addParticipation(test, variant);
-            });
+            _(getActiveTests())
+                .filter(function (test) {
+                    return (test.id === testId);
+                })
+                .forEach(function (test) {
+                    addParticipation(test, variant);
+                })
+                .valueOf();
         },
 
         segmentUser: function(config) {
@@ -198,13 +211,13 @@ define([
         },
 
         run: function(config, context) {
-            getActiveTests().forEach(function(test) {
+            forEach(getActiveTests(), function(test) {
                 run(test, config, context);
             });
         },
 
         isEventApplicableToAnActiveTest: function (event) {
-            var participations = Object.keys(getParticipations());
+            var participations = keys(getParticipations());
             return participations.some(function (id) {
                 var listOfEventStrings = getTest(id).events;
                 return listOfEventStrings.some(function (ev) {
@@ -220,21 +233,24 @@ define([
             }
 
             var eventTag = event.tag;
-            return eventTag && getActiveTests().filter(function (test) {
-                var testEvents = test.events;
-                return testEvents && testEvents.some(function (testEvent) {
-                    return startsWith(eventTag, testEvent);
-                });
-            }).map(function (test) {
-                return test.id;
-            });
+            return eventTag && _(getActiveTests())
+                .filter(function (test) {
+                    var testEvents = test.events;
+                    return testEvents && testEvents.some(function (testEvent) {
+                        return startsWith(eventTag, testEvent);
+                    });
+                })
+                .map(function (test) {
+                    return test.id;
+                })
+                .valueOf();
         },
 
         getAbLoggableObject: function(config) {
             var abLogObject = {};
 
             try {
-                getActiveTests().forEach(function (test) {
+                forEach(getActiveTests(), function (test) {
 
                     if (isParticipating(test) && testCanBeRun(test, config)) {
                         var variant = getTestVariant(test.id);

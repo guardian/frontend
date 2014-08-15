@@ -5,12 +5,14 @@ define([
     'lodash/functions/debounce',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
+    'lodash/collections/map',
     'lodash/functions/once',
     'lodash/objects/defaults',
     'lodash/objects/forOwn',
     'lodash/objects/isArray',
     'lodash/objects/pairs',
     'common/utils/$',
+    'common/utils/_',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
@@ -28,12 +30,14 @@ define([
     debounce,
     flatten,
     uniq,
+    map,
     once,
     defaults,
     forOwn,
     isArray,
     pairs,
     $,
+    _,
     cookies,
     detect,
     mediator,
@@ -209,8 +213,8 @@ define([
          * Multiple sizes - `data-mobile="300,50|320,50"`
          */
         createSizeMapping = function (attr) {
-            return attr.split('|').map(function(size) {
-                return size.split(',').map(Number);
+            return map(attr.split('|'), function(size) {
+                return map(size.split(','), Number);
             });
         },
         /**
@@ -310,8 +314,8 @@ define([
                         '{{sizeMappings}}></div>',
                     {
                         name: name,
-                        types: (isArray(types) ? types : [types]).map(function(type) { return 'ad-slot--' + type; }).join(' '),
-                        sizeMappings: pairs(definition.sizeMappings).map(function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
+                        types: map((isArray(types) ? types : [types]), function(type) { return 'ad-slot--' + type; }).join(' '),
+                        sizeMappings: map(pairs(definition.sizeMappings), function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
                     }));
             for (var attrName in dataAttrs) {
                 if (dataAttrs[attrName] === false) {
@@ -324,14 +328,13 @@ define([
             return $adSlot[0];
         },
         parseKeywords = function(keywords) {
-            return (keywords || '')
-                .split(',').map(function (keyword) {
-                    return keyword.split('/').pop();
-                });
+            return map((keywords || '') .split(','), function (keyword) {
+                return keyword.split('/').pop();
+            });
         },
         parseContributors = function(contributors) {
             var contributorArray = parseKeywords(contributors);
-            return contributorArray.map(function(contrib) {
+            return map(contributorArray, function(contrib) {
                return keywords.format(contrib);
             });
         };
@@ -427,14 +430,17 @@ define([
             config.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
         }
 
-        adSlots = qwery(config.adSlotSelector)
+        adSlots = _(qwery(config.adSlotSelector))
             // filter out hidden ads
             .map(function (adSlot) {
                 return bonzo(adSlot);
             })
             .filter(function ($adSlot) {
-                return $adSlot.css('display') !== 'none';
-            });
+                // bonzo needs these - default to true if unavailable (e.g. IE8)
+                return (window.document.defaultView && window.document.defaultView.getComputedStyle)
+                    ? $adSlot.css('display') !== 'none' : true;
+            })
+            .valueOf();
 
         if (adSlots.length > 0) {
             // if we don't already have googletag, create command queue (assumes it's loaded further up the chain)
