@@ -97,7 +97,7 @@
     }
 }
 .container__toggle,
-.item__live-indicator,
+.item__label,
 .item__meta,
 .collection__show-more {
     @include f-data;
@@ -262,17 +262,25 @@
     }
 }
 
-.item__live-indicator {
-    color: #ffffff;
-    background-color: $c-live;
+.item__label {
+    color: $c-newsAccent;
     @include fs-data(2, $size-only: true);
-    display: inline-block;
-    padding: 0 3px;
-    position: relative;
-    top: -3px;
+    margin-right: 3px;
     font-weight: bold;
     text-transform: uppercase;
 }
+
+.item__label--live {
+    color: #ffffff;
+    background-color: $c-live;
+    display: inline-block;
+    padding: 0 3px;
+}
+
+.item__label--breaking-news {
+    color: $c-breakingNews;
+}
+
 .item--sport-stats .competition-table h3,
 .item__title,
 .item__standfirst {

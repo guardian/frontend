@@ -39,5 +39,5 @@ trait FaciaFields {
   def imageSrcWidth: Option[String] = None
   def imageSrcHeight: Option[String] = None
   def imageAdjust: String = "default"
-  def isBreaking: Boolean = false
+  def label: Option[String] = None
 }

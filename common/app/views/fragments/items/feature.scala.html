@@ -30,11 +30,11 @@
             <div class="item__header">
                 <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article">
                     <h2 class="item__title">
-                        @if(trail.isBreaking){
-                            <span class="item__live-indicator">Breaking News</span>
+                        @if(trail.isLive){
+                            <span class="item__label item__label--live">Live</span>
                         }
-                        @if(trail.isLive && !trail.isBreaking){
-                            <span class="item__live-indicator">Live</span>
+                        @trail.label.map{ l =>
+                            <span class="item__label item__label--@trail.label">@l.replace("-", " ")</span>
                         }
                         @if(tone == "comment") {
                             <span class="i i-quote-orange"></span>

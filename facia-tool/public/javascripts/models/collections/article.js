@@ -269,7 +269,6 @@ define([
             var self = this;
 
             _.defer(function(){
-                self._save();
                 self.state.isOpen(false);
             });
         };

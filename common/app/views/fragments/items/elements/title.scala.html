@@ -1,12 +1,12 @@
 @(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader)
 
-@defining((trail.visualTone, if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, headerLevel) =>
+@defining((trail.visualTone, trail.label, if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, label, headerLevel) =>
     <h@headerLevel class="item__title">
-        @if(trail.isBreaking){
-            <span class="item__live-indicator">Breaking News</span>
+        @if(trail.isLive){
+            <span class="item__label item__label--live">Live</span>
         }
-        @if(trail.isLive && !trail.isBreaking){
-            <span class="item__live-indicator">Live</span>
+        @trail.label.map{ l =>
+            <span class="item__label item__label--@trail.label">@l.replace("-", " ")</span>
         }
         @if(tone == "comment") {
             <span class="i i-quote-orange"></span>

@@ -30,9 +30,7 @@ define([
 
         labels: [
             'breaking-news',
-            'background',
-            'exclusive',
-            'opinion'
+            'background'
         ],
 
         headlineLength: 200,
