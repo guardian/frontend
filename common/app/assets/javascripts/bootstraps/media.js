@@ -425,7 +425,7 @@ define([
         },
         displayReleaseMessage: function() {
             var msg = '<p class="site-message__message" id="site-message__message">' +
-                    'We\'ve redesigned our video pages to make it easier to find and experience our best video content. We\'d love to hear what you think.' +
+                    'We’ve redesigned our video pages to make it easier to find and experience our best video content. We’d love to hear what you think.' +
                     '</p>' +
                     '<ul class="site-message__actions u-unstyled">' +
                     '<li class="site-message__actions__item">' +

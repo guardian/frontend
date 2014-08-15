@@ -1,4 +1,4 @@
-@(trail: Trail, index: Int, containerIndex: Int, element: String = "li", headerToneBackground: Boolean = false, forceTone: Option[String] = None)(implicit request: RequestHeader, config: Config)
+@(trail: Trail, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None)(implicit request: RequestHeader, config: Config)
 
 @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
     <@element
@@ -15,7 +15,7 @@
         <div class="item__container">
             <div class="item__tonal-border tone-accent-border"></div>
             @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
-            <div class="item__header @if(headerToneBackground){tone-background}">
+            <div class="item__header">
                 <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article">
                     @fragments.items.elements.title(trail, index, containerIndex)
                 </a>

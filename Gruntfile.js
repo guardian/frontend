@@ -72,7 +72,20 @@ module.exports = function (grunt) {
                 }
             }
         },
-
+        px_to_rem: {
+            dist: {
+                options: {
+                    base: 10,
+                    fallback: true // set to false when Opera Mini supports rem units
+                },
+                files: [{
+                    expand: true,
+                    cwd: staticTargetDir + 'stylesheets/',
+                    src: ['*.css', '!old-ie*'],
+                    dest: staticTargetDir + 'stylesheets/'
+                }]
+            }
+        },
         requirejs: {
             options: {
                 paths: {
@@ -930,6 +943,28 @@ module.exports = function (grunt) {
         }
     });
 
+    // Load the plugins
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-px-to-rem');
+    grunt.loadNpmTasks('grunt-scss-lint');
+    grunt.loadNpmTasks('grunt-css-metrics');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-webfontjson');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-mkdir');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-asset-hash');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-asset-monitor');
+    grunt.loadNpmTasks('grunt-text-replace');
+    grunt.loadNpmTasks('grunt-pagespeed');
+    grunt.loadNpmTasks('grunt-csdevmode');
+
     // Default task
     grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
 
@@ -951,8 +986,8 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', function() {
-        grunt.task.run('sass:compile');
-        grunt.task.run('sass:compileStyleguide');
+        grunt.task.run(['sass:compile', 'sass:compileStyleguide', 'px_to_rem']);
+
         if (isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }

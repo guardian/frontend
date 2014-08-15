@@ -60,8 +60,13 @@
     .social-icon-wrapper {
         opacity: .8;
 
-        &:hover {
+        &:hover,
+        &:focus {
             opacity: 1;
+
+            .social-icon {
+                border-color: #ffffff;
+            }
         }
     }
 
