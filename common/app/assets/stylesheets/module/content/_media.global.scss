@@ -201,17 +201,17 @@
         &:before {
             @include icon(camera-yellow-large);
             @include rem((
-                width: 34px !important
+                width: 28px !important
             ));
 
             @include mq(mobileLandscape) {
                 @include rem((
-                    width: 40px !important
+                    width: 35px !important
                 ));
             }
             @include mq(tablet) {
                 @include rem((
-                    width: 43px !important
+                    width: 37px !important
                 ));
             }
         }
