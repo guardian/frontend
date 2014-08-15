@@ -94,7 +94,7 @@ module.exports = function (grunt) {
                     bonzo:        '../../../../common/app/assets/javascripts/components/bonzo/bonzo',
                     domReady:     '../../../../common/app/assets/javascripts/components/domready/ready',
                     EventEmitter: '../../../../common/app/assets/javascripts/components/eventEmitter/EventEmitter',
-                    qwery:        '../../../../common/app/assets/javascripts/components/qwery/qwery-mobile',
+                    qwery:        '../../../../common/app/assets/javascripts/components/qwery/qwery',
                     reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/reqwest',
                     lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd',
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/container',
