@@ -290,7 +290,7 @@ define([
                 at      : cookies.get('adtest') || cookies.get('GU_TEST') || '',
                 gdncrm  : userAdTargeting.getUserSegments(),
                 ab      : abParam(),
-                co      : parseContributors(page.author),
+                co      : parseContributors(page.authorIds),
                 bl      : parseKeywords(page.blogIds),
                 ms      : mediaSource
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
