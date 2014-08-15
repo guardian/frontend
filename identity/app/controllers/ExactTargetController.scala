@@ -19,6 +19,8 @@ class ExactTargetController @Inject()(
                                        authAction: actions.AuthenticatedAction)
   extends Controller with ExecutionContexts with SafeLogging {
 
+  import play.api.Play.current
+
   def cloudWatchCount(id: String) { CloudWatch.put("ExactTarget", Map(id -> 1d)) }
 
   def subscribe(subscriptionDefId: String, returnUrl: String) = authAction.apply {

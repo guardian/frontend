@@ -20,7 +20,7 @@
 
         <meta name="apple-mobile-web-app-title" content="Guardian" />
         <meta name="application-name" content="The Guardian" />
-        <meta name="msapplication-TileColor" content="#214583" />
+        <meta name="msapplication-TileColor" content="#005689" />
         <meta name="msapplication-TileImage" content="@routes.Assets.at("images/windows_tile_144_b.png")" />
 
         <link href="@routes.Assets.at("javascripts/components/bootstrap/dist/css/bootstrap.css")" rel="stylesheet" />
@@ -54,7 +54,7 @@
                             </li>
                         </ul>
                     } else {
-                        <form action="@controllers.admin.routes.Login.loginPost()" method="post" class="navbar-form navbar-right">
+                        <form action="@controllers.admin.routes.OAuthLoginController.login()" method="post" class="navbar-form navbar-right">
                             <input value="Log In" class="btn btn-primary" type="submit" id="login-button">
                         </form>
                     }

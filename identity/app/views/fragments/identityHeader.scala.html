@@ -4,19 +4,19 @@
 <header id="header" class="l-header l-header--identity" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
     <div class="l-header-pre">
         <div class="l-header-pre__inner gs-container u-cf">
-            <div class="top-nav">
+            <div class="top-bar">
                 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                    <div class="top-nav__item">
-                        <div class="js-profile-nav js-hidden">
-                            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
-                               class="control control--profile">
+                    <div class="brand-bar__item brand-bar__item--profile has-nav-popup brand-bar__item--has-control js-profile-nav">
+                        <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
+                           class="brand-bar__item--action nav-popup__toggle">
+                            <span class="control__icon-wrapper">
                                 <span class="control__icon">
-                                    <i class="i i-profile control--active__hide"></i>
-                                    <i class="i i-profile-active control--active__show"></i>
+                                    <i class="i i-profile-white-36"></i>
                                 </span>
-                                <span class="js-profile-info control__info">Sign in</span>
-                            </a>
-                        </div>
+                            </span>
+                            <span class="js-profile-info control__info">Sign in</span>
+                        </a>
+                        <div class="js-profile-nav-popup"></div>
                     </div>
                 }
             </div>
@@ -24,16 +24,14 @@
     </div>
     <div class="l-header-main">
         <div class="gs-container">
-            <meta itemprop="logo" content="http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
-            <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="guardian-logo-wrapper" itemprop="url">
-                <span class="u-h">The Guardian</span>
-                <i class="i i-guardian-logo-160 mobile-only"></i>
-                <i class="i i-guardian-logo-big hide-on-mobile"></i>
-            </a>
-
-            @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                <div class="nav-popup--profile nav-popup--profile-docked-left nav-popup--small js-profile-nav-popup nav-popup is-off"></div>
-            }
+            <span itemscope itemtype="http://schema.org/Organization">
+                <meta itemprop="logo" content="http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
+                <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url">
+                    <span class="u-h" itemprop="name">The Guardian</span>
+                    <i class="i i-guardian-logo-160 mobile-only"></i>
+                    <i class="i i-guardian-logo-320 hide-on-mobile"></i>
+                </a>
+            </span>
         </div>
     </div>
 </header>

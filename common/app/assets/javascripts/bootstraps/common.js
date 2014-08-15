@@ -7,12 +7,14 @@ define([
     'common/utils/deferToLoad',
     'common/utils/ajax',
     'common/modules/userPrefs',
+    'common/utils/url',
     //Vendor libraries
     'bonzo',
     'bean',
     'qwery',
     'enhancer',
     'lodash/functions/debounce',
+    'fastclick',
     //Modules
     'common/utils/storage',
     'common/utils/detect',
@@ -21,9 +23,8 @@ define([
     'common/modules/onward/onward-content',
     'common/modules/ui/images',
     'common/modules/navigation/profile',
-    'common/modules/navigation/sections',
     'common/modules/navigation/search',
-    'common/modules/navigation/newNavigation',
+    'common/modules/navigation/navigation',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
     'common/modules/ui/dropdowns',
@@ -37,7 +38,7 @@ define([
     'common/modules/discussion/comment-count',
     'common/modules/gallery/lightbox',
     'common/modules/onward/history',
-    'common/modules/onward/sequence',
+    'common/modules/onward/breaking-news',
     'common/modules/ui/message',
     'common/modules/identity/autosignin',
     'common/modules/analytics/foresee-survey',
@@ -47,6 +48,7 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
+    'common/modules/ui/fauxBlockLink',
     'common/modules/discussion/loader'
 ], function (
     $,
@@ -54,12 +56,14 @@ define([
     deferToLoadEvent,
     ajax,
     userPrefs,
+    Url,
 
     bonzo,
     bean,
     qwery,
     enhancer,
     debounce,
+    FastClick,
 
     storage,
     detect,
@@ -68,10 +72,8 @@ define([
     Onward,
     images,
     Profile,
-    Sections,
     Search,
-    newNavigation,
-
+    Navigation,
     Tabs,
     Toggles,
     Dropdowns,
@@ -84,8 +86,8 @@ define([
     ab,
     CommentCount,
     LightboxGallery,
-    History,
-    sequence,
+    history,
+    breakingNews,
     Message,
     AutoSignin,
     Foresee,
@@ -95,14 +97,23 @@ define([
     id,
     MoreTags,
     smartAppBanner,
+    FauxBlockLink,
     DiscussionLoader
 ) {
 
     var modules = {
 
+        initFastClick: function() {
+            new FastClick(document.body);
+        },
+
         upgradeImages: function () {
             images.upgrade();
             images.listen();
+        },
+
+        initialiseFauxBlockLink: function(context){
+            new FauxBlockLink(context);
         },
 
         initialiseTopNavItems: function(config){
@@ -122,11 +133,7 @@ define([
         },
 
         initialiseNavigation: function (config) {
-            new Sections(config).init(document);
-        },
-
-        initialiseNewNavigation: function (config) {
-            newNavigation.init(config);
+            Navigation.init(config);
         },
 
         transcludeRelated: function (config, context) {
@@ -200,19 +207,10 @@ define([
             });
         },
 
-        initAbTests: function (config) {
-            ab.segmentUser(config);
-        },
-
-        runAbTests: function (config, context) {
-            ab.run(config, context);
-        },
-
         initRightHandComponent: function(config) {
             if(config.page.contentType === 'Article' &&
                 detect.getBreakpoint() !== 'mobile' &&
-                parseInt(config.page.wordCount, 10) > 500 &&
-                !config.page.isLiveBlog) {
+                parseInt(config.page.wordCount, 10) > 500) {
                 new GeoMostPopular({});
             }
         },
@@ -234,7 +232,7 @@ define([
                         mediator.on('scrolldepth:data', ophan.record);
 
                         new ScrollDepth({
-                            isContent: config.page.contentType === 'Article'
+                            isContent: /Article|LiveBlog/.test(config.page.contentType)
                         });
                     }
                 });
@@ -274,43 +272,18 @@ define([
             var releaseMessage = new Message('alpha');
 
             // Do not show the release message on -sp- based paths.
-            var spRegExp = new RegExp('.*/-sp-.*');
+            var spRegExp = new RegExp('.*-sp-.*');
 
-            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path)) {
+            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path) && config.page.contentType !== 'Video' && config.page.hasClassicVersion) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
                 releaseMessage.show(msg);
             }
         },
 
-        displayOnboardMessage: function (config) {
-            if(window.location.hash === '#opt-in-message' && config.switches.networkFrontOptIn && detect.getBreakpoint() !== 'mobile') {
-                bean.on(document, 'click', '.js-site-message-close', function() {
-                    Cookies.add('GU_VIEW', 'responsive', 365);
-                });
-                bean.on(document, 'click', '.js-site-message', function() {
-                    Cookies.add('GU_VIEW', 'responsive', 365);
-                });
-                var message = new Message('onboard', { type: 'modal' }),
-                    path = (document.location.pathname) ? document.location.pathname : '/',
-                    exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
-                    msg = '<h2 class="site-message__header">Thanks for joining us.</h2>' +
-                    '<div class="site-message__message" id="site-message__message">' +
-                    '<p>You’re looking at a prototype of our new website. Opt-out any time by clicking "Current version" at the bottom of the page. <a href="http://next.theguardian.com/">Find out more</a>.</p>' +
-                    '<ul class="site-message__list">' +
-                    '<li class="site-message__list__item">We love feedback - <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback">let us know yours</a>.</li>' +
-                    '<li class="site-message__list__item">Stay up to date with new releases on <a href="http://next.theguardian.com/blog/">our blog</a>.</li>' +
-                    '</ul>' +
-                    '<ul class="site-message__actions u-unstyled">' +
-                    '<li class="site-message__actions__item"><i class="i i-arrow-white-circle"></i>  '+
-                    '<a class="js-site-message-close" data-link-name="R2 alpha opt in" href="#" tabindex=1>Got it</a>' +
-                    '<li class="site-message__actions__item">' +
-                    '<i class="i i-back-white"></i>' +
-                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                    'data-link-name="R2 alpha opt out">Opt-out and return to the current site </a>' +
-                    '</li>' +
-                    '</ul>';
-                message.show(msg);
+        displayBreakingNews: function (config) {
+            if (config.switches.breakingNews) {
+                breakingNews(config);
             }
         },
 
@@ -322,17 +295,14 @@ define([
 
         logReadingHistory : function() {
             mediator.on('page:common:ready', function(config) {
-                if(/Article|Video|Gallery|Interactive/.test(config.page.contentType)) {
-                    new History().log({
+                if(config.page.contentType !== 'Network Front') {
+                    history.log({
                         id: '/' + config.page.pageId,
                         meta: {
                             section: config.page.section,
-                            keywords: config.page.keywordIds.split(',').slice(0, 5)
+                            keywords: config.page.keywordIds && (config.page.keywordIds + '').split(',').slice(0, 5)
                         }
                     });
-                }
-                if (config.page.section !== 'identity') {
-                    sequence.init('/' + config.page.pageId);
                 }
             });
         },
@@ -375,7 +345,7 @@ define([
 
         augmentInteractive: function() {
             mediator.on('page:common:ready', function(config, context) {
-                if (/Article|Interactive/.test(config.page.contentType)) {
+                if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
                     $('figure.interactive').each(function (el) {
                         enhancer.render(el, context, config, mediator);
                     });
@@ -414,6 +384,13 @@ define([
                     discussionLoader.attachTo($('.discussion')[0]);
                 }
             });
+        },
+
+        testCookie: function() {
+            var queryParams = Url.getUrlVars();
+            if (queryParams.test) {
+                Cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
+            }
         }
     };
 
@@ -422,11 +399,9 @@ define([
         deferToLoadEvent(function() {
             if (!self.initialisedDeferred) {
                 self.initialisedDeferred = true;
-                modules.initAbTests(config);
                 modules.logLiveStats(config);
                 modules.loadAnalytics(config, context);
                 modules.cleanupCookies(context);
-                modules.runAbTests(config, context);
                 modules.transcludePopular(config);
                 modules.transcludeRelated(config, context);
                 modules.transcludeOnwardContent(config, context);
@@ -439,17 +414,16 @@ define([
     var ready = function (config, context) {
         if (!this.initialised) {
             this.initialised = true;
-            modules.displayOnboardMessage(config);
+            modules.initFastClick();
+            modules.testCookie();
             modules.windowEventListeners();
+            modules.initialiseFauxBlockLink(context);
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();
             modules.initialiseTopNavItems(config);
-            if(config.switches.responsiveNav){
-                modules.initialiseNewNavigation(config);
-            } else {
-                modules.initialiseNavigation(config);
-            }
+            modules.initialiseNavigation(config);
+            modules.displayBreakingNews(config);
             modules.showToggles();
             modules.showRelativeDates();
             modules.initClickstream();
@@ -480,3 +454,4 @@ define([
         init: init
     };
 });
+

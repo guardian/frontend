@@ -59,7 +59,7 @@ define([
             mediator.emit('video:ads:finished', self.config, self.context);
 
             bean.off(self.video, 'ended error');
-            bean.off(self.video, 'click.ct touchstart.ct');
+            bean.off(self.video, 'click.ct');
 
             self.video.src = source;
             self.video.play();
@@ -106,7 +106,7 @@ define([
         if(this.events.start) { this.logEvent(this.events.start); }
         if(this.events.clickThrough) {
             $(this.video).addClass('has-cursor');
-            bean.one(self.video, 'click.ct touchstart.ct', function(){
+            bean.one(self.video, 'click.ct', function(){
                 if(self.events.oasClickThrough) { self.logEvent(self.events.oasClickThrough); }
                 window.open(self.events.clickThrough.url);
             });

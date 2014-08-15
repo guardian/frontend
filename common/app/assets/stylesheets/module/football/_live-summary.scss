@@ -15,13 +15,13 @@
 }
 
 .score-summary {
-    @include fs-headline(2, true);
+    @include fs-headline(3, true);
     @include rem((
         margin: $gs-baseline 0 (-$gs-baseline/2)
     ));
 
-    @include mq($from: tablet) {
-        @include fs-headline(4, true);
+    @include mq(tablet) {
+        @include fs-headline(5, true);
         @include rem((
             margin: $gs-baseline/2 0 0
         ));

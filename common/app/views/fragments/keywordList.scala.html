@@ -1,4 +1,8 @@
-@(keywords: Seq[Tag], visibleKeywords: Int = 5)(implicit request: RequestHeader)
+@(keywords: Seq[model.Tag], visibleKeywords: Int = 5, title: String = "Tags")(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import model.Tag
+@import views.support.{RowInfo, Seq2zipWithRowInfo}
 
 @renderItem(keyword: Tag, row: RowInfo, clazz: String = "", trailingComma: Boolean = false) = {
     <li class="inline-list__item @clazz">
@@ -13,7 +17,7 @@
     @defining(keywords.filterNot(_.isSectionTag).drop(visibleKeywords)) { hiddenKeywords =>
         @if(shownKeywords.nonEmpty) {
             <ul class="inline-list">
-                <li class="inline-list__item">Tags:</li>
+                <li class="inline-list__item">@title:</li>
                 @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
                     @renderItem(keyword, row, trailingComma = hiddenKeywords.nonEmpty)
                 }
@@ -21,7 +25,7 @@
                 @if(hiddenKeywords.nonEmpty) {
 
                     <li class="inline-list__item js-more-tags js-hidden">
-                        <button class="u-button-reset u-fauxlink content__keywords--more-tags js-more-tags__link"
+                        <button class="u-button-reset u-fauxlink show-more-tags js-more-tags__link"
                            data-link-name="more-tags">more…</button>
                     </li>
 

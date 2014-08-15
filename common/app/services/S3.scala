@@ -1,5 +1,6 @@
 package services
 
+import com.gu.googleauth.UserIdentity
 import conf.Configuration
 import common.Logging
 import com.amazonaws.services.s3.AmazonS3Client
@@ -9,44 +10,51 @@ import com.amazonaws.util.StringInputStream
 import scala.io.{Codec, Source}
 import org.joda.time.DateTime
 import play.Play
-import play.api.libs.ws.WS
+import play.api.libs.ws.{WSRequestHolder, WS}
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 import sun.misc.BASE64Encoder
 import com.amazonaws.auth.AWSSessionCredentials
-import controllers.Identity
 import common.S3Metrics.S3ClientExceptionsMetric
+import com.gu.googleauth.UserIdentity
 
 trait S3 extends Logging {
 
   lazy val bucket = Configuration.aws.bucket
 
-  lazy val client = {
-    val client = new AmazonS3Client(Configuration.aws.credentials)
+  lazy val client: Option[AmazonS3Client] = Configuration.aws.credentials.map{ credentials =>
+    val client = new AmazonS3Client(credentials)
     client.setEndpoint(AwsEndpoints.s3)
     client
   }
 
-  private def withS3Result[T](key: String)(action: S3Object => T): Option[T] = try {
+  private def withS3Result[T](key: String)(action: S3Object => T): Option[T] = client.flatMap { client =>
+    try {
 
-    val request = new GetObjectRequest(bucket, key)
-    val result = client.getObject(request)
+      val request = new GetObjectRequest(bucket, key)
+      val result = client.getObject(request)
 
-    // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
-    try { Some(action(result)) }
-    catch { case e: Exception =>
-      S3ClientExceptionsMetric.increment()
-      throw e
-    }
-    finally { result.close() }
-  } catch {
-    case e: AmazonS3Exception if e.getStatusCode == 404 => {
-      log.warn("not found at %s - %s" format(bucket, key))
-      None
-    }
-    case e: Exception => {
-      S3ClientExceptionsMetric.increment()
-      throw e
+      // http://stackoverflow.com/questions/17782937/connectionpooltimeoutexception-when-iterating-objects-in-s3
+      try {
+        Some(action(result))
+      }
+      catch {
+        case e: Exception =>
+          S3ClientExceptionsMetric.increment()
+          throw e
+      }
+      finally {
+        result.close()
+      }
+    } catch {
+      case e: AmazonS3Exception if e.getStatusCode == 404 => {
+        log.warn("not found at %s - %s" format(bucket, key))
+        None
+      }
+      case e: Exception => {
+        S3ClientExceptionsMetric.increment()
+        throw e
+      }
     }
   }
 
@@ -88,7 +96,7 @@ trait S3 extends Logging {
     val request = new PutObjectRequest(bucket, key, new StringInputStream(value), metadata).withCannedAcl(accessControlList)
 
     try {
-      client.putObject(request)
+      client.foreach(_.putObject(request))
     } catch {
       case e: Exception =>
         S3ClientExceptionsMetric.increment()
@@ -120,22 +128,22 @@ object S3FrontsApi extends S3 {
   def putBlock(id: String, json: String) =
     putPublic(s"$location/collection/$id/collection.json", json, "application/json")
 
-  def archive(id: String, json: String, identity: Identity) = {
+  def archive(id: String, json: String, identity: UserIdentity) = {
     val now = DateTime.now
-    putPrivate(s"$location/history/collection/$id/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
+    putPrivate(s"$location/history/collection/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/$id/${now}.${identity.email}.json", json, "application/json")
   }
 
   def putMasterConfig(json: String) =
     putPublic(s"$location/config/config.json", json, "application/json")
 
-  def archiveMasterConfig(json: String, identity: Identity) = {
+  def archiveMasterConfig(json: String, identity: UserIdentity) = {
     val now = DateTime.now
-    putPublic(s"${location}/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
+    putPublic(s"$location/history/config/${now.year.get}/${"%02d".format(now.monthOfYear.get)}/${"%02d".format(now.dayOfMonth.get)}/${now}.${identity.email}.json", json, "application/json")
   }
 
   private def getListing(prefix: String, dropText: String): List[String] = {
     import scala.collection.JavaConversions._
-    val summaries = client.listObjects(bucket, prefix).getObjectSummaries.toList
+    val summaries = client.map(_.listObjects(bucket, prefix).getObjectSummaries.toList).getOrElse(Nil)
     summaries
       .map(_.getKey.split(prefix))
       .filter(_.nonEmpty)
@@ -158,30 +166,32 @@ object S3FrontsApi extends S3 {
 }
 
 trait SecureS3Request extends implicits.Dates with Logging {
+  import play.api.Play.current
   val algorithm: String = "HmacSHA1"
   val frontendBucket: String = Configuration.aws.bucket
   val frontendStore: String = Configuration.frontend.store
 
-  def urlGet(id: String): WS.WSRequestHolder = url("GET", id)
+  def urlGet(id: String): WSRequestHolder = url("GET", id)
 
-  private def url(httpVerb: String, id: String): WS.WSRequestHolder = {
+  private def url(httpVerb: String, id: String): WSRequestHolder = {
 
-    // we are working with a credentials provider here - this needs to be scoped inside the function
-    // i.e. we need a new one each request
-    val credentials = Configuration.aws.credentials.getCredentials
+    val headers = Configuration.aws.credentials.map(_.getCredentials).map{ credentials =>
+      val sessionTokenHeaders: Seq[(String, String)] = credentials match {
+        case sessionCredentials: AWSSessionCredentials => Seq("x-amz-security-token" -> sessionCredentials.getSessionToken)
+        case _ => Nil
+      }
 
-    val sessionTokenHeaders: Seq[(String, String)] = credentials match {
-      case sessionCredentials: AWSSessionCredentials => Seq("x-amz-security-token" -> sessionCredentials.getSessionToken)
-      case _ => Nil
-    }
+      val date = DateTime.now.toHttpDateTimeString
+      val signedString = signAndBase64Encode(generateStringToSign(httpVerb, id, date, sessionTokenHeaders), credentials.getAWSSecretKey)
 
-    val date = DateTime.now.toHttpDateTimeString
-    val signedString = signAndBase64Encode(generateStringToSign(httpVerb, id, date, sessionTokenHeaders), credentials.getAWSSecretKey)
+      Seq(
+        "Date" -> date,
+        "Authorization" -> s"AWS ${credentials.getAWSAccessKeyId}:$signedString"
+      ) ++ sessionTokenHeaders
 
-    val headers = Seq(
-      "Date" -> date,
-      "Authorization" -> s"AWS ${credentials.getAWSAccessKeyId}:$signedString"
-    ) ++ sessionTokenHeaders
+    }.getOrElse(Seq.empty[(String, String)])
+
+
 
     WS.url(s"$frontendStore/$id").withHeaders(headers:_*)
   }

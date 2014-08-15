@@ -1,7 +1,7 @@
 package model
 
 import pa._
-import org.joda.time.DateMidnight
+import org.joda.time.LocalDate
 import pa.LeagueTableEntry
 import pa.MatchDayTeam
 import java.awt.Color
@@ -13,7 +13,7 @@ case class Competition(
     fullName: String,
     shortName: String,
     nation: String,
-    startDate: Option[DateMidnight] = None,
+    startDate: Option[LocalDate] = None,
     matches: Seq[FootballMatch] = Nil,
     leagueTable: Seq[LeagueTableEntry] = Nil,
     showInTeamsList: Boolean = false,
@@ -27,7 +27,7 @@ case class Competition(
   lazy val hasLeagueTable = leagueTable.nonEmpty
   lazy val hasTeams = teams.nonEmpty
 
-  lazy val matchDates = matches.map(_.date.toDateMidnight).distinct
+  lazy val matchDates = matches.map(_.date.toLocalDate).distinct
 
   lazy val teams = leagueTable.map(_.team).sortBy(_.name)
 
@@ -99,7 +99,7 @@ object LeagueTableEntryWithForm {
   }
 }
 
-case class PrevResult(date: DateMidnight, self: MatchDayTeam, foe: MatchDayTeam, wasHome: Boolean) {
+case class PrevResult(date: LocalDate, self: MatchDayTeam, foe: MatchDayTeam, wasHome: Boolean) {
   val scores = self.score.flatMap { selfScore =>
     foe.score.map { foeScore =>
       (selfScore, foeScore)

@@ -1,7 +1,11 @@
 define([
-    'reqwest'
+    'reqwest',
+    'lodash/objects/assign',
+    'common/utils/config'
 ], function (
-    reqwest
+    reqwest,
+    assign,
+    globalConfig
 ) {
 
     var makeAbsolute = function () {
@@ -18,9 +22,9 @@ define([
 
     ajax.reqwest = reqwest; // expose publicly so we can inspect it in unit tests
 
-    ajax.init = function (config) {
+    ajax.init = function(config) {
         makeAbsolute = function (url) {
-            return config.page.ajaxUrl + url;
+            return assign({}, globalConfig, config).page.ajaxUrl + url;
         };
     };
 

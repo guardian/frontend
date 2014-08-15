@@ -6,6 +6,7 @@ import services.{Archive, DynamoDB, Googlebot404Count}
 import java.net.URLDecoder
 import model.{NoCache, Cached}
 import scala.concurrent.Future.successful
+import conf.Switches.CenturyRedirectionSwitch
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
  
@@ -24,7 +25,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   else
     None
 
-  def lowercase(path: String): Option[SimpleResult] = path.split("/").toList match {
+  def lowercase(path: String): Option[Result] = path.split("/").toList match {
     case "www.theguardian.com" :: section :: other if section.exists(_.isUpper) => Some(Cached(300){
       Redirect(s"http://www.theguardian.com/${section.toLowerCase}/${other.mkString("/")}")
     })
@@ -69,6 +70,7 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     isEncoded(path).map(url => successful(Redirect(s"http://$url", 301)))
     .getOrElse(lookupPath(path)
       .map{ _.orElse(redirectGallery(path))
+        .orElse(redirectCentury(path))
         .orElse(lowercase(path))
         .getOrElse{
           log.info(s"Not Found (404): $path")
@@ -108,4 +110,35 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
     logDestination(path, "gallery", url)
     Cached(300)(Redirect(s"http://$url", 301))
   }
+
+  private def redirectCentury(path: String) = newCenturyUrl(path).map { url =>
+    logDestination(path, "century", url)
+    Cached(300)(Redirect(s"http://$url", 301))
+  }
+
+  def newCenturyUrl(path: String): Option[String] = {
+    if (CenturyRedirectionSwitch.isSwitchedOn) {
+        val centuryUrlEx = """www.theguardian.com\/century(\/)?$""".r
+        val centuryDecadeUrlEx = """www.theguardian.com(\/\d{4}-\d{4})(\/)?$""".r
+        val centuryStoryUrlEx = """www.theguardian.com\/(\d{4}-\d{4})\/Story\/([0|1]?,[\d]*,-?\d+,[\d]*)(.*)""".r
+        val ngCenturyFront = "www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century"
+        path match {
+          case centuryUrlEx(_) => {
+            Some(ngCenturyFront)
+          }
+          case centuryDecadeUrlEx(centuryDecade, _) => {
+            Some(ngCenturyFront)
+          }
+          case centuryStoryUrlEx(decade, storyId, ext) => {
+            Some(s"www.theguardian.com/century/$decade/Story/$storyId$ext")
+          }
+          case _ => {
+            None
+          }
+        }
+      } else {
+        None
+    }
+  }
+
 }

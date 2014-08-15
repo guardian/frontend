@@ -1,13 +1,13 @@
 @mixin deport-left {
     @include mq(leftCol) {
         @include rem((
-            margin-left: -1 * (gs-span(2) + $gs-gutter)
+            margin-left: -1 * ($left-column + $gs-gutter)
         ));
     }
 
     @include mq(wide) {
         @include rem((
-            margin-left: -1 * (gs-span(3) + $gs-gutter)
+            margin-left: -1 * ($left-column-wide + $gs-gutter)
         ));
     }
 }
@@ -15,13 +15,13 @@
 @mixin reduce-left {
     @include mq(leftCol) {
         @include rem((
-            width: gs-span(2)
+            width: $left-column
         ));
     }
 
     @include mq(wide) {
         @include rem((
-            width: gs-span(3)
+            width: $left-column-wide
         ));
     }
 }
@@ -32,7 +32,7 @@
     @include rem((
         margin-right: 24px
     ));
-    @include fs-headline(3);
+    @include fs-headline(4);
     font-weight: 200;
     font-style: normal;
     color: $c-neutral2;
@@ -68,6 +68,34 @@ figure.element.element--supporting {
     }
 }
 
+figure.element.element--thumbnail {
+    float: left;
+    clear: left;
+    margin-bottom: 0;
+    @include rem((
+        width: gs-span(2) - $gs-gutter,
+        margin-right: $gs-gutter,
+        margin-top: $gs-baseline/2
+    ));
+
+    @include mq(tablet) {
+        @include rem((
+            width: gs-span(2)
+        ));
+    }
+
+    @include mq(leftCol) {
+        @include deport-left;
+        position: relative;
+    }
+
+    @include mq(wide) {
+        @include rem((
+            margin-left: -1 * (gs-span(2) + $gs-gutter)
+        ));
+    }
+}
+
 figure.element.element--showcase {
 
     @include mq(leftCol) {
@@ -89,7 +117,7 @@ figure.element.element--supporting {
             position: absolute;
             top: 100%;
             @include rem((
-                padding-top: 21px
+                padding-top: ($gs-baseline/6)*5
             ));
             @include reduce-left;
         }
@@ -134,9 +162,11 @@ figure {
 
 .tone-feature .media-primary.media-primary--showcase {
     margin-left: 0;
+    z-index: 2; // Put the image on top of the left and right layout borders
+    position: relative;
 
     .responsive-img {
-        @include mq($from: rightCol) {
+        @include mq(rightCol) {
             top: -25%;
         }
         height: auto;
@@ -154,12 +184,16 @@ figure {
                 padding-bottom: aspect-ratio-height(5, 3)
             ));
         }
-
-        // Magic number for max height in 5:2 ratio before cropping kicks in.
-        @include mq(1680px) {
-            @include rem((
-                padding-bottom: 672px
-            ));
-        }
+    }
+    @include mq(leftCol) {
+        margin: 0 auto;
+        @include rem((
+            max-width: gs-span(14) + $gs-gutter * 2,
+        ));
+    }
+    @include mq(wide) {
+        @include rem((
+            max-width: gs-span(16) + $gs-gutter * 2,
+        ));
     }
 }

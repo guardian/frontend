@@ -1,7 +1,11 @@
 .related {
-    .item__link {
+    .item__tonal-border {
         @include mq($to: tablet) {
             border-top: 1px solid $c-neutral5 !important;
+        }
+    }
+    .item__link {
+        @include mq($to: tablet) {
             @include rem((
                 padding-top: 7px,
                 margin-top: -12px
@@ -13,7 +17,7 @@
 
         @include mq($to: tablet) {
             .item__title {
-                @include fs-headline(2, true);
+                @include fs-headline(3, true);
             }
         }
     }
@@ -40,6 +44,14 @@
 
     @include mq(tablet, rightCol) {
         .facia-slice__item:nth-child(n+4) {
+            display: none;
+        }
+    }
+
+    // Temporarily hide story package from IE8
+    // TODO find a fix!
+    @if $old-ie {
+        &.more-on-this-story {
             display: none;
         }
     }

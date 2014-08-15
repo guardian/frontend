@@ -46,26 +46,5 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
         assertNotTeamWithScore(matches, "Cardiff", "2")
       }
     }
-
-    scenario("The 'Classic version' link points to the correct, equivalent classic page") {
-
-      Given("I visit the live page")
-      And("I am on the 'UK' edition")
-      HtmlUnit("/football/live") { browser =>
-        import browser._
-
-        Then("the 'Classic version' link should point to '/football/live?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/live"))
-      }
-
-      Given("I visit the live page")
-      And("I am on the 'US' edition")
-      HtmlUnit.US("/football/live") { browser =>
-        import browser._
-
-        Then("the 'Classic version' link should point to '/football/matches?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/live"))
-      }
-    }
   }
 }

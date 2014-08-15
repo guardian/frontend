@@ -22,27 +22,40 @@
     }
 
     .item__title {
-        @include fs-headline(2, $size-only: true);
+        @include fs-headline(3, $size-only: true);
         padding-top: 0;
         @include rem((
             margin-bottom: $gs-baseline
         ));
 
         @include mq(tablet) {
-            @include fs-headline(4, true);
+            @include fs-headline(5, true);
             @include rem((
                 margin-bottom: $gs-baseline*1.25
             ));
         }
         @include mq(desktop) {
-            @include fs-headline(5, true);
+            @include fs-headline(6, true);
+        }
+    }
+    .stars {
+        @include rem((
+            margin-top: 0 - $gs-baseline * .5,
+            margin-bottom: $gs-baseline * 1.25
+        ));
+
+        @include mq(tablet) {
+            @include rem((
+                margin-top: 0 - $gs-baseline * .75,
+                margin-bottom: $gs-baseline * 1.5
+            ));
         }
     }
     .item__standfirst {
         display: block;
 
         @include mq(desktop) {
-            @include fs-headline(1, true);
+            @include fs-headline(2, true);
         }
     }
     .item__media-wrapper {

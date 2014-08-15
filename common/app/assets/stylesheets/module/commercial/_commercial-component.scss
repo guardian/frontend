@@ -104,13 +104,9 @@ $commercial-cta-diameter: (
     }
 }
 
-.facia-container--layout-article .commercial {
-    .facia-container__inner {
-        margin-bottom: 0;
-    }
-    
+.facia-container--layout-content .commercial {
     &.commercial--high {
-        @include mq($from: tablet, $to: leftCol) {
+        @include mq(tablet, leftCol) {
             .lineitem {
                 width: 100%;
                 
@@ -134,7 +130,7 @@ $commercial-cta-diameter: (
                 display: none;
             }
         }
-    }    
+    }
 }
 
 .commercial {
@@ -154,7 +150,86 @@ $commercial-cta-diameter: (
         float: none;
         color: $c-newsDefault;
     }
+    
+    &.commercial--v-high {
+        background-image: radial-gradient(circle at center, #ffffff 3px, transparent 4px), radial-gradient(circle at center, #ffffff 3px, transparent 4px);
+        background-size: 14px 12px;
+        background-position: center -6px, center calc(100% + 6px);
+        background-repeat: repeat-x;
+        @include rem((
+            padding: $gs-baseline $gs-gutter/2
+        ));
+        
+        .commercial__title {
+            display: none;
+            float: none;
+        }
+        @include mq(tablet) {
+            .commercial__title {
+                display: block;
+            }
+        }
+        @include mq(leftCol, wide) {
+            .i-bookshop-logo--bookshop {
+                margin-left: 0;
+            }
+        }
+        .commercial--v-high__head {
+            clear: both;
+            border-top: 1px solid $c-neutral3;
+            @include rem((
+                padding: $gs-baseline 0
+            ));
+        }
+        .lineitem__title {
+            white-space: normal;
+            font-weight: bold;
+        }
+        .lineitem__link {
+            float: none;
+        }
+        .commercial--v-high__body {
+            border: 1px dotted $c-neutral3;
+            @include rem((
+                padding: $gs-baseline/2 0
+            ));
+            border-width: 1px 0;
+        }
+        .commercial--v-high__footer {
+            border-bottom: 1px dotted $c-neutral3;
+            @include rem((
+                padding: $gs-baseline/2 0
+            ));
+        }
+        .commercial__home-link {
+            float: none;
+            padding-left: 0;
+            color: #ffffff;
+        }
+    }
 }
+
+.ad-slot--im {
+    @include rem((
+        padding-right: $gs-gutter
+    ));
+    width: 50%;
+    float: left;
+    @include mq(leftCol) {
+        @include box-sizing(border-box);
+        @include rem((
+            width: $left-column + $gs-gutter,
+            margin-left: -($left-column + $gs-gutter)
+        ));
+    }
+    @include mq(wide) {
+        @include rem((
+            width: $left-column-wide + $gs-gutter,
+            margin-left: -($left-column-wide + $gs-gutter)
+        ));
+    }
+}
+
 .commercial__head {
     @include box-sizing(border-box);
     background-color: #ffffff;
@@ -214,7 +289,7 @@ $commercial-cta-diameter: (
         height: $gs-row-height,
         padding: $gs-baseline/3 32px $gs-baseline/3 8px
     ));
-    @include fs-textsans(2);
+    @include fs-textSans(2);
     border: 0;
     @include border-radius(0); // Prevent rounded corners in iOS
     float: left;
@@ -267,7 +342,7 @@ $commercial-cta-diameter: (
     @include box-sizing(border-box);
     position: relative;
     padding: 0;
-    @include fs-headline(1);
+    @include fs-headline(2);
 
     &:nth-child(n + 4) {
         display: none;
@@ -280,7 +355,7 @@ $commercial-cta-diameter: (
     }
 }
 .lineitem__title {
-    @include fs-headline(1);
+    @include fs-headline(2);
     font-weight: normal;
     text-overflow: ellipsis;
     white-space: pre;
@@ -324,7 +399,7 @@ $commercial-cta-diameter: (
 }
 .lineitem__meta {
     color: $c-neutral2;
-    @include fs-textsans(2);
+    @include fs-textSans(2);
     margin: 0;
 }
 .lineitem__img,
@@ -499,6 +574,28 @@ $commercial-cta-diameter: (
     }
 }
 
+.commercial--v-high__body {
+    @include mq($to: mobileLandscape) {
+        .highitem__img {
+            width: 100px;
+            float: none;
+            @include rem((
+                margin-bottom: $gs-baseline/2
+            ));
+        }
+    }
+
+    @include mq(leftCol, wide) {
+        .highitem__img {
+            width: 100%;
+            float: none;
+            @include rem((
+                margin-bottom: $gs-baseline/2
+            ));
+        }
+    }
+}
+
 .commercial__home-link {
     position: relative;
     display: inline-block;
@@ -544,6 +641,24 @@ $commercial-cta-diameter: (
                 height: 8px;
                 margin-left: -5px;
                 margin-top: -4px;
+                background-size: contain;
+            }
+        }
+    }
+    .commercial__home-link__pill {
+        padding: 4px 25px 4px 12px;
+        background-position: right;
+        background-color: $c-newsDefault;
+        @include border-radius(50%);
+        white-space: nowrap;
+        
+        .i {
+            left: auto;
+            right: 10px;
+            
+            .svg & {
+                width: 12px;
+                height: 8px;
                 background-size: contain;
             }
         }

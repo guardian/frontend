@@ -88,27 +88,5 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
         }
       }
     }
-
-    scenario("The 'Classic version' link points to the correct, equivalent classic page") {
-
-      Given("I visit the results page")
-      And("I am on the 'UK' edition")
-      HtmlUnit("/football/results") { browser =>
-        import browser._
-
-        Then("the 'Classic version' link should point to '/football/results?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/results"))
-      }
-
-      Given("I visit the results page")
-      And("I am on the 'US' edition")
-      HtmlUnit.US("/football/results") { browser =>
-        import browser._
-
-        Then("the 'Classic version' link should point to '/football/results?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/results"))
-      }
-
-    }
   }
 }

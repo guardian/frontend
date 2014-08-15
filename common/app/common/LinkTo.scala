@@ -1,7 +1,7 @@
 package common
 
-import play.api.templates.Html
-import play.api.mvc.{SimpleResult, AnyContent, Request, RequestHeader}
+import play.twirl.api.Html
+import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
 import conf.Configuration
 import model.{Snap, Trail, MetaData}
 import org.jsoup.Jsoup
@@ -25,7 +25,7 @@ trait LinkTo extends Logging {
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request), Region(request))
 
   def apply(url: String, edition: Edition, region: Option[Region] = None)(implicit request : RequestHeader): String =
-    (HttpSwitch.queryString(url) match {
+    HttpSwitch.queryString(url match {
       case "http://www.theguardian.com" => homeLink(edition, region)
       case "/" => homeLink(edition, region)
       case protocolRelative if protocolRelative.startsWith("//") => protocolRelative
@@ -47,7 +47,7 @@ trait LinkTo extends Logging {
     .map(urlFor(_, edition))
     .getOrElse(urlFor("", edition))
 
-  def redirectWithParameters(request: Request[AnyContent], realPath: String): SimpleResult = {
+  def redirectWithParameters(request: Request[AnyContent], realPath: String): Result = {
     val params = if (request.hasParameters) s"?${request.rawQueryString}" else ""
     Redirect(request.path.endsWith(".json") match {
       case true => s"/$realPath.json$params"
@@ -96,12 +96,6 @@ object ClassicLink {
     val targetUrl = encode(LinkTo(s"/$fixedId?view=classic"), "UTF-8")
     LinkTo{s"/preference/platform/classic?page=$targetUrl"}
   }
-
-  // As we move towards taking over full site traffic, we will get pages that only work on the Next Gen platform.
-  // add whatever identifies them here so that we do not show users a 'Classic' link on those pages
-  def hasClassicVersion()(implicit request: RequestHeader): Boolean = !specialLiveBlog(request)
-
-  private def specialLiveBlog(request: RequestHeader) = request.path.contains("-sp-")
 }
 
 class CanonicalLink {

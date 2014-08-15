@@ -1,17 +1,17 @@
 package common
 
 import com.gu.openplatform.contentapi.ApiError
+import conf.Switch
 import play.api.Logger
-import play.api.mvc.{ SimpleResult, Result, RequestHeader }
-import play.api.templates.Html
+import play.api.mvc.{ Result, RequestHeader }
+import play.twirl.api.Html
 import model.{NoCache, Cached}
-import com.gu.management.Switchable
 import java.util.concurrent.TimeoutException
 
 object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results {
 
 
-  def convertApiExceptions[T](implicit log: Logger): PartialFunction[Throwable, Either[T, SimpleResult]] = {
+  def convertApiExceptions[T](implicit log: Logger): PartialFunction[Throwable, Either[T, Result]] = {
     case ApiError(404, message) =>
       log.info(s"Got a 404 while calling content api: $message")
       Right(NoCache(NotFound))
@@ -35,7 +35,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       Ok(htmlResponse())
   }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData, switches: Seq[Switchable])(implicit request: RequestHeader) = Cached(metaData) {
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, metaData: model.MetaData, switches: Seq[Switch])(implicit request: RequestHeader) = Cached(metaData) {
     if (request.isJson)
       JsonComponent(metaData, jsonResponse())
     else
@@ -49,7 +49,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       Ok(htmlResponse())
   }
 
-  def renderFormat(html: () => Html, cacheTime: Integer)(implicit request: RequestHeader): SimpleResult = {
+  def renderFormat(html: () => Html, cacheTime: Integer)(implicit request: RequestHeader): Result = {
     renderFormat(html, html, cacheTime)(request)
   }
 }

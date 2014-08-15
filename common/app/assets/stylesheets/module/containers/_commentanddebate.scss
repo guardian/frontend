@@ -1,6 +1,6 @@
 .container--commentanddebate {
     .l-row--items-3 {
-        .item__link {
+        .item__tonal-border {
             border-color: $c-commentAccent;
         }
         .item__byline {
@@ -14,7 +14,7 @@
         }
         .item__title,
         .item__byline {
-            @include fs-headline(2, true);
+            @include fs-headline(3, true);
         }
         @include mq($to: tablet) {
             .facia-slice__item:first-child {
@@ -29,7 +29,7 @@
 
                 .item__title,
                 .item__byline {
-                    @include fs-headline(3, true);
+                    @include fs-headline(4, true);
                 }
             }
         }
@@ -82,7 +82,7 @@
     }
     .facia-slice-wrapper--position-2 {
         .item--has-no-image .item__title {
-            @include fs-headline(1, true);
+            @include fs-headline(2, true);
         }
         .item--has-no-image .item__standfirst,
         .item__media-wrapper,
@@ -92,7 +92,7 @@
     }
 }
 
-.facia-container--layout-article {
+.facia-container--layout-content {
     .container--commentanddebate {
         .facia-slice-wrapper--position-2,
         .linkslist-container {

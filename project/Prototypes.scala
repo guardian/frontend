@@ -3,8 +3,9 @@ package com.gu
 import com.gu.versioninfo.VersionInfo
 import sbt._
 import sbt.Keys._
-import play.Project._
+import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.SbtNativePackager._
+import play.twirl.sbt.Import._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -33,28 +34,27 @@ trait Prototypes {
       </dependencies>,
 
     resolvers := Seq(
+      Resolver.typesafeRepo("releases"),
+      Classpaths.typesafeReleases,
+      "Akka" at "http://repo.akka.io/releases",
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
-      Resolver.url("Typesafe Ivy Releases", url("http://repo.typesafe.com/typesafe/ivy-releases"))(Resolver.ivyStylePatterns),
-      "JBoss Releases" at "http://repository.jboss.org/nexus/content/repositories/releases",
-      "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/",
-      "Akka" at "http://repo.akka.io/releases"
+      "Guardian Github Snapshots" at "http://guardian.github.com/maven/repo-snapshots",
+      "JBoss Releases" at "https://repository.jboss.org/nexus/content/repositories/releases"
     ),
 
     resolvers ++= Seq(
       // where Shade lives
       "BionicSpirit Releases" at "http://maven.bionicspirit.com/releases/",
       // for SpyMemcached
-      "Spy" at "http://files.couchbase.com/maven2/"
+      "Spy" at "https://files.couchbase.com/maven2/"
     )
   )
 
   val frontendClientSideSettings = Seq(
-    // Effectively disable built in Play javascript compiler
-    javascriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
-    lessEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
-    coffeescriptEntryPoints <<= (sourceDirectory in Compile) { base => (base / "assets" ** "*.none") },
+    sourceDirectory in Assets := (sourceDirectory in Compile).value / "assets.none",
+    sourceDirectory in TestAssets := (sourceDirectory in Test).value / "assets.none",
 
-    templatesImport ++= Seq(
+    TwirlKeys.templateImports ++= Seq(
       "common._",
       "model._",
       "views._",
@@ -69,14 +69,15 @@ trait Prototypes {
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
 
-    concurrentRestrictions in Global += Tags.limit(Tags.Test, 1),
+    // Dev experiments suggested 4 concurrent test tasks gave the best results, at the time.
+    concurrentRestrictions in Global += Tags.limit(Tags.Test, 4),
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.0" % "test",
-      "org.mockito" % "mockito-all" % "1.9.5" % "test"
+      "org.scalatest" %% "scalatest" % "2.2.0" % Test,
+      "org.mockito" % "mockito-all" % "1.9.5" % Test
     ),
 
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.
@@ -84,10 +85,10 @@ trait Prototypes {
     baseDirectory in Test := file(".")
   )
 
-  def root() = Project("root", base = file("."))
+  def root() = Project("root", base = file(".")).enablePlugins(play.PlayScala)
 
   def application(applicationName: String) = {
-    play.Project(applicationName, version, path = file(applicationName))
+    Project(applicationName, file(applicationName)).enablePlugins(play.PlayScala)
     .settings(frontendDependencyManagementSettings:_*)
     .settings(frontendCompilationSettings:_*)
     .settings(frontendClientSideSettings:_*)
@@ -95,10 +96,9 @@ trait Prototypes {
     .settings(VersionInfo.settings:_*)
     .settings(
       libraryDependencies ++= Seq(
-        "com.gu" %% "management-play" % "6.1",
         "commons-io" % "commons-io" % "2.4"
       )
     )
-      .settings(Seq(name in Universal := applicationName): _*)
+    .settings((name in Universal := applicationName))
   }
 }

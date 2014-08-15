@@ -3,7 +3,7 @@ package controllers
 import common._
 import conf._
 import model._
-import play.api.mvc.{SimpleResult, RequestHeader, Controller, Action}
+import play.api.mvc.{Result, RequestHeader, Controller, Action}
 import services.ImageQuery
 
 case class ImageContentPage(image: Content, storyPackage: List[Trail])
@@ -19,7 +19,7 @@ object ImageContentController extends Controller with ImageQuery with Logging wi
     }
   }
 
-  private def renderImageContent(page: ImageContentPage)(implicit request: RequestHeader): SimpleResult = {
+  private def renderImageContent(page: ImageContentPage)(implicit request: RequestHeader): Result = {
     val htmlResponse = () => views.html.imageContent(page)
     val jsonResponse = () => views.html.fragments.imageContentBody(page)
     renderFormat(htmlResponse, jsonResponse, page.image, Switches.all)

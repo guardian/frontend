@@ -1,32 +1,31 @@
-/*  credit for this microsprite:
-    @csswizardry: http://jsfiddle.net/csswizardry/KL5Vs/
+/*doc
+---
+title: Stars
+name: stars
+category: Common
+---
+
+```html_example
+<div class="stars" role="presentation">
+    <i class="star__item i-star-golden i"></i>
+    <i class="star__item i-star-golden i"></i>
+    <i class="star__item i-star-golden i"></i>
+    <i class="star__item i-star-gray i"></i>
+    <i class="star__item i-star-gray i"></i>
+</div>
+```
 */
+
+$starIcon-width: 14px;
+$starIcon-height: 13px;
+
 .stars {
     display: block;
-    width: 65px;
-    position: relative;
-    text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
-    margin-top: 4px;
-
-    &,
-    &:after {
-        height: 13px;
-    }
-
-    &:after {
-        content: '';
-        background-position: 0 -13px;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-    }
+    @include rem((
+        margin-top: 4px,
+        width: $starIcon-width * 5,
+        line-height: $starIcon-height
+    ));
 }
-
-.s-1:after { width: 13px; }
-.s-2:after { width: 26px; }
-.s-3:after { width: 39px; }
-.s-4:after { width: 52px; }
-.s-5:after { width: 65px; }

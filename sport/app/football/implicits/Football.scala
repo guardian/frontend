@@ -1,12 +1,10 @@
 package implicits
 
 import pa._
-import org.joda.time.{ DateTime, DateMidnight }
+import org.joda.time.{ DateTime, LocalDate }
 import model._
 import views.MatchStatus
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
-import conf.Switches.WorldCupWallchartEmbedSwitch
-
 
 trait Football extends Collections {
 
@@ -37,7 +35,7 @@ trait Football extends Collections {
   }
 
   implicit class Match2isOn(m: FootballMatch) {
-    def isOn(date: DateMidnight) = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
+    def isOn(date: LocalDate) = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
   }
 
   implicit class Match2status(m: FootballMatch) {
@@ -121,15 +119,10 @@ trait Football extends Collections {
       else t.name
     }
 
-    WorldCupWallchartEmbedSwitch.isSwitchedOn  // ghost team IDs correct for world-cup 2014, should go after that
+    // ghost team IDs correct for world-cup 2014, should go after that
     // PA knockout placeholder teams
     // e.g. "Winner Group A", "Wnr Gp G/R-Up Gp H", "Loser SF1"
-    private val ghostTeamIds = List(
-      "8158", "8159", "8162", "8163", "8160", "8161", "8164", "8165",
-      "8166", "8167", "8172", "8173", "8170", "8171", "8174", "8175",
-      "8204", "8206", "8200", "8202", "8205", "8207", "8201", "8203",
-      "42624", "42625", "42626", "42627", "8176", "8177", "7357", "7358"
-    )
+    private val ghostTeamIds = List()
 
     private val ghostTeamNameMappings = List(
       "/" -> " / ",
@@ -141,11 +134,9 @@ trait Football extends Collections {
     )
   }
 
-  WorldCupWallchartEmbedSwitch.isSwitchedOn  // "700" is for world-cup 2014 - remove that entry when it is done (leave the impls for other tournaments)
+ // "700" is for world-cup 2014 - remove that entry when it is done (leave the impls for other tournaments)
 
-  val roundLinks = Map[String, Round => Option[String]](
-    "700" -> ((round: Round) => round.name.map{ n => s"/football/world-cup-2014-${n.toLowerCase.replace(" ", "-")}" })
-  )
+  val roundLinks = Map[String, Round => Option[String]]()
   def groupTag(competitionId: String, round: Round) = roundLinks.get(competitionId).flatMap(_(round))
 }
 

@@ -1,14 +1,21 @@
 define([
+    'lodash/arrays/zipObject',
     'lodash/functions/once',
+    'lodash/objects/pairs',
     'common/utils/config',
+    'common/utils/storage',
     'common/utils/url'
 ], function (
+    zipObject,
     once,
+    pairs,
     config,
+    storage,
     urlUtils
 ) {
 
     var gatewayUrl = '//pq-direct.revsci.net/pql',
+        storageKey = 'gu.ads.audsci-gateway',
         sectionPlacements = {
             sport:        ['FKSWod', '2xivTZ', 'MTLELH'],
             football:     ['6FaXJO', 'ORE2W-', 'MTLELH'],
@@ -18,10 +25,10 @@ define([
             news:         ['eMdl6Y', 'mMYVrM', 'MTLELH'],
             'default':    ['c7Zrhu', 'Y1C40a', 'LtKGsC', 'MTLELH']
         },
-        segments = {},
+        section = sectionPlacements[config.page.section] ? config.page.section : 'default',
         load = once(function() {
-            if (config.switches.audienceScience) {
-                var placements = sectionPlacements[config.page.section] || sectionPlacements['default'],
+            if (config.switches.audienceScienceGateway) {
+                var placements = sectionPlacements[section],
                     query = urlUtils.constructQuery({
                         placementIdList: placements.join(','),
                         cb: new Date().getTime()
@@ -30,16 +37,23 @@ define([
 
                 return require(['js!' + url + '!exports=asiPlacements'])
                     .then(function(asiPlacements) {
-                        for (var placement in asiPlacements) {
-                            if (asiPlacements[placement]['default']) {
-                                segments['pq_' + placement] = 'T';
-                            }
-                        }
+                        var segments = storage.local.get(storageKey) || {};
+                        segments[section] = zipObject(
+                            pairs(asiPlacements)
+                                .filter(function(placement) {
+                                    return placement[1]['default'];
+                                })
+                                .map(function(placement) {
+                                    return ['pq_' + placement[0], 'T'];
+                                })
+                        );
+                        storage.local.set(storageKey, segments);
                     });
             }
         }),
         getSegments = function() {
-            return segments;
+            var segments = storage.local.get(storageKey);
+            return segments ? segments[section] : {};
         };
 
     return {

@@ -1,4 +1,4 @@
-$item-top-border-height: 2px;
+$item-top-border-height: 1px;
 
 @mixin vertical-item-separator {
     &:before {
@@ -14,7 +14,7 @@ $item-top-border-height: 2px;
     }
 }
 @mixin item--hide-tone-border {
-    .item__link {
+    .item__tonal-border {
         border-top-width: 0 !important;
     }
     .item__image-container {

@@ -1,8 +1,10 @@
 @(popular: Seq[model.MostPopular])(implicit request: RequestHeader)
+@import views.support._
+@import common.LinkTo
 
 @defining(popular.size > 1){ isTabbed =>
 
-    <div id="popular-trails" data-link-name="most popular">
+    <div id="popular-trails" data-link-name="most popular" data-test-id="popular-in">
 
         <h2 id="most-popular-head" class="page-sub-header">Popular</h2>
 

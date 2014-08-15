@@ -11,20 +11,24 @@
     data-link-name="trail | @{index + 1}">
 
     <div class="item__container">
+        <div class="item__tonal-border"></div>
+        @trail.contributorAvatar.map{ url =>
+            <div class="item__avatar">
+                <img src="@url" alt="" class="item__avatar__media" />
+            </div>
+        }
         <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
-            @trail.contributorAvatar.map{ url =>
-                <div class="item__avatar">
-                    <img src="@url" alt="" class="item__avatar__media" />
-                </div>
-            }
             <h2 class="item__title">
                 <span class="i i-quote-orange"></span>
-                @RemoveOuterParaHtml(trail.headline)
+                <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>
             </h2>
         </a>
         @trail.byline.map { byLine =>
-            <p class="item__byline">@Html(byLine)</p>
+            @trail match { case content:model.Content =>
+                <p class="item__byline tone-colour tone-comment">@ContributorLinks(Html(byLine), content.contributors)</p>
+            }
         }
         <div class="item__meta"></div>
     </div>
+    <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 </@element>

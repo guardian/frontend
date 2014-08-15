@@ -1,4 +1,4 @@
-@(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[Identity] = None)(content: Html)
+@(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None)(content: Html)
 
 <!DOCTYPE html>
 
@@ -17,7 +17,7 @@
 
         <meta name="apple-mobile-web-app-title" content="Guardian" />
         <meta name="application-name" content="The Guardian" />
-        <meta name="msapplication-TileColor" content="#214583" />
+        <meta name="msapplication-TileColor" content="#005689" />
         <meta name="msapplication-TileImage" content="@routes.Assets.at("images/windows_tile_144_b.png")" />
 
         <link href="@routes.Assets.at("javascripts/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet">
@@ -27,6 +27,7 @@
                 baseUrl: '/assets/javascripts',
                 paths: {
                     knockout:              'components/knockout.js/knockout.js',
+                    EventEmitter:          'components/eventEmitter/EventEmitter',
                     reqwest:               'components/reqwest/reqwest',
                     bean:                  'components/bean/bean',
                     bonzo:                 'components/bonzo/bonzo',
@@ -46,7 +47,8 @@
                     priority: '@priority',
                     editions: [@Html(Edition.all.map(_.id.toLowerCase).mkString("'","','", "'"))],
                     navSections: [@Html(FaciaToolConfiguration.sectionsFromNav.mkString("'", "', '", "'"))],
-                    email: '@identity.map(_.email).getOrElse("")'
+                    email: '@identity.map(_.email).getOrElse("")',
+                    avatarUrl: '@identity.map(_.avatarUrl).getOrElse("")'
                 }
             });
         </script>
@@ -73,7 +75,7 @@
         @if(isAuthed) {
             @content
         } else {
-            <form action="@routes.Login.loginPost()" method="post" class="login-form tools">
+            <form action="@routes.OAuthLoginController.loginAction()" method="post" class="login-form tools">
                 <input value="Log In" class="tool" type="submit" id="login-button">
             </form>
         }

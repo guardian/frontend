@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-width: 320px;
+    color: #000000;
+    background-color: #f6f6f6;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+p {
+    margin: 0;
+}
+
+a,
+a:hover,
+.linky {
+    color: #148ad2;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover,
+.linky:hover {
+    color: #2ea3eb;
+}
+
+header {
+    height: 51px;
+    position: absolute;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    overflow: hidden;
+}
+
+.status {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: fixed;
+    width: 100%;
+    background: #999999;
+    color: #000000;
+    padding: 15px 40px 0;
+    height: 51px;
+    z-index: 3;
+    text-align: center;
+}
+
+h1 {
+    float: left;
+    display: inline-block;
+    font-size: 32px;
+    line-height: 46px;
+    letter-spacing: -1px;
+    color: #666666;
+    font-weight: normal;
+    text-transform: lowercase;
+    margin: 0 0 0 5px;
+    font-family: Georgia;
+}
+
+.login-form {
+    position: absolute;
+    top: 13px;
+    left: 160px;
+    z-index: 1;
+}
+
+.logged-in {
+    float: right;
+}
+
+.avatar {
+    float: right;
+}
+
+.logged-in-message {
+    padding: 0.4em;
+}
+
+.log-in-out {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 51px;
+    padding: 15px 20px 0;
+    font-size: 14px;
+    float: right;
+    border-left: 1px solid #cfd8dc;
+}
+
+.log-in-out a {
+    color: #999999;
+}
+
+.log-in-out a:hover {
+    color: #333333;
+}
+
+.tool {
+     display: inline-block;
+     padding: 0 10px;
+     background: #cccccc;
+     font-size: 15px;
+     line-height: 24px;
+     color: #ffffff;
+     border: 0;
+     cursor: pointer;
+     text-decoration: none;
+}
+
+.tools .tool:first-child {
+   background: #2ea3eb;
+}
+
+.tools .tool:first-child:hover {
+   background: #148ad2;
+}
+
+.tools .tool.draft-publish {
+   background: #ffc107;
+}
+
+.tools .tool.draft-publish:hover {
+   background: #46c430;
+}
+
+.tools .tool.draft-warning {
+   background: #ffc107;
+   margin-right: 4px;
+}
+
+.tools .tool.draft-warning:hover {
+   background: #BBBBBB;
+}

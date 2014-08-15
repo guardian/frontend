@@ -1,12 +1,13 @@
 package frontsapi.model
 
+import com.gu.googleauth.UserIdentity
 import play.api.libs.json.{Json, JsValue}
 import tools.FaciaApi
-import controllers.Identity
 import org.joda.time.DateTime
 import scala.util.{Success, Failure, Try}
 import common.Logging
 import conf.Configuration
+import com.gu.googleauth.UserIdentity
 
 object Front {
   implicit val jsonFormat = Json.format[Front]
@@ -165,28 +166,28 @@ trait UpdateActions extends Logging {
     else
       block
 
-  def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: Identity): Block =
+  def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: UserIdentity): Block =
     block.copy(displayName=update.displayName, href=update.href)
 
-  def putBlock(id: String, block: Block, identity: Identity): Block =
+  def putBlock(id: String, block: Block, identity: UserIdentity): Block =
     FaciaApi.putBlock(id, block, identity)
 
   //Archiving
-  def archivePublishBlock(id: String, block: Block, identity: Identity): Block =
+  def archivePublishBlock(id: String, block: Block, identity: UserIdentity): Block =
     archiveBlock(id, block, "publish", identity)
 
-  def archiveDiscardBlock(id: String, block: Block, identity: Identity): Block =
+  def archiveDiscardBlock(id: String, block: Block, identity: UserIdentity): Block =
     archiveBlock(id, block, "discard", identity)
 
-  private def archiveBlock(id: String, block: Block, action: String, identity: Identity): Block =
+  private def archiveBlock(id: String, block: Block, action: String, identity: UserIdentity): Block =
     archiveBlock(id, block, Json.obj("action" -> action), identity)
 
-  def archiveUpdateBlock(id: String, block: Block, updateJson: JsValue, identity: Identity): Block =
+  def archiveUpdateBlock(id: String, block: Block, updateJson: JsValue, identity: UserIdentity): Block =
     archiveBlock(id, block, Json.obj("action" -> "update", "update" -> updateJson), identity)
-  def archiveDeleteBlock(id: String, block: Block, updateJson: JsValue, identity: Identity): Block =
+  def archiveDeleteBlock(id: String, block: Block, updateJson: JsValue, identity: UserIdentity): Block =
     archiveBlock(id, block, Json.obj("action" -> "delete", "update" -> updateJson), identity)
 
-  private def archiveBlock(id: String, block: Block, updateJson: JsValue, identity: Identity): Block =
+  private def archiveBlock(id: String, block: Block, updateJson: JsValue, identity: UserIdentity): Block =
     Try(FaciaApi.archive(id, block, updateJson, identity)) match {
       case Failure(t: Throwable) => {
         log.warn(t.toString)
@@ -195,12 +196,12 @@ trait UpdateActions extends Logging {
       case Success(_) => block
     }
 
-  def putMasterConfig(config: Config, identity: Identity): Option[Config] = {
+  def putMasterConfig(config: Config, identity: UserIdentity): Option[Config] = {
     FaciaApi.archiveMasterConfig(config, identity)
     FaciaApi.putMasterConfig(config)
   }
 
-  def updateCollectionList(id: String, update: UpdateList, identity: Identity): Option[Block] = {
+  def updateCollectionList(id: String, update: UpdateList, identity: UserIdentity): Option[Block] = {
     lazy val updateJson = Json.toJson(update)
     getBlock(id)
     .map(insertIntoLive(update, _))
@@ -212,7 +213,7 @@ trait UpdateActions extends Logging {
     .orElse(createBlock(id, identity, update))
   }
 
-  def updateCollectionFilter(id: String, update: UpdateList, identity: Identity): Option[Block] = {
+  def updateCollectionFilter(id: String, update: UpdateList, identity: UserIdentity): Option[Block] = {
     lazy val updateJson = Json.toJson(update)
     getBlock(id)
       .map(deleteFromLive(update, _))
@@ -222,7 +223,7 @@ trait UpdateActions extends Logging {
       .map(putBlock(id, _, identity))
   }
 
-  def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: Identity): Option[Block] =
+  def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: UserIdentity): Option[Block] =
     getBlock(id)
       .map(updateCollectionMeta(_, update, identity))
       .map(_.sortByGroup)
@@ -259,7 +260,7 @@ trait UpdateActions extends Logging {
 
   def itemMetaWhiteList(itemMeta: Map[String, JsValue]): Map[String, JsValue] = itemMeta.filter{case (k, v) => itemMetaWhitelistFields.contains(k)}
 
-  def createBlock(id: String, identity: Identity, update: UpdateList): Option[Block] = {
+  def createBlock(id: String, identity: UserIdentity, update: UpdateList): Option[Block] = {
     if (update.live)
       Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList))), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
     else

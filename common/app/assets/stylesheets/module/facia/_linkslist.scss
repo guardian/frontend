@@ -7,10 +7,9 @@
  * - hide/default: hidden image
  * - boost: shows image at desktop breakpoint
  */
-
 .linkslist-container {
     position: relative;
-    padding-top: 1px;
+
     @include mq(tablet) {
         @include rem((
             margin-top: $gs-baseline*.75
@@ -24,7 +23,7 @@
         top: 0;
         left: 0;
         right: 0;
-        height: 2px;
+        height: 1px;
         width: 100%;
         background: $c-newsAccent;
         z-index: 1;
@@ -47,6 +46,25 @@
         }
     }
 }
+
+.linkslist--without-top-borders .linkslist__item {
+    &:nth-child(1) {
+        border-top: 0;
+    }
+
+    @include mq(tablet) {
+        &:nth-child(2) {
+            border-top: 0;
+        }
+    }
+
+    @include mq(desktop) {
+        &:nth-child(3) {
+            border-top: 0;
+        }
+    }
+}
+
 .linkslist {
     @extend %u-unstyled;
 }
@@ -61,7 +79,7 @@
     position: relative;
     color: $c-neutral1;
     display: block;
-    @include fs-headline(1);
+    @include fs-headline(2);
     @include rem((
         margin-top: $gs-baseline/4,
         margin-bottom: get-line-height($fs-headlines, 1)

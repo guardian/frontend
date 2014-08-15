@@ -7,7 +7,7 @@
 // DEPRECATED:
 // Use font-scale mixins instead
 
-%type-5 { @include font($serifheadline, normal, 18, 24); }
+%type-5 { @include font($f-serif-headline, normal, 18, 24); }
 
 
 // Misc
@@ -22,7 +22,7 @@
     margin-left: .2em;
     vertical-align: middle;
     background: $c-newsDefault;
-    font: bold 13px/1 $serifheadline;
+    font: bold 13px/1 $f-serif-headline;
     color: #ffffff;
     text-align: center;
     cursor: help;
@@ -32,8 +32,10 @@
     position: relative;
     display: block;
     overflow: hidden;
-    width: 30px;
-    height: 30px;
+    @include rem((
+        width: 30px,
+        height: 30px
+    ));
     border: 1px solid $c-neutral1;
     padding: 0;
     @include border-radius(50%);

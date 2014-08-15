@@ -7,6 +7,7 @@ define([
     'lodash/arrays/uniq',
     'lodash/functions/once',
     'lodash/objects/defaults',
+    'lodash/objects/forOwn',
     'lodash/objects/isArray',
     'lodash/objects/pairs',
     'common/utils/$',
@@ -19,7 +20,8 @@ define([
     'common/modules/commercial/tags/audience-science-gateway',
     'common/modules/commercial/tags/criteo',
     'common/modules/commercial/keywords',
-    'common/modules/commercial/user-ad-targeting'
+    'common/modules/commercial/user-ad-targeting',
+    'common/modules/experiments/ab'
 ], function (
     bonzo,
     qwery,
@@ -28,6 +30,7 @@ define([
     uniq,
     once,
     defaults,
+    forOwn,
     isArray,
     pairs,
     $,
@@ -40,7 +43,8 @@ define([
     audienceScienceGateway,
     criteo,
     keywords,
-    userAdTargeting
+    userAdTargeting,
+    ab
 ) {
 
     /**
@@ -92,6 +96,13 @@ define([
                     tabletlandscape: '300,250|300,600'
                 }
             },
+            im: {
+                label: false,
+                refresh: false,
+                sizeMappings: {
+                    mobile: '88,85'
+                }
+            },
             inline1: {
                 sizeMappings: {
                     mobile: '300,50',
@@ -110,7 +121,7 @@ define([
                 label: false,
                 refresh: false,
                 sizeMappings: {
-                    desktop: '888,88|88,88'
+                    desktop: '88,87'
                 }
             },
             spbadge: {
@@ -144,7 +155,7 @@ define([
         },
         addLabel = function($slot) {
             if (shouldRenderLabel($slot)) {
-                $slot.prepend('<div class="ad-slot__label">Advertisement</div>');
+                $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
             }
         },
         removeLabel = function($slot) {
@@ -226,6 +237,18 @@ define([
 
             return mapping.build();
         },
+        abParam = function() {
+            var hchTest = ab.getParticipations().HighCommercialComponent;
+            if (hchTest) {
+                switch (hchTest.variant) {
+                    case 'control':
+                        return '1';
+                    case 'variant':
+                        return '2';
+                }
+            }
+            return '3';
+        },
         /**
          * Builds the appropriate page level targeting
          *
@@ -249,7 +272,8 @@ define([
                 section     = encodeTargetValue(page.section),
                 series      = encodeTargetValue(page.series),
                 contentType = encodeTargetValue(page.contentType),
-                edition     = encodeTargetValue(page.edition);
+                edition     = encodeTargetValue(page.edition),
+                mediaSource = encodeTargetValue(page.source);
 
             return defaults({
                 url     : window.location.pathname,
@@ -260,11 +284,15 @@ define([
                 pt      : contentType,
                 p       : 'ng',
                 k       : parseKeywords(page.keywordIds || page.pageId),
-                su      : page.isSurging ? '1' : '0',
+                su      : page.isSurging,
                 bp      : detect.getBreakpoint(),
                 a       : audienceScience.getSegments(),
-                at      : cookies.get('adtest') || '',
-                gdncrm  : userAdTargeting.getUserSegments()
+                at      : cookies.get('adtest') || cookies.get('GU_TEST') || '',
+                gdncrm  : userAdTargeting.getUserSegments(),
+                ab      : abParam(),
+                co      : parseContributors(page.author),
+                bl      : parseKeywords(page.blogIds),
+                ms      : mediaSource
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         createAdSlot = function(name, types, keywords) {
@@ -277,6 +305,7 @@ define([
                     '<div id="dfp-ad--{{name}}" ' +
                         'class="ad-slot ad-slot--dfp ad-slot--{{name}} {{types}}" ' +
                         'data-link-name="ad slot {{name}}" ' +
+                        'data-test-id="ad-slot-{{name}}" ' +
                         'data-name="{{name}}"' +
                         '{{sizeMappings}}></div>',
                     {
@@ -299,6 +328,12 @@ define([
                 .split(',').map(function (keyword) {
                     return keyword.split('/').pop();
                 });
+        },
+        parseContributors = function(contributors) {
+            var contributorArray = parseKeywords(contributors);
+            return contributorArray.map(function(contrib) {
+               return keywords.format(contrib);
+            });
         };
 
     /**
@@ -308,12 +343,9 @@ define([
             googletag.pubads().addEventListener('slotRenderEnded', parseAd);
         },
         setPageTargeting = function() {
-            var targets = buildPageTargeting(config);
-            for (var target in targets) {
-                if (targets.hasOwnProperty(target)) {
-                    googletag.pubads().setTargeting(target, targets[target]);
-                }
-            }
+            forOwn(buildPageTargeting(config), function(value, key) {
+                googletag.pubads().setTargeting(key, value);
+            });
         },
         /**
          * Loop through each slot detected on the page and define it based on the data

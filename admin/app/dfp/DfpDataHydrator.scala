@@ -7,9 +7,13 @@ import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.{AdminConfiguration, Configuration}
-import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
+import dfp.DfpApiWrapper.DfpSessionException
+import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
+
+import scala.util.{Failure, Try}
 
 object DfpDataHydrator extends Logging {
+
 
   private lazy val dfpSession: Option[DfpSession] = try {
     for {
@@ -50,6 +54,7 @@ object DfpDataHydrator extends Logging {
       val optSponsorFieldId = loadCustomFieldId("sponsor")
 
       val allAdUnits = loadActiveDescendantAdUnits(Configuration.commercial.dfpAdUnitRoot)
+      val placementAdUnits = loadAdUnitIdsByPlacement()
 
       val allCustomTargetingKeys = loadAllCustomTargetKeys()
       val allCustomTargetingValues = loadAllCustomTargetValues()
@@ -68,11 +73,27 @@ object DfpDataHydrator extends Logging {
 
         val dfpTargeting = dfpLineItem.getTargeting
 
-        val adUnits = Option(dfpTargeting.getInventoryTargeting.getTargetedAdUnits) map { adUnits =>
+        val directAdUnits = Option(dfpTargeting.getInventoryTargeting.getTargetedAdUnits) map { adUnits =>
           adUnits.flatMap { adUnit =>
             allAdUnits get adUnit.getAdUnitId
           }.toSeq
         } getOrElse Nil
+
+        val adUnitsDerivedFromPlacements = {
+          Option(dfpTargeting.getInventoryTargeting.getTargetedPlacementIds).map { placementIds =>
+
+            def adUnitsInPlacement(id: Long) = {
+              placementAdUnits get id map {
+                _ flatMap allAdUnits.get
+              } getOrElse Nil
+            }
+
+            placementIds.flatMap(adUnitsInPlacement).toSeq
+
+          } getOrElse Nil
+        }
+
+        val adUnits = (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
 
         val geoTargets = Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
           Option(geoTargeting.getTargetedLocations) map { locations =>
@@ -103,7 +124,7 @@ object DfpDataHydrator extends Logging {
       }
 
     } catch {
-      case e:Exception =>
+      case e: Exception =>
         log.error(e.getStackTraceString)
         Nil
     }
@@ -119,20 +140,48 @@ object DfpDataHydrator extends Logging {
     session =>
 
       val statementBuilder = new StatementBuilder()
-        .where("parentId is not null and status = :status")
+        .where("status = :status")
         .withBindVariableValue("status", InventoryStatus._ACTIVE)
 
       val dfpAdUnits = DfpApiWrapper.fetchAdUnits(session, statementBuilder)
 
-      val descendantAdUnits = dfpAdUnits filter { adUnit =>
-        Option(adUnit.getParentPath) exists (path => path.length > 1 && path(1).getName == rootName)
+      val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
+        Option(adUnit.getParentPath) exists { path =>
+          (path.length == 1 && adUnit.getName == rootName) || (path.length > 1 && path(1).getName == rootName)
+        }
       }
 
-      descendantAdUnits.map { adUnit =>
+      rootAndDescendantAdUnits.map { adUnit =>
         val path = adUnit.getParentPath.tail.map(_.getName).toSeq :+ adUnit.getName
         (adUnit.getId, GuAdUnit(adUnit.getId, path))
       }.toMap
   }
+
+  def loadAdUnitsForApproval(rootName: String): Seq[GuAdUnit] = dfpSession.fold(Seq[GuAdUnit]()) {
+    session =>
+      val statementBuilder = new StatementBuilder()
+
+      val suggestedAdUnits = DfpApiWrapper.fetchSuggestedAdUnits(session, statementBuilder)
+
+      val allUnits = suggestedAdUnits.map { adUnit =>
+        val fullpath: List[String] = adUnit.getParentPath.map(_.getName).toList ::: adUnit.getPath.toList
+
+        GuAdUnit(adUnit.getId, fullpath.tail)
+      }
+
+      allUnits.filter(au => (au.path.last == "ng" || au.path.last == "r2") && au.path.size == 4).sortBy(_.id).distinct
+  }
+
+  def approveTheseAdUnits(adUnits: Iterable[String]): Try[String] = dfpSession.map {
+    session =>
+      val adUnitsList: String = adUnits.mkString(",")
+
+      val statementBuilder = new StatementBuilder()
+        .where(s"id in ($adUnitsList)")
+
+      DfpApiWrapper.approveTheseAdUnits(session, statementBuilder)
+  }.getOrElse(Failure(new DfpSessionException()))
+
 
   def loadAllCustomTargetKeys(): Map[Long, String] = dfpSession.fold(Map[Long, String]()) { session =>
     DfpApiWrapper.fetchCustomTargetingKeys(session, new StatementBuilder()).map { k =>
@@ -143,6 +192,12 @@ object DfpDataHydrator extends Logging {
   def loadAllCustomTargetValues(): Map[Long, String] = dfpSession.fold(Map[Long, String]()) { session =>
     DfpApiWrapper.fetchCustomTargetingValues(session, new StatementBuilder()).map { v =>
       v.getId.longValue() -> v.getName
+    }.toMap
+  }
+
+  def loadAdUnitIdsByPlacement(): Map[Long, Seq[String]] = dfpSession.fold(Map[Long, Seq[String]]()) { session =>
+    DfpApiWrapper.fetchPlacements(session, new StatementBuilder()).map { placement =>
+      placement.getId.toLong -> placement.getTargetedAdUnitIds.toSeq
     }.toMap
   }
 
@@ -161,9 +216,9 @@ object DfpDataHydrator extends Logging {
       hasA1x1Pixel(dfpLineItem.getCreativePlaceholders)
   }
 
-  private def buildCustomTargetSets(customCriteriaSet:CustomCriteriaSet,
-                         targetingKeys: Map[Long, String],
-                         targetingValues: Map[Long, String]): Seq[CustomTargetSet] = {
+  private def buildCustomTargetSets(customCriteriaSet: CustomCriteriaSet,
+                                    targetingKeys: Map[Long, String],
+                                    targetingValues: Map[Long, String]): Seq[CustomTargetSet] = {
 
     def buildTargetSet(crits: CustomCriteriaSet): Option[CustomTargetSet] = {
       val targets = crits.getChildren.flatMap(crit => buildTarget(crit.asInstanceOf[CustomCriteria]))

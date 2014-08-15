@@ -1,29 +1,44 @@
-@(faciaPage: FaciaPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(faciaPage: model.FaciaPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+
 @import common.Edition
+@import views.support.RenderClasses
+@import views.html.fragments.keywordList
+@import views.support.MostPopularTags.topTags
 
 @if(faciaPage.collections.nonEmpty) {
-    <div class="@RenderClasses(Map(
-            "facia-container" -> true,
-            "facia-container--layout-front" -> true,
-            "facia-container--sponsored" -> faciaPage.isSponsored,
-            "facia-container--advertisement-feature" -> (faciaPage.isAdvertisementFeature && !faciaPage.isSponsored)))"
-        data-link-name="Front | @request.path"
-        @faciaPage.sponsor.map { sponsor =>
-            data-sponsor="@sponsor"
-        }
-        role="main">
-
-        @if(faciaPage.hasPageSkin(Edition(request))) {
-            @fragments.commercial.pageSkin()
-        }
-
-        @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
-            @collections.zipWithIndex.map{ case(block, index) =>
-                @fragments.frontCollection(faciaPage, block, collections.size, index)
+    <div class="l-side-margins l-side-margins--layout-front">
+        <div class="@RenderClasses(Map(
+                "facia-container" -> true,
+                "facia-container--layout-front" -> true,
+                "facia-container--sponsored" -> faciaPage.isSponsored,
+                "facia-container--advertisement-feature" -> (faciaPage.isAdvertisementFeature && !faciaPage.isSponsored)))"
+            data-link-name="Front | @request.path"
+            @faciaPage.sponsor.map { sponsor =>
+                data-sponsor="@sponsor"
             }
-        }
+            role="main">
 
-        @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
+            @if(faciaPage.hasPageSkin(Edition(request))) {
+                @fragments.commercial.pageSkin()
+            }
+
+            @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
+                @collections.zipWithIndex.map{ case(block, index) =>
+                    @fragments.frontCollection(faciaPage, block, collections.size, index)
+                }
+            }
+
+            @fragments.commercial.commercialComponent()
+
+            @defining(topTags(faciaPage.allItems).take(20)) { tags =>
+                @if(tags.nonEmpty) {
+                    <div class="facia-container__related-keywords">
+                        <div class="facia-container__related-keywords__body">
+                            @keywordList(tags, 5, "See also")
+                        </div>
+                    </div>
+                }
+            }
+        </div>
     </div>
 }
-

@@ -1,7 +1,7 @@
-@(content: model.Content, storyPackage: Seq[Trail])(implicit request: RequestHeader)
+@(content: model.Content, storyPackage: Seq[Trail], cssClass: String = "")(implicit request: RequestHeader)
 @import conf.Switches._
 
-<div class="content-footer">
+<div class="content-footer @if(cssClass){ content-footer--@cssClass }">
     @if(DiscussionSwitch.isSwitchedOn && content.isCommentable) {
         <div class="gs-container js-comments">
             <div class="content__main-column" data-component="discussion">
@@ -10,9 +10,9 @@
         </div>
     }
 
-    @if(content.isArticle && !content.shouldHideAdverts) {
-        <div class="facia-container facia-container--layout-article facia-container--commercial">
-            @fragments.commercial.commercialComponent("merchandising-high", Seq("commercial-component-high"))
+    @if(!content.shouldHideAdverts) {
+        <div class="facia-container facia-container--layout-content facia-container--commercial">
+            @fragments.commercial.commercialComponentHigh()
         </div>
     }
 
@@ -23,18 +23,17 @@
 
     <div class="js-repositioned-comments content__repositioned-comments"></div>
 
-    @if(WorldCupArticleContainerSwitch.isSwitchedOn) {
-        <aside class="you-may-have-missed js-world-cup facia-container facia-container--default-heading facia-container--layout-article tone-news" role="complementary">
-        </aside>
-    }
-
-    <div class="facia-container facia-container--layout-article facia-container--default-heading">
+    <div class="facia-container facia-container--layout-content facia-container--default-heading">
         @fragments.mostPopularPlaceholder(content.section, content.visualTone)
     </div>
 
-    @if(content.isArticle && !content.shouldHideAdverts) {
-        <div class="facia-container facia-container--layout-article facia-container--commercial">
-            @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
+    <div class="facia-container facia-container--layout-content facia-container--outbrain">
+        @fragments.outbrainPlaceholder()
+    </div>
+
+    @if(!content.shouldHideAdverts) {
+        <div class="facia-container facia-container--layout-content facia-container--commercial">
+            @fragments.commercial.commercialComponent()
         </div>
     }
 

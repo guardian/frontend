@@ -8,7 +8,6 @@ import services.IndexPage
 import common._
 
 object LatestIndexController extends Controller with ExecutionContexts with implicits.ItemResponses with Logging {
-
   def latest(path: String) = Action.async { implicit request =>
 
     loadLatest(path).map { _.map { index =>

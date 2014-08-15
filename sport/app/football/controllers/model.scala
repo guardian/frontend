@@ -1,10 +1,11 @@
 package football.controllers
 
-import model.{ Trail, MetaData, Competition }
-import org.joda.time.DateMidnight
+import common.Pagination
+import model.{Page, Trail, MetaData, Competition}
+import org.joda.time.LocalDate
 import implicits.Football
 
-case class MatchesOnDate(date: DateMidnight, competitions: Seq[Competition])
+case class MatchesOnDate(date: LocalDate, competitions: Seq[Competition])
 
 case class CompetitionFilter(name: String, url: String)
 
@@ -21,4 +22,21 @@ case class MatchesPage(
   lazy val isLive = days.flatMap(_.competitions.flatMap(_.matches)).exists(_.isLive)
   lazy val urlBase = comp.map(c => c.url).getOrElse("/football")
 
+}
+
+class FootballPage(
+            id: String,
+            section: String,
+            webTitle: String,
+            analyticsName: String,
+            pagination: Option[Pagination] = None,
+            description: Option[String] = None) extends Page(
+  id,
+  section,
+  webTitle,
+  analyticsName,
+  pagination,
+  description
+) {
+  override val hasClassicVersion: Boolean = false
 }

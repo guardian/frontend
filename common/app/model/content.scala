@@ -3,9 +3,8 @@ package model
 import com.gu.openplatform.contentapi.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
+import ophan.SurgingContentAgent
 import org.joda.time.DateTime
-import org.scala_tools.time.Imports._
-import common.{LinkCounts, LinkTo, Reference}
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
@@ -13,19 +12,20 @@ import play.api.libs.json.JsValue
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
-import ophan.SurgingContentAgent
+import scala.util.Try
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
 
   lazy val delegate: ApiContent = apiContent.delegate
 
-  lazy val publication: String = fields.get("publication").getOrElse("")
+  lazy val publication: String = fields.getOrElse("publication", "")
   lazy val lastModified: DateTime = fields.get("lastModified").map(_.parseISODateTime).getOrElse(DateTime.now)
+  lazy val internalContentCode: String = delegate.safeFields("internalContentCode")
   lazy val shortUrl: String = delegate.safeFields("shortUrl")
   lazy val shortUrlId: String = delegate.safeFields("shortUrl").replace("http://gu.com", "")
   lazy val webUrl: String = delegate.webUrl
   lazy val standfirst: Option[String] = fields.get("standfirst")
-  lazy val starRating: Option[String] = fields.get("starRating")
+  lazy val starRating: Option[Int] = fields.get("starRating").flatMap(s => Try(s.toInt).toOption)
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)
   lazy val isExpired = delegate.isExpired.getOrElse(false)
@@ -72,7 +72,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val seriesMeta = {
     series.headOption.map( series =>
       Seq(("series", series.name), ("series-id", series.id))
-    )getOrElse(Nil)
+    )getOrElse Nil
   }
 
   private lazy val fields: Map[String, String] = delegate.safeFields
@@ -123,7 +123,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val description: Option[String] = trailText
   override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
   override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
-  override def isSurging: Boolean = SurgingContentAgent.isSurging(id)
+  override def isSurging: Int = SurgingContentAgent.getSurgingLevelFor(id)
 
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
@@ -138,6 +138,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("author", contributors.map(_.name).mkString(",")),
       ("tones", tones.map(_.name).mkString(",")),
       ("blogs", blogs.map { _.name }.mkString(",")),
+      ("blogIds", blogs.map { _.id.split("/").last }.mkString(",")),
       ("commentable", isCommentable),
       ("has-story-package", fields.get("hasStoryPackage").exists(_.toBoolean)),
       ("page-code", fields("internalPageCode")),
@@ -186,11 +187,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height)
 
-  override lazy val adUnitSuffix: String = {
-    val prioritisedTagList: List[Tag] = blogs.toList ::: primaryKeyWordTag.toList
-    val prioritisedPossibleAdUnits: List[String] = prioritisedTagList.map{_.id} ::: section :: Nil
-    prioritisedPossibleAdUnits.headOption.getOrElse("")
-  }
+  override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 }
 
 object Content {
@@ -219,7 +216,7 @@ object Content {
   def fromPressedJson(json: JsValue): Option[Content] = {
     val contentFields: Option[Map[String, String]] = (json \ "safeFields").asOpt[Map[String, String]]
     val itemId: String = (json \ "id").as[String]
-    if (itemId.startsWith("snap/")) {
+    if (Snap.isSnap(itemId)) {
       val snapMeta: Map[String, JsValue] = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
       Option(
         new Snap(
@@ -356,6 +353,10 @@ class Snap(snapId: String,
   override lazy val webPublicationDate = snapWebPublicationDate
 }
 
+object Snap {
+  def isSnap(id: String): Boolean = id.startsWith("snap/")
+}
+
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
@@ -371,17 +372,22 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   override def trailPicture: Option[ImageContainer] = thumbnail.find(_.imageCrops.exists(_.width >= 620))
     .orElse(mainPicture).orElse(videos.headOption)
 
+  override def hasInlineMerchandise = {
+    isbn.isDefined || super.hasInlineMerchandise
+  }
+
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
   override lazy val metaData: Map[String, Any] = {
-    val bookReviewIsbns = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
+    val bookReviewIsbn = isbn.map { i: String => Map("isbn" -> i)}.getOrElse(Map())
 
     super.metaData ++ Map(
       ("content-type", contentType),
       ("isLiveBlog", isLiveBlog),
       ("inBodyInternalLinkCount", linkCounts.internal),
       ("inBodyExternalLinkCount", linkCounts.external),
-      ("shouldHideAdverts", shouldHideAdverts)
-    ) ++ bookReviewIsbns
+      ("shouldHideAdverts", shouldHideAdverts),
+      ("hasInlineMerchandise", hasInlineMerchandise)
+    ) ++ bookReviewIsbn
   }
 
   override def openGraph: Map[String, Any] = super.openGraph ++ Map(
@@ -403,31 +409,48 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   private lazy val soupedBody = Jsoup.parseBodyFragment(body).body()
   lazy val hasKeyEvents: Boolean = soupedBody.select(".is-key-event").nonEmpty
   lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
+  override lazy val contentType = GuardianContentTypes.LIVEBLOG
 
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary"
   )
 }
 
-class Video(content: ApiContentWithMeta) extends Content(content) {
+abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 
-  private implicit val ordering = EncodingOrdering
+  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
+  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
+    "og:type" -> "video",
+    "og:type" -> "video",
+    "og:video:type" -> "text/html",
+    "og:video:url" -> webUrl,
+    "video:tag" -> keywords.map(_.name).mkString(",")
+  )
+}
 
-  lazy val encodings: Seq[Encoding] = {
-    videoAssets.toList.collect {
-      case video: VideoAsset => Encoding(video.url.getOrElse(""), video.mimeType.getOrElse(""))
-    }.sorted
-  }
+class Audio(content: ApiContentWithMeta) extends Media(content) {
 
-  // if you change these rules make sure you update IMAGES.md (in this project)
-  override def mainPicture: Option[ImageContainer] = (images ++ videos).find(_.isMain)
+  lazy val body: String = delegate.safeFields.getOrElse("body", "")
 
-  lazy val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
-  lazy val mediaId: Option[String] = mainVideo.map(_.id)
+  override lazy val contentType = GuardianContentTypes.AUDIO
+
+  override lazy val metaData: Map[String, Any] =
+    super.metaData + ("content-type" -> contentType, "blockVideoAds" -> blockVideoAds)
+}
+
+object Audio {
+  def apply(delegate: ApiContent): Audio = new Audio(ApiContentWithMeta(delegate))
+}
+
+class Video(content: ApiContentWithMeta) extends Media(content) {
+
+  override lazy val hasClassicVersion = false
 
   override lazy val contentType = GuardianContentTypes.VIDEO
-  lazy val source: Option[String] = videoAssets.headOption.flatMap(_.source)
 
+  lazy val source: Option[String] = videos.find(_.isMain).flatMap(_.source)
+  override lazy val metaData: Map[String, Any] =
+    super.metaData + ("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
   // I know its not too pretty
   lazy val bylineWithSource: Option[String] = Some(Seq(
     byline,
@@ -436,17 +459,9 @@ class Video(content: ApiContentWithMeta) extends Content(content) {
       case other => s"Source: $other"
     }
   ).flatten.mkString(", ")).filter(_.nonEmpty)
+  lazy val videoLinkText: String = webTitle.stripSuffix(" - video").stripSuffix(" – video")
 
-  override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-  override lazy val metaData: Map[String, Any] = super.metaData +("content-type" -> contentType, "blockVideoAds" -> blockVideoAds, "source" -> source.getOrElse(""))
-
-  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
-    "og:type" -> "video",
-    "og:type" -> "video",
-    "og:video:type" -> "text/html",
-    "og:video:url" -> webUrl,
-    "video:tag" -> keywords.map(_.name).mkString(",")
-  )
+  def endSlatePath = EndSlateComponents.fromVideo(this).toUriPath
 }
 
 object Video {

@@ -101,10 +101,23 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
   object js {
 
-    lazy val curl: String = {
-      val url = Play.classloader(Play.current).getResource(s"assets/curl-domReady.js")
-      IOUtils.toString(url)
+    private def escapeRelativeJsPaths(unescaped: String): String = {
+      // We are getting Googlebot 404 because Google is incorrectly seeing paths in the curl js
+      // we need to escape them out.
+      // "../foo"
+      // "./foo"
+      // and any that are inside single quotes too
+      val regex = """["'](\.{1,2}\/){1,}\w*(\/){0,}\w*(\/)?['"]""".r
+
+      val matches = regex.findAllIn(unescaped).toSeq
+
+      matches.foldLeft(unescaped){ case (result:String, matched: String) =>
+        result.replace(matched, matched.replace("./", ".\" + \"/\" + \""))
+      }
     }
+
+    lazy val curl: String =
+      escapeRelativeJsPaths(IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js")))
 
   }
 

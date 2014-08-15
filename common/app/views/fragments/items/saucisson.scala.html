@@ -13,31 +13,37 @@
         @SnapData(trail)>
 
         <div class="saucisson__container">
-            <a @LinkTo(trail).map{url=>href=@url} class="saucisson__link" data-link-name="article">
-                @fragments.items.elements.image(trail)
+            @fragments.items.elements.image(trail)
+
+            <a @LinkTo(trail).map{url=>href="@url"} class="saucisson__link" data-link-name="article">
                 @fragments.items.elements.title(trail, index, 0)
             </a>
+
+            @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
-                    <p class="item__byline tone-colour">@Html(byLine)</p>
+                    @trail match { case content:model.Content =>
+                        <p class="item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                    }
                 }
             }
 
             @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
 
             @trail.trailText.map { text =>
-                <div class="item__standfirst">
-                    @Html(text)
-                    @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
-                </div>
+                <div class="item__standfirst">@Html(text)</div>
             }
 
-            @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            <div class="u-faux-block-link__promote">
+                @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            </div>
 
             @if(trail.isCommentable) {
                 @fragments.items.elements.meta(trail)
             }
         </div>
+        <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 
     </div>
 }

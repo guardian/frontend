@@ -10,7 +10,7 @@
 
     .dropdown__toggle,
     .dropdown__toggle-label {
-        @include fs-textsans(1);
+        @include fs-textSans(1);
         @include rem((
             top: ($gs-baseline/3)*2
         ));
@@ -34,11 +34,12 @@
         .control {
             border-color: $c-neutral5;
             float: right;
+            position: relative;
         }
 
         .i {
             background-color: $c-neutral2;
-            left: -1px;
+            right: 0;
             top: -1px;
             position: absolute;
         }

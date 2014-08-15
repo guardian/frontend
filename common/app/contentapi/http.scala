@@ -1,22 +1,25 @@
 package contentapi
 
-import com.gu.openplatform.contentapi.connection.{HttpResponse, Http}
-import scala.concurrent.Future
+import java.net.InetAddress
+import java.util.concurrent.TimeoutException
+
+import com.gu.openplatform.contentapi.connection.{Http, HttpResponse}
+import common.ContentApiMetrics.ContentApi404Metric
+import common.ExecutionContexts
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
-import common.{SimpleCountMetric, FrontendTimingMetric, ExecutionContexts}
-import java.util.concurrent.TimeoutException
-import play.api.libs.ws.WS
-import com.gu.management.TimingMetric
-import common.ContentApiMetrics.ContentApi404Metric
-import java.net.InetAddress
-import scala.util.Try
-import com.ning.http.client.Realm.AuthScheme
+import metrics.{CountMetric, FrontendTimingMetric}
+import play.api.libs.ws.{WS, WSAuthScheme}
 
-class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCountMetric) extends Http[Future]
+import scala.concurrent.Future
+import scala.util.Try
+
+class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: CountMetric) extends Http[Future]
                                                                                               with ExecutionContexts {
 
-  import System.currentTimeMillis
+  import java.lang.System.currentTimeMillis
+
+import play.api.Play.current
 
   override def GET(url: String, headers: Iterable[(String, String)]) = {
 
@@ -28,13 +31,13 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCo
     val start = currentTimeMillis
 
     val baseRequest = WS.url(urlWithDebugInfo)
-    val request = previewAuth.fold(baseRequest)(auth => baseRequest.withAuth(auth.user, auth.password, AuthScheme.BASIC))
+    val request = previewAuth.fold(baseRequest)(auth => baseRequest.withAuth(auth.user, auth.password, WSAuthScheme.BASIC))
     val response = request.withHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
 
     // record metrics
     response.onSuccess {
       case r if r.status == 404 => ContentApi404Metric.increment()
-      case r if r.status == 200 => httpTimingMetric.recordTimeSpent(currentTimeMillis - start)
+      case r if r.status == 200 => httpTimingMetric.recordDuration(currentTimeMillis - start)
     }
 
     response.onFailure {
@@ -57,7 +60,7 @@ class WsHttp(val httpTimingMetric: TimingMetric, val httpTimeoutMetric: SimpleCo
 trait DelegateHttp extends Http[Future] with ExecutionContexts {
 
   val httpTimingMetric: FrontendTimingMetric
-  val httpTimeoutMetric: SimpleCountMetric
+  val httpTimeoutMetric: CountMetric
 
   private var _http: Http[Future] = new WsHttp(httpTimingMetric, httpTimeoutMetric)
 

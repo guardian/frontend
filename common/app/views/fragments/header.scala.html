@@ -1,7 +1,7 @@
 @(page: model.MetaData)(implicit request: RequestHeader)
 @import conf.Switches._
-@import dev.HttpSwitch
 @import common.{LinkTo, Navigation, Edition}
+@import common.editions._
 
 @*<!--
 Identity pages use identityHeader.scala.html, be sure
@@ -9,149 +9,73 @@ to apply any necessary changes to non-shared code there too.
 -->*@
 
 <header id="header" class="l-header u-cf" role="banner" data-link-name="global navigation: header">
-    <div class="l-header-pre">
-        <div class="l-header-pre__inner gs-container u-cf">
-            <div class="top-nav">
-                @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOff){
-                <div class="top-nav__item top-nav__item--mobile-only">
-                    <a href="#footer-nav" data-link-name="Sections" data-toggle="nav-popup--sections"
-                       class="control control--sections">
-                        <span class="u-h">Sections</span>
-                        <span class="control__icon">
-                            <i class="i i-menu"></i>
-                            <i class="i i-menu-active"></i>
+    <div class="l-header-pre gs-container u-cf">
+        <div class="brand-bar">
+            @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+                <div class="brand-bar__item brand-bar__item--profile has-nav-popup brand-bar__item--has-control js-profile-nav" data-component="identity-profile">
+                    <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
+                       class="brand-bar__item--action nav-popup__toggle" data-test-id="sign-in-link">
+                        <span class="control__icon-wrapper">
+                            <span class="control__icon">
+                                <i class="i i-profile-white-36"></i>
+                            </span>
                         </span>
+                        <span class="js-profile-info control__info" data-test-id="sign-in-name">sign in</span>
+                    </a>
+                    <div class="js-profile-nav-popup"></div>
+                </div>
+            }
+            @if(Edition(request) == Uk){
+                <div class="brand-bar__item brand-bar__item--subscribe hide-on-tablet" data-component="subscribe">
+                    <a class="brand-bar__item--action" data-link-name="topNav : subscribe" href="http://subscribe.theguardian.com??INTCMP=NGW_TOPNAV_UK_GU_SUBSCRIBE">
+                        <i class="i i-g-white-36"></i>
+                        <span class="control__info">subscribe</span>
                     </a>
                 </div>
-                }
-                @if(SearchSwitch.isSwitchedOn) {
-                    <div class="top-nav__item top-nav__item--search" data-component="search">
-                        <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
-                            class="control control--search js-search-toggle" data-toggle="nav-popup--search">
+            }
+            @if(SearchSwitch.isSwitchedOn) {
+                <div class="brand-bar__item has-nav-popup brand-bar__item--has-control brand-bar__item--search" data-component="search">
+                    <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
+                       class="brand-bar__item--action nav-popup__toggle js-search-toggle" data-toggle="nav-popup--search">
+                        <span class="control__icon-wrapper">
                             <span class="control__icon">
-                                <i class="i i-search"></i>
-                                <i class="i i-search-active"></i>
+                                <i class="i i-search-white-36"></i>
                             </span>
-                            <span class="control__info hide-on-mobile">Search</span>
-                        </a>
-                    </div>
-                }
-                <div class="top-nav__item hide-on-mobile" data-component="edition">
-                    <div class="preheader__editions">
-                        <dl class="editions">
-                            <dt class="editions__title">
-                                Edition:
-                            </dt>
-
-                            @common.Region(request).filter(r => conf.Switches.IndiaRegionSwitch.isSwitchedOn).map{ region =>
-                                <dd class="edition__item">
-                                    <span class="edition">@region.id</span>
-                                </dd>
-                            }.getOrElse{
-                                <dd class="edition__item">
-                                    <span class="edition">@Edition(request).id</span>
-                                </dd>
-                            }
-                            @Edition.others(request).map{ edition =>
-                                <dd class="edition__item">
-                                    <a class="edition" data-edition="@edition.id"
-                                        data-link-name="switch to @edition.id edition"
-                                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
-                                        @edition.id
-                                    </a>
-                                </dd>
-                            }
-                            @common.Region.others(request).map{ region =>
-                                <dd class="edition__item">
-                                    <a class="edition" data-edition="@region.id"
-                                        data-link-name="switch to @region.id region"
-                                        href="@LinkTo(s"/preference/edition/${region.id.toLowerCase}")">
-                                        @region.id
-                                    </a>
-                                </dd>
-                            }
-                        </dl>
-                    </div>
+                        </span>
+                        <span class="control__info hide-on-mobile">search</span>
+                    </a>
                 </div>
-                @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                    <div class="top-nav__item" data-component="identity-profile">
-                        <div class="js-profile-nav js-hidden">
-                            <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
-                               class="control control--profile">
-                                <span class="control__icon">
-                                    <i class="i i-profile control--active__hide"></i>
-                                    <i class="i i-profile-active control--active__show"></i>
-                                </span>
-                                <span class="js-profile-info control__info">Sign in</span>
-                            </a>
-                        </div>
-                    </div>
-                }
-            </div>
+            }
+            @fragments.topNav.servicesLinks(page)
         </div>
     </div>
+
+    <div class="nav-popup nav-popup--search is-off"><div class="js-search-placeholder"></div></div>
+
     <div class="l-header-main">
         <div class="gs-container">
             <span itemscope itemtype="http://schema.org/Organization">
                 <meta itemprop="logo" content="https://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png" />
-                <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="guardian-logo-wrapper" itemprop="url" data-component="logo">
-                    <span class="u-h" itemprop="name">The Guardian</span>
-                    <i class="i i-guardian-logo-160 mobile-only"></i>
-                    <i class="i i-guardian-logo-big hide-on-mobile"></i>
-                </a>
+                @if(page.section == "observer" && page.isFront) {
+                    <a href="@LinkTo{@page.url}" data-link-name="site logo" id="logo" class="logo-wrapper logo-wrapper--observer" itemprop="url" data-component="logo">
+                        <span class="u-h" itemprop="name">The Observer</span>
+                        <i class="i i-observer-logo-160 mobile-only"></i>
+                        <i class="i i-observer-logo-320 hide-on-mobile"></i>
+                    </a>
+                } else {
+                    <a href="@LinkTo{/}" data-link-name="site logo" id="logo" class="logo-wrapper" itemprop="url" data-component="logo">
+                        <span class="u-h" itemprop="name">The Guardian</span>
+                        <i class="i i-guardian-logo-160 mobile-only"></i>
+                        <i class="i i-guardian-logo-320 hide-on-mobile"></i>
+                    </a>
+                }
             </span>
-
-            @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                <div class="nav-popup--profile nav-popup--small js-profile-nav-popup nav-popup is-off"></div>
-            }
-            @if(SearchSwitch.isSwitchedOn) {
-                <div class="nav-popup--search nav-popup--small nav-popup is-off"><div class="js-search-placeholder"></div></div>
-            }
-            @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOff){
-            <div class="nav-popup--sections nav-popup nav-popup--small is-off" data-component="navigation">
-                @fragments.sections(page, false)
-            </div>
-            }
         </div>
     </div>
-    @if(HttpSwitch(ResponsiveNavSwitch).isSwitchedOn){
-        @fragments.nav.newNavigation(page)
-    } else {
-        @defining(Edition(request).navigation) { navigation =>
-            @defining(Navigation.topLevelItem(navigation, page)) { topLevelSelected =>
-                @* Top level nav *@
-                <div class="nav-container u-cf" data-component="navigation">
-                    <div class="gs-container">
-                        <ul class="nav nav--global" data-link-name="Sections">
-                            @navigation.map { nav =>
-                                <li class="nav__item @if(topLevelSelected.exists(_ == nav)) {is-active}">
-                                    <a href="@LinkTo {@nav.name.href}" data-link-name="@nav.name.href" class="nav__link">
-                                        @Html(nav.name.title)
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-                @* Secondary nav *@
-                @Navigation.localNav(navigation, page).map { localNav =>
-                    @defining(localNav.searchForCurrentSublink(page)){ currentSublink =>
-                        <div class="localnav-container u-cf" data-component="navigation">
-                            <div class="gs-container">
-                                <ul class="nav nav--local" data-link-name="Local Navigation">
-                                    @localNav.links.map { nav =>
-                                        <li class="nav__item @currentSublink.filter(_.href == nav.href).map{ current => is-active }">
-                                            <a href="@LinkTo{@nav.href}" class="nav__link" data-link-name="@nav.href">
-                                                @Html(nav.title)
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                        </div>
-                    }
-                }
-            }
-        }
-    }
+    @fragments.nav.navigation(page)
+
 </header>
+
+@if(BreakingNewsSwitch.isSwitchedOn) {
+    <div class="js-breaking-news-placeholder breaking-news"></div>
+}

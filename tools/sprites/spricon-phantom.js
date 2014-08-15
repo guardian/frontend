@@ -33,7 +33,15 @@ var imgOutputdir = phantom.args[1];
 var cssOutputdir  = phantom.args[2];
 var spritepath =  phantom.args[7];
 var cssprefix = phantom.args[8];
-var files = fs.list( inputdir );
+var files = fs.list(inputdir)
+    .filter(function(file) {
+        return file.match(/\.svg$/i);
+    })
+    .sort(function(fileOne, fileTwo) {
+        var fileOneExec = /height="([^"]+)"/.exec(fs.read(inputdir + fileOne));
+        var fileTwoExec = /height="([^"]+)"/.exec(fs.read(inputdir + fileTwo));
+        return (fileOneExec ? fileOneExec[1] : 0) - (fileTwoExec ? fileTwoExec[1] : 0);
+    });
 var currfile = 0;
 var pngcssrules = [];
 var pngdatacssrules = [];
@@ -51,6 +59,7 @@ var sprite = require( "webpage" ).create();
 
 // add a single reference to the sprite background
 pngcssrules.push("%i, .i { background-repeat: no-repeat; display: inline-block; }");
+pngcssrules.push(".svg .i { @include background-size(contain); }");
 
 
 // increment the current file index and process it
@@ -83,82 +92,81 @@ function processFile() {
     var theFile = files[ currfile ];
 
     if( theFile ){
-        // only parse svg files
-        if( theFile.match( /\.svg$/i ) ){
 
-            (function(){
+        (function(){
 
-                var page = require( "webpage" ).create();
-                var svgdata = fs.read(  inputdir + theFile ) || "";
-                var svgdatauri = "data:image/svg+xml;base64,";
-                var pngdatauri = "data:image/png;base64,";
+            var page = require( "webpage" ).create();
+            var svgdata = fs.read(  inputdir + theFile ) || "";
+            var svgdatauri = "data:image/svg+xml;base64,";
+            var pngdatauri = "data:image/png;base64,";
 
-                // kill the ".svg" at the end of the filename
-                var filenamenoext = theFile.replace( /\.svg$/i, "" );
+            // kill the ".svg" at the end of the filename
+            var filenamenoext = theFile.replace( /\.svg$/i, "" );
 
-                // get svg element's dimensions so we can set the viewport dims later
-                var frag = window.document.createElement( "div" );
-                frag.innerHTML = svgdata;
-                var svgelem = frag.querySelector( "svg" );
-                var width = svgelem.getAttribute( "width" );
-                var height = svgelem.getAttribute( "height" );
+            // get svg element's dimensions so we can set the viewport dims later
+            var frag = window.document.createElement( "div" );
+            frag.innerHTML = svgdata;
+            var svgelem = frag.querySelector( "svg" );
+            var width = svgelem.getAttribute( "width" );
+            var height = svgelem.getAttribute( "height" );
 
-                // get base64 of svg file
-                svgdatauri += btoa(svgdata);
+            // get base64 of svg file
+            svgdatauri += btoa(svgdata);
 
-                //If we want to generate base64 svg css
-                if(generatesvg) {
-                    // add rules to svg data css file
-                    datacssrules.push( "    %svg-" + cssprefix + filenamenoext +", .svg-" + cssprefix + filenamenoext +" { background-image: url(" + svgdatauri + "); background-position: 0 0; background-repeat: no-repeat; }\n    .svg ." + cssprefix + filenamenoext + " { @extend %svg-" + cssprefix + filenamenoext +" !optional; }\n" );
-                }
+            //If we want to generate base64 svg css
+            if(generatesvg) {
+                // add rules to svg data css file
+                datacssrules.push( "    %svg-" + cssprefix + filenamenoext +", .svg-" + cssprefix + filenamenoext +" { background-image: url(" + svgdatauri + "); background-position: 0 0; background-repeat: no-repeat; }\n    .svg ." + cssprefix + filenamenoext + " { @extend %svg-" + cssprefix + filenamenoext +" !optional; }\n" );
+            }
 
-                // set page viewport size to svg dimensions
-                page.viewportSize = {  width: parseFloat(width), height: parseFloat(height) };
+            // set page viewport size to svg dimensions
+            page.viewportSize = {  width: parseFloat(width), height: parseFloat(height) };
 
-                // open svg file in webkit to make a png
-                page.open(  inputdir + theFile, function( status ){
+            // open svg file in webkit to make a png
+            page.open(  inputdir + theFile, function( status ){
 
-                    // create png file
-                    //page.render( imgOutputdir + filenamenoext + ".png" );
+                // create png file
+                //page.render( imgOutputdir + filenamenoext + ".png" );
 
-                    var coords = sprite.evaluate(function(svgdata) {
-                        var placeholder = document.createElement('div');
-                        placeholder.style.display = 'block';
-                        placeholder.style.float = 'left';
-                        placeholder.style.margin = '1px 1px 0 0'; // prevents the sprite icons from leaking
-                        placeholder.innerHTML = svgdata;
-                        var svgel = placeholder.querySelector('svg');
+                var coords = sprite.evaluate(function(svgdata) {
+                    var placeholder = document.createElement('div');
+                    placeholder.style.display = 'block';
+                    placeholder.style.float = 'left';
+                    placeholder.style.margin = '1px 1px 0 0'; // prevents the sprite icons from leaking
+                    placeholder.innerHTML = svgdata;
+                    var svgel = placeholder.querySelector('svg');
 
-                        document.getElementById('container').appendChild(placeholder);
+                    document.getElementById('container').appendChild(placeholder);
 
-                        return {
-                            x: placeholder.offsetLeft,
-                            y: placeholder.offsetTop,
-                            w: Math.round(svgel.getAttribute('width')),
-                            h: Math.round(svgel.getAttribute('height'))
-                        };
+                    return {
+                        x: placeholder.offsetLeft,
+                        y: placeholder.offsetTop,
+                        w: Math.round(svgel.getAttribute('width')),
+                        h: Math.round(svgel.getAttribute('height'))
+                    };
 
-                    }, svgdata);
+                }, svgdata);
 
+                pngcssrules.push( "%" + cssprefix + filenamenoext + ", " +
+                                  "." + cssprefix + filenamenoext + " { " +
+                                      "background-position: -" + coords.x + "px -" + coords.y + "px; " +
+                                      "@include rem((" +
+                                          "width: " + coords.w + "px, " +
+                                          "height: " + coords.h + "px" +
+                                      "));" +
+                                  "}\n");
 
-                    pngcssrules.push( "%" + cssprefix + filenamenoext + ", ." + cssprefix + filenamenoext + " { background-position: -" + coords.x + "px -" + coords.y + "px; width: " + coords.w + "px; height: " + coords.h + "px; }\n");
+              // process the next svg
+              nextFile();
+            });
 
-                  // process the next svg
-                  nextFile();
-                });
-
-          }());
-        }
-        else {
-            // process the next svg
-            nextFile();
-        }
-  }
-  else {
-    // fin
-    finishUp();
-    phantom.exit();
-  }
+        }());
+    }
+    else {
+        // fin
+        finishUp();
+        phantom.exit();
+    }
 }
 
 // go ahead with the first file

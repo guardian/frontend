@@ -1,95 +1,57 @@
 /* ==========================================================================
    Navigation controls
    ========================================================================== */
+// TODO:
+// use a proper icon size variabe when the icons are redrawn at mulptile sizes
+$control-size: 36px;
 
-/* Control
+
+/* Label next to the icon
    ========================================================================== */
-
-.control {
-    @extend %icon-holder-circle;
-    float: left;
-    font-family: $serif;
-    @include rem((
-        font-size: 13px
-    ));
-
-    .is-signed-in & {
-        color: $c-brandBlue;
-        border-color: $c-brandBlue;
-    }
-    &.is-active {
-        border-color: $c-brandLightBlue;
-    }
-}
-
-
-/* Sections control - (Hamburger icon)
-   ========================================================================== */
-
-.control--sections {
-    @include mq(tablet) {
-        position: absolute;
-        z-index: 1;
-        @include rem((
-            right: $gs-gutter,
-            top: 131px
-        ));
-    }
-    @include mq(desktop) {
-        @include rem((
-            top: 131px - $gs-row-height
-        ));
-    }
-}
-
-
-/* Search control & control info (text label next to it)
-   ========================================================================== */
-
-.control--search {
-    overflow: visible; // Makes control__info visible
-}
-
-/* Profile control & control info (text label next to it)
-   ========================================================================== */
-
-.control--profile {
-    overflow: visible; // Makes control__info visible
-}
 
 .control__info {
     display: none;
-    height: 30px;
+    @include rem((
+        height: 30px,
+        line-height: $control-size,
+        margin-left: $gs-gutter/2
+    ));
     vertical-align: top;
-    line-height: 30px;
     white-space: nowrap;
 
     @include mq(544px) {
-        position: absolute;
         display: block;
         overflow: hidden;
-        top: 1px;
-        left: 42px;
+        float: left;
         @include rem((
             max-width: 200px
         ));
         text-overflow: ellipsis;
         text-align: left;
     }
-    .is-active & {
-        color: $c-brandLightBlue;
-    }
 }
 
 
-/* Active control icon
+/* Control icon
    ========================================================================== */
+
+.control__icon-wrapper {
+    @extend %icon-holder-circle;
+    border-color: #ffffff;
+    float: left;
+    @include rem((
+        height: 34px,
+        width: 34px
+    ));
+}
 
 .control__icon {
     display: block;
     text-align: center;
-    height: 24px;
-    padding-top: 5px;
+    @include rem((
+        height: 32px,
+        padding-top: 7px
+    ));
 
     .i {
         display: none;
@@ -99,7 +61,9 @@
             display: block;
         }
 
-        .is-active & {
+        .control:active &,
+        .control:focus &,
+        .control.is-active & {
             display: block;
 
             &:first-child {

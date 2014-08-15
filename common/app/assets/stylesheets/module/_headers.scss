@@ -2,7 +2,7 @@
    ========================================================================== */
 
 .page-header {
-    @include fs-headline(2);
+    @include fs-headline(3);
     @include rem((
         padding: 0 0 ($gs-baseline/3)*4,
         margin: 0 $gs-gutter/2 $gs-baseline/3
@@ -23,6 +23,7 @@
         padding: $gs-baseline/6 0 $gs-baseline/3,
         margin-bottom: $gs-baseline
     ));
+
     .no-indent-article__zone &,
     .monocolumn-wrapper &,
     .facia-container__inner & {

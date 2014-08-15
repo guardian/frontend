@@ -1,8 +1,9 @@
 package controllers.admin
 
+import com.gu.googleauth.UserIdentity
 import common._
 import common.AdminMetrics.{ SwitchesUpdateCounter, SwitchesUpdateErrorCounter }
-import controllers.{AuthLogging, Identity}
+import controllers.AuthLogging
 import conf.{ Switches, Configuration }
 import play.api.mvc._
 import scala.concurrent.Future
@@ -14,7 +15,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
-  def renderSwitchboard() = Authenticated.async { implicit request =>
+  def renderSwitchboard() = AuthActions.AuthActionTest.async { implicit request =>
     log("loaded Switchboard", request)
 
     Future { Store.getSwitchesWithLastModified } map { switchesWithLastModified =>
@@ -33,7 +34,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     }
   }
 
-  def save() = Authenticated.async { implicit request =>
+  def save() = AuthActions.AuthActionTest.async { implicit request =>
     val form = request.body.asFormUrlEncoded
 
     val localLastModified = form.get("lastModified").head.toLong
@@ -46,7 +47,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     } else {
       log("saving switchboard", request)
 
-      val requester = Identity(request).get.fullName
+      val requester = UserIdentity.fromRequest(request).get.fullName
       val updates = request.body.asFormUrlEncoded.map { params =>
           Switches.all map { switch =>
               switch.name + "=" + params.get(switch.name).map(v => "on").getOrElse("off")
@@ -65,7 +66,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     }
 
     Store.putSwitches(updates mkString "\n")
-    SwitchesUpdateCounter.recordCount(1)
+    SwitchesUpdateCounter.increment()
 
     log.info("switches successfully updated")
 
@@ -78,7 +79,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     Redirect(routes.SwitchboardController.renderSwitchboard())
   } catch { case e: Throwable =>
     log.error("exception saving switches", e)
-    SwitchesUpdateErrorCounter.recordCount(1)
+    SwitchesUpdateErrorCounter.increment()
 
     Redirect(routes.SwitchboardController.renderSwitchboard()).flashing(
       "error" -> ("Error saving switches '%s'" format e.getMessage)

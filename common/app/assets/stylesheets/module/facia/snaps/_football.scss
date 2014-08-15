@@ -1,13 +1,18 @@
 .facia-snap--football {
+    $slice-innerHeight: gs-height(5) - $gs-baseline / 3;
+
     // Dealing with the double embedding of snaps
     overflow: hidden;
+    position: relative;
     padding: 0;
 
     // Generic
     &.facia-snap-embed {
         @include rem((
+            height: $slice-innerHeight,
             margin: 0 $gs-gutter/2
         ));
+        position: relative;
         background: #ffffff;
     }
 
@@ -20,9 +25,7 @@
     }
 
     .c-football-matches {
-        height: $gs-baseline*14;
         overflow: hidden;
-        position: relative;
         background: $c-neutral8;
     }
 
@@ -108,7 +111,7 @@
             padding-right: $gs-gutter/2
         ));
         background: $c-neutral8;
-
+        height: 100%;
         &:hover,
         &:active {
             background: $c-neutral6;
@@ -118,7 +121,7 @@
     }
 
     .team__info {
-        @include fs-headline(2, true);
+        @include fs-headline(3, true);
     }
 
     .status__time {
@@ -150,7 +153,7 @@
             border-top: 0 none;
         }
         .team__info {
-            @include fs-headline(5, true)
+            @include fs-headline(6, true)
         }
     }
 
@@ -166,7 +169,7 @@
 
     &.facia-snap-point--medium {
         .team__info {
-            @include fs-headline(2, true)
+            @include fs-headline(3, true)
         }
     }
 
@@ -175,7 +178,7 @@
         @include table--hide-from-importance-2;
 
         .team__info {
-            @include fs-headline(1, true)
+            @include fs-headline(2, true)
         }
     }
 

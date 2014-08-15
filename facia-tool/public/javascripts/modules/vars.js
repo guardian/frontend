@@ -12,13 +12,31 @@ define([
         types: [
             {name: 'news', groups: ['standard', 'big', 'very big', 'huge']},
             {name: 'news/auto'},
+            {name: 'news/headline', groups: ['standard', 'big', 'very big']},
             {name: 'news/most-popular'},
             {name: 'news/people'},
+            {name: 'news/small-list'},
             {name: 'news/special'},
             {name: 'features'},
             {name: 'features/auto'},
             {name: 'features/multimedia'},
-            {name: 'comment/comment-and-debate'}
+            {name: 'features/picks', groups: ['standard', 'big']},
+            {name: 'features/volumes', groups: ['standard', 'big', 'very big', 'huge']},
+            {name: 'comment/comment-and-debate'},
+            {name: 'prototype/cassoulet'},
+            {name: 'prototype/quichelorraine'},
+            {name: 'prototype/raclette'}
+        ],
+
+        headlineLength: 200,
+        restrictedHeadlineLength: 90,
+
+        restrictHeadlinesOn: [
+            'breaking-news'
+        ],
+
+        restrictedLiveMode: [
+            'breaking-news'
         ],
 
         detectPressFailureMs: 10000,

@@ -105,14 +105,10 @@ object MasterClassTagsAgent extends ExecutionContexts with Logging {
     Future.sequence {
       tags map { tag =>
         Lookup.keyword(tag) map { keywords =>
-          tagKeywordIds.alter(_.updated(tag, keywords.map(_.id)))(2.seconds)
+          tagKeywordIds.alter(_.updated(tag, keywords.map(_.id)))
         }
       }
     }
-  }
-
-  def stop() {
-    tagKeywordIds.close()
   }
 
   def forTag(name: String) = tagKeywordIds().getOrElse(name, Nil)

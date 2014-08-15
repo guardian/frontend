@@ -5,9 +5,13 @@
 # For dev machines
 GET        /                                controllers.Application.front
 
+GET        /_healthcheck                    conf.HealthCheck.healthcheck()
+
 GET        /js.gif                          controllers.DiagnosticsController.js
 GET        /ab.gif                          controllers.DiagnosticsController.ab
 
 GET        /count/$path<.+>.gif             controllers.DiagnosticsController.analytics(path)
+
+GET        /counts.gif                      controllers.DiagnosticsController.analyticsCounts()
 
 GET        /robots.txt                      controllers.Assets.at(path="/public", file="robots.txt")

@@ -1,21 +1,44 @@
-@(trail: Trail, index: Int)(implicit request: RequestHeader)
+@(trail: model.Trail, index: Int)(implicit request: RequestHeader)
+
+@import common.LinkTo
+@import model.Video
+@import views.html.fragments.media.video
+@import views.support.{GetClasses, SnapData, Video640}
 
 <div
-    class="@GetClasses.forItem(trail, true) baguette"
+    class="@GetClasses.forItem(trail, true) baguette u-faux-block-link"
     data-link-name="trail | @{index + 1}"
     @SnapData(trail)
 >
 
     <div class="item__container">
-        <a @LinkTo(trail).map{url=>href=@url} class="item__link" data-link-name="article">
-            @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
+        <div class="item__tonal-border tone-accent-border"></div>
+        @trail match {
+            case v: Video if v.mainVideo.isDefined => {
+                <div class="item__media-wrapper item__media-wrapper--has-icon u-faux-block-link__promote">
+                    <div class="item__video-container">
+                        @video(v.mainVideo.get, Video640, v.webTitle, false, Some(v.endSlatePath))
+                    </div>
+                </div>
+            }
+            case _ => {
+                @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
+            }
+        }
+        <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article">
             @fragments.items.elements.title(trail, index, 0)
         </a>
+
+        @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+
         @trail.trailText.map { text =>
             <div class="baguette__standfirst">@Html(text)</div>
         }
     </div>
 
-    @fragments.items.elements.supporting(trail.supporting, trail, style = "fullwidth")
+    <div class="u-faux-block-link__promote">
+        @fragments.items.elements.supporting(trail.supporting, trail, style = "fullwidth")
+    </div>
 
+    <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 </div>

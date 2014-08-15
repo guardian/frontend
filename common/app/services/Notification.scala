@@ -1,16 +1,16 @@
 package services
 
-import common.{AkkaAsync, Logging}
 import com.amazonaws.services.sns.AmazonSNSAsyncClient
 import com.amazonaws.services.sns.model.PublishRequest
+import common.{AkkaAsync, Logging}
 import conf.Configuration
 
 trait Notification extends Logging {
 
   val topic: String
 
-  def sns = {
-    val client = new AmazonSNSAsyncClient(Configuration.aws.credentials)
+  def sns: Option[AmazonSNSAsyncClient] = Configuration.aws.credentials.map{ credentials =>
+    val client = new AmazonSNSAsyncClient(credentials)
     client.setEndpoint(AwsEndpoints.sns)
     client
   }
@@ -32,11 +32,10 @@ trait Notification extends Logging {
     sendAsync(request)
   }
 
-  private def sendAsync(request: PublishRequest) =
-    AkkaAsync {
+  private def sendAsync(request: PublishRequest) = AkkaAsync {
       log.info(s"Issuing SNS notification: ${request.getSubject}:${request.getMessage}")
-      sns.publish(request)
-    }
+      sns.map(_.publish(request))
+  }
 }
 
 object Notification extends Notification {

@@ -1,8 +1,16 @@
 .container.container--popular {
-
     #most-popular-head {
         display: none;
     }
+    .facia-container--layout-content & {
+        margin-bottom: 0;
+    }
+    .content-footer--media & {
+        @include rem((
+            margin-top: $gs-baseline
+        ));
+    }
+
     @include mq(rightCol, desktop) {
         .headline-list--large .headline-list__item {
             &:first-child {
@@ -21,7 +29,7 @@
             @include rem((
                 margin-left: ($gs-gutter/2) * -1,
                 margin-right: ($gs-gutter/2) * -1,
-                padding: 0 $gs-gutter/2
+                padding: $gs-baseline/3 $gs-gutter/2 0
             ));
         }
     }

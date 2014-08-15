@@ -6,12 +6,10 @@ import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import scala.concurrent.Future
-import views.support.{MostReferredContainer, SeriesContainer, TemplateDeduping, PopularContainer}
+import views.support.{TemplateDeduping, PopularContainer}
 import play.api.libs.json.{Json, JsArray}
 
-
 object MostPopularController extends Controller with Logging with ExecutionContexts {
-
 
   implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
@@ -22,7 +20,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     "GFE:Most Read"
   )
 
-  def renderJson(path: String) = render(path)
+  def renderHtml(path: String) = render(path)
   def render(path: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val globalPopular = MostPopular("The Guardian", "", MostPopularAgent.mostPopular(edition))
@@ -48,10 +46,10 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     "US" -> "US",
     "IN" -> "India")
 
-  def renderPopularGeoJson() = Action { implicit request =>
+  def renderPopularGeo() = Action { implicit request =>
 
     val headers = request.headers.toSimpleMap
-    val countryCode = headers.getOrElse("X-GU-GeoLocation","country:ROW").replace("country:","")
+    val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
 
     val countryPopular = MostPopular("The Guardian", "", GeoMostPopularAgent.mostPopular(countryCode))
 
@@ -64,8 +62,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
     }
   }
 
-
-  def renderPopularDayJson(countryCode: String) = Action { implicit request =>
+  def renderPopularDay(countryCode: String) = Action { implicit request =>
     Cached(900) {
       JsonComponent(
         "trails" -> JsArray(DayMostPopularAgent.mostPopular(countryCode).map{ trail =>

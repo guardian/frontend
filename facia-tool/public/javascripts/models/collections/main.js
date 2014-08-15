@@ -9,12 +9,15 @@ define([
     'utils/update-scrollables',
     'utils/terminate',
     'utils/is-valid-date',
+    'modules/list-manager',
+    'modules/droppable',
     'modules/authed-ajax',
+    'modules/copied-article',
     'models/group',
-    'models/collections/droppable',
     'models/collections/collection',
     'models/collections/article',
-    'models/collections/latest-articles'
+    'models/collections/latest-articles',
+    'models/collections/new-items'
 ], function(
     pageConfig,
     ko,
@@ -25,14 +28,16 @@ define([
     updateScrollables,
     terminate,
     isValidDate,
-    authedAjax,
-    Group,
+    listManager,
     droppable,
+    authedAjax,
+    copiedArticle,
+    Group,
     Collection,
     Article,
-    LatestArticles
+    LatestArticles,
+    newItems
 ) {
-
     return function() {
 
         var model = vars.model = {};
@@ -52,6 +57,10 @@ define([
 
         model.front = ko.observable();
 
+        model.headlineLength = ko.computed(function() {
+            return _.contains(vars.CONST.restrictHeadlinesOn, model.front()) ? vars.CONST.restrictedHeadlineLength : vars.CONST.headlineLength;
+        }, this);
+
         model.title = ko.computed(function() {
             return model.front() || (pageConfig.priority + ' fronts');
         }, this);
@@ -64,7 +73,6 @@ define([
 
         model.clipboard = new Group({
             parentType: 'Clipboard',
-            reflow: updateScrollables,
             keepCopy:  true
         });
 
@@ -89,10 +97,14 @@ define([
         };
 
         model.previewUrl = ko.computed(function() {
-            return vars.CONST.viewer +
-                '#env=' + pageConfig.env +
-                '&mode=' + (model.liveMode() ? 'live' : 'draft' ) +
-                '&url=' + model.front() + encodeURIComponent('?view=mobile');
+            if (pageConfig.env === 'prod' && !model.liveMode()) {
+                return vars.CONST.previewBase + '/responsive-viewer/' + model.front();
+            } else {
+                return vars.CONST.viewer +
+                    '#env=' + pageConfig.env +
+                    '&mode=' + (model.liveMode() ? 'live' : 'draft' ) +
+                    '&url=' + model.front();
+            }
         });
 
         model.detectPressFailureCount = 0;
@@ -212,8 +224,6 @@ define([
         });
 
         this.init = function() {
-            droppable.init();
-
             fetchSettings(function (config, switches) {
                 var fronts;
 
@@ -285,8 +295,10 @@ define([
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
             });
+
+            listManager.init(newItems);
+            droppable.init();
+            copiedArticle.flush();
         };
-
     };
-
 });

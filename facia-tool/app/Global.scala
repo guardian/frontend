@@ -1,6 +1,7 @@
-import common._
-import conf.{Gzipper, Management}
 import java.io.File
+
+import common._
+import conf.{Gzipper, Configuration => GuardianConfiguration}
 import play.api._
 import play.api.mvc.WithFilters
 import services.ConfigAgentLifecycle
@@ -11,7 +12,7 @@ object Global extends WithFilters(Gzipper)
   with ConfigAgentLifecycle {
   lazy val devConfig = Configuration.from(Map("session.secure" -> "false"))
 
-  override lazy val applicationName = Management.applicationName
+  override lazy val applicationName = "frontend-facia-tool"
   override def applicationMetrics: Map[String, Double] = Map(
     ("api-usage", FaciaToolMetrics.ApiUsageCount.getAndReset.toDouble),
     ("api-proxy-usage", FaciaToolMetrics.ProxyCount.getAndReset.toDouble),
@@ -28,8 +29,10 @@ object Global extends WithFilters(Gzipper)
     ("s3-client-exceptions", S3Metrics.S3ClientExceptionsMetric.getAndReset.toDouble)
   )
 
+  def secureCookie(mode: Mode.Mode): Boolean = mode == Mode.Dev || GuardianConfiguration.environment.stage == "dev"
+
   override def onLoadConfig(config: Configuration, path: File, classloader: ClassLoader, mode: Mode.Mode): Configuration = {
-    val newConfig: Configuration = if (mode == Mode.Dev) config ++ devConfig else config
+    val newConfig: Configuration = if (secureCookie(mode)) config ++ devConfig else config
     super.onLoadConfig(newConfig, path, classloader, mode)
   }
 }

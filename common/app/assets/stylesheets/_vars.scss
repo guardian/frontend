@@ -7,7 +7,7 @@
 // http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables
 
 
-// Support
+// Browser support
 // =============================================================================
 
 $old-ie:      false !default;
@@ -19,32 +19,30 @@ $browser-supports-flexbox: true !default;
 // Layout dimensions
 // =============================================================================
 
-$unitHeight: 36px;
 $inArticleInlineImgWidth: 114px;
-$headerHeight: 46px;
+$headerHeight: 36px;
 
 @import 'components/guss-colours/helpers';
 @import 'components/guss-colours/colours';
 @import 'components/guss-grid-system/_grid-system';
 
+$right-column:     gs-span(4);
+$left-column:      gs-span(2); // Grows to 3 columns on wide viewports
+$left-column-wide: gs-span(3);
+
 
 // Breakpoints
 // =============================================================================
 
+// Add breakpoints and tweakpoints here
+// To add custom breakpoints directly inside of a component,
+// see https://github.com/guardian/sass-mq#adding-custom-breakpoints
+
 // Name your breakpoints in a way that creates a ubiquitous language
 // across team members. It will improve communication between
 // stakeholders, designers, developers, and testers.
+
 // NB. If these change, please update dfp.js to match
-
-// Article breakpoints
-$a-rightCol-width:    gs-span(4);
-$a-rightCol-trigger:  gs-span(11) + $gs-gutter*2; // 900px
-$a-leftCol-width:     gs-span(2); // Grows to 3 columns on wide viewports
-$a-leftCol-trigger:   gs-span(13) + $gs-gutter*2; // 1060px
-$a-leftColWide-width: gs-span(3);
-
-// Facia breakpoints
-$facia-leftCol-trigger: gs-span(14) + $gs-gutter*2; // 1140px
 
 $mq-breakpoints: (
     mobile:  gs-span(4)  + $gs-gutter,   // 320px
@@ -54,20 +52,27 @@ $mq-breakpoints: (
 
     // Tweakpoints
     mobileLandscape: gs-span(6) + $gs-gutter, // 480px
-    desktopAd: 810px,
 
-    // Article layout
-    rightCol: $a-rightCol-trigger,
-    leftCol: $a-leftCol-trigger,
+    // Content
+    rightCol: gs-span(11) + $gs-gutter*2, // 900px
+    leftCol:  gs-span(13) + $gs-gutter*2, // 1060px
 
-    // Facia layout
-    faciaLeftCol: $facia-leftCol-trigger
+    // Facia
+    faciaLeftCol: gs-span(14) + $gs-gutter*2 // 1140px
 );
+
+
+// Show the current breakpoint in the top right corner of the viewport:
+// see https://github.com/guardian/sass-mq#seeing-the-currently-active-breakpoint
+// Uncomment to activate during development
+//$mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
+
 
 // Guss defaults overrides
 // =============================================================================
 
 $guss-column-rule: none;
+$f-serif-headline: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
 
 
 // Colours
@@ -114,22 +119,6 @@ $c-liveAccent: guss-colour(tone-live-2);
 $c-mediaDefault: $c-commentAccent;
 
 
-// Zones
-// =============================================================================
-
-// Note: try to at least alphabetise these within sections
-
-$articleOrange: #e47a39; //Used for live-blogging
-$businessBlue: #004179;
-$commentBlue: #004179;
-$culturePink: #d1008b;
-$environmentGreen: #4a7801;
-$lifeandstyleOrange: #ea721e;
-$moneyPurple: #7d0068;
-$newsRed: #d61d00;
-$travelBlue: #066ec9;
-
-
 // Football
 // =============================================================================
 
@@ -163,3 +152,11 @@ $mpu-ad-label-height: 34px;
 
 $action-icon-width: 23px;
 $action-icon-rightspace: 7px;
+$content-top-padding: $gs-baseline;
+
+
+// Video.JS player
+// =============================================================================
+
+$vjs-small-button-size: 50px;
+$vjs-large-button-size: 70px;

@@ -1,11 +1,12 @@
 package controllers.commercial
 
-import common.{JsonNotFound, ExecutionContexts, JsonComponent}
-import model.commercial.books.{Book, BookFinder, BestsellersAgent}
-import model.{NoCache, Cached}
+import common.ExecutionContexts
+import model.commercial.books.{BestsellersAgent, Book}
+import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
-import play.api.templates.Html
+import play.twirl.api.Html
+
 import scala.concurrent.Future
 
 object BookOffers extends Controller with ExecutionContexts with implicits.Collections {
@@ -24,7 +25,7 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
     override def view(books: Seq[Book])(implicit request: RequestHeader): Html =
       views.html.books.bestsellersHigh(books)
   }
-
+  
   private def renderBestsellers(relevance: Relevance[Book], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
@@ -38,6 +39,20 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
       }
     }
 
+  private def renderSingleBook(format: Format) = MemcachedAction { implicit request =>
+    Future.successful {
+      specificId.flatMap { isbn =>
+        BestsellersAgent.getSpecificBook(isbn) map { book =>
+          Cached(componentMaxAge) {
+            format.result(views.html.books.bestsellersSuperHigh(book))
+          }
+        }
+      }.getOrElse {
+        NoCache(format.nilResult)
+      }
+    }
+  }
+
   def bestsellersLowJson = renderBestsellers(lowRelevance, jsonFormat)
   def bestsellersLowHtml = renderBestsellers(lowRelevance, htmlFormat)
 
@@ -47,21 +62,7 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
   def bestsellersHighJson = renderBestsellers(highRelevance, jsonFormat)
   def bestsellersHighHtml = renderBestsellers(highRelevance, htmlFormat)
 
-  def singleBookJson(pageId: String) = MemcachedAction { implicit request =>
-    BookFinder.findByPageId(pageId) map {
-      case Some(book) => Cached(componentMaxAge) {
-        JsonComponent(views.html.books.singleBook(book))
-      }
-      case None => NoCache(JsonNotFound.apply())
-    }
-  }
+  def bestsellersSuperHighJson = renderSingleBook(jsonFormat)
+  def bestsellersSuperHighHtml = renderSingleBook(htmlFormat)
 
-  def singleBookHtml(pageId: String) = MemcachedAction { implicit request =>
-    BookFinder.findByPageId(pageId) map {
-      case Some(book) => Cached(componentMaxAge) {
-        Ok(views.html.books.singleBook(book))
-      }
-      case None => NoCache(NotFound)
-    }
-  }
 }

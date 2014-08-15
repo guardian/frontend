@@ -2,9 +2,6 @@ package conf
 
 import common.PaMetrics._
 import common._
-import com.gu.management.{ PropertiesPage, StatusPage, ManifestPage }
-import com.gu.management.play.{ Management => GuManagement }
-import com.gu.management.logback.LogbackLevelPage
 import feed.Competitions
 import model.{TeamMap, LiveBlogAgent}
 import pa.{Http, PaClient}
@@ -70,14 +67,12 @@ class FootballStatsPlugin(app: PlayApp) extends Plugin with ExecutionContexts {
 
   override def onStop() {
     descheduleJobs()
-
-    Competitions.stop()
-    LiveBlogAgent.stop()
-    TeamMap.stop()
   }
 }
 
 object FootballClient extends PaClient with Http with Logging with ExecutionContexts {
+
+  import play.api.Play.current
 
   override lazy val base = Configuration.pa.host
 
@@ -85,13 +80,13 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
     override def GET(urlString: String): Future[pa.Response] = {
         val start = System.currentTimeMillis()
         val promiseOfResponse = WS.url(urlString).withRequestTimeout(2000).get()
-        promiseOfResponse.onComplete( r => PaApiHttpTimingMetric.recordTimeSpent(System.currentTimeMillis() - start))
+        promiseOfResponse.onComplete( r => PaApiHttpTimingMetric.recordDuration(System.currentTimeMillis() - start))
 
         promiseOfResponse.map{ r =>
 
           r.status match {
-            case 200 => PaApiHttpOkMetric.recordCount(1)
-            case _ => PaApiHttpErrorMetric.recordCount(1)
+            case 200 => PaApiHttpOkMetric.increment()
+            case _ => PaApiHttpErrorMetric.increment()
           }
 
           //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
@@ -111,18 +106,8 @@ object FootballClient extends PaClient with Http with Logging with ExecutionCont
   }
 }
 
-object Management extends GuManagement {
-  val applicationName = "frontend-sport"
-  val metrics = Metrics.contentApi ++ Metrics.common ++ Metrics.pa
-
-  lazy val pages = List(
-    new ManifestPage,
-    new UrlPagesHealthcheckManagementPage(
-      "/football/live",
-      "/football/premierleague/results"
-    ),
-    StatusPage(applicationName, metrics),
-    new PropertiesPage(Configuration.toString),
-    new LogbackLevelPage(applicationName)
-  )
-}
+object HealthCheck extends AllGoodHealthcheckController(
+  9013,
+  "/football/live",
+  "/football/premierleague/results"
+)

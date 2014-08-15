@@ -18,7 +18,7 @@
         margin: 0;
         text-transform: lowercase;
         color: $c-newsDefault;
-        @include fs-headline(2);
+        @include fs-headline(3);
         float: none;
     }
     .commercial__title__last-word {
@@ -133,9 +133,9 @@
         }
         .commercial__home-link {
             position: absolute;
-            right: 0;
             @include rem((
-                top: 10px
+                top: $gs-baseline,
+                right: $gs-gutter/2
             ));
         }
     }
@@ -181,6 +181,11 @@
                 display: block;
             }
         }
+        .commercial__home-link {
+            @include rem((
+                right: $gs-gutter
+            ));
+        }
     }
     @include mq(leftCol) {
         .commercial__title__last-word {
@@ -199,12 +204,12 @@
             top: auto;
             right: auto;
             @include rem((
-                bottom: $gs-baseline
+                bottom: $gs-baseline,
+                left: $gs-gutter/2
             ));
-            left: 0;
         }
     }
-    @include mq($from: faciaLeftCol, $to: wide) {
+    @include mq(faciaLeftCol, wide) {
         .commercial__title__last-word {
             margin-left: 0;
         }
@@ -262,14 +267,7 @@
     }
 }
 /* article */
-.facia-container--layout-article .commercial--masterclasses {
-    @include mq(tablet) {
-        .commercial__home-link {
-            @include rem((
-                right: $gs-gutter
-            ));
-        }
-    }
+.facia-container--layout-content .commercial--masterclasses {
     @include mq(rightCol) {
         .commercial--masterclasses__class {
             @include rem((
@@ -280,6 +278,13 @@
             &:nth-child(n+4) {
                 display: block;
             }
+        }
+    }
+    @include mq(desktop) {
+        .commercial__home-link {
+            @include rem((
+                right: $gs-gutter
+            ));
         }
     }
     @include mq(leftCol) {
@@ -295,7 +300,7 @@
             ));
         }
     }
-    @include mq($from: leftCol, $to: wide) {
+    @include mq(leftCol, wide) {
         .commercial__home-link {
             width: gs-span(2);
             line-height: 1.2;

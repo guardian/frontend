@@ -65,21 +65,16 @@
 @mixin article-header-tone($tone, $colour, $accentColour, $textColour, $commentIcon) {
     .tone-#{$tone} .content__head--tonal {
         .content__section {
-            @include mq($from: tablet, $to: leftCol) {
-                border-top: 1px dotted $c-neutral5 !important;
-            }
-            @include rem((
-                padding-top: $gs-baseline/3
-            ));
-            @include mq($from: leftCol) {
+            @include mq(leftCol) {
                 @include rem((
-                    padding-top: $gs-baseline/2
+                    padding-top: $content-top-padding
                 ));
             }
         }
         .content__section .tone-colour {
             color: $colour;
-            @include mq($from: leftCol) {
+
+            @include mq(leftCol) {
                 color: $textColour;
             }
         }
@@ -110,6 +105,9 @@
         }
         .u-underline {
             border-bottom-color: lighten($accentColour, 25);
+
+            &:focus,
+            &:active,
             &:hover {
                 border-bottom-color: #ffffff;
             }

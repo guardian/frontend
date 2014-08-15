@@ -17,13 +17,24 @@ case class Redirect(location: String) extends Destination
 case class Archive(location: String) extends Destination
 
 trait DynamoDB extends Logging with ExecutionContexts {
-
+  import play.api.Play.current
   private val tableName = "redirects"
   private val DynamoDbGet = "DynamoDB_20120810.GetItem"
 
   def destinationFor(source: String): Future[Option[Destination]] = {
+    Configuration.aws.credentials.map{ credentialsProvider =>
+      val signer = new AWS4Signer()
+      def signedHeaders(xAmzTarget: String, bodyContent: String) = {
+        val request = new DefaultRequest[Nothing](new AmazonWebServiceRequest {}, "DynamoDB")
+        request.setEndpoint(new URI(s"http://${AwsEndpoints.dynamoDb}"))
+        request.addHeader("Content-Type", "application/x-amz-json-1.0")
+        request.addHeader("x-amz-target", xAmzTarget)
+        request.setContent(new StringInputStream(bodyContent))
+        signer.sign(request, credentialsProvider.getCredentials)
+        request.getHeaders.toSeq
+      }
 
-    val bodyContent = s"""
+      val bodyContent = s"""
       |{
       |   "TableName": "$tableName",
       |   "Key": {
@@ -32,31 +43,17 @@ trait DynamoDB extends Logging with ExecutionContexts {
       |}
       """.stripMargin
 
-    val headers = signedHeaders(DynamoDbGet, bodyContent)
+      val headers = signedHeaders(DynamoDbGet, bodyContent)
 
-    val asyncRequest = WS.url(s"http://${AwsEndpoints.dynamoDb}")
-      .withHeaders(headers:_*)
+      val asyncRequest = WS.url(s"http://${AwsEndpoints.dynamoDb}")
+        .withHeaders(headers:_*)
 
-    asyncRequest.post(bodyContent).map(_.json).map{ json =>
-      (json \\ "destination").headOption.map(d => Redirect((d \ "S").as[String]))
-      .orElse((json \\ "archive").headOption.map(a => Archive((a \ "S").as[String])))
-    }
+      asyncRequest.post(bodyContent).map(_.json).map{ json =>
+        (json \\ "destination").headOption.map(d => Redirect((d \ "S").as[String]))
+          .orElse((json \\ "archive").headOption.map(a => Archive((a \ "S").as[String])))
+      }
+    }.getOrElse(Future.successful(None))
   }
-
-  // I'm not 100% sure, but this might just work for lots of different request types...
-  // might be a candidate for reuse at some point
-  private val signer = new AWS4Signer()
-  private val credentialsProvider = Configuration.aws.credentials
-  private def signedHeaders(xAmzTarget: String, bodyContent: String) = {
-    val request = new DefaultRequest[Nothing](new AmazonWebServiceRequest {}, "DynamoDB")
-    request.setEndpoint(new URI(s"http://${AwsEndpoints.dynamoDb}"))
-    request.addHeader("Content-Type", "application/x-amz-json-1.0")
-    request.addHeader("x-amz-target", xAmzTarget)
-    request.setContent(new StringInputStream(bodyContent))
-    signer.sign(request, credentialsProvider.getCredentials)
-    request.getHeaders.toSeq
-  }
-
 }
 
 object DynamoDB extends DynamoDB

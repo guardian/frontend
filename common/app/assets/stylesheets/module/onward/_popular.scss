@@ -1,15 +1,18 @@
+.facia-container--layout-content .container--popular .container__border {
+    display: none;
+
+    @include mq(rightCol) {
+        display: block;
+    }
+}
+
 @include mq(rightCol) {
 
     @include guss-columns('.headline-column', $column-min-width: 190px);
 
     .container--popular {
-
         .page-sub-header {
             display: none;
-        }
-
-        .tabs__container {
-            border-top: 1px solid $c-neutral4;
         }
 
         .tabs__tab:first-child {
@@ -17,7 +20,7 @@
             width: 100%;
             border-top: 0;
             @include rem((
-                padding: $gs-baseline/3 $gs-gutter/4 $gs-baseline/3 0
+                padding: ($gs-baseline - 2px) $gs-gutter/4 $gs-baseline/3 0
             ));
 
             a {
@@ -81,7 +84,7 @@
                             padding-left: 50px,
                             padding-bottom: 24px
                         ));
-                        @include fs-headline(2, true);
+                        @include fs-headline(3, true);
                     }
 
                     &:before {
@@ -134,25 +137,20 @@
 
         .tabs {
             @include rem((
-                padding-left: $a-leftCol-width + $gs-gutter,
+                padding-left: $left-column + $gs-gutter,
             ));
             position: relative;
         }
 
         .tabs__container {
             @include rem((
-                width: $a-leftCol-width,
+                width: $left-column,
                 padding-right: $gs-gutter
             ));
             position: absolute;
             left: 0;
             top: 0;
         }
-
-        .tabs__content {
-            border-top: 1px solid $c-neutral4;
-        }
-
     }
 }
 
@@ -162,14 +160,14 @@
 
         .tabs {
             @include rem((
-                padding-left: $a-leftColWide-width + $gs-gutter,
+                padding-left: $left-column-wide + $gs-gutter,
             ));
         }
 
         .tabs__container {
             float: left;
             @include rem((
-                width: $a-leftColWide-width
+                width: $left-column-wide
             ));
         }
 

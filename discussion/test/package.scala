@@ -1,9 +1,10 @@
 package test
 
 import java.io.File
+import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
 import com.ning.http.client.{Response => NingResponse, FluentCaseInsensitiveStringsMap}
-import play.api.libs.ws.{WS, Response}
+import play.api.libs.ws.{WS, WSResponse}
 import play.api.Application
 import java.util
 import java.net.URI
@@ -39,13 +40,13 @@ private case class Resp(getResponseBody: String) extends NingResponse {
 
 }
 
-object DiscussionApiHttpRecorder extends HttpRecorder[Response] {
+object DiscussionApiHttpRecorder extends HttpRecorder[WSResponse] {
 
   override lazy val baseDir = new File(System.getProperty("user.dir"), "data/discussion")
 
-  def toResponse(str: String) = Response(Resp(str))
+  def toResponse(str: String) = NingWSResponse(Resp(str))
 
-  def fromResponse(response: Response) = {
+  def fromResponse(response: WSResponse) = {
     if (response.status == 200) {
       response.body
     } else {
@@ -55,6 +56,7 @@ object DiscussionApiHttpRecorder extends HttpRecorder[Response] {
 }
 
 class DiscussionApiStub(app: Application) extends DiscussionApi with Plugin{
+  import play.api.Play.current
   protected val clientHeaderValue: String =""
   protected val apiRoot = conf.Configuration.discussion.apiRoot
   protected val apiTimeout = conf.Configuration.discussion.apiTimeout
@@ -66,9 +68,9 @@ class DiscussionApiStub(app: Application) extends DiscussionApi with Plugin{
 }
 
 object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit
+  object HtmlUnit extends EditionalisedHtmlUnit(conf.HealthCheck.testPort.toString)
 
-  object Fake extends FakeApp {
+  object FakeDiscussion extends FakeApplication {
 
     override def disabledPlugins = super.disabledPlugins :+ classOf[DiscussionApiPlugin].getName
     override def testPlugins = super.testPlugins :+ "test.DiscussionApiStub"

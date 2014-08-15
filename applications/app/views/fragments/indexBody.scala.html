@@ -1,26 +1,32 @@
-@(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: TemplateDeduping)
+@(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
+
 @import common.Edition
+@import model.{Collection, Config}
+@import views.support.NewsContainer
+@import views.support.RenderClasses
 
-<div class="@RenderClasses(Map(
-        "facia-container" -> true,
-        "facia-container--layout-front" -> true,
-        "facia-container--sponsored" -> index.page.isSponsored,
-        "facia-container--advertisement-feature" -> (index.page.isAdvertisementFeature && !index.page.isSponsored)))"
-    data-link-name="Front | @request.path"
-    @index.page.sponsor.map { sponsor =>
-        data-sponsor="@sponsor"
-    }
-    role="main">
+<div class="l-side-margins l-side-margins--layout-front">
+    <div class="@RenderClasses(Map(
+            "facia-container" -> true,
+            "facia-container--layout-front" -> true,
+            "facia-container--sponsored" -> index.page.isSponsored,
+            "facia-container--advertisement-feature" -> (index.page.isAdvertisementFeature && !index.page.isSponsored)))"
+        data-link-name="Front | @request.path"
+        @index.page.sponsor.map { sponsor =>
+            data-sponsor="@sponsor"
+        }
+        role="main">
 
-    @if(index.page.hasPageSkin(Edition(request))) {
-        @fragments.commercial.pageSkin()
-    }
+        @if(index.page.hasPageSkin(Edition(request))) {
+            @fragments.commercial.pageSkin()
+        }
 
-    @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
+        @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
 
-    <section class="no-indent-article__zone facia-container__inner">
-        @fragments.footballNav(index.page)
-    </section>
+        <section class="no-indent-article__zone facia-container__inner">
+            @fragments.footballNav(index.page)
+        </section>
 
-    @fragments.commercial.commercialComponent("merchandising", Seq("commercial-component"))
+        @fragments.commercial.commercialComponent()
+    </div>
 </div>

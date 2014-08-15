@@ -7,11 +7,16 @@
     }
     .facia-slice-wrapper--position-1 {
         .item__title {
-            @include fs-headline(2, true);
+            @include fs-headline(3, true);
             @include box-sizing(border-box);
             @include rem((
                 padding-bottom: $gs-baseline,
                 min-height: 86px
+            ));
+        }
+        .stars {
+            @include rem((
+                margin-bottom: $gs-baseline / 2
             ));
         }
         @include mq($to: tablet) {
@@ -23,7 +28,7 @@
                 border-bottom: 0;
 
                 .item__title {
-                    @include fs-headline(1, true);
+                    @include fs-headline(2, true);
                 }
             }
             .item--has-image .item__media-wrapper,
@@ -112,19 +117,9 @@
     .item__title {
         background-color: $c-featuresVariant;
     }
-    .item__link:hover,
-    .item__link:focus {
-        .item__title {
-            // Restore lost underline because of the absolute positioning
-            text-decoration: underline;
-        }
-    }
-    .item__link:active .item__title {
-        text-decoration: none;
-    }
 }
 
-.facia-container--layout-article {
+.facia-container--layout-content {
     .container--features {
         .facia-slice-wrapper--position-2,
         .linkslist-container {

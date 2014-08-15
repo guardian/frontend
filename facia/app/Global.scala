@@ -1,5 +1,5 @@
-import common.{FaciaToolMetrics, ContentApiMetrics, FaciaMetrics, CloudWatchApplicationMetrics}
-import conf.{Management, Filters}
+import common._
+import conf.{Configuration, Filters}
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
 import ophan.SurgingContentAgentLifecycle
@@ -13,10 +13,10 @@ with DevParametersLifecycle
 with CloudWatchApplicationMetrics
 with DfpAgentLifecycle
 with SurgingContentAgentLifecycle {
-  override lazy val applicationName = Management.applicationName
+  override lazy val applicationName = "frontend-facia"
 
   override def applicationMetrics: Map[String, Double] = super.applicationMetrics ++ Map(
-    ("s3-authorization-error", FaciaMetrics.S3AuthorizationError.getAndReset.toDouble),
+    ("s3-authorization-error", S3Metrics.S3AuthorizationError.getAndReset.toDouble),
     ("json-parsing-error", FaciaMetrics.JsonParsingErrorCount.getAndReset.toDouble),
     ("elastic-content-api-calls", ContentApiMetrics.ElasticHttpTimingMetric.getAndReset.toDouble),
     ("elastic-content-api-timeouts", ContentApiMetrics.ElasticHttpTimeoutCountMetric.getAndReset.toDouble),

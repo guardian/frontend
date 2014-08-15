@@ -1,5 +1,7 @@
 @(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
+@import views.support.GetClasses
+
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
     @defining(templateDeduping(4, collection.items)) { items =>
@@ -18,7 +20,7 @@
 
                     <div class="container__header">
                         @title.map { title =>
-                            <h2 class="container__title tone-@style.tone tone-background">
+                            <h2 class="container__title">
                                 @href.map { href =>
                                     <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
                                 }.getOrElse{

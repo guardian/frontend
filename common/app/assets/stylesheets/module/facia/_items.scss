@@ -2,79 +2,74 @@
     position: relative;
     overflow: hidden;
     @include rem((
-        margin-top: $gs-baseline
+        margin-bottom: $gs-baseline
     ));
 
     @include mq(tablet) {
         @include rem((
-            margin-top: $gs-baseline*2
+            margin-bottom: $gs-baseline*2
         ));
     }
 }
-.container--first {
-    margin-top: 0;
-    @include rem((
-        padding-top: $gs-row-height*.5
-    ));
-}
 .container__border {
-    border-top-style: solid;
-    border-top-width: 4px;
+    border-top: 1px solid $c-neutral4;
 
     @include mq(tablet) {
-        border-top-width: 2px;
+        @include rem((
+            margin-left: -$gs-gutter,
+            margin-right: -$gs-gutter
+        ));
     }
 }
 .container__header {
     position: relative;
 }
 .container__title {
+    @include box-sizing(border-box);
     position: relative;
-    @include fs-header(5);
+    @include fs-header(3);
     @include rem((
-        padding: $gs-baseline/3 gs-span(1)+$gs-gutter/5 $gs-baseline/3 $gs-gutter/5,
-        min-height: gs-height(1) - $gs-baseline*(2/3)
+        padding: $gs-baseline/4 (gs-span(1) + $gs-gutter/5) $gs-baseline/3 0,
+        min-height: gs-height(1)
     ));
-    background-color: $c-newsDefault;
-    color: #ffffff;
-
-    @include mq(tablet) {
-        @include fs-header(3, true);
-        min-height: 0;
-        padding-left: 0;
-        padding-right: 0;
-        background-color: transparent !important;
-        @include rem((
-            margin-bottom: $gs-baseline
-        ));
-        line-height: 1;
-
-        &.tone-news {
-            color: $c-newsDefault;
-        }
-        &.tone-comment {
-            color: $c-commentDefault;
-        }
-        &.tone-feature {
-            color: $c-featureDefault;
-        }
-    }
+    color: $c-neutral1;
 
     .today__sub {
         @include mq(faciaLeftCol) {
-            @include fs-headline(1);
+            @include fs-headline(2);
         }
         @include mq(wide) {
-            @include fs-headline(2, $size-only: true);
+            @include fs-headline(3, $size-only: true);
         }
     }
     a {
         color: inherit;
     }
+
+    @include mq(tablet) {
+        min-height: 0;
+        padding-right: 0;
+        @include rem((
+            padding-top: $gs-baseline/2,
+            margin-bottom: $gs-baseline
+        ));
+    }
+    @include mq(desktop) {
+        @include rem((
+            padding-top: $gs-baseline/1.5
+        ));
+    }
+}
+.container__body {
+    @include mq(leftCol) {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+    }
 }
 .container__updated {
     display: block;
-    @include fs-headline(1);
+    @include fs-headline(2);
     margin-top: ($gs-baseline/3)*5;
     padding-top: $gs-baseline/3;
     border-top: 1px solid $c-neutral5;
@@ -110,7 +105,7 @@
     position: absolute;
     @include rem((
         min-height: gs-height(1),
-        min-width: gs-span(1),
+        min-width: gs-span(1)
     ));
     top: 0;
     right: 0;
@@ -126,7 +121,9 @@
         position: absolute;
         top: 13px;
         left: 50%;
-        margin-left: -12px;
+        @include rem((
+            margin-left: -12px
+        ));
 
         .container--rolled-up & {
             @include transform(rotate(0));
@@ -136,7 +133,7 @@
         display: none;
         position: relative;
         @include rem((
-            top: -6px
+            top: -2px
         ));
     }
     @include mq(tablet) {
@@ -159,7 +156,9 @@
         }
     }
     @include mq(wide) {
-        left: gs-span(15) + $gs-gutter;
+        @include rem((
+            left: gs-span(15) + $gs-gutter
+        ));
     }
 }
 .facia-slice {
@@ -180,10 +179,24 @@
         padding-right: $gs-gutter/2,
         margin-bottom: $gs-baseline/2
     ));
+
+    .stars {
+        @include rem((
+            margin-top: $gs-baseline * .25
+        ));
+
+        @include mq(tablet) {
+            @include rem((
+                margin-bottom: $gs-baseline * 1.25
+            ));
+        }
+    }
+}
+.item__tonal-border {
+    border-top: $item-top-border-height solid $c-newsAccent;
 }
 .item__link {
     display: block;
-    border-top: $item-top-border-height solid $c-newsAccent;
     color: $c-neutral1;
 
     &:visited {
@@ -195,7 +208,13 @@
     &:active {
         color: $c-neutral1;
     }
-    &:hover {
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        .u-faux-block-link__cta {
+            text-decoration: underline;
+        }
         .item__cta {
             background-color: rgba($c-neutral2, 1);
         }
@@ -204,9 +223,17 @@
             background-color: $c-media-icon;
         }
     }
+    &:active {
+        .u-faux-block-link__cta {
+            text-decoration: none;
+        }
+    }
 }
-.item__link--no-border {
-    border-width: 0;
+.item__video-container {
+    margin-top: 4px;
+}
+.container--news .facia-slice-wrapper:first-child .item__video-container {
+    margin-top: 0;
 }
 .item__image-container {
     margin-top: 4px;
@@ -215,6 +242,7 @@
         display: none;
     }
 }
+
 .item__media-wrapper,
 .item__image-container {
     display: none;
@@ -275,7 +303,7 @@
     @include rem((
         padding-top: $gs-baseline/6
     ));
-    @include fs-headline(1, true);
+    @include fs-headline(2, true);
     word-wrap: break-word;
 
     .i-quote-orange {
@@ -292,6 +320,21 @@
         @include show-only-if-svg-is-supported;
     }
 }
+
+// This is for when the accompanying media element is a video and the h2/h3
+// element is displaying to the left of the video - the h2/h3 should show
+// inline, otherwise the link stretches over the video, preventing the user
+// from clicking the play button. It should NOT, however, display inline
+// otherwise, as it messes up padding, etc.
+.row-of-two--boost-first .item__title--inline-video,
+.row-of-two--boost-second .item__title--inline-video {
+    display: inline;
+}
+
+.item__media-wrapper .gu-media-wrapper {
+    margin-bottom: 0;
+}
+
 .item--video,
 .item--gallery {
     .item__title .i {
@@ -322,7 +365,7 @@
     }
 }
 .item__byline {
-    @include fs-headline(2);
+    @include fs-headline(3);
     @include rem((
         margin-bottom: $gs-baseline/3
     ));
@@ -344,7 +387,7 @@
     }
 }
 .item__tag {
-    @include fs-headline(1);
+    @include fs-headline(2);
 }
 .item__meta {
     position: absolute;
@@ -385,18 +428,18 @@
         }
     }
     .trail__count {
-        @include rem((
-            padding-left: 18px
-        ));
         top: 0;
 
         a {
+            @include rem((
+                padding-left: 18px
+            ));
             line-height: inherit;
             color: inherit;
         }
         i {
             @include rem((
-                top: 3px,
+                top: 2px,
                 left: 0
             ));
         }
@@ -407,6 +450,7 @@
     @include rem((
         margin-top: $gs-baseline*2
     ));
+
     .item--support-show & {
         display: block;
     }
@@ -424,9 +468,9 @@
 
 .item__cta {
     position: absolute;
-    width: ($gs-baseline/3)*11;  //44px
-    height: ($gs-baseline/3)*11;
     @include rem((
+        width: ($gs-baseline/3)*11,  //44px
+        height: ($gs-baseline/3)*11,
         top: ($gs-baseline/3)*2,
         left: $gs-gutter/2.5
     ));
@@ -457,27 +501,36 @@ $cta-icon-gap: 2px;
 .item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
-        top: $gs-baseline/3;
-        left: $gs-baseline/3;
+        @include rem((
+            top: $gs-baseline/3,
+            left: $gs-baseline/3
+        ));
     }
     .i {
-        margin-bottom: $cta-icon-gap;
         position: relative;
+        @include rem((
+            margin-bottom: $cta-icon-gap
+        ));
     }
     &:hover,
     &:focus {
         .item__cta--gallery {
             background-color: $c-neutral1;
+
             .i {
-                top: -1 * (map-get($gallery-cta-icon, height) + $cta-icon-gap);
+                @include rem((
+                    top: -1 * (map-get($gallery-cta-icon, height) + $cta-icon-gap)
+                ));
             }
         }
     }
 }
 .item__cta--gallery,
 .item__cta--video {
-    width: 36px;
-    height: 36px;
+    @include rem((
+        width: 36px,
+        height: 36px
+    ));
     background-color: $c-media-icon;
 }
 .item__cta__icon {
@@ -488,17 +541,21 @@ $cta-icon-gap: 2px;
     font-size: 0;
 
     .item__cta--gallery & {
-        width: map-get($gallery-cta-icon, width);
-        height: map-get($gallery-cta-icon, height);
-        margin-left: -1 * (map-get($gallery-cta-icon, width) / 2);
-        margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2);
+        @include rem((
+            width: map-get($gallery-cta-icon, width),
+            height: map-get($gallery-cta-icon, height),
+            margin-left: -1 * (map-get($gallery-cta-icon, width) / 2),
+            margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2)
+        ));
     }
     .item__cta--video & {
-        width: map-get($video-cta-icon, width);
-        height: map-get($video-cta-icon, height);
-        // don't want icon to be exactly in the middle
-        margin-left: -1 * (map-get($video-cta-icon, width) / 3);
-        margin-top: -1 * (map-get($video-cta-icon, height) / 2);
+        @include rem((
+            width: map-get($video-cta-icon, width),
+            height: map-get($video-cta-icon, height),
+            // don't want icon to be exactly in the middle
+            margin-left: -1 * (map-get($video-cta-icon, width) / 3),
+            margin-top: -1 * (map-get($video-cta-icon, height) / 2)
+        ));
     }
 }
 .item--dark {
@@ -538,4 +595,34 @@ $cta-icon-gap: 2px;
 
 .container--rolled-up .container--rolled-up-hide {
     display: none;
+}
+
+.container--first {
+    margin-top: 0;
+    padding-top: 0;
+
+    .container__border {
+        display: none;
+    }
+
+    // Restyle the title to look less bulky
+    // TODO: remove when container titles all look the same
+    // at all breakpoints
+    .container__title {
+        padding-left: 0;
+        background: transparent;
+        color: $c-neutral1;
+    }
+
+
+    @include mq(tablet) {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+    }
+    @include mq(faciaLeftCol, wide) {
+        .facia-slice-wrapper:first-child {
+            padding-top: 0;
+        }
+    }
 }

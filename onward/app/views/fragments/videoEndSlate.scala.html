@@ -1,0 +1,14 @@
+@(videos: Seq[model.Video], componentId: String, heading: String)(implicit request: RequestHeader)
+
+<div class="end-slate-container end-slate-container--video" data-component="video-end-slate-@componentId">
+
+    <div class="end-slate-container__header">
+        <h3 class="end-slate-container__heading">@heading</h3>
+    </div>
+    <ul class="u-cf u-unstyled end-slate end-slate--video items--media items--video" data-link-name="end slate">
+        @videos.zipWithRowInfo.map{ case (video, row) =>
+            @fragments.mediaItem(video, row.rowNum)
+        }
+    </ul>
+
+</div>

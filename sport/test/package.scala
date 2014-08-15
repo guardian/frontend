@@ -1,32 +1,34 @@
 package test
 
-import com.ning.http.client.{Response => NingResponse, FluentCaseInsensitiveStringsMap}
+import com.ning.http.client.FluentCaseInsensitiveStringsMap
+import com.ning.http.client.providers.netty.NettyResponse
 import common.ExecutionContexts
 import java.io.{File, InputStream}
 import java.nio.ByteBuffer
 import java.net.URI
 import java.util
+import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
-import play.api.libs.ws.Response
+import play.api.libs.ws.WSResponse
 import play.api.{Application => PlayApplication, Plugin}
 import conf.{FootballClient, FootballStatsPlugin, Configuration}
 import pa.Http
 import io.Source
-import org.joda.time.DateMidnight
+import org.joda.time.LocalDate
 import scala.concurrent.Future
 
 object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit with implicits.Football {
+  object HtmlUnit extends EditionalisedHtmlUnit(conf.HealthCheck.testPort.toString) with implicits.Football {
     override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
     override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
   }
-  object Fake extends FakeApp {
+  object FakeSport extends FakeApplication {
     override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
     override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
   }
 }
 
-private case class Resp(getResponseBody: String) extends NingResponse {
+private case class Resp(getResponseBody: String) extends com.ning.http.client.Response {
   def getContentType: String = "application/json"
   def getResponseBody(charset: String): String = getResponseBody
   def getStatusCode: Int = 200
@@ -47,13 +49,13 @@ private case class Resp(getResponseBody: String) extends NingResponse {
   def hasResponseBody: Boolean = throw new NotImplementedError()
 }
 
-object FeedHttpRecorder extends HttpRecorder[Response] {
+object FeedHttpRecorder extends HttpRecorder[WSResponse] {
 
   override lazy val baseDir = new File(System.getProperty("user.dir"), "data/sportfeed")
 
-  def toResponse(str: String) = Response(Resp(str))
+  def toResponse(str: String) = NingWSResponse(Resp(str))
 
-  def fromResponse(response: Response) = {
+  def fromResponse(response: WSResponse) = {
     if (response.status == 200) {
       response.body
     } else {
@@ -73,7 +75,7 @@ class StubFootballStatsPlugin(app: PlayApplication) extends Plugin with Football
 // Stubs data for Football stats integration tests
 object TestHttp extends Http with ExecutionContexts {
 
-  val today = new DateMidnight()
+  val today = new LocalDate()
 
   val base = s"${getClass.getClassLoader.getResource("testdata").getFile}/"
 

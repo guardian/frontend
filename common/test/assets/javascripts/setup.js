@@ -40,3 +40,7 @@ guardian = {
         }
     }
 };
+
+require(['common/utils/ajax'], function(ajax) {
+    ajax.init();
+});

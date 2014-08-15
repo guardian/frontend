@@ -1,3 +1,41 @@
+/*doc
+---
+title: Social
+name: social
+category: Common
+---
+
+```html_example
+<ul class="social u-unstyled u-cf">
+    <li class="social__item">
+        <a class="social__action social-icon-wrapper" href="#">
+            <span class="u-h">Share via Email</span>
+            <span class="social-icon"><i class="i-share-email i"></i></span>
+        </a>
+    </li>
+    <li class="social__item">
+        <a class="social__action social-icon-wrapper" href="#">
+            <span class="u-h">Share on Facebook</span>
+            <span class="social-icon"><i class="i-share-facebook i"></i></span>
+        </a>
+    </li>
+    <li class="social__item">
+        <a class="social__action social-icon-wrapper" href="#">
+            <span class="u-h">Share on Twitter</span>
+            <span class="social-icon"><i class="i-share-twitter i"></i></span>
+        </a>
+    </li>
+    <li class="social__item">
+        <a class="social__action social-icon-wrapper" href="#">
+            <span class="u-h">Share on Google+</span>
+            <span class="social-icon"><i class="i-share-gplus i"></i></span>
+        </a>
+    </li>
+</ul>
+```
+*/
+
+
 .social-wrapper {
     @include rem((
         padding-top: $gs-baseline,
@@ -18,14 +56,14 @@
     }
 }
 .social {
-    height: 32px;
     overflow-y: hidden;
     @include rem((
+        height: 32px,
         margin-left: -$gs-gutter/5
     ));
 }
 .social__head {
-    @include fs-textsans(1);
+    @include fs-textSans(1);
     color: $c-neutral2;
     @include rem((
         padding: $gs-baseline/3 0 $gs-baseline 0
@@ -33,12 +71,15 @@
 }
 .social__item {
     float: left;
-    width: 36px;
-    padding: 0 $gs-gutter/5;
-
+    @include rem((
+        width: 36px,
+        padding: 0 $gs-gutter/5
+    ));
 
     @include mq(leftCol, wide) {
-        width: 32px;
+        @include rem((
+            width: 32px
+        ));
         padding-right: 0;
     }
 }
@@ -81,8 +122,10 @@ $social-icon: (
 
     i {
         display: block;
-        margin-bottom: 2px;
-        margin-top: -1px;
-        margin-left: -1px;
+        @include rem((
+            margin-bottom: 2px,
+            margin-top: -1px,
+            margin-left: -1px
+        ));
     }
 }

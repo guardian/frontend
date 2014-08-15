@@ -1,6 +1,7 @@
 import common._
-import conf.{Configuration => GuardianConfiguration, Management}
-import frontpress.{ToolPressQueueWorker, FrontPressCron}
+import conf.{Configuration => GuardianConfiguration}
+import frontpress.{FrontPressCron, ToolPressQueueWorker}
+import metrics._
 import play.api.GlobalSettings
 import services.ConfigAgentLifecycle
 
@@ -15,7 +16,7 @@ object Global extends GlobalSettings
   private def getTotalPressFailureCount: Long =
     FaciaPressMetrics.FrontPressLiveFailure.getResettingValue() + FaciaPressMetrics.FrontPressDraftFailure.getResettingValue()
 
-  override def applicationName = Management.applicationName
+  override def applicationName = "frontend-facia-press"
 
   override def applicationMetrics = Map(
     ("front-press-failure", getTotalPressFailureCount.toDouble),
@@ -33,10 +34,14 @@ object Global extends GlobalSettings
     ("content-api-client-mapping-exceptions", ContentApiMetrics.ContentApiJsonMappingExceptionMetric.getAndReset.toDouble),
     ("content-api-invalid-content-exceptions", FaciaToolMetrics.InvalidContentExceptionMetric.getAndReset.toDouble),
     ("s3-client-exceptions", S3Metrics.S3ClientExceptionsMetric.getAndReset.toDouble),
+    ("s3-authorization-errors", S3Metrics.S3AuthorizationError.getAndReset.toDouble),
     ("content-api-seo-request-success", FaciaPressMetrics.ContentApiSeoRequestSuccess.getAndReset.toDouble),
     ("content-api-seo-request-failure", FaciaPressMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble),
     ("content-api-fallbacks", FaciaPressMetrics.MemcachedFallbackMetric.getAndReset.toDouble)
   )
+
+  override def latencyMetrics: List[FrontendMetric] = List(UkPressLatencyMetric, UsPressLatencyMetric, AuPressLatencyMetric,
+                                     AllFrontsPressLatencyMetric)
 
   def scheduleJobs() {
     Jobs.schedule("FaciaToolPressJob", s"0/$pressJobConsumeRateInSeconds * * * * ?") {

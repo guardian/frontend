@@ -57,26 +57,5 @@ class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers w
         }
       }
     }
-
-    scenario("The 'Classic version' link points to the correct, equivalent classic page") {
-
-      Given("I visit the fixtures page")
-      And("I am on the 'UK' edition")
-      HtmlUnit("/football/fixtures") { browser =>
-        import browser._
-
-        Then("the 'Classic version' link should point to '/football/fixtures?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/fixtures"))
-      }
-
-      Given("I visit the fixtures page")
-      And("I am on the 'US' edition")
-      HtmlUnit.US("/football/fixtures") { browser =>
-        import browser._
-
-        Then("the 'Classic version' link should point to '/football/fixtures?view=classic'")
-        findFirst(".js-main-site-link").getAttribute("href") should be(ClassicVersionLink("/football/fixtures"))
-      }
-    }
   }
 }

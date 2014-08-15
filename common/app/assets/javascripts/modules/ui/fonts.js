@@ -29,7 +29,10 @@ define([
 
             // If no URL, then load from standard static assets path.
             url = url || '';
+            // NOTE - clearing old fonts, can be removed after a certain amount of time
+            storage.local.clearByPrefix('gu.fonts.Web');
             for (var i = 0, j = styleNodes.length; i < j; ++i) {
+                clearOldFonts(styleNodes[i]);
                 var style = styleNodes[i];
                 if (fontIsRequired(style)) {
                     var that = this;
@@ -49,7 +52,7 @@ define([
 
                                 var nameAndCacheKey = getNameAndCacheKey(style);
 
-                                that.clearFont(nameAndCacheKey[0]);
+                                that.clearFont(nameAndCacheKey[1]);
                                 storage.local.set(storagePrefix + nameAndCacheKey[1] + '.' + nameAndCacheKey[0], json.css);
                                 mediator.emit('modules:fonts:loaded', [json.name]);
                             };
@@ -89,30 +92,31 @@ define([
                 var nameAndCacheKey =  getNameAndCacheKey(style);
                 var cachedValue = storage.local.get(storagePrefix + nameAndCacheKey[1] + '.' + nameAndCacheKey[0]);
 
-                // NOTE: needed for a while, due to erroneously storing fonts against the wrong key
-                storage.local.remove('gu.fonts.17c5ce231fe8d2e6b2d4f6e429fa8d72.WebAgateSans');
-                storage.local.remove('gu.fonts.d46b85fe29c76aa14f620a5e67b1d720.WebHeadlineSans');
-                storage.local.remove('gu.fonts.085af4a5fff2c8f22c02bdcd86104251.WebEgyptian');
-                storage.local.remove('gu.fonts.bcb2f9b361c905a71d2894f46b51ce4c.WebTextSans');
-
-
                 var widthMatches = true;
                 var minWidth = style.getAttribute('data-min-width');
                 if (minWidth && parseInt(minWidth, 10) >= window.innerWidth) {
                     widthMatches = false;
                 }
 
-                // if this font is only for advertisement features, make sure that's what the page is
-                var fontRequired = (bonzo(style).data('advertisement-feature') !== undefined) ? isAdvertisementFeature() : true;
-
-                return cachedValue === null && widthMatches && fontRequired;
+                return cachedValue === null && widthMatches;
             } else {
                 return false;
             }
         }
 
-        function isAdvertisementFeature() {
-            return qwery('.facia-container--advertisement-feature').length > 0;
+        /**
+         * NOTE: temp method, to fix bug with removal of old fonts - can be removed if font files update
+         */
+        function clearOldFonts(style) {
+            var key = getNameAndCacheKey(style),
+                fontPrefix = 'gu.fonts.' + key[1],
+                fontName = fontPrefix + '.' + key[0];
+            for (var i = storage.local.length() - 1; i > -1; --i) {
+                var name = storage.local.getKey(i);
+                if (name.indexOf(fontPrefix) === 0 && name.indexOf(fontName) !== 0) {
+                    storage.local.remove(name);
+                }
+            }
         }
 
     }

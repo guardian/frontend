@@ -5,23 +5,18 @@ import conf.FootballClient
 import java.util.Comparator
 import model.Competition
 import model.TeamFixture
-import org.joda.time.{ DateTimeComparator, DateMidnight }
+import org.joda.time.{ DateTimeComparator, LocalDate }
 import org.scala_tools.time.Imports._
 import pa._
 
 
 trait CompetitionSupport extends implicits.Football {
 
-  private implicit val dateMidnightOrdering = Ordering.comparatorToOrdering(
-    DateTimeComparator.getInstance.asInstanceOf[Comparator[DateMidnight]]
+  private implicit val localDateOrdering = Ordering.comparatorToOrdering(
+    DateTimeComparator.getInstance.asInstanceOf[Comparator[LocalDate]]
   )
 
   val competitions: Seq[Competition]
-
-  def withMatchesOn(date: DateMidnight) = CompetitionSupport {
-    val competitionsWithMatches = competitions.filter(_.matches.exists(_.isOn(date)))
-    competitionsWithMatches.map(c => c.copy(matches = c.matches.filter(_.isOn(date))))
-  }
 
   def withCompetitionFilter(path: String) = CompetitionSupport(
     competitions.filter(_.url == path)
@@ -32,17 +27,17 @@ trait CompetitionSupport extends implicits.Football {
   def withId(compId: String) = competitions.find(_.id == compId)
 
   lazy val withTodaysMatchesAndFutureFixtures = CompetitionSupport {
-    val today = new DateMidnight
+    val today = new LocalDate
     competitions.map(c => c.copy(matches = c.matches.filter(m => m.isFixture || m.isOn(today)))).filter(_.hasMatches)
   }
 
   lazy val withTodaysMatchesAndPastResults = CompetitionSupport {
-    val today = new DateMidnight
+    val today = new LocalDate
     competitions.map(c => c.copy(matches = c.matches.filter(m => m.isResult || m.isOn(today)))).filter(_.hasMatches)
   }
 
   lazy val withTodaysMatches = CompetitionSupport {
-    val today = new DateMidnight
+    val today = new LocalDate
     competitions.map(c => c.copy(matches = c.matches.filter(_.isOn(today)))).filter(_.hasMatches)
   }
 
@@ -52,9 +47,9 @@ trait CompetitionSupport extends implicits.Football {
 
   lazy val matchDates = competitions.flatMap(_.matchDates).distinct.sorted
 
-  def nextMatchDates(startDate: DateMidnight, numDays: Int) = matchDates.filter(_ >= startDate).take(numDays)
+  def nextMatchDates(startDate: LocalDate, numDays: Int) = matchDates.filter(_ >= startDate).take(numDays)
 
-  def previousMatchDates(date: DateMidnight, numDays: Int) = matchDates.reverse.filter(_ <= date).take(numDays)
+  def previousMatchDates(date: LocalDate, numDays: Int) = matchDates.reverse.filter(_ <= date).take(numDays)
 
   def findMatch(id: String): Option[FootballMatch] = matches.find(_.id == id)
 
@@ -71,8 +66,8 @@ trait CompetitionSupport extends implicits.Football {
     MatchDayTeam(teamId, unclean.name, None, None, None, None)
   }
 
-  def matchFor(date: DateMidnight, homeTeamId: String, awayTeamId: String) = withMatchesOn(date).matches
-    .find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId)
+  def matchFor(date: LocalDate, homeTeamId: String, awayTeamId: String) =
+    matches.find(m => m.homeTeam.id == homeTeamId && m.awayTeam.id == awayTeamId && m.date.toLocalDate == date)
 
   // note team1 & team2 are the home and away team, but we do NOT know their order
   def matchFor(interval: Interval, team1: String, team2: String): Option[FootballMatch] = matches
@@ -133,7 +128,7 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     log.info("Refreshing competition data")
     competitionAgents.find(_.competition.id == season.id).map { agent =>
       val newCompetition = agent.competition.startDate match {
-        case Some(existingStartDate) if season.startDate.isAfter(existingStartDate) => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+        case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
         case None => agent.update(agent.competition.copy(startDate = Some(season.startDate)))
         case _ =>
       }
@@ -148,10 +143,6 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
         agent.addMatches(newMatches)
       }
     })
-  }
-
-  def stop() {
-    competitionAgents.foreach(_.stop())
   }
 }
 

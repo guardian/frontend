@@ -20,25 +20,28 @@ object SurgingContentAgent extends Logging with ExecutionContexts {
 
       val surging: Seq[(String, Int)] = SurgeUtils.parse(ophanResults)
 
-      agent.update(surging.toMap)
+      agent.send(surging.toMap)
     }
-  }
-
-  def stop() {
-    agent.close()
-  }
-
-  def isSurging(id: String): Boolean = {
-    agent.get().contains(id)
   }
 
   def getSurging= {
     agent.get()
   }
 
+  def getSurgingLevelFor(id: String): Int = SurgeUtils.levelProvider(agent.get().get(id))
 }
 
 object SurgeUtils {
+  def levelProvider(surgeLevel: Option[Int]) = {
+    surgeLevel match {
+      case Some(x) if x >= 400 => 1
+      case Some(x) if x >= 300 => 2
+      case Some(x) if x >= 200 => 3
+      case Some(x) if x >= 100 => 4
+      case _ => 0
+    }
+  }
+
   def parse(json: JsValue) = {
     for {
       item: JsValue <- json.asOpt[JsArray].map(_.value).getOrElse(Nil)
@@ -68,9 +71,6 @@ trait SurgingContentAgentLifecycle extends GlobalSettings {
 
   override def onStop(app: PlayApp) {
     Jobs.deschedule("SurgingContentAgentRefreshJob")
-
-    SurgingContentAgent.stop()
-
     super.onStop(app)
   }
 }

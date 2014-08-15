@@ -1,22 +1,19 @@
 package controllers.admin
 
-import play.api._
-import play.api.mvc._
-import play.api.Play.current
-import pa._
 import common.ExecutionContexts
-import org.joda.time.DateMidnight
-import java.net.URLDecoder
-import football.model.{PrevResult, PA}
-import play.api.templates.Html
-import scala.concurrent.Future
+import football.model.PA
 import football.services.GetPaClient
-import model.{Cors, NoCache, Cached}
+import model.{Cached, Cors, NoCache}
+import org.joda.time.LocalDate
+import pa._
+import play.api.mvc._
+
+import scala.concurrent.Future
 
 
 object TablesController extends Controller with ExecutionContexts with GetPaClient {
 
-  def tablesIndex = Authenticated.async { request =>
+  def tablesIndex = AuthActions.AuthActionTest.async { request =>
     for {
       allCompetitions <- client.competitions
     } yield {
@@ -25,7 +22,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
     }
   }
 
-  def redirectToTable = Authenticated { implicit request =>
+  def redirectToTable = AuthActions.AuthActionTest { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competitionId").get.head
     val url = submission.get("focus").get.head match {
@@ -34,7 +31,7 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
       case "team" =>
         val teamId = submission.get("teamId").get.head
         submission.get("team2Id") match {
-          case Some(team2Id :: Nil) if !team2Id.startsWith("Choose") => s"/admin/football/tables/league/$competitionId/$teamId/$team2Id"
+          case Some(Seq(team2Id)) if !team2Id.startsWith("Choose") => s"/admin/football/tables/league/$competitionId/$teamId/$team2Id"
           case _ => s"/admin/football/tables/league/$competitionId/$teamId"
         }
       case _ =>
@@ -45,10 +42,10 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
     NoCache(SeeOther(url))
   }
 
-  def leagueTableFragment(competitionId: String, focus: String) = Authenticated.async { implicit request =>
+  def leagueTableFragment(competitionId: String, focus: String) =AuthActions.AuthActionTest.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
-        client.leagueTable(season.competitionId, DateMidnight.now()).map { tableEntries =>
+        client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
           val entries = focus match {
             case "top" => tableEntries.take(5)
             case "bottom" => tableEntries.reverse.take(5).reverse
@@ -62,10 +59,10 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
     }
   }
 
-  def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String) = Authenticated.async { implicit request =>
+  def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String) = AuthActions.AuthActionTest.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
-        client.leagueTable(season.competitionId, DateMidnight.now()).map { tableEntries =>
+        client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
           val aroundTeam1 = surroundingItems[LeagueTableEntry](1, tableEntries, _.team.id == team1Id)
           val aroundTeam2 = surroundingItems[LeagueTableEntry](1, tableEntries, _.team.id == team2Id)
           val entries = {
@@ -80,10 +77,10 @@ object TablesController extends Controller with ExecutionContexts with GetPaClie
     }
   }
 
-  def leagueTable(competitionId: String) = Authenticated.async { implicit request =>
+  def leagueTable(competitionId: String) = AuthActions.AuthActionTest.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
-        client.leagueTable(season.competitionId, DateMidnight.now()).map { tableEntries =>
+        client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
           Cors(NoCache(Ok(views.html.football.leagueTables.leagueTable(season, tableEntries))))
         }
       }

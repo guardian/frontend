@@ -37,7 +37,6 @@ RUNNING_PID
 *.sublime-*
 
 local.sbt
-build.sbt
 
 node_modules
 screenshots
@@ -67,3 +66,9 @@ ivy-sbt
 .springBeans
 .cache
 bower_components
+
+# Scala test framework #
+local.conf
+
+# Generared styleguide files #
+docs/styleguide/*.html

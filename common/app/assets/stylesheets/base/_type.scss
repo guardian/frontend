@@ -5,23 +5,35 @@
 /* Root base
    ========================================================================== */
 
-html {
-    font-family: $serif;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
+@include guss-typography-defaults;
 
-    // Set baseline font size to 10px
-    // This is used as a baseline for rem (root ems) values
-    font-size: 62.5%;
-
-    // For IE11 to do the math properly
-    // See http://bit.ly/1g4X0bX — thanks @7studio and @dawitti
-    font-size: calc(1em * .625);
-}
 body {
     color: $c-neutral1;
-    font-size: 1.6em; // Bump font-size back up to 16px
-    line-height: 1.5;
+}
+
+
+/**
+ * Turn on kerning and ligatures
+ * Causes issues in Chrome at the moment
+ */
+
+html,
+body {
+    -webkit-font-feature-settings: normal;
+    -moz-font-feature-settings: "kern" 1, "liga" 1;
+    font-feature-settings: "kern" 1, "liga" 1;
+}
+
+
+/**
+ * Turn off kerning and ligatures for monospace type
+ */
+
+pre,
+code {
+    -webkit-font-feature-settings: normal;
+    -moz-font-feature-settings: normal;
+    font-feature-settings: normal;
 }
 
 
@@ -64,5 +76,5 @@ p {
 h3 {
     font-weight: normal;
     margin-bottom: 7px;
-    @include fs-bodyCopy(3);
+    @include fs-bodyCopy(2);
 }

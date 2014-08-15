@@ -17,75 +17,69 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with M
 
       Given("I am on any guardian.co.uk page")
       HtmlUnit("/world/2012/aug/23/australia-mining-boom-end") { browser =>
-        import browser._
 
         Then("I should see a list of top sections")
 
-        val sections = find("#footer-nav li a")
+        val sections = browser.find("#footer-nav li a")
 
         sections.length should be > 0
 
         And("a button to activate that list")
-        findFirst(".control--sections").getAttribute("href") should include("australia-mining-boom-end#footer-nav")
+        browser.findFirst(".navigation__toggle").getAttribute("href") should include("australia-mining-boom-end#footer-nav")
       }
     }
 
     scenario("Link to US edition", ArticleComponents) {
       Given("I am on any guardian.co.uk page")
       HtmlUnit("/world/2012/aug/23/australia-mining-boom-end") { browser =>
-        import browser._
 
         Then("I should see a link to the US edition")
 
-        val editionLink = findFirst("[data-link-name='switch to US edition']")
+        val editionLink = browser.findFirst("[data-link-name='switch to US edition']")
 
-        editionLink.getAttribute("href") should be("http://localhost:9000/preference/edition/us")
+        editionLink.getAttribute("href") should be(s"http://localhost:${HtmlUnit.port}/preference/edition/us")
       }
     }
 
     scenario("Link to UK edition", ArticleComponents) {
       Given("I am on any guardiannews.com page")
       HtmlUnit.US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
-        import browser._
 
         Then("I should see a link to the UK edition")
 
-        val editionLink = findFirst("[data-link-name='switch to UK edition']")
+        val editionLink = browser.findFirst("[data-link-name='switch to UK edition']")
 
-        editionLink.getAttribute("href") should be("http://localhost:9000/preference/edition/uk")
+        editionLink.getAttribute("href") should be(s"http://localhost:${HtmlUnit.port}/preference/edition/uk")
       }
     }
 
     scenario("Links to user information", ArticleComponents) {
       Given("I am on any guardian.co.uk page")
       HtmlUnit.US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
-        import browser._
 
         Then("I should see a link to the help section")
 
-        val help = find(".l-footer li a", withText().contains("Help"))
+        val help = browser.find(".l-footer li a", withText().contains("Help"))
         help.length should be > 0
 
         And("a link to the contact us page")
-        val contact = find(".l-footer li a", withText().contains("Contact"))
+        val contact = browser.find(".l-footer li a", withText().contains("Contact"))
 
         contact.length should be > 0
-
       }
     }
 
     scenario("Links to legal information", ArticleComponents) {
       Given("I am on any guardian.co.uk page")
       HtmlUnit.US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
-        import browser._
 
         Then("I should see a link to the terms & Conditions in the page footer")
 
-        val terms = find(".l-footer li a", withText().contains("Terms"))
+        val terms = browser.find(".l-footer li a", withText().contains("Terms"))
         terms.length should be > 0
 
         And("a link to the privacy policy page")
-        val privacy = find(".l-footer li a", withText().contains("Privacy"))
+        val privacy = browser.find(".l-footer li a", withText().contains("Privacy"))
 
         privacy.length should be > 0
 

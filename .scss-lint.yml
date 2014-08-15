@@ -1,4 +1,5 @@
 # Default application configuration that all configurations inherit from.
+# Documentation: https://github.com/causes/scss-lint/blob/master/lib/scss_lint/linter/README.md
 exclude: 'common/app/assets/stylesheets/components/*'
 
 linters:
@@ -24,8 +25,8 @@ linters:
   DuplicateProperty:
     enabled: true
     exclude:
-        - common/app/assets/stylesheets/base/_type.scss # We need to declare font-size twice
-        - common/app/assets/stylesheets/_mixins.scss
+      - common/app/assets/stylesheets/base/_type.scss # We need to declare font-size twice
+      - common/app/assets/stylesheets/_mixins.scss
 
   MergeableSelector:
     enabled: false
@@ -85,8 +86,8 @@ linters:
     enabled: true
     max_depth: 4
     exclude: # Exclude if forced to break the inception rule to style third party components
-        - common/app/assets/stylesheets/module/_live-blog.scss
-        - common/app/assets/stylesheets/module/commercial/_travel.scss
+      - common/app/assets/stylesheets/module/content/_live-blog.scss
+      - common/app/assets/stylesheets/module/commercial/_travel.scss
 
   Shorthand:
     enabled: true
@@ -96,6 +97,8 @@ linters:
 
   SpaceAfterComma:
     enabled: true
+    exclude:
+      - common/app/assets/stylesheets/webfonts.scss
 
   SpaceAfterPropertyColon:
     enabled: true
@@ -120,6 +123,9 @@ linters:
 
   UnnecessaryMantissa:
     enabled: true
+
+  UnnecessaryParentReference:
+    enabled: false
 
   UrlFormat:
     enabled: false

@@ -1,11 +1,11 @@
 define([
     'lodash/objects/isArray',
-    'lodash/objects/pairs',
+    'common/utils/_',
     'common/utils/detect',
     'common/utils/mediator'
 ], function(
     isArray,
-    pairs,
+    _,
     detect,
     mediator
 ) {
@@ -15,18 +15,16 @@ define([
     var model = {
 
         // returns a map of querystrings
-        // eg ?foo=bar&fizz=buzz returns x.foo = bar and x.fizz = buzz
+        // eg ?foo=bar&fizz=buzz returns {foo: 'bar', fizz: 'buzz'}
         getUrlVars: function (options) {
-            var opts = options || {},
-                vars = {},
-                hash,
-                hashes = (opts.query || model.getCurrentQueryString()).split('&'),
-                hash_length = hashes.length;
-            for (var i = 0; i < hash_length; i++) {
-                hash = hashes[i].split('=');
-                vars[hash[0]] = hash[1];
-            }
-            return vars;
+            var opts = options || {};
+            return _((opts.query || model.getCurrentQueryString()).split('&'))
+                .compact()
+                .map(function(query) {
+                    return query.indexOf('=') > -1 ? query.split('=') : [query, true];
+                })
+                .zipObject()
+                .valueOf();
         },
 
         // returns "foo=bar&fizz=buzz" (eg. no ? symbol)
@@ -53,7 +51,9 @@ define([
 
         // take an object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
         constructQuery: function (query) {
-            return pairs(query).map(function(queryParts) {
+            return _(query)
+                .pairs()
+                .map(function(queryParts) {
                     var value = queryParts[1];
                     if (isArray(value)) {
                         value = value.join(',');

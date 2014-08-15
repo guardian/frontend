@@ -1,0 +1,36 @@
+@(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
+
+@defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
+    @if(collection.items.nonEmpty) {
+        <section
+            class="@RenderClasses(Map(
+                ("container", true),
+                (s"container--${style.containerType}", true),
+                ("container--first" -> (containerIndex == 0))))"
+            data-link-name="@FaciaComponentName(config, collection)"
+            data-id="@config.id"
+            data-type="@style.containerType"
+            data-component="@FaciaComponentName(config, collection)"
+            @config.sponsorshipKeyword.map { keyword =>
+                data-keywords="@keyword"
+            }>
+            <div class="facia-container__inner">
+                <div class="container__border tone-@style.tone tone-accent-border"></div>
+                <div class="container__header">
+                    @title.map { title =>
+                        <h2 class="container__title">
+                        @href.map { href =>
+                            <a data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                        }.getOrElse{
+                            @Html(title)
+                        }
+                        </h2>
+                    }
+                </div>
+                <div class="container__body container--rolled-up-hide">
+                    @fragments.collections.headline(collection.items, containerIndex)
+                </div>
+            </div>
+        </section>
+    }
+}
