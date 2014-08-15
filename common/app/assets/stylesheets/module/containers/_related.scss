@@ -1,14 +1,11 @@
 .related {
     .item__tonal-border {
         @include mq($to: tablet) {
-            border-top: 1px solid $c-neutral5 !important;
-        }
-    }
-    .item__link {
-        @include mq($to: tablet) {
+            @include box-sizing(border-box);
+            border-top-color: $c-neutral5;
             @include rem((
-                padding-top: 7px,
-                margin-top: -12px
+                margin-top: -10px,
+                height: 10px
             ));
         }
     }
@@ -32,6 +29,9 @@
         &.more-on-this-story--one-item {
             display: none;
         }
+    }
+    .item--has-image .item__image-container {
+        margin-top: 0;
     }
     // Force showing the images
     .item--has-image .item__image-container,
