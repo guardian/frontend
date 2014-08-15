@@ -40,23 +40,25 @@
 
                             @if(standardItems.nonEmpty){
                                 <div class="facia-slice-wrapper">
-                                    <div class="facia-slice picked-items">
-                                        @standardItems.take(1).zipWithIndex.map{ case(item, index) =>
-                                            <div class="pick-item pick-item--big">
-                                                <div class="pick-item__container u-faux-block-link tone-@item.visualTone">
-                                                    @fragments.items.standard(item, index, containerIndex, "div", headerToneBackground = true)
-                                                </div>
-                                            </div>
-                                        }
-                                        <ul class="u-unstyled picked-items__standard">
-                                            @standardItems.drop(1).zipWithIndex.map{ case (item, index) =>
-                                                <li class="pick-item pick-item--standard">
-                                                    <div class="pick-item__container u-faux-block-link tone-@item.visualTone">
-                                                        @fragments.items.standard(item, index, containerIndex, "div", headerToneBackground = true)
+                                    <div class="facia-slice">
+                                        <div class="pick-items">
+                                            @standardItems.take(1).zipWithIndex.map{ case(item, index) =>
+                                                <div class="pick-item pick-item--big tone-@item.visualTone tone-background">
+                                                    <div class="pick-item__container u-faux-block-link">
+                                                        @fragments.items.standard(item, index, containerIndex, "div")
                                                     </div>
-                                                </li>
+                                                </div>
                                             }
-                                        </ul>
+                                            <ul class="u-unstyled picked-items__standard">
+                                                @standardItems.drop(1).zipWithRowInfo.map{ case (item, row) =>
+                                                    <li class="pick-item pick-item--standard tone-@item.visualTone tone-background @if(row.isLast){pick-item--last}">
+                                                        <div class="pick-item__container u-faux-block-link">
+                                                            @fragments.items.standard(item, row.rowNum, containerIndex, "div")
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             }
