@@ -449,10 +449,12 @@ define([
                 if(detect.getBreakpoint() !== 'mobile') {
                     var releaseMessage = new Message('video');
                     if(releaseMessage.show(msg) !== false) {
+                        // the message is being shown, display the footer message only if it's dismissed
                         mediator.on('message:hidden:video', function() {
                             $('.js-footer-message').removeClass('is-hidden');
                         });
                     } else {
+                        // the message is not being shown (e.g. it's been dismissed previously) so show the footer message
                         $('.js-footer-message').removeClass('is-hidden');
                     }
                 }
