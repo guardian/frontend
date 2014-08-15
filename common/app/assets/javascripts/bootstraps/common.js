@@ -277,16 +277,16 @@ define([
 
                 var exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                     msg = '<p class="site-message__message" id="site-message__message">' +
-                            'You’re viewing a beta release of the Guardian’s responsive website.' +
-                            ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
-                      '</p>' +
-                      '<ul class="site-message__actions u-unstyled">' +
-                           '<li class="site-message__actions__item">' +
-                               '<i class="i i-back"></i>' +
-                                   '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                                       'data-link-name="opt-out">Opt-out and return to our current site </a>' +
-                           '</li>' +
-                      '</ul>'
+                        'You’re viewing a beta release of the Guardian’s responsive website.' +
+                        ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
+                    '</p>' +
+                    '<ul class="site-message__actions u-unstyled">' +
+                       '<li class="site-message__actions__item">' +
+                           '<i class="i i-back"></i>' +
+                               '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
+                                   'data-link-name="opt-out">Opt-out and return to our current site </a>' +
+                        '</li>' +
+                    '</ul>';
 
                 // add release message to the footer message
                 $('.js-footer-site-message-copy').html(msg);
@@ -298,7 +298,7 @@ define([
                     if(releaseMessage.show(msg) !== false) {
                         mediator.on('message:hidden:alpha', function() {
                             $('.js-footer-message').removeClass('is-hidden');
-                        })
+                        });
                     } else {
                         $('.js-footer-message').removeClass('is-hidden');
                     }
