@@ -2,12 +2,11 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.Matchers
-import org.scalatest.{BeforeAndAfterAll, FlatSpec}
+import org.scalatest.{Matchers, FlatSpec}
 import common.ExecutionContexts
 import controllers.FaciaController
 
-class FaciaControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll with ExecutionContexts {
+class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts {
 
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
