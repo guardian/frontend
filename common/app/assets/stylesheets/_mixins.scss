@@ -173,7 +173,7 @@
     ));
 }
 
-@mixin display-flex() {
+@mixin display-flex {
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;

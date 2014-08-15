@@ -2,7 +2,6 @@
     @include mq(tablet) {
         @if $browser-supports-flexbox {
             @include display-flex;
-
             direction: rtl;
         }
     }
@@ -117,7 +116,6 @@
         @if $browser-supports-flexbox {
             @include display-flex;
             @include flex-direction(column);
-
             border-right: 1px solid $c-neutral5;
         }
     }
