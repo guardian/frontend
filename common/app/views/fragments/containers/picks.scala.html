@@ -43,16 +43,16 @@
                                     <div class="facia-slice picked-items">
                                         @standardItems.take(1).zipWithIndex.map{ case(item, index) =>
                                             <div class="pick-item pick-item--big">
-                                                <div class="pick-item__container tone-@item.visualTone">
-                                                    @fragments.items.standard(item, index, containerIndex, "div", linkToneBackground = true)
+                                                <div class="pick-item__container u-faux-block-link tone-@item.visualTone">
+                                                    @fragments.items.standard(item, index, containerIndex, "div", headerToneBackground = true)
                                                 </div>
                                             </div>
                                         }
                                         <ul class="u-unstyled picked-items__standard">
                                             @standardItems.drop(1).zipWithIndex.map{ case (item, index) =>
                                                 <li class="pick-item pick-item--standard">
-                                                    <div class="pick-item__container tone-@item.visualTone">
-                                                        @fragments.items.standard(item, index, containerIndex, "div", linkToneBackground = true)
+                                                    <div class="pick-item__container u-faux-block-link tone-@item.visualTone">
+                                                        @fragments.items.standard(item, index, containerIndex, "div", headerToneBackground = true)
                                                     </div>
                                                 </li>
                                             }
