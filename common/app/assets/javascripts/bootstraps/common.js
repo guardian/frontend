@@ -267,44 +267,31 @@ define([
 
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
+
             var path = (document.location.pathname) ? document.location.pathname : '/';
+
+            var releaseMessage = new Message('alpha');
 
             // Do not show the release message on -sp- based paths.
             var spRegExp = new RegExp('.*-sp-.*');
 
-            if (config.switches.releaseMessage && !spRegExp.test(path) && config.page.contentType !== 'Video' && config.page.hasClassicVersion) {
-
+            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path) && config.page.contentType !== 'Video' && config.page.hasClassicVersion) {
+                // force the visitor in to the alpha release for subsequent visits
+                Cookies.add('GU_VIEW', 'responsive', 365);
 
                 var exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                     msg = '<p class="site-message__message" id="site-message__message">' +
-                        'You’re viewing a beta release of the Guardian’s responsive website.' +
-                        ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
-                    '</p>' +
-                    '<ul class="site-message__actions u-unstyled">' +
-                       '<li class="site-message__actions__item">' +
-                           '<i class="i i-back"></i>' +
-                               '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                                   'data-link-name="opt-out">Opt-out and return to our current site </a>' +
-                        '</li>' +
-                    '</ul>';
-
-                // add release message to the footer message
-                $('.js-footer-site-message-copy').html(msg);
-
-                if(detect.getBreakpoint() !== 'mobile') {
-                    // force the visitor in to the alpha release for subsequent visits
-                    Cookies.add('GU_VIEW', 'responsive', 365);
-                    var releaseMessage = new Message('alpha');
-                    if(releaseMessage.show(msg) !== false) {
-                        // the message is being shown, display the footer message only if it's dismissed
-                        mediator.on('message:hidden:alpha', function() {
-                            $('.js-footer-message').removeClass('is-hidden');
-                        });
-                    } else {
-                        // the message is not being shown (e.g. it's been dismissed previously) so show the footer message
-                        $('.js-footer-message').removeClass('is-hidden');
-                    }
-                }
+                            'You’re viewing a beta release of the Guardian’s responsive website.' +
+                            ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
+                        '</p>' +
+                        '<ul class="site-message__actions u-unstyled">' +
+                            '<li class="site-message__actions__item">' +
+                               '<i class="i i-back"></i>' +
+                                   '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
+                                       'data-link-name="opt-out">Opt-out and return to our current site </a>' +
+                            '</li>' +
+                        '</ul>';
+                releaseMessage.show(msg);
             }
         },
 

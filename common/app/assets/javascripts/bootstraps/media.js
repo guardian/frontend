@@ -16,8 +16,7 @@ define([
     'common/modules/component',
     'common/modules/analytics/beacon',
     'common/modules/ui/message',
-    'raven',
-    'common/utils/mediator'
+    'raven'
 ], function(
     $,
     ajax,
@@ -35,8 +34,7 @@ define([
     Component,
     beacon,
     Message,
-    raven,
-    mediator
+    raven
 ) {
 
     var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint()),
@@ -426,10 +424,7 @@ define([
             }
         },
         displayReleaseMessage: function() {
-            if (config.page.contentType.toLowerCase() === 'video') {
-
-
-                var msg = '<p class="site-message__message" id="site-message__message">' +
+            var msg = '<p class="site-message__message" id="site-message__message">' +
                     'We\'ve redesigned our video pages to make it easier to find and experience our best video content. We\'d love to hear what you think.' +
                     '</p>' +
                     '<ul class="site-message__actions u-unstyled">' +
@@ -441,24 +436,11 @@ define([
                     '<i class="i i-arrow-white-right"></i>' +
                     '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
                     '</li>' +
-                '</ul>';
+                    '</ul>';
 
-                // add video message to the footer message
-                $('.js-footer-site-message-copy').html(msg);
+            var releaseMessage = new Message('video');
 
-                if(detect.getBreakpoint() !== 'mobile') {
-                    var releaseMessage = new Message('video');
-                    if(releaseMessage.show(msg) !== false) {
-                        // the message is being shown, display the footer message only if it's dismissed
-                        mediator.on('message:hidden:video', function() {
-                            $('.js-footer-message').removeClass('is-hidden');
-                        });
-                    } else {
-                        // the message is not being shown (e.g. it's been dismissed previously) so show the footer message
-                        $('.js-footer-message').removeClass('is-hidden');
-                    }
-                }
-            }
+            releaseMessage.show(msg);
         }
     };
 
@@ -474,7 +456,9 @@ define([
             modules.initMostViewedMedia();
         }
 
-        modules.displayReleaseMessage();
+        if (config.page.contentType.toLowerCase() === 'video' && detect.getBreakpoint() !== 'mobile') {
+            modules.displayReleaseMessage();
+        }
     };
 
     return {

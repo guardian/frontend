@@ -3,15 +3,13 @@ define([
     'bean',
     'common/utils/storage',
     'common/modules/userPrefs',
-    'lodash/arrays/uniq',
-    'common/utils/mediator'
+    'lodash/arrays/uniq'
 ], function (
     $,
     bean,
     storage,
     userPrefs,
-    uniq,
-    mediator
+    uniq
 ) {
 
    /**
@@ -31,8 +29,16 @@ define([
     };
 
     Message.prototype.show = function(message) {
+        if(this.type === 'banner') {
+            $('.js-footer-site-message-copy').html(message);
+        }
+
         // don't let messages unknowingly overwrite each other
         if ((!$('.site-message').hasClass('is-hidden') && !this.important) || this.hasSeen()) {
+            // if we're not showing a banner message, display it in the footer
+            if(this.type === 'banner') {
+                $('.js-footer-message').removeClass('is-hidden');
+            }
             return false;
         }
         $('.js-site-message-copy').html(message);
@@ -60,7 +66,9 @@ define([
     Message.prototype.hide = function() {
         $('#header').removeClass('js-site-message');
         $('.site-message').addClass('is-hidden');
-        mediator.emit('message:hidden:' + this.id);
+        if(this.type === 'banner') {
+            $('.js-footer-message').removeClass('is-hidden');
+        }
     };
 
     Message.prototype.hasSeen = function() {

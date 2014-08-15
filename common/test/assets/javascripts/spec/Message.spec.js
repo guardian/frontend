@@ -1,13 +1,11 @@
 define([
     'common/modules/ui/message',
     'helpers/fixtures',
-    'common/utils/$',
-    'common/utils/mediator'
+    'common/utils/$'
 ], function(
     Message,
     fixtures,
-    $,
-    mediator
+    $
 ) {
 
     describe("Message", function() {
@@ -19,6 +17,9 @@ define([
                     '<div class="site-message is-hidden">' +
                         '<div class="js-site-message-copy">...</div>' +
                         '<button class="site-message__close"></button>' +
+                    '</div>' +
+                    '<div class="site-message--footer is-hidden js-footer-message"> ' +
+                        '<div class="site-message__copy js-footer-site-message-copy u-cf"></div> ' +
                     '</div>'
                 ]
         }
@@ -35,16 +36,31 @@ define([
         it("Show a message", function(){
             new Message('foo').show('hello world');
             expect($('.js-site-message-copy').text()).toContain('hello world');
+            expect($('.js-footer-site-message-copy').text()).toContain('hello world');
             expect($('.site-message').hasClass('is-hidden')).toBeFalsy();
-        });
+        })
+
+        it("Show any non-banner message", function(){
+            new Message('foo', {type: 'foo'}).show('hello world');
+            expect($('.js-site-message-copy').text()).toContain('hello world');
+            expect($('.js-footer-site-message-copy').text()).not.toContain('hello world');
+            expect($('.site-message').hasClass('is-hidden')).toBeFalsy();
+        })
 
         it("Hide a message", function(){
-            sinon.spy(mediator, "emit");
             var m = new Message('foo');
             m.show('hello world');
             m.hide();
             expect($('.site-message').hasClass('is-hidden')).toBeTruthy();
-            expect(mediator.emit).toHaveBeenCalledWith('message:hidden:foo');
+            expect($('.js-footer-message').hasClass('is-hidden')).toBeFalsy();
+        })
+
+        it("Hide any non-banner message", function(){
+            var m = new Message('foo', {type: 'foo'});
+            m.show('hello world');
+            m.hide();
+            expect($('.site-message').hasClass('is-hidden')).toBeTruthy();
+            expect($('.js-footer-message').hasClass('is-hidden')).toBeTruthy();
         })
 
         it("Remember the user has acknowledged the message", function(){
