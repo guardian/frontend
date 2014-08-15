@@ -297,10 +297,11 @@
 
     @include mq(leftCol) {
         @include rem((
-            height: $gs-row-height,
+            height: gs-height(1) + $gs-baseline,
             padding-top: $gs-baseline/6,
             padding-bottom: $gs-baseline
         ));
+        margin-bottom: 0;
         border-top: 1px dotted $c-neutral5;
     }
 
@@ -492,8 +493,9 @@
         margin-bottom: 0;
         padding-right: 0;
         border-top: 1px dotted $c-neutral5;
+        @include box-sizing(border-box);
         @include rem((
-            min-height: gs-height(1),
+            min-height: gs-height(1) + $gs-baseline,
             padding-top: $gs-baseline/6,
             padding-bottom: $gs-baseline
         ));
