@@ -6,7 +6,6 @@ import services.{Archive, DynamoDB, Googlebot404Count}
 import java.net.URLDecoder
 import model.{NoCache, Cached}
 import scala.concurrent.Future.successful
-import conf.Switches.CenturyRedirectionSwitch
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
  
@@ -117,27 +116,23 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   }
 
   def newCenturyUrl(path: String): Option[String] = {
-    if (CenturyRedirectionSwitch.isSwitchedOn) {
-        val centuryUrlEx = """www.theguardian.com\/century(\/)?$""".r
-        val centuryDecadeUrlEx = """www.theguardian.com(\/\d{4}-\d{4})(\/)?$""".r
-        val centuryStoryUrlEx = """www.theguardian.com\/(\d{4}-\d{4})\/Story\/([0|1]?,[\d]*,-?\d+,[\d]*)(.*)""".r
-        val ngCenturyFront = "www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century"
-        path match {
-          case centuryUrlEx(_) => {
-            Some(ngCenturyFront)
-          }
-          case centuryDecadeUrlEx(centuryDecade, _) => {
-            Some(ngCenturyFront)
-          }
-          case centuryStoryUrlEx(decade, storyId, ext) => {
-            Some(s"www.theguardian.com/century/$decade/Story/$storyId$ext")
-          }
-          case _ => {
-            None
-          }
-        }
-      } else {
+    val centuryUrlEx = """www.theguardian.com\/century(\/)?$""".r
+    val centuryDecadeUrlEx = """www.theguardian.com(\/\d{4}-\d{4})(\/)?$""".r
+    val centuryStoryUrlEx = """www.theguardian.com\/(\d{4}-\d{4})\/Story\/([0|1]?,[\d]*,-?\d+,[\d]*)(.*)""".r
+    val ngCenturyFront = "www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century"
+    path match {
+      case centuryUrlEx(_) => {
+        Some(ngCenturyFront)
+      }
+      case centuryDecadeUrlEx(centuryDecade, _) => {
+        Some(ngCenturyFront)
+      }
+      case centuryStoryUrlEx(decade, storyId, ext) => {
+        Some(s"www.theguardian.com/century/$decade/Story/$storyId$ext")
+      }
+      case _ => {
         None
+      }
     }
   }
 
