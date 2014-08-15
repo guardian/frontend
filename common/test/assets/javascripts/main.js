@@ -25,7 +25,7 @@ requirejs.config({
         lodash:       '/base/common/app/assets/javascripts/components/lodash-amd',
         imager:       '/base/common/app/assets/javascripts/components/imager.js/container',
         enhancer:     '/base/common/app/assets/javascripts/components/enhancer/enhancer',
-        stripe:       '/base/common/app/assets/javascripts/components/stripe/stripe.min',
+        stripe:       '/base/common/app/public/javascripts/vendor/stripe/stripe.min',
         Squire:       '/base/common/test/assets/javascripts/components/squire/src/Squire'
     },
     map: {
