@@ -8,8 +8,6 @@ import org.openqa.selenium.WebDriver
 
 class IdentityLoginTests extends IdentitySeleniumTestSuite {
 
-  System.setProperty("webdriver.chrome.driver", "/home/shakor/Downloads/chromedriver")
-
   feature("Login feature") {
     scenarioWeb("should be able to login using credentials") { implicit driver: WebDriver =>
       BaseSteps().goToStartPage(useBetaRedirect = false)

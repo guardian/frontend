@@ -7,8 +7,6 @@ import org.openqa.selenium.WebDriver
 
 class ChangeProfileTests extends IdentitySeleniumTestSuite {
 
-  System.setProperty("webdriver.chrome.driver", "/home/shakor/Downloads/chromedriver")
-
   feature("Change profile") {
     scenarioWeb("should be able to change email address") { implicit driver: WebDriver =>
       //given there is a user in the system
