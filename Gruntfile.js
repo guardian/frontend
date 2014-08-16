@@ -64,7 +64,7 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', function() {
-        grunt.task.run(['sass:compile', 'sass:compileStyleguide', 'px_to_rem']);
+        grunt.task.run(['compile:images', 'sass:compile', 'sass:compileStyleguide', 'px_to_rem']);
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
@@ -85,9 +85,7 @@ module.exports = function (grunt) {
     grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap']);
     grunt.registerTask('compile', [
-        'compile:images',
-        'compile:css',
-        'compile:js',
+        'concurrent:compile',
         'compile:fonts',
         'compile:flash',
         'asset_hash',

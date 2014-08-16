@@ -1,5 +1,4 @@
 module.exports = function(grunt, options) {
-    console.log(options)
     return {
         js: [
             options.staticTargetDir + 'javascripts',
