@@ -5,12 +5,13 @@ import model.{Trail, Content}
 import scala.concurrent.Future
 import conf.LiveContentApi
 import feed.MostReadAgent
+import conf.Switches.RelatedContentSwitch
 
 trait Related extends ConciergeRepository {
   def related(edition: Edition, path: String): Future[Seq[Trail]] = {
 
     val response = LiveContentApi.item(path, edition)
-      .showRelated(true)
+      .showRelated(RelatedContentSwitch.isSwitchedOn)
       .response
 
     val trails = response.map { response =>

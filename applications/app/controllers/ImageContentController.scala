@@ -6,7 +6,7 @@ import model._
 import play.api.mvc.{Result, RequestHeader, Controller, Action}
 import services.ImageQuery
 
-case class ImageContentPage(image: Content, storyPackage: List[Trail])
+case class ImageContentPage(image: Content, related: RelatedContent)
 
 object ImageContentController extends Controller with ImageQuery with Logging with ExecutionContexts {
 
