@@ -3,7 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.ItemResponse
 
 case class RelatedContent(
-  // A manually curated list of related content. You wanto to favour this over `related`
+  // A manually curated list of related content. You want to to favour this over `related`
   storyPackage: Seq[Trail],
 
   // Related content worked out by an algorithm
