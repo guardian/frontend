@@ -21,22 +21,6 @@ body {
     }
 }
 
-/**
- * Breakpoint definition for JS - see https://github.com/JoshBarr/on-media-query
- */
-html {
-    font-family: 'mobile';
-
-    @include mq(tablet) {
-        font-family: 'tablet';
-    }
-    @include mq(desktop) {
-        font-family: 'desktop';
-    }
-    @include mq(wide) {
-        font-family: 'wide';
-    }
-}
 body:after {
     content: 'mobile';
     @include u-h;

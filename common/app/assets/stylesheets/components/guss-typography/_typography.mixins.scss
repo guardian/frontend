@@ -4,6 +4,7 @@
 @mixin guss-typography-defaults {
     @at-root {
         html {
+            font-family: $f-serif-text;
             // Make type rendering look crisper
             -moz-osx-font-smoothing: grayscale;
             -webkit-font-smoothing: antialiased;
@@ -17,7 +18,6 @@
             font-size: calc(1em * .625);
         }
         body {
-            font-family: $f-serif-text;
             font-size: 1.6em; // Bump font-size back up to 16px
             line-height: 1.5;
         }
