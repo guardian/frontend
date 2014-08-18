@@ -51,7 +51,7 @@ object PageLoader extends TestLogging {
   }
 
   /**
-   * Observe that this does not take AJAX loaded elements into consideration
+   * Observe that this may not take AJAX loaded requests into consideration
    */
   def waitForPageToBeLoaded(implicit driver: WebDriver) {
     val pageReady = new ExpectedCondition[java.lang.Boolean]() {

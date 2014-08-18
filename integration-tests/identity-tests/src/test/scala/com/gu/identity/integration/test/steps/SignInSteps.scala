@@ -7,7 +7,7 @@ import com.gu.integration.test.steps.BaseSteps
 import com.gu.integration.test.util.CookieUtil._
 import com.gu.integration.test.util.PageLoader._
 import com.gu.integration.test.util.UserConfig._
-import org.openqa.selenium.WebDriver
+import org.openqa.selenium.{Cookie, WebDriver}
 import org.scalatest.Matchers
 
 case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matchers {
@@ -44,15 +44,9 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
   }
 
   def checkUserIsLoggedInSecurely() = {
-    //have to go to a https link because on some browsers you can only get secure cookies on https pages
-    val currentUrl = driver.getCurrentUrl
-    driverGet(get("secureEditProfileLink"))
+    val secureLoginCookie: Cookie = getSecureCookie(SecureLoginCookie, Some(get("secureEditProfileLink")))
 
-    val secureLoginCookie = getCookie(SecureLoginCookie)
     secureLoginCookie.getValue should not be empty
-
-    //go back to previous link
-    driverGet(currentUrl)
   }
 
   def signInUsingFaceBook(signInPage: SignInPage) = {
