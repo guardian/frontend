@@ -6,13 +6,16 @@
         ));
     }
     .facia-slice-wrapper--position-1 {
+        .item__header {
+            @include rem((
+                min-height: (4 * get-line-height($fs-headlines, 3)) - $gs-baseline,
+                padding-bottom: $gs-baseline
+            ));
+        }
         .item__title {
             @include fs-headline(3, true);
             @include box-sizing(border-box);
-            @include rem((
-                padding-bottom: $gs-baseline,
-                min-height: 86px
-            ));
+
         }
         .stars {
             @include rem((
