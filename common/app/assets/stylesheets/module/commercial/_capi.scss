@@ -4,11 +4,11 @@ Content API component
 
 .commercial--capi {
     .commercial__head {
+        height: auto;
         border-top: 0;
         @include rem((
             margin-top: $gs-baseline
         ));
-        height: auto;
         position: relative;
     }
     .commercial__body {
@@ -22,12 +22,12 @@ Content API component
         ));
     }
     .lineitem {
-        width: 50%;
-        float: left;
         border-top: 0;
         @include rem((
             padding: 0 $gs-gutter/2
         ));
+        width: 50%;
+        float: left;
         
         &:nth-child(n+3) {
             display: none;

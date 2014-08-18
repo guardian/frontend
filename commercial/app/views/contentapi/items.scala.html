@@ -12,27 +12,25 @@
                 <ul class="lineitems">
                     @for(item <- items) {
                         <li class="lineitem">
-                            <div>
-                                <a class="lineitem__link" href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle">
-                                    <img class="lineitem__image" src="@item.mainPicture.map(_.largestImage.map(_.url))" />
-                                    <div class="lineitem__offer">
-                                        <h4 class="lineitem__title">@item.webTitle</h4>
-                                        <div class="item__meta">
-                                            <time
-                                                class="item__timestamp js-item__timestamp"
-                                                datetime="@item.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
-                                                data-timestamp="@item.webPublicationDate.getMillis"
-                                                data-relativeformat="short">
-                                                <i class="i i-clock-light-grey"></i>
-                                                <span class="timestamp__text">
-                                                    <span class="u-h">Published: </span>
-                                                    @Format(item.webPublicationDate, "d MMM y")
-                                                </span>
-                                            </time>
-                                        </div>
+                            <a class="lineitem__link" href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle">
+                                <img class="lineitem__image" src="@item.mainPicture.map(_.largestImage.map(_.url))" />
+                                <div class="lineitem__offer">
+                                    <h4 class="lineitem__title">@item.webTitle</h4>
+                                    <div class="item__meta">
+                                        <time
+                                            class="item__timestamp js-item__timestamp"
+                                            datetime="@item.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
+                                            data-timestamp="@item.webPublicationDate.getMillis"
+                                            data-relativeformat="short">
+                                            <i class="i i-clock-light-grey"></i>
+                                            <span class="timestamp__text">
+                                                <span class="u-h">Published: </span>
+                                                @Format(item.webPublicationDate, "d MMM y")
+                                            </span>
+                                        </time>
                                     </div>
-                                </a>
-                            </div>
+                                </div>
+                            </a>
                         </li>
                     }
                 </ul>
