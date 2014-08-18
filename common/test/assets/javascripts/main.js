@@ -20,7 +20,7 @@ requirejs.config({
         bonzo:        '/base/common/app/assets/javascripts/components/bonzo/bonzo',
         domReady:     '/base/common/app/assets/javascripts/components/domready/ready',
         EventEmitter: '/base/common/app/assets/javascripts/components/eventEmitter/EventEmitter',
-        qwery:        '/base/common/app/assets/javascripts/components/qwery/qwery-mobile',
+        qwery:        '/base/common/app/assets/javascripts/components/qwery/qwery',
         reqwest:      '/base/common/app/assets/javascripts/components/reqwest/reqwest',
         lodash:       '/base/common/app/assets/javascripts/components/lodash-amd',
         imager:       '/base/common/app/assets/javascripts/components/imager.js/container',
