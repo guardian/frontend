@@ -72,4 +72,3 @@ local.conf
 
 # Generared styleguide files #
 docs/styleguide/*.html
-docs/styleguide/assets/css
