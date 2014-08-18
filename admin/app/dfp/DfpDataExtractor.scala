@@ -21,7 +21,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
   }
 
   val inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = {
-    lineItems.foldLeft(InlineMerchandisingTagSet(Nil, Nil, Nil)) { (soFar, lineItem) =>
+    lineItems.foldLeft(InlineMerchandisingTagSet()) { (soFar, lineItem) =>
       soFar.copy(keywords = soFar.keywords ++ lineItem.inlineMerchandisingTargetedKeywords,
         series = soFar.series ++ lineItem.inlineMerchandisingTargetedSeries,
         contributors = soFar.contributors ++ lineItem.inlineMerchandisingTargetedContributors)

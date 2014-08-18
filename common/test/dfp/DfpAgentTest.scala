@@ -49,7 +49,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
 
     override protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet =
-      InlineMerchandisingTagSet(keywords = Seq("ad-feature", "film"), series = Nil, contributors = Nil)
+      InlineMerchandisingTagSet(keywords = Set("ad-feature", "film"))
 
     override def isProd = true
   }
@@ -63,7 +63,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
 
-    override protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = InlineMerchandisingTagSet(Nil, Nil, Nil)
+    override protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = InlineMerchandisingTagSet()
   }
 
   def apiQuery(apiQuery: String) = {

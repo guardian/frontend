@@ -12,9 +12,9 @@ case class Sponsorship(tags: Seq[String], sponsor: Option[String]) {
 }
 
 
-case class InlineMerchandisingTagSet(keywords: Seq[String], series: Seq[String], contributors: Seq[String]) {
+case class InlineMerchandisingTagSet(keywords: Set[String] = Set.empty, series: Set[String] = Set.empty, contributors: Set[String] = Set.empty) {
 
-  private def hasTagId(tags: Seq[String], tagId: String): Boolean = tags contains tagId.split('/').last
+  private def hasTagId(tags: Set[String], tagId: String): Boolean = tags contains tagId.split('/').last
 
   def hasTag(tag: Tag): Boolean = tag.tagType match {
     case "keyword" => hasTagId(keywords, tag.id)
@@ -59,9 +59,9 @@ case class InlineMerchandisingTargetedTagsReport(updatedTimeStamp: String, targe
 object InlineMerchandisingTargetedTagsReportParser extends Logging {
 
   private implicit val inlineMerchandisingTagSetReads: Reads[InlineMerchandisingTagSet] = (
-    (JsPath \ "keywords").read[Seq[String]] and
-      (JsPath \ "series").read[Seq[String]] and
-      (JsPath \ "contributors").read[Seq[String]]
+    (JsPath \ "keywords").read[Set[String]] and
+      (JsPath \ "series").read[Set[String]] and
+      (JsPath \ "contributors").read[Set[String]]
     )(InlineMerchandisingTagSet.apply _)
 
   private implicit val inlineMerchandisingTargetedTagsReportReads: Reads[InlineMerchandisingTargetedTagsReport] = (

@@ -56,7 +56,7 @@ trait Store extends Logging with Dates {
 
   def getDfpInlineMerchandisingTargetedTagsReport(): InlineMerchandisingTargetedTagsReport = {
     S3.get(dfpInlineMerchandisingTagsDataKey) flatMap (InlineMerchandisingTargetedTagsReportParser(_))
-  } getOrElse InlineMerchandisingTargetedTagsReport(now, InlineMerchandisingTagSet(Nil, Nil, Nil))
+  } getOrElse InlineMerchandisingTargetedTagsReport(now, InlineMerchandisingTagSet())
 
   def getDfpLineItemsReport() = S3.get(dfpLineItemsKey)
 }

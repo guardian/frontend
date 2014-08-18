@@ -93,7 +93,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
   private lazy val sponsoredTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
   private lazy val advertisementFeatureTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
-  private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet(Nil, Nil, Nil))
+  private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
 
   protected def sponsorships: Seq[Sponsorship] = sponsoredTagsAgent get()
@@ -128,7 +128,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
         jsonString <- stringFromS3(dfpInlineMerchandisingTagsDataKey)
         report <- InlineMerchandisingTargetedTagsReportParser(jsonString)
       } yield report.targetedTags
-      maybeTagSet getOrElse InlineMerchandisingTagSet(Nil, Nil, Nil)
+      maybeTagSet getOrElse InlineMerchandisingTagSet()
     }
 
     def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) {
