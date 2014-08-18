@@ -10,6 +10,7 @@ define([
     'lodash/objects/forOwn',
     'lodash/objects/isArray',
     'lodash/objects/pairs',
+    'common/utils/_',
     'common/utils/$',
     'common/utils/cookies',
     'common/utils/detect',
@@ -33,6 +34,7 @@ define([
     forOwn,
     isArray,
     pairs,
+    _,
     $,
     cookies,
     detect,
@@ -332,7 +334,7 @@ define([
         },
         parseTargets = function(targets) {
             var targetArray = parseKeywords(targets);
-            return targetArray.map(function(target) {
+            return _.map(targetArray, function(target) {
                 return keywords.format(target);
             });
         };
