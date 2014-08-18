@@ -6,7 +6,7 @@
 
 @defining((trail.visualTone, containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
-        class="@GetClasses.forItem(trail, isFirstContainer, forceTone)"
+        class="@GetClasses.forItem(trail, isFirstContainer, forceTone = forceTone)"
         data-link-name="trail | @{index + 1}">
 
         <div class="item__container">
