@@ -349,7 +349,7 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if (el.getAttribute("data-show-end-slate") === "true" &&
+                                if (el.getAttribute('data-show-end-slate') === 'true' &&
                                     /desktop|wide/.test(detect.getBreakpoint())) {
                                     modules.initEndSlate(player, el.getAttribute('data-end-slate'));
                                 }
