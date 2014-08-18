@@ -147,7 +147,7 @@ $control-offset: 36 + $gs-gutter/2;
             .brand-bar__item--right & {
                 @include mq(tablet) {
                     @include rem((
-                        margin-left: 0 - $nav-popup-toggle-arrow-size * 3
+                        margin-left: 0 - $nav-popup-toggle-arrow-size * 2.5
                     ));
                 }
             }
