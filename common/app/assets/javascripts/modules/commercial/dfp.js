@@ -440,7 +440,7 @@ define([
             .filter(function ($adSlot) {
                 // bonzo needs these - use currentStyle (not as reliable?) if unavailable (e.g. IE8)
                 return (window.document.defaultView && window.document.defaultView.getComputedStyle)
-                    ? $adSlot.css('display') !== 'none' : $adSlot[0].currentStyle.display;
+                    ? $adSlot.css('display') !== 'none' : $adSlot[0].currentStyle.display !== 'none';
             })
             .valueOf();
 
