@@ -232,6 +232,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .site-message--android,
 .site-message--ios {
     position: relative;
+
     .site-message__media {
         display: none;
     }
