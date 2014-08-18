@@ -42,10 +42,10 @@ import play.api.Play.current
 
     response.onFailure {
       case e: TimeoutException =>
-        log.warn(s"Content API TimeoutException for $url: $e")
+        log.warn(s"Content API TimeoutException for $url in ${currentTimeMillis - start}: $e")
         httpTimeoutMetric.increment()
       case e: Exception =>
-        log.warn(s"Content API client exception for $url: $e")
+        log.warn(s"Content API client exception for $url in ${currentTimeMillis - start}: $e")
     }
 
     response
