@@ -59,6 +59,14 @@
             return fBound;
         };
     }
+
+    @* needed due to class manipulation in bonzo is not x-browser - https://github.com/ded/bonzo/pull/133 *@
+    if (!String.prototype.trim) {
+        String.prototype.trim = function () {
+            return this.replace(/^\s+|\s+$/g, '');
+        };
+    }
+
     @* JSON support needed for raven *@
     if ("object" !== typeof JSON) {
         var s = document.createElement('script'),
@@ -90,21 +98,28 @@
         // must always be set before the Omniture file is parsed
         window.s_account = guardian.config.page.omnitureAccount;
 
-        if (!isModern) { return false; }
-
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
-        var htmlClassNames = "";
+        var currentClassName = document.documentElement.className,
+            htmlClassNames = currentClassName ? currentClassName.split(' ') : [];
 
-        @* http://modernizr.com/download/#-svg *@
-        function hasSvgSupport() {
-            var ns = {'svg': 'http://www.w3.org/2000/svg'};
-            return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+        if (!isModern) {
+            htmlClassNames.push('is-not-modern');
+        } else {
+            @* http://modernizr.com/download/#-svg *@
+            function hasSvgSupport() {
+                var ns = {'svg': 'http://www.w3.org/2000/svg'};
+                return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
+            }
+            if (hasSvgSupport()) {
+                htmlClassNames.push('svg');
+            }
+            htmlClassNames.push('is-modern');
         }
-        if (hasSvgSupport()) {
-            htmlClassNames += " svg";
-        }
-        document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, '') + ' js-on ' + htmlClassNames;
+
+        document.documentElement.className = htmlClassNames.join(' ');
 
     })(guardian.isModernBrowser);
+
+    document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, 'js-on');
 
 </script>

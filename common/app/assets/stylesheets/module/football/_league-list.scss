@@ -14,7 +14,6 @@
 
 .football-leagues__label {
     display: none;
-
     @include rem((
         margin-right: $gs-gutter/3
     ));
@@ -46,12 +45,11 @@
 
 .football-leagues__item {
     @include box-sizing(border-box);
-    @include fs-data(4, true);
-    @include rem((
-        margin-bottom: $gs-baseline/2
-    ));
-
     display: inline-block;
     vertical-align: top;
     width: 50%;
+    @include rem((
+        margin-bottom: $gs-baseline/2
+    ));
+    @include fs-data(4, true);
 }

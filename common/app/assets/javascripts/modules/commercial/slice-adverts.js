@@ -1,9 +1,11 @@
 define([
     'bonzo',
     'qwery',
-    'lodash/objects/defaults',
+    'lodash/collections/contains',
     'lodash/functions/once',
+    'lodash/objects/defaults',
     'common/utils/$',
+    'common/utils/_',
     'common/utils/config',
     'common/utils/template',
     'common/modules/userPrefs',
@@ -11,9 +13,11 @@ define([
 ], function (
     bonzo,
     qwery,
-    defaults,
+    contains,
     once,
+    defaults,
     $,
+    _,
     globalConfig,
     template,
     userPrefs,
@@ -50,7 +54,7 @@ define([
                     containerId = bonzo(container).data('id'),
                     $adSlice = $(config.sliceSelector, container),
                     // don't display ad in the first container on the fronts
-                    isFrontFirst = ['uk', 'us', 'au'].indexOf(config.page.pageId) > -1 && index === 0;
+                    isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
                 if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
                     adSlices.push($adSlice.first());
                     index += (containerGap + 1);
@@ -59,13 +63,16 @@ define([
                 }
             }
 
-            adSlices.slice(0, adNames.length).forEach(function($adSlice, index) {
-                var adName = adNames[index],
-                    $adSlot = bonzo(dfp.createAdSlot(adName, 'container-inline'));
-                $adSlice
-                    .addClass('slice--has-ad')
-                    .append($adSlot);
-            });
+            _(adSlices)
+                .slice(0, adNames.length)
+                .forEach(function($adSlice, index) {
+                    var adName = adNames[index],
+                        $adSlot = bonzo(dfp.createAdSlot(adName, 'container-inline'));
+                    $adSlice
+                        .addClass('slice--has-ad')
+                        .append($adSlot);
+                })
+                .valueOf();
 
             return adSlices;
         };
