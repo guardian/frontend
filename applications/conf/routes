@@ -7,8 +7,6 @@ GET         /assets/*path                                                       
 
 GET        /_healthcheck                                                        conf.HealthCheck.healthcheck()
 
-GET        /humans.txt                                                          controllers.Assets.at(path="/public", file="humans.txt")
-
 GET        /index/keywords                                                      controllers.TagIndexController.keywords()
 GET        /index/keywords/*index                                               controllers.TagIndexController.keyword(index)
 GET        /index/contributors                                                  controllers.TagIndexController.contributors()
