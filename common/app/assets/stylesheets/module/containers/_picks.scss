@@ -19,6 +19,7 @@
         ));
         color: #ffffff;
 
+        &.item__title:before, // video icon. Increased specificity needed
         .i {
             display: none;
         }
