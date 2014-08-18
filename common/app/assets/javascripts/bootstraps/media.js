@@ -438,7 +438,7 @@ define([
                     '</li>' +
                     '</ul>';
 
-            var releaseMessage = new Message('video');
+            var releaseMessage = new Message('video', {pinOnHide: true});
 
             releaseMessage.show(msg);
         }

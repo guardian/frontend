@@ -257,7 +257,7 @@ define([
 
             var path = (document.location.pathname) ? document.location.pathname : '/';
 
-            var releaseMessage = new Message('alpha');
+            var releaseMessage = new Message('alpha', {pinOnHide: true});
 
             // Do not show the release message on -sp- based paths.
             var spRegExp = new RegExp('.*-sp-.*');
