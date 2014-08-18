@@ -1,10 +1,15 @@
 define([
-    'membership/paymentForm',
+    'membership/payment-form',
     'common/utils/ajax',
     'common/utils/$',
     'stripe',
-    'membership/stripeErrorMessages'
-], function (PaymentForm, ajax, $, stripe, stripeErrorMessages) {
+    'membership/stripe-error-messages'
+], function (
+    PaymentForm,
+    ajax, $,
+    stripe,
+    stripeErrorMessages
+) {
 
     ajax.init({page: {ajaxUrl: ''}});
 

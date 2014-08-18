@@ -1,14 +1,14 @@
 define([
-    'lodash/arrays/zipObject',
     'lodash/functions/once',
     'lodash/objects/pairs',
+    'common/utils/_',
     'common/utils/config',
     'common/utils/storage',
     'common/utils/url'
 ], function (
-    zipObject,
     once,
     pairs,
+    _,
     config,
     storage,
     urlUtils
@@ -38,15 +38,15 @@ define([
                 return require(['js!' + url + '!exports=asiPlacements'])
                     .then(function(asiPlacements) {
                         var segments = storage.local.get(storageKey) || {};
-                        segments[section] = zipObject(
-                            pairs(asiPlacements)
-                                .filter(function(placement) {
-                                    return placement[1]['default'];
-                                })
-                                .map(function(placement) {
-                                    return ['pq_' + placement[0], 'T'];
-                                })
-                        );
+                        segments[section] = _(pairs(asiPlacements))
+                            .filter(function(placement) {
+                                return placement[1]['default'];
+                            })
+                            .map(function(placement) {
+                                return ['pq_' + placement[0], 'T'];
+                            })
+                            .zipObject()
+                            .valueOf();
                         storage.local.set(storageKey, segments);
                     });
             }
