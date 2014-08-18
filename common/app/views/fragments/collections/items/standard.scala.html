@@ -5,8 +5,8 @@
 
 <li class="@GetClasses.forCollectionItem(trail, additionalClasses)">
     @trail match {
-        case g: Gallery => { @fragments.items.standardGallery(g, index, containerIndex, "div", forceTone = forceTone) }
-        case v: Video   => { @fragments.items.standardVideo(v, index, containerIndex, "div", forceTone = forceTone) }
-        case t          => { @fragments.items.standard(t, index, containerIndex, "div", forceTone = forceTone) }
+        case g: Gallery => { @fragments.items.standardGallery(g, index, containerIndex, "div", forceTone) }
+        case v: Video   => { @fragments.items.standardVideo(v, index, containerIndex, "div", forceTone) }
+        case t          => { @fragments.items.standard(t, index, containerIndex, "div", forceTone) }
     }
 </li>
