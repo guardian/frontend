@@ -46,7 +46,6 @@ import play.api.Play.current
         httpTimeoutMetric.increment()
       case e: Exception =>
         log.warn(s"Content API client exception for $url: $e")
-        httpTimeoutMetric.increment()
     }
 
     response
