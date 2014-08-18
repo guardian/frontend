@@ -47,7 +47,7 @@ object ElementLoader extends TestLogging {
     //with the subsequent findElements
     waitUntil(visibilityOfElementLocated(By.cssSelector("a")), 5)
 
-    displayedElements(searchContext.findElements(By.cssSelector("a")).asScala.toList)
+    displayedElements(searchContext.findElements(By.cssSelector("a")).asScala.toList, maxElements)
   }
 
   /**
