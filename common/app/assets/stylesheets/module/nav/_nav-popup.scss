@@ -19,11 +19,10 @@ $control-offset: 36 + $gs-gutter/2;
     margin: 0;
     padding: 0;
     list-style: none;
-    @include box-shadow(0 rem(2px 2px) 0 rgba(0, 0, 0, .15));
+    @include box-shadow(0 rem(0px 1px) 0 rgba(0, 0, 0, .5));
     @include rem((
-        min-width: gs-span(2) + $gs-gutter/2,
-        top: $nav-popup-top - 2,
-        padding: 0 $gs-gutter/2
+        min-width: gs-span(2) + $gs-gutter * 3,
+        top: $nav-popup-top - 2
     ));
 
     @include mq(mobileLandscape) {
@@ -50,6 +49,27 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
+.nav-popup__group {
+    margin: 0;
+    padding: 0;
+    @include rem((
+        padding: 0 $gs-gutter/2,
+        border-bottom: 1px solid guss-colour(neutral-4)
+    ));
+    &:last-of-type {
+        border-bottom: 0;
+    }
+}
+
+.nav-popup__group-header {
+    @include fs-data(2);
+    color: guss-colour(neutral-2);
+    @include rem((
+        margin: $gs-gutter/2
+    ));
+    margin-bottom: 0;
+}
+
 .has-nav-popup {
     cursor: pointer;
     position: relative;
@@ -57,6 +77,8 @@ $control-offset: 36 + $gs-gutter/2;
 
 .nav-popup__toggle {
     position: relative;
+    z-index: 11;
+
     // disclosure arrow
     @include mq(tablet) {
         &:after {
@@ -135,7 +157,8 @@ $control-offset: 36 + $gs-gutter/2;
 
 
 .nav-popup__item {
-    border-bottom: 1px solid guss-colour(neutral-5);
+    display: block;
+    border-bottom: 1px solid guss-colour(neutral-7);
 
     &:last-child {
         border-bottom: 0;
@@ -148,7 +171,7 @@ $control-offset: 36 + $gs-gutter/2;
     white-space: nowrap;
     color: guss-colour(neutral-1);
     @include rem((
-        line-height: 36
+        line-height: $gs-baseline * 3
     ));
 }
 
