@@ -5,10 +5,11 @@ import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
 import views.support.RenderOtherStatus
+import conf.Switches.RelatedContentSwitch
 
 case class GalleryPage(
   gallery: Gallery,
-  storyPackage: List[Trail],
+  related: RelatedContent,
   index: Int,
   trail: Boolean)
 
@@ -42,24 +43,23 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
     log.info(s"Fetching gallery: $path for edition $edition")
     LiveContentApi.item(path, edition)
       .showExpired(true)
+      .showRelated(RelatedContentSwitch.isSwitchedOn)
       .showFields("all")
       .response.map{response =>
         val gallery = response.content.filter { _.isGallery } map { Gallery(_) }
-        val storyPackage = response.storyPackage map { Content(_) }
-
-        val model = gallery map { g => GalleryPage(g, storyPackage.filterNot(_.id == g.id), index, isTrail) }
+        val model = gallery map { g => GalleryPage(g, RelatedContent(g, response), index, isTrail) }
         ModelOrResult(model, response)
     }.recover{convertApiExceptions}
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
-    val htmlResponse = () => views.html.gallery(model.gallery, model.storyPackage, model.index)
-    val jsonResponse = () => views.html.fragments.galleryBody(model.gallery, model.storyPackage, model.index)
+    val htmlResponse = () => views.html.gallery(model.gallery, model.related, model.index)
+    val jsonResponse = () => views.html.fragments.galleryBody(model.gallery, model.related, model.index)
     renderFormat(htmlResponse, jsonResponse, model.gallery, Switches.all)
   }
 
   private def renderLightboxGallery(model: GalleryPage)(implicit request: RequestHeader) = {
-    val response = () => views.html.fragments.lightboxGalleryBody(model.gallery, model.storyPackage, model.index)
+    val response = () => views.html.fragments.lightboxGalleryBody(model.gallery, model.index)
     renderFormat(response, response, model.gallery, Switches.all)
   }
 }
