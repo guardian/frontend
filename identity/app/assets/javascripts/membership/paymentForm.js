@@ -88,6 +88,9 @@ define([
                 crossOrigin: true,
                 withCredentials: true,
                 method: 'post',
+                headers: {
+                    'Csrf-Token': 'nocheck'
+                },
                 data: {
                     stripeToken: token
                 }
