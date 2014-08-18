@@ -34,7 +34,7 @@ define([
         })
 
         it("Show a message", function(){
-            new Message('foo', {type: 'foo'}).show('hello world');
+            new Message('foo').show('hello world');
             expect($('.js-site-message-copy').text()).toContain('hello world');
             expect($('.js-footer-site-message-copy').text()).not.toContain('hello world');
             expect($('.site-message').hasClass('is-hidden')).toBeFalsy();
@@ -48,7 +48,7 @@ define([
         })
 
         it("Hide a message", function(){
-            var m = new Message('foo', {type: 'foo'});
+            var m = new Message('foo');
             m.show('hello world');
             m.hide();
             expect($('.site-message').hasClass('is-hidden')).toBeTruthy();
