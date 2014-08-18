@@ -24,7 +24,8 @@
             'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")',
             'bootstraps/commercial' : '@Static("javascripts/bootstraps/commercial.js")',
             'bootstraps/video-player': '@Static("javascripts/bootstraps/video-player.js")',
-            'bootstraps/dev' : '@Static("javascripts/bootstraps/dev.js")'
+            'bootstraps/dev' : '@Static("javascripts/bootstraps/dev.js")',
+            'stripe': '@Static("javascripts/vendor/stripe/stripe.min.js")'
         }
     };
 
@@ -119,7 +120,7 @@
     require([
         'core',
         'domReady!'
-    ], function (core) {
+    ], function() {
 
         require(['raven', 'common/utils/config'], function(raven, config) {
 

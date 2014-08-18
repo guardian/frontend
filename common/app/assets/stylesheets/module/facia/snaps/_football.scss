@@ -31,7 +31,7 @@
 
     .table,
     .table__caption {
-        border-top: 0 none;
+        border-top: 0;
     }
 
     .table__caption--top {
@@ -150,7 +150,7 @@
         @include table--hide-none;
         .table,
         .table__caption {
-            border-top: 0 none;
+            border-top: 0;
         }
         .team__info {
             @include fs-headline(6, true)

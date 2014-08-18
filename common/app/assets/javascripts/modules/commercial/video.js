@@ -1,20 +1,22 @@
 define([
+    'bean',
+    'lodash/collections/map',
     'common/utils/$',
+    'common/utils/ajax',
     'common/utils/mediator',
     'common/utils/to-array',
-    'bean',
-    'common/utils/ajax',
     'common/utils/url',
     'common/modules/commercial/dfp'
 ], function(
+    bean,
+    map,
     $,
+    ajax,
     mediator,
     toArray,
-    bean,
-    ajax,
     urlUtils,
     dfp
-    ) {
+) {
 
     function Video(config) {
         this.config = config.config;
@@ -156,7 +158,7 @@ define([
 
             impressionList = (xml.querySelector('Impression URL')) ? xml.querySelectorAll('Impression URL') : xml.querySelectorAll('Impression');
 
-            this.vastData.impressionEvents = toArray(impressionList).map(function(el) {
+            this.vastData.impressionEvents = map(toArray(impressionList), function(el) {
                 return self.getNodeContent(el);
             });
 

@@ -1,4 +1,8 @@
-define(function () {
+define([
+    'lodash/collections/forEach'
+], function(
+    forEach
+) {
 
     function cleanUp(list) {
         for (var i = 0, j = list.length; i<j; ++i) {
@@ -19,7 +23,7 @@ define(function () {
             return;
         }
 
-        list.forEach(function(cookie) {
+        forEach(list, function(cookie) {
 
             if (getCookieValues(cookie).length > 1) {
                 // This remove is conservative; we know it is safe to remove the cookie
@@ -67,7 +71,7 @@ define(function () {
             nameEq = name + '=',
             cookies = document.cookie.split(';');
 
-        cookies.forEach(function(cookie) {
+        forEach(cookies, function(cookie) {
             while (cookie.charAt(0) === ' ') {
                 cookie = cookie.substring(1, cookie.length);
             }

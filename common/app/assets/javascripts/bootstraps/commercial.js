@@ -1,6 +1,7 @@
 define([
     'bonzo',
     'qwery',
+    'lodash/collections/forEach',
     'common/utils/config',
     'common/modules/userPrefs',
     'common/modules/commercial/tags/container',
@@ -14,6 +15,7 @@ define([
 ], function (
     bonzo,
     qwery,
+    forEach,
     config,
     userPrefs,
     tagsContainer,
@@ -29,10 +31,12 @@ define([
     function init() {
 
         // forces a commercial component on a page, for testing
-        [
-            ['commercial-component', 'merchandising'],
-            ['commercial-component-high', 'merchandising-high']
-        ].forEach(function(data) {
+        forEach(
+            [
+                ['commercial-component', 'merchandising'],
+                ['commercial-component-high', 'merchandising-high']
+            ],
+            function(data) {
                 var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
                     slot = qwery('[data-name="' + data[1] + '"]').shift();
                 if (commercialComponent && slot) {
@@ -45,7 +49,8 @@ define([
                     loader.postLoadEvents = postLoadEvents;
                     loader.init(commercialComponent[1], slot);
                 }
-            });
+            }
+        );
 
         if (!userPrefs.isOff('adverts') && !config.page.shouldHideAdverts && !config.page.isSSL) {
 

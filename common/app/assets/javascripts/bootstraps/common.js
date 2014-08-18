@@ -257,7 +257,7 @@ define([
 
             var path = (document.location.pathname) ? document.location.pathname : '/';
 
-            var releaseMessage = new Message('alpha');
+            var releaseMessage = new Message('alpha', {pinOnHide: true});
 
             // Do not show the release message on -sp- based paths.
             var spRegExp = new RegExp('.*-sp-.*');
@@ -269,13 +269,17 @@ define([
                 var exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                     msg = '<p class="site-message__message" id="site-message__message">' +
                             'You’re viewing a beta release of the Guardian’s responsive website.' +
-                            ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
+                            ' We’d love to hear what you think.' +
                         '</p>' +
                         '<ul class="site-message__actions u-unstyled">' +
                             '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                                       'data-link-name="opt-out">Opt-out and return to our current site </a>' +
+                                       'data-link-name="opt-out">Use current version</a>' +
+                            '</li>' +
+                            '<li class="site-message__actions__item">' +
+                            '<i class="i i-arrow-white-right"></i>' +
+                            '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
                             '</li>' +
                         '</ul>';
                 releaseMessage.show(msg);
