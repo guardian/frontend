@@ -21,11 +21,11 @@
                         </div>
                     </div>
 
-                    <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
-                        <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon item__title--inline-video">
+                    <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon item__title--inline-video">
+                        <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
                             <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>
-                        </h@if(isFirstContainer && index == 0){1}else{2}>
-                    </a>
+                        </a>
+                    </h@if(isFirstContainer && index == 0){1}else{2}>
                 }
 
                 case _ => {
@@ -44,15 +44,15 @@
                             </div>
                         }
                     </div>
-                    <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
-                        <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon">
+                    <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon">
+                        @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
+                        <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
                             <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>
-                        </h@if(isFirstContainer && index == 0){1}else{2}>
-                    </a>
+                        </a>
+                    </h@if(isFirstContainer && index == 0){1}else{2}>
                 }
             }
 
-            @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
 
             @trail.trailText.map { text =>
                 <div class="item__standfirst">@Html(text)</div>

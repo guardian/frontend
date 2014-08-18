@@ -104,14 +104,21 @@
             }
         }
     }
+    .item__tag {
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            color: mix(#ffffff, $c-featuresVariant, 70%);
+        }
+    }
     .item__link,
     .item__title,
     .item__standfirst {
         color: #ffffff;
     }
-    .item__standfirst {
-        color: rgba(#ffffff, .8);
-    }
+    .item__tag-separator,
+    .item__standfirst,
     .item__link:visited,
     .item__link:visited .item__title {
         color: mix(#ffffff, $c-featuresVariant, 80%);
