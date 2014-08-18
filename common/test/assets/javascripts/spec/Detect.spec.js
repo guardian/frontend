@@ -2,8 +2,8 @@ define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
 
     describe("Breakpoint", function() {
 
-        it("should default to 'mobile' breakpoint", function(){
-            expect(detect.getBreakpoint()).toBe('mobile');
+        it("should default to 'desktop' breakpoint", function(){
+            expect(detect.getBreakpoint()).toBe('desktop');
         });
 
         it("should return the correct breakpoint mode for the device width", function(){
@@ -122,9 +122,9 @@ define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
             expect(detect.getBreakpoint()).toBe(breakpointName);
         });
 
-        it('shoule return "mobile" if no css value', function() {
+        it('shoule return "desktop" if no css value', function() {
             style.remove();
-            expect(detect.getBreakpoint()).toBe('mobile');
+            expect(detect.getBreakpoint()).toBe('desktop');
         });
 
     });

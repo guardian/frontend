@@ -166,8 +166,9 @@ define([
 
     function getBreakpoint() {
         // default to desktop
-        var breakpoint = window.getComputedStyle
-            ? window.getComputedStyle(document.body, ':after').getPropertyValue('content') : 'desktop';
+        var breakpoint = (
+                window.getComputedStyle && window.getComputedStyle(document.body, ':after').getPropertyValue('content')
+            ) || 'desktop';
 
         // firefox wraps the value in quotes
         return breakpoint.replace(/"'/, '');
