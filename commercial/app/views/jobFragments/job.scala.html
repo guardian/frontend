@@ -1,7 +1,7 @@
 @(job: model.commercial.jobs.Job)(implicit request: RequestHeader)
 @defining("http://jobs.theguardian.com", "1_0", "2014-08-14") { case (jobsHost, version, date) =>
     <li class="lineitem lineitem__multi lineitem__jobs u-cf">
-    	<h4 class="commercial__title commercial--jobs">
+    	<h4 class="commercial__title">
             <a href="@AdLink{@jobsHost/}"
             data-link-name="merchandising-hybrid-jobs-v@{version}_@{date}-visit-site">
                 Guardian 

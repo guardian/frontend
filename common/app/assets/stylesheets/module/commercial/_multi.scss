@@ -18,7 +18,6 @@ Multi component (AKA Frankenponent)
         }
         .commercial__title {
             margin-bottom: 0;
-            padding: 0;
             float: none;
 
             &.i-soulmates-title-background {
@@ -33,7 +32,8 @@ Multi component (AKA Frankenponent)
         }
         .commercial__explainer {
             @include rem((
-                margin: $gs-baseline 0 0
+                margin: $gs-baseline 0 0,
+                padding-right: $gs-gutter/2
             ));
             color: $c-neutral1;
             @include fs-headline(2);
@@ -53,6 +53,14 @@ Multi component (AKA Frankenponent)
 
             &:nth-child(n+3) {
                 display: none;
+            }
+            
+            .commercial__title {
+                @include rem((
+                    padding-top: ($gs-baseline * 2),
+                    margin-bottom: $gs-baseline
+                ));
+                height: auto;
             }
         }
         .lineitem__image {
