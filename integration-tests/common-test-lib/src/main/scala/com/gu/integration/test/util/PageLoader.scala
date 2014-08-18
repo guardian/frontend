@@ -2,8 +2,8 @@ package com.gu.integration.test.util
 
 import com.gu.automation.support.{Config, TestLogging}
 import com.gu.integration.test.pages.common.ParentPage
+import org.openqa.selenium.support.ui.{ExpectedCondition, WebDriverWait}
 import org.openqa.selenium.{JavascriptExecutor, WebDriver}
-import org.openqa.selenium.support.ui.{WebDriverWait, ExpectedCondition}
 
 /**
  * This class is for loading and initializing pages and page objects. Example usage: <code></code>
@@ -29,6 +29,13 @@ object PageLoader extends TestLogging {
 
   def turnOfPopups(url: String): String = {
     url + "?test=true"
+  }
+
+  /**
+   * Pointless wrapper of driver.get because you are not "allowed" to use driver.get in Step classes
+   */
+  def driverGet(url: String)(implicit driver: WebDriver) = {
+    driver.get(url)
   }
 
   /**
