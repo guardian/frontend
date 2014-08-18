@@ -44,20 +44,6 @@
                         </li>
                     </ul>
                 </li>
-                <li class="global-navigation__section">
-                    <span class="global-navigation__title global-navigation__title--guardian-services">edition</span>
-                    <ul class="global-navigation__children">
-                        @Edition.others(request).map{ edition =>
-                            <li class="global-navigation__child">
-                                <a class="global-navigation__action" data-edition="@edition.id"
-                                    data-link-name="switch to @edition.id edition"
-                                    href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
-                                    <span class="u-h">switch to </span>@edition.id<span class="u-h"> edition</span>
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </li>
                 @if(metaData.hasClassicVersion) {
                     <li class="global-navigation__section">
                         <span class="global-navigation__title global-navigation__title--guardian-services">view website</span>

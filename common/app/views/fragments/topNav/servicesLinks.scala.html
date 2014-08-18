@@ -57,6 +57,28 @@
                         </li>
                     }
                 </ul>
+                <h3 class="nav-popup__group-header mobile-only">change edition:</h3>
+                <ul class="nav-popup__group mobile-only">
+                    <li class="nav-popup__item">
+                        @Edition.others(request).map{ edition =>
+                            <a class="brand-bar__item--action brand-bar__item--inline-action" data-edition="@edition.id"
+                                data-link-name="switch to @edition.id edition"
+                                href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+                                title="Switch to the @edition.id edition">
+                                <span class="u-h">switch to the </span>@edition.id<span class="u-h"> edition</span>
+                            </a>
+                        }
+                        @common.Region.others(request).map{ region =>
+                            <a class="brand-bar__item--action brand-bar__item--inline-action" data-edition="@region.id"
+                                data-link-name="switch to @region.id region"
+                                href="@LinkTo(s"/preference/edition/${region.id.toLowerCase}")"
+                                title="Switch to the @region.id edition">
+                                <span class="u-h">switch to the </span>@region.id<span class="u-h"> edition</span>
+                            </a>
+                        }
+                    </li>
+                </ul>
+
             </div>
         </div>
     }

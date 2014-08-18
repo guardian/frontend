@@ -165,15 +165,25 @@ $control-offset: 36 + $gs-gutter/2;
     };
 }
 
-.nav-popup .brand-bar__item--action,
-.nav-popup .brand-bar__item--action:hover {
-    display: block;
-    white-space: nowrap;
-    color: guss-colour(neutral-1);
-    @include rem((
-        line-height: $gs-baseline * 3
-    ));
+.nav-popup {
+    .brand-bar__item--action,
+    .brand-bar__item--action:hover {
+        display: block;
+        white-space: nowrap;
+        color: guss-colour(neutral-1);
+        @include rem((
+            line-height: $gs-baseline * 3
+        ));
+    }
+
+    .brand-bar__item--inline-action {
+        display: inline-block !important;
+        @include rem((
+            margin-right: $gs-gutter * .25
+        ));
+    }
 }
+
 
 /* Profile Menu
    ========================================================================== */
