@@ -1,16 +1,11 @@
 package com.gu.integration.test.util
 
-import scala.collection.JavaConverters.asScalaBufferConverter
-import org.openqa.selenium.By
-import org.openqa.selenium.JavascriptExecutor
-import org.openqa.selenium.SearchContext
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebDriverException
-import org.openqa.selenium.WebElement
-import org.openqa.selenium.support.ui.ExpectedCondition
-import org.openqa.selenium.support.ui.ExpectedConditions._
-import org.openqa.selenium.support.ui.WebDriverWait
 import com.gu.automation.support.TestLogging
+import org.openqa.selenium.support.ui.ExpectedConditions._
+import org.openqa.selenium.support.ui.{ExpectedCondition, WebDriverWait}
+import org.openqa.selenium.{By, JavascriptExecutor, SearchContext, WebDriver, WebDriverException, WebElement}
+
+import scala.collection.JavaConverters.asScalaBufferConverter
 
 object ElementLoader extends TestLogging {
 
@@ -51,10 +46,15 @@ object ElementLoader extends TestLogging {
     //this is needed because sometimes it takes a while for AJAX to load the links so a race condition may occur
     //with the subsequent findElements
     waitUntil(visibilityOfElementLocated(By.cssSelector("a")), 5)
-    
-    searchContext.findElements(By.cssSelector("a")).asScala
-      .toList
-      .view
+
+    displayedElements(searchContext.findElements(By.cssSelector("a")).asScala.toList)
+  }
+
+  /**
+   * Find maxElements of displayed and visible elements, including nested, from the provided SearchContext
+   */
+  def displayedElements(elements: List[WebElement], maxElements: Int = Int.MaxValue)(implicit driver: WebDriver): List[WebElement] = {
+    elements.view
       .filter(element => waitUntil(visibilityOf(element)) && element.isDisplayed())
       .take(maxElements)
       .toList
@@ -78,10 +78,10 @@ object ElementLoader extends TestLogging {
     //this is needed because sometimes it takes a while for AJAX to load the images so a race condition may occur
     //with the subsequent findElements
     waitUntil(visibilityOfElementLocated(By.cssSelector("img")), 5)
-    
+
     val imageElements = searchContext.findElements(By.cssSelector("img"))
     logger.info(s"Found ${imageElements.size()} image elements")
-    
+
     val preDisplayedImages = imageElements.asScala.toList.filter(element => waitUntil(visibilityOf(element)))
     preDisplayedImages.filter(element => isImageDisplayed(element))
   }
@@ -121,8 +121,8 @@ object ElementLoader extends TestLogging {
 
   /**
    * This method is needed because calling isDisplayed on a list of elements, which were asynchronously loaded,
-   *  was proven to be a bit flaky. So calling this method, before calling is displayed, will make sure the elements are loaded and
-   *  visible
+   * was proven to be a bit flaky. So calling this method, before calling is displayed, will make sure the elements are loaded and
+   * visible
    */
   def waitUntil[T](expectedCondition: ExpectedCondition[T], timeoutInSeconds: Int = 3)(implicit driver: WebDriver): Boolean = {
     try {
