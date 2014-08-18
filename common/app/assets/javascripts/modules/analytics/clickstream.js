@@ -1,12 +1,14 @@
 define([
-    'common/utils/mediator',
-    'common/utils/detect',
     'bean',
+    'lodash/collections/map',
+    'common/utils/detect',
+    'common/utils/mediator',
     'common/modules/experiments/ab'
 ], function (
-    mediator,
-    detect,
     bean,
+    map,
+    detect,
+    mediator,
     ab
 ) {
 
@@ -107,7 +109,7 @@ define([
                 // prefix ab tests to the click spec
                 var applicableTests = ab.getActiveTestsEventIsApplicableTo(clickSpec);
                 if (applicableTests !== undefined && applicableTests.length > 0) {
-                    clickSpec.tag = applicableTests.map(function (test) {
+                    clickSpec.tag = map(applicableTests, function (test) {
                         var variant = ab.getTestVariant(test);
                         return 'AB,' + test + ',' + variant + ',' + clickSpec.tag;
                     }).join(',');

@@ -9,11 +9,10 @@ import org.openqa.selenium.WebDriver
 class ArticleTests extends IntegrationSeleniumTestSuite {
 
   feature("Articles") {
-    scenarioWeb("checking most popular module and related content exist on standard article page", ReadyForProd) {
+    scenarioWeb("checking most popular module exist on standard article page", ReadyForProd) {
       implicit driver: WebDriver =>
         val articlePage = ArticleSteps().goToArticle("/world/2014/jul/13/voodoo-big-problem-haiti-cardinal-chibly-langlois")
         ArticleSteps().checkMostPopularDisplayedProperly(articlePage)
-        ArticleSteps().checkMostRelatedContentDisplayedProperly(articlePage)
     }
 
     scenarioWeb("checking that async content such as expand button and Popular in.. works properly on live blog page", ReadyForProd) {

@@ -12,7 +12,7 @@
   var fns = [], listener
     , doc = document
     , domContentLoaded = 'DOMContentLoaded'
-    , loaded = /^loaded|^i|^c/.test(doc.readyState)
+    , loaded = /^loaded|^c/.test(doc.readyState)
 
   if (!loaded)
   doc.addEventListener(domContentLoaded, listener = function () {

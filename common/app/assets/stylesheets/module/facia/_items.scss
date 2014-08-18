@@ -53,11 +53,10 @@
             padding-top: $gs-baseline/2,
             margin-bottom: $gs-baseline
         ));
-        line-height: 1;
     }
     @include mq(desktop) {
         @include rem((
-            padding-top: $gs-baseline*.75
+            padding-top: $gs-baseline/1.5
         ));
     }
 }
@@ -239,7 +238,7 @@
 .item__image-container {
     margin-top: 4px;
 
-    .js-off & {
+    .is-not-modern & {
         display: none;
     }
 }
@@ -256,7 +255,7 @@
     .item__image-container {
         display: block;
 
-        .js-off & {
+        .is-not-modern & {
             display: none !important;
         }
     }

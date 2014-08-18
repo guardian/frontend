@@ -31,7 +31,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         border-top: 0;
     }
 
-    .js-off & {
+    .is-not-modern & {
         .navigation--collapsed {
             height: auto;
         }
@@ -46,6 +46,19 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     }
     .control__info {
         display: inline-block;
+    }
+}
+
+.site-message--footer {
+    position: relative;
+    z-index: 1;
+    background-color: $c-primary-footer-background-side-bar;
+    @include rem((
+        border-bottom: 1px solid #ffffff
+    ));
+
+    .site-message__inner {
+        background-color: $c-brandBlue;
     }
 }
 

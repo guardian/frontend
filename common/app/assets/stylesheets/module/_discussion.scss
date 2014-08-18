@@ -1376,10 +1376,10 @@ $avatarSize: 44px;
         margin-top: ($gs-baseline/3)*8
     ));
 
-    .clamp__fade {
+    .clamp-fade {
         @include simple-gradient(transparent, $c-neutral7);
     }
-    .clamp__fade-content {
+    .clamp-fade__content {
         border-top: 1px solid $c-neutral3;
         background: $c-neutral7;
     }
