@@ -136,6 +136,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("headline", headline),
       ("web-publication-date", webPublicationDate),
       ("author", contributors.map(_.name).mkString(",")),
+      ("authorIds", contributors.map(_.id).mkString(",")),
       ("tones", tones.map(_.name).mkString(",")),
       ("blogs", blogs.map { _.name }.mkString(",")),
       ("blogIds", blogs.map { _.id.split("/").last }.mkString(",")),

@@ -2,21 +2,36 @@ package com.gu.identity.integration.test.steps
 
 import com.gu.automation.support.{Config, TestLogging}
 import com.gu.identity.integration.test.pages.{ContainerWithSigninModulePage, SignInPage}
+import com.gu.identity.integration.test.util.User
+import com.gu.integration.test.steps.BaseSteps
+import com.gu.integration.test.util.CookieUtil._
+import com.gu.integration.test.util.PageLoader._
 import com.gu.integration.test.util.UserConfig._
-import org.openqa.selenium.WebDriver
+import org.openqa.selenium.{Cookie, WebDriver}
 import org.scalatest.Matchers
 
 case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matchers {
+  private val LoginCookie: String = "GU_U"
+  private val SecureLoginCookie: String = "SC_GU_U"
+  private val SocialMediaCookieMI: String = "GU_MI"
+  private val SocialMediaCookieME: String = "GU_ME"
 
-  def openSignInPage(): SignInPage = {
+  def clickSignInLink(): SignInPage = {
     new ContainerWithSigninModulePage().signInModule().clickSignInLink()
   }
 
   def signIn(signInPage: SignInPage) = {
-    logger.step(s"I am signing in using credentials")
+    logger.step(s"Signing in using credentials")
     signInPage.enterEmail(Config().getLoginEmail())
     signInPage.enterPwd(Config().getLoginPassword())
     signInPage.signInButton.click()
+  }
+
+  def checkUserIsLoggedIn(user: User): ContainerWithSigninModulePage = {
+    logger.step(s"Signing in using api")
+    BaseSteps().goToStartPage(useBetaRedirect = false)
+    checkUserIsLoggedIn(user.userName)
+    new ContainerWithSigninModulePage()
   }
 
   def checkUserIsLoggedIn(expectedLoginName: String) = {
@@ -24,17 +39,18 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
     val loginName = new ContainerWithSigninModulePage().signInModule().signInName.getText
     loginName should be(expectedLoginName)
 
-    val loginCookie = driver.manage().getCookieNamed("GU_U")
+    val loginCookie = getCookie(LoginCookie)
     loginCookie.getValue should not be empty
   }
 
   def checkUserIsLoggedInSecurely() = {
-    val loginCookieSecure = driver.manage().getCookieNamed("SC_GU_U")
-    loginCookieSecure.getValue should not be empty
+    val secureLoginCookie: Cookie = getSecureCookie(SecureLoginCookie, Some(get("secureEditProfileLink")))
+
+    secureLoginCookie.getValue should not be empty
   }
 
   def signInUsingFaceBook(signInPage: SignInPage) = {
-    logger.step(s"I am signing in using FaceBook")
+    logger.step(s"Signing in using FaceBook")
     val faceBookSignInPage = signInPage.clickFaceBookSignInButton()
     faceBookSignInPage.enterEmail(get("faceBookEmail"))
     faceBookSignInPage.enterPwd(get("faceBookPwd"))
@@ -42,7 +58,7 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
   }
 
   def signInUsingGoogle(signInPage: SignInPage) = {
-    logger.step(s"I am signing in using FaceBook")
+    logger.step(s"Signing in using FaceBook")
     val googleSignInPage = signInPage.clickGoogleSignInButton()
     googleSignInPage.enterEmail(get("googleEmail"))
     googleSignInPage.enterPwd(get("googlePwd"))
@@ -51,10 +67,10 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
 
   def checkLoggedInThroughSocialMedia() = {
     logger.step(s"Checking that user is logged in through Social Media")
-    val loginCookieMI = driver.manage().getCookieNamed("GU_MI")
+    val loginCookieMI = getCookie(SocialMediaCookieMI)
     loginCookieMI.getValue should not be empty
 
-    val loginCookieME = driver.manage().getCookieNamed("GU_ME")
+    val loginCookieME = getCookie(SocialMediaCookieME)
     loginCookieME.getValue should not be empty
   }
 }

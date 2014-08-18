@@ -11,7 +11,7 @@
             margin: 0 0 $gs-baseline*2.5
         ));
         .svg & {
-            background-size: cover;            
+            background-size: cover;
         }
     }
     .commercial__explainer {
@@ -43,7 +43,7 @@
         .svg & {
             background-size: contain;
         }
-    }    
+    }
 }
 
 @mixin c-soulmates-branding {
@@ -92,9 +92,9 @@ $c-soulmates-high: $c-neutral1;
         text-align: center;
         line-height: 1;
     }
-    
+
     @include c-soulmates-branding-small;
-    
+
     @include mq(tablet) {
         .commercial__header {
             float: left;
@@ -379,7 +379,7 @@ $c-soulmates-high: $c-neutral1;
         .commercial__head {
             position: static;
             @include rem((
-                width: $left-column+$gs-gutter !important,
+                width: $left-column + $gs-gutter !important,
                 margin-top: 8px
             ));
             margin-right: 0;
@@ -396,9 +396,9 @@ $c-soulmates-high: $c-neutral1;
             @include rem((
                 padding-top: $gs-baseline*2.5
             ));
-            
+
             .svg & {
-                background-size: contain;                
+                background-size: contain;
             }
         }
         @include c-soulmates-branding;
@@ -430,9 +430,9 @@ $c-soulmates-high: $c-neutral1;
             @include rem((
                 padding-top: 40px
             ));
-            
+
             .svg & {
-                background-size: cover;                
+                background-size: cover;
             }
         }
         .commercial__explainer {

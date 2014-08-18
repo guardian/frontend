@@ -1,4 +1,4 @@
-@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li")(implicit request: RequestHeader, config: model.Config)
+@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None)(implicit request: RequestHeader, config: model.Config)
 
 @import common.LinkTo
 @import conf.Static
@@ -8,14 +8,14 @@
 
 @defining((trail.visualTone, containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
     <@element
-        class="@GetClasses.forItem(trail, isFirstContainer, true)"
+        class="@GetClasses.forItem(trail, isFirstContainer, true, forceTone)"
         data-link-name="trail | @{index + 1}">
 
         <div class="item__container">
             <div class="item__tonal-border tone-accent-border"></div>
             @trail match {
                 case videoItem: Video if videoItem.mainVideo.isDefined && trail.imageAdjust == "boost" => {
-                    <div class="item__media-wrapper item__media-wrapper--has-icon">
+                    <div class="item__media-wrapper item__media-wrapper--has-icon u-faux-block-link__promote">
                         <div class="item__video-container">
                             @video(videoItem.mainVideo.get, Video640, videoItem.webTitle, false, Some(videoItem.endSlatePath))
                         </div>
