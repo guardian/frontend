@@ -23,4 +23,5 @@ object GuardianContentTypes {
   val VIDEO = "Video"
   val AUDIO = "Audio"
   val LIVEBLOG = "LiveBlog"
+  val TAG_COMBINER = NETWORK_FRONT
 }
