@@ -29,6 +29,12 @@ $control-size: 36px;
         text-overflow: ellipsis;
         text-align: left;
     }
+
+    .brand-bar__item--right & {
+        @include mq(tablet) {
+            margin: 0;
+        }
+    }
 }
 
 
@@ -43,6 +49,12 @@ $control-size: 36px;
         height: 34px,
         width: 34px
     ));
+
+    .brand-bar__item--right & {
+        @include mq(tablet) {
+            display: none;
+        }
+    }
 }
 
 .control__icon {

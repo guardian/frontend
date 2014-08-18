@@ -10,7 +10,6 @@ $c-nav-popup-bg: #ffffff;
 // TODO:
 // use a proper icon size variabe when the icons are redrawn at mulptile sizes
 $control-offset: 36 + $gs-gutter/2;
-$bp-header-wrap: 544px;
 
 .nav-popup {
     @include box-sizing(border-box);
@@ -36,7 +35,7 @@ $bp-header-wrap: 544px;
     }
 
     .brand-bar__item--has-control & {
-        @include mq($bp-header-wrap) {
+        @include mq(tablet) {
             @include rem((
                 left: $control-offset
             ))
@@ -44,8 +43,10 @@ $bp-header-wrap: 544px;
     }
 
     .brand-bar__item--right & {
-        left: auto;
-        right: 0;
+        @include mq(tablet) {
+            left: auto;
+            right: 0;
+        }
     }
 }
 
@@ -106,7 +107,7 @@ $bp-header-wrap: 544px;
             ));
 
             .brand-bar__item--has-control & {
-                @include mq($bp-header-wrap) {
+                @include mq(tablet) {
                     @include rem((
                         margin-left: $control-offset * .5 - $nav-popup-toggle-arrow-size
                     ))
@@ -122,9 +123,11 @@ $bp-header-wrap: 544px;
             }
 
             .brand-bar__item--right & {
-                @include rem((
-                    margin-left: 0 - $nav-popup-toggle-arrow-size * 3
-                ));
+                @include mq(tablet) {
+                    @include rem((
+                        margin-left: 0 - $nav-popup-toggle-arrow-size * 3
+                    ));
+                }
             }
         }
     }

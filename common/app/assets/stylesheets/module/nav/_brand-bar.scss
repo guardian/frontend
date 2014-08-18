@@ -3,14 +3,14 @@
     line-height: 0;
     @include box-sizing(border-box);
     @include rem((
-        padding-left: $gs-gutter/2,
-        padding-right: $gs-gutter/2
+        padding-left: $gs-gutter * .25,
+        padding-right: $gs-gutter * .25
     ));
 
     @include mq(mobileLandscape) {
         @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
+            padding-left: $gs-gutter / 2,
+            padding-right: $gs-gutter / 2
         ));
     }
 }
@@ -27,7 +27,8 @@
         height: $headerHeight,
         padding-top: $gs-baseline /3,
         padding-bottom: $gs-baseline /3,
-        margin-right: $gs-baseline/2
+        margin-right: $gs-baseline * .25,
+        margin-left: $gs-baseline * .25
     ));
 
     @include mq(mobileLandscape) {
@@ -39,7 +40,8 @@
 
     @include mq(tablet) {
         @include rem((
-            margin-right: $gs-gutter
+            margin-right: $gs-gutter / 2,
+            margin-left: $gs-gutter / 2
         ));
     }
 }
@@ -59,17 +61,10 @@
 
 .brand-bar__item--right {
     @include box-sizing(border-box);
-    float: right;
+    float: left;
 
-    .brand-bar__item {
-        margin-right: 0;
-        @include rem((
-            margin-left: $gs-gutter
-        ));
-    }
-
-    .brand-bar__item:last-child {
-        padding-right: 0;
+    @include mq(tablet) {
+        float: right;
     }
 }
 
