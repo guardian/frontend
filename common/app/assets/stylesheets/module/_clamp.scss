@@ -1,20 +1,20 @@
-.clamp__fade {
-    @include simple-gradient(transparent, #ffffff);
+.clamp-fade {
+    position: relative;
     display: block;
+    width: 100%;
     height: 50px;
     margin-top: -50px;
-    position: relative;
-    width: 100%;
+    @include simple-gradient(transparent, #ffffff);
 }
 
-.clamp__fade-content {
-    @include fs-data(3);
+.clamp-fade__content {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    padding-top: 4px;
     border-top: 1px solid $c-neutral7;
     background: #ffffff;
-    bottom: 0;
-    padding-top: 4px;
-    position: absolute;
-    right: 0;
+    @include fs-data(3);
     text-align: center;
-    width: 100%;
 }

@@ -411,7 +411,7 @@
       }
       return this
     }
-  , catch: function (fn) {
+  , 'catch': function (fn) {
       return this.fail(fn)
     }
   }

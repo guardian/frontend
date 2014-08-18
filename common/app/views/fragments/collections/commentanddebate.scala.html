@@ -12,7 +12,7 @@
         <div class="facia-slice-wrapper facia-slice-wrapper--position-2">
             <ul class="u-unstyled l-row l-row--items-4 facia-slice">
                 @items.zipWithIndex.map{ case (trail, index) =>
-                    @fragments.collections.items.standard(trail, index + 3, containerIndex)
+                    @fragments.collections.items.standard(trail, index + 3, containerIndex, forceTone = Some(style.tone))
                 }
             </ul>
         </div>
