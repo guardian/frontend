@@ -34,7 +34,6 @@
           "bower_components/curl/dist/curl-with-js-and-domReady/curl.js": "curl-domReady.js"
         }
       ],
-      "qwery": "bower_components/qwery/mobile/qwery-mobile.js",
       "lodash-amd": "bower_components/lodash-amd/modern/**",
       "imager.js": [
         "bower_components/imager.js/src/imager.js",
