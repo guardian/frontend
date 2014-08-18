@@ -57,7 +57,7 @@ $bp-header-wrap: 544px;
 .nav-popup__toggle {
     position: relative;
     // disclosure arrow
-    @include mq($bp-header-wrap) {
+    @include mq(tablet) {
         &:after {
             content: '';
             display: inline-block;
@@ -78,7 +78,7 @@ $bp-header-wrap: 544px;
 
     &.is-active,
     .is-active > & {
-        @include mq($bp-header-wrap) {
+        @include mq(tablet) {
             &:after {
                 border-top: 0;
                 @include rem((

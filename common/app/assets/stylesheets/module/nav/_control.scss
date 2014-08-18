@@ -19,7 +19,7 @@ $control-size: 36px;
     vertical-align: top;
     white-space: nowrap;
 
-    @include mq(544px) {
+    @include mq(tablet) {
         display: block;
         overflow: hidden;
         float: left;
