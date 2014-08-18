@@ -1,6 +1,5 @@
 package com.gu.integration.test.util
 
-import com.gu.integration.test.util.PageLoader._
 import org.openqa.selenium.{Cookie, WebDriver}
 
 object CookieUtil {
@@ -16,7 +15,7 @@ object CookieUtil {
     val currentUrl = driver.getCurrentUrl
 
     if (secureUrl.isDefined) {
-      driverGet(secureUrl.get)
+      driver.get(secureUrl.get)
     }
 
     if (!driver.getCurrentUrl.startsWith("https")) {
@@ -27,7 +26,7 @@ object CookieUtil {
 
     //go back to previous link
     if (secureUrl.isDefined) {
-      driverGet(currentUrl)
+      driver.get(currentUrl)
     }
 
     secureLoginCookie

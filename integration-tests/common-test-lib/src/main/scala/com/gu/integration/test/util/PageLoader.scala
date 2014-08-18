@@ -32,13 +32,6 @@ object PageLoader extends TestLogging {
   }
 
   /**
-   * Pointless wrapper of driver.get because you are not "allowed" to use driver.get in Step classes
-   */
-  def driverGet(url: String)(implicit driver: WebDriver) = {
-    driver.get(url)
-  }
-
-  /**
    * This will append the request parameters needed to switch to beta site. However, for some reason, this does not work on
    * localhost so had to make a check
    */
