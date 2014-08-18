@@ -2,7 +2,8 @@
    Nav pop-up
    ========================================================================== */
 $nav-popup-toggle-arrow-size: 4px;
-$nav-popup-top: $headerHeight + $gs-baseline/2;
+$nav-popup-anchor-arrow-size: 6px;
+$nav-popup-top: $headerHeight + $gs-baseline/2 + 3;
 $c-nav-popup-bg: #ffffff;
 
 // Popups align with the label, so if there's a control icon, we need to account
@@ -121,17 +122,17 @@ $control-offset: 36 + $gs-gutter/2;
             position: absolute;
             left: 50%;
             @include rem((
-                margin-left: 0 - $nav-popup-toggle-arrow-size,
-                border-left: $nav-popup-toggle-arrow-size solid transparent,
-                border-right: $nav-popup-toggle-arrow-size solid transparent,
-                border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg,
-                top: $nav-popup-top - $nav-popup-toggle-arrow-size - $gs-baseline/2
+                margin-left: 0 - $nav-popup-anchor-arrow-size,
+                border-left: $nav-popup-anchor-arrow-size solid transparent,
+                border-right: $nav-popup-anchor-arrow-size solid transparent,
+                border-bottom: $nav-popup-anchor-arrow-size solid $c-nav-popup-bg,
+                top: $nav-popup-top - $nav-popup-anchor-arrow-size - $gs-baseline/2
             ));
 
             .brand-bar__item--has-control & {
                 @include mq(tablet) {
                     @include rem((
-                        margin-left: $control-offset * .5 - $nav-popup-toggle-arrow-size
+                        margin-left: $control-offset * .5 - $nav-popup-anchor-arrow-size
                     ))
                 };
             }
@@ -139,7 +140,7 @@ $control-offset: 36 + $gs-gutter/2;
             .brand-bar__item--search & {
                 @include mq($to: tablet) {
                     @include rem((
-                        margin-left: 0 - $nav-popup-toggle-arrow-size
+                        margin-left: 0 - $nav-popup-anchor-arrow-size
                     ))
                 };
             }
@@ -147,7 +148,7 @@ $control-offset: 36 + $gs-gutter/2;
             .brand-bar__item--right & {
                 @include mq(tablet) {
                     @include rem((
-                        margin-left: 0 - $nav-popup-toggle-arrow-size * 2.5
+                        margin-left: 0 - $nav-popup-anchor-arrow-size * 2
                     ));
                 }
             }
@@ -224,7 +225,7 @@ $control-offset: 36 + $gs-gutter/2;
 
     @include mq(mobileLandscape) {
         @include rem((
-            top: $headerHeight + $gs-baseline / 2
+            top: $nav-popup-top
         ));
     }
 
