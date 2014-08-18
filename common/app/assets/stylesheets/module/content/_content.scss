@@ -127,6 +127,10 @@
         margin-top: $gs-baseline,
         margin-bottom: $gs-baseline
     ));
+    
+    .content--media & a {
+        color: guss-colour(neutral-5);
+    }
 }
 
 .content__section {
@@ -148,7 +152,7 @@
 
     @include mq(tablet) {
         @include rem((
-            padding-bottom: ($gs-baseline/2) * 3
+            padding-bottom: $gs-baseline/2
         ));
     }
 
@@ -297,10 +301,11 @@
 
     @include mq(leftCol) {
         @include rem((
-            height: $gs-row-height,
+            height: gs-height(1) + $gs-baseline,
             padding-top: $gs-baseline/6,
             padding-bottom: $gs-baseline
         ));
+        margin-bottom: 0;
         border-top: 1px dotted $c-neutral5;
     }
 
@@ -492,8 +497,9 @@
         margin-bottom: 0;
         padding-right: 0;
         border-top: 1px dotted $c-neutral5;
+        @include box-sizing(border-box);
         @include rem((
-            min-height: gs-height(1),
+            min-height: gs-height(1) + $gs-baseline,
             padding-top: $gs-baseline/6,
             padding-bottom: $gs-baseline
         ));

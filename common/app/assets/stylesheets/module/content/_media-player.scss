@@ -623,6 +623,7 @@ $vjs-progress-inset-bottom: 4px;
     margin: auto;
     @include box-sizing(border-box);
     background-color: rgba(25, 25, 25, .8);
+    color: guss-colour(neutral-7);
     @include rem((
         top: $gs-baseline*4,
         padding-left: $gs-gutter/4,
@@ -655,7 +656,7 @@ $vjs-progress-inset-bottom: 4px;
             top: $gs-baseline*3.5
         ));
     }
-    @include mq(desktop) {
+    @include mq(wide) {
         @include rem((
             max-width: gs-span(8)
         ));

@@ -22,7 +22,7 @@ clickable areas within it as directly nesting a tags breaks things.
 
     <video class="u-faux-block-link__promote">I can interact with that video</video>
 
-    <a href="#" class="u-faux-block-link__overlay">headline</a>
+    <a href="#" class="u-faux-block-link__overlay" tabindex="-1">headline</a>
 </div>
 ```
 */

@@ -27,6 +27,6 @@ $guss-rem-baseline: 10px !default;
         }
 
         #{$property}: $value;
-        #{$property}: rem($value);
+//        #{$property}: rem($value);
     }
 }

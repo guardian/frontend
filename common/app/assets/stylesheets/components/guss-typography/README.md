@@ -19,7 +19,7 @@ $f-sans-serif-headline: 'Guardian Sans Web', 'Helvetica Neue', Helvetica, Arial,
 $fs-headers: (
     16 20, // 1
     18 24, // 2
-    20 28, // 3
+    20 24, // 3
     22 28, // 4
     24 28, // 5
 );
@@ -65,8 +65,8 @@ $fs-textSans: (
     14 22, // 4
 );
 
-@import "path/to/_helpers.scss";
-@import "path/to/_font-scale.scss";
+@import 'path/to/_helpers.scss';
+@import 'path/to/_font-scale.scss';
 ```
 
 ## Suggested default type settings
