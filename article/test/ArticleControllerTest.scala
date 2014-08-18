@@ -46,13 +46,6 @@ class ArticleControllerTest extends FlatSpec with Matchers {
     header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
   }
 
-  // this does not work like this on V2 (yet) ...
-  ignore should "redirect for short urls with Twitter suffix" in Fake {
-    val result = controllers.ArticleController.renderArticle("p/39heg/tw")(TestRequest("/p/39heg/tw"))
-    status(result) should be (302)
-    header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
-  }
-
   it should "return JSONP when callback is supplied" in Fake {
     val fakeRequest = FakeRequest(GET, s"${articleUrl}?callback=$callbackName")
 
@@ -85,24 +78,6 @@ class ArticleControllerTest extends FlatSpec with Matchers {
   }
 
   val expiredArticle = "football/2012/sep/14/zlatan-ibrahimovic-paris-st-germain-toulouse"
-
-  // content api has stopped doing this, am finding out what is happening
-  ignore should "display an expired message for expired content" in Fake {
-    val result = controllers.ArticleController.renderArticle(expiredArticle)(TestRequest(s"/$expiredArticle"))
-    status(result) should be(410)
-    contentAsString(result) should include("Sorry - the page you are looking for has been removed")
-  }
-
-  // content api has stopped doing this, am finding out what is happening
-  ignore should "return JSONP for expired content" in Fake {
-    val fakeRequest = FakeRequest(GET, s"/${expiredArticle}?callback=${callbackName}")
-      .withHeaders("host" -> "localhost:9000")
-
-    val result = controllers.ArticleController.renderArticle(expiredArticle)(fakeRequest)
-    status(result) should be(200)
-    contentType(result).get should be("application/javascript; charset=utf-8")
-    contentAsString(result) should startWith(s"""${callbackName}({\"config\"""") // the callback
-  }
 
   it should "return the latest blocks of a live blog" in Fake {
     val fakeRequest = FakeRequest(GET, "/environment/blog/2013/jun/26/barack-obama-climate-action-plan.json?lastUpdate=block-51cae3aee4b02dad15c7494e")

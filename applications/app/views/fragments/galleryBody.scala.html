@@ -1,4 +1,4 @@
-@(gallery: Gallery, storyPackage: List[Trail], index: Int)(implicit request: RequestHeader)
+@(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
 <div class="l-side-margins l-side-margins--layout-content">
     <article class="content content--media content--gallery tone-@gallery.visualTone"
         itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
@@ -61,6 +61,5 @@
             </div>
         </div>
     </article>
-
     @fragments.contentFooter(gallery, storyPackage, "media")
 </div>
