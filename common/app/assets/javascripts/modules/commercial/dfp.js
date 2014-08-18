@@ -292,7 +292,8 @@ define([
                 ab      : abParam(),
                 co      : parseContributors(page.authorIds),
                 bl      : parseKeywords(page.blogIds),
-                ms      : mediaSource
+                ms      : mediaSource,
+                tn      : parseTones(page.tones)
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         createAdSlot = function(name, types, keywords) {
@@ -332,7 +333,13 @@ define([
         parseContributors = function(contributors) {
             var contributorArray = parseKeywords(contributors);
             return contributorArray.map(function(contrib) {
-               return keywords.format(contrib);
+                return keywords.format(contrib);
+            });
+        },
+        parseTones = function (tones) {
+            var tonalArray = parseKeywords(tones);
+            return tonalArray.map(function (tone) {
+                return keywords.format(tone);
             });
         };
 
