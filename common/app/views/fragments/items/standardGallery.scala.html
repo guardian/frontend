@@ -4,7 +4,12 @@
 @import common.LinkTo
 @import views.support.{GetClasses, ImgSrc, Item300, Item620, RemoveOuterParaHtml}
 
-@defining((trail.visualTone, containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
+@defining((
+    trail.visualTone,
+    containerIndex == 0,
+    containerIndex == 0 && index < 4,
+    if (containerIndex == 0 && index == 0) { "1" } else { "2" })
+) { case (tone, isFirstContainer, inlineImages, headingLevel) =>
     <@element
         class="@GetClasses.forItem(trail, isFirstContainer, forceTone = forceTone)"
         data-link-name="trail | @{index + 1}">
@@ -36,13 +41,13 @@
                 </div>
             </a>
             <div class="item__header">
-                <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--has-icon-mobile">
+                <h@headingLevel class="item__title item__title--has-icon-mobile">
                     <span class="i i-gallery-yellow-small"></span>
                     @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
                     <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
                         <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>
                     </a>
-                </h@if(isFirstContainer && index == 0){1}else{2}>
+                </h@headingLevel>
             </div>
 
 

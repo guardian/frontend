@@ -6,7 +6,12 @@
 @import views.html.fragments.media.video
 @import views.support.{GetClasses, ImgSrc, Video640, Item620, Item300, RemoveOuterParaHtml}
 
-@defining((trail.visualTone, containerIndex == 0, containerIndex == 0 && index < 4)) { case (tone, isFirstContainer, inlineImages) =>
+@defining((
+    trail.visualTone,
+    containerIndex == 0,
+    containerIndex == 0 && index < 4,
+    if (containerIndex == 0 && index == 0) { "1" } else { "2" })
+) { case (tone, isFirstContainer, inlineImages, headingLevel) =>
     <@element
         class="@GetClasses.forItem(trail, isFirstContainer, true, forceTone)"
         data-link-name="trail | @{index + 1}">
@@ -21,18 +26,19 @@
                         </div>
                     </div>
 
-                    <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon item__title--inline-video">
+                    <h@headingLevel class="item__title item__title--video-icon item__title--inline-video">
+                        @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
                         <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
                             <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>
                         </a>
-                    </h@if(isFirstContainer && index == 0){1}else{2}>
+                    </h@headingLevel>
                 }
 
                 case _ => {
                     <div class="item__media-wrapper item__media-wrapper--has-icon">
                         @trail.trailPicture(5,3).map{ imageContainer =>
                             @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
-                                <div class="item__image-container u-responsive-ratio js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc">
+                                <div class="item__image-container u-responsive-ratio js-image-upgrade@if(inlineImages){ inlined-image}" data-src="@imgSrc">
                                 @if(inlineImages){
                                     @Item300.bestFor(imageContainer).map{ url => <img src="@url" class="responsive-img" alt="" /> }
                                 }
@@ -44,12 +50,12 @@
                             </div>
                         }
                     </div>
-                    <h@if(isFirstContainer && index == 0){1}else{2} class="item__title item__title--video-icon">
+                    <h@headingLevel class="item__title item__title--video-icon">
                         @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
                         <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
                             <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>
                         </a>
-                    </h@if(isFirstContainer && index == 0){1}else{2}>
+                    </h@headingLevel>
                 }
             }
 
