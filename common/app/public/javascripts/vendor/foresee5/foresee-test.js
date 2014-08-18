@@ -7,7 +7,8 @@ var $$FSR = {
    'sessionreplay': true,
    'auto' : true,
    'encode' : true,
-   'files': 'http://assets.guim.co.uk/javascripts/vendor/foresee4/',
+   'files': 'http://assets.guim.co.uk/javascripts/vendor/foresee5/',
+   'html_files': '/surveys/foresee/',
    // needs to be set when foresee-transport.swf is not located at 'files'
    //'swf_files': '__swf_files_'
    'id': 'fdIXz/UlLcgRJ+Qwv25S0Q==',
