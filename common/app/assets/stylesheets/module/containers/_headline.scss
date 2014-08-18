@@ -46,7 +46,7 @@
         &.story-list-columns--standard-#{$inverse-i}-col {
             @include mq(desktop) {
                 @include rem((
-                    width: gs-span(3*$inverse-i)+$gs-gutter
+                    width: gs-span(3*$inverse-i) + $gs-gutter
                 ));
 
                 .headline-item {

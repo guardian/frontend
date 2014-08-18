@@ -5,7 +5,7 @@ define([
     'membership/masker',
     'stripe',
     'common/utils/ajax',
-    'membership/stripeErrorMessages',
+    'membership/stripe-error-messages',
     'common/utils/config'
 ], function ($, bean, userUtil, masker, stripe, ajax, stripeErrorMessages, config) {
     'use strict';
@@ -84,10 +84,13 @@ define([
             var token = response.id;
 
             ajax({
-                url: config.page.membershipUrl + '/subscription/update',
+                url: config.page.membershipUrl + '/subscription/update-card',
                 crossOrigin: true,
                 withCredentials: true,
                 method: 'post',
+                headers: {
+                    'Csrf-Token': 'nocheck'
+                },
                 data: {
                     stripeToken: token
                 }
