@@ -430,15 +430,15 @@ define([
                     '<ul class="site-message__actions u-unstyled">' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="https://www.surveymonkey.com/s/guardianvideo" target="_blank">Leave feedback</a>' +
+                    '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
                     '</li>' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
+                    '<a href="https://www.surveymonkey.com/s/guardianvideo" target="_blank">Leave feedback</a>' +
                     '</li>' +
                     '</ul>';
 
-            var releaseMessage = new Message('video');
+            var releaseMessage = new Message('video', {pinOnHide: true});
 
             releaseMessage.show(msg);
         }
