@@ -4,7 +4,7 @@ case class User(userName: String, email: String, pwd: String)
 
 object User {
   def generateRandomUser(): User = {
-    User(generateRandomAlphaNumericString(6), generateRandomEmail, "123password123")
+    User(generateRandomAlphaNumericString(6), generateRandomEmail, generateRandomAlphaNumericString(12))
   }
 
   def generateRandomEmail: String = {
@@ -12,7 +12,6 @@ object User {
   }
   private def generateRandomAlphaNumericString(nrOfChars: Int): String = {
     val random = new scala.util.Random
-    val alphaNumericBucket = "abcdefghijklmnopqrstuvwxyz0123456789"
-    Stream.continually(random.nextInt(alphaNumericBucket.size)).map(alphaNumericBucket).take(nrOfChars).mkString
+    random.alphanumeric.take(nrOfChars).mkString
   }
 }
