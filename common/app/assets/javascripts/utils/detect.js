@@ -167,15 +167,14 @@ define([
     function getBreakpoint() {
         // default to mobile
         var breakpoint = (
-                document.body
-                && window.getComputedStyle
+                window.getComputedStyle
                     ? window.getComputedStyle(document.body, ':after').getPropertyValue('content')
-                    : document.body.currentStyle['content']
+                    : document.documentElement.currentStyle.fontFamily
             )
             || 'mobile';
 
-        // firefox seems to wrap the value in quotes
-        return breakpoint.replace(/^"([^"]*)"$/, '$1');
+        // firefox wraps the value in quotes, android adds trailing comma to font
+        return breakpoint.replace(/['",]/g, '');
     }
 
     // Page Visibility
