@@ -1,4 +1,4 @@
-@(displayName: Option[String], href: Option[String], description: Option[String], tagId: String)(implicit request: RequestHeader)
+@(displayName: Option[String], description: Option[String], tagId: String)(implicit request: RequestHeader)
 @import common.LinkTo
 
 <div class="container__meta">
@@ -6,9 +6,7 @@
         <h2 class="container__meta__label hide-on-mobile">@name</h2>
     }
     <dl class="container__meta__description">
-        <dt class="container__meta__title">
-            <a href="@LinkTo{/@href}" data-link-name="tag heading">@tagId</a>
-        </dt>
+        <dt class="container__meta__title">@tagId</dt>
         @description.map { desc =>
             <dd class="container__meta__item hide-on-mobile">@Html(desc)</dd>
         }
