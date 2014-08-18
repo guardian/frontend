@@ -277,8 +277,8 @@
                 padding-right: $gs-gutter/4
             ));
         }
-        .js-on &.fromage--has-discussion .fromage__standfirst,
-        .js-on &.fromage--has-discussion .fromage__byline {
+        .is-modern &.fromage--has-discussion .fromage__standfirst,
+        .is-modern &.fromage--has-discussion .fromage__byline {
             // If the story has a discussion, make room for the comment count
             // in the top right of the component
             @include rem((

@@ -80,7 +80,7 @@
         height: $gs-baseline*5
     ));
     border: 4px solid #ffffff;
-    border-bottom: 0 none;
+    border-bottom: 0;
     bottom: 0;
     position: absolute;
     width: 30%;
@@ -98,11 +98,11 @@
     text-align: right;
 }
 .goal-attempts__on-target--home {
-    border-right: 0 none;
+    border-right: 0;
     left: 20%;
 }
 .goal-attempts__on-target--away {
-    border-left: 0 none;
+    border-left: 0;
     right: 20%;
 }
 

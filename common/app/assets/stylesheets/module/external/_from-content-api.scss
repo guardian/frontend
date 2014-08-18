@@ -38,6 +38,11 @@
     > blockquote > ul,
     > ul {
         margin-top: .8em;
+    }
+    > li, // sometimes HTML is malformed on purpose by editors
+    > ol,
+    > blockquote > ul,
+    > ul {
         list-style: none;
     }
     > ol {
