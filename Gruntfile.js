@@ -100,7 +100,7 @@ module.exports = function (grunt) {
                     imager:       '../../../../common/app/assets/javascripts/components/imager.js/container',
                     fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
                     enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
-                    stripe:       '../../../../common/app/assets/javascripts/components/stripe/stripe.min',
+                    stripe:       '../../../../common/app/public/javascripts/vendor/stripe/stripe.min',
                     raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven',
                     fastclick:    '../../../../common/app/assets/javascripts/components/fastclick/fastclick',
                     omniture:     '../../../../common/app/public/javascripts/vendor/omniture'
@@ -157,7 +157,8 @@ module.exports = function (grunt) {
                     out: staticTargetDir + 'javascripts/bootstraps/membership.js',
                     exclude: [
                         '../../../../common/app/assets/javascripts/core',
-                        '../../../../common/app/assets/javascripts/bootstraps/app'
+                        '../../../../common/app/assets/javascripts/bootstraps/app',
+                        '../../../../common/app/public/javascripts/vendor/stripe/stripe.min'
                     ]
                 }
             },
@@ -609,7 +610,8 @@ module.exports = function (grunt) {
                         cwd: 'common/app/public/javascripts/vendor',
                         src: [
                             'formstack-interactive/0.1/boot.js',
-                            'vast-client.js'
+                            'vast-client.js',
+                            'stripe/stripe.min.js'
                         ],
                         dest: staticTargetDir + 'javascripts/vendor'
                     },
@@ -729,7 +731,8 @@ module.exports = function (grunt) {
                     src: [
                         '{components,vendor}/**/*.js',
                         '!components/curl/**/*.js',
-                        '!components/zxcvbn/**/*.js'
+                        '!components/zxcvbn/**/*.js',
+                        '!vendor/stripe/*.js'
                     ],
                     dest: staticTargetDir + 'javascripts'
                 }]
