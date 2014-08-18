@@ -1,12 +1,21 @@
 /*
 * If user is a member, display a membership tab on edit profile page
 */
-define(['common/utils/$',
-'bean',
-'common/utils/ajax',
-'common/utils/config',
-'common/modules/component',
-'membership/paymentForm'], function ($, bean, ajax, config, Component, PaymentForm) {
+define([
+    'common/utils/$',
+    'bean',
+    'common/utils/ajax',
+    'common/utils/config',
+    'common/modules/component',
+    'membership/payment-form'
+], function (
+    $,
+    bean,
+    ajax,
+    config,
+    Component,
+    PaymentForm
+) {
 
     function Membership (context, options) {
 

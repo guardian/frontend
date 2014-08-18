@@ -5,7 +5,7 @@ define([
     'membership/masker',
     'stripe',
     'common/utils/ajax',
-    'membership/stripeErrorMessages',
+    'membership/stripe-error-messages',
     'common/utils/config'
 ], function ($, bean, userUtil, masker, stripe, ajax, stripeErrorMessages, config) {
     'use strict';
