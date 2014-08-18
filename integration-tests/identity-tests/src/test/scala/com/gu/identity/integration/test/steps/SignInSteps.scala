@@ -4,6 +4,7 @@ import com.gu.automation.support.{Config, TestLogging}
 import com.gu.identity.integration.test.pages.{ContainerWithSigninModulePage, SignInPage}
 import com.gu.identity.integration.test.util.User
 import com.gu.integration.test.steps.BaseSteps
+import com.gu.integration.test.util.CookieUtil._
 import com.gu.integration.test.util.UserConfig._
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
@@ -37,7 +38,7 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
     val loginName = new ContainerWithSigninModulePage().signInModule().signInName.getText
     loginName should be(expectedLoginName)
 
-    val loginCookie = driver.manage().getCookieNamed(LoginCookie)
+    val loginCookie = getCookie(LoginCookie)
     loginCookie.getValue should not be empty
   }
 
@@ -46,7 +47,7 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
     val currentUrl = driver.getCurrentUrl
     driver.get(get("secureEditProfileLink"))
 
-    val secureLoginCookie = driver.manage().getCookieNamed(SecureLoginCookie)
+    val secureLoginCookie = getCookie(SecureLoginCookie)
     secureLoginCookie.getValue should not be empty
 
     //go back to previous link
@@ -71,10 +72,10 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
 
   def checkLoggedInThroughSocialMedia() = {
     logger.step(s"Checking that user is logged in through Social Media")
-    val loginCookieMI = driver.manage().getCookieNamed(SocialMediaCookieMI)
+    val loginCookieMI = getCookie(SocialMediaCookieMI)
     loginCookieMI.getValue should not be empty
 
-    val loginCookieME = driver.manage().getCookieNamed(SocialMediaCookieME)
+    val loginCookieME = getCookie(SocialMediaCookieME)
     loginCookieME.getValue should not be empty
   }
 }
