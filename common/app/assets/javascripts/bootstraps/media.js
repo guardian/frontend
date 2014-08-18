@@ -55,7 +55,7 @@ define([
     }
 
     function shouldAutoPlay(player) {
-        return player.el().getAttribute("data-auto-play") == "true" && isDesktop;
+        return player.el().getAttribute('data-auto-play') === 'true' && isDesktop;
     }
 
     function constructEventName(eventName, player) {
