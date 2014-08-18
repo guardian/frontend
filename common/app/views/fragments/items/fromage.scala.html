@@ -39,9 +39,7 @@
                     }
                 }
             }
-            <a @LinkTo(trail).map{url=>href="@url"} class="fromage__link" data-link-name="article">
-                @fragments.items.elements.title(trail, index, 0)
-            </a>
+            @fragments.items.elements.title(trail, index, 0)
 
             @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
 

@@ -97,6 +97,28 @@
             padding-top: 0;
         }
     }
+    .item__link {
+        color: $c-neutral1;
+        display: block;
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+
+            .item__title {
+                text-decoration: underline;
+            }
+        }
+        &:active {
+            .item__title {
+                text-decoration: none;
+            }
+        }
+        &:visited,
+        &:visited .item__title {
+            color: $c-neutral2;
+        }
+    }
 }
 .saucisson,
 .saucisson__container {
@@ -120,32 +142,5 @@
         @include rem((
             padding-left: gs-span(8) + $gs-gutter
         ));
-    }
-}
-
-
-/* Main elements
-   ========================================================================== */
-
-.saucisson__link {
-    color: $c-neutral1;
-    display: block;
-
-    &:hover,
-    &:focus {
-        text-decoration: none;
-
-        .item__title {
-            text-decoration: underline;
-        }
-    }
-    &:active {
-        .item__title {
-            text-decoration: none;
-        }
-    }
-    &:visited,
-    &:visited .item__title {
-        color: $c-neutral2;
     }
 }

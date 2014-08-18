@@ -196,7 +196,6 @@
     border-top: $item-top-border-height solid $c-newsAccent;
 }
 .item__link {
-    display: block;
     color: $c-neutral1;
 
     &:visited {
@@ -284,8 +283,6 @@
     .linkslist__action:visited,
     .item__link:visited,
     .item__link:visited .item__title,
-    .fromage__link:visited,
-    .fromage__link:visited .item__title,
     .item__standfirst,
     .fromage__standfirst {
         color: $c-neutral2-contrasted;
@@ -370,6 +367,20 @@
         margin-bottom: $gs-baseline/3
     ));
 }
+.item__tag-separator {
+    display: none;
+    position: relative;
+    bottom: -.03em; // Slightly better alignment in Headline 3
+    height: .8em;
+    margin-left: .1em;
+    margin-right: .1em;
+    border-left: 1px solid currentColor;
+    color: $c-neutral3;
+
+    .item__title & {
+        display: inline-block;
+    }
+}
 .item__standfirst,
 .item__meta {
     color: $c-neutral2;
@@ -385,9 +396,6 @@
     p {
         margin-bottom: 0; // Some trail texts are wrapped in a paragraph
     }
-}
-.item__tag {
-    @include fs-headline(2);
 }
 .item__meta {
     position: absolute;

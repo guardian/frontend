@@ -16,13 +16,9 @@
             <div class="item__tonal-border tone-accent-border"></div>
             @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
             <div class="item__header">
-                <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article">
-                    @fragments.items.elements.title(trail, index, containerIndex)
-                </a>
+                @fragments.items.elements.title(trail, index, containerIndex, showTag = true)
                 @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
             </div>
-
-            @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
 
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
