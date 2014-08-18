@@ -10,23 +10,33 @@ Multi component (AKA Frankenponent)
             @include rem((
                 margin-top: $gs-baseline
             ));
-            height: auto;
-            position: relative;
             padding: 0;
+            width: auto;
+            height: auto;
+            float: none;
+            position: relative;
         }
         .commercial__title {
             margin-bottom: 0;
             padding: 0;
+            float: none;
 
             &.i-soulmates-title-background {
-                background-size: cover;
                 height: auto;
                 @include rem((
                     width: gs-span(2) - $gs-gutter,
                     padding: ($gs-baseline * 2) 0 0 ($gs-gutter * 1.25),
                     margin-bottom: $gs-baseline
                 ));
+                background-size: cover;
             }
+        }
+        .commercial__explainer {
+            @include rem((
+                margin: $gs-baseline 0 0
+            ));
+            color: $c-neutral1;
+            @include fs-headline(2);
         }
         .commercial__body {
             @include rem((
@@ -37,9 +47,9 @@ Multi component (AKA Frankenponent)
             }
         }
         .lineitem {
+            padding: 0 0 $gs-baseline;
             float: none;
             clear: both;
-            padding: 0 0 $gs-baseline;
 
             &:nth-child(n+3) {
                 display: none;
@@ -65,18 +75,18 @@ Multi component (AKA Frankenponent)
                 ));
             }
             .lineitem {
-                float: left;
-                clear: none;
                 width: percentage(1/3);
                 @include rem((
                     padding: 0 $gs-gutter/2
                 ));
+                float: left;
+                clear: none;
 
                 &:nth-child(n) {
-                    display: block;
                     @include rem((
                         padding-left: $gs-gutter/2
                     ));
+                    display: block;
                 }
             }
         }
@@ -86,6 +96,32 @@ Multi component (AKA Frankenponent)
                     padding: $gs-baseline 0
                 ));
             }
+            .commercial__head {
+                float: left;
+            }
         }
     }
+}
+
+/* Fronts */
+
+.facia-container--layout-front .commercial.commercial--multi {
+    @include mq(faciaLeftCol) {
+        .commercial__head {
+            @include rem((
+                width: gs-span(2) + $gs-gutter
+            ));
+            float: left;
+        }
+    }
+}
+
+/* Articles */
+
+.facia-container--layout-content .commercial.commercial--multi {
+    @include mq(leftCol) {
+        .commercial__head {
+            float: left;
+        }
+    }    
 }
