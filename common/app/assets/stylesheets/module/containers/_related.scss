@@ -56,8 +56,6 @@
     // Temporarily hide story package from IE8
     // TODO find a fix!
     @if $old-ie {
-        &.more-on-this-story {
-            display: none;
-        }
+        display: none;
     }
 }

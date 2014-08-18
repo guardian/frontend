@@ -84,10 +84,13 @@ define([
             var token = response.id;
 
             ajax({
-                url: config.page.membershipUrl + '/subscription/update',
+                url: config.page.membershipUrl + '/subscription/update-card',
                 crossOrigin: true,
                 withCredentials: true,
                 method: 'post',
+                headers: {
+                    'Csrf-Token': 'nocheck'
+                },
                 data: {
                     stripeToken: token
                 }
