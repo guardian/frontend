@@ -165,17 +165,12 @@ define([
     }
 
     function getBreakpoint() {
-        // default to mobile
-        var breakpoint = (
-                document.body
-                && window.getComputedStyle
-                    ? window.getComputedStyle(document.body, ':after').getPropertyValue('content')
-                    : document.body.currentStyle['content']
-            )
-            || 'mobile';
+        // default to desktop
+        var breakpoint = window.getComputedStyle
+            ? window.getComputedStyle(document.body, ':after').getPropertyValue('content') : 'desktop';
 
-        // firefox seems to wrap the value in quotes
-        return breakpoint.replace(/^"([^"]*)"$/, '$1');
+        // firefox wraps the value in quotes
+        return breakpoint.replace(/"'/, '');
     }
 
     // Page Visibility
