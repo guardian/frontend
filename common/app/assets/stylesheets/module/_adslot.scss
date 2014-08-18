@@ -394,7 +394,7 @@
     @include clearfix;
     position: relative;
     min-height: 90px;
-    z-index: 99;
+    z-index: auto;
 
     .ad-slot--paid-for-badge__link {
         position: relative;
