@@ -462,7 +462,7 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
   ).flatten.mkString(", ")).filter(_.nonEmpty)
   lazy val videoLinkText: String = webTitle.stripSuffix(" - video").stripSuffix(" – video")
 
-  def endSlatePath = EndSlateComponents.fromVideo(this).toUriPath
+  def endSlatePath = EndSlateComponents.fromContent(this).toUriPath
 }
 
 object Video {
