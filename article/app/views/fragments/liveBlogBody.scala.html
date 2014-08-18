@@ -1,7 +1,7 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 @import conf.Switches._
 
-@defining((model.article, model.storyPackage)) {  case (article, storyPackage) =>
+@defining(model.article) {  article =>
 <div class="l-side-margins l-side-margins--layout-content">
     <article id="live-blog" data-test-id="live-blog"
         class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
@@ -52,7 +52,7 @@
 
                 @fragments.standfirst(article)
 
-                <div class="js-football-tabs football-tabs content__mobile-full-width"></div>
+                <div class="js-football-tabs js-football-meta football-tabs content__mobile-full-width"></div>
 
                 @fragments.mainMedia(article)
 
@@ -99,11 +99,11 @@
 
 
             <div class="content__secondary-column" aria-hidden="true">
-                @if(storyPackage.nonEmpty) {
+                @if(model.related.hasStoryPackage) {
                     <aside role="complementary" class="blog__related">
                         <h3 class="blog__related__head">More on this story</h3>
                         <ul class="u-unstyled">
-                            @storyPackage.take(4).zipWithIndex.map { case (item, index) =>
+                            @model.related.storyPackage.take(4).zipWithIndex.map { case (item, index) =>
                                 @fragments.collections.items.standard(item, index, 1, "blog__related__item")(request, Config.emptyConfig)
                             }
                         </ul>
@@ -115,7 +115,7 @@
         </div>
     </article>
 
-    @fragments.contentFooter(article, storyPackage)
+    @fragments.contentFooter(article, model.related)
 
     }
 </div>

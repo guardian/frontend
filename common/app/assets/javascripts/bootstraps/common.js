@@ -48,6 +48,7 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
+    'common/modules/ui/faux-block-link',
     'common/modules/discussion/loader'
 ], function (
     $,
@@ -96,6 +97,7 @@ define([
     id,
     MoreTags,
     smartAppBanner,
+    fauxBlockLink,
     DiscussionLoader
 ) {
 
@@ -110,23 +112,8 @@ define([
             images.listen();
         },
 
-        initialiseFauxBlockLinks: function(context){
-            bean.on(
-                context,
-                'mouseenter',
-                '.u-faux-block-link__overlay',
-                function(e) {
-                    $(e.currentTarget).parent().addClass('u-faux-block-link--hover');
-                }
-            );
-            bean.on(
-                context,
-                'mouseleave',
-                '.u-faux-block-link__overlay',
-                function(e) {
-                    $(e.currentTarget).parent().removeClass('u-faux-block-link--hover');
-                }
-            );
+        initialiseFauxBlockLink: function(context){
+            fauxBlockLink().init(context);
         },
 
         initialiseTopNavItems: function(config){
@@ -268,19 +255,7 @@ define([
         // display a flash message to devices over 600px who don't have the mobile cookie
         displayReleaseMessage: function (config) {
 
-            var path = (document.location.pathname) ? document.location.pathname : '/',
-                exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
-                msg = '<p class="site-message__message" id="site-message__message">' +
-                            'You’re viewing a beta release of the Guardian’s responsive website.' +
-                            ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
-                      '</p>' +
-                      '<ul class="site-message__actions u-unstyled">' +
-                           '<li class="site-message__actions__item">' +
-                               '<i class="i i-back"></i>' +
-                                   '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                                       'data-link-name="opt-out">Opt-out and return to our current site </a>' +
-                           '</li>' +
-                      '</ul>';
+            var path = (document.location.pathname) ? document.location.pathname : '/';
 
             var releaseMessage = new Message('alpha');
 
@@ -290,6 +265,19 @@ define([
             if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path) && config.page.contentType !== 'Video' && config.page.hasClassicVersion) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
+
+                var exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
+                    msg = '<p class="site-message__message" id="site-message__message">' +
+                            'You’re viewing a beta release of the Guardian’s responsive website.' +
+                            ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
+                        '</p>' +
+                        '<ul class="site-message__actions u-unstyled">' +
+                            '<li class="site-message__actions__item">' +
+                               '<i class="i i-back"></i>' +
+                                   '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
+                                       'data-link-name="opt-out">Opt-out and return to our current site </a>' +
+                            '</li>' +
+                        '</ul>';
                 releaseMessage.show(msg);
             }
         },
@@ -430,7 +418,7 @@ define([
             modules.initFastClick();
             modules.testCookie();
             modules.windowEventListeners();
-            modules.initialiseFauxBlockLinks(context);
+            modules.initialiseFauxBlockLink(context);
             modules.checkIframe();
             modules.upgradeImages();
             modules.showTabs();

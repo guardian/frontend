@@ -9,7 +9,8 @@ module.exports = function (grunt) {
     require('jit-grunt')(grunt, {
         replace: 'grunt-text-replace',
         scsslint: 'grunt-scss-lint',
-        cssmetrics: 'grunt-css-metrics'
+        cssmetrics: 'grunt-css-metrics',
+        assetmonitor: 'grunt-asset-monitor'
     });
 
     var isDev = (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
@@ -71,7 +72,20 @@ module.exports = function (grunt) {
                 }
             }
         },
-
+        px_to_rem: {
+            dist: {
+                options: {
+                    base: 10,
+                    fallback: true // set to false when Opera Mini supports rem units
+                },
+                files: [{
+                    expand: true,
+                    cwd: staticTargetDir + 'stylesheets/',
+                    src: ['*.css', '!old-ie*'],
+                    dest: staticTargetDir + 'stylesheets/'
+                }]
+            }
+        },
         requirejs: {
             options: {
                 paths: {
@@ -548,7 +562,7 @@ module.exports = function (grunt) {
              * Using this task to copy hooks, as Grunt's own copy task doesn't preserve permissions
              */
             copyHooks: {
-                command: 'cp git-hooks/pre-commit .git/hooks/',
+                command: 'ln -s ../git-hooks .git/hooks',
                 options: {
                     stdout: true,
                     stderr: true,
@@ -866,7 +880,7 @@ module.exports = function (grunt) {
             flash      : [staticTargetDir + 'flash', staticHashDir + 'flash'],
             fonts      : [staticTargetDir + 'fonts', staticHashDir + 'fonts'],
             // Clean any pre-commit hooks in .git/hooks directory
-            hooks      : ['.git/hooks/pre-commit'],
+            hooks      : ['.git/hooks'],
             assets     : ['common/conf/assets']
         },
 
@@ -929,6 +943,28 @@ module.exports = function (grunt) {
         }
     });
 
+    // Load the plugins
+    grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-px-to-rem');
+    grunt.loadNpmTasks('grunt-scss-lint');
+    grunt.loadNpmTasks('grunt-css-metrics');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-webfontjson');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-mkdir');
+    grunt.loadNpmTasks('grunt-contrib-imagemin');
+    grunt.loadNpmTasks('grunt-asset-hash');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-asset-monitor');
+    grunt.loadNpmTasks('grunt-text-replace');
+    grunt.loadNpmTasks('grunt-pagespeed');
+    grunt.loadNpmTasks('grunt-csdevmode');
+
     // Default task
     grunt.registerTask('default', ['clean', 'validate', 'compile', 'test', 'analyse']);
 
@@ -950,8 +986,8 @@ module.exports = function (grunt) {
      */
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', function() {
-        grunt.task.run('sass:compile');
-        grunt.task.run('sass:compileStyleguide');
+        grunt.task.run(['sass:compile', 'sass:compileStyleguide', 'px_to_rem']);
+
         if (isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
@@ -1013,7 +1049,6 @@ module.exports = function (grunt) {
         grunt.task.run('pagespeed' + target);
     });
     grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
-    grunt.registerTask('analyse:monitor', ['monitor:common']);
     grunt.registerTask('analyse', ['analyse:css', 'analyse:performance']);
 
     /**

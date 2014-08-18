@@ -35,7 +35,9 @@
                 <div class="item__standfirst">@Html(text)</div>
             }
 
-            @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            <div class="u-faux-block-link__promote">
+                @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            </div>
 
             @if(trail.isCommentable) {
                 @fragments.items.elements.meta(trail)

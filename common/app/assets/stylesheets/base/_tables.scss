@@ -44,7 +44,7 @@ td {
 
 .table {
     background: $c-neutral8;
-    border-top: 2px solid $c-newsAccent;
+    border-top: 1px solid $c-newsAccent;
 
     th,
     td,
@@ -131,7 +131,7 @@ td {
     ));
     background: $c-neutral8;
     border-bottom: 1px solid darken($c-neutral8, 4%);
-    border-top: 2px solid $c-newsAccent;
+    border-top: 1px solid $c-newsAccent;
     font-weight: bold;
     margin-bottom: -2px;
     position: relative;

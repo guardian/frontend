@@ -623,7 +623,7 @@ $block-padding-right: $gs-gutter;
         }
     }
 
-    + & {
+    & + & {
         .dropdown__button {
             border-top: 0 none;
 
@@ -845,11 +845,13 @@ $timeline-width: 14px;
     .item {
         padding: 0;
         margin: 0;
-        border-top: 2px solid $c-neutral4;
     }
 
-    + &:before,
-    .item:before,
+    .item__tonal-border {
+        border-color: $c-neutral4;
+    }
+
+    & + &:before, // Vertical item separator
     .item__byline,
     .item__meta {
         display: none;
@@ -949,7 +951,8 @@ $timeline-width: 14px;
         @include mq(rightCol) {
             float: left;
             @include rem((
-                width: gs-span(3)
+                width: gs-span(3),
+                padding-top: $content-top-padding
             ));
 
             .tone-colour {

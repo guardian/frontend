@@ -27,7 +27,8 @@
         <div class="fieldset__fields">
             <ul class="u-unstyled">
 
-                @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address")))
+                @inputField(Input(accountDetailsForm("primaryEmailAddress"), ('_label, "Email address"),
+                    Symbol("data-test-id") -> "email-address"))
 
                 <li class="form-field form-field--email-validation">
                     @if(user.statusFields.userEmailValidated.getOrElse(false)){
@@ -116,7 +117,7 @@
                     ('_default, "")
                 )
                 <li>
-                    <button type="submit" class="submit-input" data-link-name="Create account">Save changes</button>
+                    <button type="submit" class="submit-input" data-link-name="Create account" data-test-id="save-changes">Save changes</button>
                 </li>
             </ul>
         </div>

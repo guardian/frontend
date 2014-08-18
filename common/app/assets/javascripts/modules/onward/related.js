@@ -57,16 +57,7 @@ define([
     Related.prototype.renderRelatedComponent = function(config, context) {
         var container;
 
-        if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
-
-            new Expandable({
-                dom: context.querySelector('.related-trails'),
-                expanded: false,
-                showCount: false
-            }).init();
-            mediator.emit('modules:related:loaded', config, context);
-
-        } else if (config.switches && config.switches.relatedContent && config.page.showRelatedContent &&
+        if (config.switches && config.switches.relatedContent && config.page.showRelatedContent &&
                    config.page.section !== 'childrens-books-site') {
             container = context.querySelector('.js-related');
             if (container) {
@@ -75,28 +66,33 @@ define([
                 register.begin(componentName);
 
                 container.setAttribute('data-component', componentName);
-                new LazyLoad({
-                    url: Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json',
-                    container: container,
-                    success: function () {
-                        if (Related.overrideUrl) {
-                            if (config.page.hasStoryPackage) {
-                                $('.more-on-this-story').addClass('u-h');
-                            }
-                        }
 
-                        var relatedTrails = container.querySelector('.related-trails');
-                        new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
-                        // upgrade images
-                        images.upgrade(relatedTrails);
-                        mediator.emit('modules:related:loaded', config, context);
-                        register.end(componentName);
-                    },
-                    error: function(req) {
-                        mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
-                        register.error(componentName);
-                    }
-                }).load();
+                var relatedUrl = Related.overrideUrl || popularInTag;
+
+                if(relatedUrl) {
+                    new LazyLoad({
+                        url: relatedUrl,
+                        container: container,
+                        success: function () {
+                            if (Related.overrideUrl) {
+                                if (config.page.hasStoryPackage) {
+                                    $('.more-on-this-story').addClass('u-h');
+                                }
+                            }
+
+                            var relatedTrails = container.querySelector('.related-trails');
+                            new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
+                            // upgrade images
+                            images.upgrade(relatedTrails);
+                            mediator.emit('modules:related:loaded', config, context);
+                            register.end(componentName);
+                        },
+                        error: function (req) {
+                            mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
+                            register.error(componentName);
+                        }
+                    }).load();
+                }
             }
         }
     };
