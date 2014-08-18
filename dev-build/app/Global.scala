@@ -20,6 +20,7 @@ object DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
         if (
           header.status == 200 &&
             !header.headers.keySet.contains("Cache-Control") &&
+            path != "/favicon.ico" &&
             !path.startsWith("/assets/") // these are only used on DEV machines
         ) {
           // nice big warning to devs if they are working on something uncached

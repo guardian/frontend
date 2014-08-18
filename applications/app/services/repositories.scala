@@ -12,6 +12,7 @@ import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.openplatform.contentapi.ApiError
 import controllers.ImageContentPage
+import conf.Switches.RelatedContentSwitch
 
 object IndexPagePagination {
   def pageSize: Int = 20 //have a good think before changing this
@@ -152,10 +153,11 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
     val response = LiveContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
+      .showRelated(RelatedContentSwitch.isSwitchedOn)
       .response.map { response =>
       val mainContent: Option[Content] = response.content.filter { c => c.isImageContent } map {Content(_)}
       val storyPackage: List[Trail] = response.storyPackage map { Content(_) }
-      mainContent.map { content => Left(ImageContentPage(content,storyPackage)) }.getOrElse(Right(NotFound))
+      mainContent.map { content => Left(ImageContentPage(content, RelatedContent(content, response))) }.getOrElse(Right(NotFound))
     }
 
     response recover convertApiExceptions
