@@ -43,7 +43,7 @@ $control-size: 36px;
 
 .control__icon-wrapper {
     @extend %icon-holder-circle;
-    border-color: #ffffff;
+    border: 1px solid rgba(#ffffff, .3);
     float: left;
     @include rem((
         height: 34px,

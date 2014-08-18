@@ -46,6 +46,13 @@
     }
 }
 
+.brand-bar__item--has-control {
+    &:hover .control__icon-wrapper,
+    & .is-active .control__icon-wrapper {
+        border-color: #ffffff;
+    }
+}
+
 .brand-bar__item--action,
 .brand-bar__item--action:focus,
 .brand-bar__item--action:hover {
