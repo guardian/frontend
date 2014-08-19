@@ -296,9 +296,10 @@ define([
                 at      : cookies.get('adtest') || cookies.get('GU_TEST') || '',
                 gdncrm  : userAdTargeting.getUserSegments(),
                 ab      : abParam(),
-                co      : parseContributors(page.authorIds),
+                co      : parseTargets(page.authorIds),
                 bl      : parseKeywords(page.blogIds),
-                ms      : mediaSource
+                ms      : mediaSource,
+                tn      : parseTargets(page.tones)
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         createAdSlot = function(name, types, keywords) {
@@ -334,10 +335,10 @@ define([
                 return keyword.split('/').pop();
             });
         },
-        parseContributors = function(contributors) {
-            var contributorArray = parseKeywords(contributors);
-            return map(contributorArray, function(contrib) {
-               return keywords.format(contrib);
+        parseTargets = function(targets) {
+            var targetArray = parseKeywords(targets);
+            return map(targetArray, function(target) {
+                return keywords.format(target);
             });
         };
 

@@ -5,7 +5,7 @@ import java.util.concurrent.TimeoutException
 
 import com.gu.openplatform.contentapi.connection.{Http, HttpResponse}
 import common.ContentApiMetrics.ContentApi404Metric
-import common.ExecutionContexts
+import common.{Logging, ExecutionContexts}
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
 import metrics.{CountMetric, FrontendTimingMetric}
@@ -14,8 +14,8 @@ import play.api.libs.ws.{WS, WSAuthScheme}
 import scala.concurrent.Future
 import scala.util.Try
 
-class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: CountMetric) extends Http[Future]
-                                                                                              with ExecutionContexts {
+class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: CountMetric)
+  extends Http[Future] with ExecutionContexts with Logging {
 
   import java.lang.System.currentTimeMillis
 
@@ -41,18 +41,16 @@ import play.api.Play.current
     }
 
     response.onFailure {
-      case e: Throwable if isTimeout(e) => httpTimeoutMetric.increment()
+      case e: TimeoutException =>
+        log.warn(s"Content API TimeoutException for $url in ${currentTimeMillis - start}: $e")
+        httpTimeoutMetric.increment()
+      case e: Exception =>
+        log.warn(s"Content API client exception for $url in ${currentTimeMillis - start}: $e")
     }
 
     response
   }.map {
     r => HttpResponse(r.body, r.status, r.statusText)
-  }
-
-
-  private def isTimeout(e: Throwable): Boolean = e match {
-    case t: TimeoutException => true
-    case _  => false
   }
 }
 

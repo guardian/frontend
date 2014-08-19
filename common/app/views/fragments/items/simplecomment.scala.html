@@ -17,12 +17,12 @@
                 <img src="@url" alt="" class="item__avatar__media" />
             </div>
         }
-        <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
-            <h2 class="item__title">
-                <span class="i i-quote-orange"></span>
+        <h2 class="item__title">
+            <span class="i i-quote-orange"></span>
+            <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
                 <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>
-            </h2>
-        </a>
+            </a>
+        </h2>
         @trail.byline.map { byLine =>
             @trail match { case content:model.Content =>
                 <p class="item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
