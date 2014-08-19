@@ -20,7 +20,7 @@ $control-offset: 36 + $gs-gutter/2;
     margin: 0;
     padding: 0;
     list-style: none;
-    @include box-shadow(0 rem(0px 1px) 0 rgba(0, 0, 0, .5));
+    @include box-shadow(0 rem(1px 1px) 0 rgba(0, 0, 0, .25));
     @include rem((
         min-width: gs-span(2) + $gs-gutter * 3,
         top: $nav-popup-top - 2
