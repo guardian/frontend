@@ -21,7 +21,6 @@ define([
     'common/modules/onward/most-popular-factory',
     'common/modules/onward/related',
     'common/modules/onward/onward-content',
-    'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/navigation/navigation',
@@ -70,7 +69,6 @@ define([
     MostPopularFactory,
     Related,
     Onward,
-    images,
     Profile,
     Search,
     Navigation,
@@ -105,11 +103,6 @@ define([
 
         initFastClick: function() {
             new FastClick(document.body);
-        },
-
-        upgradeImages: function () {
-            images.upgrade();
-            images.listen();
         },
 
         initialiseFauxBlockLink: function(context){
@@ -424,7 +417,6 @@ define([
             modules.windowEventListeners();
             modules.initialiseFauxBlockLink(context);
             modules.checkIframe();
-            modules.upgradeImages();
             modules.showTabs();
             modules.initialiseTopNavItems(config);
             modules.initialiseNavigation(config);

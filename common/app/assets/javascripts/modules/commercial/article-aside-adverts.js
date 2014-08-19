@@ -3,6 +3,7 @@ define([
     'lodash/objects/defaults',
     'lodash/functions/once',
     'common/utils/$',
+    'common/utils/$css',
     'common/utils/config',
     'common/modules/commercial/dfp'
 ], function (
@@ -10,6 +11,7 @@ define([
     defaults,
     once,
     $,
+    $css,
     globalConfig,
     dfp
 ) {
@@ -26,11 +28,7 @@ define([
                 }
             ),
             $col = $(config.columnSelector),
-            colIsHidden = $col.length
-                && (
-                    (window.document.defaultView && window.document.defaultView.getComputedStyle)
-                        ? $col.css('display') === 'none' : $col[0].currentStyle.display === 'none'
-                );
+            colIsHidden = $col.length && $css($col) === 'none';
 
         // is the switch off, or not an article, or the secondary column hidden
         if (!config.switches.standardAdverts || !/Article|LiveBlog/.test(config.page.contentType) || colIsHidden) {
