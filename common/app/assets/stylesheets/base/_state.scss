@@ -1,7 +1,9 @@
 @charset 'UTF-8';
 
-.is-modern .js-hidden,
-.is-not-modern .js-visible {
+.js-on .js-hidden,
+.js-off .js-visible,
+/*.js-on*/.is-modern .modern-hidden,
+.is-not-modern .modern-visible {
     display: none;
 }
 
