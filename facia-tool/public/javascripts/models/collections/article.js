@@ -44,6 +44,7 @@ define([
 
             this.frontPublicationDate = opts.frontPublicationDate;
             this.frontPublicationTime = ko.observable();
+            this.scheduledPublicationTime = ko.observable();
 
             this.props = asObservableProps([
                 'webUrl',
@@ -152,8 +153,6 @@ define([
 
                 contentApi.decorateItems(this.meta.supporting.items());
             }
-
-            this.setFrontPublicationTime();
         }
 
         Article.prototype.copy = function() {
@@ -202,6 +201,8 @@ define([
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
 
+            this.setRelativeTimes();
+
             if (validate || opts.webUrl) {
                  missingProps = [
                     'webUrl',
@@ -219,8 +220,9 @@ define([
             }
         };
 
-        Article.prototype.setFrontPublicationTime = function() {
+        Article.prototype.setRelativeTimes = function() {
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
+            this.scheduledPublicationTime(humanTime(this.fields.scheduledPublicationDate()));
         };
 
         Article.prototype.toggleIsBreaking = function() {

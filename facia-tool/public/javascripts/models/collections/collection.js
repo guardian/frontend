@@ -256,10 +256,10 @@ define([
         });
     };
 
-    Collection.prototype.refreshFrontPublicationTime = function() {
+    Collection.prototype.refreshRelativeTimes = function() {
         _.each(this.groups, function(group) {
             _.each(group.items(), function(item) {
-                item.setFrontPublicationTime();
+                item.setRelativeTimes();
             });
         });
     };
