@@ -55,7 +55,7 @@ define([
     }
 
     function shouldAutoPlay(player) {
-        return player.el().getAttribute('data-auto-play') === 'true' && isDesktop;
+        return bonzo(player.el()).attr('data-auto-play') === 'true' && isDesktop;
     }
 
     function constructEventName(eventName, player) {
@@ -63,7 +63,6 @@ define([
     }
 
     var modules = {
-
         ophanRecord: function(id, event, player) {
             if(id) {
                 require('ophan/ng', function (ophan) {
