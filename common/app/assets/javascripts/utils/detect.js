@@ -169,7 +169,7 @@ define([
         var breakpoint = (
                 window.getComputedStyle
                     ? window.getComputedStyle(document.body, ':after').getPropertyValue('content')
-                    : document.documentElement.currentStyle.fontFamily
+                    : document.getElementsByTagName('head')[0].currentStyle.fontFamily
             )
             || 'mobile';
 
