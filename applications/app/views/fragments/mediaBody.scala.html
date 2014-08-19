@@ -1,6 +1,6 @@
 @(page: MediaPage)(implicit request: RequestHeader)
 
-@import model.{Audio, Video, VideoPlayer}
+@import model.{Audio, AudioPlayer, Video, VideoPlayer}
 @import views.support.{Video640, SeoOptimisedContentImage, StripHtmlTags}
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
@@ -25,7 +25,13 @@
                         @media match {
                             case audio: Audio => {
                                 <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio">
-                                @fragments.media.audio(audio.mainAudio, audio.headline)
+                                @audio.mainAudio.map { audioElement =>
+                                    @fragments.media.audio(AudioPlayer(
+                                        audioElement,
+                                        audio.headline,
+                                        autoPlay = true
+                                    ))
+                                }
                                 </figure>
                             }
                             case video: Video => {
