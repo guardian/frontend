@@ -1,11 +1,11 @@
 package model
 
 object EndSlateComponents {
-  def fromContent(content: Content) = EndSlateComponents(
-    content.series collectFirst { case Tag(apiTag, _) => apiTag.id },
-    content.section,
-    content.shortUrl
-  )
+  def fromVideo(video: Video) = EndSlateComponents(
+      video.series collectFirst { case Tag(apiTag, _) => apiTag.id },
+      video.section,
+      video.shortUrl
+    )
 }
 
 case class EndSlateComponents(
