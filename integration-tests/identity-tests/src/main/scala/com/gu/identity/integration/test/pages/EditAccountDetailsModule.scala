@@ -23,10 +23,10 @@ class EditAccountDetailsModule(implicit driver: WebDriver) extends ParentPage {
   private def saveChangesButton: WebElement = findByTestAttribute("save-changes")
   private def validationErrors: List[WebElement] = findAllByTestAttribute("form-field-error")
 
-  def selectRandomCountry() = {
+  def selectFirstValidCountry() = {
     val countrySelect = new Select(countrySelectElement)
     //ignore the first two elements as they seem to not be countries
-    countrySelect.selectByIndex(2 + new Random().nextInt(countrySelect.getOptions.size() - 2))
+    countrySelect.selectByIndex(2)
     logger.debug(s"Selected country ${countrySelect.getFirstSelectedOption.getText}")
   }
 

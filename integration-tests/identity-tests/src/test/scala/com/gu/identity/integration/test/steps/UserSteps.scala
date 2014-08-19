@@ -61,7 +61,7 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     editAccountDetailsModule.enterTown(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.enterCounty(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.enterPostCode(generateRandomAlphaNumericString(7))
-    editAccountDetailsModule.selectRandomCountry()
+    editAccountDetailsModule.selectFirstValidCountry()
     editAccountDetailsModule.saveChanges()
 
     waitForPageToBeLoaded
