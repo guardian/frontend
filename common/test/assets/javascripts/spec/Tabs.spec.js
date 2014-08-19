@@ -23,7 +23,7 @@ define(['common/modules/ui/tabs', 'bean', 'helpers/fixtures'], function(Tabs, be
                             '</ol>' +
                             '<div class="tabs__content">' +
                                 '<div class="tabs__pane" id="tab1panel" role="tabpanel">foo</div>' +
-                                '<div class="tabs__pane js-hidden" id="tab2panel" role="tabpanel">bar</div>' +
+                                '<div class="tabs__pane modern-hidden" id="tab2panel" role="tabpanel">bar</div>' +
                             '</div>' +
                         '</div>' +
                         '<div class="tabs-container">' +
@@ -34,7 +34,7 @@ define(['common/modules/ui/tabs', 'bean', 'helpers/fixtures'], function(Tabs, be
                             '</ol>' +
                             '<div class="tabs-content">' +
                                 '<div class="tabs-pane" id="tab1panel_2" role="tabpanel" aria-labelledby="tab1_2-tab">foo</div>' +
-                                '<div class="tabs-pane js-hidden" id="tab2panel_2" role="tabpanel" aria-labelledby="tab2_2-tab">bar</div>' +
+                                '<div class="tabs-pane modern-hidden" id="tab2panel_2" role="tabpanel" aria-labelledby="tab2_2-tab">bar</div>' +
                             '</div>' +
                         '</div>' +
                     '</p>'
@@ -83,7 +83,7 @@ define(['common/modules/ui/tabs', 'bean', 'helpers/fixtures'], function(Tabs, be
 
         it("should show the correct panel when a tab is clicked", function(){
             bean.fire(tab2, 'click');
-            expect(tab2panel.getAttribute('class')).not.toContain('js-hidden');
+            expect(tab2panel.getAttribute('class')).not.toContain('modern-hidden');
         });
 
         it("should hide other panels when a tab is clicked", function(){
@@ -93,7 +93,7 @@ define(['common/modules/ui/tabs', 'bean', 'helpers/fixtures'], function(Tabs, be
 
         it("should operate independently of other tabsets on the page", function(){
             bean.fire(tab2, 'click');
-            expect(independentTabPanel.getAttribute('class')).toContain('js-hidden');
+            expect(independentTabPanel.getAttribute('class')).toContain('modern-hidden');
         });
 
         it("should allow 'fake' tabs with URL hrefs instead of ID selectors", function(){
