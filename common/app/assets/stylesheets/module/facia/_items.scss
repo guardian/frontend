@@ -97,7 +97,6 @@
 }
 .container__toggle,
 .item__live-indicator,
-.item__meta,
 .collection__show-more {
     @include f-data;
 }
@@ -400,11 +399,7 @@
 .item__meta {
     position: absolute;
     bottom: 0;
-    @include fs-data(2, $size-only: true);
-
-    @include mq(tablet) {
-        @include fs-data(3, $size-only: true);
-    }
+    @include fs-textSans(1);
 
     .item__timestamp,
     .trail__count {
@@ -428,16 +423,9 @@
             @include rem((
                 top: 3px
             ));
-            @include mq(tablet) {
-                @include rem((
-                    top: 2px
-                ));
-            }
         }
     }
     .trail__count {
-        top: 0;
-
         a {
             @include rem((
                 padding-left: 18px
@@ -447,9 +435,15 @@
         }
         i {
             @include rem((
-                top: 2px,
+                top: 3px, // Aligns well with system sans-serif font
                 left: 0
             ));
+
+            @include mq(desktop) {
+                @include rem((
+                    top: 1px // Align with Text Sans 1
+                ));
+            }
         }
     }
 }
