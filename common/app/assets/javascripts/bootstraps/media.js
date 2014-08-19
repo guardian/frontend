@@ -36,7 +36,8 @@ define([
     Message,
     raven
 ) {
-    var isDesktop = /desktop|wide/.test(detect.getBreakpoint()),
+
+    var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint()),
         QUARTILES = [25, 50, 75],
         // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [
@@ -54,15 +55,12 @@ define([
         return mediaEl ? mediaEl.tagName.toLowerCase() : 'video';
     }
 
-    function shouldAutoPlay(player) {
-        return bonzo(player.el().children[0]).attr('data-auto-play') === 'true' && isDesktop;
-    }
-
     function constructEventName(eventName, player) {
         return getMediaType(player) + ':' + eventName;
     }
 
     var modules = {
+
         ophanRecord: function(id, event, player) {
             if(id) {
                 require('ophan/ng', function (ophan) {
@@ -132,7 +130,7 @@ define([
                     player.one('adstart', events.play);
                     player.one('adend', events.end);
 
-                    if (shouldAutoPlay(player)) {
+                    if (autoplay) {
                         player.play();
                     }
                 }
@@ -176,7 +174,7 @@ define([
                     player.on('timeupdate', _throttle(events.timeupdate, 1000));
                     player.one('ended', events.end);
 
-                    if (shouldAutoPlay(player)) {
+                    if (autoplay) {
                         player.play();
                     }
                 }
@@ -382,11 +380,17 @@ define([
                 });
             });
         },
+        generateEndSlateUrlFromPage: function() {
+            var seriesId = config.page.seriesId;
+            var sectionId = config.page.section;
+            var url = (seriesId)  ? '/video/end-slate/series/' + seriesId : '/video/end-slate/section/' + sectionId;
+            return url + '.json?shortUrl=' + config.page.shortUrl;
+        },
         initEndSlate: function(player, endSlatePath) {
             var endSlate = new Component(),
                 endState = 'vjs-has-ended';
 
-            endSlate.endpoint = endSlatePath;
+            endSlate.endpoint = endSlatePath || modules.generateEndSlateUrlFromPage();
             endSlate.fetch(player.el(), 'html');
 
             player.one(constructEventName('content:play', player), function() {

@@ -1,6 +1,5 @@
-@(videoElement: model.VideoElement, title: String, isFirst: Boolean, endSlatePath: String)
+@(videoElement: model.VideoElement, title: String, isFirst: Boolean, endSlatePath: Option[String])
 
-@import model.VideoPlayer
 @import views.html.fragments.media.video
 @import views.support.{Video460, RenderClasses}
 
@@ -12,13 +11,6 @@
     "u-faux-block-link__promote" -> true
 ))">
     <div class="fromage__video-container">
-        @video(VideoPlayer(
-            videoElement,
-            Video460,
-            title,
-            autoPlay = false,
-            showControlsAtStart = false,
-            endSlatePath
-        ))
+        @video(videoElement, Video460, title, false, endSlatePath)
     </div>
 </div>
