@@ -2,9 +2,17 @@ package com.gu.identity.integration.test.util
 
 import com.gu.identity.integration.test.pages.EditAccountDetailsModule
 
-case class User(userName: String, email: String, pwd: Option[String], firstName: Option[String] = None, lastName: Option[String] = None,
-                addrLine1: Option[String] = None, addrLine2: Option[String] = None, town: Option[String] = None,
-                county: Option[String] = None, postCode: Option[String] = None, country: Option[String] = None)
+case class User(userName: String,
+                email: String,
+                pwd: Option[String],
+                firstName: Option[String] = None,
+                lastName: Option[String] = None,
+                addrLine1: Option[String] = None,
+                addrLine2: Option[String] = None,
+                town: Option[String] = None,
+                county: Option[String] = None,
+                postCode: Option[String] = None,
+                country: Option[String] = None)
 
 object User {
   def generateRandomUser(): User = {
