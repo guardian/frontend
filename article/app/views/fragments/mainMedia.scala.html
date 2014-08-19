@@ -1,5 +1,7 @@
 @(article: model.Article)(implicit request: RequestHeader)
+@import model.EndSlateComponents
 
+@import model.VideoPlayer
 @import views.support.{Video640, SeoOptimisedContentImage}
 @import views.BodyCleaner
 
@@ -16,7 +18,14 @@
                     <figure itemprop="associatedMedia video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
                     class="media-primary media-content">
                         @article.mainVideo.map { video =>
-                            @fragments.media.video(video, Video640, article.headline)
+                            @fragments.media.video(VideoPlayer(
+                                video,
+                                Video640,
+                                article.headline,
+                                autoPlay = true,
+                                showControlsAtStart = true,
+                                endSlatePath = EndSlateComponents.fromContent(article).toUriPath
+                            ))
                         }
 
                         @posters.headOption.map { image =>

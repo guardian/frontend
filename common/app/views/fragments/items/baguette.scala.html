@@ -1,7 +1,7 @@
 @(trail: model.Trail, index: Int)(implicit request: RequestHeader, config: Config)
 
 @import common.LinkTo
-@import model.Video
+@import model.{Video, VideoPlayer}
 @import views.html.fragments.media.video
 @import views.support.{GetClasses, SnapData, Video640}
 
@@ -17,7 +17,14 @@
             case v: Video if v.mainVideo.isDefined => {
                 <div class="item__media-wrapper item__media-wrapper--has-icon u-faux-block-link__promote">
                     <div class="item__video-container">
-                        @video(v.mainVideo.get, Video640, v.webTitle, false, Some(v.endSlatePath))
+                        @video(VideoPlayer(
+                            v.mainVideo.get,
+                            Video640,
+                            v.webTitle,
+                            autoPlay = false,
+                            showControlsAtStart = false,
+                            v.endSlatePath
+                        ))
                     </div>
                 </div>
             }
