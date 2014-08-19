@@ -3,7 +3,7 @@
 @import views.support.{Video640, SeoOptimisedContentImage}
 @import views.BodyCleaner
 
-@if(!article.main.isEmpty) {
+@if(article.main.nonEmpty) {
     <div class="media-primary">
         @BodyCleaner(article, article.main)
     </div>
