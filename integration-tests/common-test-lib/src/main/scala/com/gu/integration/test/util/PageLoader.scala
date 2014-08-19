@@ -19,7 +19,7 @@ object PageLoader extends TestLogging {
    */
   def goTo[Page <: ParentPage](pageObject: => Page, absoluteUrl: String, useBetaRedirect: Boolean = true)
                               (implicit driver: WebDriver): Page = {
-    driver.get(forceBetaSite(useBetaRedirect, turnOfPopups(absoluteUrl)))
+    driver.get(forceBetaSite(useBetaRedirect, absoluteUrl))
     pageObject
   }
 
