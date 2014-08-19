@@ -167,11 +167,14 @@ define([
     function getBreakpoint() {
         // default to desktop
         var breakpoint = (
-                window.getComputedStyle && window.getComputedStyle(document.body, ':after').getPropertyValue('content')
-            ) || 'desktop';
+                window.getComputedStyle
+                    ? window.getComputedStyle(document.body, ':after').getPropertyValue('content')
+                    : document.documentElement.currentStyle.fontFamily
+            )
+            || 'mobile';
 
-        // firefox wraps the value in quotes
-        return breakpoint.replace(/"'/, '');
+        // firefox wraps the value in quotes, android adds trailing comma to font
+        return breakpoint.replace(/['",]/g, '');
     }
 
     // Page Visibility
