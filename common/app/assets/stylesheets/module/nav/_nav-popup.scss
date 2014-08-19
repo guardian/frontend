@@ -62,7 +62,7 @@ $control-offset: 36 + $gs-gutter/2;
     @include fs-data(2);
     color: guss-colour(neutral-2);
     @include rem((
-        padding: $gs-gutter/2,
+        padding: $gs-baseline/2 $gs-gutter/2,
         border-top: 1px solid guss-colour(neutral-4)
     ));
     padding-bottom: 0;
