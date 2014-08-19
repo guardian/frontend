@@ -15,7 +15,7 @@ object Cached extends implicits.Dates {
   }
 
   def apply(duration: Duration)(result: Result): Result = {
-    apply(duration.toSeconds.asInstanceOf[Int])(result)
+    apply(duration.toSeconds.toInt)(result)
   }
 
   def apply(metaData: MetaData)(result: Result): Result = {
