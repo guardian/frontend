@@ -115,10 +115,13 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
     a {
         &,
-        &:hover,
         &:active,
         &:focus {
             text-decoration: none;
+        }
+
+        &:hover {
+            text-decoration: underline;
         }
     }
 }
@@ -777,7 +780,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     &:focus,
     &:active {
         color: $c-navigation-toggle-icon;
-        text-decoration: none;
     }
     &:focus {
         background: mix($c-navigation-toggle-background, #ffffff, 92%);

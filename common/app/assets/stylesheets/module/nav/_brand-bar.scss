@@ -54,8 +54,7 @@
 }
 
 .brand-bar__item--action,
-.brand-bar__item--action:focus,
-.brand-bar__item--action:hover {
+.brand-bar__item--action:focus {
     margin: 0;
     cursor: pointer;
     color: $c-guardian-services-action;
@@ -64,6 +63,11 @@
     @include rem((
         line-height: $headerHeight
     ));
+}
+
+.brand-bar__item--action:hover,
+.brand-bar__item--action:hover .control__info {
+    text-decoration: underline;
 }
 
 .brand-bar__item--right {
