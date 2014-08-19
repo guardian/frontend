@@ -47,7 +47,7 @@ GET         /analytics/commercial                   controllers.admin.Commercial
 GET         /analytics/commercial/sponsorships      controllers.admin.CommercialController.renderSponsorships()
 GET         /analytics/commercial/pageskins         controllers.admin.CommercialController.renderPageskins()
 GET         /analytics/commercial/surging           controllers.admin.CommercialController.renderSurgingContent()
-GET         /analytics/commercial/im-sponsorships   controllers.admin.CommercialController.renderInlineMerchandisingSponsorships()
+GET         /analytics/commercial/im-sponsorships   controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
 GET         /commercialtools/adunits/toapprove      controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove      controllers.admin.CommercialAdUnitController.approve()
 
