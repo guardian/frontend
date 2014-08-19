@@ -55,7 +55,7 @@ define([
     }
 
     function shouldAutoPlay(player) {
-        return bonzo(player.el()).attr('data-auto-play') === 'true' && isDesktop;
+        return bonzo(player.el().children[0]).attr('data-auto-play') === 'true' && isDesktop;
     }
 
     function constructEventName(eventName, player) {
