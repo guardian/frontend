@@ -17,5 +17,5 @@ case class VideoPlayer(
   def width = profile.width.get
   def height = profile.width.get
 
-  def hideEndSlate = width < Video640.width.get
+  def showEndSlate = width >= Video640.width.get
 }
