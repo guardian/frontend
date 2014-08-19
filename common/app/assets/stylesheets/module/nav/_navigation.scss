@@ -13,7 +13,7 @@ $navigation-toggler-width: 48px;
 $navigation-toggler-width-full: 130px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
-$c-navigation-background-side-bar: mix(guss-colour(guardian-brand-dark), #ffffff, 85%);
+$c-navigation-background-side-bar: #005182;
 
 $c-signposting-action: $c-newsDefault;
 $c-signposting-background: $c-navigation-base;
@@ -50,7 +50,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .navigation__expandable {
     .global-navigation__title--guardian-services {
         background-color: $c-newsDefault;
-        border-top: 1px solid mix($c-newsDefault, #ffffff, 80%);
+        border-top: 1px solid mix(guss-colour(guardian-brand), #ffffff, 93%);
     }
 }
 
@@ -424,7 +424,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     background: $c-global-navigation-title-background;
     float: left;
     @include rem((
-        border-top: 1px solid mix($c-global-navigation-title-background, #ffffff, 80%)
+        border-top: 1px solid guss-colour(guardian-brand)
     ));
 
     @include mq($to: tablet) {
