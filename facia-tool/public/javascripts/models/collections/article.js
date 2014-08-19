@@ -52,6 +52,7 @@ define([
             this.fields = asObservableProps([
                 'isLive',
                 'firstPublicationDate',
+                'scheduledPublicationDate',
                 'headline',
                 'trailText',
                 'thumbnail']);

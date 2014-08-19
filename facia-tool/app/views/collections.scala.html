@@ -334,6 +334,9 @@
 
             <div class="closed" data-bind="if: !state.isOpen()">
                 <div class="article__time">
+                    <span class="article__time__scheduled" data-bind="
+                        visible: fields.scheduledPublicationDate,
+                        text: fields.scheduledPublicationDate"></span>
                     <span class="article__time__publication" data-bind="
                         visible: webPublicationTime,
                         text: webPublicationTime"></span>
