@@ -27,9 +27,10 @@ object UpdateManager {
         throw new RuntimeException(s"Unable to de-serialize config from S3: $configJson")
       }
 
-      val newConfig = SanitizeInput.fromConfigSeo(Transformations.prune(transform(config)))
+      val transformedConfig: Config = transform(config)
+      val newConfig = SanitizeInput.fromConfigSeo(Transformations.prune(transformedConfig))
       UpdateActions.putMasterConfig(newConfig, identity)
-      ConfigAgent.refreshWith(configJson)
+      ConfigAgent.refreshWith(Json.toJson(transformedConfig))
     }
   }
 

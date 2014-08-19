@@ -45,6 +45,7 @@ with SurgingContentAgentLifecycle {
   def descheduleJobs() {
     Jobs.deschedule("FrontPressJob")
     Jobs.deschedule("DfpDataCacheJob")
+    Jobs.deschedule("RebuildIndexJob")
   }
 
   override def onStart(app: play.api.Application) {

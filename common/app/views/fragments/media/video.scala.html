@@ -1,22 +1,23 @@
-@(video: model.VideoElement, profile: views.support.Profile, title: String, width: Int, height: Int, use16_9AspectRatio: Boolean = true, showControlsAtStart: Boolean = true, endSlatePath: Option[String] = None)
+@(video: model.VideoElement, profile: views.support.VideoProfile, title: String, showControlsAtStart: Boolean = true, endSlatePath: Option[String] = None)
 
 @import conf.Static
-@import views.support.RenderClasses
+@import views.support.{Video640, RenderClasses}
 
-@defining(profile.bestFor(video).getOrElse(Static("images/media-holding.jpg"))) { poster =>
+@mediaVideo(profile.bestFor(video).getOrElse(Static("images/media-holding.jpg").path), profile.width.get, profile.height.get)
+
+@mediaVideo(poster: String, width: Int, height: Int) = {
     <div class="gu-media-wrapper gu-media-wrapper--video">
         <div class="@RenderClasses(Map(
             "u-responsive-ratio" -> true,
-            "u-responsive-ratio--hd" -> use16_9AspectRatio
+            "u-responsive-ratio--hd" -> profile.isRatioHD
         ))">
             <video controls="controls" class="@RenderClasses(Map(
                 "gu-media" -> true,
                 "gu-media--video" -> true,
                 "gu-media--show-controls-at-start" -> showControlsAtStart,
-                "gu-media--hide-endslate" -> (width < 620),
                 "js-gu-media" -> true
             ))" data-title="@title"
-                poster="@poster" data-duration="@video.duration.toString()" data-media-id="@video.id" @endSlatePath.map { path => data-end-slate="@path"}>
+                poster="@poster" data-duration="@video.duration.toString()" data-show-end-slate="@{width >= Video640.width.get}" data-media-id="@video.id" @endSlatePath.map { path => data-end-slate="@path"}>
 
                 @video.encodings.map { encoding =>
                     <source src="@encoding.url" type="@encoding.format" />

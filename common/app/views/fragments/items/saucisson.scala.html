@@ -15,9 +15,7 @@
         <div class="saucisson__container">
             @fragments.items.elements.image(trail)
 
-            <a @LinkTo(trail).map{url=>href="@url"} class="saucisson__link" data-link-name="article">
-                @fragments.items.elements.title(trail, index, 0)
-            </a>
+            @fragments.items.elements.title(trail, index, 0)
 
             @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
 
@@ -35,7 +33,9 @@
                 <div class="item__standfirst">@Html(text)</div>
             }
 
-            @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            <div class="u-faux-block-link__promote">
+                @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            </div>
 
             @if(trail.isCommentable) {
                 @fragments.items.elements.meta(trail)

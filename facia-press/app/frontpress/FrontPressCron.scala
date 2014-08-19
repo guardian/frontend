@@ -8,6 +8,7 @@ import common.SQSQueues._
 import common.{Edition, Logging}
 import conf.Configuration
 import conf.Switches.FrontPressJobSwitch
+import metrics.AllFrontsPressLatencyMetric
 import org.joda.time.DateTime
 import play.api.libs.concurrent.Akka
 import play.api.libs.json.Json
@@ -43,10 +44,14 @@ object FrontPressCron extends Logging with implicits.Collections {
             val f = FrontPress.pressLiveByPathId(path)
             f onComplete {
               case Success(_) =>
+
                 if (Edition.all.map(_.id.toLowerCase).exists(_ == path))
                   ToolPressQueueWorker.metricsByPath.get(path).foreach { metric =>
                     metric.recordDuration(DateTime.now.getMillis - start.getMillis)
-                }
+                  }
+                else
+                  AllFrontsPressLatencyMetric.recordDuration(DateTime.now.getMillis - start.getMillis)
+
                 deleteMessage(receiveMessageResult, queueUrl)
                 FrontPressCronSuccess.increment()
               case Failure(error) =>

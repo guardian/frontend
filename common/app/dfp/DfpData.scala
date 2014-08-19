@@ -16,9 +16,9 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   val targetsAdTest = isPositive("at")
 
-  val isTag = isPositive("k") || isPositive("se")
-
-  val isContributor = isPositive("co")
+  val isKeywordTag = isPositive("k")
+  val isSeriesTag = isPositive("se")
+  val isContributorTag = isPositive("co")
 }
 
 
@@ -29,13 +29,15 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
     } else Nil
   }
 
-  val sponsoredTags = filterTags(_.isTag)(_.isSponsoredSlot)
+  val sponsoredTags = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag)(_.isSponsoredSlot)
 
-  val advertisementFeatureTags = filterTags(_.isTag)(_.isAdvertisementFeatureSlot)
+  val advertisementFeatureTags = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag)(_.isAdvertisementFeatureSlot)
 
-  val inlineMerchandisingTargettedTags = filterTags(target => target.isTag || target.isContributor)(_.isInlineMerchandisingSlot)
+  val inlineMerchandisingTargetedKeywords = filterTags(tag => tag.isKeywordTag)(_.isInlineMerchandisingSlot)
+  val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
+  val inlineMerchandisingTargetedContributors = filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
 
-  val targetsAdTest = targets.find(_.targetsAdTest).isDefined
+  val targetsAdTest = targets.exists(_.targetsAdTest)
 }
 
 
@@ -47,7 +49,7 @@ case class GuAdUnit(id: String, path: Seq[String])
 
 case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargets: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet]) {
   def hasAdTestTargetting = {
-    customTargetSets.find(_.targetsAdTest).isDefined
+    customTargetSets.exists(_.targetsAdTest)
   }
 }
 
@@ -66,5 +68,7 @@ case class GuLineItem(id: Long,
 
   val advertisementFeatureTags: Seq[String] = targeting.customTargetSets.flatMap(_.advertisementFeatureTags).distinct
 
-  val inlineMerchandisingTargettedTags: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargettedTags).distinct
+  val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
+  val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
+  val inlineMerchandisingTargetedContributors: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
 }

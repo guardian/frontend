@@ -1,6 +1,6 @@
 .facia-slice-wrapper {
     @include rem((
-        padding-top: $gs-baseline/3,
+        padding-top: $gs-baseline/2,
         margin-left: $gs-gutter/2 * -1,
         margin-right: $gs-gutter/2 * -1
     ));
@@ -8,7 +8,7 @@
     + .facia-slice-wrapper {
         padding-top: 0;
         @include rem((
-            margin-top: ($gs-baseline/3)*2
+            margin-top: $gs-baseline
         ));
     }
 

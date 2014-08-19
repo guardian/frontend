@@ -32,6 +32,8 @@ class DfpAgentTest extends FlatSpec with Matchers {
       true)
   )
 
+  private def toKeyword(tagId: String): Tag = Tag(ApiTag(id = tagId, `type` = "keyword", webTitle = "title", webUrl = "url", apiUrl = "url"))
+
   private object testDfpAgent extends DfpAgent {
     override protected def sponsorships: Seq[Sponsorship] = Seq(
       Sponsorship(Seq("spon-page"), Some("spon")),
@@ -46,10 +48,8 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
 
-    override protected def inlineMerchandisingDeals: Seq[Sponsorship] = Seq(
-      Sponsorship(Seq("ad-feature"), None),
-      Sponsorship(Seq("film"), None)
-    )
+    override protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet =
+      InlineMerchandisingTagSet(keywords = Set("ad-feature", "film"))
 
     override def isProd = true
   }
@@ -63,7 +63,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
 
-    override protected def inlineMerchandisingDeals: Seq[Sponsorship] = Nil
+    override protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = InlineMerchandisingTagSet()
   }
 
   def apiQuery(apiQuery: String) = {
@@ -161,7 +161,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "hasInlineMerchandise" should "be true if tag id has inline merchandising" in {
-    testDfpAgent.hasInlineMerchandise("advert/ad-feature") should be(true)
+    testDfpAgent.hasInlineMerchandise(Seq(toKeyword("advert/ad-feature"))) should be(true)
   }
 
   it should "be true if keyword tag exists" in {
@@ -173,7 +173,7 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   it should "be false for a tag id which doesn't have inline merchandising" in {
-    testDfpAgent.hasInlineMerchandise("culture/article") should be(false)
+    testDfpAgent.hasInlineMerchandise(Seq(toKeyword("culture/article"))) should be(false)
   }
 
   it should "be false if keyword tag doesn't exists" in {

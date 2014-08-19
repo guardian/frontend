@@ -59,7 +59,7 @@
      * @param {HTMLElement} element
      */
     ImagerContainerStrategy.prototype.createPlaceholder = function createPlaceholder (element) {
-        var placeholder = this.element.cloneNode();
+        var placeholder = this.element.cloneNode(false);
 
         if (element.hasAttribute('data-width')) {
             placeholder.width = element.getAttribute('data-width');
