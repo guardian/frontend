@@ -14,25 +14,33 @@ $control-size: 36px;
     @include rem((
         height: 30px,
         line-height: $control-size,
-        margin-left: $gs-gutter/2
+        margin-left: $gs-gutter/2,
+        max-width: 140px
     ));
     vertical-align: top;
     white-space: nowrap;
+    overflow: hidden;
+    float: left;
+    text-overflow: ellipsis;
+    text-align: left;
+
+    @include mq($from: 540) {
+        max-width: 200px;
+    }
 
     @include mq(tablet) {
         display: block;
-        overflow: hidden;
-        float: left;
-        @include rem((
-            max-width: 200px
-        ));
-        text-overflow: ellipsis;
-        text-align: left;
     }
 
     .brand-bar__item--right & {
         @include mq(tablet) {
             margin: 0;
+        }
+    }
+
+    .brand-bar__item--profile & {
+        @include mq(mobileLandscape) {
+            display: block;
         }
     }
 }
