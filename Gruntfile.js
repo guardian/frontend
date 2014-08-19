@@ -92,7 +92,6 @@ module.exports = function (grunt) {
                     common:       '../../../../common/app/assets/javascripts',
                     bean:         '../../../../common/app/assets/javascripts/components/bean/bean',
                     bonzo:        '../../../../common/app/assets/javascripts/components/bonzo/bonzo',
-                    domReady:     '../../../../common/app/assets/javascripts/components/domready/ready',
                     EventEmitter: '../../../../common/app/assets/javascripts/components/eventEmitter/EventEmitter',
                     qwery:        '../../../../common/app/assets/javascripts/components/qwery/qwery',
                     reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/reqwest',

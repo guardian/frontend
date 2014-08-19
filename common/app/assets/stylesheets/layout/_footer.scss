@@ -31,7 +31,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         border-top: 0;
     }
 
-    .is-not-modern & {
+    .js-off & {
         .navigation--collapsed {
             height: auto;
         }

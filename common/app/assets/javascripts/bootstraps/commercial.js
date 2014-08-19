@@ -44,7 +44,7 @@ define([
                     var loader = new CommercialLoader({ config: config }),
                         postLoadEvents = {};
                     postLoadEvents[commercialComponent[1]] = function() {
-                        bonzo(slot).css('display', 'block');
+                        slot.style.display = 'block';
                     };
                     loader.postLoadEvents = postLoadEvents;
                     loader.init(commercialComponent[1], slot);

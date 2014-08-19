@@ -97,7 +97,6 @@
 }
 .container__toggle,
 .item__live-indicator,
-.item__meta,
 .collection__show-more {
     @include f-data;
 }
@@ -196,7 +195,6 @@
     border-top: $item-top-border-height solid $c-newsAccent;
 }
 .item__link {
-    display: block;
     color: $c-neutral1;
 
     &:visited {
@@ -284,8 +282,6 @@
     .linkslist__action:visited,
     .item__link:visited,
     .item__link:visited .item__title,
-    .fromage__link:visited,
-    .fromage__link:visited .item__title,
     .item__standfirst,
     .fromage__standfirst {
         color: $c-neutral2-contrasted;
@@ -370,6 +366,20 @@
         margin-bottom: $gs-baseline/3
     ));
 }
+.item__tag-separator {
+    display: none;
+    position: relative;
+    bottom: -.03em; // Slightly better alignment in Headline 3
+    height: .8em;
+    margin-left: .1em;
+    margin-right: .1em;
+    border-left: 1px solid currentColor;
+    color: $c-neutral3;
+
+    .item__title & {
+        display: inline-block;
+    }
+}
 .item__standfirst,
 .item__meta {
     color: $c-neutral2;
@@ -386,17 +396,10 @@
         margin-bottom: 0; // Some trail texts are wrapped in a paragraph
     }
 }
-.item__tag {
-    @include fs-headline(2);
-}
 .item__meta {
     position: absolute;
     bottom: 0;
-    @include fs-data(2, $size-only: true);
-
-    @include mq(tablet) {
-        @include fs-data(3, $size-only: true);
-    }
+    @include fs-textSans(1);
 
     .item__timestamp,
     .trail__count {
@@ -420,16 +423,9 @@
             @include rem((
                 top: 3px
             ));
-            @include mq(tablet) {
-                @include rem((
-                    top: 2px
-                ));
-            }
         }
     }
     .trail__count {
-        top: 0;
-
         a {
             @include rem((
                 padding-left: 18px
@@ -439,9 +435,15 @@
         }
         i {
             @include rem((
-                top: 2px,
+                top: 3px, // Aligns well with system sans-serif font
                 left: 0
             ));
+
+            @include mq(desktop) {
+                @include rem((
+                    top: 1px // Align with Text Sans 1
+                ));
+            }
         }
     }
 }

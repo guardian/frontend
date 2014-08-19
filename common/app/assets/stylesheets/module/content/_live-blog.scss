@@ -84,7 +84,7 @@ $block-padding-right: $gs-gutter;
         margin: 0;
         padding: 0;
         height: auto;
-        @include fs-data(3);
+        @include fs-textSans(2);
         color: inherit;
         border: 0;
         @include mq($to: mobileLandscape) {

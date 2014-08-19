@@ -101,29 +101,6 @@
 /* Main elements
    ========================================================================== */
 
-.fromage__link {
-    color: $c-neutral1;
-    display: block;
-
-    &:hover,
-    &:focus {
-        text-decoration: none;
-
-        .u-faux-block-link__cta {
-            text-decoration: underline;
-        }
-    }
-    &:active {
-        .u-faux-block-link__cta {
-            text-decoration: none;
-        }
-    }
-    &:visited,
-    &:visited .item__title {
-        color: $c-neutral2;
-    }
-}
-
 .fromage__video-wrapper {
     @include mq(tablet) {
         float: left;
@@ -239,7 +216,8 @@
     .fromage__image-container {
         display: none !important;
     }
-    .fromage__link {
+    .item__title {
+        @include fs-headline(4, true);
         @include mq(tablet) {
             float: left;
             padding-left: 0;
@@ -247,19 +225,13 @@
                 width: gs-span(5),
                 margin-left: gs-span(5) * -1 - $gs-gutter
             ));
+            @include fs-headline(6, true);
         }
         @include mq(desktop) {
             @include rem((
                 width: gs-span(6),
                 margin-left: gs-span(6) * -1 - $gs-gutter
             ));
-        }
-    }
-    .item__title {
-        @include fs-headline(4, true);
-
-        @include mq(tablet) {
-            @include fs-headline(6, true);
         }
     }
     .fromage__byline,
@@ -289,7 +261,7 @@
 }
 .fromage--has-image {
     @include mq(tablet) {
-        .js-on &.fromage--has-discussion .fromage__link {
+        .js-on &.fromage--has-discussion .item__title {
             // If the story has a discussion, make room for the comment count
             // in the top right of the component
             @include rem((
@@ -332,10 +304,6 @@
         ));
         @include mq(tablet) {
             padding-top: 0;
-        }
-    }
-    .fromage__link {
-        @include mq(tablet) {
             margin-left: 0;
             padding-left: 0;
         }
