@@ -1,11 +1,9 @@
 package ophan
 
-import common._
+import common.{AkkaAsync, Jobs, _}
 import play.api.libs.json.{JsArray, JsValue}
-import java.net.URL
+import play.api.{GlobalSettings, Application => PlayApp}
 import services.OphanApi
-import play.api.{Application => PlayApp, GlobalSettings}
-import common.{AkkaAsync, Jobs}
 
 object SurgingContentAgent extends Logging with ExecutionContexts {
 
@@ -28,18 +26,22 @@ object SurgingContentAgent extends Logging with ExecutionContexts {
     agent.get()
   }
 
-  def getSurgingLevelFor(id: String): Int = SurgeUtils.levelProvider(agent.get().get(id))
+  def getSurgingLevelsFor(id: String): Seq[Int] = SurgeUtils.levelProvider(agent.get().get(id))
 }
 
 object SurgeUtils {
-  def levelProvider(surgeLevel: Option[Int]) = {
-    surgeLevel match {
+
+  def levelProvider(surgeLevel: Option[Int]): Seq[Int] = {
+
+    val level = surgeLevel match {
       case Some(x) if x >= 400 => 1
       case Some(x) if x >= 300 => 2
       case Some(x) if x >= 200 => 3
       case Some(x) if x >= 100 => 4
       case _ => 0
     }
+
+    if (level == 0) Seq(0) else Seq.range(level, 5)
   }
 
   def parse(json: JsValue) = {
