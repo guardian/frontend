@@ -69,11 +69,11 @@
 
 .brand-bar__item--action:hover,
 .brand-bar__item--action:focus,
-.brand-bar__item--action:active,
-.brand-bar__item--action:hover .control__info,
-.brand-bar__item--action:focus .control__info,
-.brand-bar__item--action:active .control__info {
-    text-decoration: underline;
+.brand-bar__item--action:active {
+    &,
+    .control__info {
+        text-decoration: underline;
+    }
 }
 
 .brand-bar__item--right {
