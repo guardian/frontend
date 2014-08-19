@@ -27,6 +27,7 @@ class EditAccountDetailsModule(implicit driver: WebDriver) extends ParentPage {
     val countrySelect = new Select(countrySelectElement)
     //ignore the first two elements as they seem to not be countries
     countrySelect.selectByIndex(2 + new Random().nextInt(countrySelect.getOptions.size() - 2))
+    logger.debug(s"Selected country ${countrySelect.getFirstSelectedOption.getText}")
   }
 
   def enterEmailAddress(email: String) = {
