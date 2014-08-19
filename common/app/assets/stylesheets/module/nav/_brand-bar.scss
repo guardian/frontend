@@ -48,6 +48,8 @@
 
 .brand-bar__item {
     &:hover .control__icon-wrapper,
+    &:active .control__icon-wrapper,
+    &:focus .control__icon-wrapper,
     & .is-active .control__icon-wrapper {
         border-color: #ffffff;
     }
@@ -66,7 +68,11 @@
 }
 
 .brand-bar__item--action:hover,
-.brand-bar__item--action:hover .control__info {
+.brand-bar__item--action:focus,
+.brand-bar__item--action:active,
+.brand-bar__item--action:hover .control__info,
+.brand-bar__item--action:focus .control__info,
+.brand-bar__item--action:active .control__info {
     text-decoration: underline;
 }
 
