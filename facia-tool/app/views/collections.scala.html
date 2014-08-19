@@ -335,8 +335,9 @@
             <div class="closed" data-bind="if: !state.isOpen()">
                 <div class="article__time">
                     <!-- ko if: fields.scheduledPublicationDate -->
+                        <span class="article__time__scheduled article__time__scheduled__launches">launches</span>
                         <span class="article__time__scheduled" data-bind="
-                            text: 'scheduled ' + scheduledPublicationTime()"></span>
+                            text: scheduledPublicationTime"></span>
                     <!-- /ko -->
 
                     <!-- ko if: props.webPublicationDate -->
