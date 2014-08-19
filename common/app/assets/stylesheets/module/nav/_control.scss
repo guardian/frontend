@@ -25,7 +25,9 @@ $control-size: 36px;
     text-align: left;
 
     @include mq($from: 540px) {
-        max-width: 200px;
+        @include rem((
+            max-width: 200px
+        ));
     }
 
     @include mq(tablet) {
