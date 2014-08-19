@@ -1,7 +1,7 @@
 package services
 
 import model._
-import conf.LiveContentApi
+import conf.{InlineRelatedContentSwitch, LiveContentApi}
 import model.Section
 import common._
 import com.gu.openplatform.contentapi.model.{SearchResponse, ItemResponse}
@@ -153,7 +153,7 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
     val response = LiveContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
-      .showRelated(RelatedContentSwitch.isSwitchedOn)
+      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .response.map { response =>
       val mainContent: Option[Content] = response.content.filter { c => c.isImageContent } map {Content(_)}
       val storyPackage: List[Trail] = response.storyPackage map { Content(_) }

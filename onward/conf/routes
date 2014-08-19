@@ -18,6 +18,8 @@ GET        /most-read-day.json                        controllers.MostPopularCon
 GET        /top-stories.json                          controllers.TopStoriesController.renderTopStories()
 GET        /top-stories/trails.json                   controllers.TopStoriesController.renderTrails()
 
+GET        /related/*path.json                        controllers.RelatedController.render(path)
+
 GET        /popular-in-tag/*tag.json                  controllers.PopularInTag.render(tag)
 
 GET        /preference/platform/:platform             controllers.ChangeViewController.render(platform, page)
@@ -34,6 +36,7 @@ GET        /video/end-slate/section/*sectionId.json   controllers.VideoEndSlateC
 
 # For tests
 GET        /most-read/*path                           controllers.MostPopularController.renderHtml(path)
+GET        /related/*path                             controllers.RelatedController.renderHtml(path)
 GET        /top-stories                               controllers.TopStoriesController.renderTopStoriesHtml()
 
 # Experimental

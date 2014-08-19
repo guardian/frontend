@@ -57,8 +57,19 @@ define([
     Related.prototype.renderRelatedComponent = function(config, context) {
         var container;
 
-        if (config.switches && config.switches.relatedContent && config.page.showRelatedContent &&
-                   config.page.section !== 'childrens-books-site') {
+        var fetchRelated = config.switches.relatedContent && config.switches.ajaxRelatedContent && config.page.showRelatedContent;
+            config.page.section !== 'childrens-books-site';
+
+        if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
+            new Expandable({
+                dom: context.querySelector('.related-trails'),
+                expanded: false,
+                showCount: false
+            }).init();
+            mediator.emit('modules:related:loaded', config, context);
+
+        } else if (fetchRelated) {
+
             container = context.querySelector('.js-related');
             if (container) {
                 var popularInTag = this.popularInTagOverride(config),
@@ -67,32 +78,30 @@ define([
 
                 container.setAttribute('data-component', componentName);
 
-                var relatedUrl = Related.overrideUrl || popularInTag;
+                var relatedUrl = Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json';
 
-                if(relatedUrl) {
-                    new LazyLoad({
-                        url: relatedUrl,
-                        container: container,
-                        success: function () {
-                            if (Related.overrideUrl) {
-                                if (config.page.hasStoryPackage) {
-                                    $('.more-on-this-story').addClass('u-h');
-                                }
+                new LazyLoad({
+                    url: relatedUrl,
+                    container: container,
+                    success: function () {
+                        if (Related.overrideUrl) {
+                            if (config.page.hasStoryPackage) {
+                                $('.more-on-this-story').addClass('u-h');
                             }
-
-                            var relatedTrails = container.querySelector('.related-trails');
-                            new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
-                            // upgrade images
-                            images.upgrade(relatedTrails);
-                            mediator.emit('modules:related:loaded', config, context);
-                            register.end(componentName);
-                        },
-                        error: function (req) {
-                            mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
-                            register.error(componentName);
                         }
-                    }).load();
-                }
+
+                        var relatedTrails = container.querySelector('.related-trails');
+                        new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
+                        // upgrade images
+                        images.upgrade(relatedTrails);
+                        mediator.emit('modules:related:loaded', config, context);
+                        register.end(componentName);
+                    },
+                    error: function(req) {
+                        mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
+                        register.error(componentName);
+                    }
+                }).load();
             }
         }
     };

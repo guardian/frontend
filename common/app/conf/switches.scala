@@ -79,6 +79,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val AjaxRelatedContentSwitch = Switch("Performance Switches", "ajax-related-content",
+    "If this switch is turned on then related be loaded via ajax and not inline. Also requires related-content switch to be on.",
+    safeState = On, sellByDate = never
+  )
+
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
     safeState = On, sellByDate = never
@@ -413,6 +418,7 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
+    AjaxRelatedContentSwitch,
     CommercialSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
@@ -525,4 +531,9 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
   override def onStop() {
     Jobs.deschedule("SwitchBoardRefreshJob")
   }
+}
+
+// not really a switch, but I need to use this combination of switches in a number of place.
+object InlineRelatedContentSwitch {
+  def isSwitchedOn: Boolean = Switches.RelatedContentSwitch.isSwitchedOn && Switches.AjaxRelatedContentSwitch.isSwitchedOff
 }
