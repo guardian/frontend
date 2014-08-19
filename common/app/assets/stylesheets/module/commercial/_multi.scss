@@ -76,6 +76,10 @@ Multi component (AKA Frankenponent)
         .lineitem__book .lineitem__img {
             display: block;
         }
+        .commercial__home-link {
+            position: relative;
+            padding-left: 0;
+        }
         @include mq(tablet) {
             .lineitems {
                 @include rem((
