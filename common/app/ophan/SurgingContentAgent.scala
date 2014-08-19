@@ -1,35 +1,38 @@
 package ophan
 
-import common._
+import common.{AkkaAsync, Jobs, _}
+import dfp.londonTimeFormatter
+import org.joda.time.DateTime
 import play.api.libs.json.{JsArray, JsValue}
-import java.net.URL
+import play.api.{GlobalSettings, Application => PlayApp}
 import services.OphanApi
-import play.api.{Application => PlayApp, GlobalSettings}
-import common.{AkkaAsync, Jobs}
 
 object SurgingContentAgent extends Logging with ExecutionContexts {
 
-  private val agent = AkkaAgent[Map[String, Int]](Map.empty)
+  private val agent = AkkaAgent[SurgingContent](SurgingContent())
 
   def update() {
     log.info("Refreshing surging content.")
-
     val ophanQuery = OphanApi.getSurgingContent()
-
-    ophanQuery.map{ ophanResults =>
-
+    ophanQuery.map { ophanResults =>
       val surging: Seq[(String, Int)] = SurgeUtils.parse(ophanResults)
-
-      agent.send(surging.toMap)
+      agent.send(SurgingContent(surging.toMap))
     }
   }
 
-  def getSurging= {
-    agent.get()
-  }
+  def getSurging = agent.get()
 
-  def getSurgingLevelFor(id: String): Int = SurgeUtils.levelProvider(agent.get().get(id))
+  def getSurgingLevelFor(id: String): Int = SurgeUtils.levelProvider(agent.get().surges.get(id))
 }
+
+
+case class SurgingContent(surges: Map[String, Int] = Map.empty, timestamp: DateTime = DateTime.now()) {
+
+  lazy val sortedSurges: Seq[(String, Int)] = surges.toSeq.sortBy(_._2).reverse
+
+  lazy val lastUpdated: String = londonTimeFormatter.print(timestamp)
+}
+
 
 object SurgeUtils {
   def levelProvider(surgeLevel: Option[Int]) = {

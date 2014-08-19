@@ -1,8 +1,8 @@
 package dfp
 
 import common.ExecutionContexts
+import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.json.Json.{toJson, _}
 import play.api.libs.json.{JsValue, Json, Writes}
 import tools.Store
@@ -141,8 +141,6 @@ object DfpDataCacheJob extends ExecutionContexts {
       )
     }
   }
-
-  private val londonTimeFormatter = DateTimeFormat.longDateTime().withZone(DateTimeZone.forID("Europe/London"))
 
   def run() {
     future {
