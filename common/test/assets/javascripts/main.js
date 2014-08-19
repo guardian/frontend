@@ -18,7 +18,6 @@ requirejs.config({
         analytics:    '/base/common/app/assets/javascripts/modules/analytics',
         bean:         '/base/common/app/assets/javascripts/components/bean/bean',
         bonzo:        '/base/common/app/assets/javascripts/components/bonzo/bonzo',
-        domReady:     '/base/common/app/assets/javascripts/components/domready/ready',
         EventEmitter: '/base/common/app/assets/javascripts/components/eventEmitter/EventEmitter',
         qwery:        '/base/common/app/assets/javascripts/components/qwery/qwery',
         reqwest:      '/base/common/app/assets/javascripts/components/reqwest/reqwest',

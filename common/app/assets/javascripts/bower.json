@@ -11,7 +11,6 @@
     "curl": "~0.8.9",
     "qwery": "3.4.2",
     "reqwest": "git://github.com/guardian/reqwest.git",
-    "domready": "~1.0.4",
     "enhancer": "0.1.1",
     "videojs": "git://github.com/guardian/video.js.git#fabb393da9e139f6869bc0fdb95074d7ca062aa8",
     "videojs-contrib-ads": "guardian/videojs-contrib-ads#798b8a93cb293a95ede9af385c2354aa2c129216",
