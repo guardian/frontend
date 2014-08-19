@@ -229,6 +229,38 @@ $c-money-high: #63007f;
             ));
             padding-left: 0;
         }
+        .has-page-skin & {
+            .tools__calculators {
+                @include rem((
+                    right: $gs-gutter*1.5
+                ));
+            }
+            .facia-container__inner {
+                width: 100%;
+                @include rem((
+                    padding: 0 $gs-gutter/2
+                ));
+            }
+            .container__body {
+                width: 100%;
+                margin-left: 0;
+                
+                &.tabs__container {
+                    width: auto;
+                    @include rem((
+                        margin-left: gs-span(3) + $gs-gutter
+                    ));
+                }
+            }
+            .container__title {
+                float: none;
+            }
+            .commercial__home-link {
+                @include rem((
+                    right: $gs-gutter*2
+                ));
+            }
+        }
     }
     @include mq(faciaLeftCol, wide) {
         .commercial__home-link {
