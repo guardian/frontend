@@ -24,7 +24,7 @@ $control-size: 36px;
     text-overflow: ellipsis;
     text-align: left;
 
-    @include mq($from: 540) {
+    @include mq($from: 540px) {
         max-width: 200px;
     }
 
