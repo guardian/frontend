@@ -54,21 +54,22 @@ $control-offset: 36 + $gs-gutter/2;
     margin: 0;
     padding: 0;
     @include rem((
-        padding: 0 $gs-gutter/2,
-        border-bottom: 1px solid guss-colour(neutral-4)
+        padding: 0 $gs-gutter/2
     ));
-    &:last-of-type {
-        border-bottom: 0;
-    }
 }
 
 .nav-popup__group-header {
     @include fs-data(2);
     color: guss-colour(neutral-2);
     @include rem((
-        margin: $gs-gutter/2
+        padding: $gs-gutter/2,
+        border-top: 1px solid guss-colour(neutral-4)
     ));
-    margin-bottom: 0;
+    padding-bottom: 0;
+    margin: 0;
+    &:first-of-type {
+        border-top: 0;
+    }
 }
 
 .has-nav-popup {
