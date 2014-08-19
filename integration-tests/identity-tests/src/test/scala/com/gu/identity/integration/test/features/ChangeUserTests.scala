@@ -31,14 +31,14 @@ class ChangeUserTests extends IdentitySeleniumTestSuite {
       val userBeforeChange: User = UserSteps().createRandomBasicUser()
       val editAccountDetailsModule = UserSteps().checkUserIsLoggedInAndGoToAccountDetails(userBeforeChange)
 
-      val userWithChangedName = UserSteps().changeAddress(editAccountDetailsModule)
+      val userWithChangedAddress = UserSteps().changeAddress(editAccountDetailsModule)
 
-      userWithChangedName.addrLine1 should not be userBeforeChange.addrLine1
-      userWithChangedName.addrLine2 should not be userBeforeChange.addrLine2
-      userWithChangedName.town should not be userBeforeChange.town
-      userWithChangedName.county should not be userBeforeChange.county
-      userWithChangedName.postCode should not be userBeforeChange.postCode
-      userWithChangedName.country should not be userBeforeChange.country
+      userWithChangedAddress.addrLine1 should not be userBeforeChange.addrLine1
+      userWithChangedAddress.addrLine2 should not be userBeforeChange.addrLine2
+      userWithChangedAddress.town should not be userBeforeChange.town
+      userWithChangedAddress.county should not be userBeforeChange.county
+      userWithChangedAddress.postCode should not be userBeforeChange.postCode
+      userWithChangedAddress.country should not be userBeforeChange.country
     }
   }
 }
