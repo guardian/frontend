@@ -25,6 +25,14 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     userBeforeChange
   }
 
+  def createUserWithUserName(userName: String): User = {
+    logger.step(s"Creating user with username: $userName")
+    BaseSteps().goToStartPage(useBetaRedirect = false)
+    val registerPage = SignInSteps().clickSignInLink().clickRegisterNewUserLink()
+    val userBeforeChange = RegisterSteps().registerNewTempUserUsing(registerPage, userName)
+    userBeforeChange
+  }
+
   def goToEditAccountDetailsPage(pageWithSignInModule: ContainerWithSigninModulePage): EditAccountDetailsModule = {
     logger.step("Going to the edit account details page")
     val editProfilePage = goToEditProfilePage(pageWithSignInModule)
