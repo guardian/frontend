@@ -1,15 +1,25 @@
 define([
     'common/utils/ajax',
     'common/utils/$',
-    'common/utils/_',
-    'lodash/collections/groupby',
-    'lodash/collections/reduce'
+    'lodash/arrays/first',
+    'lodash/arrays/flatten',
+    'lodash/arrays/last',
+    'lodash/collections/forEach',
+    'lodash/collections/groupBy',
+    'lodash/collections/pluck',
+    'lodash/collections/reduce',
+    'lodash/objects/values'
 ], function(
     ajax,
     $,
-    _,
+    first,
+    flatten,
+    last,
+    forEach,
     groupBy,
-    reduce
+    pluck,
+    reduce,
+    values
 ) {
     function initialise() {
         var pingdom = document.getElementById('pingdom')
@@ -108,19 +118,19 @@ define([
         }).then(
             function(data) {
 
-                var todayData = groupBy(_.flatten(_.pluck(data.seriesData, 'data')),
+                var todayData = groupBy(flatten(pluck(data.seriesData, 'data')),
                     function(entry) { return entry.dateTime }
                 );
 
                 // Remove first & last Ophan entries, as they always seem slightly off
                 var keys =  Object.keys(todayData);
-                delete todayData[_.first(keys)];
-                delete todayData[_.last(keys)];
+                delete todayData[first(keys)];
+                delete todayData[last(keys)];
 
                 // Build Graph
                 var graphData = [['time', 'pageviews']];
 
-                _.forEach(todayData, function(viewsBreakdown, timestamp) {
+                forEach(todayData, function(viewsBreakdown, timestamp) {
                     var epoch = parseInt(timestamp, 10),
                         time  = new Date(epoch),
                         hours = ("0" + time.getHours()).slice(-2),
@@ -145,7 +155,7 @@ define([
                     });
 
                 // Average pageviews now
-                var lastOphanEntry = reduce(_.last(_.values(todayData)),
+                var lastOphanEntry = reduce(last(values(todayData)),
                     function(memo, entry) { return entry.count + memo }, 0);
                 var viewsPerSecond = Math.round(lastOphanEntry/60);
                 $('.pageviews-per-second').html('(' + viewsPerSecond + ' views/sec)');
