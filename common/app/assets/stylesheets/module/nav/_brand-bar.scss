@@ -46,7 +46,7 @@
     }
 }
 
-.brand-bar__item--has-control {
+.brand-bar__item {
     &:hover .control__icon-wrapper,
     & .is-active .control__icon-wrapper {
         border-color: #ffffff;
