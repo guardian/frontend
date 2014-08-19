@@ -30,7 +30,7 @@ function (
                     },
                     // this is an optional filter function
                     function(container) {
-                        return $css(bonzo(container)) !== 'none';
+                        return $css(bonzo(container), 'display') !== 'none';
                     }
                 );
             imager.init(containers, options);

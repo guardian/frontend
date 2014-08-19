@@ -28,7 +28,7 @@ define([
                 }
             ),
             $col = $(config.columnSelector),
-            colIsHidden = $col.length && $css($col) === 'none';
+            colIsHidden = $col.length && $css($col, 'display') === 'none';
 
         // is the switch off, or not an article, or the secondary column hidden
         if (!config.switches.standardAdverts || !/Article|LiveBlog/.test(config.page.contentType) || colIsHidden) {

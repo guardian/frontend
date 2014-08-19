@@ -441,7 +441,7 @@ define([
                 return bonzo(adSlot);
             })
             .filter(function ($adSlot) {
-                return $css($adSlot) !== 'none';
+                return $css($adSlot, 'display') !== 'none';
             })
             .valueOf();
 
