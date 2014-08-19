@@ -310,7 +310,12 @@
                             click: toggleImageAdjustHide,
                             text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
                             css: {selected: meta.imageAdjust() === 'hide'}"></a>
-
+                        &middot;
+                        Main media video
+                        <a data-bind="
+                            click: toggleShowMainVideo,
+                            text: meta.showMainVideo() ? 'overridden' : 'override',
+                            css: {selected: meta.videoId}"></a>
                         &middot;
                         Mark as
                         <a data-bind="

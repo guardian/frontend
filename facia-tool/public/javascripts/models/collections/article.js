@@ -64,6 +64,7 @@ define([
                 'imageSrc',
                 'imageSrcWidth',
                 'imageSrcHeight',
+                'showMainVideo',
                 'isBreaking',
                 'group',
                 'snapType',
@@ -248,6 +249,11 @@ define([
 
         Article.prototype.toggleImageAdjustHide = function() {
             this.meta.imageAdjust(this.meta.imageAdjust() === 'hide' ? undefined : 'hide');
+            this._save();
+        };
+
+        Article.prototype.toggleShowMainVideo = function () {
+            this.meta.showMainVideo(!this.meta.showMainVideo());
             this._save();
         };
 
