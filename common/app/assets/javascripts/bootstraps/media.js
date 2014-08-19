@@ -297,7 +297,7 @@ define([
 
                     bonzo(el).addClass('vjs');
 
-                    var mediaId = el.getAttribute('data-media-id'),
+                    var mediaId = bonzo(el).attr('data-media-id'),
                         vjs = modules.createVideoObject(el, {
                             controls: true,
                             autoplay: false,
@@ -349,9 +349,9 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if (el.getAttribute('data-show-end-slate') === 'true' &&
+                                if (bonzo(el).attr('data-show-end-slate') === 'true' &&
                                     /desktop|wide/.test(detect.getBreakpoint())) {
-                                    modules.initEndSlate(player, el.getAttribute('data-end-slate'));
+                                    modules.initEndSlate(player, bonzo(el).attr('data-end-slate'));
                                 }
                             } else {
                                 vjs.playlist({
