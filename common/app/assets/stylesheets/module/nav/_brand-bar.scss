@@ -46,11 +46,11 @@
     }
 }
 
-.brand-bar__item {
+.brand-bar__item--action {
     &:hover .control__icon-wrapper,
     &:active .control__icon-wrapper,
     &:focus .control__icon-wrapper,
-    & .is-active .control__icon-wrapper {
+    &.is-active .control__icon-wrapper {
         border-color: #ffffff;
     }
 }
