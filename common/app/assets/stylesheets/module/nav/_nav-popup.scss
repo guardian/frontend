@@ -207,6 +207,22 @@ $control-offset: 36 + $gs-gutter/2;
             }
         }
     }
+
+    .nav-popup {
+        @include mq(mobileLandscape) {
+            @include rem((
+                left: $control-offset
+            ));
+        };
+    }
+
+    .brand-bar__item--action:before {
+        @include mq(mobileLandscape) {
+            @include rem((
+                margin-left: $control-offset * .5 - $nav-popup-anchor-arrow-size
+            ));
+        };
+    }
 }
 
 
