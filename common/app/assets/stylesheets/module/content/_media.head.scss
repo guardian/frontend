@@ -1,8 +1,6 @@
 .content__main-column--media {
     @include mq(wide) {
-        @include rem((
-            width: gs-span(9)
-        ));
+        width: gs-span(9);
     }
 
     .content__main-column__body a {
@@ -11,18 +9,14 @@
     }
 }
 .content__main-column--audio .content__main-column__body {
-    @include rem((
-        margin-top: $gs-baseline,
-        max-width: gs-span(8)
-    ));
+    margin-top: $gs-baseline;
+    max-width: gs-span(8);
 }
 
 .content--media {
     background-color: $c-neutral1;
     color: $c-neutral7;
-    @include rem((
-        padding-bottom: $gs-baseline*2
-    ));
+    padding-bottom: $gs-baseline*2;
 
     .content__section .tone-colour {
         color: $c-commentAccent;
