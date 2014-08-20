@@ -1,44 +1,52 @@
 var $$FSR = {
-   'timestamp': 'June 5, 2014 @ 11:07 AM',
-   'version': '16.2.1',
-   'build': '7',
-   'enabled': true,
-   'frames' : false,
-   'sessionreplay': true,
-   'auto' : true,
-   'encode' : true,
-   'files': 'http://assets.guim.co.uk/javascripts/vendor/foresee5/',
-   'html_files': '/surveys/foresee/',
-   // needs to be set when foresee-transport.swf is not located at 'files'
-   //'swf_files': '__swf_files_'
-   'id': 'fdIXz/UlLcgRJ+Qwv25S0Q==',
-   'definition': 'foresee-surveydef.js',
-   'swf' : {fileName:'foresee-transport.swf', scriptAccess:'always'},
-   'worker' : 'foresee-worker.js',
-   'embedded': false,
-   'replay_id': 'theguardian.com',
-   'attach': false,
-   'renderer':'W3C',	// or "ASRECORDED"
-   'layout':'CENTERFIXED',	// or "LEFTFIXED" or "LEFTSTRETCH" or "CENTERSTRETCH"
-   'triggerDelay': undefined,
-   'heartbeat' : true,
-   'pools' : [
-      {
-         path: '.',
-         sp: 100  // CHANGE ONLY WHEN INCLUDING SESSION REPLAY
-      }
-   ],
-   'sites': [
-      {
-         path: /\w+-?\w+\.(com|org|edu|gov|net|co\.uk)/
-      },
-      {
-         path: '.',
-         domain: 'default'
-      }
-   ],
-   storageOption: 'cookie',
-   nameBackup:window.name
+    'timestamp': 'August 19, 2014 @ 4:20 PM',
+    'version': '16.2.1',
+    'build': '10',
+    'enabled': true,
+    'frames': false,
+    'sessionreplay': true,
+    'auto': true,
+    'encode': true,
+    'files': '/assets/javascripts/vendor/foresee/8192014/',
+	'html_files': '/surveys/foresee/8192014/',
+    // needs to be set when foresee-transport.swf is not located at 'files'
+    //'swf_files': '__swf_files_'
+    'id': 'fdIXz/UlLcgRJ+Qwv25S0Q==',
+    'definition': 'foresee-surveydef.js',
+    'swf': {
+        fileName: 'foresee-transport.swf',
+        scriptAccess: 'always'
+    },
+    'worker': 'foresee-worker.js',
+    'embedded': false,
+    'replay_id': 'theguardian.com',
+    'attach': false,
+    'renderer': 'W3C', // or "ASRECORDED"
+    'layout': 'CENTERFIXED', // or "LEFTFIXED" or "LEFTSTRETCH" or "CENTERSTRETCH"
+    'triggerDelay': undefined,
+    'heartbeat': true,
+    'pools': [{
+        path: '.',
+        sp: 100 // CHANGE ONLY WHEN INCLUDING SESSION REPLAY
+    }],
+    'sites': [{
+        path: 'www.theguardian.com',
+        domain: 'theguardian.com',
+        files: '//assets.guim.co.uk/javascripts/vendor/foresee/8192014/',
+        html_files: '//www.theguardian.com/surveys/foresee/8192014/'
+    }, {
+        path: 'm.code.dev-theguardian.com',
+        domain: 'dev-theguardian.com',
+        files: '//aws-frontend-static.s3.amazonaws.com/CODE/frontend-static/javascripts/vendor/foresee/8192014/',
+        html_files: '//m.code.dev-theguardian.com/surveys/foresee/8192014/'
+    }, {
+        path: /\w+-?\w+\.(com|org|edu|gov|net|co\.uk)/
+    }, {
+        path: '.',
+        domain: 'default'
+    }],
+    storageOption: 'cookie',
+    nameBackup: window.name
 };
 
 var FSRCONFIG = {};
