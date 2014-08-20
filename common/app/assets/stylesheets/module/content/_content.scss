@@ -171,6 +171,14 @@
     }
 }
 
+.content__inlinesection {
+    @include fs-header(3);
+    @include box-sizing(border-box);
+    @include rem((
+        padding: $gs-baseline/2 0 $gs-baseline 0
+    ));
+}
+
 .content__headline {
     @include fs-headline(5);
     @include rem((
