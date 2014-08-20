@@ -296,6 +296,11 @@ object Switches extends Collections {
     safeState = Off, sellByDate = new LocalDate(2014, 9, 30)
   )
 
+  val ToneLabelsSwitch = Switch("Feature Switches", "tone-labels",
+    "If this is switched on then tone labels are shown on sublinks",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 30)
+  )
+
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -477,6 +482,7 @@ object Switches extends Collections {
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
+    ToneLabelsSwitch,
     ChildrensBooksSwitch
   )
 
