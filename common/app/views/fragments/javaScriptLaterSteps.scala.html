@@ -140,7 +140,7 @@
                     tags: {
                         edition: config.page.edition,
                         contentType: config.page.contentType,
-                        buildNumber: config.page.buildNumber
+                        version: config.page.coreHash
                     },
                     dataCallback: function(data) {
                         data.tags.origin = (/j.ophan.co.uk/.test(data.culprit)) ? 'ophan' : 'app';

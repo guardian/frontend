@@ -49,6 +49,11 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
   val lookup = new AssetMap(base, assetMap)
   def apply(path: String): Asset = lookup(path)
 
+  def getHash(path: String): String = """/([a-z\d]{32})/[^/]*$""".r.findFirstMatchIn(apply(path).toString) match {
+    case Some(m) => m.group(1)
+    case None => ""
+  }
+
   object css {
 
     def head(projectOverride: Option[String] = None) = css(projectOverride.getOrElse(Configuration.environment.projectName))
