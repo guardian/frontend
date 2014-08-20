@@ -2,9 +2,7 @@
     display: block;
     margin: 0 auto;
     border: 0;
-    @include rem((
-        max-width: gs-span(6)
-    ));
+    max-width: gs-span(6);
     width: 100%;
 }
 
@@ -13,16 +11,12 @@
 }
 
 .formstack-heading--first {
-    @include rem((
-        margin-top: ($gs-baseline/3)*4
-    ));
+    margin-top: ($gs-baseline/3)*4;
     @include fs-header(5);
 }
 
 .formstack-heading--first + .formstack-section {
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
+    margin-bottom: $gs-baseline*2;
 }
 
 .formstack-required {
@@ -39,9 +33,7 @@
     position: absolute;
     color: $c-neutral1;
     font-family: $f-data;
-    @include rem((
-        font-size: 13px,
-        margin-left: 6px,
-        padding-top: ($gs-baseline/3)*9
-    ));
+    font-size: 13px;
+    margin-left: 6px;
+    padding-top: ($gs-baseline/3)*9;
 }
