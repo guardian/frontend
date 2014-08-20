@@ -291,7 +291,7 @@ $commercial-cta-diameter: (
     ));
     @include fs-textSans(2);
     border: 0;
-    @include border-radius(0); // Prevent rounded corners in iOS
+    @include border-radius(18px);
     float: left;
     overflow: hidden;
 
@@ -301,24 +301,19 @@ $commercial-cta-diameter: (
     }
 }
 .commercial__search__submit {
-    @extend %icon-holder-circle;
+    @include rem((
+        width: $gs-baseline*3,
+        height: $gs-baseline*3
+    ));
     position: absolute;
-    top: 2px;
-    right: 2px;
+    right: 0;
+    opacity: 0.67;
 
     &:hover,
-    &:focus {
-        background-color: #ffffff;
-        outline: none;
-    }
-
+    &:focus,
     &:active {
-        background-color: #ffffff;
         outline: none;
-    }
-
-    .i-search {
-        margin-top: 3px;
+        opacity: 1;
     }
 }
 
