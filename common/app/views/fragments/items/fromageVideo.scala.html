@@ -1,20 +1,24 @@
-@(videoElement: model.VideoElement, title: String, boost: Boolean, isFirst: Boolean, endSlatePath: Option[String])
+@(videoElement: model.VideoElement, title: String, isFirst: Boolean, endSlatePath: String)
 
+@import model.VideoPlayer
 @import views.html.fragments.media.video
-@import views.support.{Item300, Item220, RenderClasses}
+@import views.support.{Video460, RenderClasses}
 
 <div class="@RenderClasses(Map(
     "fromage__video-wrapper" -> true,
-    "fromage__video-wrapper--boost" -> boost,
+    "fromage__video-wrapper--boost" -> true,
     "fromage__video-wrapper--first" -> isFirst,
     "fromage__video-wrapper--second" -> !isFirst,
     "u-faux-block-link__promote" -> true
 ))">
     <div class="fromage__video-container">
-    @if(boost) {
-        @video(videoElement, Item300, title, 300, 180, true, false, endSlatePath)
-    } else {
-        @video(videoElement, Item220, title, 220, 132, true, false, endSlatePath)
-    }
+        @video(VideoPlayer(
+            videoElement,
+            Video460,
+            title,
+            autoPlay = false,
+            showControlsAtStart = false,
+            endSlatePath
+        ))
     </div>
 </div>

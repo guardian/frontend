@@ -1,6 +1,8 @@
 @(article: model.Article)(implicit request: RequestHeader)
+@import model.EndSlateComponents
 
-@import views.support.{Item620, SeoOptimisedContentImage}
+@import model.{AudioPlayer, VideoPlayer}
+@import views.support.{Video640, SeoOptimisedContentImage}
 @import views.BodyCleaner
 
 @if(article.hasMainEmbed) {
@@ -16,7 +18,14 @@
                     <figure itemprop="associatedMedia video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video"
                     class="media-primary media-content">
                         @article.mainVideo.map { video =>
-                            @fragments.media.video(video, Item620, article.headline, 620, 350)
+                            @fragments.media.video(VideoPlayer(
+                                video,
+                                Video640,
+                                article.headline,
+                                autoPlay = false,
+                                showControlsAtStart = true,
+                                endSlatePath = EndSlateComponents.fromContent(article).toUriPath
+                            ))
                         }
 
                         @posters.headOption.map { image =>
@@ -31,7 +40,13 @@
             @if(article.hasMainAudio) {
                 <figure itemprop="associatedMedia audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio"
                     class="media-primary media-content">
-                    @fragments.media.audio(article.mainAudio, article.headline)
+                    @article.mainAudio.map { audioElement =>
+                        @fragments.media.audio(AudioPlayer(
+                            audioElement,
+                            article.headline,
+                            autoPlay = false
+                        ))
+                    }
                 </figure>
             } else {
                 @fragments.img(article.mainPicture, article.hasShowcaseMainPicture, article.isFeature)

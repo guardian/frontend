@@ -19,7 +19,7 @@
         <div class="fromage__container">
             @trail match {
                 case v: Video if v.mainVideo.isDefined && imageAdjust == "boost" => {
-                    @fromageVideo(v.mainVideo.get, v.webTitle, true, true, Some(v.endSlatePath))
+                    @fromageVideo(v.mainVideo.get, v.webTitle, true, v.endSlatePath)
                 }
                 case _ => {
                     @if(imageAdjust != Some("hide")) {
@@ -39,9 +39,7 @@
                     }
                 }
             }
-            <a @LinkTo(trail).map{url=>href="@url"} class="fromage__link" data-link-name="article">
-                @fragments.items.elements.title(trail, index, 0)
-            </a>
+            @fragments.items.elements.title(trail, index, 0)
 
             @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
 
@@ -73,7 +71,9 @@
                 <div class="fromage__standfirst">@Html(text)</div>
             }
 
-            @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            <div class="u-faux-block-link__promote">
+                @fragments.items.elements.supporting(trail.supporting, trail, style = "fit")
+            </div>
 
             @if(trail.isCommentable) {
                 @fragments.items.elements.meta(trail)

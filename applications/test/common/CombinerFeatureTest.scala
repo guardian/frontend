@@ -29,7 +29,7 @@ class CombinerFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
         val trails = $(".fromage, .facia-slice__item, .linkslist__item")
         Then("I should see content tagged with both the section and the tag")
-        findFirst(".container__title").getText.toLowerCase should be ("science + apple")
+        findFirst(".container__meta__title").getText.toLowerCase should be ("science + apple")
         trails.length should be > 10
       }
     }

@@ -2,6 +2,7 @@ import common.{CloudWatchApplicationMetrics, ContentApiMetrics}
 import conf.{Configuration, Filters}
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
+import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters
 
@@ -13,8 +14,8 @@ object Global
   with SurgingContentAgentLifecycle {
   override lazy val applicationName = "frontend-article"
 
-  override def applicationMetrics: Map[String, Double] = super.applicationMetrics ++ Map(
-    ("elastic-content-api-calls", ContentApiMetrics.ElasticHttpTimingMetric.getAndReset.toDouble),
-    ("elastic-content-api-timeouts", ContentApiMetrics.ElasticHttpTimeoutCountMetric.getAndReset.toDouble)
+  override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
+    ContentApiMetrics.ElasticHttpTimingMetric,
+    ContentApiMetrics.ElasticHttpTimeoutCountMetric
   )
 }

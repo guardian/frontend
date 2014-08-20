@@ -3,6 +3,21 @@
 @import org.joda.time.DateTime
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
+
+    @if(ReleaseMessageSwitch.isSwitchedOn) {
+        <div class="site-message--footer is-hidden js-footer-message" data-link-name="release message">
+            <div class="gs-container">
+                <div class="site-message__inner">
+                    <div class="site-message__media">
+                        <i class="i i-g-white-36"></i>
+                    </div>
+                    <div class="site-message__copy js-footer-site-message-copy u-cf"></div>
+                </div>
+            </div>
+        </div>
+    }
+
+
     <div class="l-footer__primary">
         <div id="footer-nav" class="gs-container">
             <div class="brand-bar u-cf">
@@ -10,7 +25,7 @@
                     <span class="u-h">The Guardian</span>
                     <i class="i i-guardian-logo-160"></i>
                 </a>
-                <a class="brand-bar__item" data-link-name="back to top" href="#top">
+                <a class="brand-bar__item brand-bar__item--action" data-link-name="back to top" href="#top">
                     <span class="control__icon-wrapper">
                         <span class="control__icon">
                             <i class="i i-arrow-white-up-36"></i>

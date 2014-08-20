@@ -21,11 +21,13 @@
     "grunt-karma": "^0.8.3",
     "grunt-mkdir": "~0.1.1",
     "grunt-pagespeed": "^0.2.0",
+    "grunt-px-to-rem": "^0.2.7",
     "grunt-scss-lint": "0.3.2",
     "grunt-shell": "^0.7.0",
     "grunt-text-replace": "~0.3.11",
     "grunt-webfontjson": "~0.0.3",
     "imagemin-pngquant": "^0.1.2",
+    "jit-grunt": "^0.8.0",
     "karma": "^0.12.16",
     "karma-chrome-launcher": "~0.1.0",
     "karma-coffee-preprocessor": "^0.2.1",
@@ -38,7 +40,8 @@
     "mkdirp": "^0.5.0",
     "moment": "^2.7.0",
     "phantomjs": "~1.9.1",
-    "svgo": "0.4.4"
+    "svgo": "0.4.4",
+    "time-grunt": "^0.4.0"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"

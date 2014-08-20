@@ -27,6 +27,7 @@ require([
     // utilities
     'common/utils/_',
     'common/utils/$',
+    'common/utils/$css',
     'common/utils/ajax',
     'common/utils/atob',
     'common/utils/clamp',
@@ -54,5 +55,6 @@ require([
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/lazyload',
+    'common/modules/ui/images',
     'common/modules/ui/tabs'
 ], function() {});

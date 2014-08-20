@@ -30,6 +30,26 @@
     }
 }
 
+.content__head {
+    @include mq(tablet) {
+        @include rem((
+            padding-top: $content-top-padding
+        ));
+    }
+
+    &.content__head--tonal {
+        padding-top: 0;
+
+        .tone-background {
+            @include mq(tablet) {
+                @include rem((
+                    padding-top: $content-top-padding
+                ));
+            }
+        }
+    }
+}
+
 .content__main-column {
     position: relative;
 
@@ -107,6 +127,10 @@
         margin-top: $gs-baseline,
         margin-bottom: $gs-baseline
     ));
+    
+    .content--media & a {
+        color: guss-colour(neutral-5);
+    }
 }
 
 .content__section {
@@ -128,7 +152,7 @@
 
     @include mq(tablet) {
         @include rem((
-            padding-bottom: ($gs-baseline/2) * 3
+            padding-bottom: $gs-baseline/2
         ));
     }
 
@@ -254,7 +278,7 @@
     position: relative;
     color: $c-neutral2;
     @include box-sizing(border-box);
-    @include fs-data(2);
+    @include fs-textSans(1);
     @include rem((
         padding-top: $gs-baseline/3
     ));
@@ -272,15 +296,15 @@
 
     @include mq(tablet) {
         padding-right: 0;
-        @include fs-data(3, true);
     }
 
     @include mq(leftCol) {
         @include rem((
-            height: $gs-row-height,
+            height: gs-height(1) + $gs-baseline,
             padding-top: $gs-baseline/6,
             padding-bottom: $gs-baseline
         ));
+        margin-bottom: 0;
         border-top: 1px dotted $c-neutral5;
     }
 
@@ -376,11 +400,10 @@
 }
 
 .content-meta {
-    @include fs-textSans(3);
+    @include fs-textSans(1);
     font-weight: bold;
     @include rem((
-        margin: 0 0 $gs-baseline/2,
-        line-height: 16px
+        margin: 0 0 $gs-baseline/2
     ));
 
     @include mq(tablet) {
@@ -472,8 +495,9 @@
         margin-bottom: 0;
         padding-right: 0;
         border-top: 1px dotted $c-neutral5;
+        @include box-sizing(border-box);
         @include rem((
-            min-height: gs-height(1),
+            min-height: gs-height(1) + $gs-baseline,
             padding-top: $gs-baseline/6,
             padding-bottom: $gs-baseline
         ));
@@ -520,7 +544,7 @@
 
 .commentcount {
     display: none;
-    @include fs-data(3);
+    @include fs-textSans(1);
 
     i {
         vertical-align: bottom;
@@ -542,7 +566,7 @@
         position: absolute;
         right: 0;
         @include rem((
-            top: $gs-baseline/2
+            top: $gs-baseline/3
         ));
 
         .content__head & {

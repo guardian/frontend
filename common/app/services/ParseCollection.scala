@@ -78,7 +78,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   case class CollectionItem(id: String, metaData: Option[Map[String, JsValue]], webPublicationDate: Option[DateTime]) {
-    val isSnap: Boolean = id.startsWith("snap/")
+    val isSnap: Boolean = Snap.isSnap(id)
   }
 
   def requestCollection(id: String): Future[WSResponse] = {

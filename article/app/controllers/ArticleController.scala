@@ -5,19 +5,20 @@ import common._
 import conf._
 import model._
 import org.jsoup.nodes.Document
-import play.api.mvc.{ Content => _, _ }
-import views.support._
-import views.BodyCleaner
-import scala.concurrent.Future
-import scala.collection.JavaConversions._
 import performance.MemcachedAction
+import play.api.mvc.{Content => _, _}
+import views.BodyCleaner
+import views.support._
+
+import scala.collection.JavaConversions._
+import scala.concurrent.Future
 
 trait ArticleWithStoryPackage {
   def article: Article
-  def storyPackage: List[Trail]
+  def related: RelatedContent
 }
-case class ArticlePage(article: Article, storyPackage: List[Trail]) extends ArticleWithStoryPackage
-case class LiveBlogPage(article: LiveBlog, storyPackage: List[Trail]) extends ArticleWithStoryPackage
+case class ArticlePage(article: Article, related: RelatedContent) extends ArticleWithStoryPackage
+case class LiveBlogPage(article: LiveBlog, related: RelatedContent) extends ArticleWithStoryPackage
 
 object ArticleController extends Controller with Logging with ExecutionContexts {
 
@@ -54,6 +55,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
       .showExpired(true)
+      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showTags("all")
       .showFields("all")
       .showReferences("all")
@@ -61,11 +63,13 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
 
     val result = response map { response =>
       val storyPackage = response.storyPackage map { Content(_) }
+      val related = response.relatedContent map { Content(_) }
+
 
       val supportedContent = response.content.filter { c => c.isArticle || c.isLiveBlog || c.isSudoku }
       val content = supportedContent map { Content(_) } map {
-        case liveBlog: LiveBlog => LiveBlogPage(liveBlog, storyPackage.filterNot(_.id == liveBlog.id))
-        case article: Article => ArticlePage(article, storyPackage.filterNot(_.id == article.id))
+        case liveBlog: LiveBlog => LiveBlogPage(liveBlog, RelatedContent(liveBlog, response))
+        case article: Article => ArticlePage(article, RelatedContent(article, response))
       }
 
       ModelOrResult(content, response)

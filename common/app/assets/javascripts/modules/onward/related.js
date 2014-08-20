@@ -57,8 +57,10 @@ define([
     Related.prototype.renderRelatedComponent = function(config, context) {
         var container;
 
-        if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
+        var fetchRelated = config.switches.relatedContent && config.switches.ajaxRelatedContent && config.page.showRelatedContent;
+            config.page.section !== 'childrens-books-site';
 
+        if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
             new Expandable({
                 dom: context.querySelector('.related-trails'),
                 expanded: false,
@@ -66,8 +68,8 @@ define([
             }).init();
             mediator.emit('modules:related:loaded', config, context);
 
-        } else if (config.switches && config.switches.relatedContent && config.page.showRelatedContent &&
-                   config.page.section !== 'childrens-books-site') {
+        } else if (fetchRelated) {
+
             container = context.querySelector('.js-related');
             if (container) {
                 var popularInTag = this.popularInTagOverride(config),
@@ -75,8 +77,11 @@ define([
                 register.begin(componentName);
 
                 container.setAttribute('data-component', componentName);
+
+                var relatedUrl = Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json';
+
                 new LazyLoad({
-                    url: Related.overrideUrl || popularInTag || '/related/' + config.page.pageId + '.json',
+                    url: relatedUrl,
                     container: container,
                     success: function () {
                         if (Related.overrideUrl) {

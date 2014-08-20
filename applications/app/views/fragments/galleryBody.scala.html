@@ -1,6 +1,6 @@
-@(gallery: Gallery, storyPackage: List[Trail], index: Int)(implicit request: RequestHeader)
+@(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
 <div class="l-side-margins l-side-margins--layout-content">
-    <article class="content content--gallery tone-@gallery.visualTone"
+    <article class="content content--media content--gallery tone-@gallery.visualTone"
         itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
 
         @fragments.headDefault(gallery)
@@ -14,7 +14,7 @@
                 @fragments.galleryThumbs(gallery, showCta=true)
 
                 <!-- Non-JS Gallery / LightboxSwitch off mode -->
-                <div class="js-hidden">
+                <div class="modern-hidden">
                     <p class="gallery-nav">
 
                         @if(index > 1) {
@@ -56,11 +56,10 @@
                 </div>
 
                 <div class="social-wrapper" data-component="share">
-                    @fragments.social(gallery)
+                    @fragments.social(gallery, iconModifier = "white")
                 </div>
             </div>
         </div>
     </article>
-
-    @fragments.contentFooter(gallery, storyPackage)
+    @fragments.contentFooter(gallery, related, "media")
 </div>

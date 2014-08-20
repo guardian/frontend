@@ -60,14 +60,6 @@ object CloudWatch extends implicits.Futures{
     ("Fastly Hits and Misses (USA) - per minute, average", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
   )
 
-  private val jsErrorMetrics = List(
-    ("JavaScript errors caused by adverts", "ads"),
-    ("JavaScript errors from iOS", "js.ios"),
-    ("JavaScript errors from iOS", "js.android"),
-    ("JavaScript errors from iOS", "js.unknown"),
-    ("JavaScript errors from iOS", "js.windows")
-  )
-
   val assetsFiles = Seq(
     "app.js",
     "facia.js",
@@ -137,21 +129,6 @@ object CloudWatch extends implicits.Futures{
           asyncHandler)
       )
     }.toSeq
-  }
-
-  def jsErrors = {
-    val metrics = jsErrorMetrics.map{ case (graphTitle, metric) =>
-        euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-          .withStartTime(new DateTime().minusHours(6).toDate)
-          .withEndTime(new DateTime().toDate)
-          .withPeriod(120)
-          .withStatistics("Average")
-          .withNamespace("Diagnostics")
-          .withMetricName(metric)
-          .withDimensions(stage),
-          asyncHandler)
-        }
-    new LineChart("JavaScript Errors", Seq("Time") ++ jsErrorMetrics.map{ case(title, name) => name}.toSeq, metrics:_*)
   }
 
   def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>

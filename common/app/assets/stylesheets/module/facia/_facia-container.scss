@@ -133,6 +133,7 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
                 }
             }
         }
+        @include container__meta(faciaLeftCol, desktop);
     }
 }
 @mixin facia-container--layout-content {
@@ -158,17 +159,13 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
             }
         }
         @include mq(leftCol) {
-            .container__title,
-            .container__meta {
+            .container__title {
                 margin-bottom: 0;
                 float: left;
                 @include rem((
                     width: $left-column !important,
                     margin-right: $gs-gutter
                 ));
-            }
-            .container__meta {
-                clear: left;
             }
             .container__body {
                 overflow: hidden;
@@ -178,8 +175,7 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
             }
         }
         @include mq(wide) {
-            .container__title,
-            .container__meta {
+            .container__title {
                 @include rem((
                     width: $left-column-wide !important
                 ));
@@ -190,6 +186,7 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
                 ));
             }
         }
+        @include container__meta(leftCol, rightCol);
     }
 }
 @mixin facia-container--layout-discussion {
@@ -204,6 +201,35 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
         .container__border,
         .container__border.tone-accent-border {
             border-top: 1px solid $c-neutral4;
+        }
+    }
+}
+@mixin container__meta($leftColumn, $halfWidthBreakpoint) {
+    .container__meta {
+        @include rem((
+            padding-top: $gs-baseline/2
+        ));
+        @include mq($halfWidthBreakpoint) {
+            @include rem((
+                padding-top: $gs-baseline/1.5
+            ));
+        }
+        @include mq($halfWidthBreakpoint, $leftColumn) {
+            max-width: 50%;
+        }
+        @include mq($leftColumn) {
+            margin-bottom: 0;
+            float: left;
+            clear: left;
+            @include rem((
+                width: $left-column !important,
+                margin-right: $gs-gutter
+            ));
+        }
+        @include mq(wide) {
+            @include rem((
+                width: $left-column-wide !important
+            ));
         }
     }
 }

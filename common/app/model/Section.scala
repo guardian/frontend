@@ -15,8 +15,6 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
 
   override lazy val isFront = true
 
-  override lazy val description = Some(s"Latest news and comment on ${webTitle.toLowerCase()} from the Guardian")
-
   override lazy val url: String = SupportedUrl(delegate)
 
   override lazy val analyticsName = s"GFE:$section"

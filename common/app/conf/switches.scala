@@ -79,6 +79,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val AjaxRelatedContentSwitch = Switch("Performance Switches", "ajax-related-content",
+    "If this switch is turned on then related be loaded via ajax and not inline. Also requires related-content switch to be on.",
+    safeState = On, sellByDate = never
+  )
+
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
     safeState = On, sellByDate = never
@@ -399,14 +404,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 9, 30)
   )
 
-  val CenturyRedirectionSwitch = Switch("Feature Switches", "redirect-century-pages",
-    "If switched on, we redirect /century and /century/yyyy-yyyy to valid (non-R1) endpoints",
-    safeState = Off,
-
-    // extending as the owner of the switch is on holiday.
-    sellByDate = new LocalDate(2014, 8, 18)
-  )
-
   val ChildrensBooksSwitch = Switch("Feature Switches", "childrens-books-hide-popular",
     "If switched on, video pages in the childrens books section will not show popular videos",
     safeState = On, sellByDate = new LocalDate(2014, 9, 8)
@@ -416,6 +413,7 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
+    AjaxRelatedContentSwitch,
     CommercialSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
@@ -479,7 +477,6 @@ object Switches extends Collections {
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
-    CenturyRedirectionSwitch,
     ChildrensBooksSwitch
   )
 
@@ -528,4 +525,9 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
   override def onStop() {
     Jobs.deschedule("SwitchBoardRefreshJob")
   }
+}
+
+// not really a switch, but I need to use this combination of switches in a number of place.
+object InlineRelatedContentSwitch {
+  def isSwitchedOn: Boolean = Switches.RelatedContentSwitch.isSwitchedOn && Switches.AjaxRelatedContentSwitch.isSwitchedOff
 }

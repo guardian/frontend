@@ -1,8 +1,8 @@
 package dfp
 
 import common.ExecutionContexts
+import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.json.Json.{toJson, _}
 import play.api.libs.json.{JsValue, Json, Writes}
 import tools.Store
@@ -123,14 +123,31 @@ object DfpDataCacheJob extends ExecutionContexts {
     }
   }
 
-  private val londonTimeFormatter = DateTimeFormat.longDateTime().withZone(DateTimeZone.forID("Europe/London"))
+  private implicit val inlineMerchandisingTagSetWrites = new Writes[InlineMerchandisingTagSet] {
+    def writes(tagSet: InlineMerchandisingTagSet): JsValue = {
+      Json.obj(
+        "keywords" -> tagSet.keywords,
+        "series" -> tagSet.series,
+        "contributors" -> tagSet.contributors
+      )
+    }
+  }
+
+  private implicit val inlineMerchandisingTargetedTagsReportWrites = new Writes[InlineMerchandisingTargetedTagsReport] {
+    def writes(report: InlineMerchandisingTargetedTagsReport): JsValue = {
+      Json.obj(
+        "updatedTimeStamp" -> report.updatedTimeStamp,
+        "targetedTags" -> report.targetedTags
+      )
+    }
+  }
 
   def run() {
     future {
       val data = DfpDataExtractor(DfpDataHydrator.loadCurrentLineItems())
 
       if (data.isValid) {
-        val now = londonTimeFormatter.print(DateTime.now())
+        val now = printLondonTime(DateTime.now())
 
         val sponsorships = data.sponsorships
         Store.putDfpSponsoredTags(stringify(toJson(SponsorshipReport(now, sponsorships))))
@@ -138,8 +155,8 @@ object DfpDataCacheJob extends ExecutionContexts {
         val advertisementFeatureSponsorships = data.advertisementFeatureSponsorships
         Store.putDfpAdvertisementFeatureTags(stringify(toJson(SponsorshipReport(now, advertisementFeatureSponsorships))))
 
-        val inlineMerchandisingSponsorships = data.inlineMerchandisingSponsorships
-        Store.putInlineMerchandisingSponsorships(stringify(toJson(SponsorshipReport(now, inlineMerchandisingSponsorships))))
+        val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
+        Store.putInlineMerchandisingSponsorships(stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
 
         val pageSkinSponsorships = data.pageSkinSponsorships
         Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))

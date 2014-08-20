@@ -16,7 +16,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val webUrl: String = delegate.webUrl
   lazy val webTitle: String = delegate.webTitle
-  override lazy val description = Some(delegate.description.getOrElse(s"Latest news and comment on $name from the Guardian"))
+  override lazy val description = delegate.description
 
   override lazy val url: String = SupportedUrl(delegate)
 

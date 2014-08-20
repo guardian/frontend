@@ -1,7 +1,7 @@
 @(page: ImageContentPage)(implicit request: RequestHeader)
 @import conf.Switches._
 
-@defining((page.image, page.storyPackage)) { case (image, storyPackage) =>
+@defining(page.image) { image =>
 
 <article class="content content--image tone-@image.visualTone" itemprop="mainContentOfPage" itemscope itemtype="@image.schemaType" role="main">
 
@@ -33,6 +33,6 @@
     </div>
 </article>
 
-@fragments.contentFooter(image, storyPackage)
+@fragments.contentFooter(image, page.related)
 
 }

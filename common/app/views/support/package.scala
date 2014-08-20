@@ -255,10 +255,9 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
       element.getElementsByTag("source").remove()
 
       val sourceHTML: String = getVideoAssets(mediaId).map { videoAsset =>
-        (videoAsset.url, videoAsset.mimeType) match {
-          case (Some(url), Some(mimeType)) => s"""<source src="${url}" type="${mimeType}"></source>"""
-          case _ =>
-        }
+        videoAsset.encoding.map { encoding =>
+          s"""<source src="${encoding.url}" type="${encoding.format}"></source>"""
+        }.getOrElse("")
       }.mkString("")
 
       element.append(sourceHTML)
@@ -601,7 +600,7 @@ object ContributorLinks {
     tags.foldLeft(text) {
       case (t, tag) =>
         t.replaceFirst(tag.name,
-          <span itemscope=" " itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={s"${LinkTo("/"+tag.id)}"}>{tag.name}</a></span>.toString())
+          <span itemscope="" itemtype="http://schema.org/Person" itemprop="author"><a rel="author" class="tone-colour" itemprop="url name" data-link-name="auto tag link" href={s"${LinkTo("/"+tag.id)}"}>{tag.name}</a></span>.toString())
     }
   }
   def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
@@ -778,33 +777,35 @@ object GetClasses {
 
   def forItem(trail: Trail,
               firstContainer: Boolean,
-              forceHasImage: Boolean = false): String = {
+              forceHasImage: Boolean = false,
+              forceTone: Option[String] = None): String = {
+    val tone = forceTone.getOrElse(trail.visualTone)
     val baseClasses: Seq[String] = Seq(
       "item",
-      s"tone-${trail.visualTone}"
+      s"tone-${tone}"
     )
-    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) => trail match {
+    val f: Seq[(Trail, Boolean, Boolean, Option[String]) => String] = Seq(
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) => trail match {
         case _: Gallery => "item--gallery"
         case _: Video   => "item--video"
         case _          => ""
       },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
         if (firstContainer) "item--force-image-upgrade" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
         if (trail.isLive) "item--live" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
         if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")){
           "item--has-no-image"
         }else{
           "item--has-image"
         },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
         if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean) =>
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
         if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage)} ++ makeSnapClasses(trail)
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage, forceTone)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 
@@ -866,7 +867,7 @@ object GetClasses {
       (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
         if (index == 0) "container--first" else "",
       (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (index > 0 && hasTitle) "js-container--toggle" else ""
+        if (index > 0 && hasTitle && !(config.isAdvertisementFeature || config.isSponsored)) "js-container--toggle" else ""
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(container, config, index, hasTitle)}
     RenderClasses(classes:_*)

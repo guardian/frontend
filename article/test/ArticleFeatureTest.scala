@@ -399,6 +399,15 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Video as main element should act as main media") {
+      Given("I am on an article with a main video")
+      HtmlUnit("/politics/2014/may/16/nigel-farage-lbc-interview-key-moments") { browser =>
+        import browser._
+        Then("the main media should contain a video")
+        $(".media-primary video") should have size 1
+      }
+    }
+
     scenario("Hide main picture if video is at start of article") {
       Given("I am on an article with a video at the start of the body")
       HtmlUnit("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
@@ -439,6 +448,24 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
         import browser._
         Then("I should see the embedded video")
         $(".element-video").size should be (4)
+      }
+    }
+
+    scenario("Do not show 'classic' link on Football live blogs"){
+      HtmlUnit("/football/live/2014/aug/03/arsenal-v-monaco-emirates-cup-live"){ browser =>
+        import browser._
+        withClue("There should be no 'classic version' link"){
+          find(".js-main-site-link") should be (empty)
+        }
+      }
+    }
+
+    scenario("Show 'classic' link on non-Football live blogs"){
+      HtmlUnit("/business/blog/live/2014/aug/20/bank-of-england-minutes-to-shed-light-on-interest-rate-rises-business-live"){ browser =>
+        import browser._
+        withClue("There should be a 'classic version' link") {
+          find(".js-main-site-link") should not be empty
+        }
       }
     }
 

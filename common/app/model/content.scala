@@ -123,7 +123,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val description: Option[String] = trailText
   override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
   override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
-  override def isSurging: Int = SurgingContentAgent.getSurgingLevelFor(id)
+  override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
   // Meta Data used by plugins on the page
   // people (including 3rd parties) rely on the names of these things, think carefully before changing them
@@ -136,6 +136,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("headline", headline),
       ("web-publication-date", webPublicationDate),
       ("author", contributors.map(_.name).mkString(",")),
+      ("authorIds", contributors.map(_.id).mkString(",")),
       ("tones", tones.map(_.name).mkString(",")),
       ("blogs", blogs.map { _.name }.mkString(",")),
       ("blogIds", blogs.map { _.id.split("/").last }.mkString(",")),
@@ -216,7 +217,7 @@ object Content {
   def fromPressedJson(json: JsValue): Option[Content] = {
     val contentFields: Option[Map[String, String]] = (json \ "safeFields").asOpt[Map[String, String]]
     val itemId: String = (json \ "id").as[String]
-    if (itemId.startsWith("snap/")) {
+    if (Snap.isSnap(itemId)) {
       val snapMeta: Map[String, JsValue] = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
       Option(
         new Snap(
@@ -353,6 +354,10 @@ class Snap(snapId: String,
   override lazy val webPublicationDate = snapWebPublicationDate
 }
 
+object Snap {
+  def isSnap(id: String): Boolean = id.startsWith("snap/")
+}
+
 class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val main: String = delegate.safeFields.getOrElse("main","")
   lazy val body: String = delegate.safeFields.getOrElse("body","")
@@ -410,6 +415,8 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary"
   )
+
+  override lazy val hasClassicVersion: Boolean = super.hasClassicVersion && !(section == "football")
 }
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
@@ -457,7 +464,7 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
   ).flatten.mkString(", ")).filter(_.nonEmpty)
   lazy val videoLinkText: String = webTitle.stripSuffix(" - video").stripSuffix(" – video")
 
-  def endSlatePath = EndSlateComponents.fromVideo(this).toUriPath
+  def endSlatePath = EndSlateComponents.fromContent(this).toUriPath
 }
 
 object Video {

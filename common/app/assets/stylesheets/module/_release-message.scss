@@ -7,7 +7,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
-    z-index: 100;
+    z-index: 1001;
 }
 
 .site-message__inner {
@@ -52,9 +52,6 @@
     @include mq(rightCol) {
         display: table-cell;
         vertical-align: middle;
-        @include rem((
-            padding-left: $gs-gutter
-        ));
     }
 }
 
@@ -232,6 +229,10 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .site-message--android,
 .site-message--ios {
     position: relative;
+
+    .site-message__media {
+        display: none;
+    }
 }
 
 .site-message--android {

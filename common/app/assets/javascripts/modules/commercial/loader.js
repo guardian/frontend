@@ -3,24 +3,26 @@
     Description: Loads our commercial components
 */
 define([
+    'bean',
     'bonzo',
+    'lodash/collections/map',
     'common/utils/$',
     'common/utils/config',
     'common/utils/mediator',
     'common/utils/storage',
-    'common/modules/lazyload',
     'common/modules/component',
-    'bean',
+    'common/modules/lazyload',
     'common/modules/ui/tabs'
 ], function (
+    bean,
     bonzo,
+    map,
     $,
     config,
     mediator,
     storage,
-    LazyLoad,
     Component,
-    bean,
+    LazyLoad,
     Tabs
 ) {
 
@@ -50,7 +52,8 @@ define([
         this.isbn               = page.isbn || '';
         this.oastoken           = options.oastoken || '';
         this.adType             = options.adType || 'desktop';
-        this.multiComponents    = (options.components || []).map(function(c) { return 'c=' + c; }).join('&');
+        this.multiComponents    = map(options.components || [], function(c) { return 'c=' + c; }).join('&');
+        this.capi               = map(options.capi || [], function(t) {return 't=' + t;}).join('&');
         this.components         = {
             bestbuy:           this.host + 'money/bestbuys.json',
             bestbuyHigh:       this.host + 'money/bestbuys-high.json',
@@ -66,6 +69,7 @@ define([
             soulmatesHigh:     this.host + 'soulmates/mixed-high.json',
             travel:            this.host + 'travel/offers.json?'            + 's=' + this.section + '&' + this.getKeywords(),
             travelHigh:        this.host + 'travel/offers-high.json?'       + 's=' + this.section + '&' + this.getKeywords(),
+            capi:              this.host + 'capi.json?'                     + this.capi + '&' + this.getKeywords(),
             multi:             this.host + 'multi.json?'                    + this.multiComponents
         };
         this.postLoadEvents = {
@@ -95,7 +99,7 @@ define([
 
     Loader.prototype.getKeywords = function () {
         if (this.keywordIds) {
-            return this.keywordIds.split(',').map(function (keywordId) {
+            return map(this.keywordIds.split(','), function (keywordId) {
                 return 'k=' + encodeURIComponent(keywordId.split('/').pop());
             }).join('&');
         } else {

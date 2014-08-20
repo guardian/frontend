@@ -25,12 +25,23 @@ define([
         this.important = opts.important || false;
         this.permanent = opts.permanent || false;
         this.type = opts.type || 'banner';
+        this.pinOnHide = opts.pinOnHide || false;
         this.prefs = 'messages';
+
+        this.$footerMessage = $('.js-footer-message');
     };
 
     Message.prototype.show = function(message) {
+        if(this.pinOnHide) {
+            $('.js-footer-site-message-copy').html(message);
+        }
+
         // don't let messages unknowingly overwrite each other
         if ((!$('.site-message').hasClass('is-hidden') && !this.important) || this.hasSeen()) {
+            // if we're not showing a banner message, display it in the footer
+            if(this.pinOnHide) {
+                this.$footerMessage.removeClass('is-hidden');
+            }
             return false;
         }
         $('.js-site-message-copy').html(message);
@@ -58,6 +69,9 @@ define([
     Message.prototype.hide = function() {
         $('#header').removeClass('js-site-message');
         $('.site-message').addClass('is-hidden');
+        if(this.pinOnHide) {
+            this.$footerMessage.removeClass('is-hidden');
+        }
     };
 
     Message.prototype.hasSeen = function() {

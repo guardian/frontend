@@ -1,0 +1,52 @@
+@(env: String, report: dfp.InlineMerchandisingTargetedTagsReport)
+@import tools.SiteLink
+@import tools.CapiLink
+
+@admin_main("Commercial IM Slot", env, isAuthed = true, hasCharts = false) {
+
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at(" css/commercial.css")">
+
+    <h1>Inline Merchandising Slot</h1>
+
+    <p>Last updated: @report.updatedTimeStamp</p>
+
+    <p>Pages will show an inline merchandising slot if you set up a LineItem in DFP with the following parameters:</p>
+    <ol>
+        <li>Targets an <em>im</em> slot</li>
+        <li>Targets a tag of one of:
+            <ul>
+                <li>keyword: <em>k</em></li>
+                <li>series: <em>se</em></li>
+                <li>contributor: <em>co</em></li>
+            </ul>
+        </li>
+    </ol>
+
+    <h2>Targeted Keywords</h2>
+    @if(report.targetedTags.keywords.isEmpty) {<p>None</p>} else {
+        <ol>
+        @for(keyword <- report.targetedTags.keywords) {
+            <li style="font-size : large"><a href="@CapiLink.keywordPage(keyword)">@keyword</a></li>
+        }
+        </ol>
+    }
+
+    <h2>Targeted Series</h2>
+    @if(report.targetedTags.series.isEmpty) {<p>None</p>} else {
+        <ol>
+        @for(series <- report.targetedTags.series) {
+            <li style="font-size : large"><a href="@CapiLink.seriesPage(series)">@series</a></li>
+        }
+        </ol>
+    }
+
+    <h2>Targeted Contributors</h2>
+    @if(report.targetedTags.contributors.isEmpty) {<p>None</p>} else {
+        <ol>
+        @for(contributor <- report.targetedTags.contributors) {
+            <li style="font-size : large"><a href="@SiteLink.contributorTagPage(contributor)">@contributor</a></li>
+        }
+        </ol>
+    }
+
+}
