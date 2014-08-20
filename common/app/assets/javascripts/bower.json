@@ -42,7 +42,8 @@
       "socket.io-client": "bower_components/socket.io-client/socket.io.js",
       "videojs": "bower_components/videojs/dist/video-js/video.js",
       "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",
-      "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js"
+      "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js",
+      "videojs-vast": "bower_components/videojs-vast/videojs.vast.js"
     }
   }
 }

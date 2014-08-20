@@ -1,5 +1,8 @@
-/*! videojs-contrib-ads - v0.2.1 - 2014-08-20
-* Copyright (c) 2014 Brightcove; Licensed  */
+/**
+ * Basic Ad support plugin for video.js.
+ *
+ * Common code to support ad integrations.
+ */
 (function(window, document, vjs, undefined) {
 "use strict";
 
