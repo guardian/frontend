@@ -349,7 +349,9 @@
                 margin-top: get-line-height($fs-data, 3)*-2
             ));
             .ad-slot--commercial-component & {
-                margin-top: -(get-line-height($fs-data, 3))
+                @include rem((
+                    margin-top: -(get-line-height($fs-data, 3))
+                ));
             }
         }
     }
@@ -365,9 +367,6 @@
             @include rem((
                 margin-top: get-line-height($fs-data, 3)*-1
             ));
-            .ad-slot--commercial-component & {
-                margin-top: -(get-line-height($fs-data, 3))
-            }
         }
     }
 }
