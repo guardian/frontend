@@ -867,7 +867,7 @@ object GetClasses {
       (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
         if (index == 0) "container--first" else "",
       (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (index > 0 && hasTitle) "js-container--toggle" else ""
+        if (index > 0 && hasTitle && !(config.isAdvertisementFeature || config.isSponsored)) "js-container--toggle" else ""
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(container, config, index, hasTitle)}
     RenderClasses(classes:_*)
