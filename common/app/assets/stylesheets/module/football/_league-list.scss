@@ -22,7 +22,7 @@
         display: inline-block;
     }
 
-    @include mq(desktop) {
+    @include mq(desktop, leftCol) {
         @include rem((
             margin-left: $gs-gutter
         ));

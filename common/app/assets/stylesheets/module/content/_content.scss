@@ -177,6 +177,7 @@
     @include rem((
         padding: $gs-baseline/2 0 $gs-baseline 0
     ));
+    border-top: 1px dotted guss-colour(neutral-5) !important; // Disable tone colour
 }
 
 .content__headline {
