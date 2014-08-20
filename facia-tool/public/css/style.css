@@ -593,7 +593,7 @@ input[type="text"] {
     box-sizing: border-box;
     height: 25px;
     padding: 1px 5px;
-    margin-top: 2px;
+    margin: 2px 0 0 0;
     color: #000000;
 }
 
