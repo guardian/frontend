@@ -359,11 +359,15 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2;
     }
+
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             @include rem((
                 margin-top: get-line-height($fs-data, 3)*-1
             ));
+            .ad-slot--commercial-component & {
+                margin-top: -(get-line-height($fs-data, 3))
+            }
         }
     }
 }
@@ -420,6 +424,27 @@
             ));
         }
     }
+
+    @include mq(leftCol) {
+        .l-side-margins--layout-content .ad-slot--commercial-component & {
+            clear: left;
+            padding: 0;
+            margin: 0;
+            float: left;
+            min-height: 0;
+            @include rem((
+                margin-top: 4px
+            ));
+
+            .ad-slot--paid-for-badge__link {
+                float: none;
+                @include rem((
+                    margin-top: $gs-row-height/4
+                ));
+            }
+        }
+    }
+    
     @include mq(faciaLeftCol) {
         clear: left;
         padding: 0;
