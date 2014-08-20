@@ -22,7 +22,7 @@ object SurgingContentAgent extends Logging with ExecutionContexts {
 
   def getSurging = agent.get()
 
-  def getSurgingLevelFor(id: String): Int = SurgeUtils.levelProvider(agent.get().surges.get(id))
+  def getSurgingLevelsFor(id: String): Seq[Int] = SurgeUtils.levelProvider(agent.get().surges.get(id))
 }
 
 
@@ -35,14 +35,18 @@ case class SurgingContent(surges: Map[String, Int] = Map.empty, timestamp: DateT
 
 
 object SurgeUtils {
-  def levelProvider(surgeLevel: Option[Int]) = {
-    surgeLevel match {
+
+  def levelProvider(surgeLevel: Option[Int]): Seq[Int] = {
+
+    val level = surgeLevel match {
       case Some(x) if x >= 400 => 1
       case Some(x) if x >= 300 => 2
       case Some(x) if x >= 200 => 3
       case Some(x) if x >= 100 => 4
       case _ => 0
     }
+
+    if (level == 0) Seq(0) else Seq.range(level, 5)
   }
 
   def parse(json: JsValue) = {
