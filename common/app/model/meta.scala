@@ -16,7 +16,7 @@ trait MetaData extends Tags {
   def rssPath: Option[String] = None
 
   // i.e. show the link back to the desktop site
-  lazy val hasClassicVersion: Boolean = !special
+  def hasClassicVersion: Boolean = !special
 
   // Special means "Next Gen platform only".
   private lazy val special = id.contains("-sp-")
