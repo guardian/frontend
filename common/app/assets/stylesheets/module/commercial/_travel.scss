@@ -328,7 +328,7 @@ $travelBlue: #066ec9;
 .facia-container--layout-content .commercial--travel {
     @include mq(leftCol) {
         @include c-travel-leftCol;
-        
+
         .commercial__search {
             left: $gs-gutter;
         }
