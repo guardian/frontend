@@ -147,7 +147,7 @@ object DfpDataCacheJob extends ExecutionContexts {
       val data = DfpDataExtractor(DfpDataHydrator.loadCurrentLineItems())
 
       if (data.isValid) {
-        val now = londonTimeFormatter.print(DateTime.now())
+        val now = printLondonTime(DateTime.now())
 
         val sponsorships = data.sponsorships
         Store.putDfpSponsoredTags(stringify(toJson(SponsorshipReport(now, sponsorships))))

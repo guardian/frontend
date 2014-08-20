@@ -29,4 +29,6 @@ object SiteLink {
       None
     }
   }
+
+  def contributorTagPage(contributor: String): String = s"${site.host}/profile/$contributor"
 }

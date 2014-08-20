@@ -1,4 +1,5 @@
 @(env: String, report: dfp.InlineMerchandisingTargetedTagsReport)
+@import tools.SiteLink
 
 @admin_main("Commercial IM Slot", env, isAuthed = true, hasCharts = false) {
 
@@ -42,7 +43,7 @@
     @if(report.targetedTags.contributors.isEmpty) {<p>None</p>} else {
         <ol>
         @for(contributor <- report.targetedTags.contributors) {
-            <li style="font-size : large">@contributor</li>
+            <li style="font-size : large"><a href="@SiteLink.contributorTagPage(contributor)">@contributor</a></li>
         }
         </ol>
     }

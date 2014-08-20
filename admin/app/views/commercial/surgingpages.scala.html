@@ -1,4 +1,5 @@
 @(env: String, surgingContent: ophan.SurgingContent)
+@import dfp.printLondonTime
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
@@ -6,7 +7,7 @@
 
     <h1>Surging Content</h1>
     <p>Guardian content that is currently surging.</p>
-    <p>Last updated: @surgingContent.lastUpdated</p>
+    <p>Last updated: @printLondonTime(surgingContent.lastUpdated)</p>
 
     <ol>
         @for((path, pvs) <- surgingContent.sortedSurges) {

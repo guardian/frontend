@@ -65,15 +65,18 @@ trait CloudWatch extends Logging {
 
 
   def putMetricsWithStage(metrics: List[FrontendMetric], applicationDimension: Dimension): Unit =
-    putMetrics(metrics, List(stageDimension, applicationDimension))
+    putMetrics("Application", metrics, List(stageDimension, applicationDimension))
 
-  def putMetrics(metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
+  def putSystemMetricsWithStage(metrics: List[FrontendMetric], applicationDimension: Dimension): Unit =
+    putMetrics("ApplicationSystemMetrics", metrics, List(stageDimension, applicationDimension))
+
+  def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
     for {
       metric <- metrics
       dataPointGroup <- metric.getAndResetDataPoints.grouped(20)
     } {
       val request = new PutMetricDataRequest()
-        .withNamespace("Application")
+        .withNamespace(metricNamespace)
         .withMetricData {
           for (dataPoint <- dataPointGroup) yield {
             val metricDatum = new MetricDatum()

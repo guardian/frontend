@@ -1,7 +1,6 @@
 package ophan
 
 import common.{AkkaAsync, Jobs, _}
-import dfp.londonTimeFormatter
 import org.joda.time.DateTime
 import play.api.libs.json.{JsArray, JsValue}
 import play.api.{GlobalSettings, Application => PlayApp}
@@ -26,11 +25,9 @@ object SurgingContentAgent extends Logging with ExecutionContexts {
 }
 
 
-case class SurgingContent(surges: Map[String, Int] = Map.empty, timestamp: DateTime = DateTime.now()) {
+case class SurgingContent(surges: Map[String, Int] = Map.empty, lastUpdated: DateTime = DateTime.now()) {
 
   lazy val sortedSurges: Seq[(String, Int)] = surges.toSeq.sortBy(_._2).reverse
-
-  lazy val lastUpdated: String = londonTimeFormatter.print(timestamp)
 }
 
 

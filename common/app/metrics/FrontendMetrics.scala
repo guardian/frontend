@@ -24,7 +24,7 @@ case class GaugeDataPoint(value: Long) extends DataPoint {
   val time: Option[DateTime] = None
 }
 
-trait FrontendMetric {
+sealed trait FrontendMetric {
   val name: String
   val metricUnit: StandardUnit
   def getAndResetDataPoints: List[DataPoint]
