@@ -9,46 +9,34 @@
    ========================================================================== */
 
 .saucisson {
-    @include rem((
-        margin: 0 $gs-gutter/2 $gs-baseline
-    ));
+    margin: 0 $gs-gutter/2 $gs-baseline;
     border-top-width: 2px;
     border-top-style: solid;
 
     @include mq(tablet) {
-        @include rem((
-            margin-bottom: $gs-baseline*1.75
-        ));
+        margin-bottom: $gs-baseline*1.75;
     }
 
     .item__title {
         @include fs-headline(3, $size-only: true);
         padding-top: 0;
-        @include rem((
-            margin-bottom: $gs-baseline
-        ));
+        margin-bottom: $gs-baseline;
 
         @include mq(tablet) {
             @include fs-headline(5, true);
-            @include rem((
-                margin-bottom: $gs-baseline*1.25
-            ));
+            margin-bottom: $gs-baseline*1.25;
         }
         @include mq(desktop) {
             @include fs-headline(6, true);
         }
     }
     .stars {
-        @include rem((
-            margin-top: 0 - $gs-baseline * .5,
-            margin-bottom: $gs-baseline * 1.25
-        ));
+        margin-top: 0 - $gs-baseline * .5;
+        margin-bottom: $gs-baseline * 1.25;
 
         @include mq(tablet) {
-            @include rem((
-                margin-top: 0 - $gs-baseline * .75,
-                margin-bottom: $gs-baseline * 1.5
-            ));
+            margin-top: 0 - $gs-baseline * .75;
+            margin-bottom: $gs-baseline * 1.5;
         }
     }
     .item__standfirst {
@@ -61,16 +49,12 @@
     .item__media-wrapper {
         @include mq(tablet) {
             float: left;
-            @include rem((
-                width: gs-span(6),
-                margin-left: -(gs-span(6) + $gs-gutter)
-            ));
+            width: gs-span(6);
+            margin-left: -(gs-span(6) + $gs-gutter);
         }
         @include mq(desktop) {
-            @include rem((
-                width: gs-span(8),
-                margin-left: -(gs-span(8) + $gs-gutter)
-            ));
+            width: gs-span(8);
+            margin-left: -(gs-span(8) + $gs-gutter);
         }
     }
     .item__media-wrapper,
@@ -83,16 +67,12 @@
     .item__meta {
         @include mq(tablet) {
             position: static;
-            @include rem((
-                margin-top: $gs-baseline,
-                margin-bottom: $gs-baseline
-            ));
+            margin-top: $gs-baseline;
+            margin-bottom: $gs-baseline;
         }
     }
     .item__title {
-        @include rem((
-            padding-top: $gs-baseline/3
-        ));
+        padding-top: $gs-baseline/3;
         @include mq(tablet) {
             padding-top: 0;
         }
@@ -128,19 +108,13 @@
     // used for spacing, width set if needed
     border-top: 0 solid transparent;
     position: relative;
-    @include rem((
-        padding-bottom: $gs-row-height - $gs-baseline/3
-    ));
+    padding-bottom: $gs-row-height - $gs-baseline/3;
 
     @include mq(tablet) {
         padding-bottom: 0;
-        @include rem((
-            padding-left: gs-span(6) + $gs-gutter
-        ));
+        padding-left: gs-span(6) + $gs-gutter;
     }
     @include mq(desktop) {
-        @include rem((
-            padding-left: gs-span(8) + $gs-gutter
-        ));
+        padding-left: gs-span(8) + $gs-gutter;
     }
 }

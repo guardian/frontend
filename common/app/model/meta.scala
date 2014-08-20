@@ -19,7 +19,7 @@ trait MetaData extends Tags {
   def hasClassicVersion: Boolean = !special
 
   // Special means "Next Gen platform only".
-  def special = id.contains("-sp-")
+  private lazy val special = id.contains("-sp-")
 
   def title: Option[String] = None
   // this is here so it can be included in analytics.

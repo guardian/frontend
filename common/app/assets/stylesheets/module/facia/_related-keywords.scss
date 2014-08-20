@@ -1,21 +1,18 @@
 .related-keywords {
-    @include rem((
-        padding-top: 0,
-        margin: $gs-baseline 0
-    ));
+    padding-top: 0;
+    margin: $gs-baseline 0;
 
     @include fs-data(4);
 
     @include mq(leftCol) {
         float: right;
-        @include rem((
-            width: gs-span(12)
-        ));
+        width: gs-span(12);
     }
-
     @include mq(wide) {
-        @include rem((
-            width: gs-span(13)
-        ));
+        width: gs-span(13);
+
+        .has-page-skin & {
+            width: 100%;
+        }
     }
 }

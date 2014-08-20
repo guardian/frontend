@@ -5,10 +5,8 @@
         }
     }
     .ad-slot--inline {
-        @include rem((
-            margin-top: $gs-baseline,
-            margin-bottom: $gs-baseline/2
-        ));
+        margin-top: $gs-baseline;
+        margin-bottom: $gs-baseline/2;
     }
     .container__banding:first-child .saucisson {
         border-top-width: 0;
@@ -21,9 +19,7 @@
             float: left;
             @include box-sizing(border-box);
             width: 50%;
-            @include rem((
-                padding-right: $gs-gutter/2
-            ));
+            padding-right: $gs-gutter/2;
         }
     }
 }

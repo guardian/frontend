@@ -30,17 +30,13 @@ $pamplemousse-dot-smallscale: .45;
     display: block;
     position: relative;
     text-align: center;
-    @include rem((
-        width: $pamplemousse-dot-spacing,
-        height: $pamplemousse-dot-spacing,
-        line-height: $pamplemousse-dot-spacing
-    ));
+    width: $pamplemousse-dot-spacing;
+    height: $pamplemousse-dot-spacing;
+    line-height: $pamplemousse-dot-spacing;
 
     i {
-        @include rem((
-            width: $pamplemousse-dot-size-large,
-            height: $pamplemousse-dot-size-large
-        ));
+        width: $pamplemousse-dot-size-large;
+        height: $pamplemousse-dot-size-large;
 
         @include transform(scale($pamplemousse-dot-smallscale));
         @include animation(pulsate 2s ease-in-out infinite);

@@ -1,21 +1,25 @@
 .facia-container__related-keywords {
-    @include rem((
-        margin: $gs-baseline $gs-gutter
-    ));
+    margin: $gs-baseline $gs-gutter;
     @include facia-container__inner--layout-front;
     @include fs-data(4);
+
+    @include mq(wide) {
+        .has-page-skin & {
+            width: 100%;
+        }
+    }
 }
 
 .facia-container__related-keywords__body {
     @include mq(faciaLeftCol) {
-        @include rem((
-            margin-left: $left-column + $gs-gutter
-        ));
+        margin-left: $left-column + $gs-gutter;
     }
 
     @include mq(wide) {
-        @include rem((
-            margin-left: $left-column-wide + $gs-gutter
-        ));
+        margin-left: $left-column-wide + $gs-gutter;
+
+        .has-page-skin & {
+            margin-left: $gs-gutter;
+        }
     }
 }

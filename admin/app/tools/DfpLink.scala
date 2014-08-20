@@ -29,4 +29,15 @@ object SiteLink {
       None
     }
   }
+
+  def contributorTagPage(contributor: String): String = s"${site.host}/profile/$contributor"
+}
+
+object CapiLink {
+
+  private def tagPage(tagType: String, tagName: String): String = s"http://content.guardianapis.com/tags?type=$tagType&q=$tagName"
+
+  def keywordPage(keyword: String): String = tagPage("keyword", keyword)
+
+  def seriesPage(series: String): String = tagPage("series", series)
 }

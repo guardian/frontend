@@ -4,15 +4,11 @@
 .football-groups {
     .football-group {
         @include box-sizing(border-box);
-        @include rem((
-            margin: $gs-baseline 0
-        ));
+        margin: $gs-baseline 0;
         vertical-align: top;
 
         @include mq(tablet) {
-            @include rem((
-                padding-left: $gs-gutter/2
-            ));
+            padding-left: $gs-gutter/2;
             display: inline-block;
             display: flex;
             @supports not (flex-wrap: wrap) {
@@ -95,10 +91,8 @@
         .football-matches__date {
             border-top: 1px solid darken($c-neutral8, 4%);
             display: block;
-            @include rem((
-                margin-top: $gs-baseline/2,
-                padding-top: $gs-baseline/2
-            ));
+            margin-top: $gs-baseline/2;
+            padding-top: $gs-baseline/2;
         }
     }
 }
@@ -122,9 +116,7 @@
    Knockout chart (Desktop only)
    ========================================================================== */
 .football-knockout-chart {
-    @include rem((
-        padding: 0 $gs-gutter/2
-    ));
+    padding: 0 $gs-gutter/2;
     background: $c-neutral8;
     display: none;
     position: relative;
@@ -141,10 +133,8 @@
         vertical-align: middle;
     }
     .football-match__team {
-        @include rem((
-            height: ($gs-baseline/1.5)*2,
-            padding: 0 0 $gs-baseline*1.5
-        ));
+        height: ($gs-baseline/1.5)*2;
+        padding: 0 0 $gs-baseline*1.5;
         border: 1px solid $c-neutral2;
         border-top: 0;
         display: block;
@@ -157,15 +147,11 @@
         text-align: center;
     }
     .football-match__team--home {
-        @include rem((
-            margin-top: -(($gs-baseline*1.5)/2)
-        ));
+        margin-top: -(($gs-baseline*1.5)/2);
         top: 25%;
     }
     .football-match__team--away {
-        @include rem((
-            margin-bottom: -(($gs-baseline*1.5)/2)
-        ));
+        margin-bottom: -(($gs-baseline*1.5)/2);
         bottom: 25%;
         top: auto;
     }
@@ -187,9 +173,7 @@
     }
 
     .football-match__score {
-        @include rem((
-            margin-right: $gs-gutter/5
-        ));
+        margin-right: $gs-gutter/5;
         float: right;
         font-weight: bold;
     }
@@ -206,16 +190,12 @@
     }
 
     .football-match__comments {
-        @include rem((
-            padding: 0 $gs-gutter/4
-        ));
+        padding: 0 $gs-gutter/4;
     }
 
     .team-crest {
-        @include rem((
-            margin-bottom: 2px,
-            margin-left: 1px
-        ));
+        margin-bottom: 2px;
+        margin-left: 1px;
     }
 
     @include mq(rightCol) {
@@ -231,9 +211,7 @@
 
 .football-knockout-chart__timezone {
     @include fs-data(1);
-    @include rem((
-        padding: $gs-baseline 0
-    ));
+    padding: $gs-baseline 0;
     float: left;
     text-align: center;
     width: 100%;
@@ -251,9 +229,7 @@
         }
     }
     .football-round__matches {
-        @include rem((
-            padding-left: $gs-gutter/2
-        ));
+        padding-left: $gs-gutter/2;
         padding-right: 0;
     }
 }
@@ -301,18 +277,14 @@
     }
 }
 .football-round__name {
-    @include rem((
-        padding: $gs-baseline/2 0
-    ));
+    padding: $gs-baseline/2 0;
     border-bottom: 1px solid $c-neutral3;
     font-weight: bold;
     text-align: center;
 }
 .football-round__matches {
     @include box-sizing(border-box);
-    @include rem((
-        padding-right: $gs-gutter/2
-    ));
+    padding-right: $gs-gutter/2;
     height: 530px;
 }
 
@@ -328,9 +300,7 @@
         display: none;
     }
     .football-match {
-        @include rem((
-            top: -$gs-baseline
-        ));
+        top: -$gs-baseline;
         height: 25%;
     }
 }
