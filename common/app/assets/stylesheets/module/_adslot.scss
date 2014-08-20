@@ -306,6 +306,10 @@
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             margin-top: get-line-height($fs-data, 3)*-2;
+
+            .ad-slot--commercial-component & {
+                margin-top: -(get-line-height($fs-data, 3));
+            }
         }
     }
 }
@@ -314,6 +318,7 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2;
     }
+
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             margin-top: get-line-height($fs-data, 3)*-1;
@@ -363,7 +368,9 @@
             margin-right: gs-span(1);
         }
     }
-    @include mq(faciaLeftCol) {
+
+    @mixin comm-paid-logo-placement {
+        clear: left;
         padding: 0;
         margin: 0;
         float: left;
@@ -375,9 +382,18 @@
             margin-top: $gs-row-height/4;
         }
     }
-    @include mq(wide) {
-        clear: left;
 
+    @include mq(leftCol) {
+        .l-side-margins--layout-content .ad-slot--commercial-component & {
+            @include comm-paid-logo-placement;
+        }
+    }
+    
+    @include mq(faciaLeftCol) {
+        @include comm-paid-logo-placement;
+    }
+    
+    @include mq(wide) {
         .has-page-skin & {
             margin-left: 50%;
             width: auto;
