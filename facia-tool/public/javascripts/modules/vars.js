@@ -29,8 +29,10 @@ define([
         ],
 
         labels: [
+            'analysis',
+            'background',
             'breaking-news',
-            'background'
+            'comment'
         ],
 
         headlineLength: 200,
