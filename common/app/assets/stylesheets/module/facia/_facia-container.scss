@@ -125,7 +125,7 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
                 max-width: gs-span(14);
             }
             @include mq(wide) {
-                max-width: gs-span(15) ;
+                max-width: gs-span(15);
                 padding-right: gs-span(1) + $gs-gutter*2;
             }
         }

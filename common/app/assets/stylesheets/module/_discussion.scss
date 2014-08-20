@@ -165,7 +165,6 @@ $avatarSize: 44px;
 .d-discussion__show-all-comments {
     display: none;
     position: relative;
-    height: 40px;
     padding-left: 55px;
     @include fs-textSans(4);
     font-weight: bold;
@@ -832,7 +831,7 @@ $avatarSize: 44px;
     }
     .d-comment__content {
         background-color: $c-neutral7;
-        padding: $gs-baseline $gs-gutter * .8 ($gs-baseline/6) * 5 $gs-gutter * .8;
+        padding: $gs-baseline $gs-gutter * .8 ($gs-baseline/6) * 5;
         margin-bottom: $gs-baseline;
         position: relative;
 
@@ -906,7 +905,7 @@ $avatarSize: 44px;
 }
 .comment--speechy {
     border: 0;
-    padding: 0 0 ($gs-baseline/3)*10 0;
+    padding: 0 0 ($gs-baseline/3)*10;
 
     .comment__inner {
         @include box-sizing(border-box);
@@ -1250,7 +1249,7 @@ $avatarSize: 44px;
     cursor: pointer;
     @include fs-textSans(2);
     margin-left: $gs-gutter / 5;
-    padding: 2px 5px 0px 5px;
+    padding: 2px 5px 0px;
     min-width: 11px;
     line-height: 17px;
 

@@ -42,9 +42,10 @@
 
 .component--rhc {
     display: none;
+
     @include mq(rightCol) {
         display: block;
-        margin-top: $gs-baseline * 3
+        margin-top: $gs-baseline * 3;
     }
 
     &:last-child {

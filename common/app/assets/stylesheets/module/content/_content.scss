@@ -475,7 +475,7 @@
     }
 
     @include mq(leftCol) {
-        height : gs-height(1);
+        height: gs-height(1);
         position: static;
         @include box-sizing(border-box);
 
@@ -485,7 +485,7 @@
 
         .content__meta-container & {
             display: block;
-            padding-top: ($gs-baseline/3);
+            padding-top: $gs-baseline/3;
             margin-bottom: $gs-baseline;
             border-top: 1px dotted $c-neutral5;
         }

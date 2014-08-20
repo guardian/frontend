@@ -50,7 +50,7 @@
     }
 
     @include mq(wide) {
-        padding-left:  $left-column-wide + $gs-gutter;
+        padding-left: $left-column-wide + $gs-gutter;
         padding-right: $right-column + gs-span(1) + $gs-gutter*2;
     }
 

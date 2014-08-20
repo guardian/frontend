@@ -192,7 +192,7 @@ $block-padding-right: $gs-gutter;
 .updated-time {
     @include fs-data(1);
     color: $c-neutral2;
-    margin: 0 $gs-gutter/2 $gs-baseline/3 $gs-gutter/2;
+    margin: 0 $gs-gutter/2 $gs-baseline/3;
     padding: $gs-baseline/2 0 0;
     @include mq(tablet) {
         margin-right: $block-padding-right;
@@ -360,7 +360,7 @@ $block-padding-right: $gs-gutter;
         > .element-embed,
         > .element-audio {
             width: auto;
-            margin: $gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4 $gs-gutter/2;
+            margin: $gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4;
 
             @include mq(tablet) {
                 margin-left: $block-padding-left;
@@ -395,7 +395,7 @@ $block-padding-right: $gs-gutter;
             background-color: #ffffff;
             margin-left: $gs-gutter/2;
             margin-right: $gs-gutter/2;
-            padding: $gs-baseline/3 0 $gs-baseline*2 0;
+            padding: $gs-baseline/3 0 $gs-baseline*2;
 
             @include mq(mobileLandscape) {
                 margin-left: $block-padding-left;
