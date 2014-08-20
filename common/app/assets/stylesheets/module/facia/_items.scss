@@ -261,7 +261,7 @@
 }
 
 .item__label {
-    color: $c-newsAccent;
+    color: $c-newsDefault;
     @include fs-data(2, $size-only: true);
     margin-right: 3px;
     font-weight: bold;
@@ -275,8 +275,20 @@
     padding: 0 3px;
 }
 
+.item__label--analysis {
+    color: $c-commentDefault;
+}
+
+.item__label--background {
+    color: $c-newsAccent;
+}
+
 .item__label--breaking-news {
     color: $c-breakingNews;
+}
+
+.item__label--comment {
+    color: $c-commentDefault;
 }
 
 .item--sport-stats .competition-table h3,
