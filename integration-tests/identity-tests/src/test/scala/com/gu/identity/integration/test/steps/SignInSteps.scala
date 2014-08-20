@@ -5,6 +5,7 @@ import com.gu.identity.integration.test.pages.{ContainerWithSigninModulePage, Si
 import com.gu.identity.integration.test.util.User
 import com.gu.integration.test.steps.BaseSteps
 import com.gu.integration.test.util.CookieUtil._
+import com.gu.integration.test.util.PageLoader._
 import com.gu.integration.test.util.UserConfig._
 import org.openqa.selenium.{Cookie, WebDriver}
 import org.scalatest.Matchers
@@ -95,6 +96,6 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
     loginName should not be(expectedLoginName)
 
     val loginCookie = getCookie(LoginCookie)
-    loginCookie.getValue should be ('empty)
+    loginCookie should be (null)
   }
 }

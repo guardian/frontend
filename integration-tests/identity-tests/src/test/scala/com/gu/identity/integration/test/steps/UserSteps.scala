@@ -89,7 +89,7 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
   }
 
   def changePassword(pageWithSignInModule: ContainerWithSigninModulePage, userBeforeChange: User):
-  (String, PasswordResetConfirmationPage) = {
+  (String, ContainerWithSigninModulePage) = {
     logger.step("Changing user password")
     val profileNavMenu = pageWithSignInModule.signInModule().clickSignInLinkWhenLoggedIn()
     val changePwdPage = profileNavMenu.clickChangePassword()
@@ -104,6 +104,10 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
 
     changePwdPage.getAllValidationErrorElements() should be('empty)
     resetConfirmPage.isPasswordChangeMsgDisplayed()
-    (newPwd, resetConfirmPage)
+
+    waitForPageToBeLoaded
+
+    BaseSteps().goToStartPage(useBetaRedirect = false)
+    (newPwd, new ContainerWithSigninModulePage())
   }
 }

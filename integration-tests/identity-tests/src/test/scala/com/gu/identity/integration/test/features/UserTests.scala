@@ -55,11 +55,11 @@ class UserTests extends IdentitySeleniumTestSuite with EitherValues {
       val userBeforeChange: User = UserSteps().createRandomBasicUser().right.value
       val containerWithSignInModulePage = SignInSteps().checkUserIsLoggedIn(userBeforeChange)
 
-      val newPasswordAndConfirmPage = UserSteps().changePassword(containerWithSignInModulePage, userBeforeChange)
-      val pwdConfirmPage = newPasswordAndConfirmPage._2
-      val newPassword = newPasswordAndConfirmPage._1
+      val newPasswordAndStartPage = UserSteps().changePassword(containerWithSignInModulePage, userBeforeChange)
+      val startPage = newPasswordAndStartPage._2
+      val newPassword = newPasswordAndStartPage._1
 
-      SignInSteps().signOut(pwdConfirmPage)
+      SignInSteps().signOut(startPage)
       SignInSteps().checkUserIsNotLoggedIn(userBeforeChange.userName)
 
       SignInSteps().signInWith(userBeforeChange.email, newPassword)
