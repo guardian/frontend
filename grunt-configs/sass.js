@@ -12,7 +12,7 @@ module.exports = function(grunt, options) {
             }],
             options: {
                 style: 'compressed',
-                sourcemap: true,
+                sourcemap: options.isDev ? true : false,
                 noCache: true,
                 quiet: options.isDev ? false : true
             }
