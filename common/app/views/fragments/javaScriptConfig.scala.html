@@ -26,6 +26,7 @@
         "isSSL": @Configuration.environment.secure,
         "assetsPath": "@Configuration.assets.path",
         "hasPageSkin": @item.hasPageSkin(edition),
+        "coreHash": "@Static.getHash("javascripts/core.js")",
         "shouldHideAdverts": @item match {
             case c: model.Content if c.shouldHideAdverts => {true}
             case _                                       => {false}
