@@ -194,10 +194,10 @@ define([
             });
         },
 
-        showFootballLiveBlogMessage: function(config, context){
+        showFootballLiveBlogMessage: function(config){
 
             // limit message to "new style" Football live blogs
-            if(config.page.pageId.indexOf("football/live/") === 0 && detect.getBreakpoint() !== 'mobile') {
+            if(config.page.pageId.indexOf('football/live/') === 0 && detect.getBreakpoint() !== 'mobile') {
 
                 var msg = '<p class="site-message__message" id="site-message__message">' +
                     'We’ve redesigned our Football live blogs to make it easier to follow the match. We’d love to hear what you think.' +
