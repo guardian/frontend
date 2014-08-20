@@ -54,6 +54,7 @@
             border-color: #ffffff;
         }
     }
+
     &:hover {
         // stops controls icons staying hightlighted
         // after closing a popup on mobile
@@ -85,6 +86,7 @@
             text-decoration: underline;
         }
     }
+
     &:hover {
         &,
         .control__info {
