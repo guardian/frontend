@@ -9,6 +9,4 @@ package object dfp {
     (__ \ "tags").read[Seq[String]] and
     (__ \ "sponsor").readNullable[String]
   )(Sponsorship)
-
-  val londonTimeFormatter = DateTimeFormat.longDateTime().withZone(DateTimeZone.forID("Europe/London"))
 }
