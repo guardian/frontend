@@ -4,6 +4,11 @@
     ));
     @include facia-container__inner--layout-front;
     @include fs-data(4);
+    @include mq(wide) {
+        .has-page-skin & {
+            width: 100%;
+        }
+    }
 }
 
 .facia-container__related-keywords__body {
@@ -17,5 +22,10 @@
         @include rem((
             margin-left: $left-column-wide + $gs-gutter
         ));
+        .has-page-skin & {
+            @include rem((
+                margin-left: $gs-gutter
+            ));
+        }
     }
 }

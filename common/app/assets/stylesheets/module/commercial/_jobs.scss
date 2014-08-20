@@ -216,9 +216,9 @@
         }
         .commercial__home-link {
             @include rem((
-                bottom: $comercial-comp-baseline
+                bottom: $comercial-comp-baseline,
+                left: $gs-gutter
             ));
-            left: 0;
             top: auto;
             right: auto;
         }
@@ -245,6 +245,9 @@
             ));
         }
         .has-page-skin & {
+            .facia-container__inner {
+                width: 100%;
+            }
             .commercial__home-link {
                 width: auto;
                 top: auto;
@@ -274,9 +277,9 @@
         }
         .commercial__home-link {
             @include rem((
-                left: $gs-gutter,
                 bottom: $comercial-comp-baseline
             ));
+            left: 0;
             top: auto;
             right: auto;
         }
@@ -289,6 +292,13 @@
             &:nth-child(n+4) {
                 display: block;
             }
+        }
+    }
+    @include mq(desktop) {
+        .commercial__home-link {
+            @include rem((
+                left: $gs-gutter
+            ));
         }
     }
     @include mq(leftCol) {

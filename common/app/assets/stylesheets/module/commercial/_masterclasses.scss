@@ -260,7 +260,7 @@
             .lineitems {
                 @include rem((
                     padding-left: $gs-gutter/2,
-                    margin: 0 -($gs-gutter/2)
+                    margin: 0 (-$gs-gutter/2)
                 ));
             }
         }
