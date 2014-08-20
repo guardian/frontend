@@ -236,7 +236,7 @@
 .item__image-container {
     margin-top: 4px;
 
-    .is-not-modern & {
+    .js-off & {
         display: none;
     }
 }
@@ -253,7 +253,7 @@
     .item__image-container {
         display: block;
 
-        .is-not-modern & {
+        .js-off & {
             display: none !important;
         }
     }
