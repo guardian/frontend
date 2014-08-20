@@ -338,4 +338,5 @@ $travelBlue: #066ec9;
     }
     @include mq(wide) {
         @include c-travel-wide;
+    }
 }
