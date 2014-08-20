@@ -46,7 +46,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
   }
   lazy val hasTonalHeaderByline: Boolean = { visualTone == Tags.VisualTone.Comment && hasSingleContributor }
-  lazy val showBylinePic: Boolean = { visualTone != Tags.VisualTone.News }
+  lazy val showBylinePic: Boolean = {
+    visualTone != Tags.VisualTone.News && hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
+  }
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
