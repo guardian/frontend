@@ -153,9 +153,9 @@ figure {
     }
     @include mq(leftCol) {
         margin: 0 auto;
-        max-width: gs-span(14) + $gs-gutter * 2,;
+        max-width: gs-span(14) + $gs-gutter * 2;
     }
     @include mq(wide) {
-        max-width: gs-span(16) + $gs-gutter * 2,;
+        max-width: gs-span(16) + $gs-gutter * 2;
     }
 }

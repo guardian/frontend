@@ -81,7 +81,7 @@
     }
 }
 .top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, $to: faciaLeftCol) {
+    @include mq(mobile, faciaLeftCol) {
         text-align: center;
     }
     @include mq(faciaLeftCol) {
@@ -101,11 +101,11 @@
     }
 }
 .top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, $to: rightCol) {
+    @include mq(mobile, rightCol) {
         text-align: center;
     }
     @include mq(rightCol) {
-        margin: 0 0 0 $gs-gutter,;
+        margin: 0 0 0 $gs-gutter;
     }
     @include mq(leftCol) {
         margin: 0 auto;
@@ -154,7 +154,7 @@
     }
 }
 .ad-slot--container-inline {
-    margin: $gs-baseline 0 $gs-baseline/2,;
+    margin: $gs-baseline 0 $gs-baseline/2;
 
     @include mq(tablet) {
         position: absolute;

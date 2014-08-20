@@ -17,7 +17,7 @@
     }
 
     @include mq(tablet) {
-        margin-bottom: $gs-baseline*2 !important,;
+        margin-bottom: $gs-baseline*2 !important;
 
         .item__title {
             @include fs-headline(7, $size-only: true);
