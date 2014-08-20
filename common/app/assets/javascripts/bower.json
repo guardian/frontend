@@ -12,9 +12,9 @@
     "qwery": "3.4.2",
     "reqwest": "git://github.com/guardian/reqwest.git",
     "enhancer": "0.1.1",
-    "videojs": "git://github.com/guardian/video.js.git#fabb393da9e139f6869bc0fdb95074d7ca062aa8",
-    "videojs-contrib-ads": "guardian/videojs-contrib-ads#798b8a93cb293a95ede9af385c2354aa2c129216",
-    "videojs-vast": "guardian/videojs-vast-plugin#14432837c5f454b69659e60d4c65b4203fa13de8",
+    "videojs": "guardian/video.js#21f2d3c150b3573337030758f7dfb634f6798052",
+    "videojs-contrib-ads": "guardian/videojs-contrib-ads#099c752aa8c7d849290be49276ac568852b6ba28",
+    "videojs-vast": "guardian/videojs-vast-plugin#6b7b526ceb1ee5223db48a965b16be36b153e038",
     "videojs-persistvolume": "~0.1.0",
     "socket.io-client": "1.0.6",
     "raven-js": "~1.1.16",
@@ -22,8 +22,8 @@
     "fastclick": "~1.0.3"
   },
   "resolutions": {
-    "videojs": "fabb393da9e139f6869bc0fdb95074d7ca062aa8",
-    "videojs-contrib-ads": "798b8a93cb293a95ede9af385c2354aa2c129216"
+    "videojs": "21f2d3c150b3573337030758f7dfb634f6798052",
+    "videojs-contrib-ads": "099c752aa8c7d849290be49276ac568852b6ba28"
   },
   "install": {
     "path": "components",
@@ -42,7 +42,8 @@
       "socket.io-client": "bower_components/socket.io-client/socket.io.js",
       "videojs": "bower_components/videojs/dist/video-js/video.js",
       "videojs-contrib-ads": "bower_components/videojs-contrib-ads/src/videojs.ads.js",
-      "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js"
+      "videojs-playlist-audio": "bower_components/videojs-playlist-audio/javascripts/videojs.playlist.js",
+      "videojs-vast": "bower_components/videojs-vast/videojs.vast.js"
     }
   }
 }

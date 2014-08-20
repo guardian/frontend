@@ -182,13 +182,15 @@ $vjs-progress-inset-bottom: 4px;
     ));
     display: none;
 
+    .vjs-waiting &,
+    .vjs-seeking &,
+    .vjs-ad-loading & {
+        display: block !important;
+    }
+
     .vjs-using-native-controls &,
     .vjs-paused & {
         display: none !important;
-    }
-
-    .vjs-ad-loading & {
-        display: block !important;
     }
 }
 
