@@ -2,7 +2,7 @@ package com.gu.identity.integration.test.steps
 
 import com.gu.automation.support.TestLogging
 import com.gu.identity.integration.test.pages.{ContainerWithSigninModulePage, EditAccountDetailsModule, EditProfilePage}
-import com.gu.identity.integration.test.util.User
+import com.gu.identity.integration.test.util.{FormError, User}
 import com.gu.identity.integration.test.util.User._
 import com.gu.integration.test.steps.BaseSteps
 import com.gu.integration.test.util.PageLoader._
@@ -17,20 +17,20 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     profileNavMenu.clickEditProfile()
   }
 
-  def createRandomBasicUser(): User = {
+  def createRandomBasicUser(): (User, List[FormError]) = {
     logger.step("Creating random user")
     BaseSteps().goToStartPage(useBetaRedirect = false)
     val registerPage = SignInSteps().clickSignInLink().clickRegisterNewUserLink()
-    val userBeforeChange = RegisterSteps().registerNewTempUser(registerPage)
-    userBeforeChange
+    val userAndFormErrors = RegisterSteps().registerNewTempUser(registerPage)
+    userAndFormErrors
   }
 
-  def createUserWithUserName(userName: String): User = {
+  def createUserWithUserName(userName: String): (User, List[FormError]) = {
     logger.step(s"Creating user with username: $userName")
     BaseSteps().goToStartPage(useBetaRedirect = false)
     val registerPage = SignInSteps().clickSignInLink().clickRegisterNewUserLink()
-    val userBeforeChange = RegisterSteps().registerNewTempUserUsing(registerPage, userName)
-    userBeforeChange
+    val userAndFormErrors = RegisterSteps().registerNewTempUserUsing(registerPage, userName)
+    userAndFormErrors
   }
 
   def goToEditAccountDetailsPage(pageWithSignInModule: ContainerWithSigninModulePage): EditAccountDetailsModule = {
