@@ -452,7 +452,7 @@ define([
             modules.initMostViewedMedia();
         }
 
-        if (config.page.contentType.toLowerCase() === 'video' && detect.getBreakpoint() !== 'mobile') {
+        if (config.page.contentType && config.page.contentType.toLowerCase() === 'video' && detect.getBreakpoint() !== 'mobile') {
             modules.displayReleaseMessage();
         }
     };
