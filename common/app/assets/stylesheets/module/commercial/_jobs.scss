@@ -182,7 +182,7 @@
         }
         .commercial__home-link {
             bottom: $comercial-comp-baseline;
-            left: 0;
+            left: $gs-gutter;
             top: auto;
             right: auto;
         }
@@ -205,6 +205,9 @@
             margin-right: $gs-gutter/2;
         }
         .has-page-skin & {
+            .facia-container__inner {
+                width: 100%;
+            }
             .commercial__home-link {
                 width: auto;
                 top: auto;
@@ -233,7 +236,7 @@
             float: left;
         }
         .commercial__home-link {
-            left: $gs-gutter;
+            left: 0;
             bottom: $comercial-comp-baseline;
             top: auto;
             right: auto;
@@ -245,6 +248,11 @@
             &:nth-child(n+4) {
                 display: block;
             }
+        }
+    }
+    @include mq(desktop) {
+        .commercial__home-link {
+            left: $gs-gutter;
         }
     }
     @include mq(leftCol) {

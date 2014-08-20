@@ -241,7 +241,7 @@ $travelBlue: #066ec9;
         position: absolute;
         width: gs-span(5) + $gs-gutter/2;
         bottom: 0;
-        left: 0;
+        left: $gs-gutter;
     }
     .commercial__body {
         padding-top: $gs-baseline;
@@ -252,7 +252,7 @@ $travelBlue: #066ec9;
     }
     .commercial__home-link {
         left: auto;
-        right: 0;
+        right: $gs-gutter;
         bottom: $gs-baseline;
         top: auto;
     }
@@ -338,9 +338,4 @@ $travelBlue: #066ec9;
     }
     @include mq(wide) {
         @include c-travel-wide;
-        
-        .commercial__home-link {
-            left: $gs-gutter;
-        }
-    }
 }
