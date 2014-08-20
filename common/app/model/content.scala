@@ -415,6 +415,8 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary"
   )
+
+  override lazy val hasClassicVersion: Boolean = super.hasClassicVersion && !(section == "football")
 }
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {

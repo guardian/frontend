@@ -252,10 +252,7 @@ define([
 
             var releaseMessage = new Message('alpha', {pinOnHide: true});
 
-            // Do not show the release message on -sp- based paths.
-            var spRegExp = new RegExp('.*-sp-.*');
-
-            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path) && config.page.contentType !== 'Video' && config.page.hasClassicVersion) {
+            if (config.switches.releaseMessage && config.page.hasClassicVersion && (detect.getBreakpoint() !== 'mobile')) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
 
