@@ -23,10 +23,6 @@ object Global extends WithFilters(Gzipper)
     FaciaToolMetrics.ExpiredRequestCount,
     ContentApiMetrics.ElasticHttpTimingMetric,
     ContentApiMetrics.ElasticHttpTimeoutCountMetric,
-    ContentApiMetrics.ContentApi404Metric,
-    ContentApiMetrics.ContentApiJsonParseExceptionMetric,
-    ContentApiMetrics.ContentApiJsonMappingExceptionMetric,
-    FaciaToolMetrics.InvalidContentExceptionMetric,
     S3Metrics.S3ClientExceptionsMetric
   )
 
