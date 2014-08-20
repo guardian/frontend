@@ -9,19 +9,19 @@ import org.scalatest.Matchers
 
 case class RegisterSteps(implicit driver: WebDriver) extends TestLogging with Matchers {
 
-  def registerNewTempUser(registerPage: RegisterPage): (User, List[FormError]) = {
+  def registerNewTempUser(registerPage: RegisterPage): Either[List[FormError], User] = {
     logger.step("Creating a new random user")
     val randomGeneratedUser = User.generateRandomUser()
     registerNewTempUserUsing(registerPage, randomGeneratedUser)
   }
 
-  def registerNewTempUserUsing(registerPage: RegisterPage, userName:String): (User, List[FormError]) = {
+  def registerUserWithUserName(registerPage: RegisterPage, userName:String): Either[List[FormError], User] = {
     logger.step("Creating a new random user")
     val randomGeneratedUser = User.generateRandomUserWith(userName)
     registerNewTempUserUsing(registerPage, randomGeneratedUser)
   }
 
-  def registerNewTempUserUsing(registerPage: RegisterPage, user:User): (User, List[FormError]) = {
+  def registerNewTempUserUsing(registerPage: RegisterPage, user:User): Either[List[FormError], User] = {
     logger.step("Creating a new user")
     registerPage.enterEmail(user.email)
     enterPasswordIfSet(registerPage, user)
@@ -32,8 +32,12 @@ case class RegisterSteps(implicit driver: WebDriver) extends TestLogging with Ma
 
     val errorElements: List[WebElement] = registerPage.getAllValidationErrorElements()
     val userFormErrors = errorElements.map(webElement => FormError(webElement.getText))
-    
-    (user, userFormErrors)
+
+    if (userFormErrors.nonEmpty) {
+      Left(userFormErrors)
+    } else {
+      Right(user)
+    }
   }
 
   private def enterPasswordIfSet(registerPage: RegisterPage, randomUser: User) {

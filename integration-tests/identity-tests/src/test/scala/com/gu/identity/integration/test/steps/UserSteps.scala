@@ -1,14 +1,17 @@
 package com.gu.identity.integration.test.steps
 
 import com.gu.automation.support.TestLogging
-import com.gu.identity.integration.test.pages.{ContainerWithSigninModulePage, EditAccountDetailsModule, EditProfilePage}
-import com.gu.identity.integration.test.util.{FormError, User}
+import com.gu.identity.integration.test.pages.{ContainerWithSigninModulePage, EditAccountDetailsModule, EditProfilePage, PasswordResetConfirmationPage}
 import com.gu.identity.integration.test.util.User._
+import com.gu.identity.integration.test.util.{FormError, User}
 import com.gu.integration.test.steps.BaseSteps
 import com.gu.integration.test.util.PageLoader._
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 
+/**
+ * Steps regarding the user, generally after he has been logged in, but also for creating a user
+ */
 case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matchers {
 
   def goToEditProfilePage(pageWithSignInModule: ContainerWithSigninModulePage): EditProfilePage = {
@@ -17,20 +20,20 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     profileNavMenu.clickEditProfile()
   }
 
-  def createRandomBasicUser(): (User, List[FormError]) = {
+  def createRandomBasicUser(): Either[List[FormError], User] = {
     logger.step("Creating random user")
     BaseSteps().goToStartPage(useBetaRedirect = false)
     val registerPage = SignInSteps().clickSignInLink().clickRegisterNewUserLink()
-    val userAndFormErrors = RegisterSteps().registerNewTempUser(registerPage)
-    userAndFormErrors
+    val userOrFormErrors = RegisterSteps().registerNewTempUser(registerPage)
+    userOrFormErrors
   }
 
-  def createUserWithUserName(userName: String): (User, List[FormError]) = {
+  def createUserWithUserName(userName: String): Either[List[FormError], User] = {
     logger.step(s"Creating user with username: $userName")
     BaseSteps().goToStartPage(useBetaRedirect = false)
     val registerPage = SignInSteps().clickSignInLink().clickRegisterNewUserLink()
-    val userAndFormErrors = RegisterSteps().registerNewTempUserUsing(registerPage, userName)
-    userAndFormErrors
+    val userOrFormErrors = RegisterSteps().registerUserWithUserName(registerPage, userName)
+    userOrFormErrors
   }
 
   def goToEditAccountDetailsPage(pageWithSignInModule: ContainerWithSigninModulePage): EditAccountDetailsModule = {
@@ -83,5 +86,24 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     val startPage = SignInSteps().checkUserIsLoggedIn(userBeforeChange)
     val editAccountDetailsModule = UserSteps().goToEditAccountDetailsPage(startPage)
     editAccountDetailsModule
+  }
+
+  def changePassword(pageWithSignInModule: ContainerWithSigninModulePage, userBeforeChange: User):
+  (String, PasswordResetConfirmationPage) = {
+    logger.step("Changing user password")
+    val profileNavMenu = pageWithSignInModule.signInModule().clickSignInLinkWhenLoggedIn()
+    val changePwdPage = profileNavMenu.clickChangePassword()
+
+    changePwdPage.enterOldPassword(userBeforeChange.pwd.get)
+    val newPwd = generateRandomAlphaNumericString(10)
+    changePwdPage.enterNewPassword(newPwd)
+    changePwdPage.enterNewRepeatPassword(newPwd)
+    val resetConfirmPage = changePwdPage.submitChangePassword()
+
+    waitForPageToBeLoaded
+
+    changePwdPage.getAllValidationErrorElements() should be('empty)
+    resetConfirmPage.isPasswordChangeMsgDisplayed()
+    (newPwd, resetConfirmPage)
   }
 }

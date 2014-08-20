@@ -24,10 +24,14 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
   }
 
   def signIn() = {
+    signInWith(Config().getLoginEmail(), Config().getLoginPassword())
+  }
+
+  def signInWith(email:String, pwd:String) = {
     logger.step("Signing in using credentials")
     val signInPage = SignInSteps().clickSignInLink()
-    signInPage.enterEmail(Config().getLoginEmail())
-    signInPage.enterPwd(Config().getLoginPassword())
+    signInPage.enterEmail(email)
+    signInPage.enterPwd(pwd)
     signInPage.signInButton.click()
   }
 
@@ -93,5 +97,4 @@ case class SignInSteps(implicit driver: WebDriver) extends TestLogging with Matc
     val loginCookie = getCookie(LoginCookie)
     loginCookie.getValue should be ('empty)
   }
-
 }
