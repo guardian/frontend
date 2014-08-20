@@ -6,7 +6,7 @@ import com.gu.integration.test.steps.BaseSteps
 import com.gu.integration.test.util.UserConfig._
 import org.openqa.selenium.WebDriver
 
-class IdentityLoginTests extends IdentitySeleniumTestSuite {
+class LoginTests extends IdentitySeleniumTestSuite {
 
   feature("Login feature") {
     scenarioWeb("should be able to login using credentials") { implicit driver: WebDriver =>

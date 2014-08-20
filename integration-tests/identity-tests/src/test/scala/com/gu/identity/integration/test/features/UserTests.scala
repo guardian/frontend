@@ -3,13 +3,21 @@ package com.gu.identity.integration.test.features
 import com.gu.identity.integration.test.IdentitySeleniumTestSuite
 import com.gu.identity.integration.test.steps.UserSteps
 import com.gu.identity.integration.test.util.User
+import com.gu.integration.test.util.UserConfig._
 import org.openqa.selenium.WebDriver
 
-class ChangeUserTests extends IdentitySeleniumTestSuite {
+class UserTests extends IdentitySeleniumTestSuite {
 
-  feature("Change profile") {
+  feature("Create and changing a User") {
+
+    scenarioWeb("should be able not be able to create user with existing user name") { implicit driver: WebDriver =>
+      val validationErrorElements = UserSteps().createUserWithUserName(get("loginName"))._2
+      validationErrorElements.size should be(1)
+      validationErrorElements.head.errorText.contains("username") should be(true)
+    }
+
     scenarioWeb("should be able to change email address") { implicit driver: WebDriver =>
-      val userBeforeChange: User = UserSteps().createRandomBasicUser()
+      val userBeforeChange: User = UserSteps().createRandomBasicUser()._1
       val editAccountDetailsModule = UserSteps().checkUserIsLoggedInAndGoToAccountDetails(userBeforeChange)
 
       val changedEmail = UserSteps().changeEmail(editAccountDetailsModule)
@@ -18,7 +26,7 @@ class ChangeUserTests extends IdentitySeleniumTestSuite {
     }
 
     scenarioWeb("should be able to set and change first and last name") { implicit driver: WebDriver =>
-      val userBeforeChange: User = UserSteps().createRandomBasicUser()
+      val userBeforeChange: User = UserSteps().createRandomBasicUser()._1
       val editAccountDetailsModule = UserSteps().checkUserIsLoggedInAndGoToAccountDetails(userBeforeChange)
 
       val userWithChangedName = UserSteps().changeFirstAndLastName(editAccountDetailsModule)
@@ -28,7 +36,7 @@ class ChangeUserTests extends IdentitySeleniumTestSuite {
     }
 
     scenarioWeb("should be able to set and change address") { implicit driver: WebDriver =>
-      val userBeforeChange: User = UserSteps().createRandomBasicUser()
+      val userBeforeChange: User = UserSteps().createRandomBasicUser()._1
       val editAccountDetailsModule = UserSteps().checkUserIsLoggedInAndGoToAccountDetails(userBeforeChange)
 
       val userWithChangedAddress = UserSteps().changeAddress(editAccountDetailsModule)
