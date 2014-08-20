@@ -425,27 +425,7 @@
         }
     }
 
-    @include mq(leftCol) {
-        .l-side-margins--layout-content .ad-slot--commercial-component & {
-            clear: left;
-            padding: 0;
-            margin: 0;
-            float: left;
-            min-height: 0;
-            @include rem((
-                margin-top: 4px
-            ));
-
-            .ad-slot--paid-for-badge__link {
-                float: none;
-                @include rem((
-                    margin-top: $gs-row-height/4
-                ));
-            }
-        }
-    }
-    
-    @include mq(faciaLeftCol) {
+    @mixin comm-paid-logo-placement {
         clear: left;
         padding: 0;
         margin: 0;
@@ -460,8 +440,19 @@
             @include rem((
                 margin-top: $gs-row-height/4
             ));
+        }        
+    }
+
+    @include mq(leftCol) {
+        .l-side-margins--layout-content .ad-slot--commercial-component & {
+            @include comm-paid-logo-placement;
         }
     }
+    
+    @include mq(faciaLeftCol) {
+        @include comm-paid-logo-placement;
+    }
+    
     @include mq(wide) {
         .has-page-skin & {
             margin-left: 50%;
