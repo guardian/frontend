@@ -348,6 +348,9 @@
             @include rem((
                 margin-top: get-line-height($fs-data, 3)*-2
             ));
+            .ad-slot--commercial-component & {
+                margin-top: -(get-line-height($fs-data, 3))
+            }
         }
     }
 }
@@ -418,6 +421,7 @@
         }
     }
     @include mq(faciaLeftCol) {
+        clear: left;
         padding: 0;
         margin: 0;
         float: left;
@@ -434,8 +438,6 @@
         }
     }
     @include mq(wide) {
-        clear: left;
-
         .has-page-skin & {
             margin-left: 50%;
             width: auto;
