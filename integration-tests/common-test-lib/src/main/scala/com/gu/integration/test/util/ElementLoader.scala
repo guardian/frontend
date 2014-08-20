@@ -53,9 +53,9 @@ object ElementLoader extends TestLogging {
   /**
    * Find maxElements of displayed and visible elements, including nested, from the provided SearchContext
    */
-  def displayedElements(elements: List[WebElement], maxElements: Int = Int.MaxValue)(implicit driver: WebDriver): List[WebElement] = {
+  def displayedElements(elements: List[WebElement], timeoutInSeconds: Int = 3, maxElements: Int = Int.MaxValue)(implicit driver: WebDriver): List[WebElement] = {
     elements.view
-      .filter(element => waitUntil(visibilityOf(element)) && element.isDisplayed())
+      .filter(element => waitUntil(visibilityOf(element), timeoutInSeconds) && element.isDisplayed())
       .take(maxElements)
       .toList
   }
