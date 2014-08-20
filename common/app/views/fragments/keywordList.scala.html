@@ -24,13 +24,13 @@
 
                 @if(hiddenKeywords.nonEmpty) {
 
-                    <li class="inline-list__item js-more-tags js-hidden">
+                    <li class="inline-list__item js-more-tags modern-hidden">
                         <button class="u-button-reset u-fauxlink show-more-tags js-more-tags__link"
                            data-link-name="more-tags">more…</button>
                     </li>
 
                     @hiddenKeywords.zipWithRowInfo.map{ case(keyword, row) =>
-                        @renderItem(keyword, row, clazz = "js-hidden js-hidden-tag")
+                        @renderItem(keyword, row, clazz = "modern-hidden modern-hidden-tag")
                     }
                 }
 

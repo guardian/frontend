@@ -79,6 +79,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val AjaxRelatedContentSwitch = Switch("Performance Switches", "ajax-related-content",
+    "If this switch is turned on then related be loaded via ajax and not inline. Also requires related-content switch to be on.",
+    safeState = On, sellByDate = never
+  )
+
   val CssFromStorageSwitch = Switch("Performance Switches", "css-from-storage",
     "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
     safeState = On, sellByDate = never
@@ -214,6 +219,11 @@ object Switches extends Collections {
   val DiagnosticsLogging = Switch("Diagnostics", "enable-diagnostics-logging",
     "If this switch is on, then js error reports and requests sent to the Diagnostics servers will be logged.",
     safeState = On, never
+  )
+
+  val MetricsSwitch = Switch("Diagnostics", "enable-metrics-non-prod",
+    "If this switch is on, then metrics will be pushed to cloudwatch on DEV and CODE",
+    safeState = Off, never
   )
 
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
@@ -413,6 +423,7 @@ object Switches extends Collections {
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
     RelatedContentSwitch,
+    AjaxRelatedContentSwitch,
     CommercialSwitch,
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
@@ -477,7 +488,8 @@ object Switches extends Collections {
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
-    ChildrensBooksSwitch
+    ChildrensBooksSwitch,
+    MetricsSwitch
   )
 
   val httpSwitches: List[Switch] = List(
@@ -525,4 +537,9 @@ class SwitchBoardAgent(config: GuardianConfiguration) extends Plugin with Execut
   override def onStop() {
     Jobs.deschedule("SwitchBoardRefreshJob")
   }
+}
+
+// not really a switch, but I need to use this combination of switches in a number of place.
+object InlineRelatedContentSwitch {
+  def isSwitchedOn: Boolean = Switches.RelatedContentSwitch.isSwitchedOn && Switches.AjaxRelatedContentSwitch.isSwitchedOff
 }

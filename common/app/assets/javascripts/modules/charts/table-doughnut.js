@@ -26,11 +26,13 @@ TableDoughnut.prototype.render = function(el) {
         });
 
     bonzo(el).addClass('u-h');
-    return new Doughnut(data, {
+    var $doughnut = new Doughnut(data, {
         showValues: el.getAttribute('data-chart-show-values') === 'true',
         unit: el.getAttribute('data-chart-unit'),
         width: width
-    }).addClass(el.getAttribute('data-chart-class')).insertAfter(el);
+    });
+    $doughnut[0].className += ' ' + el.getAttribute('data-chart-class');
+    return $doughnut.insertAfter(el);
 };
 
 return TableDoughnut;

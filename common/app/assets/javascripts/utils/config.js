@@ -4,10 +4,14 @@
  Common functions to simplify access to page data
  */
 define([
+    'lodash/collections/contains',
     'lodash/objects/assign',
+    'common/utils/_',
     'common/utils/pad'
 ], function (
+    contains,
     extend,
+    _,
     pad
 ) {
     var config = guardian.config;
@@ -20,11 +24,14 @@ define([
             return (config.page.series || '').indexOf(name) > -1;
         },
         referencesOfType: function (name) {
-            return (config.page.references || []).filter(function (reference) {
-                return typeof reference[name] !== 'undefined';
-            }).map(function (reference) {
+            return _(config.page.references || [])
+                .filter(function (reference) {
+                    return typeof reference[name] !== 'undefined';
+                })
+                .map(function (reference) {
                     return reference[name];
-                });
+                })
+                .valueOf();
         },
         referenceOfType: function (name) {
             return this.referencesOfType(name)[0];
@@ -47,7 +54,8 @@ define([
             return s ? s[0] : null;
         },
 
-        isMedia: ['Video', 'Audio'].indexOf(config.page.contentType) > -1
+        isMedia: contains(['Video', 'Audio'], config.page.contentType)
 
     }, config);
+
 });

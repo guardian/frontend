@@ -451,6 +451,24 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
+    scenario("Do not show 'classic' link on Football live blogs"){
+      HtmlUnit("/football/live/2014/aug/03/arsenal-v-monaco-emirates-cup-live"){ browser =>
+        import browser._
+        withClue("There should be no 'classic version' link"){
+          find(".js-main-site-link") should be (empty)
+        }
+      }
+    }
+
+    scenario("Show 'classic' link on non-Football live blogs"){
+      HtmlUnit("/business/blog/live/2014/aug/20/bank-of-england-minutes-to-shed-light-on-interest-rate-rises-business-live"){ browser =>
+        import browser._
+        withClue("There should be a 'classic version' link") {
+          find(".js-main-site-link") should not be empty
+        }
+      }
+    }
+
     scenario("Show embedded tweets in live blogs"){
       Given("I am on a live blog with an embedded tweet")
       HtmlUnit("/world/2013/jun/24/kevin-rudd-labour-politics-live"){ browser =>

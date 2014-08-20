@@ -1,7 +1,7 @@
 @(page: InteractivePage)(implicit request: RequestHeader)
 @import conf.Switches.DiscussionSwitch
 
-@defining((page.interactive, page.storyPackage)) { case (interactive, storyPackage) =>
+@defining(page.interactive) { interactive =>
 
     <article class="content content--interactive tone-@interactive.visualTone"
     itemprop="mainContentOfPage" itemscope itemtype="@interactive.schemaType" role="main">
@@ -24,6 +24,6 @@
     </div>
     </article>
 
-    @fragments.contentFooter(interactive, storyPackage)
+    @fragments.contentFooter(interactive, page.related)
 
 }

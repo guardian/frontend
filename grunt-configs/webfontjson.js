@@ -239,8 +239,7 @@ module.exports = function(grunt, options) {
                 callback: 'guFont',
                 fonts: [{
                     'font-family': '"Guardian Sans Web"',
-                    file: options.webfontsDir + 'hinting-off_kerning-off/latin1/GuardianSansWeb/GuardianSansWeb-Light.woff2',
-                    'font-weight': '200',
+                    file: options.webfontsDir + 'hinting-off_kerning-off/latin1/GuardianSansWeb/GuardianSansWeb-Regular.woff2',
                     format: 'woff'
                 }]
             }
@@ -251,8 +250,7 @@ module.exports = function(grunt, options) {
                 callback: 'guFont',
                 fonts: [{
                     'font-family': '"Guardian Sans Web"',
-                    file: options.webfontsDir + 'hinting-off_kerning-off/ascii/GuardianSansWeb/GuardianSansWeb-Light.woff',
-                    'font-weight': '200',
+                    file: options.webfontsDir + 'hinting-off_kerning-off/ascii/GuardianSansWeb/GuardianSansWeb-Regular.woff',
                     format: 'woff'
                 }]
             }
@@ -263,8 +261,7 @@ module.exports = function(grunt, options) {
                 callback: 'guFont',
                 fonts: [{
                     'font-family': '"Guardian Sans Web"',
-                    file: options.webfontsDir + 'hinting-off_kerning-off/ascii/GuardianSansWeb/GuardianSansWeb-Light.ttf',
-                    'font-weight': '200',
+                    file: options.webfontsDir + 'hinting-off_kerning-off/ascii/GuardianSansWeb/GuardianSansWeb-Regular.ttf',
                     format: 'ttf'
                 }]
             }

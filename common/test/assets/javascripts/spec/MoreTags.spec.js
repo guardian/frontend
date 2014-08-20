@@ -28,17 +28,17 @@ define([
                                     'data-link-name="keyword: world/usforeignpolicy"' +
                                     'itemprop="keywords">US foreign policy</a>,' +
                                 '</li>' +
-                                '<li class="inline-list__item js-more-tags js-hidden">' +
+                                '<li class="inline-list__item js-more-tags modern-hidden">' +
                                     '<button class="u-button-reset u-fauxlink js-more-tags__link"' +
                                     'data-link-name="more-tags">more…</button>' +
                                 '</li>' +
-                                '<li class="inline-list__item js-hidden js-hidden-tag">' +
+                                '<li class="inline-list__item modern-hidden modern-hidden-tag">' +
                                     '<a class=" "' +
                                     'href="/world/russia"' +
                                     'data-link-name="keyword: world/russia"' +
                                     'itemprop="keywords">Russia</a>,' +
                                 '</li>' +
-                                '<li class="inline-list__item js-hidden js-hidden-tag">' +
+                                '<li class="inline-list__item modern-hidden modern-hidden-tag">' +
                                     '<a class=" "' +
                                     'href="/world/vladimir-putin"' +
                                     'data-link-name="keyword: world/vladimir-putin"' +
@@ -58,18 +58,18 @@ define([
         });
 
         it("should initially hide the 'more...' link", function(){
-            expect($('.js-more-tags').hasClass('js-hidden')).toBeTruthy();
-            expect($('.js-hidden-tag').hasClass('js-hidden')).toBeTruthy();
+            expect($('.js-more-tags').hasClass('modern-hidden')).toBeTruthy();
+            expect($('.modern-hidden-tag').hasClass('modern-hidden')).toBeTruthy();
         });
 
         it("should reveal the 'more...' link when initialised", function(){
 
             new MoreTags().init();
 
-            expect($('.js-more-tags').hasClass('js-hidden')).toBeFalsy();
+            expect($('.js-more-tags').hasClass('modern-hidden')).toBeFalsy();
 
             // but the tags should remain hidden
-            expect($('.js-hidden-tag').hasClass('js-hidden')).toBeTruthy();
+            expect($('.modern-hidden-tag').hasClass('modern-hidden')).toBeTruthy();
         });
 
         it("should reveal the hidden keywords when clicked", function(){
@@ -78,10 +78,10 @@ define([
 
             document.querySelector('.js-more-tags__link').click();
 
-            expect($('.js-hidden-tag').hasClass('js-hidden')).toBeFalsy();
+            expect($('.modern-hidden-tag').hasClass('modern-hidden')).toBeFalsy();
 
             // but the more link should now be hidden
-            expect($('.js-more-tags').hasClass('js-hidden')).toBeTruthy();
+            expect($('.js-more-tags').hasClass('modern-hidden')).toBeTruthy();
         });
     });
 });

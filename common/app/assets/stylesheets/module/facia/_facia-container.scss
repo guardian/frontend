@@ -6,24 +6,19 @@
         overflow: hidden;
         position: relative;
 
-        @include rem((
-            margin-left: $gs-gutter / 2,
-            margin-right: $gs-gutter / 2
-        ));
+        margin-left: $gs-gutter / 2;
+
+        margin-right: $gs-gutter / 2;
 
         @include mq(mobileLandscape) {
-            @include rem((
-                margin-left: $gs-gutter,
-                margin-right: $gs-gutter
-            ));
+            margin-left: $gs-gutter;
+            margin-right: $gs-gutter;
         }
         @include mq(desktop) {
             margin-left: auto;
             margin-right: auto;
-            @include rem((
-                padding-left: $gs-gutter,
-                padding-right: $gs-gutter
-            ));
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
         }
     }
 }
@@ -46,9 +41,7 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
                 margin-left: auto;
                 margin-right: auto;
             }
-            @include rem((
-                width: $container-width
-            ));
+            width: $container-width;
         }
     }
 }
@@ -63,53 +56,39 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
             }
             .container__body {
                 overflow: hidden;
-                @include rem((
-                    margin-left: $left-column + $gs-gutter
-                ));
+                margin-left: $left-column + $gs-gutter;
             }
             .container--news {
                 .container__title {
                     display: block;
                     float: left;
-                    @include rem((
-                        width: $left-column,
-                        margin-right: $gs-gutter
-                    ));
+                    width: $left-column;
+                    margin-right: $gs-gutter;
                 }
                 .container__body {
                     margin-left: 0;
-                    @include rem((
-                        width: gs-span(12)
-                    ));
+                    width: gs-span(12);
                 }
             }
         }
         @include mq(wide) {
             .container__title {
                 float: left;
-                @include rem((
-                    width: $left-column-wide !important,
-                    margin-right: $gs-gutter
-                ));
+                width: $left-column-wide !important;
+                margin-right: $gs-gutter;
             }
             .container__body {
-                @include rem((
-                    margin-left: $left-column-wide + $gs-gutter,
-                    width: gs-span(12)
-                ));
+                margin-left: $left-column-wide + $gs-gutter;
+                width: gs-span(12);
             }
             .has-page-skin & {
                 overflow: hidden;
                 margin-left: auto;
                 margin-right: auto;
-                @include rem((
-                    width: gs-span(12) + ($gs-gutter*2)
-                ));
+                width: gs-span(12) + ($gs-gutter*2);
 
                 .facia-container__inner {
-                    @include rem((
-                        width: gs-span(12)
-                    ));
+                    width: gs-span(12);
                 }
                 .container__body {
                     margin-left: 0;
@@ -118,9 +97,7 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
                     width: auto !important;
                     margin-right: 0;
                     float: none;
-                    @include rem((
-                        margin-bottom: $gs-baseline
-                    ));
+                    margin-bottom: $gs-baseline;
                 }
                 .container--news .container__title {
                     display: none;
@@ -133,63 +110,46 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
                 }
             }
         }
+        @include container__meta(faciaLeftCol, desktop);
     }
 }
 @mixin facia-container--layout-content {
     .facia-container--layout-content {
         .facia-container__inner {
             @include mq(tablet, rightCol) {
-                @include rem((
-                    max-width: gs-span(8)
-                ));
+                max-width: gs-span(8);
                 margin-left: auto;
                 margin-right: auto;
             }
             @include mq(leftCol) {
-                @include rem((
-                    max-width: gs-span(14)
-                ));
+                max-width: gs-span(14);
             }
             @include mq(wide) {
-                @include rem((
-                    max-width: gs-span(15) ,
-                    padding-right: gs-span(1) + $gs-gutter*2
-                ));
+                max-width: gs-span(15);
+                padding-right: gs-span(1) + $gs-gutter*2;
             }
         }
         @include mq(leftCol) {
-            .container__title,
-            .container__meta {
+            .container__title {
                 margin-bottom: 0;
                 float: left;
-                @include rem((
-                    width: $left-column !important,
-                    margin-right: $gs-gutter
-                ));
-            }
-            .container__meta {
-                clear: left;
+                width: $left-column !important;
+                margin-right: $gs-gutter;
             }
             .container__body {
                 overflow: hidden;
-                @include rem((
-                    margin-left: $left-column + $gs-gutter
-                ));
+                margin-left: $left-column + $gs-gutter;
             }
         }
         @include mq(wide) {
-            .container__title,
-            .container__meta {
-                @include rem((
-                    width: $left-column-wide !important
-                ));
+            .container__title {
+                width: $left-column-wide !important;
             }
             .container__border {
-                @include rem((
-                    margin-right: -(gs-span(1) + $gs-gutter*2)
-                ));
+                margin-right: -(gs-span(1) + $gs-gutter*2);
             }
         }
+        @include container__meta(leftCol, rightCol);
     }
 }
 @mixin facia-container--layout-discussion {
@@ -204,6 +164,27 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
         .container__border,
         .container__border.tone-accent-border {
             border-top: 1px solid $c-neutral4;
+        }
+    }
+}
+@mixin container__meta($leftColumn, $halfWidthBreakpoint) {
+    .container__meta {
+        padding-top: $gs-baseline/2;
+        @include mq($halfWidthBreakpoint) {
+            padding-top: $gs-baseline/1.5;
+        }
+        @include mq($halfWidthBreakpoint, $leftColumn) {
+            max-width: 50%;
+        }
+        @include mq($leftColumn) {
+            margin-bottom: 0;
+            float: left;
+            clear: left;
+            width: $left-column !important;
+            margin-right: $gs-gutter;
+        }
+        @include mq(wide) {
+            width: $left-column-wide !important;
         }
     }
 }

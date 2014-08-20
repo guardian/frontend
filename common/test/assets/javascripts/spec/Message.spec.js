@@ -36,14 +36,14 @@ define([
         it("Show a message", function(){
             new Message('foo').show('hello world');
             expect($('.js-site-message-copy').text()).toContain('hello world');
-            expect($('.js-footer-site-message-copy').text()).toContain('hello world');
+            expect($('.js-footer-site-message-copy').text()).not.toContain('hello world');
             expect($('.site-message').hasClass('is-hidden')).toBeFalsy();
         })
 
-        it("Show any non-banner message", function(){
-            new Message('foo', {type: 'foo'}).show('hello world');
+        it("Show a pinnable message", function(){
+            new Message('foo', {pinOnHide: true}).show('hello world');
             expect($('.js-site-message-copy').text()).toContain('hello world');
-            expect($('.js-footer-site-message-copy').text()).not.toContain('hello world');
+            expect($('.js-footer-site-message-copy').text()).toContain('hello world');
             expect($('.site-message').hasClass('is-hidden')).toBeFalsy();
         })
 
@@ -52,15 +52,15 @@ define([
             m.show('hello world');
             m.hide();
             expect($('.site-message').hasClass('is-hidden')).toBeTruthy();
-            expect($('.js-footer-message').hasClass('is-hidden')).toBeFalsy();
+            expect($('.js-footer-message').hasClass('is-hidden')).toBeTruthy();
         })
 
-        it("Hide any non-banner message", function(){
-            var m = new Message('foo', {type: 'foo'});
+        it("Hide a pinnable message", function(){
+            var m = new Message('foo', {pinOnHide: true});
             m.show('hello world');
             m.hide();
             expect($('.site-message').hasClass('is-hidden')).toBeTruthy();
-            expect($('.js-footer-message').hasClass('is-hidden')).toBeTruthy();
+            expect($('.js-footer-message').hasClass('is-hidden')).toBeFalsy();
         })
 
         it("Remember the user has acknowledged the message", function(){

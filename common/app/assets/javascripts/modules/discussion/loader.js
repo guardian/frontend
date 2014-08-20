@@ -199,7 +199,7 @@ Loader.prototype.loadComments = function(args) {
                 self.comments.removeState('shut');
             }
 
-            bonzo(commentsContainer).removeClass('js-hidden');
+            bonzo(commentsContainer).removeClass('modern-hidden');
             self.initUnthreaded();
         }).fail(self.loadingError.bind(self));
 };
@@ -280,7 +280,7 @@ Loader.prototype.loadingError = function() {
 Loader.prototype.renderReadOnly = function() {
     this.getElem('commentBox').innerHTML =
         '<div class="d-bar d-bar--closed">'+
-            '<b>We\'re doing some maintenance right now.</b>'+
+            '<b>We’re doing some maintenance right now.</b>'+
             ' You can still read comments, but please come back later to add your own.'+
         '</div>';
 };

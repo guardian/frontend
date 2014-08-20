@@ -119,3 +119,8 @@ class CanonicalLink {
 
 object CanonicalLink extends CanonicalLink
 
+object AnalyticsHost extends implicits.Requests {
+  def apply()(implicit request: RequestHeader): String =
+    if (request.isSecure) "https://hits-secure.theguardian.com" else "http://hits.theguardian.com"
+}
+

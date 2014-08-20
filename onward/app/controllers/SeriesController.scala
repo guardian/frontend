@@ -29,21 +29,19 @@ object SeriesController extends Controller with Logging with Paging with Executi
     def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{shortUrl => shortUrl.equals(currentShortUrl)}.getOrElse(false)
 
     val seriesResponse: Future[Option[Series]] = LiveContentApi.item(seriesId, edition)
-      .showTags("all")
       .showFields("all")
       .response
-      .map {
-        response =>
-          response.tag.flatMap { tag =>
-            val trails = response.results filterNot (isCurrentStory(_)) map (Content(_))
-            if (!trails.isEmpty) {
-              Some(Series(seriesId, Tag(tag,None), trails))
-            } else { None }
-          }
+      .map { response =>
+        response.tag.flatMap { tag =>
+          val trails = response.results filterNot (isCurrentStory(_)) map (Content(_))
+          if (!trails.isEmpty) {
+            Some(Series(seriesId, Tag(tag,None), trails))
+          } else { None }
+        }
       }
       seriesResponse.recover{ case ApiError(404, message) =>
-         log.info(s"Got a 404 calling content api: $message" )
-         None
+        log.info(s"Got a 404 calling content api: $message" )
+        None
       }
   }
 

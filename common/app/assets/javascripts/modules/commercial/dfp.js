@@ -5,21 +5,25 @@ define([
     'lodash/functions/debounce',
     'lodash/arrays/flatten',
     'lodash/arrays/uniq',
+    'lodash/collections/forEach',
+    'lodash/collections/map',
     'lodash/functions/once',
     'lodash/objects/defaults',
     'lodash/objects/forOwn',
     'lodash/objects/isArray',
     'lodash/objects/pairs',
     'common/utils/$',
+    'common/utils/$css',
+    'common/utils/_',
+    'common/utils/config',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/mediator',
-    'common/utils/config',
     'common/utils/template',
+    'common/modules/commercial/keywords',
     'common/modules/commercial/tags/audience-science',
     'common/modules/commercial/tags/audience-science-gateway',
     'common/modules/commercial/tags/criteo',
-    'common/modules/commercial/keywords',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
 ], function (
@@ -28,21 +32,25 @@ define([
     debounce,
     flatten,
     uniq,
+    forEach,
+    map,
     once,
     defaults,
     forOwn,
     isArray,
     pairs,
     $,
+    $css,
+    _,
+    globalConfig,
     cookies,
     detect,
     mediator,
-    globalConfig,
     template,
+    keywords,
     audienceScience,
     audienceScienceGateway,
     criteo,
-    keywords,
     userAdTargeting,
     ab
 ) {
@@ -209,8 +217,8 @@ define([
          * Multiple sizes - `data-mobile="300,50|320,50"`
          */
         createSizeMapping = function (attr) {
-            return attr.split('|').map(function(size) {
-                return size.split(',').map(Number);
+            return map(attr.split('|'), function(size) {
+                return map(size.split(','), Number);
             });
         },
         /**
@@ -290,9 +298,10 @@ define([
                 at      : cookies.get('adtest') || cookies.get('GU_TEST') || '',
                 gdncrm  : userAdTargeting.getUserSegments(),
                 ab      : abParam(),
-                co      : parseContributors(page.author),
+                co      : parseTargets(page.authorIds),
                 bl      : parseKeywords(page.blogIds),
-                ms      : mediaSource
+                ms      : mediaSource,
+                tn      : parseTargets(page.tones)
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
         createAdSlot = function(name, types, keywords) {
@@ -310,8 +319,8 @@ define([
                         '{{sizeMappings}}></div>',
                     {
                         name: name,
-                        types: (isArray(types) ? types : [types]).map(function(type) { return 'ad-slot--' + type; }).join(' '),
-                        sizeMappings: pairs(definition.sizeMappings).map(function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
+                        types: map((isArray(types) ? types : [types]), function(type) { return 'ad-slot--' + type; }).join(' '),
+                        sizeMappings: map(pairs(definition.sizeMappings), function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
                     }));
             for (var attrName in dataAttrs) {
                 if (dataAttrs[attrName] === false) {
@@ -324,15 +333,14 @@ define([
             return $adSlot[0];
         },
         parseKeywords = function(keywords) {
-            return (keywords || '')
-                .split(',').map(function (keyword) {
-                    return keyword.split('/').pop();
-                });
+            return map((keywords || '') .split(','), function (keyword) {
+                return keyword.split('/').pop();
+            });
         },
-        parseContributors = function(contributors) {
-            var contributorArray = parseKeywords(contributors);
-            return contributorArray.map(function(contrib) {
-               return keywords.format(contrib);
+        parseTargets = function(targets) {
+            var targetArray = parseKeywords(targets);
+            return map(targetArray, function(target) {
+                return keywords.format(target);
             });
         };
 
@@ -355,7 +363,7 @@ define([
 
             var adUnit = config.page.adUnit;
 
-            adSlots.forEach(function($adSlot) {
+            forEach(adSlots, function($adSlot) {
 
                 var id          = $adSlot.attr('id'),
                     sizeMapping = defineSlotSizes($adSlot),
@@ -427,14 +435,15 @@ define([
             config.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
         }
 
-        adSlots = qwery(config.adSlotSelector)
+        adSlots = _(qwery(config.adSlotSelector))
             // filter out hidden ads
             .map(function (adSlot) {
                 return bonzo(adSlot);
             })
             .filter(function ($adSlot) {
-                return $adSlot.css('display') !== 'none';
-            });
+                return $css($adSlot, 'display') !== 'none';
+            })
+            .valueOf();
 
         if (adSlots.length > 0) {
             // if we don't already have googletag, create command queue (assumes it's loaded further up the chain)

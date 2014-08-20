@@ -21,7 +21,6 @@ define([
     'common/modules/onward/most-popular-factory',
     'common/modules/onward/related',
     'common/modules/onward/onward-content',
-    'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/navigation/navigation',
@@ -48,7 +47,7 @@ define([
     'common/modules/identity/api',
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
-    'common/modules/ui/fauxBlockLink',
+    'common/modules/ui/faux-block-link',
     'common/modules/discussion/loader'
 ], function (
     $,
@@ -70,7 +69,6 @@ define([
     MostPopularFactory,
     Related,
     Onward,
-    images,
     Profile,
     Search,
     Navigation,
@@ -97,7 +95,7 @@ define([
     id,
     MoreTags,
     smartAppBanner,
-    FauxBlockLink,
+    fauxBlockLink,
     DiscussionLoader
 ) {
 
@@ -107,13 +105,8 @@ define([
             new FastClick(document.body);
         },
 
-        upgradeImages: function () {
-            images.upgrade();
-            images.listen();
-        },
-
         initialiseFauxBlockLink: function(context){
-            new FauxBlockLink(context);
+            fauxBlockLink().init(context);
         },
 
         initialiseTopNavItems: function(config){
@@ -257,25 +250,26 @@ define([
 
             var path = (document.location.pathname) ? document.location.pathname : '/';
 
-            var releaseMessage = new Message('alpha');
+            var releaseMessage = new Message('alpha', {pinOnHide: true});
 
-            // Do not show the release message on -sp- based paths.
-            var spRegExp = new RegExp('.*-sp-.*');
-
-            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path) && config.page.contentType !== 'Video' && config.page.hasClassicVersion) {
+            if (config.switches.releaseMessage && config.page.hasClassicVersion && (detect.getBreakpoint() !== 'mobile')) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
 
                 var exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                     msg = '<p class="site-message__message" id="site-message__message">' +
                             'You’re viewing a beta release of the Guardian’s responsive website.' +
-                            ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
+                            ' We’d love to hear what you think.' +
                         '</p>' +
                         '<ul class="site-message__actions u-unstyled">' +
                             '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                                       'data-link-name="opt-out">Opt-out and return to our current site </a>' +
+                                       'data-link-name="opt-out">Use current version</a>' +
+                            '</li>' +
+                            '<li class="site-message__actions__item">' +
+                            '<i class="i i-arrow-white-right"></i>' +
+                            '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
                             '</li>' +
                         '</ul>';
                 releaseMessage.show(msg);
@@ -420,7 +414,6 @@ define([
             modules.windowEventListeners();
             modules.initialiseFauxBlockLink(context);
             modules.checkIframe();
-            modules.upgradeImages();
             modules.showTabs();
             modules.initialiseTopNavItems(config);
             modules.initialiseNavigation(config);

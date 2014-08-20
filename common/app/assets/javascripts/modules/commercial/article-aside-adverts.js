@@ -1,35 +1,37 @@
 define([
+    'qwery',
     'lodash/objects/defaults',
     'lodash/functions/once',
     'common/utils/$',
+    'common/utils/$css',
     'common/utils/config',
     'common/modules/commercial/dfp'
 ], function (
+    qwery,
     defaults,
     once,
     $,
+    $css,
     globalConfig,
     dfp
 ) {
 
     function init(c) {
         var config = defaults(
-            c || {},
-            globalConfig,
-            {
-                columnSelector: '.content__secondary-column',
-                adSlotContainerSelector: '.js-mpu-ad-slot',
-                switches: {},
-                page: {}
-            }
-        );
+                c || {},
+                globalConfig,
+                {
+                    columnSelector: '.content__secondary-column',
+                    adSlotContainerSelector: '.js-mpu-ad-slot',
+                    switches: {},
+                    page: {}
+                }
+            ),
+            $col = $(config.columnSelector),
+            colIsHidden = $col.length && $css($col, 'display') === 'none';
 
         // is the switch off, or not an article, or the secondary column hidden
-        if (
-            !config.switches.standardAdverts ||
-            !/Article|LiveBlog/.test(config.page.contentType) ||
-            $(config.columnSelector).css('display') === 'none'
-        ) {
+        if (!config.switches.standardAdverts || !/Article|LiveBlog/.test(config.page.contentType) || colIsHidden) {
             return false;
         }
 

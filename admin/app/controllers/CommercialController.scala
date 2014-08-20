@@ -39,15 +39,13 @@ object CommercialController extends Controller with Logging with AuthLogging {
     NoCache(Ok(views.html.commercial.pageskins(Configuration.environment.stage, pageskinnedAdUnits)))
   }
 
-  def renderSurgingContent = AuthActions.AuthActionTest {implicit request =>
-    val surging: Seq[(String, Int)] = SurgingContentAgent.getSurging.toSeq
-    val sortedSurging: Seq[(String, Int)] = surging.sortBy(_._2).reverse
-
-    NoCache(Ok(views.html.commercial.surgingpages(Configuration.environment.stage, sortedSurging)))
+  def renderSurgingContent = AuthActions.AuthActionTest { implicit request =>
+    val surging = SurgingContentAgent.getSurging
+    NoCache(Ok(views.html.commercial.surgingpages(Configuration.environment.stage, surging)))
   }
 
-  def renderInlineMerchandisingSponsorships = AuthActions.AuthActionTest { implicit request =>
-    val sponsorships = Store.getDfpInlineMerchandisingSponsorships()
-    NoCache(Ok(views.html.commercial.inlineMerchandisingSponsorships(Configuration.environment.stage, sponsorships)))
+  def renderInlineMerchandisingTargetedTags = AuthActions.AuthActionTest { implicit request =>
+    val report = Store.getDfpInlineMerchandisingTargetedTagsReport()
+    NoCache(Ok(views.html.commercial.inlineMerchandisingTargetedTags(Configuration.environment.stage, report)))
   }
 }
