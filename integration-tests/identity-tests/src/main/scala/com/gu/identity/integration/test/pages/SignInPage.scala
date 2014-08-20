@@ -2,7 +2,8 @@ package com.gu.identity.integration.test.pages
 
 import com.gu.integration.test.pages.common.ParentPage
 import com.gu.integration.test.util.ElementLoader._
-import org.openqa.selenium.{WebDriver, WebElement}
+import org.openqa.selenium.support.ui.ExpectedConditions._
+import org.openqa.selenium.{By, WebDriver, WebElement}
 
 class SignInPage(implicit driver: WebDriver) extends ParentPage {
   private def emailInputField: WebElement = findByTestAttribute("signin-email")
@@ -24,6 +25,10 @@ class SignInPage(implicit driver: WebDriver) extends ParentPage {
 
   def clickFaceBookSignInButton(): FaceBookSignInPage = {
     faceBookSignInButton.click()
+
+    //this is needed because sometimes the above click does not wait for the facebook page to be loaded
+    waitUntil(visibilityOf(driver.findElement(By.name("email"))), 10)
+
     new FaceBookSignInPage()
   }
 
