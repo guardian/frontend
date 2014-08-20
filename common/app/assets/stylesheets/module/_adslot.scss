@@ -348,6 +348,11 @@
             @include rem((
                 margin-top: get-line-height($fs-data, 3)*-2
             ));
+            .ad-slot--commercial-component & {
+                @include rem((
+                    margin-top: -(get-line-height($fs-data, 3))
+                ));
+            }
         }
     }
 }
@@ -356,6 +361,7 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2;
     }
+
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             @include rem((
@@ -417,7 +423,9 @@
             ));
         }
     }
-    @include mq(faciaLeftCol) {
+
+    @mixin comm-paid-logo-placement {
+        clear: left;
         padding: 0;
         margin: 0;
         float: left;
@@ -431,11 +439,20 @@
             @include rem((
                 margin-top: $gs-row-height/4
             ));
+        }        
+    }
+
+    @include mq(leftCol) {
+        .l-side-margins--layout-content .ad-slot--commercial-component & {
+            @include comm-paid-logo-placement;
         }
     }
+    
+    @include mq(faciaLeftCol) {
+        @include comm-paid-logo-placement;
+    }
+    
     @include mq(wide) {
-        clear: left;
-
         .has-page-skin & {
             margin-left: 50%;
             width: auto;
