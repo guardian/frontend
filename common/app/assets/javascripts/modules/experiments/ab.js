@@ -2,6 +2,7 @@ define([
     'lodash/collections/filter',
     'lodash/collections/forEach',
     'lodash/collections/map',
+    'lodash/collections/some',
     'lodash/objects/assign',
     'lodash/objects/keys',
     'common/utils/_',
@@ -14,6 +15,7 @@ define([
     filter,
     forEach,
     map,
+    some,
     assign,
     keys,
     _,
@@ -60,7 +62,7 @@ define([
             if (typeof(assign({}, globalConfig, config).switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
             } else {
-                var testExists = TESTS.some(function (element) {
+                var testExists = some(TESTS, function(element) {
                     return element.id === k;
                 });
 
@@ -118,7 +120,7 @@ define([
         if (isParticipating(test) && testCanBeRun(test, config)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
-            test.variants.some(function(variant) {
+            some(test.variants, function(variant) {
                 if (variant.id === variantId) {
                     variant.test(context, config);
                     return true;
@@ -216,11 +218,11 @@ define([
             });
         },
 
-        isEventApplicableToAnActiveTest: function (event) {
+        isEventApplicableToAnActiveTest: function(event) {
             var participations = keys(getParticipations());
-            return participations.some(function (id) {
+            return some(participations, function(id) {
                 var listOfEventStrings = getTest(id).events;
-                return listOfEventStrings.some(function (ev) {
+                return some(listOfEventStrings, function(ev) {
                     return event.indexOf(ev) === 0;
                 });
             });
@@ -236,7 +238,7 @@ define([
             return eventTag && _(getActiveTests())
                 .filter(function (test) {
                     var testEvents = test.events;
-                    return testEvents && testEvents.some(function (testEvent) {
+                    return testEvents && some(testEvents, function(testEvent) {
                         return startsWith(eventTag, testEvent);
                     });
                 })

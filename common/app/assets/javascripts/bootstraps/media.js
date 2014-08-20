@@ -36,8 +36,7 @@ define([
     Message,
     raven
 ) {
-
-    var autoplay = config.isMedia && /desktop|wide/.test(detect.getBreakpoint()),
+    var isDesktop = /desktop|wide/.test(detect.getBreakpoint()),
         QUARTILES = [25, 50, 75],
         // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [
@@ -55,12 +54,15 @@ define([
         return mediaEl ? mediaEl.tagName.toLowerCase() : 'video';
     }
 
+    function shouldAutoPlay(player) {
+        return $('.vjs-tech', player.el()).attr('data-auto-play') === 'true' && isDesktop;
+    }
+
     function constructEventName(eventName, player) {
         return getMediaType(player) + ':' + eventName;
     }
 
     var modules = {
-
         ophanRecord: function(id, event, player) {
             if(id) {
                 require('ophan/ng', function (ophan) {
@@ -130,7 +132,7 @@ define([
                     player.one('adstart', events.play);
                     player.one('adend', events.end);
 
-                    if (autoplay) {
+                    if (shouldAutoPlay(player)) {
                         player.play();
                     }
                 }
@@ -174,7 +176,7 @@ define([
                     player.on('timeupdate', _throttle(events.timeupdate, 1000));
                     player.one('ended', events.end);
 
-                    if (autoplay) {
+                    if (shouldAutoPlay(player)) {
                         player.play();
                     }
                 }
@@ -297,7 +299,7 @@ define([
 
                     bonzo(el).addClass('vjs');
 
-                    var mediaId = el.getAttribute('data-media-id'),
+                    var mediaId = bonzo(el).attr('data-media-id'),
                         vjs = modules.createVideoObject(el, {
                             controls: true,
                             autoplay: false,
@@ -349,8 +351,9 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if (/desktop|wide/.test(detect.getBreakpoint())) {
-                                    modules.initEndSlate(player, el.getAttribute('data-end-slate'));
+                                if (bonzo(el).attr('data-show-end-slate') === 'true' &&
+                                    /desktop|wide/.test(detect.getBreakpoint())) {
+                                    modules.initEndSlate(player, bonzo(el).attr('data-end-slate'));
                                 }
                             } else {
                                 vjs.playlist({
@@ -379,17 +382,11 @@ define([
                 });
             });
         },
-        generateEndSlateUrlFromPage: function() {
-            var seriesId = config.page.seriesId;
-            var sectionId = config.page.section;
-            var url = (seriesId)  ? '/video/end-slate/series/' + seriesId : '/video/end-slate/section/' + sectionId;
-            return url + '.json?shortUrl=' + config.page.shortUrl;
-        },
         initEndSlate: function(player, endSlatePath) {
             var endSlate = new Component(),
                 endState = 'vjs-has-ended';
 
-            endSlate.endpoint = endSlatePath || modules.generateEndSlateUrlFromPage();
+            endSlate.endpoint = endSlatePath;
             endSlate.fetch(player.el(), 'html');
 
             player.one(constructEventName('content:play', player), function() {

@@ -199,7 +199,7 @@ Loader.prototype.loadComments = function(args) {
                 self.comments.removeState('shut');
             }
 
-            bonzo(commentsContainer).removeClass('js-hidden');
+            bonzo(commentsContainer).removeClass('modern-hidden');
             self.initUnthreaded();
         }).fail(self.loadingError.bind(self));
 };

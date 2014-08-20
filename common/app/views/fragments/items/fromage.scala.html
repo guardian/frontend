@@ -19,7 +19,7 @@
         <div class="fromage__container">
             @trail match {
                 case v: Video if v.mainVideo.isDefined && imageAdjust == "boost" => {
-                    @fromageVideo(v.mainVideo.get, v.webTitle, true, Some(v.endSlatePath))
+                    @fromageVideo(v.mainVideo.get, v.webTitle, true, v.endSlatePath)
                 }
                 case _ => {
                     @if(imageAdjust != Some("hide")) {
