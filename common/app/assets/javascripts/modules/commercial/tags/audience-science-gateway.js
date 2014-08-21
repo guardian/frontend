@@ -1,5 +1,6 @@
 define([
     'lodash/functions/once',
+    'lodash/objects/assign',
     'lodash/objects/pairs',
     'common/utils/_',
     'common/utils/config',
@@ -7,6 +8,7 @@ define([
     'common/utils/url'
 ], function (
     once,
+    assign,
     pairs,
     _,
     config,
@@ -25,8 +27,12 @@ define([
             news:         ['eMdl6Y', 'mMYVrM', 'MTLELH'],
             'default':    ['c7Zrhu', 'Y1C40a', 'LtKGsC', 'MTLELH']
         },
-        section = sectionPlacements[config.page.section] ? config.page.section : 'default',
-        load = once(function() {
+        section,
+        init = function (opts) {
+            var c = assign(config, opts);
+            section = sectionPlacements[c.page.section] ? c.page.section : 'default';
+        },
+        load = once(function () {
             if (config.switches.audienceScienceGateway) {
                 var placements = sectionPlacements[section],
                     query = urlUtils.constructQuery({
@@ -38,27 +44,38 @@ define([
                 return require(['js!' + url + '!exports=asiPlacements'])
                     .then(function(asiPlacements) {
                         var segments = storage.local.get(storageKey) || {};
-                        segments[section] = _(pairs(asiPlacements))
-                            .filter(function(placement) {
-                                return placement[1]['default'];
-                            })
-                            .map(function(placement) {
-                                return ['pq_' + placement[0], 'T'];
-                            })
-                            .zipObject()
-                            .valueOf();
+                        // override the global value with our previously stored one
+                        window.asiPlacements = segments[section];
+                        segments[section] = asiPlacements;
                         storage.local.set(storageKey, segments);
                     });
             }
         }),
         getSegments = function() {
-            var segments = storage.local.get(storageKey);
-            return segments ? segments[section] : {};
+            var segments = {},
+                storedSegments = storage.local.get(storageKey);
+            if (config.switches.audienceScienceGateway && storedSegments) {
+                segments = _(pairs(storedSegments[section]))
+                    .filter(function(placement) {
+                        return placement[1]['default'];
+                    })
+                    .map(function(placement) {
+                        return ['pq_' + placement[0], 'T'];
+                    })
+                    .zipObject()
+                    .valueOf();
+                // set up the global asiPlacements var in case dfp returns before asg
+                window.asiPlacements = storedSegments[section];
+            }
+            return segments;
         };
+
+    init();
 
     return {
         load: load,
-        getSegments: getSegments
+        getSegments: getSegments,
+        _init: init
     };
 
 });
