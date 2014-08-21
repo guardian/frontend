@@ -469,7 +469,13 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
       case other => s"Source: $other"
     }
   ).flatten.mkString(", ")).filter(_.nonEmpty)
-  lazy val videoLinkText: String = webTitle.stripSuffix(" - video").stripSuffix(" – video")
+  lazy val videoLinkText: String = {
+    val suffixVariations = List(
+        " - video", " – video",
+        " - video interview", " – video interview",
+        " - video interviews"," – video interviews" )
+    suffixVariations.fold(webTitle.trim) { (str, suffix) => str.stripSuffix(suffix) }
+  }
 
   def endSlatePath = EndSlateComponents.fromContent(this).toUriPath
 }
