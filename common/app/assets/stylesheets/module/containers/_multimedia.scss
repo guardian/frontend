@@ -25,6 +25,14 @@
     .linkslist__action:visited {
         color: mix(#ffffff, lighten($c-neutral1, 4%), 80%);
     }
+    .item__tag {
+        &,
+        &:hover,
+        &:active,
+        &:focus {
+            color: mix(#ffffff, $c-neutral1, 70%);
+        }
+    }
     .linkslist__item {
         border-top-color: mix(#ffffff, lighten($c-neutral1, 8%), 50%);
     }

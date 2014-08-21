@@ -15,11 +15,7 @@
 
     .content__head--tonal {
         background-color: #ffffff;
-        .tone-background {
-            @include rem((
-                padding-top: $content-top-padding
-            ));
-        }
+
         .tone-background--accent {
             @include rem((
                 padding: $gs-baseline/2 0 $gs-baseline

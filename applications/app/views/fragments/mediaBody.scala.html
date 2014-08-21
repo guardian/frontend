@@ -1,9 +1,8 @@
 @(page: MediaPage)(implicit request: RequestHeader)
-@import conf.Switches._
 @import model.{Audio, Video}
-@import views.support.{Item620, StripHtmlTags}
+@import views.support.{Video640, StripHtmlTags}
 
-@defining(page.media, page.storyPackage, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, storyPackage, mediaType) =>
+@defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
 <div class="l-side-margins l-side-margins--layout-content">
     <article class="content content--media content--media--@mediaType tone-@media.visualTone"
         itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
@@ -50,7 +49,7 @@
                                     <meta itemprop="image" content="@video.openGraphImage" />
                                     @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
                                     @video.mainVideo.map { videoElement =>
-                                        @fragments.media.video(videoElement, Item620, video.headline, 620, 350)
+                                        @fragments.media.video(videoElement, Video640, video.headline)
                                     }
                                 </figure>
                             }
@@ -89,7 +88,7 @@
         </div>
     </article>
 
-    @fragments.contentFooter(media, storyPackage, "media")
+    @fragments.contentFooter(media, page.related, "media")
 
     }
 </div>

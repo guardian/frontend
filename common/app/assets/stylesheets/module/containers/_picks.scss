@@ -1,7 +1,14 @@
-.container--picks {}
-.pick-items {}
+.pick-items {
+    @include mq(tablet) {
+        @if $browser-supports-flexbox {
+            @include display-flex;
+            direction: rtl;
+        }
+    }
+}
 .pick-item {
     @include box-sizing(border-box);
+    direction: ltr;
 
     .item {
         padding: 0;
@@ -19,6 +26,7 @@
         ));
         color: #ffffff;
 
+        &.item__title:before, // video icon. Increased specificity needed
         .i {
             display: none;
         }
@@ -47,11 +55,20 @@
     .item__meta {
         display: none;
     }
-    .tone-accent-border {
+    .item__tonal-border {
         border: 0;
     }
+    .stars {
+        display: none;
+    }
 }
+
 .pick-item--big {
+    @include box-sizing(border-box);
+    @include rem((
+        margin-bottom: $gs-baseline/2
+    ));
+
     .item__header {
         @include box-sizing(border-box);
         @include rem((
@@ -61,45 +78,54 @@
         ));
     }
 
+    .stars {
+        display: block;
+    }
+
     @include mq(tablet) {
-        @include box-sizing(border-box);
-        @include rem((
-            padding-left: $gs-gutter/2
-        ));
         float: right;
+        margin-bottom: 0;
         position: relative;
         width: 50%;
-        width: calc(50% - 1px);
 
-        @if not $old-ie {
-            border-left: 1px solid $c-neutral5;
-            left: -1px;
+        @if $browser-supports-flexbox {
+            @include rem((
+                margin-left: $gs-gutter/2
+            ));
         }
 
         .item__header {
             @include rem((
                 padding-left: $gs-gutter/2,
-                padding-bottom: ($gs-baseline*4) - 2
+                padding-bottom: $gs-baseline
             ));
         }
     }
 }
+
 .picked-items__standard {
+    @include box-sizing(border-box);
+    direction: ltr;
+
     @include mq(tablet) {
-        @include box-sizing(border-box);
         @include rem((
             padding-right: $gs-gutter/2
         ));
         float: left;
         width: 50%;
-        width: calc(50% + 1px);
 
-        @if not $old-ie {
+        @if $browser-supports-flexbox {
+            @include display-flex;
+            @include flex-direction(column);
             border-right: 1px solid $c-neutral5;
         }
     }
 }
 .pick-item--standard {
+    @include rem((
+        margin-bottom: $gs-baseline/2
+    ));
+
     .item__media-wrapper {
         @include rem((
             width: gs-span(2)
@@ -118,4 +144,17 @@
             padding-right: $gs-gutter/2
         ));
     }
+
+    @if $browser-supports-flexbox {
+        @include mq(desktop) {
+            margin-bottom: auto;
+
+            .item {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+.pick-item--last {
+    margin-bottom: 0;
 }

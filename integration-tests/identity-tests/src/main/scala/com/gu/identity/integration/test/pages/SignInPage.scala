@@ -10,6 +10,7 @@ class SignInPage(implicit driver: WebDriver) extends ParentPage {
   def signInButton: WebElement = findByTestAttribute("sign-in-button")
   private def faceBookSignInButton: WebElement = findByTestAttribute("facebook-sign-in")
   private def googleSignInButton: WebElement = findByTestAttribute("google-sign-in")
+  private def registerLink: WebElement = findByTestAttribute("register-link")
 
   def enterEmail(email: String) = {
     emailInputField.sendKeys(email)
@@ -29,5 +30,10 @@ class SignInPage(implicit driver: WebDriver) extends ParentPage {
   def clickGoogleSignInButton(): GoogleSignInPage = {
     googleSignInButton.click()
     new GoogleSignInPage()
+  }
+
+  def clickRegisterNewUserLink(): RegisterPage = {
+    registerLink.click()
+    new RegisterPage()
   }
 }

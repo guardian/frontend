@@ -123,6 +123,25 @@ object DfpDataCacheJob extends ExecutionContexts {
     }
   }
 
+  private implicit val inlineMerchandisingTagSetWrites = new Writes[InlineMerchandisingTagSet] {
+    def writes(tagSet: InlineMerchandisingTagSet): JsValue = {
+      Json.obj(
+        "keywords" -> tagSet.keywords,
+        "series" -> tagSet.series,
+        "contributors" -> tagSet.contributors
+      )
+    }
+  }
+
+  private implicit val inlineMerchandisingTargetedTagsReportWrites = new Writes[InlineMerchandisingTargetedTagsReport] {
+    def writes(report: InlineMerchandisingTargetedTagsReport): JsValue = {
+      Json.obj(
+        "updatedTimeStamp" -> report.updatedTimeStamp,
+        "targetedTags" -> report.targetedTags
+      )
+    }
+  }
+
   private val londonTimeFormatter = DateTimeFormat.longDateTime().withZone(DateTimeZone.forID("Europe/London"))
 
   def run() {
@@ -138,8 +157,8 @@ object DfpDataCacheJob extends ExecutionContexts {
         val advertisementFeatureSponsorships = data.advertisementFeatureSponsorships
         Store.putDfpAdvertisementFeatureTags(stringify(toJson(SponsorshipReport(now, advertisementFeatureSponsorships))))
 
-        val inlineMerchandisingSponsorships = data.inlineMerchandisingSponsorships
-        Store.putInlineMerchandisingSponsorships(stringify(toJson(SponsorshipReport(now, inlineMerchandisingSponsorships))))
+        val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
+        Store.putInlineMerchandisingSponsorships(stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
 
         val pageSkinSponsorships = data.pageSkinSponsorships
         Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))

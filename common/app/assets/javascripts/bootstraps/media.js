@@ -297,7 +297,7 @@ define([
 
                     bonzo(el).addClass('vjs');
 
-                    var mediaId = el.getAttribute('data-media-id'),
+                    var mediaId = bonzo(el).attr('data-media-id'),
                         vjs = modules.createVideoObject(el, {
                             controls: true,
                             autoplay: false,
@@ -349,8 +349,9 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if (/desktop|wide/.test(detect.getBreakpoint())) {
-                                    modules.initEndSlate(player, el.getAttribute('data-end-slate'));
+                                if (bonzo(el).attr('data-show-end-slate') === 'true' &&
+                                    /desktop|wide/.test(detect.getBreakpoint())) {
+                                    modules.initEndSlate(player, bonzo(el).attr('data-end-slate'));
                                 }
                             } else {
                                 vjs.playlist({
@@ -425,20 +426,20 @@ define([
         },
         displayReleaseMessage: function() {
             var msg = '<p class="site-message__message" id="site-message__message">' +
-                    'We\'ve redesigned our video pages to make it easier to find and experience our best video content. We\'d love to hear what you think.' +
+                    'We’ve redesigned our video pages to make it easier to find and experience our best video content. We’d love to hear what you think.' +
                     '</p>' +
                     '<ul class="site-message__actions u-unstyled">' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="https://www.surveymonkey.com/s/guardianvideo" target="_blank">Leave feedback</a>' +
+                    '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
                     '</li>' +
                     '<li class="site-message__actions__item">' +
                     '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
+                    '<a href="https://www.surveymonkey.com/s/guardianvideo" target="_blank">Leave feedback</a>' +
                     '</li>' +
                     '</ul>';
 
-            var releaseMessage = new Message('video');
+            var releaseMessage = new Message('video', {pinOnHide: true});
 
             releaseMessage.show(msg);
         }

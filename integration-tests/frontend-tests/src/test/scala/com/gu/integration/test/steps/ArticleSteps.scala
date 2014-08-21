@@ -22,13 +22,6 @@ case class ArticleSteps(implicit driver: WebDriver) extends TestLogging with Mat
     mostPopularModule.displayedImages should not be empty
   }
 
-  def checkMostRelatedContentDisplayedProperly(articlePage: ArticlePage) = {
-    logger.step("Get related content module and check that it is properly displayed")
-    val relatedContentModule = articlePage.relatedContentModule()
-    relatedContentModule.displayedLinks(3).size should be (3)
-    relatedContentModule.displayedImages should not be empty
-  }
-
   def checkThatTopBannerAdIsDisplayedProperly(articlePage: ArticlePage) = {
     logger.step("Check that top banner ad is displayed on the page")
     checkThatAdWithIFrameIsDisplayedProperly(articlePage.topBannerAdModule())

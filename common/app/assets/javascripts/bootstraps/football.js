@@ -207,7 +207,7 @@ define([
                         $.create('<div class="js-football-match-day" data-link-name="football-match-day-embed"></div>').each(function (container) {
                             football.matchDayFor(competition, resp.matchDate).fetch(container).then(function() {
                                 extras[1] = {
-                                    name: 'Today\'s matches',
+                                    name: 'Today’s matches',
                                     importance: 2,
                                     content: container,
                                     ready: true
@@ -234,7 +234,7 @@ define([
                                           .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
 
             $img.addClass('u-h');
-            loading($matchListContainer[0], 'Fetching today\'s matches…', { text: 'Impatient?', href: '/football/live' });
+            loading($matchListContainer[0], 'Fetching today’s matches…', { text: 'Impatient?', href: '/football/live' });
 
             $('.js-football-meta').append($matchListContainer);
             ml.fetch($matchListContainer[0]).fail(function() {

@@ -1,12 +1,18 @@
-/*
-* If user is a member, display a membership tab on edit profile page
-*/
-define(['common/utils/$',
-'bean',
-'common/utils/ajax',
-'common/utils/config',
-'common/modules/component',
-'membership/paymentForm'], function ($, bean, ajax, config, Component, PaymentForm) {
+define([
+    'common/utils/$',
+    'bean',
+    'common/utils/ajax',
+    'common/utils/config',
+    'common/modules/component',
+    'membership/payment-form'
+], function (
+    $,
+    bean,
+    ajax,
+    config,
+    Component,
+    PaymentForm
+) {
 
     function Membership (context, options) {
 
@@ -34,10 +40,10 @@ define(['common/utils/$',
         JOIN: 'js-membership-join-date',
         NEXT: 'js-membership-payment-next',
         INTERVAL: 'js-membership-plan-interval',
-        CC_NUM: 'js-membership-card-details',
-        CC_LAST4: 'js-membership-card-lastfour',
-        CC_TYPE: 'js-membership-card-type',
-        CC_TYPE_TEXT: 'js-membership-card-text',
+        CC_SUMMARY_LAST4: 'js-membership-summary-card-lastfour',
+        CC_PAYMENT_LAST4: 'js-membership-payment-card-lastfour',
+        CC_PAYMENT_TYPE: 'js-membership-payment-card-type',
+        CC_PAYMENT_TYPE_TEXT: 'js-membership-payment-card-text',
         CC_CHANGE_BUTTON: 'js-membership-change-cc-open',
         CC_CHANGE_FORM_CONT: 'js-membership-change-cc-form-cont',
         CC_CHANGE_FORM: 'js-membership-change-cc-form',
@@ -175,7 +181,7 @@ define(['common/utils/$',
         $(this.getClass('NOTIFICATION_NEW_START'), rootElement).html(subscriptionNewStartDate);
         $(this.getClass('NOTIFICATION_ICON_CURRENT'), rootElement).addClass('i-g-' + resp.tier.toLowerCase());
         $(this.getClass('NOTIFICATION_ICON_TARGET'), rootElement).addClass('i-g-' + 'friend');
-        $(this.getClass('CC_LAST4'), rootElement).text(resp.subscription.card.last4);
+        $(this.getClass('CC_SUMMARY_LAST4'), rootElement).text(resp.subscription.card.last4);
     };
 
     /**
@@ -204,12 +210,12 @@ define(['common/utils/$',
         $(rootElement, this.context).removeClass('is-hidden');
         $(this.getClass('INTERVAL'), this.context).html(subscriptionDates.interval);
         $(this.getClass('NEXT'), rootElement).text(this.formatDate(new Date(resp.subscription.end)));
-        $(this.getClass('CC_LAST4'), rootElement).text(resp.subscription.card.last4);
+        $(this.getClass('CC_PAYMENT_LAST4'), rootElement).text(resp.subscription.card.last4);
 
         this.currentCardTypeClass = 'i-' + resp.subscription.card.type.toLowerCase().replace(' ', '-');
 
-        $(this.getClass('CC_TYPE'), rootElement).addClass(this.currentCardTypeClass);
-        $(this.getClass('CC_TYPE_TEXT'), rootElement).text(resp.subscription.card.type);
+        $(this.getClass('CC_PAYMENT_TYPE'), rootElement).addClass(this.currentCardTypeClass);
+        $(this.getClass('CC_PAYMENT_TYPE_TEXT'), rootElement).text(resp.subscription.card.type);
     };
 
     /**
@@ -274,11 +280,10 @@ define(['common/utils/$',
                 self.closeFormAndUpdate();
 
                 // update cc last4 with new details
-                $(self.getElem('CC_LAST4')).text(resp.last4);
-                $(self.getElem('CC_TYPE')).removeClass(self.currentCardTypeClass);
+                $(self.getElem('CC_PAYMENT_LAST4')).text(resp.last4);
+                $(self.getElem('CC_PAYMENT_TYPE')).removeClass(self.currentCardTypeClass);
                 self.currentCardTypeClass = 'i-'+resp.cardType.toLowerCase().replace(' ', '-');
-                $(self.getElem('CC_TYPE')).addClass(self.currentCardTypeClass);
-                $(self.getElem('CC_NUM')).addClass('membership-tab__updated');
+                $(self.getElem('CC_PAYMENT_TYPE')).addClass(self.currentCardTypeClass);
                 // append a success message
                 self.appendSuccessMessage(self.options.messages.CHANGE_CC_SUCCESS);
             });

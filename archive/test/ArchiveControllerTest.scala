@@ -4,7 +4,6 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.Matchers
 import org.scalatest.FlatSpec
-import conf.Switches.CenturyRedirectionSwitch
 
 class ArchiveControllerTest extends FlatSpec with Matchers {
 
@@ -51,21 +50,20 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
     location should be ("http://www.theguardian.com/football/News_Story/0,1563,1655638,00.html")
   }
 
-  it should "redirect century urls correctly when enabled" in Fake {
+  it should "redirect century urls correctly" in Fake {
     val tests = Map[String, Option[String]](
+      "www.theguardian.com" -> None,
       "www.theguardian.com/century" -> Some("www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century")
     )
-    CenturyRedirectionSwitch.switchOn()
     tests foreach {
       case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
     }
   }
 
-  it should "redirect decade urls correctly when enabled" in Fake {
+  it should "redirect decade urls correctly" in Fake {
     val tests = Map[String, Option[String]](
       "www.theguardian.com/1899-1909" -> Some("www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century")
     )
-    CenturyRedirectionSwitch.switchOn()
     tests foreach {
       case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
     }
@@ -75,67 +73,15 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
     val tests = Map[String, Option[String]](
       "www.theguardian.com/discover-culture/2014/jul/22/mid-century-textiles-then-and-now" -> None
     )
-    CenturyRedirectionSwitch.switchOn()
     tests foreach {
       case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
     }
   }
 
-  it should "redirect an R1 century article to a corrected decade story endpoint when enabled" in Fake {
+  it should "redirect an R1 century article to a corrected decade story endpoint" in Fake {
     val tests = Map[String, Option[String]](
       "www.theguardian.com/1899-1909/Story/0,,126404,00.html" -> Some("www.theguardian.com/century/1899-1909/Story/0,,126404,00.html")
     )
-    CenturyRedirectionSwitch.switchOn()
-    tests foreach {
-      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
-    }
-  }
-
-  it should "not hijack www.theguardian.com by mistake when century redirection is enabled" in Fake {
-    val tests = Map[String, Option[String]](
-      "www.theguardian.com" -> None
-    )
-    CenturyRedirectionSwitch.switchOn()
-    tests foreach {
-      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
-    }
-  }
-
-  it should "not redirect century urls when disabled" in Fake {
-    val tests = Map[String, Option[String]](
-      "www.theguardian.com/century" -> None
-    )
-    CenturyRedirectionSwitch.switchOff()
-    tests foreach {
-      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
-    }
-  }
-
-  it should "not redirect century/decade urls when disabled" in Fake {
-    val tests = Map[String, Option[String]](
-      "www.theguardian.com/century/1899-1909" -> None
-    )
-    CenturyRedirectionSwitch.switchOff()
-    tests foreach {
-      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
-    }
-  }
-
-  it should "not redirect decade urls when disabled" in Fake {
-    val tests = Map[String, Option[String]](
-      "www.theguardian.com/1899-1909" -> None
-    )
-    CenturyRedirectionSwitch.switchOff()
-    tests foreach {
-      case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
-    }
-  }
-
-  it should "not redirect a century story url when disabled" in Fake {
-    val tests = Map[String, Option[String]](
-      "www.theguardian.com/1899-1909/Story/0,,126404,00.html" -> None
-    )
-    CenturyRedirectionSwitch.switchOff()
     tests foreach {
       case (key, value) => controllers.ArchiveController.newCenturyUrl(key) should be (value)
     }

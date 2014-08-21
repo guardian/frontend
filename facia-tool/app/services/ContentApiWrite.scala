@@ -4,7 +4,7 @@ import common.FaciaToolMetrics.{ContentApiPutFailure, ContentApiPutSuccess}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import frontsapi.model.Trail
-import model.Config
+import model.{Snap, Config}
 import org.joda.time.DateTime
 import play.Play
 import play.api.libs.json.{JsNull, JsNumber, JsValue, Json}
@@ -88,9 +88,8 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
   }
 
   private def generateItems(items: List[Trail]): List[Item] =
-    items.map { trail =>
-    Item(trail.id, trail.meta.map(_.map(convertFields))
-    )
+    items.filterNot(t => Snap.isSnap(t.id)).map { trail =>
+      Item(trail.id, trail.meta.map(_.map(convertFields)))
     }
 
   //TODO: These are in transition and will be removed

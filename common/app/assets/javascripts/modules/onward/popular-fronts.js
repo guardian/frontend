@@ -26,7 +26,7 @@ define([
                 crossOrigin: true
             }).then(
                 function(resp) {
-                    var container = bonzo.create(resp.faciaHtml.trim())[0];
+                    var container = bonzo.create(resp.faciaHtml.replace(/^\s+|\s+$/g, ''))[0];
                     if (!container) {
                         return false;
                     }
