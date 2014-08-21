@@ -17,7 +17,7 @@ function (
     urlAbsPath,
     snap
 ){
-    var standardQueryParams = 'page-size=50&format=json&show-fields=all';
+    var standardQueryParams = 'page-size=50&format=json&show-fields=all&show-elements=video';
 
     function validateItem (item) {
         var defer = $.Deferred(),
@@ -134,8 +134,16 @@ function (
         });
     }
 
-    function populate(article, opts) {
-        article.populate(opts, true);
+    function mainMediaType(contentApiArticle) {
+        var mainElement = _.findWhere(contentApiArticle.elements || [], {
+            relation: 'main'
+        });
+        return mainElement && mainElement.type;
+    }
+
+    function populate(article, contentApiArticle) {
+        contentApiArticle.mainMediaType = mainMediaType(contentApiArticle);
+        article.populate(contentApiArticle, true);
     }
 
     function fetchContentByIds(ids) {

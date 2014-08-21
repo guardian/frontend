@@ -13,7 +13,8 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     groups = Some(List("1", "2")),
     uneditable = Some(false),
     showTags = Some(true),
-    showSections = Some(false)
+    showSections = Some(false),
+    showMainVideo = None
   )
 
   val createCommandFixture = CreateFront(
@@ -27,6 +28,7 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
   )
 
   val emptyCollectionFixture = Collection(
+    None,
     None,
     None,
     None,

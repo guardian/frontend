@@ -46,6 +46,8 @@ define([
             this.frontPublicationTime = ko.observable();
             this.scheduledPublicationTime = ko.observable();
 
+            this.mainMediaType = ko.observable();
+
             this.props = asObservableProps([
                 'webUrl',
                 'webPublicationDate']);
@@ -66,6 +68,7 @@ define([
                 'imageSrc',
                 'imageSrcWidth',
                 'imageSrcHeight',
+                'showMainVideo',
                 'isBreaking',
                 'group',
                 'snapType',
@@ -200,6 +203,7 @@ define([
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
+            opts.mainMediaType && this.mainMediaType(opts.mainMediaType);
 
             this.setRelativeTimes();
 
@@ -251,6 +255,11 @@ define([
 
         Article.prototype.toggleImageAdjustHide = function() {
             this.meta.imageAdjust(this.meta.imageAdjust() === 'hide' ? undefined : 'hide');
+            this._save();
+        };
+
+        Article.prototype.toggleShowMainVideo = function () {
+            this.meta.showMainVideo(!this.meta.showMainVideo());
             this._save();
         };
 
