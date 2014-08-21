@@ -42,15 +42,23 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     editProfilePage.clickEditAccountDetailsTab()
   }
 
-  def changeEmail(editAccountDetailsModule: EditAccountDetailsModule): String = {
-    logger.step("Changing account email")
-    editAccountDetailsModule.enterEmailAddress(generateRandomEmail)
+  def changeEmail(editAccountDetailsModule: EditAccountDetailsModule): Either[List[FormError], String] = {
+    changeEmailTo(generateRandomEmail, editAccountDetailsModule)
+  }
+
+  def changeEmailTo(newEmail:String, editAccountDetailsModule: EditAccountDetailsModule): Either[List[FormError], String] = {
+    logger.step(s"Changing account email to $newEmail")
+    editAccountDetailsModule.enterEmailAddress(newEmail)
     editAccountDetailsModule.saveChanges()
 
     waitForPageToBeLoaded
 
-    editAccountDetailsModule.getAllValidationErrorElements() should be('empty)
-    editAccountDetailsModule.getEmailAddress()
+    val userFormErrors = editAccountDetailsModule.getAllValidationFormErrors()
+    if (userFormErrors.nonEmpty) {
+      Left(userFormErrors)
+    } else {
+      Right(editAccountDetailsModule.getEmailAddress())
+    }
   }
 
   def changeFirstAndLastName(editAccountDetailsModule: EditAccountDetailsModule): User = {
@@ -61,7 +69,7 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
 
     waitForPageToBeLoaded
 
-    editAccountDetailsModule.getAllValidationErrorElements() should be('empty)
+    editAccountDetailsModule.getAllValidationFormErrors() should be('empty)
     User.fromEditAccountDetailsForm(editAccountDetailsModule)
   }
 
@@ -77,7 +85,7 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
 
     waitForPageToBeLoaded
 
-    editAccountDetailsModule.getAllValidationErrorElements() should be('empty)
+    editAccountDetailsModule.getAllValidationFormErrors() should be('empty)
     User.fromEditAccountDetailsForm(editAccountDetailsModule)
   }
 
@@ -102,7 +110,7 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
 
     waitForPageToBeLoaded
 
-    changePwdPage.getAllValidationErrorElements() should be('empty)
+    changePwdPage.getAllValidationFormErrors() should be('empty)
     resetConfirmPage.isPasswordChangeMsgDisplayed()
 
     waitForPageToBeLoaded
@@ -112,7 +120,4 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
   }
 }
 
-/**
- * Weird class but no choice to create one because Tuples are apparently forbidden to use in test code
- */
 case class NewPasswordAndContainerWithSigninModule(newPwd: String, containerWithSignInpage: ContainerWithSigninModulePage)

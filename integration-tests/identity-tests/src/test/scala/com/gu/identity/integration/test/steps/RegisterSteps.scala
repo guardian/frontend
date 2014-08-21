@@ -30,8 +30,7 @@ case class RegisterSteps(implicit driver: WebDriver) extends TestLogging with Ma
 
     waitForPageToBeLoaded
 
-    val errorElements: List[WebElement] = registerPage.getAllValidationErrorElements()
-    val userFormErrors = errorElements.map(webElement => FormError(webElement.getText))
+    val userFormErrors = registerPage.getAllValidationFormErrors()
 
     if (userFormErrors.nonEmpty) {
       Left(userFormErrors)

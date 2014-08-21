@@ -1,8 +1,10 @@
 package com.gu.identity.integration.test.features
 
 import com.gu.identity.integration.test.IdentitySeleniumTestSuite
+import com.gu.identity.integration.test.pages.EditAccountDetailsModule
 import com.gu.identity.integration.test.steps.{SignInSteps, UserSteps}
 import com.gu.identity.integration.test.util.User
+import com.gu.identity.integration.test.util.User._
 import com.gu.integration.test.util.UserConfig._
 import org.openqa.selenium.WebDriver
 import org.scalatest.EitherValues
@@ -19,12 +21,20 @@ class UserTests extends IdentitySeleniumTestSuite with EitherValues {
     }
 
     scenarioWeb("should be able to change email address") { implicit driver: WebDriver =>
-      val userBeforeChange: User = UserSteps().createRandomBasicUser().right.value
-      val editAccountDetailsModule = UserSteps().checkUserIsLoggedInAndGoToAccountDetails(userBeforeChange)
+        val userBeforeChange: User = UserSteps().createRandomBasicUser().right.value
+        val editAccountDetailsModule = UserSteps().checkUserIsLoggedInAndGoToAccountDetails(userBeforeChange)
 
-      val changedEmail = UserSteps().changeEmail(editAccountDetailsModule)
+        checkEmailValidation(editAccountDetailsModule)
 
-      changedEmail should not be userBeforeChange.email
+        val changedEmail = UserSteps().changeEmail(editAccountDetailsModule).right.value
+        changedEmail should not be userBeforeChange.email
+    }
+
+    def checkEmailValidation(editAccountDetailsModule: EditAccountDetailsModule) = { implicit driver: WebDriver =>
+      val invalidEmail = generateRandomAlphaNumericString(7)
+      val validationErrors = UserSteps().changeEmailTo(invalidEmail, editAccountDetailsModule).left.value
+      validationErrors.size should be(1)
+      validationErrors.head.errorText.contains("email") should be(true)
     }
 
     scenarioWeb("should be able to set and change first and last name") { implicit driver: WebDriver =>
