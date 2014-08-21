@@ -7,7 +7,11 @@
     }
     <dl class="container__meta__description">
         <dt class="container__meta__title">
-            <a href="@LinkTo{/@href}" data-link-name="tag heading">@tagId</a>
+            @if(href) {
+                <a href="@LinkTo{/@href}" data-link-name="tag heading">@tagId</a>
+            } else {
+                @tagId
+            }
         </dt>
         @description.map { desc =>
             <dd class="container__meta__item hide-on-mobile">@Html(desc)</dd>
