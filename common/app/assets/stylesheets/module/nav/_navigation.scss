@@ -44,17 +44,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint
 $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(navigationBreakOnTwoLevels) + gs-span(1) + $gs-gutter * 1.5);
 
 
-/* Meganav footer overrides (edition switcher and Guardian services)
-   ========================================================================== */
-
-.navigation__expandable {
-    .global-navigation__title--guardian-services {
-        background-color: $c-newsDefault;
-        border-top: 1px solid mix(guss-colour(guardian-brand), #ffffff, 93%);
-    }
-}
-
-
 /* Styles common to all states
    ========================================================================== */
 
