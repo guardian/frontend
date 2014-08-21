@@ -9,15 +9,20 @@
             <div class="content__main-column content__main-column--gallery">
 
                 @fragments.standfirst(gallery)
-                
+
                 @fragments.contentMeta(gallery)
 
                 <div class="gallery2">
                     @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
                         <figure class="gallery2__item">
-                            <img class="gallery2__img @if(image.width >= image.height){gallery2__img--landscape} else {gallery2__img--portrait}"
-                                src="@image.path"
-                                alt="@image.altText.getOrElse("")" />
+                            <a class="gallery2__img-container js-gallerythumbs" href="@LinkTo{@gallery.url?index=@{image.index+1}}">
+                                <img class="gallery2__img @if(image.width >= image.height){gallery2__img--landscape} else {gallery2__img--portrait}"
+                                    src="@image.path"
+                                    alt="@image.altText.getOrElse("")" />
+                                <span class="gallery2__fullscreen">
+                                    <i class="i gallery2_expand-icon"></i>
+                                </span>
+                            </a>
 
                             <div class="gallery2__figcaption">
                                 <p class="gallery2__caption">@Html(image.caption.getOrElse(""))</p>

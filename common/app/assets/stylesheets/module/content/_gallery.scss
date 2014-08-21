@@ -10,11 +10,15 @@
 
 .gallery2__item {
     position: relative;
-    @include rem((
-        margin-bottom: $gs-baseline
-    ));
+    @include box-sizing(border-box);
+    margin-bottom: $gs-baseline;
+
     @include mq($to: rightCol) {
         border-bottom: 1px dotted guss-colour(neutral-2);
+    }
+
+    @include mq(rightCol) {
+        padding-right: gs-span(3) + $gs-gutter;
     }
 }
 
@@ -48,13 +52,36 @@
     color: guss-colour(neutral-3);
 }
 
+.gallery2__img-container {
+    position: relative;
+    display: block;
+}
+
 .gallery2__img {
+    cursor: pointer;
     width: 100%;
-    @include box-sizing(border-box);
-    @include mq(rightCol) {
-        @include rem((
-            padding-right: gs-span(3) + $gs-gutter
-        ));
+}
+
+.gallery2__fullscreen {
+    width: 30px;
+    height: 30px;
+    @include border-radius(50%);
+    top: 0;
+    right: 0;
+    @include icon-button(44px, -11px);
+    background-color: guss-colour(tone-media-1);
+    position: absolute;
+    margin: $gs-gutter/2;
+
+    .gallery2__img-container:hover & {
+        background-color: $c-mediaDefault;
+    }
+}
+
+.gallery2_expand-icon {
+    @include icon(expand-white);
+    .gallery2__img-container:hover & {
+        @include icon(expand-black);
     }
 }
 
@@ -125,7 +152,7 @@
             }
 
             .commentcount__label {
-                display: inline-block;
+                display: inline;
             }
         }
     }
