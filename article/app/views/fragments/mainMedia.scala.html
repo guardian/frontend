@@ -1,8 +1,8 @@
 @(article: model.Article)(implicit request: RequestHeader)
-@import model.EndSlateComponents
 
+@import model.EndSlateComponents
 @import model.{AudioPlayer, VideoPlayer}
-@import views.support.{Video640, SeoOptimisedContentImage}
+@import views.support.Video640
 @import views.BodyCleaner
 
 @if(article.hasMainEmbed) {
@@ -22,7 +22,8 @@
                             article.headline,
                             autoPlay = false,
                             showControlsAtStart = true,
-                            endSlatePath = EndSlateComponents.fromContent(article).toUriPath
+                            endSlatePath = EndSlateComponents.fromContent(article).toUriPath,
+                            None
                         ))
                     }
 
