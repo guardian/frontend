@@ -4,8 +4,6 @@ module.exports = function (grunt) {
 
     require('time-grunt')(grunt);
 
-    var path = require('path');
-
     var options = {
         isDev: (grunt.option('dev') !== undefined) ?
             Boolean(grunt.option('dev')) :
@@ -18,9 +16,13 @@ module.exports = function (grunt) {
         webfontsDir: './resources/fonts/'
     };
 
+    options.propertiesFile = options.isDev ?
+        process.env.HOME + '/.gu/frontend.properties' :
+        '/etc/gu/frontend.properties';
+
     // Load config and plugins (using jit-grunt)
     require('load-grunt-config')(grunt, {
-        configPath: path.join(process.cwd(), 'grunt-configs'),
+        configPath: require('path').join(process.cwd(), 'grunt-configs'),
         data: options,
         jitGrunt: {
             replace: 'grunt-text-replace',
@@ -30,10 +32,6 @@ module.exports = function (grunt) {
             px_to_rem: 'grunt-px-to-rem'
         }
     });
-
-    options.propertiesFile = options.isDev ?
-        process.env.HOME + '/.gu/frontend.properties' :
-        '/etc/gu/frontend.properties';
 
     function isOnlyTask(task) {
         return grunt.cli.tasks.length === 1 && grunt.cli.tasks[0] === task.name;
