@@ -30,8 +30,7 @@
     }
 }
 
-.caption:before,
-figcaption:before {
+.img-caption:before {
     @include background-size(contain);
     @extend %i;
     @extend %i-image;
