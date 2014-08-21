@@ -53,10 +53,7 @@ figcaption:before {
     content: '';
     position: absolute;
     left: 0;
-    @include rem((
-        margin-top: -2px
-    ));
-    @include transform(scale(.65));
+    @include transform(scale(.8));
     @include transform-origin(0);
 
     @if ($svg-support) {
