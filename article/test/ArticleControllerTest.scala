@@ -6,7 +6,7 @@ import org.scalatest.Matchers
 import org.scalatest.FlatSpec
 
 class ArticleControllerTest extends FlatSpec with Matchers {
-  
+
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
@@ -25,8 +25,8 @@ class ArticleControllerTest extends FlatSpec with Matchers {
   it should "count in body links" in Fake {
     val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
     val body = contentAsString(result)
-    body should include(""""inBodyInternalLinkCount": "38"""")
-    body should include(""""inBodyExternalLinkCount": "42"""")
+    body should include(""""inBodyInternalLinkCount":38""")
+    body should include(""""inBodyExternalLinkCount":42""")
   }
 
   it should "200 when content type is sudoku" in Fake {
@@ -58,7 +58,7 @@ class ArticleControllerTest extends FlatSpec with Matchers {
   it should "return JSON when .json format is supplied" in Fake {
     val fakeRequest = FakeRequest("GET", s"${articleUrl}.json")
       .withHeaders("Origin" -> "http://www.theorigin.com")
-      
+
     val result = controllers.ArticleController.renderArticle(articleUrl)(fakeRequest)
     status(result) should be(200)
     contentType(result).get should be("application/json")
