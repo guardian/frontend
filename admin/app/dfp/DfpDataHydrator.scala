@@ -201,6 +201,18 @@ object DfpDataHydrator extends Logging {
     }.toMap
   }
 
+  def loadActiveUserDefinedCreativeTemplates(): Seq[CreativeTemplate] = dfpSession.fold(Seq.empty[CreativeTemplate]) { session =>
+    val statementBuilder = new StatementBuilder()
+      .where("status = :active and type = :type")
+      .withBindVariableValue("active", CreativeTemplateStatus.ACTIVE.getValue)
+      .withBindVariableValue("type", CreativeTemplateType.USER_DEFINED.getValue)
+      .orderBy("name ASC")
+    DfpApiWrapper.fetchCreativeTemplates(session, statementBuilder) filterNot { template =>
+      val name = template.getName.toUpperCase
+      name.startsWith("APPS - ") || name.startsWith("AS ") || name.startsWith("QC ")
+    }
+  }
+
   private def isPageSkin(dfpLineItem: LineItem) = {
 
     def hasA1x1Pixel(placeholders: Array[CreativePlaceholder]): Boolean = {

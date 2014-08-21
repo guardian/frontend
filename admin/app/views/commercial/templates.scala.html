@@ -1,0 +1,34 @@
+@(env: String, templates: Seq[com.google.api.ads.dfp.axis.v201403.CreativeTemplate])
+@import tools.DfpLink
+
+@admin_main("Commercial Templates", env, isAuthed = true) {
+
+    <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
+
+    <h1>Creative Templates</h1>
+
+    <ol>
+    @for(template <- templates) {
+        <li style="margin-top:60px;margin-bottom:60px">
+            <p style="font-size:large;font-weight:bold">@template.getName (<a href="@DfpLink.creativeTemplate(template.getId)">@template.getId</a>)</p>
+            <p>@{template.getDescription}</p>
+            <div>
+                <p style="font-weight:bold">Parameters:</p>
+                <table style="margin-bottom:20px">
+                    @for(param <- template.getVariables) {
+                        <tr>
+                            <td style="padding-right:10px;word-break:normal">@{param.getLabel}</td>
+                            <td style="padding-right:10px">@{param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable")}</td>
+                            <td style="padding-right:10px"><span style="font-size:small">@if(param.getIsRequired){Required}else{Optional}</span></td>
+                            <td style="padding-right:10px">@{param.getDescription}</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <p style="font-weight:bold">Snippet</p>
+            <p>@{template.getSnippet}</p>
+        </li>
+    }
+    </ol>
+
+}
