@@ -135,14 +135,14 @@ function (
     }
 
     function mainMediaType(contentApiArticle) {
-        var mainElement = _.findWhere(contentApiArticle["elements"] || [], {
-            relation: "main"
+        var mainElement = _.findWhere(contentApiArticle.elements || [], {
+            relation: 'main'
         });
-        return mainElement && mainElement["type"];
+        return mainElement && mainElement.type;
     }
 
     function populate(article, contentApiArticle) {
-        contentApiArticle["mainMediaType"] = mainMediaType(contentApiArticle);
+        contentApiArticle.mainMediaType = mainMediaType(contentApiArticle);
         article.populate(contentApiArticle, true);
     }
 

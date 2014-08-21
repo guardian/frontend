@@ -203,7 +203,7 @@ define([
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
-            opts["mainMediaType"] && this.mainMediaType(opts["mainMediaType"]);
+            opts.mainMediaType && this.mainMediaType(opts.mainMediaType);
 
             if (validate || opts.webUrl) {
                  missingProps = [
