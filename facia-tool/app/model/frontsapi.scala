@@ -37,7 +37,8 @@ case class Collection(
   groups: Option[List[String]],
   uneditable: Option[Boolean],
   showTags: Option[Boolean],
-  showSections: Option[Boolean]
+  showSections: Option[Boolean],
+  showMainVideo: Option[Boolean]
 )
 
 object Config {
@@ -128,8 +129,10 @@ trait UpdateActions extends Logging {
     "imageAdjust",
     "imageSrc",
     "imageSrcWidth",
-    "imageSrcHeight")
-  
+    "imageSrcHeight",
+    "showMainVideo"
+  )
+
   implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
   implicit val updateListWrite = Json.writes[UpdateList]
 

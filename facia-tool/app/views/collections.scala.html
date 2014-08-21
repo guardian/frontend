@@ -304,6 +304,10 @@
 
                 <div class="image__overrides">
                     <a data-bind="
+                        click: toggleOpenImage,
+                        text: meta.imageSrc() ? 'replaced' : 'replace',
+                        css: {selected: meta.imageSrc}"></a>
+                    <a data-bind="
                         click: toggleImageAdjustBoost,
                         text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
                         css: {selected: meta.imageAdjust() === 'boost'}"></a>
@@ -311,10 +315,11 @@
                         click: toggleImageAdjustHide,
                         text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
                         css: {selected: meta.imageAdjust() === 'hide'}"></a>
+                    <!-- ko if: mainMediaType() === 'video' -->
                     <a data-bind="
-                        click: toggleOpenImage,
-                        text: meta.imageSrc() ? 'replaced' : 'replace',
-                        css: {selected: meta.imageSrc}"></a>
+                        click: toggleShowMainVideo,
+                        css: {selected: meta.showMainVideo}">video</a>
+                    <!-- /ko -->
                 </div>
 
 
