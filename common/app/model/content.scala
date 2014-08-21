@@ -46,6 +46,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     }
   }
   lazy val hasTonalHeaderByline: Boolean = { visualTone == Tags.VisualTone.Comment && hasSingleContributor }
+  lazy val showBylinePic: Boolean = {
+    visualTone != Tags.VisualTone.News && hasLargeContributorImage && contributors.length == 1 && !hasTonalHeaderByline
+  }
 
   // read this before modifying
   // https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
@@ -122,6 +125,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val description: Option[String] = trailText
   override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
+  lazy val cleanedHeadline: String = if (delegate.isVideo) headline.stripSuffix(" – video") else headline
   override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
@@ -187,6 +191,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     width <- imageSrcWidth
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height)
+
+  override lazy val showMainVideo: Boolean =
+    apiContent.metaData.get("showMainVideo").flatMap(_.asOpt[Boolean]).getOrElse(false)
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 }
@@ -415,6 +422,8 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   override def cards: List[(String, Any)] = super.cards ++ List(
     "twitter:card" -> "summary"
   )
+
+  override lazy val hasClassicVersion: Boolean = super.hasClassicVersion && !(section == "football")
 }
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {

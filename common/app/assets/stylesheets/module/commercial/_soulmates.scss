@@ -5,11 +5,9 @@
 @mixin c-soulmates-branding-small {
     .container__title__wrapper {
         height: auto;
-        @include rem((
-            width: gs-span(2),
-            padding: $gs-baseline*2 0 $gs-baseline/2,
-            margin: 0 0 $gs-baseline*2.5
-        ));
+        width: gs-span(2);
+        padding: $gs-baseline*2 0 $gs-baseline/2;
+        margin: 0 0 $gs-baseline*2.5;
         .svg & {
             background-size: cover;
         }
@@ -21,9 +19,7 @@
         width: auto;
         padding: 0;
         @include fs-header(1);
-        @include rem((
-            margin: $gs-baseline 0 0
-        ));
+        margin: $gs-baseline 0 0;
     }
     .commercial__buy-now-button {
         display: none;
@@ -36,10 +32,8 @@
         }
     }
     .i-soulmates-logo {
-        @include rem((
-            width: 86px,
-            height: 18px
-        ));
+        width: 86px;
+        height: 18px;
         .svg & {
             background-size: contain;
         }
@@ -50,26 +44,20 @@
     .commercial__explainer {
         position: static;
         color: #ffffff;
-        @include rem((
-            width: gs-span(2)-$gs-gutter,
-            padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5,
-            margin-top: $gs-baseline
-        ));
+        width: gs-span(2)-$gs-gutter;
+        padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5;
+        margin-top: $gs-baseline;
     }
     .i-soulmates-logo {
         .svg & {
-            @include rem((
-                width: 100px,
-                height: 21px
-            ));
+            width: 100px;
+            height: 21px;
             background-size: contain;
         }
     }
     .commercial__buy-now-button {
         display: inline-block;
-        @include rem((
-            padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5
-        ));
+        padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5;
         position: relative;
     }
 }
@@ -99,15 +87,11 @@ $c-soulmates-high: $c-neutral1;
         .commercial__header {
             float: left;
             margin-bottom: 0;
-            @include rem((
-                width: gs-span(3)
-            ));
+            width: gs-span(3);
         }
     }
     .commercial__body {
-        @include rem((
-            padding: $gs-baseline 0
-        ));
+        padding: $gs-baseline 0;
         position: relative;
     }
     .lineitems {
@@ -156,9 +140,7 @@ $c-soulmates-high: $c-neutral1;
     }
     .lineitem__title {
         @include fs-header(1);
-        @include rem((
-            font-size: 14px
-        ));
+        font-size: 14px;
 
         &:hover {
             text-decoration: underline;
@@ -172,15 +154,11 @@ $c-soulmates-high: $c-neutral1;
         @include box-sizing(border-box);
         width: auto;
         float: none;
-        @include rem((
-            margin-top: $gs-baseline
-        ));
+        margin-top: $gs-baseline;
         @include mq(tablet) {
             margin-top: 0;
             float: right;
-            @include rem((
-                width: gs-span(3) - $gs-gutter/2
-            ));
+            width: gs-span(3) - $gs-gutter/2;
         }
     }
     .search__dropdown {
@@ -188,10 +166,8 @@ $c-soulmates-high: $c-neutral1;
         border-top: 1px solid  $c-neutral4;
         overflow: hidden;
         @include fs-data(3);
-        @include rem((
-            padding-top: $gs-baseline/2,
-            margin-top: $gs-baseline/2
-        ));
+        padding-top: $gs-baseline/2;
+        margin-top: $gs-baseline/2;
 
         &:first-child {
             margin-top: 0;
@@ -210,9 +186,7 @@ $c-soulmates-high: $c-neutral1;
         padding: 0;
         padding-right: ($search-submit-cta-diameter/4)*5;
         @include fs-header(1);
-        @include rem((
-            margin-top: $gs-baseline
-        ))
+        margin-top: $gs-baseline;
     }
     .search__submit__cta {
         position: absolute;
@@ -245,21 +219,15 @@ $c-soulmates-high: $c-neutral1;
     }
     @include mq(wide) {
         .commercial__explainer {
-            @include rem((
-                padding-left: $gs-gutter*2
-            ));
+            padding-left: $gs-gutter*2;
         }
         .commercial__buy-now-button {
-            @include rem((
-                margin-left: $gs-gutter
-            ));
+            margin-left: $gs-gutter;
         }
         .i-soulmates-logo {
             .svg & {
-                @include rem((
-                    width: 136px,
-                    height: 28px
-                ));
+                width: 136px;
+                height: 28px;
             }
         }
     }
@@ -280,9 +248,7 @@ $c-soulmates-high: $c-neutral1;
             padding-left: 0;
         }
         .commercial__search {
-            @include rem((
-                padding-left: $gs-gutter/2
-            ));
+            padding-left: $gs-gutter/2;
         }
         .commercial__head {
             width: auto;
@@ -291,18 +257,14 @@ $c-soulmates-high: $c-neutral1;
     @include mq(faciaLeftCol) {
         .commercial__head {
             position: static;
-            @include rem((
-                width: gs-span(2) + $gs-gutter,
-                margin-top: 8px
-            ));
+            width: gs-span(2) + $gs-gutter;
+            margin-top: 8px;
         }
         .container__title__wrapper {
             width: auto;
             height: auto;
             margin: 0;
-            @include rem((
-                padding-top: $gs-baseline*2.5
-            ));
+            padding-top: $gs-baseline*2.5;
             padding-bottom: 0;
             
             .svg & {
@@ -311,31 +273,23 @@ $c-soulmates-high: $c-neutral1;
         }
         @include c-soulmates-branding;
         .commercial__body {
-            @include rem((
-                padding: $gs-baseline 0
-            ));
+            padding: $gs-baseline 0;
         }
     }
     @include mq(wide) {
         .container__title__wrapper {
-            @include rem((
-                padding-top: 40px
-            ));
+            padding-top: 40px;
             
             .svg & {
                 background-size: cover;
             }
         }
         .commercial__explainer {
-            @include rem((
-                padding-left: $gs-gutter*2,
-                padding-top: 0
-            ));
+            padding-left: $gs-gutter*2;
+            padding-top: 0;
         }
         .commercial__buy-now-button {
-            @include rem((
-                padding-left: $gs-gutter
-            ));
+            padding-left: $gs-gutter;
         }
         .has-page-skin & {
             .commercial__head {
@@ -351,17 +305,13 @@ $c-soulmates-high: $c-neutral1;
 .facia-container--layout-content .commercial--soulmates {
     @include mq(tablet) {
         .lineitems {
-            @include rem((
-                width: gs-span(6) - $gs-gutter*3
-            ));
+            width: gs-span(6) - $gs-gutter*3;
         }
     }
     @include mq(rightCol) {
         .commercial__search {
             width: 25%;
-            @include rem((
-                padding-left: $gs-gutter
-            ));
+            padding-left: $gs-gutter;
         }
         .lineitems {
             width: 75%;
@@ -369,31 +319,23 @@ $c-soulmates-high: $c-neutral1;
     }
     @include mq(leftCol) {
         .commercial__search {
-            @include rem((
-                width: gs-span(3) - $gs-gutter
-            ));
+            width: gs-span(3) - $gs-gutter;
             padding: 0;
         }
         .commercial__head {
             position: static;
-            @include rem((
-                width: $left-column + $gs-gutter !important,
-                margin-top: 8px
-            ));
+            width: $left-column + $gs-gutter !important;
+            margin-top: 8px;
             margin-right: 0;
         }
         .commercial__body {
-            @include rem((
-                padding: $gs-baseline 0
-            ));
+            padding: $gs-baseline 0;
         }
         .container__title__wrapper {
             width: auto;
             height: auto;
             margin: 0;
-            @include rem((
-                padding-top: $gs-baseline*2.5
-            ));
+            padding-top: $gs-baseline*2.5;
 
             .svg & {
                 background-size: contain;
@@ -407,42 +349,30 @@ $c-soulmates-high: $c-neutral1;
             padding-right: 0;
         }
         .commercial__explainer {
-            @include rem((
-                margin-top: $gs-baseline
-            ));
+            margin-top: $gs-baseline;
         }
         .commercial__search {
-            @include rem((
-                width: $left-column-wide
-            ));
+            width: $left-column-wide;
         }
     }
     @include mq(wide) {
         .commercial__head {
-            @include rem((
-                width: $left-column-wide !important,
-                margin-right: $gs-gutter
-            ));
+            width: $left-column-wide !important;
+            margin-right: $gs-gutter;
         }
         .container__title__wrapper {
-            @include rem((
-                padding-top: 40px
-            ));
+            padding-top: 40px;
 
             .svg & {
                 background-size: cover;
             }
         }
         .commercial__explainer {
-            @include rem((
-                padding-left: $gs-gutter*2,
-                margin-top: $gs-baseline
-            ));
+            padding-left: $gs-gutter*2;
+            margin-top: $gs-baseline;
         }
         .commercial__buy-now-button {
-            @include rem((
-                padding-left: $gs-gutter
-            ));
+            padding-left: $gs-gutter;
         }
     }
 }

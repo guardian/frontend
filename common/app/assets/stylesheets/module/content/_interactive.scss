@@ -3,51 +3,39 @@
     .social-wrapper--aside {
         display: block;
         max-width: none;
-        @include rem((
-            padding-top: $gs-baseline/2
-        ));
+        padding-top: $gs-baseline/2;
 
         @include mq(rightCol) {
             border-top: 0;
             position: absolute;
             padding-top: 0;
             right: 0;
-            @include rem((
-                top: $gs-baseline/2,
-                right: -$gs-gutter/2
-            ));
+            top: $gs-baseline/2;
+            right: -$gs-gutter/2;
         }
 
         @include mq(leftCol) {
             right: 0;
-            @include rem((
-                top: $gs-baseline/2
-            ));
+            top: $gs-baseline/2;
         }
 
         @include mq(wide) {
-            @include rem((
-                right: -$gs-gutter/2
-            ));
+            right: -$gs-gutter/2;
         }
     }
 
     @include mq(rightCol) {
         .content__meta-container {
             .content__dateline {
-                @include rem((
-                    height: $gs-row-height,
-                    padding-top: $gs-baseline/3,
-                    padding-bottom: $gs-baseline
-                ));
+                height: $gs-row-height;
+                padding-top: $gs-baseline/3;
+                padding-bottom: $gs-baseline;
             }
             .commentcount {
                 display: block;
                 position: static;
-                @include rem((
-                    padding-top: ($gs-baseline/3),
-                    margin-bottom: $gs-baseline
-                ));
+                padding-top: ($gs-baseline/3);
+                margin-bottom: $gs-baseline;
                 border-top: 1px dotted $c-neutral5;
             }
         }
@@ -66,24 +54,18 @@
         @include mq(leftCol) {
             border-top: 0;
             padding-bottom: 0;
-            @include rem((
-                min-height: $gs-baseline*2,
-                width: gs-span(6)
-            ));
+            min-height: $gs-baseline*2;
+            width: gs-span(6);
         }
         @include mq(wide) {
-            @include rem((
-                width: gs-span(8)
-            ));
+            width: gs-span(8);
         }
     }
 
     .content__section {
         @include mq(leftCol) {
-            @include rem((
-                width: gs-span(6),
-                padding-bottom: $gs-baseline
-            ));
+            width: gs-span(6);
+            padding-bottom: $gs-baseline;
         }
     }
 
@@ -92,9 +74,7 @@
 
         @include mq(tablet, rightCol) {
             margin: auto;
-            @include rem((
-                max-width: gs-span(8)
-            ));
+            max-width: gs-span(8);
         }
         @include mq(rightCol) {
             max-width: none;
@@ -109,17 +89,13 @@
 
     .content__headline {
         @include mq(rightCol, leftCol) {
-            @include rem((
-                padding-bottom: $gs-baseline*2
-            ));
+            padding-bottom: $gs-baseline*2;
         }
     }
 
     .content-meta {
         @include mq(tablet) {
-            @include rem((
-                padding-top: $gs-baseline/2
-            ))
+            padding-top: $gs-baseline/2;
         }
     }
     .content__headline,
@@ -129,15 +105,11 @@
             float: left;
             clear: left;
             width: 50%;
-            @include rem((
-                margin-left: -($left-column + $gs-gutter),
-                padding-right: $gs-gutter
-            ));
+            margin-left: -($left-column + $gs-gutter);
+            padding-right: $gs-gutter;
         }
         @include mq(wide) {
-            @include rem((
-                margin-left: -($left-column-wide + $gs-gutter)
-            ));
+            margin-left: -($left-column-wide + $gs-gutter);
         }
     }
 
@@ -146,16 +118,12 @@
             float: left;
             @include box-sizing(border-box);
             width: 50%;
-            @include rem((
-                padding-top: $gs-baseline/6,
-                margin-bottom: $gs-baseline*2
-            ));
+            padding-top: $gs-baseline/6;
+            margin-bottom: $gs-baseline*2;
         }
         @include mq(wide) {
-            @include rem((
-                margin-right: -(gs-span(5) + $gs-gutter),
-                width: gs-span(8)
-            ));
+            margin-right: -(gs-span(5) + $gs-gutter);
+            width: gs-span(8);
         }
     }
 

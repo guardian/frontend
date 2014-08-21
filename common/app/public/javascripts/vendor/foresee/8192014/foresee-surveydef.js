@@ -231,11 +231,13 @@ FSR.properties = {
     
     cpps: {
         Beta_Site: {
-			source: 'function',
-			value: function(){
-                return (window.guardian && window.guardian.r2) ? 'N' : 'Y';
-			}
-		}
+            source: 'function',
+            value: function(){
+                if (typeof window.guardian != "undefined" && window.guardian.r2 == "undefined") 
+                    return "N";
+                return "Y";
+            }        
+        }
     },
     
     mode: 'first-party'

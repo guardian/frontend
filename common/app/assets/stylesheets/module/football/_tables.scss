@@ -42,9 +42,7 @@
     }
 
     .football-stat--form {
-        @include rem((
-            min-width: 15*5 // width of status
-        ));
+        min-width: 15*5 // width of status;
     }
 
     @include mq($to: $table-breakpoint-importance-1) { @include table-football--medium; }
@@ -59,11 +57,9 @@
 }
 
 .team-crest {
-    @include rem((
-        height: 12px,
-        margin-right: $gs-gutter/4,
-        width: 22px
-    ));
+    height: 12px;
+    margin-right: $gs-gutter/4;
+    width: 22px;
     @include background-size(22px 12px);
     display: inline-block;
     vertical-align: text-bottom;
@@ -73,14 +69,10 @@
 // i.e. /football/tables or /football/results
 .football-table__container {
     @include mq($to: rightCol) {
-        @include rem((
-            max-width: gs-span(7)
-        ));
+        max-width: gs-span(7);
     }
 
-    @include rem((
-        margin-bottom: $gs-baseline*3
-    ));
+    margin-bottom: $gs-baseline*3;
     position: relative;
 
     .football-matches__date {
@@ -90,13 +82,11 @@
     @include mq(leftCol) {
         .table__caption--top {
             @include fs-header(1);
-            @include rem((
-                margin-bottom: ($gs-baseline/3)*4,
-                margin-left: ($left-column + $gs-gutter)*-1,
-                padding-bottom: ($gs-baseline/3)*4,
-                padding-top: ($gs-baseline/3),
-                width: $left-column
-            ));
+            margin-bottom: ($gs-baseline/3)*4;
+            margin-left: ($left-column + $gs-gutter)*-1;
+            padding-bottom: ($gs-baseline/3)*4;
+            padding-top: ($gs-baseline/3);
+            width: $left-column;
             background: none;
             border-bottom: 0;
             border-top: 1px dotted $c-neutral5;
@@ -109,10 +99,8 @@
 
     @include mq(wide) {
         .table__caption--top {
-            @include rem((
-                margin-left: ($left-column-wide + $gs-gutter)*-1,
-                width: $left-column-wide
-            ));
+            margin-left: ($left-column-wide + $gs-gutter)*-1;
+            width: $left-column-wide;
         }
     }
 }
@@ -122,9 +110,7 @@
 }
 
 .football__group {
-    @include rem((
-        margin-top: $gs-baseline*2
-    ));
+    margin-top: $gs-baseline*2;
 
     &:first-child {
         margin-top: 0;
@@ -133,9 +119,7 @@
 
 .table__caption {
     .item__live-indicator {
-        @include rem((
-            top: 2px
-        ));
+        top: 2px;
         float: right;
     }
 }

@@ -47,15 +47,15 @@ object ElementLoader extends TestLogging {
     //with the subsequent findElements
     waitUntil(visibilityOfElementLocated(By.cssSelector("a")), 5)
 
-    displayedElements(searchContext.findElements(By.cssSelector("a")).asScala.toList, maxElements)
+    displayedElements(searchContext.findElements(By.cssSelector("a")).asScala.toList, 3, maxElements)
   }
 
   /**
    * Find maxElements of displayed and visible elements, including nested, from the provided SearchContext
    */
-  def displayedElements(elements: List[WebElement], maxElements: Int = Int.MaxValue)(implicit driver: WebDriver): List[WebElement] = {
+  def displayedElements(elements: List[WebElement], timeoutInSeconds: Int = 3, maxElements: Int = Int.MaxValue)(implicit driver: WebDriver): List[WebElement] = {
     elements.view
-      .filter(element => waitUntil(visibilityOf(element)) && element.isDisplayed())
+      .filter(element => waitUntil(visibilityOf(element), timeoutInSeconds) && element.isDisplayed())
       .take(maxElements)
       .toList
   }

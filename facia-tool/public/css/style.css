@@ -464,10 +464,14 @@ a.headline:hover {
 .article__time {
     position: absolute;
     right: 3px;
-    top: 1px;
-    font-size: 9px;
+    top: 2px;
+    font-size: 10px;
     line-height: 12px;
     color: #999;
+}
+
+.article__time__scheduled {
+    color: #ffc107;
 }
 
 .article__time__publication {
@@ -1108,9 +1112,10 @@ button {
         width: 40%;
     }
     .left-col .article .article_content {
-        margin-right: 40px;
+        margin-right: 50px;
     }
-    .left-col .article__spark {
+    .left-col .article__spark,
+    .left-col .article__time__scheduled__launches {
         display: none;
     }
     .left-col .article__time {

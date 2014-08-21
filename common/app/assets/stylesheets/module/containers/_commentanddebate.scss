@@ -47,29 +47,21 @@
         display: none;
         overflow: hidden;
         @include border-radius(50%);
-        @include rem((
-            margin-bottom: $gs-baseline/2
-        ));
+        margin-bottom: $gs-baseline/2;
 
         @include mq(tablet) {
             display: block;
-            @include rem((
-                margin-bottom: $gs-baseline
-            ));
+            margin-bottom: $gs-baseline;
         }
     }
     .item__avatar,
     .item__avatar__media {
-        @include rem((
-            width: 60px,
-            height: 60px
-        ));
+        width: 60px;
+        height: 60px;
 
         @include mq(tablet) {
-            @include rem((
-                width: 80px,
-                height: 80px
-            ));
+            width: 80px;
+            height: 80px;
         }
     }
     .item__avatar__media {

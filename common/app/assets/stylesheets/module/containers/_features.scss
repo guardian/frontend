@@ -1,16 +1,12 @@
 .container--features {
     .ad-slot--inline {
-        @include rem((
-            margin-top: $gs-baseline,
-            margin-bottom: $gs-baseline/2
-        ));
+        margin-top: $gs-baseline;
+        margin-bottom: $gs-baseline/2;
     }
     .facia-slice-wrapper--position-1 {
         .item__header {
-            @include rem((
-                min-height: (4 * get-line-height($fs-headlines, 3)) - $gs-baseline,
-                padding-bottom: $gs-baseline
-            ));
+            min-height: (4 * get-line-height($fs-headlines, 3)) - $gs-baseline;
+            padding-bottom: $gs-baseline;
         }
         .item__title {
             @include fs-headline(3, true);
@@ -18,9 +14,7 @@
 
         }
         .stars {
-            @include rem((
-                margin-bottom: $gs-baseline / 2
-            ));
+            margin-bottom: $gs-baseline / 2;
         }
         @include mq($to: tablet) {
             .facia-slice__item {
@@ -73,16 +67,12 @@
 /* Items in this row have a background */
 .l-row--background-features {
     .item {
-        @include rem((
-            padding-left: 7px,
-            padding-right: 7px
-        ));
+        padding-left: 7px;
+        padding-right: 7px;
     }
     .item__media-wrapper {
-        @include rem((
-            margin-left: -7px,
-            margin-right: -7px
-        ));
+        margin-left: -7px;
+        margin-right: -7px;
     }
     .item__byline,
     .item__meta {
@@ -90,9 +80,7 @@
     }
     .item--has-no-image {
         .item__title {
-            @include rem((
-                padding-top: 3px
-            ));
+            padding-top: 3px;
         }
     }
     .facia-slice__item {

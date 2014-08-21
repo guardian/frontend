@@ -310,8 +310,13 @@
                             click: toggleImageAdjustHide,
                             text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
                             css: {selected: meta.imageAdjust() === 'hide'}"></a>
-
                         &middot;
+                        <!-- ko if: mainMediaType() === 'video' -->
+                        <a data-bind="
+                            click: toggleShowMainVideo,
+                            css: {selected: meta.showMainVideo}">video</a>
+                        &middot;
+                        <!-- /ko -->
                         Mark as
                         <a data-bind="
                             click: toggleIsBreaking,
@@ -334,12 +339,18 @@
 
             <div class="closed" data-bind="if: !state.isOpen()">
                 <div class="article__time">
-                    <span class="article__time__publication" data-bind="
-                        visible: webPublicationTime,
-                        text: webPublicationTime"></span>
-                    <span class="article__time__front" data-bind="
-                        visible: frontPublicationTime,
-                        text: frontPublicationTime"></span>
+                    <!-- ko if: fields.scheduledPublicationDate -->
+                        <span class="article__time__scheduled article__time__scheduled__launches">launches</span>
+                        <span class="article__time__scheduled" data-bind="
+                            text: scheduledPublicationTime"></span>
+                    <!-- /ko -->
+
+                    <!-- ko if: props.webPublicationDate -->
+                        <span class="article__time__publication" data-bind="
+                            text: webPublicationTime"></span>
+                        <span class="article__time__front" data-bind="
+                            text: frontPublicationTime"></span>
+                    <!-- /ko -->
                 </div>
 
                 <a class="article__spark" target="ophan" data-bind="
@@ -381,7 +392,7 @@
                 <div class="article_content is-empty" data-bind="if: state.isEmpty">
                     <span target="article" class="is-empty__url" data-bind="
                         text: id"></span>
-                    This content is unavailable, deleted, or has a new URL
+                    This content is currently unavailable
                 </div>
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">

@@ -10,9 +10,7 @@ $disc-avatar-size: 44px;
    ========================================================================== */
 
 .disc-comment {
-    @include rem((
-        padding-bottom: $gs-baseline/2
-    ));
+    padding-bottom: $gs-baseline/2;
     @include fs-textSans(4);
 
     @include mq(activityLeftCol) {
@@ -22,9 +20,7 @@ $disc-avatar-size: 44px;
     }
 }
 .disc-comment__meta {
-    @include rem((
-        margin-bottom: $gs-baseline*1.5
-    ));
+    margin-bottom: $gs-baseline*1.5;
     @include fs-textSans(1);
     color: $c-neutral2-contrasted;
 
@@ -41,18 +37,14 @@ $disc-avatar-size: 44px;
 }
 .disc-comment__recommend {
     position: absolute;
-    @include rem((
-        top: $gs-baseline/2
-    ));
+    top: $gs-baseline/2;
     right: 0;
     width: auto;
     cursor: default;
 }
 .disc-comment__recommend-count {
     display: inline-block;
-    @include rem((
-        margin-right: $gs-gutter/4
-    ));
+    margin-right: $gs-gutter/4;
 
     .disc-comment__recommend--active & {
         color: $c-commentDefault;
@@ -62,10 +54,8 @@ $disc-avatar-size: 44px;
     display: inline-block;
     vertical-align: middle;
     @include border-radius(50%);
-    @include rem((
-        height: 19px,
-        width: 18px
-    ));
+    height: 19px;
+    width: 18px;
     background-color: $c-neutral2-contrasted;
 
     .i {
@@ -82,15 +72,11 @@ $disc-avatar-size: 44px;
 }
 
 .disc-comment__body {
-    @include rem((
-        margin-bottom: $gs-baseline
-    ));
+    margin-bottom: $gs-baseline;
 
     blockquote {
-        @include rem((
-            margin: $gs-baseline $gs-gutter,
-            padding-left: $gs-gutter/2
-        ));
+        margin: $gs-baseline $gs-gutter;
+        padding-left: $gs-gutter/2;
         border-left: 3px solid transparentize($c-neutral1, .75);
     }
 }
@@ -110,19 +96,15 @@ $disc-avatar-size: 44px;
     float: left;
     overflow: hidden;
     @include border-radius(50%);
-    @include rem((
-        height: $disc-avatar-size,
-        width: $disc-avatar-size
-    ));
+    height: $disc-avatar-size;
+    width: $disc-avatar-size;
 }
 .disc-profile__avatar-image {
     height: 100%;
     width: 100%;
 }
 .disc-profile__user-info {
-    @include rem((
-        padding-left: $disc-avatar-size + ($gs-gutter/2)
-    ));
+    padding-left: $disc-avatar-size + ($gs-gutter/2);
 }
 .disc-profile__badges {
     @include fs-textSans(1);

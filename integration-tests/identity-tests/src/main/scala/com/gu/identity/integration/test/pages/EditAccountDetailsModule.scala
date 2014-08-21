@@ -1,13 +1,10 @@
 package com.gu.identity.integration.test.pages
 
-import com.gu.integration.test.pages.common.ParentPage
 import com.gu.integration.test.util.ElementLoader._
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.{WebDriver, WebElement}
 
-import scala.util.Random
-
-class EditAccountDetailsModule(implicit driver: WebDriver) extends ParentPage {
+class EditAccountDetailsModule(implicit driver: WebDriver) extends UserFormPage {
   private def emailField: WebElement = findByTestAttribute("email-address")
   private def firstNameField: WebElement = findByTestAttribute("first-name")
   private def lastNameField: WebElement = findByTestAttribute("last-name")
@@ -21,7 +18,6 @@ class EditAccountDetailsModule(implicit driver: WebDriver) extends ParentPage {
 
   private def signInName: WebElement = findByTestAttribute("sign-in-name")
   private def saveChangesButton: WebElement = findByTestAttribute("save-changes")
-  private def validationErrors: List[WebElement] = findAllByTestAttribute("form-field-error")
 
   def selectFirstValidCountry() = {
     val countrySelect = new Select(countrySelectElement)
@@ -60,10 +56,6 @@ class EditAccountDetailsModule(implicit driver: WebDriver) extends ParentPage {
 
   def enterPostCode(postCode: String) = {
     clearAndSetField(postCodeField, postCode)
-  }
-
-  def getAllValidationErrorElements(): List[WebElement] = {
-    displayedElements(validationErrors)
   }
 
   def saveChanges() = {

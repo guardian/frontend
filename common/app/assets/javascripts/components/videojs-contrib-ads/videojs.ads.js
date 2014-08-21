@@ -143,13 +143,7 @@ var
       snapshot = {
         src: player.currentSrc(),
         currentTime: player.currentTime(),
-        type: player.currentType(),
-
-        // on slow connections, player.paused() may be true when starting and
-        // stopping ads even though play has been requested. Hard-coding the
-        // playback state works for the purposes of ad playback but makes this
-        // an inaccurate snapshot.
-        play: true
+        type: player.currentType()
       };
 
     if (tech) {
@@ -188,7 +182,7 @@ var
       // finish restoring the playback state
       resume = function() {
         player.currentTime(snapshot.currentTime);
-        if (snapshot.play) {
+        if (!player.ended()) {
           player.play();
         }
       },
@@ -217,19 +211,21 @@ var
     if (snapshot.nativePoster) {
       tech.poster = snapshot.nativePoster;
     }
-
+    
     // with a custom ad display or burned-in ads, the content player state
     // hasn't been modified and so no restoration is required
-    if (player.currentSrc() === snapshot.src) {
+    var src = player.src(),
+        sameSrc = src === snapshot.src,
+        sameCurrentSrc = player.currentSrc() === snapshot.src,
+        unchanged = src ? sameSrc : sameCurrentSrc;
+    if (unchanged && !player.ended()) {
       player.play();
-      return;
+    } else {
+        player.src({src: snapshot.src, type: snapshot.type});
+        // safari requires a call to `load` to pick up a changed source
+        player.load();
+        player.one('loadedmetadata', tryToResume);
     }
-
-    player.src({src: snapshot.src, type: snapshot.type});
-    // safari requires a call to `load` to pick up a changed source
-    player.load();
-
-    player.one('loadedmetadata', tryToResume);
   },
 
   /**

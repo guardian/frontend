@@ -2,6 +2,7 @@ package dfp
 
 import com.google.api.ads.dfp.axis.factory.DfpServices
 import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
+import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder.SUGGESTED_PAGE_LIMIT
 import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
@@ -11,38 +12,25 @@ object DfpApiWrapper extends Logging {
 
   private lazy val dfpServices = new DfpServices()
 
-  private def lineItemService(session: DfpSession): LineItemServiceInterface =
-    dfpServices.get(session, classOf[LineItemServiceInterface])
+  private def lineItemService(session: DfpSession) = dfpServices.get(session, classOf[LineItemServiceInterface])
+  private def customFieldService(session: DfpSession) = dfpServices.get(session, classOf[CustomFieldServiceInterface])
+  private def customTargetingService(session: DfpSession) = dfpServices.get(session, classOf[CustomTargetingServiceInterface])
+  private def inventoryService(session: DfpSession) = dfpServices.get(session, classOf[InventoryServiceInterface])
+  private def suggestedAdUnitService(session: DfpSession) = dfpServices.get(session, classOf[SuggestedAdUnitServiceInterface])
+  private def placementService(session: DfpSession) = dfpServices.get(session, classOf[PlacementServiceInterface])
+  private def creativeTemplateService(session: DfpSession) = dfpServices.get(session, classOf[CreativeTemplateServiceInterface])
 
-  private def customFieldService(session: DfpSession): CustomFieldServiceInterface =
-    dfpServices.get(session, classOf[CustomFieldServiceInterface])
-
-  private def customTargetingService(session: DfpSession): CustomTargetingServiceInterface =
-    dfpServices.get(session, classOf[CustomTargetingServiceInterface])
-
-  private def inventoryService(session: DfpSession): InventoryServiceInterface =
-    dfpServices.get(session, classOf[InventoryServiceInterface])
-
-  private def suggestedAdUnitService(session: DfpSession): SuggestedAdUnitServiceInterface =
-    dfpServices.get(session, classOf[SuggestedAdUnitServiceInterface])
-
-  private def placementService(session: DfpSession): PlacementServiceInterface =
-    dfpServices.get(session, classOf[PlacementServiceInterface])
-
-  case class Page[T](rawResults: Array[T], totalResultSetSize: Int) {
+  sealed case class Page[T](rawResults: Array[T], totalResultSetSize: Int) {
     def results: Seq[T] = Option(rawResults) map (_.toSeq) getOrElse Nil
   }
 
-  private def fetch[T](statementBuilder: StatementBuilder)(getPage: Statement => Page[T]): Seq[T] = {
-
-    statementBuilder.limit(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+  private def fetch[T](statementBuilder: StatementBuilder)(fetchPage: Statement => Page[T]): Seq[T] = {
 
     def fetch(soFar: Seq[T]): Seq[T] = {
-      val page = getPage(statementBuilder.toStatement)
+      val page = fetchPage(statementBuilder.toStatement)
       val resultsSoFar = soFar ++ page.results
-
       if (resultsSoFar.size < page.totalResultSetSize) {
-        statementBuilder.increaseOffsetBy(StatementBuilder.SUGGESTED_PAGE_LIMIT)
+        statementBuilder.increaseOffsetBy(SUGGESTED_PAGE_LIMIT)
         fetch(resultsSoFar)
       } else {
         resultsSoFar
@@ -50,6 +38,7 @@ object DfpApiWrapper extends Logging {
     }
 
     try {
+      statementBuilder.limit(SUGGESTED_PAGE_LIMIT)
       fetch(Nil)
     } catch {
 
@@ -73,57 +62,65 @@ object DfpApiWrapper extends Logging {
   }
 
   def fetchLineItems(session: DfpSession, statementBuilder: StatementBuilder): Seq[LineItem] = {
+    val service = lineItemService(session)
     fetch(statementBuilder) { statement =>
-      val service = lineItemService(session)
-      val page = service.getLineItemsByStatement(statementBuilder.toStatement)
+      val page = service.getLineItemsByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
   def fetchCustomFields(session: DfpSession, statementBuilder: StatementBuilder): Seq[CustomField] = {
+    val service = customFieldService(session)
     fetch(statementBuilder) { statement =>
-      val service = customFieldService(session)
-      val page = service.getCustomFieldsByStatement(statementBuilder.toStatement)
+      val page = service.getCustomFieldsByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
   def fetchCustomTargetingKeys(session: DfpSession, statementBuilder: StatementBuilder): Seq[CustomTargetingKey] = {
+    val service = customTargetingService(session)
     fetch(statementBuilder) { statement =>
-      val service = customTargetingService(session)
-      val page = service.getCustomTargetingKeysByStatement(statementBuilder.toStatement)
+      val page = service.getCustomTargetingKeysByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
   def fetchCustomTargetingValues(session: DfpSession, statementBuilder: StatementBuilder): Seq[CustomTargetingValue] = {
+    val service = customTargetingService(session)
     fetch(statementBuilder) { statement =>
-      val service = customTargetingService(session)
-      val page = service.getCustomTargetingValuesByStatement(statementBuilder.toStatement)
+      val page = service.getCustomTargetingValuesByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
   def fetchAdUnits(session: DfpSession, statementBuilder: StatementBuilder): Seq[AdUnit] = {
+    val service = inventoryService(session)
     fetch(statementBuilder) { statement =>
-      val service = inventoryService(session)
-      val page = service.getAdUnitsByStatement(statementBuilder.toStatement)
+      val page = service.getAdUnitsByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
   def fetchSuggestedAdUnits(session: DfpSession, statementBuilder: StatementBuilder): Seq[SuggestedAdUnit] = {
+    val service = suggestedAdUnitService(session)
     fetch(statementBuilder) { statement =>
-      val service = suggestedAdUnitService(session)
-      val page = service.getSuggestedAdUnitsByStatement(statementBuilder.toStatement)
+      val page = service.getSuggestedAdUnitsByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }
 
   def fetchPlacements(session: DfpSession, statementBuilder: StatementBuilder): Seq[Placement] = {
+    val service = placementService(session)
     fetch(statementBuilder) { statement =>
-      val service = placementService(session)
-      val page = service.getPlacementsByStatement(statementBuilder.toStatement)
+      val page = service.getPlacementsByStatement(statement)
+      Page(page.getResults, page.getTotalResultSetSize)
+    }
+  }
+
+  def fetchCreativeTemplates(session: DfpSession, statementBuilder: StatementBuilder): Seq[CreativeTemplate] = {
+    val service = creativeTemplateService(session)
+    fetch(statementBuilder) { statement =>
+      val page = service.getCreativeTemplatesByStatement(statement)
       Page(page.getResults, page.getTotalResultSetSize)
     }
   }

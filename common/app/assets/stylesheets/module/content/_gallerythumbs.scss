@@ -84,9 +84,7 @@
 
 .gallery-launch-cta {
     @include fs-bodyCopy(1);
-    @include rem((
-        line-height: 16px
-    ));
+    line-height: 16px;
     background-color: guss-colour(tone-media-1);
     color: guss-colour(neutral-7) !important;
     position: absolute;

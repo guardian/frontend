@@ -5,9 +5,7 @@ $block-padding-right: $gs-gutter;
    ========================================================================== */
 
 .blog__last-updated-container {
-    @include rem((
-        padding-bottom: 9px
-    ));
+    padding-bottom: 9px;
 }
 
 .blog__comment-count {
@@ -18,9 +16,7 @@ $block-padding-right: $gs-gutter;
         top: 0;
     }
     @include mq(mobileLandscape, desktop) {
-        @include rem((
-            top: $gs-baseline/3
-        ));
+        top: $gs-baseline/3;
     }
     .commentcount {
         display: block;
@@ -47,11 +43,9 @@ $block-padding-right: $gs-gutter;
 
 .content__main-column--liveblog {
     @include mq(rightCol) {
-        @include rem((
-            max-width: gs-span(8),
-            margin-left: $right-column + $gs-gutter,
-            margin-right: 0
-        ));
+        max-width: gs-span(8);
+        margin-left: $right-column + $gs-gutter;
+        margin-right: 0;
         max-width: none;
     }
     @include mq(wide) {
@@ -66,18 +60,14 @@ $block-padding-right: $gs-gutter;
     position: relative;
     color: #ffffff;
     border-top: 1px dotted #e6a1ab;
-    @include rem((
-        padding-bottom: $gs-baseline
-    ));
+    padding-bottom: $gs-baseline;
 
     @include mq(rightCol) {
         border-top: 0;
     }
 
     @include mq(rightCol) {
-        @include rem((
-            min-height: gs-height(1)*1.5
-        ));
+        min-height: gs-height(1)*1.5;
     }
 
     .content__dateline {
@@ -88,9 +78,7 @@ $block-padding-right: $gs-gutter;
         color: inherit;
         border: 0;
         @include mq($to: mobileLandscape) {
-            @include rem((
-                padding-bottom: $gs-baseline/2
-            ));
+            padding-bottom: $gs-baseline/2;
         }
     }
 
@@ -99,23 +87,17 @@ $block-padding-right: $gs-gutter;
         font-weight: normal;
         padding: 0;
         min-height: initial;
-        @include rem((
-            margin: $gs-baseline/3 0 $gs-baseline/2
-        ));
+        margin: $gs-baseline/3 0 $gs-baseline/2;
         border-top: 0;
         color: inherit;
 
         @include mq(mobileLandscape) {
-            @include rem((
-                margin-right: $gs-gutter * 2.5
-            ));
+            margin-right: $gs-gutter * 2.5;
         }
 
         @include mq(rightCol) {
             margin-top: 0;
-            @include rem((
-                margin-bottom: $gs-baseline/3
-            ));
+            margin-bottom: $gs-baseline/3;
         }
 
         .tone-colour {
@@ -131,16 +113,12 @@ $block-padding-right: $gs-gutter;
     @include fs-data(3);
 
     @include mq($to: rightCol) {
-        @include rem((
-            height: $gs-row-height,
-            padding-top: $gs-baseline/2
-        ));
+        height: $gs-row-height;
+        padding-top: $gs-baseline/2;
     }
     @include mq(rightCol) {
         float: left;
-        @include rem((
-            margin-left: -($right-column + $gs-gutter)
-        ));
+        margin-left: -($right-column + $gs-gutter);
     }
 }
 
@@ -153,12 +131,10 @@ $block-padding-right: $gs-gutter;
         display: inline-block;
         content: '';
         background-color: #ffffff;
-        @include rem((
-            width: $size,
-            height: $size,
-            margin-bottom: -1px,
-            margin-right: 3px
-        ));
+        width: $size;
+        height: $size;
+        margin-bottom: -1px;
+        margin-right: 3px;
         @include border-radius(50%);
     }
 }
@@ -168,25 +144,19 @@ $block-padding-right: $gs-gutter;
 .timestamp,
 .published-time {
     display: block;
-    @include rem((
-        padding: $gs-baseline/3 0,
-        margin-top: ($gs-baseline/3)*2
-    ));
+    padding: $gs-baseline/3 0;
+    margin-top: ($gs-baseline/3)*2;
     @include font($f-data, bold, 13, 20);
 
     time {
         display: inline-block;
-        @include rem((
-            margin-bottom: $gs-baseline/2
-        ));
+        margin-bottom: $gs-baseline/2;
     }
 }
 
 .block-time {
-    @include rem((
-        line-height: 15px,
-        padding: $gs-baseline/4 0 $gs-baseline $gs-gutter/2
-    ));
+    line-height: 15px;
+    padding: $gs-baseline/4 0 $gs-baseline $gs-gutter/2;
 
     &.published-time {
         margin: 0;
@@ -196,9 +166,7 @@ $block-padding-right: $gs-gutter;
 
     .block-time__absolute {
         display: inline-block;
-        @include rem((
-            margin-left: $gs-gutter/4
-        ));
+        margin-left: $gs-gutter/4;
         color: $c-neutral2;
         @include fs-data(2);
         font-weight: normal;
@@ -224,15 +192,11 @@ $block-padding-right: $gs-gutter;
 .updated-time {
     @include fs-data(1);
     color: $c-neutral2;
-    @include rem((
-        margin: 0 $gs-gutter/2 $gs-baseline/3 $gs-gutter/2,
-        padding: $gs-baseline/2 0 0
-    ));
+    margin: 0 $gs-gutter/2 $gs-baseline/3;
+    padding: $gs-baseline/2 0 0;
     @include mq(tablet) {
-        @include rem((
-            margin-right: $block-padding-right,
-            margin-left: $block-padding-left
-        ));
+        margin-right: $block-padding-right;
+        margin-left: $block-padding-left;
     }
 }
 
@@ -240,11 +204,9 @@ $block-padding-right: $gs-gutter;
    ========================================================================== */
 .block {
     @include clearfix;
-    @include rem((
-        margin-bottom: $gs-baseline,
-        padding-top: $gs-baseline/2,
-        padding-bottom: $gs-baseline*2
-    ));
+    margin-bottom: $gs-baseline;
+    padding-top: $gs-baseline/2;
+    padding-bottom: $gs-baseline*2;
     background-color: #ffffff;
     border-top: 1px solid $c-neutral3;
     border-bottom: 1px solid $c-neutral6;
@@ -259,9 +221,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .blog .ad-slot--mpu-banner-ad {
-    @include rem((
-        padding-top: $gs-baseline
-    ));
+    padding-top: $gs-baseline;
 }
 
 /* Autoupdate
@@ -303,15 +263,11 @@ $block-padding-right: $gs-gutter;
 
     .content__keywords {
         border-top: 1px dotted $c-neutral3;
-        @include rem((
-            line-height: 20px
-        ));
+        line-height: 20px;
     }
 
     .social-wrapper {
-        @include rem((
-            padding-bottom: $gs-baseline*2
-        ));
+        padding-bottom: $gs-baseline*2;
     }
 }
 
@@ -320,25 +276,19 @@ $block-padding-right: $gs-gutter;
 .blog .from-content-api {
 
     .block-title {
-        @include rem((
-            margin-top: ($gs-baseline/4)*-1,
-            margin-bottom: $gs-baseline
-        ));
+        margin-top: ($gs-baseline/4)*-1;
+        margin-bottom: $gs-baseline;
     }
 
     .block-title,
     .block-elements > *,
     .block-elements > .element.element-tweet,
     .block-elements > .element.element-witness {
-        @include rem((
-            margin-left: $gs-gutter/2,
-            margin-right: $gs-gutter/2
-        ));
+        margin-left: $gs-gutter/2;
+        margin-right: $gs-gutter/2;
         @include mq(tablet) {
-            @include rem((
-                margin-right: $block-padding-right,
-                margin-left: $block-padding-left
-            ));
+            margin-right: $block-padding-right;
+            margin-left: $block-padding-left;
         }
     }
     .block-elements > *:last-child {
@@ -351,14 +301,10 @@ $block-padding-right: $gs-gutter;
            ========================================================= */
         > blockquote,
         > blockquote.quoted { // using !important to override inline styles from content api
-            @include rem((
-                margin: 16px $block-padding-right $gs-baseline*1.5 $block-padding-left !important
-            ));
+            margin: 16px $block-padding-right $gs-baseline*1.5 $block-padding-left !important;
             @include mq($to: mobileLandscape) {
-                @include rem((
-                    margin-left: $gs-gutter/2 !important,
-                    margin-right: $gs-gutter/2 !important
-                ));
+                margin-left: $gs-gutter/2 !important;
+                margin-right: $gs-gutter/2 !important;
                 &:before { // remove pseudo quote at mobile
                     display: none;
                 }
@@ -369,23 +315,17 @@ $block-padding-right: $gs-gutter;
         }
 
         > blockquote.quoted:before {
-            @include rem((
-                margin-left: -24px
-            ));
+            margin-left: -24px
             left: auto;
         }
 
         /* Media
            ========================================================= */
         > .element {
-            @include rem((
-                margin: 0 0 $gs-baseline
-            ));
+            margin: 0 0 $gs-baseline;
         }
         > .element-image + .element {
-            @include rem((
-                margin-top: $gs-baseline*-1
-            ));
+            margin-top: $gs-baseline*-1;
         }
 
         > .element-table {
@@ -420,14 +360,11 @@ $block-padding-right: $gs-gutter;
         > .element-embed,
         > .element-audio {
             width: auto;
-            @include rem((
-                margin:$gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4 $gs-gutter/2
-            ));
+            margin: $gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4;
+
             @include mq(tablet) {
-                @include rem((
-                    margin-left: $block-padding-left,
-                    margin-right: $block-padding-right
-                ));
+                margin-left: $block-padding-left;
+                margin-right: $block-padding-right;
             }
         }
 
@@ -456,17 +393,13 @@ $block-padding-right: $gs-gutter;
 
         > .element figcaption {
             background-color: #ffffff;
-            @include rem((
-                margin-left: $gs-gutter/2,
-                margin-right: $gs-gutter/2,
-                padding: $gs-baseline/3 0 $gs-baseline*2 0
-            ));
+            margin-left: $gs-gutter/2;
+            margin-right: $gs-gutter/2;
+            padding: $gs-baseline/3 0 $gs-baseline*2;
 
             @include mq(mobileLandscape) {
-                @include rem((
-                    margin-left: $block-padding-left,
-                    margin-right: $block-padding-right
-                ));
+                margin-left: $block-padding-left;
+                margin-right: $block-padding-right;
             }
         }
     }
@@ -487,33 +420,25 @@ $block-padding-right: $gs-gutter;
     }
 }
 .element-tweet {
-    @include rem((
-        margin: $gs-baseline 0 ($gs-baseline/3)*4
-    ));
+    margin: $gs-baseline 0 ($gs-baseline/3)*4;
 }
 .tweet,
 .from-content-api blockquote.tweet {
     border-left-width: 0;
-    @include rem((
-        padding: $gs-baseline/2 0 0,
-        margin-bottom: $gs-baseline,
-        margin-left: $gs-gutter/2,
-        margin-right: $gs-gutter/2
-    ));
+    padding: $gs-baseline/2 0 0;
+    margin-bottom: $gs-baseline;
+    margin-left: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
     font-style: normal;
     @include fs-textSans(3);
 
     &:first-child {
-        @include rem((
-            margin-top: $gs-baseline/2
-        ));
+        margin-top: $gs-baseline/2;
     }
 
     @include mq(tablet) {
-        @include rem((
-            margin-left: $block-padding-left,
-            margin-right: $block-padding-right
-        ));
+        margin-left: $block-padding-left;
+        margin-right: $block-padding-right;
     }
 }
 // Temporary fix to issue #1674
@@ -532,19 +457,15 @@ $block-padding-right: $gs-gutter;
 .tweet-user {
     display: inline-block;
     font-weight: bold;
-    @include rem((
-        padding-left: 40px
-    ));
+    padding-left: 40px;
     margin-bottom: 0;
 }
 
 .tweet-date {
     display: block;
     color: $c-neutral2;
-    @include rem((
-        padding-left: 40px,
-        margin-bottom: ($gs-baseline/3)*4
-    ));
+    padding-left: 40px;
+    margin-bottom: ($gs-baseline/3)*4;
 }
 
 .twitter-tweet {
@@ -591,9 +512,7 @@ $block-padding-right: $gs-gutter;
     }
 
     .dropdown__button {
-        @include rem((
-            padding: $gs-baseline/1.5 0
-        ));
+        padding: $gs-baseline/1.5 0;
         border-top: 1px solid $c-neutral4;
 
         &:before,
@@ -614,11 +533,9 @@ $block-padding-right: $gs-gutter;
             @include mq(rightCol) {
                 display: block;
                 border-top: 0;
-                @include rem((
-                    padding-top: 0,
-                    margin-top: ($gs-baseline/3)*-1,
-                    margin-bottom: $gs-baseline/2
-                ));
+                padding-top: 0;
+                margin-top: ($gs-baseline/3)*-1;
+                margin-bottom: $gs-baseline/2;
             }
         }
     }
@@ -636,22 +553,16 @@ $block-padding-right: $gs-gutter;
 
     .dropdown__label {
         @include fs-header(2);
-        @include rem((
-            line-height: 30px
-        ));
+        line-height: 30px;
     }
 
     .dropdown__content {
         position: relative;
         margin: 0;
-        @include rem((
-            padding: $gs-baseline 0
-        ));
+        padding: $gs-baseline 0;
 
         .blog__timeline & {
-            @include rem((
-                padding: 0 0 $gs-baseline
-            ));
+            padding: 0 0 $gs-baseline;
         }
 
         @include mq($to: rightCol) {
@@ -686,10 +597,8 @@ $timeline-width: 14px;
 .blog__timeline-container {
     @include mq(rightCol) {
         @include transform(translateZ(0)); //To force on GPU
-        @include rem((
-            width: $right-column,
-            top: $gs-baseline*2
-        ));
+        width: $right-column;
+        top: $gs-baseline*2;
     }
 }
 
@@ -697,18 +606,14 @@ $timeline-width: 14px;
     position: relative;
 
     @include mq(rightCol) {
-        @include rem((
-            margin-left: $timeline-width/2
-        ));
+        margin-left: $timeline-width/2;
     }
 }
 .timeline__item {
     display: table;
     width: 100%;
     overflow: hidden;
-    @include rem((
-        min-height: gs-height(1) + $gs-baseline/3
-    ));
+    min-height: gs-height(1) + $gs-baseline/3;
     border-bottom: 1px solid $c-neutral4;
 
     &:last-child {
@@ -723,9 +628,7 @@ $timeline-width: 14px;
 }
 .timeline__link {
     display: block;
-    @include rem((
-        padding: $gs-baseline/6 0 $gs-baseline/2
-    ));
+    padding: $gs-baseline/6 0 $gs-baseline/2;
 
     &,
     &:hover,
@@ -737,21 +640,17 @@ $timeline-width: 14px;
 
     @include mq(rightCol) {
         position: relative;
-        @include rem((
-            padding: 0 $gs-gutter $gs-baseline*2
-        ));
+        padding: 0 $gs-gutter $gs-baseline*2;
         border-left: 1px solid $c-neutral5;
 
         &:before {
             display: block;
             position: absolute;
             content: ' ';
-            @include rem((
-                top: -4px,
-                left: ($timeline-width/2)*-1,
-                width: $timeline-width,
-                height: $timeline-width
-            ));
+            top: -4px;
+            left: ($timeline-width/2)*-1;
+            width: $timeline-width;
+            height: $timeline-width;
             @include border-radius(50%);
             background-color: $c-neutral5;
         }
@@ -767,9 +666,7 @@ $timeline-width: 14px;
         .timeline__item:last-child &:before {
             border-radius: 0;
             top: 0;
-            @include rem((
-                height: 1px
-            ));
+            height: 1px;
         }
 
         .timeline__item:last-child & {
@@ -779,9 +676,7 @@ $timeline-width: 14px;
 }
 .timeline__date {
     display: table-cell;
-    @include rem((
-        width: gs-span(1)
-    ));
+    width: gs-span(1);
     @include fs-data(4);
     font-weight: bold;
 
@@ -793,10 +688,8 @@ $timeline-width: 14px;
     @include mq(rightCol) {
         display: block;
         position: relative;
-        @include rem((
-            top: ($gs-baseline/3)*-1,
-            line-height: $timeline-width
-        ));
+        top: ($gs-baseline/3)*-1;
+        line-height: $timeline-width;
     }
 }
 
@@ -821,25 +714,19 @@ $timeline-width: 14px;
 /* Related content
    ========================================================================== */
 .blog__related {
-    @include rem((
-        width: gs-span(3),
-        margin-left: gs-span(1) + $gs-gutter
-    ));
+    width: gs-span(3);
+    margin-left: gs-span(1) + $gs-gutter;
 }
 
 .blog__related__head {
     @include fs-header(2);
-    @include rem((
-        margin-bottom: ($gs-baseline/3)*4
-    ));
+    margin-bottom: ($gs-baseline/3)*4;
 }
 
 .blog__related__item {
     width: auto !important;
     padding-bottom: 0;
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
+    margin-bottom: $gs-baseline*2;
 
     .item {
         padding: 0;
@@ -882,17 +769,13 @@ $timeline-width: 14px;
             padding: 0;
             background: none;
             border: 0;
-            @include rem((
-                margin: $gs-baseline/2 $gs-gutter/2 0
-            ));
+            margin: $gs-baseline/2 $gs-gutter/2 0;
 
             @include mq(mobileLandscape) {
                 border-left: 1px solid darken($c-neutral8, 4%);
-                @include rem((
-                    margin-left: $gs-gutter,
-                    margin-right: $gs-gutter,
-                    padding-left: $gs-gutter
-                ));
+                margin-left: $gs-gutter;
+                margin-right: $gs-gutter;
+                padding-left: $gs-gutter;
             }
         }
         .player-card__position {
@@ -903,9 +786,7 @@ $timeline-width: 14px;
     }
 
     .dropdown .match-stats__container {
-        @include rem((
-            margin-bottom: $gs-baseline
-        ));
+        margin-bottom: $gs-baseline;
     }
 
     @include mq(rightCol) {
@@ -930,9 +811,7 @@ $timeline-width: 14px;
     background-color: $c-neutral8;
 
     .content__headline {
-        @include rem((
-            padding-bottom: $gs-baseline*3
-        ));
+        padding-bottom: $gs-baseline*3;
         color: $c-neutral1;
         @include fs-headline(5);
 
@@ -940,9 +819,7 @@ $timeline-width: 14px;
             @include fs-headline(6, true);
         }
         @include mq(rightCol) {
-            @include rem((
-                padding-bottom: $gs-row-height + ($gs-baseline * 2)
-            ));
+            padding-bottom: $gs-row-height + ($gs-baseline * 2);
         }
     }
 
@@ -950,10 +827,8 @@ $timeline-width: 14px;
 
         @include mq(rightCol) {
             float: left;
-            @include rem((
-                width: gs-span(3),
-                padding-top: $content-top-padding
-            ));
+            width: gs-span(3);
+            padding-top: $content-top-padding;
 
             .tone-colour {
                 // overriding tonal head style here as liveblog section breaks differently
@@ -979,9 +854,7 @@ $timeline-width: 14px;
         color: $c-neutral2-contrasted;
 
         @include mq(rightCol) {
-            @include rem((
-                padding-right: $gs-gutter
-            ));
+            padding-right: $gs-gutter;
         }
     }
 }
@@ -991,10 +864,8 @@ $timeline-width: 14px;
         position: absolute;
         top: 0;
         z-index: 200;
-        @include rem((
-            margin-left: ($right-column + $gs-gutter) * - 1,
-            width: $right-column
-        ));
+        margin-left: ($right-column + $gs-gutter) * - 1;
+        width: $right-column;
     }
 }
 
@@ -1002,13 +873,9 @@ $timeline-width: 14px;
     .content__standfirst,
     .blog__timeline,
     .content__secondary-column {
-        @include rem((
-            padding-top: $gs-baseline
-        ));
+        padding-top: $gs-baseline;
         @include mq(rightCol) {
-            @include rem((
-                padding-top: $gs-baseline*2
-            ));
+            padding-top: $gs-baseline*2;
         }
     }
 }

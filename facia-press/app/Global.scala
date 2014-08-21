@@ -37,11 +37,12 @@ object Global extends GlobalSettings
     S3Metrics.S3AuthorizationError,
     FaciaPressMetrics.ContentApiSeoRequestSuccess,
     FaciaPressMetrics.ContentApiSeoRequestFailure,
-    FaciaPressMetrics.MemcachedFallbackMetric
+    FaciaPressMetrics.MemcachedFallbackMetric,
+    UkPressLatencyMetric,
+    UsPressLatencyMetric,
+    AuPressLatencyMetric,
+    AllFrontsPressLatencyMetric
   )
-
-  override def latencyMetrics: List[FrontendMetric] = List(UkPressLatencyMetric, UsPressLatencyMetric, AuPressLatencyMetric,
-                                     AllFrontsPressLatencyMetric)
 
   def scheduleJobs() {
     Jobs.schedule("FaciaToolPressJob", s"0/$pressJobConsumeRateInSeconds * * * * ?") {

@@ -592,6 +592,13 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
   }
 }
 
+object FigCaptionCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
+    document
+  }
+}
+
 // whitespace in the <span> below is significant
 // (results in spaces after author names before commas)
 // so don't add any, fool.
@@ -867,7 +874,7 @@ object GetClasses {
       (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
         if (index == 0) "container--first" else "",
       (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (index > 0 && hasTitle) "js-container--toggle" else ""
+        if (index > 0 && hasTitle && !(config.isAdvertisementFeature || config.isSponsored)) "js-container--toggle" else ""
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(container, config, index, hasTitle)}
     RenderClasses(classes:_*)

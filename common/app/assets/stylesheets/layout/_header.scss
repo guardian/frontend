@@ -11,9 +11,7 @@ $c-guardian-services-action: #ffffff;
 
     @include mq(wide) {
         .has-page-skin & .gs-container {
-            @include rem((
-                width: gs-span(12) + ($gs-gutter*2)
-            ));
+            width: gs-span(12) + ($gs-gutter*2);
         }
     }
 }
@@ -21,21 +19,15 @@ $c-guardian-services-action: #ffffff;
 .logo-wrapper {
     position: relative;
     float: right;
-    @include rem((
-        margin: $gs-baseline/4 $gs-gutter/2 $gs-baseline 0
-    ));
+    margin: $gs-baseline/4 $gs-gutter/2 $gs-baseline 0;
 
     @include mq(mobileLandscape) {
-        @include rem((
-            margin-right: $gs-gutter
-        ));
+        margin-right: $gs-gutter;
     }
 
     @include mq(tablet) {
-        @include rem((
-            margin-top: $gs-baseline * .5,
-            margin-bottom: $gs-baseline * .5
-        ));
+        margin-top: $gs-baseline * .5;
+        margin-bottom: $gs-baseline * .5;
     }
 
     i {

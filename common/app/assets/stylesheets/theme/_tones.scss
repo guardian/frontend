@@ -66,9 +66,7 @@
     .tone-#{$tone} .content__head--tonal {
         .content__section {
             @include mq(leftCol) {
-                @include rem((
-                    padding-top: $content-top-padding
-                ));
+                padding-top: $content-top-padding;
             }
         }
         .content__section .tone-colour {

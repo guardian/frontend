@@ -1,5 +1,6 @@
 @(env: String, report: dfp.InlineMerchandisingTargetedTagsReport)
 @import tools.SiteLink
+@import tools.CapiLink
 
 @admin_main("Commercial IM Slot", env, isAuthed = true, hasCharts = false) {
 
@@ -25,7 +26,7 @@
     @if(report.targetedTags.keywords.isEmpty) {<p>None</p>} else {
         <ol>
         @for(keyword <- report.targetedTags.keywords) {
-            <li style="font-size : large">@keyword</li>
+            <li style="font-size : large"><a href="@CapiLink.keywordPage(keyword)">@keyword</a></li>
         }
         </ol>
     }
@@ -34,7 +35,7 @@
     @if(report.targetedTags.series.isEmpty) {<p>None</p>} else {
         <ol>
         @for(series <- report.targetedTags.series) {
-            <li style="font-size : large">@series</li>
+            <li style="font-size : large"><a href="@CapiLink.seriesPage(series)">@series</a></li>
         }
         </ol>
     }

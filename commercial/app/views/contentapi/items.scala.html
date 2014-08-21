@@ -13,7 +13,9 @@
                     @for(item <- items) {
                         <li class="lineitem">
                             <a class="lineitem__link" href="@AdLink{@item.webUrl}" data-link-name="merchandising-capi-v@{version}_@{date}-@item.webTitle">
-                                <img class="lineitem__image" src="@item.mainPicture.map(_.largestImage.map(_.url))" />
+                                @item.mainPicture.map{ picture =>
+                                    @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
+                                }
                                 <div class="lineitem__offer">
                                     <h4 class="lineitem__title">@item.webTitle</h4>
                                     <div class="item__meta">

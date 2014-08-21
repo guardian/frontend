@@ -2,25 +2,20 @@
     @if ($svg-support) {
         .svg & {
             background-size: 100%;
-            @include rem((
-                width: 10px,
-                height: 10px
-            ));
+            width: 10px;
+            height: 10px;
         }
     }
 }
 
-.caption:before,
-figcaption:before {
+.caption--img:before {
     @include background-size(contain);
     @extend %i;
     @extend %i-image;
     display: inline-block;
     content: '';
     vertical-align: top;
-    @include rem((
-        margin: 1px 4px 0 0
-    ));
+    margin: 1px 4px 0 0;
 
     @if ($svg-support) {
         .svg & {

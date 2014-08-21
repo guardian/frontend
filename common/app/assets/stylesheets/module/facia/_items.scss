@@ -1,24 +1,18 @@
 .container {
     position: relative;
     overflow: hidden;
-    @include rem((
-        margin-bottom: $gs-baseline
-    ));
+    margin-bottom: $gs-baseline;
 
     @include mq(tablet) {
-        @include rem((
-            margin-bottom: $gs-baseline*2
-        ));
+        margin-bottom: $gs-baseline*2;
     }
 }
 .container__border {
     border-top: 1px solid $c-neutral4;
 
     @include mq(tablet) {
-        @include rem((
-            margin-left: -$gs-gutter,
-            margin-right: -$gs-gutter
-        ));
+        margin-left: -$gs-gutter;
+        margin-right: -$gs-gutter;
     }
 }
 .container__header {
@@ -28,10 +22,8 @@
     @include box-sizing(border-box);
     position: relative;
     @include fs-header(3);
-    @include rem((
-        padding: $gs-baseline/4 (gs-span(1) + $gs-gutter/5) $gs-baseline/3 0,
-        min-height: gs-height(1)
-    ));
+    padding: $gs-baseline/4 (gs-span(1) + $gs-gutter/5) $gs-baseline/3 0;
+    min-height: gs-height(1);
     color: $c-neutral1;
 
     .today__sub {
@@ -49,22 +41,16 @@
     @include mq(tablet) {
         min-height: 0;
         padding-right: 0;
-        @include rem((
-            padding-top: $gs-baseline/2,
-            margin-bottom: $gs-baseline
-        ));
+        padding-top: $gs-baseline/2;
+        margin-bottom: $gs-baseline;
     }
     @include mq(desktop) {
-        @include rem((
-            padding-top: $gs-baseline/1.5
-        ));
+        padding-top: $gs-baseline/1.5;
     }
 }
 .container__body {
     @include mq(leftCol) {
-        @include rem((
-            padding-top: $gs-baseline/2
-        ));
+        padding-top: $gs-baseline/2;
     }
 }
 .container__updated {
@@ -83,9 +69,7 @@
         }
     }
     @include mq(wide) {
-        @include rem((
-            padding-left: $gs-gutter*2
-        ));
+        padding-left: $gs-gutter*2;
 
         .i--clock {
             display: block;
@@ -102,10 +86,8 @@
 }
 .container__toggle {
     position: absolute;
-    @include rem((
-        min-height: gs-height(1),
-        min-width: gs-span(1)
-    ));
+    min-height: gs-height(1);
+    min-width: gs-span(1);
     top: 0;
     right: 0;
     height: 100%;
@@ -120,9 +102,7 @@
         position: absolute;
         top: 13px;
         left: 50%;
-        @include rem((
-            margin-left: -12px
-        ));
+        margin-left: -12px;
 
         .container--rolled-up & {
             @include transform(rotate(0));
@@ -131,9 +111,7 @@
     .container__toggle__text {
         display: none;
         position: relative;
-        @include rem((
-            top: -2px
-        ));
+        top: -2px;
     }
     @include mq(tablet) {
         text-align: right;
@@ -155,9 +133,7 @@
         }
     }
     @include mq(wide) {
-        @include rem((
-            left: gs-span(15) + $gs-gutter
-        ));
+        left: gs-span(15) + $gs-gutter;
     }
 }
 .facia-slice {
@@ -173,21 +149,15 @@
     @include box-sizing(border-box);
     display: block;
     @include clearfix;
-    @include rem((
-        padding-left: $gs-gutter/2,
-        padding-right: $gs-gutter/2,
-        margin-bottom: $gs-baseline/2
-    ));
+    padding-left: $gs-gutter/2;
+    padding-right: $gs-gutter/2;
+    margin-bottom: $gs-baseline/2;
 
     .stars {
-        @include rem((
-            margin-top: $gs-baseline * .25
-        ));
+        margin-top: $gs-baseline * .25;
 
         @include mq(tablet) {
-            @include rem((
-                margin-bottom: $gs-baseline * 1.25
-            ));
+            margin-bottom: $gs-baseline * 1.25;
         }
     }
 }
@@ -229,9 +199,6 @@
 }
 .item__video-container {
     margin-top: 4px;
-}
-.container--news .facia-slice-wrapper:first-child .item__video-container {
-    margin-top: 0;
 }
 .item__image-container {
     margin-top: 4px;
@@ -296,9 +263,7 @@
 
 .item__title {
     position: relative;
-    @include rem((
-        padding-top: $gs-baseline/6
-    ));
+    padding-top: $gs-baseline/6;
     @include fs-headline(2, true);
     word-wrap: break-word;
 
@@ -327,6 +292,12 @@
     display: inline;
 }
 
+.item__header--inline-video {
+    @include mq(desktop) {
+        margin-top: 2px;
+    }
+}
+
 .item__media-wrapper .gu-media-wrapper {
     margin-bottom: 0;
 }
@@ -340,9 +311,7 @@
 .l-row--items-4 {
     @include mq($to: tablet) {
         .item__title--has-icon-mobile {
-            @include rem((
-                padding-left: 30px
-            ));
+            padding-left: 30px;
         }
     }
     .item--video,
@@ -362,9 +331,7 @@
 }
 .item__byline {
     @include fs-headline(3);
-    @include rem((
-        margin-bottom: $gs-baseline/3
-    ));
+    margin-bottom: $gs-baseline/3;
 }
 .item__tag-separator {
     display: none;
@@ -386,11 +353,9 @@
 }
 .item__standfirst {
     display: none;
-    @include rem((
-        margin: $gs-baseline 0 0,
-        font-size: 14px,
-        line-height: 18px
-    ));
+    margin: $gs-baseline 0 0;
+    font-size: 14px;
+    line-height: 18px;
 
     p {
         margin-bottom: 0; // Some trail texts are wrapped in a paragraph
@@ -412,46 +377,34 @@
         }
     }
     .item__timestamp {
-        @include rem((
-            min-width: 50px - $gs-gutter/2 - 14px,
-            padding-right: $gs-gutter/2,
-            padding-left: 14px
-        ));
+        min-width: 50px - $gs-gutter/2 - 14px;
+        padding-right: $gs-gutter/2;
+        padding-left: 14px;
 
         i {
             left: 0;
-            @include rem((
-                top: 3px
-            ));
+            top: 3px;
         }
     }
     .trail__count {
         a {
-            @include rem((
-                padding-left: 18px
-            ));
+            padding-left: 18px;
             line-height: inherit;
             color: inherit;
         }
         i {
-            @include rem((
-                top: 3px, // Aligns well with system sans-serif font
-                left: 0
-            ));
+            top: 3px; // Aligns well with system sans-serif font
+            left: 0;
 
             @include mq(desktop) {
-                @include rem((
-                    top: 1px // Align with Text Sans 1
-                ));
+                top: 1px // Align with Text Sans 1;
             }
         }
     }
 }
 .item__support {
     display: none;
-    @include rem((
-        margin-top: $gs-baseline*2
-    ));
+    margin-top: $gs-baseline*2;
 
     .item--support-show & {
         display: block;
@@ -470,12 +423,10 @@
 
 .item__cta {
     position: absolute;
-    @include rem((
-        width: ($gs-baseline/3)*11,  //44px
-        height: ($gs-baseline/3)*11,
-        top: ($gs-baseline/3)*2,
-        left: $gs-gutter/2.5
-    ));
+    width: ($gs-baseline/3)*11;  //44px
+    height: ($gs-baseline/3)*11;
+    top: ($gs-baseline/3)*2;
+    left: $gs-gutter/2.5;
     background-color: rgba($c-neutral2, .7);
     z-index: 2;
     @include border-radius(50%);
@@ -503,16 +454,12 @@ $cta-icon-gap: 2px;
 .item__media-wrapper--has-icon {
     .item__cta {
         position: absolute;
-        @include rem((
-            top: $gs-baseline/3,
-            left: $gs-baseline/3
-        ));
+        top: $gs-baseline/3;
+        left: $gs-baseline/3;
     }
     .i {
         position: relative;
-        @include rem((
-            margin-bottom: $cta-icon-gap
-        ));
+        margin-bottom: $cta-icon-gap;
     }
     &:hover,
     &:focus {
@@ -520,19 +467,15 @@ $cta-icon-gap: 2px;
             background-color: $c-neutral1;
 
             .i {
-                @include rem((
-                    top: -1 * (map-get($gallery-cta-icon, height) + $cta-icon-gap)
-                ));
+                top: -1 * (map-get($gallery-cta-icon, height) + $cta-icon-gap);
             }
         }
     }
 }
 .item__cta--gallery,
 .item__cta--video {
-    @include rem((
-        width: 36px,
-        height: 36px
-    ));
+    width: 36px;
+    height: 36px;
     background-color: $c-media-icon;
 }
 .item__cta__icon {
@@ -543,21 +486,17 @@ $cta-icon-gap: 2px;
     font-size: 0;
 
     .item__cta--gallery & {
-        @include rem((
-            width: map-get($gallery-cta-icon, width),
-            height: map-get($gallery-cta-icon, height),
-            margin-left: -1 * (map-get($gallery-cta-icon, width) / 2),
-            margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2)
-        ));
+        width: map-get($gallery-cta-icon, width);
+        height: map-get($gallery-cta-icon, height);
+        margin-left: -1 * (map-get($gallery-cta-icon, width) / 2);
+        margin-top: -1 * ceil(map-get($gallery-cta-icon, height) / 2);
     }
     .item__cta--video & {
-        @include rem((
-            width: map-get($video-cta-icon, width),
-            height: map-get($video-cta-icon, height),
-            // don't want icon to be exactly in the middle
-            margin-left: -1 * (map-get($video-cta-icon, width) / 3),
-            margin-top: -1 * (map-get($video-cta-icon, height) / 2)
-        ));
+        width: map-get($video-cta-icon, width);
+        height: map-get($video-cta-icon, height);
+        // don't want icon to be exactly in the middle
+        margin-left: -1 * (map-get($video-cta-icon, width) / 3);
+        margin-top: -1 * (map-get($video-cta-icon, height) / 2);
     }
 }
 .item--dark {
@@ -566,10 +505,8 @@ $cta-icon-gap: 2px;
         background-color: $c-neutral1;
     }
     .item__title {
-        @include rem((
-            padding-left: 7px,
-            padding-right: 7px
-        ));
+        padding-left: 7px;
+        padding-right: 7px;
     }
     .item__link:visited {
         .item__title {
@@ -588,9 +525,7 @@ $cta-icon-gap: 2px;
         color: #9c9c9c;
     }
     .item__meta {
-        @include rem((
-            padding-left: 7px
-        ));
+        padding-left: 7px;
         color: #9c9c9c; //Darkest we can go to pass accessiblity
     }
 }
@@ -618,9 +553,7 @@ $cta-icon-gap: 2px;
 
 
     @include mq(tablet) {
-        @include rem((
-            padding-top: $gs-baseline/2
-        ));
+        padding-top: $gs-baseline/2;
     }
     @include mq(faciaLeftCol, wide) {
         .facia-slice-wrapper:first-child {

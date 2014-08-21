@@ -5,6 +5,7 @@ import java.lang.management.{GarbageCollectorMXBean, ManagementFactory}
 import java.util.concurrent.atomic.AtomicLong
 
 import com.amazonaws.services.cloudwatch.model.{Dimension, StandardUnit}
+import conf.{Switches, Configuration}
 import metrics.{CountMetric, FrontendMetric, FrontendTimingMetric, GaugeMetric}
 import model.diagnostics.CloudWatch
 import play.api.{GlobalSettings, Application => PlayApp}
@@ -170,11 +171,6 @@ object AdminMetrics {
 }
 
 object FaciaMetrics {
-
-  object JsonParsingErrorCount extends CountMetric(
-    "json-parsing-error",
-    "Number of errors whilst parsing JSON out of S3"
-  )
 
   object FaciaToApplicationRedirectMetric extends CountMetric(
     "redirects-to-applications",
@@ -354,14 +350,13 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
       )
     )}
 
-  def latencyMetrics: List[FrontendMetric] = Nil
-
   private def report() {
     val systemMetrics  = this.systemMetrics
     val applicationMetrics  = this.applicationMetrics
-    CloudWatch.putSystemMetricsWithStage(systemMetrics, applicationDimension)
-    CloudWatch.putMetricsWithStage(applicationMetrics, applicationDimension)
-    CloudWatch.putMetricsWithStage(latencyMetrics, applicationDimension)
+    if (!Configuration.environment.isNonProd || Switches.MetricsSwitch.isSwitchedOn) {
+      CloudWatch.putSystemMetricsWithStage(systemMetrics, applicationDimension)
+      CloudWatch.putMetricsWithStage(applicationMetrics, applicationDimension)
+    }
   }
 
   override def onStart(app: PlayApp) {
