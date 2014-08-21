@@ -11,39 +11,29 @@
 }
 
 .site-message__inner {
-    @include rem((
-        padding: 0 $gs-gutter/2
-    ));
+    padding: 0 $gs-gutter/2;
 
     @include mq(tablet) {
         display: table;
         width: 100%;
         padding: 0;
-        @include rem((
-            min-height: gs-height(2) - $gs-baseline
-        ));
+        min-height: gs-height(2) - $gs-baseline;
     }
 
     @include mq(rightCol) {
-        @include rem((
-            min-height: gs-height(2) - $gs-baseline*2
-        ));
+        min-height: gs-height(2) - $gs-baseline*2;
     }
 
     @include mq(wide) {
-        @include rem((
-            min-height: gs-height(1) + $gs-baseline
-        ));
+        min-height: gs-height(1) + $gs-baseline;
     }
 }
 
 .site-message__media {
     display: none;
-    @include rem((
-        width: 36px, // Icon size
-        height: $gs-baseline*3,
-        padding-left: $gs-gutter/2
-    ));
+    width: 36px; // Icon size
+    height: $gs-baseline*3;
+    padding-left: $gs-gutter/2;
 
     .i {
         display: block;
@@ -66,11 +56,9 @@
     @include fs-headline(1);
     color: #ffffff;
     margin-bottom: 0;
-    @include rem((
-        padding-top: $gs-baseline,
-        margin-right: $gs-gutter/2,
-        margin-left: $gs-gutter/2
-    ));
+    padding-top: $gs-baseline;
+    margin-right: $gs-gutter/2;
+    margin-left: $gs-gutter/2;
 
     a {
         color: #ffffff;
@@ -85,31 +73,23 @@
         display: table-cell;
         vertical-align: middle;
         padding-top: 0;
-        @include rem((
-            padding-left: $gs-gutter/2,
-            padding-right: $gs-gutter,
-            max-width: gs-span(4) + $gs-gutter
-        ));
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter;
+        max-width: gs-span(4) + $gs-gutter;
     }
 
     @include mq(rightCol) {
         @include fs-headline(2, true);
-        @include rem((
-            padding-right: $gs-gutter/2,
-            max-width: gs-span(6) + $gs-gutter/2
-        ));
+        padding-right: $gs-gutter/2;
+        max-width: gs-span(6) + $gs-gutter/2;
     }
 
     @include mq(desktop) {
-        @include rem((
-            max-width: gs-span(7) - $gs-gutter*2
-        ));
+        max-width: gs-span(7) - $gs-gutter*2;
     }
 
     @include mq(leftCol) {
-        @include rem((
-            max-width: gs-span(8) - $gs-gutter*2
-        ));
+        max-width: gs-span(8) - $gs-gutter*2;
     }
 
     @include mq(wide) {
@@ -122,10 +102,8 @@
 }
 
 .site-message__actions {
-    @include rem((
-        margin-top: $gs-baseline,
-        margin-bottom: $gs-baseline
-    ));
+    margin-top: $gs-baseline;
+    margin-bottom: $gs-baseline;
     overflow: hidden;
 
     @include mq(tablet) {
@@ -139,11 +117,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 .site-message__actions__item {
     float: left;
-    @include rem((
-        height: $btn-height,
-        padding-left: $gs-gutter/2,
-        margin-right: $gs-gutter/2
-    ));
+    height: $btn-height;
+    padding-left: $gs-gutter/2;
+    margin-right: $gs-gutter/2;
     @include fs-textSans(2);
     color: #ffffff;
     border: 1px solid rgba(#ffffff, .3);
@@ -154,9 +130,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 
     @include mq(wide) {
-        @include rem((
-            margin-right: $gs-gutter/4
-        ));
+        margin-right: $gs-gutter/4;
     }
 
     &:hover {
@@ -166,9 +140,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     a {
         float: left;
         color: #ffffff;
-        @include rem((
-            line-height: $btn-height + 1px
-        ));
+        line-height: $btn-height + 1px;
 
         &:hover,
         &:focus,
@@ -185,23 +157,17 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .site-message__close {
     display: table-cell;
     vertical-align: middle;
-    @include rem((
-        padding-right: $gs-gutter/2
-    ));
+    padding-right: $gs-gutter/2;
 
     @include mq(rightCol) {
-        @include rem((
-            padding-right: $gs-gutter
-        ));
+        padding-right: $gs-gutter;
     }
 }
 
 .site-message__close-btn {
     display: block;
     padding: 0;
-    @include rem((
-        height: $btn-height + 2px
-    ));
+    height: $btn-height + 2px;
     @include fs-textSans(2);
     background: transparent;
     border: 1px solid rgba(#ffffff, .3);
@@ -217,10 +183,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include mq($to: tablet) {
         position: absolute;
         right: 0;
-        @include rem((
-            right: $gs-gutter,
-            bottom: $gs-baseline
-        ));
+        right: $gs-gutter;
+        bottom: $gs-baseline;
     }
 }
 
@@ -236,9 +200,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 }
 
 .site-message--android {
-    @include rem((
-        max-height: 140px
-    ));
+    max-height: 140px;
     overflow: hidden;
     background: #444444;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAAAAACMmsGiAAAAGElEQVR4AWMItbW1ZbANBRJ2QJIByAsFACn9BDLFzRqoAAAAAElFTkSuQmCC');
@@ -247,31 +209,25 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .site-message__inner {
         position: relative;
-        @include rem((
-            padding-top: $gs-baseline/2,
-            padding-bottom: $gs-baseline/2
-        ));
+        padding-top: $gs-baseline/2;
+        padding-bottom: $gs-baseline/2;
     }
 
     .site-message__close {
         display: block;
         position: absolute;
-        @include rem((
-            top: $gs-baseline/4,
-            left: $gs-gutter/4,
-            width: $gs-gutter,
-            height: $gs-gutter
-        ));
+        top: $gs-baseline/4;
+        left: $gs-gutter/4;
+        width: $gs-gutter;
+        height: $gs-gutter;
     }
 
     .site-message__close-btn {
         position: relative;
         right: auto;
         bottom: auto;
-        @include rem((
-            width: $gs-gutter,
-            height: $gs-gutter
-        ));
+        width: $gs-gutter;
+        height: $gs-gutter;
         background-color: $c-neutral1;
         @include border-radius(50%);
         @include box-shadow(0px 1px 0px $c-neutral3);
@@ -280,10 +236,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             display: block;
             position: absolute;
             content: '×';
-            @include rem((
-                left: 6px,
-                top: 3px
-            ));
+            left: 6px;
+            top: 3px;
             background-color: $c-neutral1;
             @include font(arial, bold, 14px);
             color: $c-neutral4;
@@ -300,11 +254,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 
     .app__logo {
-        @include rem((
-            width: 50px,
-            margin-left: $gs-gutter*.75,
-            margin-right: $gs-gutter/4
-        ));
+        width: 50px;
+        margin-left: $gs-gutter*.75;
+        margin-right: $gs-gutter/4;
     }
 
     .app__cta {
@@ -330,10 +282,8 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         float: right;
         background-color: #37b1c6;
         color: #ffffff;
-        @include rem((
-            margin-top: $gs-baseline,
-            padding: $gs-baseline/3 $gs-gutter
-        ));
+        margin-top: $gs-baseline;
+        padding: $gs-baseline/3 $gs-gutter;
         @include font(arial, bold, 14px);
         text-transform: uppercase;
         border: 1px solid #333333;
@@ -348,48 +298,38 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 .site-message--ios {
     $helvetica: 'helvetica neue', helvetica, arial;
 
-    @include rem((
-        max-height: 140px
-    ));
+    max-height: 140px;
     overflow: hidden;
     background: #f2f2f2;
 
 
     .site-message__inner {
-        @include rem((
-            padding-top: $gs-baseline/2,
-            padding-bottom: $gs-baseline/2
-        ));
+        padding-top: $gs-baseline/2;
+        padding-bottom: $gs-baseline/2;
         position: relative;
     }
 
     .site-message__close {
         display: block;
         position: absolute;
-        @include rem((
-            top: $gs-baseline*2,
-            left: $gs-gutter/4,
-            width: $gs-gutter,
-            height: $gs-gutter
-        ));
+        top: $gs-baseline*2;
+        left: $gs-gutter/4;
+        width: $gs-gutter;
+        height: $gs-gutter;
     }
 
     .site-message__close-btn {
         right: auto;
         bottom: auto;
-        @include rem((
-            width: $gs-gutter,
-            height: $gs-gutter
-        ));
+        width: $gs-gutter;
+        height: $gs-gutter;
 
         &:before {
             display: block;
             position: absolute;
             content: '×';
-            @include rem((
-                top: -($gs-baseline/2),
-                left: 2px
-            ));
+            top: -($gs-baseline/2);
+            left: 2px;
             @include font($helvetica, 200, 24px);
             color: $c-neutral2;
         }
@@ -405,11 +345,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 
     .app__logo {
-        @include rem((
-            width: 60px,
-            margin-left: $gs-gutter,
-            margin-right: $gs-gutter/2
-        ));
+        width: 60px;
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter/2;
     }
 
     .app__cta {
@@ -437,17 +375,13 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
     .app__link {
         float: right;
-        @include rem((
-            margin-top: $gs-baseline*2
-        ));
+        margin-top: $gs-baseline*2;
         color: #1878fb;
         @include font($helvetica, normal, 14px);
 
         @include mq(tablet) {
             float: left;
-            @include rem((
-                margin-left: $gs-gutter*2
-            ))
+            margin-left: $gs-gutter*2;
         }
     }
 
@@ -458,9 +392,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             display: block;
             position: absolute;
             bottom: 0;
-            @include rem((
-                right: $gs-gutter
-            ));
+            right: $gs-gutter;
             width: 28%;
         }
     }

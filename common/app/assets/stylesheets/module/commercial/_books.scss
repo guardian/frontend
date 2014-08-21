@@ -5,9 +5,7 @@
 $c-commercial-books-dark: #630d4c;
 
 .commercial--books {
-    @include rem((
-        padding: $comercial-comp-baseline 0
-    ));
+    padding: $comercial-comp-baseline 0;
     .commercial__branding,
     .commercial__head {
         overflow: hidden;
@@ -22,23 +20,17 @@ $c-commercial-books-dark: #630d4c;
     }
     .commercial__logo {
         margin: 0;
-        @include rem((
-            height: 24px
-        ));
+        height: 24px;
 
         .i:nth-child(2) {
-            @include rem((
-                margin-left: -4px
-            ));
+            margin-left: -4px;
         }
     }
     .commercial__title {
         margin: 0;
     }
     .i-bookshop-logo--bookshop {
-        @include rem((
-            margin-left: -5px
-        ));
+        margin-left: -5px;
     }
     .commercial__explainer {
         clear: both;
@@ -55,21 +47,15 @@ $c-commercial-books-dark: #630d4c;
     }
     .commercial__body {
         padding: 0;
-        @include rem((
-            margin-top: $gs-baseline
-        ));
+        margin-top: $gs-baseline;
     }
     .lineitem,
     .highitem {
         @include box-sizing(border-box);
-        @include rem((
-            padding: 0 0 $comercial-comp-baseline
-        ));
+        padding: 0 0 $comercial-comp-baseline;
     }
     .lineitem {
-        @include rem((
-            padding: $comercial-comp-baseline 0
-        ));        
+        padding: $comercial-comp-baseline 0;        
     }
     .lineitem:first-child {
         padding-top: 0;
@@ -79,14 +65,10 @@ $c-commercial-books-dark: #630d4c;
         @include fs-textSans(1);
     }
     .highitem .commercial--books__buy-now-button {
-        @include rem((
-            margin-right: -($gs-gutter/2)
-        ));
+        margin-right: -($gs-gutter/2);
     }
     .commercial--books__price {
-        @include rem((
-            margin-top: $gs-baseline/2
-        ));
+        margin-top: $gs-baseline/2;
         margin-bottom: 0;
     }
     .commercial--books__price__rrp,
@@ -107,10 +89,8 @@ $c-commercial-books-dark: #630d4c;
         float: right;
         @include f-header;
         @include font-size(12, 20);
-        @include rem((
-            padding: 0 $gs-gutter/2,
-            min-width: gs-span(1)
-        ));
+        padding: 0 $gs-gutter/2;
+        min-width: gs-span(1);
     }
 
     .commercial__foot {
@@ -125,16 +105,12 @@ $c-commercial-books-dark: #630d4c;
             position: relative;
             float: none;
             width: 100%;
-            @include rem((
-                margin-top: $gs-baseline*4
-            ));
+            margin-top: $gs-baseline*4;
         }        
         .lineitem {
             position: relative;
             width: percentage(1/3);
-            @include rem((
-                padding: 0 $gs-gutter/2
-            ));
+            padding: 0 $gs-gutter/2;
 
             &:nth-child(n+4) {
                 display: none;
@@ -145,18 +121,14 @@ $c-commercial-books-dark: #630d4c;
         }
         .commercial--books__price {
             text-align: left;
-            @include rem((
-                margin-top: $gs-baseline/2
-            ));
+            margin-top: $gs-baseline/2;
         }
         .commercial--books__price__label {
             display: inline;
         }
         .commercial--books__buy-now-button {
             float: none;
-            @include rem((
-                margin-top: $comercial-comp-baseline
-            ));
+            margin-top: $comercial-comp-baseline;
         }
     }
     @include mq(desktop) {
@@ -173,9 +145,7 @@ $c-commercial-books-dark: #630d4c;
     }
     @include mq(wide) {
         .commercial__head {
-            @include rem((
-                width: gs-span(4)
-            ));
+            width: gs-span(4);
         }
     }
     &.commercial--low {
@@ -188,9 +158,7 @@ $c-commercial-books-dark: #630d4c;
         
         @include mq(tablet) {
             .commercial__body {
-                @include rem((
-                    padding-left: $gs-gutter/2
-                ));
+                padding-left: $gs-gutter/2;
             }
             .commercial__home-link {
                 position: absolute;
@@ -200,9 +168,7 @@ $c-commercial-books-dark: #630d4c;
             }
             .commercial__head {
                 float: left;
-                @include rem((
-                    width: gs-span(3)
-                ));
+                width: gs-span(3);
             }
             .commercial__foot {
                 display: none;
@@ -217,16 +183,12 @@ $c-commercial-books-dark: #630d4c;
         }
         .commercial__relevance-low {
             .lineitem__img {
-                @include rem((
-                    width: 66px
-                ));
+                width: 66px;
             }
         }
         @include mq(tablet) {
             .lowitem__details {
-                @include rem((
-                    margin-left: 76px
-                ));
+                margin-left: 76px;
             }
         }
     }
@@ -234,9 +196,7 @@ $c-commercial-books-dark: #630d4c;
 
 /* fronts */
 .facia-container--layout-front .commercial--books {
-    @include rem((
-        padding: $gs-gutter/2
-    ));
+    padding: $gs-gutter/2;
     @include mq(leftCol) {
         .commercial__head {
             float: left;
@@ -244,49 +204,37 @@ $c-commercial-books-dark: #630d4c;
     }
     @include mq(faciaLeftCol) {
         .commercial__head {
-            @include rem((
-                width: gs-span(2)
-            ));
+            width: gs-span(2);
         }
     }
     @include mq(faciaLeftCol, wide) {
         .commercial__title {
             line-height: 1;
-            @include rem((
-                margin-bottom: $comercial-comp-baseline
-            ));
+            margin-bottom: $comercial-comp-baseline;
         }
         .i-bookshop-logo--bookshop {
             margin-left: 0;
         }
         .commercial__search {
-            @include rem((
-                margin-top: 40px
-            ));
+            margin-top: 40px;
         }
     }
     @include mq(wide) {
         .commercial__head {
-            @include rem((
-                width: gs-span(2) + $gs-gutter
-            ));
+            width: gs-span(2) + $gs-gutter;
             margin-right: 0;
         }
         &.commercial--high {
             .has-page-skin & {
                 .container__title {
-                    @include rem((
-                        margin-bottom: $gs-baseline
-                    ));
+                    margin-bottom: $gs-baseline;
                 }
                 .commercial__home-link {
                     width: auto;
                     right: 0;
                     left: auto;
                     bottom: auto;
-                    @include rem((
-                        top: $gs-baseline
-                    ));
+                    top: $gs-baseline;
                 }
             }
         }
@@ -299,9 +247,7 @@ $c-commercial-books-dark: #630d4c;
         .commercial__head {
             float: left;
             width: 25%;
-            @include rem((
-                padding-right: $gs-gutter/2
-            ));
+            padding-right: $gs-gutter/2;
         }
         .commercial__body {
             padding-left: 0;
@@ -309,9 +255,7 @@ $c-commercial-books-dark: #630d4c;
     }
     @include mq(rightCol, leftCol) {
         &.commercial--high .commercial__head {
-            @include rem((
-                padding-right: 16px
-            ));
+            padding-right: 16px;
         }
     }
     @include mq(leftCol) {
@@ -325,18 +269,14 @@ $c-commercial-books-dark: #630d4c;
     @include mq(leftCol, $to: wide) {
         .commercial__title {
             line-height: 1;
-            @include rem((
-                margin-bottom: $comercial-comp-baseline
-            ));
+            margin-bottom: $comercial-comp-baseline;
         }
         .i-bookshop-logo--bookshop {
             margin-left: 0;
         }
         .commercial__search {
             background: #ff0000;
-            @include rem((
-                margin-top: 40px
-            ));
+            margin-top: 40px;
         }
     }    
 }

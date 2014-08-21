@@ -2,11 +2,9 @@
     content: '';
     @include icon($type);
     @include background-size(auto 100%);
-    @include rem((
-        margin-right: $gs-gutter/10,
-        height: .75em !important,
-        width: 1.2em !important
-    ));
+    margin-right: $gs-gutter/10;
+    height: .75em !important;
+    width: 1.2em !important;
 }
 
 .container--multimedia {
@@ -51,9 +49,7 @@
         border-left-color: lighten($c-neutral1, 16%);
     }
     .collection__show-more {
-        @include rem((
-            top: -$gs-baseline
-        ));
+        top: -$gs-baseline;
     }
     .facia-slice-wrapper--position-1 .facia-slice__item:first-child {
         .item__title {
@@ -68,9 +64,7 @@
             }
         }
         .facia-slice-wrapper--position-2 .item__title {
-            @include rem((
-                margin-bottom: ($gs-baseline/3)*2
-            ));
+            margin-bottom: ($gs-baseline/3)*2;
         }
     }
     @include mq(tablet) {
@@ -89,9 +83,7 @@
         .facia-slice-wrapper--position-1 {
             .facia-slice__item:first-child {
                 .item__title {
-                    @include rem((
-                        min-height: $gs-baseline*4
-                    ));
+                    min-height: $gs-baseline*4;
                     @include fs-headline(4, true);
                 }
             }
@@ -108,9 +100,7 @@
     }
     @include mq(faciaLeftCol) {
         .facia-slice-wrapper--position-1 {
-            @include rem((
-                padding-top: $gs-baseline/2
-            ));
+            padding-top: $gs-baseline/2;
         }
     }
     .container__banding {
@@ -125,19 +115,19 @@
             }
 
             .facia-container__inner {
-                @include rem((
-                    padding-top: $gs-baseline
-                ));
+                padding-top: $gs-baseline;
             }
         }
     }
     .facia-container--layout-content & {
         .facia-container__inner {
-            @include rem((
-                margin-bottom: $gs-baseline*2
-            ));
+            margin-bottom: $gs-baseline*2;
         }
     }
+}
+
+.container--multimedia .item__video-container {
+    margin-top: 0;
 }
 
 .item--video {
@@ -159,9 +149,7 @@
 
     &.supporting__item {
         .linkslist__action:before {
-            @include rem((
-                margin-top: -1 * $gs-baseline
-            ));
+            margin-top: -1 * $gs-baseline;
         }
     }
 }

@@ -8,10 +8,8 @@
 
     // Generic
     &.facia-snap-embed {
-        @include rem((
-            height: $slice-innerHeight,
-            margin: 0 $gs-gutter/2
-        ));
+        height: $slice-innerHeight;
+        margin: 0 $gs-gutter/2;
         position: relative;
         background: #ffffff;
     }
@@ -36,22 +34,16 @@
 
     .table__caption--top {
         $title-padding: $gs-baseline*(2/3);
-        @include rem((
-            padding: 0
-        ));
+        padding: 0;
 
         .football-matches__heading {
             display: block;
-            @include rem((
-                padding: $title-padding
-            ));
+            padding: $title-padding;
         }
 
         .football-matches__date {
-            @include rem((
-                margin: 0,
-                padding: $title-padding,
-            ));
+            margin: 0;
+            padding: $title-padding;
             border-top: 1px solid darken($c-neutral8, 4%);
         }
     }
@@ -66,14 +58,10 @@
         z-index: 2;
         position: absolute;
         margin: 0;
-        @include rem((
-            padding: 10px 0
-        ));
+        padding: 10px 0;
 
         .full-table-link {
-            @include rem((
-                margin-left: $gs-gutter/2
-            ));
+            margin-left: $gs-gutter/2;
             display: inline-block;
         }
 
@@ -106,10 +94,8 @@
     // Big match special
     // =============================================================================
     .match-summary {
-        @include rem((
-            padding-left: $gs-gutter/2,
-            padding-right: $gs-gutter/2
-        ));
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
         background: $c-neutral8;
         height: 100%;
         &:hover,
@@ -125,9 +111,7 @@
     }
 
     .status__time {
-        @include rem((
-            top: $gs-baseline/2
-        ));
+        top: $gs-baseline/2;
     }
 
     .team__scorers {
@@ -161,9 +145,7 @@
     &.facia-snap-point--medium {
         @include match-summary--responsive;
         .team__crest {
-            @include rem((
-                line-height: $gs-gutter*2
-            ));
+            line-height: $gs-gutter*2;
         }
     }
 
@@ -204,19 +186,13 @@
         }
 
         .football-match__status {
-            @include rem((
-                padding-right: $gs-gutter/5
-            ));
+            padding-right: $gs-gutter/5;
         }
         .football-match__team--home {
-            @include rem((
-                padding-right: $gs-gutter*.5
-            ));
+            padding-right: $gs-gutter*.5;
         }
         .football-match__team--away {
-            @include rem((
-                padding-left: $gs-gutter*.5
-            ));
+            padding-left: $gs-gutter*.5;
         }
 
         .football-match--live,
@@ -251,7 +227,5 @@
 }
 
 .after-article .football-extras {
-    @include rem((
-        margin-top: $gs-baseline*2
-    ));
+    margin-top: $gs-baseline*2;
 }

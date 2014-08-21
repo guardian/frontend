@@ -11,9 +11,7 @@ $player-card-avatar: (
  * https://github.com/guardian/frontend/tree/master/admin/app/views/football/player/cards
  **/
 .player-card {
-    @include rem((
-        padding: $gs-baseline $gs-gutter/2
-    ));
+    padding: $gs-baseline $gs-gutter/2;
     background: $c-neutral8;
     border-top: 1px solid $c-sportMid;
     color: $c-neutral1;
@@ -24,33 +22,25 @@ $player-card-avatar: (
 }
 .player-card__image {
     @include border-radius(50%);
-    @include rem((
-        height: map-get($player-card-avatar, default),
-        width: map-get($player-card-avatar, default)
-    ));
+    height: map-get($player-card-avatar, default);
+    width: map-get($player-card-avatar, default);
     float: right;
 
     @include mq(mobileLandscape) {
-        @include rem((
-            height: map-get($player-card-avatar, mobileLandscape),
-            width: map-get($player-card-avatar, mobileLandscape)
-        ));
+        height: map-get($player-card-avatar, mobileLandscape);
+        width: map-get($player-card-avatar, mobileLandscape);
     }
 }
 
 .player-card__player {
-    @include rem((
-        margin-bottom: $gs-baseline,
-        min-height: map-get($player-card-avatar, default),
-        padding-right: map-get($player-card-avatar, default)
-    ));
+    margin-bottom: $gs-baseline;
+    min-height: map-get($player-card-avatar, default);
+    padding-right: map-get($player-card-avatar, default);
 
     @include mq(mobileLandscape) {
-        @include rem((
-            margin-bottom: $gs-baseline*2,
-            min-height: map-get($player-card-avatar, mobileLandscape),
-            padding-right: map-get($player-card-avatar, mobileLandscape)
-        ));
+        margin-bottom: $gs-baseline*2;
+        min-height: map-get($player-card-avatar, mobileLandscape);
+        padding-right: map-get($player-card-avatar, mobileLandscape);
     }
 }
 .player-card__name {
@@ -68,10 +58,8 @@ $player-card-avatar: (
 }
 .player-card__stat-name,
 .player-card__stat-value {
-    @include rem((
-        margin: 0,
-        padding: $gs-baseline/3 0 ($gs-baseline/3)*2
-    ));
+    margin: 0;
+    padding: $gs-baseline/3 0 ($gs-baseline/3)*2;
 }
 .player-card__stat-name {
     @include fs-data(4);

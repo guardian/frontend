@@ -18,28 +18,22 @@
 }
 
 @mixin team-result--thin {
-    @include rem((
-        margin-left: ($gs-gutter/10)*2,
-        height: 14px,
-        top: 2px,
-        width: 2px
-    ));
+    margin-left: ($gs-gutter/10)*2;
+    height: 14px;
+    top: 2px;
+    width: 2px;
     @include border-radius(0);
 }
 
 @mixin team-result--shrink {
     @include border-radius(8px);
-    @include rem((
-        height: 4px,
-        margin-left: ($gs-gutter/4)+3,
-        width: 4px
-    ));
+    height: 4px;
+    margin-left: ($gs-gutter/4)+3;
+    width: 4px;
 }
 
 .team__results {
-    @include rem((
-        min-width: $gs-gutter*1.5
-    ));
+    min-width: $gs-gutter*1.5;
     font-size: 0;
 }
 
@@ -64,11 +58,9 @@
     top: 0;
     vertical-align: middle;
     @include border-radius(4px);
-    @include rem((
-        height: 8px,
-        margin-left: ($gs-gutter/4)+3,
-        width: 8px
-    ));
+    height: 8px;
+    margin-left: ($gs-gutter/4)+3;
+    width: 8px;
     cursor: help;
 
     &:first-child {
