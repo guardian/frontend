@@ -594,7 +594,7 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
 
 object FigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    document.getElementsByTag("figcaption").foreach{ _.addClass("img-caption")}
+    document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
     document
   }
 }

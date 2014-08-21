@@ -139,9 +139,7 @@
 /* Captions
    ========================================================================== */
 
-.caption,
-figcaption,
-.main-caption {
+.caption {
     @include fs-data(1);
     color: $c-neutral2;
 
@@ -150,7 +148,7 @@ figcaption,
     }
 }
 
-.main-caption {
+.caption--main {
     padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-row-height;
 
     @include mq(mobileLandscape) {
