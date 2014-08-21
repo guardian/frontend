@@ -48,8 +48,7 @@ define([
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/faux-block-link',
-    'common/modules/discussion/loader',
-    'common/utils/preferences'
+    'common/modules/discussion/loader'
 ], function (
     $,
     mediator,
@@ -97,8 +96,7 @@ define([
     MoreTags,
     smartAppBanner,
     fauxBlockLink,
-    DiscussionLoader,
-    preferences
+    DiscussionLoader
 ) {
 
     var modules = {
@@ -257,8 +255,7 @@ define([
             if (
                 config.switches.releaseMessage &&
                 config.page.hasClassicVersion &&
-                (detect.getBreakpoint() !== 'mobile') &&
-                !preferences.hasOptedIntoResponsive()
+                (detect.getBreakpoint() !== 'mobile')
             ) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
