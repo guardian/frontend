@@ -45,6 +45,8 @@ define([
             this.frontPublicationDate = opts.frontPublicationDate;
             this.frontPublicationTime = ko.observable();
 
+            this.mainMediaType = ko.observable();
+
             this.props = asObservableProps([
                 'webUrl',
                 'webPublicationDate']);
@@ -201,6 +203,7 @@ define([
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
+            opts["mainMediaType"] && this.mainMediaType(opts["mainMediaType"]);
 
             if (validate || opts.webUrl) {
                  missingProps = [
