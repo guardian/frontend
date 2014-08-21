@@ -2,9 +2,7 @@
 
     .most-viewed-no-js i {
         @include rotate(-90deg);
-        @include rem((
-            margin-top: 10px
-        ));
+        margin-top: 10px;
     }
     #most-popular-head {
         display: none;

@@ -2,15 +2,11 @@
     @include mq(leftCol) {
         float: left;
         border-top: 0 !important;
-        @include rem((
-            margin-left: -1 * (gs-span(2) + $gs-gutter),
-            margin-top: $gs-baseline/-4
-        ));
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+        margin-top: $gs-baseline/-4;
     }
     @include mq(wide) {
-        @include rem((
-            margin-left: -1 * (gs-span(3) + $gs-gutter)
-        ));
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
     }
 }
 
