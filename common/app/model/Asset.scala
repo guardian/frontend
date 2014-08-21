@@ -3,6 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.Asset
 import org.apache.commons.math3.fraction.Fraction
 import views.support.{Naked, ImgSrc}
+import scala.util.matching.Regex
 
 case class ImageAsset(private val delegate: Asset, index: Int) {
 
@@ -30,6 +31,11 @@ case class ImageAsset(private val delegate: Asset, index: Int) {
 
   lazy val caption: Option[String] = fields.get("caption")
   lazy val altText: Option[String] = fields.get("altText")
+
+  lazy val cleanedCaption: String = {
+    val r = new Regex("Photograph: .*$")
+    r.replaceAllIn(caption.getOrElse(""), "")
+  }
 
   lazy val source: Option[String] = fields.get("source")
   lazy val photographer: Option[String] = fields.get("photographer")

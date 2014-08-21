@@ -26,7 +26,7 @@
                             </a>
 
                             <div class="gallery2__figcaption">
-                                <p class="gallery2__caption">@Html(image.caption.getOrElse(""))</p>
+                                <p class="gallery2__caption">@Html(image.cleanedCaption)</p>
                                 <p class="gallery2__credit">@image.credit</p>
                             </div>
                         </figure>

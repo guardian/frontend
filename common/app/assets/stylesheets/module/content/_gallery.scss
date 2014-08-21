@@ -3,6 +3,13 @@
 /* ==========================================================================
    Non-JS Gallery Styles
    ========================================================================== */
+@include mq($to: mobileLandscape) {
+    .content--gallery {
+        .content__section {
+            display: none;
+        }
+    }
+}
 
 .gallery2 {
 
@@ -14,11 +21,12 @@
     margin-bottom: $gs-baseline;
 
     @include mq($to: rightCol) {
-        border-bottom: 1px dotted guss-colour(neutral-2);
+        border-bottom: 1px dotted guss-colour(tone-media-2);
     }
 
     @include mq(rightCol) {
         padding-right: gs-span(3) + $gs-gutter;
+        margin-bottom: $gs-baseline*2;
     }
 }
 
@@ -27,7 +35,13 @@
     @include rem((
         padding-top: $gs-baseline/2
     ));
+
+    @include mq($to: rightCol) {
+        margin-bottom: $gs-baseline*3;
+    }
+
     @include mq(rightCol) {
+        @include fs-textSans(2, true);
         position: absolute;
         width: gs-span(3);
         right: 0;
@@ -38,6 +52,8 @@
 
 .gallery2__caption {
     color: guss-colour(neutral-7);
+    margin-bottom: 0;
+
     a {
         color: guss-colour(neutral-7);
         border-bottom: 1px solid guss-colour(neutral-2);
@@ -55,11 +71,15 @@
 .gallery2__img-container {
     position: relative;
     display: block;
+    background-color: lighten(guss-colour(tone-media-1), 2.5%);
 }
 
 .gallery2__img {
     cursor: pointer;
-    width: 100%;
+    width: auto;
+    margin: auto;
+    max-height: 800px;
+    max-width: 100%;
 }
 
 .gallery2__fullscreen {
@@ -69,8 +89,7 @@
     top: 0;
     right: 0;
     @include icon-button(44px, -11px);
-    background-color: guss-colour(tone-media-1);
-    opacity: 0.6;
+    background-color: rgba(51,51,51,0.6);
     position: absolute;
     margin: $gs-gutter/2;
 
@@ -81,7 +100,6 @@
     @include mq(desktop) {
         .gallery2__img-container:hover & {
             background-color: $c-mediaDefault;
-            opacity: 1.0;
             .i-expand-black {
                 display: inline-block;
             }
@@ -164,9 +182,7 @@
         }
     }
     .content__standfirst {
-        @include fs-bodyCopy(1, true);
         @include mq(mobileLandscape) {
-            @include fs-bodyCopy(2, true);
         }
         @include mq(rightCol) {
             padding-right: gs-span(3);
