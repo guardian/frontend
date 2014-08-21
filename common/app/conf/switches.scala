@@ -235,7 +235,7 @@ object Switches extends Collections {
 
   val ReleaseMessageSwitch = Switch("Feature Switches", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 31)
+    safeState = On, sellByDate = new LocalDate(2014, 8, 31)
   )
 
   val GeoMostPopular = Switch("Feature Switches", "geo-most-popular",
