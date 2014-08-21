@@ -335,8 +335,8 @@ $avatarSize: 44px;
         padding-right: 0;
     }
 
-    .i-in-reply-arrow {
-        margin-bottom: -1px;
+    .i-reply-grey {
+        margin-bottom: -4px;
         display: none; // shown in d-comment--response
     }
 }
@@ -823,7 +823,7 @@ $avatarSize: 44px;
     .d-comment__avatar-wrapper {
         display: none;
     }
-    .i-in-reply-arrow {
+    .i-reply-grey {
         display: inline-block;
     }
     .d-comment__author,
