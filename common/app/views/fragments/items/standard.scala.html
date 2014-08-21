@@ -1,4 +1,7 @@
-@(trail: Trail, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None)(implicit request: RequestHeader, config: Config)
+@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None)(implicit request: RequestHeader, config: Config)
+
+@import common.LinkTo
+@import views.support.{GetClasses, RemoveOuterParaHtml, SnapData}
 
 @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
     <@element
