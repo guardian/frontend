@@ -1,7 +1,7 @@
 package com.gu.identity.integration.test.steps
 
 import com.gu.automation.support.TestLogging
-import com.gu.identity.integration.test.pages.{ContainerWithSigninModulePage, EditAccountDetailsModule, EditProfilePage, PasswordResetConfirmationPage}
+import com.gu.identity.integration.test.pages.{ContainerWithSigninModulePage, EditAccountDetailsModule, EditProfilePage}
 import com.gu.identity.integration.test.util.User._
 import com.gu.identity.integration.test.util.{FormError, User}
 import com.gu.integration.test.steps.BaseSteps
@@ -89,7 +89,7 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
   }
 
   def changePassword(pageWithSignInModule: ContainerWithSigninModulePage, userBeforeChange: User):
-  (String, ContainerWithSigninModulePage) = {
+      NewPasswordAndContainerWithSigninModule = {
     logger.step("Changing user password")
     val profileNavMenu = pageWithSignInModule.signInModule().clickSignInLinkWhenLoggedIn()
     val changePwdPage = profileNavMenu.clickChangePassword()
@@ -108,6 +108,11 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     waitForPageToBeLoaded
 
     BaseSteps().goToStartPage(useBetaRedirect = false)
-    (newPwd, new ContainerWithSigninModulePage())
+    NewPasswordAndContainerWithSigninModule(newPwd, new ContainerWithSigninModulePage())
   }
 }
+
+/**
+ * Weird class but no choice to create one because Tuples are apparently forbidden to use in test code
+ */
+case class NewPasswordAndContainerWithSigninModule(newPwd: String, containerWithSignInpage: ContainerWithSigninModulePage)

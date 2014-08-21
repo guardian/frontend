@@ -56,8 +56,8 @@ class UserTests extends IdentitySeleniumTestSuite with EitherValues {
       val containerWithSignInModulePage = SignInSteps().checkUserIsLoggedIn(userBeforeChange)
 
       val newPasswordAndStartPage = UserSteps().changePassword(containerWithSignInModulePage, userBeforeChange)
-      val startPage = newPasswordAndStartPage._2
-      val newPassword = newPasswordAndStartPage._1
+      val startPage = newPasswordAndStartPage.containerWithSignInpage
+      val newPassword = newPasswordAndStartPage.newPwd
 
       SignInSteps().signOut(startPage)
       SignInSteps().checkUserIsNotLoggedIn(userBeforeChange.userName)
