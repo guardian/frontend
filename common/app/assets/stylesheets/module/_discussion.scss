@@ -526,7 +526,7 @@ $avatarSize: 44px;
     }
 }
 .d-comment__recommend-button {
-    @include icon-button(18px, -6px);
+    @include icon-button(18px, -9px);
     background-color: $c-neutral4;
     @include rem((
         margin-right: 2px,
@@ -670,7 +670,7 @@ $avatarSize: 44px;
     }
 }
 .d-comment__reply-button {
-    @include icon-button(18px, -5px, -6px);
+    @include icon-button(18px, -9px);
     position: absolute; // override relative position of icon-button
     background-color: $c-newsDefault;
 }
@@ -904,7 +904,7 @@ $avatarSize: 44px;
         ));
     }
 }
-.d-show-more-replies {
+.d-show-more-replies { // PRL, 21/0814: Is this now deprecated?
     background-color: transparent;
     border-top: 1px dotted $c-neutral5;
     color: $c-newsDefault;
@@ -920,7 +920,7 @@ $avatarSize: 44px;
     }
 
     span {
-        @include icon-button(18px, -7px);
+        @include icon-button(18px, -9px);
         background-color: $c-newsDefault;
         @include rem((
             margin-bottom: $gs-baseline/3 * -1,
