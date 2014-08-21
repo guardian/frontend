@@ -126,6 +126,10 @@
     }
 }
 
+.container--multimedia .item__video-container {
+    margin-top: 0;
+}
+
 .item--video {
     .item__title:before {
         @include video-icon(video-icon-black);
