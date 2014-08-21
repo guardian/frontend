@@ -114,7 +114,7 @@ define([
                 } else {
                     url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';
                     url += self.showingDrafts() ?
-                        '&content-set=preview&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
+                        '&content-set=-web-live&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
                         '&content-set=web-live&order-by=newest';
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
