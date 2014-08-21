@@ -13,6 +13,8 @@ class SignInPage(implicit driver: WebDriver) extends ParentPage {
   private def googleSignInButton: WebElement = findByTestAttribute("google-sign-in")
   private def registerLink: WebElement = findByTestAttribute("register-link")
 
+  private def faceBookEmailElement: WebElement = driver.findElement(By.name("email"))
+
   def enterEmail(email: String) = {
     emailInputField.sendKeys(email)
     this
@@ -27,7 +29,7 @@ class SignInPage(implicit driver: WebDriver) extends ParentPage {
     faceBookSignInButton.click()
 
     //this is needed because sometimes the above click does not wait for the facebook page to be loaded
-    waitUntil(visibilityOf(driver.findElement(By.name("email"))), 10)
+    waitUntil(visibilityOf(faceBookEmailElement), 10)
 
     new FaceBookSignInPage()
   }

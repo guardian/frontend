@@ -10,7 +10,8 @@ import org.openqa.selenium.{By, WebDriver, WebElement}
  * Do not confuse this with the sign in page. This is only the module which sits at the top of most frontend pages
  */
 class ProfileNavMenu(implicit driver: WebDriver) extends ParentPage {
-  val menuList: WebElement = findByTestAttribute("nav-popup-profile")
+  private val menuList: WebElement = findByTestAttribute("nav-popup-profile")
+  private def menuElement(dataLinkName: String): By = By.cssSelector(s"a[data-link-name='$dataLinkName']")
 
   def clickEditProfile(): EditProfilePage = {
     clickMenuElement("Edit profile")
@@ -31,7 +32,8 @@ class ProfileNavMenu(implicit driver: WebDriver) extends ParentPage {
 
   def clickMenuElement(dataLinkName: String) = {
     waitUntil(visibilityOf(menuList))
-    val menuElement = menuList.findElement(By.cssSelector(s"a[data-link-name='$dataLinkName']"))
+    val menuElement = menuList.findElement(menuElement(dataLinkName))
     menuElement.click()
   }
+
 }
