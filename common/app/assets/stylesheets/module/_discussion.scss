@@ -1208,28 +1208,6 @@ $avatarSize: 44px;
     width: 1px;
 }
 
-/* CTAs
-   ========================================================================== */
-
-.d-actions__link,
-.d-actions__link:hover,
-.d-actions__link:focus {
-    display: block;
-    @include rem((
-        padding-right: $gs-gutter,
-        margin: ($gs-baseline/3)*4 0
-    ));
-    @include fs-textSans(1);
-    color: #808080;
-}
-.d-actions__link:after {
-    @extend %i-filter-arrow-right;
-    content: ' ';
-    display: inline-block;
-    @include rem((
-        margin: 0 0 -3px 20px
-    ));
-}
 
 /* Comment Box
    ========================================================================== */
