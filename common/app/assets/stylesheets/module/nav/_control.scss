@@ -11,12 +11,10 @@ $control-size: 36px;
 
 .control__info {
     display: none;
-    @include rem((
-        height: 30px,
-        line-height: $control-size,
-        margin-left: $gs-gutter/2,
-        max-width: 140px
-    ));
+    height: 30px;
+    line-height: $control-size;
+    margin-left: $gs-gutter/2;
+    max-width: 140px;
     vertical-align: top;
     white-space: nowrap;
     overflow: hidden;
@@ -25,9 +23,7 @@ $control-size: 36px;
     text-align: left;
 
     @include mq($from: 540px) {
-        @include rem((
-            max-width: 200px
-        ));
+        max-width: 200px;
     }
 
     @include mq(tablet) {
@@ -55,10 +51,8 @@ $control-size: 36px;
     @extend %icon-holder-circle;
     border: 1px solid rgba(#ffffff, .3);
     float: left;
-    @include rem((
-        height: 34px,
-        width: 34px
-    ));
+    height: 34px;
+    width: 34px;
 
     .brand-bar__item--right & {
         @include mq(tablet) {
@@ -70,10 +64,8 @@ $control-size: 36px;
 .control__icon {
     display: block;
     text-align: center;
-    @include rem((
-        height: 32px,
-        padding-top: 7px
-    ));
+    height: 32px;
+    padding-top: 7px;
 
     .i {
         display: none;

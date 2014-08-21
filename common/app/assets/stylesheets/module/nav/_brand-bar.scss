@@ -2,16 +2,12 @@
     background-color: guss-colour(guardian-brand);
     line-height: 0;
     @include box-sizing(border-box);
-    @include rem((
-        padding-left: $gs-gutter * .25,
-        padding-right: $gs-gutter * .25
-    ));
+    padding-left: $gs-gutter * .25;
+    padding-right: $gs-gutter * .25;
 
     @include mq(mobileLandscape) {
-        @include rem((
-            padding-left: $gs-gutter / 2,
-            padding-right: $gs-gutter / 2
-        ));
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
     }
 }
 
@@ -23,35 +19,40 @@
     @include fs-bodyHeading(1);
     float: left;
     color: $c-guardian-services-action;
-    @include rem((
-        height: $headerHeight,
-        padding-top: $gs-baseline /3,
-        padding-bottom: $gs-baseline /3,
-        margin-right: $gs-baseline * .25,
-        margin-left: $gs-baseline * .25
-    ));
+    height: $headerHeight;
+    padding-top: $gs-baseline /3;
+    padding-bottom: $gs-baseline /3;
+    margin-right: $gs-baseline * .25;
+    margin-left: $gs-baseline * .25;
 
     @include mq(mobileLandscape) {
-        @include rem((
-            padding-top: $gs-baseline/2,
-            padding-bottom: $gs-baseline/2
-        ));
+        padding-top: $gs-baseline/2;
+        padding-bottom: $gs-baseline/2;
     }
 
     @include mq(tablet) {
-        @include rem((
-            margin-right: $gs-gutter / 2,
-            margin-left: $gs-gutter / 2
-        ));
+        margin-right: $gs-gutter / 2;
+        margin-left: $gs-gutter / 2;
     }
 }
 
 .brand-bar__item--action {
-    &:hover .control__icon-wrapper,
-    &:active .control__icon-wrapper,
-    &:focus .control__icon-wrapper,
-    &.is-active .control__icon-wrapper {
-        border-color: #ffffff;
+    &:active,
+    &:focus,
+    &.is-active {
+        .control__icon-wrapper {
+            border-color: #ffffff;
+        }
+    }
+
+    &:hover {
+        // stops controls icons staying hightlighted
+        // after closing a popup on mobile
+        @include mq(tablet) {
+            .control__icon-wrapper {
+                border-color: #ffffff;
+            }
+        }
     }
 }
 
@@ -62,17 +63,27 @@
     color: $c-guardian-services-action;
     display: inline-block;
     text-decoration: none;
-    @include rem((
-        line-height: $headerHeight
-    ));
+    line-height: $headerHeight;
 }
 
-.brand-bar__item--action:hover,
-.brand-bar__item--action:focus,
-.brand-bar__item--action:active {
-    &,
-    .control__info {
-        text-decoration: underline;
+.brand-bar__item--action {
+    &:focus,
+    &:active {
+        &,
+        .control__info {
+            text-decoration: underline;
+        }
+    }
+
+    &:hover {
+        &,
+        .control__info {
+            // stops links staying underlined
+            // after closing a popup on mobile
+            @include mq(tablet) {
+                text-decoration: underline;
+            }
+        }
     }
 }
 

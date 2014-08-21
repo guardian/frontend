@@ -6,21 +6,19 @@ import com.gu.integration.test.steps.BaseSteps
 import com.gu.integration.test.util.UserConfig._
 import org.openqa.selenium.WebDriver
 
-class IdentityLoginTests extends IdentitySeleniumTestSuite {
+class LoginTests extends IdentitySeleniumTestSuite {
 
   feature("Login feature") {
     scenarioWeb("should be able to login using credentials") { implicit driver: WebDriver =>
       BaseSteps().goToStartPage(useBetaRedirect = false)
-      val signInPage = SignInSteps().clickSignInLink()
-      SignInSteps().signIn(signInPage)
+      SignInSteps().signIn()
       SignInSteps().checkUserIsLoggedIn(get("loginName"))
       SignInSteps().checkUserIsLoggedInSecurely()
     }
 
     scenarioWeb("should be able to login using existing Facebook account") { implicit driver: WebDriver =>
       BaseSteps().goToStartPage(useBetaRedirect = false)
-      val signInPage = SignInSteps().clickSignInLink()
-      SignInSteps().signInUsingFaceBook(signInPage)
+      SignInSteps().signInUsingFaceBook()
       SignInSteps().checkUserIsLoggedIn(get("faceBookLoginName"))
       SignInSteps().checkUserIsLoggedInSecurely()
       SignInSteps().checkLoggedInThroughSocialMedia()
@@ -28,8 +26,7 @@ class IdentityLoginTests extends IdentitySeleniumTestSuite {
 
     scenarioWeb("should be able to login using existing Google account") { implicit driver: WebDriver =>
       BaseSteps().goToStartPage(useBetaRedirect = false)
-      val signInPage = SignInSteps().clickSignInLink()
-      SignInSteps().signInUsingGoogle(signInPage)
+      SignInSteps().signInUsingGoogle()
       SignInSteps().checkUserIsLoggedIn(get("googleLoginName"))
       SignInSteps().checkUserIsLoggedInSecurely()
       SignInSteps().checkLoggedInThroughSocialMedia()

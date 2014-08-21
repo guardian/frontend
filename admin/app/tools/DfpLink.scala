@@ -8,6 +8,10 @@ object DfpLink {
   def lineItem(lineItemId: Long) = {
     s"https://www.google.com/dfp/$dfpAccountId#delivery/LineItemDetail/lineItemId=$lineItemId"
   }
+
+  def creativeTemplate(templateId: Long) = {
+    s"https://www.google.com/dfp/$dfpAccountId#delivery/CreateCreativeTemplate/creativeTemplateId=$templateId"
+  }
 }
 
 object SiteLink {

@@ -6,10 +6,8 @@
     }
 
     .stars {
-        @include rem((
-            margin-top: $gs-baseline * .25,
-            margin-bottom: $gs-baseline * 1.5
-        ));
+        margin-top: $gs-baseline * .25;
+        margin-bottom: $gs-baseline * 1.5;
     }
 
     @include mq($to: tablet) {
@@ -19,15 +17,11 @@
     }
 
     @include mq(tablet) {
-        @include rem((
-            margin-bottom: $gs-baseline*2 !important,
-        ));
+        margin-bottom: $gs-baseline*2 !important;
 
         .item__title {
             @include fs-headline(7, $size-only: true);
-            @include rem((
-                max-width: gs-span(11)
-            ));
+            max-width: gs-span(11);
         }
         .item__media-wrapper {
             overflow: hidden;
@@ -45,10 +39,8 @@
 .baguette__standfirst {
     @include fs-headline(2);
     color: $c-neutral2;
-    @include rem((
-        margin-top: $gs-baseline,
-        margin-bottom: $gs-baseline
-    ));
+    margin-top: $gs-baseline;
+    margin-bottom: $gs-baseline;
 
     p {
         margin-bottom: 0; // Some trail texts are wrapped in a paragraph

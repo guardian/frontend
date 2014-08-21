@@ -221,6 +221,11 @@ object Switches extends Collections {
     safeState = On, never
   )
 
+  val MetricsSwitch = Switch("Diagnostics", "enable-metrics-non-prod",
+    "If this switch is on, then metrics will be pushed to cloudwatch on DEV and CODE",
+    safeState = Off, never
+  )
+
   val ScrollDepthSwitch = Switch("Analytics", "scroll-depth",
     "Enables tracking and measurement of scroll depth",
     safeState = Off, never
@@ -483,7 +488,8 @@ object Switches extends Collections {
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
     ToneLabelsSwitch,
-    ChildrensBooksSwitch
+    ChildrensBooksSwitch,
+    MetricsSwitch
   )
 
   val httpSwitches: List[Switch] = List(

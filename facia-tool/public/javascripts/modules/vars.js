@@ -57,7 +57,7 @@ define([
 
         searchPageSize:        50,
 
-        capiBatchSize:         10,
+        capiBatchSize:         20,
 
         collectionsPollMs:     10000,
         latestArticlesPollMs:  30000,

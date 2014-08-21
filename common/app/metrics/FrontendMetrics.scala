@@ -94,8 +94,3 @@ object UsPressLatencyMetric extends DurationMetric("us-press-latency", StandardU
 object AuPressLatencyMetric extends DurationMetric("au-press-latency", StandardUnit.Milliseconds)
 
 object AllFrontsPressLatencyMetric extends DurationMetric("front-press-latency", StandardUnit.Milliseconds)
-
-object LatencyMetrics {
-  val all: List[DurationMetric] = List(UkPressLatencyMetric, UsPressLatencyMetric, AuPressLatencyMetric,
-    AllFrontsPressLatencyMetric)
-}

@@ -37,19 +37,15 @@ category: Common
 
 
 .social-wrapper {
-    @include rem((
-        padding-top: $gs-baseline,
-        max-width: gs-span(4)
-    ));
+    padding-top: $gs-baseline;
+    max-width: gs-span(4);
     overflow: hidden;
 }
 .social-wrapper--aside {
     display: none;
     padding-top: 0;
     border-top: 1px dotted $c-neutral4;
-    @include rem((
-        margin-bottom: ($gs-baseline/3)*4
-    ));
+    margin-bottom: ($gs-baseline/3)*4;
 
     @include mq(leftCol) {
         display: block;
@@ -57,29 +53,21 @@ category: Common
 }
 .social {
     overflow-y: hidden;
-    @include rem((
-        height: 32px,
-        margin-left: -$gs-gutter/5
-    ));
+    height: 32px;
+    margin-left: -$gs-gutter/5;
 }
 .social__head {
     @include fs-textSans(1);
     color: $c-neutral2;
-    @include rem((
-        padding: $gs-baseline/3 0 $gs-baseline 0
-    ));
+    padding: $gs-baseline/3 0 $gs-baseline;
 }
 .social__item {
     float: left;
-    @include rem((
-        width: 36px,
-        padding: 0 $gs-gutter/5
-    ));
+    width: 36px;
+    padding: 0 $gs-gutter/5;
 
     @include mq(leftCol, wide) {
-        @include rem((
-            width: 32px
-        ));
+        width: 32px;
         padding-right: 0;
     }
 }
@@ -122,10 +110,8 @@ $social-icon: (
 
     i {
         display: block;
-        @include rem((
-            margin-bottom: 2px,
-            margin-top: -1px,
-            margin-left: -1px
-        ));
+        margin-bottom: 2px;
+        margin-top: -1px;
+        margin-left: -1px;
     }
 }

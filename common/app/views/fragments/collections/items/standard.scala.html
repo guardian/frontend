@@ -1,4 +1,4 @@
-@(trail: model.Trail, index: Int, containerIndex: Int, additionalClasses: String = "", forceTone: Option[String] = None)(implicit request: RequestHeader, config: model.Config)
+@(trail: model.Trail, index: Int, containerIndex: Int, additionalClasses: String = "", forceTone: Option[String] = None, forcePlayable: Boolean = false)(implicit request: RequestHeader, config: model.Config)
 
 @import model.{Gallery, Video}
 @import views.support.GetClasses
@@ -6,7 +6,7 @@
 <li class="@GetClasses.forCollectionItem(trail, additionalClasses)">
     @trail match {
         case g: Gallery => { @fragments.items.standardGallery(g, index, containerIndex, "div", forceTone) }
-        case v: Video   => { @fragments.items.standardVideo(v, index, containerIndex, "div", forceTone) }
+        case v: Video   => { @fragments.items.standardVideo(v, index, containerIndex, "div", forceTone, forcePlayable) }
         case t          => { @fragments.items.standard(t, index, containerIndex, "div", forceTone) }
     }
 </li>

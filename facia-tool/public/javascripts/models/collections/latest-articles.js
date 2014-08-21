@@ -20,6 +20,11 @@ define([
     authedAjax,
     ko
 ) {
+    function dateYyyymmdd() {
+        var d = new Date();
+        return [d.getFullYear(), d.getMonth() + 1, d.getDate()].map(function(p) { return p < 10 ? '0' + p : p; }).join('-');
+    }
+
     return function(options) {
 
         var self = this,
@@ -103,17 +108,19 @@ define([
 
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
+                    propName = 'content';
                     self.term(urlAbsPath(self.term()));
                     url += self.term() + '?' + vars.CONST.apiSearchParams;
-                    propName = 'content';
                 } else {
-                    url += 'search?' + vars.CONST.apiSearchParams + '&order-by=newest';
-                    url += '&content-set=' + (self.showingDrafts() ? 'preview&use-date=last-modified' : 'web-live');
+                    propName = 'results';
+                    url += 'search?' + vars.CONST.apiSearchParams;
+                    url += self.showingDrafts() ?
+                        '&content-set=preview&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
+                        '&content-set=web-live&order-by=newest';
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
                     url += self.term() ? '&q=' + encodeURIComponent(self.term().trim().replace(/ +/g,' AND ')) : '';
-                    url += '&' + self.filterType().param + '=' + encodeURIComponent(self.filter());
-                    propName = 'results';
+                    url += self.filter() ? '&' + self.filterType().param + '=' + encodeURIComponent(self.filter()) : '';
                 }
 
                 authedAjax.request({
