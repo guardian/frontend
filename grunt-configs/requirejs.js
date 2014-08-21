@@ -65,7 +65,8 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/membership.js',
                 exclude: [
                     '../../../../common/app/assets/javascripts/core',
-                    '../../../../common/app/assets/javascripts/bootstraps/app'
+                    '../../../../common/app/assets/javascripts/bootstraps/app',
+                    '../../../../common/app/public/javascripts/vendor/stripe/stripe.min'
                 ]
             }
         },
