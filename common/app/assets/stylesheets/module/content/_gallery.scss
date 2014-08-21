@@ -70,18 +70,25 @@
     right: 0;
     @include icon-button(44px, -11px);
     background-color: guss-colour(tone-media-1);
+    opacity: 0.6;
     position: absolute;
     margin: $gs-gutter/2;
 
-    .gallery2__img-container:hover & {
-        background-color: $c-mediaDefault;
+    .i-expand-black {
+        display: none;
     }
-}
 
-.gallery2_expand-icon {
-    @include icon(expand-white);
-    .gallery2__img-container:hover & {
-        @include icon(expand-black);
+    @include mq(desktop) {
+        .gallery2__img-container:hover & {
+            background-color: $c-mediaDefault;
+            opacity: 1.0;
+            .i-expand-black {
+                display: inline-block;
+            }
+            .i-expand-white {
+                display: none;
+            }
+        }
     }
 }
 
