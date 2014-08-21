@@ -1,7 +1,7 @@
 @(trail: model.Trail, index: Int)(implicit request: RequestHeader, config: model.Config)
 
 @import common.LinkTo
-@import model.{FaciaDisplayElement, InlineImage, InlineVideo, VideoPlayer}
+@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
 @import views.html.fragments.media.video
 @import views.support.{GetClasses, RemoveOuterParaHtml, SnapData, Video640}
 
@@ -28,7 +28,7 @@
                     </div>
                 </div>
             }
-            case InlineImage => {
+            case _ => {
                 @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
             }
         }
