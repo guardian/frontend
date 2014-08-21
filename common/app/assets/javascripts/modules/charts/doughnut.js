@@ -15,7 +15,7 @@ define([
      * @param {string} type
      * @return {Bonzo}
      */
-    function svgEl(type, elClass) {
+    function svgEl(type) {
         return $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
     }
 
