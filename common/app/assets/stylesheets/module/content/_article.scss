@@ -190,21 +190,6 @@
     }
 }
 
-.article__popular {
-    clear: left;
-
-    .article__zone {
-        border-color: $c-newsAccent; // Acts as a default
-    }
-
-    i {
-        @include rotate(-90deg);
-        @include rem((
-            margin-top: 10px
-        ));
-    }
-}
-
 .article-elongator {
     position: relative;
 
