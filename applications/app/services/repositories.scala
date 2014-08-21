@@ -79,7 +79,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
             pageName,
             s"GFE:${tag1.section}:$pageName",
             pagination = pagination(response),
-            maybeContentType = Some(GuardianContentTypes.TAG_COMBINER)
+            maybeContentType = Some(GuardianContentTypes.TAG_INDEX)
           )
 
           Left(IndexPage(page, trails))
