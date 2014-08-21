@@ -592,6 +592,13 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
   }
 }
 
+object FigCaptionCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
+    document
+  }
+}
+
 // whitespace in the <span> below is significant
 // (results in spaces after author names before commas)
 // so don't add any, fool.

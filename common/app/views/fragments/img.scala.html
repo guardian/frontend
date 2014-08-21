@@ -47,6 +47,6 @@
 
 @caption(picture: model.ImageContainer) = {
     @SeoOptimisedContentImage.captionFor(picture).map { caption =>
-        <figcaption class="main-caption" itemprop="description">@Html(caption)</figcaption>
+        <figcaption class="caption caption--main caption--img" itemprop="description">@Html(caption)</figcaption>
     }
 }
