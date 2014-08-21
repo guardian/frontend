@@ -2,15 +2,19 @@ package dfp
 
 import common.Logging
 import model.Tag
-import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
+object Sponsorship {
+  implicit val jsonReads = Json.reads[Sponsorship]
+}
 
 case class Sponsorship(tags: Seq[String], sponsor: Option[String]) {
-
   def hasTag(tagId: String): Boolean = tags contains tagId.split('/').last
 }
 
+object InlineMerchandisingTagSet {
+  implicit val jsonReads = Json.reads[InlineMerchandisingTagSet]
+}
 
 case class InlineMerchandisingTagSet(keywords: Set[String] = Set.empty, series: Set[String] = Set.empty, contributors: Set[String] = Set.empty) {
 
@@ -26,6 +30,9 @@ case class InlineMerchandisingTagSet(keywords: Set[String] = Set.empty, series: 
   def nonEmpty: Boolean = keywords.nonEmpty || series.nonEmpty || contributors.nonEmpty
 }
 
+object SponsorshipReport {
+  implicit val jsonReads = Json.reads[SponsorshipReport]
+}
 
 case class SponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[Sponsorship])
 
@@ -33,17 +40,6 @@ case class SponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[Sponsor
 object SponsorshipReportParser extends Logging {
 
   def apply(jsonString: String) = {
-    implicit val sponsorshipReads: Reads[Sponsorship] = (
-      (JsPath \ "tags").read[Seq[String]] and
-        (JsPath \ "sponsor").read[Option[String]]
-      )(Sponsorship.apply _)
-
-    implicit val sponsorshipReportReads: Reads[SponsorshipReport] = (
-      (JsPath \ "updatedTimeStamp").read[String] and
-        (JsPath \ "sponsorships").read[Seq[Sponsorship]]
-      )(SponsorshipReport.apply _)
-
-
     val result: JsResult[SponsorshipReport] = Json.parse(jsonString).validate[SponsorshipReport]
     result match {
       case s: JsSuccess[SponsorshipReport] => Some(s.get)
@@ -52,23 +48,14 @@ object SponsorshipReportParser extends Logging {
   }
 }
 
+object InlineMerchandisingTargetedTagsReport {
+  implicit val jsonReads = Json.reads[InlineMerchandisingTargetedTagsReport]
+}
 
 case class InlineMerchandisingTargetedTagsReport(updatedTimeStamp: String, targetedTags: InlineMerchandisingTagSet)
 
 
 object InlineMerchandisingTargetedTagsReportParser extends Logging {
-
-  private implicit val inlineMerchandisingTagSetReads: Reads[InlineMerchandisingTagSet] = (
-    (JsPath \ "keywords").read[Set[String]] and
-      (JsPath \ "series").read[Set[String]] and
-      (JsPath \ "contributors").read[Set[String]]
-    )(InlineMerchandisingTagSet.apply _)
-
-  private implicit val inlineMerchandisingTargetedTagsReportReads: Reads[InlineMerchandisingTargetedTagsReport] = (
-    (JsPath \ "updatedTimeStamp").read[String] and
-      (JsPath \ "targetedTags").read[InlineMerchandisingTagSet]
-    )(InlineMerchandisingTargetedTagsReport.apply _)
-
   def apply(jsonString: String): Option[InlineMerchandisingTargetedTagsReport] = {
     val json = Json.parse(jsonString)
     json.validate[InlineMerchandisingTargetedTagsReport] match {

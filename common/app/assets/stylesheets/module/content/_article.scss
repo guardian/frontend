@@ -115,7 +115,7 @@
     .content__standfirst,
     .content__dateline,
     .social__head,
-    .main-caption,
+    .caption--main,
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2-contrasted;
@@ -162,7 +162,7 @@
 /* Layout changes across devices
    ========================================================================== */
 
-.main-caption {
+.caption--main {
     min-height: ($gs-baseline/3)*7;
     max-width: gs-span(7);
 
@@ -175,7 +175,7 @@
 }
 
 @include mq(tablet) {
-    .main-caption {
+    .caption--main {
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
