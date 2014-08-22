@@ -9,5 +9,5 @@ module.exports = function(grunt, options) {
                 credentials: options.propertiesFile
             }
         }
-    }
-}
+    };
+};

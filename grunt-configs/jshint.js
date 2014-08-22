@@ -34,5 +34,5 @@ module.exports = function(grunt, options) {
                 src: ['**/*.js']
             }]
         }
-    }
-}
+    };
+};

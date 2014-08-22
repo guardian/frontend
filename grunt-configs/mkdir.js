@@ -5,5 +5,5 @@ module.exports = function(grunt, options) {
                 create: [options.staticTargetDir + 'fonts']
             }
         }
-    }
-}
+    };
+};

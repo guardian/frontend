@@ -12,7 +12,7 @@ module.exports = function(grunt, options) {
             }],
             options: {
                 style: 'compressed',
-                sourcemap: options.isDev ? true : false,
+                sourcemap: true,
                 noCache: true,
                 quiet: options.isDev ? false : true
             }
@@ -34,5 +34,5 @@ module.exports = function(grunt, options) {
                 quiet: options.isDev ? false : true
             }
         }
-    }
-}
+    };
+};

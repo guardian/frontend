@@ -5,5 +5,5 @@ module.exports = function(grunt, options) {
                 config: 'hologram_config.yml'
             }
         }
-    }
-}
+    };
+};

@@ -16,5 +16,5 @@ module.exports = function(grunt, options) {
         applications: {
             url: 'http://www.theguardian.com/world/video/2014/jun/07/stephan-fry-surveillance-squalid-rancid-video?view=mobile'
         }
-    }
-}
+    };
+};

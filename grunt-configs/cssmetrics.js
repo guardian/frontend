@@ -8,5 +8,5 @@ module.exports = function(grunt, options) {
                 maxFileSize: 1048576 //1mb in bytes
             }
         }
-    }
-}
+    };
+};

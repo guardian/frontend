@@ -1,40 +1,46 @@
 module.exports = function(grunt, options) {
-    return{
+    return {
         'javascript': {
-            files: [{
-                expand: true,
-                cwd: 'common/app/public/javascripts/components',
-                src: ['**/*.js'],
-                dest: options.staticTargetDir + 'javascripts/components'
-            }, {
-                expand: true,
-                cwd: 'common/app/public/javascripts/vendor',
-                src: [
-                    'formstack-interactive/0.1/boot.js',
-                    'vast-client.js'
-                ],
-                dest: options.staticTargetDir + 'javascripts/vendor'
-            }, {
-                expand: true,
-                cwd: 'common/app/public/javascripts/vendor',
-                src: [
-                    'foresee*/**'
-                ],
-                dest: options.staticHashDir + 'javascripts/vendor'
-            }, {
-                expand: true,
-                cwd: options.requirejsDir,
-                src: [
-                    'core.js',
-                    'core.js.map',
-                    'bootstraps/app.js',
-                    'bootstraps/app.js.map',
-                    'bootstraps/commercial.js',
-                    'bootstraps/commercial.js.map',
-                    'components/curl/curl-domReady.js'
-                ],
-                dest: options.staticTargetDir + 'javascripts'
-            }]
+            files: [
+                {
+                    expand: true,
+                    cwd: 'common/app/public/javascripts/components',
+                    src: ['**/*.js'],
+                    dest: options.staticTargetDir + 'javascripts/components'
+                },
+                {
+                    expand: true,
+                    cwd: 'common/app/public/javascripts/vendor',
+                    src: [
+                        'formstack-interactive/0.1/boot.js',
+                        'vast-client.js',
+                        'stripe/stripe.min.js'
+                    ],
+                    dest: options.staticTargetDir + 'javascripts/vendor'
+                },
+                {
+                    expand: true,
+                    cwd: 'common/app/public/javascripts/vendor',
+                    src: [
+                        'foresee*/**'
+                    ],
+                    dest: options.staticHashDir + 'javascripts/vendor'
+                },
+                {
+                    expand: true,
+                    cwd: options.requirejsDir,
+                    src: [
+                        'core.js',
+                        'core.js.map',
+                        'bootstraps/app.js',
+                        'bootstraps/app.js.map',
+                        'bootstraps/commercial.js',
+                        'bootstraps/commercial.js.map',
+                        'components/curl/curl-domReady.js'
+                    ],
+                    dest: options.staticTargetDir + 'javascripts'
+                }
+            ]
         },
         css: {
             files: [{
@@ -98,5 +104,5 @@ module.exports = function(grunt, options) {
                 dest: '.git/hooks/'
             }]
         }
-    }
-}
+    };
+};

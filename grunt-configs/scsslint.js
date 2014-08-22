@@ -8,5 +8,5 @@ module.exports = function(grunt, options) {
             config: '.scss-lint.yml',
             reporterOutput: null
         }
-    }
-}
+    };
+};

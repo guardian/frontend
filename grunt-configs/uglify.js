@@ -7,10 +7,11 @@ module.exports = function(grunt, options) {
                 src: [
                     '{components,vendor}/**/*.js',
                     '!components/curl/**/*.js',
-                    '!components/zxcvbn/**/*.js'
+                    '!components/zxcvbn/**/*.js',
+                    '!vendor/stripe/*.js'
                 ],
                 dest: options.staticTargetDir + 'javascripts'
             }]
         }
-    }
-}
+    };
+};

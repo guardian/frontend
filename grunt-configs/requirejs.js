@@ -2,20 +2,20 @@ module.exports = function(grunt, options) {
     return {
         options: {
             paths: {
-                common: '../../../../common/app/assets/javascripts',
-                bean: '../../../../common/app/assets/javascripts/components/bean/bean',
-                bonzo: '../../../../common/app/assets/javascripts/components/bonzo/bonzo',
+                common:       '../../../../common/app/assets/javascripts',
+                bean:         '../../../../common/app/assets/javascripts/components/bean/bean',
+                bonzo:        '../../../../common/app/assets/javascripts/components/bonzo/bonzo',
                 EventEmitter: '../../../../common/app/assets/javascripts/components/eventEmitter/EventEmitter',
-                qwery: '../../../../common/app/assets/javascripts/components/qwery/qwery',
-                reqwest: '../../../../common/app/assets/javascripts/components/reqwest/reqwest',
-                lodash: '../../../../common/app/assets/javascripts/components/lodash-amd',
-                imager: '../../../../common/app/assets/javascripts/components/imager.js/container',
-                fence: '../../../../common/app/assets/javascripts/components/fence/fence',
-                enhancer: '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
-                stripe: '../../../../common/app/public/javascripts/vendor/stripe/stripe.min',
-                raven: '../../../../common/app/assets/javascripts/components/raven-js/raven',
-                fastclick: '../../../../common/app/assets/javascripts/components/fastclick/fastclick',
-                omniture: '../../../../common/app/public/javascripts/vendor/omniture'
+                qwery:        '../../../../common/app/assets/javascripts/components/qwery/qwery',
+                reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/reqwest',
+                lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd',
+                imager:       '../../../../common/app/assets/javascripts/components/imager.js/container',
+                fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
+                enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
+                stripe:       '../../../../common/app/public/javascripts/vendor/stripe/stripe.min',
+                raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven',
+                fastclick:    '../../../../common/app/assets/javascripts/components/fastclick/fastclick',
+                omniture:     '../../../../common/app/public/javascripts/vendor/omniture'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
@@ -36,15 +36,19 @@ module.exports = function(grunt, options) {
                         exports: 's'
                     }
                 },
-                modules: [{
-                    name: 'core'
-                }, {
-                    name: 'bootstraps/app',
-                    exclude: ['core']
-                }, {
-                    name: 'bootstraps/commercial',
-                    exclude: ['core']
-                }]
+                modules: [
+                    {
+                        name: 'core'
+                    },
+                    {
+                        name: 'bootstraps/app',
+                        exclude: ['core']
+                    },
+                    {
+                        name: 'bootstraps/commercial',
+                        exclude: ['core']
+                    }
+                ]
             }
         },
         facia: {
@@ -93,7 +97,7 @@ module.exports = function(grunt, options) {
                 }
             }
         },
-        video: {
+        video : {
             options: {
                 baseUrl: 'common/app/assets/javascripts',
                 name: 'bootstraps/video-player',
@@ -117,7 +121,7 @@ module.exports = function(grunt, options) {
                         deps: ['videojs']
                     },
                     videojsvast: {
-                        deps: ['vast', 'videojs']
+                         deps: ['vast', 'videojs']
                     },
                     videojsplaylist: {
                         deps: ['videojs']
@@ -138,7 +142,7 @@ module.exports = function(grunt, options) {
                     socketio: 'components/socket.io-client/socket.io'
                 }
             },
-            exclude: ['core', 'bootstraps/app']
+            exclude: ['core','bootstraps/app']
         }
-    }
-}
+    };
+};

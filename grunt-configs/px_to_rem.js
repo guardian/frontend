@@ -12,5 +12,5 @@ module.exports = function(grunt, options) {
                 dest: options.staticTargetDir + 'stylesheets/'
             }]
         }
-    }
-}
+    };
+};

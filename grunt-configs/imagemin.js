@@ -12,5 +12,5 @@ module.exports = function(grunt, options) {
             src: ['**/*.{png,gif,jpg}', '!favicons/windows_tile_144_b.png'],
             dest: options.staticTargetDir + 'images'
         }
-    }
-}
+    };
+};

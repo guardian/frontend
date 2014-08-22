@@ -25,13 +25,13 @@ module.exports = function(grunt, options) {
 
         abTestInfo: {
             command: 'node tools/ab-test-info/ab-test-info.js ' +
-                'common/app/assets/javascripts/modules/experiments/tests ' +
-                'static/abtests.json',
+                     'common/app/assets/javascripts/modules/experiments/tests ' +
+                     'static/abtests.json',
             options: {
                 stdout: true,
                 stderr: true,
                 failOnError: true
             }
         }
-    }
-}
+    };
+};

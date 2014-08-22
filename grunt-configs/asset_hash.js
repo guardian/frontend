@@ -10,10 +10,12 @@ module.exports = function(grunt, options) {
             options: {
                 preserveSourceMaps: true
             },
-            files: [{
-                src: [options.staticTargetDir + '**/*'],
-                dest: options.staticHashDir
-            }]
+            files: [
+                {
+                    src: [options.staticTargetDir + '**/*'],
+                    dest: options.staticHashDir
+                }
+            ]
         }
-    }
-}
+    };
+};

@@ -8,5 +8,5 @@ module.exports = function(grunt, options) {
                 to: ''
             }]
         }
-    }
-}
+    };
+};

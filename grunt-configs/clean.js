@@ -21,9 +21,8 @@ module.exports = function(grunt, options) {
             options.staticTargetDir + 'fonts',
             options.staticHashDir + 'fonts'
         ],
-
         // Clean any pre-commit hooks in .git/hooks directory
         hooks: ['.git/hooks'],
         assets: ['common/conf/assets']
-    }
-}
+    };
+};
