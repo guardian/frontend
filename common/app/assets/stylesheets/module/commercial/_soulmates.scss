@@ -177,7 +177,7 @@ $c-soulmates-high: $c-neutral1;
         float: right;
         min-width: 50%;
     }
-    $search-submit-cta-diameter: 20px;
+    $search-submit-cta-diameter: 18px;
     .search__submit {
         border: 0;
         background: transparent;
@@ -202,8 +202,8 @@ $c-soulmates-high: $c-neutral1;
             display: none;
 
             $arrow-size: (
-                width: 8px,
-                height: 15px,
+                width: 12px,
+                height: 12px,
             );
             .svg & {
                 display: block;
@@ -213,9 +213,7 @@ $c-soulmates-high: $c-neutral1;
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                margin-top: -(map-get($arrow-size, width)/2);
-                margin-left: -(map-get($arrow-size, height)/2 - 2);
-                @include transform(rotate(-90deg));
+                margin: -(map-get($arrow-size, width)/2);
             }
         }
     }
