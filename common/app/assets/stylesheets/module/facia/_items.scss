@@ -199,6 +199,11 @@
 }
 .item__video-container {
     margin-top: 4px;
+
+    // No margin for Raclette
+    .l-row--items-3 & {
+        margin-top: 0;
+    }
 }
 .item__image-container {
     margin-top: 4px;
