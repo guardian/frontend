@@ -1,4 +1,9 @@
 .container.container--popular {
+
+    .most-viewed-no-js i {
+        @include rotate(-90deg);
+        margin-top: 10px;
+    }
     #most-popular-head {
         display: none;
     }

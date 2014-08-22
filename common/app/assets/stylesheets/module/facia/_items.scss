@@ -200,9 +200,6 @@
 .item__video-container {
     margin-top: 4px;
 }
-.container--news .facia-slice-wrapper:first-child .item__video-container {
-    margin-top: 0;
-}
 .item__image-container {
     margin-top: 4px;
 
@@ -293,6 +290,12 @@
 .row-of-two--boost-first .item__title--inline-video,
 .row-of-two--boost-second .item__title--inline-video {
     display: inline;
+}
+
+.item__header--inline-video {
+    @include mq(desktop) {
+        margin-top: 2px;
+    }
 }
 
 .item__media-wrapper .gu-media-wrapper {

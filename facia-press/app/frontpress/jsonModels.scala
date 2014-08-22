@@ -62,21 +62,23 @@ object ItemMeta {
     href = content.apiContent.metaData.get("href"),
     snapType = content.apiContent.metaData.get("snapType"),
     snapCss = content.apiContent.metaData.get("snapCss"),
-    snapUri = content.apiContent.metaData.get("snapUri")
+    snapUri = content.apiContent.metaData.get("snapUri"),
+    showMainVideo = content.apiContent.metaData.get("showMainVideo")
   )
 }
 
 case class ItemMeta(
-  headline:     Option[JsValue],
-  trailText:    Option[JsValue],
-  group:        Option[JsValue],
-  imageAdjust:  Option[JsValue],
-  isBreaking:   Option[Boolean],
-  supporting:   Option[Seq[JsValue]],
-  href:         Option[JsValue],
-  snapType:     Option[JsValue],
-  snapCss:      Option[JsValue],
-  snapUri:      Option[JsValue]
+  headline:      Option[JsValue],
+  trailText:     Option[JsValue],
+  group:         Option[JsValue],
+  imageAdjust:   Option[JsValue],
+  isBreaking:    Option[Boolean],
+  supporting:    Option[Seq[JsValue]],
+  href:          Option[JsValue],
+  snapType:      Option[JsValue],
+  snapCss:       Option[JsValue],
+  snapUri:       Option[JsValue],
+  showMainVideo: Option[JsValue]
 )
 
 

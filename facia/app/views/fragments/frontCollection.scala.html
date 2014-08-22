@@ -13,7 +13,7 @@
     case Some("news/special")               => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
     case Some("features")                   => { @containers.features(block._2, FeaturesContainer(), index)(request, templateDeduping, block._1) }
     case Some("features/auto")              => { @containers.featuresauto(block._2, FeaturesAutoContainer(), index)(request, templateDeduping, block._1) }
-    case Some("features/multimedia")        => { @containers.multimedia(block._2, MultimediaContainer(), index)(request, templateDeduping, block._1) }
+    case Some("features/multimedia")        => { @containers.multimedia(block._2, MultimediaContainer(), index, useInlinePlayer = true)(request, templateDeduping, block._1) }
     case Some("features/picks")             => { @containers.picks(block._2, PicksContainer(), index)(request, templateDeduping, block._1) }
     case Some("features/volumes")           => { @containers.featuresvolumes(front, block._2, FeaturesVolumesContainer(), index)(request, templateDeduping, block._1) }
     case Some("prototype/cassoulet")        => { @containers.cassoulet(block._2, CassouletContainer(), index)(request, templateDeduping, block._1) }

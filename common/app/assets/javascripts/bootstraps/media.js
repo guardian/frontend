@@ -16,7 +16,8 @@ define([
     'common/modules/component',
     'common/modules/analytics/beacon',
     'common/modules/ui/message',
-    'raven'
+    'raven',
+    'common/utils/preferences'
 ], function(
     $,
     ajax,
@@ -34,7 +35,8 @@ define([
     Component,
     beacon,
     Message,
-    raven
+    raven,
+    preferences
 ) {
     var isDesktop = /desktop|wide/.test(detect.getBreakpoint()),
         QUARTILES = [25, 50, 75],
@@ -452,7 +454,11 @@ define([
             modules.initMostViewedMedia();
         }
 
-        if (config.page.contentType.toLowerCase() === 'video' && detect.getBreakpoint() !== 'mobile') {
+        if (config.page.contentType &&
+            config.page.contentType.toLowerCase() === 'video' &&
+            detect.getBreakpoint() !== 'mobile' &&
+            !preferences.hasOptedIntoResponsive()
+        ) {
             modules.displayReleaseMessage();
         }
     };

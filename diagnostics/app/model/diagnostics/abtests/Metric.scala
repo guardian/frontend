@@ -1,7 +1,7 @@
 package model.diagnostics.abtests
 
 import common.Logging
-import views.support.JavaScriptVariableName
+import views.support.CamelCase
 import conf.Switches.{all => AllSwitches}
 
 import com.google.common.util.concurrent.AtomicDouble
@@ -14,7 +14,7 @@ object Metric extends Logging {
   private val sessions   = Wrappers.JConcurrentMapWrapper(new ConcurrentHashMap[String, AtomicDouble]())
 
   private lazy val abTests: Seq[String] = {
-    AllSwitches.filter {_.name.startsWith("ab-")} map {switch => JavaScriptVariableName(switch.name)}
+    AllSwitches filter { _.name.startsWith("ab-") } map { switch => CamelCase.fromHyphenated(switch.name) }
   }
 
   def incrementPageView(test: String, variant: String) {

@@ -16,38 +16,16 @@ class GalleryTemplateTest extends FlatSpec with Matchers {
     linkUrls should contain(HtmlUnit.withHost("/music/2010/sep/16/gustavo-dudamel-simon-bolivar-orchestra"))
   }
 
-  it should "render caption and navigation on first image page" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
+  it should "render captions" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
     import browser._
-    $("p.caption").getTexts.firstNonEmpty.get should include("A TV grab from state-owned French television station France 2 showing the debate between Francois Hollande and Nicolas Sarkozy for the 2012 French presidential election campaign")
-
-    $("p.gallery-nav a.gallery-prev").length should be(0)
-
-    $("p.gallery-nav a.gallery-next").getTexts.toList should be(List("Next"))
-    $("p.gallery-nav a.gallery-next").getAttributes("href").toList should be(List(HtmlUnit.withHost("/news/gallery/2012/may/02/picture-desk-live-kabul-burma?index=2")))
+    $("p.gallery2__caption").getTexts.firstNonEmpty.get should include("A TV grab from state-owned French television station France 2 showing the debate between Francois Hollande and Nicolas Sarkozy for the 2012 French presidential election campaign")
   }
 
-  it should "render caption and navigation on second image page" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma?index=2") { browser =>
+  it should "render all images in the gallery" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
     import browser._
-    $("p.caption").getTexts.firstNonEmpty.get should include("Socialist Party supporters watch live TV debate as their presidential candiate Francois Hollande takes on current president Nicolas Sarkozy")
-
-    $("p.gallery-nav a.gallery-prev").getTexts.toList should be(List("Previous"))
-    $("p.gallery-nav a.gallery-prev").getAttributes("href").toList should be(List(HtmlUnit.withHost("/news/gallery/2012/may/02/picture-desk-live-kabul-burma?index=1")))
-
-    $("p.gallery-nav a.gallery-next").getTexts.toList should be(List("Next"))
-    $("p.gallery-nav a.gallery-next").getAttributes("href").toList should be(List(HtmlUnit.withHost("/news/gallery/2012/may/02/picture-desk-live-kabul-burma?index=3")))
+    $(".gallery2__item").length should be (22)
   }
 
-  it should "render caption and navigation on last image page" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma?index=22") { browser =>
-    import browser._
-    $("p.caption").getTexts.toList.last should include("This little scout has been taking part in a parade marking International Workers' Day in Nigeria's commercial capital, Lagos")
-
-    $("p.gallery-nav a.gallery-prev").getTexts.toList should be(List("Previous"))
-    $("p.gallery-nav a.gallery-prev").getAttributes("href").toList should be(List(HtmlUnit.withHost("/news/gallery/2012/may/02/picture-desk-live-kabul-burma?index=21")))
-
-    $("p.gallery-nav a.gallery-next").getTexts.toList should be(List("Next"))
-    $("p.gallery-nav a.gallery-next").getAttributes("href").toList should be(List(HtmlUnit.withHost("/news/gallery/2012/may/02/picture-desk-live-kabul-burma?index=1")))
-  }
-   
   it should "show the twitter card meta-data" in HtmlUnit("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre") { browser =>
     import browser._
     $("meta[property='twitter:card']").getAttributes("content").head should be ("gallery")
