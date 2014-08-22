@@ -17,13 +17,13 @@
                         <li class="gallery2__item">
                             <figure itemscope itemtype="http://schema.org/ImageObject">
 
-                                @ImgSrc.imager(gallery.imageContainer(row.rowNum-1), maxWidth=700).map { imgSrc =>
+                                @ImgSrc.imager(gallery.imageContainer(row.rowNum-1), GalleryUpgradedImage).map { imgSrc =>
 
                                     <a  class="gallery2__img-container js-gallerythumbs js-image-upgrade"
                                         href="@LinkTo{@gallery.url?index=@row.rowNum}"
                                         data-src="@imgSrc">
 
-                                        @Item300.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
+                                        @GalleryInitialImage.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
 
                                             <img class="gallery2__img responsive-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
                                                 src="@url"
