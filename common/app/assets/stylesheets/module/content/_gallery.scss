@@ -1,10 +1,9 @@
 @charset 'UTF-8';
 
 @include mq($to: mobileLandscape) {
-    .content--gallery {
-        .content__section {
-            display: none;
-        }
+    .content--gallery .content__section
+     {
+        display: none;
     }
 }
 
@@ -12,6 +11,7 @@
     position: relative;
     @include box-sizing(border-box);
     margin-bottom: $gs-baseline;
+    min-height: 200px;
 
     @include mq($to: rightCol) {
         border-bottom: 1px dotted guss-colour(tone-media-2);
@@ -21,7 +21,6 @@
         padding-right: gs-span(3) + $gs-gutter;
         margin-bottom: $gs-baseline*2;
     }
-    min-height: 200px;
 }
 
 .gallery2__figcaption {
@@ -33,7 +32,6 @@
     @include mq($to: rightCol) {
         margin-bottom: $gs-baseline*3;
     }
-
     @include mq(rightCol) {
         @include fs-textSans(2, true);
         position: absolute;
@@ -51,6 +49,7 @@
     a {
         color: guss-colour(neutral-7);
         border-bottom: 1px solid guss-colour(neutral-2);
+
         &:hover {
             border-bottom: 1px solid guss-colour(neutral-7);
             text-decoration: none;
@@ -94,6 +93,7 @@
     @include mq(desktop) {
         .gallery2__img-container:hover & {
             background-color: $c-mediaDefault;
+
             .i-expand-black {
                 display: inline-block;
             }
@@ -169,9 +169,8 @@
             }
         }
     }
+
     .content__standfirst {
-        @include mq(mobileLandscape) {
-        }
         @include mq(rightCol) {
             padding-right: gs-span(3);
         }
