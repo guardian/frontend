@@ -1,6 +1,6 @@
 package common.Assets
 
-import common.Logging
+import common.{RelativePathEscaper, Logging}
 import org.apache.commons.io.IOUtils
 import play.api.{ Mode, Play }
 import play.api.libs.json.{ JsString, Json, JsObject }
@@ -100,25 +100,8 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
   }
 
   object js {
-
-    private def escapeRelativeJsPaths(unescaped: String): String = {
-      // We are getting Googlebot 404 because Google is incorrectly seeing paths in the curl js
-      // we need to escape them out.
-      // "../foo"
-      // "./foo"
-      // and any that are inside single quotes too
-      val regex = """["'](\.{1,2}\/){1,}\w*(\/){0,}\w*(\/)?['"]""".r
-
-      val matches = regex.findAllIn(unescaped).toSeq
-
-      matches.foldLeft(unescaped){ case (result:String, matched: String) =>
-        result.replace(matched, matched.replace("./", ".\" + \"/\" + \""))
-      }
-    }
-
     lazy val curl: String =
-      escapeRelativeJsPaths(IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js")))
-
+      RelativePathEscaper(IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js")))
   }
 
 }
