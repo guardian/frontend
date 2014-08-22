@@ -1,8 +1,5 @@
 @charset 'UTF-8';
 
-/* ==========================================================================
-   Non-JS Gallery Styles
-   ========================================================================== */
 @include mq($to: mobileLandscape) {
     .content--gallery {
         .content__section {
@@ -186,47 +183,4 @@
         }
     }
 
-}
-
-
-/* ==========================================================================
-   Gallery nav
-   ========================================================================== */
-
-.gallery-nav {
-    @include fs-data(3);
-    text-align: center;
-    margin-bottom: ($gs-baseline/3)*2;
-}
-
-.gallery-prev,
-.gallery-next {
-    // this is to ensure the "Image x of y" is centered. (MA)
-    width: 75px;
-
-    &.is-off {
-        display: inline-block;
-        visibility: hidden;
-    }
-}
-
-.gallery-prev {
-    text-align: left;
-}
-
-.gallery-next {
-    text-align: right;
-    float: right;
-}
-
-.gallery-prev:before {
-    content: '« ';
-}
-
-.gallery-next:after {
-    content: ' »';
-}
-
-.gallery-nav i {
-    display: inline-block;
 }
