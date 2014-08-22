@@ -12,27 +12,29 @@
 
                 @fragments.contentMeta(gallery)
 
-                <div class="gallery2">
+                <ul class="gallery2">
                     @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-                        <figure class="gallery2__item" itemscope itemtype="http://schema.org/ImageObject">
-                            <a class="gallery2__img-container js-gallerythumbs" href="@LinkTo{@gallery.url?index=@row.rowNum}">
-                                <img class="gallery2__img @if(image.width >= image.height){gallery2__img--landscape} else {gallery2__img--portrait}"
-                                    src="@image.path"
-                                    alt="@image.altText.getOrElse("")"
-                                    itemprop="contentUrl" />
-                                <span class="gallery2__fullscreen">
-                                    <i class="i i-expand-white"></i>
-                                    <i class="i i-expand-black"></i>
-                                </span>
-                            </a>
+                        <li class="gallery2__item">
+                            <figure itemscope itemtype="http://schema.org/ImageObject">
+                                <a class="gallery2__img-container js-gallerythumbs" href="@LinkTo{@gallery.url?index=@row.rowNum}">
+                                    <img class="gallery2__img @if(image.width >= image.height){gallery2__img--landscape} else {gallery2__img--portrait}"
+                                        src="@image.path"
+                                        alt="@image.altText.getOrElse("")"
+                                        itemprop="contentUrl" />
+                                    <span class="gallery2__fullscreen">
+                                        <i class="i i-expand-white"></i>
+                                        <i class="i i-expand-black"></i>
+                                    </span>
+                                </a>
 
-                            <div class="gallery2__figcaption">
-                                <p class="gallery2__caption" itemprop="caption">@Html(image.cleanedCaption)</p>
-                                <p class="gallery2__credit" itemprop="author">@image.credit</p>
-                            </div>
-                        </figure>
+                                <div class="gallery2__figcaption">
+                                    <p class="gallery2__caption" itemprop="caption">@Html(image.cleanedCaption)</p>
+                                    <p class="gallery2__credit" itemprop="author">@image.credit</p>
+                                </div>
+                            </figure>
+                        </li>
                     }
-                </div>
+                </ul>
 
                 <div class="social-wrapper social-wrapper--bottom" data-component="share">
                     @fragments.social(gallery, iconModifier = "white")

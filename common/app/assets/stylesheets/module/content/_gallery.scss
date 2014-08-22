@@ -6,6 +6,11 @@
     }
 }
 
+.gallery2 {
+    list-style: none;
+    margin: 0;
+}
+
 .gallery2__item {
     position: relative;
     @include box-sizing(border-box);
