@@ -176,3 +176,22 @@
     -ms-flex-direction: $direction;
     flex-direction: $direction;
 }
+
+@mixin columns($cols: 1, $gutter: $gs-gutter) {
+    @if $browser-supports-columns {
+        -webkit-column-count: $cols;
+        -moz-column-count: $cols;
+        column-count: $cols;
+
+        -webkit-column-gap: $gutter;
+        -moz-column-gap: $gutter;
+        column-gap: $gutter;
+    } @else {
+        & > * {
+            @include box-sizing(border-box);
+            width: (100% / $cols);
+            float: left;
+            display: block;
+        }
+    }
+}
