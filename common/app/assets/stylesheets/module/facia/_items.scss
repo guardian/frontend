@@ -242,20 +242,20 @@
     padding: 0 3px;
 }
 
-.item__label--analysis {
+.item__label--analysis,
+.item__label--comment,
+.item__label--reaction {
     color: $c-commentDefault;
 }
 
-.item__label--background {
+.item__label--background,
+.item__label--detail,
+.item__label--in-depth {
     color: $c-newsAccent;
 }
 
 .item__label--breaking-news {
     color: $c-breakingNews;
-}
-
-.item__label--comment {
-    color: $c-commentDefault;
 }
 
 .item--sport-stats .competition-table h3,

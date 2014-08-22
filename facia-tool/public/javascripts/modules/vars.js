@@ -32,7 +32,10 @@ define([
             'analysis',
             'background',
             'breaking-news',
-            'comment'
+            'comment',
+            'detail',
+            'in-depth',
+            'reaction'
         ],
 
         headlineLength: 200,
