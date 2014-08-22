@@ -16,7 +16,7 @@
         display: inline-block;
     }
 
-    @include mq(desktop) {
+    @include mq(desktop, leftCol) {
         margin-left: $gs-gutter;
     }
 }

@@ -1,6 +1,13 @@
 .page-heading--football {
-    @include fs-header(3);
-    font-weight: 900;
+    @include mq(leftCol) {
+        float: left;
+        border-top: 0 !important;
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+        margin-top: $gs-baseline/-4;
+    }
+    @include mq(wide) {
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
+    }
 }
 
 .football-filters {
