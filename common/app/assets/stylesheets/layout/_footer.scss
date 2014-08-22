@@ -85,16 +85,15 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     margin: 0;
     padding-top: $gs-baseline * .75;
     padding-bottom: $gs-baseline * .5;
-    border-bottom: 1px solid guss-colour(neutral-4);
-    @include columns(2, 0);
+    @include columns(2);
 
     @include mq(tablet) {
-        @include columns(3, 0);
+        @include columns(3);
         padding-bottom: $gs-baseline * 1.5;
     }
 
     @include mq(wide) {
-        @include columns(4, 0);
+        @include columns(4);
     }
 
     a {
@@ -109,6 +108,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 .l-footer__misc {
     padding-top: $gs-baseline * .5;
     padding-bottom: $gs-baseline * .5;
+    border-top: 1px solid guss-colour(neutral-4);
 }
 
 .really-serious-copyright {
