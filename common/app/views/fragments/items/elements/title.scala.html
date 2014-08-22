@@ -1,4 +1,4 @@
-@(trail: Trail, itemIndex: Int, containerIndex: Int, kickerCssClasses: String = "u-faux-block-link__cta", showTag: Boolean = false)(implicit request: RequestHeader, config: Config)
+@(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta", showTag: Boolean = false)(implicit request: RequestHeader, config: Config)
 
 @defining((trail.visualTone, trail.kicker, if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, kicker, headingLevel) =>
     <h@headingLevel class="item__title">
@@ -14,6 +14,6 @@
         @if(showTag) {
             @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
         }
-        <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article"><span class="@kickerCssClasses">@RemoveOuterParaHtml(trail.headline)</span></a>
+        <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span></a>
     </h@headingLevel>
 }
