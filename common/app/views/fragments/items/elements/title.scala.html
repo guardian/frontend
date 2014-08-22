@@ -5,7 +5,7 @@
         @if(trail.isLive){
             <span class="item__label item__label--live">Live</span>
         }
-        @if(trail.label == "breaking-news") {
+        @if(trail.label == Some("breaking-news")) {
             <span class="item__label item__label--breaking-news">Breaking news</span>
         }
         @if(tone == "comment") {

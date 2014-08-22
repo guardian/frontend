@@ -32,7 +32,6 @@ define([
             'analysis',
             'background',
             'breaking-news',
-            'comment',
             'detail',
             'in-depth',
             'reaction'
