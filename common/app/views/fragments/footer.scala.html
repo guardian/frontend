@@ -1,6 +1,8 @@
 @(page: MetaData, showNav: Boolean=true)(implicit request: RequestHeader)
 @import conf.Switches._
 @import org.joda.time.DateTime
+@import common.Edition
+@import common.editions._
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
@@ -44,15 +46,27 @@
 
     <div class="l-footer__secondary gs-container" role="contentinfo">
         <ul class="colophon u-cf">
-            <li class="colophon__item"><a data-link-name="about" href="http://next.theguardian.com/blog/welcome-to-our-beta-site/">About this site</a></li>
-            <li class="colophon__item"><a data-link-name="help" href="@LinkTo("/help/2012/nov/26/guardian-mobile-site")">Help</a></li>
-            <li class="colophon__item"><a data-link-name="contact" href="@LinkTo("/help/contact-us")">Contact us</a></li>
-            <li class="colophon__item"><a data-link-name="feedback" target="_blank" href="https://www.surveymonkey.com/s/theguardian-beta-feedback">Feedback</a></li>
-            <li class="colophon__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">Terms &amp; conditions</a></li>
-            <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">Privacy policy</a></li>
-            <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo("/info/cookies")">Cookie policy</a></li>
+        @if(Edition(request) == Uk){
+            <li class="colophon__item"><a data-link-name="uk : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS">jobs</a></li>
+            <li class="colophon__item"><a data-link-name="uk : footer : soulmates" href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">soulmates</a></li>
+            <li class="colophon__item"><a data-link-name="uk : footer : masterclasses" href="http://www.theguardian.com/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES">masterclasses</a></li>
+        }
+        @if(Edition(request) == Us){
+            <li class="colophon__item"><a data-link-name="us : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS">jobs</a></li>
+        }
+        @if(Edition(request) == Au){
+            <li class="colophon__item"><a data-link-name="au : footer : jobs" href="http://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS">jobs</a></li>
+            <li class="colophon__item"><a data-link-name="au : footer : masterclasses" href="http://www.theguardian.com/guardian-masterclasses/guardian-masterclasses-australia">masterclasses</a></li>
+        }
+            <li class="colophon__item"><a data-link-name="about" href="http://next.theguardian.com/blog/welcome-to-our-beta-site/">about this site</a></li>
+            <li class="colophon__item"><a data-link-name="help" href="@LinkTo("/help/2012/nov/26/guardian-mobile-site")">help</a></li>
+            <li class="colophon__item"><a data-link-name="contact" href="@LinkTo("/help/contact-us")">contact us</a></li>
+            <li class="colophon__item"><a data-link-name="feedback" target="_blank" href="https://www.surveymonkey.com/s/theguardian-beta-feedback">feedback</a></li>
+            <li class="colophon__item"><a data-link-name="terms" href="@LinkTo("/help/terms-of-service")">terms &amp; conditions</a></li>
+            <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">privacy policy</a></li>
+            <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo("/info/cookies")">cookie policy</a></li>
             @if(page.hasClassicVersion) {
-                <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "Current version")</li>
+                <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "use current version")</li>
             }
         </ul>
         <div class="l-footer__misc">
