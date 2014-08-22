@@ -32,6 +32,10 @@
     }
 }
 
+.football-matches__container {
+    clear: both;
+}
+
 .football-matches__date {
     color: $c-neutral1;
     display: block;
