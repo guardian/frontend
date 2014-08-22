@@ -15,7 +15,7 @@
                 <div class="gallery2">
                     @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
                         <figure class="gallery2__item">
-                            <a class="gallery2__img-container js-gallerythumbs" href="@LinkTo{@gallery.url?index=@{image.index+1}}">
+                            <a class="gallery2__img-container js-gallerythumbs" href="@LinkTo{@gallery.url?index=@row.rowNum}">
                                 <img class="gallery2__img @if(image.width >= image.height){gallery2__img--landscape} else {gallery2__img--portrait}"
                                     src="@image.path"
                                     alt="@image.altText.getOrElse("")" />
