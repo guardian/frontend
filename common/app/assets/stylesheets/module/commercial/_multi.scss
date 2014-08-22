@@ -7,9 +7,7 @@ Multi component (AKA Frankenponent)
     .commercial.commercial--multi {
         .commercial__head {
             border-top: 0;
-            @include rem((
-                margin-top: $gs-baseline
-            ));
+            margin-top: $gs-baseline;
             height: auto;
             position: relative;
             padding: 0;
@@ -21,17 +19,13 @@ Multi component (AKA Frankenponent)
             &.i-soulmates-title-background {
                 background-size: cover;
                 height: auto;
-                @include rem((
-                    width: gs-span(2) - $gs-gutter,
-                    padding: ($gs-baseline * 2) 0 0 ($gs-gutter * 1.25),
-                    margin-bottom: $gs-baseline
-                ));
+                width: gs-span(2) - $gs-gutter;
+                padding: ($gs-baseline * 2) 0 0 ($gs-gutter * 1.25);
+                margin-bottom: $gs-baseline;
             }
         }
         .commercial__body {
-            @include rem((
-                padding: 0 0 $gs-baseline
-            ));
+            padding: 0 0 $gs-baseline;
             .commercial__title {
                 float: none;
             }
@@ -60,31 +54,23 @@ Multi component (AKA Frankenponent)
         }
         @include mq(tablet) {
             .lineitems {
-                @include rem((
-                    margin: 0 (-$gs-gutter/2)
-                ));
+                margin: 0 (-$gs-gutter/2);
             }
             .lineitem {
                 float: left;
                 clear: none;
                 width: percentage(1/3);
-                @include rem((
-                    padding: 0 $gs-gutter/2
-                ));
+                padding: 0 $gs-gutter/2;
 
                 &:nth-child(n) {
                     display: block;
-                    @include rem((
-                        padding-left: $gs-gutter/2
-                    ));
+                    padding-left: $gs-gutter/2;
                 }
             }
         }
         @include mq(faciaLeftCol) {
             .commercial__body {
-                @include rem((
-                    padding: $gs-baseline 0
-                ));
+                padding: $gs-baseline 0;
             }
         }
     }

@@ -44,6 +44,9 @@ define([
 
             this.frontPublicationDate = opts.frontPublicationDate;
             this.frontPublicationTime = ko.observable();
+            this.scheduledPublicationTime = ko.observable();
+
+            this.mainMediaType = ko.observable();
 
             this.props = asObservableProps([
                 'webUrl',
@@ -52,6 +55,7 @@ define([
             this.fields = asObservableProps([
                 'isLive',
                 'firstPublicationDate',
+                'scheduledPublicationDate',
                 'headline',
                 'trailText',
                 'thumbnail']);
@@ -64,6 +68,7 @@ define([
                 'imageSrc',
                 'imageSrcWidth',
                 'imageSrcHeight',
+                'showMainVideo',
                 'isBreaking',
                 'group',
                 'snapType',
@@ -151,8 +156,6 @@ define([
 
                 contentApi.decorateItems(this.meta.supporting.items());
             }
-
-            this.setFrontPublicationTime();
         }
 
         Article.prototype.copy = function() {
@@ -200,6 +203,9 @@ define([
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
+            opts.mainMediaType && this.mainMediaType(opts.mainMediaType);
+
+            this.setRelativeTimes();
 
             if (validate || opts.webUrl) {
                  missingProps = [
@@ -218,8 +224,9 @@ define([
             }
         };
 
-        Article.prototype.setFrontPublicationTime = function() {
+        Article.prototype.setRelativeTimes = function() {
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
+            this.scheduledPublicationTime(humanTime(this.fields.scheduledPublicationDate()));
         };
 
         Article.prototype.toggleIsBreaking = function() {
@@ -248,6 +255,11 @@ define([
 
         Article.prototype.toggleImageAdjustHide = function() {
             this.meta.imageAdjust(this.meta.imageAdjust() === 'hide' ? undefined : 'hide');
+            this._save();
+        };
+
+        Article.prototype.toggleShowMainVideo = function () {
+            this.meta.showMainVideo(!this.meta.showMainVideo());
             this._save();
         };
 

@@ -5,9 +5,7 @@
     overflow: auto;
     padding: $gs-baseline/3 0 ($gs-baseline/3)*5;
     @include fs-bodyCopy(1);
-    @include rem((
-        line-height: 22px
-    ));
+    line-height: 22px;
 
     @include mq(tablet) {
         padding-top: ($gs-baseline/3)*2;
@@ -38,29 +36,21 @@
     @include fs-bodyCopy(1, true);
     float: left;
     color: $c-neutral2;
-    @include rem((
-        width: 14px
-    ));
+    width: 14px;
 
     @include mq(tablet) {
         @include fs-bodyCopy(2, true);
-        @include rem((
-            width: 20px
-        ));
+        width: 20px;
     }
 }
 .headline-list__title {
     border-bottom: 1px solid $c-neutral6;
-    @include rem((
-        padding: $gs-baseline/3 $gs-gutter/5 $gs-baseline 0,
-        margin: 0 $gs-gutter/2
-    ));
+    padding: $gs-baseline/3 $gs-gutter/5 $gs-baseline 0;
+    margin: 0 $gs-gutter/2;
 
     @include mq(mobileLandscape) {
-        @include rem((
-            margin-left: $gs-gutter,
-            margin-right: $gs-gutter
-        ));
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
     }
 
     @include mq(544px) {
@@ -116,28 +106,22 @@
     .headline-list__item {
         position: relative;
         @include box-sizing(border-box);
-        @include rem((
-            min-height: gs-height(1),
-            padding-left: gs-span(1) - $gs-gutter/2,
-            padding-bottom: ($gs-baseline/3)*7
-        ));
+        min-height: gs-height(1);
+        padding-left: gs-span(1) - $gs-gutter/2;
+        padding-bottom: ($gs-baseline/3)*7;
         border-top-color: $c-neutral4;
         @include fs-headline(2);
 
         @include mq(rightCol) {
             border: 0;
             padding-bottom: 0;
-            @include rem((
-                padding-left: gs-span(1),
-                min-height: gs-height(2)
-            ));
+            padding-left: gs-span(1);
+            min-height: gs-height(2);
 
             &:before {
                 position: absolute;
                 top: 0;
-                @include rem((
-                    right: $gs-gutter/2
-                ));
+                right: $gs-gutter/2;
                 left: 0;
                 content: '';
                 display: block;
@@ -148,14 +132,10 @@
 
         @include mq(wide) {
             padding-bottom: 0;
-            @include rem((
-                min-height: gs-height(3)
-            ));
+            min-height: gs-height(3);
 
             &:first-child {
-                @include rem((
-                    min-height: gs-height(6)
-                ));
+                min-height: gs-height(6);
 
                 &:before {
                     left: 0;
@@ -167,17 +147,13 @@
 
                 .headline-list__count {
                     left: 0;
-                    @include rem((
-                        font-size: 65px
-                    ));
+                    font-size: 65px;
                 }
             }
 
             &:before {
                 right: 0;
-                @include rem((
-                    left: $gs-gutter
-                ));
+                left: $gs-gutter;
             }
 
             &:nth-child(-n+4) {

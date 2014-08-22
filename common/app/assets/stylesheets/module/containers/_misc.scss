@@ -7,19 +7,13 @@
     }
     .linkslist {
         @include mq(tablet) {
-            @include rem((
-                width: gs-span(5)
-            ));
+            width: gs-span(5);
         }
         @include mq(desktop) {
-            @include rem((
-                width: gs-span(8) + $gs-gutter
-            ));
+            width: gs-span(8) + $gs-gutter;
 
             &__item {
-                @include rem((
-                    width: gs-span(4)
-                ));
+                width: gs-span(4);
 
                 &:nth-child(n) {
                     clear: none;

@@ -23,9 +23,7 @@ $commercial-cta-diameter: (
     }
     @include mq(desktop) {
         .commercial__head {
-            @include rem((
-                width: gs-span(3)
-            ));
+            width: gs-span(3);
         }
     }
     @include mq(wide) {
@@ -58,9 +56,7 @@ $commercial-cta-diameter: (
                 display: block;
             }
             .commercial__body {
-                @include rem((
-                    padding-left: $gs-gutter
-                ));
+                padding-left: $gs-gutter;
             }
             .commercial__relevance-high {
                 width: percentage(2/3);
@@ -84,9 +80,7 @@ $commercial-cta-diameter: (
         }
         @include mq(faciaLeftCol) {
             .commercial__head {
-                @include rem((
-                    width: gs-span(2) + $gs-gutter
-                ));
+                width: gs-span(2) + $gs-gutter;
             }
             .commercial__body {
                 padding-left: 0;
@@ -151,9 +145,7 @@ $commercial-cta-diameter: (
     .container__title {
         background: none !important;    // Overriding default page styles
         padding: 0;
-        @include rem((
-            margin-top: ($gs-baseline/3)
-        ));
+        margin-top: ($gs-baseline/3);
         float: none;
         color: $c-newsDefault;
     }
@@ -163,9 +155,7 @@ $commercial-cta-diameter: (
         background-size: 14px 12px;
         background-position: center -6px, center calc(100% + 6px);
         background-repeat: repeat-x;
-        @include rem((
-            padding: $gs-baseline $gs-gutter/2
-        ));
+        padding: $gs-baseline $gs-gutter/2;
         
         .commercial__title {
             display: none;
@@ -184,9 +174,7 @@ $commercial-cta-diameter: (
         .commercial--v-high__head {
             clear: both;
             border-top: 1px solid $c-neutral3;
-            @include rem((
-                padding: $gs-baseline 0
-            ));
+            padding: $gs-baseline 0;
         }
         .lineitem__title {
             white-space: normal;
@@ -197,16 +185,12 @@ $commercial-cta-diameter: (
         }
         .commercial--v-high__body {
             border: 1px dotted $c-neutral3;
-            @include rem((
-                padding: $gs-baseline/2 0
-            ));
+            padding: $gs-baseline/2 0;
             border-width: 1px 0;
         }
         .commercial--v-high__footer {
             border-bottom: 1px dotted $c-neutral3;
-            @include rem((
-                padding: $gs-baseline/2 0
-            ));
+            padding: $gs-baseline/2 0;
         }
         .commercial__home-link {
             float: none;
@@ -217,23 +201,17 @@ $commercial-cta-diameter: (
 }
 
 .ad-slot--im {
-    @include rem((
-        padding-right: $gs-gutter
-    ));
+    padding-right: $gs-gutter;
     width: 50%;
     float: left;
     @include mq(leftCol) {
         @include box-sizing(border-box);
-        @include rem((
-            width: $left-column + $gs-gutter,
-            margin-left: -($left-column + $gs-gutter)
-        ));
+        width: $left-column + $gs-gutter;
+        margin-left: -($left-column + $gs-gutter);
     }
     @include mq(wide) {
-        @include rem((
-            width: $left-column-wide + $gs-gutter,
-            margin-left: -($left-column-wide + $gs-gutter)
-        ));
+        width: $left-column-wide + $gs-gutter;
+        margin-left: -($left-column-wide + $gs-gutter);
     }
 }
 
@@ -242,21 +220,15 @@ $commercial-cta-diameter: (
     background-color: #ffffff;
     border-top: 1px solid $c-neutral4;
     overflow: hidden;
-    @include rem((
-        height: 40px
-    ));
+    height: 40px;
 }
 .commercial__logo {
-    @include rem((
-        margin-bottom: $gs-baseline/2
-    ));
+    margin-bottom: $gs-baseline/2;
     float: left;
 }
 .commercial__title {
     @include fs-header(3);
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
+    margin-bottom: $gs-baseline*2;
     float: left;
     clear: both;
 }
@@ -270,15 +242,11 @@ $commercial-cta-diameter: (
     }
 }
 .commercial__body {
-    @include rem((
-        padding: $comercial-comp-baseline
-    ));
+    padding: $comercial-comp-baseline;
     overflow: hidden;
 }
 .commercial__foot {
-    @include rem((
-        padding: ($gs-baseline/3)*2 0
-    ));
+    padding: ($gs-baseline/3)*2 0;
     clear: both;
     overflow: hidden;
 }
@@ -292,10 +260,8 @@ $commercial-cta-diameter: (
 .commercial__search__input {
     @include box-sizing(border-box);
     width: 100%;
-    @include rem((
-        height: $gs-row-height,
-        padding: $gs-baseline/3 32px $gs-baseline/3 8px
-    ));
+    height: $gs-row-height;
+    padding: $gs-baseline/3 32px $gs-baseline/3 8px;
     @include fs-textSans(2);
     border: 0;
     @include border-radius(0); // Prevent rounded corners in iOS
@@ -413,9 +379,7 @@ $commercial-cta-diameter: (
 .highitem__img {
     height: 100px;
     display: none;
-    @include rem((
-        margin-right: $gs-gutter/2
-    ));
+    margin-right: $gs-gutter/2;
     float: left;
     text-align: center;
 
@@ -430,17 +394,13 @@ $commercial-cta-diameter: (
     width: 80px;
 }
 .highitem__details {
-    @include rem((
-        margin-left: 90px
-    ));
+    margin-left: 90px;
 }
 
 .commercial--high {
     .commercial__relevance-title {
         @include fs-bodyHeading(3);
-        @include rem((
-            margin-bottom: $gs-baseline/2
-        ));
+        margin-bottom: $gs-baseline/2;
     }
     .lineitem__title {
         clear: none;
@@ -462,9 +422,7 @@ $commercial-cta-diameter: (
         }
     }
     .highitem__details {
-        @include rem((
-            padding-right: $gs-gutter/2
-        ));
+        padding-right: $gs-gutter/2;
     }
     @include mq(tablet) {
         .lineitem {
@@ -475,9 +433,7 @@ $commercial-cta-diameter: (
             padding-bottom: 0;
         }
         .commercial__search {
-            @include rem((
-                margin-top: $gs-baseline
-            ));
+            margin-top: $gs-baseline;
         }
         .commercial__relevance-high {
             width: percentage(2/3);
@@ -510,11 +466,9 @@ $commercial-cta-diameter: (
 
 @include mq($to: tablet) {
     .commercial__head {
-        @include rem((
-            padding-left: $gs-baseline/2,
-            padding-right: $gs-baseline/2,
-            height: 50px
-        ));
+        padding-left: $gs-baseline/2;
+        padding-right: $gs-baseline/2;
+        height: 50px;
         overflow: hidden;
     }
     .commercial__title {
@@ -532,10 +486,8 @@ $commercial-cta-diameter: (
     }
     .lineitem {
         width: 20%;
-        @include rem((
-            padding-left: $gs-gutter/2,
-            padding-right: $gs-gutter/2
-        ));
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
         float: left;
 
         &:nth-child(n + 4) {
@@ -559,9 +511,7 @@ $commercial-cta-diameter: (
         margin-bottom: $gs-baseline;
     }
     .highitem__details {
-        @include rem((
-            margin-left: 110px
-        ));
+        margin-left: 110px;
     }
     .highitem__img {
         width: 100px;
@@ -586,9 +536,7 @@ $commercial-cta-diameter: (
         .highitem__img {
             width: 100px;
             float: none;
-            @include rem((
-                margin-bottom: $gs-baseline/2
-            ));
+            margin-bottom: $gs-baseline/2;
         }
     }
 
@@ -596,9 +544,7 @@ $commercial-cta-diameter: (
         .highitem__img {
             width: 100%;
             float: none;
-            @include rem((
-                margin-bottom: $gs-baseline/2
-            ));
+            margin-bottom: $gs-baseline/2;
         }
     }
 }
@@ -619,18 +565,14 @@ $commercial-cta-diameter: (
         left: 0;
         width: map-get($commercial-cta-diameter, mobile);
         height: map-get($commercial-cta-diameter, mobile);
-        @include rem((
-            margin-top: -(map-get($commercial-cta-diameter, mobile)/2)-1
-        ));
+        margin-top: -(map-get($commercial-cta-diameter, mobile)/2)-1;
         background-position: center;
         background-color: $c-newsDefault;
         @include border-radius(50%);
         @include mq(tablet) {
             width: map-get($commercial-cta-diameter, tablet);
             height: map-get($commercial-cta-diameter, tablet);
-            @include rem((
-                margin-top: -(map-get($commercial-cta-diameter, tablet)/2)
-            ));
+            margin-top: -(map-get($commercial-cta-diameter, tablet)/2);
         }
     }
     .i {

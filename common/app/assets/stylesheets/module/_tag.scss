@@ -19,38 +19,28 @@ category: Common
 */
 
 .profile {
-    @include rem((
-        margin-top: $gs-baseline/3,
-        margin-bottom: $gs-baseline/2
-    ));
+    margin-top: $gs-baseline/3;
+    margin-bottom: $gs-baseline/2;
 }
 
 .profile__img {
-    @include rem((
-        margin: 0 $gs-gutter 0 0
-    ));
+    margin: 0 $gs-gutter 0 0;
     @include border-radius(50%);
     overflow: hidden;
 
     img {
-        @include rem((
-            width: 80px,
-            height: 80px
-        ));
+        width: 80px;
+        height: 80px;
         @include mq(desktop) {
-            @include rem((
-                width: 120px,
-                height: 120px
-            ));
+            width: 120px;
+            height: 120px;
         }
     }
 }
 
 .profile__bio {
     @include fs-bodyCopy(1);
-    @include rem((
-        height: 80px
-    ));
+    height: 80px;
     vertical-align: middle;
     display: table-cell;
     max-width: gs-span(7);
@@ -60,8 +50,6 @@ category: Common
     }
     @include mq(desktop) {
         @include fs-bodyCopy(2, true);
-        @include rem((
-            height: 120px
-        ));
+        height: 120px;
     }
 }

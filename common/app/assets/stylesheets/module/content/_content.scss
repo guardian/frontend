@@ -1,9 +1,7 @@
 .content {
     border-top: 1px solid #ffffff;
     padding-top: 0;
-    @include rem((
-        padding-bottom: $gs-baseline*3.5
-    ));
+    padding-bottom: $gs-baseline*3.5;
 
     &:after { // clearfix
         content: '';
@@ -20,21 +18,15 @@
     // the intention is to move this to the global .gs-container definition
     // which requires the padding to be removed from all child elements
     @include box-sizing(border-box);
-    @include rem((
-        padding: 0 $gs-gutter/2
-    ));
+    padding: 0 $gs-gutter/2;
     @include mq(mobileLandscape) {
-        @include rem((
-            padding: 0 $gs-gutter
-        ));
+        padding: 0 $gs-gutter;
     }
 }
 
 .content__head {
     @include mq(tablet) {
-        @include rem((
-            padding-top: $content-top-padding
-        ));
+        padding-top: $content-top-padding;
     }
 
     &.content__head--tonal {
@@ -42,9 +34,7 @@
 
         .tone-background {
             @include mq(tablet) {
-                @include rem((
-                    padding-top: $content-top-padding
-                ));
+                padding-top: $content-top-padding;
             }
         }
     }
@@ -54,26 +44,18 @@
     position: relative;
 
     @include mq(tablet) {
-        @include rem((
-            max-width: 620px
-        ));
+        max-width: 620px;
         margin: auto;
     }
     @include mq(rightCol) {
-        @include rem((
-            margin-left: 0,
-            margin-right: $right-column + $gs-gutter
-        ));
+        margin-left: 0;
+        margin-right: $right-column + $gs-gutter;
     }
     @include mq(leftCol) {
-        @include rem((
-            margin-left: $left-column + $gs-gutter
-        ));
+        margin-left: $left-column + $gs-gutter;
     }
     @include mq(wide) {
-        @include rem((
-            margin-left: $left-column-wide + $gs-gutter
-        ));
+        margin-left: $left-column-wide + $gs-gutter;
     }
 
     &.content__main-column--media,
@@ -83,9 +65,7 @@
             max-width: none;
         }
         @include mq(wide) {
-            @include rem((
-                margin-right: gs-span(1) + $gs-gutter
-            ));
+            margin-right: gs-span(1) + $gs-gutter;
         }
     }
 }
@@ -96,23 +76,17 @@
     right: 0;
     height: 100%;
     overflow: hidden; // quick hackfix for overflowing right hand components
-    @include rem((
-        margin-right: $gs-gutter
-    ));
+    margin-right: $gs-gutter;
 
     @include mq($to: rightCol) {
         display: none;
     }
 
-    @include rem((
-        width: gs-span(4)
-    ));
+    width: gs-span(4);
 }
 
 .content__head__comment-count {
-    @include rem((
-        height: 16px + $gs-baseline //font-size + $gs-baseline
-    ));
+    height: 16px + $gs-baseline; //font-size + $gs-baseline
     @include mq(tablet) {
         display: none;
     }
@@ -123,10 +97,8 @@
 
 .content__keywords {
     @include fs-data(4);
-    @include rem((
-        margin-top: $gs-baseline,
-        margin-bottom: $gs-baseline
-    ));
+    margin-top: $gs-baseline;
+    margin-bottom: $gs-baseline;
     
     .content--media & a {
         color: guss-colour(neutral-5);
@@ -138,9 +110,7 @@
     @include box-sizing(border-box);
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
-    @include rem((
-        padding-bottom: $gs-baseline
-    ));
+    padding-bottom: $gs-baseline;
 
     @include mq($to: tablet) {
         border-bottom: 1px solid $c-neutral7;
@@ -151,42 +121,39 @@
     }
 
     @include mq(tablet) {
-        @include rem((
-            padding-bottom: $gs-baseline/2
-        ));
+        padding-bottom: $gs-baseline/2;
     }
 
     @include mq(leftCol) {
         float: left;
-        @include rem((
-            margin-left: -($left-column + $gs-gutter),
-            width: $left-column
-        ));
+        margin-left: -($left-column + $gs-gutter);
+        width: $left-column;
     }
     @include mq(wide) {
-        @include rem((
-            margin-left: -($left-column-wide + $gs-gutter),
-            width: $left-column-wide
-        ));
+        margin-left: -($left-column-wide + $gs-gutter);
+        width: $left-column-wide;
     }
+}
+
+.content__inline-section {
+    @include fs-header(3);
+    @include box-sizing(border-box);
+    padding: $gs-baseline/2 0 $gs-baseline;
+    border-top: 1px dotted guss-colour(neutral-5) !important; // Disable tone colour
 }
 
 .content__headline {
     @include fs-headline(5);
-    @include rem((
-        padding-bottom: $gs-baseline*2,
-        padding-top: $gs-baseline/2
-    ));
+    padding-bottom: $gs-baseline*2;
+    padding-top: $gs-baseline/2;
 
     @include mq(mobileLandscape) {
         @include fs-headline(7, true);
     }
     @include mq(tablet) {
         @include fs-headline(8, true);
-        @include rem((
-            padding-bottom: $gs-row-height,
-            padding-top: $gs-baseline/6
-        ));
+        padding-bottom: $gs-row-height;
+        padding-top: $gs-baseline/6;
         border-top: 0;
     }
     a {
@@ -207,16 +174,12 @@
 
 .content__standfirst {
     @include fs-headline(2);
-    @include rem((
-        margin-bottom: $gs-baseline
-    ));
+    margin-bottom: $gs-baseline;
     color: $c-neutral2;
 
     @include mq(tablet) {
         @include font-size(18px, 22px);
-        @include rem((
-            margin-bottom: ($gs-baseline/3)*4
-        ));
+        margin-bottom: ($gs-baseline/3)*4;
     }
 
     > ul,
@@ -242,22 +205,16 @@
         counter-reset: li;
 
         >li {
-            @include rem((
-                text-indent: 18px
-            ));
+            text-indent: 18px;
 
             @include mq(tablet) {
-                @include rem((
-                    text-indent: 20px
-                ));
+                text-indent: 20px;
             }
         }
 
         > li:before {
             position: absolute;
-            @include rem((
-                left: -16px
-            ));
+            left: -16px;
             content: counter(li)'.';
             counter-increment: li;
             @include fs-header(1);
@@ -265,10 +222,8 @@
 
             @include mq(tablet) {
                 @include fs-header(3, true);
-                @include rem((
-                    left: -20px,
-                    top: -2px
-                ));
+                left: -20px;
+                top: -2px;
             }
         }
     }
@@ -279,9 +234,7 @@
     color: $c-neutral2;
     @include box-sizing(border-box);
     @include fs-textSans(1);
-    @include rem((
-        padding-top: $gs-baseline/3
-    ));
+    padding-top: $gs-baseline/3;
 
     i {
         position: relative;
@@ -289,9 +242,7 @@
     }
     .relative-timestamp__icon {
         vertical-align: top;
-        @include rem((
-            top: 3px
-        ));
+        top: 3px;
     }
 
     @include mq(tablet) {
@@ -299,11 +250,9 @@
     }
 
     @include mq(leftCol) {
-        @include rem((
-            height: gs-height(1) + $gs-baseline,
-            padding-top: $gs-baseline/6,
-            padding-bottom: $gs-baseline
-        ));
+        height: gs-height(1) + $gs-baseline;
+        padding-top: $gs-baseline/6;
+        padding-bottom: $gs-baseline;
         margin-bottom: 0;
         border-top: 1px dotted $c-neutral5;
     }
@@ -320,9 +269,7 @@
     position: relative;
     width: gs-span(1);
     height: 60px; //Intentionally off grid
-    @include rem((
-        margin: $gs-baseline/2 0
-    ));
+    margin: $gs-baseline/2 0;
     overflow: hidden;
     @include border-radius(50%);
     background-color: $c-neutral7;
@@ -335,9 +282,7 @@
         width: gs-span(2);
         height: gs-span(2); //This is intentionally square
         margin-right: 0;
-        @include rem((
-            margin-bottom: $gs-baseline
-        ));
+        margin-bottom: $gs-baseline;
     }
 }
 
@@ -359,9 +304,7 @@
 .content__meta-container {
     min-height: gs-height(1);
     position: relative;
-    @include rem((
-        margin-bottom: $gs-baseline
-    ));
+    margin-bottom: $gs-baseline;
     border-top: 1px dotted $c-neutral5;
     border-bottom: 1px dotted $c-neutral5;
 
@@ -370,18 +313,14 @@
         top: 0;
         border-top: 0;
         border-bottom: 0;
-        @include rem((
-            margin-left: ($left-column + $gs-gutter)*-1,
-            margin-bottom: ($gs-baseline/3)*4,
-            width: $left-column
-        ));
+        margin-left: ($left-column + $gs-gutter)*-1;
+        margin-bottom: ($gs-baseline/3)*4;
+        width: $left-column;
     }
 
     @include mq(wide) {
-        @include rem((
-            margin-left: ($left-column-wide + $gs-gutter)*-1,
-            width: $left-column-wide
-        ));
+        margin-left: ($left-column-wide + $gs-gutter)*-1;
+        width: $left-column-wide;
     }
 }
 
@@ -402,14 +341,10 @@
 .content-meta {
     @include fs-textSans(1);
     font-weight: bold;
-    @include rem((
-        margin: 0 0 $gs-baseline/2
-    ));
+    margin: 0 0 $gs-baseline/2;
 
     @include mq(tablet) {
-        @include rem((
-            padding-top: $gs-baseline/2
-        ));
+        padding-top: $gs-baseline/2;
     }
     .content__head & {
         @include mq(tablet, leftCol) {
@@ -429,35 +364,25 @@
 
 .content-meta--inline {
     margin: 0;
-    @include rem((
-        padding-top: ($gs-baseline/3)*2
-    ));
+    padding-top: ($gs-baseline/3)*2;
 
     .content-meta__label,
     .content-meta__item {
         display: inline-block;
-        @include rem((
-            margin-right: $gs-gutter/10
-        ));
+        margin-right: $gs-gutter/10;
     }
 
     @include mq(tablet) {
-        @include rem((
-            margin: 0 0 $gs-baseline/2
-        ));
+        margin: 0 0 $gs-baseline/2;
     }
 }
 
 .content__mobile-full-width {
-    @include rem((
-        margin-left: -($gs-gutter/2),
-        margin-right: -($gs-gutter/2)
-    ));
+    margin-left: -($gs-gutter/2);
+    margin-right: -($gs-gutter/2);
     @include mq(mobileLandscape, tablet) {
-        @include rem((
-            margin-left: -$gs-gutter,
-            margin-right: -$gs-gutter
-        ));
+        margin-left: -$gs-gutter;
+        margin-right: -$gs-gutter;
     }
     @include mq(tablet) {
         margin-left: 0;
@@ -468,27 +393,21 @@
 .meta__comment-count--top { // currently used on video page only
     display: none;
     float: right;
-    @include rem((
-        margin-top: $gs-baseline/2,
-        margin-left: $gs-gutter/4
-    ));
+    margin-top: $gs-baseline/2;
+    margin-left: $gs-gutter/4;
 }
 
 .byline {
     margin-bottom: 0;
     @include fs-bodyHeading(1);
-    @include rem((
-        padding-top: $gs-baseline/3,
-        line-height: 20px
-    ));
+    padding-top: $gs-baseline/3;
+    line-height: 20px;
     color: $c-neutral2;
 
     @include mq(tablet) {
         @include fs-bodyHeading(2, true);
-        @include rem((
-            padding-right: gs-span(2),
-            line-height: 22px
-        ));
+        padding-right: gs-span(2);
+        line-height: 22px;
     }
 
     @include mq(leftCol) {
@@ -496,11 +415,9 @@
         padding-right: 0;
         border-top: 1px dotted $c-neutral5;
         @include box-sizing(border-box);
-        @include rem((
-            min-height: gs-height(1) + $gs-baseline,
-            padding-top: $gs-baseline/6,
-            padding-bottom: $gs-baseline
-        ));
+        min-height: gs-height(1) + $gs-baseline;
+        padding-top: $gs-baseline/6;
+        padding-bottom: $gs-baseline;
     }
 }
 
@@ -511,11 +428,9 @@
     @include f-headline;
     font-weight: 200;
     @include box-sizing(border-box);
-    @include rem((
-        height: 2*get-line-height($fs-bodyCopy, 2),
-        padding-top: 1px,
-        margin-right: 4px
-    ));
+    height: 2*get-line-height($fs-bodyCopy, 2);
+    padding-top: 1px;
+    margin-right: 4px;
 
     .drop-cap__inner {
         display: inline-block;
@@ -531,10 +446,8 @@
         text-transform: uppercase;
         @include f-headline;
         font-weight: 200;
-        @include rem((
-            margin-right: 5px,
-            height: 3*get-line-height($fs-bodyCopy, 2)
-        ));
+        margin-right: 5px;
+        height: 3*get-line-height($fs-bodyCopy, 2);
 
         .drop-cap__inner {
             @include font-size(84px, 68px);
@@ -548,26 +461,20 @@
 
     i {
         vertical-align: bottom;
-        @include rem((
-            margin-right: 3px,
-            vertical-align: -4px
-        ));
+        margin-right: 3px;
+        vertical-align: -4px;
     }
 
     .content__head & {
         display: block;
-        @include rem((
-            margin-bottom: $gs-baseline
-        ));
+        margin-bottom: $gs-baseline;
     }
 
     @include mq(tablet) {
         display: block;
         position: absolute;
         right: 0;
-        @include rem((
-            top: $gs-baseline/3
-        ));
+        top: $gs-baseline/3;
 
         .content__head & {
             display: none;
@@ -575,9 +482,7 @@
     }
 
     @include mq(leftCol) {
-        @include rem((
-            height : gs-height(1)
-        ));
+        height: gs-height(1);
         position: static;
         @include box-sizing(border-box);
 
@@ -587,10 +492,8 @@
 
         .content__meta-container & {
             display: block;
-            @include rem((
-                padding-top: ($gs-baseline/3),
-                margin-bottom: $gs-baseline
-            ));
+            padding-top: $gs-baseline/3;
+            margin-bottom: $gs-baseline;
             border-top: 1px dotted $c-neutral5;
         }
     }

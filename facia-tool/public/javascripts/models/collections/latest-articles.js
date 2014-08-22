@@ -20,6 +20,11 @@ define([
     authedAjax,
     ko
 ) {
+    function dateYyyymmdd() {
+        var d = new Date();
+        return [d.getFullYear(), d.getMonth() + 1, d.getDate()].map(function(p) { return p < 10 ? '0' + p : p; }).join('-');
+    }
+
     return function(options) {
 
         var self = this,
@@ -107,12 +112,14 @@ define([
                     url = vars.CONST.apiSearchBase + '/' + self.term() + '?show-fields=all&format=json';
                     propName = 'content';
                 } else {
-                    url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json&order-by=newest';
-                    url += '&content-set=' + (self.showingDrafts() ? 'preview&use-date=last-modified' : 'web-live');
+                    url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';
+                    url += self.showingDrafts() ?
+                        '&content-set=-web-live&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
+                        '&content-set=web-live&order-by=newest';
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();
                     url += self.term() ? '&q=' + encodeURIComponent(self.term().trim().replace(/ +/g,' AND ')) : '';
-                    url += '&' + self.filterType().param + '=' + encodeURIComponent(self.filter());
+                    url += self.filter() ? '&' + self.filterType().param + '=' + encodeURIComponent(self.filter()) : '';
                     propName = 'results';
                 }
 

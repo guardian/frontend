@@ -4,9 +4,7 @@
 
 .match-stats__caption {
     @include fs-data(5);
-    @include rem((
-        margin-bottom: $gs-baseline/1.5
-    ));
+    margin-bottom: $gs-baseline/1.5;
     color: $c-neutral1;
     font-weight: 400;
     text-align: left;
@@ -29,9 +27,7 @@
 
 .goal-attempts__label {
     @include box-sizing(border-box);
-    @include rem((
-        padding: $gs-baseline/6 ($gs-gutter/5)*2
-    ));
+    padding: $gs-baseline/6 ($gs-gutter/5)*2;
     font-weight: normal;
     position: absolute;
     margin: 0;
@@ -44,9 +40,7 @@
 }
 .goal-attempts__label--on-target-away,
 .goal-attempts__label--on-target-home {
-    @include rem((
-        bottom: ($gs-baseline/3)*8
-    ));
+    bottom: ($gs-baseline/3)*8;
 }
 .goal-attempts__label--on-target-home {
     left: 21%;
@@ -59,26 +53,20 @@
 .goal-attempts__on-target {
     @include box-sizing(border-box);
     @include fs-header(2);
-    @include rem((
-        padding: $gs-baseline*1.5 ($gs-gutter/5)*2
-    ));
+    padding: $gs-baseline*1.5 ($gs-gutter/5)*2;
     font-weight: 900;
     margin: 0;
     width: 50%;
 }
 .goal-attempts__off-target {
-    @include rem((
-        height: $gs-baseline*10
-    ));
+    height: $gs-baseline*10;
     /* taken from https://github.com/guardian/mobile-apps-article-templates/blob/master/ArticleTemplates/css/img/hor_bg.png */
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAGElEQVQoz2NgIAP8///feFTTqKbhrQkIAKVFLKEzqlndAAAAAElFTkSuQmCC');
     background-size: 8px;
 }
 .goal-attempts__on-target {
     @include box-sizing(border-box);
-    @include rem((
-        height: $gs-baseline*5
-    ));
+    height: $gs-baseline*5;
     border: 4px solid #ffffff;
     border-bottom: 0;
     bottom: 0;
@@ -114,19 +102,15 @@
 .bar-fight {
     .match-stats__caption {
         float: left;
-        @include rem((
-            margin-top: ($gs-baseline/3)*4
-        ));
+        margin-top: ($gs-baseline/3)*4;
     }
 }
 
 .bar-fight__bar {
     @include box-sizing(border-box);
     @include fs-header(2);
-    @include rem((
-        line-height: $gs-baseline*1.5,
-        padding: $gs-baseline/4 ($gs-gutter/4)+3 0
-    ));
+    line-height: $gs-baseline*1.5;
+    padding: $gs-baseline/4 ($gs-gutter/4)+3 0;
     background-color: $c-statusNeutral;
     color: #ffffff;
     font-weight: bold;

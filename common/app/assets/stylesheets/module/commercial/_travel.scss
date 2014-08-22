@@ -9,9 +9,7 @@ $travelBlue: #066ec9;
 .commercial--travel {
     .commercial__head {
         border-top: 0;
-        @include rem((
-            margin-top: $gs-baseline
-        ));
+        margin-top: $gs-baseline;
         height: auto;
         position: relative;
     }
@@ -22,41 +20,29 @@ $travelBlue: #066ec9;
         
         .commercial__title__middle-word {
             color: $c-commercial-travel-light;
-            @include rem((
-               margin-left: -$gs-gutter/4
-            ));
+            margin-left: -$gs-gutter/4;
         }
         .commercial__title__last-word {
             color: $travelBlue;
-            @include rem((
-               margin-left: -$gs-gutter/4
-            ));
+            margin-left: -$gs-gutter/4;
         }
     }
     .commercial__search {
         float: none;
         overflow: auto;
-        @include rem((
-            margin: $gs-baseline/2 0
-        ));
+        margin: $gs-baseline/2 0;
     }
     .commercial__body {
-        @include rem((
-            padding: 0 0 $gs-baseline
-        ));
+        padding: 0 0 $gs-baseline;
     }
     .lineitems {
-        @include rem((
-            margin: 0 (-$gs-gutter/2)
-        ));
+        margin: 0 (-$gs-gutter/2);
     }
     .lineitem {
         width: 50%;
         float: left;
         border-top: 0;
-        @include rem((
-            padding: 0 $gs-gutter/2
-        ));
+        padding: 0 $gs-gutter/2;
         
         &:nth-child(n+3) {
             display: none;
@@ -86,9 +72,7 @@ $travelBlue: #066ec9;
                 float: none;
                 width: auto;
                 border: 0;
-                @include rem((
-                    padding-top: $gs-baseline/2
-                ));
+                padding-top: $gs-baseline/2;
                 
                 + .lineitem {
                     border-top: 1px solid $c-neutral4;
@@ -105,9 +89,7 @@ $travelBlue: #066ec9;
                     width: 50%;
                     float: left;
                     border-top: 0;
-                    @include rem((
-                        padding: 0 $gs-gutter/2
-                    ));
+                    padding: 0 $gs-gutter/2;
 
                     &:nth-child(n+3) {
                         display: none;
@@ -133,14 +115,10 @@ $travelBlue: #066ec9;
                 @include box-sizing(border-box);
             }
             .commercial__relevance-high {
-                @include rem((
-                    padding-right: $gs-gutter/2
-                ));
+                padding-right: $gs-gutter/2;
             }
             .commercial__relevance-low {
-                @include rem((
-                    padding-left: $gs-gutter/2
-                ));
+                padding-left: $gs-gutter/2;
 
                 .lineitem:nth-child(n+2) {
                     display: block;
@@ -154,10 +132,8 @@ $travelBlue: #066ec9;
                     position: static;
                 }
                 .commercial__home-link {
-                    @include rem((
-                        top: $gs-baseline,
-                        right: $gs-gutter
-                    ));
+                    top: $gs-baseline;
+                    right: $gs-gutter;
                 }
             }
         }
@@ -178,30 +154,22 @@ $travelBlue: #066ec9;
                     float: left;
                 }
                 .commercial__search {
-                    @include rem((
-                        bottom: $gs-baseline
-                    ));
+                    bottom: $gs-baseline;
                 }
                 .commercial__home-link {
                     top: auto;
-                    @include rem((
-                        bottom: $gs-baseline,
-                        right: $gs-gutter
-                    ));
+                    bottom: $gs-baseline;
+                    right: $gs-gutter;
                 }
             }
         }
         @include mq(faciaLeftCol) {
             .facia-container--layout-front & {
                 .lineitem:nth-child(1) {
-                    @include rem((
-                        padding-left: $gs-gutter/2
-                    ));
+                    padding-left: $gs-gutter/2;
                 }
                 .commercial__search {
-                    @include rem((
-                        bottom: $gs-baseline
-                    ));
+                    bottom: $gs-baseline;
                 }
             }
         }
@@ -225,9 +193,7 @@ $travelBlue: #066ec9;
             right: 0;
         }
         .commercial__search {
-            @include rem((
-                margin: $gs-baseline 0
-            ));
+            margin: $gs-baseline 0;
         }
     }
     @include mq(tablet) {
@@ -263,9 +229,7 @@ $travelBlue: #066ec9;
 
 @mixin c-travel-leftCol {
     .facia-container__inner {
-        @include rem((
-            padding-bottom: $gs-baseline*4
-        ));
+        padding-bottom: $gs-baseline*4;
     }
     .commercial__title {
         .commercial__title__middle-word,
@@ -275,16 +239,12 @@ $travelBlue: #066ec9;
     }
     .commercial__search {
         position: absolute;
-        @include rem((
-            width: gs-span(5) + $gs-gutter/2,
-            left: $gs-gutter
-        ));
+        width: gs-span(5) + $gs-gutter/2;
         bottom: 0;
+        left: $gs-gutter;
     }
     .commercial__body {
-        @include rem((
-            padding-top: $gs-baseline
-        ));
+        padding-top: $gs-baseline;
     }
     .commercial__head {
         position: static;
@@ -292,10 +252,8 @@ $travelBlue: #066ec9;
     }
     .commercial__home-link {
         left: auto;
-        @include rem((
-            right: $gs-gutter,
-            bottom: $gs-baseline
-        ));
+        right: $gs-gutter;
+        bottom: $gs-baseline;
         top: auto;
     }
     .lineitem {
@@ -314,24 +272,20 @@ $travelBlue: #066ec9;
     .commercial__title {
         .commercial__title__middle-word,
         .commercial__title__last-word {
-            @include rem((
-                margin-left: -$gs-gutter/4
-            ))
+            margin-left: -$gs-gutter/4;
         }
     }
     .facia-container__inner {
         padding-bottom: 0;
     }
     .commercial__search {
+        position: relative;
         width: auto;
         left: 0;
-        position: relative;
     }
     .commercial__home-link {
         right: auto;
-        @include rem((
-            left: $gs-gutter
-        ));
+        left: 0;
     }
     .has-page-skin & {
         .commercial__head {
@@ -339,9 +293,7 @@ $travelBlue: #066ec9;
         }
         .commercial__home-link {
             width: auto;
-            @include rem((
-                top: $gs-baseline
-            ));
+            top: $gs-baseline;
             right: 0;
             left: auto;
             bottom: auto;
@@ -362,10 +314,8 @@ $travelBlue: #066ec9;
         
         &.commercial--high .commercial__head,
         .commercial__head {
-            @include rem((
-                width: gs-span(2),
-                margin-right: $gs-gutter
-            ));
+            width: gs-span(2);
+            margin-right: $gs-gutter;
         }
     }
     @include mq(wide) {
@@ -378,16 +328,12 @@ $travelBlue: #066ec9;
 .facia-container--layout-content .commercial--travel {
     @include mq(leftCol) {
         @include c-travel-leftCol;
-        
+
         .commercial__search {
-            @include rem((
-                left: $gs-gutter
-            ));
+            left: $gs-gutter;
         }
         .commercial__home-link {
-            @include rem((
-                right: $gs-gutter
-            ));
+            right: $gs-gutter;
         }
     }
     @include mq(wide) {
