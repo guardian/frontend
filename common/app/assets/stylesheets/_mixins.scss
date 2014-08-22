@@ -177,7 +177,7 @@
     flex-direction: $direction;
 }
 
-@mixin columns($cols: 1, $gutter: $gs-gutter) {
+@mixin columns($cols: 1, $gutter: 0) {
     @if $browser-supports-columns {
         -webkit-column-count: $cols;
         -moz-column-count: $cols;
@@ -187,11 +187,15 @@
         -moz-column-gap: $gutter;
         column-gap: $gutter;
     } @else {
+        margin-left: 0 - $gutter * .5;
+        margin-right: 0 - $gutter * .5;
         & > * {
             @include box-sizing(border-box);
             width: (100% / $cols);
             float: left;
             display: block;
+            padding-left: $gutter * .5;
+            padding-right: $gutter * .5;
         }
     }
 }
