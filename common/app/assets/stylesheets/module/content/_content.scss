@@ -135,7 +135,7 @@
     }
 }
 
-.content__inlinesection {
+.content__inline-section {
     @include fs-header(3);
     @include box-sizing(border-box);
     padding: $gs-baseline/2 0 $gs-baseline;
