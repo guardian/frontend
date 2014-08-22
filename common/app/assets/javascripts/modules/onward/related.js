@@ -98,7 +98,7 @@ define([
                         register.end(componentName);
                     },
                     error: function(req) {
-                        mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
+                        throw new Error('Failed to load related: ' + req.statusText);
                         register.error(componentName);
                     }
                 }).load();

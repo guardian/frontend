@@ -28,7 +28,6 @@ define([
             w[this.type].removeItem(testKey);
             return true;
         } catch (e) {
-            mediator.emit('module:error', 'Unable to save to local storage: ' + e.message, 'common/utils/storage.js');
             return false;
         }
     };

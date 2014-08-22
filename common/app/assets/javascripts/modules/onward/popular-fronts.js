@@ -40,9 +40,7 @@ define([
                     images.upgrade(container);
                 },
                 function(req) {
-                    mediator.emit(
-                        'module:error', 'Failed to load facia popular: ' + req.statusText
-                    );
+                    throw new Error('Failed to load facia popular: ' + req.statusText);
                 }
             );
         }

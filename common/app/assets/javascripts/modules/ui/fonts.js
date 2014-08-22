@@ -43,7 +43,7 @@ define([
                         success: (function (style) {
                             return function (json) {
                                 if (!json) {
-                                    mediator.emit('module:error', 'Failed to load fonts', 'fonts.js');
+                                    throw new Error('Failed to load fonts');
                                     return;
                                 }
                                 if (typeof callback === 'function') {

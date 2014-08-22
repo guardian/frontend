@@ -53,7 +53,7 @@ define([
     };
 
     TonalComponent.prototype.error = function() {
-        mediator.emit('module:error', 'Failed to load tone:' + this.getTone() + 'common/modules/related.js');
+        throw new Error('Failed to load tone:' + this.getTone());
         register.error('tonal-content');
     };
 

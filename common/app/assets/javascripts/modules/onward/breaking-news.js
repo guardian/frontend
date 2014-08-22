@@ -104,9 +104,7 @@ define([
                 });
             },
             function() {
-                mediator.emit(
-                    'module:error', 'Failed to load breaking news'
-                );  
+                throw new Error('Failed to load breaking news');
             }
         );
     };

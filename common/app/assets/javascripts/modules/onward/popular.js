@@ -28,7 +28,7 @@ define([
                     mediator.emit('register:end','popular-in-section');
                 },
                 error: function(req) {
-                    mediator.emit('module:error', 'Failed to load most read: ' + req.statusText, 'common/modules/popular.js');
+                    throw new Error('Failed to load most read: ' + req.statusText);
                     mediator.emit('register:error','popular-in-section');
                 }
             }).load();

@@ -25,7 +25,7 @@ define([
     };
 
     OnwardContent.prototype.error = function() {
-        mediator.emit('module:error', 'Failed to load series:' + this.config.page.series + 'common/modules/related.js');
+        throw new Error('Failed to load series:' + this.config.page.series);
         register.error('series-content');
     };
 

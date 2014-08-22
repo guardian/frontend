@@ -146,7 +146,7 @@ define([
                     }
                 },
                 function(req) {
-                    mediator.emit('module:error', 'Failed to load auto-update: ' + req.statusText, 'common/modules/autoupdate.js');
+                    throw new Error('Failed to load auto-update: ' + req.statusText);
                 }
             );
         };

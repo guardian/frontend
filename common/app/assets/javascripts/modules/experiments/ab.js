@@ -265,7 +265,7 @@ define([
                 // Encountering an error should invalidate the logging process.
                 abLogObject = {};
 
-                mediator.emit('module:error', error, 'common/modules/experiments/ab.js', 267);
+                throw error;
             }
 
             return abLogObject;

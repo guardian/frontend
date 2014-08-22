@@ -31,7 +31,7 @@ define([
                     $('.monocolumn-wrapper').after($pushedContent);
                 }
             } else {
-                mediator.emit('module:error', 'Invalid data returned from socket, module/websocket.js');
+                throw new Error('Invalid data returned from socket');
             }
         };
 
