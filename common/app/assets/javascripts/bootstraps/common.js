@@ -252,7 +252,11 @@ define([
 
             var releaseMessage = new Message('alpha', {pinOnHide: true});
 
-            if (config.switches.releaseMessage && config.page.hasClassicVersion && (detect.getBreakpoint() !== 'mobile')) {
+            if (
+                config.switches.releaseMessage &&
+                config.page.hasClassicVersion &&
+                (detect.getBreakpoint() !== 'mobile')
+            ) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
 
