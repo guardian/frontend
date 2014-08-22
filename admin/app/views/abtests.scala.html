@@ -1,5 +1,7 @@
 @(env: String, charts: Seq[tools.LineChart])
 
+@import views.support.CamelCase
+
 @chartJson(chart: tools.LineChart) = {
     '@chart.name': {
         data: @Html(chart.asDataset),
@@ -33,7 +35,7 @@
         };
         window.abSwitches = {
             @conf.Switches.all.filter(_.group == "A/B Tests").map{ s =>
-                "@JavaScriptVariableName(s.name)": @s.isSwitchedOn,
+                "@CamelCase.fromHyphenated(s.name)": @s.isSwitchedOn,
             }
         }
     </script>
