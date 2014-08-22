@@ -26,9 +26,9 @@
 
 .gallery2__figcaption {
     @include fs-textSans(1);
-    @include rem((
-        padding-top: $gs-baseline/2
-    ));
+    padding-top: $gs-baseline/2;
+    overflow: hidden;
+    max-height: 100%;
 
     @include mq($to: rightCol) {
         margin-bottom: $gs-baseline*3;
@@ -110,9 +110,7 @@
 
 .content--gallery {
     .content__meta-container {
-        @include rem((
-            min-height: gs-height(1) + $gs-baseline*2
-        ));
+        min-height: gs-height(1) + $gs-baseline*2;
 
         @include mq(tablet) {
             border-bottom: 0;
@@ -120,9 +118,7 @@
 
         .social__head {
             color: guss-colour(neutral-3);
-            @include rem((
-                padding: $gs-baseline/4 0
-            ));
+            padding: $gs-baseline/4 0;
         }
 
         @include mq(tablet, leftCol) {
@@ -162,9 +158,7 @@
         .meta__comment-count--bottom {
             display: block;
             float: none;
-            @include rem((
-                padding-top: $gs-baseline/2
-            ));
+            padding-top: $gs-baseline/2;
 
             .commentcount {
                 position: static;
