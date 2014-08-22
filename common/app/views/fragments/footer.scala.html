@@ -70,6 +70,9 @@
             @if(page.hasClassicVersion) {
                 <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "use current version")</li>
             }
+            @if(page.hasClassicVersion) {
+                <li class="colophon__item mobile-only">@fragments.mainSiteLink(page, label = "desktop site")</li>
+            }
         </ul>
         <div class="l-footer__misc">
             <div class="really-serious-copyright">© @{new DateTime().year.getAsText} Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
