@@ -1,13 +1,15 @@
 /*jshint loopfunc: true */
 define([
-    'qwery',
     'bonzo',
+    'qwery',
+    'raven',
     'common/utils/ajax',
     'common/utils/mediator',
     'common/utils/storage'
 ], function (
-    qwery,
     bonzo,
+    qwery,
+    raven,
     ajax,
     mediator,
     storage
@@ -43,7 +45,7 @@ define([
                         success: (function (style) {
                             return function (json) {
                                 if (!json) {
-                                    throw new Error('Failed to load fonts');
+                                    raven.captureMessage('Failed to load fonts');
                                     return;
                                 }
                                 if (typeof callback === 'function') {

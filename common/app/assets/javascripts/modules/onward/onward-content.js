@@ -1,13 +1,13 @@
 define([
-    'common/utils/mediator',
+    'raven',
     'common/modules/analytics/register',
-    'common/modules/ui/images',
-    'common/modules/component'
+    'common/modules/component',
+    'common/modules/ui/images'
 ], function(
-    mediator,
+    raven,
     register,
-    images,
-    Component
+    Component,
+    images
 ){
     function OnwardContent(config, context){
         register.begin('series-content');
@@ -25,7 +25,7 @@ define([
     };
 
     OnwardContent.prototype.error = function() {
-        throw new Error('Failed to load series:' + this.config.page.series);
+        raven.captureMessage('Failed to load series:' + this.config.page.series);
         register.error('series-content');
     };
 

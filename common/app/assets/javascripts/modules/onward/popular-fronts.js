@@ -1,19 +1,19 @@
 define([
-    'common/utils/$',
-    'common/utils/mediator',
-    'common/utils/ajax',
+    'raven',
     'bonzo',
-    'common/modules/ui/relativedates',
+    'common/utils/$',
+    'common/utils/ajax',
+    'common/modules/discussion/comment-count',
     'common/modules/ui/images',
-    'common/modules/discussion/comment-count'
+    'common/modules/ui/relativedates'
 ], function (
-    $,
-    mediator,
-    ajax,
+    raven,
     bonzo,
-    relativeDates,
+    $,
+    ajax,
+    commentCount,
     images,
-    commentCount
+    relativeDates
 ) {
 
     return  {
@@ -40,7 +40,7 @@ define([
                     images.upgrade(container);
                 },
                 function(req) {
-                    throw new Error('Failed to load facia popular: ' + req.statusText);
+                    raven.captureMessage('Failed to load facia popular: ' + req.statusText);
                 }
             );
         }

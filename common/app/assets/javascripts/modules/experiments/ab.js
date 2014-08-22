@@ -1,4 +1,5 @@
 define([
+    'raven',
     'lodash/collections/filter',
     'lodash/collections/forEach',
     'lodash/collections/map',
@@ -12,6 +13,7 @@ define([
     'common/modules/analytics/mvt-cookie',
     'common/modules/experiments/tests/high-commercial-component'
 ], function (
+    raven,
     filter,
     forEach,
     map,
@@ -264,8 +266,7 @@ define([
             } catch (error) {
                 // Encountering an error should invalidate the logging process.
                 abLogObject = {};
-
-                throw error;
+                raven.captureException(error);
             }
 
             return abLogObject;

@@ -1,25 +1,25 @@
 define([
-    'common/utils/mediator',
-    'common/utils/ajax',
-    'common/modules/onward/history',
-    'common/utils/storage',
-    'lodash/objects/assign',
-    'lodash/objects/isArray',
+    'bean',
+    'bonzo',
+    'raven',
     'lodash/arrays/flatten',
     'lodash/arrays/intersection',
-    'bean',
-    'bonzo'
+    'lodash/objects/assign',
+    'lodash/objects/isArray',
+    'common/utils/ajax',
+    'common/utils/storage',
+    'common/modules/onward/history'
 ], function (
-    mediator,
-    ajax,
-    history,
-    storage,
-    assign,
-    isArray,
+    bean,
+    bonzo,
+    raven,
     flatten,
     intersection,
-    bean,
-    bonzo
+    assign,
+    isArray,
+    ajax,
+    storage,
+    history
 ) {
     var breakingNewsSource = '/breaking-news/lite.json',
         storageKeyHidden = 'gu.breaking-news.hidden',
@@ -104,7 +104,7 @@ define([
                 });
             },
             function() {
-                throw new Error('Failed to load breaking news');
+                raven.captureMessage('Failed to load breaking news');
             }
         );
     };

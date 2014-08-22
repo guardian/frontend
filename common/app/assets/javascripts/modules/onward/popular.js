@@ -1,9 +1,11 @@
 define([
-    'common/modules/lazyload',
-    'common/utils/mediator'
+    'raven',
+    'common/utils/mediator',
+    'common/modules/lazyload'
 ], function (
-    LazyLoad,
-    mediator
+    raven,
+    mediator,
+    LazyLoad
 ) {
 
 
@@ -28,7 +30,7 @@ define([
                     mediator.emit('register:end','popular-in-section');
                 },
                 error: function(req) {
-                    throw new Error('Failed to load most read: ' + req.statusText);
+                    raven.captureMessage('Failed to load most read: ' + req.statusText);
                     mediator.emit('register:error','popular-in-section');
                 }
             }).load();

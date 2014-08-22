@@ -3,9 +3,9 @@
     Description: Wrapper around localStorage functionality
 */
 define([
-    'common/utils/mediator'
+    'raven'
 ], function (
-    mediator
+    raven
 ) {
 
     var w = window;
@@ -28,6 +28,7 @@ define([
             w[this.type].removeItem(testKey);
             return true;
         } catch (e) {
+            raven.captureException(e);
             return false;
         }
     };
