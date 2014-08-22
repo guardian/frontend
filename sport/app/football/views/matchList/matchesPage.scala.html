@@ -26,28 +26,28 @@
                     </ul>
                 </div>
 
-            <div class="football-matches__container" data-show-more-contains="football-matches">
-                @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
-                    <div class="football-matches__day">
-                        <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
-                        @competitionMatches.map { case (competition, matches) =>
-                            <div class="football-table__container">
-                                <div class="u-cf">
-                                    @football.views.html.matchList.matchesList(
-                                        matches,
-                                        competition,
-                                        date,
-                                        responsiveFont = true,
-                                        matchType = matchesList.pageType,
-                                        // this is a special case for the world cup, remove it afterwards
-                                        heading = Some(competition.fullName, Option(competition.url))
-                                    )
+                <div class="football-matches__container" data-show-more-contains="football-matches">
+                    @matchesList.matchesGroupedByDateAndCompetition.map { case (date, competitionMatches) =>
+                        <div class="football-matches__day">
+                            <div class="date-divider">@date.toString("EEEE d MMMM yyyy")</div>
+                            @competitionMatches.map { case (competition, matches) =>
+                                <div class="football-table__container">
+                                    <div class="u-cf">
+                                        @football.views.html.matchList.matchesList(
+                                            matches,
+                                            competition,
+                                            date,
+                                            responsiveFont = true,
+                                            matchType = matchesList.pageType,
+                                            // this is a special case for the world cup, remove it afterwards
+                                            heading = Some(competition.fullName, Option(competition.url))
+                                        )
+                                    </div>
                                 </div>
-                            </div>
-                        }
-                    </div>
-                }
-            </div>
+                            }
+                        </div>
+                    }
+                </div>
 
                 @if(matchesList.previousPage.isDefined || matchesList.nextPage.isDefined) {
                     <div class="matches-nav" data-link-name="@matchesList.pageType nav">
