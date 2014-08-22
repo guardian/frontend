@@ -1,8 +1,7 @@
 @charset 'UTF-8';
 
 @include mq($to: mobileLandscape) {
-    .content--gallery .content__section
-     {
+    .content--gallery .content__section {
         display: none;
     }
 }
