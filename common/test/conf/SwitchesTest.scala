@@ -27,13 +27,4 @@ class SwitchesTest extends FlatSpec with Matchers {
       case Switch(_, id, _, _, sellByDate) => assert(sellByDate.isAfter(new LocalDate()), id)
     }
   }
-
-  it should "Check a switch is on if set to expire in the future" in {
-    assert(Switches.NeverExpiredSwitch.isSwitchedOn)
-  }
-  
-  it should "Check a switch expires once it's sell by date has past" in {
-    assert(Switches.AlwaysExpiredSwitch.isSwitchedOff)
-  }
-  
 }

@@ -192,6 +192,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height)
 
+  override lazy val showMainVideo: Boolean =
+    apiContent.metaData.get("showMainVideo").flatMap(_.asOpt[Boolean]).getOrElse(false)
+
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 }
 
@@ -488,6 +491,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
   override lazy val openGraphImage: String = galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
+
+  override def schemaType = Some("http://schema.org/ImageGallery")
 
   // if you change these rules make sure you update IMAGES.md (in this project)
   override def trailPicture: Option[ImageContainer] = thumbnail

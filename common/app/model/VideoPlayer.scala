@@ -9,7 +9,8 @@ case class VideoPlayer(
   title: String,
   autoPlay: Boolean,
   showControlsAtStart: Boolean,
-  endSlatePath: String
+  endSlatePath: String,
+  overrideIsRatioHd: Option[Boolean] = None
 ) {
   def poster = profile.bestFor(video).getOrElse(Static("images/media-holding.jpg").path)
 
@@ -18,4 +19,6 @@ case class VideoPlayer(
   def height = profile.width.get
 
   def showEndSlate = width >= Video640.width.get
+
+  def isRatioHd = overrideIsRatioHd getOrElse profile.isRatioHD
 }
