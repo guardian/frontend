@@ -7,22 +7,13 @@ import conf.IdentityConfiguration
 import com.google.inject.Inject
 import utils.SafeLogging
 
+import scala.util.Try
+
 
 class ReturnUrlVerifier @Inject()(conf: IdentityConfiguration) extends SafeLogging {
   val domainRegExp = """^https?://([^:/\?]+).*""".r
   val returnUrlDomains = List(conf.id.domain)
   val defaultReturnUrl = "http://www." + conf.id.domain
-
-  private def validUrl(s: String): Boolean = try {
-    new URI(s)
-    true
-  } catch {
-    case e: URISyntaxException => false
-  }
-
-  private def validDomain(domain: String) = returnUrlDomains.exists(validDomain =>
-    domain == validDomain || domain.endsWith("." + validDomain)
-  )
 
   def getVerifiedReturnUrl(request: RequestHeader): Option[String] = {
     getVerifiedReturnUrl(
@@ -53,4 +44,11 @@ class ReturnUrlVerifier @Inject()(conf: IdentityConfiguration) extends SafeLoggi
       case _ => false
     })
   }
+
+  private def validUrl(url: String) = Try(new URI(url)).isSuccess
+
+  private def validDomain(domain: String) = returnUrlDomains.exists(validDomain =>
+    domain == validDomain || domain.endsWith("." + validDomain)
+  )
+
 }
