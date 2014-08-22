@@ -66,6 +66,7 @@ case class VideoAsset(private val delegate: Asset, image: Option[ImageContainer]
   lazy val blockVideoAds: Boolean = fields.get("blockAds").exists(_.toBoolean)
 
   lazy val source: Option[String] = fields.get("source")
+  lazy val caption: Option[String] = fields.get("caption")
 }
 
 case class AudioAsset(private val delegate: Asset) {

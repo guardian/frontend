@@ -15,10 +15,8 @@ define([
      * @param {string} type
      * @return {Bonzo}
      */
-    function svgEl(type, elClass) {
-        var $el = $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
-        $el.className += (elClass ? ' ' + elClass : '');
-        return $el;
+    function svgEl(type) {
+        return $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
     }
 
     /**
@@ -102,19 +100,23 @@ define([
                 'A', cutoutRadius, cutoutRadius, 0, arc, 0, inner.end.x, inner.end.y,
                 'Z'
             ];
-            $g = svgEl('g', 'chart__arc')
+            $g = svgEl('g')
+                .attr('class', 'chart__arc')
                 .append(svgEl('path').attr({
                     'd': d.join(' '),
                     'fill': datum.color
                 }));
 
             // labels
-            $t = svgEl('text', 'chart__label');
+            $t = svgEl('text')
+                .attr('class', 'chart__label');
             if (o.showValues) {
-                $t.append(svgEl('tspan', 'chart__label-text')
+                $t.append(svgEl('tspan')
+                    .attr('class', 'chart__label-text')
                     .text(datum.label)
                     .attr({ x: 0, dy: '0' }))
-                 .append(svgEl('tspan', 'chart__label-value')
+                 .append(svgEl('tspan')
+                    .attr('class', 'chart__label-value')
                     .text(datum.value)
                     .attr({ x: 0, dy: '1em' }));
             } else {
@@ -128,7 +130,8 @@ define([
         });
 
         // Unit of measurement
-        return $svg.append(svgEl('text', 'chart__unit')
+        return $svg.append(svgEl('text')
+            .attr('class', 'chart__unit')
             .text(o.unit)
             .attr({
                 transform: translate(c),
