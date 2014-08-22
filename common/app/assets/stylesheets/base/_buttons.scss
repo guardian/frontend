@@ -1,4 +1,118 @@
-.button {}
+/*doc
+---
+title: Buttons
+name: buttons
+category: Common
+---
+```html_example
+<div>
+    <a href="#" class="button button--primary">Link to somewhere</a>
+    <a href="#" class="button button--secondary">Link to somewhere</a>
+    <a href="#" class="button button--tertiary">Link to somewhere</a>
+</div>
+<div>
+    <a href="#" class="button button--primary button--large">Link to somewhere</a>
+    <a href="#" class="button button--primary button--medium">Link to somewhere</a>
+    <a href="#" class="button button--primary button--small">Link to somewhere</a>
+    <a href="#" class="button button--primary button--xsmall">Link to somewhere</a>
+</div>
+<div>
+    <a href="#" class="button button--primary i i-arrow-white-right i-right">Link to somewhere</a>
+    <a href="#" class="button button--secondary i i-arrow-white-right i-right">Link to somewhere</a>
+    <a href="#" class="button button--tertiary i i-arrow-white-right i-right">Link to somewhere</a>
+</div>
+<div>
+    <a href="#" class="button button--primary i i-arrow-white-right i-left">Link to somewhere</a>
+    <a href="#" class="button button--secondary i i-arrow-white-right i-left">Link to somewhere</a>
+    <a href="#" class="button button--tertiary i i-arrow-white-right i-left">Link to somewhere</a>
+</div>
+```
+*/
+
+@mixin button-height($button-size) {
+    height: $button-size;
+    padding: 0 $button-size/2;
+    margin-right: $button-size/4;
+    line-height: $button-size + 1px;
+    
+    i {
+        width: $button-size;
+        height: $button-size;
+    }
+    &.i {
+        padding: 0  $button-size 0 $button-size/2;
+        width: auto;
+        .svg & {
+            background-position-x: right;
+        }
+    }
+    &.i-left {
+        padding: 0  $button-size/2 0 $button-size;
+        .svg & {
+            background-position-x: left;
+        }
+    }
+}
+
+@mixin button-colour($fill-colour, $text-colour, $hover-colour) {
+    color: $text-colour;
+    background-color: $fill-colour;
+    
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $hover-colour;
+    }    
+}
+
+.button {
+    display: inline-block;
+    width: auto;
+    @include fs-textSans(2);
+    @include button-height(gs-height(1) - $gs-baseline/2);
+    color: #ffffff;
+    @include border-radius(50%);
+
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: none;
+    }
+ 
+/* TODO make colours from GUSS */   
+    &.button--primary {
+        @include button-colour($c-newsAccent, #ffffff, $c-newsDefault);
+    }
+    
+    &.button--secondary {
+        @include button-colour($c-neutral2, #ffffff, $c-newsAccent);
+    }
+    &.button--tertiary {
+        background-color: #fff;
+        color: #ccc;
+        border: 1px solid #ccc;
+        
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: #ccc;
+            color: #fff;
+        }
+    }
+    &.button--large {
+        @include button-height($gs-baseline*3);
+    }
+    &.button--medium {
+        @include button-height(gs-height(1) - $gs-baseline/2);
+    }
+    &.button--small {
+        @include button-height($gs-baseline*2);
+    }
+    &.button--xsmall {
+        @include button-height($gs-baseline*1.5);
+    }
+}
+
 .button--show-more {
     @include fs-textSans(3);
     margin-bottom: $gs-baseline;
@@ -18,3 +132,5 @@
         }
     }
 }
+
+
