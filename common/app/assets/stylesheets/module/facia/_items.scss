@@ -225,14 +225,14 @@
     }
 }
 
-.item__label {
+.item__kicker {
     @include fs-headline(1);
     color: $c-newsAccent;
     margin-right: 3px;
 }
 
-.item__label--live,
-.item__label--breaking-news {
+.item__kicker--live,
+.item__kicker--breaking-news {
     @include f-data;
     @include fs-data(2, $size-only: true);
     text-transform: uppercase;

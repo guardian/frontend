@@ -288,14 +288,14 @@
                     </div>
 
                     <div class="tools">
-                        <a class="tool tool--done" data-bind="click: close">Save</a>
+                        <a class="tool tool--done" data-bind="click: close">Done</a>
                     </div>
 
                     <div class="article__overrides__other">
-                        <select class="labels" data-bind="
+                        <select data-bind="
                             event: {blur: save},
-                            options: $root.labels,
-                            value: meta.label,
+                            options: $root.kickers,
+                            value: meta.kicker,
                             optionsCaption: 'Kicker...'"></select>
 
                         <div class="supporting-message">Add supporting content below</div>
@@ -425,9 +425,9 @@
                         <!-- /ko -->
 
                         <span data-bind="
-                            attr: {class: 'is is--' + meta.label()}
-                            visible: meta.label,
-                            text: meta.label,
+                            attr: {class: 'is is--' + meta.kicker()}
+                            visible: meta.kicker,
+                            text: meta.kicker,
                             click: open"></span>
 
                         <span data-bind="

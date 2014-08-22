@@ -28,7 +28,7 @@ define([
             {name: 'prototype/raclette'}
         ],
 
-        labels: [
+        kickers: [
             'analysis',
             'background',
             'breaking-news',

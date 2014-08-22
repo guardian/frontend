@@ -323,8 +323,8 @@ object Switches extends Collections {
 
   // Facia
 
-  val ToneLabelsSwitch = Switch("Feature Switches", "tone-labels",
-    "If this is switched on then tone labels are shown on sublinks",
+  val KickersSwitch = Switch("Feature Switches", "show-kickers",
+    "If this is switched on then kickers are shown on sublinks",
     safeState = Off, sellByDate = new LocalDate(2014, 9, 30)
   )
 
@@ -460,7 +460,7 @@ object Switches extends Collections {
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
-    ToneLabelsSwitch,
+    KickersSwitch,
     ChildrensBooksSwitch,
     MetricsSwitch
   )

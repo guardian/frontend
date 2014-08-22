@@ -1,12 +1,12 @@
-@(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta", showTag: Boolean = false)(implicit request: RequestHeader, config: Config)
+@(trail: Trail, itemIndex: Int, containerIndex: Int, kickerCssClasses: String = "u-faux-block-link__cta", showTag: Boolean = false)(implicit request: RequestHeader, config: Config)
 
-@defining((trail.visualTone, trail.label, if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, label, headingLevel) =>
+@defining((trail.visualTone, trail.kicker, if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, kicker, headingLevel) =>
     <h@headingLevel class="item__title">
         @if(trail.isLive){
-            <span class="item__label item__label--live">Live</span>
+            <span class="item__kicker item__kicker--live">Live</span>
         }
-        @if(trail.label == Some("breaking-news")) {
-            <span class="item__label item__label--breaking-news">Breaking news</span>
+        @if(trail.kicker == Some("breaking-news")) {
+            <span class="item__kicker item__kicker--breaking-news">Breaking news</span>
         }
         @if(tone == "comment") {
             <span class="i i-quote-orange"></span>
@@ -14,6 +14,6 @@
         @if(showTag) {
             @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
         }
-        <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span></a>
+        <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article"><span class="@kickerCssClasses">@RemoveOuterParaHtml(trail.headline)</span></a>
     </h@headingLevel>
 }

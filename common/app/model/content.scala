@@ -181,7 +181,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   // Inherited from FaciaFields
   override lazy val group: Option[String] = apiContent.metaData.get("group").flatMap(_.asOpt[String])
   override lazy val supporting: List[Content] = apiContent.supporting
-  override lazy val label: Option[String] = apiContent.metaData.get("label").flatMap(_.asOpt[String])
+  override lazy val kicker: Option[String] = apiContent.metaData.get("kicker").flatMap(_.asOpt[String])
   override lazy val imageAdjust: String = apiContent.metaData.get("imageAdjust").flatMap(_.asOpt[String]).getOrElse("default")
   override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
   override lazy val imageSrcWidth: Option[String] = apiContent.metaData.get("imageSrcWidth").flatMap(_.asOpt[String])

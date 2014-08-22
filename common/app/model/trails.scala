@@ -39,6 +39,6 @@ trait FaciaFields {
   def imageSrcWidth: Option[String] = None
   def imageSrcHeight: Option[String] = None
   def imageAdjust: String = "default"
-  def label: Option[String] = None
+  def kicker: Option[String] = None
   def showMainVideo: Boolean = false
 }
