@@ -53,14 +53,14 @@ trait MetaData extends Tags {
     ("hasClassicVersion", JsBoolean(hasClassicVersion))
   )
 
-  def openGraph: Map[String, Any] = Map(
+  def openGraph: Map[String, String] = Map(
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",
     "og:url"       -> s"${Configuration.site.host}$url"
   )
 
-  def cards: List[(String, Any)] = List(
+  def cards: List[(String, String)] = List(
     "twitter:site" -> "@guardian",
     "twitter:app:name:iphone" -> "The Guardian",
     "twitter:app:id:iphone" -> "409128287",
