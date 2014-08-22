@@ -11,7 +11,7 @@ class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers 
 
   feature("Analytics") {
 
-    // Feature 
+    // Feature
 
     info("In order understand how people are using the website and provide data for auditing")
     info("As a product manager")
@@ -43,7 +43,7 @@ class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers 
       HtmlUnit("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         import browser._
         Then("all links on the page should be decorated with the Omniture meta-data attribute")
-        val anchorsWithNoDataLink = find("a").filter(hasNoLinkName(_))
+        val anchorsWithNoDataLink = find("a").filter(hasNoLinkName)
         anchorsWithNoDataLink should have length (0)
       }
 

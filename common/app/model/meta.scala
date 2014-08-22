@@ -3,6 +3,7 @@ package model
 import common.{NavItem, Edition, ManifestData, Pagination}
 import conf.Configuration
 import dfp.DfpAgent
+import play.api.libs.json.{JsBoolean, JsValue, JsString}
 
 trait MetaData extends Tags {
   def id: String
@@ -39,17 +40,17 @@ trait MetaData extends Tags {
 
   def isSurging: Seq[Int] = Seq(0)
 
-  def metaData: Map[String, Any] = Map(
-    ("page-id", id),
-    ("section", section),
-    ("web-title", webTitle),
-    ("build-number", buildNumber),
-    ("analytics-name", analyticsName),
-    ("blockVideoAds", false),
-    ("is-front", isFront),
-    ("ad-unit", s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng"),
-    ("is-surging", isSurging.mkString(",")),
-    ("has-classic-version", hasClassicVersion)
+  def metaData: Map[String, JsValue] = Map(
+    ("pageId", JsString(id)),
+    ("section", JsString(section)),
+    ("webTitle", JsString(webTitle)),
+    ("buildNumber", JsString(buildNumber)),
+    ("analyticsName", JsString(analyticsName)),
+    ("blockVideoAds", JsBoolean(false)),
+    ("isFront", JsBoolean(isFront)),
+    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
+    ("isSurging", JsString(isSurging.mkString(","))),
+    ("hasClassicVersion", JsBoolean(hasClassicVersion))
   )
 
   def openGraph: Map[String, Any] = Map(

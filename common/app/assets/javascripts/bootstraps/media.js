@@ -454,12 +454,11 @@ define([
             modules.initMostViewedMedia();
         }
 
-        if (
+        if (config.page.contentType &&
             config.page.contentType.toLowerCase() === 'video' &&
             detect.getBreakpoint() !== 'mobile' &&
             !preferences.hasOptedIntoResponsive()
         ) {
-
             modules.displayReleaseMessage();
         }
     };
