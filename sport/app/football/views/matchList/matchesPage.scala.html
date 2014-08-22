@@ -84,15 +84,19 @@
             </div>
 
             <div class="content__secondary-column" aria-hidden="true"></div>
+        </div>
 
+    </article>
 
+    <div class="facia-container facia-container--layout-content">
+        <div class="facia-container__inner">
             @football.views.html.fragments.footballCompetitionNav(matchesList match {
                 case ml: CompetitionList => ml.competition
                 case _ => None
             })
         </div>
+    </div>
 
-    </article>
     <div class="facia-container facia-container--layout-content">
         @views.html.fragments.mostPopularPlaceholder("sport")
     </div>
