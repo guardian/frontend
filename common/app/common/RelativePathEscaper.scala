@@ -1,5 +1,7 @@
 package common
 
+import conf.Switches.SeoEscapeJsonValuesSwitch
+
 object RelativePathEscaper {
   def apply(unescaped: String) = {
     // We are getting Googlebot 404s because Google is incorrectly assessing paths in curl js & json config data
@@ -9,24 +11,29 @@ object RelativePathEscaper {
     // "/foo"
     // and any that are inside single quotes too
 
+    escapeLeadingSlashFootballPaths(escapeLeadingDotPaths(unescaped))
+  }
+
+  def escapeLeadingDotPaths(unescaped: String) = {
     val leadingDotPathRegex = """["'](\.{1,2}\/){1,}\w*(\/){0,}\w*(\/)?['"]""".r
-    val leadingSlashFootballPathRegex = """["'](\/football)(\/team|\/tournament)(\/\w+)['"]""".r
-
     val dotMatches = leadingDotPathRegex.findAllIn(unescaped)
-
-    val unescaped1 = dotMatches.foldLeft(unescaped) {
+    dotMatches.foldLeft(unescaped) {
       case (result: String, matched: String) =>
         result.replace(matched, matched.replace("./", ".\" + \"/\" + \""))
     }
+  }
 
-    val footballMatches = leadingSlashFootballPathRegex.findAllIn(unescaped1)
-
-    val unescaped2 = footballMatches.foldLeft(unescaped1) {
-      case (result: String, matched: String) =>
-        result.replace(matched, matched.replace("/", "/\" + \""))
+  def escapeLeadingSlashFootballPaths(unescaped: String) = {
+    val leadingSlashFootballPathRegex = """["']?(\/football)(\/team|\/tournament)(\/\w+)['"]?""".r
+    if (SeoEscapeJsonValuesSwitch.isSwitchedOn) {
+      val footballMatches = leadingSlashFootballPathRegex.findAllIn(unescaped)
+      footballMatches.foldLeft(unescaped) {
+        case (result: String, matched: String) =>
+          result.replace(matched, matched.replace("/", "/\" + \""))
+      }
+    } else {
+      unescaped
     }
-
-    unescaped2
   }
 
 }

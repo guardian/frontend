@@ -101,7 +101,9 @@ class Assets(base: String, assetMap: String = "assets/assets.map") extends Loggi
 
   object js {
     lazy val curl: String =
-      RelativePathEscaper(IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js")))
+      RelativePathEscaper.escapeLeadingDotPaths(
+        IOUtils.toString(Play.classloader(Play.current).getResource(s"assets/curl-domReady.js"))
+      )
   }
 
 }
