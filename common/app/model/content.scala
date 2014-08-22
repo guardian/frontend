@@ -497,6 +497,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   override lazy val metaData: Map[String, Any] = super.metaData + ("content-type" -> contentType, "gallerySize" -> size)
   override lazy val openGraphImage: String = galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
 
+  override def schemaType = Some("http://schema.org/ImageGallery")
+
   // if you change these rules make sure you update IMAGES.md (in this project)
   override def trailPicture: Option[ImageContainer] = thumbnail
 

@@ -292,6 +292,12 @@
     display: inline;
 }
 
+.item__header--inline-video {
+    @include mq(desktop) {
+        margin-top: 2px;
+    }
+}
+
 .item__media-wrapper .gu-media-wrapper {
     margin-bottom: 0;
 }

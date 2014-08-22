@@ -17,7 +17,7 @@
         <div class="item__container">
             <div class="item__tonal-border tone-accent-border"></div>
             @FaciaDisplayElement.fromTrail(video) match {
-                case InlineVideo(videoElement, title, endSlatePath) if (video.imageAdjust == "boost" || forcePlayable) => {
+                case InlineVideo(videoElement, title, endSlatePath) if video.imageAdjust == "boost" || forcePlayable => {
                     <div class="item__media-wrapper item__media-wrapper--has-icon u-faux-block-link__promote">
                         <div class="item__video-container">
                             @views.html.fragments.media.video(VideoPlayer(
@@ -26,7 +26,8 @@
                                 title,
                                 autoPlay = false,
                                 showControlsAtStart = false,
-                                endSlatePath
+                                endSlatePath,
+                                overrideIsRatioHd = Some(false)
                             ))
                         </div>
                     </div>
