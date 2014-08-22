@@ -494,6 +494,9 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   def apply(index: Int): ImageAsset = galleryImages(index).largestImage.get
 
+  def imageAssets(index: Int): Seq[ImageAsset] = galleryImages(index).delegate.assets.map(a => ImageAsset(a, index))
+  def imageContainer(index: Int): ImageContainer =  ImageContainer(imageAssets(index), galleryImages(index).delegate, index)
+
   lazy val size = galleryImages.size
   override lazy val contentType = GuardianContentTypes.GALLERY
   lazy val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
