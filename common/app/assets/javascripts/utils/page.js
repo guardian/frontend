@@ -20,7 +20,7 @@ function(
     }
 
     function isMatch(yes, no) {
-        var teams = config.referencesOfType('paFootballTeam'),
+        var teams = config.referencesOfType('pa-football-team'),
             match = config.page.footballMatch || {};
 
         // the order of this is important as, on occasion,
