@@ -99,7 +99,6 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
   }
 
   def resetPassword(token : String) = Action.async { implicit request =>
-    val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromFlash(resetFormKey).getOrElse(passwordResetForm.bindFromRequest)
 
     def onError(formWithErrors: Form[(String, String, String)]): Future[Result] = {
