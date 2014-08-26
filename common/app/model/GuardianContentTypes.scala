@@ -14,13 +14,14 @@ object GuardianContentTypes {
   // cheers,
   // ken lim (8 July 2014)
 
-  val ARTICLE = "Article"
-  val NETWORK_FRONT = "Network Front"
-  val SECTION = "Section"
-  val IMAGE_CONTENT = "ImageContent"
-  val INTERACTIVE = "Interactive"
-  val GALLERY = "Gallery"
-  val VIDEO = "Video"
-  val AUDIO = "Audio"
-  val LIVEBLOG = "LiveBlog"
+  val Article = "Article"
+  val NetworkFront = "Network Front"
+  val Section = "Section"
+  val ImageContent = "ImageContent"
+  val Interactive = "Interactive"
+  val Gallery = "Gallery"
+  val Video = "Video"
+  val Audio = "Audio"
+  val LiveBlog = "LiveBlog"
+  val TagIndex = "Index"
 }

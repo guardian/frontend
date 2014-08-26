@@ -10,8 +10,10 @@ GET         /reset                                  @controllers.ResetPasswordCo
 POST        /reset                                  @controllers.ResetPasswordController.processPasswordResetRequestForm
 GET         /c/:resetToken                          @controllers.ResetPasswordController.processUpdatePasswordToken( resetToken : String)
 POST        /reset-password/:resetToken             @controllers.ResetPasswordController.resetPassword( resetToken : String )
+GET         /reset-password/:resetToken             @controllers.ResetPasswordController.renderResetPassword( resetToken : String )
 GET         /password/change                        @controllers.ChangePasswordController.displayForm
 POST        /password/change                        @controllers.ChangePasswordController.submitForm
+GET         /password/confirmation                  @controllers.ResetPasswordController.renderPasswordResetConfirmation
 GET         /requestnewtoken                        @controllers.ResetPasswordController.requestNewToken
 GET         /register                               @controllers.RegistrationController.renderForm
 POST        /register                               @controllers.RegistrationController.processForm

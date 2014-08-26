@@ -1,4 +1,6 @@
-@(trail: Trail, inlineImage: Boolean = false, maxWidth: Int = 620)(implicit request: RequestHeader)
+@(trail: model.Trail, inlineImage: Boolean = false, maxWidth: Int = 620)(implicit request: RequestHeader)
+
+@import views.support.{ImgSrc, Item300}
 
 @if(trail.imageAdjust != "hide") {
     @trail.trailPicture(5,3).map{ imageContainer =>

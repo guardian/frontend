@@ -113,7 +113,9 @@ trait FakeApplication extends TestSettings {
       withoutPlugins = disabledPlugins,
       withGlobal = globalSettingsOverride,
       additionalPlugins = testPlugins,
-      additionalConfiguration = Map("application.secret" -> "test-secret")
+      additionalConfiguration = Map(
+        "application.secret" -> "this_is_not_a_real_secret_just_for_tests"
+      )
     )
   ) { block }
 }
