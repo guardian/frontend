@@ -28,7 +28,6 @@ define([
             w[this.type].removeItem(testKey);
             return true;
         } catch (e) {
-            raven.captureException(e);
             return false;
         }
     };
