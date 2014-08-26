@@ -109,7 +109,7 @@ define([
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
                     self.term(urlAbsPath(self.term()));
-                    url = vars.CONST.apiSearchBase + '/' + self.term() + '?show-fields=all&format=json';
+                    url = vars.CONST.apiSearchBase + '/' + self.term() + '?show-fields=all&show-elements=video&format=json';
                     propName = 'content';
                 } else {
                     url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';

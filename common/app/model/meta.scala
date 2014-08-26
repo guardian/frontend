@@ -94,7 +94,7 @@ object Page {
     override lazy val contentType = maybeContentType.getOrElse("")
 
     override def metaData: Map[String, JsValue] =
-      super.metaData ++ maybeContentType.map(contentType => List("content-type" -> JsString(contentType))).getOrElse(Nil)
+      super.metaData ++ maybeContentType.map(contentType => List("contentType" -> JsString(contentType))).getOrElse(Nil)
   }
 }
 
