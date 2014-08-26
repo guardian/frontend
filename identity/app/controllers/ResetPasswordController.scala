@@ -145,15 +145,14 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
   }
 
   def processUpdatePasswordToken( token : String) = Action.async { implicit request =>
-    val idRequest = idRequestParser(request)
-      api.userForToken(token) map {
-        case Left(errors) =>
-          logger.warn(s"Could not retrieve password reset request for token: $token, errors: ${errors.toString()}")
-          NoCache(SeeOther(routes.ResetPasswordController.requestNewToken().url))
+    api.userForToken(token) map {
+      case Left(errors) =>
+        logger.warn(s"Could not retrieve password reset request for token: $token, errors: ${errors.toString()}")
+        NoCache(SeeOther(routes.ResetPasswordController.requestNewToken().url))
 
-        case Right(user) =>
-          val filledForm = passwordResetForm.fill("","", user.primaryEmailAddress)
-          NoCache(SeeOther(routes.ResetPasswordController.renderResetPassword(token).url).flashing(filledForm.toFlash(resetFormKey)))
-     }
+      case Right(user) =>
+        val filledForm = passwordResetForm.fill("","", user.primaryEmailAddress)
+        NoCache(SeeOther(routes.ResetPasswordController.renderResetPassword(token).url).flashing(filledForm.toFlash(resetFormKey)))
+   }
   }
 }
