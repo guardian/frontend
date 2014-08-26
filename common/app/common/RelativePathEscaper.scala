@@ -1,6 +1,6 @@
 package common
 
-import conf.Switches.SeoEscapeJsonValuesSwitch
+import conf.Switches.SeoEscapeFootballJsonPathLikeValuesSwitch
 
 object RelativePathEscaper {
   def apply(unescaped: String) = {
@@ -25,7 +25,7 @@ object RelativePathEscaper {
 
   def escapeLeadingSlashFootballPaths(unescaped: String) = {
     val leadingSlashFootballPathRegex = """["']?(\/football)(\/team|\/tournament)(\/\w+)['"]?""".r
-    if (SeoEscapeJsonValuesSwitch.isSwitchedOn) {
+    if (SeoEscapeFootballJsonPathLikeValuesSwitch.isSwitchedOn) {
       val footballMatches = leadingSlashFootballPathRegex.findAllIn(unescaped)
       footballMatches.foldLeft(unescaped) {
         case (result: String, matched: String) =>

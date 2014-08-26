@@ -314,7 +314,7 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 8, 30)
   )
 
-  val SeoEscapeJsonValuesSwitch = Switch("Feature", "seo-googlebot-escape-json-path-like-values",
+  val SeoEscapeFootballJsonPathLikeValuesSwitch = Switch("Feature", "seo-googlebot-escape-football-json-path-like-values",
     "If switched ON, json football references that look like a path to googlebot are 'escaped'.",
     safeState = Off, sellByDate = new LocalDate(2014, 9, 2))
 
@@ -457,7 +457,7 @@ object Switches extends Collections {
     GeoMostPopular,
     SmartBannerSwitch,
     SeoOptimisedContentImageSwitch,
-    SeoEscapeJsonValuesSwitch,
+    SeoEscapeFootballJsonPathLikeValuesSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
