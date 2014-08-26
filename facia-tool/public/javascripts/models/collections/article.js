@@ -196,6 +196,13 @@ define([
             };
         };
 
+        function mainMediaType(contentApiArticle) {
+            var mainElement = _.findWhere(contentApiArticle.elements || [], {
+                relation: 'main'
+            });
+            return mainElement && mainElement.type;
+        }
+
         Article.prototype.populate = function(opts, validate) {
             var missingProps;
 
@@ -203,7 +210,12 @@ define([
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
-            opts.mainMediaType && this.mainMediaType(opts.mainMediaType);
+
+            var mainMedia = mainMediaType(opts);
+
+            if (mainMedia) {
+                this.mainMediaType(mainMedia);
+            }
 
             this.setRelativeTimes();
 
