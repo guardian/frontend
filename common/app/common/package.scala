@@ -75,6 +75,6 @@ object Reference {
       *
       * TODO: figure out if this is actually being used. If so, refactor it.
       */
-    JsObject(Seq(k -> JsString(v)))
+    JsObject(Seq(k -> JsString(RelativePathEscaper.escapeLeadingSlashFootballPaths(v))))
   }
 }

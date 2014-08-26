@@ -13,7 +13,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{ Element, Document }
 import org.jsoup.safety.{ Whitelist, Cleaner }
 import play.api.libs.json.Json._
-import play.api.libs.json.Writes
+import play.api.libs.json.{Json, JsValue, JsString, Writes}
 import play.api.mvc.RequestHeader
 import play.api.mvc.Result
 import play.twirl.api.Html
