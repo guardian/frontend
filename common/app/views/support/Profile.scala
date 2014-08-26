@@ -1,7 +1,7 @@
 package views.support
 
 import model.{Content, MetaData, ImageContainer, ImageAsset}
-import conf.Switches.{ImageServerSwitch, SeoOptimisedContentImageSwitch}
+import conf.Switches.ImageServerSwitch
 import java.net.URI
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
@@ -71,6 +71,9 @@ object Item620 extends Profile(Some(620), None)
 object Item640 extends Profile(Some(640), None)
 object Item700 extends Profile(Some(700), None)
 object Item940 extends Profile(Some(940), None)
+object Video640 extends VideoProfile(Some(640), Some(360)) // 16:9
+object Video460 extends VideoProfile(Some(460), Some(276)) // 5:3
+object SeoOptimisedContentImage extends Profile(width = Some(460))
 
 // Just degrade the image quality without adjusting the width/height
 object Naked extends Profile(None, None)
@@ -136,16 +139,3 @@ object SeoThumbnail {
     case _ => None
   }
 }
-
-object SeoOptimisedContentImage extends Profile(width = Some(460)) {
-  override def bestFor(image: ImageContainer): Option[String] = if (SeoOptimisedContentImageSwitch.isSwitchedOn){
-    elementFor(image).filter(i => this.width.exists(_ == i.width)).flatMap(_.url).orElse(
-      super.bestFor(image)
-    )
-  } else {
-    super.bestFor(image)
-  }
-}
-
-object Video640 extends VideoProfile(Some(640), Some(360)) // 16:9
-object Video460 extends VideoProfile(Some(460), Some(276)) // 5:3
