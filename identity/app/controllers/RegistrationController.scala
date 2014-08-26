@@ -31,6 +31,8 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
   val registrationForm = Form(
     Forms.tuple(
+      "user.firstName" -> idFirstName,
+      "user.secondName" -> idSecondName,
       "user.primaryEmailAddress" -> idEmail,
       "user.publicFields.username" -> Forms.text,
       passwordKey -> idPassword,
@@ -43,7 +45,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     logger.trace("Rendering registration form")
 
     val idRequest = idRequestParser(request)
-    val filledForm = registrationForm.bindFromFlash(registrationKey).getOrElse(registrationForm.fill("","","",true,false))
+    val filledForm = registrationForm.bindFromFlash(registrationKey).getOrElse(registrationForm.fill("", "", "", "", "", true, false))
 
     NoCache(Ok(views.html.registration(page.registrationStart(idRequest), idRequest, idUrlBuilder, filledForm)))
   }
@@ -53,14 +55,14 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     val boundForm = registrationForm.bindFromRequest
     val trackingData = idRequest.trackingData
 
-    def onError(formWithErrors: Form[(String, String, String, Boolean, Boolean)]): Future[Result] = {
+    def onError(formWithErrors: Form[(String, String, String, String, String, Boolean, Boolean)]): Future[Result] = {
       logger.info("Invalid registration request")
       Future.successful(redirectToRegistrationPage(formWithErrors))
     }
 
-    def onSuccess(form: (String, String, String, Boolean, Boolean)): Future[Result] = form match {
-      case (email, username, password, gnmMarketing, thirdPartyMarketing) =>
-        val user = userCreationService.createUser(email, username, password, gnmMarketing, thirdPartyMarketing, idRequest.clientIp)
+    def onSuccess(form: (String, String, String, String, String, Boolean, Boolean)): Future[Result] = form match {
+      case (firstName, secondName, email, username, password, gnmMarketing, thirdPartyMarketing) =>
+        val user = userCreationService.createUser(firstName, secondName, email, username, password, gnmMarketing, thirdPartyMarketing, idRequest.clientIp)
         val registeredUser: Future[Response[User]] = api.register(user, trackingData)
 
         val result: Future[Result] = registeredUser flatMap {
@@ -71,7 +73,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                   form.withError(context.getOrElse(""), description)
               }
             }
-            formWithError.fill(email,username,"",thirdPartyMarketing,gnmMarketing)
+            formWithError.fill(firstName, secondName, email,username,"",thirdPartyMarketing,gnmMarketing)
             Future.successful(redirectToRegistrationPage(formWithError))
 
           case Right(usr) =>
@@ -93,14 +95,14 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
-  private def redirectToRegistrationPage(formWithErrors: Form[(String, String, String, Boolean, Boolean)]) = NoCache(
+  private def redirectToRegistrationPage(formWithErrors: Form[(String, String, String, String, String, Boolean, Boolean)]) = NoCache(
     SeeOther(routes.RegistrationController.renderForm().url).flashing(
       clearPassword(formWithErrors).toFlash(registrationKey)
     )
   )
 
 
-  private def clearPassword(formWithPassword: Form[(String, String, String, Boolean, Boolean)]) = {
+  private def clearPassword(formWithPassword: Form[(String, String, String, String, String, Boolean, Boolean)]) = {
     val dataWithoutPassword = formWithPassword.data + (passwordKey -> "")
     formWithPassword.copy(data = dataWithoutPassword)
   }
