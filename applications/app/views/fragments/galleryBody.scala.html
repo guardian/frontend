@@ -8,54 +8,49 @@
         <div class="gs-container">
             <div class="content__main-column content__main-column--gallery">
 
+                @fragments.standfirst(gallery)
+
                 @fragments.contentMeta(gallery)
 
-                <!-- Lightbox JS Gallery -->
-                @fragments.galleryThumbs(gallery, showCta=true)
+                <ul class="gallery2">
+                    @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
+                        <li class="gallery2__item">
+                            <figure itemscope itemtype="http://schema.org/ImageObject">
 
-                <!-- Non-JS Gallery / LightboxSwitch off mode -->
-                <div class="modern-hidden">
-                    <p class="gallery-nav">
+                                @ImgSrc.imager(gallery.imageContainer(row.rowNum-1), GalleryUpgradedImage).map { imgSrc =>
 
-                        @if(index > 1) {
-                            <a class="gallery-prev control tone-colour" href="@LinkTo{?index=@(index - 1)}">Previous</a>
-                        }
+                                    <a  class="gallery2__img-container js-gallerythumbs js-image-upgrade"
+                                        href="@LinkTo{@gallery.url?index=@row.rowNum}"
+                                        data-src="@imgSrc">
 
-                        Image @index of @gallery.size
+                                        @GalleryInitialImage.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
 
-                        @if(index < gallery.size) {
-                            <a class="gallery-next control tone-colour" href="@LinkTo{?index=@(index + 1)}">Next</a>
-                        } else {
-                            <a class="gallery-next control tone-colour" href="@LinkTo{?index=1}">Next</a>
-                        }
-                    </p>
+                                            <img class="gallery2__img responsive-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                                                src="@url"
+                                                alt="@image.altText.getOrElse("")"
+                                                itemprop="contentUrl" />
 
-                    <div class="gallery-container">
-                        @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-                            @if(row.rowNum == index) {
-                                <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
-                                    src="@image.path"
-                                    alt="@image.altText.getOrElse("")"
-                                />
+                                        }
 
-                                <div class="gallery-caption">
-                                    <p class="caption caption--img">@Html(image.caption.getOrElse(""))</p>
-                                    <p class="caption-credit">@image.credit</p>
+                                        <span class="gallery2__fullscreen">
+                                            <i class="i i-expand-white"></i>
+                                            <i class="i i-expand-black"></i>
+                                        </span>
+
+                                    </a>
+                                }
+
+                                <div class="gallery2__figcaption">
+                                    <p class="gallery2__caption" itemprop="caption">@Html(image.cleanedCaption)</p>
+                                    <p class="gallery2__credit" itemprop="author">@image.credit</p>
                                 </div>
-                            }
-                        }
-                    </div>
-                </div>
 
-                <div data-component="body">
-                    @fragments.standfirst(gallery)
+                            </figure>
+                        </li>
+                    }
+                </ul>
 
-                    <div class="content__keywords" data-link-name="gallery keywords">
-                        @fragments.keywordList(gallery.keywords)
-                    </div>
-                </div>
-
-                <div class="social-wrapper" data-component="share">
+                <div class="social-wrapper social-wrapper--bottom" data-component="share">
                     @fragments.social(gallery, iconModifier = "white")
                 </div>
             </div>

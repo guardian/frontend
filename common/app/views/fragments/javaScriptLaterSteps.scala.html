@@ -169,7 +169,7 @@
                 images.listen();
 
                 if (config.switches.commercial) {
-                    require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
+                    require(['bootstraps/commercial'], function(commercial) {
                         commercial.init();
                     });
                 }

@@ -3,6 +3,7 @@ package common
 import com.gu.openplatform.contentapi.ApiError
 import conf.Switch
 import play.api.Logger
+import play.api.libs.json.{JsString, JsObject}
 import play.api.mvc.{ Result, RequestHeader }
 import play.twirl.api.Html
 import model.{NoCache, Cached}
@@ -58,5 +59,22 @@ object Reference {
   def apply(s: String) = {
     val parts = s.split("/")
     parts(0) -> parts.drop(1).mkString("/")
+  }
+
+  def toJavaScript(s: String) = {
+    val (k, v) = apply(s)
+
+    /** Yeah ... so ... in the JavaScript references are represented like this:
+      *
+      * "references":[{"esaFootballTeam":"/football/team/48"},{"optaFootballTournament":"5/2012"}57"} ... ]
+      *
+      * See for example the source of
+      * http://www.theguardian.com/football/live/2014/aug/20/maribor-v-celtic-champions-league-play-off-live-report
+      *
+      * Seems pretty STRANGE.
+      *
+      * TODO: figure out if this is actually being used. If so, refactor it.
+      */
+    JsObject(Seq(k -> JsString(v)))
   }
 }

@@ -70,7 +70,7 @@ define([
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
-        apiSearchParams:       'show-fields=internalContentCode,isLive,firstPublicationDate,headline,trailText,thumbnail',
+        apiSearchParams:       'show-fields=internalContentCode,isLive,firstPublicationDate,headline,trailText,thumbnail&show-elements=video',
         imageCdnDomain:        'guim.co.uk',
         previewBase:           'http://preview.gutools.co.uk',
         viewer:                'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',

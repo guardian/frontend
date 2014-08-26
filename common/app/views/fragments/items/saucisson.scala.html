@@ -1,6 +1,9 @@
-@(trail: Trail, index: Int)(implicit request: RequestHeader, config: Config)
+@(trail: model.Trail, index: Int)(implicit request: RequestHeader, config: model.Config)
 
-@defining((trail.visualTone)) { tone =>
+@import common.LinkTo
+@import views.support.{GetClasses, RemoveOuterParaHtml, SnapData}
+
+@defining(trail.visualTone) { tone =>
     <div
         class="@GetClasses.forSaucisson(trail)"
         @if(trail.isCommentable) {
@@ -17,7 +20,7 @@
 
             @fragments.items.elements.title(trail, index, 0)
 
-            @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+            @trail match { case content: model.Content => @fragments.items.elements.starRating(content) }
 
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>
