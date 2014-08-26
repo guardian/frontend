@@ -19,7 +19,7 @@
         <div class="saucisson__container">
             @FaciaDisplayElement.fromTrail(trail) match {
                 case InlineVideo(video, title, endSlatePath) => {
-                    <div class="item__media-wrapper">
+                    <div class="item__media-wrapper item__media-wrapper--video">
                         @fragments.media.video(VideoPlayer(
                             video,
                             Video640,
@@ -63,8 +63,7 @@
                 @fragments.items.elements.meta(trail)
             }
         </div>
-        @if(!FaciaDisplayElement.isVideo(trail)) {
-            <a @LinkTo(trail).map { url => href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
-        }
+
+        <a @LinkTo(trail).map { url => href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </div>
 }
