@@ -4,7 +4,6 @@ define([
     //Commmon libraries
     'common/utils/$',
     'common/utils/mediator',
-    'common/utils/deferToLoad',
     'common/utils/ajax',
     'common/modules/userPrefs',
     'common/utils/url',
@@ -52,7 +51,6 @@ define([
 ], function (
     $,
     mediator,
-    deferToLoadEvent,
     ajax,
     userPrefs,
     Url,
