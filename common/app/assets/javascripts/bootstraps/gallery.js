@@ -1,7 +1,9 @@
 define([
-    'common/utils/mediator'
+    'common/utils/mediator',
+    'bean'
 ], function(
-    mediator
+    mediator,
+    bean
 ) {
 
     var ready = function (config, context) {
@@ -9,6 +11,9 @@ define([
             this.initialised = true;
         }
         mediator.emit('page:gallery:ready', config, context);
+        mediator.on('modules:overlay:hide', function() {
+            bean.fire(document, 'resize');
+        });
     };
 
     return {
