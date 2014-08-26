@@ -24,8 +24,8 @@ Install nginx:
 
 Add the following to your ```/etc/hosts```:
 
-    127.0.1.1   profile.thegulocal.com
-    127.0.1.1   m.thegulocal.com
+    127.0.0.1   profile.thegulocal.com
+    127.0.0.1   m.thegulocal.com
 
 ## Now run the setup script:
 

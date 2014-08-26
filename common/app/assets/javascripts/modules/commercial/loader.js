@@ -5,6 +5,7 @@
 define([
     'bean',
     'bonzo',
+    'raven',
     'lodash/collections/map',
     'common/utils/$',
     'common/utils/config',
@@ -16,6 +17,7 @@ define([
 ], function (
     bean,
     bonzo,
+    raven,
     map,
     $,
     config,
@@ -130,7 +132,7 @@ define([
                 mediator.emit('modules:commercial/loader:loaded');
             },
             error: function (req) {
-                mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/commercial/loader.js');
+                raven.captureMessage('Failed to load related: ' + req.statusText);
             }
         }).load();
 
@@ -144,7 +146,7 @@ define([
     Loader.prototype.init = function(name, el) {
 
         if(this.components[name] === undefined) {
-            mediator.emit('module:error', 'Unknown commercial component: ' + name, 'common/modules/commercial/loader.js');
+            raven.captureMessage('Unknown commercial component: ' + name);
             return false;
         }
 
