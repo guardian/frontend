@@ -94,7 +94,7 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
 
   def renderResetPassword(token: String) = Action{ implicit request =>
     val idRequest = idRequestParser(request)
-    val boundForm = passwordResetForm.bindFromFlash(resetFormKey).getOrElse(passwordResetForm.bindFromRequest)
+    val boundForm = passwordResetForm.bindFromFlash(resetFormKey).getOrElse(passwordResetForm)
     Ok(views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token))
   }
 
