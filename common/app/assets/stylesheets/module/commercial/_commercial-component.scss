@@ -1,8 +1,8 @@
 $c-commercial-comp-neutral: #edede7;
 $comercial-comp-baseline: 10px;
 $commercial-cta-diameter: (
-    mobile: 20px,
-    tablet: 32px
+    mobile: 24px,
+    tablet: 36px
 );
 
 .l-footer {
@@ -264,7 +264,7 @@ $commercial-cta-diameter: (
     padding: $gs-baseline/3 32px $gs-baseline/3 8px;
     @include fs-textSans(2);
     border: 0;
-    @include border-radius(0); // Prevent rounded corners in iOS
+    @include border-radius(18px);
     float: left;
     overflow: hidden;
 
@@ -274,24 +274,19 @@ $commercial-cta-diameter: (
     }
 }
 .commercial__search__submit {
-    @extend %icon-holder-circle;
+    @include rem((
+        width: $gs-baseline*3,
+        height: $gs-baseline*3
+    ));
     position: absolute;
-    top: 2px;
-    right: 2px;
+    right: 0;
+    opacity: .67;
 
     &:hover,
-    &:focus {
-        background-color: #ffffff;
-        outline: none;
-    }
-
+    &:focus,
     &:active {
-        background-color: #ffffff;
         outline: none;
-    }
-
-    .i-search {
-        margin-top: 3px;
+        opacity: 1;
     }
 }
 
@@ -349,18 +344,15 @@ $commercial-cta-diameter: (
     float: left;
     overflow: hidden;
 
-    .i.i-arrow-white-down {
-        background-position: 3px 6px;
+    .i.i-arrow-white-right-18 {
+        background-position: 3px 3px;
         background-color: $c-newsDefault;
         @include border-radius(50%);
-        margin-top: 2px;
         margin-right: $gs-gutter/5;
-        padding: $gs-baseline/3 $gs-gutter/5;
-        width: 8px;
-        height: 8px;
+        width: 18px;
+        height: 18px;
         float: left;
-        @include transform(rotate(-90deg));
-        background-size: 10px 5px;
+        background-size: 12px 12px;
     }
 }
 .lineitem__blocklink:hover {
@@ -579,17 +571,14 @@ $commercial-cta-diameter: (
         position: absolute;
         left: 50%;
         top: 50%;
-        margin-left: -10px;
-        margin-top: -5.5px;
-        @include transform(rotate(-90deg));
+        margin: -12px;
 
         // resize only if it's using the svg
         @include mq($to: tablet) {
             .svg & {
-                width: 12px;
-                height: 8px;
-                margin-left: -5px;
-                margin-top: -4px;
+                width: 16px;
+                height: 16px;
+                margin: -8px;
                 background-size: contain;
             }
         }
@@ -604,10 +593,12 @@ $commercial-cta-diameter: (
         .i {
             left: auto;
             right: 10px;
+            margin-top: -6px;
+            margin-right: auto;
             
             .svg & {
                 width: 12px;
-                height: 8px;
+                height: 12px;
                 background-size: contain;
             }
         }

@@ -35,7 +35,7 @@ define([
                             '</span>' +
                             '<div class="d-comment-box__meta-text">' +
                                 '<span class="d-comment-box__author"></span>' +
-                                '<span class="i i-in-reply-arrow"></span>' +
+                                '<span class="i i-reply-grey"></span>' +
                                 '<span class="d-comment-box__reply-to-author"></span>' +
                                 '<span class="u-fauxlink d-comment-box__show-parent" role="button">Show comment</span>' +
                                 '<span class="u-fauxlink d-comment-box__hide-parent" role="button">Hide comment</span>' +

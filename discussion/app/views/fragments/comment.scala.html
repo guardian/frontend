@@ -43,7 +43,7 @@
                 </span>
 
                 @comment.responseTo.map{ r =>
-                    <span class="i i-in-reply-arrow"></span>
+                    <span class="i i-reply-grey"></span>
                     <a href="#comment-@r.commentId">
                         <span class="d-comment__reply-to-author">@r.displayName</span>
                     </a>
@@ -114,7 +114,7 @@
                         <div class="d-comment__actions__main sign-in-required">
                             <div class="d-comment__action d-comment__action--reply" data-link-name="reply to comment" data-comment-id="@comment.id" role="button">
                                 <span class="d-comment__reply-button">
-                                    <i class="i i-reply-arrow-white"></i>
+                                    <i class="i i-reply-white"></i>
                                 </span>
                                 <span class="u-fauxlink d-comment__action--reply-text">Reply</span>
                             </div>
