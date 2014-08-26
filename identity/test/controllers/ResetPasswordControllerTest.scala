@@ -88,8 +88,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
        "should render the reset password form when the user token has not expired" in Fake {
          val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
-         status(result) should equal(SEE_OTHER)
-         header("Location", result).head should be ("/reset-password/1234")
+         status(result) should equal(OK)
        }
     }
 
