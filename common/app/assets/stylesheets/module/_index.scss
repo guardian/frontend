@@ -11,6 +11,8 @@
 .tag-index__main-column {
     position: relative;
 
+    padding-top: 8px;
+
     @include mq(tablet) {
         margin: auto;
         max-width: gs-span(8);
@@ -22,6 +24,10 @@
     @include mq(wide) {
         margin-left: $left-column-wide + $gs-gutter;
     }
+}
+
+.tag-index__head {
+    padding-top: $gs-baseline/2;
 }
 
 .tag-index__headline {
