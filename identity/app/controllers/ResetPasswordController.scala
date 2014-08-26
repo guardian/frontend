@@ -44,6 +44,10 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
     ) verifying(Messages("error.passwordsMustMatch"), { f => f._1 == f._2 }  )
   )
 
+  private def clearPasswords(form: Form[(String, String, String)]) = form.copy(
+    data = form.data + ("password" -> "", "password-confirm" -> "")
+  )
+
   def renderPasswordResetRequestForm = Action { implicit request =>
     val idRequest = idRequestParser(request)
     val form = requestPasswordResetForm.bindFromFlash(requestPasswordResetFormKey).getOrElse(requestPasswordResetForm)
@@ -88,6 +92,12 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
       .flashing(formWithErrors.toFlash(requestPasswordResetFormKey))
   )
 
+  def renderResetPassword(token: String) = Action{ implicit request =>
+    val idRequest = idRequestParser(request)
+    val boundForm = passwordResetForm.bindFromFlash(resetFormKey).getOrElse(passwordResetForm.bindFromRequest)
+    Ok(views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token))
+  }
+
   def resetPassword(token : String) = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromFlash(resetFormKey).getOrElse(passwordResetForm.bindFromRequest)
@@ -95,7 +105,10 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
     def onError(formWithErrors: Form[(String, String, String)]): Future[Result] = {
       logger.info("form errors in reset password attempt")
       Future.successful {
-        NoCache(SeeOther(routes.ResetPasswordController.resetPassword(token).url).flashing(formWithErrors.toFlash(resetFormKey)))
+        NoCache(
+          SeeOther(routes.ResetPasswordController.renderResetPassword(token).url)
+            .flashing(clearPasswords(formWithErrors).toFlash(resetFormKey))
+        )
       }
     }
 
@@ -141,7 +154,7 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
 
         case Right(user) =>
           val filledForm = passwordResetForm.fill("","", user.primaryEmailAddress)
-          Ok(views.html.password.resetPassword(page, idRequest, idUrlBuilder, filledForm, token))
+          NoCache(SeeOther(routes.ResetPasswordController.renderResetPassword(token).url).flashing(filledForm.toFlash(resetFormKey)))
      }
   }
 }
