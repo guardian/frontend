@@ -286,3 +286,44 @@ figure.element--thumbnail + h2 {
         width: 100%;
     }
 }
+
+/* Pullquotes
+   ========================================================================== */
+
+.element-pullquote {
+    width: 100%;
+    @include box-sizing(border-box);
+    padding: 0;
+
+    @include mq(tablet) {
+        width: gs-span(3);
+        float: left;
+        padding-right: $gs-gutter;
+    }
+
+    @include mq(leftCol) {
+        $width: gs-span(2) + $gs-gutter*2;
+        width: $width;
+        margin-left: $width * -1;
+        padding: 0 $gs-gutter;
+    }
+    @include mq(wide) {
+        $width: gs-span(3) + $gs-gutter*2;
+        width: $width;
+        margin-left: $width * -1;
+    }
+
+    blockquote {
+        margin: 0;
+
+        p {
+            @extend .tone-colour;
+            @include fs-headline(3);
+        }
+    }
+
+    cite {
+        color: guss-colour(neutral-2);
+        @include fs-bodyHeading(2);
+    }
+}
