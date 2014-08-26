@@ -9,11 +9,11 @@ define([
 ) {
 
 
-    function popular(config, context, isExpandable, url, targetSelector) {
+    function popular(config, isExpandable, url, targetSelector) {
        mediator.emit('register:begin','popular-in-section');
 
         targetSelector = targetSelector || '.js-popular';
-        var container = context.querySelector(targetSelector);
+        var container = document.body.querySelector(targetSelector);
 
         if (container) {
             // some pages, e.g. profiles, are flagged as 'section: global', a non-existent section - this ignores those

@@ -12,7 +12,6 @@ define([
 
         var enabled,
             gcsUrl,
-            currentContext,
             container,
             self = this;
 
@@ -50,7 +49,7 @@ define([
             var s,
                 x;
 
-            container = currentContext.querySelector('.js-search-placeholder');
+            container = docuemnt.body.querySelector('.js-search-placeholder');
 
             // Set so Google know what to do
             window.__gcse = {
@@ -83,11 +82,7 @@ define([
             }
         };
 
-        this.init = function(context) {
-            if (enabled) {
-                currentContext = context;
-            }
-        };
+        this.init = function() { };
 
     };
 

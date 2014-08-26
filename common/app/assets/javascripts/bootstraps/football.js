@@ -3,7 +3,6 @@ define([
     'bonzo',
     'bean',
     'common/utils/ajax',
-    'common/utils/context',
     'common/utils/config',
     'common/utils/page',
     'common/utils/mediator',
@@ -19,7 +18,6 @@ define([
     bonzo,
     bean,
     ajax,
-    context,
     config,
     page,
     mediator,
@@ -40,7 +38,7 @@ define([
             if (resp.nav && resp.nav.trim().length > 0) {
                 $nav = $.create(resp.nav).first().each(function (nav) {
                     if (match.id || $('.tabs__tab', nav).length > 2) {
-                        $('.js-football-tabs', context).append(nav);
+                        $('.js-football-tabs').append(nav);
                     }
                 });
             }
@@ -49,8 +47,8 @@ define([
                 callback(resp, $nav, matchInfo.endpoint);
             } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
         }, function() {
-            $('.score-container', context).remove();
-            $('.js-score', context).removeClass('u-h');
+            $('.score-container').remove();
+            $('.js-score').removeClass('u-h');
         });
     }
 
@@ -64,7 +62,7 @@ define([
         if (ready) {
             page.belowArticleVisible(function() {
                 var b;
-                $('.js-after-article', context).append(
+                $('.js-after-article').append(
                     $.create('<div class="football-extras"></div>').each(function(extrasContainer) {
                         extras.forEach(function(extra, i) {
                             if (dropdownTemplate) {
@@ -133,14 +131,12 @@ define([
         var extras = [],
             dropdownTemplate;
 
-        context = context();
-
         page.isMatch(function(match) {
             extras[0] = { ready: false };
             if (match.pageType === 'stats') {
                 renderNav(match);
             } else {
-                var $h = $('.js-score', context),
+                var $h = $('.js-score'),
                     scoreBoard = new ScoreBoard(),
                     scoreContainer = bonzo.create(
                         '<div class="score-container">'+
@@ -259,14 +255,14 @@ define([
         });
 
         // Binding
-        bean.on(context, 'click', '.js-show-more', function(e) {
+        bean.on(document.body, 'click', '.js-show-more', function(e) {
             e.preventDefault();
             var el = e.currentTarget;
             ajax({
                 url: el.getAttribute('href') +'.json'
             }).then(function(resp) {
                 $.create(resp.html).each(function(html) {
-                    $('[data-show-more-contains="'+ el.getAttribute('data-puts-more-into') +'"]', context)
+                    $('[data-show-more-contains="'+ el.getAttribute('data-puts-more-into') +'"]')
                         .append($(el.getAttribute('data-shows-more'), html));
 
                     var nurl = resp[el.getAttribute('data-new-url')];
@@ -279,12 +275,12 @@ define([
             });
         });
 
-        bean.on(context, 'change', $('form.football-leagues')[0], function() {
+        bean.on(document.body, 'change', $('form.football-leagues')[0], function() {
             window.location = this.value;
         });
 
         if(!config.page.isFootballWorldCup2014) {
-            bean.on(context, 'click', '.table tr[data-link-to]', function (e) {
+            bean.on(document.body, 'click', '.table tr[data-link-to]', function (e) {
                 if (!e.target.getAttribute('href')) {
                     window.location = this.getAttribute('data-link-to');
                 }

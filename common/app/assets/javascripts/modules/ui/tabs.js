@@ -52,9 +52,9 @@ define([
             }
         };
 
-        this.init = function (context) {
+        this.init = function () {
 
-            Array.prototype.forEach.call(context.querySelectorAll('.tabs'), function(container) {
+            Array.prototype.forEach.call(document.body.querySelectorAll('.tabs'), function(container) {
 
                 var tabSet = $('.js-tabs', container)[0],
                     tabSetHeight = 0,
