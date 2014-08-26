@@ -3,29 +3,29 @@
     Description: Used to load update fragments of the DOM from specfied endpoint
 */
 define([
-    'common/utils/mediator',
-    'common/utils/ajax',
-    'common/utils/$',
-    'bonzo',
     'bean',
-    'common/modules/userPrefs',
-    'common/utils/detect',
-    'common/modules/live/notification-bar',
+    'bonzo',
+    'raven',
+    'lodash/collections/toArray',
     'lodash/objects/assign',
+    'common/utils/$',
+    'common/utils/ajax',
+    'common/utils/detect',
+    'common/utils/mediator',
     'common/modules/article/twitter',
-    'lodash/collections/toArray'
+    'common/modules/live/notification-bar'
 ], function (
-    mediator,
-    ajax,
-    $,
-    bonzo,
     bean,
-    userPrefs,
+    bonzo,
+    raven,
+    toArray,
+    assign,
+    $,
+    ajax,
     detect,
-    NotificationBar,
-    extend,
+    mediator,
     twitter,
-    toArray
+    NotificationBar
 ) {
     /*
         @param {Object} options hash of configuration options:
@@ -37,7 +37,7 @@ define([
     */
     function Autoupdate(config) {
 
-        var options = extend({
+        var options = assign({
             'activeClass': 'is-active',
             'btnClass' : '.js-auto-update',
             'manipulationType' : 'html'
@@ -146,7 +146,7 @@ define([
                     }
                 },
                 function(req) {
-                    mediator.emit('module:error', 'Failed to load auto-update: ' + req.statusText, 'common/modules/autoupdate.js');
+                    raven.captureMessage('Failed to load auto-update: ' + req.statusText);
                 }
             );
         };
