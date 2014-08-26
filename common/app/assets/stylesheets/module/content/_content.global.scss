@@ -3,9 +3,13 @@
     &:after {
         content: '';
         @include icon(pullquotemark);
+        display: block !important;
+    }
+    &:before {
+        margin-bottom: 5px;
     }
     &:after {
-        margin-top: $gs-baseline/2;
+        margin-top: $gs-baseline/3;
         @include transform(rotate(180deg));
     }
 }
