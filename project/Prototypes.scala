@@ -81,7 +81,8 @@ trait Prototypes {
     ),
 
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.
-    javaOptions in Test += "-DAPP_SECRET=secret",
+    // obviously this should never be a real production secret, just used for local development
+    javaOptions in Test += "-DAPP_SECRET=myKV8HQkjcaxssgbDufneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS",
     baseDirectory in Test := file(".")
   )
 
