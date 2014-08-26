@@ -95,7 +95,7 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
   def renderResetPassword(token: String) = Action{ implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromFlash(resetFormKey).getOrElse(passwordResetForm)
-    Ok(views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token))
+    NoCache(Ok(views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token)))
   }
 
   def resetPassword(token : String) = Action.async { implicit request =>
@@ -145,6 +145,7 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
   }
 
   def processUpdatePasswordToken( token : String) = Action.async { implicit request =>
+    val idRequest = idRequestParser(request)
     api.userForToken(token) map {
       case Left(errors) =>
         logger.warn(s"Could not retrieve password reset request for token: $token, errors: ${errors.toString()}")
@@ -152,7 +153,7 @@ class ResetPasswordController @Inject()(  api : IdApiClient,
 
       case Right(user) =>
         val filledForm = passwordResetForm.fill("","", user.primaryEmailAddress)
-        NoCache(SeeOther(routes.ResetPasswordController.renderResetPassword(token).url).flashing(filledForm.toFlash(resetFormKey)))
+        NoCache(Ok(views.html.password.resetPassword(page, idRequest, idUrlBuilder, filledForm, token)))
    }
   }
 }
