@@ -10,7 +10,7 @@
 
             @fragments.meta.metaInline(content)
 
-            <h1 itemprop="headline" class="content__headline js-score">@Html(content.cleanedHeadline)</h1>
+            <h1 itemprop="headline" class="content__headline js-score">@Html(content.headline)</h1>
 
             @if(!content.delegate.isVideo && !content.delegate.isGallery) {
                 @fragments.standfirst(content)

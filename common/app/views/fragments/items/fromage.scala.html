@@ -1,7 +1,7 @@
 @(trail: model.Trail, index: Int, imageAdjustOverride: Option[String] = None)(implicit request: RequestHeader, config: model.Config)
 
 @import common.LinkTo
-@import model.{FaciaDisplayElement, InlineVideo, InlineImage}
+@import model.{FaciaDisplayElement, InlineVideo}
 @import views.support.{GetClasses, ImgSrc, Item220, Item300, Item620, SnapData}
 
 @defining((trail.visualTone, imageAdjustOverride.getOrElse(trail.imageAdjust))) { case (tone, imageAdjust) =>
@@ -21,7 +21,7 @@
                 case InlineVideo(videoElement, title, endSlatePath) if imageAdjust == "boost" => {
                     @fromageVideo(videoElement, title, true, endSlatePath)
                 }
-                case InlineImage => {
+                case _ => {
                     @if(imageAdjust != "hide") {
                         @trail.trailPicture(5,3).map{ imageContainer =>
                             @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
