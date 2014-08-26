@@ -102,7 +102,9 @@ define([
     var modules = {
 
         initFastClick: function() {
-            new FastClick(document.body);
+            if (window.navigator.userAgent.toLowerCase().indexOf('firefox') === -1) {
+                new FastClick(document.body);
+            }
         },
 
         initialiseFauxBlockLink: function(context){
