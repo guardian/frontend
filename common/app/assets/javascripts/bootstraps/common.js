@@ -192,12 +192,6 @@ define([
                 galleries.init();
             });
 
-            // Register as a page view if invoked from elsewhere than its gallery page (like a trailblock)
-            mediator.on('module:lightbox-gallery:loaded', function(config, context) {
-                if (thisPageId !== config.page.pageId) {
-                    mediator.emit('page:common:deferred:loaded', config, context);
-                }
-            });
         },
 
         initRightHandComponent: function(config) {
@@ -393,63 +387,46 @@ define([
         }
     };
 
-    var deferrable = function (config, context) {
-        var self = this;
-        deferToLoadEvent(function() {
-            if (!self.initialisedDeferred) {
-                self.initialisedDeferred = true;
-                modules.logLiveStats(config);
-                modules.loadAnalytics(config, context);
-                modules.cleanupCookies(context);
-                modules.transcludePopular(config);
-                modules.transcludeRelated(config, context);
-                modules.transcludeOnwardContent(config, context);
-                modules.initRightHandComponent(config, context);
-            }
-            mediator.emit('page:common:deferred:loaded', config, context);
-        });
-    };
-
     var ready = function (config, context) {
-        if (!this.initialised) {
-            this.initialised = true;
-            modules.initFastClick();
-            modules.testCookie();
-            modules.windowEventListeners();
-            modules.initialiseFauxBlockLink(context);
-            modules.checkIframe();
-            modules.showTabs();
-            modules.initialiseTopNavItems(config);
-            modules.initialiseNavigation(config);
-            modules.displayBreakingNews(config);
-            modules.showToggles();
-            modules.showRelativeDates();
-            modules.initClickstream();
-            modules.transcludeCommentCounts();
-            modules.initLightboxGalleries();
-            modules.optIn();
-            modules.displayReleaseMessage(config);
-            modules.logReadingHistory();
-            modules.unshackleParagraphs(config, context);
-            modules.initAutoSignin(config);
-            modules.augmentInteractive();
-            modules.runForseeSurvey(config);
-            modules.startRegister(config);
-            modules.repositionComments();
-            modules.showMoreTagsLink();
-            modules.showSmartBanner(config);
-            modules.initDiscussion();
-        }
+        modules.initFastClick();
+        modules.testCookie();
+        modules.windowEventListeners();
+        modules.initialiseFauxBlockLink(context);
+        modules.checkIframe();
+        modules.showTabs();
+        modules.initialiseTopNavItems(config);
+        modules.initialiseNavigation(config);
+        modules.displayBreakingNews(config);
+        modules.showToggles();
+        modules.showRelativeDates();
+        modules.initClickstream();
+        modules.transcludeCommentCounts();
+        modules.initLightboxGalleries();
+        modules.optIn();
+        modules.displayReleaseMessage(config);
+        modules.logReadingHistory();
+        modules.unshackleParagraphs(config, context);
+        modules.initAutoSignin(config);
+        modules.augmentInteractive();
+        modules.runForseeSurvey(config);
+        modules.startRegister(config);
+        modules.repositionComments();
+        modules.showMoreTagsLink();
+        modules.showSmartBanner(config);
+        modules.initDiscussion();
+        modules.logLiveStats(config);
+        modules.loadAnalytics(config, context);
+        modules.cleanupCookies(context);
+        modules.transcludePopular(config);
+        modules.transcludeRelated(config, context);
+        modules.transcludeOnwardContent(config, context);
+        modules.initRightHandComponent(config, context);
+
         mediator.emit('page:common:ready', config, context);
     };
 
-    var init = function (config, context) {
-        ready(config, context);
-        deferrable(config, context);
-    };
-
     return {
-        init: init
+        init: ready
     };
 });
 
