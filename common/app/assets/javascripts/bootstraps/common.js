@@ -102,6 +102,7 @@ define([
     var modules = {
 
         initFastClick: function() {
+            // broken in ff, so ignoring for now - https://github.com/ftlabs/fastclick/issues/292
             if (window.navigator.userAgent.toLowerCase().indexOf('firefox') === -1) {
                 new FastClick(document.body);
             }
