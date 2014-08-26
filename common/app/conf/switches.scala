@@ -318,7 +318,7 @@ object Switches extends Collections {
 
   val ABSoulmatesLabelling = Switch("A/B Tests", "ab-soulmates-labelling",
     "If this switch is turned on, run the SoulmatesLabelling A/B test",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 23)
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 11)
   )
 
   // Facia

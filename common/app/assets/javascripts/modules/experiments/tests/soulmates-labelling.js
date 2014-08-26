@@ -8,14 +8,14 @@ define([
     return function() {
 
         this.id = 'SoulmatesLabelling';
-        this.start = '2014-08-08';
-        this.expiry = '2014-08-22';
+        this.start = '2014-08-27';
+        this.expiry = '2014-09-10';
         this.author = 'Darren Hurley';
         this.description = 'Display either "soulmates" or "dating" label';
         this.audience = 0.2;
         this.audienceOffset = 0;
         this.successMeasure = 'CTR';
-        this.audienceCriteria = 'Desktop+ breakpoint';
+        this.audienceCriteria = 'Everyone';
         this.dataLinkNames = 'topNav : soulmates';
         this.idealOutcome = 'Increased CTR.';
 
