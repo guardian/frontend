@@ -2,11 +2,7 @@
     Module: storage.js
     Description: Wrapper around localStorage functionality
 */
-define([
-    'raven'
-], function (
-    raven
-) {
+define(function () {
 
     var w = window;
 
@@ -28,7 +24,6 @@ define([
             w[this.type].removeItem(testKey);
             return true;
         } catch (e) {
-            raven.captureException(e);
             return false;
         }
     };

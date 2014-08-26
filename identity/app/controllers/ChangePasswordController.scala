@@ -53,7 +53,7 @@ class ChangePasswordController @Inject()( api: IdApiClient,
         api.passwordExists(request.auth) map {
           result =>
             val pwdExists = result.right.toOption exists {_ == true}
-            NoCache(Ok(views.html.password.changePassword(page.tracking(idRequest), idRequest, idUrlBuilder,  passwordForm, pwdExists )))
+            NoCache(Ok(views.html.password.changePassword(page.tracking(idRequest), idRequest, idUrlBuilder,  form, pwdExists )))
         }
     }
   }
