@@ -1,13 +1,13 @@
 package frontsapi.model
 
 import com.gu.googleauth.UserIdentity
-import play.api.libs.json.{Json, JsValue}
-import tools.FaciaApi
-import org.joda.time.DateTime
-import scala.util.{Success, Failure, Try}
 import common.Logging
 import conf.Configuration
-import com.gu.googleauth.UserIdentity
+import org.joda.time.DateTime
+import play.api.libs.json.{Format, JsValue, Json}
+import tools.FaciaApi
+import scala.util.{Failure, Success, Try}
+
 
 object Front {
   implicit val jsonFormat = Json.format[Front]
@@ -112,6 +112,12 @@ case class CollectionMetaUpdate(
   displayName: Option[String],
   href: Option[String]
 )
+
+case class StreamUpdate(update: UpdateList, action: String, email: String)
+
+object StreamUpdate {
+  implicit val streamUpdateFormat: Format[StreamUpdate] = Json.format[StreamUpdate]
+}
 
 trait UpdateActions extends Logging {
 
