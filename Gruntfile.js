@@ -67,6 +67,11 @@ module.exports = function (grunt) {
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
+
+        if (isOnlyTask(this)) {
+            grunt.task.run('asset_hash');
+        }
+
     });
     grunt.registerTask('compile:js', function() {
         grunt.task.run(['requirejs', 'copy:javascript']);
