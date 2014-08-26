@@ -164,7 +164,7 @@ define([
 
         showRelativeDates: function () {
             var dates = RelativeDates;
-            mediator.on('page:common:ready', function(config) {
+            mediator.on('page:common:ready', function() {
                 dates.init();
             });
             mediator.on('fragment:ready:dates', function(el) {
@@ -177,7 +177,7 @@ define([
         },
 
         transcludeCommentCounts: function () {
-            mediator.on('page:common:ready', function(config) {
+            mediator.on('page:common:ready', function() {
                 CommentCount.init();
             });
         },
@@ -278,7 +278,7 @@ define([
             }
         },
 
-        unshackleParagraphs: function (config) {
+        unshackleParagraphs: function () {
             if (userPrefs.isOff('para-indents')) {
                 $('.paragraph-spacing--indents').removeClass('paragraph-spacing--indents');
             }

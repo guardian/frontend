@@ -6,7 +6,7 @@ define([
     bonzo
 ) {
 
-    function forgottenEmail(config) {
+    function forgottenEmail() {
         var form = document.body.querySelector('.js-reset-form');
         if (form) {
             var hashEmail = window.location.hash.match('email=([^&#]*)');
@@ -17,7 +17,7 @@ define([
         }
     }
 
-    function forgottenPassword(config) {
+    function forgottenPassword() {
         var form = document.body.querySelector('.js-signin-form');
         if (form) {
             var email = form.querySelector('.js-signin-email'),
@@ -33,7 +33,7 @@ define([
         }
     }
 
-    function passwordToggle(config) {
+    function passwordToggle() {
         var form = document.body.querySelector('.js-register-form');
         if (form) {
             var password = form.querySelector('.js-register-password'),

@@ -49,7 +49,7 @@ define([
             var s,
                 x;
 
-            container = docuemnt.body.querySelector('.js-search-placeholder');
+            container = document.body.querySelector('.js-search-placeholder');
 
             // Set so Google know what to do
             window.__gcse = {

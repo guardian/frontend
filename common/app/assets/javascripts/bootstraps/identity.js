@@ -91,21 +91,21 @@ define([
             });
         },
         validationEmail: function() {
-            mediator.on('page:identity:ready', function(config) {
+            mediator.on('page:identity:ready', function() {
                 ValidationEmail.init();
             });
         },
 
         tabs: function() {
             var tabs = new Tabs();
-            mediator.on('page:identity:ready', function(config) {
+            mediator.on('page:identity:ready', function() {
                 tabs.init();
             });
         },
 
         accountProfile: function() {
             var accountProfile = new AccountProfile();
-            mediator.on('page:identity:ready', function(config) {
+            mediator.on('page:identity:ready', function() {
                 accountProfile.init();
             });
         }

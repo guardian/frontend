@@ -74,7 +74,7 @@ define([
 
         bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e) {
             mediator.emit('module:liveblog:showkeyevents', true);
-            $('.dropdown--live-feed', getContext()).addClass('dropdown--active');
+            $('.dropdown--live-feed').addClass('dropdown--active');
             var $el = bonzo(e.currentTarget),
                 eventId = $el.attr('data-event-id'),
                 title = $('.timeline__title', $el).text(),
@@ -124,7 +124,7 @@ define([
     }
 
     function getUpdatePath() {
-        var blocks = qwery('.article-body .block', getContext()),
+        var blocks = qwery('.article-body .block'),
             newestBlock = null;
 
         if (autoUpdate.getManipulationType() === 'append') {
@@ -140,7 +140,7 @@ define([
 
     var modules = {
 
-        createFilter: function(config) {
+        createFilter: function() {
             new LiveFilter($('.js-blog-blocks')[0]).render($('.js-live-filter')[0]);
             new NotificationCounter().init();
         },
