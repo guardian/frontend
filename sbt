@@ -53,9 +53,7 @@ java -version
 echo "********************************************************************************"
 echo ''
 
-
-# NOTE this is not a REAL APP_SECRET it is just for DEV environments
-export APP_SECRET="myKV8HQkjcaxygbDuyneHBeyFgsyyM8yCFFOxyDoT0QGuyrY7IyammSyP1VivCxS"
+export APP_SECRET="this_is_not_a_real_secret_just_for_tests"
 
 ####################################################################################
 #
