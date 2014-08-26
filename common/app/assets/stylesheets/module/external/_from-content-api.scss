@@ -322,7 +322,7 @@ figure.element--thumbnail + h2 {
         font-style: normal;
 
         p {
-            @extend .tone-colour;
+            @extend %tone-colour;
             margin-bottom: 0;
             @include fs-headline(4);
             @include mq(tablet) {
