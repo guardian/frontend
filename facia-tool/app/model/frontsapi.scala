@@ -113,7 +113,7 @@ case class CollectionMetaUpdate(
   href: Option[String]
 )
 
-case class StreamUpdate(update: UpdateList, action: String, email: String)
+case class StreamUpdate(update: JsValue, action: String, email: String)
 
 object StreamUpdate {
   implicit val streamUpdateFormat: Format[StreamUpdate] = Json.format[StreamUpdate]
