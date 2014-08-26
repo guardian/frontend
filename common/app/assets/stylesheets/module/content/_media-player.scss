@@ -274,14 +274,27 @@ $vjs-progress-inset-bottom: 4px;
     cursor: pointer;
     float: right;
     box-sizing: border-box;
-    margin: 8px 8px 8px 0;
-    @include icon(expand-white);
+    height: $vjs-control-height;
+    width: $vjs-control-height;
+    position: relative;
+
+    & .vjs-control-content {
+        width: 20px !important;
+        height: 20px !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        @include icon(expand-white);
+    }
+    &:hover .vjs-control-content {
+        @include icon(expand-yellow);
+    }
 
     .gu-media--audio & {
         display: none;
-    }
-    &:hover {
-        @include icon(expand-yellow);
     }
 }
 
