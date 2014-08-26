@@ -2,11 +2,7 @@
     Module: storage.js
     Description: Wrapper around localStorage functionality
 */
-define([
-    'raven'
-], function (
-    raven
-) {
+define(function () {
 
     var w = window;
 
