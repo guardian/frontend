@@ -7,7 +7,7 @@ define([
 ) {
     var modules = {
 
-        showPopular: function () {
+        showPopular: function (config) {
             popular.render(config);
         }
 

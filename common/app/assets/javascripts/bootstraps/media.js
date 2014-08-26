@@ -5,6 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'common/utils/deferToAnalytics',
+    'common/utils/mediator',
     'common/utils/url',
     'common/modules/ui/images',
     'common/modules/commercial/dfp',
@@ -24,6 +25,7 @@ define([
     detect,
     config,
     deferToAnalytics,
+    mediator,
     urlUtils,
     images,
     dfp,
@@ -405,7 +407,7 @@ define([
         },
         initMoreInSection: function(config) {
             if (!config.isMedia || !config.page.showRelatedContent) {
-                return
+                return;
             }
             var section = new Component(),
                 parentEl = $('.js-onward')[0];
@@ -421,7 +423,7 @@ define([
         },
         initMostViewedMedia: function(config) {
             if (!config.isMedia) {
-                return
+                return;
             }
             if (config.page.section === 'childrens-books-site' && config.switches.childrensBooksHidePopular) {
                 $('.content__secondary-column--media').addClass('u-h');
@@ -460,7 +462,7 @@ define([
         }
     };
 
-    var ready = function (config) {
+    var ready = function (config, context) {
         modules.initPlayer(config);
         modules.initMoreInSection(config);
         modules.initMostViewedMedia(config);
