@@ -88,7 +88,14 @@ object Page {
     webTitle: String,
     analyticsName: String,
     pagination: Option[Pagination] = None,
-    description: Option[String] = None) = new Page(id, section, webTitle, analyticsName, pagination, description)
+    description: Option[String] = None,
+    maybeContentType: Option[String] = None
+  ) = new Page(id, section, webTitle, analyticsName, pagination, description) {
+    override lazy val contentType = maybeContentType.getOrElse("")
+
+    override def metaData: Map[String, JsValue] =
+      super.metaData ++ maybeContentType.map(contentType => List("content-type" -> JsString(contentType))).getOrElse(Nil)
+  }
 }
 
 trait Elements {
