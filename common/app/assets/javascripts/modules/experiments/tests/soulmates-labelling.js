@@ -1,9 +1,7 @@
 define([
-    'common/utils/$',
-    'common/utils/detect'
+    'common/utils/$'
 ], function(
-    $,
-    detect
+    $
 ) {
     return function() {
 
@@ -20,7 +18,7 @@ define([
         this.idealOutcome = 'Increased CTR.';
 
         this.canRun = function () {
-            return ['desktop', 'wide'].indexOf(detect.getBreakpoint()) > -1;
+            return true;
         };
 
         this.variants = [
