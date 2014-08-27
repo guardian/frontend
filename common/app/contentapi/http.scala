@@ -11,15 +11,13 @@ import conf.Configuration.contentApi.previewAuth
 import metrics.{CountMetric, FrontendTimingMetric}
 import play.api.libs.ws.{WS, WSAuthScheme}
 
-import scala.concurrent.Future
 import scala.util.Try
 
 class WsHttp(val httpTimingMetric: FrontendTimingMetric, val httpTimeoutMetric: CountMetric)
-  extends Http[Future] with ExecutionContexts with Logging {
+  extends Http with ExecutionContexts with Logging {
 
   import java.lang.System.currentTimeMillis
-
-import play.api.Play.current
+  import play.api.Play.current
 
   override def GET(url: String, headers: Iterable[(String, String)]) = {
 
@@ -55,15 +53,15 @@ import play.api.Play.current
 }
 
 // allows us to inject a test Http
-trait DelegateHttp extends Http[Future] with ExecutionContexts {
+trait DelegateHttp extends Http with ExecutionContexts {
 
   val httpTimingMetric: FrontendTimingMetric
   val httpTimeoutMetric: CountMetric
 
-  private var _http: Http[Future] = new WsHttp(httpTimingMetric, httpTimeoutMetric)
+  private var _http: Http = new WsHttp(httpTimingMetric, httpTimeoutMetric)
 
   def http = _http
-  def http_=(delegateHttp: Http[Future]) { _http = delegateHttp }
+  def http_=(delegateHttp: Http) { _http = delegateHttp }
 
   override def GET(url: String, headers: scala.Iterable[scala.Tuple2[String, String]]) = _http.GET(url, headers)
 }
