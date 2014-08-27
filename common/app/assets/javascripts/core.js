@@ -34,7 +34,6 @@ require([
     'common/utils/config',
     'common/utils/context',
     'common/utils/cookies',
-    'common/utils/deferToLoad',
     'common/utils/detect',
     'common/utils/easing',
     'common/utils/get-property',

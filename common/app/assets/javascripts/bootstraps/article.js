@@ -46,11 +46,10 @@ define([
     };
 
     var ready = function (config, context) {
-        for (var init in modules) {
-            if (modules.hasOwnProperty(init)) {
-                mediator.on('page:article:ready', modules[init]);
-            }
-        }
+        modules.initOpen(config, context);
+        modules.initFence();
+        modules.initTruncateAndTwitter();
+
         mediator.emit('page:article:ready', config, context);
     };
 
