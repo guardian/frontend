@@ -54,6 +54,7 @@ category: Common
 */
 
 @mixin button-height($button-size) {
+    /* true height is height minus 1px border */
     $true-button-height: $button-size - 2px;
     height: $true-button-height;
     padding: 0 ($true-button-height/2);
@@ -148,5 +149,3 @@ category: Common
         }
     }
 }
-
-
