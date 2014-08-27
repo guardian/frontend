@@ -55,7 +55,6 @@
             border-top: 0;
         }
     }
-
     @include mq(desktop) {
         &:nth-child(3) {
             border-top: 0;
