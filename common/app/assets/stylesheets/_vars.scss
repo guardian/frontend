@@ -12,7 +12,7 @@
 
 $old-ie:      false !default;
 $svg-support: true !default;
-$browser-supports-columns: true;
+$browser-supports-columns: not $old-ie !default;
 $browser-supports-flexbox: true !default;
 
 
