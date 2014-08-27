@@ -6,7 +6,7 @@ import com.google.inject.Inject
 import com.gu.identity.model.User
 import idapiclient.{ IdApiClient, EmailPassword }
 import javax.inject.Singleton
-import model.IdentityPage
+import model.{NoCache, IdentityPage}
 import play.api.mvc._
 import play.api.data._
 import play.api.mvc.Result
@@ -22,15 +22,18 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
                                      idRequestParser : IdRequestParser,
                                      idUrlBuilder : IdentityUrlBuilder,
                                      signinService : PlaySigninService  )
-  extends Controller with ExecutionContexts with SafeLogging with Mappings{
+  extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   val page = IdentityPage("/register", "Register", "register")
+
+  private val registrationKey = "register"
+  private val passwordKey = "user.password"
 
   val registrationForm = Form(
     Forms.tuple(
       "user.primaryEmailAddress" -> idEmail,
       "user.publicFields.username" -> Forms.text,
-      "user.password" -> idPassword,
+      passwordKey -> idPassword,
       "receive_gnm_marketing" -> Forms.boolean,
       "receive_third_party_marketing" -> Forms.boolean
     )
@@ -40,8 +43,9 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     logger.trace("Rendering registration form")
 
     val idRequest = idRequestParser(request)
-    val filledForm = registrationForm.fill("","","",true,false)
-    Ok(views.html.registration(page.registrationStart(idRequest), idRequest, idUrlBuilder, filledForm ))
+    val filledForm = registrationForm.bindFromFlash(registrationKey).getOrElse(registrationForm.fill("","","",true,false))
+
+    NoCache(Ok(views.html.registration(page.registrationStart(idRequest), idRequest, idUrlBuilder, filledForm)))
   }
 
   def processForm = Action.async { implicit request =>
@@ -51,9 +55,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
     def onError(formWithErrors: Form[(String, String, String, Boolean, Boolean)]): Future[Result] = {
       logger.info("Invalid registration request")
-      Future {
-        Ok(views.html.registration(page.registrationError(idRequest), idRequest, idUrlBuilder, formWithErrors))
-      }
+      Future.successful(redirectToRegistrationPage(formWithErrors))
     }
 
     def onSuccess(form: (String, String, String, Boolean, Boolean)): Future[Result] = form match {
@@ -70,7 +72,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
               }
             }
             formWithError.fill(email,username,"",thirdPartyMarketing,gnmMarketing)
-            Future { Ok(views.html.registration(page.registrationError(idRequest), idRequest, idUrlBuilder, formWithError)) }
+            Future.successful(redirectToRegistrationPage(formWithError))
 
           case Right(usr) =>
             val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
@@ -89,5 +91,17 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     }
 
     boundForm.fold[Future[Result]](onError, onSuccess)
+  }
+
+  private def redirectToRegistrationPage(formWithErrors: Form[(String, String, String, Boolean, Boolean)]) = NoCache(
+    SeeOther(routes.RegistrationController.renderForm().url).flashing(
+      clearPassword(formWithErrors).toFlash(registrationKey)
+    )
+  )
+
+
+  private def clearPassword(formWithPassword: Form[(String, String, String, Boolean, Boolean)]) = {
+    val dataWithoutPassword = formWithPassword.data + (passwordKey -> "")
+    formWithPassword.copy(data = dataWithoutPassword)
   }
 }

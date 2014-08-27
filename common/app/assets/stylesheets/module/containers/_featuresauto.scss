@@ -23,3 +23,9 @@
         }
     }
 }
+
+.item__media-wrapper--video {
+    // so that it appears above the fake overlay link, and the user is able to play the video without opening the
+    // article
+    z-index: 1;
+}

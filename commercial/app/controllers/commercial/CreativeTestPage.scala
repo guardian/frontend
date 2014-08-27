@@ -27,7 +27,7 @@ object TestPage extends model.MetaData  {
 
   val isNetworkFront: Boolean = false
 
-  override lazy val contentType: String =   if (isNetworkFront) GuardianContentTypes.NETWORK_FRONT else GuardianContentTypes.SECTION
+  override lazy val contentType: String =   if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
 }
 

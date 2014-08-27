@@ -309,14 +309,10 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 9, 8)
   )
 
-  val SeoOptimisedContentImageSwitch = Switch("Feature", "seo-optimised-article-image",
-    "If this switch is on images then articles will get a 460px on static.guim.co.uk image as the low-res version.",
-    safeState = On, sellByDate = new LocalDate(2014, 8, 30)
-  )
-
   val SeoEscapeFootballJsonPathLikeValuesSwitch = Switch("Feature", "seo-googlebot-escape-football-json-path-like-values",
     "If switched ON, json football references that look like a path to googlebot are 'escaped'.",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 2))
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
+  )
 
   // A/B Tests
 
@@ -456,7 +452,6 @@ object Switches extends Collections {
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     SmartBannerSwitch,
-    SeoOptimisedContentImageSwitch,
     SeoEscapeFootballJsonPathLikeValuesSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,

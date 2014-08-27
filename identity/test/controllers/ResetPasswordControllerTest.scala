@@ -72,7 +72,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
         "should redirect to the form" in Fake {
           val result = resetPasswordController.processPasswordResetRequestForm(fakeRequest)
-          status(result) should equal (OK)
+          status(result) should equal (SEE_OTHER)
         }
     }
   }
@@ -96,7 +96,8 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       when(api.userForToken("1234")).thenReturn(Future.successful(Left(tokenExpired)))
       "should render to the the to the request new password form" in Fake {
         val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
-        status(result) should equal(OK)
+        status(result) should equal(SEE_OTHER)
+        header("Location", result).head should be ("/requestnewtoken")
       }
     }
   }
@@ -112,7 +113,8 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       }
       "should return password confirmation view in" in Fake {
          val result = resetPasswordController.resetPassword("1234")(fakeRequest)
-         status(result) should be (OK)
+         status(result) should be (SEE_OTHER)
+        header("Location", result).head should be ("/password/confirmation")
       }
     }
 
@@ -120,7 +122,8 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       when(api.resetPassword("1234","newpassword")).thenReturn(Future.successful(Left(tokenExpired)))
       "should redirect to request request new password with a token expired" in Fake {
         val result = resetPasswordController.resetPassword("1234")(fakeRequest)
-        status(result) should equal(OK)
+        status(result) should equal(SEE_OTHER)
+        header("Location", result).head should be ("/requestnewtoken")
       }
     }
 
@@ -128,7 +131,8 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       when(api.resetPassword("1234", "newpassword")).thenReturn(Future.successful(Left(accesssDenied)))
       "should redirect to request new password with a problem resetting your password" in Fake {
         val result = resetPasswordController.resetPassword("1234")(fakeRequest)
-        status(result) should equal(OK)
+        status(result) should equal(SEE_OTHER)
+        header("Location", result).head should be ("/reset")
       }
     }
   }
