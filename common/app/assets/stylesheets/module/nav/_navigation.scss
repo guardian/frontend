@@ -5,7 +5,7 @@
 /* Configuration
    ========================================================================== */
 
-$c-navigation-base: guss-colour(neutral-5);
+$c-navigation-base: rgb(246, 233, 216);
 
 $navigation-height: $gs-row-height;
 
@@ -13,13 +13,13 @@ $navigation-toggler-width: 48px;
 $navigation-toggler-width-full: 130px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
-$c-navigation-background-side-bar: #005182;
+$c-navigation-background-side-bar: mix(rgb(158, 47, 80), #ffffff, 90%);
 
 $c-signposting-action: $c-newsDefault;
 $c-signposting-background: $c-navigation-base;
 
 $c-top-navigation-action: #ffffff;
-$c-top-navigation-background: #00456e; // one-off colour for nav bg
+$c-top-navigation-background: rgb(158, 47, 80); // one-off colour for nav bg
 
 $c-local-navigation-action: guss-colour(neutral-1);
 $c-local-navigation-background: $c-navigation-base;

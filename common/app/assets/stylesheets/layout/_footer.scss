@@ -1,4 +1,4 @@
-$c-primary-footer-background: guss-colour(guardian-brand);
+$c-primary-footer-background: rgb(158, 47, 80);
 $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff, 90%);
 
 /* Elements modifiers specific to the footer
@@ -52,7 +52,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     border-bottom: 1px solid #ffffff;
 
     .site-message__inner {
-        background-color: $c-brandBlue;
+        background-color: rgb(158, 47, 80);
     }
 }
 

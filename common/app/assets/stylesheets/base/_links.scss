@@ -1,6 +1,6 @@
 a,
 .u-fauxlink {
-    color: $c-newsDefault;
+    color: rgb(46, 110, 158);
     cursor: pointer;
     text-decoration: none;
 
@@ -9,7 +9,7 @@ a,
         text-decoration: underline;
     }
     &:active {
-        color: $c-newsAccent;
+        color: rgb(46, 110, 158);
         text-decoration: none;
     }
 }
