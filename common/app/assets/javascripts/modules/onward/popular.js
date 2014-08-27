@@ -30,7 +30,6 @@ define([
                     mediator.emit('register:end','popular-in-section');
                 },
                 error: function(req) {
-                    raven.captureMessage('Failed to load most read: ' + req.statusText);
                     mediator.emit('register:error','popular-in-section');
                 }
             }).load();
