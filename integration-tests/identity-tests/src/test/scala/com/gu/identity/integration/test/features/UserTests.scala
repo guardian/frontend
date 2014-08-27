@@ -17,8 +17,9 @@ class UserTests extends IdentitySeleniumTestSuite with EitherValues {
 
     scenarioWeb("should not be able to create user with existing user name") { implicit driver: WebDriver =>
       val validationErrors = UserSteps().createUserWithUserName(get("loginName")).left.value
-      validationErrors.size should be(1)
-      validationErrors.head.errorText.contains("username") should be(true)
+      validationErrors.size should be(2)
+
+      validationErrors.exists(_.errorText.contains("username")) should be (true)
     }
 
     scenarioWeb("should be able to change email address") { implicit driver: WebDriver =>
