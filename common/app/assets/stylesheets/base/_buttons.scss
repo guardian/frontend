@@ -17,51 +17,78 @@ category: Common
     <a href="#" class="button button--primary button--xsmall">Link to somewhere</a>
 </div>
 <div>
-    <a href="#" class="button button--primary i i-arrow-white-right i-right">Link to somewhere</a>
-    <a href="#" class="button button--secondary i i-arrow-white-right i-right">Link to somewhere</a>
-    <a href="#" class="button button--tertiary i i-arrow-white-right i-right">Link to somewhere</a>
+    <a href="#" class="button button--primary button--large">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
+    <a href="#" class="button button--primary button--medium">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
+    <a href="#" class="button button--primary button--small">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
+    <a href="#" class="button button--primary button--xsmall">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
 </div>
 <div>
-    <a href="#" class="button button--primary i i-arrow-white-right i-left">Link to somewhere</a>
-    <a href="#" class="button button--secondary i i-arrow-white-right i-left">Link to somewhere</a>
-    <a href="#" class="button button--tertiary i i-arrow-white-right i-left">Link to somewhere</a>
+    <a href="#" class="button button--primary">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
+    <a href="#" class="button button--secondary">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
+    <a href="#" class="button button--tertiary">Link to somewhere<i class="i i-arrow-grey-right i-right"></i></a>
+</div>
+<div>
+    <a href="#" class="button button--primary"><i class="i i-arrow-white-right i-left"></i>Link to somewhere</a>
+    <a href="#" class="button button--secondary"><i class="i i-arrow-white-right i-left"></i>Link to somewhere</a>
+    <a href="#" class="button button--tertiary"><i class="i i-arrow-grey-right i-left"></i>Link to somewhere</a>
+</div>
+<div>
+    <a href="#" class="button button--primary button--large"><i class="i i-arrow-white-right i-only"></i></a>
+    <a href="#" class="button button--primary button--medium"><i class="i i-arrow-white-right i-only"></i></a>
+    <a href="#" class="button button--primary button--small"><i class="i i-arrow-white-right i-only"></i></a>
+    <a href="#" class="button button--primary button--xsmall"><i class="i i-arrow-white-right i-only"></i></a>
+</div>
+<div>
+    <a href="#" class="button button--secondary button--large"><i class="i i-arrow-white-right i-only"></i></a>
+    <a href="#" class="button button--secondary button--medium"><i class="i i-arrow-white-right i-only"></i></a>
+    <a href="#" class="button button--secondary button--small"><i class="i i-arrow-white-right i-only"></i></a>
+    <a href="#" class="button button--secondary button--xsmall"><i class="i i-arrow-white-right i-only"></i></a>
+</div>
+<div>
+    <a href="#" class="button button--tertiary button--large"><i class="i i-arrow-grey-right i-only"></i></a>
+    <a href="#" class="button button--tertiary button--medium"><i class="i i-arrow-grey-right i-only"></i></a>
+    <a href="#" class="button button--tertiary button--small"><i class="i i-arrow-grey-right i-only"></i></a>
+    <a href="#" class="button button--tertiary button--xsmall"><i class="i i-arrow-grey-right i-only"></i></a>
 </div>
 ```
 */
 
 @mixin button-height($button-size) {
-    height: $button-size;
-    padding: 0 $button-size/2;
-    margin-right: $button-size/4;
-    line-height: $button-size + 1px;
+    $true-button-height: $button-size - 2px;
+    height: $true-button-height;
+    padding: 0 ($true-button-height/2);
+    margin-right: $true-button-height/4;
+    line-height: $true-button-height + 1px;
     
-    i {
-        width: $button-size;
-        height: $button-size;
+    .i {
+        width: $true-button-height;
+        height: $true-button-height;
     }
-    &.i {
-        padding: 0  $button-size 0 $button-size/2;
-        width: auto;
-        .svg & {
-            background-position-x: right;
-        }
+    .i-left {
+        margin-left: -($button-size/2);
+        margin-right: $button-size/4;
+        float: left;
     }
-    &.i-left {
-        padding: 0  $button-size/2 0 $button-size;
-        .svg & {
-            background-position-x: left;
-        }
+    .i-right {
+        margin-right: -($button-size/2);
+        margin-left: $button-size/4;
+        float: right;
+    }
+    .i-only {
+        margin: 0 (-($true-button-height/2));
     }
 }
 
 @mixin button-colour($fill-colour, $text-colour, $hover-colour) {
     color: $text-colour;
     background-color: $fill-colour;
+    border: 1px solid $fill-colour;
     
     &:hover,
     &:focus,
     &:active {
         background-color: $hover-colour;
+        border-color: $hover-colour;
     }    
 }
 
@@ -70,7 +97,6 @@ category: Common
     width: auto;
     @include fs-textSans(2);
     @include button-height(gs-height(1) - $gs-baseline/2);
-    color: #ffffff;
     @include border-radius(50%);
 
     &:hover,
@@ -79,25 +105,15 @@ category: Common
         text-decoration: none;
     }
  
-/* TODO make colours from GUSS */   
     &.button--primary {
         @include button-colour($c-newsAccent, #ffffff, $c-newsDefault);
     }
-    
     &.button--secondary {
         @include button-colour($c-neutral2, #ffffff, $c-newsAccent);
     }
     &.button--tertiary {
-        background-color: #fff;
-        color: #ccc;
-        border: 1px solid #ccc;
-        
-        &:hover,
-        &:focus,
-        &:active {
-            background-color: #ccc;
-            color: #fff;
-        }
+        @include button-colour(#ffffff, $c-neutral2, $c-neutral3);
+        border: 1px solid $c-neutral3;
     }
     &.button--large {
         @include button-height($gs-baseline*3);
