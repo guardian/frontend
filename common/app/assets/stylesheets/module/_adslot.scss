@@ -297,10 +297,10 @@
     }
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            margin-top: get-line-height($fs-data, 3)*-2;
+            margin-top: get-line-height(data, 3)*-2;
 
             .ad-slot--commercial-component & {
-                margin-top: -(get-line-height($fs-data, 3));
+                margin-top: -(get-line-height(data, 3));
             }
         }
     }
@@ -313,7 +313,7 @@
 
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            margin-top: get-line-height($fs-data, 3)*-1;
+            margin-top: get-line-height(data, 3)*-1;
         }
     }
 }
@@ -396,10 +396,10 @@
                 float: right;
             }
             &.ad-slot--adbadge .ad-slot--paid-for-badge__link {
-                margin-top: get-line-height($fs-data, 3)*-2;
+                margin-top: get-line-height(data, 3)*-2;
             }
             &.ad-slot--spbadge .ad-slot--paid-for-badge__link {
-                margin-top: get-line-height($fs-data, 3)*-1;
+                margin-top: get-line-height(data, 3)*-1;
             }
         }
         .has-page-skin .container--has-toggle & {
