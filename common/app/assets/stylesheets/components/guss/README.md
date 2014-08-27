@@ -7,23 +7,23 @@ bower install guss --save
 ```
 
 ```scss
-@import "bower_components/sass-mq/_mq";
-@import "bower_components/guss-css3/_css3";
-@import "bower_components/guss-rem/_rem";
-@import "bower_components/guss-grid-system/_grid-system";
-@import "bower_components/guss-layout/_row";
-@import "bower_components/guss-layout/_columns";
-@import "bower_components/guss-typography/_typography";
-@import "bower_components/guss-forms/_forms";
-@import "bower_components/guss-webfonts/_webfonts";
+@import 'bower_components/sass-mq/_mq';
+@import 'bower_components/guss-css3/_css3';
+@import 'bower_components/guss-rem/_rem';
+@import 'bower_components/guss-grid-system/_grid-system';
+@import 'bower_components/guss-layout/_row';
+@import 'bower_components/guss-layout/_columns';
+@import 'bower_components/guss-typography/_typography';
+@import 'bower_components/guss-forms/_forms';
+@import 'bower_components/guss-webfonts/_webfonts';
 ```
 
 ## Features
 
-Guss (Guardian StyleSheets) is a collection of universal CSS and Sass bower
-components re-usable across multiple Guardian web products.
+Guss (Guardian Style Sheets) is a collection of universal components re-usable across
+Guardian web products.
 
-It is largely inspired by Nicolas Gallagher's [Suit framework](https://github.com/suitcss/suit).
+It is inspired by Nicolas Gallagher's [Suit framework](https://github.com/suitcss/suit).
 
 ## Utilities
 
@@ -38,3 +38,12 @@ It is largely inspired by Nicolas Gallagher's [Suit framework](https://github.co
 - [guss-colours](https://github.com/guardian/guss-colours): Brand colours
 - [guss-forms](https://github.com/guardian/guss-forms): Basic Guardian styling for form elements
 - [guss-webfonts](https://github.com/guardian/guss-webfonts): Guardian Webfonts
+
+## Documentation
+
+Use [SassDoc](https://github.com/SassDoc/sassdoc) to build the documentation locally:
+
+1. Install SassDoc: `npm install sassdoc -g`
+2. Install Guss: `bower install guss`
+3. Build the docs: `sassdoc bower_components sassdoc --config bower_components/guss/sassdoc.json`
+4. Read the docs: `open sassdoc/index.html`

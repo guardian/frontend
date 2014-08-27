@@ -6,6 +6,8 @@
  * - original: full character set
  * 
  * @type String
+ *
+ * @group webfonts
  */
 /**
  * Hinting
@@ -14,6 +16,8 @@
  * - off: smaller files, render well on HiDPI displays
  *
  *  @type String
+ *
+ * @group webfonts
  */
 /**
  * Kerning
@@ -22,12 +26,16 @@
  * - off: smaller files
  *
  *  @type String
+ *
+ * @group webfonts
  */
 /**
  * Base URL
  * URL can be an absolute HTTP (`//pasteup.guim.co.uk/fonts/`) or relative (`../`)
  *
  * @type String
+ *
+ * @group webfonts
  */
 /**
  * Complete path
@@ -37,11 +45,15 @@
  * @requires {variable} guss-webfonts-kerning
  *
  * @type String
+ *
+ * @group webfonts
  */
 /**
  * Human-readable Font-weights
  * 
  * @type Map
+ *
+ * @group webfonts
  */
 /* Extra fonts
    ========================================================================== */
@@ -49,11 +61,15 @@
  * Extra fonts directory
  * 
  * @type String
+ *
+ * @group webfonts
  */
 /**
  * Extra fonts list
  * 
  * @type List
+ *
+ * @group webfonts
  */
 /* Font registry
    ========================================================================== */
@@ -61,6 +77,8 @@
  * Font registry
  * 
  * @type Map
+ *
+ * @group webfonts
  */
 /**
  * Machine-readable CSS font-weight.
@@ -69,7 +87,12 @@
  * 
  * @requires {variable} guss-font-weights
  *
+ * @example scss
+ * font-weight: guss-font-weight(light);
+ *
  * @return {Number} - CSS font-weight
+ *
+ * @group webfonts
  */
 /**
  * Is this font stored in `$guss-extras-directory`?
@@ -79,6 +102,8 @@
  * @requires {variable} guss-webfonts-extras
  *
  * @return {Bool}
+ *
+ * @group webfonts
  */
 /**
  * Replace `$search` by `$replace` in `$string`.
@@ -90,6 +115,8 @@
  * @param {String} $replace ('') - new value
  * 
  * @return {String}
+ *
+ * @group webfonts
  */
 /**
  * Remove white space in $string
@@ -99,6 +126,8 @@
  * @param {String} $string - string to update
  * 
  * @return {String}
+ *
+ * @group webfonts
  */
 /**
  * Capitalise first letter of $string
@@ -106,6 +135,8 @@
  * @param {String} $string - string to update
  *
  * @return {String}
+ *
+ * @group webfonts
  */
 /**
  * Compose webfont filename
@@ -122,6 +153,8 @@
  * -> src: url("GuardianTextSansWeb-BoldItalic.eot");
  *
  * @return {String}
+ *
+ * @group webfonts
  */
 /**
  * Compose webfont path
@@ -135,6 +168,8 @@
  * @requires {function} str-remove-white-space
  *
  * @return {String} - Path to the font
+ *
+ * @group webfonts
  */
 /**
  * Look for `$needle` in `$haystack`.
@@ -143,6 +178,8 @@
  * @param {String} $needle - The string to look for
  *
  * @return {Boolean}
+ *
+ * @group webfonts
  */
 /**
  * Output a @font-face declaration at root level.
@@ -155,6 +192,8 @@
  * @param {String} $url ($guss-webfonts-base-url) - URL
  *
  * @requires {variable} guss-webfonts-base-url
+ *
+ * @group webfonts
  */
 /**
  * Output the @font-face declaration for a Guss webfont.
@@ -168,6 +207,8 @@
  * @requires {function} compose-webfont-path
  * @requires {function} guss-font-weight
  * @requires {mixin} guss-at-font-face
+ *
+ * @group webfonts
  */
 /**
  * Output the @font-face declaration for Guss webfonts.
@@ -178,6 +219,8 @@
  * @requires {variable} guss-webfonts
  * @requires {mixin} guss-webfonts-single-declaration
  * @requires {mixin} guss-webfonts
+ *
+ * @group webfonts
  */
 @font-face {
   font-family: "Guardian Agate Sans 1 Web";
