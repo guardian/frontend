@@ -1,5 +1,4 @@
-@import "../colours";
-@import "../helpers";
+@import "../_colours";
 
 html {
     max-width: 60em;
@@ -48,9 +47,9 @@ a {
     margin-top: calc(50% - 2.75em);
 }
 
-@mixin show-colour-meta($palette: $guss-colours, $prefix: b-) {
+@mixin show-colour-meta($palette: $guss-colours, $prefix: "b-") {
     @each $name, $color in $palette {
-        .#{$prefix}#{$name} {
+        .#{unquote($prefix)}#{$name} {
             @if lightness($color) < 70% {
                 text-shadow: 0 0 3px #000000;
                 font-weight: 200;

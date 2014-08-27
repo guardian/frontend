@@ -22,8 +22,7 @@ $browser-supports-flexbox: true !default;
 $inArticleInlineImgWidth: 114px;
 $headerHeight: 36px;
 
-@import 'components/guss-colours/helpers';
-@import 'components/guss-colours/colours';
+@import 'components/guss-colours/_colours';
 @import 'components/guss-grid-system/_grid-system';
 
 $right-column:     gs-span(4);
