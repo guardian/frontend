@@ -1,10 +1,11 @@
 package com.gu.identity.integration.test.features
 
 import com.gu.identity.integration.test.IdentitySeleniumTestSuite
-import com.gu.identity.integration.test.pages.EditAccountDetailsModule
+import com.gu.identity.integration.test.pages.{ContainerWithSigninModulePage, EditAccountDetailsModule}
 import com.gu.identity.integration.test.steps.{SignInSteps, UserSteps}
 import com.gu.identity.integration.test.util.User
 import com.gu.identity.integration.test.util.User._
+import com.gu.integration.test.steps.BaseSteps
 import com.gu.integration.test.util.UserConfig._
 import org.openqa.selenium.WebDriver
 import org.scalatest.EitherValues
@@ -21,13 +22,13 @@ class UserTests extends IdentitySeleniumTestSuite with EitherValues {
     }
 
     scenarioWeb("should be able to change email address") { implicit driver: WebDriver =>
-        val userBeforeChange: User = UserSteps().createRandomBasicUser().right.value
-        val editAccountDetailsModule = UserSteps().checkUserIsLoggedInAndGoToAccountDetails(userBeforeChange)
+      val userBeforeChange: User = UserSteps().createRandomBasicUser().right.value
+      val editAccountDetailsModule = UserSteps().checkUserIsLoggedInAndGoToAccountDetails(userBeforeChange)
 
-        checkEmailValidation(editAccountDetailsModule)
+      checkEmailValidation(editAccountDetailsModule)
 
-        val changedEmail = UserSteps().changeEmail(editAccountDetailsModule).right.value
-        changedEmail should not be userBeforeChange.email
+      val changedEmail = UserSteps().changeEmail(editAccountDetailsModule).right.value
+      changedEmail should not be userBeforeChange.email
     }
 
     def checkEmailValidation(editAccountDetailsModule: EditAccountDetailsModule) = { implicit driver: WebDriver =>
@@ -74,6 +75,16 @@ class UserTests extends IdentitySeleniumTestSuite with EitherValues {
 
       SignInSteps().signInWith(userBeforeChange.email, newPassword)
       SignInSteps().checkUserIsLoggedIn(userBeforeChange.userName)
+    }
+
+    scenarioWeb("should be able to reset password") { implicit driver: WebDriver =>
+      BaseSteps().goToStartPage()
+      SignInSteps().signInUsingFaceBook()
+      UserSteps().requestToResetPassword(new ContainerWithSigninModulePage())
+
+      val resetPwdPage = UserSteps().checkResetPasswordMailAndGoToResetPwdPage()
+
+      UserSteps().resetPassword(resetPwdPage)
     }
   }
 }

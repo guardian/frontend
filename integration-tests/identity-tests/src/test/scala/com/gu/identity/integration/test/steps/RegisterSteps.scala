@@ -28,7 +28,7 @@ case class RegisterSteps(implicit driver: WebDriver) extends TestLogging with Ma
     registerPage.enterUsername(user.userName)
     registerPage.createButton.click()
 
-    waitForPageToBeLoaded
+    waitForPageToLoad
 
     val userFormErrors = registerPage.getAllValidationFormErrors()
 
