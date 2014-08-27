@@ -140,9 +140,11 @@
                     tags: {
                         edition: config.page.edition,
                         contentType: config.page.contentType,
-                        buildNumber: config.page.buildNumber
+                        revisionNumber: config.page.revisionNumber
                     },
                     dataCallback: function(data) {
+                        var appUrl = /\/[a-z\/]*\/([a-z0-9]*\/)[\da-z\.-]+$/.exec(data.culprit);
+                        data.culprit = (appUrl.length) ? data.culprit.replace(appUrl[1], '') : data.culprit;
                         data.tags.origin = (/j.ophan.co.uk/.test(data.culprit)) ? 'ophan' : 'app';
                         return data;
                     },
