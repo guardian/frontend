@@ -11,7 +11,7 @@ define([
         this.author = 'Darren Hurley';
         this.description = 'Display either "soulmates" or "dating" label';
         this.audience = 0.2;
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.1;
         this.successMeasure = 'CTR';
         this.audienceCriteria = 'Everyone';
         this.dataLinkNames = 'topNav : soulmates';
