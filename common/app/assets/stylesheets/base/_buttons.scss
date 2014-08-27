@@ -60,6 +60,8 @@ category: Common
     padding: 0 ($true-button-height/2);
     margin-right: $true-button-height/4;
     line-height: $true-button-height + 1px;
+    border-width: 1px;
+    border-style: solid;
     
     .i {
         width: $true-button-height;
@@ -83,7 +85,7 @@ category: Common
 @mixin button-colour($fill-colour, $text-colour, $hover-colour) {
     color: $text-colour;
     background-color: $fill-colour;
-    border: 1px solid $fill-colour;
+    border-color: $fill-colour;
     
     &:hover,
     &:focus,
@@ -115,6 +117,12 @@ category: Common
     &.button--tertiary {
         @include button-colour(#ffffff, $c-neutral2, $c-neutral3);
         border: 1px solid $c-neutral3;
+        
+        &:hover,
+        &:focus,
+        &:active {
+            color: $c-neutral1;
+        }
     }
     &.button--large {
         @include button-height($gs-baseline*3);
