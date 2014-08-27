@@ -13,8 +13,8 @@
     "reqwest": "git://github.com/guardian/reqwest.git",
     "enhancer": "0.1.1",
     "videojs": "guardian/video.js#21f2d3c150b3573337030758f7dfb634f6798052",
-    "videojs-contrib-ads": "guardian/videojs-contrib-ads#099c752aa8c7d849290be49276ac568852b6ba28",
-    "videojs-vast": "guardian/videojs-vast-plugin#6b7b526ceb1ee5223db48a965b16be36b153e038",
+    "videojs-contrib-ads": "guardian/videojs-contrib-ads#e477f283d4cdf5f720f95e458451a027143d52bf",
+    "videojs-vast": "theonion/videojs-vast-plugin#4b2185024e112242aa46e11bd1ddcf561fc27bbe",
     "videojs-persistvolume": "~0.1.0",
     "socket.io-client": "1.0.6",
     "raven-js": "~1.1.16",
@@ -23,7 +23,7 @@
   },
   "resolutions": {
     "videojs": "21f2d3c150b3573337030758f7dfb634f6798052",
-    "videojs-contrib-ads": "099c752aa8c7d849290be49276ac568852b6ba28"
+    "videojs-contrib-ads": "e477f283d4cdf5f720f95e458451a027143d52bf"
   },
   "install": {
     "path": "components",
