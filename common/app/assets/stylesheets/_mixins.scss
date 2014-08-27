@@ -177,25 +177,24 @@
     flex-direction: $direction;
 }
 
-@mixin columns($cols: 1, $gutter: 0) {
+@mixin columns($cols: 1, $gap: 0) {
     @if $browser-supports-columns {
         -webkit-column-count: $cols;
         -moz-column-count: $cols;
         column-count: $cols;
 
-        -webkit-column-gap: $gutter;
-        -moz-column-gap: $gutter;
-        column-gap: $gutter;
+        -webkit-column-gap: $gap;
+        -moz-column-gap: $gap;
+        column-gap: $gap;
     } @else {
-        margin-left: 0 - $gutter * .5;
-        margin-right: 0 - $gutter * .5;
+        margin-left: 0 - $gap * .5;
+        margin-right: 0 - $gap * .5;
         & > * {
             @include box-sizing(border-box);
             width: (100% / $cols);
             float: left;
-            display: block;
-            padding-left: $gutter * .5;
-            padding-right: $gutter * .5;
+            padding-left: $gap * .5;
+            padding-right: $gap * .5;
         }
     }
 }
