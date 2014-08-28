@@ -25,7 +25,6 @@ define([
     };
 
     OnwardContent.prototype.error = function() {
-        raven.captureMessage('Failed to load series:' + this.config.page.series);
         register.error('series-content');
     };
 

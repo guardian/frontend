@@ -12,6 +12,7 @@ import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
 
 import scala.collection.JavaConversions._
+import scala.language.postfixOps
 import scala.util.Try
 
 class Content protected (val apiContent: ApiContentWithMeta) extends Trail with MetaData {
@@ -161,13 +162,13 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
-  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
+  override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:title" -> webTitle,
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),
     "og:image" -> openGraphImage
   )
 
-  override def cards: List[(String, Any)] = super.cards ++ List(
+  override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:app:url:googleplay" -> webUrl.replace("http", "guardian")
   )
 
@@ -397,19 +398,21 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
     ) ++ bookReviewIsbn
   }
 
-  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
+  override def openGraph: Map[String, String] = super.openGraph ++ Map(
     ("og:type", "article"),
-    ("article:published_time", webPublicationDate),
-    ("article:modified_time", lastModified),
+    ("article:published_time", webPublicationDate.toString()),
+    ("article:modified_time", lastModified.toString()),
     ("article:tag", keywords.map(_.name).mkString(",")),
     ("article:section", sectionName),
     ("article:publisher", "https://www.facebook.com/theguardian"),
     ("article:author", contributors.map(_.webUrl).mkString(","))
   )
 
-  override def cards: List[(String, Any)] = super.cards ++ List(
+  override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
-  ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
+  ) ++ Seq(
+    mainPicture.flatMap(_.largestImage.flatMap(_.path.map("twitter:image:src" ->)))
+  ).flatten
 }
 
 class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
@@ -418,7 +421,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   lazy val isSport: Boolean = tags.exists(_.id == "sport/sport")
   override lazy val contentType = GuardianContentTypes.LiveBlog
 
-  override def cards: List[(String, Any)] = super.cards ++ List(
+  override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "summary"
   )
 
@@ -428,7 +431,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
-  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
+  override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:type" -> "video",
     "og:type" -> "video",
     "og:video:type" -> "text/html",
@@ -516,10 +519,10 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   // if you change these rules make sure you update IMAGES.md (in this project)
   override def trailPicture: Option[ImageContainer] = thumbnail
 
-  override def openGraph: Map[String, Any] = super.openGraph ++ Map(
+  override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:type" -> "article",
-    "article:published_time" -> webPublicationDate,
-    "article:modified_time" -> lastModified,
+    "article:published_time" -> webPublicationDate.toString(),
+    "article:modified_time" -> lastModified.toString(),
     "article:section" -> sectionName,
     "article:tag" -> keywords.map(_.name).mkString(","),
     "article:author" -> contributors.map(_.webUrl).mkString(",")
@@ -528,12 +531,12 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   private lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
 
-  override def cards: List[(String, Any)] = super.cards ++ List(
+  override def cards: List[(String, String)] = super.cards ++ Seq(
     "twitter:card" -> "gallery",
     "twitter:title" -> linkText
-  ) ++ largestCrops.sortBy(_.index).take(5).zipWithIndex.map{ case(image, index) =>
-    s"twitter:image$index:src" -> image.path
-  }
+  ) ++ largestCrops.sortBy(_.index).take(5).zipWithIndex.map { case (image, index) =>
+    image.path.map(s"twitter:image$index:src" ->)
+  }.flatten
 }
 
 object Gallery {
@@ -560,9 +563,9 @@ class ImageContent(content: ApiContentWithMeta) extends Content(content) {
   override lazy val metaData: Map[String, JsValue] =
     super.metaData + ("contentType" -> JsString(contentType))
 
-  override def cards: List[(String, Any)] = super.cards ++ List(
+  override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "photo"
-  ) ++ mainPicture.flatMap(_.largestImage.map( "twitter:image:src" -> _.path ))
+  ) ++ mainPicture.flatMap(_.largestImage.flatMap(_.path.map("twitter:image:src" ->)))
 }
 
 case class ApiContentWithMeta(delegate: ApiContent, supporting: List[Content] = Nil, metaData: Map[String, JsValue] = Map.empty)

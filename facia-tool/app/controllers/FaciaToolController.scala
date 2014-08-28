@@ -60,6 +60,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     block foreach { b =>
       UpdateActions.archivePublishBlock(id, b, identity)
       FaciaPress.press(PressCommand.forOneId(id).withPressDraft().withPressLive())
+      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(Json.obj("id" -> id), "publish", identity.email))
     }
     ContentApiPush.notifyContentApi(Set(id))
     NoCache(Ok)
@@ -69,6 +70,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val identity = request.user
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
+      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(Json.obj("id" -> id), "discard", identity.email))
       UpdateActions.archiveDiscardBlock(id, b, identity)
       FaciaPress.press(PressCommand.forOneId(id).withPressDraft())
     }
@@ -83,6 +85,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
           val identity = request.user
           UpdateActions.updateCollectionMeta(id, update, identity)
           ContentApiPush.notifyContentApi(Set(id))
+          FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(Json.toJson(update), "meta", identity.email))
           Ok
         }
         case _ => NotFound
@@ -96,6 +99,10 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
       request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
         case update: Map[String, UpdateList] =>
           val identity = request.user
+
+          update.foreach{ case (action, u) =>
+            FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(Json.toJson(u), action, identity.email))}
+
           val updatedCollections: Map[String, Block] = update.collect {
             case ("update", updateList) =>
               UpdateActions.updateCollectionList(updateList.id, updateList, identity).map(updateList.id -> _)

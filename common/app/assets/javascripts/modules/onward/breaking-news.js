@@ -102,9 +102,6 @@ define([
                         storage.local.set(storageKeyHidden, intersection(hiddenIds, articleIds));
                     });
                 });
-            },
-            function() {
-                raven.captureMessage('Failed to load breaking news');
             }
         );
     };

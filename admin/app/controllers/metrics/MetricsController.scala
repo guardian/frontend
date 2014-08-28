@@ -8,19 +8,19 @@ import model.NoCache
 import conf.Configuration
 import tools.CloudWatch._
 
-object DashboardController extends Controller with Logging with AuthLogging {
+object MetricsController extends Controller with Logging with AuthLogging {
   // We only do PROD metrics
 
   val stage = Configuration.environment.stage.toUpperCase
 
-  def renderDashboard() = AuthActions.AuthActionTest { request =>
-    val latency = CloudWatch.fullStackLatency.map(_.withFormat(ChartFormat.SingleLineGreen))
+  def renderLoadBalancers() = AuthActions.AuthActionTest { request =>
+    val latency = CloudWatch.fullStackLatency
     val charts = (latency ++ CloudWatch.requestOkFullStack).groupBy(_.name).flatMap(_._2).toSeq
     NoCache(Ok(views.html.lineCharts("PROD", charts)))
   }
 
   def renderErrors() = AuthActions.AuthActionTest { request =>
-    NoCache(Ok(views.html.lineCharts("PROD", Seq(HttpErrors.global4XX, HttpErrors.global5XX.withFormat(ChartFormat.SingleLineRed)))))
+    NoCache(Ok(views.html.lineCharts("PROD", Seq(HttpErrors.global4XX, HttpErrors.global5XX))))
   }
 
   def render4XX() = AuthActions.AuthActionTest { request =>
@@ -28,7 +28,7 @@ object DashboardController extends Controller with Logging with AuthLogging {
   }
 
   def render5XX() = AuthActions.AuthActionTest { request =>
-    NoCache(Ok(views.html.lineCharts("PROD", HttpErrors.errors.map(_.withFormat(ChartFormat.SingleLineRed)))))
+    NoCache(Ok(views.html.lineCharts("PROD", HttpErrors.errors)))
   }
 
   def renderGooglebot404s() = AuthActions.AuthActionTest { request =>
@@ -36,7 +36,7 @@ object DashboardController extends Controller with Logging with AuthLogging {
   }
 
   def renderMemory() = AuthActions.AuthActionTest{ request =>
-    val metrics = MemoryMetrics.memory.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
+    val metrics = MemoryMetrics.memory
     NoCache(Ok(views.html.lineCharts(stage, metrics)))
   }
 
