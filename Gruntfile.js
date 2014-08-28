@@ -60,9 +60,13 @@ module.exports = function (grunt) {
     /**
      * Compile tasks
      */
+
+    // for backwards compatablity
+    grunt.registerTask('sass:compile', ['concurrent:sass']);
+
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', function() {
-        grunt.task.run(['compile:images', 'sass:compile', 'sass:compileStyleguide', 'px_to_rem']);
+        grunt.task.run(['compile:images', 'concurrent:sass', 'sass:compileStyleguide', 'px_to_rem']);
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
