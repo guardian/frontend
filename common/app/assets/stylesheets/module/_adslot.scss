@@ -9,6 +9,7 @@
 .ad-slot__label {
     height: $mpu-ad-label-height;
     background-color: $c-neutral8;
+    margin: 0 auto;
     padding: 0 ($gs-baseline/3)*2;
     border-top: 1px solid $c-neutral5;
     color: $c-neutral2-contrasted;
@@ -75,7 +76,6 @@
             }
             .ad-slot__label {
                 width: 720px;
-                margin: 0 auto;
             }
         }
     }
@@ -96,7 +96,6 @@
     @include mq(tablet, faciaLeftCol) {
         .ad-slot__label {
             width: 728px;
-            margin: 0 auto;
         }
     }
 }
@@ -127,21 +126,27 @@
 /**
  * Inline ads
  */
+.ad-slot--inline,
 .ad-slot--container-inline,
-.ad-slot--inline {
+.ad-slot--gallery-inline {
     min-height: 50 + $mpu-ad-label-height;
     text-align: center;
 
-    @include mq(mobileLandscape) {
-        min-height: 50px;
-    }
     @include mq(tablet) {
         height: 250px + $mpu-ad-label-height;
         width: 300px;
     }
     .ad-slot__label {
         max-width: 300px;
-        margin: 0 auto;
+    }
+}
+.ad-slot--inline {
+    margin-bottom: $gs-baseline;
+
+    @include mq(tablet) {
+        float: right;
+        margin-top: $gs-baseline/3;
+        margin-left: $gs-gutter;
     }
 }
 .ad-slot--container-inline {
@@ -155,19 +160,7 @@
         background-color: $c-neutral8;
     }
 }
-.ad-slot--inline {
-    text-align: center;
-    margin-bottom: $gs-baseline;
-
-    @include mq(tablet) {
-        float: right;
-        margin-top: $gs-baseline/3;
-        margin-left: $gs-gutter;
-    }
-}
 .ad-slot--gallery-inline {
-    text-align: center;
-
     @include mq(tablet) {
         padding-bottom: $gs-baseline*2;
         background-color: lighten(guss-colour(tone-media-1), 2.5%);
@@ -175,15 +168,7 @@
     .ad-slot__label {
         color: guss-colour(neutral-3);
         background-color: lighten(guss-colour(tone-media-1), 2.5%);
-        border-top: 1px solid guss-colour(neutral-2);
-
-        @include mq($to: tablet) {
-            max-width: 300px;
-            margin: 0 auto;
-        }
-        @include mq(tablet) {
-            height: $gs-baseline*2;
-        }
+        border-top-color: guss-colour(neutral-2);
     }
 }
 .ad-slot--mpu-banner-ad {
