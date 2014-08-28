@@ -72,3 +72,5 @@ https://code.google.com/p/selenium/issues/detail?id=2766
 To run the tests you can either load the project in your favourite IDE as an SBT project and then simply run it as a ScalaTest class or you can run it in command line by simply exeuting: ```sbt test```
 
 If you want to run the same test suite which TeamCity runs then execute: ```sbt ciTest```. This is for the CI environment and will not fail the build if the tests fail. This is so the tests can be properly muted in Team City.
+
+However, at the time of writing this document, the tests cannot be properly run due to an environment (id.code.dev...) not being accessable from BrowserStack/SauceLab environments.
