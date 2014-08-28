@@ -7,14 +7,6 @@
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
-    @page match {
-        case content: model.Content => {
-            @fragments.breadcrumb(content)
-        }
-
-        case _ => {}
-    }
-
     @if(ReleaseMessageSwitch.isSwitchedOn) {
         <div class="site-message--footer is-hidden js-footer-message" data-link-name="release message">
             <div class="gs-container">
@@ -49,6 +41,14 @@
                 <div class="l-footer__navigation-wrapper u-cf">
                     @fragments.nav.navigationFooter(page)
                 </div>
+            }
+
+            @page match {
+                case content: model.Content => {
+                    @fragments.breadcrumb(content)
+                }
+
+                case _ => {}
             }
         </div>
     </div>
