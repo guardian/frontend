@@ -18,6 +18,9 @@
                                 }
                                 <div class="lineitem__offer">
                                     <h4 class="lineitem__title">@item.webTitle</h4>
+                                    @item.trailText.map { text =>
+                                        <p>@Html(text)</p>
+                                    }
                                     <div class="item__meta">
                                         <time
                                             class="item__timestamp js-item__timestamp"
