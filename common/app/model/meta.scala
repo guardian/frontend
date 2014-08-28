@@ -46,7 +46,7 @@ trait MetaData extends Tags {
     ("section", JsString(section)),
     ("webTitle", JsString(webTitle)),
     ("buildNumber", JsString(buildNumber)),
-    ("revisionNumber", JsString(revision)),
+    ("revisionNumber", JsString(revision.take(7))),
     ("analyticsName", JsString(analyticsName)),
     ("blockVideoAds", JsBoolean(false)),
     ("isFront", JsBoolean(isFront)),
