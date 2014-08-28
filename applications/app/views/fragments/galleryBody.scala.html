@@ -19,14 +19,14 @@
 
                                 @ImgSrc.imager(gallery.imageContainer(row.rowNum-1), GalleryUpgradedImage).map { imgSrc =>
 
-                                    <a  class="gallery2__img-container js-gallerythumbs js-image-upgrade"
+                                    <a  class="gallery2__img-container js-gallerythumbs js-delayed-image-upgrade"
                                         href="@LinkTo{@gallery.url?index=@row.rowNum}"
                                         data-src="@imgSrc"
                                         data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
                                         @GalleryInitialImage.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
 
-                                            <img class="gallery2__img responsive-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                                            <img class="gallery2__img js-vh-polyfill responsive-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
                                                 src="@url"
                                                 alt="@image.altText.getOrElse("")"
                                                 itemprop="contentUrl" />
