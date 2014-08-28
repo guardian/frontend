@@ -2,11 +2,13 @@
 
 This is an SBT multi-module test project with independent test module which share a common module.
 
-It consist of the following modules.
+It consists of the following modules.
 
 * common-test-lib - this is a common library for the test modules and contains common Page Objects, super classes and various utility classes
 * frontend-tests - Contains integration tests which are common for the whole front end and thus not specific for any particular front-end module. Keep in mind that tests here are currently configured to break the delivery flow of front end. For more details see its readme file
 * identity-tests - Contains test cases related to login, create users etc. For more details see it's readme.
+
+The modules are configured both under project/Build.scala and, for each module, under identity-tests/build.sbt and frontend-tests/build.sbt.
 
 ## Best practices and guide lines
 
