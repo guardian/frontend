@@ -100,7 +100,12 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val faciaTool = application("facia-tool").dependsOn(commonWithTests)
+  val faciaTool = application("facia-tool").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies ++= Seq(
+      "org.julienrf" %% "play-json-variants" % "0.2"
+    )
+  )
+
 
   val faciaPress = application("facia-press").dependsOn(commonWithTests)
 
