@@ -302,6 +302,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val adminPressJobPushRateInMinutes: Int =
       Try(configuration.getStringProperty("admin.pressjob.push.rate.inminutes").get.toInt)
         .getOrElse(3)
+
+    lazy val faciaToolUpdatesStream: Option[String] = configuration.getStringProperty("faciatool.updates.stream")
   }
 
   object pa {
