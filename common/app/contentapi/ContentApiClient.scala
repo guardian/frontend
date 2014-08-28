@@ -2,6 +2,7 @@ package contentapi
 
 import akka.actor.ActorSystem
 import com.gu.openplatform.contentapi.Api
+import conf.Switches
 import scala.concurrent.Future
 import common._
 import model.{Content, Trail}
@@ -148,7 +149,11 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
   })
 
   override def fetch(url: String, parameters: Map[String, String]) = {
-    circuitBreaker.withCircuitBreaker(super.fetch(url, parameters))
+    if (Switches.CircuitBreakerSwitch.isSwitchedOn) {
+      circuitBreaker.withCircuitBreaker(super.fetch(url, parameters))
+    } else {
+      super.fetch(url, parameters)
+    }
   }
 }
 
