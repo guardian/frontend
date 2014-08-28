@@ -1,7 +1,5 @@
 package com.gu.integration.test.util
 
-import java.io.ByteArrayOutputStream
-import java.nio.charset.Charset
 import java.util.{Calendar, Date}
 import javax.mail._
 import javax.mail.search.FlagTerm

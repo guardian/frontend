@@ -8,7 +8,13 @@ class MailMsgTest extends FunSuite {
 
   test("getting password reset link") {
     val expectedResetLink = "https://profile.code.dev-theguardian.com/c/ad36e5be-"
-    val resetLink = MailMsg("subject", s"This email is to let you know that someone, probably you, recently asked us\nto reset the password on the theguardian.com account belonging to\nshahin.test@guardian.co.uk\n\nIn order to reset your password, please follow the link below\n\n$expectedResetLink\n\n\nIf your email software does not allow you to click the link, please copy it\ninto your browser’s address bar.", new Date())
+    val resetLink = MailMsg("subject",
+      s"""This email is to let you know that someone, probably you, recently asked us
+         |to reset the password on the theguardian.com account belonging to
+         |shahin.test@guardian.co.uk\n\nIn order to reset your password, please follow the link below
+         |$expectedResetLink
+         If your email software does not allow you to click the link, please copy it
+         into your browser’s address bar.""".stripMargin, new Date())
       .getResetPasswordLink()
     assert(expectedResetLink.equals(resetLink.get))
   }
