@@ -54,7 +54,7 @@ case class OmnitureMetric(id: String)
 // An element id is typically 'browserType', 'browser', 'evar37', 'prop11', 'referrer', etc.
 //
 // Overtime reports do not support Elements (because the element is time, by default).
-case class OmnitureElement(id: String)
+case class OmnitureElement(id: String, selected: List[String] = Nil)
 
 object Omniture extends ExecutionContexts with Logging {
 
@@ -120,7 +120,7 @@ object Omniture extends ExecutionContexts with Logging {
 
   private def postRequest(method: String, body: JsValue): Future[WSResponse] = {
     omnitureCredentials.map { credentials => {
-      WS.url("https://api.omniture.com/admin/1.2/rest/")
+      WS.url("https://api.omniture.com/admin/1.3/rest/")
         .withHeaders(("X-WSSE", makeHeader(credentials).toString))
         .withQueryString(("method", method))
         .post(body)

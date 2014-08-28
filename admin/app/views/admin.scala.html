@@ -6,12 +6,17 @@
         <div class="col-md-4">
             <h3>Analytics</h3>
             <div class="panel panel-default well--front">
-                <div class="panel-heading">See Ophan for neartime data.</div>
+                <div class="panel-heading">Monitoring, analytics and performance.</div>
                 <div class="panel-body">
                     <ul>
                         <li><a href="@controllers.admin.routes.AnalyticsController.abtests()">A/B Tests</a></li>
                         <li><a href="@controllers.admin.routes.AnalyticsConfidenceController.renderConfidence()">Confidence</a></li>
                         <li><a href="@controllers.admin.routes.CommercialController.renderCommercial()">Commercial</a></li>
+                        <li>Content Performance Dashboards:
+                            <ul>
+                                <li><a href="@controllers.admin.routes.ContentPerformanceController.renderGalleryDashboard()">Gallery</a></li>
+                            <ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -37,18 +42,18 @@
                 <div class="panel-heading">Ops metrics (is the site healthy?).</div>
                 <div class="panel-body">
                     <ul>
-                        <li><a href="@controllers.admin.routes.DashboardController.renderDashboard()">Load Balancers</a></li>
+                        <li><a href="@controllers.admin.routes.MetricsController.renderLoadBalancers()">Load Balancers</a></li>
                         <li><a href="@controllers.admin.routes.FastlyController.renderFastly()">Fastly</a></li>
                         <li>
-                            <a href="@controllers.admin.routes.DashboardController.renderErrors()">Errors</a>
+                            <a href="@controllers.admin.routes.MetricsController.renderErrors()">Errors</a>
                             <ul>
-                                <li><a href="@controllers.admin.routes.DashboardController.render4XX()">4XX</a></li>
-                                <li><a href="@controllers.admin.routes.DashboardController.render5XX()">5XX</a></li>
-                                <li><a href="@controllers.admin.routes.DashboardController.renderGooglebot404s()">Googlebot 404s</a></li>
+                                <li><a href="@controllers.admin.routes.MetricsController.render4XX()">4XX</a></li>
+                                <li><a href="@controllers.admin.routes.MetricsController.render5XX()">5XX</a></li>
+                                <li><a href="@controllers.admin.routes.MetricsController.renderGooglebot404s()">Googlebot 404s</a></li>
                             </ul>
                         </li>
-                        <li><a href="@controllers.admin.routes.DashboardController.renderMemory()">JVM Memory</a></li>
-                        <li><a href="@controllers.admin.routes.DashboardController.renderAssets()">Static assets</a></li>
+                        <li><a href="@controllers.admin.routes.MetricsController.renderMemory()">JVM Memory</a></li>
+                        <li><a href="@controllers.admin.routes.MetricsController.renderAssets()">Static assets</a></li>
                     </ul>
                 </div>
             </div>

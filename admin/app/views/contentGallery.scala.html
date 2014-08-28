@@ -1,0 +1,11 @@
+@(env: String, chart: tools.GenericChart, title: Option[String] = None)
+
+@admin_main("Gallery Dashboard", env, isAuthed = true, hasCharts = true) {
+
+    @title.map{ title =>
+        <h3>@title</h3>
+    }
+
+    @fragments.genericChart(chart)
+
+}
