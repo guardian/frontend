@@ -26,6 +26,9 @@
         margin-bottom: $gs-baseline*2;
     }
 }
+.js-off .gallery2__item--advert {
+    display: none;
+}
 
 .gallery2__figcaption {
     @include fs-textSans(1);
