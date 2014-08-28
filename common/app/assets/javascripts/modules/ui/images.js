@@ -53,8 +53,8 @@ function (
                 'window:orientationchange': function() {
                     images.upgrade();
                 },
-                'ui:images:upgrade': function() {
-                    images.upgrade();
+                'ui:images:upgrade': function(context) {
+                    images.upgrade(context);
                 }
             });
         }

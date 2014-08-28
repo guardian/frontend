@@ -1,30 +1,26 @@
 define([
     'common/utils/mediator',
-    'common/utils/$',
-    'bean'
+    'common/utils/$'
 ], function(
     mediator,
-    $,
-    bean
+    $
 ) {
 
-    var verticalHeightCss = function() {
-        $('.js-vh-polyfill').css('max-height', '90vh');
-    };
-
-    var safariVerticalHeightPolyfill = function() {
+    var verticallyResponsiveImages = function() {
         var setHeight = function() {
-            $('.js-vh-polyfill').css('max-height', window.innerHeight * 0.9);
+            $('.js-vh-images').css('max-height', window.innerHeight * 0.9);
         };
         setHeight();
-        bean.on(window, 'resize', setHeight);
-        bean.on(window, 'orientationchange', setHeight);
+        mediator.addListeners({
+            'window:resize': setHeight,
+            'window:orientationchange': setHeight
+        });
     };
 
     var ready = function (config, context) {
-        (window.navigator.userAgent.match(/(Safari)/)) ? safariVerticalHeightPolyfill() : verticalHeightCss();
+        verticallyResponsiveImages();
         $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
-        mediator.emit('ui:images:upgrade');
+        mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
 
         mediator.emit('page:gallery:ready', config, context);
     };
