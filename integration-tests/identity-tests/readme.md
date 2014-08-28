@@ -1,13 +1,3 @@
-## Table of Contents
-
-* [Introduction](#introduction)
-* [How to write a test (quick)](#how-to-write-a-test-quick)
-* [How to prepare to run the tests against a local installation](#how-to-prepare-to-run-the-tests-against-a-local-installation)
-* [Configuring the tests](#configuring-the-tests)
-* [Running the Tests](#running-the-tests)
-* [Workflow (detailed)](#workflow-detailed)
-* [Writing tests (detailed)](#writing-tests-detailed)
-
 ## Introduction
 
 The purpose of this module is to run a series of tests related to logging in/out and user management use cases. It is currently targetted to run against the next-gen CODE environment.
