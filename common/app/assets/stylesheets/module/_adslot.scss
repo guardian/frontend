@@ -183,45 +183,40 @@
         display: block;
     }
 }
-.ad-slot--sponsored,
-.ad-slot--sponsored__header {
-    border-top: 1px solid $c-neutral5;
-    padding-top: $gs-baseline/4;
-}
 .ad-slot--sponsored {
     overflow: hidden;
+    border-top: 1px solid $c-neutral5;
+    padding-top: $gs-baseline/2;
 }
-.ad-slot--sponsored__label,
-.ad-slot--sponsored__header,
-.ad-slot--sponsored__image,
-.ad-slot--sponsored__text {
-    padding-left: $gs-gutter/2;
-    padding-right: $gs-gutter/2;
+.ad-slot--sponsored__article {
+    display: block;
+    position: relative;
+    min-height: gs-height(2);
+    padding: 0 $gs-gutter/2 $gs-baseline/2 (gs-span(2) + $gs-gutter);
+    margin-bottom: $gs-baseline/2;
+    border-bottom: 1px solid $c-neutral5;
 }
-.ad-slot--sponsored__label,
-.ad-slot--sponsored__text {
+.ad-slot--sponsored__image {
+    position: absolute;
+    top: 0;
+    left: $gs-gutter/2;
+}
+.ad-slot--sponsored__text,
+.ad-slot--sponsored__label {
     color: $c-neutral2;
+}
+.ad-slot--sponsored__text {
+    @include f-headlineSans;
+    @include font-size(14, 18);
 }
 .ad-slot--sponsored__label {
     float: left;
+    clear: left;
+    padding-left: $gs-gutter/2;
     @include fs-data(3);
-}
-.ad-slot--sponsored__image {
-    float: left;
 }
 .ad-slot--sponsored__link {
     float: right;
-}
-.ad-slot--sponsored__header {
-    @include f-headlineSans;
-    @include font-size(16, 20);
-}
-.ad-slot--sponsored__text {
-    @include f-textSans;
-    @include font-size(14, 18);
-}
-.ad-slot--sponsored__header {
-    clear: both;
 }
 
 /**
@@ -245,9 +240,6 @@
     @include mq(desktop) {
         display: block;
     }
-}
-.ad-slot--commercial-component {
-    margin-top: $gs-baseline;
 }
 
 /**
@@ -305,10 +297,10 @@
     }
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            margin-top: get-line-height($fs-data, 3)*-2;
+            margin-top: get-line-height(data, 3)*-2;
 
             .ad-slot--commercial-component & {
-                margin-top: -(get-line-height($fs-data, 3));
+                margin-top: -(get-line-height(data, 3));
             }
         }
     }
@@ -321,7 +313,7 @@
 
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            margin-top: get-line-height($fs-data, 3)*-1;
+            margin-top: get-line-height(data, 3)*-1;
         }
     }
 }
@@ -404,10 +396,10 @@
                 float: right;
             }
             &.ad-slot--adbadge .ad-slot--paid-for-badge__link {
-                margin-top: get-line-height($fs-data, 3)*-2;
+                margin-top: get-line-height(data, 3)*-2;
             }
             &.ad-slot--spbadge .ad-slot--paid-for-badge__link {
-                margin-top: get-line-height($fs-data, 3)*-1;
+                margin-top: get-line-height(data, 3)*-1;
             }
         }
         .has-page-skin .container--has-toggle & {

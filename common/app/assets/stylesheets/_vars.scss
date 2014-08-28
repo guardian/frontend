@@ -12,7 +12,7 @@
 
 $old-ie:      false !default;
 $svg-support: true !default;
-$browser-supports-columns: true;
+$browser-supports-columns: not $old-ie !default;
 $browser-supports-flexbox: true !default;
 
 
@@ -22,8 +22,7 @@ $browser-supports-flexbox: true !default;
 $inArticleInlineImgWidth: 114px;
 $headerHeight: 36px;
 
-@import 'components/guss-colours/helpers';
-@import 'components/guss-colours/colours';
+@import 'components/guss-colours/_colours';
 @import 'components/guss-grid-system/_grid-system';
 
 $right-column:     gs-span(4);

@@ -5,12 +5,10 @@ import java.net.URLEncoder
 import play.api.test._
 import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
-import java.net.{ HttpURLConnection, URL }
 import java.io.File
 import com.gu.openplatform.contentapi.connection.Http
 import recorder.ContentApiHttpRecorder
 import play.api.GlobalSettings
-import scala.concurrent.Future
 import org.apache.commons.codec.digest.DigestUtils
 import com.gargoylesoftware.htmlunit.BrowserVersion
 
@@ -37,7 +35,7 @@ trait TestSettings {
     }
   }
 
-  private def toRecorderHttp(http: Http[Future]) = new Http[Future] {
+  private def toRecorderHttp(http: Http) = new Http {
 
     val originalHttp = http
 
@@ -113,7 +111,9 @@ trait FakeApplication extends TestSettings {
       withoutPlugins = disabledPlugins,
       withGlobal = globalSettingsOverride,
       additionalPlugins = testPlugins,
-      additionalConfiguration = Map("application.secret" -> "test-secret")
+      additionalConfiguration = Map(
+        "application.secret" -> "this_is_not_a_real_secret_just_for_tests"
+      )
     )
   ) { block }
 }

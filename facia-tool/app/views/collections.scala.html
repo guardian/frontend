@@ -310,8 +310,13 @@
                             click: toggleImageAdjustHide,
                             text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
                             css: {selected: meta.imageAdjust() === 'hide'}"></a>
-
                         &middot;
+                        <!-- ko if: mainMediaType() === 'video' -->
+                        <a data-bind="
+                            click: toggleShowMainVideo,
+                            css: {selected: meta.showMainVideo}">video</a>
+                        &middot;
+                        <!-- /ko -->
                         Mark as
                         <a data-bind="
                             click: toggleIsBreaking,

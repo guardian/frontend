@@ -6,13 +6,11 @@
  *  run analytics over (eg. ab tests, enhancement).
  */
 define([
-    'common/utils/deferToLoad',
     'common/utils/mediator',
     'common/modules/experiments/ab',
     'lodash/collections/where'
 
 ], function (
-    deferToLoadEvent,
     mediator,
     ab,
     _where
@@ -55,9 +53,7 @@ define([
         mediator.on('register:end', end);
         mediator.on('register:error', error);
 
-        deferToLoadEvent(function() {
-            window.setTimeout(sendEvent.bind(config), 5000);
-        });
+        window.setTimeout(sendEvent.bind(config), 5000);
     }
 
     return {

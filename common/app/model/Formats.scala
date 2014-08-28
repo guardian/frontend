@@ -3,7 +3,6 @@ package model
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.json.Json.toJson
-import views.support.JavaScriptVariableName
 
 trait Formats extends implicits.Dates {
   implicit val imageFormat: Writes[ImageAsset] = new Writes[ImageAsset] {
@@ -36,14 +35,6 @@ trait Formats extends implicits.Dates {
   }
 
   implicit val metaDataFormat: Writes[MetaData] = new Writes[MetaData] {
-    def writes(item: MetaData): JsValue = toJson(
-      item.metaData map {
-        case (key, value) => JavaScriptVariableName(key) -> value
-      } mapValues {
-        case date: DateTime => toJson(date)
-        case string: String => toJson(string)
-        case boolean: Boolean => toJson(boolean)
-      }
-    )
+    def writes(item: MetaData): JsValue = toJson(item.metaData)
   }
 }

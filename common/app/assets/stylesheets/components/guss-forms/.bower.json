@@ -1,24 +1,25 @@
 {
   "name": "guss-forms",
-  "version": "2.0.0",
   "main": [
-    "_forms.scss"
+    "_forms.scss",
+    "_forms.config.scss",
+    "_forms.mixins.scss"
   ],
   "ignore": [
-    "CHANGELOG.md",
     "demo"
   ],
   "dependencies": {
-    "guss": "~2"
+    "guss": "~3"
   },
   "homepage": "https://github.com/guardian/guss-forms",
-  "_release": "2.0.0",
+  "version": "3.0.2",
+  "_release": "3.0.2",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.0",
-    "commit": "f0e62f90146159ee1a42488d4f7d1a55a4d0b5cc"
+    "tag": "v3.0.2",
+    "commit": "b559d7ee5fab29bdd3c0b789c64a2f19895403e7"
   },
   "_source": "git://github.com/guardian/guss-forms.git",
-  "_target": "~2",
+  "_target": "~3",
   "_originalSource": "guss-forms"
 }

@@ -1,6 +1,7 @@
 import com.gu.googleauth.{FilterExemption, GoogleAuthFilters}
 import common.ExecutionContexts
 import conf.Filters
+import dfp.DfpAgentLifecycle
 import feed.OnwardJourneyLifecycle
 import play.api.mvc._
 import scala.concurrent.Future
@@ -30,3 +31,4 @@ object Global extends WithFilters(
     FilterExemptions.exemptions) :: Filters.common: _*) with CommercialLifecycle
                                                         with OnwardJourneyLifecycle
                                                         with ConfigAgentLifecycle
+                                                        with DfpAgentLifecycle

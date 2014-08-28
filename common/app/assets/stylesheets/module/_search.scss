@@ -117,8 +117,8 @@ td.gsc-search-button {
 .gs-webResult .gs-snippet,
 .gs-imageResult .gs-snippet {
     @include f-headline;
-    font-size: get-font-size($fs-headlines, 1) !important;
-    line-height: get-line-height($fs-headlines, 1) !important;
+    font-size: get-font-size(headline, 1) !important;
+    line-height: get-line-height(headline, 1) !important;
     color: $c-neutral2 !important;
 }
 // Hide URLs

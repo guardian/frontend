@@ -1,64 +1,86 @@
-// Fonts
-// =============================================================================
-
+/**
+ * Data font stack
+ *
+ * @group typography
+ */
 $f-data: 'Guardian Agate Sans 1 Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif !default;
+
+/**
+ * Serif font stack
+ *
+ * @group typography
+ */
 $f-serif-text: 'Guardian Text Egyptian Web', Georgia, serif !default;
+
+/**
+ * Headline font stack
+ *
+ * @group typography
+ */
 $f-serif-headline: 'Guardian Egyptian Web', Georgia, serif !default;
+
+/**
+ * Sans serif text font stack
+ *
+ * @group typography
+ */
 $f-sans-serif-text: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif !default;
+
+/**
+ * Sans serif headline font stack
+ *
+ * @group typography
+ */
 $f-sans-serif-headline: 'Guardian Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif !default;
 
-
-// Font scale
-// =============================================================================
-
-// font-size (px) line-height (px) // level
-// See font-scale.png and font-scale.html for a correspondance matrix
-
-$fs-headers: (
-    16 20, // 1
-    18 24, // 2
-    20 24, // 3
-    22 28, // 4
-    24 28, // 5
-) !default;
-
-$fs-headlines: (
-    14 18, // 1
-    16 20, // 2
-    20 24, // 3
-    24 28, // 4
-    28 32, // 5
-    32 36, // 6
-    36 40, // 7
-    40 44, // 8
-    44 48, // 9
-) !default;
-
-$fs-bodyHeadings: (
-    14 22, // 1
-    16 24, // 2
-    18 28, // 3
-    20 28, // 4
-) !default;
-
-$fs-bodyCopy: (
-    14 20, // 1
-    16 24, // 2
-    18 28, // 3
-) !default;
-
-$fs-data: (
-    11 14, // 1
-    12 14, // 2
-    13 16, // 3
-    14 18, // 4
-    16 20, // 5
-    18 22, // 6
-) !default;
-
-$fs-textSans: (
-    12 16, // 1
-    13 18, // 2
-    14 20, // 3
-    14 22, // 4
+/**
+ * Default font scale settings
+ * See font-scale.html and font-scale.png for visual representations
+ *
+ * @group typography
+ */
+$font-scale: (
+    header: (
+        1: (font-size: 16, line-height: 20),
+        2: (font-size: 18, line-height: 24),
+        3: (font-size: 20, line-height: 24),
+        4: (font-size: 22, line-height: 28),
+        5: (font-size: 24, line-height: 28),
+    ),
+    headline: (
+        1: (font-size: 14, line-height: 18),
+        2: (font-size: 16, line-height: 20),
+        3: (font-size: 20, line-height: 24),
+        4: (font-size: 24, line-height: 28),
+        5: (font-size: 28, line-height: 32),
+        6: (font-size: 32, line-height: 36),
+        7: (font-size: 36, line-height: 40),
+        8: (font-size: 40, line-height: 44),
+        9: (font-size: 44, line-height: 48),
+    ),
+    bodyHeading: (
+        1: (font-size: 14, line-height: 22),
+        2: (font-size: 16, line-height: 24),
+        3: (font-size: 18, line-height: 28),
+        4: (font-size: 20, line-height: 28),
+    ),
+    bodyCopy: (
+        1: (font-size: 14, line-height: 20),
+        2: (font-size: 16, line-height: 24),
+        3: (font-size: 18, line-height: 28),
+    ),
+    data: (
+        1: (font-size: 11, line-height: 14),
+        2: (font-size: 12, line-height: 14),
+        3: (font-size: 13, line-height: 16),
+        4: (font-size: 14, line-height: 18),
+        5: (font-size: 16, line-height: 20),
+        6: (font-size: 18, line-height: 22),
+    ),
+    textSans: (
+        1: (font-size: 12, line-height: 16),
+        2: (font-size: 13, line-height: 18),
+        3: (font-size: 14, line-height: 20),
+        4: (font-size: 14, line-height: 22),
+    )
 ) !default;

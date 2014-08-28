@@ -112,20 +112,18 @@ define([
     };
 
     var ready = function (config, context) {
-        if (!this.initialised) {
-            this.initialised = true;
-            modules.idInit(config);
-            modules.initFormstack();
-            modules.forgottenEmail();
-            modules.forgottenPassword();
-            modules.passwordStrength();
-            modules.passwordToggle();
-            modules.userAdTargeting();
-            modules.userAvatars();
-            modules.validationEmail();
-            modules.tabs();
-            modules.accountProfile();
-        }
+        modules.idInit(config);
+        modules.initFormstack();
+        modules.forgottenEmail();
+        modules.forgottenPassword();
+        modules.passwordStrength();
+        modules.passwordToggle();
+        modules.userAdTargeting();
+        modules.userAvatars();
+        modules.validationEmail();
+        modules.tabs();
+        modules.accountProfile();
+
         mediator.emit('page:identity:ready', config, context);
     };
 

@@ -15,9 +15,18 @@ For more information, read the Commercial Type End User License Agreement.
 
 ## Quick start
 
+### Install the Sass helpers
+
 ```bash
 $ bower install guss-webfonts --save
 ```
+
+### Add the required fonts files to your project
+
+1. [Manually download the repository](https://github.com/guardian/guss-webfonts/archive/master.zip)
+2. Decompress the archive
+3. Copy all or part of the `webfonts` directory to `bower_components/guss-webfonts/webfonts`
+   depending on what fonts your project needs
 
 ### Point directly to the css
 
@@ -104,6 +113,7 @@ You can curate your own list of @font-face rules like so:
     (
         'Guardian Agate Sans 1 Web': (
             (weight: 'regular', style: 'normal'),
+            (weight: 'bold',    style: 'normal'),
         ),
         'Guardian Text Egyptian Web': (
             (weight: 'regular',  style: 'normal'),
@@ -123,7 +133,7 @@ You can curate your own list of @font-face rules like so:
             (weight: 'medium',   style: 'italic', use-as: (weight: 'bold', style: 'italic')),
         ),
         'Guardian Sans Web': (
-            (weight: 'light',    style: 'normal'),
+            (weight: 'regular',  style: 'normal'),
         )
     )
 );

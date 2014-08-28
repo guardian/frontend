@@ -1,13 +1,13 @@
 package frontsapi.model
 
 import com.gu.googleauth.UserIdentity
-import play.api.libs.json.{Json, JsValue}
-import tools.FaciaApi
-import org.joda.time.DateTime
-import scala.util.{Success, Failure, Try}
 import common.Logging
 import conf.Configuration
-import com.gu.googleauth.UserIdentity
+import org.joda.time.DateTime
+import play.api.libs.json.{Format, JsValue, Json}
+import tools.FaciaApi
+import scala.util.{Failure, Success, Try}
+
 
 object Front {
   implicit val jsonFormat = Json.format[Front]
@@ -37,7 +37,8 @@ case class Collection(
   groups: Option[List[String]],
   uneditable: Option[Boolean],
   showTags: Option[Boolean],
-  showSections: Option[Boolean]
+  showSections: Option[Boolean],
+  showMainVideo: Option[Boolean]
 )
 
 object Config {
@@ -112,6 +113,12 @@ case class CollectionMetaUpdate(
   href: Option[String]
 )
 
+case class StreamUpdate(update: JsValue, action: String, email: String)
+
+object StreamUpdate {
+  implicit val streamUpdateFormat: Format[StreamUpdate] = Json.format[StreamUpdate]
+}
+
 trait UpdateActions extends Logging {
 
   val collectionCap: Int = Configuration.facia.collectionCap
@@ -128,8 +135,10 @@ trait UpdateActions extends Logging {
     "imageSrc",
     "imageSrcWidth",
     "imageSrcHeight",
-    "isBreaking")
-  
+    "isBreaking",
+    "showMainVideo"
+  )
+
   implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
   implicit val updateListWrite = Json.writes[UpdateList]
 

@@ -1,0 +1,410 @@
+/**
+ * Default colour palette
+ * 
+ * @type Map
+ *
+ * @group colours
+ */
+/**
+ * Get a colour from a given colour palette.
+ * 
+ * @param {String} $name                    - colour to get
+ * @param {Map}    $palette ($guss-colours) - palette
+ *
+ * @requires {variable} guss-colours
+ *
+ * @return {Color | Null}
+ *
+ * @group colours
+ */
+/**
+ * Generate helper classes for a given colour palette  
+ * Outputs rules such as: `.c-red { color: red; }`.
+ *
+ * @param {Map}    $palette  ($guss-colours) - palette
+ * @param {String} $prefix   ("c-")          - prefix
+ * @param {String} $property ("color")       - property
+ *
+ * @requires {variable} guss-colours
+ *
+ * @group colours
+ */
+html {
+  max-width: 60em;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1em 1em 3em;
+  background: #545454;
+  font: 200 1em/1.5 'Helvetica Neue', sans-serif;
+  color: #ffffff;
+  text-align: center;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased; }
+
+h1 {
+  font: 100 6em/1 'Helvetica Neue', sans-serif; }
+
+a {
+  color: #ffffff; }
+
+.clear {
+  margin: 2em; }
+
+.b-guardian-brand {
+  background-color: #005689; }
+
+.b-guardian-brand-light {
+  background-color: #94b1ca; }
+
+.b-guardian-brand-dark {
+  background-color: #00456e; }
+
+.b-error {
+  background-color: #d61d00; }
+
+.b-success {
+  background-color: #4a7801; }
+
+.b-neutral-1 {
+  background-color: #333333; }
+
+.b-neutral-2 {
+  background-color: #767676; }
+
+.b-neutral-3 {
+  background-color: #bdbdbd; }
+
+.b-neutral-4 {
+  background-color: gainsboro; }
+
+.b-neutral-5 {
+  background-color: #dfdfdf; }
+
+.b-neutral-6 {
+  background-color: #eaeaea; }
+
+.b-neutral-7 {
+  background-color: #f1f1f1; }
+
+.b-neutral-8 {
+  background-color: #f6f6f6; }
+
+.b-neutral-1-warm {
+  background-color: #333333; }
+
+.b-neutral-2-warm {
+  background-color: #767676; }
+
+.b-neutral-3-warm {
+  background-color: #bdbdbd; }
+
+.b-neutral-4-warm {
+  background-color: gainsboro; }
+
+.b-neutral-5-warm {
+  background-color: #e3e3db; }
+
+.b-neutral-6-warm {
+  background-color: #edede7; }
+
+.b-neutral-7-warm {
+  background-color: #f4f4ee; }
+
+.b-neutral-8-warm {
+  background-color: #f6f6f6; }
+
+.b-tone-news-1 {
+  background-color: #005689; }
+
+.b-tone-news-2 {
+  background-color: #4bc6df; }
+
+.b-tone-features-1 {
+  background-color: #951c55; }
+
+.b-tone-features-2 {
+  background-color: #f66980; }
+
+.b-tone-features-3 {
+  background-color: #b82266; }
+
+.b-tone-features-4 {
+  background-color: #7d0068; }
+
+.b-tone-comment-1 {
+  background-color: #e6711b; }
+
+.b-tone-comment-2 {
+  background-color: #ffbb00; }
+
+.b-tone-comment-3 {
+  background-color: #ffcf4c; }
+
+.b-tone-media-1 {
+  background-color: #333333; }
+
+.b-tone-media-2 {
+  background-color: #484848; }
+
+.b-tone-media-3 {
+  background-color: #ffbb00; }
+
+.b-tone-live-1 {
+  background-color: #b51800; }
+
+.b-tone-live-2 {
+  background-color: #cc2b12; }
+
+[class^=b-] {
+  display: inline-block;
+  width: 12em;
+  height: 12em;
+  margin: 0 1em 1em 0;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 8px solid #fff;
+  text-align: center;
+  text-shadow: #ffffff 0 0 2px;
+  box-shadow: 0 5px 9px rgba(0, 0, 0, 0.3);
+  color: #333333; }
+
+.colour-name,
+.colour-value {
+  font-size: 1.125em;
+  width: 90%;
+  display: inline-block; }
+
+.colour-name {
+  margin-top: calc(50% - 2.75em); }
+
+.b-guardian-brand {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-guardian-brand:before {
+    visibility: hidden;
+    content: "guardian-brand"; }
+
+.b-guardian-brand-light {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-guardian-brand-light:before {
+    visibility: hidden;
+    content: "guardian-brand-light"; }
+
+.b-guardian-brand-dark {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-guardian-brand-dark:before {
+    visibility: hidden;
+    content: "guardian-brand-dark"; }
+
+.b-error {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-error:before {
+    visibility: hidden;
+    content: "error"; }
+
+.b-success {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-success:before {
+    visibility: hidden;
+    content: "success"; }
+
+.b-neutral-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-neutral-1:before {
+    visibility: hidden;
+    content: "neutral-1"; }
+
+.b-neutral-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-neutral-2:before {
+    visibility: hidden;
+    content: "neutral-2"; }
+
+.b-neutral-3:before {
+  visibility: hidden;
+  content: "neutral-3"; }
+
+.b-neutral-4:before {
+  visibility: hidden;
+  content: "neutral-4"; }
+
+.b-neutral-5:before {
+  visibility: hidden;
+  content: "neutral-5"; }
+
+.b-neutral-6:before {
+  visibility: hidden;
+  content: "neutral-6"; }
+
+.b-neutral-7:before {
+  visibility: hidden;
+  content: "neutral-7"; }
+
+.b-neutral-8:before {
+  visibility: hidden;
+  content: "neutral-8"; }
+
+.b-neutral-1-warm {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-neutral-1-warm:before {
+    visibility: hidden;
+    content: "neutral-1-warm"; }
+
+.b-neutral-2-warm {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-neutral-2-warm:before {
+    visibility: hidden;
+    content: "neutral-2-warm"; }
+
+.b-neutral-3-warm:before {
+  visibility: hidden;
+  content: "neutral-3-warm"; }
+
+.b-neutral-4-warm:before {
+  visibility: hidden;
+  content: "neutral-4-warm"; }
+
+.b-neutral-5-warm:before {
+  visibility: hidden;
+  content: "neutral-5-warm"; }
+
+.b-neutral-6-warm:before {
+  visibility: hidden;
+  content: "neutral-6-warm"; }
+
+.b-neutral-7-warm:before {
+  visibility: hidden;
+  content: "neutral-7-warm"; }
+
+.b-neutral-8-warm:before {
+  visibility: hidden;
+  content: "neutral-8-warm"; }
+
+.b-tone-news-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-news-1:before {
+    visibility: hidden;
+    content: "tone-news-1"; }
+
+.b-tone-news-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-news-2:before {
+    visibility: hidden;
+    content: "tone-news-2"; }
+
+.b-tone-features-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-features-1:before {
+    visibility: hidden;
+    content: "tone-features-1"; }
+
+.b-tone-features-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-features-2:before {
+    visibility: hidden;
+    content: "tone-features-2"; }
+
+.b-tone-features-3 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-features-3:before {
+    visibility: hidden;
+    content: "tone-features-3"; }
+
+.b-tone-features-4 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-features-4:before {
+    visibility: hidden;
+    content: "tone-features-4"; }
+
+.b-tone-comment-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-comment-1:before {
+    visibility: hidden;
+    content: "tone-comment-1"; }
+
+.b-tone-comment-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-comment-2:before {
+    visibility: hidden;
+    content: "tone-comment-2"; }
+
+.b-tone-comment-3 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-comment-3:before {
+    visibility: hidden;
+    content: "tone-comment-3"; }
+
+.b-tone-media-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-media-1:before {
+    visibility: hidden;
+    content: "tone-media-1"; }
+
+.b-tone-media-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-media-2:before {
+    visibility: hidden;
+    content: "tone-media-2"; }
+
+.b-tone-media-3 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-media-3:before {
+    visibility: hidden;
+    content: "tone-media-3"; }
+
+.b-tone-live-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-live-1:before {
+    visibility: hidden;
+    content: "tone-live-1"; }
+
+.b-tone-live-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff; }
+  .b-tone-live-2:before {
+    visibility: hidden;
+    content: "tone-live-2"; }

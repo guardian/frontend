@@ -17,7 +17,7 @@ function (
     urlAbsPath,
     snap
 ){
-    var standardQueryParams = 'page-size=50&format=json&show-fields=all';
+    var standardQueryParams = 'page-size=50&format=json&show-fields=all&show-elements=video';
 
     function validateItem (item) {
         var defer = $.Deferred(),
@@ -134,8 +134,8 @@ function (
         });
     }
 
-    function populate(article, opts) {
-        article.populate(opts, true);
+    function populate(article, contentApiArticle) {
+        article.populate(contentApiArticle, true);
     }
 
     function fetchContentByIds(ids) {

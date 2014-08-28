@@ -73,8 +73,14 @@ trait Index extends ConciergeRepository with QueryDefaults {
           val tag1 = head.tags.find(_.id == firstTag).head
           val tag2 = head.tags.find(_.id == secondTag).head
           val pageName = s"${tag1.name} + ${tag2.name}"
-          val page = Page(s"$leftSide+$rightSide", tag1.section, pageName,
-            s"GFE:${tag1.section}:$pageName", pagination = pagination(response))
+          val page = Page(
+            s"$leftSide+$rightSide",
+            tag1.section,
+            pageName,
+            s"GFE:${tag1.section}:$pageName",
+            pagination = pagination(response),
+            maybeContentType = Some(GuardianContentTypes.TagIndex)
+          )
 
           Left(IndexPage(page, trails))
       }

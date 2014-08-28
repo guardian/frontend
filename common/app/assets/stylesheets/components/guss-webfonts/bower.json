@@ -1,6 +1,5 @@
 {
   "name": "guss-webfonts",
-  "version": "2.0.0",
   "description": "Guardian web fonts, for your prototyping needs",
   "main": [
       "nextgen-webfonts.css",
@@ -11,7 +10,6 @@
   ],
   "license": "Apache 2.0",
   "ignore": [
-    "CHANGELOG.md",
     "webfonts"
   ]
 }

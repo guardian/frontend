@@ -109,12 +109,12 @@ define([
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
                     self.term(urlAbsPath(self.term()));
-                    url = vars.CONST.apiSearchBase + '/' + self.term() + '?show-fields=all&format=json';
+                    url = vars.CONST.apiSearchBase + '/' + self.term() + '?show-fields=all&show-elements=video&format=json';
                     propName = 'content';
                 } else {
                     url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';
                     url += self.showingDrafts() ?
-                        '&content-set=preview&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
+                        '&content-set=-web-live&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
                         '&content-set=web-live&order-by=newest';
                     url += '&page-size=' + (vars.CONST.searchPageSize || 25);
                     url += '&page=' + self.page();

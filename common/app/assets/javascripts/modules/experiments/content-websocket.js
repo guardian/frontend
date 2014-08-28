@@ -1,12 +1,12 @@
 define([
-    'common/utils/$',
-    'common/utils/mediator',
     'bonzo',
+    'raven',
+    'common/utils/$',
     'common/utils/detect'
 ], function (
-    $,
-    mediator,
     bonzo,
+    raven,
+    $,
     detect
 ) {
 
@@ -31,7 +31,7 @@ define([
                     $('.monocolumn-wrapper').after($pushedContent);
                 }
             } else {
-                mediator.emit('module:error', 'Invalid data returned from socket, module/websocket.js');
+                raven.captureMessage('Invalid data returned from socket');
             }
         };
 
