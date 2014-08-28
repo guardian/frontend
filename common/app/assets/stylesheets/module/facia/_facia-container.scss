@@ -5,9 +5,7 @@
     .facia-container__inner {
         overflow: hidden;
         position: relative;
-
         margin-left: $gs-gutter / 2;
-
         margin-right: $gs-gutter / 2;
 
         @include mq(mobileLandscape) {

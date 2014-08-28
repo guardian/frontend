@@ -8,15 +8,15 @@
 
 @defining(("1_0", "2014-05-23")) { case (version, date) =>
     <div class="commercial commercial--low commercial--medium commercial--books" role="complementary">
-        <div class="facia-container__inner">
-            <div class="commercial__head container__title">
-                <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
-                    <h3 class="commercial__title">
-                        <span class="i i--commercial i-bookshop-logo--guardian"></span><span class="i i--commercial i-bookshop-logo--bookshop"></span>
-                        <span class="u-h">Guardian bookshop</span>
-                    </h3>
-                </a>
-                <h4 class="commercial__title hide-on-mobile">This week's bestsellers</h4>
+        <div class="facia-container__inner--commercial">
+
+            <div class="container__title">
+                <h3 class="commercial__title">
+                    <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
+                        <i class="i i-marque-36"></i><i class="i i-guardian-logo-96-white"></i><span class="u-h">The Guardian</span>
+                        <i class="i i-bookshop-logo"></i><span class="u-h">Book Shop</span>
+                    </a>
+                </h3>
                 <form action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" class="commercial__search hide-on-mobile" name="QuickSearchForm">
                     <div>
                         <label for="bookshop" class="u-h">Search bookshop:</label>
@@ -37,7 +37,9 @@
                     </span>
                 </a>
             </div>
-            <div class="commercial__body">
+
+            <div class="container__body">
+                <h4 class="hide-on-mobile">This week's bestsellers</h4>
                 <ul class="u-unstyled lineitems">
                 @books.map { book =>
                     <li class="lineitem u-cf" itemscope itemtype="http://schema.org/Book">
@@ -65,6 +67,7 @@
                 }
                 </ul>
             </div>
+
             <div class="commercial__foot">
                 <form action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
                     <div>

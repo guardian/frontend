@@ -2,42 +2,10 @@
    Travel component
    ========================================================================== */
 
-$c-commercial-travel-light: #2cace7;
-$c-commercial-travel-dark: #002b6c;
-$travelBlue: #066ec9;
+$c-commercial-travel-1: #5ebfba;
+$c-commercial-travel-2: #72af7e;
 
 .commercial--travel {
-    .commercial__head {
-        border-top: 0;
-        margin-top: $gs-baseline;
-        height: auto;
-        position: relative;
-    }
-    .commercial__title {
-        margin-bottom: 0;
-        color: $c-brandBlue;
-        float: none;
-        
-        .commercial__title__middle-word {
-            color: $c-commercial-travel-light;
-            margin-left: -$gs-gutter/4;
-        }
-        .commercial__title__last-word {
-            color: $travelBlue;
-            margin-left: -$gs-gutter/4;
-        }
-    }
-    .commercial__search {
-        float: none;
-        overflow: auto;
-        margin: $gs-baseline/2 0;
-    }
-    .commercial__body {
-        padding: 0 0 $gs-baseline;
-    }
-    .lineitems {
-        margin: 0 (-$gs-gutter/2);
-    }
     .lineitem {
         width: 50%;
         float: left;
@@ -58,7 +26,6 @@ $travelBlue: #066ec9;
     .lineitem__link {
         float: none;
     }
-    
     &.commercial--high {
         .commercial__search {
             display: block;
@@ -98,7 +65,7 @@ $travelBlue: #066ec9;
                     + .lineitem {
                         border-top: 0;
                         border-left: 1px solid $c-neutral4;
-                    }                    
+                    }
                 }
                 .commercial__relevance-title-low,
                 .lineitem__image {
@@ -107,9 +74,6 @@ $travelBlue: #066ec9;
             }  
         }
         @include mq(tablet) {
-            .commercial__search {
-                margin-bottom: 0;
-            }
             .commercial__relevance {
                 width: 50%;
                 @include box-sizing(border-box);
@@ -125,41 +89,11 @@ $travelBlue: #066ec9;
                 }
             }
         }
-        @include mq(rightCol) {
-            .facia-container--layout-content & {
-                .commercial__head {
-                    float: none;
-                    position: static;
-                }
-                .commercial__home-link {
-                    top: $gs-baseline;
-                    right: $gs-gutter;
-                }
-            }
-        }
         @include mq(desktop) {
             .facia-container & {
-                .commercial__body {
-                    padding-left: 0;
-                }
                 .commercial__relevance-high,
                 .commercial__relevance-low {
                     width: 50%;
-                }
-            }
-        }
-        @include mq(leftCol) {
-            .facia-container--layout-content & {
-                .commercial__head {
-                    float: left;
-                }
-                .commercial__search {
-                    bottom: $gs-baseline;
-                }
-                .commercial__home-link {
-                    top: auto;
-                    bottom: $gs-baseline;
-                    right: $gs-gutter;
                 }
             }
         }
@@ -168,32 +102,7 @@ $travelBlue: #066ec9;
                 .lineitem:nth-child(1) {
                     padding-left: $gs-gutter/2;
                 }
-                .commercial__search {
-                    bottom: $gs-baseline;
-                }
             }
-        }
-        @include mq(wide) {
-            .facia-container--layout-front & {
-                .commercial__search {
-                    bottom: 0;
-                }
-            }
-            .facia-container--layout-content & {
-                .commercial__search {
-                    bottom: 0;
-                }
-            }
-        }
-    }
-    @include mq(mobileLandscape) {
-        .commercial__home-link {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
-        .commercial__search {
-            margin: $gs-baseline 0;
         }
     }
     @include mq(tablet) {
@@ -204,14 +113,8 @@ $travelBlue: #066ec9;
                 display: block;
             }
         }
-        .commercial__search {
-            width: auto;
-        }
     }
     @include mq(rightCol) {
-        .facia-container__inner {
-            position: relative;
-        }
         .lineitem {
             width: percentage(1/4);
             
@@ -220,83 +123,22 @@ $travelBlue: #066ec9;
             }
         }
     }
-    @include mq(desktop) {
-        .commercial__head {
-            width: auto;
-        }
-    }
 }
 
 @mixin c-travel-leftCol {
-    .facia-container__inner {
-        padding-bottom: $gs-baseline*4;
-    }
-    .commercial__title {
-        .commercial__title__middle-word,
-        .commercial__title__last-word {
-            margin-left: 0;
-        }
-    }
-    .commercial__search {
-        position: absolute;
-        width: gs-span(5) + $gs-gutter/2;
-        bottom: 0;
-        left: $gs-gutter;
-    }
-    .commercial__body {
-        padding-top: $gs-baseline;
-    }
-    .commercial__head {
-        position: static;
-        padding-top: 0;
-    }
-    .commercial__home-link {
-        left: auto;
-        right: $gs-gutter;
-        bottom: $gs-baseline;
-        top: auto;
-    }
     .lineitem {
         width: percentage(1/4);
-        
+
         &:nth-child(4) {
             display: block;
         }
-    }    
+    }
 }
 
 @mixin c-travel-wide {
-    .commercial__head {
-        padding-right: 0;
-    }
-    .commercial__title {
-        .commercial__title__middle-word,
-        .commercial__title__last-word {
-            margin-left: -$gs-gutter/4;
-        }
-    }
-    .facia-container__inner {
-        padding-bottom: 0;
-    }
-    .commercial__search {
-        position: relative;
-        width: auto;
-        left: 0;
-    }
-    .commercial__home-link {
-        right: auto;
-        left: 0;
-    }
     .has-page-skin & {
         .commercial__head {
             width: 50% !important;
-        }
-        .commercial__home-link {
-            width: auto;
-            top: $gs-baseline;
-            right: 0;
-            left: auto;
-            bottom: auto;
         }
     }
 }
@@ -328,13 +170,6 @@ $travelBlue: #066ec9;
 .facia-container--layout-content .commercial--travel {
     @include mq(leftCol) {
         @include c-travel-leftCol;
-
-        .commercial__search {
-            left: $gs-gutter;
-        }
-        .commercial__home-link {
-            right: $gs-gutter;
-        }
     }
     @include mq(wide) {
         @include c-travel-wide;

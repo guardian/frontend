@@ -8,14 +8,15 @@
 
 @defining(("1_0", "2014-05-8")) { case (version, date) =>
     <div class="commercial commercial--high commercial--books" role="complementary">
-        <div class="facia-container__inner">
-            <div class="commercial__head container__title">
-                <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-visit-shop">
-                    <h3 class="commercial__title">
-                        <span class="i i--commercial i-bookshop-logo--guardian"></span><span class="i i--commercial i-bookshop-logo--bookshop"></span>
-                        <span class="u-h">Guardian bookshop</span>
-                    </h3>
-                </a>
+        <div class="facia-container__inner--commercial">
+
+            <div class="container__title">
+                <h3 class="commercial__title">
+                    <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-visit-shop">
+                        <i class="i i-marque-36"></i><i class="i i-guardian-logo-96-white"></i><span class="u-h">The Guardian</span>
+                        <i class="i i-bookshop-logo"></i><span class="u-h">Book Shop</span>
+                    </a>
+                </h3>
                 <form action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
                     <div>
                         <label for="bookshop" class="u-h">Search bookshop:</label>
@@ -27,16 +28,15 @@
                         <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
                     </div>
                 </form>
-                <a href="@AdLink{@Configuration.commercial.books_url}"
-                    class="commercial__home-link"
-                    data-link-name="merchandising-bookshop-v@{version}_@{date}-high-visit-shop">
+                <a href="@AdLink{@Configuration.commercial.books_url}" class="commercial__home-link" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-visit-shop">
                     Visit shop
                     <span class="commercial__home-link__cta">
                         <span class="i i-arrow-white-right-36"></span>
                     </span>
                 </a>
             </div>
-            <div class="commercial__body container__body">
+
+            <div class="container__body">
                 <div class="commercial__relevance commercial__relevance-high u-cf">
                     <div class="highitem" itemscope itemtype="http://schema.org/Book">
                         <h4 class="commercial__relevance-title commercial__relevance-title-high">Featured book</h4>
@@ -103,6 +103,7 @@
                     </ul>
                 </div>
             </div>
+
             <div class="commercial__foot">
                 <form action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
                     <div>
@@ -116,6 +117,7 @@
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 }

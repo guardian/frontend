@@ -29,19 +29,10 @@
         padding-top: 0;
         margin-top: $gs-baseline;
     }
-    .commercial__title {
-        float: none;
-        margin-bottom: 0;
-        color: $c-brandBlue;
-        line-height: 1;
-    }
     .commercial__explainer {
         color: $c-neutral1;
         @include fs-headline(2);
         margin: $gs-baseline 0 0;
-    }
-    .commercial__body {
-        padding: 0;
     }
     .lineitems {
         margin: 0 (-$gs-gutter/2);
@@ -72,11 +63,6 @@
                 display: block;
             }
         }
-        .commercial__home-link {
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
     }
     @include mq(rightCol) {
         .lineitem {
@@ -88,9 +74,6 @@
         }
     }
     &.commercial--dfp-single {
-        .commercial__head {
-            margin-bottom: 0;
-        }
         .container__title-soulmates {
             @include c-soulmates-branding-small;
 
@@ -136,9 +119,6 @@
         .container__title-jobs .commercial__title span {
             font-style: italic;
         }
-        .commercial__body {
-            padding: $gs-baseline 0;
-        }
         .commercial__footer {
             @include box-sizing(border-box);
             padding-bottom: $gs-baseline/2;
@@ -146,9 +126,6 @@
             &.hide-cta-link {
                 display: none;
             }
-        }
-        .commercial__home-link {
-            position: relative;
         }
         .commercial--generic__item__description {
             margin-bottom: 0;
@@ -205,19 +182,12 @@
 
 .facia-container--layout-content .commercial--dfp.commercial--dfp-single {
     @include mq(rightCol) {
-        .commercial__head {
-            width: 25%;
-            float: left;
-        }
         .commercial__footer {
             position: absolute;
             bottom: $gs-baseline/2;
         }     
     }
     @include mq(leftCol) {
-        .commercial__body {
-            @include box-sizing(border-box);
-        }
         .lineitem__link-image {
             width: 25%;
         }
@@ -235,13 +205,6 @@
         .commercial__footer-inner {
             height: 100%;
             border-left: 1px solid $c-neutral4;
-        }
-        .commercial__home-link {
-            margin-left: $gs-gutter/2;
-            left: auto;
-            bottom: auto;
-            right: auto;
-            top: auto;
         }
     }
     @include mq(faciaLeftCol) {
@@ -258,19 +221,12 @@
 
 .facia-container--layout-front .commercial--dfp.commercial--dfp-single {
     @include mq(tablet) {
-        .commercial__head {
-            width: 25%;
-            float: left;
-        }
         .commercial__footer {
             position: absolute;
             bottom: $gs-baseline/2;
         }
     }
     @include mq(faciaLeftCol) {
-        .commercial__head {
-            width: gs-span(2) + $gs-gutter;
-        }
         .lineitem__link-image {
             width: 25%;
         }
@@ -289,13 +245,6 @@
             height: 100%;
             border-left: 1px solid $c-neutral4;
         }
-        .commercial__home-link {
-            margin-left: $gs-gutter/2;
-            left: auto;
-            bottom: auto;
-            right: auto;
-            top: auto;
-        }
     }
     @include mq(wide) {
         .commercial__footer {
@@ -305,31 +254,10 @@
                 left: auto;
             }
         }
-        .has-page-skin & {
-            .commercial__home-link {
-                top: $gs-baseline/2;
-            }
-        }
     }
 }
 
 .facia-container--layout-content .commercial--dfp {
-    @include mq(leftCol) {
-        .commercial__body {
-            padding-top: $gs-baseline;
-        }
-        .commercial__home-link {
-            top: auto;
-            right: auto;
-            left: $gs-gutter;
-            width: gs-span(2) - $gs-gutter;
-            line-height: 18px;
-            bottom: $gs-baseline;
-        }
-        .container__title {
-            position: static;
-        }
-    }
     @include mq(rightCol) {
         @include commercial-double-item;
     }
@@ -338,59 +266,16 @@
 .facia-container--layout-front .commercial--dfp {
     @include mq(desktop) {
         @include commercial-double-item;
-        
-        .commercial__head {
-            width: auto;
-        }
-        .commercial__body {
-            padding-left: 0;
-        }
-    }
-    @include mq(leftCol) {
-        .container__title {
-            padding: 0;
-        }
-    }
-    @include mq(faciaLeftCol) {
-        .commercial__head {
-            width: gs-span(2) + $gs-gutter;
-        }
-        .commercial__body {
-            padding-top: $gs-baseline;
-        }
-        .commercial__home-link {
-            top: auto;
-            right: auto;
-            left: 0;
-            width: gs-span(2) - map-get($commercial-cta-diameter, tablet);
-            line-height: 18px;
-            bottom: $gs-baseline;
-        }
-        .container__title {
-            position: static;
-        }
-        .facia-container__inner {
-            position: relative;
-        }
     }
     @include mq(wide) {
         .has-page-skin & {
-            .commercial__home-link {
-                width: auto;
-                top: $gs-baseline*2;
-                right: 0;
-                left: auto;
-                bottom: auto;
-            }
-        }
-    }
-}
-
-.facia-container--layout-content .commercial--dfp,
-.facia-container--layout-front .commercial--dfp {
-    @include mq(wide) {
-        .commercial__home-link {
-            width: gs-span(3);
+//            .commercial__home-link {
+//                width: auto;
+//                top: $gs-baseline*2;
+//                right: 0;
+//                left: auto;
+//                bottom: auto;
+//            }
         }
     }
 }

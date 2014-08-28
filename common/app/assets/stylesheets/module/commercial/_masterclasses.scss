@@ -3,35 +3,11 @@
    ========================================================================== */
 
 .commercial--masterclasses {
-    .commercial__head {
-        border-top: 0;
-        background-color: transparent;
-        height: auto;
-        margin-bottom: 0;
-        margin-top: $comercial-comp-baseline;
-        position: static;
-    }
-    .commercial__title {
-        padding: 0;
-        margin: 0;
-        text-transform: lowercase;
-        color: $c-newsDefault;
-        @include fs-headline(3);
-        float: none;
-    }
-    .commercial__title__last-word {
-        font-style: italic;
-        margin-left: -5px;
-    }
     .commercial__explainer {
         color: $c-neutral1;
         @include f-headline;
         @include font-size(14.5, 19);
         margin: 0;
-    }
-    .commercial__body {
-        padding-left: 0;
-        padding-right: 0;
     }
     .commercial--masterclasses__class,
     .commercial__relevance-high {
@@ -115,21 +91,6 @@
                 display: block;
             }
         }
-        .commercial__home-link {
-            position: absolute;
-            top: $gs-baseline;
-            right: $gs-gutter/2;
-        }
-    }
-    @include mq(leftCol) {
-        .commercial__title__last-word {
-            margin-left: 0;
-        }
-    }
-    @include mq(wide) {
-        .commercial__title__last-word {
-            margin-left: -5px;
-        }
     }
     .lineitem__image {
         width: 100%;
@@ -157,47 +118,7 @@
                 display: block;
             }
         }
-        .commercial__home-link {
-            right: $gs-gutter;
-        }
     }
-    @include mq(leftCol) {
-        .commercial__title__last-word {
-            margin-left: -5px;
-        }
-    }
-    @include mq(faciaLeftCol) {
-        .commercial__head {
-            width: gs-span(2) + $gs-gutter;
-        }
-        .commercial__home-link {
-            top: auto;
-            right: auto;
-            bottom: $gs-baseline;
-            left: $gs-gutter/2;
-        }
-    }
-    @include mq(faciaLeftCol, wide) {
-        .commercial__title__last-word {
-            margin-left: 0;
-        }
-        .commercial__home-link {
-            width: gs-span(2);
-            line-height: 1.2;
-        }
-    }
-    @include mq(wide) {
-        .has-page-skin & {
-            .commercial__home-link {
-                width: auto;
-                top: $gs-baseline;
-                right: 0;
-                left: auto;
-                bottom: auto;
-            }
-        }
-    }
-    
     &.commercial--high {
         @include mq(desktop) {
             .commercial__relevance-high,
@@ -215,9 +136,6 @@
             }
         }
         @include mq(faciaLeftCol) {
-            .commercial__head {
-                padding-left: 0;
-            }
             .commercial--masterclasses__class {
                 width: 50%;
             }
@@ -240,39 +158,8 @@
             }
         }
     }
-    @include mq(desktop) {
-        .commercial__home-link {
-            right: $gs-gutter;
-        }
-    }
-    @include mq(leftCol) {
-        .commercial__body {
-            padding-top: $gs-baseline;
-        }
-        .commercial__home-link {
-            top: auto;
-            right: auto;
-            bottom: $gs-baseline;
-            left: $gs-gutter;
-        }
-    }
-    @include mq(leftCol, wide) {
-        .commercial__home-link {
-            width: gs-span(2);
-            line-height: 1.2;
-        }
-    }
     &.commercial--high {
         @include mq(rightCol) {
-            .commercial__head {
-                width: 25%;
-            }
-            .commercial__home-link {
-                top: auto;
-                right: auto;
-                bottom: $gs-baseline;
-                left: $gs-gutter;
-            }
             .commercial__relevance-title-low {
                 padding-left: $gs-gutter/2;
             }

@@ -8,8 +8,9 @@
 
 @defining(("1_0", "2014-05-15")) { case (version, date) =>
     <div class="commercial commercial--soulmates" role="complementary">
-        <div class="facia-container__inner">
-            <div class="commercial__head container__title">
+        <div class="facia-container__inner--commercial">
+
+            <div class="container__title">
                 <div class="container__title__wrapper i-soulmates-title-background">
                     <span class="u-h">The Guardian</span>
                     <h3 class="commercial__title">
@@ -27,7 +28,8 @@
                     </a>
                 </div>
             </div>
-            <div class="commercial__body container__body">
+
+            <div class="container__body">
                 <ul class="u-unstyled lineitems">
                     @members.map { member =>
                         <li class="lineitem">
@@ -78,6 +80,7 @@
                     </button>
                 </form>
             </div>
+
         </div>
     </div>
 }
