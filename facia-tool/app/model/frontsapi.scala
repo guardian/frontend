@@ -3,6 +3,7 @@ package frontsapi.model
 import com.gu.googleauth.UserIdentity
 import common.Logging
 import conf.Configuration
+import julienrf.variants.Variants
 import org.joda.time.DateTime
 import play.api.libs.json.{Format, JsValue, Json}
 import tools.FaciaApi
@@ -90,8 +91,10 @@ case class Block(
 
 }
 
-object UpdateList {
-  implicit val jsonFormat = Json.format[UpdateList]
+sealed trait FaciaToolUpdate
+
+object FaciaToolUpdate {
+  implicit val format: Format[FaciaToolUpdate] = Variants.format[FaciaToolUpdate]("type")
 }
 
 case class UpdateList(
