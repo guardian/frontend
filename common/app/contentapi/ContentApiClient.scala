@@ -1,5 +1,6 @@
 package contentapi
 
+import akka.actor.ActorSystem
 import com.gu.openplatform.contentapi.Api
 import scala.concurrent.Future
 import common._
@@ -8,6 +9,9 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Implicits._
 import conf.Configuration.contentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
+
+import scala.concurrent.duration.{Duration, SECONDS}
+import akka.pattern.CircuitBreaker
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   // NOTE - do NOT add body to this list
@@ -103,6 +107,7 @@ trait ContentApiClient extends Api with ApiQueryDefaults with DelegateHttp with 
 
   override def fetch(url: String, parameters: Map[String, String]) = {
     checkQueryIsEditionalized(url, parameters)
+
     super.fetch(url, parameters + ("user-tier" -> "internal"))
   }
 
@@ -116,7 +121,38 @@ trait ContentApiClient extends Api with ApiQueryDefaults with DelegateHttp with 
   private def isTagQuery(url: String) = url.endsWith("/tags")
 }
 
-class ElasticSearchLiveContentApiClient extends ContentApiClient {
+trait CircuitBreakingContentApiClient extends ContentApiClient {
+  private final val circuitBreakerActorSystem = ActorSystem("content-api-client-circuit-breaker")
+
+  /** Read this:
+    *
+    * http://doc.akka.io/docs/akka/snapshot/common/circuitbreaker.html
+    */
+  private final val circuitBreaker = new CircuitBreaker(
+    scheduler = circuitBreakerActorSystem.scheduler,
+    maxFailures = 5,
+    callTimeout = Duration(2, SECONDS),
+    resetTimeout = Duration(20, SECONDS)
+  )
+
+  circuitBreaker.onOpen({
+    log.error("Reached error threshold for Content API Client circuit breaker - breaker is OPEN!")
+  })
+
+  circuitBreaker.onHalfOpen({
+    log.info("Reset timeout finished. Entered half open state for Content API Client circuit breaker.")
+  })
+
+  circuitBreaker.onClose({
+    log.info("Content API Client looks healthy again, circuit breaker is closed.")
+  })
+
+  override def fetch(url: String, parameters: Map[String, String]) = {
+    circuitBreaker.withCircuitBreaker(super.fetch(url, parameters))
+  }
+}
+
+class ElasticSearchLiveContentApiClient extends CircuitBreakingContentApiClient {
   lazy val httpTimingMetric = ContentApiMetrics.ElasticHttpTimingMetric
   lazy val httpTimeoutMetric = ContentApiMetrics.ElasticHttpTimeoutCountMetric
   override val targetUrl = contentApi.contentApiLiveHost
