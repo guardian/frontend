@@ -175,7 +175,16 @@
     }
 }
 .ad-slot--gallery-inline {
+    padding-bottom: $gs-baseline*2;
+    border-top: 1px solid guss-colour(neutral-2);
+    background-color: lighten(guss-colour(tone-media-1), 2.5%);
     text-align: center;
+
+    .ad-slot__label {
+        height: $gs-baseline*2;
+        color: guss-colour(neutral-3);
+        background-color: transparent;
+    }
 }
 .ad-slot--mpu-banner-ad {
     display: none;

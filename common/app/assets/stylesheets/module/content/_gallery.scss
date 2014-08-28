@@ -14,20 +14,42 @@
 .gallery2__item {
     position: relative;
     @include box-sizing(border-box);
-    margin-bottom: $gs-baseline;
+    padding-top: $gs-baseline;
     min-height: 200px;
 
     @include mq($to: rightCol) {
-        border-bottom: 1px dotted guss-colour(tone-media-2);
-    }
+        border-top: 1px dotted guss-colour(tone-media-2);
 
+        &:first-child {
+            border-top: none;
+            padding-top: 0;
+        }
+        &:last-child {
+            border-bottom: 1px dotted guss-colour(tone-media-2);
+            margin-bottom: $gs-baseline;
+        }
+        .gallery2__item--advert + & {
+            margin-top: $gs-baseline*2;
+        }
+    }
     @include mq(rightCol) {
+        padding-top: 0;
+        margin-top: $gs-baseline*2;
         padding-right: gs-span(3) + $gs-gutter;
-        margin-bottom: $gs-baseline*2;
+
+        &:last-child {
+            margin-bottom: $gs-baseline*2;
+        }
     }
 }
-.js-off .gallery2__item--advert {
-    display: none;
+.gallery2__item--advert {
+    min-height: 0;
+    padding-top: 0;
+    border-top: 0;
+
+    .js-off & {
+        display: none;
+    }
 }
 
 .gallery2__figcaption {
