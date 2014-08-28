@@ -138,7 +138,7 @@ object CloudWatch extends implicits.Futures{
   }
 
   def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
-    new AwsLineChart(graphTitle, Seq("Time", metric), ChartFormat.SingleLineRed,
+    new AwsLineChart(graphTitle, Seq("Time", metric), ChartFormat.SingleLineBlack,
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
         .withEndTime(new DateTime().toDate)

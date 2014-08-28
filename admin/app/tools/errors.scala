@@ -6,7 +6,7 @@ import org.joda.time.DateTime
 
 object HttpErrors {
 
-  def global4XX = new AwsLineChart("Global 4XX", Seq("Time", "4xx/min"), ChartFormat.SingleLineRed, euWestClient.getMetricStatisticsAsync(
+  def global4XX = new AwsLineChart("Global 4XX", Seq("Time", "4xx/min"), ChartFormat.SingleLineBlue, euWestClient.getMetricStatisticsAsync(
     metric("HTTPCode_Backend_4XX")
     ,asyncHandler)
   )
@@ -27,7 +27,7 @@ object HttpErrors {
     )
   )
 
-  def global5XX = new AwsLineChart("Global 5XX", Seq("Time", "5XX/ min"), ChartFormat.SingleLineBlue, euWestClient.getMetricStatisticsAsync(
+  def global5XX = new AwsLineChart("Global 5XX", Seq("Time", "5XX/ min"), ChartFormat.SingleLineRed, euWestClient.getMetricStatisticsAsync(
     metric("HTTPCode_Backend_5XX")
     ,asyncHandler)
   )
