@@ -1,13 +1,3 @@
-## Table of Contents
-
-* [Introduction](#introduction)
-* [How to write a test (quick)](#how-to-write-a-test-quick)
-* [How to prepare to run the tests against a local installation](#how-to-prepare-to-run-the-tests-against-a-local-installation)
-* [Configuring the tests](#configuring-the-tests)
-* [Running the Tests](#running-the-tests)
-* [Workflow (detailed)](#workflow-detailed)
-* [Writing tests (detailed)](#writing-tests-detailed)
-
 ## Introduction
 
 The purpose of this module is to run a series of tests related to logging in/out and user management use cases. It is currently targetted to run against the next-gen CODE environment.
@@ -79,6 +69,8 @@ https://code.google.com/p/selenium/issues/detail?id=2766
 
 ## Running the Tests
 
-To run the tests you can either load the project in your favourite IDE as an SBT project and then simply run it as a ScalaTest class or you can run it in command line by simply exeuting: ```sbt test```
+To run the tests you can either load the project in your favourite IDE as an SBT project and then simply run it as a ScalaTest class or you can run it in command line by, going to the parent integration-test folder, and simply exeuting: ```sbt "project identity-tests" clean compile test```
 
 If you want to run the same test suite which TeamCity runs then execute: ```sbt ciTest```. This is for the CI environment and will not fail the build if the tests fail. This is so the tests can be properly muted in Team City.
+
+However, at the time of writing this document, the tests cannot be properly run due to an environment (id.code.dev...) not being accessable from BrowserStack/SauceLab environments.
