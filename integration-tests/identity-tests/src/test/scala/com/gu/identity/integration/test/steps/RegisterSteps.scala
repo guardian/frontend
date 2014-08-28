@@ -25,10 +25,12 @@ case class RegisterSteps(implicit driver: WebDriver) extends TestLogging with Ma
     logger.step("Creating a new user")
     registerPage.enterEmail(user.email)
     enterPasswordIfSet(registerPage, user)
+    enterFirstNameIfSet(registerPage, user)
+    enterLastNameIfSet(registerPage, user)
     registerPage.enterUsername(user.userName)
     registerPage.createButton.click()
 
-    waitForPageToBeLoaded
+    waitForPageToLoad
 
     val userFormErrors = registerPage.getAllValidationFormErrors()
 
@@ -39,8 +41,18 @@ case class RegisterSteps(implicit driver: WebDriver) extends TestLogging with Ma
     }
   }
 
-  private def enterPasswordIfSet(registerPage: RegisterPage, randomUser: User) {
-    for (password <- randomUser.pwd)
+  private def enterPasswordIfSet(registerPage: RegisterPage, user: User) {
+    for (password <- user.pwd)
       registerPage.enterPwd(password)
+  }
+
+  private def enterFirstNameIfSet(registerPage: RegisterPage, user: User) {
+    for (firstName <- user.firstName)
+      registerPage.enterFirstName(firstName)
+  }
+
+  private def enterLastNameIfSet(registerPage: RegisterPage, user: User) {
+    for (lastName <- user.lastName)
+      registerPage.enterLastName(lastName)
   }
 }

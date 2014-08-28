@@ -99,7 +99,7 @@ define([
                         mediator.emit('modules:related:loaded', config, context);
                         register.end(componentName);
                     },
-                    error: function(req) {
+                    error: function() {
                         register.error(componentName);
                     }
                 }).load();
