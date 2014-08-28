@@ -10,45 +10,100 @@ category: Common
     <a href="#" class="button button--secondary">Link to somewhere</a>
     <a href="#" class="button button--tertiary">Link to somewhere</a>
 </div>
+<br/>
 <div>
     <a href="#" class="button button--primary button--large">Link to somewhere</a>
     <a href="#" class="button button--primary button--medium">Link to somewhere</a>
     <a href="#" class="button button--primary button--small">Link to somewhere</a>
     <a href="#" class="button button--primary button--xsmall">Link to somewhere</a>
 </div>
+<br/>
 <div>
     <a href="#" class="button button--primary button--large">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
     <a href="#" class="button button--primary button--medium">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
     <a href="#" class="button button--primary button--small">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
     <a href="#" class="button button--primary button--xsmall">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
 </div>
+<br/>
 <div>
     <a href="#" class="button button--primary">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
     <a href="#" class="button button--secondary">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
     <a href="#" class="button button--tertiary">Link to somewhere<i class="i i-arrow-grey-right i-right"></i></a>
 </div>
+<br/>
 <div>
     <a href="#" class="button button--primary"><i class="i i-arrow-white-right i-left"></i>Link to somewhere</a>
     <a href="#" class="button button--secondary"><i class="i i-arrow-white-right i-left"></i>Link to somewhere</a>
     <a href="#" class="button button--tertiary"><i class="i i-arrow-grey-right i-left"></i>Link to somewhere</a>
 </div>
+<br/>
 <div>
-    <a href="#" class="button button--primary button--large"><i class="i i-arrow-white-right i-only"></i></a>
-    <a href="#" class="button button--primary button--medium"><i class="i i-arrow-white-right i-only"></i></a>
-    <a href="#" class="button button--primary button--small"><i class="i i-arrow-white-right i-only"></i></a>
-    <a href="#" class="button button--primary button--xsmall"><i class="i i-arrow-white-right i-only"></i></a>
+    <a href="#" class="button button--primary button--xlarge">
+        <i class="i i-arrow-white-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--primary button--large">
+        <i class="i i-arrow-white-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--primary button--medium">
+        <i class="i i-arrow-white-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--primary button--small">
+        <i class="i i-arrow-white-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--primary button--xsmall">
+        <i class="i i-arrow-white-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
 </div>
+<br/>
 <div>
-    <a href="#" class="button button--secondary button--large"><i class="i i-arrow-white-right i-only"></i></a>
-    <a href="#" class="button button--secondary button--medium"><i class="i i-arrow-white-right i-only"></i></a>
-    <a href="#" class="button button--secondary button--small"><i class="i i-arrow-white-right i-only"></i></a>
-    <a href="#" class="button button--secondary button--xsmall"><i class="i i-arrow-white-right i-only"></i></a>
+    <a href="#" class="button button--secondary button--xlarge">
+        <i class="i i-arrow-white-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--secondary button--large">
+        <i class="i i-arrow-white-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--secondary button--medium">
+        <i class="i i-arrow-white-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--secondary button--small">
+        <i class="i i-arrow-white-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--secondary button--xsmall">
+        <i class="i i-arrow-white-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
 </div>
+<br/>
 <div>
-    <a href="#" class="button button--tertiary button--large"><i class="i i-arrow-grey-right i-only"></i></a>
-    <a href="#" class="button button--tertiary button--medium"><i class="i i-arrow-grey-right i-only"></i></a>
-    <a href="#" class="button button--tertiary button--small"><i class="i i-arrow-grey-right i-only"></i></a>
-    <a href="#" class="button button--tertiary button--xsmall"><i class="i i-arrow-grey-right i-only"></i></a>
+    <a href="#" class="button button--tertiary button--xlarge">
+        <i class="i i-arrow-grey-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--tertiary button--large">
+        <i class="i i-arrow-grey-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--tertiary button--medium">
+        <i class="i i-arrow-grey-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--tertiary button--small">
+        <i class="i i-arrow-grey-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
+    <a href="#" class="button button--tertiary button--xsmall">
+        <i class="i i-arrow-grey-right"></i>
+        <span class="u-h">Link to somewhere</span>
+    </a>
 </div>
 ```
 */
@@ -57,7 +112,7 @@ category: Common
     /* true height is height minus 1px border */
     $true-button-height: $button-size - 2px;
     height: $true-button-height;
-    padding: 0 ($true-button-height/2);
+    padding: 0 ($true-button-height/4);
     margin-right: $true-button-height/4;
     line-height: $true-button-height + 1px;
     border-width: 1px;
@@ -66,19 +121,17 @@ category: Common
     .i {
         width: $true-button-height;
         height: $true-button-height;
+        margin: 0 (-($true-button-height/4));
     }
     .i-left {
-        margin-left: -($button-size/2);
+        margin-left: -($button-size/4);
         margin-right: $button-size/4;
         float: left;
     }
     .i-right {
-        margin-right: -($button-size/2);
+        margin-right: -($button-size/4);
         margin-left: $button-size/4;
         float: right;
-    }
-    .i-only {
-        margin: 0 (-($true-button-height/2));
     }
 }
 
@@ -99,43 +152,54 @@ category: Common
     display: inline-block;
     width: auto;
     @include fs-textSans(2);
+    font-weight: bold;
     @include button-height(gs-height(1) - $gs-baseline/2);
     @include border-radius(50%);
+    @include button-colour($c-newsAccent, #ffffff, $c-newsDefault);
 
     &:hover,
     &:focus,
     &:active {
         text-decoration: none;
     }
- 
-    &.button--primary {
-        @include button-colour($c-newsAccent, #ffffff, $c-newsDefault);
+}
+.button--primary {
+    @include button-colour($c-newsAccent, #ffffff, $c-newsDefault);
+}
+.button--secondary {
+    @include button-colour($c-neutral2, #ffffff, $c-newsAccent);
+}
+.button--tertiary {
+    @include button-colour(transparent, $c-neutral2, transparent);
+    border: 1px solid $c-neutral3;
+    
+    &:hover,
+    &:focus,
+    &:active {
+        color: $c-neutral1;
+        border: 1px solid $c-neutral1;
     }
-    &.button--secondary {
-        @include button-colour($c-neutral2, #ffffff, $c-newsAccent);
-    }
-    &.button--tertiary {
-        @include button-colour(#ffffff, $c-neutral2, $c-neutral3);
-        border: 1px solid $c-neutral3;
-        
-        &:hover,
-        &:focus,
-        &:active {
-            color: $c-neutral1;
-        }
-    }
-    &.button--large {
-        @include button-height($gs-baseline*3);
-    }
-    &.button--medium {
-        @include button-height(gs-height(1) - $gs-baseline/2);
-    }
-    &.button--small {
-        @include button-height($gs-baseline*2);
-    }
-    &.button--xsmall {
-        @include button-height($gs-baseline*1.5);
-    }
+}
+.button--xlarge {
+    @include button-height(44px);
+}
+.button--large {
+    @include button-height($gs-baseline*3);
+}
+.button--medium {
+    @include button-height(gs-height(1) - $gs-baseline/2);
+}
+.button--small {
+    @include button-height($gs-baseline*2);
+    @include fs-textSans(1);
+    line-height: $gs-baseline*2 - 1px;
+    font-weight: bold;
+}
+.button--xsmall {
+    @include button-height($gs-baseline*1.5);
+    @include fs-textSans(1);
+    line-height: $gs-baseline*1.5 - 1px;
+    font-weight: bold;
 }
 
 .button--show-more {
