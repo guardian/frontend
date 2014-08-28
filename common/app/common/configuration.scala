@@ -212,7 +212,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object witness {
     lazy val witnessApiRoot = configuration.getMandatoryStringProperty("witness.apiRoot")
   }
-  
+
   object commercial {
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
@@ -392,5 +392,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
 object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
+  lazy val revision = ManifestFile.asKeyValuePairs.getOrElse("Revision", "DEV").dequote.trim
 }
 

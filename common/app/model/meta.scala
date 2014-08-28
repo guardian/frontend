@@ -27,6 +27,7 @@ trait MetaData extends Tags {
   // Basically it helps us understand the impact of changes and needs
   // to be an integral part of each page
   def buildNumber: String = ManifestData.build
+  def revision: String = ManifestData.revision
 
   //must be one of... http://schema.org/docs/schemas.html
   def schemaType: Option[String] = None
@@ -45,6 +46,7 @@ trait MetaData extends Tags {
     ("section", JsString(section)),
     ("webTitle", JsString(webTitle)),
     ("buildNumber", JsString(buildNumber)),
+    ("revisionNumber", JsString(revision.take(7))),
     ("analyticsName", JsString(analyticsName)),
     ("blockVideoAds", JsBoolean(false)),
     ("isFront", JsBoolean(isFront)),
