@@ -16,11 +16,13 @@ case class User(userName: String,
 
 object User {
   def generateRandomUser(): User = {
-    User(generateRandomAlphaNumericString(8), generateRandomEmail, Option(generateRandomAlphaNumericString(12)))
+    User(generateRandomAlphaNumericString(8), generateRandomEmail, Option(generateRandomAlphaNumericString(12)),
+      Option(generateRandomAlphaNumericString(10)), Option(generateRandomAlphaNumericString(10)))
   }
 
   def generateRandomUserWith(userName: String): User = {
-    User(userName, generateRandomEmail, Option(generateRandomAlphaNumericString(12)))
+    User(userName, generateRandomEmail, Option(generateRandomAlphaNumericString(12)),
+      Option(generateRandomAlphaNumericString(10)), Option(generateRandomAlphaNumericString(10)))
   }
 
   def fromEditAccountDetailsForm(accountDetails: EditAccountDetailsModule): User = {
