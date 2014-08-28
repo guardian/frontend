@@ -9,7 +9,7 @@ define([
 ) {
 
     var verticalHeightCss = function() {
-        $('.gallery2__img').css('max-height', '90vh');
+        $('.js-vh-polyfill').css('max-height', '90vh');
     };
 
     var safariVerticalHeightPolyfill = function() {
