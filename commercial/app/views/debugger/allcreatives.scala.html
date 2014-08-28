@@ -24,8 +24,8 @@
         });
 
         $(".codeContainer pre").hide();
-        $(".codeContainer").click(function() {
-            $(this).children().slideToggle();
+        $(".show-code").click(function() {
+            $(this).next().slideToggle();
             return false;
         });
         
@@ -120,7 +120,7 @@
             </div>
         </div>
         <div class="codeContainer facia-container__inner">
-            Show code for DFP >
+            <span class="show-code">Show code for DFP ></span>
             <pre>
                 <code>
                     &lt;div class="breakout__html"&gt;
@@ -202,7 +202,7 @@
     </div>
 
     <div class="codeContainer facia-container__inner">
-        Show code for DFP >
+        <span class="show-code">Show code for DFP ></span>
         <pre>
         <code>
             &lt;div class="breakout__html"&gt;
@@ -336,17 +336,19 @@
     </div>
 
     <div class="codeContainer facia-container__inner">
-        Show code for DFP >
+        <span class="show-code">Show code for DFP ></span>
         <pre>
             <code>
-                &lt;div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-test-id="ad-slot-merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-mobile="88,88" data-node-uid="4"&gt;&lt;style type="text/css"&gt;
-
-                    &lt;/style&gt;&lt;div class="commercial commercial--dfp commercial--dfp-1234567890 commercial--dfp-multiple commercial--items-dfp-4" role="complementary"&gt;
+                &lt;div class="breakout__html"&gt;
+                    &lt;style type="text/css"&gt;
+                        [%commercial__css%]
+                    &lt;/style&gt;
+                    &lt;div class="commercial commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
                         &lt;div class="facia-container__inner"&gt;
                             &lt;div class="commercial__head container__title"&gt;
-                                &lt;h3 class="commercial__title"&gt;&lt;a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DB7VJwyhXRU6PzIs-tiga94IDwAt_qkZcFAAAAEAEg75TfITgAWO-wiMKUAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFcaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vZ2xvYmFsLWRldmVsb3BtZW50L3ZpZGVvLzIwMTQvanVsLzA3L21hbGktbGFuZC1ncmFicy1mYXJtZXItdmlkZW-pAtZN5GxziLw-wAIC4AIA6gIuLzU5NjY2MDQ3L3RoZWd1YXJkaWFuLmNvbS9uZXdzL3Nlcmllcy9kb2N1YmVhdPgC-dEekAOMBpgDjAaoAwHQBJBO4AQBoAYf%2526num%253D0%2526sig%253DAOD64_1a7IqhLv6ApJJ2HxwcfxqBWa481Q%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.guardian.co.uk" data-link-name="merchandising-1234567890-high-title"&gt;Guardian Vintage Motoring&lt;/a&gt;&lt;/h3&gt;
-                                &lt;p class="commercial__explainer"&gt;For all of your old car needs&lt;/p&gt;
-                                &lt;a class="commercial__home-link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DB7VJwyhXRU6PzIs-tiga94IDwAt_qkZcFAAAAEAEg75TfITgAWO-wiMKUAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFcaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vZ2xvYmFsLWRldmVsb3BtZW50L3ZpZGVvLzIwMTQvanVsLzA3L21hbGktbGFuZC1ncmFicy1mYXJtZXItdmlkZW-pAtZN5GxziLw-wAIC4AIA6gIuLzU5NjY2MDQ3L3RoZWd1YXJkaWFuLmNvbS9uZXdzL3Nlcmllcy9kb2N1YmVhdPgC-dEekAOMBpgDjAaoAwHQBJBO4AQBoAYf%2526num%253D0%2526sig%253DAOD64_1a7IqhLv6ApJJ2HxwcfxqBWa481Q%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.guardian.co.uk" data-link-name="merchandising-1234567890-high-viewall"&gt;See all our classic car deals
+                                &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
+                                &lt;p class="commercial__explainer"&gt;[%commercial__explainer%]&lt;/p&gt;
+                                &lt;a class="commercial__home-link" href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-viewall"&gt;[%commercial__viewalltext%]
                                     &lt;span class="commercial__home-link__cta"&gt;
                                         &lt;span class="i i-arrow-white-right-36"&gt;&lt;/span&gt;
                                     &lt;/span&gt;
@@ -356,13 +358,13 @@
                                 &lt;ul class="lineitems"&gt;
                                     &lt;li class="lineitem"&gt;
                                         &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DB7VJwyhXRU6PzIs-tiga94IDwAt_qkZcFAAAAEAEg75TfITgAWO-wiMKUAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFcaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vZ2xvYmFsLWRldmVsb3BtZW50L3ZpZGVvLzIwMTQvanVsLzA3L21hbGktbGFuZC1ncmFicy1mYXJtZXItdmlkZW-pAtZN5GxziLw-wAIC4AIA6gIuLzU5NjY2MDQ3L3RoZWd1YXJkaWFuLmNvbS9uZXdzL3Nlcmllcy9kb2N1YmVhdPgC-dEekAOMBpgDjAaoAwHQBJBO4AQBoAYf%2526num%253D0%2526sig%253DAOD64_1a7IqhLv6ApJJ2HxwcfxqBWa481Q%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.guardian.co.uk/offer1" data-link-name="merchandising-1234567890-high-Austin%207%20Chummy"&gt;
-                                                &lt;img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjjfmxuQEQARgBMghESIArhcWi2g" alt=""&gt;
+                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer1url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%URI_ENCODE:commercial__offer1title%]"&gt;
+                                                &lt;img class="lineitem__image" src="[%commercial__offer1image%]" alt="" /&gt;
                                                 &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;Austin 7 Chummy&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;&lt;strong&gt;Lovely&lt;/strong&gt; &lt;i&gt;1930&lt;/i&gt; car&lt;br&gt;in blue&lt;br&gt;RRP: &lt;del&gt;&lt;span style="color: orange;"&gt;£3,000&lt;/span&gt;&lt;/del&gt;&lt;br&gt;&lt;strong&gt;&lt;i&gt;Our&lt;/i&gt; price: £2,500&lt;/strong&gt;&lt;/p&gt;
+                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer1title%]&lt;/h4&gt;
+                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer1meta%]&lt;/p&gt;
                                                     &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;Buy now
+                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
                                                     &lt;/p&gt;
                                                 &lt;/div&gt;
                                             &lt;/a&gt;
@@ -370,13 +372,13 @@
                                     &lt;/li&gt;
                                     &lt;li class="lineitem"&gt;
                                         &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DB7VJwyhXRU6PzIs-tiga94IDwAt_qkZcFAAAAEAEg75TfITgAWO-wiMKUAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFcaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vZ2xvYmFsLWRldmVsb3BtZW50L3ZpZGVvLzIwMTQvanVsLzA3L21hbGktbGFuZC1ncmFicy1mYXJtZXItdmlkZW-pAtZN5GxziLw-wAIC4AIA6gIuLzU5NjY2MDQ3L3RoZWd1YXJkaWFuLmNvbS9uZXdzL3Nlcmllcy9kb2N1YmVhdPgC-dEekAOMBpgDjAaoAwHQBJBO4AQBoAYf%2526num%253D0%2526sig%253DAOD64_1a7IqhLv6ApJJ2HxwcfxqBWa481Q%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.guardian.co.uk/offer2" data-link-name="merchandising-1234567890-high-Austin 7 Ulster"&gt;
-                                                &lt;img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjn-CZIhABGAEyCP9JNYGznnPG" alt=""&gt;
+                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer2url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer2title%]"&gt;
+                                                &lt;img class="lineitem__image" src="[%commercial__offer2image%]" alt="" /&gt;
                                                 &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;Austin 7 Ulster&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;Fast and noisy, no roof!&lt;/p&gt;
+                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer2title%]&lt;/h4&gt;
+                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer2meta%]&lt;/p&gt;
                                                     &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;Buy now
+                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
                                                     &lt;/p&gt;
                                                 &lt;/div&gt;
                                             &lt;/a&gt;
@@ -384,13 +386,13 @@
                                     &lt;/li&gt;
                                     &lt;li class="lineitem"&gt;
                                         &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DB7VJwyhXRU6PzIs-tiga94IDwAt_qkZcFAAAAEAEg75TfITgAWO-wiMKUAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFcaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vZ2xvYmFsLWRldmVsb3BtZW50L3ZpZGVvLzIwMTQvanVsLzA3L21hbGktbGFuZC1ncmFicy1mYXJtZXItdmlkZW-pAtZN5GxziLw-wAIC4AIA6gIuLzU5NjY2MDQ3L3RoZWd1YXJkaWFuLmNvbS9uZXdzL3Nlcmllcy9kb2N1YmVhdPgC-dEekAOMBpgDjAaoAwHQBJBO4AQBoAYf%2526num%253D0%2526sig%253DAOD64_1a7IqhLv6ApJJ2HxwcfxqBWa481Q%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.guardian.co.uk/offer3" data-link-name="merchandising-1234567890-high-Austin 7 trials saloon"&gt;
-                                                &lt;img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjn-CPBRABGAEyCNsEiR2LKclz" alt=""&gt;
+                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer3url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer3title%]"&gt;
+                                                &lt;img class="lineitem__image" src="[%commercial__offer3image%]" alt="" /&gt;
                                                 &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;Austin 7 trials saloon&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;Goes up muddy hills with ease&lt;/p&gt;
+                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer3title%]&lt;/h4&gt;
+                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer3meta%]&lt;/p&gt;
                                                     &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;Buy now
+                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
                                                     &lt;/p&gt;
                                                 &lt;/div&gt;
                                             &lt;/a&gt;
@@ -398,13 +400,13 @@
                                     &lt;/li&gt;
                                     &lt;li class="lineitem"&gt;
                                         &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DB7VJwyhXRU6PzIs-tiga94IDwAt_qkZcFAAAAEAEg75TfITgAWO-wiMKUAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFcaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vZ2xvYmFsLWRldmVsb3BtZW50L3ZpZGVvLzIwMTQvanVsLzA3L21hbGktbGFuZC1ncmFicy1mYXJtZXItdmlkZW-pAtZN5GxziLw-wAIC4AIA6gIuLzU5NjY2MDQ3L3RoZWd1YXJkaWFuLmNvbS9uZXdzL3Nlcmllcy9kb2N1YmVhdPgC-dEekAOMBpgDjAaoAwHQBJBO4AQBoAYf%2526num%253D0%2526sig%253DAOD64_1a7IqhLv6ApJJ2HxwcfxqBWa481Q%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.guardian.co.uk/offer4" data-link-name="merchandising-1234567890-high-Austin 7 racing slaoon"&gt;
-                                                &lt;img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDjn5DgJBABGAEyCAJR0OYCo4Bt" alt=""&gt;
+                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer4url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer4title%]"&gt;
+                                                &lt;img class="lineitem__image" src="[%commercial__offer4image%]" alt="" /&gt;
                                                 &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;Austin 7 racing slaoon&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;Supercharged and not for the feint hearted&lt;/p&gt;
+                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer4title%]&lt;/h4&gt;
+                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer4meta%]&lt;/p&gt;
                                                     &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;Buy now
+                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
                                                     &lt;/p&gt;
                                                 &lt;/div&gt;
                                             &lt;/a&gt;

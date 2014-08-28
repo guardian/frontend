@@ -3,16 +3,106 @@
    ========================================================================== */
 
 /**
- * A "columns pattern" will fit as many "$guss-column-min-width"-wide columns
+ * Minimum column width.
+ * 
+ * @type Number
+ *
+ * @group layout
+ */
+$guss-column-min-width: 300px !default;
+
+/**
+ * Column gutter.
+ * 
+ * @type Number
+ *
+ * @group layout
+ */
+$guss-column-gap: 20px !default;
+
+/**
+ * Column utility class.
+ * 
+ * @type String
+ *
+ * @group layout
+ */
+$guss-columns-utility-class: '.l-columns';
+
+/**
+ * When set to false, output a simpler version with a static width.
+ *
+ * @link http://caniuse.com/#feat=multicolumn Column support table
+ * 
+ * @type Bool
+ *
+ * @group layout
+ */
+$browser-supports-columns: true !default;
+
+/**
+ * Fallback width when CSS3 columns support is disabled.
+ * 
+ * @type Number
+ *
+ * @group layout
+ */
+$guss-columns-fallback-width: 940px !default;
+
+/**
+ * Number of columns in the non-responsive version.
+ * 
+ * @type Number
+ *
+ * @group layout
+ */
+$guss-columns-fallback-columns: 3 !default;
+
+/**
+ * Width of fallback column item.
+ *
+ * @param {Number} $container-width
+ * @param {Number} $gap-between-columns
+ * @param {Number} $number-of-columns
+ *
+ * @return {Number}
+ *
+ * @group layout
+ */
+@function width-of-fallback-column-item($container-width, $gap-between-columns, $number-of-columns) {
+    @return ($container-width - $gap-between-columns * ($number-of-columns - 1)) / $number-of-columns;
+}
+
+/**
+ * A "columns pattern" fits as many "$guss-column-min-width"-wide columns
  * in any type of context: full-width container, sidebar…
  *
- * Usage 1: Sass mixin
- * @include guss-columns('.classname');
- * Examples: http://sassmeister.com/gist/35288593dc035ef645e1
+ * @param {String} $base-class
+ * @param {Number} $column-min-width         ($guss-column-min-width)
+ * @param {Number} $column-gap               ($guss-column-gap)
+ * @param {Number} $columns-fallback-width   ($guss-columns-fallback-width)
+ * @param {Number} $columns-fallback-columns ($guss-columns-fallback-columns)
+ * @param {Bool}   $css3-columns-support     ($browser-supports-columns)
  *
- * Usage 2: utility class set as `$guss-columns-utility-class`
- * @include guss-columns-utility;
+ * @requires {variable} guss-column-min-width
+ * @requires {variable} guss-column-gap
+ * @requires {variable} guss-columns-fallback-width
+ * @requires {variable} guss-columns-fallback-columns
+ * @requires {variable} browser-supports-columns
+ * @requires {function} width-of-fallback-column-item
+ * @requires {function} rem
+ * @requires {mixin} mq
  *
+ * @link http://sassmeister.com/gist/5c09ed0242085ba8d705 Examples on Sassmeister
+ * 
+ * @example
+ *  // Usage 1: Sass mixin
+ *  @include guss-columns('.classname');
+ *
+ *  // Usage 2: utility class set as `$guss-columns-utility-class`
+ *  @include guss-columns-utility;
+ *
+ * @example markup
  * <div class="l-columns">
  *     <div class="l-columns__item"></div>
  *     <div class="l-columns__item"></div>
@@ -23,27 +113,8 @@
  *     <div class="l-columns__item"></div>
  * </div>
  *
+ * @group layout
  */
-
-$guss-column-min-width: 300px !default;
-$guss-column-gap: 20px !default;
-
-$guss-columns-utility-class: '.l-columns';
-
-// When set to false, output a simpler version with a static width
-// http://caniuse.com/#feat=multicolumn
-$browser-supports-columns: true !default;
-
-// Fallback width when CSS3 columns support is disabled
-$guss-columns-fallback-width: 940px !default;
-
-// Number of columns in the non-responsive version
-$guss-columns-fallback-columns: 3 !default;
-
-@function width-of-fallback-column-item($container-width, $gap-between-columns, $number-of-columns) {
-    @return ($container-width - $gap-between-columns * ($number-of-columns - 1)) / $number-of-columns;
-}
-
 @mixin guss-columns($base-class,
                     $column-min-width: $guss-column-min-width,
                     $column-gap: $guss-column-gap,
@@ -80,10 +151,8 @@ $guss-columns-fallback-columns: 3 !default;
     }
     @if not $css3-columns-support {
         #{$base-class} {
-            @include rem((
-                margin-left: $column-gap / 2 * -1,
-                margin-right: $column-gap / 2 * -1
-            ));
+            margin-left: $column-gap / 2 * -1;
+            margin-right: $column-gap / 2 * -1;
 
             // Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
             zoom: 1;
@@ -100,10 +169,8 @@ $guss-columns-fallback-columns: 3 !default;
         #{$base-class}__item {
             position: relative;
             display: block;
-            @include rem((
-                margin-left: $column-gap / 2,
-                margin-right: $column-gap / 2
-            ));
+            margin-left: $column-gap / 2;
+            margin-right: $column-gap / 2;
 
             @include mq(tablet) {
                 float: left;
@@ -129,13 +196,11 @@ $guss-columns-fallback-columns: 3 !default;
                     $number-of-fallback-columns: if(type-of($columns-fallback-columns) == map, map-get($columns-fallback-columns, $breakpoint), $columns-fallback-columns);
 
                     @include mq($breakpoint) {
-                        @include rem((
-                            width: width-of-fallback-column-item(
-                                                                    $container-width: $fallback-width,
-                                                                    $gap-between-columns: $column-gap,
-                                                                    $number-of-columns: $number-of-fallback-columns
-                                                                )
-                        ));
+                        width: width-of-fallback-column-item(
+                                    $container-width: $fallback-width,
+                                    $gap-between-columns: $column-gap,
+                                    $number-of-columns: $number-of-fallback-columns
+                                );
 
                         &:nth-child(n) {
                             clear: none;
@@ -154,13 +219,11 @@ $guss-columns-fallback-columns: 3 !default;
                 //     $columns-fallback-width: 290px,
                 //     $columns-fallback-columns: 3
                 // );
-                @include rem((
-                    width: width-of-fallback-column-item(
-                                                            $container-width: $columns-fallback-width,
-                                                            $gap-between-columns: $column-gap,
-                                                            $number-of-columns: $columns-fallback-columns
-                                                        )
-                ));
+                width: width-of-fallback-column-item(
+                            $container-width: $columns-fallback-width,
+                            $gap-between-columns: $column-gap,
+                            $number-of-columns: $columns-fallback-columns
+                        );
 
                 &:nth-child(n) {
                     clear: none;
@@ -173,6 +236,14 @@ $guss-columns-fallback-columns: 3 !default;
     }
 }
 
+/**
+ * Column utility.
+ *
+ * @requires {mixin} guss-columns
+ * @requires {variable} guss-columns-utility-class
+ *
+ * @group layout
+ */
 @mixin guss-columns-utility {
     @include guss-columns($guss-columns-utility-class);
 }

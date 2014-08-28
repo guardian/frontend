@@ -1,7 +1,8 @@
 @(trail: model.Trail, index: Int)(implicit request: RequestHeader, config: model.Config)
 
 @import common.LinkTo
-@import views.support.{GetClasses, RemoveOuterParaHtml, SnapData}
+@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
+@import views.support.{GetClasses, Video640, RemoveOuterParaHtml, SnapData}
 
 @defining(trail.visualTone) { tone =>
     <div
@@ -16,7 +17,25 @@
         @SnapData(trail)>
 
         <div class="saucisson__container">
-            @fragments.items.elements.image(trail)
+            @FaciaDisplayElement.fromTrail(trail) match {
+                case InlineVideo(video, title, endSlatePath) => {
+                    <div class="item__media-wrapper item__media-wrapper--video">
+                        @fragments.media.video(VideoPlayer(
+                            video,
+                            Video640,
+                            title,
+                            autoPlay = false,
+                            showControlsAtStart = false,
+                            endSlatePath,
+                            None
+                        ))
+                    </div>
+                }
+
+                case _ => {
+                    @fragments.items.elements.image(trail)
+                }
+            }
 
             @fragments.items.elements.title(trail, index, 0)
 
@@ -44,7 +63,7 @@
                 @fragments.items.elements.meta(trail)
             }
         </div>
-        <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 
+        <a @LinkTo(trail).map { url => href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </div>
 }

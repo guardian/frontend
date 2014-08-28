@@ -27,6 +27,7 @@ trait MetaData extends Tags {
   // Basically it helps us understand the impact of changes and needs
   // to be an integral part of each page
   def buildNumber: String = ManifestData.build
+  def revision: String = ManifestData.revision
 
   //must be one of... http://schema.org/docs/schemas.html
   def schemaType: Option[String] = None
@@ -45,6 +46,7 @@ trait MetaData extends Tags {
     ("section", JsString(section)),
     ("webTitle", JsString(webTitle)),
     ("buildNumber", JsString(buildNumber)),
+    ("revisionNumber", JsString(revision.take(7))),
     ("analyticsName", JsString(analyticsName)),
     ("blockVideoAds", JsBoolean(false)),
     ("isFront", JsBoolean(isFront)),
@@ -53,14 +55,14 @@ trait MetaData extends Tags {
     ("hasClassicVersion", JsBoolean(hasClassicVersion))
   )
 
-  def openGraph: Map[String, Any] = Map(
+  def openGraph: Map[String, String] = Map(
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",
     "og:url"       -> s"${Configuration.site.host}$url"
   )
 
-  def cards: List[(String, Any)] = List(
+  def cards: List[(String, String)] = List(
     "twitter:site" -> "@guardian",
     "twitter:app:name:iphone" -> "The Guardian",
     "twitter:app:id:iphone" -> "409128287",

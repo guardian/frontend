@@ -428,7 +428,7 @@
     @include f-headline;
     font-weight: 200;
     @include box-sizing(border-box);
-    height: 2*get-line-height($fs-bodyCopy, 2);
+    height: 2*get-line-height(bodyCopy, 2);
     padding-top: 1px;
     margin-right: 4px;
 
@@ -447,7 +447,7 @@
         @include f-headline;
         font-weight: 200;
         margin-right: 5px;
-        height: 3*get-line-height($fs-bodyCopy, 2);
+        height: 3*get-line-height(bodyCopy, 2);
 
         .drop-cap__inner {
             @include font-size(84px, 68px);

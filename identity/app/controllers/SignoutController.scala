@@ -38,14 +38,8 @@ class SignoutController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   private def performSignout(request: RequestHeader) = {
 
-    // a session cookie is a cookie without an expiry time
-    // http://en.wikipedia.org/wiki/HTTP_cookie#Session_cookie
-    val sessionCookies = request.cookies.filter(_.maxAge.isEmpty).map( cookie =>
-      DiscardingCookie(cookie.name, cookie.path, cookie.domain, cookie.secure)
-    ).toList
-
     val cookiesToDiscard = DiscardingCookie("GU_U", "/", Some(conf.id.domain), secure = false) ::
-      DiscardingCookie("SC_GU_U", "/", Some(conf.id.domain), secure = true) :: sessionCookies
+      DiscardingCookie("SC_GU_U", "/", Some(conf.id.domain), secure = true) :: Nil
 
     NoCache(Found(
       returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)

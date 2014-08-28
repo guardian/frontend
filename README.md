@@ -127,6 +127,15 @@ Restart the machine.
 
 For more info see http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/
 
+On OSX the open file limit can be even lower (256 or so). 
+To find out what it is run `ulimit -n` at the command prompt, and if it's a low number, you can fix it like this;
+* Edit your `~/.bash-profile` file 
+* add the following line: `ulimit -n 1024`
+* save and close the file
+* back at the command prompt enter: `source .bash_profile` and hit return.
+
+Now you should be able to compile and run. Yay.
+
 Running
 -------
 Assuming you have checked out this project, open a console and change directory

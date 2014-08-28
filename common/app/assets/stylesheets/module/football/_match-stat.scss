@@ -35,6 +35,7 @@
 .team__results {
     min-width: $gs-gutter*1.5;
     font-size: 0;
+    white-space: nowrap;
 }
 
 .team__results--shrink {

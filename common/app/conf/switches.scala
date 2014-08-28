@@ -309,11 +309,21 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 9, 8)
   )
 
+  val SeoEscapeFootballJsonPathLikeValuesSwitch = Switch("Feature", "seo-googlebot-escape-football-json-path-like-values",
+    "If switched ON, json football references that look like a path to googlebot are 'escaped'.",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
+  )
+
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
+  )
+
+  val ABSoulmatesLabelling = Switch("A/B Tests", "ab-soulmates-labelling",
+    "If this switch is turned on, run the SoulmatesLabelling A/B test",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 11)
   )
 
   // Facia
@@ -447,12 +457,14 @@ object Switches extends Collections {
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
     SmartBannerSwitch,
+    SeoEscapeFootballJsonPathLikeValuesSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
+    ABSoulmatesLabelling,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
     ChildrensBooksSwitch,

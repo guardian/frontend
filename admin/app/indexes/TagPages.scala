@@ -98,7 +98,7 @@ object TagPages {
     TagIndexPage(
       id,
       titleFromKey(id),
-      tagSet.toSeq.sortBy(tag => asAscii(tag.webTitle)).map(TagDefinition.fromContentApiTag)
+      tagSet.toSeq.sortBy(tag => asAscii(tag.webTitle).toLowerCase).map(TagDefinition.fromContentApiTag)
     )
   }
 

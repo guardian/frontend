@@ -5,6 +5,7 @@ define([
     'common/utils/detect',
     'common/utils/config',
     'common/utils/deferToAnalytics',
+    'common/utils/mediator',
     'common/utils/url',
     'common/modules/ui/images',
     'common/modules/commercial/dfp',
@@ -24,6 +25,7 @@ define([
     detect,
     config,
     deferToAnalytics,
+    mediator,
     urlUtils,
     images,
     dfp,
@@ -289,7 +291,11 @@ define([
             return vjs;
         },
 
-        initPlayer: function() {
+        initPlayer: function (config) {
+
+            if (!config.switches.enhancedMediaPlayer) {
+                return;
+            }
 
             require('bootstraps/video-player', function () {
 
@@ -399,7 +405,10 @@ define([
                 bonzo(player.el()).removeClass(endState);
             });
         },
-        initMoreInSection: function() {
+        initMoreInSection: function(config) {
+            if (!config.isMedia || !config.page.showRelatedContent) {
+                return;
+            }
             var section = new Component(),
                 parentEl = $('.js-onward')[0];
 
@@ -412,7 +421,10 @@ define([
                 images.upgrade(parentEl);
             });
         },
-        initMostViewedMedia: function() {
+        initMostViewedMedia: function(config) {
+            if (!config.isMedia) {
+                return;
+            }
             if (config.page.section === 'childrens-books-site' && config.switches.childrensBooksHidePopular) {
                 $('.content__secondary-column--media').addClass('u-h');
             } else {
@@ -421,46 +433,42 @@ define([
                 mostViewed.fetch($('.js-video-components-container')[0], 'html');
             }
         },
-        displayReleaseMessage: function() {
-            var msg = '<p class="site-message__message" id="site-message__message">' +
-                    'We’ve redesigned our video pages to make it easier to find and experience our best video content. We’d love to hear what you think.' +
-                    '</p>' +
-                    '<ul class="site-message__actions u-unstyled">' +
-                    '<li class="site-message__actions__item">' +
-                    '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
-                    '</li>' +
-                    '<li class="site-message__actions__item">' +
-                    '<i class="i i-arrow-white-right"></i>' +
-                    '<a href="https://www.surveymonkey.com/s/guardianvideo" target="_blank">Leave feedback</a>' +
-                    '</li>' +
-                    '</ul>';
+        displayReleaseMessage: function(config) {
 
-            var releaseMessage = new Message('video', {pinOnHide: true});
+            if (config.page.contentType &&
+                config.page.contentType.toLowerCase() === 'video' &&
+                detect.getBreakpoint() !== 'mobile' &&
+                !preferences.hasOptedIntoResponsive()
+            ) {
 
-            releaseMessage.show(msg);
+                var msg = '<p class="site-message__message" id="site-message__message">' +
+                        'We’ve redesigned our video pages to make it easier to find and experience our best video content. We’d love to hear what you think.' +
+                        '</p>' +
+                        '<ul class="site-message__actions u-unstyled">' +
+                        '<li class="site-message__actions__item">' +
+                        '<i class="i i-arrow-white-right"></i>' +
+                        '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
+                        '</li>' +
+                        '<li class="site-message__actions__item">' +
+                        '<i class="i i-arrow-white-right"></i>' +
+                        '<a href="https://www.surveymonkey.com/s/guardianvideo" target="_blank">Leave feedback</a>' +
+                        '</li>' +
+                        '</ul>';
+
+                var releaseMessage = new Message('video', {pinOnHide: true});
+
+                releaseMessage.show(msg);
+            }
         }
     };
 
-    var ready = function () {
-        if(config.switches.enhancedMediaPlayer) {
-            modules.initPlayer();
-        }
+    var ready = function (config, context) {
+        modules.initPlayer(config);
+        modules.initMoreInSection(config);
+        modules.initMostViewedMedia(config);
+        modules.displayReleaseMessage(config);
 
-        if (config.isMedia) {
-            if (config.page.showRelatedContent) {
-                modules.initMoreInSection();
-            }
-            modules.initMostViewedMedia();
-        }
-
-        if (config.page.contentType &&
-            config.page.contentType.toLowerCase() === 'video' &&
-            detect.getBreakpoint() !== 'mobile' &&
-            !preferences.hasOptedIntoResponsive()
-        ) {
-            modules.displayReleaseMessage();
-        }
+        mediator.emit('page:media:ready', config, context);
     };
 
     return {

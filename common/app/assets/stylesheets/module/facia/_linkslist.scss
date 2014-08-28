@@ -55,7 +55,6 @@
             border-top: 0;
         }
     }
-
     @include mq(desktop) {
         &:nth-child(3) {
             border-top: 0;
@@ -79,10 +78,11 @@
     display: block;
     @include fs-headline(2);
     margin-top: $gs-baseline/4;
-    margin-bottom: get-line-height($fs-headlines, 1);
+    margin-bottom: get-line-height(headline, 1);
+
     @include mq(tablet) {
-        min-height: get-line-height($fs-headlines, 1) * 2;
-        margin-bottom: get-font-size($fs-headlines, 1);
+        min-height: get-line-height(headline, 1) * 2;
+        margin-bottom: get-font-size(headline, 1);
     }
 
     &:visited {
@@ -135,7 +135,7 @@
     $action-image-width: 88px;
     .action--has-image {
         // Min height of 3 baselines
-        min-height: get-line-height($fs-headlines, 1) * 3;
+        min-height: get-line-height(headline, 1) * 3;
         // Override .svg .action--has-icon
         padding-left: $action-image-width + $gs-gutter/2 !important;
     }

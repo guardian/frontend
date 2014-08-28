@@ -41,6 +41,7 @@ POST        /dev/switchboard              controllers.admin.SwitchboardControlle
 # Analytics
 GET         /analytics/abtests                      controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET         /analytics/content/gallery              controllers.admin.ContentPerformanceController.renderGalleryDashboard()
 
 # Commercial
 GET         /analytics/commercial                   controllers.admin.CommercialController.renderCommercial()
@@ -53,14 +54,14 @@ GET         /commercialtools/adunits/toapprove      controllers.admin.Commercial
 POST        /commercialtools/adunits/toapprove      controllers.admin.CommercialAdUnitController.approve()
 
 # Metrics
-GET         /metrics/loadbalancers        controllers.admin.DashboardController.renderDashboard()
+GET         /metrics/loadbalancers        controllers.admin.MetricsController.renderLoadBalancers()
 GET         /metrics/fastly               controllers.admin.FastlyController.renderFastly()
-GET         /metrics/errors               controllers.admin.DashboardController.renderErrors()
-GET         /metrics/errors/4xx           controllers.admin.DashboardController.render4XX()
-GET         /metrics/errors/5xx           controllers.admin.DashboardController.render5XX()
-GET         /metrics/memory               controllers.admin.DashboardController.renderMemory()
-GET         /metrics/assets               controllers.admin.DashboardController.renderAssets()
-GET         /metrics/googlebot/404        controllers.admin.DashboardController.renderGooglebot404s()
+GET         /metrics/errors               controllers.admin.MetricsController.renderErrors()
+GET         /metrics/errors/4xx           controllers.admin.MetricsController.render4XX()
+GET         /metrics/errors/5xx           controllers.admin.MetricsController.render5XX()
+GET         /metrics/memory               controllers.admin.MetricsController.renderMemory()
+GET         /metrics/assets               controllers.admin.MetricsController.renderAssets()
+GET         /metrics/googlebot/404        controllers.admin.MetricsController.renderGooglebot404s()
 
 # Radiator
 GET         /radiator                     controllers.admin.RadiatorController.renderRadiator()

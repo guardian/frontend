@@ -38,9 +38,6 @@ define([
                     relativeDates.init(container);
                     // upgrade image
                     images.upgrade(container);
-                },
-                function(req) {
-                    raven.captureMessage('Failed to load facia popular: ' + req.statusText);
                 }
             );
         }

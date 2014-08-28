@@ -1,13 +1,13 @@
 package model
 
-class KeywordsListingMetaData extends MetaData {
-  override def id: String = "index/keywords"
+class SubjectsListingMetaData extends MetaData {
+  override def id: String = "index/subjects"
 
   override def section: String = "Index"
 
-  override def analyticsName: String = "Keywords"
+  override def analyticsName: String = "Subjects"
 
-  override def webTitle: String = "keywords"
+  override def webTitle: String = "subjects"
 
   override def customSignPosting = Some(IndexNav.keywordsAlpha)
 }

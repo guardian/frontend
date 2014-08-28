@@ -5,7 +5,7 @@
     }
     .facia-slice-wrapper--position-1 {
         .item__header {
-            min-height: (4 * get-line-height($fs-headlines, 3)) - $gs-baseline;
+            min-height: (4 * get-line-height(headline, 3)) - $gs-baseline;
             padding-bottom: $gs-baseline;
         }
         .item__title {

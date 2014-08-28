@@ -22,7 +22,7 @@
     "grunt-karma": "^0.8.3",
     "grunt-mkdir": "~0.1.1",
     "grunt-pagespeed": "^0.2.0",
-    "grunt-px-to-rem": "^0.2.7",
+    "grunt-px-to-rem": "^0.3.0",
     "grunt-scss-lint": "0.3.2",
     "grunt-shell": "^0.7.0",
     "grunt-text-replace": "~0.3.11",

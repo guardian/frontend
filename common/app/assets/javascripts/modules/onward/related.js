@@ -99,8 +99,7 @@ define([
                         mediator.emit('modules:related:loaded', config, context);
                         register.end(componentName);
                     },
-                    error: function(req) {
-                        raven.captureMessage('Failed to load related: ' + req.statusText);
+                    error: function() {
                         register.error(componentName);
                     }
                 }).load();
