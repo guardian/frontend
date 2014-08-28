@@ -280,8 +280,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
     lazy val configBeforePressTimeout: Int = 1000
 
-
-    case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
     val oauthCredentials: Option[OAuthCredentials] =
       for {
         oauthClientId <- configuration.getStringProperty("faciatool.oauth.clientid")
@@ -369,15 +367,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object avatars {
     lazy val imageHost = configuration.getMandatoryStringProperty("avatars.image.host")
     lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
-  }
-
-  object admin {
-    lazy val oauthCredentials: Option[OAuthCredentials] =
-      for {
-        oauthClientId <- configuration.getStringProperty("admin.oauth.clientid")
-        oauthSecret <- configuration.getStringProperty("admin.oauth.secret")
-        oauthCallback <- configuration.getStringProperty("admin.oauth.callback")
-      } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
   }
 
   object preview {
