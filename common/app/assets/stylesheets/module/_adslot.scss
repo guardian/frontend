@@ -130,6 +130,7 @@
 .ad-slot--container-inline,
 .ad-slot--inline {
     min-height: 50 + $mpu-ad-label-height;
+    text-align: center;
 
     @include mq(mobileLandscape) {
         min-height: 50px;
@@ -141,16 +142,6 @@
     .ad-slot__label {
         max-width: 300px;
         margin: 0 auto;
-
-        @include mq(mobileLandscape, tablet) {
-            position: absolute;
-            width: 50%;
-            height: 50px;
-            z-index: -1;
-            text-align: left;
-            padding-left: 2px;
-            font-size: 10px;
-        }
     }
 }
 .ad-slot--container-inline {
