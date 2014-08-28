@@ -1,11 +1,17 @@
 package model
 
-import play.api.{Application => PlayApp, GlobalSettings}
+import commercial.TravelOffersCacheJob
+import conf.Configuration
+import dfp.DfpDataCacheJob
+import play.api.GlobalSettings
 import tools.{LoadBalancer, CloudWatch}
 import common.{AkkaAsync, Jobs}
-import jobs.{VideoSanityCheckJob, AnalyticsSanityCheckJob, FastlyCloudwatchLoadJob}
+import jobs._
 
 trait AdminLifecycle extends GlobalSettings {
+
+  lazy val adminPressJobPushRateInMinutes: Int = Configuration.faciatool.adminPressJobPushRateInMinutes
+  lazy val adminRebuildIndexRateInMinutes: Int = Configuration.indexes.adminRebuildIndexRateInMinutes
 
   private def scheduleJobs() {
     Jobs.schedule("AdminLoadJob", "0/30 * * * * ?") {
@@ -28,8 +34,23 @@ trait AdminLifecycle extends GlobalSettings {
       VideoSanityCheckJob.run()
     }
 
-    AkkaAsync{
-      LoadBalancer.refresh()
+    //Every 3 minutes
+    Jobs.schedule("FrontPressJob", s"0 0/$adminPressJobPushRateInMinutes * 1/1 * ? *") {
+      RefreshFrontsJob.run()
+    }
+
+    Jobs.schedule("RebuildIndexJob", s"0 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {
+      RebuildIndexJob.run()
+    }
+
+    // every 30 minutes
+    Jobs.schedule("DfpDataCacheJob", "0 1/30 * * * ? *") {
+      DfpDataCacheJob.run()
+      TravelOffersCacheJob.run()
+    }
+
+    Jobs.schedule("OmnitureReportJob", "0 */5 * * * ?") {
+      OmnitureReportJob.run()
     }
   }
 
@@ -39,12 +60,23 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("FastlyCloudwatchLoadJob")
     Jobs.deschedule("AnalyticsSanityCheckJob")
     Jobs.deschedule("VideoSanityCheckJob")
+    Jobs.deschedule("FrontPressJob")
+    Jobs.deschedule("DfpDataCacheJob")
+    Jobs.deschedule("RebuildIndexJob")
+    Jobs.deschedule("OmnitureReportJob")
   }
 
   override def onStart(app: play.api.Application) {
     super.onStart(app)
     descheduleJobs()
     scheduleJobs()
+
+    AkkaAsync {
+      RebuildIndexJob.run()
+      DfpDataCacheJob.run()
+      TravelOffersCacheJob.run()
+      OmnitureReportJob.run()
+    }
   }
 
   override def onStop(app: play.api.Application) {
