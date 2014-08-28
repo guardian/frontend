@@ -1,10 +1,19 @@
 @(page: MetaData, showNav: Boolean=true)(implicit request: RequestHeader)
+
 @import conf.Switches._
 @import org.joda.time.DateTime
 @import common.Edition
 @import common.editions._
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
+
+    @page match {
+        case content: model.Content => {
+            @fragments.breadcrumb(content)
+        }
+
+        case _ => {}
+    }
 
     @if(ReleaseMessageSwitch.isSwitchedOn) {
         <div class="site-message--footer is-hidden js-footer-message" data-link-name="release message">
