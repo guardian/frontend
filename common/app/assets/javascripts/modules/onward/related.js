@@ -100,7 +100,6 @@ define([
                         register.end(componentName);
                     },
                     error: function(req) {
-                        raven.captureMessage('Failed to load related: ' + req.statusText);
                         register.error(componentName);
                     }
                 }).load();

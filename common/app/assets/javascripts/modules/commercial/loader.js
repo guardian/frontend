@@ -130,9 +130,6 @@ define([
                 }
 
                 mediator.emit('modules:commercial/loader:loaded');
-            },
-            error: function (req) {
-                raven.captureMessage('Failed to load related: ' + req.statusText);
             }
         }).load();
 
