@@ -28,6 +28,9 @@ case class RegisterSteps(implicit driver: WebDriver) extends TestLogging with Ma
     enterFirstNameIfSet(registerPage, user)
     enterLastNameIfSet(registerPage, user)
     registerPage.enterUsername(user.userName)
+
+    //this is needed, because in Chrome, elements not in view are not very clickable
+    scrollWindow(0, 500)
     registerPage.createButton.click()
 
     waitForPageToLoad

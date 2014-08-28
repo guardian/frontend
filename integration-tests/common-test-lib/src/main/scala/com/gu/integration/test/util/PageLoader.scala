@@ -54,4 +54,8 @@ object PageLoader extends TestLogging {
     }
     new WebDriverWait(driver, 15).until(pageReady)
   }
+
+  def scrollWindow(x: Int, y: Int)(implicit driver: WebDriver) = {
+    driver.asInstanceOf[JavascriptExecutor].executeScript(s"javascript:window.scrollBy($x,$y)")
+  }
 }

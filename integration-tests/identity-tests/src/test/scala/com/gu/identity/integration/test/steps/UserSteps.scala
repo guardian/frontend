@@ -52,6 +52,10 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
   def changeEmailTo(newEmail: String, editAccountDetailsModule: EditAccountDetailsModule): Either[List[FormError], String] = {
     logger.step(s"Changing account email to $newEmail")
     editAccountDetailsModule.enterEmailAddress(newEmail)
+
+    //this is needed, because in Chrome, elements not in view are not very clickable
+    scrollWindow(0, 1000)
+
     editAccountDetailsModule.saveChanges()
 
     waitForPageToLoad
@@ -68,6 +72,8 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     logger.step("Changing first and last name")
     editAccountDetailsModule.enterFirstName(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.enterLastName(generateRandomAlphaNumericString(7))
+    //this is needed, because in Chrome, elements not in view are not very clickable
+    scrollWindow(0, 1000)
     editAccountDetailsModule.saveChanges()
 
     waitForPageToLoad
@@ -77,13 +83,15 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
   }
 
   def changeAddress(editAccountDetailsModule: EditAccountDetailsModule): User = {
-    logger.step("Changing first and last name")
+    logger.step("Changing address fields")
     editAccountDetailsModule.enterAddressLine1(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.enterAddressLine2(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.enterTown(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.enterCounty(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.enterPostCode(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.selectFirstValidCountry()
+    //this is needed, because in Chrome, elements not in view are not very clickable
+    scrollWindow(0, 1000)
     editAccountDetailsModule.saveChanges()
 
     waitForPageToLoad
