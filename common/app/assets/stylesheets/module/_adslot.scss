@@ -175,15 +175,24 @@
     }
 }
 .ad-slot--gallery-inline {
-    padding-bottom: $gs-baseline*2;
-    border-top: 1px solid guss-colour(neutral-2);
-    background-color: lighten(guss-colour(tone-media-1), 2.5%);
     text-align: center;
 
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline*2;
+        background-color: lighten(guss-colour(tone-media-1), 2.5%);
+    }
     .ad-slot__label {
-        height: $gs-baseline*2;
         color: guss-colour(neutral-3);
-        background-color: transparent;
+        background-color: lighten(guss-colour(tone-media-1), 2.5%);
+        border-top: 1px solid guss-colour(neutral-2);
+
+        @include mq($to: tablet) {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        @include mq(tablet) {
+            height: $gs-baseline*2;
+        }
     }
 }
 .ad-slot--mpu-banner-ad {
