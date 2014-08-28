@@ -69,7 +69,7 @@ https://code.google.com/p/selenium/issues/detail?id=2766
 
 ## Running the Tests
 
-To run the tests you can either load the project in your favourite IDE as an SBT project and then simply run it as a ScalaTest class or you can run it in command line by simply exeuting: ```sbt test```
+To run the tests you can either load the project in your favourite IDE as an SBT project and then simply run it as a ScalaTest class or you can run it in command line by, going to the parent integration-test folder, and simply exeuting: ```sbt "project identity-tests" clean compile test```
 
 If you want to run the same test suite which TeamCity runs then execute: ```sbt ciTest```. This is for the CI environment and will not fail the build if the tests fail. This is so the tests can be properly muted in Team City.
 
