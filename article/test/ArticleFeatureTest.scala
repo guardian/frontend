@@ -644,13 +644,13 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism") { browser =>
         import browser._
         Then("I should see three breadcrumbs")
-        $(".l-footer .signposting__item").size() should be (3)
+        $(".breadcrumb .signposting__item").size() should be (3)
 
-        val link = find(".l-footer .signposting__item a", withText().contains("Culture"))
+        val link = find(".breadcrumb .signposting__item a", withText().contains("Culture"))
         link.length should be > 0
-        val link2 = find(".l-footer .signposting__item a", withText().contains("Books"))
+        val link2 = find(".breadcrumb .signposting__item a", withText().contains("Books"))
         link2.length should be > 0
-        val link3 = find(".l-footer .signposting__item a", withText().contains("Orwell prize"))
+        val link3 = find(".breadcrumb .signposting__item a", withText().contains("Orwell prize"))
         link3.length should be > 0
       }
 
@@ -658,11 +658,11 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/commentisfree/2013/jan/07/blue-plaque-english-heritage") { browser =>
         import browser._
         Then("I should see three breadcrumbs")
-        $(".l-footer .signposting__item").size() should be (2)
+        $(".breadcrumb .signposting__item").size() should be (2)
 
-        val link = find(".l-footer .signposting__item a", withText().contains("Comment"))
+        val link = find(".breadcrumb .signposting__item a", withText().contains("Comment"))
         link.length should be > 0
-        val link2 = find(".l-footer .signposting__item a", withText().contains("Heritage"))
+        val link2 = find(".breadcrumb .signposting__item a", withText().contains("Heritage"))
         link2.length should be > 0
       }
 
@@ -670,9 +670,9 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/observer-ethical-awards/shortlist-2014") { browser =>
         import browser._
         Then("I should see one breadcrumbs")
-        $(".l-footer .signposting__item").size() should be (1)
+        $(".breadcrumb .signposting__item").size() should be (1)
 
-        val link = find(".l-footer .signposting__item a", withText().contains("Observer Ethical Awards"))
+        val link = find(".breadcrumb .signposting__item a", withText().contains("Observer Ethical Awards"))
         link.length should be > 0
       }
     }
