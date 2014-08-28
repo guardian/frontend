@@ -6,6 +6,7 @@ import model.NoCache
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc._
+import services.Omniture.OmnitureReportData
 import tools._
 
 object ContentPerformanceController extends Controller with AuthLogging with Logging with ExecutionContexts {
@@ -28,12 +29,15 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
 
   def renderGalleryDashboard() = AuthActions.AuthActionTest { request =>
 
+    val reportTimestamp = jobs.OmnitureReportJob.getReport("GalleryVisits").map {_.timeReceived.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")}
+
+
     val breakdown: Seq[(String, Map[String, Seq[BreakdownItem]])] = for {
       reportName <- List("GalleryPageViews", "GalleryVisits")
       report <- jobs.OmnitureReportJob.getReport(reportName)
     } yield {
       // The breakdown is a JSArray of objects which we can extract data from.
-      val breakdown = ((report \ "report" \ "data")(0) \ "breakdown").validate[Seq[BreakdownItem]].getOrElse(Nil)
+      val breakdown = ((report.data \ "report" \ "data")(0) \ "breakdown").validate[Seq[BreakdownItem]].getOrElse(Nil)
       (reportName, breakdown.groupBy(_.name))
     }
 
@@ -56,7 +60,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
     } else {
       val rowData = reportsObject.toSeq.sortBy(_.date).map { row => tools.ChartRow(row.date, Seq(row.pageViewsPerVisit)) }
       val chart = new GenericChart("Gallery Page Views per Visit", List("Time", "Hits per visit"), ChartFormat.SingleLineGreen, rowData)
-      NoCache(Ok(views.html.contentGallery("PROD", chart, Some("Gallery Performance"))))
+      NoCache(Ok(views.html.contentGallery("PROD", chart, "Gallery Performance", reportTimestamp)))
     }
   }
 }

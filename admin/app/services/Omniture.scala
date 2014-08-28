@@ -13,6 +13,7 @@ case class OmnitureException(message: String) extends RuntimeException
 
 trait OmnitureResponse {
   def response: String
+  val timeReceived = new DateTime(DateTimeZone.UTC)
 }
 case class OmnitureReportData(data: JsValue) extends OmnitureResponse {
   override val response = data.toString()

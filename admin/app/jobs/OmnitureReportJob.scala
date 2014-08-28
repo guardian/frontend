@@ -20,9 +20,9 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
 
   import OmnitureVariables._
 
-  private val omnitureReportAgent = AkkaAgent[Map[String, JsValue]](Map.empty)
+  private val omnitureReportAgent = AkkaAgent[Map[String, OmnitureReportData]](Map.empty)
 
-  def getReport(reportName: String): Option[JsValue] = omnitureReportAgent().get(reportName)
+  def getReport(reportName: String): Option[OmnitureReportData] = omnitureReportAgent().get(reportName)
 
   def run() {
 
@@ -52,7 +52,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
     Omniture.generateReport(report, OmnitureMethods.QUEUE_TRENDED).map { report =>
       log.info(s"Updating report: $reportName")
       omnitureReportAgent.send{ old =>
-        old + (reportName -> report.data)
+        old + (reportName -> report)
       }
     }.recover {
       case responseError: OmnitureException => log.warn(s"Failed:\n ${responseError.message}")
