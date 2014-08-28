@@ -6,8 +6,8 @@ import model.NoCache
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc._
-import services.Omniture.OmnitureReportData
 import tools._
+import jobs.OmnitureReports._
 
 object ContentPerformanceController extends Controller with AuthLogging with Logging with ExecutionContexts {
 
@@ -29,11 +29,11 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
 
   def renderGalleryDashboard() = AuthActions.AuthActionTest { request =>
 
-    val reportTimestamp = jobs.OmnitureReportJob.getReport("GalleryVisits").map {_.timeReceived.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")}
+    val reportTimestamp = jobs.OmnitureReportJob.getReport(galleryVisits).map {_.timeReceived.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")}
 
 
     val breakdown: Seq[(String, Map[String, Seq[BreakdownItem]])] = for {
-      reportName <- List("GalleryPageViews", "GalleryVisits")
+      reportName <- List(galleryPageViews, galleryVisits)
       report <- jobs.OmnitureReportJob.getReport(reportName)
     } yield {
       // The breakdown is a JSArray of objects which we can extract data from.
@@ -43,9 +43,9 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
 
     val breakdownMap = breakdown.toMap
     val reportsObject = for {
-      name <- breakdownMap.get("GalleryVisits").map(_.keys).getOrElse(Nil)
-      galleryViewsReport <- breakdownMap.get("GalleryPageViews")
-      galleryVisitsReport <- breakdownMap.get("GalleryVisits")
+      name <- breakdownMap.get(galleryVisits).map(_.keys).getOrElse(Nil)
+      galleryViewsReport <- breakdownMap.get(galleryPageViews)
+      galleryVisitsReport <- breakdownMap.get(galleryVisits)
       galleryViews: BreakdownItem <- galleryViewsReport.get(name).flatMap(_.headOption)
       galleryVisits: BreakdownItem <- galleryVisitsReport.get(name).flatMap(_.headOption)
       views <- galleryViews.counts.headOption.map(_.toDouble)

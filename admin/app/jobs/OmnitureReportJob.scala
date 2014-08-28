@@ -2,27 +2,37 @@ package jobs
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
 import org.joda.time.{DateTimeZone, DateTime}
-import play.api.libs.json.JsValue
 import services.Omniture._
+import OmnitureMethods._
 
 object OmnitureVariables {
 
   // Metrics
   val pageViews = "pageViews"
   val visits = "visits"
+  val navigationalInteractionEvent = "event37"
 
   // Elements
   val videoViews = "event17"
   val contentType = "prop9"
+  val navigationalInteraction = "evar37"
+}
+
+object OmnitureReports {
+  val galleryVisits = "gallery-visits"
+  val galleryPageViews = "gallery-page-views"
+  val galleryLightBox = "gallery-launch-lightbox"
 }
 
 object OmnitureReportJob extends ExecutionContexts with Logging {
 
   import OmnitureVariables._
+  import OmnitureReports._
 
-  private val omnitureReportAgent = AkkaAgent[Map[String, OmnitureReportData]](Map.empty)
+  private val omnitureReportAgent = AkkaAgent[Map[String, Either[Throwable, OmnitureReportData]]](Map.empty)
 
-  def getReport(reportName: String): Option[OmnitureReportData] = omnitureReportAgent().get(reportName)
+  def getReport(reportName: String): Option[OmnitureReportData] = omnitureReportAgent().get(reportName).flatMap {_.right.toOption}
+  def getReportOrResult(reportName: String): Either[Throwable, OmnitureReportData] = omnitureReportAgent().getOrElse(reportName, Left(OmnitureException("Report not found")))
 
   def run() {
 
@@ -31,32 +41,46 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
     val dateTo = new DateTime(DateTimeZone.UTC)
     val dateFrom = dateTo.minusWeeks(2)
 
-    generateTrendedReport(OmnitureReportDescription(
+    generateReport(OmnitureReportDescription(
       dateGranularity = Some("day"),
       dateTo = dateTo.toString("yyyy-MM-dd"),
       dateFrom = dateFrom.toString("yyyy-MM-dd"),
       metrics = List(OmnitureMetric(pageViews)),
       elements = List(OmnitureElement(contentType, selected = List("Gallery")))
-    ), "GalleryPageViews")
+    ), QUEUE_TRENDED, galleryPageViews)
 
-    generateTrendedReport(OmnitureReportDescription(
+    generateReport(OmnitureReportDescription(
       dateGranularity = Some("day"),
       dateTo = dateTo.toString("yyyy-MM-dd"),
       dateFrom = dateFrom.toString("yyyy-MM-dd"),
       metrics = List(OmnitureMetric(visits)),
       elements = List(OmnitureElement(contentType, selected = List("Gallery")))
-    ), "GalleryVisits")
+    ), QUEUE_TRENDED, galleryVisits)
+
+    generateReport(OmnitureReportDescription(
+      dateGranularity = None,
+      dateTo = dateTo.toString("yyyy-MM-dd"),
+      dateFrom = dateFrom.toString("yyyy-MM-dd"),
+      metrics = List(OmnitureMetric(navigationalInteractionEvent)),
+      elements = List(OmnitureElement(navigationalInteraction, selected = List("launch gallery lightbox")))
+    ), QUEUE_RANKED, galleryLightBox)
   }
 
-  private def generateTrendedReport(report: OmnitureReportDescription, reportName: String) {
-    Omniture.generateReport(report, OmnitureMethods.QUEUE_TRENDED).map { report =>
-      log.info(s"Updating report: $reportName")
-      omnitureReportAgent.send{ old =>
-        old + (reportName -> report)
-      }
+  private def generateReport(report: OmnitureReportDescription, method: String, reportName: String) {
+    Omniture.generateReport(report, method).map { report =>
+      log.info(s"Omniture report success: $reportName")
+      updateAgent(reportName, Right(report))
     }.recover {
-      case responseError: OmnitureException => log.warn(s"Failed:\n ${responseError.message}")
-      case error: Throwable => log.warn(error.getMessage)
+      case error: Throwable => {
+        log.warn(error.getMessage)
+        updateAgent(reportName, Left(error))
+      }
+    }
+  }
+
+  private def updateAgent(reportName: String, newValue: Either[Throwable, OmnitureReportData]) {
+    omnitureReportAgent.send{ old =>
+      old + (reportName -> newValue)
     }
   }
 }

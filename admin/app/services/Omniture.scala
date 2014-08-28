@@ -9,7 +9,7 @@ import play.api.libs.ws.{WSResponse, WS}
 import scala.concurrent.{Promise, Future}
 import scala.concurrent.duration._
 
-case class OmnitureException(message: String) extends RuntimeException
+case class OmnitureException(message: String) extends RuntimeException(message)
 
 trait OmnitureResponse {
   def response: String
