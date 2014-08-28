@@ -29,7 +29,7 @@ define([
                     mediator.emit('fragment:ready:images', container);
                     mediator.emit('register:end','popular-in-section');
                 },
-                error: function(req) {
+                error: function() {
                     mediator.emit('register:error','popular-in-section');
                 }
             }).load();
