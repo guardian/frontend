@@ -134,10 +134,15 @@
 
     @include mq(tablet) {
         height: 250px + $mpu-ad-label-height;
-        width: 300px;
     }
     .ad-slot__label {
         max-width: 300px;
+    }
+}
+.ad-slot--inline,
+.ad-slot--container-inline {
+    @include mq(tablet) {
+        width: 300px;
     }
 }
 .ad-slot--inline {
@@ -169,6 +174,10 @@
         color: guss-colour(neutral-3);
         background-color: lighten(guss-colour(tone-media-1), 2.5%);
         border-top-color: guss-colour(neutral-2);
+
+        @include mq(tablet) {
+            max-width: none;
+        }
     }
 }
 .ad-slot--mpu-banner-ad {
