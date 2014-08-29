@@ -73,6 +73,7 @@ define([
             var is = getBreakpoint(includeTweakpoint);
             if (is !== was) {
                 callback(is, was);
+                was = is;
             }
         };
     }
