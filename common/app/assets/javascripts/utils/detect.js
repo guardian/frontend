@@ -33,6 +33,10 @@ define([
                 isTweakpoint: true
             },
             {
+                name: 'phablet',
+                isTweakpoint: true
+            },
+            {
                 name: 'tablet',
                 isTweakpoint: false
             },
