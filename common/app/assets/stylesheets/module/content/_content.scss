@@ -44,7 +44,7 @@
     position: relative;
     margin: auto;
 
-    @include mq($to: rightCol) {
+    @include mq($to: tablet) {
         max-width: gs-span(8);
     }
     @include mq(tablet, rightCol) {
