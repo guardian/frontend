@@ -3,7 +3,7 @@ module.exports = function(grunt, options) {
         options: {
             logConcurrentOutput: true
         },
-        compile: ['compile:js', 'compile:css'],
+        compile: ['compile:js:true', 'compile:css:true'],
         sass: ['sass:old-ie', 'sass:ie9', 'sass:modern']
     };
 };

@@ -63,26 +63,27 @@ module.exports = function (grunt) {
 
     grunt.registerTask('sass:compile', ['clean:css', 'concurrent:sass']);
 
-    grunt.registerTask('compile:css', function() {
         grunt.task.run(['compile:images', 'concurrent:sass', 'sass:compileStyleguide', 'px_to_rem']);
     grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
+    grunt.registerTask('compile:css', function(fullCompile) {
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
 
         if (isOnlyTask(this)) {
+        if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
         }
 
     });
-    grunt.registerTask('compile:js', function() {
+    grunt.registerTask('compile:js', function(fullCompile) {
         grunt.task.run(['clean:js', 'requirejs', 'copy:javascript']);
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');
         }
 
-        if (isOnlyTask(this)) {
+        if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
         }
 
