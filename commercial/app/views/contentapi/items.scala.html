@@ -21,6 +21,9 @@
                                     @item.trailText.map { text =>
                                         <p>@Html(text)</p>
                                     }
+                                    @item.standfirst.map { text =>
+                                        <p>@Html(text)</p>
+                                    }
                                     <div class="item__meta">
                                         <time
                                             class="item__timestamp js-item__timestamp"
