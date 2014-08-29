@@ -72,7 +72,7 @@ module.exports = function (grunt) {
         }
 
         if (!options.isDev) {
-            grunt.task.run(['px_to_rem', ]);
+            grunt.task.run(['px_to_rem']);
         }
 
         if (isOnlyTask(this) && !fullCompile) {
