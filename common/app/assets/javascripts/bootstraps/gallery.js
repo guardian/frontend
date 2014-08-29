@@ -1,9 +1,11 @@
 define([
     'common/utils/mediator',
-    'common/utils/$'
+    'common/utils/$',
+    'bonzo'
 ], function(
     mediator,
-    $
+    $,
+    bonzo
 ) {
 
     var verticallyResponsiveImages = function() {
@@ -17,10 +19,25 @@ define([
         });
     };
 
+    var lightboxImageLinks = function() {
+        // override the no-js href with the js lightbox href
+        $('.js-gallery-img-container').each(function(el) {
+            var $el = bonzo(el),
+                href = $el.attr('data-js-href');
+            $el.attr('href', href);
+            $el.attr('target', '');
+        });
+    };
+
+    var enableImager = function() {
+        $('.js-gallery-img-container').addClass('js-image-upgrade');
+        mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
+    };
+
     var ready = function (config, context) {
         verticallyResponsiveImages();
-        $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
-        mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
+        enableImager();
+        lightboxImageLinks();
 
         mediator.emit('page:gallery:ready', config, context);
     };
