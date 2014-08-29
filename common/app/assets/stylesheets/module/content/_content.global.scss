@@ -2,14 +2,14 @@
     &:before,
     &:after {
         content: '';
-        @include icon(pullquotemark);
+        @include icon(quotemark-mask);
         display: block !important;
     }
     &:before {
-        margin-bottom: 5px;
+        margin-bottom: 7px;
     }
     &:after {
-        margin-top: $gs-baseline/3;
+        margin-top: $gs-baseline/2;
         @include transform(rotate(180deg));
     }
 }
