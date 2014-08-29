@@ -38,7 +38,7 @@ define([
         if (config.page.isLiveBlog && qwery('.block').length > numBlocks && window.location.hash === '') {
 
             $.create(
-                '<button class="u-fauxlink u-button-reset button button--show-more article-elongator" data-link-name="continue reading" data-test-id="article-expand">'+
+                '<button class="u-fauxlink u-button-reset button--show-more article-elongator" data-link-name="continue reading" data-test-id="article-expand">'+
                     '<span class="i-center"><i class="i i-plus-white-med"></i></span>'+
                     'View all updates'+
                 '</button>'
