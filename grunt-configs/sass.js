@@ -3,7 +3,7 @@ module.exports = function(grunt, options) {
 
     return {
         options: {
-            style: options.isDev ? 'expanded' : 'compressed',
+            style: 'compressed',
             sourcemap: options.isDev,
             noCache: false,
             quiet: options.isDev ? false : true
