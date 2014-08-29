@@ -85,17 +85,6 @@ define([
     var adSlots = [],
         slotsToRefresh = [],
         config = {},
-        // These should match the widths inside _vars.scss
-        breakpoints = {
-            mobile: 0,
-            'mobile-landscape': 480,
-            tablet: 740,
-            'right-col': 900,
-            desktop: 980,
-            'left-col': 1060,
-            'facia-left-col': 1140,
-            wide: 1300
-        },
         breakoutHash = {
             'breakout__html': '%content%',
             'breakout__script': '<script>%content%</script>'
@@ -209,8 +198,21 @@ define([
 
             }
         },
-        refresh = function () {
-            googletag.pubads().refresh(slotsToRefresh.map(function (slotInfo) { return slotInfo.slot; }));
+        shouldSlotRefresh = function (slot, breakpoint, previousBreakpoint) {
+            return true;
+        },
+        refresh = function (breakpoint, previousBreakpoint) {
+            googletag.pubads().refresh(
+                _(slotsToRefresh)
+                    // only refresh if the slot needs to
+                    .filter(function (slot) {
+                        return shouldSlotRefresh(slot, breakpoint, previousBreakpoint)
+                    })
+                    .map(function (slotInfo) {
+                        return slotInfo.slot;
+                    })
+                    .valueOf()
+            );
         },
         /** A breakpoint can have various sizes assigned to it. You can assign either on
          * set of sizes or multiple.
@@ -233,15 +235,16 @@ define([
          * If it has been defined, then we add that size to the size mapping.
          *
          */
-        defineSlotSizes = function(slot) {
+        defineSlotSizes = function (slot) {
             var mapping = googletag.sizeMapping();
 
-            for (var breakpoint in breakpoints) {
-                var attr  = slot.data(breakpoint);
+            forEach(detect.breakpoints, function (breakpointInfo) {
+                // turn breakpoint name into attribute style (lowercase, hyphenated)
+                var attr  = slot.data(breakpointInfo.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase());
                 if (attr) {
-                    mapping.addSize([breakpoints[breakpoint], 0], createSizeMapping(attr));
+                    mapping.addSize([breakpointInfo.width, 0], createSizeMapping(attr));
                 }
-            }
+            });
 
             return mapping.build();
         },
