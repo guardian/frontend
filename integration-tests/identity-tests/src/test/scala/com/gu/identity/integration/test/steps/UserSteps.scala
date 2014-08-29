@@ -52,6 +52,7 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
   def changeEmailTo(newEmail: String, editAccountDetailsModule: EditAccountDetailsModule): Either[List[FormError], String] = {
     logger.step(s"Changing account email to $newEmail")
     editAccountDetailsModule.enterEmailAddress(newEmail)
+
     editAccountDetailsModule.saveChanges()
 
     waitForPageToLoad
@@ -77,7 +78,7 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
   }
 
   def changeAddress(editAccountDetailsModule: EditAccountDetailsModule): User = {
-    logger.step("Changing first and last name")
+    logger.step("Changing address fields")
     editAccountDetailsModule.enterAddressLine1(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.enterAddressLine2(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.enterTown(generateRandomAlphaNumericString(7))

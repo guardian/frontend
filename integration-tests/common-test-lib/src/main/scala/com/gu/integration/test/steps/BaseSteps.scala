@@ -2,6 +2,7 @@ package com.gu.integration.test.steps
 
 import com.gu.automation.support.TestLogging
 import com.gu.integration.test.pages.common.{TermsOfServicePage, ParentPage}
+import com.gu.integration.test.util.PageLoader
 import com.gu.integration.test.util.PageLoader._
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
