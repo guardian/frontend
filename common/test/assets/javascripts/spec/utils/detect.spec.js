@@ -1,23 +1,49 @@
-define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
+define([
+    'bonzo',
+    'common/utils/$',
+    'common/utils/detect'
+], function(
+    bonzo,
+    $,
+    detect
+) {
 
-    describe("Breakpoint", function() {
+    describe('Breakpoint', function() {
 
-        it("should default to 'mobile' breakpoint", function(){
-            expect(detect.getBreakpoint()).toBe('mobile');
+        var $style;
+
+        beforeEach(function () {
+            $style = $.create('<style></style>')
+                .appendTo('head');
         });
 
-        it("should return the correct breakpoint mode for the device width", function(){
-            var breakpoint = 'desktop',
-                $style = bonzo(bonzo.create('<style></style>'))
-                    .html('body:after { content: "' + breakpoint + '"; }')
-                    .appendTo('head');
-            expect(detect.getBreakpoint()).toBe(breakpoint);
+        afterEach(function () {
             $style.remove();
         });
 
-        it("should return a function to test layout dimension changes", function(){
-            var hasCrossedTheMagicLines = detect.hasCrossedBreakpoint();
+        it('should default to "mobile" breakpoint', function(){
+            expect(detect.getBreakpoint()).toBe('mobile');
+        });
 
+        it('should return the breakpoint', function(){
+            var breakpoint = 'desktop';
+            $style.html('body:after { content: "' + breakpoint + '"; }');
+            expect(detect.getBreakpoint()).toBe(breakpoint);
+        });
+
+        it('should return the correct breakpoint if on tweakpoint', function(){
+            $style.html('body:after { content: "faciaLeftCol"; }');
+            expect(detect.getBreakpoint()).toBe('desktop');
+        });
+
+        it('should return the tweakpoint if required', function(){
+            var breakpoint = 'faciaLeftCol';
+            $style.html('body:after { content: "' + breakpoint + '"; }');
+            expect(detect.getBreakpoint(true)).toBe(breakpoint);
+        });
+
+        it('should return a function to test layout dimension changes', function(){
+            var hasCrossedTheMagicLines = detect.hasCrossedBreakpoint();
             expect(typeof hasCrossedTheMagicLines).toBe('function');
         });
 
@@ -99,34 +125,6 @@ define(['common/utils/detect', 'bonzo'], function(detect, bonzo) {
             })
 
         });
-    });
-
-    describe("Breakpoint", function() {
-
-        var breakpointName = 'a-breakpoint',
-            style;
-
-        beforeEach(function() {
-            // add css to page
-            style = bonzo(bonzo.create('<style type="text/css"></style>'))
-                .html('body:after{ content: "' + breakpointName + '"}')
-                .appendTo('head');
-        });
-
-        afterEach(function() {
-            style.remove();
-
-        });
-
-        it("should be able to get current breakpoint", function() {
-            expect(detect.getBreakpoint()).toBe(breakpointName);
-        });
-
-        it('shoule return "mobile" if no css value', function() {
-            style.remove();
-            expect(detect.getBreakpoint()).toBe('mobile');
-        });
-
     });
 
 });

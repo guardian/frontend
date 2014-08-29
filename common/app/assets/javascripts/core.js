@@ -55,5 +55,6 @@ require([
     'common/modules/experiments/ab',
     'common/modules/lazyload',
     'common/modules/ui/images',
-    'common/modules/ui/tabs'
+    'common/modules/ui/tabs',
+    'common/modules/userPrefs'
 ], function() {});
