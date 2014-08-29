@@ -209,10 +209,7 @@ define([
 
             }
         },
-        refresh = function(breakpoint, previousBreakpoint) {
-            console.info('#############################################');
-            console.info('WAS: ' + previousBreakpoint);
-            console.info('IS: ' + breakpoint);
+        refresh = function () {
             googletag.pubads().refresh(slotsToRefresh.map(function (slotInfo) { return slotInfo.slot; }));
         },
         /** A breakpoint can have various sizes assigned to it. You can assign either on
