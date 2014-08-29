@@ -362,7 +362,7 @@ define([
             new MoreTags().init();
         },
 
-        showSmartBanner: function(config) {
+        showSmartBanner: function() {
             smartAppBanner.init();
         },
 
