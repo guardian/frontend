@@ -105,23 +105,48 @@ category: Common
         <span class="u-h">Link to somewhere</span>
     </a>
 </div>
+<br/>
+<div>
+    <button type="button" class="button button--primary">Button to somewhere</button>
+    <button type="button" class="button button--secondary">Button to somewhere</button>
+    <button type="button" class="button button--tertiary">Button to somewhere</button>
+</div>
+<br/>
+<div>
+    <button type="button" class="button button--primary button--large">Button to somewhere</button>
+    <button type="button" class="button button--primary button--medium">Button to somewhere</button>
+    <button type="button" class="button button--primary button--small">Button to somewhere</button>
+    <button type="button" class="button button--primary button--xsmall">Button to somewhere</button>
+</div>
+<br/>
+<div>
+    <button type="button" class="button button--primary button--large">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
+    <button type="button" class="button button--primary button--medium">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
+    <button type="button" class="button button--primary button--small">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
+    <button type="button" class="button button--primary button--xsmall">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
+</div>
+<br/>
+<div>
+    <button type="button" class="button button--primary">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
+    <button type="button" class="button button--secondary">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
+    <button type="button" class="button button--tertiary">Button to somewhere<i class="i i-arrow-grey-right i-right"></i></button>
+</div>
 ```
 */
 
 @mixin button-height($button-size) {
-    /* true height is height minus 1px border */
-    $true-button-height: $button-size - 2px;
-    height: $true-button-height;
-    padding: 0 ($true-button-height / 4);
-    margin-right: $true-button-height / 4;
-    line-height: $true-button-height + 1px;
+    @include box-sizing(border-box);
+    height: $button-size;
+    padding: 0 ($button-size / 4);
+    margin-right: $button-size / 4;
+    line-height: $button-size + 1px;
     border-width: 1px;
     border-style: solid;
     
     .i {
-        width: $true-button-height;
-        height: $true-button-height;
-        margin: 0 (-$true-button-height / 4);
+        width: $button-size;
+        height: $button-size;
+        margin: 0 (-$button-size / 4);
     }
     .i-left {
         margin-left: -($button-size / 4);
