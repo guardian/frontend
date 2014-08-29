@@ -137,8 +137,8 @@ category: Common
 @mixin button-height($button-size) {
     @include box-sizing(border-box);
     height: $button-size;
-    padding: 0 ($button-size / 4);
-    margin-right: $button-size / 4;
+    padding: 0 ($button-size / 3);
+    margin-right: $button-size / 3;
     line-height: $button-size + 1px;
     border-width: 1px;
     border-style: solid;
@@ -146,16 +146,16 @@ category: Common
     .i {
         width: $button-size;
         height: $button-size;
-        margin: 0 (-$button-size / 4);
+        margin: 0 (-$button-size / 3);
     }
     .i-left {
-        margin-left: -($button-size / 4);
-        margin-right: $button-size / 4;
+        margin-left: -($button-size / 3);
+        margin-right: 0;
         float: left;
     }
     .i-right {
-        margin-right: -($button-size / 4);
-        margin-left: $button-size / 4;
+        margin-right: -($button-size / 3);
+        margin-left: 0;
         float: right;
     }
 }
