@@ -4,12 +4,10 @@
     @include mq($to: mobileLandscape) {
         margin-left: $gs-gutter * -0.5;
         margin-right: $gs-gutter * -0.5;
-        outline: 2px solid blue;
     }
     @include mq(mobileLandscape, 660px) {
         margin-left: $gs-gutter / -1;
         margin-right: $gs-gutter / -1;
-        outline: 2px solid purple;
     }
 }
 
@@ -81,7 +79,7 @@
     max-width: gs-span(7);
 
     @include mq(tablet) {
-        max-width: gs-span(7);
+        max-width: gs-span(8);
     }
     @include mq(rightCol) {
         max-width: none;
@@ -93,10 +91,6 @@
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
-//    .media-primary {
-//        margin-left: 0;
-//        margin-right: 0;
-//    }
     .article__columning-wrapper {
         padding-right: gs-span(1) + $gs-gutter;
     }

@@ -42,12 +42,14 @@
 
 .content__main-column {
     position: relative;
+    margin: auto;
 
     @include mq($to: rightCol) {
-        max-width: gs-span(9);
-        margin: auto;
+        max-width: gs-span(8);
     }
     @include mq(tablet, rightCol) {
+        max-width: gs-span(9);
+
         // Restrict line-length to 8-cols, but make other content full-width
         .content__article-body {
             padding-right: gs-span(1) + $gs-gutter;
