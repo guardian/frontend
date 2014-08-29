@@ -13,6 +13,8 @@ import org.scalatest.EitherValues
 
 class UserTests extends IdentitySeleniumTestSuite with EitherValues {
 
+  System.setProperty("webdriver.chrome.driver", "/home/shakor/Downloads/chromedriver")
+
   feature("Create and changing a User") {
 
     scenarioWeb("should not be able to create user with existing user name") { implicit driver: WebDriver =>

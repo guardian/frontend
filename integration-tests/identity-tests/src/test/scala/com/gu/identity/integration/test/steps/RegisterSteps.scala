@@ -30,8 +30,8 @@ case class RegisterSteps(implicit driver: WebDriver) extends TestLogging with Ma
     registerPage.enterUsername(user.userName)
 
     //this is needed, because in Chrome, elements not in view are not very clickable
-    scrollWindow(0, 500)
-    registerPage.createButton.click()
+//    scrollWindow(0, 500)
+    registerPage.clickCreateUser()
 
     waitForPageToLoad
 
