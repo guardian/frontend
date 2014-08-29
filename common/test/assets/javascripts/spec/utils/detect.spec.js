@@ -21,30 +21,85 @@ define([
             $style.remove();
         });
 
-        it('should default to "mobile" breakpoint', function(){
-            expect(detect.getBreakpoint()).toBe('mobile');
+        describe('getBreakpoint', function () {
+
+            it('should default to "mobile" breakpoint', function(){
+                expect(detect.getBreakpoint()).toBe('mobile');
+            });
+
+            it('should return the breakpoint', function(){
+                var breakpoint = 'desktop';
+                $style.html('body:after { content: "' + breakpoint + '"; }');
+                expect(detect.getBreakpoint()).toBe(breakpoint);
+            });
+
+            it('should return the correct breakpoint if on tweakpoint', function(){
+                $style.html('body:after { content: "faciaLeftCol"; }');
+                expect(detect.getBreakpoint()).toBe('desktop');
+            });
+
+            it('should return the tweakpoint if required', function(){
+                var breakpoint = 'faciaLeftCol';
+                $style.html('body:after { content: "' + breakpoint + '"; }');
+                expect(detect.getBreakpoint(true)).toBe(breakpoint);
+            });
+
         });
 
-        it('should return the breakpoint', function(){
-            var breakpoint = 'desktop';
-            $style.html('body:after { content: "' + breakpoint + '"; }');
-            expect(detect.getBreakpoint()).toBe(breakpoint);
-        });
+        describe('hasCrossedBreakpoint', function () {
 
-        it('should return the correct breakpoint if on tweakpoint', function(){
-            $style.html('body:after { content: "faciaLeftCol"; }');
-            expect(detect.getBreakpoint()).toBe('desktop');
-        });
+            var callback,
+                hasBreakpointChanged;
 
-        it('should return the tweakpoint if required', function(){
-            var breakpoint = 'faciaLeftCol';
-            $style.html('body:after { content: "' + breakpoint + '"; }');
-            expect(detect.getBreakpoint(true)).toBe(breakpoint);
-        });
+            beforeEach(function () {
+                callback = sinon.spy();
+                $style.html('body:after { content: "desktop"; }');
+                hasBreakpointChanged = detect.hasCrossedBreakpoint();
+            });
 
-        it('should return a function to test layout dimension changes', function(){
-            var hasCrossedTheMagicLines = detect.hasCrossedBreakpoint();
-            expect(typeof hasCrossedTheMagicLines).toBe('function');
+            it('should return a function to test layout dimension changes', function(){
+                var hasBreakpointChanged = detect.hasCrossedBreakpoint();
+                expect(typeof hasBreakpointChanged).toBe('function');
+            });
+
+            it('should fire if crosses breakpoint', function(){
+                $style.html('body:after { content: "mobile"; }');
+                hasBreakpointChanged(callback);
+                expect(callback).toHaveBeenCalledWith('mobile', 'desktop');
+            });
+
+            it('should not fire if no breakpoint crossed', function(){
+                hasBreakpointChanged(callback);
+                expect(callback).not.toHaveBeenCalled();
+            });
+
+            it('should not fire if similar tweakpoints crossed', function(){
+                $style.html('body:after { content: "faciaLeftCol"; }');
+                var hasBreakpointChanged = detect.hasCrossedBreakpoint();
+                $style.html('body:after { content: "leftCol"; }');
+                hasBreakpointChanged(callback);
+                expect(callback).not.toHaveBeenCalled();
+            });
+
+            it('should fire if crosses a breakpoint', function(){
+                $style.html('body:after { content: "mobile"; }');
+                hasBreakpointChanged(callback);
+                expect(callback).toHaveBeenCalledWith('mobile', 'desktop');
+            });
+
+            it('should fire if crosses a tweakpoint', function(){
+                $style.html('body:after { content: "rightCol"; }');
+                hasBreakpointChanged(callback);
+                expect(callback).toHaveBeenCalledWith('tablet', 'desktop');
+            });
+
+            it('should return tweakpoint if requested', function(){
+                var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
+                $style.html('body:after { content: "rightCol"; }');
+                hasBreakpointChanged(callback);
+                expect(callback).toHaveBeenCalledWith('rightCol', 'desktop');
+            });
+
         });
 
     });

@@ -67,13 +67,12 @@ define([
      *     then:
      *       hasCrossedTheMagicLines(function(){ do stuff })
      */
-    function hasCrossedBreakpoint(){
-        var was = getBreakpoint();
-        return function(callback){
-            var is = getBreakpoint();
-            if ( is !== was ) {
-                was = is;
-                callback(is);
+    function hasCrossedBreakpoint(includeTweakpoint) {
+        var was = getBreakpoint(includeTweakpoint);
+        return function (callback) {
+            var is = getBreakpoint(includeTweakpoint);
+            if (is !== was) {
+                callback(is, was);
             }
         };
     }
