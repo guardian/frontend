@@ -136,11 +136,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val SmartBannerSwitch = Switch("Commercial", "smart-banner",
-    "Display smart app banner onboarding message to iOS and Android users",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 31)
-  )
-
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
@@ -456,7 +451,6 @@ object Switches extends Collections {
     MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
-    SmartBannerSwitch,
     SeoEscapeFootballJsonPathLikeValuesSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
