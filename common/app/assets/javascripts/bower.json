@@ -10,7 +10,7 @@
     "bonzo": "~2.0.0",
     "curl": "~0.8.9",
     "qwery": "3.4.2",
-    "reqwest": "git://github.com/guardian/reqwest.git",
+    "reqwest": "guardian/reqwest#master",
     "enhancer": "0.1.1",
     "videojs": "guardian/video.js#21f2d3c150b3573337030758f7dfb634f6798052",
     "videojs-contrib-ads": "guardian/videojs-contrib-ads#e477f283d4cdf5f720f95e458451a027143d52bf",
@@ -19,7 +19,7 @@
     "socket.io-client": "1.0.6",
     "raven-js": "~1.1.16",
     "videojs-playlist-audio": "*",
-    "fastclick": "~1.0.3"
+    "fastclick": "guardian/fastclick#master"
   },
   "resolutions": {
     "videojs": "21f2d3c150b3573337030758f7dfb634f6798052",

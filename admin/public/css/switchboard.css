@@ -2,10 +2,6 @@ html {
     overflow-y: scroll;
 }
 
-body {
-    padding: 10px;
-}
-
 .dropdown-menu {
     position: absolute;
     display: block;

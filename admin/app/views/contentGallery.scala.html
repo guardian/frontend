@@ -1,0 +1,12 @@
+@(env: String, chart: tools.GenericChart, title: String, reportTimestamp: Option[String])
+
+@admin_main("Gallery Dashboard", env, isAuthed = true, hasCharts = true) {
+
+    <h3>@title</h3>
+
+    @fragments.genericChart(chart)
+
+    @reportTimestamp.map { timestamp =>
+        <em>This omniture report was generated at @timestamp</em>
+    }
+}
