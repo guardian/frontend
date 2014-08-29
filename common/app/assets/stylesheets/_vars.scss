@@ -51,6 +51,7 @@ $mq-breakpoints: (
 
     // Tweakpoints
     mobileLandscape: gs-span(6) + $gs-gutter, // 480px
+    phablet: gs-span(8) + $gs-gutter*2, // 660px
 
     // Content
     rightCol: gs-span(11) + $gs-gutter*2, // 900px

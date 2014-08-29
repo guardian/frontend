@@ -5,7 +5,7 @@
         margin-left: $gs-gutter * -0.5;
         margin-right: $gs-gutter * -0.5;
     }
-    @include mq(mobileLandscape, 660px) {
+    @include mq(mobileLandscape, phablet) {
         margin-left: $gs-gutter / -1;
         margin-right: $gs-gutter / -1;
     }
