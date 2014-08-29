@@ -16,57 +16,53 @@ $f-serif-headline: 'Guardian Egyptian Web', Georgia, serif;
 $f-sans-serif-text: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 $f-sans-serif-headline: 'Guardian Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
 
-$fs-headers: (
-    16 20, // 1
-    18 24, // 2
-    20 24, // 3
-    22 28, // 4
-    24 28, // 5
+$font-scale: (
+    header: (
+        1: (font-size: 16, line-height: 20),
+        2: (font-size: 18, line-height: 24),
+        3: (font-size: 20, line-height: 24),
+        4: (font-size: 22, line-height: 28),
+        5: (font-size: 24, line-height: 28),
+    ),
+    headline: (
+        1: (font-size: 14, line-height: 18),
+        2: (font-size: 16, line-height: 20),
+        3: (font-size: 20, line-height: 24),
+        4: (font-size: 24, line-height: 28),
+        5: (font-size: 28, line-height: 32),
+        6: (font-size: 32, line-height: 36),
+        7: (font-size: 36, line-height: 40),
+        8: (font-size: 40, line-height: 44),
+        9: (font-size: 44, line-height: 48),
+    ),
+    bodyHeading: (
+        1: (font-size: 14, line-height: 22),
+        2: (font-size: 16, line-height: 24),
+        3: (font-size: 18, line-height: 28),
+        4: (font-size: 20, line-height: 28),
+    ),
+    bodyCopy: (
+        1: (font-size: 14, line-height: 20),
+        2: (font-size: 16, line-height: 24),
+        3: (font-size: 18, line-height: 28),
+    ),
+    data: (
+        1: (font-size: 11, line-height: 14),
+        2: (font-size: 12, line-height: 14),
+        3: (font-size: 13, line-height: 16),
+        4: (font-size: 14, line-height: 18),
+        5: (font-size: 16, line-height: 20),
+        6: (font-size: 18, line-height: 22),
+    ),
+    textSans: (
+        1: (font-size: 12, line-height: 16),
+        2: (font-size: 13, line-height: 18),
+        3: (font-size: 14, line-height: 20),
+        4: (font-size: 14, line-height: 22),
+    )
 );
 
-$fs-headlines: (
-    14 18, // 1
-    16 20, // 2
-    20 24, // 3
-    24 28, // 4
-    28 32, // 5
-    32 36, // 6
-    36 40, // 7
-    40 44, // 8
-    44 48, // 9
-);
-
-$fs-bodyHeadings: (
-    14 22, // 1
-    16 24, // 2
-    18 28, // 3
-    20 28, // 4
-);
-
-$fs-bodyCopy: (
-    14 20, // 1
-    16 24, // 2
-    18 28, // 3
-);
-
-$fs-data: (
-    11 14, // 1
-    12 14, // 2
-    13 16, // 3
-    14 18, // 4
-    16 20, // 5
-    18 22, // 6
-);
-
-$fs-textSans: (
-    12 16, // 1
-    13 18, // 2
-    14 20, // 3
-    14 22, // 4
-);
-
-@import 'path/to/_helpers.scss';
-@import 'path/to/_font-scale.scss';
+@import 'path/to/_typography.scss';
 ```
 
 ## Suggested default type settings
@@ -113,6 +109,12 @@ p {
     // Output font family and weight settings only
     @include f-bodyHeading;
 }
+.get-font-size {
+    font-size: get-font-size(headline, 6);
+}
+.get-line-height {
+    line-height: get-line-height(header, 3);
+}
 ```
 
 ## Features
@@ -123,4 +125,4 @@ Provides Sass mixins and values for the Guardian typography & font scale.
 
 ### Nota Bene
 
-`Guardian Sans Web` is not currently integrated into our font scale, hence no `fs-` mixin; currently we're just using it as a replacement font in a few places.
+`Guardian Sans Web` is not currently integrated into our font scale matrix, hence no `fs-` mixin; currently we're just using it as a replacement font in a few places.

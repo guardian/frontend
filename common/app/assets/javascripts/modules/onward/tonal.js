@@ -55,7 +55,6 @@ define([
     };
 
     TonalComponent.prototype.error = function() {
-        raven.captureMessage('Failed to load tone:' + this.getTone());
         register.error('tonal-content');
     };
 

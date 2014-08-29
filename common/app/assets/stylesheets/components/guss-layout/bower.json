@@ -1,12 +1,8 @@
 {
   "name": "guss-layout",
-  "version": "1.2.2",
   "main": [
     "_row.scss",
     "_columns.scss"
-  ],
-  "ignore": [
-    "CHANGELOG.md"
   ],
   "dependencies": {
     "guss-rem": "~1",

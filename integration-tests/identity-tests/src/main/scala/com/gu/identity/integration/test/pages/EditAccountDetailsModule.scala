@@ -1,6 +1,7 @@
 package com.gu.identity.integration.test.pages
 
 import com.gu.integration.test.util.ElementLoader._
+import com.gu.integration.test.util.WebElementEnhancer._
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.{WebDriver, WebElement}
 
@@ -59,6 +60,7 @@ class EditAccountDetailsModule(implicit driver: WebDriver) extends UserFormPage 
   }
 
   def saveChanges() = {
+    saveChangesButton.scrollIntoView()
     saveChangesButton.click()
   }
 

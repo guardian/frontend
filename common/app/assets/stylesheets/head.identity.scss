@@ -12,5 +12,6 @@
    ========================================================================== */
 
 @import 'components/guss-forms/_forms';
+@include guss-forms-defaults;
 @import 'module/identity/_identity';
 @import 'module/identity/_formstack';

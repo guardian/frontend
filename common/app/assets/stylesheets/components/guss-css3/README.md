@@ -35,6 +35,8 @@ Provides Sass mixins for the most frequently used CSS3 features.
     @include column-width(300px);
     @include flex($flex-grow: 0, $flex-shrink: 1, $flex-basis: auto);
     @include flex-basis(auto);
+    @include flex-direction(column);
+    @include flex-display;
     @include flex-grow(0);
     @include rotate(90deg);
     @include sticky;

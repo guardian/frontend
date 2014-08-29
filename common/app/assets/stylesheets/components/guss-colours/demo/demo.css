@@ -1,26 +1,33 @@
 /**
- * Guss default colours
+ * Default colour palette
  * 
  * @type Map
+ *
+ * @group colours
  */
 /**
- * Get a color from initial color palette
+ * Get a colour from a given colour palette.
  * 
- * @param {String} $name                    - color to get
+ * @param {String} $name                    - colour to get
  * @param {Map}    $palette ($guss-colours) - palette
  *
  * @requires {variable} guss-colours
  *
  * @return {Color | Null}
+ *
+ * @group colours
  */
 /**
- * Generate a color palette
+ * Generate helper classes for a given colour palette  
+ * Outputs rules such as: `.c-red { color: red; }`.
  *
  * @param {Map}    $palette  ($guss-colours) - palette
- * @param {String} $prefix   (c-)            - prefix
- * @param {String} $property (color)         - property
+ * @param {String} $prefix   ("c-")          - prefix
+ * @param {String} $property ("color")       - property
  *
  * @requires {variable} guss-colours
+ *
+ * @group colours
  */
 html {
   max-width: 60em;

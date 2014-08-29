@@ -34,7 +34,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
   val user = User("test@example.com", "123")
   val xForwardedFor = "123.456.789.12, 12.345.678.91"
 
-  when(userCreationService.createUser(Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[Boolean], Matchers.any[Boolean], Matchers.any[Option[String]]))
+  when(userCreationService.createUser(Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[String], Matchers.any[Boolean], Matchers.any[Boolean], Matchers.any[Option[String]]))
     .thenReturn(user)
   when(requestParser.apply(Matchers.anyObject())).thenReturn(identityRequest)
   when(trackingData.ipAddress).thenReturn(Some("123.456.789.12"))
@@ -63,28 +63,38 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
    }
 
     "with valid api response" - {
+      val firstName = "First name"
+      val secondName = "Second name"
       val email = "test@example.com"
       val username = "username"
       val password = "password"
       val fakeRequest = FakeRequest(POST, "/register")
-        .withFormUrlEncodedBody("user.primaryEmailAddress" -> email, "user.publicFields.username" -> username, "user.password" -> password )
+        .withFormUrlEncodedBody("user.firstName" -> firstName, "user.secondName" -> secondName, "user.primaryEmailAddress" -> email, "user.publicFields.username" -> username, "user.password" -> password )
         .withHeaders("X-Forwarded-For" -> xForwardedFor)
       when(api.register(Matchers.same(user), Matchers.same(trackingData))).thenReturn(Future.successful(Right(createdUser)))
       when(api.authBrowser(EmailPassword(email, password, identityRequest.clientIp), trackingData)).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
       when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
 
-      "should create the user with the username, email and password required" in Fake {
+      "should create the user with the first name, second name, username, email and password required" in Fake {
         registrationController.processForm()(fakeRequest)
-        verify(userCreationService).createUser(Matchers.eq("test@example.com"), Matchers.eq("username"), Matchers.eq("password"), Matchers.eq(false), Matchers.eq(false), Matchers.any[Option[String]])
+        verify(userCreationService).createUser(
+          Matchers.eq("First name"),
+          Matchers.eq("Second name"),
+          Matchers.eq("test@example.com"),
+          Matchers.eq("username"),
+          Matchers.eq("password"),
+          Matchers.eq(false),
+          Matchers.eq(false),
+          Matchers.any[Option[String]])
       }
 
       "should pass marketing values to the create user service" in Fake {
         val fakeRequest = FakeRequest(POST, "/register")
-          .withFormUrlEncodedBody("user.primaryEmailAddress" -> "test@example.com", "user.publicFields.username" -> "username", "user.password" -> "password", "receive_gnm_marketing" -> "true", "receive_third_party_marketing" -> "true" )
+          .withFormUrlEncodedBody("user.firstName" -> firstName, "user.secondName" -> secondName, "user.primaryEmailAddress" -> "test@example.com", "user.publicFields.username" -> "username", "user.password" -> "password", "receive_gnm_marketing" -> "true", "receive_third_party_marketing" -> "true" )
         when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
 
         registrationController.processForm()(fakeRequest)
-        verify(userCreationService).createUser("test@example.com", "username", "password", true, true, Some("123.456.789.12"))
+        verify(userCreationService).createUser("First name", "Second name", "test@example.com", "username", "password", true, true, Some("123.456.789.12"))
       }
 
       "should pass the created user to the api object to the api" in Fake {
@@ -126,7 +136,7 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
 
     "with an invalid api response" - {
       val fakeRequest = FakeRequest(POST, "/register")
-        .withFormUrlEncodedBody("user.primaryEmailAddress" -> "test@example.com", "user.publicFields.username" -> "username", "user.password" -> "password" )
+        .withFormUrlEncodedBody("user.firstName" -> "First name", "user.secondName" -> "Second name", "user.primaryEmailAddress" -> "test@example.com", "user.publicFields.username" -> "username", "user.password" -> "password" )
         .withHeaders("X-Forwarded-For" -> xForwardedFor)
       val badPassword = List(Error("Invalid password:", "Password should be between 6 and 20 characters long:", 500, Some("user.password")))
 

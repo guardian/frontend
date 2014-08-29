@@ -9,6 +9,7 @@
 .ad-slot__label {
     height: $mpu-ad-label-height;
     background-color: $c-neutral8;
+    margin: 0 auto;
     padding: 0 ($gs-baseline/3)*2;
     border-top: 1px solid $c-neutral5;
     color: $c-neutral2-contrasted;
@@ -75,7 +76,6 @@
             }
             .ad-slot__label {
                 width: 720px;
-                margin: 0 auto;
             }
         }
     }
@@ -96,7 +96,6 @@
     @include mq(tablet, faciaLeftCol) {
         .ad-slot__label {
             width: 728px;
-            margin: 0 auto;
         }
     }
 }
@@ -127,30 +126,32 @@
 /**
  * Inline ads
  */
+.ad-slot--inline,
 .ad-slot--container-inline,
-.ad-slot--inline {
+.ad-slot--gallery-inline {
     min-height: 50 + $mpu-ad-label-height;
+    text-align: center;
 
-    @include mq(mobileLandscape) {
-        min-height: 50px;
-    }
     @include mq(tablet) {
         height: 250px + $mpu-ad-label-height;
-        width: 300px;
     }
     .ad-slot__label {
-        max-width: 300px;
-        margin: 0 auto;
+        max-width: 320px;
+    }
+}
+.ad-slot--inline,
+.ad-slot--container-inline {
+    @include mq(tablet) {
+        width: 300px;
+    }
+}
+.ad-slot--inline {
+    margin-bottom: $gs-baseline;
 
-        @include mq(mobileLandscape, tablet) {
-            position: absolute;
-            width: 50%;
-            height: 50px;
-            z-index: -1;
-            text-align: left;
-            padding-left: 2px;
-            font-size: 10px;
-        }
+    @include mq(tablet) {
+        float: right;
+        margin-top: $gs-baseline/3;
+        margin-left: $gs-gutter;
     }
 }
 .ad-slot--container-inline {
@@ -164,14 +165,19 @@
         background-color: $c-neutral8;
     }
 }
-.ad-slot--inline {
-    text-align: center;
-    margin-bottom: $gs-baseline;
-
+.ad-slot--gallery-inline {
     @include mq(tablet) {
-        float: right;
-        margin-top: $gs-baseline/3;
-        margin-left: $gs-gutter;
+        padding-bottom: $gs-baseline*2;
+        background-color: lighten(guss-colour(tone-media-1), 2.5%);
+    }
+    .ad-slot__label {
+        color: guss-colour(neutral-3);
+        background-color: lighten(guss-colour(tone-media-1), 2.5%);
+        border-top-color: guss-colour(neutral-2);
+
+        @include mq(tablet) {
+            max-width: none;
+        }
     }
 }
 .ad-slot--mpu-banner-ad {
@@ -297,10 +303,10 @@
     }
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            margin-top: get-line-height($fs-data, 3)*-2;
+            margin-top: get-line-height(data, 3)*-2;
 
             .ad-slot--commercial-component & {
-                margin-top: -(get-line-height($fs-data, 3));
+                margin-top: -(get-line-height(data, 3));
             }
         }
     }
@@ -313,7 +319,7 @@
 
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            margin-top: get-line-height($fs-data, 3)*-1;
+            margin-top: get-line-height(data, 3)*-1;
         }
     }
 }
@@ -396,10 +402,10 @@
                 float: right;
             }
             &.ad-slot--adbadge .ad-slot--paid-for-badge__link {
-                margin-top: get-line-height($fs-data, 3)*-2;
+                margin-top: get-line-height(data, 3)*-2;
             }
             &.ad-slot--spbadge .ad-slot--paid-for-badge__link {
-                margin-top: get-line-height($fs-data, 3)*-1;
+                margin-top: get-line-height(data, 3)*-1;
             }
         }
         .has-page-skin .container--has-toggle & {

@@ -67,13 +67,7 @@
                 <div class="linkslist-container tone-@{style.tone} js-slice--ad-candidate" data-tone="@style.tone">
                     <ul class="l-columns linkslist">
                         @i.zipWithIndex.map{ case (trail, index) =>
-                            @trail match {
-                                case l: LiveBlog if l.isLive         => { @fragments.items.linksList.live(l, index + 4, Some("boost")) }
-                                case g: Gallery                      => { @fragments.items.linksList.gallery(g, index + 4, Some("boost")) }
-                                case v: Video                        => { @fragments.items.linksList.video(v, index + 4, Some("boost")) }
-                                case c if c.visualTone == "comment"  => { @fragments.items.linksList.comment(c, index + 4, Some("boost")) }
-                                case t                               => { @fragments.items.linksList.standard(t, index + 4, Some("boost")) }
-                            }
+                            @fragments.items.linksList.trail(trail, index + 4, Some("boost"))
                         }
                     </ul>
                 </div>
@@ -88,13 +82,7 @@
                 <div class="linkslist-container tone-@{style.tone}" data-tone="@style.tone">
                     <ul class="l-columns linkslist">
                         @i.zipWithIndex.map{ case (trail, index) =>
-                            @trail match {
-                                case l: LiveBlog if l.isLive           => { @fragments.items.linksList.live(l, index + 10) }
-                                case g: Gallery                        => { @fragments.items.linksList.gallery(g, index + 10) }
-                                case v: Video                          => { @fragments.items.linksList.video(v, index + 10) }
-                                case c if c.visualTone == "comment"    => { @fragments.items.linksList.comment(c, index + 10) }
-                                case t                                 => { @fragments.items.linksList.standard(t, index + 10) }
-                            }
+                            @fragments.items.linksList.trail(trail, index + 10, None)
                         }
                     </ul>
                 </div>

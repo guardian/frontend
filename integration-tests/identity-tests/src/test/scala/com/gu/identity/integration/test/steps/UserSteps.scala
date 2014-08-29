@@ -1,11 +1,14 @@
 package com.gu.identity.integration.test.steps
 
 import com.gu.automation.support.TestLogging
-import com.gu.identity.integration.test.pages.{ContainerWithSigninModulePage, EditAccountDetailsModule, EditProfilePage}
+import com.gu.identity.integration.test.pages._
 import com.gu.identity.integration.test.util.User._
 import com.gu.identity.integration.test.util.{FormError, User}
+import com.gu.integration.test.expectedconditions.ResetEmailHasArrived
 import com.gu.integration.test.steps.BaseSteps
+import com.gu.integration.test.util.ElementLoader._
 import com.gu.integration.test.util.PageLoader._
+import com.gu.integration.test.util.UserConfig._
 import org.openqa.selenium.WebDriver
 import org.scalatest.Matchers
 
@@ -46,12 +49,13 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     changeEmailTo(generateRandomEmail, editAccountDetailsModule)
   }
 
-  def changeEmailTo(newEmail:String, editAccountDetailsModule: EditAccountDetailsModule): Either[List[FormError], String] = {
+  def changeEmailTo(newEmail: String, editAccountDetailsModule: EditAccountDetailsModule): Either[List[FormError], String] = {
     logger.step(s"Changing account email to $newEmail")
     editAccountDetailsModule.enterEmailAddress(newEmail)
+
     editAccountDetailsModule.saveChanges()
 
-    waitForPageToBeLoaded
+    waitForPageToLoad
 
     val userFormErrors = editAccountDetailsModule.getAllValidationFormErrors()
     if (userFormErrors.nonEmpty) {
@@ -67,14 +71,14 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     editAccountDetailsModule.enterLastName(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.saveChanges()
 
-    waitForPageToBeLoaded
+    waitForPageToLoad
 
     editAccountDetailsModule.getAllValidationFormErrors() should be('empty)
     User.fromEditAccountDetailsForm(editAccountDetailsModule)
   }
 
   def changeAddress(editAccountDetailsModule: EditAccountDetailsModule): User = {
-    logger.step("Changing first and last name")
+    logger.step("Changing address fields")
     editAccountDetailsModule.enterAddressLine1(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.enterAddressLine2(generateRandomAlphaNumericString(7))
     editAccountDetailsModule.enterTown(generateRandomAlphaNumericString(7))
@@ -83,7 +87,7 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     editAccountDetailsModule.selectFirstValidCountry()
     editAccountDetailsModule.saveChanges()
 
-    waitForPageToBeLoaded
+    waitForPageToLoad
 
     editAccountDetailsModule.getAllValidationFormErrors() should be('empty)
     User.fromEditAccountDetailsForm(editAccountDetailsModule)
@@ -97,7 +101,7 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
   }
 
   def changePassword(pageWithSignInModule: ContainerWithSigninModulePage, userBeforeChange: User):
-      NewPasswordAndContainerWithSigninModule = {
+  NewPasswordAndContainerWithSigninModule = {
     logger.step("Changing user password")
     val profileNavMenu = pageWithSignInModule.signInModule().clickSignInLinkWhenLoggedIn()
     val changePwdPage = profileNavMenu.clickChangePassword()
@@ -108,15 +112,57 @@ case class UserSteps(implicit driver: WebDriver) extends TestLogging with Matche
     changePwdPage.enterNewRepeatPassword(newPwd)
     val resetConfirmPage = changePwdPage.submitChangePassword()
 
-    waitForPageToBeLoaded
+    waitForPageToLoad
 
     changePwdPage.getAllValidationFormErrors() should be('empty)
     resetConfirmPage.isPasswordChangeMsgDisplayed()
 
-    waitForPageToBeLoaded
+    waitForPageToLoad
 
     BaseSteps().goToStartPage(useBetaRedirect = false)
     NewPasswordAndContainerWithSigninModule(newPwd, new ContainerWithSigninModulePage())
+  }
+
+  def requestToResetPassword(pageWithSignInModule: ContainerWithSigninModulePage) = {
+    logger.step("Requesting to reset the account password")
+    val profileNavMenu = pageWithSignInModule.signInModule().clickSignInLinkWhenLoggedIn()
+    val changePwdPage = profileNavMenu.clickChangePassword()
+
+    val resetPwdPage = changePwdPage.clickResetPasswordLink()
+
+    resetPwdPage.enterPasswordResetEmail(get("googleEmail"))
+    resetPwdPage.clickResetPassword()
+
+    waitForPageToLoad
+  }
+
+  def checkResetPasswordMailAndGoToResetPwdPage(): PasswordResetPage = {
+    logger.step(s"Opening password reset mail and following the provided link")
+    val latestResetEmail = waitUntilObject(new ResetEmailHasArrived(get("googleEmail"), get("googlePwd")), 30)
+
+    lazy val pwdResetPage = new PasswordResetPage()
+    goTo(pwdResetPage, latestResetEmail.getResetPasswordLink().get, useBetaRedirect = false)
+
+    pwdResetPage
+  }
+
+  def resetPassword(pwdResetPage: PasswordResetPage): NewPasswordAndContainerWithSigninModule = {
+    logger.step(s"Resetting password")
+    val resetPwd = generateRandomAlphaNumericString(10)
+    pwdResetPage.enterNewPassword(resetPwd)
+    pwdResetPage.enterNewRepeatPassword(resetPwd)
+
+    val resetConfirmPage = pwdResetPage.submitChangePassword()
+
+    waitForPageToLoad
+
+    pwdResetPage.getAllValidationFormErrors() should be('empty)
+    resetConfirmPage.isPasswordChangeMsgDisplayed()
+
+    waitForPageToLoad
+
+    BaseSteps().goToStartPage(useBetaRedirect = false)
+    NewPasswordAndContainerWithSigninModule(resetPwd, new ContainerWithSigninModulePage())
   }
 }
 

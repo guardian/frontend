@@ -59,11 +59,11 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with M
 
         Then("I should see a link to the help section")
 
-        val help = browser.find(".l-footer li a", withText().contains("Help"))
+        val help = browser.find(".l-footer li a", withText().contains("help"))
         help.length should be > 0
 
         And("a link to the contact us page")
-        val contact = browser.find(".l-footer li a", withText().contains("Contact"))
+        val contact = browser.find(".l-footer li a", withText().contains("contact"))
 
         contact.length should be > 0
       }
@@ -75,11 +75,11 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with M
 
         Then("I should see a link to the terms & Conditions in the page footer")
 
-        val terms = browser.find(".l-footer li a", withText().contains("Terms"))
+        val terms = browser.find(".l-footer li a", withText().contains("terms"))
         terms.length should be > 0
 
         And("a link to the privacy policy page")
-        val privacy = browser.find(".l-footer li a", withText().contains("Privacy"))
+        val privacy = browser.find(".l-footer li a", withText().contains("privacy"))
 
         privacy.length should be > 0
 

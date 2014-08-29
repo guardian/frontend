@@ -25,11 +25,12 @@ The reason for this is that other aspects of the applications can be tested by l
 
 ## How to write a test (quick)
 
-This section will quickly go through the steps to write a new test. It is strongly recommended to read this entire readme, as it contains a lot of useful information, however if you need to write a test quickly. Follow these steps:
+This section will quickly go through the steps to write a new test. It is strongly recommended to read the parent readme, as it contains a lot of useful information, however if you need to write a test quickly. Follow these steps:
 
-* Put your test class under ```src/test/scala/com.gu.integration.test.features``` (or extend an existing class if you find a suitable one)
+* Put your test class under ```src/test/scala/com.gu.integration.test.features```
+* Make sure to extend ```IntegrationSeleniumTestSuite```
 * Write your test using XXXSteps and Page Objects (see below sections for details)
-* Add ```data-test-id``` attributes to elements which your test are targetting. (see ```ElementLoader``` class for helper methods)
+* Add ```data-test-id``` attributes to elements which your test are targeting. (see ```ElementLoader``` class for helper methods)
 * Do a dry run of your test on a local dev-build instance to make sure it works
 * Create a pull request and merge it into master, using existing process for code change
 * Deploy your changes to PROD, using existing process. This is to make sure that the data-test-id attributes are deployed in prod
@@ -72,7 +73,7 @@ An example of local.conf can look like this:
 
 ## Running the Tests
 
-To run the tests you can either load the project in your favourite IDE as an SBT project and then simply run it as a ScalaTest class or you can run it in command line by simply exeuting: ```sbt test```
+To run the tests you can either load the project in your favourite IDE as an SBT project and then simply run it as a ScalaTest class or you can run it in command line by, going to the parent integration-test folder, and simply exeuting: ```sbt "project frontend-tests" clean compile test```
 
 If you want to run the same test suite which TeamCity runs then execute: ```sbt ciTest```. This will only run the tests with tag ```ReadyForProd``` and will not fail the build if the tests fail.
 
@@ -109,38 +110,3 @@ Then when doing a successive build, with the muted test, it will then be success
 ![Alt text](doc/build_chain_success_muted.png?raw=true "Build chain with tests muted")
 
 This will allow you to deploy the fix to prod. Remember though to unmute it, using similar procedure, once the fix has been applied so the test  can then be (hopefully) successfuly run.
-
-## Writing tests (detailed)
-
-Writing new tests is fairly simple and follow these steps:
-
-* Create your test classes under src/test/scala/com.gu.integration.test.features and then: 
-* Name it XXXTests where XXX is the feature you are trying to test
-* Make it extend SeleniumTestSuite
-* Define your test cases, inside your test class, like this: 
-```
-  feature("Articles") { 
-    scenarioWeb("checking most popular module and related content exist on article page") { implicit driver: WebDriver =>
-      val articlePage = ArticleSteps().goToArticle("/world/2014/jul/13/voodoo-big-problem-haiti-cardinal-chibly-langlois")
-      ArticleSteps().checkMostPopularDisplayedProperly(articlePage)
-      ArticleSteps().checkMostRelatedContentDisplayedProperly(articlePage)
-    }
-  }
-```
-* Make sure to name your feature and scenarioWeb appropriately
-* Dont forget the ```implicit driver: WebDriver =>```
-* The body of the test method should only show a short overview of what the test does and basically delegate everything to XXXSteps classes see ```ArticleSteps``` for an example. Step classes in turn should delegate page specific operations, such as clicking on links etc, to Page Objects.
-* For navigating to pages use the PageLoader.goTo and PageLoader.fromRelativeUrl, if you are going to a relative url (which is the case in most situations, see Configuration below).
-* Create, or extend existing, PageObjects for representing pages, and parts of pages. They should be put under ```src/main/scala/com.gu.integration.test.pages.XXX``` where XXX is the page group. 
-* Page objects shall extend ParentPage and define an implicit driver: WebDriver in its constructor argument list. See ```ArticlePage``` for an example.
-* Despite the name Page Objects should NOT represent an entire page. It should be appropriately modularised into modules with suffix Module and should be navigated from their parent page. See ```ArticlePage.mostPopularModule``` and MostPopularModule for an example.
-* Make sure that a Page Object does not exist before creating a new one.
-* When finding new elements it is strongly ENCOURAGED to tag those elements with data-test-id="some-value" e.g. data-test-id="article-root"
-* It is strongly DISCOURAGED to use existing DOM elements and structure. This is a sure way to create flaky tests.
-* ElementLoader contains various useful helper methods for dealing with WebElements. Please look at it before implementing a potential duplicate method.
-* If the test is to run continously in TeamCity then you need to add the tag ```ReadyForProd```. For example:
-```
-scenarioWeb("checking most popular module and related content exist on article page", ReadyForProd) {
-```
-* ONLY do this if you are sure that this test does not depend on things that is likely to change in production. Not doing that is a sure way to create flaky tests.
-* NEVER have dependencies between test cases. Each test should be completely independent of each other as they may run in any order and in parallel.

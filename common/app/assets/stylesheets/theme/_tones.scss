@@ -2,6 +2,7 @@
 @mixin tone-head($tone, $colour, $accentColour) {
     .tone-#{$tone} {
         .tone-colour,
+        %tone-colour,
         &.tone-colour {
             &,
             &:active,
@@ -22,6 +23,7 @@
         }
 
         .tone-background,
+        %tone-background,
         &.tone-background {
             background-color: $colour;
         }

@@ -219,8 +219,8 @@
     .item__headline {
         @include fs-headline(1);
         text-align: left; //Required for end slate items
-        @include text-clamp(3, get-line-height($fs-headlines, 1));
-        height: get-line-height($fs-headlines, 1) * 3;
+        @include text-clamp(3, get-line-height(headline, 1));
+        height: get-line-height(headline, 1) * 3;
 
         &:before {
             content: '';
@@ -297,8 +297,8 @@
         }
     }
     .item__headline {
-        @include text-clamp(3, get-line-height($fs-headlines, 1));
-        height: get-line-height($fs-headlines, 1) * 3;
+        @include text-clamp(3, get-line-height(headline, 1));
+        height: get-line-height(headline, 1) * 3;
     }
 }
 .most-viewed--video .item:nth-child(n+5) {

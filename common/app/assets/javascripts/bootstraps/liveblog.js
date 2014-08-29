@@ -35,7 +35,7 @@ define([
     template,
     url,
     getContext,
-    Article,
+    article,
     Message,
     preferences
 ) {
@@ -223,19 +223,21 @@ define([
         }
     };
 
-    function bindModulesToReadyEvent(obj) {
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                mediator.on('page:liveblog:ready', obj[key]);
-            }
-        }
+    function ready(config, context) {
+        modules.createFilter(config, context);
+        modules.createTimeline(config, context);
+        modules.createAutoRefresh(config, context);
+        modules.showFootballLiveBlogMessage(config, context);
+
+        // re-use modules from article bootstrap
+        article.modules.initOpen(config, context);
+        article.modules.initFence();
+        article.modules.initTruncateAndTwitter();
+
+        mediator.emit('page:liveblog:ready', config, context);
     }
 
     return {
-        init: function (config, context) {
-            bindModulesToReadyEvent(modules);
-            bindModulesToReadyEvent(Article.modules);
-            mediator.emit('page:liveblog:ready', config, context);
-        }
+        init: ready
     };
 });

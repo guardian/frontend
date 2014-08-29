@@ -274,14 +274,27 @@ $vjs-progress-inset-bottom: 4px;
     cursor: pointer;
     float: right;
     box-sizing: border-box;
-    margin: 8px 8px 8px 0;
-    @include icon(expand-white);
+    height: $vjs-control-height;
+    width: $vjs-control-height;
+    position: relative;
+
+    & .vjs-control-content {
+        width: 20px !important;
+        height: 20px !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        @include icon(expand-white);
+    }
+    &:hover .vjs-control-content {
+        @include icon(expand-yellow);
+    }
 
     .gu-media--audio & {
         display: none;
-    }
-    &:hover {
-        @include icon(expand-yellow);
     }
 }
 
@@ -368,12 +381,9 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-volume-handle {
     position: absolute;
-
-    .vjs-volume-control:hover & {
-        background-color: $c-mediaDefault;
-        height: 11px;
-        width: 2px;
-    }
+    background-color: $c-mediaDefault;
+    height: 11px;
+    width: 2px;
 }
 
 .vjs-mute-control {
@@ -490,7 +500,7 @@ $vjs-progress-inset-bottom: 4px;
     white-space: nowrap;
     @include fs-headline(2);
     position: absolute;
-    $height: get-line-height($fs-headlines, 2);
+    $height: get-line-height(headline, 2);
     height: $height;
     padding: $gs-baseline/2;
     top: ($height + $gs-baseline) * -1;
@@ -621,8 +631,8 @@ $vjs-progress-inset-bottom: 4px;
             .vjs-fullscreen & {
                 @include mq(desktop) {
                     @include fs-headline(2);
-                    @include text-clamp(4, get-line-height($fs-headlines, 2));
-                    height: get-line-height($fs-headlines, 2) * 4;
+                    @include text-clamp(4, get-line-height(headline, 2));
+                    height: get-line-height(headline, 2) * 4;
                 }
             }
         }
