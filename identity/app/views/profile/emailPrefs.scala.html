@@ -1,18 +1,47 @@
-@(page: model.MetaData, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String)(implicit request: RequestHeader)
+@(page: model.MetaData, emailPrefsForm: Form[EmailPrefsData], formActionUrl: String, emailSubscriptions: EmailSubscriptions)(implicit request: RequestHeader)
 
 @import views.html.fragments.form.{checkboxField, radioField}
 @import form.IdFormHelpers._
+
+@emailListCategoryList(theme: String, subscriptions: List[EmailSubscription], isActive: Boolean) = {
+    @fragments.dropdown(theme, isActive = isActive) {
+        @subscriptions.zipWithRowInfo.map { case (subscription, row) =>
+            <div class="@RenderClasses(Map(
+                "u-cf" -> true,
+                "email-subscription" -> true,
+                "email-subscription--subscribed" -> subscription.subscribedTo,
+                "email-subscription--first" -> row.isFirst))">
+                @if(subscription.subscribedTo){<input type="hidden" name="emailSubscription[@row.rowNum]" value="@subscription.listId" />}
+                <div class="email-subscription__name">@subscription.name</div>
+                <div class="email-subscription__description">@subscription.description</div>
+                <div class="email-subscription__meta u-cf">
+                    <button class="email-subscription__button"
+                            name="addEmailSubscription"
+                            type="submit"
+                            value="@if(subscription.subscribedTo){unsubscribe-}@subscription.listId">
+                        @if(subscription.subscribedTo){Unsubscribe}else{Subscribe}
+                    </button>
+                    <div class="email-subscription__frequency"><i class="i i-clock-light-grey"></i>@subscription.frequency</div>
+                </div>
+            </div>
+        }
+    }
+}
 
 @identityMain(page, conf.Switches.all){
 }{
     <div class="identity-wrapper monocolumn-wrapper">
         <h1 class="identity-title">Email preferences</h1>
-
         <form class="form" novalidate action="@formActionUrl" role="main" method="post">
             @views.html.helper.CSRF.formField
             @if(emailPrefsForm.globalError.isDefined) {
               <div class="form__error">@emailPrefsForm.globalErrors.map(_.message).mkString(", ")</div>
             }
+            <div class="email-subscriptions">
+                @List("news", "sport", "culture", "lifestyle").zipWithIndex.map { case(theme, index) =>
+                  @emailListCategoryList(theme, emailSubscriptions.subscriptions.filter(_.theme == theme), index == 0)
+                }
+            </div>
 
             <fieldset class="fieldset">
                 <div class="fieldset__heading">

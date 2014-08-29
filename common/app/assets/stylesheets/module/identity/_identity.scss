@@ -571,6 +571,7 @@
     }
 }
 
+
 /* Membership Keyframe animations
    ========================================================================== */
 
@@ -612,5 +613,76 @@
     100% {
         background-color: #ffffff;
         color: inherit;
+    }
+}
+
+
+/* Email subscriptions
+   ========================================================================== */
+.email-subscriptions {
+    margin-top: $gs-baseline*2;
+}
+.email-subscription {
+    border-top: 1px solid $c-neutral5;
+    margin-bottom: $gs-baseline*2;
+    padding-top: $gs-baseline/3;
+}
+.email-subscription--subscribed {
+    opacity: 0.8;
+}
+.email-subscription__name {
+    @include fs-headline(3);
+    margin-bottom: $gs-baseline;
+
+    @include mq(desktop) {
+        @include box-sizing(border-box);
+        @include fs-headline(3, true);
+        float: left;
+        padding-right: $gs-gutter;
+        width: gs-span(4);
+    }
+}
+.email-subscription__description {
+    @include fs-bodyCopy(1);
+
+    @include mq(desktop) {
+        padding-left: gs-span(4);
+    }
+}
+.email-subscription__meta {
+    margin-top: $gs-baseline;
+}
+.email-subscription__frequency {
+    @include fs-textSans(1);
+    float: right;
+    margin-bottom: $gs-baseline/1.5;
+    margin-top: $gs-baseline/1.5;
+
+    .i {
+        margin-right: $gs-gutter/4;
+        vertical-align: text-top;
+    }
+
+    @include mq(desktop) {
+        float: none;
+        margin-top: $gs-baseline;
+        padding-left: gs-span(4);
+    }
+}
+.email-subscription__button {
+    @include fs-textSans(2);
+    background: $c-brandBlue;
+    border: 0;
+    color: #ffffff;
+    cursor: pointer;
+    float: left;
+    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
+
+    @include mq(desktop) {
+        float: right;
+    }
+
+    .email-subscription--subscribed & {
+        background: $c-neutral2-contrasted;
     }
 }
