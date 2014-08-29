@@ -47,14 +47,13 @@ module.exports = function (grunt) {
     /**
      * Validate tasks
      */
-    grunt.registerTask('validate:css', ['compile:images', 'sass:compile', 'sass:compileStyleguide']);
     grunt.registerTask('validate:sass', ['scsslint']);
     grunt.registerTask('validate:js', function(app) {
         var target = (app) ? ':' + app : '';
         grunt.task.run('jshint' + target);
     });
     grunt.registerTask('validate', function(app) {
-        grunt.task.run(['validate:css', 'validate:sass', 'validate:js:' + (app || '')]);
+        grunt.task.run(['validate:sass', 'validate:js:' + (app || '')]);
     });
 
     /**
