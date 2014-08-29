@@ -112,8 +112,8 @@ category: Common
     /* true height is height minus 1px border */
     $true-button-height: $button-size - 2px;
     height: $true-button-height;
-    padding: 0 ($true-button-height/4);
-    margin-right: $true-button-height/4;
+    padding: 0 ($true-button-height / 4);
+    margin-right: $true-button-height / 4;
     line-height: $true-button-height + 1px;
     border-width: 1px;
     border-style: solid;
@@ -121,21 +121,20 @@ category: Common
     .i {
         width: $true-button-height;
         height: $true-button-height;
-        margin: 0 (-($true-button-height/4));
+        margin: 0 (-$true-button-height / 4);
     }
     .i-left {
-        margin-left: -($button-size/4);
-        margin-right: $button-size/4;
+        margin-left: -($button-size / 4);
+        margin-right: $button-size / 4;
         float: left;
     }
     .i-right {
-        margin-right: -($button-size/4);
-        margin-left: $button-size/4;
+        margin-right: -($button-size / 4);
+        margin-left: $button-size / 4;
         float: right;
     }
 }
-
-@mixin button-colour($fill-colour, $text-colour, $hover-colour) {
+@mixin button-colour($fill-colour, $text-colour, $hover-colour, $hover-border: $hover-colour) {
     color: $text-colour;
     background-color: $fill-colour;
     border-color: $fill-colour;
@@ -144,16 +143,15 @@ category: Common
     &:focus,
     &:active {
         background-color: $hover-colour;
-        border-color: $hover-colour;
+        border-color: $hover-border;
     }    
 }
-
 .button {
     display: inline-block;
     width: auto;
     @include fs-textSans(2);
     font-weight: bold;
-    @include button-height(gs-height(1) - $gs-baseline/2);
+    @include button-height(gs-height(1) - $gs-baseline / 2);
     @include border-radius(50%);
     @include button-colour($c-newsAccent, #ffffff, $c-newsDefault);
 
@@ -170,54 +168,53 @@ category: Common
     @include button-colour($c-neutral2, #ffffff, $c-newsAccent);
 }
 .button--tertiary {
-    @include button-colour(transparent, $c-neutral2, transparent);
-    border: 1px solid $c-neutral3;
+    @include button-colour(transparent, $c-neutral2, transparent, $c-neutral3);
+    border-color: $c-neutral3;
     
     &:hover,
     &:focus,
     &:active {
         color: $c-neutral1;
-        border: 1px solid $c-neutral1;
+        border-color: $c-neutral1;
     }
 }
 .button--xlarge {
     @include button-height(44px);
 }
 .button--large {
-    @include button-height($gs-baseline*3);
+    @include button-height($gs-baseline * 3);
 }
 .button--medium {
-    @include button-height(gs-height(1) - $gs-baseline/2);
+    @include button-height(gs-height(1) - $gs-baseline / 2);
 }
 .button--small {
-    @include button-height($gs-baseline*2);
+    @include button-height($gs-baseline * 2);
     @include fs-textSans(1);
-    line-height: $gs-baseline*2 - 1px;
+    line-height: $gs-baseline * 2 - 1px;
     font-weight: bold;
 }
 .button--xsmall {
-    @include button-height($gs-baseline*1.5);
+    @include button-height($gs-baseline * 1.5);
     @include fs-textSans(1);
-    line-height: $gs-baseline*1.5 - 1px;
+    line-height: $gs-baseline * 1.5 - 1px;
     font-weight: bold;
 }
-
 .button--show-more {
     @include fs-textSans(3);
     margin-bottom: $gs-baseline;
-    padding: ($gs-baseline/3)*2 0;
+    padding: ($gs-baseline / 3) * 2 0;
     text-align: center;
 
     .i-center {
-        @include border-radius($gs-baseline*3);
-        height: $gs-baseline*2;
-        margin-right: $gs-gutter/2;
-        width: $gs-baseline*2;
+        @include border-radius($gs-baseline * 3);
+        height: $gs-baseline * 2;
+        margin-right: $gs-gutter / 2;
+        width: $gs-baseline * 2;
         display: inline-block;
         vertical-align: middle;
 
         .i {
-            margin-top: $gs-baseline/4;
+            margin-top: $gs-baseline / 4;
         }
     }
 }
