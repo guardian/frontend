@@ -126,8 +126,6 @@
 /**
  * Inline ads
  */
-$ad-width-minimum: 300px;
-
 .ad-slot--inline,
 .ad-slot--container-inline,
 .ad-slot--gallery-inline {
@@ -138,13 +136,13 @@ $ad-width-minimum: 300px;
         height: 250px + $mpu-ad-label-height;
     }
     .ad-slot__label {
-        max-width: $ad-width-minimum;
+        max-width: 320px;
     }
 }
 .ad-slot--inline,
 .ad-slot--container-inline {
     @include mq(tablet) {
-        width: $ad-width-minimum;
+        width: 300px;
     }
 }
 .ad-slot--inline {
