@@ -27,7 +27,7 @@ Coding conventions
 ------------------
 Install the EditorConfig plugin in your IDE/text editor: http://editorconfig.org/#download
 
-It will read the contents of the [.editorconfig](https://github.com/guardian/frontend/blob/editorconfig/.editorconfig) file and set up your editor with the
+It will read the contents of the [.editorconfig](https://github.com/guardian/frontend/blob/master/.editorconfig) file and set up your editor with the
 correct encoding and indentation settings for the project.
 
 
