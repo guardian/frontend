@@ -363,9 +363,7 @@ define([
         },
 
         showSmartBanner: function(config) {
-            if(config.switches.smartBanner) {
-                smartAppBanner.init();
-            }
+            smartAppBanner.init();
         },
 
         initDiscussion: function() {
