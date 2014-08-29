@@ -46,24 +46,24 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
       dateTo = dateTo.toString("yyyy-MM-dd"),
       dateFrom = dateFrom.toString("yyyy-MM-dd"),
       metrics = List(OmnitureMetric(pageViews)),
-      elements = List(OmnitureElement(contentType, selected = List("Gallery")))
-    ), QUEUE_TRENDED, galleryPageViews)
+      segment_id = Some("Gallery Visit")
+    ), QUEUE_OVERTIME, galleryPageViews)
 
     generateReport(OmnitureReportDescription(
       dateGranularity = Some("day"),
       dateTo = dateTo.toString("yyyy-MM-dd"),
       dateFrom = dateFrom.toString("yyyy-MM-dd"),
       metrics = List(OmnitureMetric(visits)),
-      elements = List(OmnitureElement(contentType, selected = List("Gallery")))
-    ), QUEUE_TRENDED, galleryVisits)
+      segment_id = Some("Gallery Visit")
+    ), QUEUE_OVERTIME, galleryVisits)
 
     generateReport(OmnitureReportDescription(
-      dateGranularity = None,
+      dateGranularity = Some("day"),
       dateTo = dateTo.toString("yyyy-MM-dd"),
       dateFrom = dateFrom.toString("yyyy-MM-dd"),
       metrics = List(OmnitureMetric(navigationalInteractionEvent)),
-      elements = List(OmnitureElement(navigationalInteraction, selected = List("launch gallery lightbox")))
-    ), QUEUE_RANKED, galleryLightBox)
+      segment_id = Some("Gallery Lightbox")
+    ), QUEUE_OVERTIME, galleryLightBox)
   }
 
   private def generateReport(report: OmnitureReportDescription, method: String, reportName: String) {
@@ -72,7 +72,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
       updateAgent(reportName, Right(report))
     }.recover {
       case error: Throwable => {
-        log.warn(error.getMessage)
+        log.warn(s"report $reportName failed: ${error.getMessage}")
         updateAgent(reportName, Left(error))
       }
     }

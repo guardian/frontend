@@ -4,7 +4,7 @@ import common.{Logging, ExecutionContexts}
 import conf.OmnitureCredentials
 import org.apache.commons.codec.binary.Base64
 import org.joda.time.{DateTimeZone, DateTime}
-import play.api.libs.json.{JsValue, JsObject, Json}
+import play.api.libs.json._
 import play.api.libs.ws.{WSResponse, WS}
 import scala.concurrent.{Promise, Future}
 import scala.concurrent.duration._
@@ -21,7 +21,6 @@ case class OmnitureReportData(data: JsValue) extends OmnitureResponse {
 object OmnitureMethods {
   val QUEUE_OVERTIME  = "Report.QueueOvertime"
   val QUEUE_RANKED    = "Report.QueueRanked"
-  val QUEUE_TRENDED   = "Report.QueueTrended"
 }
 
 // dateGranularity is one of 'hour', 'day', 'week', 'month', 'quarter' or 'year'. Not supported by Ranked Reports (use None).
@@ -31,14 +30,16 @@ case class OmnitureReportDescription(
   dateTo: String,
   dateFrom: String,
   metrics: Seq[OmnitureMetric],
-  elements: Seq[OmnitureElement],
-  reportSuiteID: String = "guardiangu-frontend"
+  reportSuiteID: String = OmnitureReportDescription.reportSuiteID,
+  segment_id: Option[String] = None
 )
 object OmnitureReportDescription {
 
   implicit val writeMetric = Json.writes[OmnitureMetric]
-  implicit val writeElement = Json.writes[OmnitureElement]
   implicit val writeDescription = Json.writes[OmnitureReportDescription]
+
+  // Friendly name: Next Gen Web
+  val reportSuiteID = "guardiangu-frontend"
 }
 
 // A metric specifies the type of event data captured in the report,
@@ -48,14 +49,18 @@ object OmnitureReportDescription {
 // Trended reports support only one metric per report.
 case class OmnitureMetric(id: String)
 
-// An element further breaks down (organizes) the report's metrics data. For example,
-// you can generate a report that breaks down a page view (metric) report by the
-// Web browsers (element) used to access the page.
-//
-// An element id is typically 'browserType', 'browser', 'evar37', 'prop11', 'referrer', etc.
-//
-// Overtime reports do not support Elements (because the element is time, by default).
-case class OmnitureElement(id: String, selected: List[String] = Nil)
+case class OmnitureSegment(
+  id: String,
+  name: String,
+  folder: String,
+  `class`: String,
+  suite_enabled: JsValue,
+  read_only: Int
+)
+object OmnitureSegment {
+  implicit val reads = Json.reads[OmnitureSegment]
+  implicit val writes = Json.writes[OmnitureSegment]
+}
 
 object Omniture extends ExecutionContexts with Logging {
 
@@ -65,6 +70,7 @@ object Omniture extends ExecutionContexts with Logging {
   private object OmnitureInternalMethods {
     val GET_STATUS      = "Report.GetStatus"
     val GET_REPORT      = "Report.GetReport"
+    val GET_SEGMENTS    = "ReportSuite.GetSegments"
   }
   sealed case class OmnitureError(override val response: String) extends OmnitureResponse
   sealed case class ReportId(id: Int)
@@ -88,7 +94,7 @@ object Omniture extends ExecutionContexts with Logging {
   // There are three kinds of report method:
   // - Overtime
   //  supports multiple metrics but only one preset element, 'datetime'. This means you must specify at least one metric,
-  //  and no elements (elements = Nil).
+  //  and no elements.
   //  supports hourly reporting (and up)
   // - Ranked
   //  ranks pages in relation to the metric. This means you must specify at least one metric, and at least one element.
@@ -185,6 +191,24 @@ object Omniture extends ExecutionContexts with Logging {
     postRequest(GET_REPORT, body).map { response =>
       response.status match {
         case 200 => OmnitureReportData(Json.parse(response.body))
+        case _ => throw OmnitureException(s"Omniture returned: ${response.status}, body:${response.body}")
+      }
+    }
+  }
+
+  def getSegmentIds(): Future[Seq[OmnitureSegment]] = {
+
+    val body = Json.parse(s"""{"rsid_list":["${OmnitureReportDescription.reportSuiteID}"]}""").asInstanceOf[JsObject]
+
+    postRequest(GET_SEGMENTS, body).map { response =>
+      response.status match {
+        case 200 => {
+          val segments = Json.parse(response.body).asInstanceOf[JsArray](0) \ "sc_segments"
+          segments.validate[Seq[OmnitureSegment]] match {
+            case JsSuccess(segments, _) => segments
+            case JsError(e) => throw OmnitureException(JsError.toFlatJson(e).toString())
+          }
+        }
         case _ => throw OmnitureException(s"Omniture returned: ${response.status}, body:${response.body}")
       }
     }
