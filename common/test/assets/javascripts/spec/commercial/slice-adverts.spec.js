@@ -72,7 +72,7 @@ define([
                 .map(function(slot) { return $(slot); })
                 .forEach(function($adSlot) {
                     expect($adSlot.data('mobile')).toEqual('300,50');
-                    expect($adSlot.data('tabletportrait')).toEqual('300,250');
+                    expect($adSlot.data('tablet')).toEqual('300,250');
                 });
         });
 

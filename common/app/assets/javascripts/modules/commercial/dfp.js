@@ -88,9 +88,9 @@ define([
         // These should match the widths inside _vars.scss
         breakpoints = {
             mobile: 0,
-            mobilelandscape: 480,
-            tabletportrait: 740,
-            tabletlandscape: 900,
+            mobileLandscape: 480,
+            tablet: 740,
+            rightCol: 900,
             desktop: 980,
             wide: 1300
         },
@@ -101,7 +101,7 @@ define([
         adSlotDefinitions = {
             right: {
                 sizeMappings: {
-                    tabletlandscape: '300,250|300,600'
+                    rightCol: '300,250|300,600'
                 }
             },
             im: {
@@ -114,15 +114,15 @@ define([
             inline1: {
                 sizeMappings: {
                     mobile: '300,50',
-                    mobilelandscape: '300,50|320,50',
-                    tabletportrait: '300,250'
+                    mobileLandscape: '300,50|320,50',
+                    tablet: '300,250'
                 }
             },
             inline2: {
                 sizeMappings: {
                     mobile: '300,50',
-                    mobilelandscape: '300,50|320,50',
-                    tabletportrait: '300,250'
+                    mobileLandscape: '300,50|320,50',
+                    tablet: '300,250'
                 }
             },
             'merchandising-high': {
@@ -207,8 +207,8 @@ define([
 
             }
         },
-        refresh = function() {
-            googletag.pubads().refresh(slotsToRefresh);
+        refresh = function(breakpoint, previousBreakpoint) {
+            googletag.pubads().refresh(slotsToRefresh.map(function (slotInfo) { return slotInfo.slot; }));
         },
         /** A breakpoint can have various sizes assigned to it. You can assign either on
          * set of sizes or multiple.
@@ -389,7 +389,10 @@ define([
                 // Add to the array of ads to be refreshed (when the breakpoint changes)
                 // only if it's `data-refresh` attribute isn't set to false.
                 if ($adSlot.data('refresh') !== false) {
-                    slotsToRefresh.push(slot);
+                    slotsToRefresh.push({
+                        $adSlot: $adSlot,
+                        slot: slot
+                    });
                 }
             });
         },
