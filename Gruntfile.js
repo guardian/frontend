@@ -61,9 +61,9 @@ module.exports = function (grunt) {
      * Compile tasks
      */
 
-    grunt.registerTask('sass:compile', ['clean:css', 'concurrent:sass']);
+    grunt.registerTask('sass:compile', ['concurrent:sass']);
 
-    grunt.registerTask('compile:images', ['clean:images', 'copy:images', 'shell:spriteGeneration', 'imagemin']);
+    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', function(fullCompile) {
         grunt.task.run(['compile:images', 'sass:compile', 'sass:compileStyleguide']);
 
@@ -81,7 +81,7 @@ module.exports = function (grunt) {
 
     });
     grunt.registerTask('compile:js', function(fullCompile) {
-        grunt.task.run(['clean:js', 'requirejs', 'copy:javascript']);
+        grunt.task.run(['requirejs', 'copy:javascript']);
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');
         }
@@ -91,8 +91,8 @@ module.exports = function (grunt) {
         }
 
     });
-    grunt.registerTask('compile:fonts', ['clean:fonts', 'mkdir:fontsTarget', 'webfontjson']);
-    grunt.registerTask('compile:flash', ['clean:flash', 'copy:flash']);
+    grunt.registerTask('compile:fonts', ['mkdir:fontsTarget', 'webfontjson']);
+    grunt.registerTask('compile:flash', ['copy:flash']);
     grunt.registerTask('compile:conf', ['copy:headJs', 'copy:headCss', 'copy:assetMap']);
     grunt.registerTask('compile', [
         'concurrent:compile',
