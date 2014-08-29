@@ -40,5 +40,6 @@ class RegisterPage(implicit driver: WebDriver) extends UserFormPage {
   def clickCreateUser() = {
     createButton.scrollIntoView()
     createButton.click()
+    this
   }
 }
