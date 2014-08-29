@@ -28,7 +28,8 @@ case class RegisterSteps(implicit driver: WebDriver) extends TestLogging with Ma
     enterFirstNameIfSet(registerPage, user)
     enterLastNameIfSet(registerPage, user)
     registerPage.enterUsername(user.userName)
-    registerPage.createButton.click()
+
+    registerPage.clickCreateUser()
 
     waitForPageToLoad
 

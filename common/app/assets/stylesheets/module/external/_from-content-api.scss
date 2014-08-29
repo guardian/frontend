@@ -321,12 +321,16 @@ figure.element--thumbnail + h2 {
         margin-left: $width * -1;
     }
 
+    &:before,
+    &:after {
+        @extend %tone-background;
+    }
     blockquote {
         margin: 0;
         font-style: normal;
 
         p {
-            @extend %tone-colour;
+            color: guss-colour(neutral-2);
             margin-bottom: 0;
             @include fs-headline(4);
             @include mq(tablet) {
@@ -338,6 +342,7 @@ figure.element--thumbnail + h2 {
         margin-top: 1px;
     }
     cite {
+        @extend %tone-colour;
         font-style: normal;
         color: guss-colour(neutral-2);
         @include fs-bodyHeading(2);
