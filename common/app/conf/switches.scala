@@ -138,7 +138,7 @@ object Switches extends Collections {
 
   val SmartBannerSwitch = Switch("Commercial", "smart-banner",
     "Display smart app banner onboarding message to iOS and Android users",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 31)
+    safeState = Off, sellByDate = never
   )
 
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
