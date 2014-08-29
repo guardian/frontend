@@ -7,7 +7,7 @@ define([
     describe('Preferences', function() {
         
         it('should not consider the user opted in if there is no GU_VIEW cookie', function() {
-            document.cookie = "";
+            document.cookie = 'GU_VIEW=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
             expect(preferences.hasOptedIntoResponsive()).toBeFalsy();
         });
 
