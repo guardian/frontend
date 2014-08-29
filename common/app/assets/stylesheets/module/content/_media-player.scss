@@ -381,12 +381,9 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-volume-handle {
     position: absolute;
-
-    .vjs-volume-control:hover & {
-        background-color: $c-mediaDefault;
-        height: 11px;
-        width: 2px;
-    }
+    background-color: $c-mediaDefault;
+    height: 11px;
+    width: 2px;
 }
 
 .vjs-mute-control {
