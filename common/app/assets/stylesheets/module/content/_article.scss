@@ -2,8 +2,8 @@
     margin-left: 0;
     margin-right: 0;
     @include mq($to: mobileLandscape) {
-        margin-left: $gs-gutter * -0.5;
-        margin-right: $gs-gutter * -0.5;
+        margin-left: $gs-gutter * -.5;
+        margin-right: $gs-gutter * -.5;
     }
     @include mq(mobileLandscape, phablet) {
         margin-left: $gs-gutter / -1;
