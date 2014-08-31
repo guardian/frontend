@@ -64,12 +64,12 @@ define([
                 'href',
                 'headline',
                 'trailText',
+                'kicker',
                 'imageAdjust',
                 'imageSrc',
                 'imageSrcWidth',
                 'imageSrcHeight',
                 'showMainVideo',
-                'isBreaking',
                 'group',
                 'snapType',
                 'snapCss',
@@ -239,11 +239,6 @@ define([
         Article.prototype.setRelativeTimes = function() {
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
             this.scheduledPublicationTime(humanTime(this.fields.scheduledPublicationDate()));
-        };
-
-        Article.prototype.toggleIsBreaking = function() {
-            this.meta.isBreaking(!this.meta.isBreaking());
-            this._save();
         };
 
         Article.prototype.sparkline = function() {

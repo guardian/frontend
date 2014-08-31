@@ -425,7 +425,7 @@ a.headline:hover {
     color: #65b045;
 }
 
-.is--breaking {
+.is--breaking-news {
     color: #DD4B39;
 }
 
@@ -485,10 +485,9 @@ a.headline:hover {
 .article__overrides {
     position: relative;
     margin: 1px 0 0 80px;
-    padding: 0 0 3px 0;
     color: #666666;
     font-size: 12px;
-    line-height: 19px;
+    line-height: 16px;
 }
 
 .article__overrides input,
@@ -501,6 +500,11 @@ a.headline:hover {
 .article__overrides a {
 }
 
+.article__overrides__other {
+    margin-right: 65px;
+    min-height: 30px;
+}
+
 .article__overrides .tools {
     float: right;
     margin: 5px 1px 0 0;
@@ -510,18 +514,7 @@ a.headline:hover {
     overflow: hidden;
 }
 
-.misc__overrides {
-    margin: 5px 0 5px 6px;
-    font-size: 12px;
-    line-height: 15px;
-}
-
-.misc__overrides .selected {
-    color: #DD4B39;
-    font-weight: bold;
-}
-
-.image__overrides {
+.closed .image__overrides {
     position: absolute;
     bottom: 4px;
     font-size: 12px;
@@ -531,8 +524,20 @@ a.headline:hover {
     padding: 0 0 0 3px;
 }
 
-.image__overrides * {
+.closed .image__overrides * {
     text-shadow: 0 0 2px #666666;
+}
+
+.open .image__overrides {
+    position: absolute;
+    top: 51px;
+    width: 75px;
+    font-size: 12px;
+    line-height: 15px;
+}
+
+.open .image__overrides a {
+    display: block;
 }
 
 .supporting .image__overrides {
@@ -540,10 +545,7 @@ a.headline:hover {
 }
 
 .supporting-message {
-    font-size: 10px;
-    line-height: 6px;
     color: #999999;
-    padding: 0 0 0 6px;
 }
 
 .supporting .tool--done,
@@ -595,9 +597,12 @@ input[type="text"] {
     box-sizing: border-box;
     height: 25px;
     padding: 1px 5px;
-    margin: 1px 0 0 0;
+    margin: 2px 0 0 0;
     color: #000000;
-    border-radius: 2px;
+}
+
+select {
+    padding: 1px;
 }
 
 .radio-label {
@@ -893,8 +898,8 @@ button {
 }
 
 .selected {
+    color: #DD4B39;
     font-weight: bold;
-    color: #000000;
 }
 
 [class^="icon-"], [class*=" icon-"] {

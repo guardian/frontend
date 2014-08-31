@@ -28,6 +28,15 @@ define([
             {name: 'prototype/raclette'}
         ],
 
+        kickers: [
+            'analysis',
+            'background',
+            'breaking-news',
+            'detail',
+            'in-depth',
+            'reaction'
+        ],
+
         headlineLength: 200,
         restrictedHeadlineLength: 90,
 
@@ -42,12 +51,6 @@ define([
         detectPressFailureMs: 10000,
 
         maxFronts: 200,
-
-        imageCdnDomain: 'guim.co.uk',
-
-        previewBase: 'http://preview.gutools.co.uk',
-
-        viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
 
         filterTypes: {
             section: { display: 'in section:', param: 'section', path: 'sections', placeholder: 'e.g. news' },
@@ -67,6 +70,10 @@ define([
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
+        apiSearchParams:       'show-fields=internalContentCode,isLive,firstPublicationDate,headline,trailText,thumbnail&show-elements=video',
+        imageCdnDomain:        'guim.co.uk',
+        previewBase:           'http://preview.gutools.co.uk',
+        viewer:                'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
 
         ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
 
