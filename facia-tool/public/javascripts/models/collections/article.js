@@ -320,10 +320,8 @@ define([
                 .filter(function(p){ return !_.isUndefined(p[1]); })
                 // reject false properties:
                 .filter(function(p){ return p[1] !== false; })
-                // trim strings:
-                .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
-                // sanitize html
-                .map(function(p){ return [p[0], sanitizeHtml(p[1])]; })
+                // trim and sanitize strings:
+                .map(function(p){ return [p[0], sanitizeHtml(fullTrim(p[1]))]; })
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
