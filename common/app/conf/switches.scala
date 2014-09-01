@@ -353,11 +353,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val FaciaToolDraftPressSwitch = Switch("Facia", "facia-tool-press-draft-front",
-    "If this switch is on facia tool will press draft fronts on each change",
-    safeState = Off, sellByDate = never
-  )
-
   val FaciaToolDraftContent = Switch("Facia", "facia-tool-draft-content",
     "If this switch is on facia tool will offer draft content to editors, and press draft fronts from draft content ",
     safeState = Off, sellByDate = never
@@ -436,7 +431,6 @@ object Switches extends Collections {
     SeoEscapeFootballJsonPathLikeValuesSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
-    FaciaToolDraftPressSwitch,
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
