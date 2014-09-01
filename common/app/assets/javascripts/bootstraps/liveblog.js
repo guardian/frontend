@@ -16,7 +16,8 @@ define([
     'common/utils/url',
     'common/utils/context',
     'common/bootstraps/article',
-    'common/modules/ui/message'
+    'common/modules/ui/message',
+    'common/utils/preferences'
 ], function (
     mediator,
     $,
@@ -34,8 +35,9 @@ define([
     template,
     url,
     getContext,
-    Article,
-    Message
+    article,
+    Message,
+    preferences
 ) {
     'use strict';
 
@@ -195,9 +197,10 @@ define([
         },
 
         showFootballLiveBlogMessage: function(config){
+            var isFootballLiveBlog = config.page.pageId.indexOf('football/live/') === 0;
+            var notMobile = detect.getBreakpoint() !== 'mobile';
 
-            // limit message to "new style" Football live blogs
-            if(config.page.pageId.indexOf('football/live/') === 0 && detect.getBreakpoint() !== 'mobile') {
+            if (isFootballLiveBlog && notMobile && !preferences.hasOptedIntoResponsive()) {
 
                 var msg = '<p class="site-message__message" id="site-message__message">' +
                     'We’ve redesigned our Football live blogs to make it easier to follow the match. We’d love to hear what you think.' +
@@ -220,19 +223,21 @@ define([
         }
     };
 
-    function bindModulesToReadyEvent(obj) {
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                mediator.on('page:liveblog:ready', obj[key]);
-            }
-        }
+    function ready(config, context) {
+        modules.createFilter(config, context);
+        modules.createTimeline(config, context);
+        modules.createAutoRefresh(config, context);
+        modules.showFootballLiveBlogMessage(config, context);
+
+        // re-use modules from article bootstrap
+        article.modules.initOpen(config, context);
+        article.modules.initFence();
+        article.modules.initTruncateAndTwitter();
+
+        mediator.emit('page:liveblog:ready', config, context);
     }
 
     return {
-        init: function (config, context) {
-            bindModulesToReadyEvent(modules);
-            bindModulesToReadyEvent(Article.modules);
-            mediator.emit('page:liveblog:ready', config, context);
-        }
+        init: ready
     };
 });

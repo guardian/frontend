@@ -3,6 +3,7 @@ package model
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
 import common.Pagination
 import common.Reference
+import play.api.libs.json.{JsArray, JsString, JsValue}
 import views.support.{Contributor, ImgSrc, Item140}
 
 case class Tag(private val delegate: ApiTag, override val pagination: Option[Pagination] = None) extends MetaData with AdSuffixHandlingForFronts {
@@ -49,12 +50,14 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   lazy val tagWithoutSection = id.split("/")(1) // used for football nav
 
   override lazy val analyticsName = s"GFE:$section:$name"
-  
+
   override lazy val rssPath = Some(s"/$id/rss")
 
-  override lazy val metaData: Map[String, Any] = super.metaData ++ Map(
-    "keywords" -> name,
-    "keywordIds" -> id,
-    "content-type" -> "Tag"
-  ) ++ Map("references" -> delegate.references.map(r => Reference(r.id)))
+  override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
+    "keywords" -> JsString(name),
+    "keywordIds" -> JsString(id),
+    "content-type" -> JsString("Tag")
+  ) ++ Map(
+    "references" -> JsArray(delegate.references.toSeq.map(ref => Reference.toJavaScript(ref.id)))
+  )
 }

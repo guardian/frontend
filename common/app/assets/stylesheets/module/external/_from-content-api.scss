@@ -286,3 +286,71 @@ figure.element--thumbnail + h2 {
         width: 100%;
     }
 }
+
+/* Pullquotes
+   ========================================================================== */
+
+.element-pullquote {
+    width: 100%;
+    @include box-sizing(border-box);
+    padding: 0;
+    margin-bottom: $gs-baseline;
+
+    @include mq(tablet) {
+        width: gs-span(3);
+        float: left;
+        padding-right: $gs-gutter;
+        padding-top: $gs-baseline/4;
+        margin-bottom: $gs-baseline/2;
+    }
+
+    @include mq(leftCol) {
+        $width: gs-span(2) + $gs-gutter*2;
+        width: $width;
+        margin-left: $width * -1;
+        padding: 0 $gs-gutter;
+        padding-top: $gs-baseline/4;
+    }
+    @include mq(wide) {
+        $width: gs-span(3) + $gs-gutter*2;
+        width: $width;
+        margin-left: $width * -1;
+    }
+
+    &:before,
+    &:after {
+        @extend %tone-background;
+    }
+    blockquote {
+        margin: 0;
+        font-style: normal;
+
+        p {
+            color: guss-colour(neutral-2);
+            margin-bottom: 0;
+            @include fs-headline(4);
+            @include mq(tablet) {
+                @include fs-headline(3, true);
+            }
+        }
+    }
+    footer {
+        margin-top: 1px;
+    }
+    cite {
+        @extend %tone-colour;
+        font-style: normal;
+        color: guss-colour(neutral-2);
+        @include fs-bodyHeading(2);
+
+        a,
+        a:visited {
+            border-bottom: 1px solid guss-colour(neutral-4);
+
+            &:hover {
+                text-decoration: none;
+                border-bottom: 1px solid guss-colour(neutral-2);
+            }
+        }
+    }
+}

@@ -1,14 +1,14 @@
 {
   "name": "guss-forms",
-  "version": "2.0.0",
   "main": [
-    "_forms.scss"
+    "_forms.scss",
+    "_forms.config.scss",
+    "_forms.mixins.scss"
   ],
   "ignore": [
-    "CHANGELOG.md",
     "demo"
   ],
   "dependencies": {
-    "guss": "~2"
+    "guss": "~3"
   }
 }

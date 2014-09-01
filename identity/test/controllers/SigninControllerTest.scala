@@ -5,6 +5,7 @@ import org.scalatest.{Matchers => ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import org.mockito.Matchers._
+import play.api.Play
 import services._
 import idapiclient.IdApiClient
 import play.api.test.Helpers._
@@ -21,6 +22,7 @@ import idapiclient.EmailPassword
 import idapiclient.TrackingData
 import services.IdentityRequest
 import idapiclient.responses.CookiesResponse
+import play.api.test.Helpers._
 
 
 class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -91,6 +93,36 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
           secureTestCookie should have('secure(true))
           secureTestCookie should have('httpOnly(true))
         }
+      }
+    }
+
+    "should redirect without persisting the password" in Fake {
+
+      val postRequest = FakeRequest(POST, "/signin").withFormUrlEncodedBody("email" -> "bad-email", "password" -> "good-password")
+      val postResult = signinController.processForm()(postRequest)
+
+      status(postResult) should be (303)
+      header("Location", postResult) should be (Some("/signin"))
+
+      val flashCookie = cookies(postResult).apply("PLAY_FLASH")
+
+
+      withClue("the cookie should be encrypted"){
+        flashCookie.value should not include "bad-email"
+      }
+
+
+      val getRequest = FakeRequest(GET, "/signin").withCookies(flashCookie)
+      val getResult = signinController.renderForm()(getRequest)
+      status(getResult) should be (200)
+      val body = contentAsString(getResult)
+
+      withClue("the user should have their password filled"){
+        body should include ("bad-email")
+      }
+
+      withClue("the password should be stripped and not returned to the client"){
+        body should not include "good-password"
       }
     }
   }

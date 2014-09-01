@@ -1,7 +1,7 @@
 .container__meta {
     .container__meta__label {
         @include fs-header(3);
-        line-height: get-line-height($fs-headers, 2) !important;
+        line-height: get-line-height(header, 2) !important;
         color: $c-neutral2;
     }
     .container__meta__description {
@@ -12,7 +12,7 @@
             padding: $gs-baseline/4 0 $gs-baseline/3;
         }
         @include fs-header(3);
-        line-height: get-line-height($fs-headers, 2) !important;
+        line-height: get-line-height(header, 2) !important;
 
         a {
             color: inherit;

@@ -1,13 +1,13 @@
 package tools
 
 import CloudWatch._
-import com.amazonaws.services.cloudwatch.model.{Dimension, StandardUnit, GetMetricStatisticsRequest}
+import com.amazonaws.services.cloudwatch.model.GetMetricStatisticsRequest
 import org.joda.time.DateTime
 
 object MemoryMetrics {
 
   def memory = loadBalancers.map{ loadBalancer =>
-    new LineChart(s"${loadBalancer.name} JVM memory", Seq("Memory", "used (mb)", "max (mb)"),
+    new AwsLineChart(s"${loadBalancer.name} JVM memory", Seq("Memory", "used (mb)", "max (mb)"), ChartFormat.DoubleLineBlueRed,
 
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(3).toDate)

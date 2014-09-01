@@ -136,11 +136,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val SmartBannerSwitch = Switch("Commercial", "smart-banner",
-    "Display smart app banner onboarding message to iOS and Android users",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 31)
-  )
-
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
@@ -232,7 +227,7 @@ object Switches extends Collections {
 
   val ReleaseMessageSwitch = Switch("Feature", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 31)
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 30)
   )
 
   val GeoMostPopular = Switch("Feature", "geo-most-popular",
@@ -285,7 +280,7 @@ object Switches extends Collections {
 
   val SentimentalCommentsSwitch = Switch("Feature", "sentimental-comments",
     "When this switch is on, you will be able to put sentiment into your comments.",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
   )
 
   val EnhancedMediaPlayerSwitch = Switch("Feature", "enhanced-media-player",
@@ -309,9 +304,9 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 9, 8)
   )
 
-  val SeoOptimisedContentImageSwitch = Switch("Feature", "seo-optimised-article-image",
-    "If this switch is on images then articles will get a 460px on static.guim.co.uk image as the low-res version.",
-    safeState = On, sellByDate = new LocalDate(2014, 8, 30)
+  val SeoEscapeFootballJsonPathLikeValuesSwitch = Switch("Feature", "seo-googlebot-escape-football-json-path-like-values",
+    "If switched ON, json football references that look like a path to googlebot are 'escaped'.",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
   )
 
   // A/B Tests
@@ -319,6 +314,11 @@ object Switches extends Collections {
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
     "Switch for the High Commercial Component A/B test.",
     safeState = Off, sellByDate = never
+  )
+
+  val ABSoulmatesLabelling = Switch("A/B Tests", "ab-soulmates-labelling",
+    "If this switch is turned on, run the SoulmatesLabelling A/B test",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 11)
   )
 
   // Facia
@@ -445,14 +445,14 @@ object Switches extends Collections {
     MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
-    SmartBannerSwitch,
-    SeoOptimisedContentImageSwitch,
+    SeoEscapeFootballJsonPathLikeValuesSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
+    ABSoulmatesLabelling,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
     ChildrensBooksSwitch,

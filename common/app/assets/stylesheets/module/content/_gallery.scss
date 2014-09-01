@@ -1,78 +1,214 @@
 @charset 'UTF-8';
 
-/* ==========================================================================
-   Non-JS Gallery Styles
-   ========================================================================== */
+@include mq($to: mobileLandscape) {
+    .content--gallery .content__section {
+        display: none;
+    }
+}
 
-.gallery-container {
-    overflow: hidden;
+.gallery2 {
+    list-style: none;
     margin: 0;
 }
 
-.gallery-caption {
-    margin-top: $gs-baseline/3;
-
-    i {
-        display: inline-block;
-        margin-right: 4px;
-    }
-}
-
-.gallery-container .caption-credit {
-    margin-bottom: 20px;
-    border-top: 1px solid $c-neutral7;
-    padding-top: $gs-baseline/3;
-    margin-top: $gs-baseline/3;
-}
-
-.gallery-container li {
-    float: left;
+.gallery2__item {
+    position: relative;
+    @include box-sizing(border-box);
+    padding-top: $gs-baseline;
     min-height: 200px;
 
-    img {
-        width: 100%;
+    @include mq($to: rightCol) {
+        border-top: 1px dotted guss-colour(tone-media-2);
+
+        &:first-child {
+            border-top: 0;
+            padding-top: 0;
+        }
+        &:last-child {
+            border-bottom: 1px dotted guss-colour(tone-media-2);
+            margin-bottom: $gs-baseline;
+        }
+        .gallery2__item--advert + & {
+            margin-top: $gs-baseline*2;
+        }
+    }
+    @include mq(rightCol) {
+        padding-top: 0;
+        margin-top: $gs-baseline*2;
+        padding-right: gs-span(3) + $gs-gutter;
+
+        &:last-child {
+            margin-bottom: $gs-baseline*2;
+        }
+    }
+}
+.gallery2__item--advert {
+    min-height: 0;
+    padding-top: 0;
+    border-top: 0;
+
+    .js-off & {
+        display: none;
     }
 }
 
+.gallery2__figcaption {
+    @include fs-textSans(1);
+    padding-top: $gs-baseline/2;
+    overflow: hidden;
+    max-height: 100%;
 
-/* ==========================================================================
-   Gallery nav
-   ========================================================================== */
-
-.gallery-nav {
-    @include fs-data(3);
-    text-align: center;
-    margin-bottom: ($gs-baseline/3)*2;
-}
-
-.gallery-prev,
-.gallery-next {
-    // this is to ensure the "Image x of y" is centered. (MA)
-    width: 75px;
-
-    &.is-off {
-        display: inline-block;
-        visibility: hidden;
+    @include mq($to: rightCol) {
+        margin-bottom: $gs-baseline*3;
+    }
+    @include mq(rightCol) {
+        @include fs-textSans(2, true);
+        position: absolute;
+        width: gs-span(3);
+        right: 0;
+        top: 0;
+        border-top: 1px dotted guss-colour(neutral-2);
     }
 }
 
-.gallery-prev {
-    text-align: left;
+.gallery2__caption {
+    color: guss-colour(neutral-7);
+    margin-bottom: 0;
+
+    a {
+        color: guss-colour(neutral-7);
+        border-bottom: 1px solid guss-colour(neutral-2);
+
+        &:hover {
+            border-bottom: 1px solid guss-colour(neutral-7);
+            text-decoration: none;
+        }
+    }
 }
 
-.gallery-next {
-    text-align: right;
-    float: right;
+.gallery2__credit {
+    color: guss-colour(neutral-3);
 }
 
-.gallery-prev:before {
-    content: '« ';
+.gallery2__img-container {
+    position: relative;
+    display: block;
+    background-color: lighten(guss-colour(tone-media-1), 2.5%);
 }
 
-.gallery-next:after {
-    content: ' »';
+.gallery2__img {
+    cursor: pointer;
+    width: auto;
+    margin: auto;
+    max-width: 100%;
+    max-height: 700px;
 }
 
-.gallery-nav i {
-    display: inline-block;
+.gallery2__fullscreen {
+    width: 30px;
+    height: 30px;
+    @include border-radius(50%);
+    top: 0;
+    right: 0;
+    @include icon-button(44px, -11px);
+    background-color: rgba(51, 51, 51, .6);
+    position: absolute;
+    margin: $gs-gutter/2;
+
+    .i-expand-black {
+        display: none;
+    }
+
+    @include mq(desktop) {
+        .gallery2__img-container:hover & {
+            background-color: $c-mediaDefault;
+
+            .i-expand-black {
+                display: inline-block;
+            }
+            .i-expand-white {
+                display: none;
+            }
+        }
+    }
+}
+
+.content__main-column--gallery {
+    margin-right: auto;
+}
+
+.content--gallery {
+    .content__meta-container {
+        min-height: gs-height(1) + $gs-baseline*2;
+
+        @include mq(tablet) {
+            border-bottom: 0;
+        }
+
+        .social__head {
+            color: guss-colour(neutral-3);
+            padding: $gs-baseline/4 0;
+        }
+
+        @include mq(tablet, leftCol) {
+            .byline,
+            .content__dateline {
+                padding-right: gs-span(3) + $gs-gutter;
+            }
+
+            .social-wrapper--aside {
+                display: block;
+                position: absolute;
+                top: 0;
+                right: 0;
+                border-top: 0;
+                width: gs-span(3);
+                overflow: visible;
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    width: $gs-gutter;
+                    height: 1px;
+                    top: -1px;
+                    left: $gs-gutter * -1;
+                    background-color: guss-colour(neutral-1);
+                }
+            }
+        }
+
+        .meta__comment-count--top,
+        .meta__comment-count--top .commentcount {
+            @include mq($to: tablet) {
+                display: block;
+            }
+        }
+
+        .meta__comment-count--bottom {
+            display: block;
+            float: none;
+            padding-top: $gs-baseline/2;
+
+            .commentcount {
+                position: static;
+            }
+
+            .commentcount__label {
+                display: inline;
+            }
+        }
+    }
+
+    .content__standfirst {
+        @include mq(rightCol) {
+            padding-right: gs-span(3);
+        }
+    }
+
+    .social-wrapper--bottom {
+        padding-top: 0;
+        margin-top: $gs-baseline * -.5;
+        display: block;
+    }
+
 }

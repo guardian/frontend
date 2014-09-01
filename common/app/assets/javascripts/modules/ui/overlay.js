@@ -72,6 +72,7 @@ define([
 
         this.node.style.display = 'none';
         mediator.emit('modules:overlay:hide', this);
+        mediator.emit('window:resize'); // trigger responsive image upgrade
     };
 
     Overlay.prototype.setBody = function(content) {

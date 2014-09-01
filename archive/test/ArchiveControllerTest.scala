@@ -34,6 +34,11 @@ class ArchiveControllerTest extends FlatSpec with Matchers {
     controllers.ArchiveController.isEncoded("foo") should be (None)
   }
 
+  it should "decode spaces as +" in Fake {
+    controllers.ArchiveController.isEncoded("foo%20foo") should be (Some("foo+foo"))
+    controllers.ArchiveController.isEncoded("foo+foo") should be (None)
+  }
+
   it should "test a string contains an old gallery" in Fake {
     controllers.ArchiveController.isGallery("arts/gallery/0,") should be (Some("arts/pictures/0,"))
   }

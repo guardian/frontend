@@ -1,4 +1,5 @@
 define([
+    'raven',
     'lodash/collections/filter',
     'lodash/collections/forEach',
     'lodash/collections/map',
@@ -10,8 +11,10 @@ define([
     'common/utils/mediator',
     'common/utils/config',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/high-commercial-component'
+    'common/modules/experiments/tests/high-commercial-component',
+    'common/modules/experiments/tests/soulmates-labelling'
 ], function (
+    raven,
     filter,
     forEach,
     map,
@@ -23,11 +26,13 @@ define([
     mediator,
     globalConfig,
     mvtCookie,
-    HighCommercialComponent
+    HighCommercialComponent,
+    SoulmatesLabelling
     ) {
 
     var TESTS = [
-            new HighCommercialComponent()
+            new HighCommercialComponent(),
+            new SoulmatesLabelling()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -264,8 +269,7 @@ define([
             } catch (error) {
                 // Encountering an error should invalidate the logging process.
                 abLogObject = {};
-
-                mediator.emit('module:error', error, 'common/modules/experiments/ab.js', 267);
+                raven.captureException(error);
             }
 
             return abLogObject;

@@ -7,10 +7,12 @@
 /*global DocumentTouch: true */
 
 define([
-    'common/modules/userPrefs',
+    'lodash/arrays/findIndex',
+    'common/utils/_',
     'common/utils/mediator'
 ], function (
-    userPrefs,
+    findIndex,
+    _,
     mediator
 ) {
 
@@ -19,7 +21,42 @@ define([
                          document.webkitVisibilityState ||
                          document.mozVisibilityState ||
                          document.msVisibilityState ||
-                         'visible';
+                         'visible',
+        // ordered lists of breakpoints
+        breakpoints = [
+            {
+                name: 'mobile',
+                isTweakpoint: false
+            },
+            {
+                name: 'mobileLandscape',
+                isTweakpoint: true
+            },
+            {
+                name: 'tablet',
+                isTweakpoint: false
+            },
+            {
+                name: 'rightCol',
+                isTweakpoint: true
+            },
+            {
+                name: 'desktop',
+                isTweakpoint: false
+            },
+            {
+                name: 'leftCol',
+                isTweakpoint: true
+            },
+            {
+                name: 'faciaLeftCol',
+                isTweakpoint: true
+            },
+            {
+                name: 'wide',
+                isTweakpoint: false
+            }
+        ];
 
     /**
      *     Util: returns a function that:
@@ -30,13 +67,13 @@ define([
      *     then:
      *       hasCrossedTheMagicLines(function(){ do stuff })
      */
-    function hasCrossedBreakpoint(){
-        var was = getBreakpoint();
-        return function(callback){
-            var is = getBreakpoint();
-            if ( is !== was ) {
+    function hasCrossedBreakpoint(includeTweakpoint) {
+        var was = getBreakpoint(includeTweakpoint);
+        return function (callback) {
+            var is = getBreakpoint(includeTweakpoint);
+            if (is !== was) {
+                callback(is, was);
                 was = is;
-                callback(is);
             }
         };
     }
@@ -164,17 +201,28 @@ define([
         return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }
 
-    function getBreakpoint() {
-        // default to desktop
+    function getBreakpoint(includeTweakpoint) {
+        // default to mobile
         var breakpoint = (
                 window.getComputedStyle
                     ? window.getComputedStyle(document.body, ':after').getPropertyValue('content')
                     : document.getElementsByTagName('head')[0].currentStyle.fontFamily
-            )
-            || 'mobile';
+            ).replace(/['",]/g, '') || 'mobile';
 
-        // firefox wraps the value in quotes, android adds trailing comma to font
-        return breakpoint.replace(/['",]/g, '');
+        if (!includeTweakpoint) {
+            var index = findIndex(breakpoints, function (b) {
+                return b.name === breakpoint;
+            });
+            breakpoint = _(breakpoints)
+                .first(index + 1)
+                .findLast(function (b) {
+                    return !b.isTweakpoint;
+                })
+                .valueOf()
+                .name;
+        }
+
+        return breakpoint;
     }
 
     // Page Visibility

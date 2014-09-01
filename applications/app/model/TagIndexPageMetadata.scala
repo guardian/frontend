@@ -4,8 +4,8 @@ import common.{SectionLink, NavItem}
 import services.{KeywordAlphaIndexAutoRefresh, ContributorAlphaIndexAutoRefresh}
 
 object IndexNav {
-  private def tagIndexSignposting(tagType: String)(get: => Option[TagIndexListings]) = {
-    val sectionRoot = SectionLink(tagType, tagType, tagType.capitalize, s"/index/$tagType")
+  private def tagIndexSignposting(tagType: String, navTitle: String)(get: => Option[TagIndexListings]) = {
+    val sectionRoot = SectionLink(tagType, tagType, navTitle, s"/index/$tagType")
 
     get match {
       case Some(listings) => NavItem(
@@ -19,9 +19,9 @@ object IndexNav {
     }
   }
 
-  val contributorsAlpha = tagIndexSignposting("contributors")(ContributorAlphaIndexAutoRefresh.get)
+  val contributorsAlpha = tagIndexSignposting("contributors", "Contributors")(ContributorAlphaIndexAutoRefresh.get)
 
-  val keywordsAlpha = tagIndexSignposting("keywords")(KeywordAlphaIndexAutoRefresh.get)
+  val keywordsAlpha = tagIndexSignposting("subjects", "Subjects")(KeywordAlphaIndexAutoRefresh.get)
 }
 
 trait TagIndexPageMetaData extends MetaData {
@@ -29,7 +29,9 @@ trait TagIndexPageMetaData extends MetaData {
 
   val tagType: String
 
-  override def id: String = s"index/$tagType/$page"
+  val indexFolder: String
+
+  override def id: String = s"index/$indexFolder/$page"
 
   override def section: String = tagType
 
@@ -38,14 +40,18 @@ trait TagIndexPageMetaData extends MetaData {
   override def webTitle: String = page.capitalize
 }
 
-class KeywordIndexPageMetaData(val page: String) extends TagIndexPageMetaData {
+class SubjectIndexPageMetaData(val page: String) extends TagIndexPageMetaData {
   override val tagType: String = "keywords"
+
+  override val indexFolder: String = "subjects"
 
   override def customSignPosting = Some(IndexNav.keywordsAlpha)
 }
 
 class ContributorsIndexPageMetaData(val page: String) extends TagIndexPageMetaData {
   override val tagType: String = "contributors"
+
+  override val indexFolder: String = "contributors"
 
   override def customSignPosting = Some(IndexNav.contributorsAlpha)
 }

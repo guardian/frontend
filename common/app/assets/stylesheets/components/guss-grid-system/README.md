@@ -9,7 +9,7 @@ bower install guss-grid-system --save
 ```
 
 ```scss
-@import "path/to/_grid-system.scss";
+@import 'path/to/_grid-system.scss';
 ```
 
 

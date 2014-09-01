@@ -199,6 +199,11 @@
 }
 .item__video-container {
     margin-top: 4px;
+
+    // No margin for Raclette
+    .l-row--items-3 & {
+        margin-top: 0;
+    }
 }
 .item__image-container {
     margin-top: 4px;
@@ -269,10 +274,10 @@
 
     .i-quote-orange {
         float: left;
-        margin-right: 7px;
+        margin-right: $gs-gutter/5;
         position: relative;
-        top: 3px;
-        width: 1.45em;
+        top: 1px;
+        width: 1.1em;
         height: 1em;
         background-size: contain;
 
@@ -290,6 +295,12 @@
 .row-of-two--boost-first .item__title--inline-video,
 .row-of-two--boost-second .item__title--inline-video {
     display: inline;
+}
+
+.item__header--inline-video {
+    @include mq(desktop) {
+        margin-top: 2px;
+    }
 }
 
 .item__media-wrapper .gu-media-wrapper {

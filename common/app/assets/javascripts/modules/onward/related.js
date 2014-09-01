@@ -1,25 +1,27 @@
 define([
-    'common/utils/mediator',
-    'common/modules/lazyload',
-    'common/modules/ui/expandable',
-    'common/modules/ui/images',
-    'common/modules/onward/history',
-    'qwery',
     'bonzo',
+    'qwery',
+    'raven',
+    'lodash/arrays/intersection',
     'common/utils/$',
+    'common/utils/mediator',
     'common/modules/analytics/register',
-    'lodash/arrays/intersection'
+    'common/modules/lazyload',
+    'common/modules/onward/history',
+    'common/modules/ui/expandable',
+    'common/modules/ui/images'
 ], function (
-    mediator,
-    LazyLoad,
-    Expandable,
-    images,
-    History,
-    qwery,
     bonzo,
+    qwery,
+    raven,
+    intersection,
     $,
+    mediator,
     register,
-    _intersection
+    LazyLoad,
+    History,
+    Expandable,
+    images
 ) {
 
     function Related() {
@@ -48,7 +50,7 @@ define([
         ];
         var pageTags = config.page.keywordIds.split(',');
 
-        var match = _intersection(whitelistedTags, pageTags);
+        var match = intersection(whitelistedTags, pageTags);
         if (match.length > 0) {
             return '/popular-in-tag/' + match[0] + '.json';
         }
@@ -97,8 +99,7 @@ define([
                         mediator.emit('modules:related:loaded', config, context);
                         register.end(componentName);
                     },
-                    error: function(req) {
-                        mediator.emit('module:error', 'Failed to load related: ' + req.statusText, 'common/modules/related.js');
+                    error: function() {
                         register.error(componentName);
                     }
                 }).load();

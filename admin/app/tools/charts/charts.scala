@@ -59,11 +59,10 @@ trait Chart {
   lazy val id = UUID.randomUUID().toString
 
   def name: String
-  def yAxis: Option[String] = None
   def labels: Seq[String]
   def dataset: Seq[ChartRow]
-
-  def form: String = "LineChart"
+  def hasData = dataset.nonEmpty
+  def format: ChartFormat
 
   def asDataset = s"[[$labelString], $dataString]"
 
@@ -72,11 +71,7 @@ trait Chart {
     val data = point.values.mkString(",")
     s"['${point.rowKey}', $data]"
   }
-  private def dataString = dataset.map(datapointString).mkString(",")
-}
-
-case class MaximumMetric(metric: Future[GetMetricStatisticsResult]) {
-  lazy val max: Double = metric.get().getDatapoints.headOption.map(_.getMaximum.doubleValue()).getOrElse(0.0)
+  private def dataString = dataset.map { datapointString }.mkString(",")
 }
 
 case class ChartFormat(colours: Seq[String], cssClass: String)
@@ -90,7 +85,17 @@ object ChartFormat {
   val MultiLine = ChartFormat(colours = Seq("#FF6600", "#99CC33", "#CC0066", "#660099", "#0099FF"), cssClass =  "charts charts-full")
 }
 
-class LineChart(val name: String, val labels: Seq[String], val charts: Future[GetMetricStatisticsResult]*) extends Chart {
+class GenericChart(
+  override val name: String,
+  override val labels: Seq[String],
+  override val format: ChartFormat,
+  override val dataset: Seq[ChartRow]) extends Chart
+
+class AwsLineChart(
+  override val name: String,
+  override val labels: Seq[String],
+  override val format: ChartFormat,
+  val charts: Future[GetMetricStatisticsResult]*) extends Chart {
 
   override def dataset: Seq[ChartRow] = {
     val dataColumns = labels.tail
@@ -103,30 +108,18 @@ class LineChart(val name: String, val labels: Seq[String], val charts: Future[Ge
     table.asChartRow(toLabel, toValue)
   }
     
-  def toValue(dataPoint: Datapoint): Double = Option(dataPoint.getAverage).orElse(Option(dataPoint.getSum))
+  protected def toValue(dataPoint: Datapoint): Double = Option(dataPoint.getAverage).orElse(Option(dataPoint.getSum))
       .getOrElse(throw new IllegalStateException(s"Don't know how to get a value for $dataPoint"))
 
-  def toLabel(date: DateTime): String = date.toString("HH:mm")
-
-  lazy val hasData = dataset.nonEmpty
-
-  lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
-
-  lazy val format = ChartFormat.SingleLineBlue
-
-  def withFormat(f: ChartFormat) = new LineChart(name, labels, charts:_*) {
-    override lazy val format = f
-  }
+  protected def toLabel(date: DateTime): String = date.toString("HH:mm")
 }
 
-class AssetChart(name: String, labels: Seq[String], charts: Future[GetMetricStatisticsResult]*) extends LineChart(name, labels, charts:_*) {
+class AwsDailyLineChart(name: String, labels: Seq[String], format: ChartFormat, charts: Future[GetMetricStatisticsResult]*) extends AwsLineChart(name, labels, format, charts:_*) {
   override def toLabel(date: DateTime): String = date.toString("dd/MM")
-  override def withFormat(f: ChartFormat) = new AssetChart(name, labels, charts:_*) {
-    override lazy val format = f
-  }
+  lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
 }
 
-class ABDataChart(name: String, ablabels: Seq[String], f: ChartFormat, charts: Future[GetMetricStatisticsResult]*) extends LineChart(name, ablabels, charts:_*) {
+class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, charts: Future[GetMetricStatisticsResult]*) extends AwsLineChart(name, ablabels, format, charts:_*) {
 
   private val dataColumns: Seq[(String, ChartColumn)] = {
 
@@ -148,6 +141,4 @@ class ABDataChart(name: String, ablabels: Seq[String], f: ChartFormat, charts: F
   }
 
   override val labels: Seq[String] = Seq(ablabels.headOption.getOrElse("X axis")) ++ dataColumns.map(_._1)
-
-  override lazy val format: ChartFormat = f
 }

@@ -34,7 +34,6 @@ require([
     'common/utils/config',
     'common/utils/context',
     'common/utils/cookies',
-    'common/utils/deferToLoad',
     'common/utils/detect',
     'common/utils/easing',
     'common/utils/get-property',
@@ -56,5 +55,6 @@ require([
     'common/modules/experiments/ab',
     'common/modules/lazyload',
     'common/modules/ui/images',
-    'common/modules/ui/tabs'
+    'common/modules/ui/tabs',
+    'common/modules/userPrefs'
 ], function() {});

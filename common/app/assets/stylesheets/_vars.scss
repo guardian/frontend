@@ -12,7 +12,7 @@
 
 $old-ie:      false !default;
 $svg-support: true !default;
-$browser-supports-columns: true;
+$browser-supports-columns: not $old-ie !default;
 $browser-supports-flexbox: true !default;
 
 
@@ -22,8 +22,7 @@ $browser-supports-flexbox: true !default;
 $inArticleInlineImgWidth: 114px;
 $headerHeight: 36px;
 
-@import 'components/guss-colours/helpers';
-@import 'components/guss-colours/colours';
+@import 'components/guss-colours/_colours';
 @import 'components/guss-grid-system/_grid-system';
 
 $right-column:     gs-span(4);
@@ -144,7 +143,7 @@ $c-statusNegative: #da1d1d;
 $mpu-original-width: 300px;
 $mpu-original-height: 250px;
 $mpu-align-offset: 20px; // Align bottom of ad with text on desktop
-$mpu-ad-label-height: 34px;
+$mpu-ad-label-height: $gs-baseline*2;
 
 
 // Dimensions
