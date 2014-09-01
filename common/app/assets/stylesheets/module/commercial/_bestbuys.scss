@@ -1,10 +1,14 @@
 /* ==========================================================================
    Best Buys component
    ========================================================================== */
-
-$c-money-high: #63007f;
-
 .commercial--bestbuys {
+    $c-commercial-bestbuys-1: #4bc6df;
+    $c-commercial-bestbuys-2: #197caa;
+
+    .container__header {
+        background-color: $c-commercial-bestbuys-1;
+    }
+
     .commercial__explainer {
         @include fs-header(2);
         line-height: 1;
@@ -13,14 +17,14 @@ $c-money-high: #63007f;
         position: absolute;
         right: 0;
         top: $gs-baseline;
-        color: $c-money-high;
+        color: $c-commercial-bestbuys-2;
         width: auto;
         @include fs-textSans(2);
         font-weight: bold;
         
         .i.i-arrow-white-right-18 {
             float: right;
-            background-color: $c-money-high;
+            background-color: $c-commercial-bestbuys-2;
             margin-top: 0;
             margin-left: 4px;
         }
@@ -36,7 +40,7 @@ $c-money-high: #63007f;
     .tabs__tab {
         width: auto;
         border-bottom: 0;
-        border-color: $c-commercial-comp-neutral;
+        border-color: $c-neutral6;
 
         + .tabs__tab a {
             border-left: 0;
@@ -48,11 +52,11 @@ $c-money-high: #63007f;
         }
     }
     .tabs__tab--selected {
-        border-color: $c-money-high;
+        border-color: $c-commercial-bestbuys-2;
 
         a {
             background-color: transparent;
-            color: $c-money-high;
+            color: $c-commercial-bestbuys-2;
             font-weight: bold;
         }
     }

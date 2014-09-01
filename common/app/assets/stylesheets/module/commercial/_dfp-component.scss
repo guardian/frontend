@@ -21,8 +21,15 @@
         }
     }
 }
-   
+
 .commercial--dfp {
+    $c-commercial-dfp-1: $c-neutral2;
+    $c-commercial-dfp-2: $c-neutral1;
+
+    .container__header {
+        background-color: $c-commercial-dfp-1;
+    }
+
     .commercial__head {
         height: auto;
         border: 0;

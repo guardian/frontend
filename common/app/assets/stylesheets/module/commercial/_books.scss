@@ -1,10 +1,14 @@
 /* ==========================================================================
    Books components
    ========================================================================== */
-
-$c-commercial-books-dark: #630d4c;
-
 .commercial--books {
+    $c-commercial-books-1: #BB3a7f;
+    $c-commercial-books-2: #52a8a4;
+
+    .container__header {
+        background-color: $c-commercial-books-1;
+    }
+
     .commercial__explainer {
         clear: both;
     }

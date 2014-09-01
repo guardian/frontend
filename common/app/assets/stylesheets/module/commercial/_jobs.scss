@@ -1,10 +1,14 @@
 /* ==========================================================================
    Jobs component
    ========================================================================== */
-
-/* remove top margin on the footer to make component sit on top of it as per design */
-
 .commercial--jobs {
+    $c-commercial-jobs-1: #197caa;
+    $c-commercial-jobs-2: #005689;
+
+    .container__header {
+        background-color: $c-commercial-jobs-1;
+    }
+
     .commercial__head {
         background-color: transparent;
         height: auto;

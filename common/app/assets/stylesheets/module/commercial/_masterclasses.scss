@@ -1,8 +1,14 @@
 /* ==========================================================================
    Masterclass component
    ========================================================================== */
-
 .commercial--masterclasses {
+    $c-commercial-masterclasses-1: #a60947;
+    $c-commercial-masterclasses-2: #ff9b0b;
+
+    .container__header {
+        background-color: $c-commercial-masterclasses-1;
+    }
+
     .commercial__explainer {
         color: $c-neutral1;
         @include f-headline;

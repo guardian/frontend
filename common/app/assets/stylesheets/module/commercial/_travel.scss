@@ -1,11 +1,14 @@
 /* ==========================================================================
    Travel component
    ========================================================================== */
-
-$c-commercial-travel-1: #5ebfba;
-$c-commercial-travel-2: #72af7e;
-
 .commercial--travel {
+    $c-commercial-travel-1: #5ebfba;
+    $c-commercial-travel-2: #52A8A4;
+
+    .container__header {
+        background-color: $c-commercial-travel-1;
+    }
+
     .lineitem {
         width: 50%;
         float: left;
@@ -27,9 +30,6 @@ $c-commercial-travel-2: #72af7e;
         float: none;
     }
     &.commercial--high {
-        .commercial__search {
-            display: block;
-        }
         .highitem__details {
             margin-left: 0;
             padding-right: 0;
