@@ -16,7 +16,7 @@ case class TagIndexReadError(error: JsError) extends TagIndexError
 object TagIndexesS3 extends S3 {
   override lazy val bucket = Configuration.indexes.tagIndexesBucket
 
-  val stage = if (Play.isTest) "TEST" else Configuration.facia.stage
+  val stage = if (Play.isTest) "TEST" else Configuration.facia.stage.toUpperCase
 
   val ListingKey = "_listing"
 
