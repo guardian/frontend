@@ -181,9 +181,7 @@ define([
                     return this.meta[key]() || this.fields[key]();
                 },
                 write: function(value) {
-                    var el = document.createElement('div');
-                    el.innerHTML = value;
-                    this.meta[key](el.innerHTML);
+                    this.meta[key](value);
                 },
                 owner: this
             });
@@ -310,6 +308,7 @@ define([
                 .filter(function(p){ return p[1] !== false; })
                 // trim strings:
                 .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
+                .map(sanitizeHtml)
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
@@ -407,6 +406,17 @@ define([
                 self._save();
             }, 200);
         };
+
+        function sanitizeHtml(s) {
+            var el;
+            if (_.isString(s)) {
+                el = document.createElement('div');
+                el.innerHTML = s;
+                return el.innerHTML;
+            } else {
+                return s;
+            }
+        }
 
         return Article;
     });

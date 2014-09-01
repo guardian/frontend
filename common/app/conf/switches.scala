@@ -388,11 +388,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val FaciaToolContainerTagsSwitch = Switch("Facia", "facia-tool-tags",
-    "If this switch is on the container configuration will allow articles to show their tags or sections",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
-  )
-
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -443,7 +438,6 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
-    FaciaToolContainerTagsSwitch,
     EnhanceTweetsSwitch,
     SentimentalCommentsSwitch,
     IndiaRegionSwitch,

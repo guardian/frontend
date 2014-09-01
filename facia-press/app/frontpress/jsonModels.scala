@@ -131,8 +131,8 @@ object CollectionJson {
       groups         = Option(config.groups).filter(_.nonEmpty),
       href           = collection.href.orElse(config.href),
       `type`         = config.collectionType,
-      showTags       = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showTags,
-      showSections   = Switches.FaciaToolContainerTagsSwitch.isSwitchedOn && config.showSections
+      showTags       = config.showTags,
+      showSections   = config.showSections
     )
 }
 
