@@ -11,7 +11,7 @@
    Identity core
    ========================================================================== */
 
-@import 'components/guss-forms/_forms';
-@include guss-forms-defaults;
+@import 'components/pasteup-forms/_forms';
+@include pasteup-forms-defaults;
 @import 'module/identity/_identity';
 @import 'module/identity/_formstack';
