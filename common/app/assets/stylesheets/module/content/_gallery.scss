@@ -25,7 +25,7 @@
             padding-top: 0;
         }
         &:last-child {
-            border-bottom: 1px dotted guss-colour(tone-media-2);
+            border-bottom: 1px dotted $c-mediaAccent2;
             margin-bottom: $gs-baseline;
         }
         .gallery2__item--advert + & {

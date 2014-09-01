@@ -86,7 +86,7 @@
     @include fs-bodyCopy(1);
     line-height: 16px;
     background-color: $c-mediaBackground;
-    color: guss-colour(neutral-7) !important;
+    color: $c-neutral7 !important;
     position: absolute;
     top: 0;
     left: 0;

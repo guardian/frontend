@@ -168,12 +168,12 @@
 .ad-slot--gallery-inline {
     @include mq(tablet) {
         padding-bottom: $gs-baseline*2;
-        background-color: lighten(guss-colour(tone-media-1), 2.5%);
+        background-color: lighten($c-mediaBackground, 2.5%);
     }
     .ad-slot__label {
-        color: guss-colour(neutral-3);
-        background-color: lighten(guss-colour(tone-media-1), 2.5%);
-        border-top-color: guss-colour(neutral-2);
+        color: $c-neutral3;
+        background-color: lighten($c-mediaBackground, 2.5%);
+        border-top-color: $c-neutral2;
 
         @include mq(tablet) {
             max-width: none;
