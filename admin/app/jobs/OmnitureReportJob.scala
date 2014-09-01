@@ -11,11 +11,6 @@ object OmnitureVariables {
   val pageViews = "pageViews"
   val visits = "visits"
   val navigationalInteractionEvent = "event37"
-
-  // Elements
-  val videoViews = "event17"
-  val contentType = "prop9"
-  val navigationalInteraction = "evar37"
 }
 
 object OmnitureReports {
