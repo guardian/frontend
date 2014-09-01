@@ -9,7 +9,7 @@ object Title {
 
   def apply(page: MetaData)(implicit request: RequestHeader): Html = Html{
     val title = page match {
-      case c: Content => s"${c.webTitle}${pagination(page)}${getSectionConsideringWebtitle(c.webTitle, Option(page.section))}"
+      case c: Content => s"${c.webTitle}${pagination(c)}${getSectionConsideringWebtitle(c.webTitle, Option(c.sectionName))}"
       case t: Tag     => s"${t.webTitle}${pagination(page)}${getSectionConsideringWebtitle(t.webTitle, Option(page.section))}"
       case _          => page.title.filter(_.nonEmpty).getOrElse(s"${page.webTitle}${pagination(page)}${getSectionConsideringWebtitle(page.webTitle, Option(page.section))}")
     }
