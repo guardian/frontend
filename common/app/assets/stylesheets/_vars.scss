@@ -41,7 +41,7 @@ $left-column-wide: gs-span(3);
 // across team members. It will improve communication between
 // stakeholders, designers, developers, and testers.
 
-// NB. If these change, please update dfp.js to match
+// NB. If these change, please update javascripts/utils/detect.js to match
 
 $mq-breakpoints: (
     mobile:  gs-span(4)  + $gs-gutter,   // 320px

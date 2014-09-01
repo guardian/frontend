@@ -22,7 +22,8 @@ define([
                          document.mozVisibilityState ||
                          document.msVisibilityState ||
                          'visible',
-        // ordered lists of breakpoints
+        // Ordered lists of breakpoints
+        // These should match those defined in stylesheets/_vars.scss
         breakpoints = [
             {
                 name: 'mobile',
