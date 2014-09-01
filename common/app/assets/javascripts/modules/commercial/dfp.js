@@ -198,15 +198,35 @@ define([
 
             }
         },
-        shouldSlotRefresh = function () {
-            return true;
+        breakpointNameToAttribute = function (breakpointName) {
+            return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+        },
+        getSlotsBreakpoint = function (breakpoint, slotBreakpoints) {
+            return _(detect.breakpoints)
+                .initial(function (breakpointInfo) {
+                    return breakpointInfo.name !== breakpoint;
+                })
+                .intersection(slotBreakpoints)
+                .last()
+                .valueOf();
+        },
+        shouldSlotRefresh = function (slotInfo, breakpoint, previousBreakpoint) {
+            // get the slots breakpoints
+            var slotBreakpoints = _(detect.breakpoints)
+                .filter(function (breakpointInfo) {
+                    return slotInfo.$adSlot.data(breakpointNameToAttribute(breakpointInfo.name));
+                })
+                .valueOf();
+            // have we changed breakpoints
+            return getSlotsBreakpoint(previousBreakpoint, slotBreakpoints) !==
+                getSlotsBreakpoint(breakpoint, slotBreakpoints);
         },
         refresh = function (breakpoint, previousBreakpoint) {
             googletag.pubads().refresh(
                 _(slotsToRefresh)
                     // only refresh if the slot needs to
-                    .filter(function (slot) {
-                        return shouldSlotRefresh(slot, breakpoint, previousBreakpoint);
+                    .filter(function (slotInfo) {
+                        return shouldSlotRefresh(slotInfo, breakpoint, previousBreakpoint);
                     })
                     .map(function (slotInfo) {
                         return slotInfo.slot;
@@ -240,7 +260,7 @@ define([
 
             forEach(detect.breakpoints, function (breakpointInfo) {
                 // turn breakpoint name into attribute style (lowercase, hyphenated)
-                var attr  = slot.data(breakpointInfo.name.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase());
+                var attr  = slot.data(breakpointNameToAttribute(breakpointInfo.name));
                 if (attr) {
                     mapping.addSize([breakpointInfo.width, 0], createSizeMapping(attr));
                 }

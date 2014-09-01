@@ -222,7 +222,7 @@ define([
                 return googletag.pubads().refresh.called;
             });
             runs(function() {
-                expect(googletag.pubads().refresh.firstCall.args[0].length).toBe(3);
+                expect(googletag.pubads().refresh.firstCall.args[0].length).toBe(2);
             })
         });
 
