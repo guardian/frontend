@@ -378,11 +378,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val FaciaToolCachedZippingContentApiSwitch = Switch("Facia", "facia-tool-zipcached-capi-requests",
-    "If this switch is on facia tool will zip cache responses from the content API and use them on failure",
-    safeState = On, sellByDate = never
-  )
-
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
@@ -447,7 +442,6 @@ object Switches extends Collections {
     GeoMostPopular,
     SeoEscapeFootballJsonPathLikeValuesSwitch,
     FaciaToolCachedContentApiSwitch,
-    FaciaToolCachedZippingContentApiSwitch,
     FaciaToolDraftPressSwitch,
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
