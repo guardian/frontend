@@ -130,6 +130,8 @@ trait UpdateActions extends Logging {
     "showMainVideo"
   )
 
+  implicit val updateListWrite = Json.writes[UpdateList]
+
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
 
   def insertIntoLive(update: UpdateList, block: Block): Block =
