@@ -101,10 +101,6 @@ define([
 
         function bootstrap(opts) {
             return fetchSettings(function (config, switches) {
-                if (switches['facia-tool-configuration-disable']) {
-                    terminate('The configuration tool has been switched off.', '/');
-                    return;
-                }
                 model.switches(switches);
 
                 if (opts.force || !_.isEqual(config, vars.state.config)) {

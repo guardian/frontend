@@ -328,11 +328,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ToolConfigurationDisable = Switch("Facia", "facia-tool-configuration-disable",
-    "If this is switched on then the fronts configuration tool is disabled",
-    safeState = Off, sellByDate = never
-  )
-
   val ToolSnaps = Switch("Facia", "facia-tool-snaps",
     "If this is switched on then snaps can be created by dragging arbitrary links into the tool",
     safeState = Off, sellByDate = never
@@ -407,7 +402,6 @@ object Switches extends Collections {
     IdentityFormstackSwitch,
     IdentityAvatarUploadSwitch,
     ToolDisable,
-    ToolConfigurationDisable,
     ToolSnaps,
     ToolImageOverride,
     ToolSparklines,
