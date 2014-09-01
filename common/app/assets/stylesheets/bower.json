@@ -3,5 +3,8 @@
   "dependencies": {
     "guss": "~3",
     "pasteup-palette": "*"
+  },
+  "devDependencies": {
+    "pasteup-forms": "~4.0.0"
   }
 }

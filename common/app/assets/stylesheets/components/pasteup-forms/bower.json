@@ -1,0 +1,14 @@
+{
+  "name": "pasteup-forms",
+  "main": [
+    "_forms.scss",
+    "_forms.config.scss",
+    "_forms.mixins.scss"
+  ],
+  "ignore": [
+    "demo"
+  ],
+  "dependencies": {
+    "guss": "~3"
+  }
+}
