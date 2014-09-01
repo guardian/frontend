@@ -198,7 +198,7 @@ define([
 
             }
         },
-        shouldSlotRefresh = function (slot, breakpoint, previousBreakpoint) {
+        shouldSlotRefresh = function () {
             return true;
         },
         refresh = function (breakpoint, previousBreakpoint) {
@@ -206,7 +206,7 @@ define([
                 _(slotsToRefresh)
                     // only refresh if the slot needs to
                     .filter(function (slot) {
-                        return shouldSlotRefresh(slot, breakpoint, previousBreakpoint)
+                        return shouldSlotRefresh(slot, breakpoint, previousBreakpoint);
                     })
                     .map(function (slotInfo) {
                         return slotInfo.slot;
