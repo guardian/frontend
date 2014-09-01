@@ -20,7 +20,6 @@ define([
 
     function Video(config) {
         this.config = config.config;
-        this.context = config.context;
         this.support = config.support;
         this.video = config.el;
         this.played = false;
@@ -58,7 +57,7 @@ define([
 
         bean.on(this.video, 'ended error', function() {
             //Init omniture tracking
-            mediator.emit('video:ads:finished', self.config, self.context);
+            mediator.emit('video:ads:finished', self.config);
 
             bean.off(self.video, 'ended error');
             bean.off(self.video, 'click.ct');
@@ -237,7 +236,7 @@ define([
                 }
             });
         } else {
-            mediator.emit('video:ads:finished', self.config, self.context);
+            mediator.emit('video:ads:finished', self.config);
         }
     };
 

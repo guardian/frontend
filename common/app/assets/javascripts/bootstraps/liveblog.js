@@ -14,7 +14,6 @@ define([
     'common/modules/experiments/affix',
     'common/utils/template',
     'common/utils/url',
-    'common/utils/context',
     'common/bootstraps/article',
     'common/modules/ui/message',
     'common/utils/preferences'
@@ -34,7 +33,6 @@ define([
     Affix,
     template,
     url,
-    getContext,
     article,
     Message,
     preferences
@@ -76,7 +74,7 @@ define([
 
         bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e) {
             mediator.emit('module:liveblog:showkeyevents', true);
-            $('.dropdown--live-feed', getContext()).addClass('dropdown--active');
+            $('.dropdown--live-feed').addClass('dropdown--active');
             var $el = bonzo(e.currentTarget),
                 eventId = $el.attr('data-event-id'),
                 title = $('.timeline__title', $el).text(),
@@ -126,7 +124,7 @@ define([
     }
 
     function getUpdatePath() {
-        var blocks = qwery('.article-body .block', getContext()),
+        var blocks = qwery('.article-body .block'),
             newestBlock = null;
 
         if (autoUpdate.getManipulationType() === 'append') {
@@ -142,17 +140,17 @@ define([
 
     var modules = {
 
-        createFilter: function(config, context) {
-            new LiveFilter($('.js-blog-blocks', context)[0]).render($('.js-live-filter')[0]);
+        createFilter: function() {
+            new LiveFilter($('.js-blog-blocks')[0]).render($('.js-live-filter')[0]);
             new NotificationCounter().init();
         },
 
-        createTimeline: function(config, context) {
+        createTimeline: function(config) {
             var allEvents = getKeyEvents();
             if(allEvents.length > 0) {
                 var timelineHTML = wrapWithFirstAndLast(getTimelineHTML(allEvents));
 
-                $('.js-live-blog__timeline', context).append(timelineHTML);
+                $('.js-live-blog__timeline').append(timelineHTML);
                 $('.js-live-blog__timeline li:first-child .timeline__title').text('Latest post');
                 $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
 
@@ -169,7 +167,7 @@ define([
             }
         },
 
-        createAutoRefresh: function(config, context){
+        createAutoRefresh: function(config){
 
             if (config.page.isLive) {
 
@@ -177,7 +175,7 @@ define([
                 autoUpdate = new AutoUpdate({
                     path: getUpdatePath,
                     delay: timerDelay,
-                    attachTo: $('.article-body', context)[0],
+                    attachTo: $('.article-body')[0],
                     switches: config.switches,
                     manipulationType: 'prepend'
                 });

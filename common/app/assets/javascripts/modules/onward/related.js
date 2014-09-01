@@ -56,7 +56,7 @@ define([
         }
     };
 
-    Related.prototype.renderRelatedComponent = function(config, context) {
+    Related.prototype.renderRelatedComponent = function(config) {
         var container;
 
         var fetchRelated = config.switches.relatedContent && config.switches.ajaxRelatedContent && config.page.showRelatedContent;
@@ -64,15 +64,15 @@ define([
 
         if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
             new Expandable({
-                dom: context.querySelector('.related-trails'),
+                dom: document.body.querySelector('.related-trails'),
                 expanded: false,
                 showCount: false
             }).init();
-            mediator.emit('modules:related:loaded', config, context);
+            mediator.emit('modules:related:loaded', config);
 
         } else if (fetchRelated) {
 
-            container = context.querySelector('.js-related');
+            container = document.body.querySelector('.js-related');
             if (container) {
                 var popularInTag = this.popularInTagOverride(config),
                     componentName = (!Related.overrideUrl && popularInTag) ? 'related-popular-in-tag' : 'related-content';
@@ -96,7 +96,7 @@ define([
                         new Expandable({dom: relatedTrails, expanded: false, showCount: false}).init();
                         // upgrade images
                         images.upgrade(relatedTrails);
-                        mediator.emit('modules:related:loaded', config, context);
+                        mediator.emit('modules:related:loaded', config);
                         register.end(componentName);
                     },
                     error: function() {
