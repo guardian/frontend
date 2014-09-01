@@ -10,7 +10,7 @@
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-clean": "~0.5",
     "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-imagemin": "^0.7.0",
+    "grunt-contrib-imagemin": "^0.8.1",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-requirejs": "~0.4.3",
     "grunt-contrib-sass": "~0.7.2",
