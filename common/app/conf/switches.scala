@@ -395,7 +395,6 @@ object Switches extends Collections {
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
     EnhanceTweetsSwitch,
-    SentimentalCommentsSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,
