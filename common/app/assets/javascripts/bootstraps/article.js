@@ -19,9 +19,9 @@ define([
 
     var modules = {
 
-        initOpen: function(config, context) {
+        initOpen: function(config) {
             if (config.switches.openCta && config.page.commentable) {
-                var openCta = new OpenCta(context, mediator, {
+                var openCta = new OpenCta(mediator, {
                     discussionKey: config.page.shortUrl.replace('http://gu.com/', '')
                 });
 
@@ -45,12 +45,12 @@ define([
         }
     };
 
-    var ready = function (config, context) {
-        modules.initOpen(config, context);
+    var ready = function (config) {
+        modules.initOpen(config);
         modules.initFence();
         modules.initTruncateAndTwitter();
 
-        mediator.emit('page:article:ready', config, context);
+        mediator.emit('page:article:ready', config);
     };
 
     return {

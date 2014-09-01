@@ -3,7 +3,7 @@ package com.gu.integration.test.util
 import com.gu.automation.support.{Config, TestLogging}
 import com.gu.integration.test.pages.common.ParentPage
 import org.openqa.selenium.support.ui.{ExpectedCondition, WebDriverWait}
-import org.openqa.selenium.{JavascriptExecutor, WebDriver}
+import org.openqa.selenium.{JavascriptExecutor, WebDriver, WebElement}
 
 /**
  * This class is for loading and initializing pages and page objects. Example usage: <code></code>
@@ -20,6 +20,7 @@ object PageLoader extends TestLogging {
   def goTo[Page <: ParentPage](pageObject: => Page, absoluteUrl: String, useBetaRedirect: Boolean = true)
                               (implicit driver: WebDriver): Page = {
     driver.get(forceBetaSite(useBetaRedirect, turnOfPopups(absoluteUrl)))
+    waitForPageToLoad
     pageObject
   }
 

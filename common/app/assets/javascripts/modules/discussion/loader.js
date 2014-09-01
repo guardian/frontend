@@ -40,20 +40,15 @@ define([
  * And also the premod / banned state of the user
  * @constructor
  * @extends Component
- * @param {Element=} context
  * @param {Object} mediator
  * @param {Object=} options
  */
-var Loader = function(context, mediator, options) {
-    this.context = context || document;
+var Loader = function(mediator, options) {
     this.mediator = mediator;
     this.setOptions(options);
     register.begin('discussion');
 };
 Component.define(Loader);
-
-/** @type {Element} */
-Loader.prototype.context = null;
 
 Loader.prototype.defaultOptions = {
     switches: {}
@@ -109,7 +104,7 @@ Loader.prototype.ready = function() {
     bonzo(this.topLoadingElem).insertAfter(topCommentsElem);
 
     this.on('user:loaded', function() {
-        this.topComments = new TopComments(self.context, self.mediator, {
+        this.topComments = new TopComments(self.mediator, {
             discussionId: this.getDiscussionId(),
             user: self.user
         });
@@ -178,7 +173,7 @@ Loader.prototype.loadComments = function(args) {
         this.mediator.emit('discussion:seen:comment-permalink');
     }
 
-    this.comments = new Comments(this.context, this.mediator, {
+    this.comments = new Comments(this.mediator, {
         discussionId: this.getDiscussionId(),
         user: this.user,
         commentId: commentId ? commentId : null,
@@ -410,7 +405,7 @@ Loader.prototype.renderCommentCount = function() {
                 var commentCount = response.counts[0].count;
                 if (commentCount > 0) {
                     // Remove non-JS links
-                    bonzo(qwery('.js-show-discussion, .js-show-discussion a', this.context)).attr('href', '#comments');
+                    bonzo(qwery('.js-show-discussion, .js-show-discussion a')).attr('href', '#comments');
 
                     var commentCountLabel = (commentCount === 1) ? 'comment' : 'comments',
                         html = '<a href="#comments" class="js-show-discussion commentcount tone-colour" data-link-name="Comment count">' +
@@ -418,7 +413,7 @@ Loader.prototype.renderCommentCount = function() {
                                '  <span class="commentcount__label">'+commentCountLabel+'</span>' +
                                '</a>';
 
-                    bonzo(qwery('.js-comment-count', this.context)).html(html);
+                    bonzo(qwery('.js-comment-count')).html(html);
                 }
             }
         }

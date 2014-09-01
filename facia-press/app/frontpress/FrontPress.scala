@@ -10,6 +10,8 @@ import services._
 import scala.concurrent.Future
 import play.api.Play.current
 
+import scala.util.{Failure, Success, Try}
+
 trait FrontPress extends Logging {
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
@@ -37,38 +39,32 @@ trait FrontPress extends Logging {
       json
     }
 
-  def generateLiveJson(id: String): Future[JsObject] = {
-    val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
-    futureSeoData.flatMap { seoData =>
-      retrieveFrontByPath(id)
-        .map(_.map { case (config, collection) =>
-        Json.obj(
-          config.id -> Json.toJson(CollectionJson.fromCollection(config, collection))
-        )})
-        .map(_.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject})
-        .map(c =>
-        Json.obj("id" -> id) ++
-          Json.obj("seoData" -> seoData) ++
-          Json.obj("collections" -> c)
-        )
+  def generateJson(id: String, seoData: SeoData, collections: Iterable[(Config, Collection)]): Try[JsObject] = {
+    if (collections.flatMap(_._2.items).isEmpty) {
+      val errorMessage = s"Tried to generate pressed JSON for front $id but all collections were empty - aborting!"
+      log.error(errorMessage)
+      Failure(new RuntimeException(errorMessage))
+    } else {
+      val collectionsJson = collections.map { case (config, collection) =>
+        Json.obj(config.id -> Json.toJson(CollectionJson.fromCollection(config, collection)))
+      }.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject}
+
+      Success(Json.obj("id" -> id, "seoData" -> seoData, "collections" -> collectionsJson))
     }
   }
 
+  def generateLiveJson(id: String): Future[JsObject] = {
+    for {
+      seoData <- SeoData.getSeoData(id)
+      front <- retrieveFrontByPath(id)
+    } yield generateJson(id, seoData, front).get
+  }
+
   def generateDraftJson(id: String): Future[JsObject] = {
-    val futureSeoData: Future[SeoData] = SeoData.getSeoData(id)
-    futureSeoData.flatMap { seoData =>
-      retrieveDraftFrontByPath(id)
-        .map(_.map { case (config, collection) =>
-        Json.obj(
-          config.id -> Json.toJson(CollectionJson.fromCollection(config, collection))
-        )})
-        .map(_.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject})
-        .map(c =>
-        Json.obj("id" -> id) ++
-          Json.obj("seoData" -> seoData) ++
-          Json.obj("collections" -> c)
-        )
-    }
+    for {
+      seoData <- SeoData.getSeoData(id)
+      front <- retrieveDraftFrontByPath(id)
+    } yield generateJson(id, seoData, front).get
   }
 }
 

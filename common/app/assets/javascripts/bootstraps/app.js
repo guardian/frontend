@@ -5,7 +5,6 @@ define([
     'common/utils/mediator',
     'common/utils/detect',
     'common/utils/config',
-    'common/utils/context',
     'common/utils/userTiming',
 
     'common/modules/ui/fonts',
@@ -28,7 +27,6 @@ define([
     mediator,
     detect,
     config,
-    context,
     userTiming,
 
     Fonts,
@@ -55,7 +53,7 @@ define([
                     }
                 },
                 function() {
-                    boostrap.init(config, context());
+                    boostrap.init(config);
                 }
             );
         },
@@ -74,7 +72,7 @@ define([
             },
 
             initId: function () {
-                identity.init(config, context());
+                identity.init(config);
             },
 
             initUserAdTargeting : function () {
@@ -84,8 +82,6 @@ define([
 
     var routes = function() {
         userTiming.mark('App Begin');
-
-        context.set(document.getElementById('js-context'));
 
         modules.initialiseDiscussionApi();
         modules.loadFonts(navigator.userAgent);
@@ -136,7 +132,7 @@ define([
         };
 
         mediator.on('page:ready', pageRoute);
-        mediator.emit('page:ready', config, context());
+        mediator.emit('page:ready', config);
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');
