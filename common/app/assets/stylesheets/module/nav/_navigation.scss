@@ -5,7 +5,7 @@
 /* Configuration
    ========================================================================== */
 
-$c-navigation-base: guss-colour(neutral-5, $pasteup-palette);
+$c-navigation-base: $c-neutral5;
 
 $navigation-height: $gs-row-height;
 
@@ -21,7 +21,7 @@ $c-signposting-background: $c-navigation-base;
 $c-top-navigation-action: #ffffff;
 $c-top-navigation-background: #00456e; // one-off colour for nav bg
 
-$c-local-navigation-action: guss-colour(neutral-1, $pasteup-palette);
+$c-local-navigation-action: $c-neutral1;
 $c-local-navigation-background: $c-navigation-base;
 
 $c-global-navigation-background: $c-navigation-base;
@@ -29,16 +29,16 @@ $c-global-navigation-title: #ffffff;
 $c-global-navigation-title-background: $c-top-navigation-background;
 $global-navigation-title-width: $left-column + $gs-gutter;
 $global-navigation-title-width-wide: $left-column-wide + $gs-gutter;
-$c-global-navigation-action: guss-colour(neutral-1, $pasteup-palette);
+$c-global-navigation-action: $c-neutral1;
 $c-global-navigation-border: mix($c-local-navigation-background, #ffffff, 60%);
 
-$c-navigation-toggle-background: guss-colour(neutral-1, $pasteup-palette);
+$c-navigation-toggle-background: $c-neutral1;
 $c-navigation-toggle-icon: #ffffff;
 $c-navigation-toggle-shadow: rgba(#000000, .333333);
 
 $navigation-h-space-between-items: $gs-gutter;
 
-$c-navigation-expandable-background: guss-colour(neutral-1, $pasteup-palette);
+$c-navigation-expandable-background: $c-neutral1;
 
 $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
 $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(navigationBreakOnTwoLevels) + gs-span(1) + $gs-gutter * 1.5);
@@ -360,7 +360,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     color: $c-global-navigation-title;
     background: $c-global-navigation-title-background;
     float: left;
-    border-top: 1px solid guss-colour(guardian-brand, $pasteup-palette);
+    border-top: 1px solid $c-brandBlue;
 
     @include mq($to: tablet) {
         line-height: $gs-baseline*2;
