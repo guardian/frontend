@@ -32,7 +32,6 @@ require([
     'common/utils/atob',
     'common/utils/clamp',
     'common/utils/config',
-    'common/utils/context',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/easing',
