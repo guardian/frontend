@@ -50,7 +50,7 @@ define([
         modules.initFence();
         modules.initTruncateAndTwitter();
 
-        mediator.emit('page:article:ready', config, context);
+        mediator.emit('page:article:ready', config);
     };
 
     return {

@@ -383,7 +383,7 @@ define([
         }
     };
 
-    var ready = function (config, context) {
+    var ready = function (config) {
         modules.initFastClick();
         modules.testCookie();
         modules.windowEventListeners();
