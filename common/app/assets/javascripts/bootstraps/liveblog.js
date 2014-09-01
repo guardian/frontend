@@ -1,41 +1,41 @@
 define([
-    'common/utils/mediator',
-    'common/utils/$',
-    'qwery',
-    'bonzo',
     'bean',
-    'lodash/functions/throttle',
+    'bonzo',
+    'qwery',
+    'common/utils/$',
     'common/utils/_',
-    'common/utils/scroller',
     'common/utils/detect',
-    'common/modules/ui/autoupdate',
-    'common/modules/live/filter',
-    'common/modules/ui/notification-counter',
-    'common/modules/experiments/affix',
+    'common/utils/mediator',
+    'common/utils/preferences',
+    'common/utils/scroller',
     'common/utils/template',
     'common/utils/url',
-    'common/bootstraps/article',
+    'common/modules/commercial/liveblog-adverts',
+    'common/modules/experiments/affix',
+    'common/modules/live/filter',
+    'common/modules/ui/autoupdate',
     'common/modules/ui/message',
-    'common/utils/preferences'
+    'common/modules/ui/notification-counter',
+    'common/bootstraps/article'
 ], function (
-    mediator,
-    $,
-    qwery,
-    bonzo,
     bean,
-    _throttle,
+    bonzo,
+    qwery,
+    $,
     _,
-    scroller,
     detect,
-    AutoUpdate,
-    LiveFilter,
-    NotificationCounter,
-    Affix,
+    mediator,
+    preferences,
+    scroller,
     template,
     url,
-    article,
+    liveblogAdverts,
+    Affix,
+    LiveFilter,
+    AutoUpdate,
     Message,
-    preferences
+    NotificationCounter,
+    article
 ) {
     'use strict';
 
@@ -140,6 +140,10 @@ define([
 
     var modules = {
 
+        initAdverts: function () {
+            liveblogAdverts.init();
+        },
+
         createFilter: function() {
             new LiveFilter($('.js-blog-blocks')[0]).render($('.js-live-filter')[0]);
             new NotificationCounter().init();
@@ -222,6 +226,7 @@ define([
     };
 
     function ready(config) {
+        modules.initAdverts();
         modules.createFilter(config);
         modules.createTimeline(config);
         modules.createAutoRefresh(config);

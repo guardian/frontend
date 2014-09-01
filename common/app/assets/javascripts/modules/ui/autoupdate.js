@@ -5,7 +5,6 @@
 define([
     'bean',
     'bonzo',
-    'raven',
     'lodash/collections/toArray',
     'lodash/objects/assign',
     'common/utils/$',
@@ -17,7 +16,6 @@ define([
 ], function (
     bean,
     bonzo,
-    raven,
     toArray,
     assign,
     $,
@@ -81,6 +79,10 @@ define([
                     elementsToAdd = toArray(resultHtml.children).reverse();
                 }
 
+                if (elementsToAdd.length) {
+                    mediator.emit('modules:autoupdate:updates', elementsToAdd);
+                }
+
                 $attachTo[manipulation](elementsToAdd);
                 // add a timestamp to the attacher
                 $attachTo.attr('data-last-updated', date);
@@ -90,6 +92,7 @@ define([
                     this.notificationBar.setState('hidden');
                     this.view.revealNewElements.call(this);
                 } else if(this.unreadBlocks > 0) {
+                    console.log(this.unreadBlocks);
                     this.notificationBar.notify(this.unreadBlocks);
                     mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
                 }
