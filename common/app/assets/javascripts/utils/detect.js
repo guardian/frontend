@@ -211,8 +211,7 @@ define([
                 window.getComputedStyle
                     ? window.getComputedStyle(document.body, ':after').getPropertyValue('content')
                     : document.getElementsByTagName('head')[0].currentStyle.fontFamily
-            )
-            || 'mobile';
+            ).replace(/['",]/g, '') || 'mobile';
 
         if (!includeTweakpoint) {
             var index = findIndex(breakpoints, function (b) {
@@ -227,8 +226,7 @@ define([
                 .name;
         }
 
-        // value might be wrapped in quotes, or include commas
-        return breakpoint.replace(/['",]/g, '');
+        return breakpoint;
     }
 
     // Page Visibility
