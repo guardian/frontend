@@ -328,11 +328,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ToolSparklines = Switch("Facia", "facia-tool-sparklines",
-    "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
-    safeState = Off, sellByDate = never
-  )
-
   val ContentApiPutSwitch = Switch("Facia", "facia-tool-contentapi-put",
     "If this switch is on facia tool will PUT all collection changes to content api",
     safeState = Off, sellByDate = never
@@ -387,7 +382,6 @@ object Switches extends Collections {
     IdentityFormstackSwitch,
     IdentityAvatarUploadSwitch,
     ToolDisable,
-    ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
     ContentApiPutSwitch,

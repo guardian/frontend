@@ -249,20 +249,16 @@ define([
         Article.prototype.sparkline = function() {
             var path = urlAbsPath(this.props.webUrl());
 
-            if (vars.model.switches()['facia-tool-sparklines']) {
-                this.state.sparkUrl(
-                    vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':46C430' : '')
-                );
-                this.state.ophanUrl(
-                    vars.CONST.ophanBase + '?path=/' + path
-                );
-            }
+            this.state.sparkUrl(
+                vars.sparksBase + path + (this.frontPublicationDate ? '&markers=' + (this.frontPublicationDate/1000) + ':46C430' : '')
+            );
+            this.state.ophanUrl(
+                vars.CONST.ophanBase + '?path=/' + path
+            );
         };
 
         Article.prototype.refreshSparkline = function() {
-            if (vars.model.switches()['facia-tool-sparklines']) {
-                this.state.sparkUrl.valueHasMutated();
-            }
+            this.state.sparkUrl.valueHasMutated();
         };
 
         Article.prototype.toggleImageAdjustHide = function() {
