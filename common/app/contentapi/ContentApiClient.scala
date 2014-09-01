@@ -12,7 +12,7 @@ import conf.Configuration.contentApi
 import com.gu.openplatform.contentapi.model.ItemResponse
 
 import scala.concurrent.duration.{Duration, SECONDS}
-import akka.pattern.CircuitBreaker
+import akka.pattern.{CircuitBreakerOpenException, CircuitBreaker}
 
 trait QueryDefaults extends implicits.Collections with ExecutionContexts {
   // NOTE - do NOT add body to this list
@@ -150,7 +150,14 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
 
   override def fetch(url: String, parameters: Map[String, String]) = {
     if (Switches.CircuitBreakerSwitch.isSwitchedOn) {
-      circuitBreaker.withCircuitBreaker(super.fetch(url, parameters))
+      val future = circuitBreaker.withCircuitBreaker(super.fetch(url, parameters))
+
+      future onFailure {
+        case e: CircuitBreakerOpenException =>
+          ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric.record()
+      }
+
+      future
     } else {
       super.fetch(url, parameters)
     }
