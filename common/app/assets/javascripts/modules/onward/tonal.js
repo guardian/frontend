@@ -14,12 +14,11 @@ define([
 
     var noop = function(){};
 
-    function TonalComponent(config, context){
+    function TonalComponent(config){
 
         register.begin('tonal-content');
 
         this.config = config;
-        this.context = context;
         this.edition = this.config.page.edition.toLowerCase();
 
         //Ensures we only fetch supported tones.
@@ -50,7 +49,7 @@ define([
     };
 
     TonalComponent.prototype.ready = function() {
-        images.upgrade(this.context);
+        images.upgrade();
         register.end('tonal-content');
     };
 

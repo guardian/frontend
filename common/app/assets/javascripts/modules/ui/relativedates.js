@@ -146,14 +146,14 @@ define([
         return ', ' + twelveHourClock(date.getHours()) + ':' + pad(date.getMinutes()) + ampm(date.getHours());
     }
 
-    function findValidTimestamps(context) {
+    function findValidTimestamps() {
         // `.blocktime time` used in blog html
-        return $('.js-timestamp, .js-item__timestamp', context);
+        return $('.js-timestamp, .js-item__timestamp');
     }
 
-    function replaceLocaleTimestamps(context) {
+    function replaceLocaleTimestamps() {
         var cls = 'js-locale-timestamp';
-        $('.' + cls, context).each(function(el){
+        $('.' + cls).each(function(el){
             var datetime,
                 $el = bonzo(el),
                 timestamp = parseInt($el.attr('data-timestamp'), 10);
@@ -166,10 +166,10 @@ define([
         });
     }
 
-    function replaceValidTimestamps(context, opts) {
+    function replaceValidTimestamps(opts) {
         opts = opts || {};
 
-        findValidTimestamps(context).each(function(el) {
+        findValidTimestamps().each(function(el) {
             var $el = bonzo(el),
                 timestamp = parseInt($el.attr('data-timestamp'), 10) || $el.attr('datetime'), // Epoch dates are more reliable, fallback to datetime for liveblog blocks
                 datetime = new Date(timestamp),
@@ -201,9 +201,9 @@ define([
         mediator.on('modules:' + module + ':render', replaceValidTimestamps);
     });
 
-    function init(context, opts) {
-        replaceValidTimestamps(context, opts);
-        replaceLocaleTimestamps(context, opts);
+    function init(opts) {
+        replaceValidTimestamps(opts);
+        replaceLocaleTimestamps(opts);
     }
 
     return {
