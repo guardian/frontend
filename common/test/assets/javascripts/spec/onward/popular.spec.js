@@ -33,7 +33,7 @@ define(['common/utils/mediator', 'bonzo', 'common/utils/ajax', 'common/modules/o
             appendTo = document.querySelector('.js-popular');
 
             runs(function() {
-                popular({page: {section: section}}, document);
+                popular({page: {section: section}});
             });
 
             waitsFor(function () {
@@ -52,7 +52,7 @@ define(['common/utils/mediator', 'bonzo', 'common/utils/ajax', 'common/modules/o
             appendTo = document.querySelector('.js-popular');
 
             runs(function() {
-                popular({page: {section: 'global'}}, document);
+                popular({page: {section: 'global'}});
             });
 
             waitsFor(function () {

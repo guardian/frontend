@@ -1,13 +1,11 @@
 define([
     'common/utils/$',
     'bonzo',
-    'bean',
-    'common/utils/context'
+    'bean'
 ], function(
     $,
     bonzo,
-    bean,
-    context
+    bean
 ) {
     var s = {
         container: '.dropdown',
@@ -16,8 +14,6 @@ define([
     };
     function init() {
 
-        context = context();
-
         function ancestor(el, c) {
             if (!el.parentNode || bonzo(el.parentNode).hasClass(c.substring(1))) {
                 return el.parentNode;
@@ -25,7 +21,7 @@ define([
                 ancestor(el.parentNode, c);
             }
         }
-        bean.on(context, 'click', s.button, function(e) {
+        bean.on(document.body, 'click', s.button, function(e) {
             bonzo(ancestor(e.currentTarget, s.container))
                 .toggleClass('dropdown--active')
                 .each(function(d) {

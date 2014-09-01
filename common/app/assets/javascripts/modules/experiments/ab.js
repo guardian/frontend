@@ -121,13 +121,13 @@ define([
     }
 
     // Finds variant in specific tests and runs it
-    function run(test, config, context) {
+    function run(test, config) {
         if (isParticipating(test) && testCanBeRun(test, config)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
             some(test.variants, function(variant) {
                 if (variant.id === variantId) {
-                    variant.test(context, config);
+                    variant.test(config);
                     return true;
                 }
             });
@@ -217,9 +217,9 @@ define([
             cleanParticipations(config);
         },
 
-        run: function(config, context) {
+        run: function(config) {
             forEach(getActiveTests(), function(test) {
-                run(test, config, context);
+                run(test, config);
             });
         },
 
