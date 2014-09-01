@@ -1,6 +1,7 @@
 {
   "name": "frontend-common-css",
   "dependencies": {
-    "guss": "~3"
+    "guss": "~3",
+    "pasteup-palette": "*"
   }
 }

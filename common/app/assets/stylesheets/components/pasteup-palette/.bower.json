@@ -1,0 +1,16 @@
+{
+  "name": "pasteup-palette",
+  "main": [
+    "_palette.scss"
+  ],
+  "homepage": "https://github.com/guardian/pasteup-palette",
+  "_release": "5a3a7504ff",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "5a3a7504ffb8b5ba55d613b91ebc96cd46cfe32a"
+  },
+  "_source": "git://github.com/guardian/pasteup-palette.git",
+  "_target": "*",
+  "_originalSource": "pasteup-palette"
+}
