@@ -221,18 +221,18 @@ define([
         }
     };
 
-    function ready(config, context) {
-        modules.createFilter(config, context);
-        modules.createTimeline(config, context);
-        modules.createAutoRefresh(config, context);
-        modules.showFootballLiveBlogMessage(config, context);
+    function ready(config) {
+        modules.createFilter(config);
+        modules.createTimeline(config);
+        modules.createAutoRefresh(config);
+        modules.showFootballLiveBlogMessage(config);
 
         // re-use modules from article bootstrap
-        article.modules.initOpen(config, context);
+        article.modules.initOpen(config);
         article.modules.initFence();
         article.modules.initTruncateAndTwitter();
 
-        mediator.emit('page:liveblog:ready', config, context);
+        mediator.emit('page:liveblog:ready', config);
     }
 
     return {
