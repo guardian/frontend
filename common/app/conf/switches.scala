@@ -278,11 +278,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val SentimentalCommentsSwitch = Switch("Feature", "sentimental-comments",
-    "When this switch is on, you will be able to put sentiment into your comments.",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
-  )
-
   val EnhancedMediaPlayerSwitch = Switch("Feature", "enhanced-media-player",
     "If this is switched on then videos are enhanced using our JavaScript player",
     safeState = On, sellByDate = never
