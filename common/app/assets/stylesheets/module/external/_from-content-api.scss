@@ -23,15 +23,11 @@
     ul,
     ol,
     address {
-        @include rem((
-            margin: 0 0 $gs-baseline 0
-        ));
+        margin: 0 0 $gs-baseline;
         padding: 0;
 
         @include mq(tablet) {
-            @include rem((
-                margin-bottom: ($gs-baseline/3)*4
-            ));
+            margin-bottom: ($gs-baseline/3)*4;
         }
     }
     > ol,
@@ -83,42 +79,30 @@
     > figure,
     > video {
         + h2 {
-            @include rem((
-                margin-top: 24px
-            ));
+            margin-top: 24px;
 
             @include mq(tablet) {
-                @include rem((
-                    margin-top: 27px
-                ));
+                margin-top: 27px;
             }
         }
         + h3 {
-            @include rem((
-                margin-top: $gs-baseline
-            ));
+            margin-top: $gs-baseline;
         }
     }
 }
 
 .from-content-api blockquote {
     font-style: italic;
-    @include rem((
-        margin: 16px 0 28px 24px
-    ));
+    margin: 16px 0 28px 24px;
 
     @include mq(tablet) {
-        @include rem((
-            margin-left: 28px
-        ));
+        margin-left: 28px;
     }
 
     &.quoted {
         color: $c-neutral2;
 
-        @include rem((
-            margin-left: $gs-gutter * 1.5
-        ));
+        margin-left: $gs-gutter * 1.5;
     }
 }
 
@@ -155,9 +139,7 @@
 /* Captions
    ========================================================================== */
 
-.caption,
-figcaption,
-.main-caption {
+.caption {
     @include fs-data(1);
     color: $c-neutral2;
 
@@ -166,16 +148,12 @@ figcaption,
     }
 }
 
-.main-caption {
-    @include rem((
-        padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-row-height
-    ));
+.caption--main {
+    padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-row-height;
 
     @include mq(mobileLandscape) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
 }
 
@@ -190,51 +168,37 @@ figure {
         display: block;
     }
     &.img {
-        @include rem((
-            margin-top: ($gs-baseline/3)*4,
-            margin-bottom: ($gs-baseline/3)*5
-        ));
+        margin-top: ($gs-baseline/3)*4;
+        margin-bottom: ($gs-baseline/3)*5;
 
         @include mq(tablet) {
-            @include rem((
-                margin-bottom: ($gs-baseline/2)*5
-            ));
+            margin-bottom: ($gs-baseline/2)*5;
         }
     }
     &.img--landscape,
     &.img--portrait {
         figcaption {
-            @include rem((
-                padding-top: ($gs-baseline/6)*4
-            ));
+            padding-top: ($gs-baseline/6)*4;
 
             @include mq(wide) {
-                @include rem((
-                    padding-top: ($gs-baseline/6)*5
-                ));
+                padding-top: ($gs-baseline/6)*5;
             }
         }
     }
     &.img--inline {
-        @include rem((
-            margin: 5px $gs-gutter 6px 0
-        ));
+        margin: 5px $gs-gutter 6px 0;
     }
 }
 
 .figure.img--extended,
 .element-video {
-    @include rem((
-        margin-top: ($gs-baseline/3)*4,
-        margin-bottom: ($gs-baseline/3)*4
-    ));
+    margin-top: ($gs-baseline/3)*4;
+    margin-bottom: ($gs-baseline/3)*4;
 }
 
 p + figure,
 p + video {
-    @include rem((
-        margin-top: $gs-baseline/3
-    ));
+    margin-top: $gs-baseline/3;
 }
 
 figure.element--thumbnail + h2 {
@@ -320,5 +284,73 @@ figure.element--thumbnail + h2 {
     object,
     embed {
         width: 100%;
+    }
+}
+
+/* Pullquotes
+   ========================================================================== */
+
+.element-pullquote {
+    width: 100%;
+    @include box-sizing(border-box);
+    padding: 0;
+    margin-bottom: $gs-baseline;
+
+    @include mq(tablet) {
+        width: gs-span(3);
+        float: left;
+        padding-right: $gs-gutter;
+        padding-top: $gs-baseline/4;
+        margin-bottom: $gs-baseline/2;
+    }
+
+    @include mq(leftCol) {
+        $width: gs-span(2) + $gs-gutter*2;
+        width: $width;
+        margin-left: $width * -1;
+        padding: 0 $gs-gutter;
+        padding-top: $gs-baseline/4;
+    }
+    @include mq(wide) {
+        $width: gs-span(3) + $gs-gutter*2;
+        width: $width;
+        margin-left: $width * -1;
+    }
+
+    &:before,
+    &:after {
+        @extend %tone-background;
+    }
+    blockquote {
+        margin: 0;
+        font-style: normal;
+
+        p {
+            color: guss-colour(neutral-2);
+            margin-bottom: 0;
+            @include fs-headline(4);
+            @include mq(tablet) {
+                @include fs-headline(3, true);
+            }
+        }
+    }
+    footer {
+        margin-top: 1px;
+    }
+    cite {
+        @extend %tone-colour;
+        font-style: normal;
+        color: guss-colour(neutral-2);
+        @include fs-bodyHeading(2);
+
+        a,
+        a:visited {
+            border-bottom: 1px solid guss-colour(neutral-4);
+
+            &:hover {
+                text-decoration: none;
+                border-bottom: 1px solid guss-colour(neutral-2);
+            }
+        }
     }
 }

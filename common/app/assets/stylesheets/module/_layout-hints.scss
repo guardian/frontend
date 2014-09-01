@@ -1,37 +1,27 @@
 @mixin deport-left {
     @include mq(leftCol) {
-        @include rem((
-            margin-left: -1 * ($left-column + $gs-gutter)
-        ));
+        margin-left: -1 * ($left-column + $gs-gutter);
     }
 
     @include mq(wide) {
-        @include rem((
-            margin-left: -1 * ($left-column-wide + $gs-gutter)
-        ));
+        margin-left: -1 * ($left-column-wide + $gs-gutter);
     }
 }
 
 @mixin reduce-left {
     @include mq(leftCol) {
-        @include rem((
-            width: $left-column
-        ));
+        width: $left-column;
     }
 
     @include mq(wide) {
-        @include rem((
-            width: $left-column-wide
-        ));
+        width: $left-column-wide;
     }
 }
 
 @mixin pull-quote {
     float: left;
     margin-top: 0;
-    @include rem((
-        margin-right: 24px
-    ));
+    margin-right: 24px;
     @include fs-headline(4);
     font-weight: 200;
     font-style: normal;
@@ -53,18 +43,14 @@ figure.element.element--supporting {
         @include deport-left;
         position: relative;
         float: left;
-        @include rem((
-            width: gs-span(5),
-            margin-top: $gs-baseline/2,
-            margin-bottom: $gs-baseline,
-            margin-right: $gs-gutter
-        ));
+        width: gs-span(5);
+        margin-top: $gs-baseline/2;
+        margin-bottom: $gs-baseline;
+        margin-right: $gs-gutter;
     }
 
     @include mq(wide) {
-        @include rem((
-            width: gs-span(6)
-        ));
+        width: gs-span(6);
     }
 }
 
@@ -72,16 +58,12 @@ figure.element.element--thumbnail {
     float: left;
     clear: left;
     margin-bottom: 0;
-    @include rem((
-        width: gs-span(2) - $gs-gutter,
-        margin-right: $gs-gutter,
-        margin-top: $gs-baseline/2
-    ));
+    width: gs-span(2) - $gs-gutter;
+    margin-right: $gs-gutter;
+    margin-top: $gs-baseline/2;
 
     @include mq(tablet) {
-        @include rem((
-            width: gs-span(2)
-        ));
+        width: gs-span(2);
     }
 
     @include mq(leftCol) {
@@ -90,9 +72,7 @@ figure.element.element--thumbnail {
     }
 
     @include mq(wide) {
-        @include rem((
-            margin-left: -1 * (gs-span(2) + $gs-gutter)
-        ));
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
     }
 }
 
@@ -101,9 +81,7 @@ figure.element.element--showcase {
     @include mq(leftCol) {
         @include deport-left;
         position: relative;
-        @include rem((
-            margin-bottom: ($gs-baseline/3)*4
-        ));
+        margin-bottom: ($gs-baseline/3)*4;
     }
 }
 
@@ -116,44 +94,34 @@ figure.element.element--supporting {
             padding-left: 0;
             position: absolute;
             top: 100%;
-            @include rem((
-                padding-top: ($gs-baseline/6)*5
-            ));
+            padding-top: ($gs-baseline/6)*5;
             @include reduce-left;
         }
     }
 }
 
 figure.element.element--supporting.element-tweet {
-    @include rem((
-        margin-top: -$gs-baseline/2
-    ));
+    margin-top: -$gs-baseline/2;
 }
 
 figure {
     &.img--supporting {
         @include mq(leftCol) {
             float: left;
-            @include rem((
-                width: gs-span(5),
-                margin-top: $gs-baseline/2,
-                margin-right: $gs-gutter
-            ));
+            width: gs-span(5);
+            margin-top: $gs-baseline/2;
+            margin-right: $gs-gutter;
         }
 
         @include mq(wide) {
-            @include rem((
-                width: gs-span(6)
-            ));
+            width: gs-span(6);
         }
     }
 }
 
 .media-primary--full-width {
     width: 100%;
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
+    margin-bottom: $gs-baseline*2;
 }
 
 .media-primary.media-primary--showcase {
@@ -172,7 +140,7 @@ figure {
         height: auto;
     }
 
-    .main-caption {
+    .caption--main {
         padding-left: 0;
     }
 
@@ -180,20 +148,14 @@ figure {
         @include transition(padding-bottom 1s);
 
         @include mq($to: rightCol) {
-            @include rem((
-                padding-bottom: aspect-ratio-height(5, 3)
-            ));
+            padding-bottom: aspect-ratio-height(5, 3);
         }
     }
     @include mq(leftCol) {
         margin: 0 auto;
-        @include rem((
-            max-width: gs-span(14) + $gs-gutter * 2,
-        ));
+        max-width: gs-span(14) + $gs-gutter * 2;
     }
     @include mq(wide) {
-        @include rem((
-            max-width: gs-span(16) + $gs-gutter * 2,
-        ));
+        max-width: gs-span(16) + $gs-gutter * 2;
     }
 }

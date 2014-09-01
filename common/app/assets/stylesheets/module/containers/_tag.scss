@@ -3,16 +3,12 @@
         display: block;
 
         @include mq(tablet) {
-            @include rem((
-                margin-bottom: $gs-baseline
-            ));
+            margin-bottom: $gs-baseline;
         }
     }
     @include mq(faciaLeftCol, wide) {
         .container__body {
-            @include rem((
-                margin-left: 160px !important
-            ));
+            margin-left: 160px !important;
         }
     }
 }

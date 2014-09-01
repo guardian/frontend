@@ -9,9 +9,7 @@ $vjs-progress-visual-height-resting: $gs-baseline/2;
 $vjs-progress-inset-bottom: 4px;
 
 .player {
-    @include rem((
-        margin-bottom: $gs-row-height
-    ));
+    margin-bottom: $gs-row-height;
     background: #000000;
     text-align: center; // prevents poster from loading to left then centering
 }
@@ -19,31 +17,23 @@ $vjs-progress-inset-bottom: 4px;
 .gu-media-wrapper {
     background: #000000;
     -webkit-transform: translateZ(0); // fixes iOS hover bug
-    @include rem((
-        margin-bottom: $gs-baseline * 1.5
-    ));
+    margin-bottom: $gs-baseline * 1.5;
 }
 .gu-media-wrapper--audio {
-    @include rem((
-        height: $vjs-control-height,
-        padding-top: $vjs-progress-visual-height-resting
-    ));
+    height: $vjs-control-height;
+    padding-top: $vjs-progress-visual-height-resting;
 
     // naughty videojs removes classes, so have to select by element
     audio {
         width: 100%;
         height: 40px;
         @include box-sizing(border-box);
-        @include rem((
-            border-left: $gs-gutter/2 solid transparent,
-            border-right: $gs-gutter/2 solid transparent
-        ));
+        border-left: $gs-gutter/2 solid transparent;
+        border-right: $gs-gutter/2 solid transparent;
     }
 }
 .video-standfirst {
-    @include rem((
-        margin-bottom: ($gs-baseline/3)*4
-    ));
+    margin-bottom: ($gs-baseline/3)*4;
 }
 
 .element-video {
@@ -93,9 +83,7 @@ $vjs-progress-inset-bottom: 4px;
         display: none;
     }
     .vjs-has-started & {
-        @include rem((
-            padding-bottom: $vjs-control-height
-        ));
+        padding-bottom: $vjs-control-height;
     }
 
     .vjs-has-ended & {
@@ -176,19 +164,19 @@ $vjs-progress-inset-bottom: 4px;
     position: absolute;
     top: 50%;
     left: 50%;
-    @include rem((
-        margin-left: -23px,
-        margin-top: -15px
-    ));
+    margin-left: -23px;
+    margin-top: -15px;
     display: none;
+
+    .vjs-waiting &,
+    .vjs-seeking &,
+    .vjs-ad-loading & {
+        display: block !important;
+    }
 
     .vjs-using-native-controls &,
     .vjs-paused & {
         display: none !important;
-    }
-
-    .vjs-ad-loading & {
-        display: block !important;
     }
 }
 
@@ -205,16 +193,12 @@ $vjs-progress-inset-bottom: 4px;
     color: #ffffff;
     @include fs-data(2);
     font-weight: bold;
-    @include rem((
-        height: $vjs-control-height
-    ));
+    height: $vjs-control-height;
     @include transition(bottom .8s);
     transition-delay: 1s;
 
     .gu-media--video & {
-        @include rem((
-            bottom: $gs-baseline*-5
-        ));
+        bottom: $gs-baseline*-5;
     }
     .vjs-fullscreen & {
         transition-delay: .5s;
@@ -260,9 +244,7 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-play-control {
     float: left;
     cursor: pointer;
-    @include rem((
-        margin: 7px
-    ));
+    margin: 7px;
 
     .vjs-paused & {
         @include icon(play-32-yellow);
@@ -277,15 +259,11 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-time-divider,
 .vjs-duration {
     float: left;
-    @include rem((
-        line-height: $gs-baseline*4
-    ));
+    line-height: $gs-baseline*4;
 }
 
 .vjs-time-divider {
-    @include rem((
-        padding: 0 $gs-gutter/4
-    ));
+    padding: 0 $gs-gutter/4;
 }
 
 .vjs-duration {
@@ -296,16 +274,27 @@ $vjs-progress-inset-bottom: 4px;
     cursor: pointer;
     float: right;
     box-sizing: border-box;
-    @include rem((
-        margin: 8px 8px 8px 0
-    ));
-    @include icon(expand-white);
+    height: $vjs-control-height;
+    width: $vjs-control-height;
+    position: relative;
+
+    & .vjs-control-content {
+        width: 20px !important;
+        height: 20px !important;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        @include icon(expand-white);
+    }
+    &:hover .vjs-control-content {
+        @include icon(expand-yellow);
+    }
 
     .gu-media--audio & {
         display: none;
-    }
-    &:hover {
-        @include icon(expand-yellow);
     }
 }
 
@@ -315,18 +304,14 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-progress-control {
     width: 100%;
     position: absolute;
-    @include rem((
-        top: $vjs-progress-inset-bottom - $vjs-progress-hitbox-height
-    ));
+    top: $vjs-progress-inset-bottom - $vjs-progress-hitbox-height;
     .vjs-ad-playing & {
         display: none;
     }
 }
 
 .vjs-progress-holder {
-    @include rem((
-        height: $vjs-progress-hitbox-height
-    ));
+    height: $vjs-progress-hitbox-height;
     cursor: pointer;
     position: relative;
 
@@ -343,10 +328,8 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-progress-holder:before,
 .vjs-seek-handle {
     position: absolute;
-    @include rem((
-        bottom: $vjs-progress-inset-bottom,
-        height: $vjs-progress-visual-height-resting
-    ));
+    bottom: $vjs-progress-inset-bottom;
+    height: $vjs-progress-visual-height-resting;
 }
 
 .vjs-load-progress {
@@ -365,19 +348,15 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-volume-control {
     float: right;
-    @include rem((
-        width: $gs-gutter*5,
-        margin-top: $gs-baseline * 1.5,
-        margin-right: 8px
-    ));
+    width: $gs-gutter*5;
+    margin-top: $gs-baseline * 1.5;
+    margin-right: 8px;
     position: relative;
     height: 100%;
 }
 
 .vjs-volume-bar {
-    @include rem((
-        height: $gs-baseline
-    ));
+    height: $gs-baseline;
     width: 100%;
     cursor: pointer;
 
@@ -391,10 +370,8 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-volume-bar:before,
 .vjs-volume-level {
-    @include rem((
-        height: $gs-baseline/6,
-        top: $gs-baseline/3
-    ));
+    height: $gs-baseline/6;
+    top: $gs-baseline/3;
     position: absolute;
 }
 
@@ -404,25 +381,18 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-volume-handle {
     position: absolute;
-
-    .vjs-volume-control:hover & {
-        background-color: $c-mediaDefault;
-        @include rem((
-            height: 11px,
-            width: 2px
-        ));
-    }
+    background-color: $c-mediaDefault;
+    height: 11px;
+    width: 2px;
 }
 
 .vjs-mute-control {
     cursor: pointer;
     float: right;
     box-sizing: border-box;
-    @include rem((
-        width: $gs-gutter,
-        margin-right: $gs-gutter/4,
-        margin-top: $gs-baseline * (4/3)
-    ));
+    width: $gs-gutter;
+    margin-right: $gs-gutter/4;
+    margin-top: $gs-baseline * (4/3);
     text-align: left;
 
     > div {
@@ -468,10 +438,8 @@ $vjs-progress-inset-bottom: 4px;
         @include fs-headline(3);
         text-align: left;
         @include box-sizing(border-box);
-        @include rem((
-            padding: $gs-baseline $gs-gutter $gs-baseline (45 + $gs-gutter*2),
-            min-height: $gs-baseline*5
-        ));
+        padding: $gs-baseline $gs-gutter $gs-baseline (45 + $gs-gutter*2);
+        min-height: $gs-baseline*5;
         background-color: $vjs-control-colour;
         width: 100%;
         margin: auto;
@@ -481,10 +449,8 @@ $vjs-progress-inset-bottom: 4px;
             display: block;
             position: absolute;
             top: 50%;
-            @include rem((
-                left: $gs-gutter,
-                margin-top: -22px // half icon height for centering
-            ));
+            left: $gs-gutter;
+            margin-top: -22px // half icon height for centering;
         }
     }
 
@@ -505,9 +471,7 @@ $vjs-progress-inset-bottom: 4px;
 
     .vjs-overlay__title {
         text-align: left;
-        @include rem((
-            padding: $gs-gutter/2
-        ));
+        padding: $gs-gutter/2;
         @include fs-headline(4);
         @include mq(tablet) {
             @include fs-headline(5);
@@ -517,9 +481,7 @@ $vjs-progress-inset-bottom: 4px;
         }
         &:before {
             content: '';
-            @include rem((
-                margin-right: $gs-gutter/2
-            ));
+            margin-right: $gs-gutter/2;
             @include icon(video-camera-yellow);
         }
     }
@@ -528,9 +490,7 @@ $vjs-progress-inset-bottom: 4px;
         text-align: left;
         color: $c-mediaDefault;
         @include fs-headline(3);
-        @include rem((
-            padding: 0 $gs-gutter/2 $gs-baseline*2
-        ));
+        padding: 0 $gs-gutter/2 $gs-baseline*2;
     }
 }
 
@@ -540,12 +500,10 @@ $vjs-progress-inset-bottom: 4px;
     white-space: nowrap;
     @include fs-headline(2);
     position: absolute;
-    $height: get-line-height($fs-headlines, 2);
-    @include rem((
-        height: $height,
-        padding: $gs-baseline/2,
-        top: ($height + $gs-baseline) * -1
-    ));
+    $height: get-line-height(headline, 2);
+    height: $height;
+    padding: $gs-baseline/2;
+    top: ($height + $gs-baseline) * -1;
     left: 0;
     @include transition(top .8s);
     transition-delay: .2s;
@@ -584,10 +542,8 @@ $vjs-progress-inset-bottom: 4px;
     top: 0;
     left: 0;
     width: 100%;
-    @include rem((
-        height: $gs-baseline*2,
-        padding: $gs-baseline/3 0 0 $gs-gutter/4
-    ));
+    height: $gs-baseline*2;
+    padding: $gs-baseline/3 0 0 $gs-gutter/4;
     background-color: rgba($c-neutral1, .8);
     border-top: 1px solid $c-neutral2;
     color: #ffffff;
@@ -601,18 +557,12 @@ $vjs-progress-inset-bottom: 4px;
 
 .vjs-ads-overlay__label {
     position: absolute;
-    @include rem((
-        top: $gs-baseline/3,
-        right: $gs-gutter/2
-    ));
+    top: $gs-baseline/3;
+    right: $gs-gutter/2;
 }
 
 /* End slate
    ========================================================================== */
-.gu-media--hide-endslate .end-slate-container {
-    display: none;
-}
-
 .end-slate-container {
     display: none;
     position: absolute;
@@ -624,13 +574,11 @@ $vjs-progress-inset-bottom: 4px;
     @include box-sizing(border-box);
     background-color: rgba(25, 25, 25, .8);
     color: guss-colour(neutral-7);
-    @include rem((
-        top: $gs-baseline*4,
-        padding-left: $gs-gutter/4,
-        padding-right: $gs-gutter/4,
-        padding-top: $gs-gutter/4,
-        max-width: gs-span(7)
-    ));
+    top: $gs-baseline*4;
+    padding-left: $gs-gutter/4;
+    padding-right: $gs-gutter/4;
+    padding-top: $gs-gutter/4;
+    max-width: gs-span(7);
 
     .vjs-has-ended & {
         display: block;
@@ -639,12 +587,10 @@ $vjs-progress-inset-bottom: 4px;
         height: 100%;
         margin: auto;
         bottom: 0;
-        @include rem((
-            top: -1 * (gs-height(1) + $gs-baseline),
-            height: gs-height(6) + $gs-baseline*1,
-            max-width: gs-span(12) + $gs-gutter*2,
-            padding-bottom: $gs-baseline
-        ));
+        top: -1 * (gs-height(1) + $gs-baseline);
+        height: gs-height(6) + $gs-baseline*1;
+        max-width: gs-span(12) + $gs-gutter*2;
+        padding-bottom: $gs-baseline;
     }
     @include mq($to: tablet) {
         .vjs-has-ended & {
@@ -652,35 +598,25 @@ $vjs-progress-inset-bottom: 4px;
         }
     }
     @include mq(leftCol, wide) {
-        @include rem((
-            top: $gs-baseline*3.5
-        ));
+        top: $gs-baseline*3.5;
     }
     @include mq(wide) {
-        @include rem((
-            max-width: gs-span(8)
-        ));
+        max-width: gs-span(8);
     }
 }
 .end-slate-container__header {
-    @include rem((
-        height: gs-height(1),
-        padding-left: $gs-gutter/2,
-        margin-bottom: $gs-baseline
-    ));
+    height: gs-height(1);
+    padding-left: $gs-gutter/2;
+    margin-bottom: $gs-baseline;
 }
 .end-slate-container__heading {
-    @include rem((
-        padding-top: $gs-baseline/3
-    ));
+    padding-top: $gs-baseline/3;
     @include fs-header(1);
     font-weight: bold;
     text-align: left;
 }
 .end-slate {
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
+    margin-bottom: $gs-baseline*2;
 
     &.items--media {
         .item {
@@ -695,10 +631,8 @@ $vjs-progress-inset-bottom: 4px;
             .vjs-fullscreen & {
                 @include mq(desktop) {
                     @include fs-headline(2);
-                    @include text-clamp(4, get-line-height($fs-headlines, 2));
-                    @include rem((
-                        height: get-line-height($fs-headlines, 2) * 4
-                    ));
+                    @include text-clamp(4, get-line-height(headline, 2));
+                    height: get-line-height(headline, 2) * 4;
                 }
             }
         }

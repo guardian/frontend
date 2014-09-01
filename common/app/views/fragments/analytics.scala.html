@@ -1,63 +1,54 @@
 @(page: model.MetaData)( implicit request:RequestHeader)
-@import org.joda.time.DateTime
 @import conf.Configuration
+@import common.AnalyticsHost
+@import views.support.OmnitureAnalyticsData
+@import conf.Static
 
-@*<!-- TODO temporary till after dotcom switch -->*@
-@defining(
-    if (Configuration.environment.secure) {
-        "https://hits-secure.theguardian.com"
-    } else {
-        "http://hits.theguardian.com"
+@defining(s"${request.host}${request.path}") { path =>
+
+    @defining(
+        s"${AnalyticsHost()}/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "No Javascript", path)}"
+    ){ omnitureCall =>
+            <noscript id="omnitureNoScript">
+                <div>
+                    <img id="omnitureNoScriptImage" alt=""
+                         src="@Html(omnitureCall)" width="1" height="1" class="u-h" />
+                </div>
+            </noscript>
     }
-){ analyticsHost =>
 
-    @defining(request.host + request.path) { path =>
+    @defining(
+        s"${AnalyticsHost()}/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
+    ){ omnitureCall =>
+        <script>
+            @*
+            //    we do not run our javascript on some browsers, hence analytics will not run.
+            //    this does a minimal tracking for those devices
+             *@
+            if (!guardian.isModernBrowser) {
+                var analyticsImage = document.createElement("img");
+                analyticsImage.src = "@Html(omnitureCall)";
+                analyticsImage.width = "1";
+                analyticsImage.height = "1";
+                document.body.appendChild(analyticsImage);
 
-        @defining(
-        (s"$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "No Javascript", path)}",
-        Configuration.javascript.pageData("guardian.page.omnitureAccount"))
-        ){ case (omnitureCall, omnitureAccount) =>
-                <noscript id="omnitureNoScript">
-                    <div>
-                        <img id="omnitureNoScriptImage" alt=""
-                             src="@Html(omnitureCall)" width="1" height="1" class="u-h" />
-                    </div>
-                </noscript>
-        }
-
-        @defining(
-            s"$analyticsHost/b/ss/${Configuration.javascript.pageData("guardian.page.omnitureAccount")}/1/H.25.3/?${OmnitureAnalyticsData(page, "Partial Javascript", path)}"
-        ){ omnitureCall =>
-                <script>
+                @* there is currently no SSL version of the beacon *@
+                @if(!Configuration.environment.secure){
                     @*
-                    //    we do not run our javascript on some browsers, hence analytics will not run.
-                    //    this does a minimal tracking for those devices
-                     *@
-                    if (!guardian.isModernBrowser) {
-                        var analyticsImage = document.createElement("img");
-                        analyticsImage.src = "@Html(omnitureCall)";
-                        analyticsImage.width = "1";
-                        analyticsImage.height = "1";
-                        document.body.appendChild(analyticsImage);
+                    // this is used to sanity check our analytics calls
+                    *@
+                    var img = new Image();
+                    img.src = "@{Configuration.debug.beaconUrl}/count/pva.gif";
 
-                        @* there is currently no SSL version of the beacon *@
-                        @if(!Configuration.environment.secure){
-                            @*
-                            // this is used to sanity check our analytics calls
-                            *@
-                            var img = new Image();
-                            img.src = "@{Configuration.debug.beaconUrl}/count/pva.gif";
+                    var s = document.createElement('script'),
+                            sc = document.getElementsByTagName('script')[0];
 
-                            var s = document.createElement('script'),
-                                    sc = document.getElementsByTagName('script')[0];
-
-                            s.src = '@Static("javascripts/bootstraps/ophan.js")';
-                            s.aysnc = true;
-                            sc.parentNode.insertBefore(s, sc);
-                        }
-                    }
-                </script>
-        }
+                    s.src = '@Static("javascripts/bootstraps/ophan.js")';
+                    s.aysnc = true;
+                    sc.parentNode.insertBefore(s, sc);
+                }
+            }
+        </script>
     }
 }
 

@@ -9,6 +9,12 @@ import conf.Configuration._
 import controllers.HealthCheck
 import org.joda.time.DateTime
 import services.AwsEndpoints
+import java.util.concurrent.Future
+import scala.collection.JavaConversions._
+
+case class MaximumMetric(metric: Future[GetMetricStatisticsResult]) {
+  lazy val max: Double = metric.get().getDatapoints.headOption.map(_.getMaximum.doubleValue()).getOrElse(0.0)
+}
 
 object CloudWatch extends implicits.Futures{
 
@@ -60,14 +66,6 @@ object CloudWatch extends implicits.Futures{
     ("Fastly Hits and Misses (USA) - per minute, average", "usa", "2eYr6Wx3ZCUoVPShlCM61l")
   )
 
-  private val jsErrorMetrics = List(
-    ("JavaScript errors caused by adverts", "ads"),
-    ("JavaScript errors from iOS", "js.ios"),
-    ("JavaScript errors from iOS", "js.android"),
-    ("JavaScript errors from iOS", "js.unknown"),
-    ("JavaScript errors from iOS", "js.windows")
-  )
-
   val assetsFiles = Seq(
     "app.js",
     "facia.js",
@@ -105,7 +103,7 @@ object CloudWatch extends implicits.Futures{
 
   private def latency(loadBalancers: Seq[LoadBalancer]) = {
     loadBalancers.map{ loadBalancer =>
-      new LineChart(loadBalancer.name , Seq("Time", "latency (ms)"),
+      new AwsLineChart(loadBalancer.name , Seq("Time", "latency (ms)"), ChartFormat.SingleLineBlack,
         euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
           .withStartTime(new DateTime().minusHours(2).toDate)
           .withEndTime(new DateTime().toDate)
@@ -125,7 +123,7 @@ object CloudWatch extends implicits.Futures{
 
   private def requestOkCount(loadBalancers: Seq[LoadBalancer]) = {
     loadBalancers.map{ loadBalancer =>
-      new LineChart(loadBalancer.name, Seq("Time", "2xx/minute"),
+      new AwsLineChart(loadBalancer.name, Seq("Time", "2xx/minute"), ChartFormat.SingleLineBlue,
         euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
           .withStartTime(new DateTime().minusHours(2).toDate)
           .withEndTime(new DateTime().toDate)
@@ -139,23 +137,8 @@ object CloudWatch extends implicits.Futures{
     }.toSeq
   }
 
-  def jsErrors = {
-    val metrics = jsErrorMetrics.map{ case (graphTitle, metric) =>
-        euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-          .withStartTime(new DateTime().minusHours(6).toDate)
-          .withEndTime(new DateTime().toDate)
-          .withPeriod(120)
-          .withStatistics("Average")
-          .withNamespace("Diagnostics")
-          .withMetricName(metric)
-          .withDimensions(stage),
-          asyncHandler)
-        }
-    new LineChart("JavaScript Errors", Seq("Time") ++ jsErrorMetrics.map{ case(title, name) => name}.toSeq, metrics:_*)
-  }
-
   def fastlyErrors = fastlyMetrics.map{ case (graphTitle, metric, region, service) =>
-    new LineChart(graphTitle, Seq("Time", metric),
+    new AwsLineChart(graphTitle, Seq("Time", metric), ChartFormat.SingleLineBlack,
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
         .withEndTime(new DateTime().toDate)
@@ -179,7 +162,7 @@ object CloudWatch extends implicits.Futures{
     .withDimensions(new Dimension().withName("Currency").withValue("USD")), asyncHandler))
 
   def fastlyHitMissStatistics = fastlyHitMissMetrics.map{ case (graphTitle, region, service) =>
-    new LineChart( graphTitle, Seq("Time", "Hits", "Misses"),
+    new AwsLineChart( graphTitle, Seq("Time", "Hits", "Misses"), ChartFormat.DoubleLineBlueRed,
 
       euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
@@ -205,7 +188,7 @@ object CloudWatch extends implicits.Futures{
     )
   }.toSeq
 
-  def omnitureConfidence = new LineChart("omniture-percent-conversion", Seq("Time", "%"),
+  def omnitureConfidence = new AwsLineChart("omniture-percent-conversion", Seq("Time", "%"), ChartFormat.SingleLineBlue,
     euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
     .withStartTime(new DateTime().minusWeeks(2).toDate)
     .withEndTime(new DateTime().toDate)
@@ -216,7 +199,7 @@ object CloudWatch extends implicits.Futures{
     .withDimensions(stage),
     asyncHandler))
 
-  def ophanConfidence = new LineChart("ophan-percent-conversion", Seq("Time", "%"),
+  def ophanConfidence = new AwsLineChart("ophan-percent-conversion", Seq("Time", "%"), ChartFormat.SingleLineBlue,
     euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusWeeks(2).toDate)
       .withEndTime(new DateTime().toDate)
@@ -227,7 +210,7 @@ object CloudWatch extends implicits.Futures{
       .withDimensions(stage),
       asyncHandler))
 
-  def ratioConfidence = new LineChart("omniture-ophan-correlation", Seq("Time", "%"),
+  def ratioConfidence = new AwsLineChart("omniture-ophan-correlation", Seq("Time", "%"), ChartFormat.SingleLineBlue,
     euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusWeeks(2).toDate)
       .withEndTime(new DateTime().toDate)

@@ -1,52 +1,21 @@
-.top .i-arrow-small-up {
-    @include rem((
-        margin-left: ($gs-baseline/3)*2,
-        top: -1px
-    ));
-    position: relative;
-}
-
-.i-sport-arrow--small {
-    @include transform(scale(.6));
-    @include rem((
-        margin: 3px 0 0 3px
-    ));
-    vertical-align: top;
-}
-
-.is-signed-in .i-profile {
-    @extend %i-profile-signed-in;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend %svg-i-profile-signed-in;
-        }
-    }
-}
-
 .i-date {
     @if ($svg-support) {
         .svg & {
             background-size: 100%;
-            @include rem((
-                width: 10px,
-                height: 10px
-            ));
+            width: 10px;
+            height: 10px;
         }
     }
 }
 
-.caption:before,
-figcaption:before {
+.caption--img:before {
     @include background-size(contain);
     @extend %i;
     @extend %i-image;
     display: inline-block;
     content: '';
     vertical-align: top;
-    @include rem((
-        margin: 1px 4px 0 0
-    ));
+    margin: 1px 4px 0 0;
 
     @if ($svg-support) {
         .svg & {
@@ -63,10 +32,7 @@ figcaption:before {
     content: '';
     position: absolute;
     left: 0;
-    @include rem((
-        margin-top: -2px
-    ));
-    @include transform(scale(.65));
+    @include transform(scale(.8));
     @include transform-origin(0);
 
     @if ($svg-support) {

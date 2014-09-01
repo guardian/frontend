@@ -18,7 +18,7 @@
             swipe: '@Static("javascripts/components/swipe/swipe.js")',
             zxcvbn: '@Static("javascripts/components/zxcvbn/index.js")',
             'ophan/ng': '@{Configuration.javascript.config("ophanJsUrl")}',
-            foresee: 'http://assets.guim.co.uk/javascripts/vendor/foresee4/foresee-trigger.js',
+            foresee: 'vendor/foresee/8192014/foresee-trigger.js',
             googletag: '@{Configuration.javascript.config("googletagJsUrl")}',
             core: '@Static("javascripts/core.js")',
             'bootstraps/app' : '@Static("javascripts/bootstraps/app.js")',
@@ -122,7 +122,13 @@
         'domReady!'
     ], function() {
 
-        require(['raven', 'common/utils/config'], function(raven, config) {
+        require([
+            'raven',
+            'common/utils/config'
+        ], function(
+            raven,
+            config
+        ) {
 
             raven.config(
                 'http://' + config.page.sentryPublicApiKey + '@@' + config.page.sentryHost,
@@ -134,26 +140,37 @@
                     tags: {
                         edition: config.page.edition,
                         contentType: config.page.contentType,
-                        buildNumber: config.page.buildNumber
+                        revisionNumber: config.page.revisionNumber
                     },
                     dataCallback: function(data) {
+                        data.culprit = data.culprit.replace(/\/[a-z\d]{32}(\/[^\/]+)$/, '$1');
                         data.tags.origin = (/j.ophan.co.uk/.test(data.culprit)) ? 'ophan' : 'app';
                         return data;
                     },
                     shouldSendCallback: function(data) {
-                        return Math.random() < 0.4 && guardian.config.switches.enableDiagnosticsLogging;
+                        return Math.random() < 0.2 && guardian.config.switches.enableDiagnosticsLogging;
                     }
                 }
             ).install();
 
-            require(['common/utils/ajax', 'common/modules/experiments/ab'], function(ajax, ab) {
+            require([
+                'common/utils/ajax',
+                'common/modules/experiments/ab',
+                'common/modules/ui/images'
+            ], function(
+                ajax,
+                ab,
+                images
+            ) {
 
                 ajax.init();
                 ab.segmentUser();
                 ab.run();
+                images.upgrade();
+                images.listen();
 
                 if (config.switches.commercial) {
-                    require(['bootstraps/commercial', 'js!googletag'], function(commercial) {
+                    require(['bootstraps/commercial'], function(commercial) {
                         commercial.init();
                     });
                 }

@@ -18,30 +18,31 @@ object Global extends GlobalSettings
 
   override def applicationName = "frontend-facia-press"
 
-  override def applicationMetrics = Map(
-    ("front-press-failure", getTotalPressFailureCount.toDouble),
-    ("front-press-success", getTotalPressSuccessCount.toDouble),
-    ("front-press-draft-failure", FaciaPressMetrics.FrontPressDraftFailure.getAndReset.toDouble),
-    ("front-press-draft-success", FaciaPressMetrics.FrontPressDraftSuccess.getAndReset.toDouble),
-    ("front-press-live-failure", FaciaPressMetrics.FrontPressLiveFailure.getAndReset.toDouble),
-    ("front-press-live-success", FaciaPressMetrics.FrontPressLiveSuccess.getAndReset.toDouble),
-    ("front-press-cron-success", FaciaPressMetrics.FrontPressCronSuccess.getAndReset.toDouble),
-    ("front-press-cron-failure", FaciaPressMetrics.FrontPressCronFailure.getAndReset.toDouble),
-    ("elastic-content-api-calls", ContentApiMetrics.ElasticHttpTimingMetric.getAndReset.toDouble),
-    ("elastic-content-api-timeouts", ContentApiMetrics.ElasticHttpTimeoutCountMetric.getAndReset.toDouble),
-    ("content-api-404", ContentApiMetrics.ContentApi404Metric.getAndReset.toDouble),
-    ("content-api-client-parse-exceptions", ContentApiMetrics.ContentApiJsonParseExceptionMetric.getAndReset.toDouble),
-    ("content-api-client-mapping-exceptions", ContentApiMetrics.ContentApiJsonMappingExceptionMetric.getAndReset.toDouble),
-    ("content-api-invalid-content-exceptions", FaciaToolMetrics.InvalidContentExceptionMetric.getAndReset.toDouble),
-    ("s3-client-exceptions", S3Metrics.S3ClientExceptionsMetric.getAndReset.toDouble),
-    ("s3-authorization-errors", S3Metrics.S3AuthorizationError.getAndReset.toDouble),
-    ("content-api-seo-request-success", FaciaPressMetrics.ContentApiSeoRequestSuccess.getAndReset.toDouble),
-    ("content-api-seo-request-failure", FaciaPressMetrics.ContentApiSeoRequestFailure.getAndReset.toDouble),
-    ("content-api-fallbacks", FaciaPressMetrics.MemcachedFallbackMetric.getAndReset.toDouble)
+  override def applicationMetrics = List(
+    GaugeMetric("front-press-failure", "Total number of front press failure", () => getTotalPressFailureCount),
+    GaugeMetric("front-press-success", "Total number of front press success", () => getTotalPressSuccessCount),
+    FaciaPressMetrics.FrontPressDraftFailure,
+    FaciaPressMetrics.FrontPressDraftSuccess,
+    FaciaPressMetrics.FrontPressLiveFailure,
+    FaciaPressMetrics.FrontPressLiveSuccess,
+    FaciaPressMetrics.FrontPressCronSuccess,
+    FaciaPressMetrics.FrontPressCronFailure,
+    ContentApiMetrics.ElasticHttpTimingMetric,
+    ContentApiMetrics.ElasticHttpTimeoutCountMetric,
+    ContentApiMetrics.ContentApi404Metric,
+    ContentApiMetrics.ContentApiJsonParseExceptionMetric,
+    ContentApiMetrics.ContentApiJsonMappingExceptionMetric,
+    FaciaToolMetrics.InvalidContentExceptionMetric,
+    S3Metrics.S3ClientExceptionsMetric,
+    S3Metrics.S3AuthorizationError,
+    FaciaPressMetrics.ContentApiSeoRequestSuccess,
+    FaciaPressMetrics.ContentApiSeoRequestFailure,
+    FaciaPressMetrics.MemcachedFallbackMetric,
+    UkPressLatencyMetric,
+    UsPressLatencyMetric,
+    AuPressLatencyMetric,
+    AllFrontsPressLatencyMetric
   )
-
-  override def latencyMetrics: List[FrontendMetric] = List(UkPressLatencyMetric, UsPressLatencyMetric, AuPressLatencyMetric,
-                                     AllFrontsPressLatencyMetric)
 
   def scheduleJobs() {
     Jobs.schedule("FaciaToolPressJob", s"0/$pressJobConsumeRateInSeconds * * * * ?") {

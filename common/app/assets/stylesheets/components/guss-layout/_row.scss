@@ -3,36 +3,68 @@
    ========================================================================== */
 
 /**
+ * Row utility class.
+ * 
+ * @type String
+ *
+ * @group layout
+ */
+$guss-row-utility-class: '.l-row' !default;
+
+/**
+ * When set to false, output a simpler version with a static width.
+ *
+ * @link http://caniuse.com/#feat=flexbox Flexbox support table
+ * 
+ * @type Bool
+ *
+ * @group layout
+ */
+$browser-supports-flexbox: true !default;
+
+/**
+ * Static width for older browsers.
+ * 
+ * @type Number
+ *
+ * @group layout
+ */
+$guss-row-fallback-width: 940px !default;
+
+/**
  * A row is an ensemble of 2, 3 or 4 items that are originally stacked
  * vertically on mobile and flow horizontally on higher breakpoints.
- * Examples: http://sassmeister.com/gist/7986076
  *
- * Usage 1: Sass mixin
- * @include guss-row('.classname');
+ * @param {String} $base-class
  *
- * Usage 2: utility class set as `$guss-row-utility-class`
- * @include guss-row-utility;
+ * @requires {variable} browser-supports-flexbox
+ * @requires {variable} guss-row-fallback-width
+ * @requires {mixin} mq
+ * @requires {mixin} flex-grow
+ * @requires {mixin} flex-basis
+ * 
+ * @link http://sassmeister.com/gist/9b6033675b0f01de21f0 Examples on Sassmeister
  *
+ * @example scss
+ *  // Sass Mixin
+ *  @include guss-row('.classname');
+ *
+ * @example scss
+ *  // Utility class set as `$guss-row-utility-class`
+ *  @include guss-row-utility;
+ *
+ * @example markup
  * <div class="l-row l-row--items-<number of items contained>">
  *     <div class="l-row__item [l-row__item--boost-2]"></div>
  *     <div class="l-row__item"></div>
  *     <div class="l-row__item"></div>
  *     <div class="l-row__item [l-row__item--boost-1]"></div>
  * </div>
+ * <!-- --boost-n modifiers are used to add visual importance to an item.
+ * Note that this applies only to browsers that support flexbox. -->
  *
- * --boost-n modifiers are used to add visual importance to an item.
- * Note that this applies only to browsers that support flexbox.
+ * @group layout
  */
-
-$guss-row-utility-class: '.l-row' !default;
-
-// When set to false, output a simpler version with a static width
-// http://caniuse.com/#feat=flexbox
-$browser-supports-flexbox: true !default;
-
-// Static width for older browsers
-$guss-row-fallback-width: 940px !default;
-
 @mixin guss-row($base-class) {
     @if ($browser-supports-flexbox) {
         @include mq(tablet) {
@@ -134,6 +166,14 @@ $guss-row-fallback-width: 940px !default;
     }
 }
 
+/**
+ * Row utility.
+ *
+ * @requires {variable} guss-row-utility-class
+ * @requires {mixin} guss-row
+ *
+ * @group layout
+ */
 @mixin guss-row-utility {
     @include guss-row($guss-row-utility-class);
 }

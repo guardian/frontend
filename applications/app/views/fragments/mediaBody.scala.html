@@ -1,6 +1,7 @@
 @(page: MediaPage)(implicit request: RequestHeader)
-@import model.{Audio, Video}
-@import views.support.{Video640, StripHtmlTags}
+
+@import model.{Audio, AudioPlayer, Video, VideoPlayer}
+@import views.support.{Video640, SeoOptimisedContentImage, StripHtmlTags}
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
 <div class="l-side-margins l-side-margins--layout-content">
@@ -24,7 +25,13 @@
                         @media match {
                             case audio: Audio => {
                                 <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio">
-                                @fragments.media.audio(audio.mainAudio, audio.headline)
+                                @audio.mainAudio.map { audioElement =>
+                                    @fragments.media.audio(AudioPlayer(
+                                        audioElement,
+                                        audio.headline,
+                                        autoPlay = true
+                                    ))
+                                }
                                 </figure>
                             }
                             case video: Video => {
@@ -49,7 +56,15 @@
                                     <meta itemprop="image" content="@video.openGraphImage" />
                                     @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
                                     @video.mainVideo.map { videoElement =>
-                                        @fragments.media.video(videoElement, Video640, video.headline)
+                                        @fragments.media.video(VideoPlayer(
+                                            videoElement,
+                                            Video640,
+                                            video.headline,
+                                            autoPlay = true,
+                                            showControlsAtStart = true,
+                                            endSlatePath = video.endSlatePath,
+                                            None
+                                        ))
                                     }
                                 </figure>
                             }

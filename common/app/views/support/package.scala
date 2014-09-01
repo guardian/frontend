@@ -13,7 +13,7 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.{ Element, Document }
 import org.jsoup.safety.{ Whitelist, Cleaner }
 import play.api.libs.json.Json._
-import play.api.libs.json.Writes
+import play.api.libs.json.{Json, JsValue, JsString, Writes}
 import play.api.mvc.RequestHeader
 import play.api.mvc.Result
 import play.twirl.api.Html
@@ -137,21 +137,6 @@ case class PreviousAndNext(prev: Option[String], next: Option[String]) {
   val isDefined: Boolean = prev.isDefined || next.isDefined
 }
 
-object MetadataJson {
-
-  def apply(data: (String, Any)): String = data match {
-    // thank you erasure
-    case (key, value) if value.isInstanceOf[Map[_, _]] =>
-      val valueJson = value.asInstanceOf[Map[String, Any]].map(MetadataJson(_)).mkString(",")
-      s""""$key": {$valueJson}"""
-    case (key, value) if value.isInstanceOf[Seq[_]] =>
-      val valueJson = value.asInstanceOf[Seq[(String, Any)]].map(v => s"{${MetadataJson(v)}}").mkString(",")
-      s""""$key": [${valueJson}]""".format(key, valueJson)
-    case (key, value) =>
-      s""""${JavaScriptVariableName(key)}": ${JavaScriptValue(value)}"""
-  }
-}
-
 object JSON {
   //we wrap the result in an Html so that play does not escape it as html
   //after we have gone to the trouble of escaping it as Javascript
@@ -172,21 +157,6 @@ object RemoveOuterParaHtml {
       Html(fragment.html.drop(3).dropRight(4))
     }
   }
-}
-
-object JavaScriptValue {
-  def apply(value: Any) = value match {
-    case b: Boolean => b
-    case s => s""""${s.toString.trim.replace(""""""", """\"""")}""""
-  }
-}
-
-object JavaScriptVariableName {
-  def apply(s: String): String = {
-    val parts = s.split("-").toList
-    (parts.headOption.toList ::: parts.tail.map(firstLetterUppercase )).mkString
-  }
-  private def firstLetterUppercase(s: String) = s.head.toUpper + s.tail
 }
 
 case class RowInfo(rowNum: Int, isLast: Boolean = false) {
@@ -592,6 +562,13 @@ case class DropCaps(isFeature: Boolean) extends HtmlCleaner {
   }
 }
 
+object FigCaptionCleaner extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    document.getElementsByTag("figcaption").foreach{ _.addClass("caption caption--img")}
+    document
+  }
+}
+
 // whitespace in the <span> below is significant
 // (results in spaces after author names before commas)
 // so don't add any, fool.
@@ -609,15 +586,18 @@ object ContributorLinks {
 object OmnitureAnalyticsData {
   def apply(page: MetaData, jsSupport: String, path: String)(implicit request: RequestHeader): Html = {
 
-    val data = page.metaData.map { case (key, value) => key -> value.toString }
-    val pageCode = data.get("page-code").getOrElse("")
-    val contentType = data.get("content-type").getOrElse("")
-    val section = data.get("section").getOrElse("")
+    val data = page.metaData map {
+      case (key, JsString(s)) => key -> s
+      case (key, jValue: JsValue) => key -> Json.stringify(jValue)
+    }
+    val pageCode = data.getOrElse("pageCode", "")
+    val contentType = data.getOrElse("contentType", "")
+    val section = data.getOrElse("section", "")
     val platform = "frontend"
-    val publication = data.get("publication").getOrElse("")
-    val omnitureEvent = data.get("omnitureEvent").getOrElse("")
-    val registrationType = data.get("registrationType").getOrElse("")
-    val omnitureErrorMessage = data.get("omnitureErrorMessage").getOrElse("")
+    val publication = data.getOrElse("publication", "")
+    val omnitureEvent = data.getOrElse("omnitureEvent", "")
+    val registrationType = data.getOrElse("registrationType", "")
+    val omnitureErrorMessage = data.getOrElse("omnitureErrorMessage", "")
 
     val isContent = page match {
       case c: Content => true
@@ -634,19 +614,19 @@ object OmnitureAnalyticsData {
       ("c3", publication),
       ("ch", section),
       ("c9", section),
-      ("c4", data.get("keywords").getOrElse("")),
-      ("c6", data.get("author").getOrElse("")),
+      ("c4", data.getOrElse("keywords", "")),
+      ("c6", data.getOrElse("author", "")),
       ("c8", pageCode),
       ("v8", pageCode),
       ("c9", contentType),
-      ("c10", data.get("tones").getOrElse("")),
+      ("c10", data.getOrElse("tones", "")),
       ("c11", section),
-      ("c13", data.get("series").getOrElse("")),
-      ("c25", data.get("blogs").getOrElse("")),
-      ("c14", data("build-number")),
+      ("c13", data.getOrElse("series", "")),
+      ("c25", data.getOrElse("blogs", "")),
+      ("c14", data("buildNumber")),
       ("c19", platform),
       ("v19", platform),
-      ("v67", "nextgen-served"),
+      ("v67", "nextgenServed"),
       ("c30", if (isContent) "content" else "non-content"),
       ("c56", jsSupport),
       ("event", omnitureEvent),
@@ -867,7 +847,7 @@ object GetClasses {
       (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
         if (index == 0) "container--first" else "",
       (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (index > 0 && hasTitle) "js-container--toggle" else ""
+        if (index > 0 && hasTitle && !(config.isAdvertisementFeature || config.isSponsored)) "js-container--toggle" else ""
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(container, config, index, hasTitle)}
     RenderClasses(classes:_*)

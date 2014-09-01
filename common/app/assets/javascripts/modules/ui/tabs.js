@@ -19,7 +19,7 @@ define([
 
             <div class="tabs__content">
                  <div class="tabs__pane" id="foo" role="tabpanel" aria-labelledby="foo-tab">foo</div>
-                 <div class="tabs__pane js-hidden" id="bar" role="tabpanel" aria-labelledby="bar-tab">bar</div>
+                 <div class="tabs__pane modern-hidden" id="bar" role="tabpanel" aria-labelledby="bar-tab">bar</div>
             </div>
         </div>
     */
@@ -45,7 +45,7 @@ define([
                 bonzo(currentTab.parentNode).attr('aria-selected', false);
                 bonzo(clickedTab.parentNode).attr('aria-selected', true);
                 bonzo(paneToHide).hide();
-                bonzo(paneToShow).removeClass('js-hidden').show().focus();
+                bonzo(paneToShow).removeClass('modern-hidden').show().focus();
 
                 // only do this if we know the href was a tab ID, not a URL
                 originalEvent.preventDefault();

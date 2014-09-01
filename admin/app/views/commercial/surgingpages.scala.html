@@ -1,16 +1,18 @@
-@(env: String, surgingpages: Seq[(String, Int)])
-@import tools.DfpLink
+@(env: String, surgingContent: ophan.SurgingContent)
+@import dfp.printLondonTime
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("css/commercial.css")">
 
     <h1>Surging Content</h1>
-<p>Guardian content that is currently surging</p>
+    <p>Guardian content that is currently surging.</p>
+    <p>Last updated: @printLondonTime(surgingContent.lastUpdated)</p>
 
     <ol>
-        @for((path, pvs) <- surgingpages) {
+        @for((path, pvs) <- surgingContent.sortedSurges) {
            <li><a href="http://www.theguardian.com/@path">@path</a> (@pvs)</li>
         }
     </ol>
+
 }

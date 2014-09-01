@@ -1,7 +1,7 @@
 package services
 
 import model._
-import conf.LiveContentApi
+import conf.{InlineRelatedContentSwitch, LiveContentApi}
 import model.Section
 import common._
 import com.gu.openplatform.contentapi.model.{SearchResponse, ItemResponse}
@@ -73,8 +73,14 @@ trait Index extends ConciergeRepository with QueryDefaults {
           val tag1 = head.tags.find(_.id == firstTag).head
           val tag2 = head.tags.find(_.id == secondTag).head
           val pageName = s"${tag1.name} + ${tag2.name}"
-          val page = Page(s"$leftSide+$rightSide", tag1.section, pageName,
-            s"GFE:${tag1.section}:$pageName", pagination = pagination(response))
+          val page = Page(
+            s"$leftSide+$rightSide",
+            tag1.section,
+            pageName,
+            s"GFE:${tag1.section}:$pageName",
+            pagination = pagination(response),
+            maybeContentType = Some(GuardianContentTypes.TagIndex)
+          )
 
           Left(IndexPage(page, trails))
       }
@@ -153,7 +159,7 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
     val response = LiveContentApi.item(path, edition)
       .showExpired(true)
       .showFields("all")
-      .showRelated(RelatedContentSwitch.isSwitchedOn)
+      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .response.map { response =>
       val mainContent: Option[Content] = response.content.filter { c => c.isImageContent } map {Content(_)}
       val storyPackage: List[Trail] = response.storyPackage map { Content(_) }

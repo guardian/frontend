@@ -7,19 +7,15 @@ define([
 ) {
     var modules = {
 
-        showPopular: function () {
-            mediator.on('page:section:ready', function(config) {
-                popular.render(config);
-            });
+        showPopular: function (config) {
+            popular.render(config);
         }
 
     };
 
     var ready = function (config, context) {
-        if (!this.initialised) {
-            this.initialised = true;
-            modules.showPopular();
-        }
+        modules.showPopular(config);
+
         mediator.emit('page:section:ready', config, context);
     };
 

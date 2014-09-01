@@ -1,9 +1,11 @@
 define([
+    'lodash/collections/contains',
     'lodash/objects/defaults',
     'common/utils/_',
     'common/utils/config',
     'common/utils/url'
 ], function(
+    contains,
     defaults,
     _,
     defaultConfig,
@@ -14,7 +16,10 @@ define([
         extractSearchTerm = function (referrer) {
             return _(referrer.split('?').pop().split('&'))
                 .filter(function(query) {
-                    return ['q','p','as_q','as_epq','as_oq','query','search','wd','ix'].indexOf(query.split('=').shift()) > -1;
+                    return contains(
+                        ['q','p','as_q','as_epq','as_oq','query','search','wd','ix'],
+                        query.split('=').shift()
+                    );
                 })
                 .map(function(searchQuery) {
                     return decodeURIComponent(searchQuery.split('=').pop().replace(/\\+/g, ' '));

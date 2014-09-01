@@ -43,7 +43,7 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
     log.info(s"Fetching gallery: $path for edition $edition")
     LiveContentApi.item(path, edition)
       .showExpired(true)
-      .showRelated(RelatedContentSwitch.isSwitchedOn)
+      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showFields("all")
       .response.map{response =>
         val gallery = response.content.filter { _.isGallery } map { Gallery(_) }

@@ -4,8 +4,10 @@
  * - ascii: 256 characters only, very small
  * - latin1: latin 1 character set
  * - original: full character set
- * 
+ *
  * @type String
+ *
+ * @group webfonts
  */
 $guss-webfonts-charset: 'original' !default;
 
@@ -16,6 +18,8 @@ $guss-webfonts-charset: 'original' !default;
  * - off: smaller files, render well on HiDPI displays
  *
  *  @type String
+ *
+ * @group webfonts
  */
 $guss-webfonts-hinting: 'on' !default;
 
@@ -26,6 +30,8 @@ $guss-webfonts-hinting: 'on' !default;
  * - off: smaller files
  *
  *  @type String
+ *
+ * @group webfonts
  */
 $guss-webfonts-kerning: 'on' !default;
 
@@ -35,6 +41,8 @@ $guss-webfonts-kerning: 'on' !default;
  * URL can be an absolute HTTP (`//pasteup.guim.co.uk/fonts/`) or relative (`../`)
  *
  * @type String
+ *
+ * @group webfonts
  */
 $guss-webfonts-base-url: './' !default;
 
@@ -46,14 +54,18 @@ $guss-webfonts-base-url: './' !default;
  * @requires {variable} guss-webfonts-kerning
  *
  * @type String
+ *
+ * @group webfonts
  */
 $guss-webfonts-path: 'webfonts/hinting-#{$guss-webfonts-hinting}_kerning-#{$guss-webfonts-kerning}/#{$guss-webfonts-charset}/' !default;
 
 
 /**
  * Human-readable Font-weights
- * 
+ *
  * @type Map
+ *
+ * @group webfonts
  */
 $guss-font-weights: (
     'thin':       100,
@@ -73,15 +85,19 @@ $guss-font-weights: (
 
 /**
  * Extra fonts directory
- * 
+ *
  * @type String
+ *
+ * @group webfonts
  */
 $guss-extras-directory: 'GuardianExtrasWeb' !default;
 
 /**
  * Extra fonts list
- * 
+ *
  * @type List
+ *
+ * @group webfonts
  */
 $guss-webfonts-extras: 'Guardian Compact Web',
                        'Guardian Titlepiece Web',
@@ -93,8 +109,10 @@ $guss-webfonts-extras: 'Guardian Compact Web',
 
 /**
  * Font registry
- * 
+ *
  * @type Map
+ *
+ * @group webfonts
  */
 $guss-webfonts: (
     'Guardian Agate Sans 1 Web': (

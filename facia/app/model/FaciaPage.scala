@@ -2,6 +2,7 @@ package model
 
 import common.Edition
 import dfp.DfpAgent
+import play.api.libs.json.{JsString, JsValue}
 
 case class FaciaPage(
                       id: String,
@@ -17,17 +18,17 @@ case class FaciaPage(
 
   override lazy val isFront = true
 
-  override lazy val metaData: Map[String, Any] = super.metaData ++ faciaPageMetaData
-  lazy val faciaPageMetaData: Map[String, Any] = newMetaData
+  override lazy val metaData: Map[String, JsValue] = super.metaData ++ faciaPageMetaData
+  lazy val faciaPageMetaData: Map[String, JsValue] = newMetaData
 
-  lazy val newMetaData: Map[String, Any] = Map(
-    "keywords" -> webTitle.capitalize,
-    "content-type" -> contentType
+  lazy val newMetaData: Map[String, JsValue] = Map(
+    "keywords" -> JsString(webTitle.capitalize),
+    "contentType" -> JsString(contentType)
   )
 
   val isNetworkFront: Boolean = Edition.all.exists(edition => id.toLowerCase.endsWith(edition.id.toLowerCase))
 
-  override lazy val contentType: String =   if (isNetworkFront) GuardianContentTypes.NETWORK_FRONT else GuardianContentTypes.SECTION
+  override lazy val contentType: String = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
   override def isSponsored = DfpAgent.isSponsored(id)
   override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)

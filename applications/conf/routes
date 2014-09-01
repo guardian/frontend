@@ -7,8 +7,10 @@ GET         /assets/*path                                                       
 
 GET        /_healthcheck                                                        conf.HealthCheck.healthcheck()
 
-GET        /index/keywords                                                      controllers.TagIndexController.keywords()
-GET        /index/keywords/*index                                               controllers.TagIndexController.keyword(index)
+GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
+
+GET        /index/subjects                                                      controllers.TagIndexController.keywords()
+GET        /index/subjects/*index                                               controllers.TagIndexController.keyword(index)
 GET        /index/contributors                                                  controllers.TagIndexController.contributors()
 GET        /index/contributors/*contributor                                     controllers.TagIndexController.contributor(contributor)
 

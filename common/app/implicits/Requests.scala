@@ -30,6 +30,9 @@ trait Requests {
     lazy val hasParameters: Boolean = !r.queryString.isEmpty
 
     lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase  "X-Gu-Management-Healthcheck")
+
+    // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
+    lazy val isSecure: Boolean = r.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))
   }
 
   implicit class RichRequest[A](val request: RequestHeader) {
@@ -37,3 +40,5 @@ trait Requests {
     lazy val isXmlHttpRequest: Boolean = request.headers.get("X-Requested-With").exists(_ == "XMLHttpRequest")
   }
 }
+
+object Requests extends Requests

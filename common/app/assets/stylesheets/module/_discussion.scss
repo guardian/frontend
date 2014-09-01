@@ -6,19 +6,13 @@ $avatarSize: 44px;
    ========================================================================== */
 
 .discussion {
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
+    margin-bottom: $gs-baseline*2;
 
     @include mq(leftCol) {
-        @include rem((
-            margin-left: -($left-column + $gs-gutter)
-        ));
+        margin-left: -($left-column + $gs-gutter);
     }
     @include mq(wide) {
-        @include rem((
-            margin-left: -($left-column-wide + $gs-gutter)
-        ));
+        margin-left: -($left-column-wide + $gs-gutter);
     }
 
     .pagination_legend {
@@ -26,15 +20,11 @@ $avatarSize: 44px;
     }
 }
 .discussion__non-threaded {
-    @include rem((
-        margin-top: $gs-baseline
-    ));
+    margin-top: $gs-baseline;
 }
 .discussion__comments__container {
     position: relative;
-    @include rem((
-        margin-bottom: $gs-baseline*3.5
-    ));
+    margin-bottom: $gs-baseline*3.5;
 }
 .discussion__comment-count {
     color: $c-neutral3;
@@ -42,42 +32,30 @@ $avatarSize: 44px;
 .discussion__show-threaded {
     position: absolute;
     right: 0;
-    @include rem((
-        top: $gs-baseline/2
-    ));
+    top: $gs-baseline/2;
     width: auto;
     @include fs-textSans(2);
 }
 
 .discussion--lowered {
     @include mq(leftCol) {
-        @include rem((
-            margin-right: -($left-column + ($gs-gutter * 9))
-        ));
+        margin-right: -($left-column + ($gs-gutter * 9));
 
         .d-discussion {
-            @include rem((
-                max-width: gs-span(11)
-            ));
+            max-width: gs-span(11);
         }
     }
     @include mq(wide) {
-        @include rem((
-            margin-right: -($left-column-wide + ($gs-gutter * 9))
-        ));
+        margin-right: -($left-column-wide + ($gs-gutter * 9));
 
         .d-discussion {
-            @include rem((
-                max-width: gs-span(12)
-            ));
+            max-width: gs-span(12);
         }
     }
 }
 
 .d-discussion {
-    @include rem((
-        font-size: 14px
-    ));
+    font-size: 14px;
 }
 .d-discussion--shut {
     .discussion-content {
@@ -99,10 +77,8 @@ $avatarSize: 44px;
 
 .d-discussion__comment-count {
     border-top: 1px solid $c-neutral4;
-    @include rem((
-        min-height: $gs-baseline * 2,
-        padding-bottom: $gs-baseline
-    ));
+    min-height: $gs-baseline * 2;
+    padding-bottom: $gs-baseline;
     @include fs-textSans(4);
     color: $c-neutral2;
 }
@@ -124,10 +100,8 @@ $avatarSize: 44px;
     display: none;
     position: relative;
     clear: both;
-    @include rem((
-        margin-top: $gs-baseline,
-        margin-bottom: -1px
-    ));
+    margin-top: $gs-baseline;
+    margin-bottom: -1px;
     background-color: $c-neutral7;
     @include fs-textSans(4);
     color: $c-neutral1;
@@ -142,10 +116,8 @@ $avatarSize: 44px;
 .d-discussion__sentiment {
     @include box-sizing(border-box);
     display: inline-block;
-    @include rem((
-        margin-bottom: -1px,
-        padding: $gs-baseline/2 $gs-gutter/2
-    ));
+    margin-bottom: -1px;
+    padding: $gs-baseline/2 $gs-gutter/2;
     color: $c-neutral1;
 }
 .d-discussion__sentiment--active {
@@ -160,10 +132,8 @@ $avatarSize: 44px;
 
 .show-more__container {
     display: block;
-    @include rem((
-        margin-bottom: ($gs-baseline/3)*2,
-        padding-top: ($gs-baseline/3)*2
-    ));
+    margin-bottom: ($gs-baseline/3)*2;
+    padding-top: ($gs-baseline/3)*2;
     text-align: center;
 
     &.show-more__container--older,
@@ -175,10 +145,8 @@ $avatarSize: 44px;
 .d-discussion__show-more {
     @include fs-textSans(4);
     position: relative;
-    @include rem((
-        padding-top: ($gs-baseline/3)*2,
-        line-height: $gs-baseline*2
-    ));
+    padding-top: ($gs-baseline/3)*2;
+    line-height: $gs-baseline*2;
 
     &:hover span {
         text-decoration: underline;
@@ -191,33 +159,25 @@ $avatarSize: 44px;
     background-color: $c-newsDefault;
 }
 .d-discussion__show-more-text {
-    @include rem((
-        padding-left: $gs-gutter*2 - $gs-gutter/5
-    ));
+    padding-left: $gs-gutter*2 - $gs-gutter/5;
     display: inline-block;
 }
 .d-discussion__show-all-comments {
     display: none;
     position: relative;
-    @include rem((
-        height: 40px,
-        padding-left: 55px
-    ));
+    padding-left: 55px;
     @include fs-textSans(4);
     font-weight: bold;
-    @include rem((
-        height: 40px,
-        line-height: 40px
-    ));
+    height: 40px;
+    line-height: 40px;
 
     .i-show-all-comments {
         position: absolute;
+        top: 0;
         left: 0;
     }
     .i-arrow-blue-down {
-        @include rem((
-            margin-left: ($gs-baseline/3)*2
-        ));
+        margin-left: ($gs-baseline/3)*2;
     }
 
     .d-discussion--partial &,
@@ -229,10 +189,8 @@ $avatarSize: 44px;
     display: none;
 }
 .d-discussion__order-control {
-    @include rem((
-        font-size: 16px,
-        margin: 2px $gs-gutter/4 0
-    ));
+    font-size: 16px;
+    margin: 2px $gs-gutter/4 0;
 }
 
 
@@ -247,9 +205,7 @@ $avatarSize: 44px;
     clear: both;
 }
 .d-comment__inner {
-    @include rem((
-        padding-top: $gs-baseline
-    ));
+    padding-top: $gs-baseline;
     position: relative;
 }
 .d-comment--top-level {
@@ -260,30 +216,22 @@ $avatarSize: 44px;
 }
 .d-comment__meta,
 .d-comment-box__meta {
-    @include rem((
-        margin-bottom: ($gs-baseline/3)*2
-    ));
+    margin-bottom: ($gs-baseline/3)*2;
     white-space: nowrap;
 
     @include mq($comment-meta-breakpoint) {
-        @include rem((
-            width: $left-column + $gs-gutter
-        ));
+        width: $left-column + $gs-gutter;
         float: left;
         height: auto;
     }
     @include mq(wide) {
-        @include rem((
-            width: $left-column-wide + $gs-gutter
-        ));
+        width: $left-column-wide + $gs-gutter;
     }
 }
 .d-comment-box__meta {
     position: relative;
     display: none;
-    @include rem((
-        margin-top: $gs-baseline/2
-    ));
+    margin-top: $gs-baseline/2;
 
     @include mq($comment-meta-breakpoint) {
         display: block;
@@ -292,10 +240,8 @@ $avatarSize: 44px;
 .d-comment__avatar-wrapper,
 .d-comment-box__avatar-wrapper {
     float: left;
-    @include rem((
-        margin-right: ($gs-gutter/5)*2,
-        margin-top: $gs-baseline/3
-    ));
+    margin-right: ($gs-gutter/5)*2;
+    margin-top: $gs-baseline/3;
 
     @include mq($comment-meta-breakpoint, wide) {
         float: none;
@@ -305,38 +251,30 @@ $avatarSize: 44px;
 .user-avatar__image {
     @include border-radius(50%);
     overflow: hidden;
-    @include rem((
-        width: $avatarSize,
-        height: $avatarSize
-    ));
+    width: $avatarSize;
+    height: $avatarSize;
 
     @include mq($comment-meta-breakpoint, wide) {
-        @include rem((
-            width: $avatarSize*1.5,
-            height: $avatarSize*1.5
-        ));
+        width: $avatarSize*1.5;
+        height: $avatarSize*1.5;
 
         .d-comment--response & {
-            @include rem((
-                width: $avatarSize,
-                height: $avatarSize
-            ));
+            width: $avatarSize;
+            height: $avatarSize;
         }
     }
 }
 .d-comment__meta-text,
 .d-comment-box__meta-text {
-    @include rem((
-        padding-right: 50px
-    ));
+    padding-right: 50px;
     @include box-sizing(border-box);
 
     @include mq(desktop) {
         padding-right: 0;
     }
 
-    .i-in-reply-arrow {
-        margin-bottom: -1px;
+    .i-reply-grey {
+        margin-bottom: -4px;
         display: none; // shown in d-comment--response
     }
 }
@@ -347,9 +285,7 @@ $avatarSize: 44px;
 .d-comment-box__author {
     display: block;
     overflow: hidden;
-    @include rem((
-        padding-right: $gs-gutter / 2
-    ));
+    padding-right: $gs-gutter / 2;
     @include fs-textSans(4);
     font-weight: bold;
     text-overflow: ellipsis;
@@ -367,9 +303,7 @@ $avatarSize: 44px;
 }
 
 .d-comment__timestamp {
-    @include rem((
-        margin-bottom: $gs-baseline/3
-    ));
+    margin-bottom: $gs-baseline/3;
     @include fs-textSans(1);
 
     a {
@@ -392,12 +326,10 @@ $avatarSize: 44px;
 
 .d-comment__sentiment {
     @include border-radius(8px);
-    @include rem((
-        height: 8px,
-        width: 8px,
-        margin-right: $gs-gutter/4,
-        margin-top: $gs-baseline/2
-    ));
+    height: 8px;
+    width: 8px;
+    margin-right: $gs-gutter/4;
+    margin-top: $gs-baseline/2;
     background-color: $c-neutral4;
     float: left;
 }
@@ -414,48 +346,34 @@ $avatarSize: 44px;
 
 .d-comment__content {
     @include mq(leftCol) {
-        @include rem((
-            margin-left: $left-column + $gs-gutter
-        ));
+        margin-left: $left-column + $gs-gutter;
     }
     @include mq(wide) {
-        @include rem((
-            margin-left: $left-column-wide + $gs-gutter
-        ));
+        margin-left: $left-column-wide + $gs-gutter;
     }
 }
 .d-comment__pick {
-    @include rem((
-        margin-bottom: $gs-baseline/6
-    ));
+    margin-bottom: $gs-baseline/6;
     white-space: nowrap;
     @include fs-textSans(4);
     font-weight: bold;
 
     .i-gupickasterisk {
-        @include rem((
-            margin-bottom: -4px,
-            margin-right: $gs-gutter/4
-        ));
+        margin-bottom: -4px;
+        margin-right: $gs-gutter/4;
     }
 }
 
 .d-comment__main {
-    @include rem((
-        padding-bottom: $gs-baseline*2
-    ));
+    padding-bottom: $gs-baseline*2;
     position: relative;
 
     @include mq(rightCol) {
-        @include rem((
-            padding-right: $gs-column-width
-        ));
+        padding-right: $gs-column-width;
     }
 
     &.d-comment__main-removed {
-        @include rem((
-            padding-bottom: $gs-baseline
-        ));
+        padding-bottom: $gs-baseline;
     }
 }
 .d-comment__body,
@@ -471,9 +389,7 @@ $avatarSize: 44px;
     }
 
     p {
-        @include rem((
-            margin-top: $gs-baseline*1.5
-        ));
+        margin-top: $gs-baseline*1.5;
 
         @include mq($comment-meta-breakpoint) {
             &:first-child {
@@ -483,10 +399,8 @@ $avatarSize: 44px;
     }
 
     blockquote {
-        @include rem((
-            margin: $gs-baseline $gs-gutter,
-            padding-left: $gs-gutter/2
-        ));
+        margin: $gs-baseline $gs-gutter;
+        padding-left: $gs-gutter/2;
         border-left: 3px solid transparentize($c-neutral1, .75);
     }
 }
@@ -495,9 +409,7 @@ $avatarSize: 44px;
    ======================================================= */
 
 .d-comment__comment-removed {
-    @include rem((
-        margin-top: $gs-baseline*2
-    ));
+    margin-top: $gs-baseline*2;
     @include fs-textSans(1);
     color: $c-neutral2;
 
@@ -513,55 +425,43 @@ $avatarSize: 44px;
 .d-comment__recommend {
     position: absolute;
     right: 0;
-    @include rem((
-        top: $gs-baseline
-    ));
+    top: $gs-baseline;
     z-index: 1;
 
     @include mq(rightCol) {
-        @include rem((
-            min-width: 28px
-        ));
+        min-width: 28px;
         text-align: center;
     }
 }
 .d-comment__recommend-button {
-    @include icon-button(18px, -6px);
+    @include icon-button(18px, -9px);
     background-color: $c-neutral4;
-    @include rem((
-        margin-right: 2px,
-        margin-bottom: -5px
-    ));
+    margin-right: 2px;
+    margin-bottom: -5px;
 
     @include mq(rightCol) {
         position: absolute;
         top: 1.4em;
         left: 50%;
         margin: 0;
-        @include rem((
-            margin-left: -9px
-        ));
+        margin-left: -9px;
     }
 }
 .d-comment__recommend-pulse {
     position: absolute;
     top: 0;
     left: 0;
-    @include rem((
-        width: 18px,
-        height: 18px
-    ));
+    width: 18px;
+    height: 18px;
     @include border-radius(18px);
     background-color: $c-neutral4;
 }
 .d-comment__recommend-count {
     display: inline-block;
     overflow: hidden;
-    @include rem((
-        height: 16px,
-        min-width: 12px,
-        margin-bottom: -4px
-    ));
+    height: 16px;
+    min-width: 12px;
+    margin-bottom: -4px;
     @include fs-textSans(1);
     color: $c-neutral2;
     font-weight: bold;
@@ -642,11 +542,9 @@ $avatarSize: 44px;
 .d-comment__actions {
     position: absolute;
     bottom: 0;
-    @include rem((
-        height: 14px,
-        padding-top: ($gs-baseline/3)*2,
-        padding-bottom: ($gs-baseline/3)*5
-    ));
+    height: 14px;
+    padding-top: ($gs-baseline/3)*2;
+    padding-bottom: ($gs-baseline/3)*5;
     width: 100%;
     @include fs-textSans(1);
 }
@@ -654,9 +552,7 @@ $avatarSize: 44px;
     display: inline-block;
     color: $c-newsDefault;
     font-weight: bold;
-    @include rem((
-        line-height: 20px
-    ));
+    line-height: 20px;
 }
 .d-comment__action--reply {
     cursor: pointer;
@@ -670,29 +566,23 @@ $avatarSize: 44px;
     }
 }
 .d-comment__reply-button {
-    @include icon-button(18px, -5px, -6px);
+    @include icon-button(18px, -9px);
     position: absolute; // override relative position of icon-button
     background-color: $c-newsDefault;
 }
 .d-comment__action--reply-text {
-    @include rem((
-        padding-left: $gs-gutter * 1.25
-    ));
+    padding-left: $gs-gutter * 1.25;
 }
 .d-comment__action--report {
     font-weight: normal;
     position: absolute;
-    @include rem((
-        right: $gs-baseline/3
-    ));
+    right: $gs-baseline/3;
 }
 .d-comment__action-separator {
     display: inline-block;
     position: relative;
     bottom: 1px;
-    @include rem((
-        margin: 0 ($gs-gutter/5)*2
-    ));
+    margin: 0 ($gs-gutter/5)*2;
     @include fs-textSans(1);
     color: $c-neutral2;
 }
@@ -712,9 +602,7 @@ $avatarSize: 44px;
     top: 0;
     right: 0;
     z-index: 3;
-    @include rem((
-        padding: $gs-baseline/2 $gs-gutter/2
-    ));
+    padding: $gs-baseline/2 $gs-gutter/2;
     border: 2px solid $c-neutral6;
     background: #ffffff;
 }
@@ -725,26 +613,18 @@ $avatarSize: 44px;
     width: 100%;
 }
 .d-report-comment__label {
-    @include rem((
-        margin-top: $gs-baseline
-    ));
+    margin-top: $gs-baseline;
 }
 .d-report-comment__field {
-    @include rem((
-        padding: $gs-baseline/2 $gs-gutter/4
-    ));
+    padding: $gs-baseline/2 $gs-gutter/4;
     @include fs-data(4);
 }
 .d-report-comment__submit {
-    @include rem((
-        margin-top: $gs-baseline
-    ));
+    margin-top: $gs-baseline;
 }
 .d-report-comment__close {
     float: right;
-    @include rem((
-        margin-bottom: $gs-baseline/2
-    ));
+    margin-bottom: $gs-baseline/2;
     width: auto;
 }
 
@@ -754,14 +634,10 @@ $avatarSize: 44px;
         display: block;
     }
     .d-comment__main {
-        @include rem((
-            padding-bottom: $gs-baseline*4
-        ));
+        padding-bottom: $gs-baseline*4;
 
         &.d-comment__main-removed {
-            @include rem((
-                padding-bottom: $gs-baseline
-            ));
+            padding-bottom: $gs-baseline;
         }
     }
 }
@@ -775,42 +651,28 @@ $avatarSize: 44px;
     border-top: 1px dotted $c-neutral3;
 
     .d-comment__pick {
-        @include rem((
-            margin-bottom: $gs-baseline/2
-        ));
+        margin-bottom: $gs-baseline/2;
     }
     .d-comment__main {
-        @include rem((
-            margin-top: $gs-baseline/3
-        ));
+        margin-top: $gs-baseline/3;
     }
     .d-comment__content {
         margin-left: 0;
     }
     .d-comment__inner {
-        @include rem((
-            padding-top: $gs-baseline/2
-        ));
+        padding-top: $gs-baseline/2;
     }
     .d-comment__body {
-        @include rem((
-            margin-top: $gs-baseline/3
-        ));
+        margin-top: $gs-baseline/3;
         @include mq(tablet) {
-            @include rem((
-                margin-top: ($gs-baseline/3)*2
-            ));
+            margin-top: ($gs-baseline/3)*2;
         }
     }
     .d-comment__recommend {
-        @include rem((
-            top: $gs-baseline/2
-        ));
+        top: $gs-baseline/2;
     }
     .d-comment__timestamp {
-        @include rem((
-            margin-top: $gs-baseline/3 * -1
-        ));
+        margin-top: $gs-baseline/3 * -1;
     }
     .d-comment__meta,
     .d-comment-box__meta {
@@ -823,7 +685,7 @@ $avatarSize: 44px;
     .d-comment__avatar-wrapper {
         display: none;
     }
-    .i-in-reply-arrow {
+    .i-reply-grey {
         display: inline-block;
     }
     .d-comment__author,
@@ -843,9 +705,7 @@ $avatarSize: 44px;
 
     @include mq(tablet) {
         .d-comment__meta {
-            @include rem((
-                height: $gs-baseline*4
-            ));
+            height: $gs-baseline*4;
         }
         .d-comment__avatar-wrapper,
         .d-comment__timestamp {
@@ -859,17 +719,13 @@ $avatarSize: 44px;
     }
 }
 .d-discussion__error {
-    @include rem((
-        margin-top: ($gs-baseline/3)*2
-    ));
+    margin-top: ($gs-baseline/3)*2;
     @include fs-textSans(4);
     color: $c-error;
 
     .d-discussion__error-text {
         display: inline-block;
-        @include rem((
-            margin-left: $gs-gutter * 1.2
-        ));
+        margin-left: $gs-gutter * 1.2;
     }
     .i-alert { position: absolute; }
 }
@@ -878,30 +734,20 @@ $avatarSize: 44px;
 }
 
 .d-thread--responses {
-    @include rem((
-        padding-left: $gs-gutter
-    ));
+    padding-left: $gs-gutter;
 
     @include mq(tablet) {
-        @include rem((
-            padding-left: $gs-gutter * 2.5
-        ))
+        padding-left: $gs-gutter * 2.5;
     }
     @include mq($comment-meta-breakpoint) {
-        @include rem((
-            margin-left: gs-span(2) + $gs-gutter
-        ));
+        margin-left: gs-span(2) + $gs-gutter;
     }
     @include mq(leftCol) {
-        @include rem((
-            margin-left: $left-column + $gs-gutter
-        ));
+        margin-left: $left-column + $gs-gutter;
         padding-left: 0;
     }
     @include mq(wide) {
-        @include rem((
-            margin-left: $left-column-wide + $gs-gutter
-        ));
+        margin-left: $left-column-wide + $gs-gutter;
     }
 }
 .d-show-more-replies {
@@ -911,21 +757,17 @@ $avatarSize: 44px;
     cursor: pointer;
     font-weight: bold;
     @include fs-textSans(1);
-    @include rem((
-        line-height: 40px
-    ));
+    line-height: 40px;
 
     &:hover {
         text-decoration: underline;
     }
 
     span {
-        @include icon-button(18px, -7px);
+        @include icon-button(18px, -9px);
         background-color: $c-newsDefault;
-        @include rem((
-            margin-bottom: $gs-baseline/3 * -1,
-            margin-right: ($gs-gutter/5)*2
-        ));
+        margin-bottom: $gs-baseline/3 * -1;
+        margin-right: ($gs-gutter/5)*2;
     }
 }
 
@@ -936,14 +778,10 @@ $avatarSize: 44px;
 .discussion__heading {
     border-top: 1px solid $c-neutral4;
     margin-bottom: 0;
-    @include rem((
-        padding-top: $gs-baseline/3
-    ));
+    padding-top: $gs-baseline/3;
 
     @include mq(tablet) {
-        @include rem((
-            padding-top: $gs-baseline/2
-        ));
+        padding-top: $gs-baseline/2;
     }
 }
 .discussion__comments--top-comments {
@@ -952,9 +790,7 @@ $avatarSize: 44px;
         overflow: hidden;
     }
     .d-comment {
-        @include rem((
-            margin-bottom: ($gs-baseline/5)*2
-        ));
+        margin-bottom: ($gs-baseline/5)*2;
         overflow: hidden;
     }
     .d-comment__main {
@@ -968,36 +804,26 @@ $avatarSize: 44px;
     }
     .d-comment__meta {
         position: absolute;
-        @include rem((
-            bottom: ($gs-baseline/3)*2
-        ));
+        bottom: ($gs-baseline/3)*2;
         width: 100%;
 
         @include mq($comment-meta-breakpoint) {
             position: static;
-            @include rem((
-                margin-top: $gs-baseline,
-                width: 160px
-            ));
+            margin-top: $gs-baseline;
+            width: 160px;
             top: 0;
         }
     }
     .d-comment__inner {
         min-height: 0;
-        @include rem((
-            padding-bottom: $avatarSize + 20px + ($gs-baseline/3)*4
-        ));
+        padding-bottom: $avatarSize + 20px + ($gs-baseline/3)*4;
 
         @include mq($comment-meta-breakpoint) {
-            @include rem((
-                padding-bottom: ($gs-baseline/3)*2
-            ));
+            padding-bottom: ($gs-baseline/3)*2;
         }
     }
     .d-comment__pick {
-        @include rem((
-            margin-bottom: $gs-baseline/2
-        ));
+        margin-bottom: $gs-baseline/2;
     }
     .show-more__container--newer,
     .show-more__container--older,
@@ -1006,28 +832,22 @@ $avatarSize: 44px;
     }
     .d-comment__content {
         background-color: $c-neutral7;
-        @include rem((
-            padding: $gs-baseline $gs-gutter * .8 ($gs-baseline/6) * 5 $gs-gutter * .8,
-            margin-bottom: $gs-baseline
-        ));
+        padding: $gs-baseline $gs-gutter * .8 ($gs-baseline/6) * 5;
+        margin-bottom: $gs-baseline;
         position: relative;
 
         @include mq(rightCol) {
-            @include rem((
-                padding-right: 0
-            ));
+            padding-right: 0;
         }
 
         &:before {
             position: absolute;
             display: block;
             content: '';
-            @include rem((
-                bottom: -20px,
-                left: 20px,
-                border-right: 20px solid transparent,
-                border-top: 20px solid $c-neutral7
-            ));
+            bottom: -20px;
+            left: 20px;
+            border-right: 20px solid transparent;
+            border-top: 20px solid $c-neutral7;
             width: 0;
             height: 0;
             border-right-style: inset;
@@ -1037,26 +857,20 @@ $avatarSize: 44px;
 
             &:before {
                 border: 0;
-                @include rem((
-                    left: -18px,
-                    top: 11px,
-                    border-left: 18px solid transparent,
-                    border-bottom: 18px solid $c-neutral7
-                ));
+                left: -18px;
+                top: 11px;
+                border-left: 18px solid transparent;
+                border-bottom: 18px solid $c-neutral7;
                 border-left-style: inset;
             }
         }
     }
     .d-comment__recommend {
-        @include rem((
-            top: $gs-baseline * 1.25,
-            right: $gs-gutter * .8
-        ));
+        top: $gs-baseline * 1.25;
+        right: $gs-gutter * .8;
 
         @include mq(rightCol) {
-            @include rem((
-                right: $gs-gutter * .6
-            ));
+            right: $gs-gutter * .6;
         }
     }
     .d-discussion__comment-count {
@@ -1092,18 +906,14 @@ $avatarSize: 44px;
 }
 .comment--speechy {
     border: 0;
-    @include rem((
-        padding: 0 0 ($gs-baseline/3)*10 0
-    ));
+    padding: 0 0 ($gs-baseline/3)*10;
 
     .comment__inner {
         @include box-sizing(border-box);
         background-color: $c-neutral7;
         display: inline-block;
-        @include rem((
-            padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-baseline,
-            max-width: $right-column
-        ));
+        padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-baseline;
+        max-width: $right-column;
         position: relative;
         width: 100%;
         
@@ -1121,21 +931,17 @@ $avatarSize: 44px;
             width: 0;
             border-color: rgba($c-neutral7, 0);
             border-top-color: $c-neutral7;
-            @include rem((
-                border-width: 30px,
-                left: 23px,
-                margin-left: -30px
-            ));
+            border-width: 30px;
+            left: 23px;
+            margin-left: -30px;
         }
 
         &:after { // Mask (right-skewed parellelogram)
             @include transform(skew(-10deg));
             background-color: #ffffff;
-            @include rem((
-                height: 24px,
-                width: 24px,
-                left: -5px
-            ));
+            height: 24px;
+            width: 24px;
+            left: -5px;
         }
     }
 }
@@ -1143,24 +949,18 @@ $avatarSize: 44px;
 .comments-link {
     display: block;
     float: right;
-    @include rem((
-        margin-top: -(1 + ($gs-baseline/3)*4)
-    ));
+    margin-top: -(1 + ($gs-baseline/3)*4);
     @include fs-textSans(1, true);
 
     .i {
         position: relative;
-        @include rem((
-            margin-left: 7px,
-            top: 2px
-        ));
+        margin-left: 7px;
+        top: 2px;
     }
 }
 
 .comment__meta {
-    @include rem((
-        margin-top: $gs-baseline
-    ));
+    margin-top: $gs-baseline;
 }
 
 
@@ -1174,11 +974,9 @@ $avatarSize: 44px;
     @include border-radius(50%);
     overflow: hidden;
     float: left;
-    @include rem((
-        height: 36px,
-        margin-right: 15px,
-        width: 36px
-    ));
+    height: 36px;
+    margin-right: 15px;
+    width: 36px;
 }
 
 
@@ -1208,47 +1006,21 @@ $avatarSize: 44px;
     width: 1px;
 }
 
-/* CTAs
-   ========================================================================== */
-
-.d-actions__link,
-.d-actions__link:hover,
-.d-actions__link:focus {
-    display: block;
-    @include rem((
-        padding-right: $gs-gutter,
-        margin: ($gs-baseline/3)*4 0
-    ));
-    @include fs-textSans(1);
-    color: #808080;
-}
-.d-actions__link:after {
-    @extend %i-filter-arrow-right;
-    content: ' ';
-    display: inline-block;
-    @include rem((
-        margin: 0 0 -3px 20px
-    ));
-}
 
 /* Comment Box
    ========================================================================== */
 
 .d-bar {
-    @include rem((
-        margin-bottom: ($gs-baseline/3)*4
-    ));
+    margin-bottom: ($gs-baseline/3)*4;
     @include fs-textSans(4);
     color: $c-neutral2;
 }
 .d-comment-box__body {
     @include box-sizing(border-box);
     border: 1px solid $c-neutral3;
-    @include rem((
-        height: 50px,
-        margin: ($gs-baseline/3)*2 0,
-        padding: ($gs-baseline/3)*2 $gs-gutter/2
-    ));
+    height: 50px;
+    margin: ($gs-baseline/3)*2 0;
+    padding: ($gs-baseline/3)*2 $gs-gutter/2;
     width: 100%;
     resize: vertical;
     word-break: break-word;
@@ -1257,19 +1029,13 @@ $avatarSize: 44px;
     position: relative;
 
     @include mq($comment-meta-breakpoint) {
-        @include rem((
-            margin-left: 160px
-        ));
+        margin-left: 160px;
     }
     @include mq(leftCol) {
-        @include rem((
-            margin-left: $left-column + $gs-gutter
-        ));
+        margin-left: $left-column + $gs-gutter;
     }
     @include mq(wide) {
-        @include rem((
-            margin-left: $left-column-wide + $gs-gutter
-        ));
+        margin-left: $left-column-wide + $gs-gutter;
     }
 }
 
@@ -1279,9 +1045,7 @@ $avatarSize: 44px;
     }
 }
 .d-comment-box--expanded .d-comment-box__body {
-    @include rem((
-        height: gs-height(3)
-    ));
+    height: gs-height(3);
 }
 .d-comment-box__add-comment {
     display: none;
@@ -1292,9 +1056,7 @@ $avatarSize: 44px;
     font-weight: bold;
 }
 .d-comment-box__cancel {
-    @include rem((
-        margin-left: $gs-gutter
-    ));
+    margin-left: $gs-gutter;
 }
 .d-comment-box__reply-to,
 .d-comment-box__cancel {
@@ -1317,9 +1079,7 @@ $avatarSize: 44px;
 .d-comment-box__hide-parent,
 .d-comment-box__show-parent {
     display: none;
-    @include rem((
-        margin-left: $gs-gutter
-    ));
+    margin-left: $gs-gutter;
     @include fs-textSans(2);
 }
 .d-comment-box--response {
@@ -1328,10 +1088,8 @@ $avatarSize: 44px;
     }
     .d-comment-box__content {
         margin-left: 0;
-        @include rem((
-            margin-right: $gs-gutter,
-            padding-bottom: $gs-baseline
-        ));
+        margin-right: $gs-gutter;
+        padding-bottom: $gs-baseline;
     }
     .d-comment-box__avatar-wrapper {
         display: none;
@@ -1355,9 +1113,7 @@ $avatarSize: 44px;
 .d-comment-box__preview,
 .d-comment-box__cancel {
     display: none;
-    @include rem((
-        bottom: $gs-baseline
-    ));
+    bottom: $gs-baseline;
     color: $c-neutral2;
 
     .d-comment-box--expanded &,
@@ -1372,9 +1128,7 @@ $avatarSize: 44px;
     display: none;
 }
 .open-cta {
-    @include rem((
-        margin-top: ($gs-baseline/3)*8
-    ));
+    margin-top: ($gs-baseline/3)*8;
 
     .clamp-fade {
         @include simple-gradient(transparent, $c-neutral7);
@@ -1390,18 +1144,14 @@ $avatarSize: 44px;
     left: 0;
     width: 0;
     height: 0;
-    @include rem((
-        border-right: 16px solid transparent,
-        border-bottom: 16px solid $c-neutral7,
-        margin-left: $gs-gutter*2
-    ));
+    border-right: 16px solid transparent;
+    border-bottom: 16px solid $c-neutral7;
+    margin-left: $gs-gutter*2;
     border-right-style: inset;
 }
 .d-comment-box__parent-comment {
-    @include rem((
-        padding: $gs-baseline $gs-gutter,
-        margin-right: $gs-gutter
-    ));
+    padding: $gs-baseline $gs-gutter;
+    margin-right: $gs-gutter;
     background-color: $c-neutral7;
     @include fs-textSans(4);
 
@@ -1418,17 +1168,13 @@ $avatarSize: 44px;
 .d-comment-box__parent-comment-author {
     display: inline-block;
     font-weight: bold;
-    @include rem((
-        margin-bottom: $gs-baseline/2
-    ));
+    margin-bottom: $gs-baseline/2;
 }
 .d-comment-box__parent-comment-body {
     position: relative;
 }
 .d-comment-box__parent-comment-wrapper {
-    @include rem((
-        margin-top: $gs-baseline/2
-    ));
+    margin-top: $gs-baseline/2;
     display: none;
 }
 .d-comment-box--parent-visible {
@@ -1438,9 +1184,7 @@ $avatarSize: 44px;
 }
 
 .d-comment-box__preview-spout {
-    @include rem((
-        margin-left: $gs-gutter*10
-    ));
+    margin-left: $gs-gutter*10;
 }
 .d-comment-box__preview-wrapper {
     display: none;
@@ -1452,22 +1196,16 @@ $avatarSize: 44px;
 .d-comment-box__preview-block {
     display: block;
     background-color: $c-neutral7;
-    @include rem((
-        padding: $gs-baseline $gs-gutter
-    ));
+    padding: $gs-baseline $gs-gutter;
 }
 .d-comment-box__preview-body {
-    @include rem((
-        margin: $gs-baseline 0
-    ));
+    margin: $gs-baseline 0;
 }
 
 .d-comment-box__formatting-controls {
     display: none;
     float: right;
-    @include rem((
-        margin-top: - ($gs-gutter / 2)
-    ));
+    margin-top: - ($gs-gutter / 2);
 
     @include mq(tablet) {
         .d-comment-box--expanded &,
@@ -1493,12 +1231,10 @@ $avatarSize: 44px;
     text-align: center;
     cursor: pointer;
     @include fs-textSans(2);
-    @include rem((
-        margin-left: $gs-gutter / 5,
-        padding: 2px 5px 0px 5px,
-        min-width: 11px,
-        line-height: 17px
-    ));
+    margin-left: $gs-gutter / 5;
+    padding: 2px 5px 0px;
+    min-width: 11px;
+    line-height: 17px;
 
     &:hover {
         border-color: $c-brandBlue;
@@ -1520,20 +1256,16 @@ $sentiment-width: 56 + $gs-gutter/2;
     }
 }
 .d-comment-box__sentiments-head {
-    @include rem((
-        margin-bottom: $gs-baseline/2,
-        margin-right: $sentiment-width*2,
-        margin-top: $gs-baseline
-    ));
+    margin-bottom: $gs-baseline/2;
+    margin-right: $sentiment-width*2;
+    margin-top: $gs-baseline;
     @include fs-header(2);
 }
 .d-comment-box__sentiment {
     @include box-sizing(border-box);
     display: inline-block;
-    @include rem((
-        padding: $gs-baseline/6 0,
-        width: $sentiment-width
-    ));
+    padding: $gs-baseline/6 0;
+    width: $sentiment-width;
     background-color: $c-neutral6;
     @include fs-textSans(4);
     text-align: center;

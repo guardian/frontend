@@ -1,7 +1,9 @@
 define([
+    'raven',
     'lodash/collections/filter',
     'lodash/collections/forEach',
     'lodash/collections/map',
+    'lodash/collections/some',
     'lodash/objects/assign',
     'lodash/objects/keys',
     'common/utils/_',
@@ -9,11 +11,14 @@ define([
     'common/utils/mediator',
     'common/utils/config',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/high-commercial-component'
+    'common/modules/experiments/tests/high-commercial-component',
+    'common/modules/experiments/tests/soulmates-labelling'
 ], function (
+    raven,
     filter,
     forEach,
     map,
+    some,
     assign,
     keys,
     _,
@@ -21,11 +26,13 @@ define([
     mediator,
     globalConfig,
     mvtCookie,
-    HighCommercialComponent
+    HighCommercialComponent,
+    SoulmatesLabelling
     ) {
 
     var TESTS = [
-            new HighCommercialComponent()
+            new HighCommercialComponent(),
+            new SoulmatesLabelling()
         ],
         participationsKey = 'gu.ab.participations';
 
@@ -60,7 +67,7 @@ define([
             if (typeof(assign({}, globalConfig, config).switches['ab' + k]) === 'undefined') {
                 removeParticipation({ id: k });
             } else {
-                var testExists = TESTS.some(function (element) {
+                var testExists = some(TESTS, function(element) {
                     return element.id === k;
                 });
 
@@ -118,7 +125,7 @@ define([
         if (isParticipating(test) && testCanBeRun(test, config)) {
             var participations = getParticipations(),
                 variantId = participations[test.id].variant;
-            test.variants.some(function(variant) {
+            some(test.variants, function(variant) {
                 if (variant.id === variantId) {
                     variant.test(context, config);
                     return true;
@@ -216,11 +223,11 @@ define([
             });
         },
 
-        isEventApplicableToAnActiveTest: function (event) {
+        isEventApplicableToAnActiveTest: function(event) {
             var participations = keys(getParticipations());
-            return participations.some(function (id) {
+            return some(participations, function(id) {
                 var listOfEventStrings = getTest(id).events;
-                return listOfEventStrings.some(function (ev) {
+                return some(listOfEventStrings, function(ev) {
                     return event.indexOf(ev) === 0;
                 });
             });
@@ -236,7 +243,7 @@ define([
             return eventTag && _(getActiveTests())
                 .filter(function (test) {
                     var testEvents = test.events;
-                    return testEvents && testEvents.some(function (testEvent) {
+                    return testEvents && some(testEvents, function(testEvent) {
                         return startsWith(eventTag, testEvent);
                     });
                 })
@@ -262,8 +269,7 @@ define([
             } catch (error) {
                 // Encountering an error should invalidate the logging process.
                 abLogObject = {};
-
-                mediator.emit('module:error', error, 'common/modules/experiments/ab.js', 267);
+                raven.captureException(error);
             }
 
             return abLogObject;

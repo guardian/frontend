@@ -1,9 +1,7 @@
 .live-toolbar {
     width: 100%;
-    @include rem((
-        margin-bottom: $gs-baseline,
-        height: $gs-row-height + $gs-baseline
-    ));
+    margin-bottom: $gs-baseline;
+    height: $gs-row-height + $gs-baseline;
 
     .is-live & {
         display: table;
@@ -28,9 +26,7 @@
     position: relative;
     width: auto;
     text-align: left;
-    @include rem((
-        padding: ($gs-baseline/3)*2 8px $gs-baseline*2 0
-    ));
+    padding: ($gs-baseline/3)*2 8px $gs-baseline*2 0;
     @include fs-textSans(2);
 
     &.is-active {
@@ -39,26 +35,20 @@
     
     i {
         position: absolute;
-        @include rem((
-            top: 14px,
-            right: ($gs-gutter*.75)*-1
-        ));
+        top: 14px;
+        right: ($gs-gutter*.75)*-1;
     }
 }
 .live-toggler__label {
     padding-left: 0;
-    @include rem((
-        padding-right: $gs-gutter/5
-    ));
+    padding-right: $gs-gutter/5;
     color: $c-neutral2;
     @include fs-textSans(2);
 }
 .live-toggler__value {
     display: block;
-    @include rem((
-        min-width: $gs-gutter*2.5,
-        padding-bottom: 2px
-    ));
+    min-width: $gs-gutter*2.5;
+    padding-bottom: 2px;
     border-right: 1px solid $c-neutral5;
     color: $c-neutral2;
     font-weight: bold;
@@ -103,21 +93,17 @@
     .live-toggle__value {
         display: inline-block;
         text-align: center;
-        @include rem((
-            padding: $gs-baseline/1.5 0 0,
-            width: 32px,
-            height: 24px,
-            line-height: 13px
-        ));
+        padding: $gs-baseline/1.5 0 0;
+        width: 32px;
+        height: 24px;
+        line-height: 13px;
         background-color: $c-neutral2;
         color: #ffffff;
         font-weight: bold;
         @include border-radius(50%);
 
         @include mq(tablet) {
-            @include rem((
-                line-height: 17px
-            ));
+            line-height: 17px;
         }
     }
 }

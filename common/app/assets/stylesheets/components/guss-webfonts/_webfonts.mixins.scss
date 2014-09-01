@@ -9,6 +9,8 @@
  * @param {String} $url ($guss-webfonts-base-url) - URL
  *
  * @requires {variable} guss-webfonts-base-url
+ *
+ * @group webfonts
  */
 @mixin guss-at-font-face(
     $family,
@@ -46,6 +48,8 @@
  * @requires {function} compose-webfont-path
  * @requires {function} guss-font-weight
  * @requires {mixin} guss-at-font-face
+ *
+ * @group webfonts
  */
 @mixin guss-webfonts-single-declaration(
     $font-family,
@@ -79,6 +83,8 @@
  * @requires {variable} guss-webfonts
  * @requires {mixin} guss-webfonts-single-declaration
  * @requires {mixin} guss-webfonts
+ *
+ * @group webfonts
  */
 @mixin guss-webfonts($fonts: $guss-webfonts, $registry: $guss-webfonts) {
     @if type-of($fonts) == 'string' {

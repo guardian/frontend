@@ -3,7 +3,7 @@ package controllers.admin
 import play.api.mvc.Controller
 import common.Logging
 import controllers.AuthLogging
-import tools.{ChartFormat, CloudWatch}
+import tools.CloudWatch
 import play.api.libs.ws.WS
 import play.api.libs.ws.WSAuthScheme
 import play.api.libs.concurrent.Execution.Implicits._
@@ -38,11 +38,10 @@ object RadiatorController extends Controller with Logging with AuthLogging {
   }
 
   def renderRadiator() = AuthActions.AuthActionTest { implicit request =>
-    val graphs = (CloudWatch.shortStackLatency ++ CloudWatch.fastlyErrors).map(_.withFormat(ChartFormat.SingleLineBlack))
-    val multilineGraphs = CloudWatch.fastlyHitMissStatistics.map(_.withFormat(ChartFormat.DoubleLineBlueRed))
-    val jsErrors = CloudWatch.jsErrors.withFormat(ChartFormat.MultiLine)
+    val graphs = (CloudWatch.shortStackLatency ++ CloudWatch.fastlyErrors)
+    val multilineGraphs = CloudWatch.fastlyHitMissStatistics
     val switches = switchesExpiringThisWeek
-    NoCache(Ok(views.html.radiator(graphs, multilineGraphs, jsErrors, CloudWatch.cost, switches, Configuration.environment.stage)))
+    NoCache(Ok(views.html.radiator(graphs, multilineGraphs, CloudWatch.cost, switches, Configuration.environment.stage)))
   }
 
   def pingdom() = AuthActions.AuthActionTest.async { implicit request =>

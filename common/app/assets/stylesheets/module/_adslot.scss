@@ -9,6 +9,7 @@
 .ad-slot__label {
     height: $mpu-ad-label-height;
     background-color: $c-neutral8;
+    margin: 0 auto;
     padding: 0 ($gs-baseline/3)*2;
     border-top: 1px solid $c-neutral5;
     color: $c-neutral2-contrasted;
@@ -27,9 +28,7 @@
 
     .ad-slot--top-banner-ad {
         height: 50px;
-        @include rem((
-            padding: $gs-baseline 0
-        ));
+        padding: $gs-baseline 0;
 
         @include mq(tablet) {
             display: none;
@@ -49,9 +48,7 @@
     .ad-slot--top-banner-ad {
         display: none;
         min-height: 90 + ($gs-row-height/2);
-        @include rem((
-            padding-bottom: $gs-row-height/2
-        ));
+        padding-bottom: $gs-row-height/2;
 
         @include mq(tablet) {
             .js-on & {
@@ -79,56 +76,44 @@
             }
             .ad-slot__label {
                 width: 720px;
-                margin: 0 auto;
             }
         }
     }
 }
 .top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, $to: faciaLeftCol) {
+    @include mq(mobile, faciaLeftCol) {
         text-align: center;
     }
     @include mq(faciaLeftCol) {
         margin: 0 auto;
-        @include rem((
-            width: gs-span(14) - ($left-column + $gs-gutter),
-            padding-left: $left-column + $gs-gutter
-        ));
+        width: gs-span(14) - ($left-column + $gs-gutter);
+        padding-left: $left-column + $gs-gutter;
     }
     @include mq(wide) {
-        @include rem((
-            width: gs-span(16) - ($left-column-wide + $gs-gutter),
-            padding-left: $left-column-wide + $gs-gutter
-        ));
+        width: gs-span(16) - ($left-column-wide + $gs-gutter);
+        padding-left: $left-column-wide + $gs-gutter;
     }
     @include mq(tablet, faciaLeftCol) {
         .ad-slot__label {
             width: 728px;
-            margin: 0 auto;
         }
     }
 }
 .top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, $to: rightCol) {
+    @include mq(mobile, rightCol) {
         text-align: center;
     }
     @include mq(rightCol) {
-        @include rem((
-            margin: 0 0 0 $gs-gutter,
-        ));
+        margin: 0 0 0 $gs-gutter;
     }
     @include mq(leftCol) {
         margin: 0 auto;
-        @include rem((
-            max-width: gs-span(14) + ($gs-gutter*2) - ($left-column + ($gs-gutter*2)),
-            padding-left: $left-column + ($gs-gutter*2)
-        ));
+        max-width: gs-span(14) + ($gs-gutter*2) - ($left-column + ($gs-gutter*2));
+        padding-left: $left-column + ($gs-gutter*2);
     }
     @include mq(wide) {
-        @include rem((
-            max-width: gs-span(16) + ($gs-gutter*2) - ($left-column-wide + ($gs-gutter*2)),
-            padding-left: $left-column-wide + ($gs-gutter*2)
-        ));
+        max-width: gs-span(16) + ($gs-gutter*2) - ($left-column-wide + ($gs-gutter*2));
+        padding-left: $left-column-wide + ($gs-gutter*2);
     }
     @include mq(tablet, rightCol) {
         .ad-slot__label {
@@ -141,38 +126,36 @@
 /**
  * Inline ads
  */
+.ad-slot--inline,
 .ad-slot--container-inline,
-.ad-slot--inline {
+.ad-slot--gallery-inline {
     min-height: 50 + $mpu-ad-label-height;
+    text-align: center;
 
-    @include mq(mobileLandscape) {
-        min-height: 50px;
-    }
     @include mq(tablet) {
         height: 250px + $mpu-ad-label-height;
-        width: 300px;
     }
     .ad-slot__label {
-        max-width: 300px;
-        margin: 0 auto;
+        max-width: 320px;
+    }
+}
+.ad-slot--inline,
+.ad-slot--container-inline {
+    @include mq(tablet) {
+        width: 300px;
+    }
+}
+.ad-slot--inline {
+    margin-bottom: $gs-baseline;
 
-        @include mq(mobileLandscape, tablet) {
-            position: absolute;
-            width: 50%;
-            height: 50px;
-            z-index: -1;
-            text-align: left;
-            @include rem((
-                padding-left: 2px,
-                font-size: 10px
-            ));
-        }
+    @include mq(tablet) {
+        float: right;
+        margin-top: $gs-baseline/3;
+        margin-left: $gs-gutter;
     }
 }
 .ad-slot--container-inline {
-    @include rem((
-        margin: $gs-baseline 0 $gs-baseline/2,
-    ));
+    margin: $gs-baseline 0 $gs-baseline/2;
 
     @include mq(tablet) {
         position: absolute;
@@ -182,74 +165,64 @@
         background-color: $c-neutral8;
     }
 }
-.ad-slot--inline {
-    text-align: center;
-    @include rem((
-        margin-bottom: $gs-baseline
-    ));
-
+.ad-slot--gallery-inline {
     @include mq(tablet) {
-        float: right;
-        @include rem((
-            margin-top: $gs-baseline/3,
-            margin-left: $gs-gutter
-        ))
+        padding-bottom: $gs-baseline*2;
+        background-color: lighten(guss-colour(tone-media-1), 2.5%);
+    }
+    .ad-slot__label {
+        color: guss-colour(neutral-3);
+        background-color: lighten(guss-colour(tone-media-1), 2.5%);
+        border-top-color: guss-colour(neutral-2);
+
+        @include mq(tablet) {
+            max-width: none;
+        }
     }
 }
 .ad-slot--mpu-banner-ad {
     display: none;
     min-height: 250 + $mpu-ad-label-height;
-    @include rem((
-        margin-bottom: $gs-baseline*2
-    ));
+    margin-bottom: $gs-baseline*2;
 
     @include mq(rightCol) {
         display: block;
     }
 }
-.ad-slot--sponsored,
-.ad-slot--sponsored__header {
-    border-top: 1px solid $c-neutral5;
-    @include rem((
-        padding-top: $gs-baseline/4
-    ));
-}
 .ad-slot--sponsored {
     overflow: hidden;
+    border-top: 1px solid $c-neutral5;
+    padding-top: $gs-baseline/2;
 }
-.ad-slot--sponsored__label,
-.ad-slot--sponsored__header,
-.ad-slot--sponsored__image,
-.ad-slot--sponsored__text {
-    @include rem((
-        padding-left: $gs-gutter/2,
-        padding-right: $gs-gutter/2
-    ));
+.ad-slot--sponsored__article {
+    display: block;
+    position: relative;
+    min-height: gs-height(2);
+    padding: 0 $gs-gutter/2 $gs-baseline/2 (gs-span(2) + $gs-gutter);
+    margin-bottom: $gs-baseline/2;
+    border-bottom: 1px solid $c-neutral5;
 }
-.ad-slot--sponsored__label,
-.ad-slot--sponsored__text {
+.ad-slot--sponsored__image {
+    position: absolute;
+    top: 0;
+    left: $gs-gutter/2;
+}
+.ad-slot--sponsored__text,
+.ad-slot--sponsored__label {
     color: $c-neutral2;
+}
+.ad-slot--sponsored__text {
+    @include f-headlineSans;
+    @include font-size(14, 18);
 }
 .ad-slot--sponsored__label {
     float: left;
+    clear: left;
+    padding-left: $gs-gutter/2;
     @include fs-data(3);
-}
-.ad-slot--sponsored__image {
-    float: left;
 }
 .ad-slot--sponsored__link {
     float: right;
-}
-.ad-slot--sponsored__header {
-    @include f-headlineSans;
-    @include font-size(16, 20);
-}
-.ad-slot--sponsored__text {
-    @include f-textSans;
-    @include font-size(14, 18);
-}
-.ad-slot--sponsored__header {
-    clear: both;
 }
 
 /**
@@ -263,9 +236,7 @@
         .has-page-skin & {
             margin-left: auto;
             margin-right: auto;
-            @include rem((
-                width: gs-span(12) + ($gs-gutter*2)
-            ));
+            width: gs-span(12) + ($gs-gutter*2);
         }
     }
 }
@@ -276,19 +247,12 @@
         display: block;
     }
 }
-.ad-slot--commercial-component {
-    @include rem((
-        margin-top: $gs-baseline
-    ));
-}
 
 /**
  * Badges
  */
 .ad-slot--paid-for-badge {
-    @include rem((
-        padding: 2px 0 $gs-baseline
-    ));
+    padding: 2px 0 $gs-baseline;
 
     // badges are always broken out, so hide the actual ad
     iframe {
@@ -299,9 +263,7 @@
 
         @include mq(leftCol) {
             .content__meta-container--no-byline & {
-                @include rem((
-                    padding-top: $gs-baseline / 3
-                ));
+                padding-top: $gs-baseline / 3;
             }
         }
     }
@@ -324,18 +286,14 @@
     }
     .ad-slot--paid-for-badge__link {
         display: block;
-        @include rem((
-            margin-top: $gs-row-height/4
-        ))
+        margin-top: $gs-row-height/4;
     }
     .ad-slot--paid-for-badge__logo {
         display: block;
     }
     .ad-slot--paid-for-badge__help {
         @include fs-textSans(1, $size-only: true);
-        @include rem((
-            margin-top: $gs-baseline/3
-        ));
+        margin-top: $gs-baseline/3;
     }
 }
 .ad-slot--adbadge {
@@ -345,9 +303,11 @@
     }
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            @include rem((
-                margin-top: get-line-height($fs-data, 3)*-2
-            ));
+            margin-top: get-line-height(data, 3)*-2;
+
+            .ad-slot--commercial-component & {
+                margin-top: -(get-line-height(data, 3));
+            }
         }
     }
 }
@@ -356,11 +316,10 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2;
     }
+
     @include mq(mobile, $to: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            @include rem((
-                margin-top: get-line-height($fs-data, 3)*-1
-            ));
+            margin-top: get-line-height(data, 3)*-1;
         }
     }
 }
@@ -373,28 +332,22 @@
     }
     // magic numbers, height of the ad badge
     &.ad-slot--spbadge {
-        @include rem((
-            min-height: 135px
-        ));
+        min-height: 135px;
     }
     &.ad-slot--adbadge {
-        @include rem((
-            min-height: 155px
-        ));
+        min-height: 155px;
     }
 }
 .ad-slot--paid-for-badge--live-blog {
     @include mq(rightCol) {
-        @include rem((
-            padding-top: $gs-baseline*2
-        ));
+        padding-top: $gs-baseline*2;
     }
 }
 .ad-slot--paid-for-badge--front {
     @include clearfix;
     position: relative;
     min-height: 90px;
-    z-index: 99;
+    z-index: auto;
 
     .ad-slot--paid-for-badge__link {
         position: relative;
@@ -403,65 +356,60 @@
     @include mq(tablet) {
         margin-left: 50%;
         padding-top: 0;
-        @include rem((
-            margin-top: -$gs-row-height
-        ));
+        margin-top: -$gs-row-height;
     }
     @include mq(desktop) {
         margin-left: 62%;
     }
     @include mq(tablet, $to: faciaLeftCol) {
         .container--has-toggle & {
-            @include rem((
-                margin-right: gs-span(1)
-            ));
+            margin-right: gs-span(1);
         }
     }
-    @include mq(faciaLeftCol) {
+
+    @mixin comm-paid-logo-placement {
+        clear: left;
         padding: 0;
         margin: 0;
         float: left;
         min-height: 0;
-        @include rem((
-            margin-top: 4px
-        ));
+        margin-top: 4px;
 
         .ad-slot--paid-for-badge__link {
             float: none;
-            @include rem((
-                margin-top: $gs-row-height/4
-            ));
+            margin-top: $gs-row-height/4;
         }
     }
-    @include mq(wide) {
-        clear: left;
 
+    @include mq(leftCol) {
+        .l-side-margins--layout-content .ad-slot--commercial-component & {
+            @include comm-paid-logo-placement;
+        }
+    }
+    
+    @include mq(faciaLeftCol) {
+        @include comm-paid-logo-placement;
+    }
+    
+    @include mq(wide) {
         .has-page-skin & {
             margin-left: 50%;
             width: auto;
             float: none;
-            @include rem((
-                margin-top: -$gs-row-height
-            ));
+            margin-top: -$gs-row-height;
 
             .ad-slot--paid-for-badge__link {
                 float: right;
             }
             &.ad-slot--adbadge .ad-slot--paid-for-badge__link {
-                @include rem((
-                    margin-top: get-line-height($fs-data, 3)*-2
-                ));
+                margin-top: get-line-height(data, 3)*-2;
             }
             &.ad-slot--spbadge .ad-slot--paid-for-badge__link {
-                @include rem((
-                    margin-top: get-line-height($fs-data, 3)*-1
-                ));
+                margin-top: get-line-height(data, 3)*-1;
             }
         }
         .has-page-skin .container--has-toggle & {
-            @include rem((
-                margin-right: gs-span(1)
-            ));
+            margin-right: gs-span(1);
         }
     }
 }
@@ -470,14 +418,10 @@
 .container--sponsored,
 .container--advertisement-feature {
     .container__header + .container__body {
-        @include rem((
-            margin-top: 104px
-        ));
+        margin-top: 104px;
 
         @include mq(tablet) {
-            @include rem((
-                margin-top: 78px
-            ));
+            margin-top: 78px;
         }
         @include mq(faciaLeftCol) {
             margin-top: 0;

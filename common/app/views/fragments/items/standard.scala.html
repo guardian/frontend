@@ -1,4 +1,9 @@
-@(trail: Trail, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None)(implicit request: RequestHeader, config: Config)
+@(trail: model.Trail, index: Int, containerIndex: Int, element: String = "li", forceTone: Option[String] = None)(implicit request: RequestHeader, config: Config)
+
+@import common.LinkTo
+@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640}
+@import views.html.fragments.media.video
 
 @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
     <@element
@@ -14,15 +19,35 @@
 
         <div class="item__container">
             <div class="item__tonal-border tone-accent-border"></div>
-            @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
-            <div class="item__header">
-                <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article">
-                    @fragments.items.elements.title(trail, index, containerIndex)
-                </a>
+            @FaciaDisplayElement.fromTrail(trail) match {
+                case InlineVideo(videoElement, title, endSlatePath) if trail.imageAdjust == "boost" => {
+                    <div class="item__media-wrapper item__media-wrapper--has-icon u-faux-block-link__promote">
+                        <div class="item__video-container">
+                        @video(VideoPlayer(
+                            videoElement,
+                            Video640,
+                            title,
+                            autoPlay = false,
+                            showControlsAtStart = false,
+                            endSlatePath,
+                            Some(false)
+                        ))
+                        </div>
+                    </div>
+                }
+
+                case _ => {
+                    @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
+                }
+            }
+
+            <div class="@RenderClasses(Map(
+                ("item__header", true),
+                ("item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
+            ))">
+                @fragments.items.elements.title(trail, index, containerIndex, showTag = true)
                 @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
             </div>
-
-            @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
 
             @if(tone == "comment") {
                 @trail.byline.map { byLine =>

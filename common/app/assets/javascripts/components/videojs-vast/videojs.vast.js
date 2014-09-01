@@ -15,9 +15,7 @@
   },
 
   defaults = {
-    skip: 5, // negative disables
-    vidFormats: ['video/mp4', 'video/webm', 'video/ogv'],
-    formatMap: {'video/x-mp4': 'video/mp4'}
+    skip: 5 // negative disables
   },
 
   vastPlugin = function(options) {
@@ -131,12 +129,15 @@
           // No pre-roll, start video
           player.trigger('adtimeout');
         }
-      });      
+      });
     };
 
     player.vast.preroll = function() {
       player.ads.startLinearAdMode();
-
+      player.vast.showControls = player.controls();
+      if (player.vast.showControls ) {
+        player.controls(false);
+      }
       player.autoplay(true);
       // play your linear ad content
       var adSources = player.vast.sources;
@@ -157,6 +158,10 @@
       blocker.href = clickthrough || "#";
       blocker.target = "_blank";
       blocker.onclick = function() {
+        if (player.paused()) {
+          player.play();
+          return false;
+        }
         var clicktrackers = player.vastTracker.clickTrackingURLTemplate;
         if (clicktrackers) {
           player.vastTracker.trackURLs([clicktrackers]);
@@ -196,6 +201,9 @@
       player.off('timeupdate', player.vast.timeupdate);
       player.off('ended', player.vast.tearDown);
       player.ads.endLinearAdMode();
+      if (player.vast.showControls ) {
+        player.controls(true);
+      }
     };
 
     player.vast.timeupdate = function(e) {
@@ -210,34 +218,46 @@
         }
       }
     };
-    player.vast.createSourceObjects = function(media_files) {
-      var sourcesByFormat = {}, format, i;
-      
-      // get a list of files with unique formats
-      for (i = 0; i < media_files.length; i++) {
-        format = media_files[i].mimeType;
-        format = settings.formatMap[format] || format;
+    player.vast.createSourceObjects = function (media_files) {
+      var sourcesByFormat = {}, i, j, tech;
+      var techOrder = player.options().techOrder;
+      for (i = 0, j = techOrder.length; i < j; i++) {
+        var techName = techOrder[i].charAt(0).toUpperCase() + techOrder[i].slice(1);
+        tech = window.videojs[techName];
 
-        if (settings.vidFormats.indexOf(format) >= 0) {
-          if(sourcesByFormat[format] === undefined) {
-            sourcesByFormat[format] = [];
+        // Check if the current tech is defined before continuing
+        if (!tech) {
+          continue;
+        }
+
+        // Check if the browser supports this technology
+        if (tech.isSupported()) {
+          // Loop through each source object
+          for (var a = 0, b = media_files.length; a < b; a++) {
+            var media_file = media_files[a];
+            var source = {type:media_file.mimeType, src:media_file.fileURL};
+            // Check if source can be played with this technology
+            if (tech.canPlaySource(source)) {
+              if (sourcesByFormat[techOrder[i]] === undefined) {
+                sourcesByFormat[techOrder[i]] = [];
+              }
+              sourcesByFormat[techOrder[i]].push({
+                type:media_file.mimeType,
+                src: media_file.fileURL,
+                width: media_file.width,
+                height: media_file.height
+              });
+            }
           }
-          sourcesByFormat[format].push({
-            type: format,
-            src: media_files[i].fileURL,
-            width: media_files[i].width,
-            height: media_files[i].height
-          });
         }
       }
-
       // Create sources in preferred format order
       var sources = [];
-      for (var j=0; j < settings.vidFormats.length; j++) {
-        format = settings.vidFormats[j];
-        if (sourcesByFormat[format] !== undefined) {
-          for (i = 0; i < sourcesByFormat[format].length; i++) {
-            sources.push(sourcesByFormat[format][i]);
+      for (j = 0; j < techOrder.length; j++) {
+        tech = techOrder[j];
+        if (sourcesByFormat[tech] !== undefined) {
+          for (i = 0; i < sourcesByFormat[tech].length; i++) {
+            sources.push(sourcesByFormat[tech][i]);
           }
         }
       }

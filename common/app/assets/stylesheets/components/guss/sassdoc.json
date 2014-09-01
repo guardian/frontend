@@ -1,0 +1,8 @@
+{
+  "package": {
+    "title": "Guss",
+    "name": "guss",
+    "homepage": "https://github.com/guardian/guss",
+    "description": "Guss (Guardian Style Sheets) is a collection of universal components re-usable across Guardian web products."
+  }
+}

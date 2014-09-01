@@ -25,14 +25,6 @@ to apply any necessary changes to non-shared code there too.
                     <div class="js-profile-nav-popup"></div>
                 </div>
             }
-            @if(Edition(request) == Uk){
-                <div class="brand-bar__item brand-bar__item--subscribe hide-on-tablet" data-component="subscribe">
-                    <a class="brand-bar__item--action" data-link-name="topNav : subscribe" href="http://subscribe.theguardian.com??INTCMP=NGW_TOPNAV_UK_GU_SUBSCRIBE">
-                        <i class="i i-g-white-36"></i>
-                        <span class="control__info">subscribe</span>
-                    </a>
-                </div>
-            }
             @if(SearchSwitch.isSwitchedOn) {
                 <div class="brand-bar__item has-nav-popup brand-bar__item--has-control brand-bar__item--search" data-component="search">
                     <a href="https://www.google.co.uk/advanced_search?q=site:www.theguardian.com" data-is-ajax data-link-name="Search icon"
@@ -42,7 +34,7 @@ to apply any necessary changes to non-shared code there too.
                                 <i class="i i-search-white-36"></i>
                             </span>
                         </span>
-                        <span class="control__info hide-on-mobile">search</span>
+                        <span class="control__info">search</span>
                     </a>
                 </div>
             }

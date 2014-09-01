@@ -14,7 +14,7 @@ object Frontend extends Build with Prototypes {
   val common = application("common").settings(
     libraryDependencies ++= Seq(
       "com.gu" %% "configuration" % "3.9",
-      "com.gu" %% "content-api-client" % "2.18",
+      "com.gu" %% "content-api-client" % "2.19",
 
       "com.typesafe.akka" %% "akka-agent" % "2.3.4",
 
@@ -104,7 +104,7 @@ object Frontend extends Build with Prototypes {
 
   val faciaPress = application("facia-press").dependsOn(commonWithTests)
 
-  val identityLibVersion = "3.21"
+  val identityLibVersion = "3.41"
   val identity = application("identity").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       filters,

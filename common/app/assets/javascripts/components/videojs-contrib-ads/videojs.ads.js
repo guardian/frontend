@@ -143,13 +143,7 @@ var
       snapshot = {
         src: player.currentSrc(),
         currentTime: player.currentTime(),
-        type: player.currentType(),
-
-        // on slow connections, player.paused() may be true when starting and
-        // stopping ads even though play has been requested. Hard-coding the
-        // playback state works for the purposes of ad playback but makes this
-        // an inaccurate snapshot.
-        play: true
+        type: player.currentType()
       };
 
     if (tech) {
@@ -188,7 +182,7 @@ var
       // finish restoring the playback state
       resume = function() {
         player.currentTime(snapshot.currentTime);
-        if (snapshot.play) {
+        if (!player.ended()) {
           player.play();
         }
       },
@@ -217,19 +211,34 @@ var
     if (snapshot.nativePoster) {
       tech.poster = snapshot.nativePoster;
     }
-
+    
     // with a custom ad display or burned-in ads, the content player state
     // hasn't been modified and so no restoration is required
-    if (player.currentSrc() === snapshot.src) {
+    var src = player.src(),
+        sameSrc = src === snapshot.src,
+        sameCurrentSrc = player.currentSrc() === snapshot.src,
+        unchanged = src ? sameSrc : sameCurrentSrc;
+    if (unchanged && !player.ended()) {
       player.play();
-      return;
+    } else {
+        player.src({src: snapshot.src, type: snapshot.type});
+        // safari requires a call to `load` to pick up a changed source
+        player.load();
+        player.one('loadedmetadata', tryToResume);
     }
+  },
 
-    player.src({src: snapshot.src, type: snapshot.type});
-    // safari requires a call to `load` to pick up a changed source
-    player.load();
-
-    player.one('loadedmetadata', tryToResume);
+  /**
+   * Remove all element level styles from the tech element. Some Adblockers
+   * use !important element level styles to hide the tech when they detect
+   * an advert as the src.
+   * @param {object} player The videojs player object
+   */
+  removeAdblockStyles = function(player) {
+    var tech = player.el().querySelector('.vjs-tech');
+    if (tech) {
+      tech.setAttribute('style', '');
+    }
   },
 
   /**
@@ -303,7 +312,6 @@ var
               },
               'play': function() {
                 this.state = 'ads-ready?';
-                this.snapshot = getPlayerSnapshot(player);
                 cancelContentPlay(player);
 
                 // remove the poster so it doesn't flash between videos
@@ -321,13 +329,6 @@ var
           },
           'preroll?': {
             enter: function() {
-              
-              // capture current player state snapshot (playing, currentTime, src)
-              this.snapshot = getPlayerSnapshot(player);
-
-              // remove the poster so it doesn't flash between videos
-              removeNativePoster(player);
-              
               // change class to show that we're waiting on ads
               player.el().className += ' vjs-ad-loading';
               
@@ -386,9 +387,6 @@ var
             }
           },
           'ad-timeout-playback': {
-            enter: function() {
-              restorePlayerSnapshot(player, this.snapshot);
-            },
             events: {
               'adsready': function() {
                 if (player.paused()) {
@@ -407,11 +405,21 @@ var
             }
           },
           'ad-playback': {
+            enter: function() {
+              // capture current player state snapshot (playing, currentTime, src)
+              this.snapshot = getPlayerSnapshot(player);
+
+              // remove the poster so it doesn't flash between videos
+              removeNativePoster(player);
+            },
+            leave: function() {
+              removeClass(player.el(), 'vjs-ad-playing');
+              removeAdblockStyles(player);
+              restorePlayerSnapshot(player, this.snapshot);
+            },
             events: {
               'adend': function() {
                 this.state = 'content-playback';
-                removeClass(player.el(), 'vjs-ad-playing');
-                restorePlayerSnapshot(player, this.snapshot);
               }
             }
           },
@@ -419,7 +427,6 @@ var
             events: {
               'adstart': function() {
                 this.state = 'ad-playback';
-                this.snapshot = getPlayerSnapshot(player);
                 player.el().className += ' vjs-ad-playing';
 
                 // remove the poster so it doesn't flash between videos

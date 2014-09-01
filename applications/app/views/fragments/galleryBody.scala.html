@@ -8,54 +8,68 @@
         <div class="gs-container">
             <div class="content__main-column content__main-column--gallery">
 
+                @fragments.standfirst(gallery)
+
                 @fragments.contentMeta(gallery)
 
-                <!-- Lightbox JS Gallery -->
-                @fragments.galleryThumbs(gallery, showCta=true)
-
-                <!-- Non-JS Gallery / LightboxSwitch off mode -->
-                <div class="js-hidden">
-                    <p class="gallery-nav">
-
-                        @if(index > 1) {
-                            <a class="gallery-prev control tone-colour" href="@LinkTo{?index=@(index - 1)}">Previous</a>
-                        }
-
-                        Image @index of @gallery.size
-
-                        @if(index < gallery.size) {
-                            <a class="gallery-next control tone-colour" href="@LinkTo{?index=@(index + 1)}">Next</a>
-                        } else {
-                            <a class="gallery-next control tone-colour" href="@LinkTo{?index=1}">Next</a>
-                        }
-                    </p>
-
-                    <div class="gallery-container">
+                <ul class="gallery2">
+                    @defining(Seq("inline1", "inline2"), 4) { case(adSlots, adInterval) =>
                         @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-                            @if(row.rowNum == index) {
-                                <img class="maxed @if(image.width >= image.height){landscape} else {portrait}"
-                                    src="@image.path"
-                                    alt="@image.altText.getOrElse("")"
-                                />
+                            <li class="gallery2__item" data-link-name="Gallery item | @row.rowNum">
+                                <figure itemscope itemtype="http://schema.org/ImageObject">
 
-                                <div class="gallery-caption">
-                                    <p class="caption">@Html(image.caption.getOrElse(""))</p>
-                                    <p class="caption-credit">@image.credit</p>
-                                </div>
+                                    @ImgSrc.imager(gallery.imageContainer(row.rowNum-1), GalleryUpgradedImage).map { imgSrc =>
+
+                                        <a  class="gallery2__img-container js-gallerythumbs js-delayed-image-upgrade"
+                                            href="@LinkTo{@gallery.url?index=@row.rowNum}"
+                                            data-src="@imgSrc"
+                                            data-link-name="Launch Gallery Lightbox" data-is-ajax>
+
+                                            @GalleryInitialImage.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
+
+                                                <img class="gallery2__img js-vh-images responsive-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                                                    src="@url"
+                                                    alt="@image.altText.getOrElse("")"
+                                                    itemprop="contentUrl" />
+
+                                            }
+
+                                            <span class="gallery2__fullscreen">
+                                                <i class="i i-expand-white"></i>
+                                                <i class="i i-expand-black"></i>
+                                            </span>
+
+                                        </a>
+                                    }
+
+                                    <div class="gallery2__figcaption">
+                                        <p class="gallery2__caption" itemprop="caption">@Html(image.cleanedCaption)</p>
+                                        <p class="gallery2__credit" itemprop="author">@image.credit</p>
+                                    </div>
+
+                                </figure>
+                            </li>
+
+                            @if(row.rowNum % adInterval == 0) {
+                                @adSlots.lift((row.rowNum / adInterval) - 1).map { adSlot =>
+                                    <li class="gallery2__item gallery2__item--advert">
+                                        @fragments.commercial.standardAd(
+                                            adSlot,
+                                            Seq("gallery-inline"),
+                                            Map(
+                                                "mobile" -> Seq("300,50"),
+                                                "mobilelandscape" -> Seq("300,50", "320,50"),
+                                                "tabletportrait" -> Seq("300,250")
+                                            )
+                                        )
+                                    </li>
+                                }
                             }
                         }
-                    </div>
-                </div>
+                    }
+                </ul>
 
-                <div data-component="body">
-                    @fragments.standfirst(gallery)
-
-                    <div class="content__keywords" data-link-name="gallery keywords">
-                        @fragments.keywordList(gallery.keywords)
-                    </div>
-                </div>
-
-                <div class="social-wrapper" data-component="share">
+                <div class="social-wrapper social-wrapper--bottom" data-component="share">
                     @fragments.social(gallery, iconModifier = "white")
                 </div>
             </div>

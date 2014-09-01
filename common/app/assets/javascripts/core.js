@@ -27,13 +27,13 @@ require([
     // utilities
     'common/utils/_',
     'common/utils/$',
+    'common/utils/$css',
     'common/utils/ajax',
     'common/utils/atob',
     'common/utils/clamp',
     'common/utils/config',
     'common/utils/context',
     'common/utils/cookies',
-    'common/utils/deferToLoad',
     'common/utils/detect',
     'common/utils/easing',
     'common/utils/get-property',
@@ -54,5 +54,7 @@ require([
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/lazyload',
-    'common/modules/ui/tabs'
+    'common/modules/ui/images',
+    'common/modules/ui/tabs',
+    'common/modules/userPrefs'
 ], function() {});

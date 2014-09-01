@@ -1,5 +1,4 @@
 require([
-    'domReady',
     'common/utils/ajax',
     'bootstraps/abtests',
     'bootstraps/adunitapproval',
@@ -7,7 +6,6 @@ require([
     'bootstraps/radiator',
     'bootstraps/commercial'
 ], function(
-    domReady,
     ajax,
     abTests,
     adunitapproval,
@@ -15,17 +13,18 @@ require([
     radiator,
     commercial
 ) {
-    var config = {
-        page: {
-            edition: "",
-            ajaxUrl: ""
-        }
-    };
+    require(['domReady!'], function() {
 
-    ajax.init(config);
+        var config = {
+            page: {
+                edition: "",
+                ajaxUrl: ""
+            }
+        };
 
-    domReady(function() {
-        switch(window.location.pathname) {
+        ajax.init(config);
+
+        switch (window.location.pathname) {
             case '/analytics/abtests':
                 abTests.init();
                 break;
@@ -47,5 +46,4 @@ require([
                 break;
         }
     });
-
 });

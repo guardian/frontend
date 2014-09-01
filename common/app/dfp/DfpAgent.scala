@@ -4,19 +4,19 @@ import java.net.URLDecoder
 
 import akka.agent.Agent
 import common._
-import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey,inlineMerchandisingSponsorshipsDataKey}
+import conf.Configuration
+import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpInlineMerchandisingTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey}
 import model.{Config, Tag}
 import play.api.{Application, GlobalSettings}
 import services.S3
 
 import scala.io.Codec.UTF8
-import conf.Configuration
 
 trait DfpAgent {
 
   protected def sponsorships: Seq[Sponsorship]
   protected def advertisementFeatureSponsorships: Seq[Sponsorship]
-  protected def inlineMerchandisingDeals: Seq[Sponsorship]
+  protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
   private def containerSponsoredTag(config: Config, p: String => Boolean): Option[String] = {
@@ -32,7 +32,6 @@ trait DfpAgent {
   }
 
   private def getKeywordTags(tags: Seq[Tag]): Seq[Tag] = tags filter(_.isKeyword)
-  private def getContributorTags(tags: Seq[Tag]): Seq[Tag] = tags filter(_.isContributor)
   private def getKeywordOrSeriesTags(tags: Seq[Tag]): Seq[Tag] = tags.filter(t => t.isSeries || t.isKeyword)
 
   def isSponsored(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isSponsored(tag.id))
@@ -45,17 +44,7 @@ trait DfpAgent {
 
   def isProd = !Configuration.environment.isNonProd
 
-  def hasInlineMerchandise(tags: Seq[Tag]): Boolean = {
-    val targettedKeywords = getKeywordTags(tags)  exists (tag => hasInlineMerchandise(tag.id))
-
-    val targettedContributors = getContributorTags(tags) exists {tag =>
-      val normalisedToDfpFormat: String = tag.webTitle.toLowerCase.replace(" ", "-")
-      hasInlineMerchandise(normalisedToDfpFormat)
-    }
-    targettedKeywords || targettedContributors
-  }
-  def hasInlineMerchandise(tagId: String): Boolean = inlineMerchandisingDeals exists (_.hasTag(tagId))
-  def hasInlineMerchandise(config: Config): Boolean = isSponsoredContainer(config, hasInlineMerchandise)
+  def hasInlineMerchandise(tags: Seq[Tag]): Boolean = tags exists inlineMerchandisingTargetedTags.hasTag
 
   def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
     if (adUnitWithoutRoot endsWith "front") {
@@ -104,12 +93,12 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
   private lazy val sponsoredTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
   private lazy val advertisementFeatureTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
-  private lazy val inlineMerchandisingTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
+  private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
 
   protected def sponsorships: Seq[Sponsorship] = sponsoredTagsAgent get()
   protected def advertisementFeatureSponsorships: Seq[Sponsorship] = advertisementFeatureTagsAgent get()
-  protected def inlineMerchandisingDeals: Seq[Sponsorship] = inlineMerchandisingTagsAgent get()
+  protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
 
   def refresh() {
@@ -134,6 +123,14 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
       reportOption.fold(Seq[PageSkinSponsorship]())(_.sponsorships)
     }
 
+    def grabInlineMerchandisingTargetedTagsFromStore(): InlineMerchandisingTagSet = {
+      val maybeTagSet = for {
+        jsonString <- stringFromS3(dfpInlineMerchandisingTagsDataKey)
+        report <- InlineMerchandisingTargetedTagsReportParser(jsonString)
+      } yield report.targetedTags
+      maybeTagSet getOrElse InlineMerchandisingTagSet()
+    }
+
     def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) {
       agent sendOff { oldData =>
         if (freshData.nonEmpty) {
@@ -144,10 +141,16 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
       }
     }
 
+    def updateInlineMerchandisingTargetedTags(freshData: InlineMerchandisingTagSet) {
+      inlineMerchandisingTagsAgent sendOff { oldData =>
+        if (freshData.nonEmpty) freshData else oldData
+      }
+    }
+
     update(sponsoredTagsAgent, grabSponsorshipsFromStore(dfpSponsoredTagsDataKey))
     update(advertisementFeatureTagsAgent, grabSponsorshipsFromStore(dfpAdvertisementFeatureTagsDataKey))
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
-    update(inlineMerchandisingTagsAgent, grabSponsorshipsFromStore(inlineMerchandisingSponsorshipsDataKey))
+    updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
   }
 }
 

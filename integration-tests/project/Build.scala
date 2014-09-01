@@ -2,14 +2,15 @@ import sbt._
 import Keys._
 
 object Build extends Build {
-
-val commonSettings: Seq[Setting[_]] = Seq(
-    version +=  "0.1.0-SNAPSHOT",
+  val commonSettings: Seq[Setting[_]] = Seq(
+    version += "0.1.0-SNAPSHOT",
     resolvers ++= Seq(
-        "Sonatype OSS Staging" at "https://oss.sonatype.org/content/repositories/staging",
-        "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/"),
+      "Sonatype OSS Staging" at "https://oss.sonatype.org/content/repositories/staging",
+      "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/"),
     libraryDependencies ++= Seq(
-      "com.gu" %% "scala-automation" % "1.31"
+      "com.gu" %% "scala-automation" % "1.34",
+      "com.sun.mail" % "javax.mail" % "1.5.2",
+      "com.sun.mail" % "imap" % "1.5.2"
     )
   )
 

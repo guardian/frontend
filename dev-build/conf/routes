@@ -3,6 +3,7 @@
 # ~~~~
 
 GET         /humans.txt                                                                                              controllers.Assets.at(path="/public", file="humans.txt")
+GET         /surveys/*file                                                                                           controllers.Assets.at(path="/public/surveys", file)
 GET         /commercial/test-page                                                                                    controllers.commercial.CreativeTestPage.allComponents
 
 # For dev machines
@@ -18,11 +19,13 @@ GET         /counts.gif                                                         
 # Analytics
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET         /analytics/content/gallery                                                                               controllers.admin.ContentPerformanceController.renderGalleryDashboard()
 GET         /analytics/commercial                                                                                    controllers.admin.CommercialController.renderCommercial()
 GET         /analytics/commercial/sponsorships                                                                       controllers.admin.CommercialController.renderSponsorships()
 GET         /analytics/commercial/pageskins                                                                          controllers.admin.CommercialController.renderPageskins()
 GET         /analytics/commercial/surging                                                                            controllers.admin.CommercialController.renderSurgingContent()
-GET         /analytics/commercial/im-sponsorships                                                                    controllers.admin.CommercialController.renderInlineMerchandisingSponsorships()
+GET         /analytics/commercial/im-sponsorships                                                                    controllers.admin.CommercialController.renderInlineMerchandisingTargetedTags()
+GET         /analytics/commercial/templates                                                                          controllers.admin.CommercialController.renderCreativeTemplates()
 
 # Discussion
 GET         /discussion/comment-box.json                                                                             controllers.DiscussionApp.commentBox()
@@ -57,6 +60,7 @@ GET         /most-read-day.json                                                 
 
 GET         /top-stories.json                                                                                        controllers.TopStoriesController.renderTopStories()
 GET         /top-stories/trails.json                                                                                 controllers.TopStoriesController.renderTrails()
+GET         /related/*path.json                                                                                      controllers.RelatedController.render(path)
 GET         /popular-in-tag/*tag.json                                                                                controllers.PopularInTag.render(tag)
 
 GET         /preference/platform/:platform                                                                           controllers.ChangeViewController.render(platform, page)
@@ -148,14 +152,14 @@ GET         /ophan/pageviews/*path                                              
 GET         /ophan/pageviews                                                                                         controllers.admin.OphanApiController.platformPageViews()
 GET         /dev/switchboard                                                                                         controllers.admin.SwitchboardController.renderSwitchboard()
 POST        /dev/switchboard                                                                                         controllers.admin.SwitchboardController.save()
-GET         /metrics/loadbalancers                                                                                   controllers.admin.DashboardController.renderDashboard()
-GET         /metrics/googlebot/404                                                                                   controllers.admin.DashboardController.renderGooglebot404s()
+GET         /metrics/loadbalancers                                                                                   controllers.admin.MetricsController.renderLoadBalancers()
+GET         /metrics/googlebot/404                                                                                   controllers.admin.MetricsController.renderGooglebot404s()
 GET         /metrics/fastly                                                                                          controllers.admin.FastlyController.renderFastly()
-GET         /metrics/errors                                                                                          controllers.admin.DashboardController.renderErrors()
-GET         /metrics/errors/4xx                                                                                      controllers.admin.DashboardController.render4XX()
-GET         /metrics/errors/5xx                                                                                      controllers.admin.DashboardController.render5XX()
-GET         /metrics/memory                                                                                          controllers.admin.DashboardController.renderMemory()
-GET         /metrics/assets                                                                                          controllers.admin.DashboardController.renderAssets()
+GET         /metrics/errors                                                                                          controllers.admin.MetricsController.renderErrors()
+GET         /metrics/errors/4xx                                                                                      controllers.admin.MetricsController.render4XX()
+GET         /metrics/errors/5xx                                                                                      controllers.admin.MetricsController.render5XX()
+GET         /metrics/memory                                                                                          controllers.admin.MetricsController.renderMemory()
+GET         /metrics/assets                                                                                          controllers.admin.MetricsController.renderAssets()
 GET         /radiator                                                                                                controllers.admin.RadiatorController.renderRadiator()
 GET         /radiator/pingdom                                                                                        controllers.admin.RadiatorController.pingdom()
 GET         /radiator/commit/*hash                                                                                   controllers.admin.RadiatorController.commitDetail(hash)

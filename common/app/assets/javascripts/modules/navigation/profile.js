@@ -70,7 +70,7 @@ define([
             }
 
             $popup.html(
-                '<ul class="nav-popup nav-popup--profile" data-link-name="Sub Sections" data-test-id="nav-popup-profile">'+
+                '<ul class="nav-popup nav-popup__group nav-popup--profile" data-link-name="Sub Sections" data-test-id="nav-popup-profile">'+
                     this.menuListItem('Comment activity', this.config.url+'/user/id/'+ user.id)+
                     this.menuListItem('Edit profile', this.config.url+'/public/edit')+
                     this.menuListItem('Email preferences', this.config.url+'/email-prefs')+

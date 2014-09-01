@@ -19,7 +19,7 @@ category: Common
         <div id="tabs-example-1" class="tabs__pane u-cf" role="tabpanel" aria-labelledby="tabs-example-1-tab">
             <!-- Content of tab 1 -->
         </div>
-        <div id="tabs-example-2" class="tabs__pane js-hidden u-cf" role="tabpanel" aria-labelledby="tabs-example-2-tab">
+        <div id="tabs-example-2" class="tabs__pane modern-hidden u-cf" role="tabpanel" aria-labelledby="tabs-example-2-tab">
             <!-- Content of tab 2 -->
         </div>
     </div>
@@ -58,9 +58,7 @@ category: Common
     border-top: 3px solid $c-neutral6;
 
     @include mq(tablet) {
-        @include rem((
-            max-width: gs-span(3)
-        ));
+        max-width: gs-span(3);
         border-bottom: 1px solid $c-neutral5;
     }
 
@@ -68,10 +66,8 @@ category: Common
     .tab__link {
         display: block;
         @include box-sizing(border-box);
-        @include rem((
-            min-height: $gs-row-height,
-            padding: $gs-baseline/3 8px 0
-        ));
+        min-height: $gs-row-height;
+        padding: $gs-baseline/3 8px 0;
         background-color: $c-neutral6;
         @include fs-headline(2);
         text-align: left;
@@ -84,15 +80,11 @@ category: Common
         }
 
         @include mq($to: tablet) {
-            @include rem((
-                font-size: 14px
-            ));
+            font-size: 14px;
         }
 
         @include mq(tablet) {
-            @include rem((
-                padding: $gs-baseline/3 $gs-gutter/2 0
-            ));
+            padding: $gs-baseline/3 $gs-gutter/2 0;
         }
     }
 
@@ -102,9 +94,7 @@ category: Common
 
     & + & a {
         border-left: 2px solid rgba(255, 255, 255, .75);
-        @include rem((
-            padding-left: 6px
-        ));
+        padding-left: 6px;
     }
 }
 
@@ -116,9 +106,7 @@ category: Common
 
     + .tabs__tab a {
         border-left: 0;
-        @include rem((
-            padding-left: 8px
-        ));
+        padding-left: 8px;
     }
 
     @include mq(tablet) {
@@ -128,9 +116,7 @@ category: Common
 
 .tabs__content {
     clear: both;
-    @include rem((
-        padding-top: ($gs-baseline/3)*2
-    ));
+    padding-top: ($gs-baseline/3)*2;
 
     @include mq(tablet) {
         border-top: 1px solid $c-neutral5;
@@ -153,9 +139,7 @@ category: Common
     table-layout: fixed;
     width: 100%;
     margin: 0;
-    @include rem((
-        margin-bottom: 10px
-    ));
+    margin-bottom: 10px;
 
     .tabs__tab {
         display: table-cell;

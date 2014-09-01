@@ -191,7 +191,7 @@ define([
                 }
                 targetEl.innerHTML = relativeDate;
             } else if (opts.notAfter) {
-                $el.addClass('js-hidden');
+                $el.addClass('modern-hidden');
             }
         });
     }

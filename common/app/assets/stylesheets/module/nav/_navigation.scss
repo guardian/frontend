@@ -13,7 +13,7 @@ $navigation-toggler-width: 48px;
 $navigation-toggler-width-full: 130px;
 
 $c-navigation-background: mix($c-navigation-base, #ffffff, 80%);
-$c-navigation-background-side-bar: mix(guss-colour(guardian-brand-dark), #ffffff, 85%);
+$c-navigation-background-side-bar: #005182;
 
 $c-signposting-action: $c-newsDefault;
 $c-signposting-background: $c-navigation-base;
@@ -44,17 +44,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint
 $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(navigationBreakOnTwoLevels) + gs-span(1) + $gs-gutter * 1.5);
 
 
-/* Meganav footer overrides (edition switcher and Guardian services)
-   ========================================================================== */
-
-.navigation__expandable {
-    .global-navigation__title--guardian-services {
-        background-color: $c-newsDefault;
-        border-top: 1px solid mix($c-newsDefault, #ffffff, 80%);
-    }
-}
-
-
 /* Styles common to all states
    ========================================================================== */
 
@@ -63,9 +52,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     overflow: hidden;
     clear: both;
     background: $c-navigation-background;
-    @include rem((
-        height: $navigation-height
-    ));
+    height: $navigation-height;
 
     &:before,
     &:after {
@@ -75,9 +62,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         top: 0;
         left: 0;
         right: 0;
-        @include rem((
-            height: $navigation-height
-        ));
+        height: $navigation-height;
     }
 
     &:before {
@@ -103,9 +88,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .global-navigation,
 .signposting {
     @include fs-headline(2);
-    @include rem((
-        line-height: $navigation-height
-    ));
+    line-height: $navigation-height;
     // Make fonts look a bit bolder (instead of loading a new webfont)
     -moz-osx-font-smoothing: auto;
     -webkit-font-smoothing: subpixel-antialiased;
@@ -115,10 +98,13 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
     a {
         &,
-        &:hover,
         &:active,
         &:focus {
             text-decoration: none;
+        }
+
+        &:hover {
+            text-decoration: underline;
         }
     }
 }
@@ -129,9 +115,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 }
 .navigation__container--first {
     background: $c-top-navigation-background;
-    @include rem((
-        min-height: $navigation-height
-    ));
+    min-height: $navigation-height;
 }
 .navigation__expandable {
     background: $c-navigation-expandable-background;
@@ -156,14 +140,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     background: $c-signposting-background;
     border-right: 1px solid $c-global-navigation-border;
     @include box-sizing(border-box);
-    @include rem((
-        padding-right: $navigation-h-space-between-items
-    ));
+    padding-right: $navigation-h-space-between-items;
 
     @include mq(mobileLandscape) {
-        @include rem((
-            padding-left: $navigation-h-space-between-items/2
-        ));
+        padding-left: $navigation-h-space-between-items/2;
     }
 
     .navigation--expanded.navigation--has-local-navigation & {
@@ -185,14 +165,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             border-right: 0;
         }
         @include mq(tablet) {
-            @include rem((
-                min-width: $global-navigation-title-width
-            ));
+            min-width: $global-navigation-title-width;
         }
         @include mq(wide) {
-            @include rem((
-                min-width: $global-navigation-title-width-wide
-            ));
+            min-width: $global-navigation-title-width-wide;
         }
     }
 }
@@ -200,9 +176,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     white-space: nowrap;
     display: table-cell;
     position: relative;
-    @include rem((
-        padding-left: $navigation-h-space-between-items/2
-    ));
+    padding-left: $navigation-h-space-between-items/2;
 }
 .signposting__action {
     color: $c-signposting-action;
@@ -217,11 +191,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .signposting__separator__inner {
     font-weight: 200;
     color: $c-signposting-action;
-    @include rem((
-        font-size: 27px,
-        line-height: $navigation-height,
-        padding-right: $navigation-h-space-between-items/2
-    ));
+    font-size: 27px;
+    line-height: $navigation-height;
+    padding-right: $navigation-h-space-between-items/2;
 }
 
 
@@ -243,10 +215,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         position: absolute;
         top: 0;
         bottom: 0;
-        @include rem((
-            right: -$gs-gutter/4,
-            left: -$gs-gutter/4
-        ));
+        right: -$gs-gutter/4;
+        left: -$gs-gutter/4;
     }
 }
 .local-navigation__action,
@@ -269,20 +239,14 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     white-space: nowrap;
 }
 .top-navigation__item--current {
-    @include rem((
-        margin-right: $gs-gutter/2
-    ));
+    margin-right: $gs-gutter/2;
 }
 
 @mixin navigation-items-shrink-spacing {
-    @include rem((
-        padding-right: $navigation-h-space-between-items/2 - 3,
-        padding-left: $navigation-h-space-between-items/2 - 3
-    ));
+    padding-right: $navigation-h-space-between-items/2 - 3;
+    padding-left: $navigation-h-space-between-items/2 - 3;
     &:first-child {
-        @include rem((
-            padding-left: $navigation-h-space-between-items/2
-        ));
+        padding-left: $navigation-h-space-between-items/2;
     }
 }
 .local-navigation__item,
@@ -290,10 +254,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     white-space: nowrap;
     display: table-cell;
     position: relative;
-    @include rem((
-        padding-right: $navigation-h-space-between-items/2,
-        padding-left: $navigation-h-space-between-items/2
-    ));
+    padding-right: $navigation-h-space-between-items/2;
+    padding-left: $navigation-h-space-between-items/2;
 
     @include mq(navigationBreakOnTwoLevels, navigationBreakOnTwoLevelsWithWideToggle) {
         @include navigation-items-shrink-spacing;
@@ -307,18 +269,14 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .navigation--collapsed.navigation--has-signposting {
     .local-navigation,
     .top-navigation {
-        @include rem((
-            padding-left: $navigation-h-space-between-items/2
-        ));
+        padding-left: $navigation-h-space-between-items/2;
     }
 }
 @include mq(mobileLandscape) {
     .navigation--collapsed {
         .local-navigation,
         .top-navigation {
-            @include rem((
-                padding-left: $navigation-h-space-between-items/2
-            ));
+            padding-left: $navigation-h-space-between-items/2;
         }
     }
 }
@@ -327,9 +285,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
    ========================================================================== */
 
 .top-navigation__item--home {
-    @include rem((
-        min-width: 15px
-    ));
+    min-width: 15px;
 
     .navigation--has-signposting & {
         display: none;
@@ -342,9 +298,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 .top-navigation__icon-wrapper {
     position: relative;
     display: inline-block;
-    @include rem((
-        top: 3px
-    ));
+    top: 3px;
 }
 .top-navigation__icon {
     display: inline-block;
@@ -352,10 +306,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     @include background-size(cover);
 }
 .top-navigation__icon--home {
-    @include rem((
-        width: 15px,
-        height: 18px
-    ));
+    width: 15px;
+    height: 18px;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAASCAQAAAAul0yEAAAAO0lEQVQoz9XPsQ0AIAwDwYzuzZ8iQjIQUiLh9r5xhA0BinqInDqsggX34EAPSpzBFTOg3Su2o3+wGtYAGI94niPCbrMAAAAASUVORK5CYII=');
 
     @media (-webkit-min-device-pixel-ratio: 1.3),
@@ -375,15 +327,11 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     @include clearfix;
 
     @include mq($to: tablet) {
-        @include rem((
-            line-height: 28px
-        ));
+        line-height: 28px;
     }
     @include mq(mobileLandscape, tablet) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
 }
 .global-navigation__section {
@@ -395,48 +343,34 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     // draws border without adding height
     @include box-shadow(inset 0 1px $c-global-navigation-border);
     background: $c-local-navigation-background;
-    @include rem((
-        min-height: $navigation-height
-    ));
+    min-height: $navigation-height;
 
     @include mq(mobileLandscape, tablet) {
-        @include rem((
-            margin-right: -$gs-gutter,
-            margin-left: -$gs-gutter
-        ));
+        margin-right: -$gs-gutter;
+        margin-left: -$gs-gutter;
     }
     @include mq(tablet) {
-        @include rem((
-            padding-left: $global-navigation-title-width
-        ));
+        padding-left: $global-navigation-title-width;
     }
     @include mq(wide) {
-        @include rem((
-            padding-left: $global-navigation-title-width-wide
-        ));
+        padding-left: $global-navigation-title-width-wide;
     }
 }
 .global-navigation__title {
     color: $c-global-navigation-title;
     background: $c-global-navigation-title-background;
     float: left;
-    @include rem((
-        border-top: 1px solid mix($c-global-navigation-title-background, #ffffff, 80%)
-    ));
+    border-top: 1px solid guss-colour(guardian-brand);
 
     @include mq($to: tablet) {
-        @include rem((
-            line-height: $gs-baseline*2,
-            padding-bottom: $gs-baseline,
-            padding-left: $gs-gutter/2,
-            padding-right: $gs-gutter/2
-        ));
+        line-height: $gs-baseline*2;
+        padding-bottom: $gs-baseline;
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
     }
     @include mq(mobileLandscape, tablet) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
     @include mq(tablet) {
         @include box-sizing(border-box);
@@ -445,47 +379,35 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         bottom: 0;
         left: 0;
         background: $c-global-navigation-title-background;
-        @include rem((
-            width: $global-navigation-title-width,
-            padding-left: $gs-gutter
-        ));
+        width: $global-navigation-title-width;
+        padding-left: $gs-gutter;
     }
     @include mq(wide) {
-        @include rem((
-            width: $global-navigation-title-width-wide
-        ));
+        width: $global-navigation-title-width-wide;
     }
 }
 .global-navigation__children {
     @include box-sizing(border-box);
-    @include rem((
-        min-height: $navigation-height,
-        padding-top: $gs-baseline/4
-    ));
+    min-height: $navigation-height;
+    padding-top: $gs-baseline/4;
     overflow: hidden;
 
     @include mq($to: tablet) {
-        @include rem((
-            margin-left: -$gs-gutter/2,
-            margin-right: -$gs-gutter/2,
-            padding-left: $gs-gutter/2,
-            padding-right: $gs-gutter/2,
-            padding-bottom: $gs-baseline*.75,
-            font-size: 14px
-        ));
+        margin-left: -$gs-gutter/2;
+        margin-right: -$gs-gutter/2;
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+        padding-bottom: $gs-baseline*.75;
+        font-size: 14px;
         line-height: 2;
     }
     @include mq(mobileLandscape, tablet) {
-        @include rem((
-            padding-left: $gs-gutter,
-            padding-right: $gs-gutter
-        ));
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
     @include mq(tablet) {
-        @include rem((
-            padding-bottom: $gs-baseline/4,
-            padding-left: $gs-gutter/2
-        ));
+        padding-bottom: $gs-baseline/4;
+        padding-left: $gs-gutter/2;
     }
 }
 @include mq($to: tablet) {
@@ -498,11 +420,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 @include mq(tablet) {
     .global-navigation__action {
         float: left;
-        @include rem((
-            line-height: $navigation-height - $gs-baseline/2,
-            margin-left: $navigation-h-space-between-items/2,
-            margin-right: $navigation-h-space-between-items/2
-        ));
+        line-height: $navigation-height - $gs-baseline/2;
+        margin-left: $navigation-h-space-between-items/2;
+        margin-right: $navigation-h-space-between-items/2;
         white-space: nowrap;
     }
 }
@@ -535,9 +455,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     &,
     .signposting,
     .local-navigation {
-        @include rem((
-            height: $navigation-height
-        ));
+        height: $navigation-height;
     }
     .signposting,
     .local-navigation {
@@ -553,14 +471,10 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
     }
     .top-navigation__item:last-child {
-        @include rem((
-            padding-right: $navigation-toggler-width + $gs-gutter
-        ));
+        padding-right: $navigation-toggler-width + $gs-gutter;
 
         @include mq(tablet) {
-            @include rem((
-                padding-right: $navigation-toggler-width-full + $gs-gutter
-            ));
+            padding-right: $navigation-toggler-width-full + $gs-gutter;
         }
         @include mq(navigationBreakOnTwoLevels) {
             padding-right: 0;
@@ -584,23 +498,17 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         background: $c-local-navigation-background;
 
         @include mq(mobileLandscape) {
-            @include rem((
-                padding-left: $gs-gutter/2,
-                padding-right: $gs-gutter/2
-            ));
+            padding-left: $gs-gutter/2;
+            padding-right: $gs-gutter/2;
         }
     }
     .local-navigation__item {
         @include mq($to: tablet) {
-            @include rem((
-                font-size: 14px,
-                line-height: 28px
-            ));
+            font-size: 14px;
+            line-height: 28px;
             &:last-child {
                 // Add space below the local nav (only if there is one)
-                @include rem((
-                    padding-bottom: $gs-baseline
-                ));
+                padding-bottom: $gs-baseline;
             }
         }
         @include mq(tablet) {
@@ -620,10 +528,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         width: 50%;
         padding-right: 0;
         @include box-sizing(border-box);
-        @include rem((
-            padding-left: $gs-gutter/2,
-            padding-right: $gs-gutter/2
-        ));
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
 
         &:nth-child(2n+1) {
             clear: both;
@@ -653,17 +559,13 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
             display: block;
             left: 0;
             right: 0;
-            @include rem((
-                top: $navigation-height
-            ));
+            top: $navigation-height;
             height: 1px;
             background: $c-global-navigation-border;
             z-index: 1;
         }
         &.navigation--collapsed {
-            @include rem((
-                height: $navigation-height * 2
-            ));
+            height: $navigation-height * 2;
         }
         &.navigation--expanded {
             .top-navigation__item {
@@ -682,9 +584,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         .local-navigation {
             vertical-align: top;
             display: table-cell;
-            @include rem((
-                height: $navigation-height
-            ));
+            height: $navigation-height;
         }
         .local-navigation {
             // Fill the maximum available width (otherwise the element
@@ -693,9 +593,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
         .local-navigation__action {
             display: block;
-            @include rem((
-                line-height: $navigation-height
-            ));
+            line-height: $navigation-height;
         }
 
         // Re-order top nav on top of local nav
@@ -705,9 +603,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
         .navigation__container--first {
             background: $c-local-navigation-background;
-            @include rem((
-                border-top: $navigation-height solid $c-top-navigation-background
-            ));
+            border-top: $navigation-height solid $c-top-navigation-background;
         }
         .navigation__container--second {
             position: absolute;
@@ -739,16 +635,12 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
 @mixin navigation__toggle--width($width: small) {
     @if $width == small {
-        @include rem((
-            min-width: $navigation-toggler-width,
-            padding-left: $gs-gutter + 2
-        ));
+        min-width: $navigation-toggler-width;
+        padding-left: $gs-gutter + 2;
     }
     @if $width == wide {
-        @include rem((
-            min-width: $navigation-toggler-width-full,
-            padding-left: $gs-gutter + 12px
-        ));
+        min-width: $navigation-toggler-width-full;
+        padding-left: $gs-gutter + 12px;
     }
 }
 
@@ -759,10 +651,8 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     top: 0;
     @include box-sizing(border-box);
     @include fs-header(1);
-    @include rem((
-        line-height: $navigation-height,
-        padding-right: $gs-gutter/2
-    ));
+    line-height: $navigation-height;
+    padding-right: $gs-gutter/2;
     @include navigation__toggle--width(small);
     background: $c-navigation-toggle-background;
     -moz-background-clip: padding-box;
@@ -777,7 +667,6 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     &:focus,
     &:active {
         color: $c-navigation-toggle-icon;
-        text-decoration: none;
     }
     &:focus {
         background: mix($c-navigation-toggle-background, #ffffff, 92%);
@@ -828,24 +717,18 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 }
 @mixin navigation__toggle-burger--width($width: small) {
     @if $width == small {
-        @include rem((
-            left: 6px,
-            width: 12px
-        ));
+        left: 6px;
+        width: 12px;
     }
     @if $width == wide {
-        @include rem((
-            left: 10px,
-            width: 16px
-        ));
+        left: 10px;
+        width: 16px;
     }
 }
 
 .navigation__toggle-burger {
     position: absolute;
-    @include rem((
-        top: 11px
-    ));
+    top: 11px;
     @include navigation__toggle-burger--width(small);
 
     @include mq(tablet) {
@@ -862,16 +745,12 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 }
 .honest-burger {
     display: block;
-    @include rem((
-        height: 16px
-    ));
+    height: 16px;
 }
 .honest-burger i {
     display: block;
-    @include rem((
-        border-top: 2px solid rgba(#ffffff, .9),
-        margin-top: 2px
-    ));
+    border-top: 2px solid rgba(#ffffff, .9);
+    margin-top: 2px;
 
     @if not $old-ie {
         @include transform-origin(60%);

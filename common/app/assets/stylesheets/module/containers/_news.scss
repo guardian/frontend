@@ -47,6 +47,9 @@
     }
 }
 
+.container--news .facia-slice-wrapper:first-child .item__video-container {
+    margin-top: 0;
+}
 
 /**
  * Date
@@ -80,7 +83,7 @@
 
     .i {
         position: absolute;
-        left: 15px;
+        left: 14px;
         top: 5px;
     }
 }

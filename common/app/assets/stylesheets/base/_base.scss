@@ -21,15 +21,55 @@ body {
     }
 }
 
+/**
+ * Breakpoint definition for JS - see https://github.com/JoshBarr/on-media-query
+ */
+head {
+    font-family: 'mobile';
+
+    @include mq(mobileLandscape) {
+        font-family: 'mobileLandscape';
+    }
+    @include mq(tablet) {
+        font-family: 'tablet';
+    }
+    @include mq(rightCol) {
+        font-family: 'rightCol';
+    }
+    @include mq(desktop) {
+        font-family: 'desktop';
+    }
+    @include mq(leftCol) {
+        font-family: 'leftCol';
+    }
+    @include mq(faciaLeftCol) {
+        font-family: 'faciaLeftCol';
+    }
+    @include mq(wide) {
+        font-family: 'wide';
+    }
+}
 body:after {
     content: 'mobile';
     @include u-h;
 
+    @include mq(mobileLandscape) {
+        content: 'mobileLandscape';
+    }
     @include mq(tablet) {
         content: 'tablet';
     }
+    @include mq(rightCol) {
+        content: 'rightCol';
+    }
     @include mq(desktop) {
         content: 'desktop';
+    }
+    @include mq(leftCol) {
+        content: 'leftCol';
+    }
+    @include mq(faciaLeftCol) {
+        content: 'faciaLeftCol';
     }
     @include mq(wide) {
         content: 'wide';

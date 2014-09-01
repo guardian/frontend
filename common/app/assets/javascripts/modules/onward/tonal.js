@@ -1,13 +1,15 @@
 define([
+    'raven',
     'common/utils/mediator',
     'common/modules/analytics/register',
-    'common/modules/ui/images',
-    'common/modules/component'
+    'common/modules/component',
+    'common/modules/ui/images'
 ], function(
+    raven,
     mediator,
     register,
-    images,
-    Component
+    Component,
+    images
 ){
 
     var noop = function(){};
@@ -53,7 +55,6 @@ define([
     };
 
     TonalComponent.prototype.error = function() {
-        mediator.emit('module:error', 'Failed to load tone:' + this.getTone() + 'common/modules/related.js');
         register.error('tonal-content');
     };
 

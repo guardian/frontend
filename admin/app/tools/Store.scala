@@ -3,10 +3,10 @@ package tools
 import common.Logging
 import conf.AdminConfiguration
 import conf.Configuration.commercial._
-import services.S3
-import dfp.{PageSkinSponsorshipReportParser, PageSkinSponsorshipReport, SponsorshipReport, SponsorshipReportParser}
-import org.joda.time.DateTime
+import dfp._
 import implicits.Dates
+import org.joda.time.DateTime
+import services.S3
 
 trait Store extends Logging with Dates {
   lazy val configKey = AdminConfiguration.configKey
@@ -33,7 +33,7 @@ trait Store extends Logging with Dates {
     S3.putPublic(dfpAdvertisementFeatureTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
   def putInlineMerchandisingSponsorships(keywordsJson: String) {
-    S3.putPublic(inlineMerchandisingSponsorshipsDataKey, keywordsJson, defaultJsonEncoding)
+    S3.putPublic(dfpInlineMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
   def putDfpPageSkinAdUnits(adUnitJson: String) {
     S3.putPublic(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding )
@@ -53,8 +53,11 @@ trait Store extends Logging with Dates {
     S3.get(dfpAdvertisementFeatureTagsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
   def getDfpPageSkinnedAdUnits() =
     S3.get(dfpPageSkinnedAdUnitsKey).flatMap(PageSkinSponsorshipReportParser(_)) getOrElse PageSkinSponsorshipReport(now, Nil)
-  def getDfpInlineMerchandisingSponsorships() =
-    S3.get(inlineMerchandisingSponsorshipsDataKey).flatMap(SponsorshipReportParser(_)) getOrElse SponsorshipReport(now, Nil)
+
+  def getDfpInlineMerchandisingTargetedTagsReport(): InlineMerchandisingTargetedTagsReport = {
+    S3.get(dfpInlineMerchandisingTagsDataKey) flatMap (InlineMerchandisingTargetedTagsReportParser(_))
+  } getOrElse InlineMerchandisingTargetedTagsReport(now, InlineMerchandisingTagSet())
+
   def getDfpLineItemsReport() = S3.get(dfpLineItemsKey)
 }
 

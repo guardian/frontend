@@ -2,7 +2,8 @@
    Nav pop-up
    ========================================================================== */
 $nav-popup-toggle-arrow-size: 4px;
-$nav-popup-top: $headerHeight + $gs-baseline/2;
+$nav-popup-anchor-arrow-size: 6px;
+$nav-popup-top: $headerHeight + $gs-baseline/2 + 3;
 $c-nav-popup-bg: #ffffff;
 
 // Popups align with the label, so if there's a control icon, we need to account
@@ -10,7 +11,6 @@ $c-nav-popup-bg: #ffffff;
 // TODO:
 // use a proper icon size variabe when the icons are redrawn at mulptile sizes
 $control-offset: 36 + $gs-gutter/2;
-$bp-header-wrap: 544px;
 
 .nav-popup {
     @include box-sizing(border-box);
@@ -20,44 +20,59 @@ $bp-header-wrap: 544px;
     margin: 0;
     padding: 0;
     list-style: none;
-    @include box-shadow(0 rem(2px 2px) 0 rgba(0, 0, 0, .15));
-    @include rem((
-        min-width: gs-span(2) + $gs-gutter/2,
-        top: $nav-popup-top - 2,
-        padding: 0 $gs-gutter/2
-    ));
+    @include box-shadow(0 rem(1px 1px) 0 rgba(0, 0, 0, .25));
+    min-width: gs-span(2) + $gs-gutter * 3;
+    top: $nav-popup-top - 2;
 
     @include mq(mobileLandscape) {
         right: auto;
         bottom: auto;
-        @include rem((
-            top: $nav-popup-top
-        ));
+        top: $nav-popup-top;
     }
 
     .brand-bar__item--has-control & {
-        @include mq($bp-header-wrap) {
-            @include rem((
-                left: $control-offset
-            ))
+        @include mq(tablet) {
+            left: $control-offset;
         };
     }
 
     .brand-bar__item--right & {
-        left: auto;
-        right: 0;
+        @include mq(tablet) {
+            left: auto;
+            right: 0;
+        }
+    }
+}
+
+.nav-popup__group {
+    margin: 0;
+    padding: 0 $gs-gutter/2;
+}
+
+.nav-popup__group-header {
+    @include fs-data(2);
+    color: guss-colour(neutral-2);
+    padding: $gs-baseline/2 $gs-gutter/2;
+    border-top: 1px solid guss-colour(neutral-4);
+    padding-bottom: 0;
+    margin: 0;
+
+    &:first-of-type {
+        border-top: 0;
     }
 }
 
 .has-nav-popup {
-    cursor: pointer;
+    cursor: default;
     position: relative;
 }
 
 .nav-popup__toggle {
     position: relative;
+    z-index: 11;
+
     // disclosure arrow
-    @include mq($bp-header-wrap) {
+    @include mq(tablet) {
         &:after {
             content: '';
             display: inline-block;
@@ -65,25 +80,21 @@ $bp-header-wrap: 544px;
             width: 0;
             height: 0;
             border-bottom: 0;
-            @include rem((
-                margin-top: 2px,
-                margin-bottom: 2px,
-                margin-left: 4px,
-                border-left: $nav-popup-toggle-arrow-size solid transparent,
-                border-right: $nav-popup-toggle-arrow-size solid transparent,
-                border-top: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
-            ));
+            margin-top: 2px;
+            margin-bottom: 2px;
+            margin-left: 4px;
+            border-left: $nav-popup-toggle-arrow-size solid transparent;
+            border-right: $nav-popup-toggle-arrow-size solid transparent;
+            border-top: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg;
         }
     };
 
     &.is-active,
     .is-active > & {
-        @include mq($bp-header-wrap) {
+        @include mq(tablet) {
             &:after {
                 border-top: 0;
-                @include rem((
-                    border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg
-                ));
+                border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg;
             }
         };
 
@@ -97,34 +108,28 @@ $bp-header-wrap: 544px;
             border-top: 0;
             position: absolute;
             left: 50%;
-            @include rem((
-                margin-left: 0 - $nav-popup-toggle-arrow-size,
-                border-left: $nav-popup-toggle-arrow-size solid transparent,
-                border-right: $nav-popup-toggle-arrow-size solid transparent,
-                border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg,
-                top: $nav-popup-top - $nav-popup-toggle-arrow-size - $gs-baseline/2
-            ));
+            margin-left: 0 - $nav-popup-anchor-arrow-size;
+            border-left: $nav-popup-anchor-arrow-size solid transparent;
+            border-right: $nav-popup-anchor-arrow-size solid transparent;
+            border-bottom: $nav-popup-anchor-arrow-size solid $c-nav-popup-bg;
+            top: $nav-popup-top - $nav-popup-anchor-arrow-size - $gs-baseline/2;
 
             .brand-bar__item--has-control & {
-                @include mq($bp-header-wrap) {
-                    @include rem((
-                        margin-left: $control-offset * .5 - $nav-popup-toggle-arrow-size
-                    ))
+                @include mq(tablet) {
+                    margin-left: $control-offset * .5 - $nav-popup-anchor-arrow-size;
                 };
             }
 
             .brand-bar__item--search & {
                 @include mq($to: tablet) {
-                    @include rem((
-                        margin-left: 0 - $nav-popup-toggle-arrow-size
-                    ))
+                    margin-left: 0 - $nav-popup-anchor-arrow-size;
                 };
             }
 
             .brand-bar__item--right & {
-                @include rem((
-                    margin-left: 0 - $nav-popup-toggle-arrow-size * 3
-                ));
+                @include mq(tablet) {
+                    margin-left: 0 - $nav-popup-anchor-arrow-size * 2;
+                }
             }
         }
     }
@@ -132,22 +137,29 @@ $bp-header-wrap: 544px;
 
 
 .nav-popup__item {
-    border-bottom: 1px solid guss-colour(neutral-5);
+    display: block;
+    border-bottom: 1px solid guss-colour(neutral-7);
 
     &:last-child {
         border-bottom: 0;
     };
 }
 
-.nav-popup .brand-bar__item--action,
-.nav-popup .brand-bar__item--action:hover {
-    display: block;
-    white-space: nowrap;
-    color: guss-colour(neutral-1);
-    @include rem((
-        line-height: 36
-    ));
+.nav-popup {
+    .brand-bar__item--action,
+    .brand-bar__item--action:hover {
+        display: block;
+        white-space: nowrap;
+        color: guss-colour(neutral-1);
+        line-height: $gs-baseline * 3;
+    }
+
+    .brand-bar__item--inline-action {
+        display: inline-block !important;
+        margin-right: $gs-gutter * .25;
+    }
 }
+
 
 /* Profile Menu
    ========================================================================== */
@@ -169,6 +181,18 @@ $bp-header-wrap: 544px;
             }
         }
     }
+
+    .nav-popup {
+        @include mq(mobileLandscape) {
+            left: $control-offset;
+        };
+    }
+
+    .brand-bar__item--action:before {
+        @include mq(mobileLandscape) {
+            margin-left: $control-offset * .5 - $nav-popup-anchor-arrow-size;
+        };
+    }
 }
 
 
@@ -180,47 +204,35 @@ $bp-header-wrap: 544px;
     z-index: 10;
     padding: 0;
     right: 0;
-    @include rem((
-        padding-top: 5px, // manual amount, determined by google, not guss-grid-system
-        min-height: 51px, // manual amount, determined by google, not guss-grid-system
-        top: $headerHeight -2 + $gs-baseline / 2,
-    ));
+    padding-top: 5px; // manual amount, determined by google, not guss-grid-system
+    min-height: 51px; // manual amount, determined by google, not guss-grid-system
+    top: $headerHeight -2 + $gs-baseline / 2;
 
     @include mq(mobileLandscape) {
-        @include rem((
-            top: $headerHeight + $gs-baseline / 2
-        ));
+        top: $nav-popup-top;
     }
 
     @include mq(tablet) {
         right: auto;
         min-height: auto;
-        @include rem((
-            width: gs-span(8) + $gs-gutter,
-            min-height: 68px,
-            left: $gs-gutter/2,
-            padding: $gs-gutter,
-            padding-top: $gs-gutter + 5px // manual amount, determined by google, not guss-grid-system
-        ));
+        width: gs-span(8) + $gs-gutter;
+        min-height: 68px;
+        left: $gs-gutter/2;
+        padding: $gs-gutter;
+        padding-top: $gs-gutter + 5px; // manual amount, determined by google, not guss-grid-system
     }
 
     @include mq(faciaLeftCol) {
         left: 50%;
-        @include rem((
-            margin-left: 0 - (gs-span(7) + $gs-gutter)
-        ));
+        margin-left: 0 - (gs-span(7) + $gs-gutter);
     }
 
     @include mq(wide) {
-        @include rem((
-            margin-left: 0 - (gs-span(8) + $gs-gutter)
-        ));
+        margin-left: 0 - (gs-span(8) + $gs-gutter);
     }
 
     // account for google search sizes.
     .search-box {
-        @include rem((
-            margin-bottom: -1px
-        ));
+        margin-bottom: -1px;
     }
 }

@@ -1,4 +1,9 @@
 .container.container--popular {
+
+    .most-viewed-no-js i {
+        @include rotate(-90deg);
+        margin-top: 10px;
+    }
     #most-popular-head {
         display: none;
     }
@@ -6,9 +11,7 @@
         margin-bottom: 0;
     }
     .content-footer--media & {
-        @include rem((
-            margin-top: $gs-baseline
-        ));
+        margin-top: $gs-baseline;
     }
 
     @include mq(rightCol, desktop) {
@@ -26,11 +29,9 @@
     }
     @include mq($to: wide) {
         .headline-list {
-            @include rem((
-                margin-left: ($gs-gutter/2) * -1,
-                margin-right: ($gs-gutter/2) * -1,
-                padding: $gs-baseline/3 $gs-gutter/2 0
-            ));
+            margin-left: ($gs-gutter/2) * -1;
+            margin-right: ($gs-gutter/2) * -1;
+            padding: $gs-baseline/3 $gs-gutter/2 0;
         }
     }
 }

@@ -1,43 +1,38 @@
-@(video: model.VideoElement, profile: views.support.VideoProfile, title: String, showControlsAtStart: Boolean = true, endSlatePath: Option[String] = None)
+@(player: model.VideoPlayer)
 
 @import conf.Static
-@import views.support.{Video640, RenderClasses}
+@import views.support.RenderClasses
 
-@mediaVideo(profile.bestFor(video).getOrElse(Static("images/media-holding.jpg").path), profile.width.get, profile.height.get)
+<div class="gu-media-wrapper gu-media-wrapper--video">
+    <div class="@RenderClasses(Map(
+        "u-responsive-ratio" -> true,
+        "u-responsive-ratio--hd" -> player.isRatioHd
+    ))">
+        <video controls="controls" class="@RenderClasses(Map(
+            ("gu-media", true),
+            ("gu-media--video", true),
+            ("gu-media--show-controls-at-start", player.showControlsAtStart),
+            ("js-gu-media", true)
+        ))" data-title="@player.title" data-auto-play="@player.autoPlay" data-show-end-slate="@player.showEndSlate"
+            poster="@player.poster" data-duration="@player.video.duration.toString()" data-media-id="@player.video.id" data-end-slate="@player.endSlatePath">
 
-@mediaVideo(poster: String, width: Int, height: Int) = {
-    <div class="gu-media-wrapper gu-media-wrapper--video">
-        <div class="@RenderClasses(Map(
-            "u-responsive-ratio" -> true,
-            "u-responsive-ratio--hd" -> profile.isRatioHD
-        ))">
-            <video controls="controls" class="@RenderClasses(Map(
-                "gu-media" -> true,
-                "gu-media--video" -> true,
-                "gu-media--show-controls-at-start" -> showControlsAtStart,
-                "gu-media--hide-endslate" -> (width < Video640.width.get),
-                "js-gu-media" -> true
-            ))" data-title="@title"
-                poster="@poster" data-duration="@video.duration.toString()" data-media-id="@video.id" @endSlatePath.map { path => data-end-slate="@path"}>
+            @player.video.encodings.map { encoding =>
+                <source src="@encoding.url" type="@encoding.format" />
+            }
 
-                @video.encodings.map { encoding =>
-                    <source src="@encoding.url" type="@encoding.format" />
-                }
-
-                @video.encodings.find(_.format == "video/mp4").map { encoding =>
-                    <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="@width" height="@height">
-                        <param name="allowFullScreen" value="true" />
-                        <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
-                        <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
-                        <img src="@poster" alt="" width="@width" height="@height" />
-                        <div class="vjs-error-display">
-                            <div>Sorry, your browser is unable to play this video.<br/>
-                                Please install <a href="http://get.adobe.com/flashplayer/">Adobe Flash</a>™ and try again.
-                                Alternatively <a href="http://whatbrowser.org/">upgrade</a> to a modern browser.</div>
-                        </div>
-                    </object>
-                }
-            </video>
-        </div>
+            @player.video.encodings.find(_.format == "video/mp4").map { encoding =>
+                <object type="application/x-shockwave-flash" data="@Static("flash/flashmediaelement.swf")" width="@player.width" height="@player.height">
+                    <param name="allowFullScreen" value="true" />
+                    <param name="movie" value="@Static("flash/flashmediaelement.swf")" />
+                    <param name="flashvars" value="controls=true&amp;file=@encoding.url" />
+                    <img src="@player.poster" alt="" width="@player.width" height="@player.height" />
+                    <div class="vjs-error-display">
+                        <div>Sorry, your browser is unable to play this video.<br/>
+                            Please install <a href="http://get.adobe.com/flashplayer/">Adobe Flash</a>™ and try again.
+                            Alternatively <a href="http://whatbrowser.org/">upgrade</a> to a modern browser.</div>
+                    </div>
+                </object>
+            }
+        </video>
     </div>
-}
+</div>

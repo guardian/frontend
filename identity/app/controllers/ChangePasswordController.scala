@@ -23,9 +23,11 @@ class ChangePasswordController @Inject()( api: IdApiClient,
                                           authenticationService: AuthenticationService,
                                           idRequestParser: IdRequestParser,
                                           idUrlBuilder: IdentityUrlBuilder)
-  extends Controller with ExecutionContexts with SafeLogging with Mappings {
+  extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   val page = IdentityPage("/password/change", "Change Password", "change-password")
+
+  private val changePasswordKey = "change-password"
 
   val passwordForm = Form(
     mapping(
@@ -44,11 +46,14 @@ class ChangePasswordController @Inject()( api: IdApiClient,
   def displayForm() = CSRFAddToken {
     authAction.async {
       implicit request =>
+
+        val form = passwordForm.bindFromFlash(changePasswordKey).getOrElse(passwordForm)
+
         val idRequest = idRequestParser(request)
         api.passwordExists(request.auth) map {
           result =>
             val pwdExists = result.right.toOption exists {_ == true}
-            NoCache(Ok(views.html.password.changePassword(page.tracking(idRequest), idRequest, idUrlBuilder,  passwordForm, pwdExists )))
+            NoCache(Ok(views.html.password.changePassword(page.tracking(idRequest), idRequest, idUrlBuilder,  form, pwdExists )))
         }
     }
   }
@@ -74,15 +79,18 @@ class ChangePasswordController @Inject()( api: IdApiClient,
           form =>
             if(form.hasErrors){
               val pwdExists = request.getQueryString("passwordExists") exists { _.toBoolean }
-              NoCache(Ok(views.html.password.changePassword(page.tracking(idRequest), idRequest, idUrlBuilder, form, pwdExists)))
-            }
-            else {
+              NoCache(SeeOther(routes.ChangePasswordController.displayForm().url)
+                  .flashing(clearPasswords(form).toFlash(changePasswordKey)
+              ))
+            } else {
               val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
               NoCache(Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
             }
         }
     }
   }
+
+  private def clearPasswords(formWithPasswords: Form[PasswordFormData]) = formWithPasswords.copy(data = Map.empty)
 
 }
 

@@ -1,21 +1,19 @@
 {
   "name": "guss-colours",
-  "version": "1.2.0",
   "main": [
     "_colours.scss",
-    "_helpers.scss"
-  ],
-  "ignore": [
-    "CHANGELOG.md"
+    "_colours.helpers.scss",
+    "_colours.config.scss"
   ],
   "homepage": "https://github.com/guardian/guss-colours",
-  "_release": "1.2.0",
+  "version": "2.0.1",
+  "_release": "2.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "v1.2.0",
-    "commit": "f9ce85cd9642e7ac8ffdcb1de68a80dfe2565ef0"
+    "tag": "v2.0.1",
+    "commit": "9d86bb31b002dadeeabd5dfe8a980384c7e665c3"
   },
   "_source": "git://github.com/guardian/guss-colours.git",
-  "_target": "~1",
+  "_target": "~2",
   "_originalSource": "guss-colours"
 }

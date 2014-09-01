@@ -99,25 +99,17 @@
         window.s_account = guardian.config.page.omnitureAccount;
 
         @* we want to add/remove classes to HTML ASAP to avoid FOUC *@
-        var currentClassName = document.documentElement.className,
-            htmlClassNames = currentClassName ? currentClassName.split(' ') : [];
-
-        if (!isModern) {
-            htmlClassNames.push('is-not-modern');
-        } else {
+        if (isModern) {
             @* http://modernizr.com/download/#-svg *@
             function hasSvgSupport() {
                 var ns = {'svg': 'http://www.w3.org/2000/svg'};
                 return !!document.createElementNS && !!document.createElementNS(ns.svg, 'svg').createSVGRect;
             }
             if (hasSvgSupport()) {
-                htmlClassNames.push('svg');
+                document.documentElement.className += ' svg';
             }
-            htmlClassNames.push('is-modern');
+            document.documentElement.className = document.documentElement.className.replace(/\bis-not-modern\b/g, 'is-modern');
         }
-
-        document.documentElement.className = htmlClassNames.join(' ');
-
     })(guardian.isModernBrowser);
 
     document.documentElement.className = document.documentElement.className.replace(/\bjs-off\b/g, 'js-on');

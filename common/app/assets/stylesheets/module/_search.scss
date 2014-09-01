@@ -3,43 +3,31 @@
    ========================================================================== */
 
 .search-placeholder {
-    @include rem((
-        min-height: 50px,
-        padding-top: $gs-baseline/2
-    ));
+    min-height: 50px;
+    padding-top: $gs-baseline/2;
 }
 .search-box {
-    @include rem((
-        margin: 0 $gs-gutter/2
-    ));
+    margin: 0 $gs-gutter/2;
 
     @include mq(mobileLandscape) {
-        @include rem((
-            margin-left: $gs-gutter,
-            margin-right: $gs-gutter
-        ));
+        margin-left: $gs-gutter;
+        margin-right: $gs-gutter;
     }
 }
 .gsc-control-cse {
-    @include rem((
-        padding: 0 $gs-gutter/2 !important
-    ));
+    padding: 0 $gs-gutter/2 !important;
 
     @include mq(mobileLandscape) {
-        @include rem((
-            padding: 0 $gs-gutter !important
-        ));
+        padding: 0 $gs-gutter !important;
     }
 }
 // Align "×" icon (cancel search button)
 span.gscb_a {
     position: relative;
     font: normal 24px/16px Georgia, serif !important;
-    @include rem((
-        top: 2px,
-        font-size: 24px,
-        line-height: 16px
-    ));
+    top: 2px;
+    font-size: 24px;
+    line-height: 16px;
 }
 .gsc-search-box {
     padding: 0;
@@ -54,16 +42,12 @@ span.gscb_a {
 }
 td.gsc-search-button {
     margin: 0 !important;
-    @include rem((
-        padding: 5px 0 0 !important
-    ));
+    padding: 5px 0 0 !important;
 }
 .gsc-search-button-v2 {
     @include border-radius(0 !important);
     margin: 0 !important;
-    @include rem((
-        padding: 7px 9px 8px !important
-    ));
+    padding: 7px 9px 8px !important;
 }
 .gsc-completion-container,
 .gsc-input {
@@ -97,14 +81,10 @@ td.gsc-search-button {
 
 // Add space between pagination links to make them more touch friendly
 .gsc-results .gsc-cursor-box {
-    @include rem((
-        margin: 0 0 ($gs-baseline/3)*4 !important
-    ));
+    margin: 0 0 ($gs-baseline/3)*4 !important;
 }
 .gsc-results .gsc-cursor-box .gsc-cursor-page {
-    @include rem((
-        margin-right: 22px !important
-    ));
+    margin-right: 22px !important;
 }
 
 // Remove border on thumbnails
@@ -115,17 +95,13 @@ td.gsc-search-button {
 // Thumbnails are on the grid
 .gs-web-image-box-landscape img.gs-image {
     margin-top: 1px; // align with top of text
-    @include rem((
-        width: gs-span(2) !important,
-        height: 84px !important
-    ));
+    width: gs-span(2) !important;
+    height: 84px !important;
     max-width: none !important;
     max-height: none !important;
 }
 .gs-image-box.gs-web-image-box.gs-web-image-box-landscape {
-    @include rem((
-        width: gs-span(2) + $gs-gutter/2 !important
-    ));
+    width: gs-span(2) + $gs-gutter/2 !important;
 }
 // Float image to the left
 .gsc-table-result {
@@ -141,10 +117,8 @@ td.gsc-search-button {
 .gs-webResult .gs-snippet,
 .gs-imageResult .gs-snippet {
     @include f-headline;
-    @include rem((
-        font-size: get-font-size($fs-headlines, 1) !important,
-        line-height: get-line-height($fs-headlines, 1) !important
-    ));
+    font-size: get-font-size(headline, 1) !important;
+    line-height: get-line-height(headline, 1) !important;
     color: $c-neutral2 !important;
 }
 // Hide URLs
@@ -155,9 +129,7 @@ td.gsc-search-button {
 .gsc-thumbnail-inside a.gs-title {
     display: block;
     @include fs-headline(2);
-    @include rem((
-        padding-bottom: 10px
-    ));
+    padding-bottom: 10px;
 }
 .gs-webResult.gs-result a.gs-title,
 .gs-imageResult a.gs-title {
@@ -188,8 +160,6 @@ td.gsc-search-button {
     border-top: 1px solid $c-neutral5 !important;
 }
 .gsc-webResult .gsc-result {
-    @include rem((
-        padding-top: 2px,
-        padding-bottom: 20px
-    ));
+    padding-top: 2px;
+    padding-bottom: 20px;
 }

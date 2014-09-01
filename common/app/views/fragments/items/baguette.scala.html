@@ -1,9 +1,9 @@
-@(trail: model.Trail, index: Int)(implicit request: RequestHeader)
+@(trail: model.Trail, index: Int)(implicit request: RequestHeader, config: model.Config)
 
 @import common.LinkTo
-@import model.Video
+@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
 @import views.html.fragments.media.video
-@import views.support.{GetClasses, SnapData, Video640}
+@import views.support.{GetClasses, RemoveOuterParaHtml, SnapData, Video640}
 
 <div
     class="@GetClasses.forItem(trail, true) baguette u-faux-block-link"
@@ -13,11 +13,19 @@
 
     <div class="item__container">
         <div class="item__tonal-border tone-accent-border"></div>
-        @trail match {
-            case v: Video if v.mainVideo.isDefined => {
+        @FaciaDisplayElement.fromTrail(trail) match {
+            case InlineVideo(videoElement, title, endSlatePath) => {
                 <div class="item__media-wrapper item__media-wrapper--has-icon u-faux-block-link__promote">
                     <div class="item__video-container">
-                        @video(v.mainVideo.get, Video640, v.webTitle, false, Some(v.endSlatePath))
+                        @video(VideoPlayer(
+                            videoElement,
+                            Video640,
+                            title,
+                            autoPlay = false,
+                            showControlsAtStart = false,
+                            endSlatePath,
+                            None
+                        ))
                     </div>
                 </div>
             }
@@ -25,11 +33,9 @@
                 @fragments.items.elements.image(trail, inlineImage = true, maxWidth = 940)
             }
         }
-        <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article">
-            @fragments.items.elements.title(trail, index, 0)
-        </a>
+        @fragments.items.elements.title(trail, index, 0, showTag = false)
 
-        @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+        @trail match { case content: model.Content => @fragments.items.elements.starRating(content) }
 
         @trail.trailText.map { text =>
             <div class="baguette__standfirst">@Html(text)</div>

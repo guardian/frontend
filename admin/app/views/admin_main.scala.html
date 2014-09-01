@@ -10,7 +10,7 @@
         @if(autoRefresh){
             <meta http-equiv="refresh" content="60">
         }
-        
+
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/32x32.ico")" />
 
         <link rel="apple-touch-icon" sizes="144x144" href="@routes.Assets.at("images/144x144.png")" />
@@ -78,8 +78,9 @@
                 baseUrl: 'assets/javascripts',
                 apiName: 'require'
             };
+
+            @Html(Static.js.curl)
         </script>
-        <script type="text/javascript" src="@Static("javascripts/components/curl/curl-domReady.js")"></script>
         <script src="//code.jquery.com/jquery.js"></script>
         <script type="text/javascript" src="@routes.Assets.at("javascripts/components/bootstrap/dist/js/bootstrap.js")"></script>
         <script type="text/javascript" src="@Static("javascripts/bootstraps/admin.js")" async></script>

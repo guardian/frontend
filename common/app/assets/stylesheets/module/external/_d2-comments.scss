@@ -7,17 +7,13 @@
     overflow: hidden;
     position: relative;
     margin-bottom: 1.5em;
-    @include rem((
-        padding-top: 15px,
-        font-size: 14px,
-        padding-left: 28px // aligns with top level comment's body
-    ));
+    padding-top: 15px;
+    font-size: 14px;
+    padding-left: 28px; // aligns with top level comment's body
     border-left: 8px solid $c-neutral5;
 
     @include mq(tablet) {
-        @include rem((
-            padding-left: 44px
-        ));
+        padding-left: 44px;
         border-left-width: 16px;
     }
 

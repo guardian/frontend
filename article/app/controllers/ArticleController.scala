@@ -5,13 +5,13 @@ import common._
 import conf._
 import model._
 import org.jsoup.nodes.Document
-import play.api.mvc.{ Content => _, _ }
-import views.support._
-import views.BodyCleaner
-import scala.concurrent.Future
-import scala.collection.JavaConversions._
 import performance.MemcachedAction
-import conf.Switches.RelatedContentSwitch
+import play.api.mvc.{Content => _, _}
+import views.BodyCleaner
+import views.support._
+
+import scala.collection.JavaConversions._
+import scala.concurrent.Future
 
 trait ArticleWithStoryPackage {
   def article: Article
@@ -55,7 +55,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
     log.info(s"Fetching article: $path for edition ${edition.id}: ${RequestLog(request)}")
     val response: Future[ItemResponse] = LiveContentApi.item(path, edition)
       .showExpired(true)
-      .showRelated(RelatedContentSwitch.isSwitchedOn)
+      .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
       .showTags("all")
       .showFields("all")
       .showReferences("all")

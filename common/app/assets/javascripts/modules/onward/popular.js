@@ -1,9 +1,11 @@
 define([
-    'common/modules/lazyload',
-    'common/utils/mediator'
+    'raven',
+    'common/utils/mediator',
+    'common/modules/lazyload'
 ], function (
-    LazyLoad,
-    mediator
+    raven,
+    mediator,
+    LazyLoad
 ) {
 
 
@@ -27,8 +29,7 @@ define([
                     mediator.emit('fragment:ready:images', container);
                     mediator.emit('register:end','popular-in-section');
                 },
-                error: function(req) {
-                    mediator.emit('module:error', 'Failed to load most read: ' + req.statusText, 'common/modules/popular.js');
+                error: function() {
                     mediator.emit('register:error','popular-in-section');
                 }
             }).load();

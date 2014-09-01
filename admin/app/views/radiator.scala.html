@@ -1,6 +1,5 @@
-@(  charts: Seq[tools.LineChart],
-    hitMissCharts: Seq[tools.LineChart],
-    jsErrors: tools.LineChart,
+@(  charts: Seq[tools.AwsLineChart],
+    hitMissCharts: Seq[tools.AwsLineChart],
     cost: tools.MaximumMetric,
     switches: List[conf.Switch],
     env: String)
@@ -54,5 +53,4 @@
 
     @charts.map{ chart => @fragments.lineChart(chart)  }
     @hitMissCharts.map{ chart => @fragments.lineChart(chart) }
-    @fragments.lineChart(jsErrors)
 }

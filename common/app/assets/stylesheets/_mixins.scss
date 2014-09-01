@@ -55,11 +55,9 @@
         display: inline-block;
         content: '';
         @include border-radius(6px);
-        @include rem((
-            height: 12px,
-            width: 12px,
-            margin-right: $right-space
-        ));
+        height: 12px;
+        width: 12px;
+        margin-right: $right-space;
         background-color: $color;
     }
 }
@@ -88,18 +86,14 @@
     // Fallback for non-Webkit browsers
     // (won't show `…` at the end of the block)
     @if $line-height {
-        @include rem((
-            max-height: $line-height * $lines
-        ));
+        max-height: $line-height * $lines;
     }
 }
 
 // icon button (circular element containing an offset/centered icon)
 @mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: null) {
-    @include rem((
-        width: $buttonSize,
-        height: $buttonSize
-    ));
+    width: $buttonSize;
+    height: $buttonSize;
     @include border-radius($buttonSize);
     position: relative;
     display: inline-block;
@@ -109,10 +103,8 @@
         text-indent: -9999px;
         top: 50%;
         left: 50%;
-        @include rem((
-            margin-top: $iconOffsetX,
-            margin-left: if(not $iconOffsetY, $iconOffsetX, $iconOffsetY)
-        ));
+        margin-top: $iconOffsetX;
+        margin-left: if(not $iconOffsetY, $iconOffsetX, $iconOffsetY);
     }
 }
 
@@ -166,11 +158,9 @@
 }
 
 @mixin video-play-button-size($size) {
-    @include rem((
-        width: $size,
-        height: $size,
-        font-size: $size/6 // play triangle is em based so this scales it
-    ));
+    width: $size;
+    height: $size;
+    font-size: $size/6 // play triangle is em based so this scales it;
 }
 
 @mixin display-flex {
@@ -185,4 +175,26 @@
     -webkit-flex-direction: $direction;
     -ms-flex-direction: $direction;
     flex-direction: $direction;
+}
+
+@mixin columns($cols: 1, $gap: 0) {
+    @if $browser-supports-columns {
+        -webkit-column-count: $cols;
+        -moz-column-count: $cols;
+        column-count: $cols;
+
+        -webkit-column-gap: $gap;
+        -moz-column-gap: $gap;
+        column-gap: $gap;
+    } @else {
+        margin-left: 0 - $gap * .5;
+        margin-right: 0 - $gap * .5;
+        & > * {
+            @include box-sizing(border-box);
+            width: (100% / $cols);
+            float: left;
+            padding-left: $gap * .5;
+            padding-right: $gap * .5;
+        }
+    }
 }

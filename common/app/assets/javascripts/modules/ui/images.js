@@ -1,14 +1,18 @@
 define([
-    'common/utils/$',
     'bonzo',
-    'common/utils/mediator',
-    'imager'
+    'imager',
+    'lodash/collections/forEach',
+    'common/utils/$',
+    'common/utils/$css',
+    'common/utils/mediator'
 ],
 function (
-    $,
     bonzo,
-    mediator,
-    imager
+    imager,
+    forEach,
+    $,
+    $css,
+    mediator
 ) {
 
     var images = {
@@ -26,12 +30,12 @@ function (
                     },
                     // this is an optional filter function
                     function(container) {
-                        return bonzo(container).css('display') !== 'none';
+                        return $css(bonzo(container), 'display') !== 'none';
                     }
                 );
             imager.init(containers, options);
             // add empty alts if none exist
-            containers.forEach(function(container) {
+            forEach(containers, function(container) {
                 $('img', container).each(function(img) {
                     var $img = bonzo(img);
                     if ($img.attr('alt') === null) {
@@ -49,8 +53,8 @@ function (
                 'window:orientationchange': function() {
                     images.upgrade();
                 },
-                'ui:images:upgrade': function() {
-                    images.upgrade();
+                'ui:images:upgrade': function(context) {
+                    images.upgrade(context);
                 }
             });
         }

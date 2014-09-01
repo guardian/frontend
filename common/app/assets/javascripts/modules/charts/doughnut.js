@@ -51,9 +51,8 @@ define([
                 x: w/2,
                 y: h/2
             },
-            $svg = $.create('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>')
-                .attr({ width: w, height: h, viewbox: '0 0 '+ [w, h].join(' ') })
-                .addClass('chart chart--doughnut');
+            $svg = $.create('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="chart chart--doughnut"></svg>')
+                .attr({ width: w, height: h, viewbox: '0 0 '+ [w, h].join(' ') });
 
         // Segments
         var segmentAngle, endRadius, arc, outer, inner, r, a, d, $g, $t,
@@ -102,28 +101,28 @@ define([
                 'Z'
             ];
             $g = svgEl('g')
-                .addClass('chart__arc')
+                .attr('class', 'chart__arc')
                 .append(svgEl('path').attr({
                     'd': d.join(' '),
                     'fill': datum.color
                 }));
 
             // labels
-            $t = svgEl('text');
+            $t = svgEl('text')
+                .attr('class', 'chart__label');
             if (o.showValues) {
                 $t.append(svgEl('tspan')
+                    .attr('class', 'chart__label-text')
                     .text(datum.label)
-                    .attr({ x: 0, dy: '0' })
-                    .addClass('chart__label-text'))
+                    .attr({ x: 0, dy: '0' }))
                  .append(svgEl('tspan')
+                    .attr('class', 'chart__label-value')
                     .text(datum.value)
-                    .attr({ x: 0, dy: '1em' })
-                    .addClass('chart__label-value'));
+                    .attr({ x: 0, dy: '1em' }));
             } else {
                 $t.text(datum.label);
             }
             $t.attr({ transform: translate([(Math.cos(a)*r)+center.x, (Math.sin(a)*r)+center.y]) })
-                .addClass('chart__label')
                 .appendTo($g);
 
             $g.appendTo($svg);
@@ -132,8 +131,8 @@ define([
 
         // Unit of measurement
         return $svg.append(svgEl('text')
+            .attr('class', 'chart__unit')
             .text(o.unit)
-            .addClass('chart__unit')
             .attr({
                 transform: translate(c),
                 dy: '0.4em'

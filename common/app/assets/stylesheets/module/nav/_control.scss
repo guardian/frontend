@@ -11,23 +11,35 @@ $control-size: 36px;
 
 .control__info {
     display: none;
-    @include rem((
-        height: 30px,
-        line-height: $control-size,
-        margin-left: $gs-gutter/2
-    ));
+    height: 30px;
+    line-height: $control-size;
+    margin-left: $gs-gutter/2;
+    max-width: 140px;
     vertical-align: top;
     white-space: nowrap;
+    overflow: hidden;
+    float: left;
+    text-overflow: ellipsis;
+    text-align: left;
 
-    @include mq(544px) {
+    @include mq($from: 540px) {
+        max-width: 200px;
+    }
+
+    @include mq(tablet) {
         display: block;
-        overflow: hidden;
-        float: left;
-        @include rem((
-            max-width: 200px
-        ));
-        text-overflow: ellipsis;
-        text-align: left;
+    }
+
+    .brand-bar__item--right & {
+        @include mq(tablet) {
+            margin: 0;
+        }
+    }
+
+    .brand-bar__item--profile & {
+        @include mq(mobileLandscape) {
+            display: block;
+        }
     }
 }
 
@@ -37,21 +49,23 @@ $control-size: 36px;
 
 .control__icon-wrapper {
     @extend %icon-holder-circle;
-    border-color: #ffffff;
+    border: 1px solid rgba(#ffffff, .3);
     float: left;
-    @include rem((
-        height: 34px,
-        width: 34px
-    ));
+    height: 34px;
+    width: 34px;
+
+    .brand-bar__item--right & {
+        @include mq(tablet) {
+            display: none;
+        }
+    }
 }
 
 .control__icon {
     display: block;
     text-align: center;
-    @include rem((
-        height: 32px,
-        padding-top: 7px
-    ));
+    height: 32px;
+    padding-top: 7px;
 
     .i {
         display: none;

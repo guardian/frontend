@@ -2,7 +2,7 @@ import commercial.TravelOffersCacheJob
 import common.{AkkaAsync, Jobs, CloudWatchApplicationMetrics}
 import conf.{Configuration, Gzipper}
 import dfp.DfpDataCacheJob
-import jobs.{RebuildIndexJob, RefreshFrontsJob}
+import jobs.{OmnitureReportJob, RebuildIndexJob, RefreshFrontsJob}
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
 import play.api.Play
@@ -40,11 +40,17 @@ with SurgingContentAgentLifecycle {
       DfpDataCacheJob.run()
       TravelOffersCacheJob.run()
     }
+
+    Jobs.schedule("OmnitureReportJob", "0 */5 * * * ?") {
+      OmnitureReportJob.run()
+    }
   }
 
   def descheduleJobs() {
     Jobs.deschedule("FrontPressJob")
     Jobs.deschedule("DfpDataCacheJob")
+    Jobs.deschedule("RebuildIndexJob")
+    Jobs.deschedule("OmnitureReportJob")
   }
 
   override def onStart(app: play.api.Application) {
@@ -58,6 +64,7 @@ with SurgingContentAgentLifecycle {
         RebuildIndexJob.run()
         DfpDataCacheJob.run()
         TravelOffersCacheJob.run()
+        OmnitureReportJob.run()
       }
     }
   }

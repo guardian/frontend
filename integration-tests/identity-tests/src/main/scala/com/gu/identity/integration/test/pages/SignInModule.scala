@@ -15,4 +15,9 @@ class SignInModule(implicit driver: WebDriver) extends ParentPage {
     signInLink.click()
     new SignInPage()
   }
+
+  def clickSignInLinkWhenLoggedIn(): ProfileNavMenu = {
+    signInLink.click()
+    new ProfileNavMenu
+  }
 }

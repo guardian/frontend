@@ -6,26 +6,18 @@
     .commercial__head {
         height: auto;
         border-top: 0;
-        @include rem((
-            margin-top: $gs-baseline
-        ));
+        margin-top: $gs-baseline;
         position: relative;
     }
     .commercial__body {
-        @include rem((
-            padding: 0 0 $gs-baseline
-        ));
+        padding: 0 0 $gs-baseline;
     }
     .lineitems {
-        @include rem((
-            margin: 0 (-$gs-gutter/2)
-        ));
+        margin: 0 (-$gs-gutter/2);
     }
     .lineitem {
         border-top: 0;
-        @include rem((
-            padding: 0 $gs-gutter/2
-        ));
+        padding: 0 $gs-gutter/2;
         width: 50%;
         float: left;
         
@@ -77,9 +69,7 @@
 
 @mixin c-capi-leftCol {
     .commercial__body {
-        @include rem((
-            padding-top: $gs-baseline
-        ));
+        padding-top: $gs-baseline;
     }    
 }
 
@@ -90,10 +80,8 @@
         @include c-capi-leftCol;
         
         .commercial__head {
-            @include rem((
-                width: gs-span(2),
-                margin-right: $gs-gutter
-            ));
+            width: gs-span(2);
+            margin-right: $gs-gutter;
         }
     }
 }

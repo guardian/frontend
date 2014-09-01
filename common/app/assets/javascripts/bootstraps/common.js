@@ -4,7 +4,6 @@ define([
     //Commmon libraries
     'common/utils/$',
     'common/utils/mediator',
-    'common/utils/deferToLoad',
     'common/utils/ajax',
     'common/modules/userPrefs',
     'common/utils/url',
@@ -21,7 +20,6 @@ define([
     'common/modules/onward/most-popular-factory',
     'common/modules/onward/related',
     'common/modules/onward/onward-content',
-    'common/modules/ui/images',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
     'common/modules/navigation/navigation',
@@ -53,7 +51,6 @@ define([
 ], function (
     $,
     mediator,
-    deferToLoadEvent,
     ajax,
     userPrefs,
     Url,
@@ -70,7 +67,6 @@ define([
     MostPopularFactory,
     Related,
     Onward,
-    images,
     Profile,
     Search,
     Navigation,
@@ -105,11 +101,6 @@ define([
 
         initFastClick: function() {
             new FastClick(document.body);
-        },
-
-        upgradeImages: function () {
-            images.upgrade();
-            images.listen();
         },
 
         initialiseFauxBlockLink: function(context){
@@ -199,12 +190,6 @@ define([
                 galleries.init();
             });
 
-            // Register as a page view if invoked from elsewhere than its gallery page (like a trailblock)
-            mediator.on('module:lightbox-gallery:loaded', function(config, context) {
-                if (thisPageId !== config.page.pageId) {
-                    mediator.emit('page:common:deferred:loaded', config, context);
-                }
-            });
         },
 
         initRightHandComponent: function(config) {
@@ -257,25 +242,30 @@ define([
 
             var path = (document.location.pathname) ? document.location.pathname : '/';
 
-            var releaseMessage = new Message('alpha');
+            var releaseMessage = new Message('alpha', {pinOnHide: true});
 
-            // Do not show the release message on -sp- based paths.
-            var spRegExp = new RegExp('.*-sp-.*');
-
-            if (config.switches.releaseMessage && (detect.getBreakpoint() !== 'mobile') && !spRegExp.test(path) && config.page.contentType !== 'Video' && config.page.hasClassicVersion) {
+            if (
+                config.switches.releaseMessage &&
+                config.page.hasClassicVersion &&
+                (detect.getBreakpoint() !== 'mobile')
+            ) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
 
                 var exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
                     msg = '<p class="site-message__message" id="site-message__message">' +
                             'You’re viewing a beta release of the Guardian’s responsive website.' +
-                            ' We’d love to hear your <a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" data-link-name="feedback">feedback</a>' +
+                            ' We’d love to hear what you think.' +
                         '</p>' +
                         '<ul class="site-message__actions u-unstyled">' +
                             '<li class="site-message__actions__item">' +
                                '<i class="i i-back"></i>' +
                                    '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                                       'data-link-name="opt-out">Opt-out and return to our current site </a>' +
+                                       'data-link-name="opt-out">Use current version</a>' +
+                            '</li>' +
+                            '<li class="site-message__actions__item">' +
+                            '<i class="i i-arrow-white-right"></i>' +
+                            '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
                             '</li>' +
                         '</ul>';
                 releaseMessage.show(msg);
@@ -372,10 +362,8 @@ define([
             new MoreTags().init();
         },
 
-        showSmartBanner: function(config) {
-            if(config.switches.smartBanner) {
-                smartAppBanner.init();
-            }
+        showSmartBanner: function() {
+            smartAppBanner.init();
         },
 
         initDiscussion: function() {
@@ -395,64 +383,46 @@ define([
         }
     };
 
-    var deferrable = function (config, context) {
-        var self = this;
-        deferToLoadEvent(function() {
-            if (!self.initialisedDeferred) {
-                self.initialisedDeferred = true;
-                modules.logLiveStats(config);
-                modules.loadAnalytics(config, context);
-                modules.cleanupCookies(context);
-                modules.transcludePopular(config);
-                modules.transcludeRelated(config, context);
-                modules.transcludeOnwardContent(config, context);
-                modules.initRightHandComponent(config, context);
-            }
-            mediator.emit('page:common:deferred:loaded', config, context);
-        });
-    };
-
     var ready = function (config, context) {
-        if (!this.initialised) {
-            this.initialised = true;
-            modules.initFastClick();
-            modules.testCookie();
-            modules.windowEventListeners();
-            modules.initialiseFauxBlockLink(context);
-            modules.checkIframe();
-            modules.upgradeImages();
-            modules.showTabs();
-            modules.initialiseTopNavItems(config);
-            modules.initialiseNavigation(config);
-            modules.displayBreakingNews(config);
-            modules.showToggles();
-            modules.showRelativeDates();
-            modules.initClickstream();
-            modules.transcludeCommentCounts();
-            modules.initLightboxGalleries();
-            modules.optIn();
-            modules.displayReleaseMessage(config);
-            modules.logReadingHistory();
-            modules.unshackleParagraphs(config, context);
-            modules.initAutoSignin(config);
-            modules.augmentInteractive();
-            modules.runForseeSurvey(config);
-            modules.startRegister(config);
-            modules.repositionComments();
-            modules.showMoreTagsLink();
-            modules.showSmartBanner(config);
-            modules.initDiscussion();
-        }
+        modules.initFastClick();
+        modules.testCookie();
+        modules.windowEventListeners();
+        modules.initialiseFauxBlockLink(context);
+        modules.checkIframe();
+        modules.showTabs();
+        modules.initialiseTopNavItems(config);
+        modules.initialiseNavigation(config);
+        modules.displayBreakingNews(config);
+        modules.showToggles();
+        modules.showRelativeDates();
+        modules.initClickstream();
+        modules.transcludeCommentCounts();
+        modules.initLightboxGalleries();
+        modules.optIn();
+        modules.displayReleaseMessage(config);
+        modules.logReadingHistory();
+        modules.unshackleParagraphs(config, context);
+        modules.initAutoSignin(config);
+        modules.augmentInteractive();
+        modules.runForseeSurvey(config);
+        modules.startRegister(config);
+        modules.repositionComments();
+        modules.showMoreTagsLink();
+        modules.showSmartBanner(config);
+        modules.initDiscussion();
+        modules.logLiveStats(config);
+        modules.loadAnalytics(config, context);
+        modules.cleanupCookies(context);
+        modules.transcludePopular(config);
+        modules.transcludeRelated(config, context);
+        modules.transcludeOnwardContent(config, context);
+        modules.initRightHandComponent(config, context);
+
         mediator.emit('page:common:ready', config, context);
     };
 
-    var init = function (config, context) {
-        ready(config, context);
-        deferrable(config, context);
-    };
-
     return {
-        init: init
+        init: ready
     };
 });
 

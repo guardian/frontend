@@ -13,20 +13,20 @@ requirejs.config({
     baseUrl: '/base/' + app + '/app/assets/javascripts',
     paths: {
         common:       '/base/common/app/assets/javascripts',
-        fixtures:     '/base/common/test/assets/javascripts/fixtures',
-        helpers:      '/base/common/test/assets/javascripts/helpers',
-        analytics:    '/base/common/app/assets/javascripts/modules/analytics',
         bean:         '/base/common/app/assets/javascripts/components/bean/bean',
         bonzo:        '/base/common/app/assets/javascripts/components/bonzo/bonzo',
-        domReady:     '/base/common/app/assets/javascripts/components/domready/ready',
-        EventEmitter: '/base/common/app/assets/javascripts/components/eventEmitter/EventEmitter',
-        qwery:        '/base/common/app/assets/javascripts/components/qwery/qwery',
-        reqwest:      '/base/common/app/assets/javascripts/components/reqwest/reqwest',
-        lodash:       '/base/common/app/assets/javascripts/components/lodash-amd',
-        imager:       '/base/common/app/assets/javascripts/components/imager.js/container',
         enhancer:     '/base/common/app/assets/javascripts/components/enhancer/enhancer',
+        EventEmitter: '/base/common/app/assets/javascripts/components/eventEmitter/EventEmitter',
+        imager:       '/base/common/app/assets/javascripts/components/imager.js/container',
+        lodash:       '/base/common/app/assets/javascripts/components/lodash-amd',
+        qwery:        '/base/common/app/assets/javascripts/components/qwery/qwery',
+        raven:        '/base/common/app/assets/javascripts/components/raven-js/raven',
+        reqwest:      '/base/common/app/assets/javascripts/components/reqwest/reqwest',
+        analytics:    '/base/common/app/assets/javascripts/modules/analytics',
         stripe:       '/base/common/app/public/javascripts/vendor/stripe/stripe.min',
-        Squire:       '/base/common/test/assets/javascripts/components/squire/src/Squire'
+        Squire:       '/base/common/test/assets/javascripts/components/squire/src/Squire',
+        fixtures:     '/base/common/test/assets/javascripts/fixtures',
+        helpers:      '/base/common/test/assets/javascripts/helpers'
     },
     map: {
         '*': {

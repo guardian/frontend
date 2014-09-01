@@ -1,5 +1,6 @@
 package controllers
 
+import model.NoCache
 import play.api.mvc._
 import common.ExecutionContexts
 import services.{PlaySigninService, IdRequestParser, ReturnUrlVerifier}
@@ -22,14 +23,12 @@ class SignoutController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     val idRequest = idRequestParser(request)
     request.cookies.get("SC_GU_U").map { cookie =>
       val unAuthResponse =  api.unauth( UserCookie(cookie.value), idRequest.trackingData)
-      signinService.getCookies(unAuthResponse, true) map { response =>
-        response match {
-          case Left(errors) => {
-            logger.info(s"Error returned from API signout: ${errors.map(_.description).mkString(", ")}")
-            performSignout(request)
-          }
-          case Right(responseCookies) => performSignout(request).withCookies(responseCookies:_*)
+      signinService.getCookies(unAuthResponse, rememberMe = true) map {
+        case Left(errors) => {
+          logger.info(s"Error returned from API signout: ${errors.map(_.description).mkString(", ")}")
+          performSignout(request)
         }
+        case Right(responseCookies) => performSignout(request).withCookies(responseCookies: _*)
       }
     }.getOrElse {
       logger.info("User attempting signout without SC_GU_U cookie")
@@ -38,11 +37,12 @@ class SignoutController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   }
 
   private def performSignout(request: RequestHeader) = {
-    Found(
+
+    val cookiesToDiscard = DiscardingCookie("GU_U", "/", Some(conf.id.domain), secure = false) ::
+      DiscardingCookie("SC_GU_U", "/", Some(conf.id.domain), secure = true) :: Nil
+
+    NoCache(Found(
       returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl)
-    ).discardingCookies(
-      DiscardingCookie("GU_U", "/", Some(conf.id.domain), false),
-      DiscardingCookie("SC_GU_U", "/", Some(conf.id.domain), true)
-    )
+    ).discardingCookies(cookiesToDiscard:_*))
   }
 }

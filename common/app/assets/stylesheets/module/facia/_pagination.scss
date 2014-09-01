@@ -39,25 +39,23 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 */
 
 .pagination {
-    @include rem((
-        padding-top: $gs-baseline / 2,
-        margin: $gs-baseline 0
-    ));
+    padding-top: $gs-baseline / 2;
+    margin: $gs-baseline 0;
     text-align: center;
     @include fs-textSans(4);
     border-top: 1px solid $c-neutral5;
 
     @include mq(leftCol) {
         float: right;
-        @include rem((
-            width: gs-span(12)
-        ));
+        width: gs-span(12);
     }
 
     @include mq(wide) {
-        @include rem((
-            width: gs-span(13)
-        ));
+        width: gs-span(13);
+
+        .has-page-skin & {
+            width: 100%;
+        }
     }
 }
 
@@ -66,9 +64,7 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 
     @include mq(tablet) {
         float: right;
-        @include rem((
-            width: gs-span(4)
-        ));
+        width: gs-span(4);
     }
 }
 
@@ -91,9 +87,7 @@ The user needs to view a subset of sorted data that is not easily displayed on o
 
 .pagination__item-inner:after {
     @include fs-headline(5);
-    @include rem((
-        line-height: 20px
-    ));
+    line-height: 20px;
     .pagination__item--first & {
         content: '«';
     }
@@ -108,20 +102,14 @@ The user needs to view a subset of sorted data that is not easily displayed on o
     }
 }
 .pagination__item--first {
-    @include rem((
-        margin-right: $gs-gutter/2
-    ));
+    margin-right: $gs-gutter/2;
 }
 .pagination__item--last {
-    @include rem((
-        margin-left: $gs-gutter/2
-    ));
+    margin-left: $gs-gutter/2;
 }
 
 .pagination__action {
-    @include rem((
-        padding: 0 $gs-gutter / 5
-    ));
+    padding: 0 $gs-gutter / 5;
 }
 
 .pagination__action--current {

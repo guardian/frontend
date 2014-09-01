@@ -21,13 +21,13 @@ class SurgeUtilsTest extends FlatSpec with Matchers {
   }
 
   "surgeLevelProvider" should "return a numerical representation of the surge level" in {
-    SurgeUtils.levelProvider(Some(500)) should be (1)
-    SurgeUtils.levelProvider(Some(401)) should be (1)
-    SurgeUtils.levelProvider(Some(301)) should be (2)
-    SurgeUtils.levelProvider(Some(201)) should be (3)
-    SurgeUtils.levelProvider(Some(101)) should be (4)
-    SurgeUtils.levelProvider(Some(99))  should be (0)
-    SurgeUtils.levelProvider(None) should be (0)
+    SurgeUtils.levelProvider(Some(500)) should be (Seq(1, 2, 3, 4))
+    SurgeUtils.levelProvider(Some(401)) should be (Seq(1, 2, 3, 4))
+    SurgeUtils.levelProvider(Some(301)) should be (Seq(2, 3, 4))
+    SurgeUtils.levelProvider(Some(201)) should be (Seq(3, 4))
+    SurgeUtils.levelProvider(Some(101)) should be (Seq(4))
+    SurgeUtils.levelProvider(Some(99))  should be (Seq(0))
+    SurgeUtils.levelProvider(None) should be (Seq(0))
   }
 
   lazy val jsonString =

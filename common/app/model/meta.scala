@@ -3,6 +3,7 @@ package model
 import common.{NavItem, Edition, ManifestData, Pagination}
 import conf.Configuration
 import dfp.DfpAgent
+import play.api.libs.json.{JsBoolean, JsValue, JsString}
 
 trait MetaData extends Tags {
   def id: String
@@ -19,13 +20,14 @@ trait MetaData extends Tags {
   def hasClassicVersion: Boolean = !special
 
   // Special means "Next Gen platform only".
-  def special = id.contains("-sp-")
+  private lazy val special = id.contains("-sp-")
 
   def title: Option[String] = None
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
   // to be an integral part of each page
   def buildNumber: String = ManifestData.build
+  def revision: String = ManifestData.revision
 
   //must be one of... http://schema.org/docs/schemas.html
   def schemaType: Option[String] = None
@@ -37,29 +39,30 @@ trait MetaData extends Tags {
 
   def hasPageSkin(edition: Edition) = false
 
-  def isSurging = 0
+  def isSurging: Seq[Int] = Seq(0)
 
-  def metaData: Map[String, Any] = Map(
-    ("page-id", id),
-    ("section", section),
-    ("web-title", webTitle),
-    ("build-number", buildNumber),
-    ("analytics-name", analyticsName),
-    ("blockVideoAds", false),
-    ("is-front", isFront),
-    ("ad-unit", s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng"),
-    ("is-surging", isSurging),
-    ("has-classic-version", hasClassicVersion)
+  def metaData: Map[String, JsValue] = Map(
+    ("pageId", JsString(id)),
+    ("section", JsString(section)),
+    ("webTitle", JsString(webTitle)),
+    ("buildNumber", JsString(buildNumber)),
+    ("revisionNumber", JsString(revision.take(7))),
+    ("analyticsName", JsString(analyticsName)),
+    ("blockVideoAds", JsBoolean(false)),
+    ("isFront", JsBoolean(isFront)),
+    ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
+    ("isSurging", JsString(isSurging.mkString(","))),
+    ("hasClassicVersion", JsBoolean(hasClassicVersion))
   )
 
-  def openGraph: Map[String, Any] = Map(
+  def openGraph: Map[String, String] = Map(
     "og:site_name" -> "the Guardian",
     "fb:app_id"    -> Configuration.facebook.appId,
     "og:type"      -> "website",
     "og:url"       -> s"${Configuration.site.host}$url"
   )
 
-  def cards: List[(String, Any)] = List(
+  def cards: List[(String, String)] = List(
     "twitter:site" -> "@guardian",
     "twitter:app:name:iphone" -> "The Guardian",
     "twitter:app:id:iphone" -> "409128287",
@@ -87,7 +90,14 @@ object Page {
     webTitle: String,
     analyticsName: String,
     pagination: Option[Pagination] = None,
-    description: Option[String] = None) = new Page(id, section, webTitle, analyticsName, pagination, description)
+    description: Option[String] = None,
+    maybeContentType: Option[String] = None
+  ) = new Page(id, section, webTitle, analyticsName, pagination, description) {
+    override lazy val contentType = maybeContentType.getOrElse("")
+
+    override def metaData: Map[String, JsValue] =
+      super.metaData ++ maybeContentType.map(contentType => List("contentType" -> JsString(contentType))).getOrElse(Nil)
+  }
 }
 
 trait Elements {

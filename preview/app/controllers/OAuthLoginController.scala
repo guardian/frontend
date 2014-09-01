@@ -8,7 +8,7 @@ import play.api.libs.json.Json
 import play.api.mvc.{RequestHeader, Action, Controller}
 import scala.concurrent.Future
 
-object OAuthLoginController extends Controller with ExecutionContexts {
+object OAuthLoginController extends Controller with ExecutionContexts with implicits.Requests {
   import play.api.Play.current
 
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
@@ -47,10 +47,7 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   // TODO - this is only while in transition from http to https for preview
   // no copy and paste for use elsewhere, simply go full https
   private def checkIsSecure(config: GoogleAuthConfig)(implicit request: RequestHeader) = {
-
-    // see http://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#x-forwarded-proto
-    val isSecure = request.headers.get("X-Forwarded-Proto").exists(_.equalsIgnoreCase("https"))
-    if (isSecure){
+    if (request.isSecure){
       val oldRedirect = config.redirectUrl
       config.copy(redirectUrl = oldRedirect.replace("http://", "https://"))
     } else {

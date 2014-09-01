@@ -2,10 +2,6 @@ html {
     overflow-y: scroll;
 }
 
-body {
-    padding: 10px;
-}
-
 .dropdown-menu {
     position: absolute;
     display: block;
@@ -29,19 +25,8 @@ input.invalid {
     background-color: #F2DEDE;
 }
 
-fieldset,
-input[type=text] {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
 input[type=text] {
     height: inherit;
-}
-
-fieldset#controls {
-    margin-top: 30px;
-    position: relative;
 }
 
 #clear-frontend {
@@ -49,21 +34,11 @@ fieldset#controls {
     right: 0;
 }
 
-input[type=checkbox].status {
-    width: 33px;
-    height: 33px;
-    float: left;
-    margin-right: 10px;
-}
-
-#switchboard label {
-    display: inline;
-    font-size: 20px;
-}
-
 #switchboard label:hover {
     color: #699;
     cursor: pointer;
 }
 
-
+#switchboard .checkbox:nth-child(odd) {
+    background-color: #E9E9E9;
+}

@@ -20,12 +20,12 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     }.distinct
   }
 
-  val inlineMerchandisingSponsorships: Seq[Sponsorship] = {
-    lineItems.withFilter { lineItem =>
-      lineItem.inlineMerchandisingTargettedTags.nonEmpty && lineItem.isCurrent
-    }.map { lineItem =>
-      Sponsorship(lineItem.inlineMerchandisingTargettedTags, lineItem.sponsor)
-    }.distinct
+  val inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = {
+    lineItems.foldLeft(InlineMerchandisingTagSet()) { (soFar, lineItem) =>
+      soFar.copy(keywords = soFar.keywords ++ lineItem.inlineMerchandisingTargetedKeywords,
+        series = soFar.series ++ lineItem.inlineMerchandisingTargetedSeries,
+        contributors = soFar.contributors ++ lineItem.inlineMerchandisingTargetedContributors)
+    }
   }
 
   val pageSkinSponsorships: Seq[PageSkinSponsorship] = {

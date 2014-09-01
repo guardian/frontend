@@ -50,12 +50,6 @@ class TemplatesTest extends FlatSpec with Matchers {
     Tag(tag("Article")).pluralName should be("Articles")
   }
 
-  "javaScriptVariableName" should "create a sensible Javascript name" in {
-
-    JavaScriptVariableName("web-publication-date") should be("webPublicationDate")
-    JavaScriptVariableName("series") should be("series")
-  }
-
   "PictureCleaner" should "correctly format inline pictures" in {
 
     val body = XML.loadString(withJsoup(bodyTextWithInlineElements)(PictureCleaner(bodyImages)).body.trim)
@@ -110,7 +104,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     (link \ "@href").text should be (s"${Configuration.site.host}/section/2011/jan/01/words-for-url")
 
   }
-  
+
   "InBodyLinkCleanerForR1" should "clean links" in {
 
     // i. www
@@ -133,8 +127,8 @@ class TemplatesTest extends FlatSpec with Matchers {
         val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="${key}">foo</a>""")(InBodyLinkCleanerForR1("")).body.trim)
         (bodyAbsolute \ "@href").text should be (value)
     }
-    
-    // iii. relative to the old subdomain 
+
+    // iii. relative to the old subdomain
     val bodyAbsolute = XML.loadString(withJsoup(s"""<a href="/path/to/foo">foo</a>""")(InBodyLinkCleanerForR1("/arts")).body.trim)
     (bodyAbsolute \ "@href").text should be ("/arts/path/to/foo")
 

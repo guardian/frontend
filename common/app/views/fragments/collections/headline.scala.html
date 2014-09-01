@@ -13,7 +13,7 @@
 
         <div class="story-list-columns story-list-columns--standard-2-col">
             @bigItems.lift(0).zipWithIndex.map { case (trail, index) =>
-                <div class="story-list-columns__item headline-item headline-item--big">
+                <div class="story-list-columns__item headline-item headline-item--big u-faux-block-link">
                     @fragments.items.standard(trail, index, containerIndex, "div")
                 </div>
                 <div class="story-list-columns__item">
@@ -27,7 +27,7 @@
                 </div>
             }
             @bigItems.lift(1).zipWithIndex.map{ case (trail, index) =>
-                <div class="story-list-columns__item headline-item headline-item--big headline-item--no-image">
+                <div class="story-list-columns__item headline-item headline-item--big headline-item--no-image u-faux-block-link">
                     @fragments.items.standard(trail, index, containerIndex, "div")
                 </div>
             }
@@ -47,7 +47,7 @@
             @defining(16 - bigItems.length * 4) { standardItemCount =>
                 <ul class="story-list-columns story-list-columns--big story-list-columns--@bigItems.length-big">
                     @bigItems.zipWithIndex.map { case (trail, index) =>
-                        <li class="story-list-columns__item headline-item headline-item--big">
+                        <li class="story-list-columns__item headline-item headline-item--big u-faux-block-link">
                             @fragments.items.standard(trail, index, containerIndex, "div")
                         </li>
                     }

@@ -1,25 +1,23 @@
 @(page: MetaData)(implicit request: RequestHeader)
 @import conf.Switches.{SearchSwitch, ReleaseMessageSwitch, IdentityProfileNavigationSwitch}
 
-<header id="header" class="l-header l-header--identity" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
-    <div class="l-header-pre">
-        <div class="l-header-pre__inner gs-container u-cf">
-            <div class="top-bar">
-                @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-                    <div class="brand-bar__item brand-bar__item--profile has-nav-popup brand-bar__item--has-control js-profile-nav">
-                        <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
-                           class="brand-bar__item--action nav-popup__toggle">
-                            <span class="control__icon-wrapper">
-                                <span class="control__icon">
-                                    <i class="i i-profile-white-36"></i>
-                                </span>
+<header id="header" class="l-header u-cf" role="banner" data-link-name="global navigation: header" itemscope itemtype="http://schema.org/Organization">
+    <div class="l-header-pre gs-container u-cf">
+        <div class="brand-bar">
+            @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+                <div class="brand-bar__item brand-bar__item--profile has-nav-popup brand-bar__item--has-control js-profile-nav">
+                    <a href="@Configuration.id.url/signin" data-link-name="User profile" data-toggle="nav-popup--profile"
+                       class="brand-bar__item--action nav-popup__toggle">
+                        <span class="control__icon-wrapper">
+                            <span class="control__icon">
+                                <i class="i i-profile-white-36"></i>
                             </span>
-                            <span class="js-profile-info control__info">Sign in</span>
-                        </a>
-                        <div class="js-profile-nav-popup"></div>
-                    </div>
-                }
-            </div>
+                        </span>
+                            <span class="js-profile-info control__info" data-test-id="sign-in-name">Sign in</span>
+                    </a>
+                    <div class="js-profile-nav-popup"></div>
+                </div>
+            }
         </div>
     </div>
     <div class="l-header-main">
