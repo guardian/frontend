@@ -89,6 +89,10 @@ case class Block(
     trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
   }
 
+  def recordIdUsage(id: String): Block =
+    this.copy(lastUsed = for (l <- lastUsed) yield {
+      (("now", id) +: l).take(20)
+    })
 }
 
 object UpdateList {
