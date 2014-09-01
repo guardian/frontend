@@ -7,6 +7,7 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/full-trim',
+    'utils/sanitize-html',
     'utils/deep-get',
     'utils/snap',
     'utils/human-time',
@@ -23,6 +24,7 @@ define([
         asObservableProps,
         populateObservables,
         fullTrim,
+        sanitizeHtml,
         deepGet,
         snap,
         humanTime,
@@ -308,7 +310,8 @@ define([
                 .filter(function(p){ return p[1] !== false; })
                 // trim strings:
                 .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
-                .map(sanitizeHtml)
+                // sanitize html
+                .map(function(p){ return [p[0], sanitizeHtml(p[1])]; })
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
@@ -406,17 +409,6 @@ define([
                 self._save();
             }, 200);
         };
-
-        function sanitizeHtml(s) {
-            var el;
-            if (_.isString(s)) {
-                el = document.createElement('div');
-                el.innerHTML = s;
-                return el.innerHTML;
-            } else {
-                return s;
-            }
-        }
 
         return Article;
     });
