@@ -121,7 +121,7 @@ $control-offset: 36 + $gs-gutter/2;
             }
 
             .brand-bar__item--search & {
-                @include mq($to: tablet) {
+                @include mq($until: tablet) {
                     margin-left: 0 - $nav-popup-anchor-arrow-size;
                 };
             }

@@ -56,7 +56,7 @@
             @include fs-headline(3, $size-only: true);
         }
     }
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         .facia-slice-wrapper--position-1 .facia-slice__item:nth-child(2),
         .facia-slice-wrapper--position-2 .facia-slice__item {
             &:before {

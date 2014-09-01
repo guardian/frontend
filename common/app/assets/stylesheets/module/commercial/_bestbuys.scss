@@ -131,7 +131,7 @@ $c-money-high: #63007f;
             background-color: $c-money-high;
         }
     }
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         .hide-cell-on-mobile {
             display: none;
         }

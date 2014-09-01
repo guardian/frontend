@@ -269,13 +269,13 @@
         width: 25%;
     }
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         a {
             padding-top: $gs-baseline/4;
             line-height: 13px !important;
         }
     }
-    @include mq($to: 500px) {
+    @include mq($until: 500px) {
         .tabs__tab {
             width: 50%;
             margin-top: 5px;
@@ -288,7 +288,7 @@
    ========================================================================== */
 
 .identity-wrapper--with-membership {
-    @include mq($to: desktop) {
+    @include mq($until: desktop) {
         .tabs__tab {
             width: auto;
         }

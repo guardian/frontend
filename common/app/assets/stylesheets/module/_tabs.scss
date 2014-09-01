@@ -79,7 +79,7 @@ category: Common
             text-decoration: none;
         }
 
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             font-size: 14px;
         }
 

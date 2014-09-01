@@ -456,7 +456,7 @@ $commercial-cta-diameter: (
     }
 }
 
-@include mq($to: tablet) {
+@include mq($until: tablet) {
     .commercial__head {
         padding-left: $gs-baseline/2;
         padding-right: $gs-baseline/2;
@@ -524,7 +524,7 @@ $commercial-cta-diameter: (
 }
 
 .commercial--v-high__body {
-    @include mq($to: mobileLandscape) {
+    @include mq($until: mobileLandscape) {
         .highitem__img {
             width: 100px;
             float: none;
@@ -574,7 +574,7 @@ $commercial-cta-diameter: (
         margin: -12px;
 
         // resize only if it's using the svg
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             .svg & {
                 width: 16px;
                 height: 16px;
