@@ -333,11 +333,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ToolCheckPressLastmodified = Switch("Facia", "facia-tool-check-press-lastmodified",
-    "If this switch is on facia tool will alert the user if a front is not pressed withing 10 secs of an edit/publish",
-    safeState = Off, sellByDate = never
-  )
-
   val ToolSnaps = Switch("Facia", "facia-tool-snaps",
     "If this is switched on then snaps can be created by dragging arbitrary links into the tool",
     safeState = Off, sellByDate = never
@@ -413,7 +408,6 @@ object Switches extends Collections {
     IdentityAvatarUploadSwitch,
     ToolDisable,
     ToolConfigurationDisable,
-    ToolCheckPressLastmodified,
     ToolSnaps,
     ToolImageOverride,
     ToolSparklines,
