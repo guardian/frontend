@@ -328,26 +328,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ToolConfigurationDisable = Switch("Facia", "facia-tool-configuration-disable",
-    "If this is switched on then the fronts configuration tool is disabled",
-    safeState = Off, sellByDate = never
-  )
-
-  val ToolCheckPressLastmodified = Switch("Facia", "facia-tool-check-press-lastmodified",
-    "If this switch is on facia tool will alert the user if a front is not pressed withing 10 secs of an edit/publish",
-    safeState = Off, sellByDate = never
-  )
-
-  val ToolSnaps = Switch("Facia", "facia-tool-snaps",
-    "If this is switched on then snaps can be created by dragging arbitrary links into the tool",
-    safeState = Off, sellByDate = never
-  )
-
-  val ToolImageOverride = Switch("Facia", "facia-tool-image-override",
-    "If this is switched on then images can be overridden in the fronts tool",
-    safeState = Off, sellByDate = never
-  )
-
   val ToolSparklines = Switch("Facia", "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
     safeState = Off, sellByDate = never
@@ -360,11 +340,6 @@ object Switches extends Collections {
 
   val FaciaToolPressSwitch = Switch("Facia", "facia-tool-press-front",
     "If this switch is on facia tool will press fronts on each change",
-    safeState = Off, sellByDate = never
-  )
-
-  val FaciaToolDraftPressSwitch = Switch("Facia", "facia-tool-press-draft-front",
-    "If this switch is on facia tool will press draft fronts on each change",
     safeState = Off, sellByDate = never
   )
 
@@ -407,10 +382,6 @@ object Switches extends Collections {
     IdentityFormstackSwitch,
     IdentityAvatarUploadSwitch,
     ToolDisable,
-    ToolConfigurationDisable,
-    ToolCheckPressLastmodified,
-    ToolSnaps,
-    ToolImageOverride,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
@@ -442,7 +413,6 @@ object Switches extends Collections {
     GeoMostPopular,
     SeoEscapeFootballJsonPathLikeValuesSwitch,
     FaciaToolCachedContentApiSwitch,
-    FaciaToolDraftPressSwitch,
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,

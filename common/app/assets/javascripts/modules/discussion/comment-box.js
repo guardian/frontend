@@ -3,7 +3,6 @@ define([
     'bean',
     'bonzo',
     'common/utils/config',
-    'common/utils/context',
     'common/utils/mediator',
     'common/modules/discussion/api',
     'common/modules/identity/api',
@@ -15,7 +14,6 @@ define([
     bean,
     bonzo,
     config,
-    context,
     mediator,
     DiscussionApi,
     IdentityApi,
@@ -27,12 +25,10 @@ define([
 /**
  * @constructor
  * @extends Component
- * @param {Element=} context
  * @param {Object} mediator
  * @param {Object=} options
  */
 function CommentBox(options) {
-    this.context = context();
     this.mediator = mediator;
     this.setOptions(options);
 
@@ -154,8 +150,8 @@ CommentBox.prototype.ready = function() {
     this.setFormState();
 
     // TODO (jamesgorrie): Could definitely use the this.on and make the default context this
-    bean.on(this.context, 'submit', [this.elem], this.postComment.bind(this));
-    bean.on(this.context, 'change keyup', [commentBody], this.setFormState.bind(this));
+    bean.on(document.body, 'submit', [this.elem], this.postComment.bind(this));
+    bean.on(document.body, 'change keyup', [commentBody], this.setFormState.bind(this));
     bean.on(commentBody, 'focus', this.setExpanded.bind(this)); // this isn't delegated as bean doesn't support it
     this.on('click', this.getClass('preview'), this.previewComment);
     this.on('click', this.getClass('hide-preview'), this.resetPreviewComment);
@@ -245,7 +241,7 @@ CommentBox.prototype.postComment = function(e) {
 
     var invalidEmailError = function () {
         self.error('EMAIL_NOT_VERIFIED');
-        ValidationEmail.init(self.context);
+        ValidationEmail.init();
     };
 
     if (!self.getUserData().emailVerified) {
