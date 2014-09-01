@@ -44,9 +44,9 @@ define([
         self.unsavedFields = [];
 
         return {
-            init: function (context) {
+            init: function () {
 
-                self.accountProfileForms = context.querySelector(self.classes.forms);
+                self.accountProfileForms = document.body.querySelector(self.classes.forms);
 
                 if (self.accountProfileForms) {
 
@@ -58,7 +58,7 @@ define([
                     var tabs = self.accountProfileForms.querySelector(self.classes.tabs);
 
                     require(['bootstraps/membership'], function (MembershipTab) {
-                        self.membershipTab = new MembershipTab(context);
+                        self.membershipTab = new MembershipTab();
                         self.membershipTab.fetch($(self.classes.memberShipContainer));
                     });
 

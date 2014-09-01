@@ -21,12 +21,12 @@ define([
         });
     };
 
-    var ready = function (config, context) {
+    var ready = function (config) {
         verticallyResponsiveImages();
         $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
         mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
 
-        mediator.emit('page:gallery:ready', config, context);
+        mediator.emit('page:gallery:ready', config);
     };
 
     return {
