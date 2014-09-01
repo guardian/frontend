@@ -41,12 +41,10 @@
 }
 
 .content__main-column {
-    position: relative;
+    max-width: gs-span(8);
     margin: auto;
+    position: relative;
 
-    @include mq($to: tablet) {
-        max-width: gs-span(8);
-    }
     @include mq(tablet, rightCol) {
         max-width: gs-span(9);
 
