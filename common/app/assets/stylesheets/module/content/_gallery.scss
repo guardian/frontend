@@ -42,12 +42,12 @@
         width: gs-span(3);
         right: 0;
         top: 0;
-        border-top: 1px dotted $c-neutral2);
+        border-top: 1px dotted $c-neutral2;
     }
 }
 
 .gallery2__caption {
-    color: $c-neutral7);
+    color: $c-neutral7;
     margin-bottom: 0;
 
     a {
@@ -121,7 +121,7 @@
         }
 
         .social__head {
-            color: $c-neutral3);
+            color: $c-neutral3;
             padding: $gs-baseline/4 0;
         }
 
@@ -147,7 +147,7 @@
                     height: 1px;
                     top: -1px;
                     left: $gs-gutter * -1;
-                    background-color: $c-neutral1);
+                    background-color: $c-neutral1;
                 }
             }
         }
