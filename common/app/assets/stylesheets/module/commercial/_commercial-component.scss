@@ -16,20 +16,28 @@ $commercial-cta-diameter: (
         margin-left: auto;
         margin-right: auto;
     }
-    .container__title {
+
+    .container__header {
         color: #fff;
         background-color: guss-colour(neutral-2);
+        padding-top: $gs-baseline/2;
+        padding-bottom: $gs-baseline*1.5;
     }
     .container__body {
         padding-top: $gs-baseline/2;
         padding-bottom: $gs-baseline*3;
+    }
+
+    .commercial__title {
+        margin: 0;
+        line-height: 1;
     }
 }
 
 /* Container layout adaptions for content pages */
 .facia-container--layout-content .commercial {
     @include mq($to: mobileLandscape) {
-        .container__title,
+        .container__header,
         .container__body {
             padding-left: $gs-gutter/2;
             padding-right: $gs-gutter/2;
@@ -37,7 +45,7 @@ $commercial-cta-diameter: (
     }
 
     @include mq(mobileLandscape, tablet) {
-        .container__title,
+        .container__header,
         .container__body {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -57,7 +65,7 @@ $commercial-cta-diameter: (
     }
 
     @include mq(rightCol, leftCol) {
-        .container__title,
+        .container__header,
         .container__body {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -70,7 +78,7 @@ $commercial-cta-diameter: (
             padding-right: $gs-gutter;
             max-width: gs-span(14) + $gs-gutter;
         }
-        .container__title {
+        .container__header {
             position: absolute;
             top: 0;
             bottom: 0;
@@ -88,7 +96,7 @@ $commercial-cta-diameter: (
             width: gs-span(16) + $gs-gutter;
             max-width: none;
         }
-        .container__title {
+        .container__header {
             width: gs-span(3) + $gs-gutter*1.5 !important;
         }
         .container__body {
@@ -130,7 +138,7 @@ $commercial-cta-diameter: (
 /* Container layout adaptions for front pages */
 .facia-container--layout-front .commercial {
     @include mq($to: mobileLandscape) {
-        .container__title,
+        .container__header,
         .container__body {
             padding-left: $gs-gutter/2;
             padding-right: $gs-gutter/2;
@@ -138,7 +146,7 @@ $commercial-cta-diameter: (
     }
 
     @include mq(mobileLandscape, gs-span(7)) {
-        .container__title,
+        .container__header,
         .container__body {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -156,7 +164,7 @@ $commercial-cta-diameter: (
             margin-left: auto;
             margin-right: auto;
         }
-        .container__title,
+        .container__header,
         .container__body {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -170,7 +178,7 @@ $commercial-cta-diameter: (
             margin-left: auto;
             margin-right: auto;
         }
-        .container__title,
+        .container__header,
         .container__body {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -184,7 +192,7 @@ $commercial-cta-diameter: (
             margin-left: auto;
             margin-right: auto;
         }
-        .container__title,
+        .container__header,
         .container__body {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -198,7 +206,7 @@ $commercial-cta-diameter: (
             margin-left: auto;
             margin-right: auto;
         }
-        .container__title,
+        .container__header,
         .container__body {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
@@ -211,7 +219,7 @@ $commercial-cta-diameter: (
             padding-right: $gs-gutter;
             max-width: gs-span(14) + $gs-gutter;
         }
-        .container__title {
+        .container__header {
             position: absolute;
             top: 0;
             bottom: 0;
@@ -229,7 +237,7 @@ $commercial-cta-diameter: (
             width: gs-span(16) + $gs-gutter;
             max-width: none;
         }
-        .container__title {
+        .container__header {
             width: gs-span(3) + $gs-gutter*1.5 !important;
         }
         .container__body {
@@ -249,7 +257,7 @@ $commercial-cta-diameter: (
             .container__body {
                 width: 100%;
             }
-            .container__title {
+            .container__header {
                 margin-bottom: 0;
             }
         }
@@ -323,7 +331,7 @@ $commercial-cta-diameter: (
 .commercial {
     background-color: $c-commercial-comp-neutral;
 
-    .container__title {
+    .container__header {
         .i-guardian-logo-96-white {
             @include mq($to: leftCol) {
                 display: inline-block;
@@ -409,10 +417,6 @@ $commercial-cta-diameter: (
     }
 }
 
-.commercial__title {
-    margin-bottom: $gs-baseline*2;
-    clear: both;
-}
 .commercial__call-to-action {
     display: block;
     float: right;
@@ -633,22 +637,6 @@ $commercial-cta-diameter: (
     }
 }
 
-@include mq($to: tablet) {
-    .commercial__head {
-//        padding-left: $gs-baseline/2;
-//        padding-right: $gs-baseline/2;
-//        height: 50px;
-//        overflow: hidden;
-    }
-    .commercial__title {
-        padding: 0;
-
-        .i {
-            margin-top: $gs-baseline/3;
-        }
-    }
-}
-
 @include mq(tablet) {
     .commercial__search {
 //        width: 40%;
@@ -694,7 +682,7 @@ $commercial-cta-diameter: (
 }
 
 @include mq(leftCol) {
-    .commercial .container__title {
+    .commercial .container__header {
 //        padding: $gs-baseline/3 0 ($gs-baseline/3)*2;
 //        float: left;
     }

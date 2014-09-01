@@ -74,7 +74,7 @@
         }
     }
     &.commercial--dfp-single {
-        .container__title-soulmates {
+        .container__header-soulmates {
             @include c-soulmates-branding-small;
 
             .commercial__title {
@@ -95,7 +95,7 @@
             }
         }
         @include mq(tablet) {
-            .container__title-soulmates {
+            .container__header-soulmates {
                 width: gs-span(3);
                 @include c-soulmates-branding;
                 
@@ -116,7 +116,7 @@
                 }
             }
         }
-        .container__title-jobs .commercial__title span {
+        .container__header-jobs .commercial__title span {
             font-style: italic;
         }
         .commercial__footer {

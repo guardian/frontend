@@ -3,7 +3,7 @@
    ========================================================================== */
 
 @mixin c-soulmates-branding-small {
-    .container__title__wrapper {
+    .container__header__wrapper {
         height: auto;
         width: gs-span(2);
         padding: $gs-baseline*2 0 $gs-baseline/2;
@@ -70,7 +70,7 @@ $c-soulmates-high: $c-neutral1;
         border: 0;
         position: relative;
     }
-    .container__title {
+    .container__header {
         margin-bottom: 0;
         padding: 0;
     }
@@ -260,7 +260,7 @@ $c-soulmates-high: $c-neutral1;
             width: gs-span(2) + $gs-gutter;
             margin-top: 8px;
         }
-        .container__title__wrapper {
+        .container__header__wrapper {
             width: auto;
             height: auto;
             margin: 0;
@@ -277,7 +277,7 @@ $c-soulmates-high: $c-neutral1;
         }
     }
     @include mq(wide) {
-        .container__title__wrapper {
+        .container__header__wrapper {
             padding-top: 40px;
             
             .svg & {
@@ -331,7 +331,7 @@ $c-soulmates-high: $c-neutral1;
         .commercial__body {
             padding: $gs-baseline 0;
         }
-        .container__title__wrapper {
+        .container__header__wrapper {
             width: auto;
             height: auto;
             margin: 0;
@@ -360,7 +360,7 @@ $c-soulmates-high: $c-neutral1;
             width: $left-column-wide !important;
             margin-right: $gs-gutter;
         }
-        .container__title__wrapper {
+        .container__header__wrapper {
             padding-top: 40px;
 
             .svg & {
