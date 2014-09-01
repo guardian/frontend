@@ -218,8 +218,8 @@ define([
                 })
                 .valueOf();
             // have we changed breakpoints
-            return getSlotsBreakpoint(previousBreakpoint, slotBreakpoints) !==
-                getSlotsBreakpoint(breakpoint, slotBreakpoints);
+            var slotBreakpoint = getSlotsBreakpoint(breakpoint, slotBreakpoints);
+            return slotBreakpoint && getSlotsBreakpoint(previousBreakpoint, slotBreakpoints) !== slotBreakpoint;
         },
         refresh = function (breakpoint, previousBreakpoint) {
             googletag.pubads().refresh(
