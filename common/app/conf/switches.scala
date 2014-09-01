@@ -333,11 +333,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ToolImageOverride = Switch("Facia", "facia-tool-image-override",
-    "If this is switched on then images can be overridden in the fronts tool",
-    safeState = Off, sellByDate = never
-  )
-
   val ToolSparklines = Switch("Facia", "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
     safeState = Off, sellByDate = never
@@ -398,7 +393,6 @@ object Switches extends Collections {
     IdentityAvatarUploadSwitch,
     ToolDisable,
     ToolSnaps,
-    ToolImageOverride,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
