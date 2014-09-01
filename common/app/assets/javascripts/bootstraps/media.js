@@ -344,7 +344,7 @@ define([
                                 player.fullscreener();
 
                                 // Init plugins
-                                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
+                                if (config.switches.videoAdverts && !config.page.blockVideoAds && !config.page.isPreview) {
                                     modules.bindPrerollEvents(player);
                                     player.adCountDown();
                                     player.trigger(constructEventName('preroll:request', player));
