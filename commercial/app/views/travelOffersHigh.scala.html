@@ -7,28 +7,30 @@
         <div class="facia-container__inner--commercial">
 
             <div class="container__header">
-                <h3 class="commercial__title">
-                    <a href="@AdLink{@Configuration.commercial.travel_url/}" data-link-name="merchandising-travel-v@{version}_@{date}-high-title">
-                        <i class="i i-marque-36"></i><i class="i i-guardian-logo-96-white"></i><span class="u-h">The Guardian</span>
-                        <i class="i i-holidayshop-logo"></i><span class="u-h">Holiday Shop</span>
+                <div class="container__header__inner">
+                    <h3 class="commercial__title">
+                        <a href="@AdLink{@Configuration.commercial.travel_url/}" data-link-name="merchandising-travel-v@{version}_@{date}-high-title">
+                            <i class="i i-marque-36"></i><i class="i i-guardian-logo-96-white"></i><span class="u-h">The Guardian</span>
+                            <i class="i i-holidayshop-logo"></i><span class="u-h">Holiday Shop</span>
+                        </a>
+                    </h3>
+                    <form action="@Configuration.commercial.travel_url/Search" class="commercial__search">
+                        <div>
+                            <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
+                            <input id="traveloffer" name="search" class="commercial__search__input" type="text" placeholder="Find your perfect holiday" />
+                            <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-travel-v@{version}_@{date}-high-search">
+                                <i class="i i-search-grey-36"></i>
+                                <span class="u-h">Find your perfect holiday</span>
+                            </button>
+                            <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+                        </div>
+                    </form>
+                    <a class="commercial__home-link" href="@AdLink{@Configuration.commercial.travel_url}" data-link-name="merchandising-travel-v@{version}_@{date}-high-visit-shop">View more great deals
+                        <span class="commercial__home-link__cta">
+                            <span class="i i-arrow-white-right-36"></span>
+                        </span>
                     </a>
-                </h3>
-                <form action="@Configuration.commercial.travel_url/Search" class="commercial__search">
-                    <div>
-                        <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
-                        <input id="traveloffer" name="search" class="commercial__search__input" type="text" placeholder="Find your perfect holiday" />
-                        <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-travel-v@{version}_@{date}-high-search">
-                            <i class="i i-search-grey-36"></i>
-                            <span class="u-h">Find your perfect holiday</span>
-                        </button>
-                        <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
-                    </div>
-                </form>
-                <a class="commercial__home-link" href="@AdLink{@Configuration.commercial.travel_url}" data-link-name="merchandising-travel-v@{version}_@{date}-high-visit-shop">View more great deals
-                    <span class="commercial__home-link__cta">
-                        <span class="i i-arrow-white-right-36"></span>
-                    </span>
-                </a>
+                </div>
             </div>
 
             <div class="container__body">

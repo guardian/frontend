@@ -4,11 +4,10 @@ $commercial-cta-diameter: (
     tablet: 36px
 );
 
-.l-footer {
-    margin-top: 0 !important;
-}
 
-/* Common container styles */
+/* ==========================================================================
+   Common commercial container styles
+   ========================================================================== */
 .facia-container .commercial {
     .facia-container__inner--commercial {
         position: relative;
@@ -20,9 +19,14 @@ $commercial-cta-diameter: (
     .container__header {
         color: #fff;
         background-color: guss-colour(neutral-2);
-        padding-top: $gs-baseline/2;
-        padding-bottom: $gs-baseline*1.5;
     }
+
+    .container__header__inner {
+        padding-top: $gs-baseline/2;
+        padding-bottom: $gs-baseline*3;
+        position: relative;
+    }
+
     .container__body {
         padding-top: $gs-baseline/2;
         padding-bottom: $gs-baseline*3;
@@ -34,93 +38,84 @@ $commercial-cta-diameter: (
     }
 }
 
-/* Container layout adaptions for content pages */
+
+/* ==========================================================================
+   Commercial container layout adaptions for content pages
+   ========================================================================== */
 .facia-container--layout-content .commercial {
-    @include mq($to: mobileLandscape) {
-        .container__header,
-        .container__body {
-            padding-left: $gs-gutter/2;
-            padding-right: $gs-gutter/2;
-        }
-    }
 
-    @include mq(mobileLandscape, tablet) {
-        .container__header,
-        .container__body {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-    }
-
-    @include mq(tablet, rightCol) {
-        .facia-container__inner--commercial {
+    .facia-container__inner--commercial {
+        @include mq(tablet, rightCol) {
             max-width: none;
         }
-        .commercial__head,
-        .container__body {
-            max-width: gs-span(8);
-            margin-left: auto;
-            margin-right: auto;
-        }
-    }
-
-    @include mq(rightCol, leftCol) {
-        .container__header,
-        .container__body {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-    }
-
-    @include mq(leftCol) {
-        .facia-container__inner--commercial {
+        @include mq(leftCol) {
             padding-left: 0;
             padding-right: $gs-gutter;
             max-width: gs-span(14) + $gs-gutter;
         }
-        .container__header {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            padding: $gs-baseline/2 $gs-gutter/2;
-            width: gs-span(2) + $gs-gutter*1.5 !important;
-        }
-        .container__body {
-            margin-left: gs-span(2) + $gs-gutter*2 !important;
-        }
-    }
-
-    @include mq(wide) {
-        .facia-container__inner--commercial {
+        @include mq(wide) {
             padding-right: $gs-gutter;
             width: gs-span(16) + $gs-gutter;
             max-width: none;
         }
-        .container__header {
-            width: gs-span(3) + $gs-gutter*1.5 !important;
+    }
+
+    .container__header__inner,
+    .container__body {
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+
+        @include mq(mobileLandscape, leftCol) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .container__body {
-            margin-left: gs-span(3) + $gs-gutter*2 !important;
+        @include mq(tablet, rightCol) {
+            padding-left: $gs-gutter/2;
+            padding-right: $gs-gutter/2;
+            max-width: gs-span(8);
+        }
+    }
+
+    .container__header {
+        @include mq(leftCol) {
+            width: $left-column + $gs-gutter*1.5 !important;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+        }
+        @include mq(wide) {
+            width: $left-column-wide + $gs-gutter*1.5 !important;
+        }
+    }
+
+    .container__body {
+        @include mq(leftCol) {
+            margin-left: $left-column + $gs-gutter*1.5 !important;
+        }
+        @include mq(wide) {
+            margin-left: $left-column-wide + $gs-gutter*1.5 !important;
         }
     }
 }
 
-/* DEPRECATED CONTENT CONTAINER STYLES? */
 .facia-container--layout-content .commercial {
     &.commercial--high {
         @include mq(tablet, leftCol) {
             .lineitem {
                 width: 100%;
-                
+
                 &:nth-child(n+2) {
                     display: none;
                 }
             }
         }
         @include mq(rightCol) {
-            .commercial__head {
+            .container__title {
                 float: left;
-                
+                outline: 2px solid red;
+
                 .commercial__search {
                     display: block;
                 }
@@ -135,113 +130,68 @@ $commercial-cta-diameter: (
     }
 }
 
-/* Container layout adaptions for front pages */
+/* ==========================================================================
+   Commercial container layout adaptions for front pages
+   ========================================================================== */
 .facia-container--layout-front .commercial {
-    @include mq($to: mobileLandscape) {
-        .container__header,
-        .container__body {
+
+    .facia-container__inner--commercial {
+        @include mq(gs-span(7), tablet) {
+            max-width: none;
+        }
+        @include mq(faciaLeftCol) {
+            padding-left: 0;
+            padding-right: $gs-gutter;
+            max-width: gs-span(14) + $gs-gutter;
+        }
+        @include mq(wide) {
+            padding-right: $gs-gutter;
+            width: gs-span(16) + $gs-gutter;
+            max-width: none;
+        }
+    }
+
+    .container__header__inner,
+    .container__body {
+        padding-left: $gs-gutter/2;
+        padding-right: $gs-gutter/2;
+
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+        @include mq(tablet) {
+            max-width: gs-span(9);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @include mq(desktop) {
+            max-width: gs-span(12);
+        }
+        @include mq(faciaLeftCol) {
             padding-left: $gs-gutter/2;
             padding-right: $gs-gutter/2;
         }
     }
 
-    @include mq(mobileLandscape, gs-span(7)) {
-        .container__header,
-        .container__body {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-    }
-
-    @include mq(gs-span(7), tablet) {
-        .facia-container__inner--commercial {
-            max-width: none;
-            outline: 3px solid teal;
-        }
-        .commercial__head,
-        .container__body {
-            max-width: gs-span(7);
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .container__header,
-        .container__body {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-    }
-
-    @include mq(tablet, desktop) {
-        .commercial__head,
-        .container__body {
-            max-width: gs-span(9);
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .container__header,
-        .container__body {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-    }
-
-    @include mq(desktop, leftCol) {
-        .commercial__head,
-        .container__body {
-            max-width: gs-span(12);
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .container__header,
-        .container__body {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-    }
-
-    @include mq(leftCol, faciaLeftCol) {
-        .commercial__head,
-        .container__body {
-            max-width: gs-span(12);
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .container__header,
-        .container__body {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-    }
-
-    @include mq(faciaLeftCol) {
-        .facia-container__inner--commercial {
-            padding-left: 0;
-            padding-right: $gs-gutter;
-            max-width: gs-span(14) + $gs-gutter;
-        }
-        .container__header {
+    .container__header {
+        @include mq(faciaLeftCol) {
+            width: $left-column + $gs-gutter*1.5;
             position: absolute;
             top: 0;
             bottom: 0;
-            padding: $gs-baseline/2 $gs-gutter/2;
-            width: gs-span(2) + $gs-gutter*1.5 !important;
         }
-        .container__body {
-            margin-left: gs-span(2) + $gs-gutter*2 !important;
+        @include mq(wide) {
+            width: $left-column-wide + $gs-gutter*1.5;
         }
     }
 
-    @include mq(wide) {
-        .facia-container__inner--commercial {
-            padding-right: $gs-gutter;
-            width: gs-span(16) + $gs-gutter;
-            max-width: none;
+    .container__body {
+        @include mq(faciaLeftCol) {
+            margin-left: $left-column + $gs-gutter*1.5 !important;
         }
-        .container__header {
-            width: gs-span(3) + $gs-gutter*1.5 !important;
-        }
-        .container__body {
-            margin-left: gs-span(3) + $gs-gutter*2 !important;
+        @include mq(wide) {
+            margin-left: $left-column-wide + $gs-gutter*1.5 !important;
         }
     }
 }
@@ -643,8 +593,9 @@ $commercial-cta-diameter: (
     }
     .lineitem {
         width: 20%;
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+//        padding-left: $gs-gutter/2;
+//        padding-right: $gs-gutter/2;
+        padding: 0;
         float: left;
 
         &:nth-child(n + 4) {
