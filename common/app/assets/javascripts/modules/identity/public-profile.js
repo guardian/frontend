@@ -3,7 +3,6 @@ define([
     'bonzo',
     'bean',
     'common/utils/config',
-    'common/utils/context',
     'common/utils/url',
     'common/modules/component',
     'common/modules/discussion/api',
@@ -15,7 +14,6 @@ function(
     bonzo,
     bean,
     config,
-    context,
     url,
     component,
     discussionApi,
@@ -44,7 +42,7 @@ function(
     }
 
     function setupActivityStreamChanger(activityStream) {
-        bean.on(context(), 'click', '.js-activity-stream-change', function(e) {
+        bean.on(document.body, 'click', '.js-activity-stream-change', function(e) {
             var el = e.currentTarget,
                 streamType = el.getAttribute('data-stream-type');
             e.preventDefault();
@@ -61,7 +59,7 @@ function(
     }
 
     function setupActivityStreamSearch(activityStream) {
-        bean.on(context(), 'submit', '.js-activity-stream-search', function(e) {
+        bean.on(document.body, 'submit', '.js-activity-stream-search', function(e) {
             var q = e.currentTarget.elements.q.value;
             e.preventDefault();
             selectTab($('a[data-stream-type="discussions"]'));

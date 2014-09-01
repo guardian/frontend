@@ -4,16 +4,17 @@
 @defining(("1_0", "2014-08-07")) { case (version, date) =>
     <div class="commercial commercial--multi commercial--high">
         <div class="facia-container__inner--commercial">
-
             <div class="container__header">
                 <div class="container__header__inner">
                     <h3 class="commercial__title">
-                        Frankenponent title
+                        From the guardian
                     </h3>
                 </div>
             </div>
-
             <div class="container__body">
+                <div class="commercial__explainer">
+                    About this content blah blah, this is what the designer put in the psd.
+                </div>
                 <ul class="lineitems">
                     @ads.map { ad =>
                         @ad match {
@@ -36,7 +37,6 @@
                     }
                 </ul>
             </div>
-
         </div>
     </div>
 }

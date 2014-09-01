@@ -28,8 +28,7 @@ being signed off.
 
 ================================================================= */
 
-var TopComments = function(context, mediator, options) {
-    this.context = context || document;
+var TopComments = function(mediator, options) {
     this.mediator = mediator;
     this.setOptions(options);
 
@@ -170,7 +169,7 @@ TopComments.prototype.ready = function() {
 };
 
 TopComments.prototype.bindCommentEvents = function() {
-    RecommendComments.init(this.context);
+    RecommendComments.init();
 
     if (this.user && this.user.privateFields.canPostComment) {
         this.on('click', this.getClass('commentReply'), this.replyToComment);

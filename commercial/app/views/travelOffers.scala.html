@@ -46,7 +46,13 @@
                                         <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
                                     </div>
                                 </a>
-                                <p class="lineitem__description commercial--travel__item__description"><a class="lineitem__link commercial--travel__description__link" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-low-@{offer.title}-book-now"><i class="i i-arrow-white-right-18"></i>Book now</a></p>
+                                <p class="lineitem__description commercial--travel__item__description">
+                                    <a class="lineitem__link commercial--travel__description__link"
+                                    href="@AdLink{@offer.offerUrl}"
+                                    data-link-name="merchandising-travel-v@{version}_@{date}-low-@{offer.title}-book-now">
+                                        <i class="i i-arrow-white-right-18"></i>Book now
+                                    </a>
+                                </p>
                             </div>
                         </li>
                     }

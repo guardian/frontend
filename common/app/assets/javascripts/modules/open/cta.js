@@ -9,8 +9,7 @@ define([
 ) {
 
 /** @constructor */
-var Cta = function(context, mediator, options) {
-    this.contex = context;
+var Cta = function(mediator, options) {
     this.mediator = mediator;
     this.setOptions(options);
 };

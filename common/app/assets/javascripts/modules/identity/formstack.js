@@ -10,7 +10,7 @@ define([
     idApi
 ) {
 
-    function Formstack(el, formstackId, context, config) {
+    function Formstack(el, formstackId, config) {
 
         var self = this,
             dom = {},

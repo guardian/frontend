@@ -16,8 +16,8 @@ define([ 'bean',
                         '</div>',
 
                         '<div id="controls-b">' +
-                            '<div id="control-1b" data-toggle="target-1" class="control">button</div>' +
-                            '<div id="control-2b" data-toggle="target-2" class="control is-active">button</div>' +
+                            '<div id="control-1b" data-toggle="target-1b" class="control">button</div>' +
+                            '<div id="control-2b" data-toggle="target-2b" class="control is-active">button</div>' +
                             '<div id="target-1b"  class="target-1 is-off">content</div>' +
                             '<div id="target-2b"  class="target-2">content</div>' +
                         '</div>'
