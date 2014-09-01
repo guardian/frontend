@@ -75,7 +75,8 @@ case class Block(
                   updatedEmail: String,
                   displayName: Option[String],
                   href: Option[String],
-                  diff: Option[JsValue]
+                  diff: Option[JsValue],
+                  lastUsed: Option[List[(String, String)]]
                   ) {
 
   def sortByGroup: Block = this.copy(
