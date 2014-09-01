@@ -56,8 +56,6 @@
 @item.openGraph.map{ case (key, value) =>
     <meta property="@key" content="@value" />
 }
-<meta name="twitter:card" value="summary" />
-<meta name="twitter:url" value="@request." />
 
 @item.cards.map{ case (key, value) =>
     <meta property="@key" content="@value" />
