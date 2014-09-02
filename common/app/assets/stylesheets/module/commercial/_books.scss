@@ -27,9 +27,6 @@
         color: $c-neutral1;
         @include fs-textSans(1);
     }
-    .highitem .commercial--books__buy-now-button {
-        margin-right: -($gs-gutter/2);
-    }
     .commercial--books__price {
         margin-top: $gs-baseline/2;
         margin-bottom: 0;
@@ -42,18 +39,6 @@
     }
     .commercial--books__price__our {
         font-weight: bold;
-    }
-    .commercial--books__buy-now-button {
-        display: inline-block;
-        background-color: #e657af;
-        border: 0;
-        color: #ffffff;
-        text-align: center;
-        float: right;
-        @include f-header;
-        @include font-size(12, 20);
-        padding: 0 $gs-gutter/2;
-        min-width: gs-span(1);
     }
 
     .commercial__foot {
@@ -80,10 +65,6 @@
         .commercial--books__price__label {
             display: inline;
         }
-        .commercial--books__buy-now-button {
-            float: none;
-            margin-top: $gs-baseline;
-        }
     }
     @include mq(desktop) {
         .lineitem {
@@ -103,9 +84,6 @@
         }
     }
     &.commercial--low {
-        .lineitem__link {
-            float: none;
-        }
         .lineitem:first-child .lineitem__img {
             display: block;
         }
@@ -116,11 +94,6 @@
         }
     }
     &.commercial--high {
-        .highitem__details {
-            .lineitem__link {
-                width: 100%;
-            }
-        }
         .commercial__relevance-low {
             .lineitem__img {
                 width: 66px;

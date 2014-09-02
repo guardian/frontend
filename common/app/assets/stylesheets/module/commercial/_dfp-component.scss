@@ -15,10 +15,6 @@
             float: left;
             margin-left: $gs-gutter/2;
         }
-        .lineitem__link:hover .lineitem__offer,
-        .lineitem__link:focus .lineitem__offer {
-            text-decoration: underline;
-        }
     }
 }
 
@@ -36,11 +32,7 @@
         padding-top: 0;
         margin-top: $gs-baseline;
     }
-    .commercial__explainer {
-        color: $c-neutral1;
-        @include fs-headline(2);
-        margin: $gs-baseline 0 0;
-    }
+
     .lineitems {
         margin: 0 (-$gs-gutter/2);
     }
@@ -55,9 +47,6 @@
     }
     .lineitem__image {
         width: 100%;
-    }
-    .lineitem__link {
-        float: none;
     }
     .commercial--generic__item__description {
         margin-bottom: $gs-baseline;
@@ -96,10 +85,6 @@
                     width: 100%;
                 }
             }
-            .commercial__explainer {
-                width: auto;
-                padding: 0;
-            }
         }
         @include mq(tablet) {
             .container__header-soulmates {
@@ -115,11 +100,6 @@
                     .svg & {
                         width: 100%;
                     }
-                }
-                .commercial__explainer {
-                    color: $c-neutral1;
-                    width: auto;
-                    padding: 0;
                 }
             }
         }

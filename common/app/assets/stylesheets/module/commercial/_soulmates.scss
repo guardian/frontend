@@ -133,11 +133,6 @@ $c-soulmates-high: $c-neutral1;
             }
         }
     }
-    .lineitem__link {
-        margin: 0 auto;
-        position: relative;
-        float: none;
-    }
     .lineitem__title {
         @include fs-header(1);
         font-size: 14px;

@@ -9,12 +9,6 @@
         background-color: $c-commercial-masterclasses-1;
     }
 
-    .commercial__explainer {
-        color: $c-neutral1;
-        @include f-headline;
-        @include font-size(14.5, 19);
-        margin: 0;
-    }
     .commercial--masterclasses__class,
     .commercial__relevance-high {
         list-style-type: none;
@@ -101,10 +95,6 @@
     .lineitem__image {
         width: 100%;
     }
-    .lineitem__link {
-        display: block;
-        float: none;
-    }
     .lineitem__description {
         margin-top: $gs-baseline/3;
     } 
@@ -137,9 +127,6 @@
                     display: block;
                 }
             }
-            .commercial__relevance-title-low {
-                padding-left: $gs-gutter/2;
-            }
         }
         @include mq(faciaLeftCol) {
             .commercial--masterclasses__class {
@@ -165,11 +152,6 @@
         }
     }
     &.commercial--high {
-        @include mq(rightCol) {
-            .commercial__relevance-title-low {
-                padding-left: $gs-gutter/2;
-            }
-        }
         @include mq(leftCol) {
             .commercial--masterclasses__class {
                 width: 50%;

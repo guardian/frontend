@@ -36,9 +36,6 @@
     .lineitem__image {
         width: 100%;
     }
-    .lineitem__link {
-        float: none;
-    }
     @include mq(tablet) {
         .lineitem {
             width: percentage(1/3);

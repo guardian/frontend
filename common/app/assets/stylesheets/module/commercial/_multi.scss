@@ -24,12 +24,6 @@ Multi component (AKA Frankenponent)
                 margin-bottom: $gs-baseline;
             }
         }
-        .commercial__explainer {
-            margin: $gs-baseline 0 0;
-            padding-right: $gs-gutter/2;
-            color: $c-neutral1;
-            @include fs-headline(2);
-        }
         .commercial__body {
             padding: 0 0 $gs-baseline;
             .commercial__title {

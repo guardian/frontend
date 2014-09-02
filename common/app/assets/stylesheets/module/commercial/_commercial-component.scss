@@ -28,9 +28,8 @@ $commercial-cta-diameter: (
     }
 
     .container__header__inner {
-        height: 100%;
         padding-top: $gs-baseline/2;
-        padding-bottom: $gs-baseline;
+        padding-bottom: $gs-baseline/2;
         position: relative;
         overflow: hidden;
     }
@@ -46,7 +45,6 @@ $commercial-cta-diameter: (
         line-height: 1;
         min-height: $gs-baseline*3;
         clear: both;
-        padding-bottom: $gs-baseline;
 
         .i-guardian-logo-96-white {
             @include mq($to: leftCol) {
@@ -110,43 +108,35 @@ $commercial-cta-diameter: (
 
     .commercial__cta {
         position: absolute;
-        display: block;
         top: $gs-baseline/2;
         right: $gs-gutter/2;
+        margin-right: 0;
 
         @include mq(mobileLandscape) {
             right: $gs-gutter;
         }
-        @include mq(leftCol) {
-            top: auto;
-            right: auto;
-            bottom: $gs-baseline/3;
-            left: $gs-gutter/2;
+
+        &.button {
+            @include button-colour(transparent, #fff, transparent, #fff);
+            border-color: rgba(#ffffff, .3);
         }
-
-        .i-arrow-white-right-36 {
-            @include box-sizing(border-box);
-            @include border-radius(18px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            display: inline-block;
-            width: $gs-baseline*3;
-            height: $gs-baseline*3;
-            padding: $gs-baseline/2;
-
-            @include mq(tablet) {
-                float: left;
-                margin-right: $gs-gutter/2;
+        
+        @include mq($to: tablet) {
+            .i-right {
+                margin: -1px $gs-baseline*-1 0;
+                float: none;
             }
         }
+    }
 
-        .commercial__cta__label {
-            display: none;
+    .commercial__headline {
+        @include fs-headline(2);
+        margin-bottom: $gs-gutter;
+    }
 
-            @include mq(tablet) {
-                display: inline-block;
-                float: left;
-            }
-        }
+    .commercial__explainer {
+        @include fs-header(2);
+        margin-bottom: $gs-gutter;
     }
 }
 
@@ -188,6 +178,13 @@ $commercial-cta-diameter: (
         }
     }
 
+    .container__header__inner {
+        @include mq(leftCol) {
+            @include box-sizing(border-box);
+            height: 100%;
+        }
+    }
+
     .container__header {
         @include mq(leftCol) {
             width: $left-column + $gs-gutter*1.5 !important;
@@ -206,6 +203,24 @@ $commercial-cta-diameter: (
         }
         @include mq(wide) {
             margin-left: $left-column-wide + $gs-gutter*1.5 !important;
+        }
+    }
+
+    .i-commercial-brand {
+        @include mq($to: leftCol) {
+            opacity: 0.8;
+        }
+    }
+
+    .commercial__cta {
+        @include mq(tablet, leftCol) {
+            width: gs-span(3);
+        }
+        @include mq(leftCol) {
+            top: auto;
+            right: $gs-gutter/2;
+            bottom: $gs-baseline;
+            left: $gs-gutter/2;
         }
     }
 
@@ -285,24 +300,55 @@ $commercial-cta-diameter: (
         }
     }
 
+    .container__header__inner {
+        @include mq(faciaLeftCol) {
+            @include box-sizing(border-box);
+            height: 100%;
+        }
+    }
+
     .container__header {
         @include mq(faciaLeftCol) {
-            width: $left-column + $gs-gutter*1.5;
+            width: $left-column + $gs-gutter;
             position: absolute;
             top: 0;
             bottom: 0;
         }
         @include mq(wide) {
-            width: $left-column-wide + $gs-gutter*1.5;
+            width: $left-column-wide + $gs-gutter;
         }
     }
 
     .container__body {
         @include mq(faciaLeftCol) {
-            margin-left: $left-column + $gs-gutter*1.5 !important;
+            margin-left: $left-column + $gs-gutter !important;
+            margin-right: $gs-gutter*-1;
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
         }
         @include mq(wide) {
-            margin-left: $left-column-wide + $gs-gutter*1.5 !important;
+            margin-left: $left-column-wide + $gs-gutter !important;
+            margin-right: $gs-gutter*-1;
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+    }
+
+    .i-commercial-brand {
+        @include mq($to: faciaLeftCol) {
+            opacity: 0.8;
+        }
+    }
+
+    .commercial__cta {
+        @include mq(tablet, faciaLeftCol) {
+            width: gs-span(3);
+        }
+        @include mq(faciaLeftCol) {
+            top: auto;
+            right: $gs-gutter/2;
+            bottom: $gs-baseline;
+            left: $gs-gutter/2;
         }
     }
 
@@ -425,30 +471,12 @@ $commercial-cta-diameter: (
     white-space: pre;
     overflow: hidden;
 }
-.lineitem__description,
-.lineitem__link {
+.lineitem__description {
     @include fs-data(4);
 
     strong {
         color: #000000;
         font-weight: normal;
-    }
-}
-.lineitem__link {
-    color: $c-neutral1;
-    display: block;
-    float: left;
-    overflow: hidden;
-
-    .i.i-arrow-white-right-18 {
-        background-position: 3px 3px;
-        background-color: $c-newsDefault;
-        @include border-radius(50%);
-        margin-right: $gs-gutter/5;
-        width: 18px;
-        height: 18px;
-        float: left;
-        background-size: 12px 12px;
     }
 }
 .lineitem__blocklink:hover {
@@ -486,10 +514,6 @@ $commercial-cta-diameter: (
 }
 
 .commercial--high {
-    .commercial__relevance-title {
-        @include fs-bodyHeading(3);
-        margin-bottom: $gs-baseline/2;
-    }
     .lineitem__title {
         clear: none;
     }
@@ -523,10 +547,6 @@ $commercial-cta-diameter: (
         .commercial__relevance-high {
             width: percentage(2/3);
             float: left;
-            
-            .lineitem__link {
-                width: auto;
-            }
         }
         .commercial__relevance-low {
             width: percentage(1/3);
@@ -565,9 +585,6 @@ $commercial-cta-diameter: (
             border-top: 0;
             border-left: 1px solid $c-neutral4;
         }
-    }
-    .lineitem__link {
-        width: 100%;
     }
     .lineitem__title {
         white-space: nowrap;
