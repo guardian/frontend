@@ -78,19 +78,25 @@ and [Vagrant](http://docs.vagrantup.com/v2/installation/index.html) installed
 Local Install Requirements
 --------------------------
 * A Mac or Linux pc
-* Installed Open JDK `sudo apt-get install openjdk-7-jdk`
+* Installed Open JDK 
+	
+	Linux: `apt-get install openjdk-7-jdk`
+	
+	Mac:   Download and install [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+	
 * Installed Node.js (https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
-* Installed npm (Node package manager - you quite possibly already have this)
-* Installed Grunt (build tool) `sudo npm -g install grunt-cli`
-* Installed Ruby >= v1.9.x (on Ubuntu: `sudo apt-get install ruby ruby-dev`) &
+* Installed npm (Node package manager - you quite possibly already have this). Some packages (imagemin) are not working with newest Node.js. So if you want to run multiple Node.js versions on your system you may want to use [nvm](https://github.com/creationix/nvm)
+
+* Installed Grunt (build tool) `npm -g install grunt-cli`
+* Installed Ruby >= v1.9.x (on Ubuntu: `apt-get install ruby ruby-dev`) &
  [bundler](http://gembundler.com/) (You may already have this installed, but
  run `ruby -v` to check version number)
-* Installed Memcached `sudo apt-get install memcached` - this is optional
+* Installed Memcached `apt-get install memcached` - this is optional
 (most of the time you do not want to use it as caching makes local development
 harder)
 * Installed [libpng](http://libpng.org/pub/png/libpng.html):
 `brew install libpng` (Mac OSX with [Homebrew](http://brew.sh/)) or
-`sudo apt-get install libpng-dev` (Ubuntu)
+`apt-get install libpng-dev` (Ubuntu)
 
 
 NPM ownership
