@@ -393,6 +393,8 @@ define([
         };
 
         Article.prototype.open = function() {
+            if (!this.group) { return; }
+
             this.state.isOpen(true);
         };
 
@@ -405,10 +407,15 @@ define([
             this.save();
         };
 
-        Article.prototype.onBlur = function() {
+        Article.prototype.select = function() {
+            if (!this.group) { return; }
+
             if (this.group.parentType === 'Article') {
-                this.close();
+               this.group.closeAllExcept(this);
+            } else {
+               this.meta.supporting.closeAllExcept();
             }
+            return false;
         }
 
         return Article;

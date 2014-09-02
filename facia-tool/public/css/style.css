@@ -321,6 +321,7 @@ h1 {
     overflow: hidden;
     padding: 0 2px 3px 4px;
     position: relative;
+    color: #999999;
     background: #ffffff;
     border-top: 5px solid #ffffff;
     -webkit-transition: border-color 150ms;
@@ -406,26 +407,26 @@ a.headline:hover {
     color: #000000;
 }
 
-.is {
+.kicker {
     color: #376ABF;
     font-size: 10px;
     text-transform: uppercase;
     font-weight: bold;
 }
 
-.is--draft {
+.kicker--draft {
     color: #ffc107;
 }
 
-.is--takedown {
+.kicker--takedown {
     color: #DD4B39;
 }
 
-.is--football {
+.kicker--football {
     color: #65b045;
 }
 
-.is--breaking-news {
+.kicker--breaking-news {
     color: #DD4B39;
 }
 
@@ -530,10 +531,10 @@ a.headline:hover {
 
 .open .image__overrides {
     position: absolute;
-    top: 51px;
+    top: 50px;
     width: 75px;
     font-size: 12px;
-    line-height: 15px;
+    line-height: 14px;
 }
 
 .open .image__overrides a {
@@ -548,11 +549,11 @@ a.headline:hover {
     font-size: 10px;
     color: #999999;
     float: right;
-    padding: 2px 4px;
+    padding: 15px 4px 0 0;
 }
 
 .supporting .tool--done,
-.supporting .secondary,
+.supporting .trailtext,
 .supporting .supporting-message,
 .supporting .image__overrides,
 .supporting .misc__overrides {
@@ -866,6 +867,12 @@ button {
 .tool--small i {
     margin: 0;
 }
+
+.tool--done {
+    float: right;
+    margin: 0 2px 0 0;
+}
+
 
 .article > .closed .tool--small {
     float: left;
