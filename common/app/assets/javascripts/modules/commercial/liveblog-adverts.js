@@ -13,6 +13,7 @@ define([
     var postsCount,
         adTimeout,
         criteria,
+        adSlotNames = ['inline1', 'inline2'],
         state = 'first',
         adCriterias = {
             minutebyminute: {
@@ -49,9 +50,16 @@ define([
             mediator.on('modules:autoupdate:updates', function (updates) {
                 postsCount += updates.length;
                 if (postsCount >= criteria[state].posts && adTimeout) {
-                    // add the ad
-                    $('.article-body .block')
-                        .after(dfp.createAdSlot('inline1', 'liveblog-inline'));
+                    var adSlotName = adSlotNames.shift(),
+                        // add the first ad slot we haven't already
+                        adSlot = adSlotName ?
+                            dfp.createAdSlot(adSlotName, 'liveblog-inline') :
+                            // otherwise get the ad furthest down the page
+                            $('.article-body .ad-slot')
+                                .last()
+                                .detach();
+                    // put the ad slot after the latest post
+                    $('.article-body .block:first-child').after(adSlot);
                     reset();
                 }
                 state = 'further';
