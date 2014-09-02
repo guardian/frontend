@@ -1,5 +1,5 @@
 .container--special {
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         .facia-slice__item:nth-child(-n+2) {
             @include item--hide-tone-border;
             // Force the image to be displayed
