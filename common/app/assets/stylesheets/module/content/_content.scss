@@ -41,11 +41,31 @@
 }
 
 .content__main-column {
+    max-width: gs-span(8);
+    margin: auto;
     position: relative;
 
-    @include mq(tablet) {
-        max-width: 620px;
-        margin: auto;
+    @include mq(tablet, rightCol) {
+        max-width: gs-span(9);
+
+        // Restrict line-length to 8-cols, but make other content full-width
+        .content__article-body {
+            padding-right: gs-span(1) + $gs-gutter;
+
+            .element,
+            .img--extended,
+            .ad-slot {
+                margin-right: -1 * (gs-span(1) + $gs-gutter);
+            }
+
+            .gu-media-wrapper {
+                width: 112.903225806452%; // 700/620
+
+                &.u-responsive-ratio--hd {
+                    padding-bottom: 63.50806451612925%; // 56.25% * 112.903225806452%
+                }
+            }
+        }
     }
     @include mq(rightCol) {
         margin-left: 0;
