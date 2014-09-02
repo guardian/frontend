@@ -23,6 +23,7 @@ $inArticleInlineImgWidth: 114px;
 $headerHeight: 36px;
 
 @import 'components/guss-colours/_colours';
+@import 'components/pasteup-palette/_palette';
 @import 'components/guss-grid-system/_grid-system';
 
 $right-column:     gs-span(4);
@@ -78,52 +79,51 @@ $f-serif-headline: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgi
 // Colours
 // =============================================================================
 
-$c-brandBlue: guss-colour(guardian-brand);
-$c-brandLightBlue: guss-colour(guardian-brand-light);
-$c-error: guss-colour(error);
+$c-brandBlue: guss-colour(guardian-brand, $pasteup-palette);
+$c-brandLightBlue: guss-colour(guardian-brand-light, $pasteup-palette);
+$c-error: guss-colour(error, $pasteup-palette);
 
-$c-neutral1: guss-colour(neutral-1);
-$c-neutral2: guss-colour(neutral-2);
+$c-neutral1: guss-colour(neutral-1, $pasteup-palette);
+$c-neutral2: guss-colour(neutral-2, $pasteup-palette);
 // Enhance contrast of grey text on light grey background
 $c-neutral2-contrasted: darken($c-neutral2, 3%);
-$c-neutral3: guss-colour(neutral-3);
-$c-neutral4: guss-colour(neutral-4);
-$c-neutral5: guss-colour(neutral-5);
-$c-neutral6: guss-colour(neutral-6);
-$c-neutral7: guss-colour(neutral-7);
-$c-neutral8: guss-colour(neutral-8);
-
-$c-media-icon: #fbba0f;
-
+$c-neutral3: guss-colour(neutral-3, $pasteup-palette);
+$c-neutral4: guss-colour(neutral-4, $pasteup-palette);
+$c-neutral5: guss-colour(neutral-5, $pasteup-palette);
+$c-neutral6: guss-colour(neutral-6, $pasteup-palette);
+$c-neutral7: guss-colour(neutral-7, $pasteup-palette);
+$c-neutral8: guss-colour(neutral-8, $pasteup-palette);
 
 // Tones
 // =============================================================================
 
-$c-newsDefault: guss-colour(tone-news-1);
-$c-newsAccent: guss-colour(tone-news-2);
+$c-newsDefault: guss-colour(tone-news-1, $pasteup-palette);
+$c-newsAccent: guss-colour(tone-news-2, $pasteup-palette);
 
-$c-featureDefault: guss-colour(tone-features-1);
-$c-featureAccent: guss-colour(tone-features-2);
+$c-featureDefault: guss-colour(tone-features-1, $pasteup-palette);
+$c-featureAccent: guss-colour(tone-features-2, $pasteup-palette);
 $c-featureAccent2: #b62766;
-$c-featuresVariant: #7d0068;
+$c-featuresVariant: guss-colour(tone-features-4, $pasteup-palette);
 
-$c-commentDefault: guss-colour(tone-comment-1);
-$c-commentAccent: guss-colour(tone-comment-2);
+$c-commentDefault: guss-colour(tone-comment-1, $pasteup-palette);
+$c-commentAccent: guss-colour(tone-comment-2, $pasteup-palette);
 $c-commentAccent2: #ffce4b;
 $c-commentDark: #d3a034;
 
 $c-live: #c0031b;
-$c-liveDefault: guss-colour(tone-live-1);
-$c-liveAccent: guss-colour(tone-live-2);
+$c-liveDefault: guss-colour(tone-live-1, $pasteup-palette);
+$c-liveAccent: guss-colour(tone-live-2, $pasteup-palette);
 
 $c-mediaDefault: $c-commentAccent;
-
+$c-mediaBackground: guss-colour(tone-media-1, $pasteup-palette);
+$c-mediaAccent: guss-colour(tone-media-3, $pasteup-palette);
+$c-mediaAccent2: guss-colour(tone-media-2, $pasteup-palette);
 
 // Football
 // =============================================================================
 
 $c-sportBright: #70d2e6;
-$c-sportMid: #005689;
+$c-sportMid: guss-colour(guardian-brand, $pasteup-palette);
 $c-sportDark: #003f64;
 
 $c-sportHome: $c-sportBright;

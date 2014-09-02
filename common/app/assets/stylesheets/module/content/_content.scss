@@ -121,7 +121,7 @@
     margin-bottom: $gs-baseline;
     
     .content--media & a {
-        color: guss-colour(neutral-5);
+        color: $c-neutral5;
     }
 }
 
@@ -159,7 +159,7 @@
     @include fs-header(3);
     @include box-sizing(border-box);
     padding: $gs-baseline/2 0 $gs-baseline;
-    border-top: 1px dotted guss-colour(neutral-5) !important; // Disable tone colour
+    border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
 }
 
 .content__headline {
