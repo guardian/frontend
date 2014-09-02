@@ -128,12 +128,10 @@ define([
                     self.meta.imageSrc(src);
                     self.meta.imageSrcWidth(width);
                     self.meta.imageSrcHeight(height);
-
                     self.state.isOpenImage(false);
-                    self.save();
                 })
                 .fail(function(err) {
-                    self.provisionalImageSrc(undefined);
+                    self.open();
                     window.alert('Sorry! ' + err);
                 });
             }, this);
@@ -192,7 +190,6 @@ define([
         Article.prototype.reverter = function(key) {
             return function() {
                 this.meta[key](undefined);
-                this._save();
             };
         };
 
@@ -243,7 +240,6 @@ define([
 
         Article.prototype.toggleIsBreaking = function() {
             this.meta.isBreaking(!this.meta.isBreaking());
-            this._save();
         };
 
         Article.prototype.sparkline = function() {
@@ -267,17 +263,14 @@ define([
 
         Article.prototype.toggleImageAdjustHide = function() {
             this.meta.imageAdjust(this.meta.imageAdjust() === 'hide' ? undefined : 'hide');
-            this._save();
         };
 
         Article.prototype.toggleShowMainVideo = function () {
             this.meta.showMainVideo(!this.meta.showMainVideo());
-            this._save();
         };
 
         Article.prototype.toggleImageAdjustBoost = function() {
             this.meta.imageAdjust(this.meta.imageAdjust() === 'boost' ? undefined : 'boost');
-            this._save();
         };
 
         Article.prototype.open = function() {
@@ -292,14 +285,6 @@ define([
 
         Article.prototype.toggleOpenImage = function() {
             this.state.isOpenImage(!this.state.isOpenImage());
-        };
-
-        Article.prototype.close = function() {
-            var self = this;
-
-            _.defer(function(){
-                self.state.isOpen(false);
-            });
         };
 
         Article.prototype.get = function() {
@@ -345,13 +330,13 @@ define([
                 .value();
         };
 
-        Article.prototype._save = function() {
+        Article.prototype.save = function() {
             if (!this.group.parent) {
                 return;
             }
 
             if (this.group.parentType === 'Article') {
-                this.group.parent._save();
+                this.group.parent.save();
                 return;
             }
 
@@ -411,13 +396,17 @@ define([
             this.state.isOpen(!this.meta.headline());
         };
 
-        Article.prototype.save = function() {
-            var self = this;
+        Article.prototype.open = function() {
+            this.state.isOpen(true);
+        };
 
-            // defer, to let through UI events before they're blocked by the "isPending" CSS:
-            setTimeout(function() {
-                self._save();
-            }, 200);
+        Article.prototype.close = function() {
+            this.state.isOpen(false);
+        };
+
+        Article.prototype.closeAndSave = function(butStayOpen) {
+            this.close();
+            this.save();
         };
 
         return Article;
