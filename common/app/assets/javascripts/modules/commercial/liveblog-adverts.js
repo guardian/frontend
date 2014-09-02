@@ -11,7 +11,7 @@ define([
 ) {
 
     var postsCount,
-        adTimeout,
+        timedOut,
         criteria,
         adSlotNames = ['inline1', 'inline2'],
         state = 'first',
@@ -39,9 +39,9 @@ define([
         },
         reset = function () {
             postsCount = 0;
-            adTimeout = false;
+            timedOut = false;
             window.setInterval(function () {
-                adTimeout = true;
+                timedOut = true;
             }, criteria[state].timeout);
         },
         init = function () {
@@ -49,7 +49,7 @@ define([
             reset();
             mediator.on('modules:autoupdate:updates', function (updates) {
                 postsCount += updates.length;
-                if (postsCount >= criteria[state].posts && adTimeout) {
+                if (postsCount >= criteria[state].posts && timedOut) {
                     var adSlotName = adSlotNames.shift(),
                         // add the first ad slot we haven't already
                         adSlot = adSlotName ?
