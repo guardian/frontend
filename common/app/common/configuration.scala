@@ -308,6 +308,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object pa {
     lazy val apiKey = configuration.getMandatoryStringProperty("pa.api.key")
+    lazy val cricketKey = configuration.getMandatoryStringProperty("pa.cricket.api.key")
 
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }

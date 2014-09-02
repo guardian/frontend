@@ -12,12 +12,9 @@ object PaFeed extends ExecutionContexts with Logging {
 
   import play.api.Play.current
 
-/*
-* Needs key in the configuration
-* */
   val paEndpoint = "http://cricket.api.press.net/v1"
   val englandTeamId = "a359844f-fc07-9cfa-d4cc-9a9ac0d5d075"
-  val credentials = ("Apikey","needs key")
+  val credentials = ("Apikey", conf.Configuration.pa.cricketKey)
 
   val xmlContentType = ("Accept","application/xml")
   val startDate = new LocalDate(2014,1,1).toString("yyyy-MM-dd")
