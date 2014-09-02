@@ -8,7 +8,7 @@ define([
     bean
 ) {
 
-    function PasswordStrength(el, context, config) {
+    function PasswordStrength(el, config) {
 
         config = assign({
             text: {

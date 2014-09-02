@@ -21,9 +21,9 @@ define([
         };
 
         return {
-            init: function(context) {
-                bean.on(context, 'mouseenter', overlaySelector, hoverState.add);
-                bean.on(context, 'mouseleave', overlaySelector, hoverState.remove);
+            init: function() {
+                bean.on(document.body, 'mouseenter', overlaySelector, hoverState.add);
+                bean.on(document.body, 'mouseleave', overlaySelector, hoverState.remove);
             }
         };
     };
