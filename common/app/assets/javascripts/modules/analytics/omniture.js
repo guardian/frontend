@@ -166,7 +166,7 @@ define([
 
             s.prop14    = config.page.buildNumber || '';
 
-            var platform = !(navigator.mozApps && !window.locationbar.visible) ? 'frontend' : 'firefoxosapp';
+            var platform = (navigator.mozApps && !window.locationbar.visible) ? 'firefoxosapp' : 'frontend';
             s.prop19     = platform;
             s.eVar19     = platform;
 
