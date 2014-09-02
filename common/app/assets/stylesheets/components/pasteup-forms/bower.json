@@ -1,5 +1,5 @@
 {
-  "name": "guss-forms",
+  "name": "pasteup-forms",
   "main": [
     "_forms.scss",
     "_forms.config.scss",

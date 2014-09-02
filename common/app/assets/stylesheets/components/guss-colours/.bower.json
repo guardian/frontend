@@ -6,14 +6,14 @@
     "_colours.config.scss"
   ],
   "homepage": "https://github.com/guardian/guss-colours",
-  "version": "2.0.1",
-  "_release": "2.0.1",
+  "version": "3.0.0",
+  "_release": "3.0.0",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.1",
-    "commit": "9d86bb31b002dadeeabd5dfe8a980384c7e665c3"
+    "tag": "v3.0.0",
+    "commit": "28ec9ac79b673f31d2d8079d7001e6ece42357b4"
   },
   "_source": "git://github.com/guardian/guss-colours.git",
-  "_target": "~2",
+  "_target": "~3",
   "_originalSource": "guss-colours"
 }

@@ -1,25 +1,21 @@
 {
   "name": "guss",
-  "ignore": [
-    "CHANGELOG.md"
-  ],
   "dependencies": {
     "guss-rem": "~1",
     "guss-grid-system": "~1",
     "guss-typography": "~3",
     "guss-layout": "~1",
     "guss-css3": "~2",
-    "guss-colours": "~2",
-    "guss-forms": "~3",
+    "guss-colours": "~3",
     "guss-webfonts": "~2"
   },
   "homepage": "https://github.com/guardian/guss",
-  "version": "3.2.0",
-  "_release": "3.2.0",
+  "version": "3.3.0",
+  "_release": "3.3.0",
   "_resolution": {
     "type": "version",
-    "tag": "v3.2.0",
-    "commit": "a23165831ecdddf96f7704d2f7ea8bad6bbe68fc"
+    "tag": "v3.3.0",
+    "commit": "8c8d1aab511aa28f5f36d0bd21c08a0f8538335f"
   },
   "_source": "git://github.com/guardian/guss.git",
   "_target": "~3",
