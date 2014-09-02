@@ -1,12 +1,16 @@
 {
   "name": "guss",
+  "ignore": [
+    "CHANGELOG.md"
+  ],
   "dependencies": {
     "guss-rem": "~1",
     "guss-grid-system": "~1",
     "guss-typography": "~3",
     "guss-layout": "~1",
     "guss-css3": "~2",
-    "guss-colours": "~3",
+    "guss-colours": "~2",
+    "guss-forms": "~3",
     "guss-webfonts": "~2"
   }
 }

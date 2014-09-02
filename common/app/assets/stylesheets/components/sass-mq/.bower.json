@@ -10,6 +10,7 @@
     "queries",
     "media"
   ],
+  "version": "2.0.1",
   "main": "_mq.scss",
   "author": "Guardian Media Group",
   "ignore": [
@@ -26,12 +27,11 @@
     "url": "https://github.com/guardian/sass-mq"
   },
   "homepage": "https://github.com/guardian/sass-mq",
-  "version": "2.1.0",
-  "_release": "2.1.0",
+  "_release": "2.0.1",
   "_resolution": {
     "type": "version",
-    "tag": "v2.1.0",
-    "commit": "567209ab7c5f9a20366ab00670bb6428977ec986"
+    "tag": "v2.0.1",
+    "commit": "9d329bb5dbf3d78f687fdc1f82b4cdec500ebaae"
   },
   "_source": "git://github.com/guardian/sass-mq.git",
   "_target": "~2",
