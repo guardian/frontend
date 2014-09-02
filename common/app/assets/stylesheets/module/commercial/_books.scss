@@ -23,10 +23,6 @@
     .lineitem:first-child {
         padding-top: 0;
     }
-    .lineitem__meta {
-        color: $c-neutral1;
-        @include fs-textSans(1);
-    }
     .commercial--books__price {
         margin-top: $gs-baseline/2;
         margin-bottom: 0;
@@ -39,10 +35,6 @@
     }
     .commercial--books__price__our {
         font-weight: bold;
-    }
-
-    .commercial__foot {
-        padding: 0;
     }
 
     @include mq(tablet) {
@@ -88,7 +80,7 @@
             display: block;
         }
         @include mq(tablet) {
-            .commercial__foot {
+            .container__foot {
                 display: none;
             }
         }

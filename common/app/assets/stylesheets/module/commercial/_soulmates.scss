@@ -141,10 +141,6 @@ $c-soulmates-high: $c-neutral1;
             text-decoration: underline;
         }
     }
-    .lineitem__meta {
-        color: $c-neutral1;
-        @include font-size(11);
-    }
     .commercial__search {
         @include box-sizing(border-box);
         width: auto;

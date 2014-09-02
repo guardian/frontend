@@ -17,9 +17,6 @@
         &:nth-child(n+3) {
             display: none;
         }
-        .commercial--masterclasses__class__title {
-            @include fs-bodyHeading(1);
-        }
         .commercial--masterclasses__class__date,
         .commercial--masterclasses__class__meta {
             @include fs-data(3);
@@ -131,10 +128,6 @@
         @include mq(faciaLeftCol) {
             .commercial--masterclasses__class {
                 width: 50%;
-            }
-            .lineitems {
-                padding-left: $gs-gutter/2;
-                margin: 0 (-$gs-gutter/2);
             }
         }
     }

@@ -10,12 +10,12 @@
                 <div class="container__header__inner">
                     <h3 class="commercial__title">
                         <a href="@AdLink{@Configuration.commercial.travel_url/}" data-link-name="merchandising-travel-v@{version}_@{date}-low-title">
-                            <i class="i i-marque-36"></i><i class="i i-guardian-logo-96-white"></i><span class="u-h">The Guardian</span>
-                            <i class="i i-holidayshop-logo"></i><span class="u-h">Holiday Shop</span>
+                            <i class="i i-marque-36"></i><i class="i i-guardian-logo-96-white"></i><i class="i i-holidayshop-logo i-commercial-brand"></i>
+                            <span class="u-h">The Guardian</span> <span class="u-h">Holiday Shop</span>
                         </a>
                     </h3>
                     <form class="commercial__search" action="@Configuration.commercial.travel_url/Search">
-                        <div>
+                        <div class="commercial__search__inner">
                             <label for="traveloffer" class="u-h">Find hand picked holidays for hundreds of destinations</label>
                             <input id="traveloffer" name="search" class="commercial__search__input" type="text" placeholder="Find your perfect holiday" />
                             <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-travel-v@{version}_@{date}-low-search">
@@ -44,11 +44,9 @@
                                         <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
                                     </div>
                                 </a>
-                                <p class="lineitem__description commercial--travel__item__description">
-                                    <a class="lineitem__link button button--primary button--small" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-low-@{offer.title}-book-now">
-                                        Book now<i class="i i-arrow-white-right i-right"></i>
-                                    </a>
-                                </p>
+                                <a class="lineitem__link button button--primary button--small" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-low-@{offer.title}-book-now">
+                                    Book now<i class="i i-arrow-white-right i-right"></i>
+                                </a>
                             </div>
                         </li>
                     }

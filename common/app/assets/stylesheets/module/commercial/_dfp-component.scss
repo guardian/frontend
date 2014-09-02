@@ -117,9 +117,6 @@
         .commercial--generic__item__description {
             margin-bottom: 0;
         }
-        .lineitem__meta {
-            margin: $gs-baseline/2 0;
-        }
         @include mq(mobileLandscape) {
             .lineitem__link-image,
             .lineitem__offer {
