@@ -39,6 +39,12 @@
     .lineitem__link {
         float: none;
     }
+    .lineitem__standfirst {
+        margin: $gs-baseline/2 0;
+        p {
+            margin: 0;
+        }
+    }
     @include mq(tablet) {
         .lineitem {
             width: percentage(1/3);
