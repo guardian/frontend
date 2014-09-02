@@ -1,6 +1,6 @@
 package idapiclient
 
-import com.gu.identity.model.{Subscriber, LiftJsonConfig, User}
+import com.gu.identity.model.{EmailList, Subscriber, LiftJsonConfig, User}
 import client.{Anonymous, Auth, Response, Parameters}
 import client.connection.{Http, HttpResponse}
 import scala.concurrent.{Future, ExecutionContext}
@@ -122,7 +122,7 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
   }
 
   def sendPasswordResetEmail(emailAddress : String, trackingParameters: TrackingData): Future[Response[Unit]] = {
-    val apiPath = urlJoin("pwd-reset","send-password-reset-email")
+    val apiPath = urlJoin("pwd-reset", "send-password-reset-email")
     val params = buildParams(tracking = Some(trackingParameters), extra = Iterable("email-address" -> emailAddress, "type" -> "reset"))
     val response = http.GET(apiUrl(apiPath), params, buildHeaders())
     response map extractUnit
@@ -135,6 +135,14 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
     val params = buildParams(tracking = Some(trackingParameters))
     val response = http.GET(apiUrl(apiPath), params, buildHeaders())
     response map extract(jsonField("result"))
+  }
+
+  def addSubscription(userId: String, emailList: EmailList, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] = {
+    post(urlJoin("useremails", userId, "subscriptions"), Some(auth), Some(trackingParameters), Some(write(emailList))) map extractUnit
+  }
+
+  def deleteSubscription(userId: String, emailList: EmailList, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] = {
+    delete(urlJoin("useremails", userId, "subscriptions"), Some(auth), Some(trackingParameters), Some(write(emailList))) map extractUnit
   }
 
   def updateUserEmails(userId: String, subscriber: Subscriber, auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] =
@@ -151,6 +159,12 @@ abstract class IdApi(val apiRootUrl: String, http: Http, jsonBodyParser: JsonBod
            trackingParameters: Option[TrackingData] = None,
            body: Option[String] = None) =
     http.POST(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
+
+  def delete(apiPath: String,
+           auth: Option[Auth] = None,
+           trackingParameters: Option[TrackingData] = None,
+           body: Option[String] = None) =
+    http.DELETE(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
 }
 
 class SynchronousIdApi(apiRootUrl: String, http: Http, jsonBodyParser: JsonBodyParser, clientAuth: Auth)
