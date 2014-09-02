@@ -155,6 +155,10 @@
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
+    @include mq(phablet) {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 
