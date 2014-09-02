@@ -409,5 +409,11 @@ define([
             this.save();
         };
 
+        Article.prototype.onBlur = function() {
+            if (this.group.parentType === 'Article') {
+                this.close();
+            }
+        }
+
         return Article;
     });

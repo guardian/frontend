@@ -250,6 +250,7 @@
                             valueUpdate:'afterkeydown',
                             hasFocus: true,
                             value: headlineInput,
+                            event: {blur: onBlur},
                             attr: {
                                 maxlength: $root.headlineLength,
                                 placeholder: fields.headline() || 'Link text'
@@ -283,9 +284,7 @@
                         </div>
                     </div>
 
-                    <div class="tools">
-                        <a class="tool tool--done" data-bind="click: closeAndSave">Save</a>
-                    </div>
+                    <div class="supporting-message">Add supporting content below</div>
 
                     <div class="misc__overrides">
                         Image
@@ -316,8 +315,6 @@
                             click: toggleIsBreaking,
                             css: {selected: meta.isBreaking}">breaking news</a>
                     </div>
-
-                    <div class="supporting-message">Add supporting content below</div>
                 </div>
 
                 <div data-bind="if: group.parentType === 'Collection' || group.parentType === 'Clipboard'">
@@ -328,6 +325,10 @@
                             css: {underDrag: underDrag},
                             template: {name: 'template_article', foreach: items}"></div>
                     </div>
+                </div>
+
+                <div class="tools">
+                    <a class="tool tool--done" data-bind="click: closeAndSave">Save edits</a>
                 </div>
             </div>
 
