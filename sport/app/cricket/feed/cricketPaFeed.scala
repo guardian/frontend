@@ -44,7 +44,7 @@ object PaFeed extends ExecutionContexts with Logging {
       details: String <- getMatchPaResponse(s"match/$matchId")
       scorecard: String <- getMatchPaResponse(s"match/$matchId/scorecard")
     } yield {
-      Parser.parseMatch(scorecard, lineups, details)
+      Parser.parseMatch(scorecard, details, lineups)
     }
   }
 
