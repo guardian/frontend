@@ -36,7 +36,7 @@
         .i {
             background-color: $c-neutral2;
             right: 0;
-            top: -1px;
+            top: -$gs-baseline/2;
             position: absolute;
         }
     }

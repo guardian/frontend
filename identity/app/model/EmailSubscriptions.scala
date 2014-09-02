@@ -1,0 +1,246 @@
+package model
+
+case class EmailSubscriptions(subscriptions: List[EmailSubscription])
+case class EmailSubscription(
+  name: String,
+  theme: String,
+  about: String,
+  description: String,
+  frequency: String,
+  listId: String,
+  popularity: Int = 0,
+  subscribedTo: Boolean = false
+)
+object EmailSubscription {
+  def apply(emailSubscription: EmailSubscription) = emailSubscription
+}
+object EmailSubscriptions {
+  def apply(subscribedToList: Iterable[String] = None): EmailSubscriptions = EmailSubscriptions(List(
+    // News
+    EmailSubscription(
+      "The Guardian today - UK",
+      "news",
+      "News",
+      "Our editors' picks for the day's top news and commentary delivered to your inbox each morning.",
+      "Every weekday morning",
+      "37",
+      12,
+      subscribedTo = subscribedToList.exists{ x => x == "37" }
+    ),
+    EmailSubscription(
+      "The Guardian today - US",
+      "news",
+      "News",
+      "Our editors' picks for the day's top news and commentary delivered to your inbox each morning.",
+      "Every weekday morning",
+      "1493",
+      11,
+      subscribedTo = subscribedToList.exists{ x => x == "1493" }
+    ),
+    EmailSubscription(
+      "The Guardian today - AUS",
+      "news",
+      "News",
+      "Our editors' picks for the day's top news and commentary delivered to your inbox each weekday.",
+      "Every weekday",
+      "1506",
+      11,
+      subscribedTo = subscribedToList.exists{ x => x == "1506" }
+    ),
+    EmailSubscription(
+      "The best of CiF",
+      "news",
+      "The best of Comment is free",
+      "Comment is free's daily email newsletter with the most shared comment, analysis and editorial articles from the last 24 hours — sign up to read, share and join the debate on the Guardian's most popular opinion pieces every lunchtime.",
+      "Weekday lunchtime",
+      "2313",
+      10,
+      subscribedTo = subscribedToList.exists{ x => x == "2313" }
+    ),
+    EmailSubscription(
+      "The Fiver",
+      "news",
+      "Football",
+      "The Fiver is theguardian.com/sport's free football email. Every weekday we round up the day's news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way. The Fiver is delivered every Monday to Friday at around 5pm — hence the name.",
+      "5pm every weekday",
+      "218",
+      10,
+      subscribedTo = subscribedToList.exists{ x => x == "218" }
+    ),
+    EmailSubscription(
+      "Media briefing",
+      "news",
+      "Media",
+      "An indispensable summary of what the papers are saying about media on your desktop before 9am. We summarise the media headlines in every newspaper from the Wall Street Journal to the Daily Star.",
+      "Weekday mornings",
+      "217",
+      7,
+      subscribedTo = subscribedToList.exists{ x => x == "217" }
+    ),
+    EmailSubscription(
+      "Green light",
+      "news",
+      "Environment",
+      "In each weekly edition our editors highlight the most important stories of the week including data, opinion pieces and background guides. We'll also flag up our best video, picture galleries, podcasts, blogs and green living guides.",
+      "",
+      "38",
+      subscribedTo = subscribedToList.exists{ x => x == "38" }
+    ),
+    EmailSubscription(
+      "Poverty matters",
+      "news",
+      "Global development",
+      "Our editors track what's happening in development with a special focus on the millennium development goals. Sign up to get all the most important debate and discussion from around the world delivered to your inbox every fortnight.",
+      "",
+      "113",
+      subscribedTo = subscribedToList.exists{ x => x == "113" }
+    ),
+    EmailSubscription(
+      "Society briefing",
+      "news",
+      "Society",
+      "Have the top news and columnists delivered to your inbox every week. Stay on top of the latest policy announcements, keep ahead of current thinking, and find out what changes to legislation will mean for your job.",
+      "",
+      "208",
+      subscribedTo = subscribedToList.exists{ x => x == "208" }
+    ),
+    EmailSubscription(
+      "Australian politics",
+      "news",
+      "Politics",
+      "All the latest news and comment on Australian politics from the Guardian, delivered to you every weekday.",
+      "Weekdays at midday",
+      "1866",
+      subscribedTo = subscribedToList.exists{ x => x == "1866" }
+    ),
+
+    // Lifestyle
+    EmailSubscription(
+      "Zip file",
+      "lifestyle",
+      "Technology",
+      "For all you need to know about technology in the world this week, news, analysis and comment.",
+      "Every Thursday",
+      "1902",
+      10,
+      subscribedTo = subscribedToList.exists{ x => x == "10" }
+    ),
+    EmailSubscription(
+      "The Flyer",
+      "lifestyle",
+      "Travel",
+      "Sign up to The Flyer for all the latest travel stories, plus find links to hundreds of UK hotel and restaurant reviews; insider tips on the world's best cities; a road-tripper's guide to the US; and highlights of our most inspiring top 10s.",
+      "Every Wednesday",
+      "2211",
+      10,
+      subscribedTo = subscribedToList.exists{ x => x == "2211" }
+    ),
+    EmailSubscription(
+      "Money Talks",
+      "lifestyle",
+      "Money",
+      "Stay on top of the best personal finance and money news of the week, including insight and behind-the-scenes accounts from your favourite Guardian Money editors.",
+      "",
+      "1079",
+      9,
+      subscribedTo = subscribedToList.exists{ x => x == "1079" }
+    ),
+    EmailSubscription(
+      "Fashion statement",
+      "lifestyle",
+      "Fashion",
+      "The Guardian sorts the wheat from the chaff to deliver the latest news, views and shoes from the style frontline. Sign up to Fashion Statement, sent every Friday.",
+      "Every Friday",
+      "105",
+      9,
+      subscribedTo = subscribedToList.exists{ x => x == "105" }
+    ),
+    EmailSubscription(
+      "Crossword editor's update",
+      "lifestyle",
+      "Crosswords",
+      "Register to receive our monthly crossword email by the Guardian's crossword editor with the latest issues and tips about theguardian.com/crosswords.",
+      "",
+      "101",
+      subscribedTo = subscribedToList.exists{ x => x == "101" }
+    ),
+    EmailSubscription(
+      "The Observer Food Monthly",
+      "lifestyle",
+      "Food & Drink",
+      "Sign up to the Observer Food Monthly newsletter for all your food and drink news, tips, offers, recipes and competitions.",
+      "Monthly",
+      "248",
+      subscribedTo = subscribedToList.exists{ x => x == "248" }
+    ),
+
+    // Culture
+    EmailSubscription(
+      "Sleeve notes",
+      "culture",
+      "Music",
+      "Everything you need to know from the Guardian's music site, squeezed into one handy email.",
+      "Every Friday",
+      "39",
+      8,
+      subscribedTo = subscribedToList.exists{ x => x == "39" }
+    ),
+    EmailSubscription(
+      "Close up",
+      "culture",
+      "Film",
+      "Every Thursday, rely on Close up to bring you Guardian film news, reviews and much, much more.",
+      "Every Thursday",
+      "40",
+      5,
+      subscribedTo = subscribedToList.exists{ x => x == "40" }
+    ),
+    EmailSubscription(
+      "Film Today",
+      "culture",
+      "Film",
+      "Our film editors recap the top headlines each weekday and deliver them straight to your inbox in time for your evening commute.",
+      "Everyday",
+      "1950",
+      5,
+      subscribedTo = subscribedToList.exists{ x => x == "1950" }
+    ),
+    EmailSubscription(
+      "Book club",
+      "culture",
+      "Books",
+      "Hosted by John Mullan, the Guardian book club considers a book a month via a weekly column and live Q&A session. Be the first to find out about forthcoming events and featured authors.",
+      "Every Sunday",
+      "131",
+      subscribedTo = subscribedToList.exists{ x => x == "131" }
+    ),
+    EmailSubscription(
+      "Art Weekly",
+      "culture",
+      "Art and design",
+      "For your art world low-down, sign up to the Guardian's Art Weekly email and get all the latest news, reviews and comment delivered straight to your inbox.",
+      "",
+      "99"
+    ),
+
+    // Sport
+    EmailSubscription(
+      "The Breakdown",
+      "sport",
+      "Rugby Union",
+      "Sign up for our rugby union email, written by our rugby correspondent Paul Rees. Every Thursday Paul will give his thoughts on the big stories, review the latest action and provide gossip from behind the scenes in his unique and indomitable style.",
+      "Every Thursday",
+      "219",
+      subscribedTo = subscribedToList.exists{ x => x == "219" }
+    ),
+    EmailSubscription(
+      "The Spin",
+      "sport",
+      "Cricket",
+      "The Spin brings you all the latest comment and news, rumour and humour from the world of cricket every Tuesday. It promises not to use tired old cricket cliches, but it might just bowl you over.",
+      "Every Tuesday",
+      "220",
+      subscribedTo = subscribedToList.exists{ x => x == "220" }
+    )
+  ))
+}
