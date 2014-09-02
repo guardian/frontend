@@ -17,7 +17,7 @@ import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import play.api.libs.ws.WSResponse
 import play.api.libs.json.JsObject
 import scala.concurrent.duration._
-import conf.Switches.{FaciaToolCachedContentApiSwitch, FaciaToolCachedZippingContentApiSwitch}
+import conf.Switches.FaciaToolCachedContentApiSwitch
 import common.S3Metrics.S3AuthorizationError
 
 
@@ -46,17 +46,9 @@ object Result {
 }
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
-  implicit def apiContentCodec =
-    if (FaciaToolCachedZippingContentApiSwitch.isSwitchedOn)
-      JsonCodecs.snappyCodec[Option[ApiContent]]
-    else
-      JsonCodecs.nonGzippedCodec[Option[ApiContent]]
+  implicit def apiContentCodec = JsonCodecs.snappyCodec[Option[ApiContent]]
 
-  implicit def resultCodec =
-    if (FaciaToolCachedZippingContentApiSwitch.isSwitchedOn)
-      JsonCodecs.snappyCodec[Result]
-    else
-      JsonCodecs.nonGzippedCodec[Result]
+  implicit def resultCodec = JsonCodecs.snappyCodec[Result]
 
   val cacheDuration: FiniteDuration = 5.minutes
 
