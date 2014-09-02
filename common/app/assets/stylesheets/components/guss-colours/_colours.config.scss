@@ -1,55 +1,18 @@
 /**
- * Default colour palette
+ * An example of a colour palette to be used with guss-colours
+ *
+ * If you're looking for the guardian colour palette: https://github.com/guardian/pasteup-palette
  * 
  * @type Map
  *
  * @group colours
  */
 $guss-colours: (
-    guardian-brand:         #005689,
-    guardian-brand-light:   #94b1ca,
-    guardian-brand-dark:    #00456e,
-
-    error:                  #d61d00,
-    success:                #4a7801,
-
-    // Neutral palette (desaturized)
-    neutral-1:              #333333,
-    neutral-2:              #767676,
-    neutral-3:              #bdbdbd,
-    neutral-4:              #dcdcdc,
-    neutral-5:              #dfdfdf,
-    neutral-6:              #eaeaea,
-    neutral-7:              #f1f1f1,
-    neutral-8:              #f6f6f6,
-
-    // Neutral palette (warm)
-    neutral-1-warm:         #333333,
-    neutral-2-warm:         #767676,
-    neutral-3-warm:         #bdbdbd,
-    neutral-4-warm:         #dcdcdc,
-    neutral-5-warm:         #e3e3db,
-    neutral-6-warm:         #edede7,
-    neutral-7-warm:         #f4f4ee,
-    neutral-8-warm:         #f6f6f6,
-
-    // Tones
-    tone-news-1:            #005689,
-    tone-news-2:            #4bc6df,
-
-    tone-features-1:        #951c55,
-    tone-features-2:        #f66980,
-    tone-features-3:        #B82266,
-    tone-features-4:        #7d0068,
-
-    tone-comment-1:         #e6711b,
-    tone-comment-2:         #ffbb00,
-    tone-comment-3:         #ffcf4c,
-
-    tone-media-1:           #333333,
-    tone-media-2:           #484848,
-    tone-media-3:           #ffbb00,
-
-    tone-live-1:            #b51800,
-    tone-live-2:            #cc2b12,
-);
+    rainbow-red:            #ed1c24,
+    rainbow-orange:         #f26522,
+    rainbow-yellow:         #fff200,
+    rainbow-green:          #00a651,
+    rainbow-blue:           #0054a6,
+    rainbow-indigo:         #2e3192,
+    rainbow-violet:         #92278f,
+) !default;
