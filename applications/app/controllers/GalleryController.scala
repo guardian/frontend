@@ -4,8 +4,10 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
+import play.api.libs.json.{ JsObject, JsArray, JsString, JsBoolean }
 import views.support.RenderOtherStatus
 import conf.Switches.RelatedContentSwitch
+import views.support.{ ImgSrc, GalleryFullscreenImage }
 
 case class GalleryPage(
   gallery: Gallery,
@@ -24,6 +26,35 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
       case Left(model) if model.gallery.isExpired => RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
       case Left(model) => renderGallery(model)
       case Right(other) => RenderOtherStatus(other)
+    }
+  }
+
+  def lightboxJson(path: String) = Action.async { implicit request =>
+    val index = request.getQueryString("index") map (_.toInt) getOrElse 1
+    lookup(path, index, isTrail=false) map {
+      case Right(other) => RenderOtherStatus(other)
+      case Left(model) => {
+        val imageContainers = model.gallery.galleryImages.filter(_.isGallery)
+        val imageJson = imageContainers.map{ imgContainer =>
+          imgContainer.largestImage.map { img =>
+            JsObject(Seq(
+              "caption" -> JsString(img.caption.getOrElse("")),
+              "credit" -> JsString(img.credit.getOrElse("")),
+              "displayCredit" -> JsBoolean(img.displayCredit),
+              "url" -> JsString(ImgSrc.imager(imgContainer, GalleryFullscreenImage).getOrElse(""))
+            ))
+          }
+        }
+        Cached(60) {
+          JsonComponent(JsObject(Seq(
+              "gallery" -> JsObject(Seq(
+                  "headline" -> JsString(model.gallery.headline),
+                  "standfirst" -> JsString(model.gallery.standfirst.getOrElse("")),
+                  "images" -> JsArray(imageJson.flatten)
+              ))
+          )))
+        }
+      }
     }
   }
 

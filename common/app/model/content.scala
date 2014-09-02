@@ -528,7 +528,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
     "article:author" -> contributors.map(_.webUrl).mkString(",")
   )
 
-  private lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
+  lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
 
   override def cards: List[(String, String)] = super.cards ++ Seq(
