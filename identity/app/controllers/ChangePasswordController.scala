@@ -27,8 +27,6 @@ class ChangePasswordController @Inject()( api: IdApiClient,
 
   val page = IdentityPage("/password/change", "Change Password", "change-password")
 
-  private val changePasswordKey = "change-password"
-
   val passwordForm = Form(
     mapping(
       ("oldPassword", optional(idPassword)),
@@ -47,7 +45,7 @@ class ChangePasswordController @Inject()( api: IdApiClient,
     authAction.async {
       implicit request =>
 
-        val form = passwordForm.bindFromFlash(changePasswordKey).getOrElse(passwordForm)
+        val form = passwordForm.bindFromFlash.getOrElse(passwordForm)
 
         val idRequest = idRequestParser(request)
         api.passwordExists(request.auth) map {
@@ -56,6 +54,12 @@ class ChangePasswordController @Inject()( api: IdApiClient,
             NoCache(Ok(views.html.password.changePassword(page.tracking(idRequest), idRequest, idUrlBuilder,  form, pwdExists )))
         }
     }
+  }
+
+  def renderPasswordConfirmation = Action{ implicit request =>
+    val idRequest = idRequestParser(request)
+    val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
+    NoCache(Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
   }
 
   def submitForm() = CSRFCheck{
@@ -74,18 +78,18 @@ class ChangePasswordController @Inject()( api: IdApiClient,
                 boundForm
             }
         }
+
         val futureForms = futureFormOpt getOrElse Future.successful(boundForm)
-        futureForms map {
-          form =>
-            if(form.hasErrors){
-              val pwdExists = request.getQueryString("passwordExists") exists { _.toBoolean }
-              NoCache(SeeOther(routes.ChangePasswordController.displayForm().url)
-                  .flashing(clearPasswords(form).toFlash(changePasswordKey)
-              ))
-            } else {
-              val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
-              NoCache(Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
-            }
+        futureForms map { form =>
+          if(form.hasErrors){
+            val pwdExists = request.getQueryString("passwordExists") exists { _.toBoolean }
+            NoCache(
+              SeeOther(routes.ChangePasswordController.displayForm().url).flashing(clearPasswords(form).toFlash)
+            )
+          } else {
+            val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
+            NoCache(SeeOther(routes.ChangePasswordController.renderPasswordConfirmation().url))
+          }
         }
     }
   }
