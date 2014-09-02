@@ -628,7 +628,7 @@
     padding-top: $gs-baseline/3;
 }
 .email-subscription--subscribed {
-    opacity: 0.8;
+    opacity: .8;
 }
 .email-subscription__name {
     @include fs-headline(3);
