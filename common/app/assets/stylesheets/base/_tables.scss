@@ -33,6 +33,12 @@ $table-breakpoint-importance-3: 220px;
 .table--hide-from-importance-2 { @include table--hide-from-importance-2; }
 .table--hide-from-importance-3 { @include table--hide-from-importance-3; }
 
+.table-column--span-2-on-mobile {
+    @include mq() {
+        : 2;
+    }
+}
+
 table {
     width: 100%;
 }
@@ -45,6 +51,7 @@ td {
 .table {
     background: $c-neutral8;
     border-top: 1px solid $c-newsAccent;
+    border-collapse: inherit;
 
     th,
     td,
