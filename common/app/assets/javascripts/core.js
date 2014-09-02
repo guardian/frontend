@@ -1,27 +1,7 @@
 require([
     // 3rd party libs
     'raven',
-    'lodash/arrays/compact',
-    'lodash/arrays/first',
-    'lodash/arrays/flatten',
-    'lodash/arrays/last',
-    'lodash/arrays/uniq',
-    'lodash/arrays/zip',
-    'lodash/chaining/wrapperValueOf',
-    'lodash/collections/every',
-    'lodash/collections/filter',
-    'lodash/collections/forEach',
-    'lodash/collections/map',
-    'lodash/collections/max',
-    'lodash/collections/pluck',
-    'lodash/collections/sortBy',
-    'lodash/objects/clone',
-    'lodash/objects/functions',
-    'lodash/objects/isArguments',
-    'lodash/objects/isArray',
-    'lodash/objects/isString',
-    'lodash/objects/mapValues',
-    'lodash/objects/values',
+    'lodash/main',
     'lodash/utilities/mixin',
 
     // utilities

@@ -177,6 +177,7 @@ category: Common
 }
 .button {
     display: inline-block;
+    vertical-align: top;
     width: auto;
     @include fs-textSans(2);
     font-weight: bold;

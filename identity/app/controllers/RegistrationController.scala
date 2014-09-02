@@ -26,7 +26,6 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
   val page = IdentityPage("/register", "Register", "register")
 
-  private val registrationKey = "register"
   private val passwordKey = "user.password"
 
   val registrationForm = Form(
@@ -45,9 +44,15 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
     logger.trace("Rendering registration form")
 
     val idRequest = idRequestParser(request)
-    val filledForm = registrationForm.bindFromFlash(registrationKey).getOrElse(registrationForm.fill("", "", "", "", "", true, false))
+    val filledForm = registrationForm.bindFromFlash.getOrElse(registrationForm.fill("", "", "", "", "", true, false))
 
     NoCache(Ok(views.html.registration(page.registrationStart(idRequest), idRequest, idUrlBuilder, filledForm)))
+  }
+
+  def renderRegistrationConfirmation(returnUrl: String) = Action{ implicit request =>
+    val idRequest = idRequestParser(request)
+    val verifiedReturnUrl = returnUrlVerifier.getVerifiedReturnUrl(returnUrl).getOrElse(returnUrlVerifier.defaultReturnUrl)
+    NoCache(Ok(views.html.registrationConfirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl)))
   }
 
   def processForm = Action.async { implicit request =>
@@ -81,10 +86,10 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
             val authResponse = api.authBrowser(EmailPassword(email, password, idRequest.clientIp), trackingData)
             val response: Future[Result] = signinService.getCookies(authResponse, rememberMe = false) map {
               case Left(errors) =>
-                Ok(views.html.registrationConfirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl))
+                NoCache(SeeOther(routes.RegistrationController.renderRegistrationConfirmation(verifiedReturnUrl).url))
 
               case Right(responseCookies) =>
-                Ok(views.html.registrationConfirmation(page, idRequest, idUrlBuilder, verifiedReturnUrl)).withCookies(responseCookies:_*)
+                NoCache(SeeOther(routes.RegistrationController.renderRegistrationConfirmation(verifiedReturnUrl).url)).withCookies(responseCookies:_*)
             }
 
             response
@@ -97,7 +102,7 @@ class RegistrationController @Inject()( returnUrlVerifier : ReturnUrlVerifier,
 
   private def redirectToRegistrationPage(formWithErrors: Form[(String, String, String, String, String, Boolean, Boolean)]) = NoCache(
     SeeOther(routes.RegistrationController.renderForm().url).flashing(
-      clearPassword(formWithErrors).toFlash(registrationKey)
+      clearPassword(formWithErrors).toFlash
     )
   )
 
