@@ -55,10 +55,10 @@ object Parser {
     matchDetail \ "venue" \ "name" text,
     matchDetail \ "status" text,
     Date( matchDetail \ "dateTime" text),
-    parseOfficials(matchDetail \ "officials")
+    parseOfficials(matchDetail \ "official")
   )
 
-  private def parseTeams(teams: NodeSeq) :List[Team] =
+  private def parseTeams(teams: NodeSeq): List[Team] =
     teams.map { team =>
       Team( (team \ "name").text,
             (team \ "@id").text,
@@ -67,7 +67,7 @@ object Parser {
 
     }.toList
 
-  private def parseTeamLineup(lineup: NodeSeq) :List[String] =
+  private def parseTeamLineup(lineup: NodeSeq): List[String] =
     lineup.map { player => (player \ "name").text }.toList
 
   private def getStatistic(statistics: NodeSeq, statistic: String): String =
@@ -133,6 +133,6 @@ object Parser {
 
   private def parseOfficials(officials: NodeSeq): List[String]=
     officials.map { official =>
-      (officials \ "name").text
+      (official \ "name").text
     }.toList
 }

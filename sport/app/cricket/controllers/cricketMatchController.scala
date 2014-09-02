@@ -16,8 +16,6 @@ case class CricketMatchPage(theMatch: Match, matchId: String) extends MetaData w
 
 object CricketMatchController extends Controller with Logging with ExecutionContexts {
 
-
-
   def renderMatchIdJson(matchId: String) = renderMatchId(matchId)
 
   def renderMatchId(matchId: String) = {
@@ -26,13 +24,13 @@ object CricketMatchController extends Controller with Logging with ExecutionCont
         val page = CricketMatchPage(matchData, matchId)
 
         Cached(60){
-        if (request.isJson)
-          JsonComponent(
-            "summary" -> cricket.views.html.fragments.cricketMatchSummary(page.theMatch).toString,
-            "scorecard" -> cricket.views.html.fragments.cricketMiniScorecard(page).toString
-          )
-        else
-          Ok(cricket.views.html.cricketMatch(page))
+          if (request.isJson)
+            JsonComponent(
+              "summary" -> cricket.views.html.fragments.cricketMatchSummary(page.theMatch).toString,
+              "scorecard" -> cricket.views.html.fragments.cricketMiniScorecard(page).toString
+            )
+          else
+            Ok(cricket.views.html.cricketMatch(page))
         }
       }
     }
