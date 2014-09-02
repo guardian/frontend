@@ -2,9 +2,7 @@
   "name": "frontend-common-css",
   "dependencies": {
     "guss": "~3",
-    "pasteup-palette": "~1"
-  },
-  "devDependencies": {
-    "pasteup-forms": "~4.0.0"
+    "pasteup-forms": "~4.0.0",
+    "pasteup-palette": "~2"
   }
 }

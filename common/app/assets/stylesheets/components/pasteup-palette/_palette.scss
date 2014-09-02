@@ -53,5 +53,3 @@ $pasteup-palette: (
     tone-live-1:            #b51800,
     tone-live-2:            #cc2b12,
 );
-
-@include guss-generate-colour-classes($pasteup-palette);

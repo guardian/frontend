@@ -3,7 +3,5 @@
   "main": [
     "_palette.scss"
   ],
-  "dependencies": {
-    "guss-colours": "~3.0.0"
-  }
+  "dependencies": {}
 }
