@@ -33,14 +33,12 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     authAction.async { implicit request =>
       val idRequest = idRequestParser(request)
       val userId = request.user.getId()
-      val user = api.user(userId, request.auth)
-      val subscriber = api.userEmails(userId, idRequest.trackingData)
-      val u = user
-      val s = subscriber
+      val userFuture = api.user(userId, request.auth)
+      val subscriberFuture = api.userEmails(userId, idRequest.trackingData)
 
       (for {
-        user <- u
-        subscriber <- s
+        user <- userFuture
+        subscriber <- subscriberFuture
       } yield {
         (user, subscriber) match {
           case (Right(user), Right(subscriber)) => {
@@ -112,15 +110,12 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
           }.getOrElse {
             val newStatusFields = ("receiveGnmMarketing" -> emailPrefsData.receiveGnmMarketing) ~ ("receive3rdPartyMarketing" -> emailPrefsData.receive3rdPartyMarketing)
             val newSubscriber = Subscriber(emailPrefsData.htmlPreference, Nil)
-
-            val user = api.updateUser(userId, auth, trackingParameters, "statusFields", newStatusFields)
-            val subscriber = api.updateUserEmails(userId, newSubscriber, auth, trackingParameters)
-            val u = user
-            val s = subscriber
+            val userFuture = api.updateUser(userId, auth, trackingParameters, "statusFields", newStatusFields)
+            val subscriberFuture = api.updateUserEmails(userId, newSubscriber, auth, trackingParameters)
 
             for {
-              user <- u
-              subscriber <- s
+              user <- userFuture
+              subscriber <- subscriberFuture
             } yield {
               (user, subscriber) match {
                 case (Right(user), Right(subscriber)) => {
