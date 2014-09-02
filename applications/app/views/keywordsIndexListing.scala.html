@@ -1,7 +1,0 @@
-@(metaData: model.KeywordsListingMetaData, listing: model.TagIndexListings)(implicit requestHeader: RequestHeader)
-
-@import fragments.tagIndexListingBody
-
-@main(metaData, projectName = Some("index")) { } {
-    @tagIndexListingBody("keywords", metaData.webTitle, listing)
-}

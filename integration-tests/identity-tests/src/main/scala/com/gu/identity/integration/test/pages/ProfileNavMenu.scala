@@ -22,7 +22,7 @@ class ProfileNavMenu(implicit driver: WebDriver) extends ParentPage {
 
   def clickSignOut(): ContainerWithSigninModulePage = {
     clickMenuElement("Sign out")
-    waitForPageToBeLoaded
+    waitForPageToLoad
     lazy val pageWithSignIn = new ContainerWithSigninModulePage()
     goTo(pageWithSignIn, frontsBaseUrl, useBetaRedirect = false)
   }

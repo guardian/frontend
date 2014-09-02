@@ -112,7 +112,7 @@ define([
         model.deferredDetectPressFailure = _.debounce(function () {
             var count;
 
-            if (model.switches()['facia-tool-check-press-lastmodified'] && model.front()) {
+            if (model.front()) {
                 model.statusPressFailure(false);
 
                 count = ++model.detectPressFailureCount;

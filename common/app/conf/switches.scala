@@ -141,11 +141,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val SmartBannerSwitch = Switch("Commercial", "smart-banner",
-    "Display smart app banner onboarding message to iOS and Android users",
-    safeState = Off, sellByDate = new LocalDate(2014, 8, 31)
-  )
-
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
@@ -288,11 +283,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val SentimentalCommentsSwitch = Switch("Feature", "sentimental-comments",
-    "When this switch is on, you will be able to put sentiment into your comments.",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 1)
-  )
-
   val EnhancedMediaPlayerSwitch = Switch("Feature", "enhanced-media-player",
     "If this is switched on then videos are enhanced using our JavaScript player",
     safeState = On, sellByDate = never
@@ -314,11 +304,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 9, 8)
   )
 
-  val SeoEscapeFootballJsonPathLikeValuesSwitch = Switch("Feature", "seo-googlebot-escape-football-json-path-like-values",
-    "If switched ON, json football references that look like a path to googlebot are 'escaped'.",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
-  )
-
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -338,26 +323,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ToolConfigurationDisable = Switch("Facia", "facia-tool-configuration-disable",
-    "If this is switched on then the fronts configuration tool is disabled",
-    safeState = Off, sellByDate = never
-  )
-
-  val ToolCheckPressLastmodified = Switch("Facia", "facia-tool-check-press-lastmodified",
-    "If this switch is on facia tool will alert the user if a front is not pressed withing 10 secs of an edit/publish",
-    safeState = Off, sellByDate = never
-  )
-
-  val ToolSnaps = Switch("Facia", "facia-tool-snaps",
-    "If this is switched on then snaps can be created by dragging arbitrary links into the tool",
-    safeState = Off, sellByDate = never
-  )
-
-  val ToolImageOverride = Switch("Facia", "facia-tool-image-override",
-    "If this is switched on then images can be overridden in the fronts tool",
-    safeState = Off, sellByDate = never
-  )
-
   val ToolSparklines = Switch("Facia", "facia-tool-sparklines",
     "If this is switched on then the fronts tool renders images from sparklines.ophan.co.uk",
     safeState = Off, sellByDate = never
@@ -373,11 +338,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val FaciaToolDraftPressSwitch = Switch("Facia", "facia-tool-press-draft-front",
-    "If this switch is on facia tool will press draft fronts on each change",
-    safeState = Off, sellByDate = never
-  )
-
   val FaciaToolDraftContent = Switch("Facia", "facia-tool-draft-content",
     "If this switch is on facia tool will offer draft content to editors, and press draft fronts from draft content ",
     safeState = Off, sellByDate = never
@@ -388,19 +348,9 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val FaciaToolCachedZippingContentApiSwitch = Switch("Facia", "facia-tool-zipcached-capi-requests",
-    "If this switch is on facia tool will zip cache responses from the content API and use them on failure",
-    safeState = On, sellByDate = never
-  )
-
   val FrontPressJobSwitch = Switch("Facia", "front-press-job-switch",
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
-  )
-
-  val FaciaToolContainerTagsSwitch = Switch("Facia", "facia-tool-tags",
-    "If this switch is on the container configuration will allow articles to show their tags or sections",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
   )
 
   val all: List[Switch] = List(
@@ -427,10 +377,6 @@ object Switches extends Collections {
     IdentityFormstackSwitch,
     IdentityAvatarUploadSwitch,
     ToolDisable,
-    ToolConfigurationDisable,
-    ToolCheckPressLastmodified,
-    ToolSnaps,
-    ToolImageOverride,
     ToolSparklines,
     OphanSwitch,
     ScrollDepthSwitch,
@@ -453,19 +399,13 @@ object Switches extends Collections {
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
-    FaciaToolContainerTagsSwitch,
     EnhanceTweetsSwitch,
-    SentimentalCommentsSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
-    SmartBannerSwitch,
-    SeoEscapeFootballJsonPathLikeValuesSwitch,
     FaciaToolCachedContentApiSwitch,
-    FaciaToolCachedZippingContentApiSwitch,
-    FaciaToolDraftPressSwitch,
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,

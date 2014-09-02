@@ -344,7 +344,7 @@ define([
                                 player.fullscreener();
 
                                 // Init plugins
-                                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
+                                if (config.switches.videoAdverts && !config.page.blockVideoAds && !config.page.isPreview) {
                                     modules.bindPrerollEvents(player);
                                     player.adCountDown();
                                     player.trigger(constructEventName('preroll:request', player));
@@ -462,13 +462,13 @@ define([
         }
     };
 
-    var ready = function (config, context) {
+    var ready = function (config) {
         modules.initPlayer(config);
         modules.initMoreInSection(config);
         modules.initMostViewedMedia(config);
         modules.displayReleaseMessage(config);
 
-        mediator.emit('page:media:ready', config, context);
+        mediator.emit('page:media:ready', config);
     };
 
     return {

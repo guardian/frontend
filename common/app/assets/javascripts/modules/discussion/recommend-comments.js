@@ -35,16 +35,15 @@ RecommendComments.CONFIG = {
 };
 
 /**
- * @param {Element} context
  * @param {Object=} options
  */
-RecommendComments.init = function(context, options) {
+RecommendComments.init = function(options) {
     var buttons;
 
-    this.open = this.open || qwery('.'+ RecommendComments.CONFIG.classes.open, context).length > 0;
+    this.open = this.open || qwery('.'+ RecommendComments.CONFIG.classes.open).length > 0;
 
     if (this.open) {
-        buttons = qwery('.'+ RecommendComments.CONFIG.classes.button, context);
+        buttons = qwery('.'+ RecommendComments.CONFIG.classes.button);
     }
 
     for (var prop in options) {
@@ -62,16 +61,13 @@ RecommendComments.init = function(context, options) {
                 button.title = button.title += ' - recommend this comment';
             }
         });
-        RecommendComments.bindEvents(context);
+        RecommendComments.bindEvents();
         mediator.emit(RecommendComments.getEvent('init'));
     }
 };
 
-/**
- * @param {Element} context
- */
-RecommendComments.bindEvents = function(context) {
-    bean.on(context, 'click', '.'+ RecommendComments.CONFIG.classes.active, RecommendComments.handleClick);
+RecommendComments.bindEvents = function() {
+    bean.on(document.body, 'click', '.'+ RecommendComments.CONFIG.classes.active, RecommendComments.handleClick);
 };
 
 /**

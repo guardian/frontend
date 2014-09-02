@@ -50,6 +50,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
+
+    lazy val isPreview = projectName == "preview"
   }
 
   object switches {
@@ -212,7 +214,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object witness {
     lazy val witnessApiRoot = configuration.getMandatoryStringProperty("witness.apiRoot")
   }
-  
+
   object commercial {
     lazy val dfpAdUnitRoot = configuration.getMandatoryStringProperty("guardian.page.dfpAdUnitRoot")
     lazy val dfpAccountId = configuration.getMandatoryStringProperty("guardian.page.dfpAccountId")
@@ -280,8 +282,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
     lazy val configBeforePressTimeout: Int = 1000
 
-
-    case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
     val oauthCredentials: Option[OAuthCredentials] =
       for {
         oauthClientId <- configuration.getStringProperty("faciatool.oauth.clientid")
@@ -302,6 +302,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val adminPressJobPushRateInMinutes: Int =
       Try(configuration.getStringProperty("admin.pressjob.push.rate.inminutes").get.toInt)
         .getOrElse(3)
+
+    lazy val faciaToolUpdatesStream: Option[String] = configuration.getStringProperty("faciatool.updates.stream")
   }
 
   object pa {
@@ -369,15 +371,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val signingKey = configuration.getMandatoryStringProperty("avatars.signing.key")
   }
 
-  object admin {
-    lazy val oauthCredentials: Option[OAuthCredentials] =
-      for {
-        oauthClientId <- configuration.getStringProperty("admin.oauth.clientid")
-        oauthSecret <- configuration.getStringProperty("admin.oauth.secret")
-        oauthCallback <- configuration.getStringProperty("admin.oauth.callback")
-      } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
-  }
-
   object preview {
     lazy val oauthCredentials: Option[OAuthCredentials] =
       for {
@@ -390,5 +383,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
 object ManifestData {
   lazy val build = ManifestFile.asKeyValuePairs.getOrElse("Build", "DEV").dequote.trim
+  lazy val revision = ManifestFile.asKeyValuePairs.getOrElse("Revision", "DEV").dequote.trim
 }
 

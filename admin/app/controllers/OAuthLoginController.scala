@@ -2,7 +2,7 @@ package controllers.admin
 
 import com.gu.googleauth.{GoogleAuth, GoogleAuthConfig, UserIdentity}
 import common.ExecutionContexts
-import conf.Configuration
+import conf.{Configuration, AdminConfiguration}
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
@@ -15,7 +15,7 @@ object OAuthLoginController extends Controller with ExecutionContexts {
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "antiForgeryToken"
   val forbiddenNoCredentials = Forbidden("You do not have OAuth credentials set")
-  val googleAuthConfig: Option[GoogleAuthConfig] = Configuration.admin.oauthCredentials.map { cred =>
+  val googleAuthConfig: Option[GoogleAuthConfig] = AdminConfiguration.oauthCredentials.map { cred =>
     GoogleAuthConfig(
       cred.oauthClientId,     // The client ID from the dev console
       cred.oauthSecret,       // The client secret from the dev console

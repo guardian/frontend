@@ -1,28 +1,25 @@
-@(id: String, subTitle: String, listings: model.TagIndexListings)(implicit request: RequestHeader)
+@(id: String, title: String, listings: model.TagIndexListings)(implicit request: RequestHeader)
 
 @import common.LinkTo
 
-<div class="tag-index l-side-margins l-side-margins--layout-content">
-    <header class="tag-index__head tone-accent-border u-cf">
-        <div class="gs-container">
-            <div class="tag-index__main-column">
-                <div class="tag-index__parent">
-                    Index
-                </div>
-                <h1 itemprop="headline" class="tag-index__headline js-score">@subTitle</h1>
+<div class="l-side-margins l-side-margins--layout-front">
+    <div class="facia-container facia-container--layout-front">
+        <div class="facia-container__inner">
+            <div class="container__header">
+                <h2 class="container__title">
+                    <span class="container__title__label u-text-hyphenate">@title</span>
+                </h2>
             </div>
-        </div>
-    </header>
 
-    <div class="gs-container">
-        <div class="tag-index__main-column">
-            <ul class="linkslist">
-            @for(page <- listings.pages) {
-                <li class="linkslist__item">
-                    <a href="@LinkTo(s"/index/${id}/${page.id}")" class="linkslist__action tag-index__tag-link">@page.title</a>
-                </li>
-            }
-            </ul>
+            <div class="container__body">
+                <ul class="linkslist">
+                @for(page <- listings.pages) {
+                    <li class="linkslist__item">
+                        <a href="@LinkTo(s"/index/$id/${page.id}")" class="linkslist__action tag-index__tag-link">@page.title</a>
+                    </li>
+                }
+                </ul>
+            </div>
         </div>
     </div>
 </div>

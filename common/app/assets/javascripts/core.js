@@ -1,27 +1,7 @@
 require([
     // 3rd party libs
     'raven',
-    'lodash/arrays/compact',
-    'lodash/arrays/first',
-    'lodash/arrays/flatten',
-    'lodash/arrays/last',
-    'lodash/arrays/uniq',
-    'lodash/arrays/zip',
-    'lodash/chaining/wrapperValueOf',
-    'lodash/collections/every',
-    'lodash/collections/filter',
-    'lodash/collections/forEach',
-    'lodash/collections/map',
-    'lodash/collections/max',
-    'lodash/collections/pluck',
-    'lodash/collections/sortBy',
-    'lodash/objects/clone',
-    'lodash/objects/functions',
-    'lodash/objects/isArguments',
-    'lodash/objects/isArray',
-    'lodash/objects/isString',
-    'lodash/objects/mapValues',
-    'lodash/objects/values',
+    'lodash/main',
     'lodash/utilities/mixin',
 
     // utilities
@@ -32,7 +12,6 @@ require([
     'common/utils/atob',
     'common/utils/clamp',
     'common/utils/config',
-    'common/utils/context',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/easing',
@@ -55,5 +34,6 @@ require([
     'common/modules/experiments/ab',
     'common/modules/lazyload',
     'common/modules/ui/images',
-    'common/modules/ui/tabs'
+    'common/modules/ui/tabs',
+    'common/modules/userPrefs'
 ], function() {});

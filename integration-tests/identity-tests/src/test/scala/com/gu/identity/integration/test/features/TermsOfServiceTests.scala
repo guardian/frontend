@@ -10,7 +10,14 @@ class TermsOfServiceTests extends IdentitySeleniumTestSuite {
     scenarioWeb("should not be empty or trivial") { implicit driver: WebDriver =>
       val tosPage = BaseSteps().goToTermsOfServicePage()
       val minimumTosContentSize = 100
-      tosPage.getContent().size should be > minimumTosContentSize
+      val tosContent: String = tosPage.getContent()
+
+      tosContent.size should be > minimumTosContentSize
+
+      tosContent.contains("Terms and conditions") should be (true)
+      tosContent.contains("Guardian") should be (true)
+      tosContent.contains("theguardian.com") should be (true)
+      tosContent.contains("disclaimer") should be (true)
     }
   }
 }

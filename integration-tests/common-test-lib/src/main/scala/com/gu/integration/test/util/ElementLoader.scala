@@ -120,9 +120,8 @@ object ElementLoader extends TestLogging {
   }
 
   /**
-   * This method is needed because calling isDisplayed on a list of elements, which were asynchronously loaded,
-   * was proven to be a bit flaky. So calling this method, before calling is displayed, will make sure the elements are loaded and
-   * visible
+   * Utility method which uses a WebDriverWait and the provided expected condition and then returns a Boolean based on
+   * the WebDriverWait(...).until outcome.
    */
   def waitUntil[T](expectedCondition: ExpectedCondition[T], timeoutInSeconds: Int = 3)(implicit driver: WebDriver): Boolean = {
     try {
@@ -134,5 +133,13 @@ object ElementLoader extends TestLogging {
       }
     }
     true
+  }
+
+  /**
+   * Utility method which uses a WebDriverWait and the provided expected condition and then returns the generic object instance
+   * based on the WebDriverWait(...).until outcome.
+   */
+  def waitUntilObject[T](expectedCondition: ExpectedCondition[T], timeoutInSeconds: Int = 3)(implicit driver: WebDriver): T = {
+    new WebDriverWait(driver, timeoutInSeconds).until(expectedCondition)
   }
 }

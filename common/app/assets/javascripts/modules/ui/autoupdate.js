@@ -144,9 +144,6 @@ define([
                         that.view.render.call(that, response);
                         mediator.emit('modules:autoupdate:loaded', response);
                     }
-                },
-                function(req) {
-                    raven.captureMessage('Failed to load auto-update: ' + req.statusText);
                 }
             );
         };

@@ -9,6 +9,8 @@ class ChangePasswordPage(implicit driver: WebDriver) extends UserFormPage {
   private def newRepeatPasswordField: WebElement = findByTestAttribute("new-password-repeat")
   private def changePwdButton: WebElement = findByTestAttribute("change-pwd")
 
+  private def resetPwdLink: WebElement = findByTestAttribute("reset-password")
+
   def enterOldPassword(oldPassword: String) = {
     oldPasswordField.sendKeys(oldPassword)
     this
@@ -27,5 +29,10 @@ class ChangePasswordPage(implicit driver: WebDriver) extends UserFormPage {
   def submitChangePassword(): PasswordResetConfirmationPage = {
     changePwdButton.click()
     new PasswordResetConfirmationPage()
+  }
+
+  def clickResetPasswordLink(): PasswordResetRequestPage = {
+    resetPwdLink.click()
+    new PasswordResetRequestPage()
   }
 }

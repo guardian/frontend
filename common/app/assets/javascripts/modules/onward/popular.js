@@ -9,11 +9,11 @@ define([
 ) {
 
 
-    function popular(config, context, isExpandable, url, targetSelector) {
+    function popular(config, isExpandable, url, targetSelector) {
        mediator.emit('register:begin','popular-in-section');
 
         targetSelector = targetSelector || '.js-popular';
-        var container = context.querySelector(targetSelector);
+        var container = document.body.querySelector(targetSelector);
 
         if (container) {
             // some pages, e.g. profiles, are flagged as 'section: global', a non-existent section - this ignores those
@@ -29,8 +29,7 @@ define([
                     mediator.emit('fragment:ready:images', container);
                     mediator.emit('register:end','popular-in-section');
                 },
-                error: function(req) {
-                    raven.captureMessage('Failed to load most read: ' + req.statusText);
+                error: function() {
                     mediator.emit('register:error','popular-in-section');
                 }
             }).load();

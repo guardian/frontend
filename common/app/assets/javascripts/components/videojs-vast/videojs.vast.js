@@ -192,16 +192,7 @@
         }
       };
 
-      player.one('error', player.vast.onError);
       player.one("ended", player.vast.tearDown);
-    };
-
-    player.vast.removeSafariAdBlockStyles = function() {
-        player.el().querySelector('.vjs-tech').setAttribute('style', '');
-    };
-
-    player.vast.onError = function() {
-        player.vast.removeSafariAdBlockStyles();
     };
 
     player.vast.tearDown = function() {
@@ -209,7 +200,6 @@
       player.vast.blocker.parentNode.removeChild(player.vast.blocker);
       player.off('timeupdate', player.vast.timeupdate);
       player.off('ended', player.vast.tearDown);
-      player.off('error', player.vast.onError);
       player.ads.endLinearAdMode();
       if (player.vast.showControls ) {
         player.controls(true);
