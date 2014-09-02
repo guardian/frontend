@@ -4,94 +4,107 @@ import common._
 import play.api.mvc._
 import services.{Archive, DynamoDB, Googlebot404Count}
 import java.net.URLDecoder
-import model.{NoCache, Cached}
-import scala.concurrent.Future.successful
+import model.Cached
+
 
 object ArchiveController extends Controller with Logging with ExecutionContexts {
- 
-  private def destinationFor(path: String) = DynamoDB.destinationFor(path).map(_.filterNot { destination =>
-      linksToItself(path, destination.location)
-  })
 
-  def isEncoded(path: String): Option[String] = {
-    val decodedPath = URLDecoder.decode(path, "UTF-8")
-    if (decodedPath != path) Some(decodedPath) else None
-  } 
+  private val R1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
+  private val PathPattern = s"""www.theguardian.com/([\\w\\d-]+)/(.*)""".r
+  private val GoogleBot = """.*(Googlebot).*""".r
 
-  // arts/gallery/image/0,,-126 -> arts/pictures/image/0,,-126
-  def isGallery(path: String): Option[String] = if (path contains "/gallery/")
-    Some(path.replace("/gallery/", "/pictures/"))
-  else
-    None
+  def lookup(path: String) = Action.async{ implicit request =>
 
-  def lowercase(path: String): Option[Result] = path.split("/").toList match {
-    case "www.theguardian.com" :: section :: other if section.exists(_.isUpper) => Some(Cached(300){
-      Redirect(s"http://www.theguardian.com/${section.toLowerCase}/${other.mkString("/")}")
+    // lookup the path to see if we have a location for it in the database
+    lookupPath(path).map(_.getOrElse{
+
+      // if we do not have a location in the database then follow these rules
+      path match {
+        case Decoded(decodedPath) => redirectTo(decodedPath)
+        case Gallery(gallery)     => redirectTo(gallery)
+        case Century(century)     => redirectTo(century)
+        case Lowercase(lower)     => redirectTo(lower)
+
+        case _ =>
+          log404(request)
+          // short cache time as we might just be waiting for the content api to index
+          Cached(10)(NotFound(views.html.notFound()))
+      }
     })
-    case _ => None
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
-  private val r1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   def normalise(path: String, zeros: String = ""): Option[String] = {
     path match {
-      case r1ArtifactUrl(path, artifactOrContextId, extension) =>
+      case R1ArtifactUrl(path, artifactOrContextId, extension) =>
         val normalisedUrl = s"www.theguardian.com/$path/0,,$artifactOrContextId,$zeros.html"
         Some(normalisedUrl)
       case _ => None
     }
   }
 
-  private val PathPattern = s"""www.theguardian.com/([\\w\\d-]+)/(.*)""".r
   def linksToItself(path: String, destination: String): Boolean = path match {
     case PathPattern(_, r1path) => destination contains r1path
     case _ => false
   }
+ 
+  private def destinationFor(path: String) = DynamoDB.destinationFor(path).map(_.filterNot { destination =>
+      linksToItself(path, destination.location)
+  })
 
-  def lookup(path: String) = Action.async{ implicit request =>
+  private object Decoded {
+    def unapply(path: String): Option[String] = {
+        val decodedPath = URLDecoder.decode(path, "UTF-8").replace(" ", "+") // the + is for combiner pages
+        if (decodedPath != path) Some(decodedPath) else None
+    }
+  }
 
-    /*
-     * This is a chain of tests that look at the URL path and attempt to figure
-     * out what should happen to the request.
-     *
-     * As much as possible we want to normalise any odd looking URLs before sending
-     * a HTTP 2XX by sending a 3XX response back to the client. 
-     *
-     * Typically we want any redirects to happen first as these are free,
-     * before falling through to a couple of lookups in s3 and dyanmodb.
-     *
-     * If we don't find a record of the given path we ultimately need to serve
-     * a 404.
-     *
-     * Beware of creating redirect loops!
-     */
+  private object Gallery {
+    def unapply(path: String): Option[String] =
+      if (path contains "/gallery/") Some(path.replace("/gallery/", "/pictures/")) else None
+  }
 
-    isEncoded(path).map(url => successful(Redirect(s"http://$url", 301)))
-    .getOrElse(lookupPath(path)
-      .map{ _.orElse(redirectGallery(path))
-        .orElse(redirectCentury(path))
-        .orElse(lowercase(path))
-        .getOrElse{
-          log.info(s"Not Found (404): $path")
-          logGoogleBot(request)
-          // TODO do some analysis on the results of this and then set a more appropriate cache header
-          NoCache(NotFound(views.html.notFound()))
-        }
+  private object Century {
+    private val CenturyUrlEx = """www.theguardian.com\/century(\/)?$""".r
+    private val CenturyDecadeUrlEx = """www.theguardian.com(\/\d{4}-\d{4})(\/)?$""".r
+    private val CenturyStoryUrlEx = """www.theguardian.com\/(\d{4}-\d{4})\/Story\/([0|1]?,[\d]*,-?\d+,[\d]*)(.*)""".r
+    private val ngCenturyFront = "www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century"
+
+    def unapply(path: String): Option[String] = {
+      path match {
+        case CenturyUrlEx(_) => Some(ngCenturyFront)
+        case CenturyDecadeUrlEx(_, _) => Some(ngCenturyFront)
+        case CenturyStoryUrlEx(decade, storyId, ext) => Some(s"www.theguardian.com/century/$decade/Story/$storyId$ext")
+        case _ =>  None
       }
-    )
+    }
+  }
+
+  private object Lowercase {
+    def unapply(path: String): Option[String] = path.split("/").toList match {
+        case "www.theguardian.com" :: section :: other if section.exists(_.isUpper) =>
+          Some(s"www.theguardian.com/${section.toLowerCase}/${other.mkString("/")}")
+        case _ => None
+    }
+  }
+
+  private def redirectTo(path: String)(implicit request: RequestHeader): Result = {
+    log.info(s"301,${RequestLog(request)}")
+    Cached(300)(Redirect(s"http://$path", 301))
   }
 
   private def logDestination(path: String, msg: String, destination: String) {
     log.info(s"Destination: $msg : $path -> $destination")
   }
 
-  // do some specific logging for Googlebot.
-  // we really want to know how many of these (and what) are 404'ing
-  private def logGoogleBot(request: Request[AnyContent]) = request.headers.get("User-Agent")
-    .filter(_.contains("Googlebot")).foreach { bot =>
-      log.info(s"GoogleBot => ${request.uri}")
-      Googlebot404Count.increment()
-  }
+  private def log404(request: Request[AnyContent]) =
+    request.headers.get("User-Agent").getOrElse("no user agent") match {
+      case GoogleBot(_) =>
+        log.warn(s"404,${RequestLog(request)}")
+        Googlebot404Count.increment()
+      case _ =>
+        log.info(s"404,${RequestLog(request)}")
+    }
 
   private def lookupPath(path: String) = destinationFor(s"http://${normalise(path).getOrElse(path)}").map { _.map {
     case services.Redirect(url) =>
@@ -102,30 +115,5 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
       logDestination(path, "archive", archivePath)
       Cached(300)(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
   }}
-
-  // needs to happen *after* path lookup as some old galleries
-  // are still served under the URL 'gallery'
-  private def redirectGallery(path: String) = isGallery(path).map { url =>
-    logDestination(path, "gallery", url)
-    Cached(300)(Redirect(s"http://$url", 301))
-  }
-
-  private def redirectCentury(path: String) = newCenturyUrl(path).map { url =>
-    logDestination(path, "century", url)
-    Cached(300)(Redirect(s"http://$url", 301))
-  }
-
-  def newCenturyUrl(path: String): Option[String] = {
-    val centuryUrlEx = """www.theguardian.com\/century(\/)?$""".r
-    val centuryDecadeUrlEx = """www.theguardian.com(\/\d{4}-\d{4})(\/)?$""".r
-    val centuryStoryUrlEx = """www.theguardian.com\/(\d{4}-\d{4})\/Story\/([0|1]?,[\d]*,-?\d+,[\d]*)(.*)""".r
-    val ngCenturyFront = "www.theguardian.com/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century"
-    path match {
-      case centuryUrlEx(_) => Some(ngCenturyFront)
-      case centuryDecadeUrlEx(centuryDecade, _) => Some(ngCenturyFront)
-      case centuryStoryUrlEx(decade, storyId, ext) => Some(s"www.theguardian.com/century/$decade/Story/$storyId$ext")
-      case _ =>  None
-    }
-  }
 
 }

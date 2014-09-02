@@ -32,7 +32,6 @@ require([
     'common/utils/atob',
     'common/utils/clamp',
     'common/utils/config',
-    'common/utils/context',
     'common/utils/cookies',
     'common/utils/detect',
     'common/utils/easing',
@@ -55,5 +54,6 @@ require([
     'common/modules/experiments/ab',
     'common/modules/lazyload',
     'common/modules/ui/images',
-    'common/modules/ui/tabs'
+    'common/modules/ui/tabs',
+    'common/modules/userPrefs'
 ], function() {});

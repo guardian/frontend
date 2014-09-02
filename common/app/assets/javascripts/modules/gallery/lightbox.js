@@ -22,7 +22,7 @@ define([
     Overlay
 ) {
 
-    function LightboxGallery(config, context) {
+    function LightboxGallery(config) {
         var self = this,
             pageUrl = '/' + config.page.pageId, // The page url we're starting from
             galleryNode,
@@ -47,9 +47,9 @@ define([
             self.opts = opts || {};
 
             // Apply tracking to links
-            $(self.selector + ' a', context).attr('data-is-ajax', '1');
+            $(self.selector + ' a').attr('data-is-ajax', '1');
 
-            bean.on(context, 'click', self.selector, function(e) {
+            bean.on(document.body, 'click', self.selector, function(e) {
                 e.preventDefault();
 
                 var currentTarget = e.currentTarget,

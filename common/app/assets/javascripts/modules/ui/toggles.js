@@ -12,11 +12,11 @@ define([
             controls,
             readyClass = 'js-toggle-ready';
 
-        this.init = function(context) {
-            controls = context.querySelectorAll('[data-toggle]');
+        this.init = function() {
+            controls = document.body.querySelectorAll('[data-toggle]');
             Array.prototype.forEach.call(controls, function(control) {
                 if (!bonzo(control).hasClass(readyClass)) {
-                    var target = self.getTarget(control, context);
+                    var target = self.getTarget(control);
                     if (target) {
                         control.toggleTarget = target;
                         bonzo(control).addClass(readyClass);
@@ -46,10 +46,10 @@ define([
         });
     };
 
-    Toggles.prototype.getTarget = function(control, context) {
+    Toggles.prototype.getTarget = function(control) {
         var targetClass = bonzo(control).data('toggle');
         if (targetClass) {
-            return context.querySelector('.' + targetClass);
+            return document.body.querySelector('.' + targetClass);
         }
     };
 
