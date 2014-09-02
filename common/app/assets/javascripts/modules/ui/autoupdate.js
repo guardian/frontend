@@ -79,11 +79,11 @@ define([
                     elementsToAdd = toArray(resultHtml.children).reverse();
                 }
 
+                $attachTo[manipulation](elementsToAdd);
+
                 if (elementsToAdd.length) {
                     mediator.emit('modules:autoupdate:updates', elementsToAdd);
                 }
-
-                $attachTo[manipulation](elementsToAdd);
                 // add a timestamp to the attacher
                 $attachTo.attr('data-last-updated', date);
                 twitter.enhanceTweets();
@@ -92,7 +92,6 @@ define([
                     this.notificationBar.setState('hidden');
                     this.view.revealNewElements.call(this);
                 } else if(this.unreadBlocks > 0) {
-                    console.log(this.unreadBlocks);
                     this.notificationBar.notify(this.unreadBlocks);
                     mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
                 }

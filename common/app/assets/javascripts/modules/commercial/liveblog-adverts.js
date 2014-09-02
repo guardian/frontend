@@ -11,25 +11,50 @@ define([
 ) {
 
     var postsCount,
-        adTimeout;
+        adTimeout,
+        criteria,
+        state = 'first',
+        adCriterias = {
+            minutebyminute: {
+                first: {
+                    timeout: 2 * 60 * 1000,
+                    posts: 2
+                },
+                further: {
+                    timeout: 5 * 60 * 1000,
+                    posts: 5
+                }
+            },
+            'default': {
+                first: {
+                    timeout: 2 * 60 * 1000,
+                    posts: 1
+                },
+                further: {
+                    timeout: 5 * 60 * 1000,
+                    posts: 5
+                }
+            }
+        },
         reset = function () {
             postsCount = 0;
             adTimeout = false;
             window.setInterval(function () {
                 adTimeout = true;
-            }, 10 * 1000);
+            }, criteria[state].timeout);
         },
-        init = function (c) {
+        init = function () {
+            criteria = adCriterias['default'];
             reset();
             mediator.on('modules:autoupdate:updates', function (updates) {
                 postsCount += updates.length;
-                console.log(postsCount);
-                console.log(adTimeout);
-                if (postsCount >= 1 && adTimeout) {
-                    // add an ad
-                    $('.article-body').prepend(dfp.createAdSlot('inline1', 'liveblog-inline'));
+                if (postsCount >= criteria[state].posts && adTimeout) {
+                    // add the ad
+                    $('.article-body .block')
+                        .after(dfp.createAdSlot('inline1', 'liveblog-inline'));
                     reset();
                 }
+                state = 'further';
             });
         };
 
