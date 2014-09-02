@@ -2,47 +2,56 @@ package tools
 
 import CloudWatch._
 import com.amazonaws.services.cloudwatch.model.{Dimension, GetMetricStatisticsRequest}
+import common.ExecutionContexts
 import org.joda.time.DateTime
+import awswrappers.cloudwatch._
 
-object HttpErrors {
+import scala.concurrent.Future
 
-  def global4XX = new AwsLineChart("Global 4XX", Seq("Time", "4xx/min"), ChartFormat.SingleLineBlue, euWestClient.getMetricStatisticsAsync(
-    metric("HTTPCode_Backend_4XX")
-    ,asyncHandler)
-  )
+object HttpErrors extends ExecutionContexts {
+  def global4XX = euWestClient.getMetricStatisticsFuture(metric("HTTPCode_Backend_4XX")) map { metric =>
+    new AwsLineChart("Global 4XX", Seq("Time", "4xx/min"), ChartFormat.SingleLineBlue, metric)
+  }
 
-  private val prod =  new Dimension().withName("Stage").withValue("prod")
+  private val prod = new Dimension().withName("Stage").withValue("prod")
 
-  def googlebot404s = Seq(
-    new AwsLineChart("12 hours", Seq("Time", "404/min"), ChartFormat.SingleLineBlue, euWestClient.getMetricStatisticsAsync(
+  def googlebot404s = withErrorLogging(Future.sequence(Seq(
+    euWestClient.getMetricStatisticsFuture(
       metric("googlebot-404s").withStartTime(new DateTime().minusHours(12).toDate)
-        .withNamespace("ArchiveMetrics").withDimensions(prod),
-      asyncHandler)
-    ),
-    new AwsLineChart("2 weeks", Seq("Time", "404/15min"), ChartFormat.SingleLineBlue, euWestClient.getMetricStatisticsAsync(
+        .withNamespace("ArchiveMetrics").withDimensions(prod)
+    ) map { metric =>
+      new AwsLineChart("12 hours", Seq("Time", "404/min"), ChartFormat.SingleLineBlue, metric)
+    },
+    euWestClient.getMetricStatisticsFuture(
       metric("googlebot-404s").withNamespace("ArchiveMetrics")
         .withDimensions(prod).withPeriod(900)
-        .withStartTime(new DateTime().minusDays(14).toDate),
-      asyncHandler)
-    )
-  )
+        .withStartTime(new DateTime().minusDays(14).toDate)
+    ) map { metric =>
+      new AwsLineChart("2 weeks", Seq("Time", "404/15min"), ChartFormat.SingleLineBlue, metric)
+    }
+  )))
 
-  def global5XX = new AwsLineChart("Global 5XX", Seq("Time", "5XX/ min"), ChartFormat.SingleLineRed, euWestClient.getMetricStatisticsAsync(
+  def global5XX = withErrorLogging(euWestClient.getMetricStatisticsFuture(
     metric("HTTPCode_Backend_5XX")
-    ,asyncHandler)
-  )
+  ) map { metric =>
+    new AwsLineChart("Global 5XX", Seq("Time", "5XX/ min"), ChartFormat.SingleLineRed, metric)
+  })
 
-  def notFound = (primaryLoadBalancers ++ secondaryLoadBalancers).map{ loadBalancer =>
-    new AwsLineChart(loadBalancer.name, Seq("Time", "4XX/ min"), ChartFormat.SingleLineBlue, euWestClient.getMetricStatisticsAsync(
+  def notFound = withErrorLogging(Future.traverse(primaryLoadBalancers ++ secondaryLoadBalancers) { loadBalancer =>
+    euWestClient.getMetricStatisticsFuture(
       metric("HTTPCode_Backend_4XX", Some(loadBalancer.id))
-    ))
-  }
+    ) map { metric =>
+      new AwsLineChart(loadBalancer.name, Seq("Time", "4XX/ min"), ChartFormat.SingleLineBlue, metric)
+    }
+  })
 
-  def errors = (primaryLoadBalancers ++ secondaryLoadBalancers).map{ loadBalancer =>
-    new AwsLineChart(loadBalancer.name, Seq("Time", "5XX/ min"), ChartFormat.SingleLineRed, euWestClient.getMetricStatisticsAsync(
+  def errors = withErrorLogging(Future.traverse(primaryLoadBalancers ++ secondaryLoadBalancers) { loadBalancer =>
+    euWestClient.getMetricStatisticsFuture(
       metric("HTTPCode_Backend_5XX", Some(loadBalancer.id))
-    ))
-  }
+    ) map { metric =>
+      new AwsLineChart(loadBalancer.name, Seq("Time", "5XX/ min"), ChartFormat.SingleLineRed, metric)
+    }
+  })
 
   def metric(metricName: String, loadBalancer: Option[String] = None) = {
     val metric = new GetMetricStatisticsRequest()

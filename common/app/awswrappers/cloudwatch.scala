@@ -1,7 +1,7 @@
 package awswrappers
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
-import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, GetMetricStatisticsRequest, PutMetricDataRequest}
+import com.amazonaws.services.cloudwatch.model._
 
 import scala.concurrent.Future
 
@@ -18,5 +18,8 @@ object cloudwatch {
 
     def getMetricStatisticsFuture(request: GetMetricStatisticsRequest): Future[GetMetricStatisticsResult] =
       asFuture[GetMetricStatisticsRequest, GetMetricStatisticsResult](client.getMetricStatisticsAsync(request, _))
+
+    def listMetricsFuture(request: ListMetricsRequest): Future[ListMetricsResult] =
+      asFuture[ListMetricsRequest, ListMetricsResult](client.listMetricsAsync(request, _))
   }
 }
