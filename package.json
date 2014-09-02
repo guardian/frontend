@@ -10,7 +10,7 @@
     "grunt-concurrent": "^0.5.0",
     "grunt-contrib-clean": "~0.5",
     "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-imagemin": "^0.7.0",
+    "grunt-contrib-imagemin": "^0.8.1",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-requirejs": "~0.4.3",
     "grunt-contrib-sass": "~0.7.2",
@@ -43,7 +43,8 @@
     "moment": "^2.7.0",
     "phantomjs": "~1.9.1",
     "svgo": "0.4.4",
-    "time-grunt": "^0.4.0"
+    "time-grunt": "^0.4.0",
+    "grunt-bytesize": "^0.1.1"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"

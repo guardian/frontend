@@ -158,13 +158,7 @@ $commercial-cta-diameter: (
         padding: $gs-baseline $gs-gutter/2;
         
         .commercial__title {
-            display: none;
             float: none;
-        }
-        @include mq(tablet) {
-            .commercial__title {
-                display: block;
-            }
         }
         @include mq(leftCol, wide) {
             .i-bookshop-logo--bookshop {

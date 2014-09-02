@@ -50,6 +50,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val secure = Play.application.configuration.getBoolean("guardian.secure").getOrElse(false)
 
     lazy val isNonProd = List("dev", "code", "gudev").contains(stage)
+
+    lazy val isPreview = projectName == "preview"
   }
 
   object switches {
