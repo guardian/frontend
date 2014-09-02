@@ -88,7 +88,8 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
        "should render the reset password form when the user token has not expired" in Fake {
          val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
-         status(result) should equal(OK)
+         status(result) should equal(SEE_OTHER)
+         header("Location", result).head should be ("/reset-password/1234")
        }
     }
 
@@ -114,7 +115,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
       "should return password confirmation view in" in Fake {
          val result = resetPasswordController.resetPassword("1234")(fakeRequest)
          status(result) should be (SEE_OTHER)
-        header("Location", result).head should be ("/password/confirmation")
+        header("Location", result).head should be ("/password/reset-confirmation")
       }
     }
 
