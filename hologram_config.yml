@@ -4,6 +4,7 @@
 # The directory containing the source files to parse recursively
 source:
  - ./common/app/assets/stylesheets/module
+ - ./common/app/assets/stylesheets/base
 
 # The directory that hologram will build to
 destination: ./docs/styleguide
