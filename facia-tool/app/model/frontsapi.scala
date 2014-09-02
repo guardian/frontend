@@ -125,6 +125,7 @@ trait UpdateActions extends Logging {
   val itemMetaWhitelistFields: Seq[String] = Seq(
     "headline",
     "href",
+    "kicker",
     "snapType",
     "snapCss",
     "snapUri",
@@ -135,7 +136,6 @@ trait UpdateActions extends Logging {
     "imageSrc",
     "imageSrcWidth",
     "imageSrcHeight",
-    "isBreaking",
     "showMainVideo"
   )
 

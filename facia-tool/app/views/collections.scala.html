@@ -286,35 +286,35 @@
 
                     <div class="supporting-message">Add supporting content below</div>
 
-                    <div class="misc__overrides">
-                        Image
+                    <div class="article__overrides__other">
+                        <select data-bind="
+                            event: {blur: save},
+                            options: $root.kickers,
+                            value: meta.kicker,
+                            optionsCaption: 'Kicker...'"></select>
 
-                        <a data-bind="
-                            click: toggleOpenImage,
-                            text: meta.imageSrc() ? 'replaced' : 'replace',
-                            css: {selected: meta.imageSrc}"></a>
-                        &middot;
-                        <a data-bind="
-                            click: toggleImageAdjustBoost,
-                            text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
-                            css: {selected: meta.imageAdjust() === 'boost'}"></a>
-                        &middot;
-                        <a data-bind="
-                            click: toggleImageAdjustHide,
-                            text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
-                            css: {selected: meta.imageAdjust() === 'hide'}"></a>
-                        &middot;
-                        <!-- ko if: mainMediaType() === 'video' -->
-                        <a data-bind="
-                            click: toggleShowMainVideo,
-                            css: {selected: meta.showMainVideo}">video</a>
-                        &middot;
-                        <!-- /ko -->
-                        Mark as
-                        <a data-bind="
-                            click: toggleIsBreaking,
-                            css: {selected: meta.isBreaking}">breaking news</a>
+                        <div class="supporting-message">Add supporting content below</div>
                     </div>
+                </div>
+
+                <div class="image__overrides">
+                    <a data-bind="
+                        click: toggleOpenImage,
+                        text: meta.imageSrc() ? 'replaced' : 'replace',
+                        css: {selected: meta.imageSrc}"></a>
+                    <a data-bind="
+                        click: toggleImageAdjustBoost,
+                        text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
+                        css: {selected: meta.imageAdjust() === 'boost'}"></a>
+                    <a data-bind="
+                        click: toggleImageAdjustHide,
+                        text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
+                        css: {selected: meta.imageAdjust() === 'hide'}"></a>
+                    <!-- ko if: mainMediaType() === 'video' -->
+                    <a data-bind="
+                        click: toggleShowMainVideo,
+                        css: {selected: meta.showMainVideo}">video</a>
+                    <!-- /ko -->
                 </div>
 
                 <div data-bind="if: group.parentType === 'Collection' || group.parentType === 'Clipboard'">
@@ -422,9 +422,11 @@
                                 click: open"></span>
                         <!-- /ko -->
 
-                        <span class="is is--breaking" data-bind="
-                            visible: meta.isBreaking,
-                            click: open">Breaking News</span>
+                        <span data-bind="
+                            attr: {class: 'is is--' + meta.kicker()}
+                            visible: meta.kicker,
+                            text: meta.kicker,
+                            click: open"></span>
 
                         <span data-bind="
                             attr: {href: id},
