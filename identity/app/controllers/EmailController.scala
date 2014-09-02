@@ -70,8 +70,7 @@ class EmailController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   def savePreferences = CSRFCheck {
     authAction.async { implicit request =>
-      println("***********************************")
-
+      
       val idRequest = idRequestParser(request)
       val userId = request.user.getId()
       val auth = request.auth
