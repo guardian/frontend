@@ -18,6 +18,11 @@
                                 }
                                 <div class="lineitem__offer">
                                     <h4 class="lineitem__title">@item.webTitle</h4>
+                                    <div class="lineitem__standfirst">
+                                        @item.standfirst.map { text =>
+                                            @Html(text)
+                                        }
+                                    </div>
                                     <div class="item__meta">
                                         <time
                                             class="item__timestamp js-item__timestamp"

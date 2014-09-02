@@ -3,11 +3,13 @@
     Description: Filter displayed events depending on their type
 */
 define([
+    'bonzo',
     'common/utils/$',
     'common/modules/component',
     'common/utils/mediator',
     'lodash/collections/toArray'
 ], function (
+    bonzo,
     $,
     component,
     mediator,
@@ -15,8 +17,7 @@ define([
 ) {
     'use strict';
 
-    function Filter(context) {
-        this.context = context || document;
+    function Filter() {
         this.componentClass = 'live-filter';
         this.useBem = true;
     }
@@ -38,11 +39,11 @@ define([
     };
 
     Filter.prototype.toggle = function() {
-        var blocks = toArray($('.block', this.context).detach());
+        var blocks = toArray($('.block').detach());
         blocks.reverse();
 
         this.toggleState('order-by-oldest');
-        $(this.context).prepend(blocks);
+        bonzo(document.body).prepend(blocks);
 
         mediator.emit('module:filter:toggle', this.hasState('order-by-oldest'));
     };

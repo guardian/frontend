@@ -46,6 +46,7 @@ trait DynamoDB extends Logging with ExecutionContexts {
       val headers = signedHeaders(DynamoDbGet, bodyContent)
 
       val asyncRequest = WS.url(s"http://${AwsEndpoints.dynamoDb}")
+        .withRequestTimeout(1000)
         .withHeaders(headers:_*)
 
       asyncRequest.post(bodyContent).map(_.json).map{ json =>

@@ -1,6 +1,6 @@
 /* ==========================================================================
-Content API component
-========================================================================== */
+   Content API component
+   ========================================================================== */
 
 .commercial--capi {
     .commercial__head {
@@ -38,6 +38,12 @@ Content API component
     }
     .lineitem__link {
         float: none;
+    }
+    .lineitem__standfirst {
+        margin: $gs-baseline/2 0;
+        p {
+            margin: 0;
+        }
     }
     @include mq(tablet) {
         .lineitem {

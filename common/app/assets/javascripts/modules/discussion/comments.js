@@ -37,8 +37,7 @@ define([
  * @param {Object} mediator
  * @param {Object=} options
  */
-var Comments = function(context, mediator, options) {
-    this.context = context || document;
+var Comments = function(mediator, options) {
     this.mediator = mediator;
     this.setOptions(options);
 
@@ -198,7 +197,7 @@ Comments.prototype.ready = function() {
  * This is here as we don't want to create a comment Component
  */
 Comments.prototype.bindCommentEvents = function() {
-    RecommendComments.init(this.context);
+    RecommendComments.init();
 
     if (this.user && this.user.privateFields.canPostComment) {
         this.on('click', this.getClass('commentReply'), this.replyToComment);
@@ -346,7 +345,7 @@ Comments.prototype.renderComments = function(resp) {
     ));
 
     if (!this.isReadOnly()) {
-        RecommendComments.init(this.context);
+        RecommendComments.init();
     }
 
     this.emit('loaded');

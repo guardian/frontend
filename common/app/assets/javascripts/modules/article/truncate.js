@@ -4,7 +4,6 @@ define([
     'bonzo',
     'qwery',
     'common/utils/config',
-    'common/utils/context',
     'common/utils/detect',
     'common/utils/mediator',
     'common/modules/article/twitter'
@@ -14,19 +13,17 @@ define([
     bonzo,
     qwery,
     config,
-    context,
     detect,
     mediator,
     twitter
 ) {
-    context = context();
     var truncatedClass = 'truncated-block',
         numBlocks = detect.getBreakpoint() === 'mobile' ? 5 : 10,
-        $truncatedBlocks = bonzo(qwery('.block', context).slice(numBlocks));
+        $truncatedBlocks = bonzo(qwery('.block').slice(numBlocks));
 
     function removeTruncation() {
         // Reinstate tweets and enhance them.
-        $('.truncated-block blockquote.tweet-truncated', context).removeClass('tweet-truncated').addClass('tweet');
+        $('.truncated-block blockquote.tweet-truncated').removeClass('tweet-truncated').addClass('tweet');
         twitter.enhanceTweets();
 
         $truncatedBlocks.removeClass(truncatedClass);
@@ -43,16 +40,16 @@ define([
                     'View all updates'+
                 '</button>'
             ).each(function(el) {
-                $('.article-body', context).append(el);
+                $('.article-body').append(el);
             });
 
-            bean.on(context, 'click', '.article-elongator', removeTruncation.bind(this));
+            bean.on(document.body, 'click', '.article-elongator', removeTruncation.bind(this));
             mediator.on('module:liveblog:showkeyevents', removeTruncation.bind(this));
             mediator.on('module:filter:toggle', removeTruncation.bind(this));
 
             $truncatedBlocks.addClass(truncatedClass);
             // Avoid running the twitter widget on truncated tweets.
-            $('.truncated-block blockquote.tweet', context).removeClass('tweet').addClass('tweet-truncated');
+            $('.truncated-block blockquote.tweet').removeClass('tweet').addClass('tweet-truncated');
         }
     }
 

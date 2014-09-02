@@ -32,14 +32,10 @@ case class ImageAsset(private val delegate: Asset, index: Int) {
   lazy val caption: Option[String] = fields.get("caption")
   lazy val altText: Option[String] = fields.get("altText")
 
-  lazy val cleanedCaption: String = {
-    val r = new Regex("Photograph: .*$")
-    r.replaceAllIn(caption.getOrElse(""), "")
-  }
-
   lazy val source: Option[String] = fields.get("source")
   lazy val photographer: Option[String] = fields.get("photographer")
   lazy val credit: Option[String] = fields.get("credit")
+  lazy val displayCredit: Boolean = fields.get("displayCredit").exists(_=="true")
 
   lazy val aspectRatioWidth: Int = aspectRatio.getNumerator
   lazy val aspectRatioHeight: Int = aspectRatio.getDenominator

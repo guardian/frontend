@@ -9,21 +9,20 @@ define([
     extend,
     Component
     ){
-    function SocialBurners(config, context) {
+    function SocialBurners(config) {
         mediator.emit('register:begin','social-content');
         this.config = extend(this.config, config);
-        this.context = context;
         this.endpoint = '/most-referred.json';
     }
 
     Component.define(SocialBurners);
 
     SocialBurners.prototype.init = function() {
-        this.fetch(this.context, 'html');
+        this.fetch(document.body, 'html');
     };
 
     SocialBurners.prototype.ready = function() {
-        images.upgrade(this.context);
+        images.upgrade();
         mediator.emit('register:end','social-content');
     };
 
