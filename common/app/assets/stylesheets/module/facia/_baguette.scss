@@ -10,7 +10,7 @@
         margin-bottom: $gs-baseline * 1.5;
     }
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         .facia-slice-wrapper:first-child & {
             @include item--hide-tone-border;
         }

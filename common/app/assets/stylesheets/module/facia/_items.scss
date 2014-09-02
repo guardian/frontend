@@ -314,7 +314,7 @@
     }
 }
 .l-row--items-4 {
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         .item__title--has-icon-mobile {
             padding-left: 30px;
         }

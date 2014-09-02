@@ -1,6 +1,6 @@
 @charset 'UTF-8';
 
-@include mq($to: mobileLandscape) {
+@include mq($until: mobileLandscape) {
     .content--gallery .content__section {
         display: none;
     }
@@ -17,7 +17,7 @@
     padding-top: $gs-baseline;
     min-height: 200px;
 
-    @include mq($to: rightCol) {
+    @include mq($until: rightCol) {
         border-top: 1px dotted $c-mediaAccent2;
 
         &:first-child {
@@ -58,7 +58,7 @@
     overflow: hidden;
     max-height: 100%;
 
-    @include mq($to: rightCol) {
+    @include mq($until: rightCol) {
         margin-bottom: $gs-baseline*3;
     }
     @include mq(rightCol) {
@@ -179,7 +179,7 @@
 
         .meta__comment-count--top,
         .meta__comment-count--top .commentcount {
-            @include mq($to: tablet) {
+            @include mq($until: tablet) {
                 display: block;
             }
         }

@@ -301,7 +301,7 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2-contrasted;
     }
-    @include mq(mobile, $to: faciaLeftCol) {
+    @include mq(mobile, $until: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             margin-top: get-line-height(data, 3)*-2;
 
@@ -317,7 +317,7 @@
         color: $c-neutral2;
     }
 
-    @include mq(mobile, $to: faciaLeftCol) {
+    @include mq(mobile, $until: faciaLeftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             margin-top: get-line-height(data, 3)*-1;
         }
@@ -361,7 +361,7 @@
     @include mq(desktop) {
         margin-left: 62%;
     }
-    @include mq(tablet, $to: faciaLeftCol) {
+    @include mq(tablet, $until: faciaLeftCol) {
         .container--has-toggle & {
             margin-right: gs-span(1);
         }
@@ -435,7 +435,7 @@
 .ad-slot--page-skin {
     height: 0;
 }
-@include mq(mobile, $to: wide) {
+@include mq(mobile, $until: wide) {
     .has-page-skin {
         background-image: none !important;
     }

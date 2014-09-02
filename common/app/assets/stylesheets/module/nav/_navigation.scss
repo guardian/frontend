@@ -147,7 +147,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     }
 
     .navigation--expanded.navigation--has-local-navigation & {
-        @include mq($to: navigationBreakOnTwoLevels) {
+        @include mq($until: navigationBreakOnTwoLevels) {
             border-bottom: 1px solid $c-global-navigation-border;
         }
     }
@@ -161,7 +161,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     }
 
     .navigation--expanded & {
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             border-right: 0;
         }
         @include mq(tablet) {
@@ -326,7 +326,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     clear: both;
     @include clearfix;
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         line-height: 28px;
     }
     @include mq(mobileLandscape, tablet) {
@@ -362,7 +362,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     float: left;
     border-top: 1px solid $c-brandBlue;
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         line-height: $gs-baseline*2;
         padding-bottom: $gs-baseline;
         padding-left: $gs-gutter/2;
@@ -392,7 +392,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     padding-top: $gs-baseline/4;
     overflow: hidden;
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         margin-left: -$gs-gutter/2;
         margin-right: -$gs-gutter/2;
         padding-left: $gs-gutter/2;
@@ -410,7 +410,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         padding-left: $gs-gutter/2;
     }
 }
-@include mq($to: tablet) {
+@include mq($until: tablet) {
     .global-navigation__title,
     .global-navigation__children {
         float: none;
@@ -440,7 +440,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         vertical-align: top;
     }
     .navigation__scroll {
-        @include mq($to: navigationBreakOnTwoLevels) {
+        @include mq($until: navigationBreakOnTwoLevels) {
             overflow-x: scroll;
             -webkit-overflow-scrolling: touch;
         }
@@ -503,7 +503,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
     }
     .local-navigation__item {
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             font-size: 14px;
             line-height: 28px;
             &:last-child {
@@ -523,7 +523,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
 .navigation--expanded .local-navigation__item,
 .global-navigation__child {
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         float: left;
         width: 50%;
         padding-right: 0;

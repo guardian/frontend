@@ -1,6 +1,6 @@
 .container--people {
     .linkslist-container {
-        @include mq($to: desktop) {
+        @include mq($until: desktop) {
             margin-top: 0;
         }
     }

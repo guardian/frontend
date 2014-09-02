@@ -98,7 +98,7 @@
     overflow: hidden; // quick hackfix for overflowing right hand components
     margin-right: $gs-gutter;
 
-    @include mq($to: rightCol) {
+    @include mq($until: rightCol) {
         display: none;
     }
 
@@ -132,7 +132,7 @@
     z-index: 1; // bring-to-front fix to make it clickable
     padding-bottom: $gs-baseline;
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         border-bottom: 1px solid $c-neutral7;
 
         .has-localnav & {
