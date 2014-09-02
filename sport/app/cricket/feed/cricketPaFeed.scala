@@ -40,9 +40,9 @@ object PaFeed extends ExecutionContexts with Logging {
 
   def getMatch(matchId: String): Future[cricketModel.Match] = {
     for {
-      scorecard <- getMatchPaResponse(s"match/$matchId/scorecard")
-      lineups <- getMatchPaResponse(s"match/$matchId/line-ups")
-      details <- getMatchPaResponse(s"match/$matchId")
+      lineups: String  <- getMatchPaResponse(s"match/$matchId/line-ups")
+      details: String <- getMatchPaResponse(s"match/$matchId")
+      scorecard: String <- getMatchPaResponse(s"match/$matchId/scorecard")
     } yield {
       Parser.parseMatch(scorecard, lineups, details)
     }

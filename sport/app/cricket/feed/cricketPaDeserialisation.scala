@@ -1,5 +1,6 @@
 package cricketPa
 
+
 import xml.{NodeSeq, XML}
 import scala.language.postfixOps
 import org.joda.time.format.DateTimeFormat
@@ -10,15 +11,15 @@ object Parser {
 
   def parseMatch(scorecard: String, detail: String, lineups: String): Match = {
 
-    val scorecardData = XML.loadString(scorecard) \ "match"
-    val matchData = XML.loadString(detail) \ "match"
-    val lineupData = XML.loadString(lineups) \ "match"
 
+    val matchData = XML.loadString(detail) \ "match"
     val matchDetail = parseMatchDetail(matchData)
+    val lineupData = XML.loadString(lineups)
+    val scorecardData = XML.loadString(scorecard)
 
     Match(
-      parseTeams(lineupData \ "team"),
-      parseInnings( scorecardData \ "innings"),
+      parseTeams(lineupData \ "match" \ "team"),
+      parseInnings(scorecardData \ "match" \ "innings"),
       matchDetail.competitionName,
       matchDetail.venueName,
       matchDetail.result,
