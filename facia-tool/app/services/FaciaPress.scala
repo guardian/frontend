@@ -64,7 +64,7 @@ object FaciaPress extends Logging with ExecutionContexts {
         }
 
       lazy val draftPress =
-        if (FaciaToolDraftPressSwitch.isSwitchedOn && pressCommand.draft) {
+        if (pressCommand.draft) {
           val fut = Future.traverse(paths)(path => FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft)))
           fut.onComplete {
             case Failure(error) =>

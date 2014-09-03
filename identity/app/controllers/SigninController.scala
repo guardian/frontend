@@ -24,8 +24,6 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
                                  signInService : PlaySigninService)
   extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
 
-  private val flashKey = "signin"
-
   val page = IdentityPage("/signin", "Sign in", "signin")
 
   val form = Form(
@@ -40,7 +38,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
 
   def renderForm = Action { implicit request =>
 
-    val filledForm = form.bindFromFlash(flashKey).getOrElse(form.fill("", "", true))
+    val filledForm = form.bindFromFlash.getOrElse(form.fill("", "", true))
 
     logger.trace("Rendering signin form")
     val idRequest = idRequestParser(request)
@@ -86,7 +84,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   }
 
   def redirectToSigninPage(formWithErrors: Form[(String, String, Boolean)]): Result = {
-    NoCache(SeeOther(routes.SigninController.renderForm().url).flashing(clearPassword(formWithErrors).toFlash(flashKey)))
+    NoCache(SeeOther(routes.SigninController.renderForm().url).flashing(clearPassword(formWithErrors).toFlash))
   }
 
   private def clearPassword(formWithPassword: Form[(String, String, Boolean)]) = {

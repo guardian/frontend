@@ -11,9 +11,9 @@ define([
 ) {
 
     return {
-        init: function (context) {
+        init: function () {
 
-            var resendButton = context.querySelector('.js-id-send-validation-email');
+            var resendButton = document.body.querySelector('.js-id-send-validation-email');
 
             if (resendButton) {
                 var $resendButton = bonzo(resendButton);

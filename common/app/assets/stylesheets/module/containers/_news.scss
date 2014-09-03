@@ -23,7 +23,7 @@
             display: none;
         }
     }
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         .l-row--items-4 {
             .facia-slice__item:nth-child(-n+2) {
                 @include item--hide-tone-border;

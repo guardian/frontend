@@ -16,11 +16,11 @@
    ========================================================================== */
 
 @import 'base/_tables';
-@import 'components/guss-forms/_forms';
+@import 'components/pasteup-forms/_forms';
 @if $old-ie {
-    @include guss-forms-fix-ie8-password-field-webfonts-display;
+    @include pasteup-forms-fix-ie8-password-field-webfonts-display;
 }
-@include guss-forms-defaults;
+@include pasteup-forms-defaults;
 @import 'base/_buttons';
 
 

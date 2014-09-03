@@ -1,7 +1,6 @@
 define([
     'common/modules/identity/api',
     'common/utils/ajax',
-    'common/utils/context',
     'bean',
     'helpers/fixtures',
     'fixtures/discussion/discussion',
@@ -11,7 +10,6 @@ define([
 ], function(
     Id,
     ajax,
-    context,
     bean,
     fixtures,
     discussionJson,
@@ -85,7 +83,6 @@ define([
         beforeEach(function() {
             server = sinon.fakeServer.create();
             fixtures.render(fixture);
-            context.set(document.getElementById(fixturesId));
             commentBox = new CommentBox({
                 discussionId: discussionId,
                 maxLength: maxCommentLength,

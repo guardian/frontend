@@ -57,10 +57,6 @@ function (
                         err = 'Sorry, that article is malformed (has no internalContentCode)';
                     }
 
-                // A snap, but they're disabled
-                } else if (!vars.model.switches()['facia-tool-snaps']) {
-                    err = 'Sorry, snaps are disabled';
-
                 // A snap, but a link off of the tool itself
                 } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
                     err = 'Sorry, that link cannot be added to a front';

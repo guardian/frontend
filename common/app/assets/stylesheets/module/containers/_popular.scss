@@ -27,7 +27,7 @@
             }
         }
     }
-    @include mq($to: wide) {
+    @include mq($until: wide) {
         .headline-list {
             margin-left: ($gs-gutter/2) * -1;
             margin-right: ($gs-gutter/2) * -1;

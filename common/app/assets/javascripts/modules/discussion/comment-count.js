@@ -14,8 +14,8 @@ define([
         tpl += '<a href="[URL]" data-link-name="Comment count"><i class="i i-comment-light-grey"></i>[COUNT]';
         tpl += '<span class="u-h"> [LABEL]</span></a></span>';
 
-    function getContentIds(context) {
-        var nodes = context.querySelectorAll('[' + attributeName + ']'),
+    function getContentIds() {
+        var nodes = document.body.querySelectorAll('[' + attributeName + ']'),
             l = nodes.length-1,
             data = '';
 
@@ -31,9 +31,9 @@ define([
         return node.getElementsByTagName('a')[0].pathname + '#comments';
     }
 
-    function renderCounts(counts, context) {
+    function renderCounts(counts) {
         counts.forEach(function(c){
-            var node = context.querySelector('[data-discussion-id="' + c.id +'"]');
+            var node = document.body.querySelector('[data-discussion-id="' + c.id +'"]');
             if (node) {
                 if (node.getAttribute('data-discussion-closed') === 'true' && c.count === 0) {
                     return; // Discussion is closed and had no comments, we don't want to show a comment count
@@ -53,8 +53,8 @@ define([
         });
     }
 
-    function getCommentCounts(context) {
-        var ids = getContentIds(context);
+    function getCommentCounts() {
+        var ids = getContentIds();
         ajax({
             url: countUrl + ids,
             type: 'json',
@@ -62,21 +62,21 @@ define([
             crossOrigin: true,
             success: function(response) {
                 if(response && response.counts) {
-                    renderCounts(response.counts, context);
+                    renderCounts(response.counts);
                     mediator.emit('modules:commentcount:loaded', response.counts);
                 }
             }
         });
     }
 
-    function init(context) {
-        if(context.querySelector('[data-discussion-id]')) {
-            getCommentCounts(context);
+    function init() {
+        if(document.body.querySelector('[data-discussion-id]')) {
+            getCommentCounts();
         }
 
         //Load new counts when more trails are loaded
-        mediator.on('module:trailblock-show-more:render', function() { getCommentCounts(context); });
-        mediator.on('modules:related:loaded', function() { getCommentCounts(context); });
+        mediator.on('module:trailblock-show-more:render', function() { getCommentCounts(); });
+        mediator.on('modules:related:loaded', function() { getCommentCounts(); });
     }
 
     return {

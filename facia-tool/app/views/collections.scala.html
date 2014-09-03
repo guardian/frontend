@@ -271,13 +271,11 @@
                     <div class="misc__overrides">
                         Image
 
-                        <!-- ko if: $root.switches()['facia-tool-image-override'] -->
                         <a data-bind="
                             click: toggleOpenImage,
                             text: meta.imageSrc() ? 'replaced' : 'replace',
                             css: {selected: meta.imageSrc}"></a>
                         &middot;
-                        <!-- /ko -->
                         <a data-bind="
                             click: toggleImageAdjustBoost,
                             text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
