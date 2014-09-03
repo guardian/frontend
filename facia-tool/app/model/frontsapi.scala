@@ -223,6 +223,7 @@ trait UpdateActions extends Logging {
     .map(insertIntoDraft(update, _))
     .map(_.sortByGroup)
     .map(capCollection)
+    .map(_.recordIdUsage(update.item))
     .map(putBlock(id, _, identity))
     .map(archiveUpdateBlock(id, _, updateJson, identity))
     .orElse(createBlock(id, identity, update))
