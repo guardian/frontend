@@ -91,7 +91,8 @@ case class Block(
 
   def recordIdUsage(id: String): Block =
     this.copy(lastUsed = for (l <- lastUsed) yield {
-      ((DateTime.now.toString(), id) +: l).take(20)
+      val lastUsedWithoutItem: List[(String, String)] = l.filterNot(_._2 == id)
+      ((DateTime.now.toString(), id) +: lastUsedWithoutItem).take(20)
     })
 }
 
