@@ -4,6 +4,7 @@ define([
     'qwery',
     'common/utils/$',
     'common/utils/_',
+    'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
     'common/utils/preferences',
@@ -23,6 +24,7 @@ define([
     qwery,
     $,
     _,
+    config,
     detect,
     mediator,
     preferences,
@@ -149,7 +151,7 @@ define([
             new NotificationCounter().init();
         },
 
-        createTimeline: function(config) {
+        createTimeline: function() {
             var allEvents = getKeyEvents();
             if(allEvents.length > 0) {
                 var timelineHTML = wrapWithFirstAndLast(getTimelineHTML(allEvents));
@@ -171,7 +173,7 @@ define([
             }
         },
 
-        createAutoRefresh: function(config){
+        createAutoRefresh: function(){
 
             if (config.page.isLive) {
 
@@ -198,7 +200,7 @@ define([
             });
         },
 
-        showFootballLiveBlogMessage: function(config){
+        showFootballLiveBlogMessage: function(){
             var isFootballLiveBlog = config.page.pageId.indexOf('football/live/') === 0;
             var notMobile = detect.getBreakpoint() !== 'mobile';
 
@@ -225,12 +227,12 @@ define([
         }
     };
 
-    function ready(config) {
+    function ready() {
         modules.initAdverts();
-        modules.createFilter(config);
-        modules.createTimeline(config);
-        modules.createAutoRefresh(config);
-        modules.showFootballLiveBlogMessage(config);
+        modules.createFilter();
+        modules.createTimeline();
+        modules.createAutoRefresh();
+        modules.showFootballLiveBlogMessage();
 
         // re-use modules from article bootstrap
         article.modules.initOpen(config);

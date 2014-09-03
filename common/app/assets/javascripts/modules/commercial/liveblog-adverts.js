@@ -68,6 +68,9 @@ define([
             }, adCriteria[state].timeout);
         },
         init = function () {
+            if (!config.switches.liveblogAdverts) {
+                return false;
+            }
             var criteriaType;
             if (config.page.isDev) {
                 criteriaType = 'test';
