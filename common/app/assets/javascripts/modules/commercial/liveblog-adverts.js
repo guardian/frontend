@@ -1,11 +1,15 @@
 define([
+    'bean',
     'bonzo',
+    'lodash/functions/debounce',
     'lodash/functions/once',
     'common/utils/$',
     'common/utils/mediator',
     'common/modules/commercial/dfp'
 ], function (
+    bean,
     bonzo,
+    debounce,
     once,
     $,
     mediator,
@@ -15,6 +19,7 @@ define([
     var postsCount,
         timedOut,
         criteria,
+        lastInteraction = new Date(),
         adSlotNames = ['inline1', 'inline2'],
         state = 'first',
         adCriterias = {
@@ -61,7 +66,7 @@ define([
             reset();
             mediator.on('modules:autoupdate:updates', function (updates) {
                 postsCount += updates.length;
-                if (postsCount >= criteria[state].posts && timedOut) {
+                if (postsCount >= criteria[state].posts && timedOut && (new Date() - lastInteraction) < (60 * 1000)) {
                     var displaySlot = adSlotNames.length,
                         // add the first ad slot we haven't already
                         $adSlot = displaySlot ?
@@ -81,6 +86,9 @@ define([
                     state = 'further';
                 }
             });
+            bean.on(document.body, 'mousemove', debounce(function () {
+                lastInteraction = new Date();
+            }, 200));
         };
 
     return {
