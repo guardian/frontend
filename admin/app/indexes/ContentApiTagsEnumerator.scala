@@ -50,6 +50,6 @@ object ContentApiTagsEnumerator extends Logging {
   def enumerateTagTypeFiltered(tagType: String) =
     enumerateTagType(tagType) through Enumeratee.filter({ tag =>
       /** Believe it or not, we actually have tags whose titles start with HTML tags ... */
-      !tag.id.startsWith("weather/") && tag.webTitle.charAt(0).isLetterOrDigit && !tag.isSectionTag
+      !tag.id.startsWith("weather/") && tag.webTitle.charAt(0).isLetterOrDigit
     })
 }

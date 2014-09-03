@@ -4,13 +4,26 @@ import com.gu.openplatform.contentapi.model.{Tag => ApiTag}
 import common.{Maps, HTML}
 import play.api.libs.json._
 
+object SectionDefinition {
+  implicit val jsonFormat = Json.format[SectionDefinition]
+}
+
+case class SectionDefinition(
+  name: String,
+  id: String
+)
+
 object TagDefinition {
   implicit val jsonFormat = Json.format[TagDefinition]
 
   def fromContentApiTag(apiTag: ApiTag): TagDefinition = TagDefinition(
     apiTag.webTitle,
     apiTag.id,
-    apiTag.sectionName
+    for {
+      name <- apiTag.sectionName
+      id <- apiTag.sectionId
+    } yield SectionDefinition(name, id),
+    new Tag(apiTag).isSectionTag
   )
 
   object / {
@@ -27,12 +40,13 @@ object TagDefinition {
 case class TagDefinition(
   webTitle: String,
   id: String,
-  sectionName: Option[String]
+  sectionDefinition: Option[SectionDefinition],
+  isSectionTag: Boolean
 ) {
   import TagDefinition./
 
   def tagTypeName: Option[String] = {
-    sectionName.map(HTML.noHtml) orElse ({
+    sectionDefinition.map(section => HTML.noHtml(section.name)) orElse ({
       case "profile" / _ => "Contributor"
       case "type" / _ => "Content type"
       case "tone" / _ => "Tone"
@@ -41,6 +55,10 @@ case class TagDefinition(
       case "publication/guardianweekly" => "Publication"
     }: PartialFunction[String, String]).lift(id)
   }
+
+  def indexPath = "/" + ((for {
+    s <- sectionDefinition if isSectionTag
+  } yield s.id) getOrElse id)
 }
 
 object TagIndexListing {
