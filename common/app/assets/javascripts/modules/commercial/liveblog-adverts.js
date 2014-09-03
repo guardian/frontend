@@ -1,25 +1,31 @@
 define([
     'bean',
     'bonzo',
+    'lodash/collections/contains',
     'lodash/functions/debounce',
     'lodash/functions/once',
     'common/utils/$',
+    'common/utils/config',
     'common/utils/mediator',
     'common/modules/commercial/dfp'
 ], function (
     bean,
     bonzo,
+    contains,
     debounce,
     once,
     $,
+    config,
     mediator,
     dfp
 ) {
 
     var postsCount,
         timedOut,
-        criteria,
+        adCriteria,
+        // when the the user last interact with the page
         lastInteraction = new Date(),
+        interactionWindow = 60 * 1000,
         adSlotNames = ['inline1', 'inline2'],
         state = 'first',
         adCriterias = {
@@ -59,14 +65,26 @@ define([
             timedOut = false;
             window.setInterval(function () {
                 timedOut = true;
-            }, criteria[state].timeout);
+            }, adCriteria[state].timeout);
         },
         init = function () {
-            criteria = adCriterias.test;
+            var criteriaType;
+            if (config.page.isDev) {
+                criteriaType = 'test';
+            } else if (contains(config.page.toneIds.split(','), 'tone/minutebyminute')) {
+                criteriaType = 'minutebyminute';
+            } else {
+                criteriaType = 'default';
+            }
+            adCriteria = adCriterias[criteriaType];
             reset();
             mediator.on('modules:autoupdate:updates', function (updates) {
                 postsCount += updates.length;
-                if (postsCount >= criteria[state].posts && timedOut && (new Date() - lastInteraction) < (60 * 1000)) {
+                if (
+                    postsCount >= adCriteria[state].posts &&
+                    timedOut &&
+                    (new Date() - lastInteraction) < interactionWindow
+                ) {
                     var displaySlot = adSlotNames.length,
                         // add the first ad slot we haven't already
                         $adSlot = displaySlot ?

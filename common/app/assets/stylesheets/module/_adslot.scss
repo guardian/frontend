@@ -186,12 +186,12 @@
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline*2;
-        background-color: guss-colour(neutral-7);
+        background-color: $c-neutral7;
     }
     .ad-slot__label {
-        color: guss-colour(neutral-2);
-        background-color: guss-colour(neutral-7);
-        border-top-color: guss-colour(neutral-3);
+        color: $c-neutral2;
+        background-color: $c-neutral7;
+        border-top-color: $c-neutral3;
 
         @include mq(tablet) {
             max-width: none;
