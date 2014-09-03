@@ -1,13 +1,13 @@
-# Guss Forms
+# Pasteup Forms
 
-Part of the [Guss](https://github.com/guardian/guss) collection.
+Part of the [Pasteup-forms](https://github.com/guardian/pasteup) collection.
 
-<http://guardian.github.io/guss-forms>
+<http://guardian.github.io/pasteup-forms>
 
 ## Installation
 
 ```
-bower install guss-forms --save
+bower install pasteup-forms --save
 ```
 
 ## Usage
@@ -15,8 +15,8 @@ bower install guss-forms --save
 ```scss
 @import 'path/to/_forms.scss';
 
-@include guss-forms-fix-ie8-password-field-webfonts-display;
-@include guss-forms-defaults;
+@include pasteup-forms-fix-ie8-password-field-webfonts-display;
+@include pasteup-forms-defaults;
 ```
 
 ## Contribute

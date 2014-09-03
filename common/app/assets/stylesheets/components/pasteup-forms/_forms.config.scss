@@ -10,7 +10,7 @@
  *
  * @group forms
  */
-$guss-forms-fieldset-border-top: 1px solid guss-colour(neutral-7) !default;
+$pasteup-forms-fieldset-border-top: 1px solid guss-colour(neutral-7, $pasteup-palette) !default;
 
 
 // Text field (eg: textarea and text fields)
@@ -25,7 +25,7 @@ $guss-forms-fieldset-border-top: 1px solid guss-colour(neutral-7) !default;
  *
  * @group forms
  */
-$guss-forms-fields-font-family: $f-sans-serif-text !default;
+$pasteup-forms-fields-font-family: $f-sans-serif-text !default;
 
 /**
  * Text fields' `color`.
@@ -36,7 +36,7 @@ $guss-forms-fields-font-family: $f-sans-serif-text !default;
  *
  * @group forms
  */
-$guss-forms-fields-colour: guss-colour(neutral-1) !default;
+$pasteup-forms-fields-colour: guss-colour(neutral-1, $pasteup-palette) !default;
 
 /**
  * Text fields' `border-color`.
@@ -47,7 +47,7 @@ $guss-forms-fields-colour: guss-colour(neutral-1) !default;
  *
  * @group forms
  */
-$guss-forms-fields-border-colour: guss-colour(neutral-4) !default;
+$pasteup-forms-fields-border-colour: guss-colour(neutral-4, $pasteup-palette) !default;
 
 /**
  * Text fields' `border-color` when field is focused.
@@ -58,7 +58,7 @@ $guss-forms-fields-border-colour: guss-colour(neutral-4) !default;
  *
  * @group forms
  */
-$guss-forms-fields-border-colour-focus: guss-colour(neutral-2) !default;
+$pasteup-forms-fields-border-colour-focus: guss-colour(neutral-2, $pasteup-palette) !default;
 
 
 // Error
@@ -73,7 +73,7 @@ $guss-forms-fields-border-colour-focus: guss-colour(neutral-2) !default;
  *
  * @group forms
  */
-$guss-forms-error-colour: guss-colour(error) !default;
+$pasteup-forms-error-colour: guss-colour(error, $pasteup-palette) !default;
 
 /**
  * Form error `background-color`.
@@ -82,7 +82,7 @@ $guss-forms-error-colour: guss-colour(error) !default;
  *
  * @group forms
  */
-$guss-forms-error-background: #fdf4f3 !default;
+$pasteup-forms-error-background: #fdf4f3 !default;
 
 /**
  * Form error `border-color`.
@@ -91,18 +91,18 @@ $guss-forms-error-background: #fdf4f3 !default;
  *
  * @group forms
  */
-$guss-forms-error-border-colour: lighten($guss-forms-error-colour, 35%) !default;
+$pasteup-forms-error-border-colour: lighten($pasteup-forms-error-colour, 35%) !default;
 
 /**
  * Form error fields `border-color`.
  *
  * @type Color
  *
- * @requires {variable} guss-forms-error-colour
+ * @requires {variable} pasteup-forms-error-colour
  *
  * @group forms
  */
-$guss-forms-error-field-border-colour: $guss-forms-error-colour !default;
+$pasteup-forms-error-field-border-colour: $pasteup-forms-error-colour !default;
 
 
 // Success
@@ -117,7 +117,7 @@ $guss-forms-error-field-border-colour: $guss-forms-error-colour !default;
  *
  * @group forms
  */
-$guss-forms-success-colour: guss-colour(success) !default;
+$pasteup-forms-success-colour: guss-colour(success, $pasteup-palette) !default;
 
 /**
  * Form success `background-color`.
@@ -126,7 +126,7 @@ $guss-forms-success-colour: guss-colour(success) !default;
  *
  * @group forms
  */
-$guss-forms-success-background: lighten($guss-forms-success-colour, 70%)  !default;
+$pasteup-forms-success-background: lighten($pasteup-forms-success-colour, 70%)  !default;
 
 /**
  * Form success `border-color`.
@@ -135,7 +135,7 @@ $guss-forms-success-background: lighten($guss-forms-success-colour, 70%)  !defau
  *
  * @group forms
  */
-$guss-forms-success-border-colour: lighten($guss-forms-success-colour, 35%) !default;
+$pasteup-forms-success-border-colour: lighten($pasteup-forms-success-colour, 35%) !default;
 
 
 // Submit
@@ -150,18 +150,18 @@ $guss-forms-success-border-colour: lighten($guss-forms-success-colour, 35%) !def
  *
  * @group forms
  */
-$guss-forms-submit-background: guss-colour(tone-news-1) !default;
+$pasteup-forms-submit-background: guss-colour(tone-news-1, $pasteup-palette) !default;
 
 /**
  * Submit button `background-color` when focused.
  *
  * @type Color
  *
- * @requires {variable} guss-forms-submit-background
+ * @requires {variable} pasteup-forms-submit-background
  *
  * @group forms
  */
-$guss-forms-submit-background-focus: darken($guss-forms-submit-background, 5%) !default;
+$pasteup-forms-submit-background-focus: darken($pasteup-forms-submit-background, 5%) !default;
 
 /**
  * Submit button `background-color` when active.
@@ -172,7 +172,7 @@ $guss-forms-submit-background-focus: darken($guss-forms-submit-background, 5%) !
  *
  * @group forms
  */
-$guss-forms-submit-background-active: guss-colour(neutral-1) !default;
+$pasteup-forms-submit-background-active: guss-colour(neutral-1, $pasteup-palette) !default;
 
 /**
  * Submit button `background-color` when disabled.
@@ -183,4 +183,4 @@ $guss-forms-submit-background-active: guss-colour(neutral-1) !default;
  *
  * @group forms
  */
-$guss-forms-submit-background-disabled: guss-colour(neutral-5) !default;
+$pasteup-forms-submit-background-disabled: guss-colour(neutral-5, $pasteup-palette) !default;

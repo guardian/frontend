@@ -1,5 +1,5 @@
 .site-message {
-    background: guss-colour(tone-news-1);
+    background: $c-newsDefault;
     display: block;
 }
 
@@ -180,7 +180,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         border-color: #ffffff;
     }
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         position: absolute;
         right: 0;
         right: $gs-gutter;
