@@ -98,7 +98,7 @@
     overflow: hidden; // quick hackfix for overflowing right hand components
     margin-right: $gs-gutter;
 
-    @include mq($to: rightCol) {
+    @include mq($until: rightCol) {
         display: none;
     }
 
@@ -121,7 +121,7 @@
     margin-bottom: $gs-baseline;
     
     .content--media & a {
-        color: guss-colour(neutral-5);
+        color: $c-neutral5;
     }
 }
 
@@ -132,7 +132,7 @@
     z-index: 1; // bring-to-front fix to make it clickable
     padding-bottom: $gs-baseline;
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         border-bottom: 1px solid $c-neutral7;
 
         .has-localnav & {
@@ -159,7 +159,7 @@
     @include fs-header(3);
     @include box-sizing(border-box);
     padding: $gs-baseline/2 0 $gs-baseline;
-    border-top: 1px dotted guss-colour(neutral-5) !important; // Disable tone colour
+    border-top: 1px dotted $c-neutral5 !important; // Disable tone colour
 }
 
 .content__headline {

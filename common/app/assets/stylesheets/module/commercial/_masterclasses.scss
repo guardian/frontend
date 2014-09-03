@@ -65,7 +65,7 @@
         }
     }
     &.commercial--high {
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             .commercial__relevance-low .lineitem__image,
             .commercial__relevance-title-low {
                 display: none;

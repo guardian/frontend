@@ -16,7 +16,7 @@
         .item__byline {
             @include fs-headline(3, true);
         }
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             .facia-slice__item:first-child {
                 @include item--hide-tone-border;
             }

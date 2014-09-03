@@ -650,7 +650,7 @@ $commercial-cta-diameter: (
 }
 
 .commercial--v-high__body {
-    @include mq($to: mobileLandscape) {
+    @include mq($until: mobileLandscape) {
         .highitem__img {
             width: 100px;
             float: none;

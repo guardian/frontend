@@ -4,7 +4,7 @@
  *
  * @group forms
  */
-@mixin guss-forms-fix-ie8-password-field-webfonts-display {
+@mixin pasteup-forms-fix-ie8-password-field-webfonts-display {
     [type=password] {
         font-family: sans-serif !important;
     }
@@ -15,7 +15,7 @@
  *
  * @group forms
  */
-@mixin guss-forms-defaults {
+@mixin pasteup-forms-defaults {
     .form {
         margin-top: $gs-baseline*2;
         margin-bottom: $gs-baseline*2;
@@ -29,14 +29,14 @@
 
     .form__note,
     .form-field__note {
-        font-family: $guss-forms-fields-font-family;
+        font-family: $pasteup-forms-fields-font-family;
         font-size: 14px;
         margin-bottom: 8px;
     }
 
     .fieldset {
         border: 0;
-        border-top: $guss-forms-fieldset-border-top;
+        border-top: $pasteup-forms-fieldset-border-top;
         display: table;
         padding: (($gs-baseline/3)*4 - 1) 0 ($gs-baseline*2);
         margin: 0;
@@ -85,37 +85,37 @@
 
     .form-field--error {
         .label {
-            color: $guss-forms-error-colour;
+            color: $pasteup-forms-error-colour;
         }
 
         .text-input,
         .text-input:focus {
-            border-color: $guss-forms-error-field-border-colour;
+            border-color: $pasteup-forms-error-field-border-colour;
         }
     }
 
     .form__error {
         @include fs-data(4);
-        background-color: $guss-forms-error-background;
-        border-bottom: 1px solid $guss-forms-error-border-colour;
-        border-top: 1px solid $guss-forms-error-border-colour;
-        color: $guss-forms-error-colour;
+        background-color: $pasteup-forms-error-background;
+        border-bottom: 1px solid $pasteup-forms-error-border-colour;
+        border-top: 1px solid $pasteup-forms-error-border-colour;
+        color: $pasteup-forms-error-colour;
         margin-top: 6px;
         padding: 7px ($gs-baseline/3)*2;
     }
 
     .form__success {
         @include fs-data(4);
-        background-color: $guss-forms-success-background;
-        border-bottom: 1px solid $guss-forms-success-border-colour;
-        border-top: 1px solid $guss-forms-success-border-colour;
-        color: $guss-forms-success-colour;
+        background-color: $pasteup-forms-success-background;
+        border-bottom: 1px solid $pasteup-forms-success-border-colour;
+        border-top: 1px solid $pasteup-forms-success-border-colour;
+        color: $pasteup-forms-success-colour;
         margin-top: $gs-baseline/2;
         padding: 7px ($gs-baseline/3)*2;
     }
 
     .form-field__error {
-        color: $guss-forms-error-colour;
+        color: $pasteup-forms-error-colour;
         margin-top: $gs-baseline/2;
     }
 
@@ -162,12 +162,12 @@
 
     .text-input,
     .textarea {
-        border: 1px solid $guss-forms-fields-border-colour;
+        border: 1px solid $pasteup-forms-fields-border-colour;
         @include box-shadow(none);
         @include box-sizing(border-box);
-        color: $guss-forms-fields-colour;
+        color: $pasteup-forms-fields-colour;
         display: inline-block;
-        font-family: $guss-forms-fields-font-family;
+        font-family: $pasteup-forms-fields-font-family;
         padding: 8px 8px 7px;
         font-size: 16px;
         line-height: 1.4;
@@ -177,7 +177,7 @@
         -webkit-appearance: none;
 
         &:focus {
-            border-color: $guss-forms-fields-border-colour-focus;
+            border-color: $pasteup-forms-fields-border-colour-focus;
         }
 
         @include mq(tablet) {
@@ -203,7 +203,7 @@
     }
 
     .submit-input {
-        background: $guss-forms-submit-background;
+        background: $pasteup-forms-submit-background;
         border: 0 none;
         color: #ffffff;
         cursor: pointer;
@@ -217,22 +217,22 @@
 
         &:hover,
         &:focus {
-            background: $guss-forms-submit-background-focus;
+            background: $pasteup-forms-submit-background-focus;
         }
 
         &:active {
-            background: $guss-forms-submit-background-active;
+            background: $pasteup-forms-submit-background-active;
         }
     }
 
     .submit-input[disabled] {
-        background: $guss-forms-submit-background-disabled;
+        background: $pasteup-forms-submit-background-disabled;
     }
 
     .check-label,
     .radio-label {
         display: block;
-        font-family: $guss-forms-fields-font-family;
+        font-family: $pasteup-forms-fields-font-family;
         font-size: 14px;
         margin-bottom: $gs-baseline/3;
         padding-left: $gs-gutter;
