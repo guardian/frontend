@@ -14,9 +14,7 @@ class UserCreationService {
         publicFields = PublicFields(username = Some(userName)),
         privateFields = PrivateFields(firstName = Some(firstName), secondName = Some(secondName), registrationIp = registrationIp)
       )
-      if(gnmMarketing)
         user.getStatusFields().setReceiveGnmMarketing(gnmMarketing)
-      if(thirdPartyMarketing)
         user.getStatusFields().setReceive3rdPartyMarketing(thirdPartyMarketing)
       user
     }

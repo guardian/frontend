@@ -77,22 +77,6 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     NoCache(Ok)
   }
 
-  def updateCollectionMeta(id: String): Action[AnyContent] = ExpiringActions.ExpiringAuthAction { request =>
-    FaciaToolMetrics.ApiUsageCount.increment()
-    NoCache {
-      request.body.asJson flatMap(_.asOpt[CollectionMetaUpdate]) map {
-        case update: CollectionMetaUpdate => {
-          val identity = request.user
-          UpdateActions.updateCollectionMeta(id, update, identity)
-          ContentApiPush.notifyContentApi(Set(id))
-          FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(Json.toJson(update), "meta", identity.email))
-          Ok
-        }
-        case _ => NotFound
-      } getOrElse NotFound
-    }
-  }
-
   def collectionEdits(): Action[AnyContent] = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache {
