@@ -128,7 +128,8 @@
  */
 .ad-slot--inline,
 .ad-slot--container-inline,
-.ad-slot--gallery-inline {
+.ad-slot--gallery-inline,
+.ad-slot--liveblog-inline {
     min-height: 50 + $mpu-ad-label-height;
     text-align: center;
 
@@ -174,6 +175,23 @@
         color: $c-neutral3;
         background-color: lighten($c-mediaBackground, 2.5%);
         border-top-color: $c-neutral2;
+
+        @include mq(tablet) {
+            max-width: none;
+        }
+    }
+}
+.ad-slot--liveblog-inline {
+    margin: $gs-baseline*2 0;
+
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline*2;
+        background-color: guss-colour(neutral-7);
+    }
+    .ad-slot__label {
+        color: guss-colour(neutral-2);
+        background-color: guss-colour(neutral-7);
+        border-top-color: guss-colour(neutral-3);
 
         @include mq(tablet) {
             max-width: none;

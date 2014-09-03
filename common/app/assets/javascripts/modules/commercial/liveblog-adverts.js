@@ -1,9 +1,11 @@
 define([
+    'bonzo',
     'lodash/functions/once',
     'common/utils/$',
     'common/utils/mediator',
     'common/modules/commercial/dfp'
 ], function (
+    bonzo,
     once,
     $,
     mediator,
@@ -35,6 +37,16 @@ define([
                     timeout: 5 * 60 * 1000,
                     posts: 5
                 }
+            },
+            test: {
+                first: {
+                    timeout: 10 * 1000,
+                    posts: 1
+                },
+                further: {
+                    timeout: 10 * 1000,
+                    posts: 1
+                }
             }
         },
         reset = function () {
@@ -45,24 +57,29 @@ define([
             }, criteria[state].timeout);
         },
         init = function () {
-            criteria = adCriterias['default'];
+            criteria = adCriterias.test;
             reset();
             mediator.on('modules:autoupdate:updates', function (updates) {
                 postsCount += updates.length;
                 if (postsCount >= criteria[state].posts && timedOut) {
-                    var adSlotName = adSlotNames.shift(),
+                    var displaySlot = adSlotNames.length,
                         // add the first ad slot we haven't already
-                        adSlot = adSlotName ?
-                            dfp.createAdSlot(adSlotName, 'liveblog-inline') :
+                        $adSlot = displaySlot ?
+                            bonzo(dfp.createAdSlot(adSlotNames.shift(), 'liveblog-inline')) :
                             // otherwise get the ad furthest down the page
                             $('.article-body .ad-slot')
                                 .last()
                                 .detach();
                     // put the ad slot after the latest post
-                    $('.article-body .block:first-child').after(adSlot);
+                    $('.article-body .block:first-child').after($adSlot);
+                    if (displaySlot) {
+                        dfp.addSlot($adSlot);
+                    } else {
+                        dfp.refreshSlot($adSlot);
+                    }
                     reset();
+                    state = 'further';
                 }
-                state = 'further';
             });
         };
 

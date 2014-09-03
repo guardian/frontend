@@ -75,14 +75,14 @@ define([
      *
      * Labels are automatically prepended to an ad that was successfully loaded.
      *
-     * TODO: breakoutHash could just be one class and the script tag moved to inside the ad
-     *
      */
+
 
     /**
      * Private variables
      */
     var adSlots = [],
+        slots = {},
         slotsToRefresh = [],
         config = {},
         breakoutHash = {
@@ -140,9 +140,154 @@ define([
         };
 
     /**
+     * Public functions
+     */
+    var init = function (c) {
+
+            config = defaults(
+                c || {},
+                globalConfig,
+                {
+                    adSlotSelector: '.ad-slot--dfp',
+                    page: {},
+                    switches: {}
+                }
+            );
+
+            if (!config.switches.standardAdverts && !config.switches.commercialComponents) {
+                return false;
+            }
+
+            if (!config.switches.standardAdverts) {
+                config.adSlotSelector = '.ad-slot--commercial-component';
+            } else if (!config.switches.commercialComponents) {
+                config.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
+            }
+
+            adSlots = _(qwery(config.adSlotSelector))
+                // filter out hidden ads
+                .map(function (adSlot) {
+                    return bonzo(adSlot);
+                })
+                .filter(function ($adSlot) {
+                    return $css($adSlot, 'display') !== 'none';
+                })
+                .valueOf();
+
+            if (adSlots.length > 0) {
+                // if we don't already have googletag, create command queue and load it async
+                if (!window.googletag) {
+                    window.googletag = { cmd: [] };
+                    // load the library asynchronously
+                    require(['googletag']);
+                }
+
+                window.googletag.cmd.push(setListeners);
+                window.googletag.cmd.push(setPageTargeting);
+                window.googletag.cmd.push(defineSlots);
+                window.googletag.cmd.push(displayAds);
+                // anything we want to happen after displaying ads
+                window.googletag.cmd.push(postDisplay);
+            }
+
+            return dfp;
+
+        },
+        getAdSlots = function () {
+            return adSlots;
+        },
+        refreshSlot = function ($adSlot) {
+            var slot = slots[$adSlot.attr('id')];
+            if (slot) {
+                googletag.pubads().refresh([slot]);
+            }
+        },
+        addSlot = function ($adSlot) {
+            var slotId = $adSlot.attr('id');
+            slots[slotId] = defineSlot($adSlot);
+            googletag.display(slotId);
+            refreshSlot($adSlot);
+        },
+        /**
+         * Builds the appropriate page level targeting
+         *
+         * a      = audience science
+         * at     = adtest cookie
+         * bp     = current breakpoint
+         * cat    = section
+         * ct     = content type
+         * k      = keywords
+         * p      = platform
+         * pt     = content type
+         * url    = path
+         */
+        buildPageTargeting = function (config) {
+
+            function encodeTargetValue(value) {
+                return value ? keywords.format(value).replace(/&/g, 'and').replace(/'/g, '') : '';
+            }
+
+            var page        = config.page,
+                section     = encodeTargetValue(page.section),
+                series      = encodeTargetValue(page.series),
+                contentType = encodeTargetValue(page.contentType),
+                edition     = encodeTargetValue(page.edition),
+                mediaSource = encodeTargetValue(page.source);
+
+            return defaults({
+                url     : window.location.pathname,
+                edition : edition,
+                cat     : section,
+                se      : series,
+                ct      : contentType,
+                pt      : contentType,
+                p       : 'ng',
+                k       : parseKeywords(page.keywordIds || page.pageId),
+                su      : page.isSurging,
+                bp      : detect.getBreakpoint(),
+                a       : audienceScience.getSegments(),
+                at      : cookies.get('adtest') || cookies.get('GU_TEST') || '',
+                gdncrm  : userAdTargeting.getUserSegments(),
+                ab      : abParam(),
+                co      : parseTargets(page.authorIds),
+                bl      : parseKeywords(page.blogIds),
+                ms      : mediaSource,
+                tn      : parseTargets(page.tones)
+            }, audienceScienceGateway.getSegments(), criteo.getSegments());
+        },
+        createAdSlot = function (name, types, keywords) {
+            var definition = adSlotDefinitions[name],
+                dataAttrs = {
+                    refresh: definition.refresh !== undefined ? definition.refresh : true,
+                    label: definition.label !== undefined ? definition.label : true
+                },
+                $adSlot = $.create(template(
+                        '<div id="dfp-ad--{{name}}" ' +
+                        'class="ad-slot ad-slot--dfp ad-slot--{{name}} {{types}}" ' +
+                        'data-link-name="ad slot {{name}}" ' +
+                        'data-test-id="ad-slot-{{name}}" ' +
+                        'data-name="{{name}}"' +
+                        '{{sizeMappings}}></div>',
+                    {
+                        name: name,
+                        types: map((isArray(types) ? types : [types]), function(type) { return 'ad-slot--' + type; }).join(' '),
+                        sizeMappings: map(pairs(definition.sizeMappings), function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
+                    }));
+            for (var attrName in dataAttrs) {
+                if (dataAttrs[attrName] === false) {
+                    $adSlot.attr('data-' + attrName, 'false');
+                }
+            }
+            if (keywords) {
+                $adSlot.attr('data-keywords', keywords);
+            }
+            return $adSlot[0];
+        };
+
+    /**
      * Private functions
      */
-    var parseAd = function(event) {
+    var parseAd = function (event) {
             var $slot = $('#' + event.slot.getSlotId().getDomId());
 
             if (event.isEmpty) {
@@ -152,12 +297,12 @@ define([
                 addLabel($slot);
             }
         },
-        addLabel = function($slot) {
+        addLabel = function ($slot) {
             if (shouldRenderLabel($slot)) {
                 $slot.prepend('<div class="ad-slot__label" data-test-id="ad-slot-label">Advertisement</div>');
             }
         },
-        removeLabel = function($slot) {
+        removeLabel = function ($slot) {
             $('.ad-slot__label', $slot).remove();
         },
         shouldRenderLabel = function ($slot) {
@@ -172,7 +317,7 @@ define([
          * Currently this is being used for sponsored logos and commercial components so they
          * can inherit fonts.
          */
-        checkForBreakout = function($slot) {
+        checkForBreakout = function ($slot) {
             /* jshint evil: true */
             var iFrame = qwery('iframe', $slot[0])[0];
 
@@ -241,7 +386,7 @@ define([
          * Multiple sizes - `data-mobile="300,50|320,50"`
          */
         createSizeMapping = function (attr) {
-            return map(attr.split('|'), function(size) {
+            return map(attr.split('|'), function (size) {
                 return map(size.split(','), Number);
             });
         },
@@ -268,7 +413,7 @@ define([
 
             return mapping.build();
         },
-        abParam = function() {
+        abParam = function () {
             var hchTest = ab.getParticipations().HighCommercialComponent;
             if (hchTest) {
                 switch (hchTest.variant) {
@@ -280,89 +425,14 @@ define([
             }
             return '3';
         },
-        /**
-         * Builds the appropriate page level targeting
-         *
-         * a      = audience science
-         * at     = adtest cookie
-         * bp     = current breakpoint
-         * cat    = section
-         * ct     = content type
-         * k      = keywords
-         * p      = platform
-         * pt     = content type
-         * url    = path
-         */
-        buildPageTargeting = function (config) {
-
-            function encodeTargetValue(value) {
-                return value ? keywords.format(value).replace(/&/g, 'and').replace(/'/g, '') : '';
-            }
-
-            var page        = config.page,
-                section     = encodeTargetValue(page.section),
-                series      = encodeTargetValue(page.series),
-                contentType = encodeTargetValue(page.contentType),
-                edition     = encodeTargetValue(page.edition),
-                mediaSource = encodeTargetValue(page.source);
-
-            return defaults({
-                url     : window.location.pathname,
-                edition : edition,
-                cat     : section,
-                se      : series,
-                ct      : contentType,
-                pt      : contentType,
-                p       : 'ng',
-                k       : parseKeywords(page.keywordIds || page.pageId),
-                su      : page.isSurging,
-                bp      : detect.getBreakpoint(),
-                a       : audienceScience.getSegments(),
-                at      : cookies.get('adtest') || cookies.get('GU_TEST') || '',
-                gdncrm  : userAdTargeting.getUserSegments(),
-                ab      : abParam(),
-                co      : parseTargets(page.authorIds),
-                bl      : parseKeywords(page.blogIds),
-                ms      : mediaSource,
-                tn      : parseTargets(page.tones)
-            }, audienceScienceGateway.getSegments(), criteo.getSegments());
-        },
-        createAdSlot = function(name, types, keywords) {
-            var definition = adSlotDefinitions[name],
-                dataAttrs = {
-                    refresh: definition.refresh !== undefined ? definition.refresh : true,
-                    label: definition.label !== undefined ? definition.label : true
-                },
-                $adSlot = $.create(template(
-                    '<div id="dfp-ad--{{name}}" ' +
-                        'class="ad-slot ad-slot--dfp ad-slot--{{name}} {{types}}" ' +
-                        'data-link-name="ad slot {{name}}" ' +
-                        'data-test-id="ad-slot-{{name}}" ' +
-                        'data-name="{{name}}"' +
-                        '{{sizeMappings}}></div>',
-                    {
-                        name: name,
-                        types: map((isArray(types) ? types : [types]), function(type) { return 'ad-slot--' + type; }).join(' '),
-                        sizeMappings: map(pairs(definition.sizeMappings), function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
-                    }));
-            for (var attrName in dataAttrs) {
-                if (dataAttrs[attrName] === false) {
-                    $adSlot.attr('data-' + attrName, 'false');
-                }
-            }
-            if (keywords) {
-                $adSlot.attr('data-keywords', keywords);
-            }
-            return $adSlot[0];
-        },
-        parseKeywords = function(keywords) {
+        parseKeywords = function (keywords) {
             return map((keywords || '') .split(','), function (keyword) {
                 return keyword.split('/').pop();
             });
         },
-        parseTargets = function(targets) {
+        parseTargets = function (targets) {
             var targetArray = parseKeywords(targets);
-            return map(targetArray, function(target) {
+            return map(targetArray, function (target) {
                 return keywords.format(target);
             });
         };
@@ -370,56 +440,61 @@ define([
     /**
      * Initial commands
      */
-    var setListeners = function() {
+    var setListeners = function () {
             googletag.pubads().addEventListener('slotRenderEnded', parseAd);
         },
-        setPageTargeting = function() {
-            forOwn(buildPageTargeting(config), function(value, key) {
+        setPageTargeting = function () {
+            forOwn(buildPageTargeting(config), function (value, key) {
                 googletag.pubads().setTargeting(key, value);
             });
+        },
+        defineSlot = function ($adSlot) {
+            var adUnit = config.page.adUnit,
+                id          = $adSlot.attr('id'),
+                sizeMapping = defineSlotSizes($adSlot),
+                // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
+                size        = uniq(
+                    flatten(sizeMapping, true, function (map) {
+                        return map[1];
+                    }),
+                    function (size) {
+                        return size[0] + '-' + size[1];
+                    }
+                ),
+                slot = (
+                        $adSlot.data('out-of-page') ?
+                            googletag.defineOutOfPageSlot(adUnit, id) :
+                            googletag.defineSlot(adUnit, size, id)
+                    )
+                    .addService(googletag.pubads())
+                    .defineSizeMapping(sizeMapping)
+                    .setTargeting('slot', $adSlot.data('name'));
+
+            if ($adSlot.data('keywords')) {
+                slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
+            }
+
+            // Add to the array of ads to be refreshed (when the breakpoint changes)
+            // only if it's `data-refresh` attribute isn't set to false.
+            if ($adSlot.data('refresh') !== false) {
+                slotsToRefresh.push({
+                    $adSlot: $adSlot,
+                    slot: slot
+                });
+            }
         },
         /**
          * Loop through each slot detected on the page and define it based on the data
          * attributes on the element.
          */
-        defineSlots = function() {
-
-            var adUnit = config.page.adUnit;
-
-            forEach(adSlots, function($adSlot) {
-
-                var id          = $adSlot.attr('id'),
-                    sizeMapping = defineSlotSizes($adSlot),
-                    // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                    size        = uniq(
-                        flatten(sizeMapping, true, function(map) {
-                            return map[1];
-                        }),
-                        function(size) {
-                            return size[0] + '-' + size[1];
-                        }
-                    ),
-                    slot = ($adSlot.data('out-of-page')
-                            ? googletag.defineOutOfPageSlot(adUnit, id) : googletag.defineSlot(adUnit, size, id))
-                        .addService(googletag.pubads())
-                        .defineSizeMapping(sizeMapping)
-                        .setTargeting('slot', $adSlot.data('name'));
-
-                if ($adSlot.data('keywords')) {
-                    slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
-                }
-
-                // Add to the array of ads to be refreshed (when the breakpoint changes)
-                // only if it's `data-refresh` attribute isn't set to false.
-                if ($adSlot.data('refresh') !== false) {
-                    slotsToRefresh.push({
-                        $adSlot: $adSlot,
-                        slot: slot
-                    });
-                }
-            });
+        defineSlots = function () {
+            slots = _(adSlots)
+                .map(function ($adSlot) {
+                    return [$adSlot.attr('id'), defineSlot($adSlot)];
+                })
+                .zipObject();
         },
-        fireAdRequest = function() {
+        displayAds = function() {
             googletag.pubads().enableSingleRequest();
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
@@ -431,84 +506,33 @@ define([
             mediator.on('window:resize',
                 debounce(function () {
                     // refresh on resize
-                    hasBreakpointChanged(refresh);
+                    hasBreakpointChanged(function () {
+                        googletag.pubads().refresh(slotsToRefresh);
+                    });
                 }, 2000)
             );
         };
-
-    /**
-     * Initialisation function
-     */
-    var init = function (c) {
-
-        config = defaults(
-            c || {},
-            globalConfig,
-            {
-                adSlotSelector: '.ad-slot--dfp',
-                page: {},
-                switches: {}
-            }
-        );
-
-        if (!config.switches.standardAdverts && !config.switches.commercialComponents) {
-            return false;
-        }
-
-        if (!config.switches.standardAdverts) {
-            config.adSlotSelector = '.ad-slot--commercial-component';
-        } else if (!config.switches.commercialComponents) {
-            config.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
-        }
-
-        adSlots = _(qwery(config.adSlotSelector))
-            // filter out hidden ads
-            .map(function (adSlot) {
-                return bonzo(adSlot);
-            })
-            .filter(function ($adSlot) {
-                return $css($adSlot, 'display') !== 'none';
-            })
-            .valueOf();
-
-        if (adSlots.length > 0) {
-            // if we don't already have googletag, create command queue and load it async
-            if (!window.googletag) {
-                window.googletag = { cmd: [] };
-                // load the library asynchronously
-                require(['googletag']);
-            }
-
-            window.googletag.cmd.push(setListeners);
-            window.googletag.cmd.push(setPageTargeting);
-            window.googletag.cmd.push(defineSlots);
-            window.googletag.cmd.push(fireAdRequest);
-            // anything we want to happen after displaying ads
-            window.googletag.cmd.push(postDisplay);
-        }
-
-        return dfp;
-
-    };
 
     var dfp = {
 
         init: once(init),
 
-        getAdSlots: function() {
-            return adSlots;
-        },
+        getAdSlots: getAdSlots,
+
+        addSlot: addSlot,
+
+        refreshSlot: refreshSlot,
 
         buildPageTargeting: buildPageTargeting,
 
         createAdSlot: createAdSlot,
 
         // really only useful for testing
-        reset: function() {
+        reset: function () {
             adSlots = [];
+            slots = {};
             slotsToRefresh = [];
             dfp.init = once(init);
-            return adSlots;
         }
 
     };
