@@ -458,10 +458,6 @@ a.headline:hover {
     color: #999999;
 }
 
-.supporting .trailtext {
-    display: none;
-}
-
 .article__time {
     position: absolute;
     right: 3px;
@@ -541,10 +537,6 @@ a.headline:hover {
     display: block;
 }
 
-.supporting .image__overrides {
-    display: none;
-}
-
 .supporting-message {
     font-size: 10px;
     color: #999999;
@@ -552,11 +544,10 @@ a.headline:hover {
     padding: 15px 4px 0 0;
 }
 
-.supporting .tool--done,
 .supporting .trailtext,
-.supporting .supporting-message,
+.supporting .tool--done,
 .supporting .image__overrides,
-.supporting .misc__overrides {
+.supporting .supporting-message {
     display: none;
 }
 

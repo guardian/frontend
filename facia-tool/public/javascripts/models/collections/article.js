@@ -31,10 +31,48 @@ define([
         contentApi,
         Group
     ) {
+        var overridableFields = [
+            'headline',
+            'trailText',
+            'byline'
+        ];
+
         function Article(opts) {
             var self = this;
 
             opts = opts || {};
+
+            this.props = asObservableProps([
+                'webUrl',
+                'webPublicationDate']);
+
+            this.fields = asObservableProps(overridableFields.concat([
+                'isLive',
+                'firstPublicationDate',
+                'scheduledPublicationDate',
+                'thumbnail']));
+
+            this.meta = asObservableProps(overridableFields.concat([
+                'href',
+                'kicker',
+                'imageAdjust',
+                'imageSrc',
+                'imageSrcWidth',
+                'imageSrcHeight',
+                'showMainVideo',
+                'group',
+                'snapType',
+                'snapCss',
+                'snapUri']));
+
+            this.state = asObservableProps([
+                'underDrag',
+                'isOpen',
+                'isOpenImage',
+                'isLoaded',
+                'isEmpty',
+                'ophanUrl',
+                'sparkUrl']);
 
             this.id = ko.observable(opts.id);
 
@@ -47,42 +85,6 @@ define([
             this.scheduledPublicationTime = ko.observable();
 
             this.mainMediaType = ko.observable();
-
-            this.props = asObservableProps([
-                'webUrl',
-                'webPublicationDate']);
-
-            this.fields = asObservableProps([
-                'isLive',
-                'firstPublicationDate',
-                'scheduledPublicationDate',
-                'headline',
-                'trailText',
-                'thumbnail']);
-
-            this.meta = asObservableProps([
-                'href',
-                'headline',
-                'trailText',
-                'kicker',
-                'imageAdjust',
-                'imageSrc',
-                'imageSrcWidth',
-                'imageSrcHeight',
-                'showMainVideo',
-                'group',
-                'snapType',
-                'snapCss',
-                'snapUri']);
-
-            this.state = asObservableProps([
-                'underDrag',
-                'isOpen',
-                'isOpenImage',
-                'isLoaded',
-                'isEmpty',
-                'ophanUrl',
-                'sparkUrl']);
 
             this.headlineLength = ko.computed(function() {
                 return (this.meta.headline() || this.fields.headline() || '').length;
@@ -269,16 +271,6 @@ define([
             this.meta.imageAdjust(this.meta.imageAdjust() === 'boost' ? undefined : 'boost');
         };
 
-        Article.prototype.open = function() {
-            var self = this;
-
-            if (this.uneditable) { return; }
-
-            _.defer(function(){
-                self.state.isOpen(true);
-            });
-        };
-
         Article.prototype.toggleOpenImage = function() {
             this.state.isOpenImage(!this.state.isOpenImage());
         };
@@ -393,8 +385,7 @@ define([
         };
 
         Article.prototype.open = function() {
-            if (!this.group) { return; }
-
+            if (this.uneditable) { return; }
             this.state.isOpen(true);
         };
 
@@ -402,7 +393,7 @@ define([
             this.state.isOpen(false);
         };
 
-        Article.prototype.closeAndSave = function(butStayOpen) {
+        Article.prototype.closeAndSave = function() {
             this.close();
             this.save();
         };
@@ -415,7 +406,6 @@ define([
             } else {
                this.meta.supporting.closeAllExcept();
             }
-            return false;
         }
 
         return Article;

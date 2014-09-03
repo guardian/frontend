@@ -287,7 +287,6 @@
 
                     <div class="article__overrides__other">
                         <select data-bind="
-                            event: {blur: save},
                             options: $root.kickers,
                             value: meta.kicker,
                             optionsCaption: 'Kicker...'"></select>
@@ -403,13 +402,7 @@
                         <i class="icon-pencil"></i>
                     <!-- /ko -->
 
-                    <div class="secondary">
-                        <span data-bind="
-                            visible: isSnap,
-                            attr: {class: 'kicker' + (meta.snapCss() ? ' kicker--' + meta.snapCss() : '')},
-                            click: open,
-                            text: meta.snapCss() || 'snap'"></span>
-
+                    <div class="secondary" data-bind="click: open">
                         <!-- ko if: fields.isLive() === 'false' -->
                             <span class="kicker" data-bind="
                                 css: {
@@ -420,14 +413,19 @@
                                 click: open"></span>
                         <!-- /ko -->
 
-                        <span data-bind="
-                            attr: {class: 'kicker kicker--' + meta.kicker()}
-                            visible: meta.kicker,
-                            text: meta.kicker,
-                            click: open"></span>
+                        <!-- ko if: isSnap -->
+                            <span data-bind="
+                                attr: {class: 'kicker' + (meta.snapCss() ? ' kicker--' + meta.snapCss() : '')},
+                                text: meta.snapCss() || 'snap'"></span>
+                        <!-- /ko -->
+
+                        <!-- ko if: meta.kicker -->
+                            <span data-bind="
+                                attr: {class: 'kicker kicker--' + meta.kicker()},
+                                text: meta.kicker"></span>
+                        <!-- /ko -->
 
                         <span class="trailtext" data-bind="
-                            attr: {href: id},
                             html: meta.trailText() || fields.trailText()"></span>
                     </div>
                 </div>
