@@ -4,6 +4,11 @@ module.exports = function(grunt, options) {
             options: {
                 create: [options.staticTargetDir + 'fonts']
             }
+        },
+        css: {
+            options: {
+                create: [options.staticTargetDir + 'stylesheets']
+            }
         }
     };
 };
