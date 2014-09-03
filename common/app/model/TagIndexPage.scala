@@ -2,6 +2,7 @@ package model
 
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag}
 import common.{Maps, HTML}
+import common.Strings./
 import play.api.libs.json._
 
 object SectionDefinition {
@@ -25,15 +26,6 @@ object TagDefinition {
     } yield SectionDefinition(name, id),
     new Tag(apiTag).isSectionTag
   )
-
-  object / {
-    val Matcher = """^([^/]+)/(.*)$""".r
-
-    def unapply(s: String): Option[(String, String)] = s match {
-      case Matcher(before, after) => Some((before, after))
-      case _ => None
-    }
-  }
 }
 
 /** Minimal amount of information we need to serialize about tags */
@@ -43,8 +35,6 @@ case class TagDefinition(
   sectionDefinition: Option[SectionDefinition],
   isSectionTag: Boolean
 ) {
-  import TagDefinition./
-
   def tagTypeName: Option[String] = {
     sectionDefinition.map(section => HTML.noHtml(section.name)) orElse ({
       case "profile" / _ => "Contributor"
