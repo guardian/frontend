@@ -223,37 +223,68 @@
             <div data-bind="if: state.isOpen">
                 <div class="article__overrides">
                     <div class="article__overrides__fields">
-                        <textarea class="headline" data-bind="
-                            valueUpdate:'afterkeydown',
-                            hasFocus: true,
-                            value: headlineInput,
-                            attr: {
-                                maxlength: $root.headlineLength,
-                                placeholder: fields.headline() || 'Link text'
-                            }"></textarea>
-                        <span class="headline-length" data-bind="
-                            css: {'headline-length--alert': headlineLengthAlert},
-                            text: headlineLength"></span>
-                        <a class="revert revert--headline" data-bind="
-                            click: headlineRevert,
-                            attr: {title: 'Revert to: ' + fields.headline()},
-                            visible: meta.headline"><i class="icon-fast-backward"></i></a>
 
-                        <textarea class="trailtext" data-bind="
-                            valueUpdate:'afterkeydown',
-                            value: trailTextInput,
-                            attr: {placeholder: fields.trailText() || 'Trail text'}"></textarea>
-                        <a class="revert revert--trailtext" data-bind="
-                            click: trailTextRevert,
-                            attr: {title: 'Revert to: ' + fields.trailText()},
-                            visible: meta.trailText"><i class="icon-fast-backward"></i></a>
+                        <!-- ko if: isOpenMeta.headline -->
+                            <textarea class="headline" data-bind="
+                                valueUpdate:'afterkeydown',
+                                hasFocus: true,
+                                value: headlineEdit.overriden,
+                                event: {blur: headlineEdit.closer},
+                                attr: {
+                                    maxlength: $root.headlineLength,
+                                    placeholder: fields.headline() || 'Headline'
+                                }"></textarea>
+                            <span class="headline-length" data-bind="
+                                css: {'headline-length--alert': headlineLengthAlert},
+                                text: headlineLength"></span>
+                            <a class="revert revert--headline" data-bind="
+                                click: headlineEdit.reverter,
+                                attr: {title: 'Revert to: ' + fields.headline()},
+                                visible: meta.headline"><i class="icon-fast-backward"></i></a>
+                        <!-- /ko -->
+                        <!-- ko ifnot: isOpenMeta.headline -->
+                            <div class="headline" data-bind="
+                                html: headlineEdit.overriden(),
+                                click: headlineEdit.opener"></div>
+                        <!-- /ko -->
+
+                        <!-- ko if: isOpenMeta.trailText -->
+                            <textarea class="trailtext" data-bind="
+                                valueUpdate: 'afterkeydown',
+                                hasFocus: true,
+                                value: trailTextEdit.overriden,
+                                event: {blur: trailTextEdit.closer},
+                                attr: {placeholder: fields.trailText() || 'Trailtext'}"></textarea>
+                            <a class="revert revert--trailtext" data-bind="
+                                click: trailTextEdit.reverter,
+                                attr: {title: 'Revert to: ' + fields.trailText()},
+                                visible: meta.trailText"><i class="icon-fast-backward"></i></a>
+                        <!-- /ko -->
+                        <!-- ko ifnot: isOpenMeta.trailText -->
+                            <div class="trailtext" data-bind="
+                                html: trailTextEdit.overriden(),
+                                click: trailTextEdit.opener"></div>
+                        <!-- /ko -->
+
+                        <!-- ko if: isOpenMeta.kicker -->
+                            <select data-bind="
+                                hasFocus: true,
+                                options: $root.kickers,
+                                value: meta.kicker,
+                                optionsCaption: 'Kicker...'"></select>
+                        <!-- /ko -->
+                        <!-- ko ifnot: isOpenMeta.kicker -->
+                            <div data-bind="
+                                attr: {class: 'kicker kicker--' + meta.kicker()},
+                                html: meta.kicker,
+                                click: kickerEdit.opener"></div>
+                        <!-- /ko -->
 
                         <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
                             visible: isSnap,
                             value: meta.href"/>
 
-                        <div data-bind="
-                            if: state.isOpenImage() || meta.imageSrc()">
+                        <div data-bind="if: state.isOpenImage() || meta.imageSrc()">
                             <input type="text" placeholder="Image URL, eg. copied from Batch Uploader" data-bind="
                                 hasFocus: state.isOpenImage,
                                 value: provisionalImageSrc"/>
@@ -261,13 +292,6 @@
                     </div>
 
                     <div class="supporting-message">Add supporting content below</div>
-
-                    <div class="article__overrides__other">
-                        <select data-bind="
-                            options: $root.kickers,
-                            value: meta.kicker,
-                            optionsCaption: 'Kicker...'"></select>
-                    </div>
                 </div>
 
                 <div class="image__overrides">
@@ -365,7 +389,7 @@
                 </div>
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
-                    <a class="headline" target="article" data-bind="
+                    <a class="headline" data-bind="
                         html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
                         css: {'is-empty': isSnap() && !meta.headline()},
                         attr: {href: id},

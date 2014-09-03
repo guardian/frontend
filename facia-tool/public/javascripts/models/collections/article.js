@@ -31,28 +31,22 @@ define([
         contentApi,
         Group
     ) {
-        var overridableFields = [
-            'headline',
-            'trailText',
-            'byline'
-        ];
-
-        function Article(opts) {
-            var self = this;
-
-            opts = opts || {};
-
-            this.props = asObservableProps([
+        var rootProps = [
                 'webUrl',
-                'webPublicationDate']);
+                'webPublicationDate'],
 
-            this.fields = asObservableProps(overridableFields.concat([
+            overridableFields = [
+                'headline',
+                'trailText',
+                'byline'],
+
+            allFields = [
                 'isLive',
                 'firstPublicationDate',
                 'scheduledPublicationDate',
-                'thumbnail']));
+                'thumbnail'].concat(overridableFields),
 
-            this.meta = asObservableProps(overridableFields.concat([
+            allMeta = [
                 'href',
                 'kicker',
                 'imageAdjust',
@@ -63,7 +57,20 @@ define([
                 'group',
                 'snapType',
                 'snapCss',
-                'snapUri']));
+                'snapUri'].concat(overridableFields);
+
+        function Article(opts) {
+            var self = this;
+
+            opts = opts || {};
+
+            this.props = asObservableProps(rootProps);
+
+            this.fields = asObservableProps(allFields);
+
+            this.meta = asObservableProps(allMeta);
+
+            this.isOpenMeta = asObservableProps(allMeta);
 
             this.state = asObservableProps([
                 'underDrag',
@@ -108,11 +115,9 @@ define([
                     this.meta.href() || this.props.webUrl();
             }, this);
 
-            this.headlineInput  = this.overrider('headline');
-            this.headlineRevert = this.reverter('headline');
-
-            this.trailTextInput  = this.overrider('trailText');
-            this.trailTextRevert = this.reverter('trailText');
+            this.headlineEdit = this.editor('headline');
+            this.trailTextEdit = this.editor('trailText');
+            this.kickerEdit = this.editor('kicker');
 
             this.provisionalImageSrc = ko.observable();
 
@@ -175,10 +180,27 @@ define([
             });
         };
 
-        Article.prototype.overrider = function(key) {
+        Article.prototype.opener = function(key) {
+            return function() {
+                this.isOpenMeta[key](true);
+                console.log('open:' + key);
+            }
+        };
+
+        Article.prototype.closer = function(key) {
+            return function() {
+                this.isOpenMeta[key](false);
+                console.log('close:' + key);
+            }
+        };
+
+        Article.prototype.overriden = function(key) {
             return ko.computed({
                 read: function() {
-                    return this.meta[key]() || this.fields[key]();
+                    var meta  = this.meta[key]   ? this.meta[key]()   : undefined;
+                    var field = this.fields[key] ? this.fields[key]() : undefined;
+
+                    return meta || field || 'Add ' + key + '...';
                 },
                 write: function(value) {
                     var el = document.createElement('div');
@@ -194,6 +216,15 @@ define([
                 this.meta[key](undefined);
             };
         };
+
+        Article.prototype.editor = function(key) {
+            return {
+                overriden: this.overriden(key),
+                reverter: this.reverter(key),
+                opener: this.opener(key),
+                closer: this.closer(key)
+            }
+        }
 
         function mainMediaType(contentApiArticle) {
             var mainElement = _.findWhere(contentApiArticle.elements || [], {

@@ -394,7 +394,8 @@ h1 {
     font-size: 12px;
 }
 
-a.headline {
+a.headline,
+div.headline {
     font-size: 14px;
     line-height: 16px;
     color: #000000;
@@ -481,10 +482,8 @@ a.headline:hover {
 
 .article__overrides {
     position: relative;
-    margin: 2px 0 0 80px;
+    margin: 0 0 0 85px;
     color: #666666;
-    font-size: 12px;
-    line-height: 16px;
 }
 
 .article__overrides input,
@@ -540,8 +539,6 @@ a.headline:hover {
 .supporting-message {
     font-size: 10px;
     color: #999999;
-    float: right;
-    padding: 15px 4px 0 0;
 }
 
 .supporting .trailtext,
