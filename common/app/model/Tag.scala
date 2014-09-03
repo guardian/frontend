@@ -22,7 +22,7 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val contributorImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Contributor))
   lazy val sharingImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Item140)).map { s: String =>
-    if (s.startsWith("//")) s"http$s" else s
+    if (s.startsWith("//")) s"http:$s" else s
   }
 
   lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Item140))
