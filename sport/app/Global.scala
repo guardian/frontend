@@ -1,5 +1,5 @@
 import common.CloudWatchApplicationMetrics
-import conf.{Configuration, Filters}
+import conf.Filters
 import dev.DevParametersLifecycle
 import ophan.SurgingContentAgentLifecycle
 import play.api.mvc.WithFilters

@@ -81,6 +81,7 @@ GET         /video/end-slate/section/*sectionId.json                            
 
 # Sport
 GET         /sport/cricket/match/:matchId                                                                            controllers.CricketMatchController.renderMatchId(matchId)
+GET         /sport/cricket/match/:matchId.json                                                                       controllers.CricketMatchController.renderMatchIdJson(matchId)
 
 GET         /football/fixtures/:year/:month/:day.json                                                                football.controllers.FixturesController.allFixturesForJson(year, month, day)
 GET         /football/fixtures/:year/:month/:day                                                                     football.controllers.FixturesController.allFixturesFor(year, month, day)
