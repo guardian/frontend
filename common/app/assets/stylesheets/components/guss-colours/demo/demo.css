@@ -1,5 +1,7 @@
 /**
- * Default colour palette
+ * An example of a colour palette to be used with guss-colours
+ *
+ * If you're looking for the guardian colour palette: https://github.com/guardian/pasteup-palette
  * 
  * @type Map
  *
@@ -50,110 +52,26 @@ a {
 .clear {
   margin: 2em; }
 
-.b-guardian-brand {
-  background-color: #005689; }
+.b-rainbow-red {
+  background-color: #ed1c24; }
 
-.b-guardian-brand-light {
-  background-color: #94b1ca; }
+.b-rainbow-orange {
+  background-color: #f26522; }
 
-.b-guardian-brand-dark {
-  background-color: #00456e; }
+.b-rainbow-yellow {
+  background-color: #fff200; }
 
-.b-error {
-  background-color: #d61d00; }
+.b-rainbow-green {
+  background-color: #00a651; }
 
-.b-success {
-  background-color: #4a7801; }
+.b-rainbow-blue {
+  background-color: #0054a6; }
 
-.b-neutral-1 {
-  background-color: #333333; }
+.b-rainbow-indigo {
+  background-color: #2e3192; }
 
-.b-neutral-2 {
-  background-color: #767676; }
-
-.b-neutral-3 {
-  background-color: #bdbdbd; }
-
-.b-neutral-4 {
-  background-color: gainsboro; }
-
-.b-neutral-5 {
-  background-color: #dfdfdf; }
-
-.b-neutral-6 {
-  background-color: #eaeaea; }
-
-.b-neutral-7 {
-  background-color: #f1f1f1; }
-
-.b-neutral-8 {
-  background-color: #f6f6f6; }
-
-.b-neutral-1-warm {
-  background-color: #333333; }
-
-.b-neutral-2-warm {
-  background-color: #767676; }
-
-.b-neutral-3-warm {
-  background-color: #bdbdbd; }
-
-.b-neutral-4-warm {
-  background-color: gainsboro; }
-
-.b-neutral-5-warm {
-  background-color: #e3e3db; }
-
-.b-neutral-6-warm {
-  background-color: #edede7; }
-
-.b-neutral-7-warm {
-  background-color: #f4f4ee; }
-
-.b-neutral-8-warm {
-  background-color: #f6f6f6; }
-
-.b-tone-news-1 {
-  background-color: #005689; }
-
-.b-tone-news-2 {
-  background-color: #4bc6df; }
-
-.b-tone-features-1 {
-  background-color: #951c55; }
-
-.b-tone-features-2 {
-  background-color: #f66980; }
-
-.b-tone-features-3 {
-  background-color: #b82266; }
-
-.b-tone-features-4 {
-  background-color: #7d0068; }
-
-.b-tone-comment-1 {
-  background-color: #e6711b; }
-
-.b-tone-comment-2 {
-  background-color: #ffbb00; }
-
-.b-tone-comment-3 {
-  background-color: #ffcf4c; }
-
-.b-tone-media-1 {
-  background-color: #333333; }
-
-.b-tone-media-2 {
-  background-color: #484848; }
-
-.b-tone-media-3 {
-  background-color: #ffbb00; }
-
-.b-tone-live-1 {
-  background-color: #b51800; }
-
-.b-tone-live-2 {
-  background-color: #cc2b12; }
+.b-rainbow-violet {
+  background-color: #92278f; }
 
 [class^=b-] {
   display: inline-block;
@@ -177,234 +95,58 @@ a {
 .colour-name {
   margin-top: calc(50% - 2.75em); }
 
-.b-guardian-brand {
+.b-rainbow-red {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-guardian-brand:before {
+  .b-rainbow-red:before {
     visibility: hidden;
-    content: "guardian-brand"; }
+    content: "rainbow-red"; }
 
-.b-guardian-brand-light {
+.b-rainbow-orange {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-guardian-brand-light:before {
+  .b-rainbow-orange:before {
     visibility: hidden;
-    content: "guardian-brand-light"; }
+    content: "rainbow-orange"; }
 
-.b-guardian-brand-dark {
+.b-rainbow-yellow {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-guardian-brand-dark:before {
+  .b-rainbow-yellow:before {
     visibility: hidden;
-    content: "guardian-brand-dark"; }
+    content: "rainbow-yellow"; }
 
-.b-error {
+.b-rainbow-green {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-error:before {
+  .b-rainbow-green:before {
     visibility: hidden;
-    content: "error"; }
+    content: "rainbow-green"; }
 
-.b-success {
+.b-rainbow-blue {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-success:before {
+  .b-rainbow-blue:before {
     visibility: hidden;
-    content: "success"; }
+    content: "rainbow-blue"; }
 
-.b-neutral-1 {
+.b-rainbow-indigo {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-neutral-1:before {
+  .b-rainbow-indigo:before {
     visibility: hidden;
-    content: "neutral-1"; }
+    content: "rainbow-indigo"; }
 
-.b-neutral-2 {
+.b-rainbow-violet {
   text-shadow: 0 0 3px #000000;
   font-weight: 200;
   color: #ffffff; }
-  .b-neutral-2:before {
+  .b-rainbow-violet:before {
     visibility: hidden;
-    content: "neutral-2"; }
-
-.b-neutral-3:before {
-  visibility: hidden;
-  content: "neutral-3"; }
-
-.b-neutral-4:before {
-  visibility: hidden;
-  content: "neutral-4"; }
-
-.b-neutral-5:before {
-  visibility: hidden;
-  content: "neutral-5"; }
-
-.b-neutral-6:before {
-  visibility: hidden;
-  content: "neutral-6"; }
-
-.b-neutral-7:before {
-  visibility: hidden;
-  content: "neutral-7"; }
-
-.b-neutral-8:before {
-  visibility: hidden;
-  content: "neutral-8"; }
-
-.b-neutral-1-warm {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-neutral-1-warm:before {
-    visibility: hidden;
-    content: "neutral-1-warm"; }
-
-.b-neutral-2-warm {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-neutral-2-warm:before {
-    visibility: hidden;
-    content: "neutral-2-warm"; }
-
-.b-neutral-3-warm:before {
-  visibility: hidden;
-  content: "neutral-3-warm"; }
-
-.b-neutral-4-warm:before {
-  visibility: hidden;
-  content: "neutral-4-warm"; }
-
-.b-neutral-5-warm:before {
-  visibility: hidden;
-  content: "neutral-5-warm"; }
-
-.b-neutral-6-warm:before {
-  visibility: hidden;
-  content: "neutral-6-warm"; }
-
-.b-neutral-7-warm:before {
-  visibility: hidden;
-  content: "neutral-7-warm"; }
-
-.b-neutral-8-warm:before {
-  visibility: hidden;
-  content: "neutral-8-warm"; }
-
-.b-tone-news-1 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-news-1:before {
-    visibility: hidden;
-    content: "tone-news-1"; }
-
-.b-tone-news-2 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-news-2:before {
-    visibility: hidden;
-    content: "tone-news-2"; }
-
-.b-tone-features-1 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-features-1:before {
-    visibility: hidden;
-    content: "tone-features-1"; }
-
-.b-tone-features-2 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-features-2:before {
-    visibility: hidden;
-    content: "tone-features-2"; }
-
-.b-tone-features-3 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-features-3:before {
-    visibility: hidden;
-    content: "tone-features-3"; }
-
-.b-tone-features-4 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-features-4:before {
-    visibility: hidden;
-    content: "tone-features-4"; }
-
-.b-tone-comment-1 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-comment-1:before {
-    visibility: hidden;
-    content: "tone-comment-1"; }
-
-.b-tone-comment-2 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-comment-2:before {
-    visibility: hidden;
-    content: "tone-comment-2"; }
-
-.b-tone-comment-3 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-comment-3:before {
-    visibility: hidden;
-    content: "tone-comment-3"; }
-
-.b-tone-media-1 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-media-1:before {
-    visibility: hidden;
-    content: "tone-media-1"; }
-
-.b-tone-media-2 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-media-2:before {
-    visibility: hidden;
-    content: "tone-media-2"; }
-
-.b-tone-media-3 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-media-3:before {
-    visibility: hidden;
-    content: "tone-media-3"; }
-
-.b-tone-live-1 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-live-1:before {
-    visibility: hidden;
-    content: "tone-live-1"; }
-
-.b-tone-live-2 {
-  text-shadow: 0 0 3px #000000;
-  font-weight: 200;
-  color: #ffffff; }
-  .b-tone-live-2:before {
-    visibility: hidden;
-    content: "tone-live-2"; }
+    content: "rainbow-violet"; }

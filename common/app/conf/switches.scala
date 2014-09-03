@@ -45,6 +45,11 @@ object Switches extends Collections {
   private lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
+    "If this switch is switched on then the Content API circuit breaker will be operational",
+    safeState = Off,
+    sellByDate = new LocalDate(2014, 9, 28)
+  )
 
   val MemcachedSwitch = Switch("Performance", "memcached-action",
     "If this switch is switched on then the MemcacheAction will be operational",
@@ -278,11 +283,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val SentimentalCommentsSwitch = Switch("Feature", "sentimental-comments",
-    "When this switch is on, you will be able to put sentiment into your comments.",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
-  )
-
   val EnhancedMediaPlayerSwitch = Switch("Feature", "enhanced-media-player",
     "If this is switched on then videos are enhanced using our JavaScript player",
     safeState = On, sellByDate = never
@@ -302,11 +302,6 @@ object Switches extends Collections {
   val ChildrensBooksSwitch = Switch("Feature", "childrens-books-hide-popular",
     "If switched on, video pages in the childrens books section will not show popular videos",
     safeState = On, sellByDate = new LocalDate(2014, 9, 8)
-  )
-
-  val SeoEscapeFootballJsonPathLikeValuesSwitch = Switch("Feature", "seo-googlebot-escape-football-json-path-like-values",
-    "If switched ON, json football references that look like a path to googlebot are 'escaped'.",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 2)
   )
 
   // A/B Tests
@@ -410,13 +405,11 @@ object Switches extends Collections {
     ShowAllArticleEmbedsSwitch,
     FrontPressJobSwitch,
     EnhanceTweetsSwitch,
-    SentimentalCommentsSwitch,
     IndiaRegionSwitch,
     MemcachedSwitch,
     MemcachedFallbackSwitch,
     IncludeBuildNumberInMemcachedKey,
     GeoMostPopular,
-    SeoEscapeFootballJsonPathLikeValuesSwitch,
     FaciaToolCachedContentApiSwitch,
     FaciaToolDraftContent,
     GuShiftCookieSwitch,

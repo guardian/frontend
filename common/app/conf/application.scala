@@ -18,7 +18,7 @@ object Gzipper extends GzipFilter(
   shouldGzip = (req, resp) => !resp.headers.get("Content-Type").exists(_.startsWith("image/"))
 )
 
-object  JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicits.Requests {
+object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicits.Requests {
 
   private val varyFields = List("Origin", "Accept")
   private val defaultVaryFields = varyFields.mkString(",")

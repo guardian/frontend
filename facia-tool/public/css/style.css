@@ -641,10 +641,6 @@ button {
     margin: 5px 0 15px 0;;
 }
 
-.collection-overrides {
-    margin: -2px 0 0 3px;
-}
-
 .article__spark {
     position: absolute;
     top: 13px;

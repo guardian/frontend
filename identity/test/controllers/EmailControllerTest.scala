@@ -72,7 +72,6 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
         content should include("""<form class="form" novalidate action="/email-prefs" role="main" method="post">""")
         content should include("""<input type="checkbox" name="statusFields.receiveGnmMarketing" """)
         content should include("""<input type="checkbox" name="statusFields.receive3rdPartyMarketing" """)
-//        content should not include("checked")
       }
     }
 
@@ -147,7 +146,7 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
 
       "should throw a CSRF error" in {
         intercept[RuntimeException]{
-          emailController.savePreferences()(authRequest)
+          contentAsString(emailController.savePreferences()(authRequest))
         }
       }
     }

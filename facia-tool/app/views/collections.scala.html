@@ -120,83 +120,60 @@
             <div class="list-header" data-bind="
                 css: {collapsed: state.collapsed() || configMeta.uneditable()}">
 
-                <div data-bind="visible: !state.editingConfig()">
+                <span class="tools" data-bind="visible: state.hasDraft">
+                    <a class="draft-warning" data-bind="
+                        click: $root.setModeDraft,
+                        visible: $root.liveMode">
+                        <span class="tool draft-warning">Unlaunched changes</a>
 
-                    <span class="tools" data-bind="visible: state.hasDraft">
-                        <a class="draft-warning" data-bind="
-                            click: $root.setModeDraft,
-                            visible: $root.liveMode">
-                            <span class="tool draft-warning">Unlaunched changes</a>
+                    <span data-bind="visible: !$root.liveMode()">
+                        <a class="tool draft-publish" data-bind="
+                            click: publishDraft">Launch</a>
 
-                        <span data-bind="visible: !$root.liveMode()">
-                            <a class="tool draft-publish" data-bind="
-                                click: publishDraft">Launch</a>
+                        <a class="tool draft-discard" data-bind="
+                            click: discardDraft">Discard</a>
+                    </span >
+                </span>
 
-                            <a class="tool draft-discard" data-bind="
-                                click: discardDraft">Discard</a>
-                        </span >
-                    </span>
+                <span class="title" data-bind="
+                    text: configMeta.displayName() || collectionMeta.displayName() || '(no title)'"></span>
 
-                    <span class="title" data-bind="
-                        text: configMeta.displayName() || collectionMeta.displayName() || 'Special'"></span>
+                <span class="count" data-bind="if: !isPending() && !configMeta.uneditable()">
+                    (<span data-bind="
+                        text: state.count() ? state.count() : 'empty',
+                        css: {'non-zero':  state.count}"></span>)
+                </span>
 
-                    <a class="list-header__edit" data-bind="
-                        click: toggleEditingConfig,
-                        visible: typeof configMeta.displayName() === 'undefined' && !state.collapsed()">&laquo; edit title</a>
+                <span class="count" data-bind="if: isPending() && !configMeta.uneditable()">
+                    (<span class="non-zero">updating...</span>)
+                </span>
 
-                    <span class="count" data-bind="if: !isPending() && !configMeta.uneditable()">
-                        (<span data-bind="
-                            text: state.count() ? state.count() : 'empty',
-                            css: {'non-zero':  state.count}"></span>)
-                    </span>
+                <span data-bind="if: alsoOn.length">
+                    also on
+                    <span data-bind="foreach: alsoOn"
+                    ><span data-bind="if: $index">, </span
+                    ><a class="list-header__also-on" data-bind="
+                            click: $root.setFront,
+                            text: $data"></a
+                    ></span>
+                </span>
 
-                    <span class="count" data-bind="if: isPending() && !configMeta.uneditable()">
-                        (<span class="non-zero">updating...</span>)
-                    </span>
+                <a class="list-header__collapser" data-bind="click: toggleCollapsed">
+                    <i data-bind="css: {
+                        'icon-chevron-down': !state.collapsed(),
+                        'icon-chevron-up'  :  state.collapsed }"></i></a>
 
-                    <span data-bind="if: alsoOn.length">
-                        also on
-                        <span data-bind="foreach: alsoOn"
-                        ><span data-bind="if: $index">, </span
-                        ><a class="list-header__also-on" data-bind="
-                                click: $root.setFront,
-                                text: $data"></a
-                        ></span>
-                    </span>
-
-                    <a class="list-header__collapser" data-bind="click: toggleCollapsed">
-                        <i data-bind="css: {
-                            'icon-chevron-down': !state.collapsed(),
-                            'icon-chevron-up'  :  state.collapsed }"></i></a>
-
-                    <span class="list-header__timings" data-bind="
-                        css: {'has-concurrent-user': state.hasConcurrentEdits}">
-                        <!-- ko if: state.timeAgo -->
-                            <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
-                            ago by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
-                        <!-- /ko -->
-                        <a data-bind="
-                            click: reset,
-                            visible: state.hasConcurrentEdits,
-                            ">Show edits</a>
-                    </span>
-                </div>
-
-                <div class="collection-overrides" data-bind="visible: state.editingConfig">
-                    <input type="text" data-bind="
-                        value: collectionMeta.displayName,
-                        hasFocus: true" placeholder="Title"/>
-
-                    <input type="text" data-bind="
-                        value: collectionMeta.href,
-                        hasFocus: true" placeholder="Link, e.g. sport/cricket"/>
-
-                    <span class="tools">
-                        <a class="tool" data-bind="click: saveMeta">Save</a>
-                        <a class="tool" data-bind="click: reset">Cancel</a>
-                    </span>
-                </div>
-
+                <span class="list-header__timings" data-bind="
+                    css: {'has-concurrent-user': state.hasConcurrentEdits}">
+                    <!-- ko if: state.timeAgo -->
+                        <span class="list-header__timings__last-updated" data-bind="text: state.timeAgo"></span>
+                        ago by <span class="list-header__timings__user" data-bind="text: collectionMeta.updatedBy"></span>
+                    <!-- /ko -->
+                    <a data-bind="
+                        click: reset,
+                        visible: state.hasConcurrentEdits,
+                        ">Show edits</a>
+                </span>
             </div>
 
             <!-- ko if: !state.collapsed() -->

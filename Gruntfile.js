@@ -65,7 +65,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
     grunt.registerTask('compile:css', function(fullCompile) {
-        grunt.task.run(['compile:images', 'sass:compile', 'sass:compileStyleguide']);
+        grunt.task.run(['mkdir:css', 'compile:images', 'sass:compile', 'sass:compileStyleguide']);
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
@@ -130,12 +130,13 @@ module.exports = function (grunt) {
     /**
      * Analyse tasks
      */
+    grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
+    grunt.registerTask('analyse:js', ['compile:js', 'bytesize:js']);
     grunt.registerTask('analyse:performance', function(app) {
         var target = app ? ':' + app : '';
         grunt.task.run('pagespeed' + target);
     });
-    grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
-    grunt.registerTask('analyse', ['analyse:css', 'analyse:performance']);
+    grunt.registerTask('analyse', ['analyse:css', 'analyse:js', 'analyse:performance']);
 
     /**
      * Miscellaneous tasks

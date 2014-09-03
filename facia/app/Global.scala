@@ -21,7 +21,8 @@ with SurgingContentAgentLifecycle {
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
     S3Metrics.S3AuthorizationError,
-    FaciaMetrics.FaciaToApplicationRedirectMetric
+    FaciaMetrics.FaciaToApplicationRedirectMetric,
+    ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric
   )
 
   override def onStart(app: Application) {

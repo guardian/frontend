@@ -1,9 +1,14 @@
 .media-primary {
-    margin-left: $gs-gutter / -2;
-    margin-right: $gs-gutter / -2;
+    margin-left: $gs-gutter * -.5;
+    margin-right: $gs-gutter * -.5;
+
     @include mq(mobileLandscape) {
         margin-left: $gs-gutter / -1;
         margin-right: $gs-gutter / -1;
+    }
+    @include mq(phablet) {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
@@ -75,7 +80,7 @@
     max-width: gs-span(7);
 
     @include mq(tablet) {
-        max-width: gs-span(7);
+        max-width: gs-span(8);
     }
     @include mq(rightCol) {
         max-width: none;
@@ -86,10 +91,6 @@
     .caption--main {
         padding-left: 0 !important;
         padding-right: 0 !important;
-    }
-    .media-primary {
-        margin-left: 0;
-        margin-right: 0;
     }
     .article__columning-wrapper {
         padding-right: gs-span(1) + $gs-gutter;

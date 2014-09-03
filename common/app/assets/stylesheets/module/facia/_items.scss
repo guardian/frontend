@@ -187,7 +187,7 @@
         }
         .item__cta--gallery,
         .item__cta--video {
-            background-color: $c-media-icon;
+            background-color: $c-mediaAccent;
         }
     }
     &:active {
@@ -322,7 +322,7 @@
     }
 }
 .l-row--items-4 {
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         .item__title--has-icon-mobile {
             padding-left: 30px;
         }
@@ -489,7 +489,7 @@ $cta-icon-gap: 2px;
 .item__cta--video {
     width: 36px;
     height: 36px;
-    background-color: $c-media-icon;
+    background-color: $c-mediaAccent;
 }
 .item__cta__icon {
     position: absolute;

@@ -1,7 +1,6 @@
 package tools
 
 import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, Datapoint}
-import java.util.concurrent.Future
 import java.util.{UUID, Date}
 import org.joda.time.DateTime
 import scala.collection.JavaConversions._
@@ -11,7 +10,7 @@ case class ChartRow(rowKey: String, values: Seq[Double]) {
 
   def this(date: Date, values: Seq[Double]) =
   {
-    this((new DateTime(date.getTime)).toString("HH:mm"), values)
+    this(new DateTime(date.getTime).toString("HH:mm"), values)
   }
 }
 
@@ -95,37 +94,37 @@ class AwsLineChart(
   override val name: String,
   override val labels: Seq[String],
   override val format: ChartFormat,
-  val charts: Future[GetMetricStatisticsResult]*) extends Chart {
+  val charts: GetMetricStatisticsResult*) extends Chart {
 
   override def dataset: Seq[ChartRow] = {
     val dataColumns = labels.tail
     val table = new ChartTable(dataColumns)
 
     (dataColumns, charts.toList).zipped.map( (column, chart) => {
-      table.addColumn(column, ChartColumn(chart.get().getDatapoints))
+      table.addColumn(column, ChartColumn(chart.getDatapoints))
     })
 
     table.asChartRow(toLabel, toValue)
   }
-    
+
   protected def toValue(dataPoint: Datapoint): Double = Option(dataPoint.getAverage).orElse(Option(dataPoint.getSum))
       .getOrElse(throw new IllegalStateException(s"Don't know how to get a value for $dataPoint"))
 
   protected def toLabel(date: DateTime): String = date.toString("HH:mm")
 }
 
-class AwsDailyLineChart(name: String, labels: Seq[String], format: ChartFormat, charts: Future[GetMetricStatisticsResult]*) extends AwsLineChart(name, labels, format, charts:_*) {
+class AwsDailyLineChart(name: String, labels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, labels, format, charts:_*) {
   override def toLabel(date: DateTime): String = date.toString("dd/MM")
   lazy val latest = dataset.lastOption.flatMap(_.values.headOption).getOrElse(0.0)
 }
 
-class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, charts: Future[GetMetricStatisticsResult]*) extends AwsLineChart(name, ablabels, format, charts:_*) {
+class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, ablabels, format, charts:_*) {
 
   private val dataColumns: Seq[(String, ChartColumn)] = {
 
     // Do not consider any metrics that have less than three data points.
     (ablabels.tail, charts.toList).zipped.map( (column, chart) =>
-      (column, ChartColumn(chart.get().getDatapoints))
+      (column, ChartColumn(chart.getDatapoints))
     ).filter{ case (label, column)  => column.values.length > 3 }
   }
 

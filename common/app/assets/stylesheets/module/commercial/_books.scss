@@ -55,7 +55,7 @@ $c-commercial-books-dark: #630d4c;
         padding: 0 0 $comercial-comp-baseline;
     }
     .lineitem {
-        padding: $comercial-comp-baseline 0;        
+        padding: $comercial-comp-baseline 0;
     }
     .lineitem:first-child {
         padding-top: 0;
@@ -266,7 +266,7 @@ $c-commercial-books-dark: #630d4c;
             width: 50%;
         }
     }
-    @include mq(leftCol, $to: wide) {
+    @include mq(leftCol, $until: wide) {
         .commercial__title {
             line-height: 1;
             margin-bottom: $comercial-comp-baseline;

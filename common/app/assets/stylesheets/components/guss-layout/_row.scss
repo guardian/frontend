@@ -117,7 +117,7 @@ $guss-row-fallback-width: 940px !default;
         // - Chrome
         // - IE 11+
         // - Firefox 28+ (for flex-wrap support)
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             #{$base-class}--layout-m {
                 display: -webkit-flex;
                 display: flex;

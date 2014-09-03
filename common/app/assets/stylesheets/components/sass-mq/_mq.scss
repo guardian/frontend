@@ -40,7 +40,7 @@ $mq-show-breakpoints: () !default;
     @if(map-has-key($mq-breakpoints, $name)) {
         @return map-get($mq-breakpoints, $name);
     } @else {
-        @return 'Breakpoint #{$name} does not exist';
+        @warn "Breakpoint #{$name} does not exist";
     }
 }
 
@@ -50,7 +50,7 @@ $mq-show-breakpoints: () !default;
 //     @include mq($from: mobile) {
 //         color: red;
 //     }
-//     @include mq($to: tablet) {
+//     @include mq($until: tablet) {
 //         color: blue;
 //     }
 //     @include mq(mobile, tablet) {
@@ -64,7 +64,19 @@ $mq-show-breakpoints: () !default;
 //     }
 // }
 
-@mixin mq($from: false, $to: false, $and: false) {
+@mixin mq($from: false, $until: false, $and: false, $to: null) {
+
+    // Deprecate use of $to for $until, because $until implies the exclusive
+    // boundary that is in place, whereas $to is unclear.
+    @if $to {
+        @if not $until {
+            @warn '$to is deprecated, you should use $until instead';
+            $until: $to;
+        } @else {
+            @warn 'You are using $until and $to together. $to is deprecated and has been ignored. You should remove it.';
+        }
+    }
+
 
     // Initialize variables
     $min-width: 0;
@@ -80,12 +92,12 @@ $mq-show-breakpoints: () !default;
         }
     }
 
-    // To: that breakpoint (exclusive)
-    @if $to {
-        @if type-of($to) == number {
-            $max-width: mq-px2em($to);
+    // Until: that breakpoint (exclusive)
+    @if $until {
+        @if type-of($until) == number {
+            $max-width: mq-px2em($until);
         } @else {
-            $max-width: mq-px2em(mq-get-breakpoint-width($to)) - .01em;
+            $max-width: mq-px2em(mq-get-breakpoint-width($until)) - .01em;
         }
     }
 
@@ -96,7 +108,7 @@ $mq-show-breakpoints: () !default;
         @if type-of($static-breakpoint-width) == number {
             $target-width: mq-px2em($static-breakpoint-width);
             // Output only rules that start at or span our target width
-            @if ($and == false and ($min-width <= $target-width) and (($to == false) or ($max-width >= $target-width))) {
+            @if ($and == false and ($min-width <= $target-width) and (($until == false) or ($max-width >= $target-width))) {
                 @content;
             }
         } @else {

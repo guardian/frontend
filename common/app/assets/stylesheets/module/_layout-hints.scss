@@ -147,7 +147,7 @@ figure {
     .u-responsive-ratio--letterbox {
         @include transition(padding-bottom 1s);
 
-        @include mq($to: rightCol) {
+        @include mq($until: rightCol) {
             padding-bottom: aspect-ratio-height(5, 3);
         }
     }

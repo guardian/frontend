@@ -9,17 +9,18 @@ define([
     Component,
     images
 ){
-    function OnwardContent(config){
+    function OnwardContent(config, context){
         register.begin('series-content');
         this.config = config;
+        this.context = context;
         this.endpoint = '/series/' + this.config.page.seriesId + '.json?shortUrl=' + encodeURIComponent(this.config.page.shortUrl);
-        this.fetch(document.body, 'html');
+        this.fetch(this.context, 'html');
     }
 
     Component.define(OnwardContent);
 
     OnwardContent.prototype.ready = function() {
-        images.upgrade();
+        images.upgrade(this.context);
         register.end('series-content');
     };
 
