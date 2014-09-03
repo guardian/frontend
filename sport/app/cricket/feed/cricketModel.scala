@@ -23,8 +23,6 @@ case class Match(
   def secondInBatsman: Option[InningsBatsman] = lastInnings.flatMap( _.secondIn )
 
   def lastOut: Option[InningsBatsman] = lastInnings.flatMap( _.lastOut )
-
-  def bowlerOnStrike: Option[InningsBowler] = lastInnings.flatMap( _.currentBowler )
 }
 
 case class Team(
@@ -63,7 +61,6 @@ case class Innings(
     }
   }
   lazy val lastOut: Option[InningsBatsman] = batsmen.filter( _.out ).lastOption
-  lazy val currentBowler: Option[InningsBowler] = bowlers.find( _.onStrike )
 }
 
 case class InningsBatsman(
@@ -86,9 +83,7 @@ case class InningsBowler(
   overs: Int,
   maidens: Int,
   runs: Int,
-  wickets: Int,
-  onStrike: Boolean,
-  nonStrike: Boolean)
+  wickets: Int)
 
 case class InningsWicket(
   order: Int,

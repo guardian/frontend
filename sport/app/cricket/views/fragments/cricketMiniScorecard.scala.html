@@ -63,23 +63,11 @@
                 <table class="table">
                     <thead class="u-h">
                         <tr>
-                            <td>Bowling / Last Out</td>
+                            <td>Last Out</td>
                             <td>Batsman</td>
                         </tr>
                     </thead>
                     <tbody>
-                        @theMatch.bowlerOnStrike match {
-                            case Some(bowler) => {
-                            <tr>
-                                <td>
-                                    Bowling:
-                                </td>
-                                <td>
-                                    @bowler.name
-                                </td>
-                            </tr> }
-                            case _ => {}
-                        }
                         @theMatch.lastOut match {
                             case Some(batsman) => {
                             <tr>

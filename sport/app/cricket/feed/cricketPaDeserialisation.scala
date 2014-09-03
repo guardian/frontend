@@ -119,9 +119,7 @@ object Parser {
         getStatistic(bowler, "overs") toInt,
         getStatistic(bowler, "maidens") toInt,
         getStatistic(bowler, "runs-conceded") toInt,
-        getStatistic(bowler, "wickets-taken") toInt,
-        false,//(bowler \ "@on_strike").text.toInt > 0,
-        false)//(bowler \ "@non_strike").text.toInt > 0)
+        getStatistic(bowler, "wickets-taken") toInt)
     }.toList.sortBy(_.order)
 
   private def parseInningsWickets(wickets: NodeSeq): List[InningsWicket] =
