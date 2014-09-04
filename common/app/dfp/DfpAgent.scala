@@ -52,7 +52,8 @@ trait DfpAgent {
 
       def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
         sponsorship.adUnits.contains(adUnitWithRoot) &&
-          (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id))
+          (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id)) &&
+          !sponsorship.isR2Only
       }
 
       if (isProd) {

@@ -94,27 +94,6 @@ object DfpDataCacheJob extends ExecutionContexts {
     }
   }
 
-  private implicit val countryWrites = new Writes[Country] {
-    def writes(country: Country): JsValue = {
-      Json.obj(
-        "name" -> country.name,
-        "editionId" -> country.editionId
-      )
-    }
-  }
-
-  private implicit val pageSkinSponsorshipWrites = new Writes[PageSkinSponsorship] {
-    def writes(sponsorship: PageSkinSponsorship): JsValue = {
-      Json.obj(
-        "lineItem" -> sponsorship.lineItemName,
-        "lineItemId" -> sponsorship.lineItemId,
-        "adUnits" -> sponsorship.adUnits,
-        "countries" -> sponsorship.countries,
-        "isAdTest" -> sponsorship.targetsAdTest
-      )
-    }
-  }
-
   private implicit val pageSkinSponsorshipReportWrites = new Writes[PageSkinSponsorshipReport] {
     def writes(report: PageSkinSponsorshipReport): JsValue = {
       Json.obj(
