@@ -141,6 +141,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       ("author", JsString(contributors.map(_.name).mkString(","))),
       ("authorIds", JsString(contributors.map(_.id).mkString(","))),
       ("tones", JsString(tones.map(_.name).mkString(","))),
+      ("toneIds", JsString(tones.map(_.id).mkString(","))),
       ("blogs", JsString(blogs.map { _.name }.mkString(","))),
       ("blogIds", JsString(blogs.map { _.id.split("/").last }.mkString(","))),
       ("commentable", JsBoolean(isCommentable)),

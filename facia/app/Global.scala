@@ -7,16 +7,17 @@ import ophan.SurgingContentAgentLifecycle
 import play.Play
 import play.api.libs.json.Json
 import play.api.mvc.WithFilters
-import services.{ConfigAgent, ConfigAgentDefaults, ConfigAgentLifecycle}
+import services.{IndexListingsLifecycle, ConfigAgent, ConfigAgentDefaults, ConfigAgentLifecycle}
 import play.api.Application
 
 
 object Global extends WithFilters(Filters.common: _*)
-with ConfigAgentLifecycle
-with DevParametersLifecycle
-with CloudWatchApplicationMetrics
-with DfpAgentLifecycle
-with SurgingContentAgentLifecycle {
+  with ConfigAgentLifecycle
+  with DevParametersLifecycle
+  with CloudWatchApplicationMetrics
+  with DfpAgentLifecycle
+  with SurgingContentAgentLifecycle
+  with IndexListingsLifecycle {
   override lazy val applicationName = "frontend-facia"
 
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(

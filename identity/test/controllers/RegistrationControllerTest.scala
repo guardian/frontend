@@ -44,8 +44,9 @@ class RegistrationControllerTest extends path.FreeSpec with ShouldMatchers with 
   "the renderRegistrationForm" - {
     "should render the registration form" in Fake {
       val request = TestRequest()
-      when(returnUrlVerifier.getVerifiedReturnUrl(request)).thenReturn(Some("http://example.com/return"))
-      val result = registrationController.renderForm()(request)
+      val returnUrl = Some("http://example.com/return")
+      when(returnUrlVerifier.getVerifiedReturnUrl(request)).thenReturn(returnUrl)
+      val result = registrationController.renderForm(returnUrl)(request)
       status(result) should equal(OK)
     }
   }
