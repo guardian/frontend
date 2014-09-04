@@ -2,7 +2,6 @@ package model
 
 import commercial.TravelOffersCacheJob
 import conf.Configuration
-import dfp.DfpDataCacheJob
 import play.api.GlobalSettings
 import tools.{LoadBalancer, CloudWatch}
 import common.{AkkaAsync, Jobs}
@@ -44,8 +43,7 @@ trait AdminLifecycle extends GlobalSettings {
     }
 
     // every 30 minutes
-    Jobs.schedule("DfpDataCacheJob", "0 1/30 * * * ? *") {
-      DfpDataCacheJob.run()
+    Jobs.schedule("TravelOffersCacheJob", "0 1/30 * * * ? *") {
       TravelOffersCacheJob.run()
     }
 
@@ -61,7 +59,7 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("AnalyticsSanityCheckJob")
     Jobs.deschedule("VideoSanityCheckJob")
     Jobs.deschedule("FrontPressJob")
-    Jobs.deschedule("DfpDataCacheJob")
+    Jobs.deschedule("TravelOffersCacheJob")
     Jobs.deschedule("RebuildIndexJob")
     Jobs.deschedule("OmnitureReportJob")
   }
@@ -73,7 +71,6 @@ trait AdminLifecycle extends GlobalSettings {
 
     AkkaAsync {
       RebuildIndexJob.run()
-      DfpDataCacheJob.run()
       TravelOffersCacheJob.run()
       OmnitureReportJob.run()
     }
