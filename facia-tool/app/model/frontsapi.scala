@@ -76,7 +76,7 @@ case class Block(
                   displayName: Option[String],
                   href: Option[String],
                   diff: Option[JsValue],
-                  lastUsed: Option[List[(String, String)]]
+                  lastUsed: Option[List[String]]
                   ) {
 
   def sortByGroup: Block = this.copy(
@@ -89,11 +89,14 @@ case class Block(
     trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
   }
 
-  def recordIdUsage(id: String): Block =
-    this.copy(lastUsed = for (l <- lastUsed) yield {
-      val lastUsedWithoutItem: List[(String, String)] = l.filterNot(_._2 == id)
-      ((DateTime.now.toString(), id) +: lastUsedWithoutItem).take(20)
-    })
+  def recordIdUsage(id: String): Block = {
+    val updatedLastUsed: Option[List[String]] = (for (l <- lastUsed) yield {
+      val lastUsedWithoutItem: List[String] = l.filterNot(_ == id)
+      (id +: lastUsedWithoutItem).take(20)
+    }).orElse(Option(List(id)))
+
+    this.copy(lastUsed = updatedLastUsed)
+  }
 }
 
 object UpdateList {
