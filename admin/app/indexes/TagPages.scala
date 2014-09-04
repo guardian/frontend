@@ -2,8 +2,8 @@ package indexes
 
 import common.Maps._
 import com.gu.openplatform.contentapi.model.Tag
-import java.text.Normalizer
 import model.{TagDefinition, TagIndexPage}
+import common.StringEncodings.asAscii
 
 import play.api.libs.iteratee.{Enumeratee, Iteratee}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -75,9 +75,6 @@ object TagPages {
     ("women-in-leadership", "Women in Leadership"),
     ("world", "World news")
   )
-
-  def asAscii(s: String) =
-    Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")
 
   def alphaIndexKey(s: String) = {
     val firstChar = asAscii(s).toLowerCase.charAt(0)
