@@ -31,8 +31,11 @@ TableDoughnut.prototype.render = function(el) {
         unit: el.getAttribute('data-chart-unit'),
         width: width
     });
-    $doughnut[0].className += ' ' + el.getAttribute('data-chart-class');
-    return $doughnut.insertAfter(el);
+    // can't use bonzo's class methods, don't play well in IE
+    var currentClasses = $doughnut.attr('class');
+    return $doughnut
+        .attr('class', currentClasses + ' ' + el.getAttribute('data-chart-class'))
+        .insertAfter(el);
 };
 
 return TableDoughnut;

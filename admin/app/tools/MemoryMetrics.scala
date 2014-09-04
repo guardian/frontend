@@ -1,34 +1,39 @@
 package tools
 
-import CloudWatch._
+import tools.CloudWatch._
 import com.amazonaws.services.cloudwatch.model.GetMetricStatisticsRequest
+import common.ExecutionContexts
 import org.joda.time.DateTime
+import awswrappers.cloudwatch._
 
-object MemoryMetrics {
+import scala.concurrent.Future
 
-  def memory = loadBalancers.map{ loadBalancer =>
-    new AwsLineChart(s"${loadBalancer.name} JVM memory", Seq("Memory", "used (mb)", "max (mb)"), ChartFormat.DoubleLineBlueRed,
-
-      euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
+object MemoryMetrics extends ExecutionContexts {
+  def memory = withErrorLogging(Future.traverse(loadBalancers) { loadBalancer =>
+    for {
+      usedHeapMemory <- euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(3).toDate)
         .withEndTime(new DateTime().toDate)
         .withPeriod(60)
         .withStatistics("Average")
         .withNamespace("ApplicationSystemMetrics")
         .withMetricName(s"${loadBalancer.project}-used-heap-memory")
-        .withDimensions(stage),
-        asyncHandler),
+        .withDimensions(stage))
 
-    euWestClient.getMetricStatisticsAsync(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusHours(3).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(60)
-      .withStatistics("Average")
-      .withNamespace("ApplicationSystemMetrics")
-      .withMetricName(s"${loadBalancer.project}-max-heap-memory")
-      .withDimensions(stage),
-      asyncHandler)
+      maxHeapMemory <- euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+        .withStartTime(new DateTime().minusHours(3).toDate)
+        .withEndTime(new DateTime().toDate)
+        .withPeriod(60)
+        .withStatistics("Average")
+        .withNamespace("ApplicationSystemMetrics")
+        .withMetricName(s"${loadBalancer.project}-max-heap-memory")
+        .withDimensions(stage))
+    } yield new AwsLineChart(
+      s"${loadBalancer.name} JVM memory",
+      Seq("Memory", "used (mb)", "max (mb)"),
+      ChartFormat.DoubleLineBlueRed,
+      usedHeapMemory,
+      maxHeapMemory
     )
-  }
-
+  })
 }

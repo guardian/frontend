@@ -58,7 +58,7 @@ td.gsc-search-button {
     padding-left: 0; // Remove space before "About x results (x seconds)"
 }
 // Stack "About … results" and "Sort by" on mobile
-@include mq($to: mobileLandscape) {
+@include mq($until: mobileLandscape) {
     .gsc-result-info-container,
     .gsc-orderby-container {
         display: block;

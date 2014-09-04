@@ -60,26 +60,33 @@ module.exports = function (grunt) {
     /**
      * Compile tasks
      */
+
+    grunt.registerTask('sass:compile', ['concurrent:sass']);
+
     grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
-    grunt.registerTask('compile:css', function() {
-        grunt.task.run(['compile:images', 'sass:compile', 'sass:compileStyleguide', 'px_to_rem']);
+    grunt.registerTask('compile:css', function(fullCompile) {
+        grunt.task.run(['mkdir:css', 'compile:images', 'sass:compile', 'sass:compileStyleguide']);
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);
         }
 
-        if (isOnlyTask(this)) {
+        if (!options.isDev) {
+            grunt.task.run(['px_to_rem']);
+        }
+
+        if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
         }
 
     });
-    grunt.registerTask('compile:js', function() {
+    grunt.registerTask('compile:js', function(fullCompile) {
         grunt.task.run(['requirejs', 'copy:javascript']);
         if (!options.isDev) {
             grunt.task.run('uglify:javascript');
         }
 
-        if (isOnlyTask(this)) {
+        if (isOnlyTask(this) && !fullCompile) {
             grunt.task.run('asset_hash');
         }
 
@@ -123,12 +130,13 @@ module.exports = function (grunt) {
     /**
      * Analyse tasks
      */
+    grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
+    grunt.registerTask('analyse:js', ['compile:js', 'bytesize:js']);
     grunt.registerTask('analyse:performance', function(app) {
         var target = app ? ':' + app : '';
         grunt.task.run('pagespeed' + target);
     });
-    grunt.registerTask('analyse:css', ['compile:css', 'cssmetrics:common']);
-    grunt.registerTask('analyse', ['analyse:css', 'analyse:performance']);
+    grunt.registerTask('analyse', ['analyse:css', 'analyse:js', 'analyse:performance']);
 
     /**
      * Miscellaneous tasks

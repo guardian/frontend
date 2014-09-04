@@ -6,7 +6,7 @@ define([
     bean
 ) {
 
-    function FormstackIframe(el, context, config) {
+    function FormstackIframe(el, config) {
 
         var self = this;
 

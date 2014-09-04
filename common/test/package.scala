@@ -53,7 +53,7 @@ trait TestSettings {
         )
     }
 
-    override def GET(url: String, headers: scala.Iterable[scala.Tuple2[java.lang.String, java.lang.String]]) = {
+    override def GET(url: String, headers: Iterable[(String, String)]) = {
       recorder.load(url, headers.toMap) {
         originalHttp.GET(url, headers)
       }

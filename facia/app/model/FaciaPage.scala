@@ -4,10 +4,9 @@ import common.Edition
 import dfp.DfpAgent
 import play.api.libs.json.{JsString, JsValue}
 
-case class FaciaPage(
-                      id: String,
-                      seoData: SeoData,
-                      collections: List[(Config, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
+case class FaciaPage(id: String,
+                     seoData: SeoData,
+                     collections: List[(Config, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
 
   override lazy val description: Option[String] = seoData.description
   override lazy val section: String = seoData.navSection
@@ -19,9 +18,7 @@ case class FaciaPage(
   override lazy val isFront = true
 
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ faciaPageMetaData
-  lazy val faciaPageMetaData: Map[String, JsValue] = newMetaData
-
-  lazy val newMetaData: Map[String, JsValue] = Map(
+  lazy val faciaPageMetaData: Map[String, JsValue] = Map(
     "keywords" -> JsString(webTitle.capitalize),
     "contentType" -> JsString(contentType)
   )

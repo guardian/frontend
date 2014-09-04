@@ -1,21 +1,12 @@
 module.exports = function(grunt, options) {
+    var sassDir = 'common/app/assets/stylesheets';
+
     return {
-        compile: {
-            files: [{
-                expand: true,
-                cwd: 'common/app/assets/stylesheets',
-                src: ['*.scss', '!_*'],
-                dest: options.staticTargetDir + 'stylesheets/',
-                rename: function(dest, src) {
-                    return dest + src.replace('scss', 'css');
-                }
-            }],
-            options: {
-                style: 'compressed',
-                sourcemap: true,
-                noCache: true,
-                quiet: options.isDev ? false : true
-            }
+        options: {
+            style: 'compressed',
+            sourcemap: options.isDev,
+            noCache: true,
+            quiet: options.isDev ? false : true
         },
         compileStyleguide: {
             files: [{
@@ -26,13 +17,40 @@ module.exports = function(grunt, options) {
                 rename: function(dest, src) {
                     return dest + src.replace('scss', 'css');
                 }
-            }],
-            options: {
-                style: 'compressed',
-                sourcemap: true,
-                noCache: true,
-                quiet: options.isDev ? false : true
-            }
+            }]
+        },
+        'old-ie': {
+            files: [{
+                expand: true,
+                cwd: sassDir,
+                src: ['old-ie.*.scss'],
+                dest: options.staticTargetDir + 'stylesheets/',
+                rename: function(dest, src) {
+                    return dest + src.replace('scss', 'css');
+                }
+            }]
+        },
+        ie9: {
+            files: [{
+                expand: true,
+                cwd: sassDir,
+                src: ['ie9.*.scss'],
+                dest: options.staticTargetDir + 'stylesheets/',
+                rename: function(dest, src) {
+                    return dest + src.replace('scss', 'css');
+                }
+            }]
+        },
+        modern: {
+            files: [{
+                expand: true,
+                cwd: sassDir,
+                src: ['*.scss', '!{_*,ie9.*,old-ie.*}'],
+                dest: options.staticTargetDir + 'stylesheets/',
+                rename: function(dest, src) {
+                    return dest + src.replace('scss', 'css');
+                }
+            }]
         }
     };
 };

@@ -15,7 +15,9 @@
                 <ul class="linkslist">
                 @for(tag <- page.tags) {
                     <li class="linkslist__item">
-                        <a href="@LinkTo("/" + tag.id)" class="linkslist__action tag-index__tag-link">@tag.webTitle</a>
+                        <a href="@LinkTo(tag.indexPath)" class="linkslist__action tag-index__tag-link">
+                          @page.indexTitle(tag)
+                        </a>
                     </li>
                 }
                 </ul>
