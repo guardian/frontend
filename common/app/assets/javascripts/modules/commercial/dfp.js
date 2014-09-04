@@ -159,7 +159,8 @@ define([
                 .map(function ($adSlot) {
                     return [$adSlot.attr('id'), defineSlot($adSlot)];
                 })
-                .zipObject();
+                .zipObject()
+                .valueOf();
         },
         displayAds = function() {
             googletag.pubads().enableSingleRequest();
@@ -360,6 +361,8 @@ define([
                     slot: slot
                 });
             }
+
+            return slot;
         },
         parseAd = function (event) {
             var $slot = $('#' + event.slot.getSlotId().getDomId());
@@ -426,8 +429,7 @@ define([
                     return breakpointInfo.name !== breakpoint;
                 })
                 .intersection(slotBreakpoints)
-                .last()
-                .valueOf();
+                .last();
         },
         shouldSlotRefresh = function (slotInfo, breakpoint, previousBreakpoint) {
             // get the slots breakpoints
