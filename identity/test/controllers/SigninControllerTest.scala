@@ -23,6 +23,7 @@ import idapiclient.TrackingData
 import services.IdentityRequest
 import idapiclient.responses.CookiesResponse
 import play.api.test.Helpers._
+import play.api.mvc.RequestHeader
 
 
 class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
@@ -37,7 +38,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
 
   val signinController = new SigninController(returnUrlVerifier, api, requestParser, idUrlBuilder, signInService)
   when(requestParser.apply(anyObject())).thenReturn(identityRequest)
-
+  when(returnUrlVerifier.getVerifiedReturnUrl(any[RequestHeader])).thenReturn(None)
 
   "the renderForm method" - {
     "should render the signin form" in Fake {
