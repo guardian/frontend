@@ -30,6 +30,7 @@ GET        /video/section/:sectionId/*seriesId.json   controllers.VideoInSection
 GET        /video/section/:sectionId.json             controllers.VideoInSectionController.renderSectionVideos(sectionId)
 GET        /video/most-viewed.json                    controllers.MostViewedVideoController.renderMostViewed()
 GET        /audio/most-viewed.json                    controllers.MostViewedAudioController.renderMostViewed()
+GET        /gallery/most-viewed.json                  controllers.MostViewedGalleryController.renderMostViewed()
 GET        /video/end-slate/series/*seriesId.json     controllers.VideoEndSlateController.renderSeries(seriesId)
 GET        /video/end-slate/section/*sectionId.json   controllers.VideoEndSlateController.renderSection(sectionId)
 
