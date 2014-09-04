@@ -66,6 +66,9 @@ define([
                 $style.html('body:after { content: "mobile"; }');
                 hasBreakpointChanged(callback);
                 expect(callback).toHaveBeenCalledWith('mobile', 'desktop');
+                $style.html('body:after { content: "tablet"; }');
+                hasBreakpointChanged(callback);
+                expect(callback).toHaveBeenCalledWith('tablet', 'mobile');
             });
 
             it('should not fire if no breakpoint crossed', function(){
