@@ -140,6 +140,45 @@ define([
         };
 
     /**
+     * Initial commands
+     */
+    var setListeners = function () {
+            googletag.pubads().addEventListener('slotRenderEnded', parseAd);
+        },
+        setPageTargeting = function () {
+            forOwn(buildPageTargeting(config), function (value, key) {
+                googletag.pubads().setTargeting(key, value);
+            });
+        },
+        /**
+         * Loop through each slot detected on the page and define it based on the data
+         * attributes on the element.
+         */
+        defineSlots = function () {
+            slots = _(adSlots)
+                .map(function ($adSlot) {
+                    return [$adSlot.attr('id'), defineSlot($adSlot)];
+                })
+                .zipObject();
+        },
+        displayAds = function() {
+            googletag.pubads().enableSingleRequest();
+            googletag.pubads().collapseEmptyDivs();
+            googletag.enableServices();
+            // as this is an single request call, only need to make a single display call (to the first ad slot)
+            googletag.display(adSlots.shift().attr('id'));
+        },
+        postDisplay = function() {
+            var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
+            mediator.on('window:resize',
+                debounce(function () {
+                    // refresh on resize
+                    hasBreakpointChanged(refresh);
+                }, 2000)
+            );
+        };
+
+    /**
      * Public functions
      */
     var init = function (c) {
@@ -287,7 +326,42 @@ define([
     /**
      * Private functions
      */
-    var parseAd = function (event) {
+    var defineSlot = function ($adSlot) {
+            var adUnit = config.page.adUnit,
+                id          = $adSlot.attr('id'),
+                sizeMapping = defineSlotSizes($adSlot),
+                // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
+                size        = uniq(
+                    flatten(sizeMapping, true, function (map) {
+                        return map[1];
+                    }),
+                    function (size) {
+                        return size[0] + '-' + size[1];
+                    }
+                ),
+                slot = (
+                    $adSlot.data('out-of-page') ?
+                        googletag.defineOutOfPageSlot(adUnit, id) :
+                        googletag.defineSlot(adUnit, size, id)
+                    )
+                    .addService(googletag.pubads())
+                    .defineSizeMapping(sizeMapping)
+                    .setTargeting('slot', $adSlot.data('name'));
+
+            if ($adSlot.data('keywords')) {
+                slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
+            }
+
+            // Add to the array of ads to be refreshed (when the breakpoint changes)
+            // only if it's `data-refresh` attribute isn't set to false.
+            if ($adSlot.data('refresh') !== false) {
+                slotsToRefresh.push({
+                    $adSlot: $adSlot,
+                    slot: slot
+                });
+            }
+        },
+        parseAd = function (event) {
             var $slot = $('#' + event.slot.getSlotId().getDomId());
 
             if (event.isEmpty) {
@@ -435,82 +509,6 @@ define([
             return map(targetArray, function (target) {
                 return keywords.format(target);
             });
-        };
-
-    /**
-     * Initial commands
-     */
-    var setListeners = function () {
-            googletag.pubads().addEventListener('slotRenderEnded', parseAd);
-        },
-        setPageTargeting = function () {
-            forOwn(buildPageTargeting(config), function (value, key) {
-                googletag.pubads().setTargeting(key, value);
-            });
-        },
-        defineSlot = function ($adSlot) {
-            var adUnit = config.page.adUnit,
-                id          = $adSlot.attr('id'),
-                sizeMapping = defineSlotSizes($adSlot),
-                // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
-                size        = uniq(
-                    flatten(sizeMapping, true, function (map) {
-                        return map[1];
-                    }),
-                    function (size) {
-                        return size[0] + '-' + size[1];
-                    }
-                ),
-                slot = (
-                        $adSlot.data('out-of-page') ?
-                            googletag.defineOutOfPageSlot(adUnit, id) :
-                            googletag.defineSlot(adUnit, size, id)
-                    )
-                    .addService(googletag.pubads())
-                    .defineSizeMapping(sizeMapping)
-                    .setTargeting('slot', $adSlot.data('name'));
-
-            if ($adSlot.data('keywords')) {
-                slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
-            }
-
-            // Add to the array of ads to be refreshed (when the breakpoint changes)
-            // only if it's `data-refresh` attribute isn't set to false.
-            if ($adSlot.data('refresh') !== false) {
-                slotsToRefresh.push({
-                    $adSlot: $adSlot,
-                    slot: slot
-                });
-            }
-        },
-        /**
-         * Loop through each slot detected on the page and define it based on the data
-         * attributes on the element.
-         */
-        defineSlots = function () {
-            slots = _(adSlots)
-                .map(function ($adSlot) {
-                    return [$adSlot.attr('id'), defineSlot($adSlot)];
-                })
-                .zipObject();
-        },
-        displayAds = function() {
-            googletag.pubads().enableSingleRequest();
-            googletag.pubads().collapseEmptyDivs();
-            googletag.enableServices();
-            // as this is an single request call, only need to make a single display call (to the first ad slot)
-            googletag.display(adSlots.shift().attr('id'));
-        },
-        postDisplay = function() {
-            var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
-            mediator.on('window:resize',
-                debounce(function () {
-                    // refresh on resize
-                    hasBreakpointChanged(function () {
-                        googletag.pubads().refresh(slotsToRefresh);
-                    });
-                }, 2000)
-            );
         };
 
     var dfp = {
