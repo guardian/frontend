@@ -95,7 +95,6 @@ case class Block(
         val lastUsedWithoutItem: List[String] = l.filterNot(_ == update.item)
         (update.item +: lastUsedWithoutItem).take(20)
       }).orElse(Option(List(update.item)))
-
       this.copy(lastUsed = updatedLastUsed)
     }
     else
