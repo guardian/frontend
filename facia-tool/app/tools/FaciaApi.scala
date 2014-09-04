@@ -36,7 +36,6 @@ object FaciaApi extends FaciaApiRead with FaciaApiWrite {
   def publishBlock(id: String, identity: UserIdentity): Option[Block] =
     getBlock(id)
       .filter(_.draft.isDefined)
-      .map(_.recordPublishedIds)
       .map(updateIdentity(_, identity))
       .map { block => putBlock(id, block.copy(live = block.draft.get, draft = None), identity)}
 

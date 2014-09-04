@@ -76,7 +76,7 @@ case class Block(
                   displayName: Option[String],
                   href: Option[String],
                   diff: Option[JsValue],
-                  lastUsed: Option[List[String]]
+                  previously: Option[List[String]]
                   ) {
 
   def sortByGroup: Block = this.copy(
@@ -89,24 +89,16 @@ case class Block(
     trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
   }
 
-  def recordIdUsage(update: UpdateList): Block = {
+  def updatePreviously(update: UpdateList): Block = {
     if (update.live) {
-      val updatedLastUsed: Option[List[String]] = (for (l <- lastUsed) yield {
-        val lastUsedWithoutItem: List[String] = l.filterNot(_ == update.item)
-        (update.item +: lastUsedWithoutItem).take(20)
+      val updatedPreviously: Option[List[String]] = (for (p <- previously) yield {
+        val previouslyWithoutItem: List[String] = p.filterNot(_ == update.item)
+        (update.item +: previouslyWithoutItem).take(20)
       }).orElse(Option(List(update.item)))
-      this.copy(lastUsed = updatedLastUsed)
+      this.copy(previously=updatedPreviously)
     }
     else
       this
-  }
-
-  def recordPublishedIds: Block = {
-    val updatedLastUsed = for {
-      d <- draft
-      l <- lastUsed
-    } yield d.diff(live).map(_.id) ::: l
-    this.copy(lastUsed = updatedLastUsed)
   }
 }
 
@@ -224,7 +216,6 @@ trait UpdateActions extends Logging {
     .map(insertIntoDraft(update, _))
     .map(_.sortByGroup)
     .map(capCollection)
-    .map(_.recordIdUsage(update))
     .map(putBlock(id, _, identity))
     .map(archiveUpdateBlock(id, _, updateJson, identity))
     .orElse(createBlock(id, identity, update))
@@ -236,6 +227,7 @@ trait UpdateActions extends Logging {
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
       .map(_.sortByGroup)
+      .map(_.updatePreviously(update))
       .map(archiveDeleteBlock(id, _, updateJson, identity))
       .map(putBlock(id, _, identity))
   }
