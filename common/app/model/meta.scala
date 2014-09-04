@@ -214,6 +214,8 @@ trait Tags {
   lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
   lazy val isFeature = tones.exists(t => Tags.featureMappings.contains(t.id))
   lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
+
+  lazy val isCricketLiveBlog = isLiveBlog && tags.exists(t => t.id == "sport/england-cricket-team")
 }
 
 object Tags {
