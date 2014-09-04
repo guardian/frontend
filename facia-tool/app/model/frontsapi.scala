@@ -102,6 +102,11 @@ case class Block(
       this
   }
 
+  def recordPublishedIds: Block = {
+    val updatedLastUsed = for {
+      d <- draft
+      l <- lastUsed
+    } yield d.diff(live).map(_.id) ::: l
     this.copy(lastUsed = updatedLastUsed)
   }
 }
