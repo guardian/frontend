@@ -89,11 +89,18 @@ case class Block(
     trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
   }
 
-  def recordIdUsage(id: String): Block = {
-    val updatedLastUsed: Option[List[String]] = (for (l <- lastUsed) yield {
-      val lastUsedWithoutItem: List[String] = l.filterNot(_ == id)
-      (id +: lastUsedWithoutItem).take(20)
-    }).orElse(Option(List(id)))
+  def recordIdUsage(update: UpdateList): Block = {
+    if (update.live) {
+      val updatedLastUsed: Option[List[String]] = (for (l <- lastUsed) yield {
+        val lastUsedWithoutItem: List[String] = l.filterNot(_ == update.item)
+        (update.item +: lastUsedWithoutItem).take(20)
+      }).orElse(Option(List(update.item)))
+
+      this.copy(lastUsed = updatedLastUsed)
+    }
+    else
+      this
+  }
 
     this.copy(lastUsed = updatedLastUsed)
   }
@@ -213,7 +220,7 @@ trait UpdateActions extends Logging {
     .map(insertIntoDraft(update, _))
     .map(_.sortByGroup)
     .map(capCollection)
-    .map(_.recordIdUsage(update.item))
+    .map(_.recordIdUsage(update))
     .map(putBlock(id, _, identity))
     .map(archiveUpdateBlock(id, _, updateJson, identity))
     .orElse(createBlock(id, identity, update))
