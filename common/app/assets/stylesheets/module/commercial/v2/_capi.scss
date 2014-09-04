@@ -1,8 +1,7 @@
 /* ==========================================================================
    Content API component
    ========================================================================== */
-
-.commercial--capi {
+.commercial--v2.commercial--capi {
     .commercial__head {
         height: auto;
         border-top: 0;
@@ -71,8 +70,7 @@
 }
 
 /* Fronts */
-
-.facia-container--layout-front .commercial--capi {
+.facia-container--layout-front .commercial--v2.commercial--capi {
     @include mq(faciaLeftCol) {
         @include c-capi-leftCol;
         
@@ -84,8 +82,7 @@
 }
 
 /* Articles */
-
-.facia-container--layout-content .commercial--capi {
+.facia-container--layout-content .commercial--v2.commercial--capi {
     @include mq(leftCol) {
         @include c-capi-leftCol;
     }

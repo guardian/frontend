@@ -1,7 +1,7 @@
 /* ==========================================================================
    Travel component
    ========================================================================== */
-.commercial--travel {
+.commercial--v2.commercial--travel {
     $c-commercial-travel-1: #5ebfba;
     $c-commercial-travel-2: #52A8A4;
 
@@ -141,8 +141,7 @@
 }
 
 /* Fronts */
-
-.facia-container--layout-front .commercial--travel {
+.facia-container--layout-front .commercial--v2.commercial--travel {
     @include mq(desktop) {
         .commercial__head {
             width: auto;
@@ -163,8 +162,7 @@
 }
 
 /* Articles */
-
-.facia-container--layout-content .commercial--travel {
+.facia-container--layout-content .commercial--v2.commercial--travel {
     @include mq(leftCol) {
         @include c-travel-leftCol;
     }

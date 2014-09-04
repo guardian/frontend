@@ -1,7 +1,7 @@
 /* ==========================================================================
    Best Buys component
    ========================================================================== */
-.commercial--bestbuys {
+.commercial--v2.commercial--bestbuys {
     $c-commercial-bestbuys-1: #4bc6df;
     $c-commercial-bestbuys-2: #197caa;
 
@@ -86,8 +86,8 @@
     }
 }
 
-/* fronts */
-.facia-container--layout-front .commercial--bestbuys {
+/* Fronts */
+.facia-container--layout-front .commercial--v2.commercial--bestbuys {
     @include mq(tablet) {
         .tabs__content {
             margin-bottom: $gs-baseline;
@@ -115,8 +115,9 @@
         }
     }
 }
-/* article */
-.facia-container--layout-content .commercial--bestbuys {
+
+/* Articles */
+.facia-container--layout-content .commercial--v2.commercial--bestbuys {
     @include mq(tablet, rightCol) {
         .tabs__content {
             padding-bottom: $gs-baseline;

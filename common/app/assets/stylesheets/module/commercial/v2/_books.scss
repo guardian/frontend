@@ -1,7 +1,7 @@
 /* ==========================================================================
    Books components
    ========================================================================== */
-.commercial--books {
+.commercial--v2.commercial--books {
     $c-commercial-books-1: #BB3a7f;
     $c-commercial-books-2: #52a8a4;
 
@@ -99,8 +99,8 @@
     }
 }
 
-/* article */
-.facia-container--layout-content .commercial--books {
+/* Articles */
+.facia-container--layout-content .commercial--v2.commercial--books {
     @include mq(leftCol) {
         .commercial__relevance-low .lineitem {
             width: 50%;

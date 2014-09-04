@@ -64,7 +64,7 @@
 
 $c-soulmates-high: $c-neutral1;
 
-.commercial--soulmates {
+.commercial--v2.commercial--soulmates {
     .commercial__head {
         height: auto;
         border: 0;
@@ -224,8 +224,8 @@ $c-soulmates-high: $c-neutral1;
     }
 }
 
-/* fronts */
-.facia-container--layout-front .commercial--soulmates {
+/* Fronts */
+.facia-container--layout-front .commercial--v2.commercial--soulmates {
     @include mq(tablet) {
         .lineitems {
             width: percentage(2/3);
@@ -292,8 +292,9 @@ $c-soulmates-high: $c-neutral1;
         }
     }
 }
-/* article */
-.facia-container--layout-content .commercial--soulmates {
+
+/* Articles */
+.facia-container--layout-content .commercial--v2.commercial--soulmates {
     @include mq(tablet) {
         .lineitems {
             width: gs-span(6) - $gs-gutter*3;

@@ -1,7 +1,7 @@
 @(jobs: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
 
 @defining("http://jobs.theguardian.com", "0_1", "2014-05-16") { case (jobsHost, version, date) =>
-    <div class="commercial commercial--jobs">
+    <div class="commercial--redux commercial--jobs">
         <div class="facia-container__inner--commercial">
 
             <div class="container__header">

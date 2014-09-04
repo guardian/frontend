@@ -1,7 +1,7 @@
 /* ==========================================================================
    Jobs component
    ========================================================================== */
-.commercial--jobs {
+.commercial--v2.commercial--jobs {
     $c-commercial-jobs-1: #197caa;
     $c-commercial-jobs-2: #005689;
 
@@ -151,8 +151,8 @@
     }
 }
 
-/* fronts */
-.facia-container--layout-front .commercial--jobs {
+/* Fronts */
+.facia-container--layout-front .commercial--v2.commercial--jobs {
     padding: $gs-gutter/2;
     @include mq(tablet) {
         .commercial--jobs__sectors {
@@ -222,8 +222,8 @@
         }
     }
 }
-/* article */
-.facia-container--layout-content .commercial--jobs {
+/* Articles */
+.facia-container--layout-content .commercial--v2.commercial--jobs {
     @include mq(tablet) {
         .commercial--jobs__sectors {
             float: left;

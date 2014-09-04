@@ -18,7 +18,7 @@
     }
 }
 
-.commercial--dfp {
+.commercial--v2.commercial--dfp {
     $c-commercial-dfp-1: $c-neutral2;
     $c-commercial-dfp-2: $c-neutral1;
 
@@ -129,7 +129,7 @@
                 line-height: 0;
             }
             .lineitem__offer {
-                padding: 0 0 0 $gs-gutter/2;                
+                padding: 0 0 0 $gs-gutter/2;
             }
         }
         @include mq(tablet) {
@@ -164,7 +164,7 @@
     }
 }
 
-.facia-container--layout-content .commercial--dfp.commercial--dfp-single {
+.facia-container--layout-content .commercial--v2.commercial--dfp.commercial--dfp-single {
     @include mq(rightCol) {
         .commercial__footer {
             position: absolute;
@@ -203,7 +203,7 @@
     }
 }
 
-.facia-container--layout-front .commercial--dfp.commercial--dfp-single {
+.facia-container--layout-front .commercial--v2.commercial--dfp.commercial--dfp-single {
     @include mq(tablet) {
         .commercial__footer {
             position: absolute;
@@ -241,13 +241,13 @@
     }
 }
 
-.facia-container--layout-content .commercial--dfp {
+.facia-container--layout-content .commercial--v2.commercial--dfp {
     @include mq(rightCol) {
         @include commercial-double-item;
     }
 }
 
-.facia-container--layout-front .commercial--dfp {
+.facia-container--layout-front .commercial--v2.commercial--dfp {
     @include mq(desktop) {
         @include commercial-double-item;
     }

@@ -97,8 +97,8 @@
     } 
 }
 
-/* fronts */
-.facia-container--layout-front .commercial--masterclasses {
+/* Fronts */
+.facia-container--layout-front .commercial--v2.commercial--masterclasses {
     .commercial__body.container__body {
         padding-left: 0;
     }
@@ -132,8 +132,9 @@
         }
     }
 }
-/* article */
-.facia-container--layout-content .commercial--masterclasses {
+
+/* Articles */
+.facia-container--layout-content .commercial--v2.commercial--masterclasses {
     @include mq(rightCol) {
         .commercial--masterclasses__class {
             padding-left: $gs-gutter/2;
