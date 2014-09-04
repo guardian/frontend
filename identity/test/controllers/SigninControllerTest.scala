@@ -41,7 +41,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
 
   "the renderForm method" - {
     "should render the signin form" in Fake {
-      val result = signinController.renderForm()(TestRequest())
+      val result = signinController.renderForm(None)(TestRequest())
       status(result) should equal(OK)
     }
   }
@@ -113,7 +113,7 @@ class SigninControllerTest extends path.FreeSpec with ShouldMatchers with Mockit
 
 
       val getRequest = FakeRequest(GET, "/signin").withCookies(flashCookie)
-      val getResult = signinController.renderForm()(getRequest)
+      val getResult = signinController.renderForm(None)(getRequest)
       status(getResult) should be (200)
       val body = contentAsString(getResult)
 
