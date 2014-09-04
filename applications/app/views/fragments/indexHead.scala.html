@@ -1,5 +1,12 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
 @import common.LinkTo
+@import model.Tag
 
-<meta name="twitter:url" content="@LinkTo(request.uri)" />
-<meta name="og:title" content="@views.support.Title(index.page)" />
+@index.page match {
+    case tag: Tag => {
+        <meta name="twitter:url" content="@LinkTo(request.uri)" />
+        <meta name="og:title" content="@views.support.Title(index.page)" />
+    }
+    case _ => { }
+}
+
