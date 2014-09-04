@@ -53,6 +53,7 @@ define([
         ANIM_CLOSED: 'membership-tab__change-cc-form-cont--closed',
         NOTIFICATION_TIER_CURRENT: 'js-mem-tier-current',
         NOTIFICATION_TIER_TARGET: 'js-mem-tier-target',
+        NOTIFICATION_INTERVAL: 'js-mem-current-interval',
         NOTIFICATION_PERIOD_START: 'js-mem-current-period-start',
         NOTIFICATION_PERIOD_END: 'js-mem-current-period-end',
         NOTIFICATION_CANCEL: 'js-mem-cancel-tier',
@@ -176,6 +177,7 @@ define([
         $(rootElement,this.context).removeClass('is-hidden');
         $(this.getClass('NOTIFICATION_TIER_CURRENT'), rootElement).html(resp.tier);
         $(this.getClass('NOTIFICATION_TIER_TARGET'), rootElement).html('Friend');
+        $(this.getClass('NOTIFICATION_INTERVAL'), rootElement).html(subscriptionDates.interval);
         $(this.getClass('NOTIFICATION_PERIOD_START'), rootElement).html(subscriptionDates.currentPeriodStart);
         $(this.getClass('NOTIFICATION_PERIOD_END'), rootElement).html(subscriptionDates.currentPeriodEnd);
         $(this.getClass('NOTIFICATION_NEW_START'), rootElement).html(subscriptionNewStartDate);
