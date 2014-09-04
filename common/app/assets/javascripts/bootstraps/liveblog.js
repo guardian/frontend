@@ -154,7 +154,7 @@ define([
                 $('.js-live-blog__timeline li:first-child .timeline__title').text('Latest post');
                 $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
 
-                if (/desktop|wide/.test(detect.getBreakpoint()) && config.page.keywordIds.indexOf('football/football') < 0) {
+                if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0) {
                     var topMarker = qwery('.js-top-marker')[0];
                     affix = new Affix({
                         element: qwery('.js-live-blog__timeline-container')[0],
@@ -171,7 +171,7 @@ define([
 
             if (config.page.isLive) {
 
-                var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000;
+                var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 30000 : 60000;
                 autoUpdate = new AutoUpdate({
                     path: getUpdatePath,
                     delay: timerDelay,

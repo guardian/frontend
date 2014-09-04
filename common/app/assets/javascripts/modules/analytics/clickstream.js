@@ -1,13 +1,11 @@
 define([
     'bean',
     'lodash/collections/map',
-    'common/utils/detect',
     'common/utils/mediator',
     'common/modules/experiments/ab'
 ], function (
     bean,
     map,
-    detect,
     mediator,
     ab
 ) {

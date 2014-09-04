@@ -4,7 +4,6 @@ define([
     'common/utils/ajax',
     'bonzo',
     'bean',
-    'common/utils/detect',
     'common/modules/identity/api'
 ], function(
     assign,
@@ -12,7 +11,6 @@ define([
     ajax,
     bonzo,
     bean,
-    detect,
     Id
 ) {
 
