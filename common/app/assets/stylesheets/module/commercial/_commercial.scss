@@ -1,5 +1,23 @@
 @charset 'UTF-8';
 
+/* ==========================================================================
+   v1 - .commercial
+   ========================================================================== */
+@import '_commercial-component';
+@import '_bestbuys';
+@import '_books';
+@import '_jobs';
+@import '_masterclasses';
+@import '_soulmates';
+@import '_travel';
+@import '_capi.scss';
+@import '_multi';
+@import '_dfp-component.scss';
+
+
+/* ==========================================================================
+   v2 - .commercial--v2
+   ========================================================================== */
 @import 'v2/_commercial-component';
 @import 'v2/_commercial--v-high';
 @import 'v2/_bestbuys';
@@ -12,9 +30,9 @@
 @import 'v2/_multi';
 @import 'v2/_dfp-component.scss';
 
+
 /* ==========================================================================
    Icons
    ========================================================================== */
-
 @import '../../icons/_commercial-icons-sprite';
 @import '../../icons/_commercial-icons-svg';

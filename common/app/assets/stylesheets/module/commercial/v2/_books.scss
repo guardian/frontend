@@ -5,6 +5,8 @@
     $c-commercial-books-1: #BB3a7f;
     $c-commercial-books-2: #52a8a4;
 
+    padding: 0; // override v1
+
     .container__header {
         background-color: $c-commercial-books-1;
     }
