@@ -1,25 +1,21 @@
 @(jobs: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
 
 @defining("http://jobs.theguardian.com", "0_2", "2014-04-30") { case (jobsHost, version, date) =>
-    <div class="commercial--v2 commercial--jobs">
-        <div class="facia-container__inner--commercial">
-
-            <div class="container__header">
-                <div class="container__header__inner">
-                    <h3 class="commercial__title">
-                        <a href="@AdLink{@jobsHost/}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">
-                            <i class="i i-marque-54"></i><i class="i i-guardian-logo-commercial"></i><i class="i i-jobs-logo i-commercial-brand"></i>
-                            <span class="u-h">The Guardian</span> <span class="u-h">Jobs</span>
-                        </a>
-                    </h3>
-                    <a class="commercial__cta button button--tertiary button--large" href="@AdLink{@jobsHost/}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">
-                        <i class="i i-arrow-white-right i-right"></i>
-                        <span class="hide-on-mobile">Browse all jobs</span>
-                    </a>
-                </div>
+    <div class="commercial commercial--jobs">
+        <div class="facia-container__inner">
+            <div class="commercial__head container__title">
+                <h2 class="commercial__title"><a href="@AdLink{@jobsHost/}"
+                    data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">Guardian <span class="commercial__title__last-word">jobs</span></a></h2>
+                <a href="@AdLink{@jobsHost/}"
+                    class="commercial__home-link"
+                    data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">
+                    Browse all jobs
+                    <span class="commercial__home-link__cta">
+                        <span class="i i-arrow-white-right-36"></span>
+                    </span>
+                </a>
             </div>
-
-            <div class="container__body">
+            <div class="commercial__body container__body">
                 <ul class="u-unstyled commercial--jobs__sectors">
                     @Seq(
                         Seq("arts", "Arts"),
@@ -61,7 +57,6 @@
                     </ul>
                 }
             </div>
-
         </div>
     </div>
 }
