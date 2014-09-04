@@ -27,11 +27,13 @@ define([
         breakpoints = [
             {
                 name: 'mobile',
-                isTweakpoint: false
+                isTweakpoint: false,
+                width: 0
             },
             {
                 name: 'mobileLandscape',
-                isTweakpoint: true
+                isTweakpoint: true,
+                width: 480
             },
             {
                 name: 'phablet',
@@ -39,27 +41,33 @@ define([
             },
             {
                 name: 'tablet',
-                isTweakpoint: false
+                isTweakpoint: false,
+                width: 740
             },
             {
                 name: 'rightCol',
-                isTweakpoint: true
+                isTweakpoint: true,
+                width: 900
             },
             {
                 name: 'desktop',
-                isTweakpoint: false
+                isTweakpoint: false,
+                width: 980
             },
             {
                 name: 'leftCol',
-                isTweakpoint: true
+                isTweakpoint: true,
+                width: 1060
             },
             {
                 name: 'faciaLeftCol',
-                isTweakpoint: true
+                isTweakpoint: true,
+                width: 1140
             },
             {
                 name: 'wide',
-                isTweakpoint: false
+                isTweakpoint: false,
+                width: 1300
             }
         ];
 
@@ -297,7 +305,8 @@ define([
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
-        getPageSpeed: getPageSpeed
+        getPageSpeed: getPageSpeed,
+        breakpoints: breakpoints
     };
 
 });

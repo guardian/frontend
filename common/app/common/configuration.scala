@@ -195,7 +195,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object facebook {
     lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
-    lazy val imageFallback = "http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png"
+    lazy val imageFallback = "http://static.guim.co.uk/icons/social/og/gu-logo-fallback.png"
   }
 
   object ios {

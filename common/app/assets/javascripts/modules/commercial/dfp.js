@@ -85,15 +85,6 @@ define([
     var adSlots = [],
         slotsToRefresh = [],
         config = {},
-        // These should match the widths inside _vars.scss
-        breakpoints = {
-            mobile: 0,
-            mobilelandscape: 480,
-            tabletportrait: 740,
-            tabletlandscape: 900,
-            desktop: 980,
-            wide: 1300
-        },
         breakoutHash = {
             'breakout__html': '%content%',
             'breakout__script': '<script>%content%</script>'
@@ -101,7 +92,7 @@ define([
         adSlotDefinitions = {
             right: {
                 sizeMappings: {
-                    tabletlandscape: '300,250|300,600'
+                    'right-col': '300,250|300,600'
                 }
             },
             im: {
@@ -114,15 +105,15 @@ define([
             inline1: {
                 sizeMappings: {
                     mobile: '300,50',
-                    mobilelandscape: '300,50|320,50',
-                    tabletportrait: '300,250'
+                    'mobile-landscape': '300,50|320,50',
+                    tablet: '300,250'
                 }
             },
             inline2: {
                 sizeMappings: {
                     mobile: '300,50',
-                    mobilelandscape: '300,50|320,50',
-                    tabletportrait: '300,250'
+                    'mobile-landscape': '300,50|320,50',
+                    tablet: '300,250'
                 }
             },
             'merchandising-high': {
@@ -207,8 +198,41 @@ define([
 
             }
         },
-        refresh = function() {
-            googletag.pubads().refresh(slotsToRefresh);
+        breakpointNameToAttribute = function (breakpointName) {
+            return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+        },
+        getSlotsBreakpoint = function (breakpoint, slotBreakpoints) {
+            return _(detect.breakpoints)
+                .initial(function (breakpointInfo) {
+                    return breakpointInfo.name !== breakpoint;
+                })
+                .intersection(slotBreakpoints)
+                .last()
+                .valueOf();
+        },
+        shouldSlotRefresh = function (slotInfo, breakpoint, previousBreakpoint) {
+            // get the slots breakpoints
+            var slotBreakpoints = _(detect.breakpoints)
+                .filter(function (breakpointInfo) {
+                    return slotInfo.$adSlot.data(breakpointNameToAttribute(breakpointInfo.name));
+                })
+                .valueOf();
+            // have we changed breakpoints
+            var slotBreakpoint = getSlotsBreakpoint(breakpoint, slotBreakpoints);
+            return slotBreakpoint && getSlotsBreakpoint(previousBreakpoint, slotBreakpoints) !== slotBreakpoint;
+        },
+        refresh = function (breakpoint, previousBreakpoint) {
+            googletag.pubads().refresh(
+                _(slotsToRefresh)
+                    // only refresh if the slot needs to
+                    .filter(function (slotInfo) {
+                        return shouldSlotRefresh(slotInfo, breakpoint, previousBreakpoint);
+                    })
+                    .map(function (slotInfo) {
+                        return slotInfo.slot;
+                    })
+                    .valueOf()
+            );
         },
         /** A breakpoint can have various sizes assigned to it. You can assign either on
          * set of sizes or multiple.
@@ -231,17 +255,16 @@ define([
          * If it has been defined, then we add that size to the size mapping.
          *
          */
-        defineSlotSizes = function(slot) {
+        defineSlotSizes = function (slot) {
             var mapping = googletag.sizeMapping();
 
-            for (var breakpoint in breakpoints) {
-                var attr  = slot.data(breakpoint),
-                    width = breakpoints[breakpoint];
-
+            forEach(detect.breakpoints, function (breakpointInfo) {
+                // turn breakpoint name into attribute style (lowercase, hyphenated)
+                var attr  = slot.data(breakpointNameToAttribute(breakpointInfo.name));
                 if (attr) {
-                    mapping.addSize([width, 0], createSizeMapping(attr));
+                    mapping.addSize([breakpointInfo.width, 0], createSizeMapping(attr));
                 }
-            }
+            });
 
             return mapping.build();
         },
@@ -389,7 +412,10 @@ define([
                 // Add to the array of ads to be refreshed (when the breakpoint changes)
                 // only if it's `data-refresh` attribute isn't set to false.
                 if ($adSlot.data('refresh') !== false) {
-                    slotsToRefresh.push(slot);
+                    slotsToRefresh.push({
+                        $adSlot: $adSlot,
+                        slot: slot
+                    });
                 }
             });
         },
@@ -401,7 +427,7 @@ define([
             googletag.display(adSlots.shift().attr('id'));
         },
         postDisplay = function() {
-            var hasBreakpointChanged = detect.hasCrossedBreakpoint();
+            var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
             mediator.on('window:resize',
                 debounce(function () {
                     // refresh on resize
