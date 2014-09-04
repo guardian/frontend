@@ -1,8 +1,10 @@
 package tools
 
 import com.amazonaws.services.cloudwatch.model.{GetMetricStatisticsResult, Datapoint}
+import java.util.concurrent.Future
 import java.util.{UUID, Date}
 import org.joda.time.DateTime
+import play.api.libs.json._
 import scala.collection.JavaConversions._
 import scala.collection.mutable.{Map => MutableMap}
 
@@ -73,22 +75,28 @@ trait Chart {
   private def dataString = dataset.map { datapointString }.mkString(",")
 }
 
-case class ChartFormat(colours: Seq[String], cssClass: String)
+case class ChartFormat(colours: Seq[String], cssClass: String = "charts")
 
 object ChartFormat {
-  val SingleLineBlack = ChartFormat(colours = Seq("#000000"), cssClass = "charts")
-  val SingleLineBlue = ChartFormat(colours = Seq("#0033CC"), cssClass = "charts")
-  val SingleLineGreen = ChartFormat(colours = Seq("#00CC33"), cssClass =  "charts")
-  val SingleLineRed = ChartFormat(colours = Seq("#FF0000"), cssClass =  "charts")
-  val DoubleLineBlueRed = ChartFormat(colours = Seq("#0033CC", "#FF0000"), cssClass =  "charts")
-  val MultiLine = ChartFormat(colours = Seq("#FF6600", "#99CC33", "#CC0066", "#660099", "#0099FF"), cssClass =  "charts charts-full")
-}
+  val `tone-news-1` = "#005689"
+  val `tone-news-2` = "#4bc6df"
+  val `tone-features-1` = "#951c55"
+  val `tone-features-2` = "#f66980"
+  val `tone-features-3` = "#b82266"
+  val `tone-features-4` = "#7d0068"
+  val `tone-comment-1` = "#e6711b"
+  val `tone-comment-2` = "#ffbb00"
+  val `tone-comment-3` = "#ffcf4c"
 
-class GenericChart(
-  override val name: String,
-  override val labels: Seq[String],
-  override val format: ChartFormat,
-  override val dataset: Seq[ChartRow]) extends Chart
+  val SingleLineBlack = ChartFormat(colours = Seq("#000000"))
+  val SingleLineBlue = ChartFormat(colours = Seq("#0033CC"))
+  val SingleLineGreen = ChartFormat(colours = Seq("#00CC33"))
+  val SingleLineRed = ChartFormat(colours = Seq("#FF0000"))
+  val DoubleLineBlueRed = ChartFormat(colours = Seq("#0033CC", "#FF0000"))
+  val MultiLine = ChartFormat(colours = Seq("#FF6600", "#99CC33", "#CC0066", "#660099", "#0099FF"), cssClass =  "charts charts-full")
+
+  def apply(colour: String): ChartFormat = ChartFormat(Seq(colour))
+}
 
 class AwsLineChart(
   override val name: String,
@@ -140,4 +148,34 @@ class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, char
   }
 
   override val labels: Seq[String] = Seq(ablabels.headOption.getOrElse("X axis")) ++ dataColumns.map(_._1)
+}
+
+object FormattedChart {
+
+  case class DataTable(cols: Seq[Column], rows: Seq[Row])
+
+  case class Column(id: String, label: String, `type`: String)
+
+  case class Row(c: Seq[Cell])
+
+  case class Cell(v: String)
+
+  implicit val cellReads   = Json.writes[Cell]
+  implicit val rowReads    = Json.writes[Row]
+  implicit val columnReads = Json.writes[Column]
+  implicit val tableReads  = Json.writes[DataTable]
+}
+
+// A variation of Chart that can be easily serialised into a Google Visualization DataTable Json object.
+// Useful for charts that need columns with type labels like Date and DateTime.
+case class FormattedChart(
+  name: String,
+  columns: Seq[FormattedChart.Column],
+  rows: Seq[FormattedChart.Row],
+  format: ChartFormat) {
+
+  lazy val id = UUID.randomUUID().toString
+  lazy val labels: Seq[String] = columns.map(_.label)
+
+  def asJson() = Json.toJson(FormattedChart.DataTable(columns, rows))
 }

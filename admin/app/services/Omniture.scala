@@ -54,8 +54,8 @@ case class OmnitureSegment(
   name: String,
   folder: String,
   `class`: String,
-  suite_enabled: JsValue,
-  read_only: Int
+  suite_enabled: Boolean,
+  read_only: Boolean
 )
 object OmnitureSegment {
   implicit val reads = Json.reads[OmnitureSegment]
@@ -125,9 +125,9 @@ object Omniture extends ExecutionContexts with Logging {
     waitReport.flatMap { getReportData }
   }
 
-  private def postRequest(method: String, body: JsValue): Future[WSResponse] = {
+  private def postRequest(method: String, body: JsValue, apiVersion: String = "1.3"): Future[WSResponse] = {
     omnitureCredentials.map { credentials => {
-      WS.url("https://api.omniture.com/admin/1.3/rest/")
+      WS.url(s"https://api.omniture.com/admin/$apiVersion/rest/")
         .withHeaders(("X-WSSE", makeHeader(credentials).toString))
         .withQueryString(("method", method))
         .post(body)
@@ -200,10 +200,11 @@ object Omniture extends ExecutionContexts with Logging {
 
     val body = Json.parse(s"""{"rsid_list":["${OmnitureReportDescription.reportSuiteID}"]}""").asInstanceOf[JsObject]
 
-    postRequest(GET_SEGMENTS, body).map { response =>
+    // Only version 1.4 has the latest segments for the report suites.
+    postRequest(GET_SEGMENTS, body, "1.4").map { response =>
       response.status match {
         case 200 => {
-          val segments = Json.parse(response.body).asInstanceOf[JsArray](0) \ "sc_segments"
+          val segments = Json.parse(response.body).asInstanceOf[JsArray](0) \ "segments"
           segments.validate[Seq[OmnitureSegment]] match {
             case JsSuccess(segments, _) => segments
             case JsError(e) => throw OmnitureException(JsError.toFlatJson(e).toString())
