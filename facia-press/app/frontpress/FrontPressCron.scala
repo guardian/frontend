@@ -2,59 +2,84 @@ package frontpress
 
 import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
+import com.amazonaws.services.sqs.model._
 import common.FaciaPressMetrics.{FrontPressCronFailure, FrontPressCronSuccess}
 import common.SQSQueues._
-import common.{StopWatch, JsonMessageQueue, Edition}
+import common.{Edition, Logging}
 import conf.Configuration
 import conf.Switches.FrontPressJobSwitch
 import metrics.AllFrontsPressLatencyMetric
-import services.CronUpdate
+import org.joda.time.DateTime
+import play.api.libs.concurrent.Akka
+import play.api.libs.json.Json
 
+import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-object FrontPressCron extends JsonQueueWorker[CronUpdate] {
+/** TODO convert this to use JsonQueueWorker
+  *
+  * (So as to a) reduce code, and b) allow us to use the various metrics it gives for health checks)
+  */
+object FrontPressCron extends Logging with implicits.Collections {
   val queueUrl: Option[String] = Configuration.faciatool.frontPressCronQueue
 
-  override val queue: JsonMessageQueue[CronUpdate] = (Configuration.faciatool.frontPressCronQueue map { queueUrl =>
-    val credentials = Configuration.aws.mandatoryCredentials
+  import play.api.Play.current
+  private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
-    JsonMessageQueue[CronUpdate](
-      new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
-      queueUrl
-    )
-  }) getOrElse {
-    throw new RuntimeException("Required property 'frontpress.sqs.cron_queue_url' not set")
+  val batchSize: Int = Configuration.faciatool.pressJobBatchSize
+
+  def newClient: AmazonSQSAsyncClient = {
+    new AmazonSQSAsyncClient(Configuration.aws.mandatoryCredentials).withRegion(Region.getRegion(Regions.EU_WEST_1))
   }
 
-  override def process(message: common.Message[CronUpdate]): Future[Unit] = {
-    val path = message.get.path.get
+  def run(): Unit = {
+    for (queueUrl <- queueUrl) {
+      if (FrontPressJobSwitch.isSwitchedOn) {
+        val client = newClient
+        try {
+          val receiveMessageResult = client.receiveMessage(new ReceiveMessageRequest(queueUrl).withMaxNumberOfMessages(batchSize))
+          Future.traverse(receiveMessageResult.getMessages.map(getConfigFromMessage).distinct) { path =>
+            val start = DateTime.now
+            val f = FrontPress.pressLiveByPathId(path)
+            f onComplete {
+              case Success(_) =>
 
-    if (FrontPressJobSwitch.isSwitchedOn) {
-      log.info(s"Cron pressing path $path")
-      val stopWatch = new StopWatch
-      val pressFuture = FrontPress.pressLiveByPathId(path)
+                if (Edition.all.map(_.id.toLowerCase).exists(_ == path))
+                  ToolPressQueueWorker.metricsByPath.get(path).foreach { metric =>
+                    metric.recordDuration(DateTime.now.getMillis - start.getMillis)
+                  }
+                else
+                  AllFrontsPressLatencyMetric.recordDuration(DateTime.now.getMillis - start.getMillis)
 
-      pressFuture onComplete {
-        case Success(_) =>
-          if (Edition.all.map(_.id.toLowerCase).contains(path)) {
-            ToolPressQueueWorker.metricsByPath.get(path) foreach { metric =>
-              metric.recordDuration(stopWatch.elapsed)
+                deleteMessage(receiveMessageResult, queueUrl)
+                FrontPressCronSuccess.increment()
+              case Failure(error) =>
+                deleteMessage(receiveMessageResult, queueUrl)
+                log.warn("Error updating collection via cron", error)
+                FrontPressCronFailure.increment()
             }
-          } else {
-            AllFrontsPressLatencyMetric.recordDuration(stopWatch.elapsed)
+            f
           }
-
-          FrontPressCronSuccess.increment()
-        case Failure(error) =>
-          log.warn("Error updating collection via cron", error)
-          FrontPressCronFailure.increment()
+        } catch {
+          case error: Throwable =>
+            log.error("Error updating collection via cron", error)
+            FrontPressCronFailure.increment()
+        }
       }
-
-      pressFuture.map(Function.const(()))
-    } else {
-      log.info(s"Ignoring message $message in Facia Press cron as cron is turned OFF")
-      Future.successful(())
     }
   }
+
+  def deleteMessage(receiveMessageResult: ReceiveMessageResult, queueUrl: String): DeleteMessageBatchResult = {
+    val client = newClient
+    client.deleteMessageBatch(
+      new DeleteMessageBatchRequest(
+        queueUrl,
+        receiveMessageResult.getMessages.map { msg => new DeleteMessageBatchRequestEntry(msg.getMessageId, msg.getReceiptHandle)}
+      )
+    )
+  }
+
+  def getConfigFromMessage(message: Message): String =
+    (Json.parse(message.getBody) \ "Message").as[String]
 }

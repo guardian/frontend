@@ -8,6 +8,7 @@ import services.ConfigAgentLifecycle
 object Global extends GlobalSettings
   with ConfigAgentLifecycle
   with CloudWatchApplicationMetrics {
+  val pressJobConsumeRateInSeconds: Int = GuardianConfiguration.faciatool.pressJobConsumeRateInSeconds
 
   private def getTotalPressSuccessCount: Long =
     FaciaPressMetrics.FrontPressLiveSuccess.getResettingValue() + FaciaPressMetrics.FrontPressDraftSuccess.getResettingValue()
@@ -44,15 +45,25 @@ object Global extends GlobalSettings
     AllFrontsPressLatencyMetric
   )
 
-  override def onStart(app: play.api.Application) {
-    super.onStart(app)
-    ToolPressQueueWorker.start()
-    if (GuardianConfiguration.faciatool.frontPressCronQueue.isDefined) {
-      FrontPressCron.start()
+  def scheduleJobs() {
+    Jobs.schedule("FaciaToolPressJob", s"0/$pressJobConsumeRateInSeconds * * * * ?") {
+      FrontPressCron.run()
     }
   }
 
+  def descheduleJobs() {
+    Jobs.deschedule("FaciaToolPressJob")
+  }
+
+  override def onStart(app: play.api.Application) {
+    super.onStart(app)
+    ToolPressQueueWorker.start()
+    descheduleJobs()
+    scheduleJobs()
+  }
+
   override def onStop(app: play.api.Application) {
+    descheduleJobs()
     super.onStop(app)
   }
 }

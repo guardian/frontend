@@ -1,24 +1,22 @@
 package jobs
 
-import services.{FrontPath, CronUpdate, S3FrontsApi, FrontPressNotification}
+import services.{S3FrontsApi, FrontPressNotification}
 import play.api.libs.json.{JsValue, Json}
 import conf.Switches._
 import conf.Configuration
 
 object RefreshFrontsJob {
-  def getCronUpdates: Option[Seq[CronUpdate]] = {
+
+  def getPaths: Option[Seq[String]] = {
     S3FrontsApi.getMasterConfig
       .map(Json.parse)
       .flatMap { json => (json \ "fronts").asOpt[Map[String, JsValue]] }
-      .map(_.keys.toSeq.map(path => CronUpdate(FrontPath(path))))
+      .map(_.keys.toSeq)
   }
 
   def run(): Unit = {
     if (FrontPressJobSwitch.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
-      for {
-        updates <- getCronUpdates
-        update <- updates
-      } FrontPressNotification.sendWithoutSubject(Json.stringify(Json.toJson(update)))
+      getPaths map(_.map(FrontPressNotification.sendWithoutSubject))
     }
   }
 }
