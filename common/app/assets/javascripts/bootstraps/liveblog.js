@@ -1,41 +1,43 @@
 define([
-    'common/utils/mediator',
-    'common/utils/$',
-    'qwery',
-    'bonzo',
     'bean',
-    'lodash/functions/throttle',
+    'bonzo',
+    'qwery',
+    'common/utils/$',
     'common/utils/_',
-    'common/utils/scroller',
+    'common/utils/config',
     'common/utils/detect',
-    'common/modules/ui/autoupdate',
-    'common/modules/live/filter',
-    'common/modules/ui/notification-counter',
-    'common/modules/experiments/affix',
+    'common/utils/mediator',
+    'common/utils/preferences',
+    'common/utils/scroller',
     'common/utils/template',
     'common/utils/url',
-    'common/bootstraps/article',
+    'common/modules/commercial/liveblog-adverts',
+    'common/modules/experiments/affix',
+    'common/modules/live/filter',
+    'common/modules/ui/autoupdate',
     'common/modules/ui/message',
-    'common/utils/preferences'
+    'common/modules/ui/notification-counter',
+    'common/bootstraps/article'
 ], function (
-    mediator,
-    $,
-    qwery,
-    bonzo,
     bean,
-    _throttle,
+    bonzo,
+    qwery,
+    $,
     _,
-    scroller,
+    config,
     detect,
-    AutoUpdate,
-    LiveFilter,
-    NotificationCounter,
-    Affix,
+    mediator,
+    preferences,
+    scroller,
     template,
     url,
-    article,
+    liveblogAdverts,
+    Affix,
+    LiveFilter,
+    AutoUpdate,
     Message,
-    preferences
+    NotificationCounter,
+    article
 ) {
     'use strict';
 
@@ -140,12 +142,16 @@ define([
 
     var modules = {
 
+        initAdverts: function () {
+            liveblogAdverts.init();
+        },
+
         createFilter: function() {
             new LiveFilter($('.js-blog-blocks')[0]).render($('.js-live-filter')[0]);
             new NotificationCounter().init();
         },
 
-        createTimeline: function(config) {
+        createTimeline: function() {
             var allEvents = getKeyEvents();
             if(allEvents.length > 0) {
                 var timelineHTML = wrapWithFirstAndLast(getTimelineHTML(allEvents));
@@ -167,7 +173,7 @@ define([
             }
         },
 
-        createAutoRefresh: function(config){
+        createAutoRefresh: function(){
 
             if (config.page.isLive) {
 
@@ -194,7 +200,7 @@ define([
             });
         },
 
-        showFootballLiveBlogMessage: function(config){
+        showFootballLiveBlogMessage: function(){
             var isFootballLiveBlog = config.page.pageId.indexOf('football/live/') === 0;
             var notMobile = detect.getBreakpoint() !== 'mobile';
 
@@ -221,11 +227,12 @@ define([
         }
     };
 
-    function ready(config) {
-        modules.createFilter(config);
-        modules.createTimeline(config);
-        modules.createAutoRefresh(config);
-        modules.showFootballLiveBlogMessage(config);
+    function ready() {
+        modules.initAdverts();
+        modules.createFilter();
+        modules.createTimeline();
+        modules.createAutoRefresh();
+        modules.showFootballLiveBlogMessage();
 
         // re-use modules from article bootstrap
         article.modules.initOpen(config);
