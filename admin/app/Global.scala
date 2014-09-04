@@ -1,20 +1,24 @@
 import commercial.TravelOffersCacheJob
-import common.{AkkaAsync, Jobs, CloudWatchApplicationMetrics}
+import common.{AkkaAsync, CloudWatchApplicationMetrics, Jobs}
 import conf.{Configuration, Gzipper}
-import dfp.DfpDataCacheJob
+import dfp.DfpDataCacheLifecycle
 import jobs.{OmnitureReportJob, RebuildIndexJob, RefreshFrontsJob}
 import model.AdminLifecycle
 import ophan.SurgingContentAgentLifecycle
 import play.api.Play
 import play.api.Play.current
-import play.api.mvc.{WithFilters, Results, RequestHeader}
+import play.api.mvc.{RequestHeader, Results, WithFilters}
+
 import scala.concurrent.Future
 
-object Global extends WithFilters(Gzipper)
-with AdminLifecycle
-with CloudWatchApplicationMetrics
-with Results
-with SurgingContentAgentLifecycle {
+object Global
+  extends WithFilters(Gzipper)
+  with AdminLifecycle
+  with CloudWatchApplicationMetrics
+  with Results
+  with SurgingContentAgentLifecycle
+  with DfpDataCacheLifecycle {
+
   override lazy val applicationName = "frontend-admin"
 
   val adminPressJobPushRateInMinutes: Int = Configuration.faciatool.adminPressJobPushRateInMinutes
@@ -36,8 +40,7 @@ with SurgingContentAgentLifecycle {
     }
 
     // every 30 minutes
-    Jobs.schedule("DfpDataCacheJob", "0 1/30 * * * ? *") {
-      DfpDataCacheJob.run()
+    Jobs.schedule("TravelOffersCacheJob", "0 1/30 * * * ? *") {
       TravelOffersCacheJob.run()
     }
 
@@ -48,7 +51,7 @@ with SurgingContentAgentLifecycle {
 
   def descheduleJobs() {
     Jobs.deschedule("FrontPressJob")
-    Jobs.deschedule("DfpDataCacheJob")
+    Jobs.deschedule("TravelOffersCacheJob")
     Jobs.deschedule("RebuildIndexJob")
     Jobs.deschedule("OmnitureReportJob")
   }
@@ -62,7 +65,6 @@ with SurgingContentAgentLifecycle {
 
       AkkaAsync {
         RebuildIndexJob.run()
-        DfpDataCacheJob.run()
         TravelOffersCacheJob.run()
         OmnitureReportJob.run()
       }
