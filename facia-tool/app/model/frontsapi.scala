@@ -76,7 +76,7 @@ case class Block(
                   displayName: Option[String],
                   href: Option[String],
                   diff: Option[JsValue],
-                  previously: Option[List[String]]
+                  previously: Option[List[Trail]]
                   ) {
 
   def sortByGroup: Block = this.copy(
@@ -91,10 +91,14 @@ case class Block(
 
   def updatePreviously(update: UpdateList): Block = {
     if (update.live) {
-      val updatedPreviously: Option[List[String]] = (for (p <- previously) yield {
-        val previouslyWithoutItem: List[String] = p.filterNot(_ == update.item)
-        (update.item +: previouslyWithoutItem).take(20)
-      }).orElse(Option(List(update.item)))
+      val updatedPreviously: Option[List[Trail]] =
+        (for {
+          p <- previously
+          t <- live.find(_.id == update.item)
+        } yield {
+          val previouslyWithoutItem: List[Trail] = p.filterNot(_.id == update.item)
+          (t +: previouslyWithoutItem).take(20)
+        }).orElse{live.find(_.id == update.item).map(List.apply(_))}
       this.copy(previously=updatedPreviously)
     }
     else
@@ -224,10 +228,10 @@ trait UpdateActions extends Logging {
   def updateCollectionFilter(id: String, update: UpdateList, identity: UserIdentity): Option[Block] = {
     lazy val updateJson = Json.toJson(update)
     getBlock(id)
+      .map(_.updatePreviously(update))
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
       .map(_.sortByGroup)
-      .map(_.updatePreviously(update))
       .map(archiveDeleteBlock(id, _, updateJson, identity))
       .map(putBlock(id, _, identity))
   }
