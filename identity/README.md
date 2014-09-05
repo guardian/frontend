@@ -21,7 +21,7 @@ So to go into the Identity project:
 
 and then the following commands are equivalent:
 
-  idrun run 9009
+  idrun and run 9009
 
 The former is encouraged, in case we ever need to change the port.
 
