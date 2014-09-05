@@ -37,7 +37,7 @@ header {
     overflow: hidden;
 }
 
-.status {
+.alert {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: fixed;
@@ -46,19 +46,13 @@ header {
     color: #000000;
     padding: 15px 40px 0;
     height: 51px;
-    z-index: 3;
+    z-index: 10;
     text-align: center;
-}
-
-.status-warning {
+    background: #ff7043;
     background: #ffff00;
 }
 
-.status-danger {
-    background: #ff7043;
-}
-
-.status .icon-remove {
+.alert .icon-remove {
     position: absolute;
     right: 10px;
     top: 15px;
@@ -742,6 +736,15 @@ button {
     top: 11px;
     height: 30px;
     z-index: 2;
+}
+
+.front-age {
+    position: absolute;
+    right: 100px;
+    top: 15px;
+    margin-left: 235px;
+    z-index: 3;
+    color: #999999;
 }
 
 .tool {
