@@ -91,14 +91,15 @@ case class Block(
 
   def updatePreviously(update: UpdateList): Block = {
     if (update.live) {
+      val itemFromLive: Option[Trail] = live.find(_.id == update.item)
       val updatedPreviously: Option[List[Trail]] =
         (for {
-          p <- previously
-          t <- live.find(_.id == update.item)
+          previousList <- previously
+          trail <- itemFromLive
         } yield {
-          val previouslyWithoutItem: List[Trail] = p.filterNot(_.id == update.item)
-          (t +: previouslyWithoutItem).take(20)
-        }).orElse{live.find(_.id == update.item).map(List.apply(_))}
+          val previouslyWithoutItem: List[Trail] = previousList.filterNot(_.id == update.item)
+          (trail +: previouslyWithoutItem).take(20)
+        }).orElse(itemFromLive.map(List.apply(_)))
       this.copy(previously=updatedPreviously)
     }
     else
