@@ -41,6 +41,8 @@ case class FaciaPage(id: String,
 
   override def cards: List[(String, String)] = super.cards ++
     List("twitter:card" -> "summary")
+
+  override def customSignPosting: Option[NavItem] = FaciaSignpostingOverrides(id)
 }
 
 object FaciaPage {

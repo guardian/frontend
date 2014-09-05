@@ -141,6 +141,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val LiveblogAdvertsSwitch = Switch("Commercial", "liveblog-adverts",
+    "Show inline adverts on liveblogs",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 19)
+  )
+
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
     "If this switch is on, Audience Science segments will be used to target ads.",
     safeState = Off, sellByDate = new LocalDate(2014, 11, 1))
@@ -353,6 +358,10 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
+    "If switched on then football matchday feeds will be recorded every minute",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 30))
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -362,6 +371,7 @@ object Switches extends Collections {
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
+    LiveblogAdvertsSwitch,
     SponsoredSwitch,
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,
@@ -413,7 +423,8 @@ object Switches extends Collections {
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
     ChildrensBooksSwitch,
-    MetricsSwitch
+    MetricsSwitch,
+    FootballFeedRecorderSwitch
   )
 
   val httpSwitches: List[Switch] = List(

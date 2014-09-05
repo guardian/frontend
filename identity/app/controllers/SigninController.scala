@@ -36,7 +36,7 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     )
   )
 
-  def renderForm = Action { implicit request =>
+  def renderForm(returnUrl: Option[String]) = Action { implicit request =>
 
     val filledForm = form.bindFromFlash.getOrElse(form.fill("", "", true))
 
@@ -48,11 +48,12 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
   def processForm = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = form.bindFromRequest
+    val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
 
     def onError(formWithErrors: Form[(String, String, Boolean)]): Future[Result] = {
       logger.info("Invalid login form submission")
       Future.successful {
-        redirectToSigninPage(formWithErrors)
+        redirectToSigninPage(formWithErrors, verifiedReturnUrlAsOpt)
       }
     }
 
@@ -71,11 +72,11 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
               formFold.withError(error.context.getOrElse(""), errorMessage)
             }
 
-            redirectToSigninPage(formWithErrors)
+            redirectToSigninPage(formWithErrors, verifiedReturnUrlAsOpt)
 
           case Right(responseCookies) =>
             logger.trace("Logging user in")
-            SeeOther(returnUrlVerifier.getVerifiedReturnUrl(request).getOrElse(returnUrlVerifier.defaultReturnUrl))
+            SeeOther(verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl))
               .withCookies(responseCookies:_*)
         }
     }
@@ -83,8 +84,8 @@ class SigninController @Inject()(returnUrlVerifier: ReturnUrlVerifier,
     boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
-  def redirectToSigninPage(formWithErrors: Form[(String, String, Boolean)]): Result = {
-    NoCache(SeeOther(routes.SigninController.renderForm().url).flashing(clearPassword(formWithErrors).toFlash))
+  def redirectToSigninPage(formWithErrors: Form[(String, String, Boolean)], returnUrl: Option[String]): Result = {
+    NoCache(SeeOther(routes.SigninController.renderForm(returnUrl).url).flashing(clearPassword(formWithErrors).toFlash))
   }
 
   private def clearPassword(formWithPassword: Form[(String, String, Boolean)]) = {

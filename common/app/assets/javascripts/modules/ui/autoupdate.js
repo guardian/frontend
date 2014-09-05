@@ -5,7 +5,6 @@
 define([
     'bean',
     'bonzo',
-    'raven',
     'lodash/collections/toArray',
     'lodash/objects/assign',
     'common/utils/$',
@@ -17,7 +16,6 @@ define([
 ], function (
     bean,
     bonzo,
-    raven,
     toArray,
     assign,
     $,
@@ -82,6 +80,10 @@ define([
                 }
 
                 $attachTo[manipulation](elementsToAdd);
+
+                if (elementsToAdd.length) {
+                    mediator.emit('modules:autoupdate:updates', elementsToAdd);
+                }
                 // add a timestamp to the attacher
                 $attachTo.attr('data-last-updated', date);
                 twitter.enhanceTweets();
