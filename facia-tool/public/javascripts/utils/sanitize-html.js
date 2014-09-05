@@ -1,19 +1,12 @@
 /* global _: true */
 define(function() {
+    var rx = new RegExp(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi),
+        el = document.createElement('div');
+
     return function(s) {
-        var el,
-            scripts;
-
         if (_.isString(s)) {
-            el = document.createElement('div');
             el.innerHTML = s;
-
-            scripts = el.getElementsByTagName('script');
-            Array.prototype.forEach.call(scripts, function(script) {
-                script.parentElement.removeChild(script);
-            });
-
-            return el.innerHTML;
+            return el.innerHTML.replace(rx, '');
         } else {
             return s;
         }
