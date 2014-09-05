@@ -12,14 +12,15 @@ import Config._
 
 trait Driver extends Suite with WebBrowser with BeforeAndAfterAll {
 
-  implicit private val url: String = s"http://${browserStack.userName}:${browserStack.automateKey}@hub.browserstack.com/wd/hub"
+
+  implicit private val url: String = s"http://${stack.userName}:${stack.automateKey}@ondemand.saucelabs.com:80/wd/hub"
 
   lazy val remoteBrowser = new RemoteWebDriver(new URL(url), DesiredCapabilities.chrome())
   lazy val localBroswer = new FirefoxDriver()
 
   implicit val driver: WebDriver =  if (remoteMode) remoteBrowser else localBroswer
 
-  override protected def afterAll(): Unit = close()
+  override protected def afterAll(): Unit = quit()
 
   // helper methods for tests
   def theguardian(path: String) = s"$baseUrl$path?view=responsive"

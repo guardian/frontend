@@ -22,17 +22,18 @@ object Config {
     props
   }
 
-  val remoteMode = Option(properties.getProperty("tests.mode")).contains("remote")
-  val baseUrl = Option(properties.getProperty("tests.baseUrl")).getOrElse("http://www.theguardian.com")
+  val remoteMode = optionalProperty("tests.mode").contains("remote")
+  val baseUrl = optionalProperty("tests.baseUrl").getOrElse("http://www.theguardian.com")
 
-  object browserStack {
-    lazy val userName = Option(properties.getProperty("browserStack.userName")).getOrElse(
-      throw new RuntimeException("property not found browserStack.userName")
-    )
-
-    lazy val automateKey = Option(properties.getProperty("browserStack.automateKey")).getOrElse(
-      throw new RuntimeException("property not found browserStack.automateKey")
-    )
+  object stack {
+    lazy val userName = mandatoryProperty("stack.userName")
+    lazy val automateKey = mandatoryProperty("stack.automateKey")
   }
+
+  private def mandatoryProperty(key: String) = Option(properties.getProperty(key)).getOrElse(
+    throw new RuntimeException(s"property not found $key")
+  )
+
+  private def optionalProperty(key: String) = Option(properties.getProperty(key))
 
 }
