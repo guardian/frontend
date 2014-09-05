@@ -24,10 +24,15 @@ define([
     };
 
     var transcludeMostPopular = function() {
-        var mostViewed = new Component();
+        var mostViewed = new Component(),
+            container = $('.js-gallery-most-popular')[0];
+
         mostViewed.endpoint = '/gallery/most-viewed.json';
-        mostViewed.fetch($('.js-gallery-most-popular')[0], 'html');
-    }
+        mostViewed.ready = function() {
+            mediator.emit('ui:images:upgrade', container);
+        }
+        mostViewed.fetch(container, 'html');
+    };
 
     var ready = function (config) {
         verticallyResponsiveImages();
