@@ -426,7 +426,7 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   override lazy val hasClassicVersion: Boolean = super.hasClassicVersion && !(section == "football")
 
   private lazy val cricketMetaData = if (isCricketLiveBlog) {
-    Map(("cricketMatch", JsString(webPublicationDate.toString("yyyy-MM-dd"))))
+    Map(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
   } else {
     Map()
   }

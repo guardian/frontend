@@ -47,8 +47,8 @@ object PaFeed extends ExecutionContexts with Logging {
 
   def getEnglandMatchIds(): Future[Seq[String]] = {
 
-    // Get fixtures for England for today and tomorrow.
-    val fixtures = getTeamMatches("fixtures", LocalDate.now, LocalDate.now.plusDays(1))
+    // Get fixtures for England for today.
+    val fixtures = getTeamMatches("fixtures", LocalDate.now, LocalDate.now)
 
     // Get results for England over the last year.
     val results = getTeamMatches("results", LocalDate.now.minusYears(1), LocalDate.now)

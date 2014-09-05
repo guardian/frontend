@@ -16,7 +16,6 @@ case class CricketMatchPage(theMatch: Match, matchId: String) extends MetaData w
 
 object CricketMatchController extends Controller with Logging with ExecutionContexts {
 
-
   def renderMatchIdJson(date: String) = renderMatchId(date)
 
   // This date parameter should be a unique match identifier. Until we define the process for passing match identity,
