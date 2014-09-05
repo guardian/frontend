@@ -92,7 +92,7 @@ define([
         adSlotDefinitions = {
             right: {
                 sizeMappings: {
-                    'right-col': '300,250|300,600'
+                    mobile: '300,250|300,600'
                 }
             },
             im: {
@@ -120,7 +120,7 @@ define([
                 label: false,
                 refresh: false,
                 sizeMappings: {
-                    desktop: '88,87'
+                    mobile: '88,87'
                 }
             },
             spbadge: {

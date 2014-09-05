@@ -242,7 +242,7 @@ define([
                     name: 'right',
                     type: 'mpu-banner-ad',
                     html: '<div id="dfp-ad--right" class="ad-slot ad-slot--dfp ad-slot--right ad-slot--mpu-banner-ad" ' +
-                        'data-link-name="ad slot right" data-test-id="ad-slot-right" data-name="right" data-right-col="300,250|300,600"></div>'
+                        'data-link-name="ad slot right" data-test-id="ad-slot-right" data-name="right" data-mobile="300,250|300,600"></div>'
                 },
                 {
                     name: 'im',
@@ -269,7 +269,7 @@ define([
                     name: 'merchandising-high',
                     type: 'commercial-component',
                     html: '<div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component" ' +
-                        'data-link-name="ad slot merchandising-high" data-test-id="ad-slot-merchandising-high" data-name="merchandising-high" data-desktop="88,87" ' +
+                        'data-link-name="ad slot merchandising-high" data-test-id="ad-slot-merchandising-high" data-name="merchandising-high" data-mobile="88,87" ' +
                         'data-refresh="false" data-label="false"></div>'
                 },
                 {

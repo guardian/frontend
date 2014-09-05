@@ -4,7 +4,7 @@
   "dependencies": {
     "html5shiv": "~3.7.0",
     "swipe": "~2.0.0",
-    "zxcvbn": "https://raw2.github.com/lowe/zxcvbn/master/zxcvbn.js",
+    "zxcvbn": "dropbox/zxcvbn",
     "JSON-js": "*"
   },
   "install": {
