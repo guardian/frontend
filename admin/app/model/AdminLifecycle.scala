@@ -2,6 +2,7 @@ package model
 
 import commercial.TravelOffersCacheJob
 import conf.Configuration
+import football.feed.MatchDayRecorder
 import play.api.GlobalSettings
 import tools.{LoadBalancer, CloudWatch}
 import common.{AkkaAsync, Jobs}
@@ -50,6 +51,10 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.schedule("OmnitureReportJob", "0 */5 * * * ?") {
       OmnitureReportJob.run()
     }
+
+    Jobs.schedule("MatchDayRecorderJob", "0 * * * * ?") {
+      MatchDayRecorder.record()
+    }
   }
 
   private def descheduleJobs() {
@@ -62,6 +67,7 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("TravelOffersCacheJob")
     Jobs.deschedule("RebuildIndexJob")
     Jobs.deschedule("OmnitureReportJob")
+    Jobs.deschedule("MatchDayRecorderJob")
   }
 
   override def onStart(app: play.api.Application) {
