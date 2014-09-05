@@ -145,7 +145,7 @@ define([
                     .draw(google.visualization.arrayToDataTable(graphData), {
                         title: 'Page views',
                         backgroundColor: '#fff',
-                        colors: ['#333'],
+                        colors: ['#e6711b'],
                         height: 125,
                         legend: 'none',
                         fontName: 'Georgia',
