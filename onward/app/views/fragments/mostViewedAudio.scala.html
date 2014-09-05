@@ -1,14 +1,9 @@
-@(audios: Seq[model.Audio])(implicit request: RequestHeader)
+@(audios: Seq[model.Audio])(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
 
-<div class="most-viewed-container most-viewed-container--media most-viewed-container--audio" data-component="most-viewed-video">
-
-    <div class="most-viewed-container__header">
-        <h3 class="most-viewed-container__heading">Popular audio</h3>
-    </div>
-    <ul class="u-cf u-unstyled most-viewed--media most-viewed--audio items--media items--audio" data-link-name="Most viewed audio">
-        @audios.zipWithRowInfo.map{ case (audio, row) =>
-            @fragments.mediaItem(audio, row.rowNum)
-        }
-    </ul>
-
+<div class="facia-container facia-container--layout-content">
+    @fragments.containers.special(
+        Collection(audios),
+        SpecialContainer(showMore = false),
+        containerIndex = 0
+    )(request, templateDeduping, Config(s"foo/news/regular-stories", displayName = Some("Popular in audio")))
 </div>

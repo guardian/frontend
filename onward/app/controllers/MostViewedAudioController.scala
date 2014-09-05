@@ -6,8 +6,11 @@ import play.api.mvc.{RequestHeader, Controller, Action}
 import scala.concurrent.Future
 import conf.LiveContentApi
 import feed.MostReadAgent
+import views.support.TemplateDeduping
 
 object MostViewedAudioController extends Controller with Logging with ExecutionContexts {
+
+  private implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
   def renderMostViewed() = Action.async { implicit request =>
 
