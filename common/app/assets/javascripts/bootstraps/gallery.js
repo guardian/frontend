@@ -30,7 +30,7 @@ define([
         mostViewed.endpoint = '/gallery/most-viewed.json';
         mostViewed.ready = function() {
             mediator.emit('ui:images:upgrade', container);
-        }
+        };
         mostViewed.fetch(container, 'html');
     };
 
