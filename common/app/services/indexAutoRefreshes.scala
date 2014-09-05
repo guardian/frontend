@@ -2,11 +2,22 @@ package services
 
 import common.AutoRefresh
 import model.TagIndexListings
+import play.api.{Application, GlobalSettings}
 
-import scala.concurrent.{Future, blocking}
-import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
+import scala.concurrent.{Future, blocking}
 import scala.language.postfixOps
+
+trait IndexListingsLifecycle extends GlobalSettings {
+  override def onStart(app: Application): Unit = {
+    super.onStart(app)
+
+    KeywordSectionIndexAutoRefresh.start()
+    KeywordAlphaIndexAutoRefresh.start()
+    ContributorAlphaIndexAutoRefresh.start()
+  }
+}
 
 object KeywordSectionIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) {
   override protected def refresh(): Future[TagIndexListings] = Future {

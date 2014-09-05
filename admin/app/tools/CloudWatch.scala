@@ -55,6 +55,22 @@ object CloudWatch extends Logging with ExecutionContexts {
     LoadBalancer("frontend-archive")
   ).flatten
 
+  private val chartColours = Map(
+    ("frontend-router",       ChartFormat(Colour.`tone-news-1`)),
+    ("frontend-article",      ChartFormat(Colour.`tone-news-1`)),
+    ("frontend-facia",        ChartFormat(Colour.`tone-news-1`)),
+    ("frontend-applications", ChartFormat(Colour.`tone-news-1`)),
+    ("frontend-discussion",   ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-identity",     ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-image",        ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-sport",        ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-commercial",   ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-onward",       ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-r2football",   ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-diagnostics",  ChartFormat(Colour.`tone-news-2`)),
+    ("frontend-archive",      ChartFormat(Colour.`tone-news-2`))
+  ).withDefaultValue(ChartFormat.SingleLineBlack)
+
   val loadBalancers = primaryLoadBalancers ++ secondaryLoadBalancers
 
   private val fastlyMetrics = List(
@@ -112,7 +128,7 @@ object CloudWatch extends Logging with ExecutionContexts {
         .withMetricName("Latency")
         .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id))
       )) map { metricsResult =>
-        new AwsLineChart(loadBalancer.name, Seq("Time", "latency (ms)"), ChartFormat.SingleLineBlack, metricsResult)
+        new AwsLineChart(loadBalancer.name, Seq("Time", "latency (ms)"), chartColours(loadBalancer.project), metricsResult)
       }
     }
   }
@@ -134,7 +150,7 @@ object CloudWatch extends Logging with ExecutionContexts {
         .withNamespace("AWS/ELB")
         .withMetricName("HTTPCode_Backend_2XX")
         .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id)))) map { metricsResult =>
-        new AwsLineChart(loadBalancer.name, Seq("Time", "2xx/minute"), ChartFormat.SingleLineBlue, metricsResult)
+        new AwsLineChart(loadBalancer.name, Seq("Time", "2xx/minute"), ChartFormat(Colour.success), metricsResult)
       }
     }
   }
@@ -149,7 +165,7 @@ object CloudWatch extends Logging with ExecutionContexts {
       .withMetricName(metric)
       .withDimensions(new Dimension().withName("region").withValue(region),
         new Dimension().withName("service").withValue(service)))) map { metricsResult =>
-      new AwsLineChart(graphTitle, Seq("Time", metric), ChartFormat.SingleLineBlack, metricsResult)
+      new AwsLineChart(graphTitle, Seq("Time", metric), ChartFormat(Colour.`tone-features-2`), metricsResult)
     }
   }
 
@@ -189,7 +205,7 @@ object CloudWatch extends Logging with ExecutionContexts {
           new Dimension().withName("service").withValue(service)
         )
       ))
-    } yield new AwsLineChart(graphTitle, Seq("Time", "Hits", "Misses"), ChartFormat.DoubleLineBlueRed, hits, misses)
+    } yield new AwsLineChart(graphTitle, Seq("Time", "Hits", "Misses"), ChartFormat(Colour.success, Colour.error), hits, misses)
   }
 
   def omnitureConfidence = for {
