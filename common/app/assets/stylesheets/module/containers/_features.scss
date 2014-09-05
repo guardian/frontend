@@ -16,7 +16,7 @@
         .stars {
             margin-bottom: $gs-baseline / 2;
         }
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             .facia-slice__item {
                 border-bottom: 1px solid #ffffff;
             }

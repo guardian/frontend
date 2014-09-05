@@ -23,16 +23,16 @@
     }
 }
 
-$mobile-max-container-width: gs-span(7);
-$mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
+$mobile-max-container-width: gs-span(8);
+$mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
 @mixin facia-container__inner--layout-front(
     $snap-points: (
-        faciaWidestMobile: $mobile-max-container-width,
-        tablet:            gs-span(9),
-        desktop:           gs-span(12),
-        faciaLeftCol:      gs-span(14),
-        wide:              gs-span(16)
+        containerWidestMobile: $mobile-max-container-width,
+        tablet:                gs-span(9),
+        desktop:               gs-span(12),
+        faciaLeftCol:          gs-span(14),
+        wide:                  gs-span(16)
     )
 ) {
     @each $breakpoint, $container-width in $snap-points {
@@ -113,21 +113,31 @@ $mq-breakpoints: mq-add-breakpoint(faciaWidestMobile, $mobile-max-container-widt
         @include container__meta(faciaLeftCol, desktop);
     }
 }
-@mixin facia-container--layout-content {
-    .facia-container--layout-content {
-        .facia-container__inner {
-            @include mq(tablet, rightCol) {
-                max-width: gs-span(8);
+
+@mixin facia-container__inner--layout-content(
+    $snap-points: (
+        containerWidestMobile: $mobile-max-container-width,
+        tablet:                gs-span(9),
+        rightCol:              calc(100% - #{$gs-gutter * 2}),
+        desktop:               calc(100% - #{$gs-gutter * 2}),
+        leftCol:               gs-span(14),
+        wide:                  gs-span(16)
+    )
+) {
+    @each $breakpoint, $container-width in $snap-points {
+        @include mq($breakpoint) {
+            @if (index($snap-points, ($breakpoint $container-width)) == 1) {
                 margin-left: auto;
                 margin-right: auto;
             }
-            @include mq(leftCol) {
-                max-width: gs-span(14);
-            }
-            @include mq(wide) {
-                max-width: gs-span(15);
-                padding-right: gs-span(1) + $gs-gutter*2;
-            }
+            width: $container-width;
+        }
+    }
+}
+@mixin facia-container--layout-content {
+    .facia-container--layout-content {
+        .facia-container__inner {
+            @include facia-container__inner--layout-content;
         }
         @include mq(leftCol) {
             .container__title {

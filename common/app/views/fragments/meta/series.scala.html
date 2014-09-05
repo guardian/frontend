@@ -1,8 +1,0 @@
-@(id: String, name: String, cls: List[String] = Nil)(implicit request: RequestHeader)
-
-<dl class="content-meta@cls.map{ cls => content-meta--@cls}">
-    <dt class="content-meta__label">Series</dt>
-    <dd class="content-meta__item">
-        <a href="@LinkTo{/@id}" class="content-meta__item tone-colour">@name</a>
-    </dd>
-</dl>

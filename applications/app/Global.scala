@@ -1,23 +1,21 @@
-import common.CloudWatchApplicationMetrics
-import conf.{Configuration, Filters}
+import common.{ContentApiMetrics, CloudWatchApplicationMetrics}
+import conf.Filters
 import dev.DevParametersLifecycle
 import dfp.DfpAgentLifecycle
+import metrics.FrontendMetric
 import ophan.SurgingContentAgentLifecycle
-import play.api.Application
 import play.api.mvc.WithFilters
-import services.{ContributorAlphaIndexAutoRefresh, KeywordSectionIndexAutoRefresh, KeywordAlphaIndexAutoRefresh}
+import services.IndexListingsLifecycle
 
 object Global extends WithFilters(Filters.common: _*)
-                      with DevParametersLifecycle
-                      with CloudWatchApplicationMetrics
-                      with DfpAgentLifecycle
-                      with SurgingContentAgentLifecycle{
+  with DevParametersLifecycle
+  with CloudWatchApplicationMetrics
+  with DfpAgentLifecycle
+  with SurgingContentAgentLifecycle
+  with IndexListingsLifecycle {
   override lazy val applicationName = "frontend-applications"
 
-  override def onStart(app: Application): Unit = {
-    super.onStart(app)
-    KeywordSectionIndexAutoRefresh.start()
-    KeywordAlphaIndexAutoRefresh.start()
-    ContributorAlphaIndexAutoRefresh.start()
-  }
+  override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ++ List(
+    ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric
+  )
 }

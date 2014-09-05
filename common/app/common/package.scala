@@ -1,5 +1,6 @@
 package common
 
+import akka.pattern.CircuitBreakerOpenException
 import com.gu.openplatform.contentapi.ApiError
 import conf.Switch
 import play.api.Logger
@@ -11,8 +12,10 @@ import java.util.concurrent.TimeoutException
 
 object `package` extends implicits.Strings with implicits.Requests with play.api.mvc.Results {
 
-
   def convertApiExceptions[T](implicit log: Logger): PartialFunction[Throwable, Either[T, Result]] = {
+    case e: CircuitBreakerOpenException =>
+      log.error(s"Got a circuit breaker open error while calling content api")
+      Right(NoCache(ServiceUnavailable))
     case ApiError(404, message) =>
       log.info(s"Got a 404 while calling content api: $message")
       Right(NoCache(NotFound))

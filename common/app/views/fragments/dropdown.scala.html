@@ -1,8 +1,9 @@
-@(name: String = "", modifier: String = "", isActive: Boolean = false)(content: Html)
+@(name: String, modifier: Option[String] = None, isActive: Boolean = false)(content: Html)
 
 @defining("dropdown-"+content.hashCode){ hash =>
-<div class="dropdown dropdown-styled @if(modifier != ""){dropdown--@modifier} @if(isActive){dropdown--active}">
+<div class="dropdown dropdown-styled u-cf @modifier.map("dropdown--" + _) @if(isActive){dropdown--active}">
     <button class="dropdown__button u-button-reset js-dropdown-button"
+            type="button"
             data-link-name="Show dropdown: @name"
             aria-haspopup="true"
             aria-controls="@hash">

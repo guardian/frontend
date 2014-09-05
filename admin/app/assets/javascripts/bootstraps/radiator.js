@@ -145,13 +145,16 @@ define([
                     .draw(google.visualization.arrayToDataTable(graphData), {
                         title: 'Page views',
                         backgroundColor: '#fff',
-                        colors: ['#333'],
-                        height: 125,
+                        colors: ['#e6711b'],
+                        height: 160,
                         legend: 'none',
                         fontName: 'Georgia',
                         titleTextStyle: {color: '#999'},
                         hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
-                        smoothLine: true
+                        smoothLine: true,
+                        chartArea: {
+                            width: "85%"
+                        }
                     });
 
                 // Average pageviews now

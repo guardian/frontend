@@ -104,15 +104,6 @@ case class UpdateList(
   draft: Boolean
 )
 
-object CollectionMetaUpdate {
-  implicit val jsonFormat = Json.format[CollectionMetaUpdate]
-}
-
-case class CollectionMetaUpdate(
-  displayName: Option[String],
-  href: Option[String]
-)
-
 case class StreamUpdate(update: JsValue, action: String, email: String)
 
 object StreamUpdate {
@@ -139,7 +130,6 @@ trait UpdateActions extends Logging {
     "showMainVideo"
   )
 
-  implicit val collectionMetaWrites = Json.writes[CollectionMetaUpdate]
   implicit val updateListWrite = Json.writes[UpdateList]
 
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
@@ -174,9 +164,6 @@ trait UpdateActions extends Logging {
       block.copy(draft=block.draft orElse Option(block.live) map { l => l.filterNot(_.id == update.item) } filter(_ != block.live) )
     else
       block
-
-  def updateCollectionMeta(block: Block, update: CollectionMetaUpdate, identity: UserIdentity): Block =
-    block.copy(displayName=update.displayName, href=update.href)
 
   def putBlock(id: String, block: Block, identity: UserIdentity): Block =
     FaciaApi.putBlock(id, block, identity)
@@ -231,12 +218,6 @@ trait UpdateActions extends Logging {
       .map(archiveDeleteBlock(id, _, updateJson, identity))
       .map(putBlock(id, _, identity))
   }
-
-  def updateCollectionMeta(id: String, update: CollectionMetaUpdate, identity: UserIdentity): Option[Block] =
-    getBlock(id)
-      .map(updateCollectionMeta(_, update, identity))
-      .map(_.sortByGroup)
-      .map(putBlock(id, _, identity))
 
   private def updateList(update: UpdateList, blocks: List[Trail]): List[Trail] = {
     val trail: Trail = blocks
