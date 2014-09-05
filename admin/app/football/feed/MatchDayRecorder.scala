@@ -27,12 +27,12 @@ object MatchDayRecorder extends ExecutionContexts with Logging {
     val result = WS.url(feedUrl).get()
 
     result.onFailure {
-      case t: Throwable => log.info("match day recorder failed", t)
+      case t: Throwable => log.info(s"match day recorder failed $feedUrl", t)
     }
 
     result.foreach { response =>
       if (response.status != 200) {
-        log.info(s"match day recorder failed with status ${response.status} ${response.statusText}")
+        log.info(s"match day recorder failed with status ${response.status} ${response.statusText} $feedUrl")
       } else {
         S3.putPrivate(fileName, response.body, "text/xml")
       }
