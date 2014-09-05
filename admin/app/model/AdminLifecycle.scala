@@ -55,11 +55,6 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.schedule("MatchDayRecorderJob", "0 * * * * ?") {
       MatchDayRecorder.record()
     }
-
-    AkkaAsync{
-      MatchDayRecorder.record()
-    }
-
   }
 
   private def descheduleJobs() {
