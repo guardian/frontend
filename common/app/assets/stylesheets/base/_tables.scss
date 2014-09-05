@@ -68,9 +68,9 @@ td {
     }
 
     // Show / hide functionality
-    @include mq($to: $table-breakpoint-importance-1) { @include table--hide-from-importance-1; }
-    @include mq($to: $table-breakpoint-importance-2) { @include table--hide-from-importance-2; }
-    @include mq($to: $table-breakpoint-importance-3) { @include table--hide-from-importance-3; }
+    @include mq($until: $table-breakpoint-importance-1) { @include table--hide-from-importance-1; }
+    @include mq($until: $table-breakpoint-importance-2) { @include table--hide-from-importance-2; }
+    @include mq($until: $table-breakpoint-importance-3) { @include table--hide-from-importance-3; }
 }
 
 .table--responsive-font {

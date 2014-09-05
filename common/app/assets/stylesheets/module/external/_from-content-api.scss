@@ -155,6 +155,10 @@
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
+    @include mq(phablet) {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 
@@ -326,7 +330,7 @@ figure.element--thumbnail + h2 {
         font-style: normal;
 
         p {
-            color: guss-colour(neutral-2);
+            color: $c-neutral2;
             margin-bottom: 0;
             @include fs-headline(4);
             @include mq(tablet) {
@@ -340,16 +344,16 @@ figure.element--thumbnail + h2 {
     cite {
         @extend %tone-colour;
         font-style: normal;
-        color: guss-colour(neutral-2);
+        color: $c-neutral2;
         @include fs-bodyHeading(2);
 
         a,
         a:visited {
-            border-bottom: 1px solid guss-colour(neutral-4);
+            border-bottom: 1px solid $c-neutral4;
 
             &:hover {
                 text-decoration: none;
-                border-bottom: 1px solid guss-colour(neutral-2);
+                border-bottom: 1px solid $c-neutral2;
             }
         }
     }

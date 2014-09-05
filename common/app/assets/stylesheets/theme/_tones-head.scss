@@ -68,7 +68,7 @@
             float: right;
             height: $gs-baseline * 12.5;
 
-            @include mq($to: mobileLandscape) {
+            @include mq($until: mobileLandscape) {
                 margin-left: -(gs-span(1) + $gs-gutter);
             }
             @include mq(mobileLandscape) {
@@ -133,7 +133,7 @@
     .content.tone-comment {
         .content__head--tonal {
             .content__section .tone-colour {
-                @include mq($to: leftCol) {
+                @include mq($until: leftCol) {
                     color: $c-commentDefault;
                 }
             }

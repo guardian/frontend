@@ -349,8 +349,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         And("the placeholder has the correct data attributes")
         adPlaceholder.getAttribute("data-name") should be("top-above-nav")
-        adPlaceholder.getAttribute("data-tabletportrait") should be("728,90")
-        adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|940,230|900,250")
+        adPlaceholder.getAttribute("data-mobile") should be("728,90")
+        adPlaceholder.getAttribute("data-right-col") should be("728,90|940,230|900,250")
         adPlaceholder.getAttribute("data-wide") should be("728,90|940,230|900,250|970,250")
 
         And("the placeholder has the correct class name")

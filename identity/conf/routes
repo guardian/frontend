@@ -3,7 +3,7 @@ GET         /assets/*path                          dev.DevAssetsController.at(pa
 
 GET         /_healthcheck                          conf.HealthCheck.healthcheck()
 
-GET         /signin                                 @controllers.SigninController.renderForm
+GET         /signin                                 @controllers.SigninController.renderForm(returnUrl : Option[String])
 POST        /signin                                 @controllers.SigninController.processForm
 GET         /signout                                @controllers.SignoutController.signout
 GET         /reset                                  @controllers.ResetPasswordController.renderPasswordResetRequestForm
@@ -11,12 +11,15 @@ POST        /reset                                  @controllers.ResetPasswordCo
 GET         /c/:resetToken                          @controllers.ResetPasswordController.processUpdatePasswordToken( resetToken : String)
 POST        /reset-password/:resetToken             @controllers.ResetPasswordController.resetPassword( resetToken : String )
 GET         /reset-password/:resetToken             @controllers.ResetPasswordController.renderResetPassword( resetToken : String )
+GET         /password/confirm                       @controllers.ChangePasswordController.renderPasswordConfirmation
 GET         /password/change                        @controllers.ChangePasswordController.displayForm
 POST        /password/change                        @controllers.ChangePasswordController.submitForm
-GET         /password/confirmation                  @controllers.ResetPasswordController.renderPasswordResetConfirmation
+GET         /password/reset-confirmation            @controllers.ResetPasswordController.renderPasswordResetConfirmation
+GET         /password/email-sent                    @controllers.ResetPasswordController.renderEmailSentConfirmation
 GET         /requestnewtoken                        @controllers.ResetPasswordController.requestNewToken
-GET         /register                               @controllers.RegistrationController.renderForm
+GET         /register                               @controllers.RegistrationController.renderForm(returnUrl : Option[String])
 POST        /register                               @controllers.RegistrationController.processForm
+GET         /register/confirm                       @controllers.RegistrationController.renderRegistrationConfirmation(returnUrl)
 GET         /email-prefs                            @controllers.EmailController.preferences
 POST        /email-prefs                            @controllers.EmailController.savePreferences
 GET         /user/id/:id                            @controllers.PublicProfileController.renderProfileFromId(id: String, activityType = "discussions")
@@ -24,9 +27,9 @@ GET         /user/id/:id/:activityType              @controllers.PublicProfileCo
 GET         /user/:vanityUrl                        @controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType = "discussions")
 GET         /user/:vanityUrl/:activityType          @controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType: String)
 GET         /public/edit                            @controllers.EditProfileController.displayPublicProfileForm
+POST        /public/edit                            @controllers.EditProfileController.submitPublicProfileForm
 GET         /account/edit                           @controllers.EditProfileController.displayAccountForm
 GET         /membership/edit                        @controllers.EditProfileController.displayMembershipForm
-POST        /public/edit                            @controllers.EditProfileController.submitPublicProfileForm
 POST        /account/edit                           @controllers.EditProfileController.submitAccountForm
 GET         /verify-email/:token                    @controllers.EmailVerificationController.verify(token: String)
 GET         /verify-email                           @controllers.EmailVerificationController.resendEmailValidationEmail()

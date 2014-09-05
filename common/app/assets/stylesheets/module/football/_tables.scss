@@ -45,8 +45,8 @@
         min-width: 15*5 // width of status;
     }
 
-    @include mq($to: $table-breakpoint-importance-1) { @include table-football--medium; }
-    @include mq($to: $table-breakpoint-importance-2) {
+    @include mq($until: $table-breakpoint-importance-1) { @include table-football--medium; }
+    @include mq($until: $table-breakpoint-importance-2) {
         .team-name:after {
             content: attr(data-abbr);
         }
@@ -68,7 +68,7 @@
 // This is everything on the standalone pages
 // i.e. /football/tables or /football/results
 .football-table__container {
-    @include mq($to: rightCol) {
+    @include mq($until: rightCol) {
         max-width: gs-span(7);
     }
 

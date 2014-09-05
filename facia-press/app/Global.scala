@@ -32,6 +32,7 @@ object Global extends GlobalSettings
     ContentApiMetrics.ContentApi404Metric,
     ContentApiMetrics.ContentApiJsonParseExceptionMetric,
     ContentApiMetrics.ContentApiJsonMappingExceptionMetric,
+    ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
     FaciaToolMetrics.InvalidContentExceptionMetric,
     S3Metrics.S3ClientExceptionsMetric,
     S3Metrics.S3AuthorizationError,
