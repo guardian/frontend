@@ -27,20 +27,20 @@ Add the following to your ```/etc/hosts```:
     127.0.0.1   profile.thegulocal.com
     127.0.0.1   m.thegulocal.com
 
-## Now run the setup script:
+## Now run the setup script (nginx/setup.sh):
 
-    nginx/setup.sh
+    sh setup.sh
 
 ## Setup Nginx
 
 You will have to make sure the ```sites-enabled``` folder in included in your ```nginx.conf```:
-    
+
     # ...
     http {
         include       mime.types;
         default_type  application/octet-stream;
         # THIS IS WHAT YOU MUST ADD
-        include sites-enabled/*; 
+        include sites-enabled/*;
     #...
 
 ## Note
