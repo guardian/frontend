@@ -74,7 +74,7 @@ define([
 
         it('should have the correct size mappings', function() {
             articleAsideAdverts.init(config);
-            expect($('.ad-slot', fixture).data('tabletlandscape')).toBe('300,250|300,600');
+            expect($('.ad-slot', fixture).data('mobile')).toBe('300,250|300,600');
         });
 
         it('should not add ad slot to hidden column', function() {

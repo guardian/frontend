@@ -29,7 +29,7 @@
         display: none;
     }
 
-    @include mq($to: desktop) {
+    @include mq($until: desktop) {
         .meta__comment-count--top,
         .meta__comment-count--bottom {
             .commentcount {
@@ -107,7 +107,7 @@
         }
     }
     .content__secondary-column--media {
-        @include mq($to: rightCol) {
+        @include mq($until: rightCol) {
             display: block;
             position: relative;
             width: 100%;
@@ -264,7 +264,7 @@
     margin-right: -$gs-gutter/2;
 
     .item {
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             &:nth-child(odd) {
                 border-right: 1px solid $c-neutral2;
             }
@@ -302,7 +302,7 @@
     }
 }
 .most-viewed--video .item:nth-child(n+5) {
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         margin-bottom: 0;
     }
     @include mq(rightCol) {
@@ -311,7 +311,7 @@
 }
 .most-viewed--audio {
     .item:nth-child(n+3) {
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             margin-bottom: 0;
         }
         @include mq(rightCol) {

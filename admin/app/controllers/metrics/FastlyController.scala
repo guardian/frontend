@@ -1,16 +1,15 @@
 package controllers.admin
 
 import controllers.AuthLogging
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import play.api.mvc.Controller
 import tools.CloudWatch
 
-object FastlyController extends Controller with Logging with AuthLogging {
-  def renderFastly() =AuthActions.AuthActionTest { request =>
-
-    val errors = CloudWatch.fastlyErrors
-    val statistics = CloudWatch.fastlyHitMissStatistics
-
-    Ok(views.html.lineCharts("PROD", errors ++ statistics))
+object FastlyController extends Controller with Logging with AuthLogging with ExecutionContexts {
+  def renderFastly() = AuthActions.AuthActionTest.async { request =>
+    for {
+      errors <- CloudWatch.fastlyErrors
+      statistics <- CloudWatch.fastlyHitMissStatistics
+    } yield Ok(views.html.lineCharts("PROD", errors ++ statistics))
   }
 }

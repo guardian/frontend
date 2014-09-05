@@ -1,7 +1,7 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
 
-@main(index.page, projectName = Option("facia")){  }{
-
+@main(index.page, projectName = Option("facia")){
+    @fragments.indexHead(index)
+}{
     @fragments.indexBody(index)
-
 }

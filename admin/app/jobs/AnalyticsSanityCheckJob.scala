@@ -6,7 +6,7 @@ import scala.collection.JavaConversions._
 import scala.concurrent.Future.sequence
 import org.joda.time.DateTime
 
-object AnalyticsSanityCheckJob extends ExecutionContexts with implicits.Futures with Logging {
+object AnalyticsSanityCheckJob extends ExecutionContexts with Logging {
 
   def run() {
 

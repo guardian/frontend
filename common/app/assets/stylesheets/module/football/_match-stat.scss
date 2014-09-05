@@ -40,7 +40,7 @@
 
 .team__results--shrink {
     .team-result {
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             @include team-result--shrink;
         }
     }
@@ -48,7 +48,7 @@
 
 .team__results--thin {
     .team-result {
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             @include team-result--thin;
         }
     }

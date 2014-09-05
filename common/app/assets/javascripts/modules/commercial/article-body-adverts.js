@@ -43,7 +43,7 @@ define([
 
             var breakpoint  = detect.getBreakpoint(),
                 rules = {
-                    minAbove: (/mobile|tablet/).test(breakpoint) ? 300 : 700,
+                    minAbove: detect.isBreakpoint({ max: 'tablet' }) ? 300 : 700,
                     minBelow: 300,
                     selectors: {
                         ' > h2': {minAbove: breakpoint === 'mobile' ? 20 : 0, minBelow: 250},
@@ -58,7 +58,7 @@ define([
             }
             insertAdAtP(spacefinder.getParaWithSpace(rules));
 
-            if (breakpoint === 'mobile' || ((/wide|desktop|tablet/).test(breakpoint) && (config.innerWidth || window.innerWidth) < 900)) {
+            if (breakpoint === 'mobile' || (detect.isBreakpoint({ min: 'tablet' }) && (config.innerWidth || window.innerWidth) < 900)) {
                 insertAdAtP(spacefinder.getParaWithSpace(rules));
             }
         };

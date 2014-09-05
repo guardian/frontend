@@ -45,6 +45,11 @@ object Switches extends Collections {
   private lazy val never = new LocalDate(2100, 1, 1)
 
   // Performance
+  val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
+    "If this switch is switched on then the Content API circuit breaker will be operational",
+    safeState = Off,
+    sellByDate = new LocalDate(2014, 9, 28)
+  )
 
   val MemcachedSwitch = Switch("Performance", "memcached-action",
     "If this switch is switched on then the MemcacheAction will be operational",
@@ -134,6 +139,11 @@ object Switches extends Collections {
   val SponsoredSwitch = Switch("Commercial", "sponsored",
     "Show sponsored badges, logos, etc.",
     safeState = On, sellByDate = never
+  )
+
+  val LiveblogAdvertsSwitch = Switch("Commercial", "liveblog-adverts",
+    "Show inline adverts on liveblogs",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 19)
   )
 
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
@@ -357,6 +367,7 @@ object Switches extends Collections {
     StandardAdvertsSwitch,
     CommercialComponentsSwitch,
     VideoAdvertsSwitch,
+    LiveblogAdvertsSwitch,
     SponsoredSwitch,
     AudienceScienceSwitch,
     AudienceScienceGatewaySwitch,

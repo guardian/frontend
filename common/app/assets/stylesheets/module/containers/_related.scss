@@ -2,7 +2,7 @@
     .facia-slice__item:first-child {
         @include item--hide-tone-border;
 
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             .item__title {
                 @include fs-headline(3, true);
             }
@@ -21,7 +21,7 @@
     // when there are no images
     @include hide-icon-in-title;
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         // Vertically align border halfway between items
         .item__tonal-border {
             $vertical-space-between-items: $gs-baseline * 1.5;

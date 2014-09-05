@@ -1,5 +1,7 @@
 @(page: model.FaciaPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
 
-@main(page, projectName = Option("facia"), Map("bootstraps/facia" -> "javascripts/bootstraps/facia.js")){ }{
+@main(page, projectName = Option("facia"), Map("bootstraps/facia" -> "javascripts/bootstraps/facia.js")){
+    @fragments.frontHead(page)
+}{
     @fragments.frontBody(page)
 }

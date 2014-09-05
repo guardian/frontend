@@ -1,5 +1,5 @@
 .container--raclette {
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         .facia-slice-wrapper--position-1 .facia-slice__item:first-child {
             @include item--hide-tone-border;
         }

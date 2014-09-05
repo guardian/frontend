@@ -8,10 +8,18 @@
 
 define([
     'lodash/arrays/findIndex',
+    'lodash/arrays/first',
+    'lodash/arrays/last',
+    'lodash/arrays/rest',
+    'lodash/objects/defaults',
     'common/utils/_',
     'common/utils/mediator'
 ], function (
     findIndex,
+    first,
+    last,
+    rest,
+    defaults,
     _,
     mediator
 ) {
@@ -22,39 +30,52 @@ define([
                          document.mozVisibilityState ||
                          document.msVisibilityState ||
                          'visible',
-        // ordered lists of breakpoints
+        // Ordered lists of breakpoints
+        // These should match those defined in stylesheets/_vars.scss
         breakpoints = [
             {
                 name: 'mobile',
-                isTweakpoint: false
+                isTweakpoint: false,
+                width: 0
             },
             {
                 name: 'mobileLandscape',
+                isTweakpoint: true,
+                width: 480
+            },
+            {
+                name: 'phablet',
                 isTweakpoint: true
             },
             {
                 name: 'tablet',
-                isTweakpoint: false
+                isTweakpoint: false,
+                width: 740
             },
             {
                 name: 'rightCol',
-                isTweakpoint: true
+                isTweakpoint: true,
+                width: 900
             },
             {
                 name: 'desktop',
-                isTweakpoint: false
+                isTweakpoint: false,
+                width: 980
             },
             {
                 name: 'leftCol',
-                isTweakpoint: true
+                isTweakpoint: true,
+                width: 1060
             },
             {
                 name: 'faciaLeftCol',
-                isTweakpoint: true
+                isTweakpoint: true,
+                width: 1140
             },
             {
                 name: 'wide',
-                isTweakpoint: false
+                isTweakpoint: false,
+                width: 1300
             }
         ];
 
@@ -225,6 +246,26 @@ define([
         return breakpoint;
     }
 
+    function isBreakpoint(criteria) {
+        var c = defaults(
+                criteria,
+                {
+                    min: first(breakpoints).name,
+                    max: last(breakpoints).name
+                }
+            ),
+            currentBreakpoint = getBreakpoint(true);
+        return _(breakpoints)
+            .rest(function (breakpoint) {
+                return breakpoint.name !== c.min;
+            })
+            .initial(function (breakpoint) {
+                return breakpoint.name !== c.max;
+            })
+            .pluck('name')
+            .contains(currentBreakpoint);
+    }
+
     // Page Visibility
     function initPageVisibility() {
         // Taken from http://stackoverflow.com/a/1060034
@@ -289,10 +330,12 @@ define([
         hasPushStateSupport: hasPushStateSupport,
         getOrientation: getOrientation,
         getBreakpoint: getBreakpoint,
+        isBreakpoint: isBreakpoint,
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
-        getPageSpeed: getPageSpeed
+        getPageSpeed: getPageSpeed,
+        breakpoints: breakpoints
     };
 
 });
