@@ -70,7 +70,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
         val lightboxCount = Cell(row.lightboxLaunchesPerVisit.toString)
         Row(List(dateCell, lightboxCount))
       }
-      val lightboxChart = FormattedChart("Lightbox Launches per Gallery Visit", lightboxColumns, lightboxRows, ChartFormat(ChartFormat.`tone-features-3`))
+      val lightboxChart = FormattedChart("Lightbox Launches per Gallery Visit", lightboxColumns, lightboxRows, ChartFormat(Colour.`tone-features-3`))
 
       val galleryColumns = List(Column("time", "Time", "date"), Column("pvv", "Hits per visit", "number"))
       val galleryRows = reportsObject.toSeq.sortBy(_.simpleDate).map { row =>
@@ -78,7 +78,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
         val pageViews = Cell(row.pageViewsPerVisit.toString)
         Row(List(dateCell, pageViews))
       }
-      val galleryChart = FormattedChart("Gallery Page Views per Gallery Visit", galleryColumns, galleryRows, ChartFormat(ChartFormat.`tone-news-2`))
+      val galleryChart = FormattedChart("Gallery Page Views per Gallery Visit", galleryColumns, galleryRows, ChartFormat(Colour.`tone-news-2`))
 
       NoCache(Ok(views.html.contentGallery("PROD", galleryChart, lightboxChart, "Gallery Performance", reportTimestamp)))
     }

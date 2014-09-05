@@ -77,7 +77,7 @@ trait Chart {
 
 case class ChartFormat(colours: Seq[String], cssClass: String = "charts")
 
-object ChartFormat {
+object Colour {
   val `tone-news-1` = "#005689"
   val `tone-news-2` = "#4bc6df"
   val `tone-features-1` = "#951c55"
@@ -87,6 +87,13 @@ object ChartFormat {
   val `tone-comment-1` = "#e6711b"
   val `tone-comment-2` = "#ffbb00"
   val `tone-comment-3` = "#ffcf4c"
+  val `tone-live-1` = "#b51800"
+  val `tone-live-2` = "#cc2b12"
+  val error = "#d61d00"
+  val success = "#4a7801"
+}
+
+object ChartFormat {
 
   val SingleLineBlack = ChartFormat(colours = Seq("#000000"))
   val SingleLineBlue = ChartFormat(colours = Seq("#0033CC"))
@@ -95,7 +102,7 @@ object ChartFormat {
   val DoubleLineBlueRed = ChartFormat(colours = Seq("#0033CC", "#FF0000"))
   val MultiLine = ChartFormat(colours = Seq("#FF6600", "#99CC33", "#CC0066", "#660099", "#0099FF"), cssClass =  "charts charts-full")
 
-  def apply(colour: String): ChartFormat = ChartFormat(Seq(colour))
+  def apply(colour: String*): ChartFormat = ChartFormat(colour)
 }
 
 class AwsLineChart(
