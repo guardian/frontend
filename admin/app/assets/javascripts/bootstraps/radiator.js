@@ -146,12 +146,15 @@ define([
                         title: 'Page views',
                         backgroundColor: '#fff',
                         colors: ['#e6711b'],
-                        height: 125,
+                        height: 160,
                         legend: 'none',
                         fontName: 'Georgia',
                         titleTextStyle: {color: '#999'},
                         hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
-                        smoothLine: true
+                        smoothLine: true,
+                        chartArea: {
+                            width: "85%"
+                        }
                     });
 
                 // Average pageviews now
