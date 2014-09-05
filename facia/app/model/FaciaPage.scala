@@ -1,6 +1,6 @@
 package model
 
-import common.Edition
+import common.{NavItem, Edition}
 import dfp.DfpAgent
 import play.api.libs.json.{JsString, JsValue}
 
