@@ -46,9 +46,3 @@ object PressJob {
 }
 
 case class PressJob(path: FrontPath, pressType: PressType, creationTime: DateTime = DateTime.now)
-
-object CronUpdate {
-  implicit val jsonFormat = Json.format[CronUpdate]
-}
-
-case class CronUpdate(path: FrontPath)
