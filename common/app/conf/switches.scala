@@ -358,6 +358,10 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
+  val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
+    "If switched on then football matchday feeds will be recorded every minute",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 30))
+
   val all: List[Switch] = List(
     AutoRefreshSwitch,
     DoubleCacheTimesSwitch,
@@ -419,7 +423,8 @@ object Switches extends Collections {
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
     ChildrensBooksSwitch,
-    MetricsSwitch
+    MetricsSwitch,
+    FootballFeedRecorderSwitch
   )
 
   val httpSwitches: List[Switch] = List(
