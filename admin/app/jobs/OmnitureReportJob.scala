@@ -8,11 +8,14 @@ import scala.concurrent.duration._
 import scala.concurrent.future
 
 object OmnitureVariables {
-
   // Metrics
   val pageViews = "pageViews"
   val visits = "visits"
   val navigationalInteractionEvent = "event37"
+
+  // Segments
+  val segmentGalleryVisits = Some("53fddc4fe4b08891cec2831a")
+  val segmentGalleryLightboxHits = Some("5400a89fe4b0230c643d3b46")
 }
 
 object OmnitureReports {
@@ -45,7 +48,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
         dateTo = dateTo.toString("yyyy-MM-dd"),
         dateFrom = dateFrom.toString("yyyy-MM-dd"),
         metrics = List(OmnitureMetric(pageViews)),
-        segment_id = Some("53fddc4fe4b08891cec2831a") // Segment "Gallery Visits"
+        segment_id = segmentGalleryVisits
       ), QUEUE_OVERTIME, galleryPageViews)
     })
 
@@ -55,7 +58,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
         dateTo = dateTo.toString("yyyy-MM-dd"),
         dateFrom = dateFrom.toString("yyyy-MM-dd"),
         metrics = List(OmnitureMetric(visits)),
-        segment_id = Some("53fddc4fe4b08891cec2831a") // Segment "Gallery Visits"
+        segment_id = segmentGalleryVisits
       ), QUEUE_OVERTIME, galleryVisits)
     })
 
@@ -65,7 +68,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
         dateTo = dateTo.toString("yyyy-MM-dd"),
         dateFrom = dateFrom.toString("yyyy-MM-dd"),
         metrics = List(OmnitureMetric(navigationalInteractionEvent)),
-        segment_id = Some("5400a89fe4b0230c643d3b46") // Segment "Gallery Lightbox Hits"
+        segment_id = segmentGalleryLightboxHits
       ), QUEUE_OVERTIME, galleryLightBox)
     })
   }
