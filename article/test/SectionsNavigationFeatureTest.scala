@@ -65,8 +65,8 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with M
         val contact = browser.find(".l-footer li a", withText().contains("contact"))
         contact.length should be > 0
 
-        And("a link to the about this page")
-        val about = browser.find(".l-footer li a", withText().contains("about this site"))
+        And("a link to the info and resources")
+        val about = browser.find(".l-footer li a", withText().contains("info and resources"))
         about.length should be > 0
       }
     }
