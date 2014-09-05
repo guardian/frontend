@@ -1,5 +1,5 @@
 /*!
- * EventEmitter v4.2.7 - git.io/ee
+ * EventEmitter v4.2.8 - git.io/ee
  * Oliver Caldwell
  * MIT license
  * @preserve
@@ -22,7 +22,7 @@
 	var originalGlobalValue = exports.EventEmitter;
 
 	/**
-	 * Finds the index of the listener for the event in it's storage array.
+	 * Finds the index of the listener for the event in its storage array.
 	 *
 	 * @param {Function[]} listeners Array of listeners to search through.
 	 * @param {Function} listener Method to look for.
@@ -153,7 +153,7 @@
 
 	/**
 	 * Semi-alias of addListener. It will add a listener that will be
-	 * automatically removed after it's first execution.
+	 * automatically removed after its first execution.
 	 *
 	 * @param {String|RegExp} evt Name of the event to attach the listener to.
 	 * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
@@ -275,7 +275,7 @@
 		var single = remove ? this.removeListener : this.addListener;
 		var multiple = remove ? this.removeListeners : this.addListeners;
 
-		// If evt is an object then pass each of it's properties to this method
+		// If evt is an object then pass each of its properties to this method
 		if (typeof evt === 'object' && !(evt instanceof RegExp)) {
 			for (i in evt) {
 				if (evt.hasOwnProperty(i) && (value = evt[i])) {

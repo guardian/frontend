@@ -1,6 +1,6 @@
 package model
 
-import common.{NavItem, Edition}
+import common.Edition
 import dfp.DfpAgent
 import play.api.libs.json.{JsString, JsValue}
 
@@ -33,6 +33,14 @@ case class FaciaPage(id: String,
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 
   def allItems = collections.map(_._2).flatMap(_.items).distinct
+
+  override def openGraph: Map[String, String] = super.openGraph ++Map(
+    "og:title" -> webTitle,
+    "og:image" -> "http://static.guim.co.uk/icons/social/og/gu-logo-fallback.png") ++
+    description.map { s => Map("og:description" -> s)}.getOrElse(Map())
+
+  override def cards: List[(String, String)] = super.cards ++
+    List("twitter:card" -> "summary")
 
   override def customSignPosting: Option[NavItem] = FaciaSignpostingOverrides(id)
 }

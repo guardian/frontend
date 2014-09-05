@@ -20,14 +20,14 @@ object HttpErrors extends ExecutionContexts {
       metric("googlebot-404s").withStartTime(new DateTime().minusHours(12).toDate)
         .withNamespace("ArchiveMetrics").withDimensions(prod)
     ) map { metric =>
-      new AwsLineChart("12 hours", Seq("Time", "404/min"), ChartFormat.SingleLineBlue, metric)
+      new AwsLineChart("12 hours", Seq("Time", "404/min"), ChartFormat(Colour.`tone-live-1`), metric)
     },
     euWestClient.getMetricStatisticsFuture(
       metric("googlebot-404s").withNamespace("ArchiveMetrics")
         .withDimensions(prod).withPeriod(900)
         .withStartTime(new DateTime().minusDays(14).toDate)
     ) map { metric =>
-      new AwsLineChart("2 weeks", Seq("Time", "404/15min"), ChartFormat.SingleLineBlue, metric)
+      new AwsLineChart("2 weeks", Seq("Time", "404/15min"), ChartFormat(Colour.`tone-live-2`), metric)
     }
   )))
 

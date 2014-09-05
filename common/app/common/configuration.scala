@@ -289,6 +289,16 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthCallback <- configuration.getStringProperty("faciatool.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
 
+    //It's not possible to take a batch size above 10
+    lazy val pressJobBatchSize: Int =
+      Try(configuration.getStringProperty("faciapress.batch.size").get.toInt)
+        .filter(_ <= 10).getOrElse(10)
+
+    //Above 59 would probably break the cron expression
+    lazy val pressJobConsumeRateInSeconds: Int =
+      Try(configuration.getStringProperty("faciapress.rate.inseconds").get.toInt)
+        .filter(_ <= 59).filter(_ > 0).getOrElse(10)
+
     lazy val adminPressJobPushRateInMinutes: Int =
       Try(configuration.getStringProperty("admin.pressjob.push.rate.inminutes").get.toInt)
         .getOrElse(3)
