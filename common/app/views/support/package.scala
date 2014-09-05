@@ -734,6 +734,7 @@ object GetClasses {
       (trail: Trail) => trail match {
         case _: Gallery => "facia-slice__item--content-type-gallery"
         case _: Video   => "facia-slice__item--content-type-video"
+        case _: Audio   => "facia-slice__item--content-type-audio"
         case _          => ""
       }
     )
@@ -761,6 +762,7 @@ object GetClasses {
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) => trail match {
         case _: Gallery => "item--gallery"
         case _: Video   => "item--video"
+        case _: Audio   => "item--audio"
         case _          => ""
       },
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
