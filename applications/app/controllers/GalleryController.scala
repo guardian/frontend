@@ -41,7 +41,7 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
               "caption" -> JsString(img.caption.getOrElse("")),
               "credit" -> JsString(img.credit.getOrElse("")),
               "displayCredit" -> JsBoolean(img.displayCredit),
-              "url" -> JsString(ImgSrc.imager(imgContainer, GalleryFullscreenImage).getOrElse(""))
+              "src" -> JsString(ImgSrc.imager(imgContainer, GalleryFullscreenImage).getOrElse(""))
             ))
           }
         }
@@ -49,6 +49,7 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
           JsonComponent(JsObject(Seq(
               "gallery" -> JsObject(Seq(
                   "headline" -> JsString(model.gallery.headline),
+                  "shouldHideAdverts" -> JsBoolean(model.gallery.shouldHideAdverts),
                   "standfirst" -> JsString(model.gallery.standfirst.getOrElse("")),
                   "images" -> JsArray(imageJson.flatten)
               ))

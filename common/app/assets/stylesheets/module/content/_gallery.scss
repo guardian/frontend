@@ -58,6 +58,14 @@
     overflow: hidden;
     max-height: 100%;
 
+    @include mq(mobileLandscape, $until: tablet) {
+        padding-right: gs-span(2);
+    }
+
+    @include mq(tablet, $until: rightCol) {
+        padding-right: gs-span(3);
+    }
+
     @include mq($until: rightCol) {
         margin-bottom: $gs-baseline*3;
     }
@@ -74,6 +82,16 @@
 .gallery2__caption {
     color: $c-neutral7;
     margin-bottom: 0;
+
+    > strong {
+        display: block;
+        @include fs-headline(2);
+        margin-bottom: $gs-baseline/2;
+
+        & + br {
+            display: none;
+        }
+    }
 
     a {
         color: $c-neutral7;

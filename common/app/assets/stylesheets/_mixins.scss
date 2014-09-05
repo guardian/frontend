@@ -120,6 +120,27 @@
     }
 }
 
+// icon button (circular element containing a centered icon)
+@mixin icon-button2($name, $buttonSize) {
+    cursor: pointer;
+    width: $buttonSize;
+    height: $buttonSize;
+    @include border-radius($buttonSize);
+    position: relative;
+    display: block;
+
+    i,
+    .i {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        @include icon($name);
+    }
+}
+
 // Micro clearfix (http://nicolasgallagher.com/micro-clearfix-hack/)
 @mixin clearfix {
     &:after,
@@ -197,4 +218,8 @@
             padding-right: $gap * .5;
         }
     }
+}
+
+@function colour($color, $pallet: $pasteup-palette) {
+    @return guss-colour($color, $pallet);
 }
