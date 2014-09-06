@@ -2,31 +2,38 @@ package driver
 
 import java.net.URL
 
+import driver.Config._
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.remote.{DesiredCapabilities, RemoteWebDriver}
 import org.scalatest.selenium.WebBrowser
 import org.scalatest.{BeforeAndAfterAll, Suite}
-import Config._
 
 
 trait Driver extends Suite with WebBrowser with BeforeAndAfterAll {
 
+  private val url: String = s"http://${stack.userName}:${stack.automateKey}@ondemand.saucelabs.com:80/wd/hub"
 
-  implicit private val url: String = s"http://${stack.userName}:${stack.automateKey}@ondemand.saucelabs.com:80/wd/hub"
+  private lazy val remoteBrowser = {
+    val capabilities = DesiredCapabilities.firefox()
 
-  lazy val remoteBrowser = new RemoteWebDriver(new URL(url), DesiredCapabilities.chrome())
-  lazy val localBroswer = new FirefoxDriver()
+    // this makes the test name appear in the Saucelabs UI
+    capabilities.setCapability("name", getClass.getSimpleName)
+    new RemoteWebDriver(new URL(url), capabilities)
+  }
 
-  implicit val driver: WebDriver =  if (remoteMode) remoteBrowser else localBroswer
+  private lazy val localBrowser = new FirefoxDriver()
+
+  protected implicit val driver: WebDriver = if (remoteMode) remoteBrowser else localBrowser
 
   override protected def afterAll(): Unit = quit()
 
   // helper methods for tests
-  def theguardian(path: String) = s"$baseUrl$path?view=responsive"
-  def $(selector: String): List[Element] = findAll(cssSelector(selector)).toList
-  def first(selector: String): Element = $(selector).head
+  protected def theguardian(path: String) = s"$baseUrl$path?view=responsive&test=test#countmein"
 
+  protected def $(selector: String): List[Element] = findAll(cssSelector(selector)).toList
+  protected def first(selector: String): Element = $(selector).head
 }
+
 
 

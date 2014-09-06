@@ -7,7 +7,7 @@ import org.scalatest.{FreeSpec, Matchers}
 
 class FootballLiveBlogComponentsTest extends FreeSpec with Matchers with Driver with Eventually {
 
-  "Match reports" - {
+  "Football live blogs" - {
 
 
     go to theguardian("/football/live/2014/aug/16/-sp-arsenal-v-crystal-palace-premier-league-live-report")
