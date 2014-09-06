@@ -154,3 +154,21 @@ a {
     }
 }
 
+/* Teamcity widget (we do not have control over these class names) */
+.buildNumberDate, .buildResults, .tcTD_projectName {
+    display: none;
+}
+.tcTable tr {
+    display: inline-block;
+}
+
+.buildTypeIcon {
+   width: 32px;
+}
+
+.buildConfigurationName a {
+    color: #999;
+    text-decoration: none;
+}
+
+

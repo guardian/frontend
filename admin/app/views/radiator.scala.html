@@ -15,6 +15,15 @@
         <div class="cost"><strong>$@cost.max.toLong</strong> this month</div>
     </header>
 
+    <div class="">
+        <h2>Teamcity builds</h2>
+
+        @* to add another build just append another &buildTypeId=btXXXX *@
+
+        <script type="text/javascript" src="http://teamcity.guprod.gnm:8111/externalStatus.html?js=1&buildTypeId=bt1304">
+        </script>
+    </div>
+
     <div class="pingdom-wrapper">
         <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
         <ul id="pingdom"></ul>
