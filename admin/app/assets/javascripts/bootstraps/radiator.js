@@ -163,7 +163,18 @@ define([
                 var viewsPerSecond = Math.round(lastOphanEntry/60);
                 $('.pageviews-per-second').html('(' + viewsPerSecond + ' views/sec)');
             }
-        )
+        );
+
+        // "upgrade" build icons
+        $('.buildConfigurationName').each(function(build){
+            var icon = $('img', build);
+            var success = icon.attr('src').indexOf("success.png") >= 0;
+            var link = $('a', build);
+            var buildName = link[0].innerText;
+            var status = success ? 'success' : 'failure';
+            icon.replaceWith('<div title="' + buildName + '" class="' + status + '">' + buildName + '</div>');
+            link.remove();
+        });
     }
 
     return {
