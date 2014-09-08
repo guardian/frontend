@@ -194,12 +194,12 @@
 
                         <label>Image</label>
                         <input type="text" placeholder="Image URL, e.g. copied from Batch Uploader"
-                            data-bind="event: {blur: validate},value: provisionalImageUrl" />
+                            data-bind="value: provisionalImageUrl" />
 
                         <label>Display image</label>
                         <input type="checkbox" data-bind="
                             checked: props.isImageDisplayed,
-                            disabled: props.imageUrl() == undefined" />
+                            enable: props.imageUrl" />
 
                         <label>Type</label>
                         <input type="radio" name="group02" data-bind="checkedValue: undefined, checked: props.priority" />

@@ -1,3 +1,4 @@
+/* global _: true */
 define([
     'modules/vars'
 ], function(vars){
@@ -13,8 +14,8 @@ define([
         var defer = $.Deferred(),
             img,
             defaultCriteria = {
-                maxWidth: 0,
-                minWidth: 0,
+                maxWidth: undefined,
+                minWidth: undefined,
                 widthAspectRatio: undefined,
                 heightAspectRatio: undefined
             };
@@ -34,11 +35,13 @@ define([
             img.onload = function() {
                 var width = this.width || 1,
                     height = this.height || 1,
-                    err = (criteria.maxWidth > 0 && width > criteria.maxWidth) ? 'Images cannot be more than ' + criteria.maxWidth + ' pixels wide' :
-                          width < criteria.minWidth ? 'Images cannot be less than ' + criteria.minWidth + ' pixels wide' :
-                          criteria.widthAspectRatio != undefined && criteria.heightAspectRatio != undefined &&
-                            Math.abs((width * criteria.widthAspectRatio) / (height * criteria.heightAspectRatio) - 1) > 0.01
-                              ? 'Images must have a ' + criteria.widthAspectRatio + 'x' + criteria.heightAspectRatio + ' aspect ratio'
+                    err = (criteria.maxWidth !== undefined && width > criteria.maxWidth) ?
+                            'Images cannot be more than ' + criteria.maxWidth + ' pixels wide' :
+                        (criteria.minWidth !== undefined && width < criteria.minWidth) ?
+                            'Images cannot be less than ' + criteria.minWidth + ' pixels wide' :
+                        (criteria.widthAspectRatio !== undefined && criteria.heightAspectRatio !== undefined
+                          && Math.abs((width * criteria.widthAspectRatio) / (height * criteria.heightAspectRatio) - 1) > 0.01) ?
+                              'Images must have a ' + criteria.widthAspectRatio + 'x' + criteria.heightAspectRatio + ' aspect ratio'
                               : false;
 
                 if (err) {

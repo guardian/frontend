@@ -85,6 +85,7 @@ define([
         this.props.imageUrl.subscribe(function(src){
             this.provisionalImageUrl(src);
         }, this);
+        this.provisionalImageUrl(this.props.imageUrl());
 
         this.provisionalImageUrl.subscribe(function(src) {
             var self = this;
