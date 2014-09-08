@@ -173,3 +173,15 @@
         }
     }
 }
+
+.linkslist__item--gallery {
+    .linkslist__action:before {
+        @include media-icon(camera-black-large);
+    }
+
+    &.supporting__item {
+        .linkslist__action:before {
+            margin-top: -1 * $gs-baseline;
+        }
+    }
+}
