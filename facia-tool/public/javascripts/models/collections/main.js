@@ -204,7 +204,12 @@ define([
 
                         if (_.isDate(lastPressed)) {
                             model.frontAge(humanTime(resp.responseText));
-                            model.alert(opts.alertStale && (new Date() - lastPressed) > staleAge ? 'Warning, this front was last pressed ' + humanTime(resp.responseText) : false);
+                            model.alert(
+                                opts.alertStale &&
+                                pageConfig.env !== 'dev' &&
+                                new Date() - lastPressed > getFrontAgeAlertMs()
+                                ? 'Warning, this front was last pressed ' + humanTime(resp.responseText) : false
+                            );
                         } else {
                             model.frontAge(undefined);
                         }
@@ -213,6 +218,12 @@ define([
             } else {
                 model.frontAge(undefined);
             }
+        }
+
+        function getFrontAgeAlertMs() {
+            return vars.CONST.frontAgeAlertMs[
+                vars.CONST.editions.indexOf(model.front()) > -1 ? 'front' : vars.priority || 'editorial'
+            ];
         }
 
         var startCollectionsPoller = _.once(function() {

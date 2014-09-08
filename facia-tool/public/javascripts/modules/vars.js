@@ -66,6 +66,12 @@ define([
         sparksRefreshMs:       300000,
         pubTimeRefreshMs:      30000,
 
+        frontAgeAlertMs: {
+            front:      60000 * 2 * 1,
+            editorial:  60000 * 2 * 5,
+            commercial: 60000 * 2 * 60
+        },
+
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
 
