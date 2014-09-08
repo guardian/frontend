@@ -16,12 +16,11 @@ argument for you.
 
 So to go into the Identity project:
 
-  ./sbt
-  project identity
+  `./sbt` and `project identity`
 
 and then the following commands are equivalent:
 
-  idrun and run 9009
+  `idrun` or `run 9009`
 
 The former is encouraged, in case we ever need to change the port.
 
@@ -31,9 +30,9 @@ So the required steps are:
 * update your hosts file (also described in `/nginx`)
 * update your frontend.properties file with
 
-  # ID
-  id.apiRoot=https://id.code.dev-guardianapis.com
-  id.apiClientToken=frontend-code-client-token
+    <code># ID<br>
+    id.apiRoot=https://id.code.dev-guardianapis.com
+    id.apiClientToken=frontend-code-client-token</code>
 
 * run the Identity subproject on port 9009
 
