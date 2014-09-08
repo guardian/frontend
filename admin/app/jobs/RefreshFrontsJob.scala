@@ -17,22 +17,26 @@ object HighFrequency {
 }
 
 object RefreshFrontsJob extends Logging {
-  def getCronUpdates: Option[Seq[String]] = {
-    S3FrontsApi.getMasterConfig
-      .map(Json.parse)
-      .flatMap { json => (json \ "fronts").asOpt[Map[String, JsValue]] }
-      .map(_.keys.toSeq)
+  def getCronUpdates: Option[Seq[FrontType]] = {
+    val masterConfigJson: Option[JsValue] = S3FrontsApi.getMasterConfig.map(Json.parse)
+    for (json <- masterConfigJson)
+      yield
+      (for {
+        path <- (json \ "fronts").asOpt[Map[String, JsValue]].getOrElse(Map.empty).keys
+    } yield {
+        getFrontType(json, path)
+      }).toSeq
   }
 
-  def getFrontType(json: JsValue)(path: String): FrontType = {
+  def getFrontType(json: JsValue, path: String): FrontType = {
     lazy val isCommercial: Boolean =
       json.asOpt[Map[String, JsValue]].flatMap(_.get(path)).flatMap(_.asOpt[JsObject]).exists(_.keys.contains("commercial"))
     if (HighFrequency.highFrequencyPaths.contains(path))
-      HighFrequency
+      HighFrequency(path)
     else if (isCommercial)
-      Commercial
+      CommercialFrequency(path)
     else
-      StandardFrequency
+      StandardFrequency(path)
   }
 
   def run(): Unit = {
