@@ -3,6 +3,7 @@ package views.support
 import common.Edition
 import common.Maps.RichMap
 import conf.Configuration
+import conf.Configuration.environment
 import model.{Content, MetaData}
 import org.joda.time.DateTime
 import play.api.Play
@@ -37,7 +38,8 @@ case class JavaScriptPage(metaData: MetaData, request: RequestHeader) {
       ("shouldHideAdverts", JsBoolean(metaData match {
         case c: Content if c.shouldHideAdverts => true
         case _ => false
-      }))
+      })),
+      ("isPreview", JsBoolean(environment.isPreview))
     ))
   }
 }

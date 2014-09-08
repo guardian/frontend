@@ -4,7 +4,6 @@ define([
     'common/utils/ajax',
     'bonzo',
     'bean',
-    'common/utils/detect',
     'common/modules/identity/api'
 ], function(
     assign,
@@ -12,21 +11,18 @@ define([
     ajax,
     bonzo,
     bean,
-    detect,
     Id
 ) {
 
     /**
      * @param {Object} config
-     * @param {Element} context
      * @constructor
      */
-    function Profile(context, config) {
-        this.context = context;
+    function Profile(config) {
         this.config = assign(this.config, config);
-        this.dom.container = context.querySelector('.' + Profile.CONFIG.classes.container);
+        this.dom.container = document.body.querySelector('.' + Profile.CONFIG.classes.container);
         this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
-        this.dom.popup = context.querySelector('.' + Profile.CONFIG.classes.popup);
+        this.dom.popup = document.body.querySelector('.' + Profile.CONFIG.classes.popup);
     }
 
     /** @type {Object.<string.*>} */
@@ -46,9 +42,6 @@ define([
 
     /** @enum {Element} */
     Profile.prototype.dom = {};
-
-    /** @type {Element|null} */
-    Profile.prototype.context = null;
 
     /** */
     Profile.prototype.init = function() {

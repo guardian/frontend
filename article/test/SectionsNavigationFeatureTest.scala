@@ -53,19 +53,25 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with M
       }
     }
 
-    scenario("Links to user information", ArticleComponents) {
+    scenario("Links to company information", ArticleComponents) {
       Given("I am on any guardian.co.uk page")
       HtmlUnit.US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
 
-        Then("I should see a link to the help section")
-
-        val help = browser.find(".l-footer li a", withText().contains("help"))
-        help.length should be > 0
+        Then("I should see a link to the contributors section")
+        val contributors = browser.find(".l-footer li a", withText().contains("contributors"))
+        contributors.length should be > 0
 
         And("a link to the contact us page")
         val contact = browser.find(".l-footer li a", withText().contains("contact"))
-
         contact.length should be > 0
+
+        And("a link to the info and resources")
+        val info = browser.find(".l-footer li a", withText().contains("info and resources"))
+        info.length should be > 0
+
+        And("a link to the complaints and corrections")
+        val complaints = browser.find(".l-footer li a", withText().contains("complaints & corrections"))
+        complaints.length should be > 0
       }
     }
 

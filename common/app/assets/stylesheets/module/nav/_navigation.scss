@@ -5,7 +5,7 @@
 /* Configuration
    ========================================================================== */
 
-$c-navigation-base: guss-colour(neutral-5);
+$c-navigation-base: $c-neutral5;
 
 $navigation-height: $gs-row-height;
 
@@ -21,7 +21,7 @@ $c-signposting-background: $c-navigation-base;
 $c-top-navigation-action: #ffffff;
 $c-top-navigation-background: #00456e; // one-off colour for nav bg
 
-$c-local-navigation-action: guss-colour(neutral-1);
+$c-local-navigation-action: $c-neutral1;
 $c-local-navigation-background: $c-navigation-base;
 
 $c-global-navigation-background: $c-navigation-base;
@@ -29,16 +29,16 @@ $c-global-navigation-title: #ffffff;
 $c-global-navigation-title-background: $c-top-navigation-background;
 $global-navigation-title-width: $left-column + $gs-gutter;
 $global-navigation-title-width-wide: $left-column-wide + $gs-gutter;
-$c-global-navigation-action: guss-colour(neutral-1);
+$c-global-navigation-action: $c-neutral1;
 $c-global-navigation-border: mix($c-local-navigation-background, #ffffff, 60%);
 
-$c-navigation-toggle-background: guss-colour(neutral-1);
+$c-navigation-toggle-background: $c-neutral1;
 $c-navigation-toggle-icon: #ffffff;
 $c-navigation-toggle-shadow: rgba(#000000, .333333);
 
 $navigation-h-space-between-items: $gs-gutter;
 
-$c-navigation-expandable-background: guss-colour(neutral-1);
+$c-navigation-expandable-background: $c-neutral1;
 
 $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevels, mq-get-breakpoint-width(desktop));
 $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-get-breakpoint-width(navigationBreakOnTwoLevels) + gs-span(1) + $gs-gutter * 1.5);
@@ -147,7 +147,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     }
 
     .navigation--expanded.navigation--has-local-navigation & {
-        @include mq($to: navigationBreakOnTwoLevels) {
+        @include mq($until: navigationBreakOnTwoLevels) {
             border-bottom: 1px solid $c-global-navigation-border;
         }
     }
@@ -161,7 +161,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     }
 
     .navigation--expanded & {
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             border-right: 0;
         }
         @include mq(tablet) {
@@ -326,7 +326,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     clear: both;
     @include clearfix;
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         line-height: 28px;
     }
     @include mq(mobileLandscape, tablet) {
@@ -360,9 +360,9 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     color: $c-global-navigation-title;
     background: $c-global-navigation-title-background;
     float: left;
-    border-top: 1px solid guss-colour(guardian-brand);
+    border-top: 1px solid $c-brandBlue;
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         line-height: $gs-baseline*2;
         padding-bottom: $gs-baseline;
         padding-left: $gs-gutter/2;
@@ -392,7 +392,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
     padding-top: $gs-baseline/4;
     overflow: hidden;
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         margin-left: -$gs-gutter/2;
         margin-right: -$gs-gutter/2;
         padding-left: $gs-gutter/2;
@@ -410,7 +410,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         padding-left: $gs-gutter/2;
     }
 }
-@include mq($to: tablet) {
+@include mq($until: tablet) {
     .global-navigation__title,
     .global-navigation__children {
         float: none;
@@ -440,7 +440,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         vertical-align: top;
     }
     .navigation__scroll {
-        @include mq($to: navigationBreakOnTwoLevels) {
+        @include mq($until: navigationBreakOnTwoLevels) {
             overflow-x: scroll;
             -webkit-overflow-scrolling: touch;
         }
@@ -503,7 +503,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
         }
     }
     .local-navigation__item {
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             font-size: 14px;
             line-height: 28px;
             &:last-child {
@@ -523,7 +523,7 @@ $mq-breakpoints: mq-add-breakpoint(navigationBreakOnTwoLevelsWithWideToggle, mq-
 
 .navigation--expanded .local-navigation__item,
 .global-navigation__child {
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         float: left;
         width: 50%;
         padding-right: 0;

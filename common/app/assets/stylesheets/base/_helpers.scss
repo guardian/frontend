@@ -7,7 +7,7 @@
 }
 
 .u-h--up-to-right-col {
-    @include mq($to: rightCol) {
+    @include mq($until: rightCol) {
         @include u-h;
     }
 }
@@ -39,7 +39,7 @@
 }
 
 .tablet-only {
-    @include mq($to: mobile) {
+    @include mq($until: mobile) {
         display: none !important;
     }
     @include mq(desktop) {

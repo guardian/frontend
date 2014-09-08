@@ -1,43 +1,43 @@
 define([
-    'common/utils/mediator',
-    'common/utils/$',
-    'qwery',
-    'bonzo',
     'bean',
-    'lodash/functions/throttle',
+    'bonzo',
+    'qwery',
+    'common/utils/$',
     'common/utils/_',
-    'common/utils/scroller',
+    'common/utils/config',
     'common/utils/detect',
-    'common/modules/ui/autoupdate',
-    'common/modules/live/filter',
-    'common/modules/ui/notification-counter',
-    'common/modules/experiments/affix',
+    'common/utils/mediator',
+    'common/utils/preferences',
+    'common/utils/scroller',
     'common/utils/template',
     'common/utils/url',
-    'common/utils/context',
-    'common/bootstraps/article',
+    'common/modules/commercial/liveblog-adverts',
+    'common/modules/experiments/affix',
+    'common/modules/live/filter',
+    'common/modules/ui/autoupdate',
     'common/modules/ui/message',
-    'common/utils/preferences'
+    'common/modules/ui/notification-counter',
+    'common/bootstraps/article'
 ], function (
-    mediator,
-    $,
-    qwery,
-    bonzo,
     bean,
-    _throttle,
+    bonzo,
+    qwery,
+    $,
     _,
-    scroller,
+    config,
     detect,
-    AutoUpdate,
-    LiveFilter,
-    NotificationCounter,
-    Affix,
+    mediator,
+    preferences,
+    scroller,
     template,
     url,
-    getContext,
-    article,
+    liveblogAdverts,
+    Affix,
+    LiveFilter,
+    AutoUpdate,
     Message,
-    preferences
+    NotificationCounter,
+    article
 ) {
     'use strict';
 
@@ -76,7 +76,7 @@ define([
 
         bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e) {
             mediator.emit('module:liveblog:showkeyevents', true);
-            $('.dropdown--live-feed', getContext()).addClass('dropdown--active');
+            $('.dropdown--live-feed').addClass('dropdown--active');
             var $el = bonzo(e.currentTarget),
                 eventId = $el.attr('data-event-id'),
                 title = $('.timeline__title', $el).text(),
@@ -126,7 +126,7 @@ define([
     }
 
     function getUpdatePath() {
-        var blocks = qwery('.article-body .block', getContext()),
+        var blocks = qwery('.article-body .block'),
             newestBlock = null;
 
         if (autoUpdate.getManipulationType() === 'append') {
@@ -142,21 +142,25 @@ define([
 
     var modules = {
 
-        createFilter: function(config, context) {
-            new LiveFilter($('.js-blog-blocks', context)[0]).render($('.js-live-filter')[0]);
+        initAdverts: function () {
+            liveblogAdverts.init();
+        },
+
+        createFilter: function() {
+            new LiveFilter($('.js-blog-blocks')[0]).render($('.js-live-filter')[0]);
             new NotificationCounter().init();
         },
 
-        createTimeline: function(config, context) {
+        createTimeline: function() {
             var allEvents = getKeyEvents();
             if(allEvents.length > 0) {
                 var timelineHTML = wrapWithFirstAndLast(getTimelineHTML(allEvents));
 
-                $('.js-live-blog__timeline', context).append(timelineHTML);
+                $('.js-live-blog__timeline').append(timelineHTML);
                 $('.js-live-blog__timeline li:first-child .timeline__title').text('Latest post');
                 $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
 
-                if (/desktop|wide/.test(detect.getBreakpoint()) && config.page.keywordIds.indexOf('football/football') < 0) {
+                if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0) {
                     var topMarker = qwery('.js-top-marker')[0];
                     affix = new Affix({
                         element: qwery('.js-live-blog__timeline-container')[0],
@@ -169,15 +173,15 @@ define([
             }
         },
 
-        createAutoRefresh: function(config, context){
+        createAutoRefresh: function(){
 
             if (config.page.isLive) {
 
-                var timerDelay = /desktop|wide/.test(detect.getBreakpoint()) ? 30000 : 60000;
+                var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 30000 : 60000;
                 autoUpdate = new AutoUpdate({
                     path: getUpdatePath,
                     delay: timerDelay,
-                    attachTo: $('.article-body', context)[0],
+                    attachTo: $('.article-body')[0],
                     switches: config.switches,
                     manipulationType: 'prepend'
                 });
@@ -196,7 +200,7 @@ define([
             });
         },
 
-        showFootballLiveBlogMessage: function(config){
+        showFootballLiveBlogMessage: function(){
             var isFootballLiveBlog = config.page.pageId.indexOf('football/live/') === 0;
             var notMobile = detect.getBreakpoint() !== 'mobile';
 
@@ -223,18 +227,19 @@ define([
         }
     };
 
-    function ready(config, context) {
-        modules.createFilter(config, context);
-        modules.createTimeline(config, context);
-        modules.createAutoRefresh(config, context);
-        modules.showFootballLiveBlogMessage(config, context);
+    function ready() {
+        modules.initAdverts();
+        modules.createFilter();
+        modules.createTimeline();
+        modules.createAutoRefresh();
+        modules.showFootballLiveBlogMessage();
 
         // re-use modules from article bootstrap
-        article.modules.initOpen(config, context);
+        article.modules.initOpen(config);
         article.modules.initFence();
         article.modules.initTruncateAndTwitter();
 
-        mediator.emit('page:liveblog:ready', config, context);
+        mediator.emit('page:liveblog:ready', config);
     }
 
     return {

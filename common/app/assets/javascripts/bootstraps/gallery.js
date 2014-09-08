@@ -8,7 +8,11 @@ define([
 
     var verticallyResponsiveImages = function() {
         var setHeight = function() {
-            $('.js-vh-images').css('max-height', window.innerHeight * 0.9);
+            var $imgs = $('.js-vh-images'),
+                min = 300, // stops images getting too small
+                max = $imgs.parent().dim().width, // portrait images shouldn't be taller than landscapes are wide
+                maxHeight = Math.max(min, Math.min(max, window.innerHeight * 0.9));
+            $imgs.css('max-height', maxHeight);
         };
         setHeight();
         mediator.addListeners({
@@ -17,12 +21,12 @@ define([
         });
     };
 
-    var ready = function (config, context) {
+    var ready = function (config) {
         verticallyResponsiveImages();
         $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
         mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
 
-        mediator.emit('page:gallery:ready', config, context);
+        mediator.emit('page:gallery:ready', config);
     };
 
     return {

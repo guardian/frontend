@@ -52,7 +52,8 @@ trait DfpAgent {
 
       def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
         sponsorship.adUnits.contains(adUnitWithRoot) &&
-          (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id))
+          (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id)) &&
+          !sponsorship.isR2Only
       }
 
       if (isProd) {
@@ -161,7 +162,7 @@ trait DfpAgentLifecycle extends GlobalSettings {
     super.onStart(app)
 
     Jobs.deschedule("DfpDataRefreshJob")
-    Jobs.schedule("DfpDataRefreshJob", "0 6/30 * * * ?") {
+    Jobs.schedule("DfpDataRefreshJob", "0 6/5 * * * ?") {
       DfpAgent.refresh()
     }
 

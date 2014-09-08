@@ -168,11 +168,11 @@ define([
 
             self.populate(raw);
 
-            if (!self.state.editingConfig()) {
-                populateObservables(self.collectionMeta, raw);
-                self.collectionMeta.updatedBy(raw.updatedEmail === config.email ? 'you' : raw.updatedBy);
-                self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
-            }
+            populateObservables(self.collectionMeta, raw);
+
+            self.collectionMeta.updatedBy(raw.updatedEmail === config.email ? 'you' : raw.updatedBy);
+
+            self.state.timeAgo(self.getTimeAgo(raw.lastUpdated));
         })
         .always(function() {
             self.setPending(false);
@@ -261,25 +261,6 @@ define([
             _.each(group.items(), function(item) {
                 item.setRelativeTimes();
             });
-        });
-    };
-
-    Collection.prototype.saveMeta = function() {
-        var self = this;
-
-        this.state.editingConfig(false);
-        this.setPending(true);
-
-        authedAjax.request({
-            url: vars.CONST.apiBase + '/collectionmeta/' + this.id,
-            type: 'post',
-            data: JSON.stringify({
-                displayName: this.collectionMeta.displayName(),
-                href: this.collectionMeta.href()
-            })
-        })
-        .then(function(){
-            self.load();
         });
     };
 

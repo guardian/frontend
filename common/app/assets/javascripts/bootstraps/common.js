@@ -103,8 +103,8 @@ define([
             new FastClick(document.body);
         },
 
-        initialiseFauxBlockLink: function(context){
-            fauxBlockLink().init(context);
+        initialiseFauxBlockLink: function(){
+            fauxBlockLink().init();
         },
 
         initialiseTopNavItems: function(config){
@@ -127,20 +127,20 @@ define([
             Navigation.init(config);
         },
 
-        transcludeRelated: function (config, context) {
+        transcludeRelated: function (config) {
             var r = new Related();
-            r.renderRelatedComponent(config, context);
+            r.renderRelatedComponent(config);
         },
 
         transcludePopular: function (config) {
             new MostPopularFactory(config);
         },
 
-        transcludeOnwardContent: function(config, context){
+        transcludeOnwardContent: function(config){
             if ('seriesId' in config.page) {
-                new Onward(config, qwery('.js-onward', context));
+                new Onward(config, qwery('.js-onward'));
             } else if (config.page.tones !== '') {
-                $('.js-onward', context).each(function(c) {
+                $('.js-onward').each(function(c) {
                     new TonalComponent(config, c).fetch(c, 'html');
                 });
             }
@@ -164,8 +164,8 @@ define([
 
         showRelativeDates: function () {
             var dates = RelativeDates;
-            mediator.on('page:common:ready', function(config, context) {
-                dates.init(context);
+            mediator.on('page:common:ready', function() {
+                dates.init();
             });
             mediator.on('fragment:ready:dates', function(el) {
                 dates.init(el);
@@ -177,15 +177,15 @@ define([
         },
 
         transcludeCommentCounts: function () {
-            mediator.on('page:common:ready', function(config, context) {
-                CommentCount.init(context);
+            mediator.on('page:common:ready', function() {
+                CommentCount.init();
             });
         },
 
         initLightboxGalleries: function () {
             var thisPageId;
-            mediator.on('page:common:ready', function(config, context) {
-                var galleries = new LightboxGallery(config, context);
+            mediator.on('page:common:ready', function(config) {
+                var galleries = new LightboxGallery(config);
                 thisPageId = config.page.pageId;
                 galleries.init();
             });
@@ -278,9 +278,9 @@ define([
             }
         },
 
-        unshackleParagraphs: function (config, context) {
+        unshackleParagraphs: function () {
             if (userPrefs.isOff('para-indents')) {
-                $('.paragraph-spacing--indents', context).removeClass('paragraph-spacing--indents');
+                $('.paragraph-spacing--indents').removeClass('paragraph-spacing--indents');
             }
         },
 
@@ -335,10 +335,10 @@ define([
         },
 
         augmentInteractive: function() {
-            mediator.on('page:common:ready', function(config, context) {
+            mediator.on('page:common:ready', function(config) {
                 if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
                     $('figure.interactive').each(function (el) {
-                        enhancer.render(el, context, config, mediator);
+                        enhancer.render(el, config, mediator);
                     });
                 }
             });
@@ -362,16 +362,14 @@ define([
             new MoreTags().init();
         },
 
-        showSmartBanner: function(config) {
-            if(config.switches.smartBanner) {
-                smartAppBanner.init();
-            }
+        showSmartBanner: function() {
+            smartAppBanner.init();
         },
 
         initDiscussion: function() {
-            mediator.on('page:common:ready', function(config, context) {
+            mediator.on('page:common:ready', function(config) {
                 if (config.page.commentable && config.switches.discussion) {
-                    var discussionLoader = new DiscussionLoader(context, mediator, { 'switches': config.switches });
+                    var discussionLoader = new DiscussionLoader(mediator, { 'switches': config.switches });
                     discussionLoader.attachTo($('.discussion')[0]);
                 }
             });
@@ -385,11 +383,11 @@ define([
         }
     };
 
-    var ready = function (config, context) {
+    var ready = function (config) {
         modules.initFastClick();
         modules.testCookie();
         modules.windowEventListeners();
-        modules.initialiseFauxBlockLink(context);
+        modules.initialiseFauxBlockLink();
         modules.checkIframe();
         modules.showTabs();
         modules.initialiseTopNavItems(config);
@@ -403,7 +401,7 @@ define([
         modules.optIn();
         modules.displayReleaseMessage(config);
         modules.logReadingHistory();
-        modules.unshackleParagraphs(config, context);
+        modules.unshackleParagraphs(config);
         modules.initAutoSignin(config);
         modules.augmentInteractive();
         modules.runForseeSurvey(config);
@@ -413,14 +411,14 @@ define([
         modules.showSmartBanner(config);
         modules.initDiscussion();
         modules.logLiveStats(config);
-        modules.loadAnalytics(config, context);
-        modules.cleanupCookies(context);
+        modules.loadAnalytics(config);
+        modules.cleanupCookies();
         modules.transcludePopular(config);
-        modules.transcludeRelated(config, context);
-        modules.transcludeOnwardContent(config, context);
-        modules.initRightHandComponent(config, context);
+        modules.transcludeRelated(config);
+        modules.transcludeOnwardContent(config);
+        modules.initRightHandComponent(config);
 
-        mediator.emit('page:common:ready', config, context);
+        mediator.emit('page:common:ready', config);
     };
 
     return {

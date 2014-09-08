@@ -136,6 +136,11 @@ object ContentApiMetrics {
     "content-api-client-mapping-exceptions",
     "Number of times the Content API client has thrown a MappingException"
   )
+
+  object ContentApiCircuitBreakerRequestsMetric extends CountMetric(
+    "content-api-circuit-breaker-requests",
+    "Number of requests immediately rejected due to the circuit breaker being tripped"
+  )
 }
 
 object PaMetrics {

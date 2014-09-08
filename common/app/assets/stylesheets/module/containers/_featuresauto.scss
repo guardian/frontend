@@ -1,6 +1,6 @@
 .container--featuresauto {
     .linkslist-container {
-        @include mq($to: desktop) {
+        @include mq($until: desktop) {
             margin-top: 0;
         }
     }
@@ -14,7 +14,7 @@
 }
 
 .facia-slice__item--floated-m {
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         .item__media-wrapper {
             float: left;
             @include box-sizing(border-box);

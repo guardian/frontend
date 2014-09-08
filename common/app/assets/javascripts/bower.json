@@ -16,7 +16,7 @@
     "videojs-contrib-ads": "guardian/videojs-contrib-ads#e477f283d4cdf5f720f95e458451a027143d52bf",
     "videojs-vast": "theonion/videojs-vast-plugin#4b2185024e112242aa46e11bd1ddcf561fc27bbe",
     "videojs-persistvolume": "~0.1.0",
-    "socket.io-client": "1.0.6",
+    "socket.io-client": "~1.1.0",
     "raven-js": "~1.1.16",
     "videojs-playlist-audio": "*",
     "fastclick": "guardian/fastclick#master"

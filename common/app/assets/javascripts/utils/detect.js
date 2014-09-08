@@ -7,10 +7,20 @@
 /*global DocumentTouch: true */
 
 define([
-    'common/modules/userPrefs',
+    'lodash/arrays/findIndex',
+    'lodash/arrays/first',
+    'lodash/arrays/last',
+    'lodash/arrays/rest',
+    'lodash/objects/defaults',
+    'common/utils/_',
     'common/utils/mediator'
 ], function (
-    userPrefs,
+    findIndex,
+    first,
+    last,
+    rest,
+    defaults,
+    _,
     mediator
 ) {
 
@@ -19,7 +29,55 @@ define([
                          document.webkitVisibilityState ||
                          document.mozVisibilityState ||
                          document.msVisibilityState ||
-                         'visible';
+                         'visible',
+        // Ordered lists of breakpoints
+        // These should match those defined in stylesheets/_vars.scss
+        breakpoints = [
+            {
+                name: 'mobile',
+                isTweakpoint: false,
+                width: 0
+            },
+            {
+                name: 'mobileLandscape',
+                isTweakpoint: true,
+                width: 480
+            },
+            {
+                name: 'phablet',
+                isTweakpoint: true
+            },
+            {
+                name: 'tablet',
+                isTweakpoint: false,
+                width: 740
+            },
+            {
+                name: 'rightCol',
+                isTweakpoint: true,
+                width: 900
+            },
+            {
+                name: 'desktop',
+                isTweakpoint: false,
+                width: 980
+            },
+            {
+                name: 'leftCol',
+                isTweakpoint: true,
+                width: 1060
+            },
+            {
+                name: 'faciaLeftCol',
+                isTweakpoint: true,
+                width: 1140
+            },
+            {
+                name: 'wide',
+                isTweakpoint: false,
+                width: 1300
+            }
+        ];
 
     /**
      *     Util: returns a function that:
@@ -30,13 +88,13 @@ define([
      *     then:
      *       hasCrossedTheMagicLines(function(){ do stuff })
      */
-    function hasCrossedBreakpoint(){
-        var was = getBreakpoint();
-        return function(callback){
-            var is = getBreakpoint();
-            if ( is !== was ) {
+    function hasCrossedBreakpoint(includeTweakpoint) {
+        var was = getBreakpoint(includeTweakpoint);
+        return function (callback) {
+            var is = getBreakpoint(includeTweakpoint);
+            if (is !== was) {
+                callback(is, was);
                 was = is;
-                callback(is);
             }
         };
     }
@@ -164,17 +222,48 @@ define([
         return (window.innerHeight > window.innerWidth) ? 'portrait' : 'landscape';
     }
 
-    function getBreakpoint() {
-        // default to desktop
+    function getBreakpoint(includeTweakpoint) {
+        // default to mobile
         var breakpoint = (
                 window.getComputedStyle
                     ? window.getComputedStyle(document.body, ':after').getPropertyValue('content')
                     : document.getElementsByTagName('head')[0].currentStyle.fontFamily
-            )
-            || 'mobile';
+            ).replace(/['",]/g, '') || 'mobile';
 
-        // firefox wraps the value in quotes, android adds trailing comma to font
-        return breakpoint.replace(/['",]/g, '');
+        if (!includeTweakpoint) {
+            var index = findIndex(breakpoints, function (b) {
+                return b.name === breakpoint;
+            });
+            breakpoint = _(breakpoints)
+                .first(index + 1)
+                .findLast(function (b) {
+                    return !b.isTweakpoint;
+                })
+                .valueOf()
+                .name;
+        }
+
+        return breakpoint;
+    }
+
+    function isBreakpoint(criteria) {
+        var c = defaults(
+                criteria,
+                {
+                    min: first(breakpoints).name,
+                    max: last(breakpoints).name
+                }
+            ),
+            currentBreakpoint = getBreakpoint(true);
+        return _(breakpoints)
+            .rest(function (breakpoint) {
+                return breakpoint.name !== c.min;
+            })
+            .initial(function (breakpoint) {
+                return breakpoint.name !== c.max;
+            })
+            .pluck('name')
+            .contains(currentBreakpoint);
     }
 
     // Page Visibility
@@ -241,10 +330,12 @@ define([
         hasPushStateSupport: hasPushStateSupport,
         getOrientation: getOrientation,
         getBreakpoint: getBreakpoint,
+        isBreakpoint: isBreakpoint,
         initPageVisibility: initPageVisibility,
         pageVisible: pageVisible,
         hasWebSocket: hasWebSocket,
-        getPageSpeed: getPageSpeed
+        getPageSpeed: getPageSpeed,
+        breakpoints: breakpoints
     };
 
 });

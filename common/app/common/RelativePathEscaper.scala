@@ -1,7 +1,5 @@
 package common
 
-import conf.Switches.SeoEscapeFootballJsonPathLikeValuesSwitch
-
 object RelativePathEscaper {
   def apply(unescaped: String) = {
     // We are getting Googlebot 404s because Google is incorrectly assessing paths in curl js & json config data
@@ -25,14 +23,10 @@ object RelativePathEscaper {
 
   def escapeLeadingSlashFootballPaths(unescaped: String) = {
     val leadingSlashFootballPathRegex = """["']?(\/football)(\/team|\/tournament)(\/\w+)['"]?""".r
-    if (SeoEscapeFootballJsonPathLikeValuesSwitch.isSwitchedOn) {
-      val footballMatches = leadingSlashFootballPathRegex.findAllIn(unescaped)
-      footballMatches.foldLeft(unescaped) {
-        case (result: String, matched: String) =>
-          result.replace(matched, matched.replace("/", "/\" + \""))
-      }
-    } else {
-      unescaped
+    val footballMatches = leadingSlashFootballPathRegex.findAllIn(unescaped)
+    footballMatches.foldLeft(unescaped) {
+      case (result: String, matched: String) =>
+        result.replace(matched, matched.replace("/", "/\" + \""))
     }
   }
 

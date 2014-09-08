@@ -77,7 +77,7 @@ $block-padding-right: $gs-gutter;
         @include fs-textSans(2);
         color: inherit;
         border: 0;
-        @include mq($to: mobileLandscape) {
+        @include mq($until: mobileLandscape) {
             padding-bottom: $gs-baseline/2;
         }
     }
@@ -112,7 +112,7 @@ $block-padding-right: $gs-gutter;
     color: #ffffff;
     @include fs-data(3);
 
-    @include mq($to: rightCol) {
+    @include mq($until: rightCol) {
         height: $gs-row-height;
         padding-top: $gs-baseline/2;
     }
@@ -302,7 +302,7 @@ $block-padding-right: $gs-gutter;
         > blockquote,
         > blockquote.quoted { // using !important to override inline styles from content api
             margin: 16px $block-padding-right $gs-baseline*1.5 $block-padding-left !important;
-            @include mq($to: mobileLandscape) {
+            @include mq($until: mobileLandscape) {
                 margin-left: $gs-gutter/2 !important;
                 margin-right: $gs-gutter/2 !important;
                 &:before { // remove pseudo quote at mobile
@@ -482,7 +482,7 @@ $block-padding-right: $gs-gutter;
     border-top: 0;
     border-bottom: 1px solid $c-neutral4;
 
-    @include mq($to: rightCol) {
+    @include mq($until: rightCol) {
         @include full-bleed(transparent);
     }
 
@@ -521,7 +521,7 @@ $block-padding-right: $gs-gutter;
             border-top: 1px solid $c-neutral4;
         }
 
-        @include mq($to: rightCol) {
+        @include mq($until: rightCol) {
             @include full-bleed(#ffffff);
         }
 
@@ -565,7 +565,7 @@ $block-padding-right: $gs-gutter;
             padding: 0 0 $gs-baseline;
         }
 
-        @include mq($to: rightCol) {
+        @include mq($until: rightCol) {
             background-color: $c-neutral8;
             @include full-bleed($c-neutral8);
         }
@@ -844,7 +844,7 @@ $timeline-width: 14px;
     }
 
     .content__secondary-column {
-        @include mq($to: wide) {
+        @include mq($until: wide) {
             display: none;
         }
     }

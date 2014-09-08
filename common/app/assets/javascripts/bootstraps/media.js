@@ -40,7 +40,7 @@ define([
     raven,
     preferences
 ) {
-    var isDesktop = /desktop|wide/.test(detect.getBreakpoint()),
+    var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
         // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [
@@ -344,7 +344,7 @@ define([
                                 player.fullscreener();
 
                                 // Init plugins
-                                if (config.switches.videoAdverts && !config.page.blockVideoAds) {
+                                if (config.switches.videoAdverts && !config.page.blockVideoAds && !config.page.isPreview) {
                                     modules.bindPrerollEvents(player);
                                     player.adCountDown();
                                     player.trigger(constructEventName('preroll:request', player));
@@ -358,8 +358,10 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if (bonzo(el).attr('data-show-end-slate') === 'true' &&
-                                    /desktop|wide/.test(detect.getBreakpoint())) {
+                                if (
+                                    bonzo(el).attr('data-show-end-slate') === 'true' &&
+                                    detect.isBreakpoint({ min: 'desktop' })
+                                ) {
                                     modules.initEndSlate(player, bonzo(el).attr('data-end-slate'));
                                 }
                             } else {
@@ -425,7 +427,7 @@ define([
             if (!config.isMedia) {
                 return;
             }
-            if (config.page.section === 'childrens-books-site' && config.switches.childrensBooksHidePopular) {
+            if (config.page.section === 'childrens-books-site') {
                 $('.content__secondary-column--media').addClass('u-h');
             } else {
                 var mostViewed = new Component();
@@ -462,13 +464,13 @@ define([
         }
     };
 
-    var ready = function (config, context) {
+    var ready = function (config) {
         modules.initPlayer(config);
         modules.initMoreInSection(config);
         modules.initMostViewedMedia(config);
         modules.displayReleaseMessage(config);
 
-        mediator.emit('page:media:ready', config, context);
+        mediator.emit('page:media:ready', config);
     };
 
     return {

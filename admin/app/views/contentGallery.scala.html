@@ -1,12 +1,13 @@
-@(env: String, chart: tools.GenericChart, title: String, reportTimestamp: Option[String])
+@(env: String, pageViewsChart: tools.FormattedChart, lightboxLaunchesChart: tools.FormattedChart, title: String, reportTimestamp: Option[String])
 
 @admin_main("Gallery Dashboard", env, isAuthed = true, hasCharts = true) {
 
     <h3>@title</h3>
 
-    @fragments.genericChart(chart)
+    @fragments.formattedChart(pageViewsChart)
+    @fragments.formattedChart(lightboxLaunchesChart)
 
     @reportTimestamp.map { timestamp =>
-        <em>This omniture report was generated at @timestamp</em>
+        <em>Omniture reports generated at @timestamp</em>
     }
 }

@@ -33,7 +33,7 @@
     }
 
     .l-row--layout-m & {
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             margin-bottom: get-line-height(headline, 1);
         }
     }
@@ -73,7 +73,7 @@
     }
 }
 
-@include mq($to: tablet) {
+@include mq($until: tablet) {
     .row-of-two {
         .item--imageadjust-default {
             .item__media-wrapper {

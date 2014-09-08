@@ -60,11 +60,10 @@ as illustrated in this article posted on the Guardian's developer blog:
 `mq()` takes up to three optional parameters:
 
 - `$from`: _inclusive_ `min-width` boundary
-- `$to`: _exclusive_ `max-width` boundary
+- `$until`: _exclusive_ `max-width` boundary
 - `$and`: additional custom directives
 
-Note that `$to` as a keyword is a hard limit. It's not applying styles to the
-device (see examples below).
+Note that `$until` as a keyword is a hard limit i.e. it's breakpoint - 1.
 
 ```scss
 .responsive {
@@ -73,11 +72,11 @@ device (see examples below).
         color: red;
     }
     // Apply styling up to devices smaller than tablets (exclude tablets)
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         color: blue;
     }
     // Same thing, in landscape orientation
-    @include mq($to: tablet, $and: '(orientation: landscape)') {
+    @include mq($until: tablet, $and: '(orientation: landscape)') {
         color: hotpink;
     }
     // Apply styling to tablets up to desktop (exclude desktop)
@@ -123,10 +122,10 @@ $mq-static-breakpoint: desktop;
     }
 
     // But these queries won’t be compiled:
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         color: indianred;
     }
-    @include mq($to: tablet, $and: '(orientation: landscape)') {
+    @include mq($until: tablet, $and: '(orientation: landscape)') {
         color: crimson;
     }
     @include mq(mobile, desktop) {

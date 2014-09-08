@@ -9,6 +9,7 @@ define([
     'utils/update-scrollables',
     'utils/terminate',
     'utils/is-valid-date',
+    'utils/sanitize-html',
     'modules/list-manager',
     'modules/droppable',
     'modules/authed-ajax',
@@ -28,6 +29,7 @@ define([
     updateScrollables,
     terminate,
     isValidDate,
+    sanitizeHtml,
     listManager,
     droppable,
     authedAjax,
@@ -38,6 +40,12 @@ define([
     LatestArticles,
     newItems
 ) {
+    ko.bindingHandlers.saneHtml = {
+        update: function (element, valueAccessor) {
+            ko.utils.setHtml(element, sanitizeHtml(ko.utils.unwrapObservable(valueAccessor())));
+        }
+    };
+
     return function() {
 
         var model = vars.model = {};
@@ -112,7 +120,7 @@ define([
         model.deferredDetectPressFailure = _.debounce(function () {
             var count;
 
-            if (model.switches()['facia-tool-check-press-lastmodified'] && model.front()) {
+            if (model.front()) {
                 model.statusPressFailure(false);
 
                 count = ++model.detectPressFailureCount;

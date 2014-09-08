@@ -12,6 +12,7 @@ trait ExecutionContexts {
   implicit lazy val executionContext: ExecutionContext = play.api.libs.concurrent.Execution.Implicits.defaultContext
   lazy val actorSystem: ActorSystem = PlayAkka.system
   lazy val memcachedExecutionContext: ExecutionContext = PlayAkka.system.dispatchers.lookup("play.akka.actor.memcached")
+  lazy val feedsRecorderExecutionContext: ExecutionContext = PlayAkka.system.dispatchers.lookup("play.akka.actor.feed-recorder")
 }
 
 object AkkaAgent extends ExecutionContexts{

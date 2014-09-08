@@ -36,8 +36,9 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
         adUnit.path mkString "/"
       }
       val countries = lineItem.targeting.geoTargets map (geoTarget => Country.fromName(geoTarget.name))
+      val isR2Only = lineItem.targeting.targetsR2Only
       val targetsAdTest = lineItem.targeting.hasAdTestTargetting
-      PageSkinSponsorship(lineItem.name, lineItem.id, paths, countries, targetsAdTest)
+      PageSkinSponsorship(lineItem.name, lineItem.id, paths, countries, isR2Only, targetsAdTest)
     }
   }
 }

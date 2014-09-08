@@ -1,6 +1,6 @@
 @charset 'UTF-8';
 
-@include mq($to: mobileLandscape) {
+@include mq($until: mobileLandscape) {
     .content--gallery .content__section {
         display: none;
     }
@@ -17,15 +17,15 @@
     padding-top: $gs-baseline;
     min-height: 200px;
 
-    @include mq($to: rightCol) {
-        border-top: 1px dotted guss-colour(tone-media-2);
+    @include mq($until: rightCol) {
+        border-top: 1px dotted $c-mediaAccent2;
 
         &:first-child {
             border-top: 0;
             padding-top: 0;
         }
         &:last-child {
-            border-bottom: 1px dotted guss-colour(tone-media-2);
+            border-bottom: 1px dotted $c-mediaAccent2;
             margin-bottom: $gs-baseline;
         }
         .gallery2__item--advert + & {
@@ -58,7 +58,7 @@
     overflow: hidden;
     max-height: 100%;
 
-    @include mq($to: rightCol) {
+    @include mq($until: rightCol) {
         margin-bottom: $gs-baseline*3;
     }
     @include mq(rightCol) {
@@ -67,40 +67,39 @@
         width: gs-span(3);
         right: 0;
         top: 0;
-        border-top: 1px dotted guss-colour(neutral-2);
+        border-top: 1px dotted $c-neutral2;
     }
 }
 
 .gallery2__caption {
-    color: guss-colour(neutral-7);
+    color: $c-neutral7;
     margin-bottom: 0;
 
     a {
-        color: guss-colour(neutral-7);
-        border-bottom: 1px solid guss-colour(neutral-2);
+        color: $c-neutral7;
+        border-bottom: 1px solid $c-neutral2;
 
         &:hover {
-            border-bottom: 1px solid guss-colour(neutral-7);
+            border-bottom: 1px solid $c-neutral7;
             text-decoration: none;
         }
     }
 }
 
 .gallery2__credit {
-    color: guss-colour(neutral-3);
+    color: $c-neutral3;
 }
 
 .gallery2__img-container {
     position: relative;
     display: block;
-    background-color: lighten(guss-colour(tone-media-1), 2.5%);
+    background-color: lighten($c-mediaBackground, 2.5%);
 }
 
 .gallery2__img {
     cursor: pointer;
     width: auto;
     margin: auto;
-    min-height: 400px;
     max-width: 100%;
     max-height: 700px;
 }
@@ -147,7 +146,7 @@
         }
 
         .social__head {
-            color: guss-colour(neutral-3);
+            color: $c-neutral3;
             padding: $gs-baseline/4 0;
         }
 
@@ -173,14 +172,14 @@
                     height: 1px;
                     top: -1px;
                     left: $gs-gutter * -1;
-                    background-color: guss-colour(neutral-1);
+                    background-color: $c-neutral1;
                 }
             }
         }
 
         .meta__comment-count--top,
         .meta__comment-count--top .commentcount {
-            @include mq($to: tablet) {
+            @include mq($until: tablet) {
                 display: block;
             }
         }
