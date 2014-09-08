@@ -8,7 +8,7 @@ define([
     'utils/ammended-query-str',
     'utils/update-scrollables',
     'utils/terminate',
-    'utils/is-valid-date',
+    'utils/human-time',
     'modules/list-manager',
     'modules/droppable',
     'modules/authed-ajax',
@@ -27,7 +27,7 @@ define([
     ammendedQueryStr,
     updateScrollables,
     terminate,
-    isValidDate,
+    humanTime,
     listManager,
     droppable,
     authedAjax,
@@ -54,7 +54,7 @@ define([
 
         model.front = ko.observable();
 
-        model.frontAgeMins = ko.observable();
+        model.frontAge = ko.observable();
 
         model.headlineLength = ko.computed(function() {
             return _.contains(vars.CONST.restrictHeadlinesOn, model.front()) ? vars.CONST.restrictedHeadlineLength : vars.CONST.headlineLength;
@@ -121,11 +121,12 @@ define([
                     if (detectPressFailureCount === count && resp.status === 200) {
                         lastPressed = new Date(resp.responseText);
 
-                        if (isValidDate(lastPressed)) {
+                        if (_.isDate(lastPressed)) {
+                            model.frontAge(humanTime(resp.responseText));
                             model.alert(
                                 _.some(model.collections(), function(collection) {
                                     var l = new Date(collection.state.lastUpdated());
-                                    return isValidDate(l) ? l > lastPressed : false;
+                                    return _.isDate(l) ? l > lastPressed : false;
                                 }) ? 'Sorry, the latest edit to this front hasn\'t gone live.' : false
                             );
                         }
@@ -183,29 +184,34 @@ define([
                 })
             );
 
-            getFrontAgeMins(frontId);
+            getFrontAge({alertStale: true});
         }
 
-        function getFrontAgeMins(frontId) {
-            model.frontAgeMins(undefined);
-            if (frontId) {
+        function getFrontAge(opts) {
+            var staleAge = vars.CONST.frontStaleAlertMs || 60000 * 60;
+
+            opts = opts || {};
+
+            if (model.front()) {
                 authedAjax.request({
-                    url: '/front/lastmodified/' + frontId
+                    url: '/front/lastmodified/' + model.front()
                 })
                 .always(function(resp) {
-                    var lastPressed,
-                        minsAgo;
+                    var lastPressed;
 
                     if (resp.status === 200) {
                         lastPressed = new Date(resp.responseText);
 
-                        if (isValidDate(lastPressed)) {
-                            minsAgo = Math.floor((new Date() - lastPressed)/60000); // minutes in ms
-                            model.frontAgeMins(minsAgo);
-                            model.alert(minsAgo > 10 ? 'Warning, this front was last pressed ' + minsAgo + ' minutes ago.' : false);
+                        if (_.isDate(lastPressed)) {
+                            model.frontAge(humanTime(resp.responseText));
+                            model.alert(opts.alertStale && (new Date() - lastPressed) > staleAge ? 'Warning, this front was last pressed ' + humanTime(resp.responseText) : false);
+                        } else {
+                            model.frontAge(undefined);
                         }
                     }
                 });
+            } else {
+                model.frontAge(undefined);
             }
         }
 
@@ -240,6 +246,7 @@ define([
                 model.collections().forEach(function(list){
                     list.refreshRelativeTimes();
                 });
+                getFrontAge();
             }, period);
         });
 

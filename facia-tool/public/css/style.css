@@ -44,8 +44,7 @@ header {
     width: 100%;
     background: #999999;
     color: #000000;
-    padding: 15px 40px 0;
-    height: 51px;
+    padding: 15px 40px;
     z-index: 10;
     text-align: center;
     background: #ff7043;
@@ -727,24 +726,26 @@ button {
 }
 
 .front-selector {
-    font-weight: bold;
-    font-size: 16px;
-    color: #000000;
     margin: 0;
     position: absolute;
     left: 50%;
     top: 11px;
-    height: 30px;
     z-index: 2;
+    height: 30px;
+    overflow: hidden;
 }
 
-.front-age {
-    position: absolute;
-    right: 100px;
-    top: 15px;
-    margin-left: 235px;
-    z-index: 3;
+.front-selector select {
+    font-weight: bold;
+    font-size: 16px;
+    color: #000000;
+    margin: 0;
+    height: 30px;
+}
+
+.front-selector__age {
     color: #999999;
+    margin-left: 5px;
 }
 
 .tool {
@@ -1124,12 +1125,13 @@ button {
 }
 
 @media (max-width: 875px) {
+    header h1,
+    .logo,
     .left-col {
         display: none;
     }
     .front-selector {
-        right: 95px;
-        left: inherit;
+        left: 10px;
     }
     .right-col {
         width: 100%;
@@ -1149,6 +1151,11 @@ button {
     .col__inner {
         padding: 5px 0 0 5px;
     }
+    h1,
+    .front-selector__age
+    .preview,
+    .article .thumb,
+    .image__overrides,
     .log-in-out,
     .article__time,
     .article__spark {
@@ -1156,24 +1163,13 @@ button {
     }
     .article .article_content {
         margin-right: 5px;
+        margin-left: 0;
     }
     .article > .closed .tool--remove {
         top: 0;
     }
     .article:hover > .closed > .article__tools {
         background-color: #eeeeee;
-    }
-}
-
-@media (max-width: 350px) {
-    .article .article_content {
-        margin-left: 0;
-    }
-    h1,
-    .preview,
-    .article .thumb,
-    .image__overrides {
-        display: none;
     }
     .article__overrides {
         margin: 0;

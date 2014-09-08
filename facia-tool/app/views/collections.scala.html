@@ -11,10 +11,11 @@
         <i class="icon-remove" data-bind="click: clearAlert"></i>
     </div>
 
-    <select class="front-selector" data-bind="options: fronts, value: front, optionsCaption: 'choose a front...'"></select>
-
-    <div class="front-age" data-bind="visible: frontAgeMins">
-        Pressed <span data-bind="text: frontAgeMins"></span> minute<span data-bind="text: frontAgeMins !== 0 ? 's' : ''"></span> ago
+    <div class="front-selector">
+        <select data-bind="options: fronts, value: front, optionsCaption: 'choose a front...'"></select>
+        <span class="front-selector__age" data-bind="visible: frontAge">
+            pressed <span data-bind="text: frontAge"></span>
+        </span>
     </div>
 
     <div class="left-col">
