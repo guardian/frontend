@@ -2,9 +2,18 @@ package jobs
 
 import common.Logging
 import services.{S3FrontsApi, FrontPressNotification}
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsObject, JsValue, Json}
 import conf.Switches._
 import conf.Configuration
+
+sealed trait FrontType
+
+object Commercial extends FrontType
+object StandardFrequency extends FrontType
+object HighFrequency extends FrontType {
+
+  def highFrequencyPaths: List[String] = List("uk", "us", "au")
+}
 
 object RefreshFrontsJob extends Logging {
   def getCronUpdates: Option[Seq[String]] = {
