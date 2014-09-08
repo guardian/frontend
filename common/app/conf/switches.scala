@@ -304,11 +304,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 9, 30)
   )
 
-  val ChildrensBooksSwitch = Switch("Feature", "childrens-books-hide-popular",
-    "If switched on, video pages in the childrens books section will not show popular videos",
-    safeState = On, sellByDate = new LocalDate(2014, 9, 8)
-  )
-
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -357,6 +352,10 @@ object Switches extends Collections {
     "If this switch is on then the jobs to push and pull from SQS will run",
     safeState = Off, sellByDate = never
   )
+
+  val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
+    "If switched on then football matchday feeds will be recorded every minute",
+    safeState = Off, sellByDate = new LocalDate(2014, 9, 30))
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -418,8 +417,8 @@ object Switches extends Collections {
     ABSoulmatesLabelling,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
-    ChildrensBooksSwitch,
-    MetricsSwitch
+    MetricsSwitch,
+    FootballFeedRecorderSwitch
   )
 
   val httpSwitches: List[Switch] = List(

@@ -9,6 +9,7 @@ define([
     'utils/update-scrollables',
     'utils/terminate',
     'utils/human-time',
+    'utils/sanitize-html',
     'modules/list-manager',
     'modules/droppable',
     'modules/authed-ajax',
@@ -28,6 +29,7 @@ define([
     updateScrollables,
     terminate,
     humanTime,
+    sanitizeHtml,
     listManager,
     droppable,
     authedAjax,
@@ -38,6 +40,12 @@ define([
     LatestArticles,
     newItems
 ) {
+    ko.bindingHandlers.saneHtml = {
+        update: function (element, valueAccessor) {
+            ko.utils.setHtml(element, sanitizeHtml(ko.utils.unwrapObservable(valueAccessor())));
+        }
+    };
+
     return function() {
 
         var model = vars.model = {},
@@ -184,12 +192,10 @@ define([
                 })
             );
 
-            getFrontAge({alertStale: true});
+            getFrontAge({alertIfStale: true});
         }
 
         function getFrontAge(opts) {
-            var staleAge = vars.CONST.frontStaleAlertMs || 60000 * 10;
-
             opts = opts || {};
 
             if (model.front()) {
@@ -197,22 +203,16 @@ define([
                     url: '/front/lastmodified/' + model.front()
                 })
                 .always(function(resp) {
-                    var lastPressed;
-
-                    if (resp.status === 200) {
-                        lastPressed = new Date(resp.responseText);
-
-                        if (_.isDate(lastPressed)) {
-                            model.frontAge(humanTime(resp.responseText));
-                            model.alert(
-                                opts.alertStale &&
-                                pageConfig.env !== 'dev' &&
-                                new Date() - lastPressed > getFrontAgeAlertMs()
-                                ? 'Warning, this front was last pressed ' + humanTime(resp.responseText) : false
-                            );
-                        } else {
-                            model.frontAge(undefined);
-                        }
+                    if (resp.status === 200 && resp.responseText) {
+                        model.frontAge(humanTime(resp.responseText));
+                        model.alert(
+                            opts.alertIfStale &&
+                            pageConfig.env !== 'dev' &&
+                            new Date() - new Date(resp.responseText) > getFrontAgeAlertMs()
+                            ? 'Warning, this front was last pressed ' + humanTime(resp.responseText) : false
+                        );
+                    } else {
+                        model.frontAge(undefined);
                     }
                 });
             } else {

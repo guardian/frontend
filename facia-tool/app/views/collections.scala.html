@@ -371,7 +371,7 @@
 
                 <div class="article_content" data-bind="if: !state.isEmpty()">
                     <a class="headline" target="article" data-bind="
-                        html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
+                        saneHtml: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
                         css: {'is-empty': isSnap() && !meta.headline()},
                         attr: {href: id},
                         click: open"></a>
@@ -407,7 +407,7 @@
 
                         <span data-bind="
                             attr: {href: id},
-                            html: meta.trailText() || fields.trailText()"></span>
+                            saneHtml: meta.trailText() || fields.trailText()"></span>
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/full-trim',
+    'utils/sanitize-html',
     'utils/deep-get',
     'utils/snap',
     'utils/human-time',
@@ -23,6 +24,7 @@ define([
         asObservableProps,
         populateObservables,
         fullTrim,
+        sanitizeHtml,
         deepGet,
         snap,
         humanTime,
@@ -181,9 +183,7 @@ define([
                     return this.meta[key]() || this.fields[key]();
                 },
                 write: function(value) {
-                    var el = document.createElement('div');
-                    el.innerHTML = value;
-                    this.meta[key](el.innerHTML);
+                    this.meta[key](value);
                 },
                 owner: this
             });
@@ -320,8 +320,8 @@ define([
                 .filter(function(p){ return !_.isUndefined(p[1]); })
                 // reject false properties:
                 .filter(function(p){ return p[1] !== false; })
-                // trim strings:
-                .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
+                // trim and sanitize strings:
+                .map(function(p){ return [p[0], sanitizeHtml(fullTrim(p[1]))]; })
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
