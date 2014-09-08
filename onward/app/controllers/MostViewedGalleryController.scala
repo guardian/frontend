@@ -8,24 +8,20 @@ import feed.MostViewedGalleryAgent
 
 object MostViewedGalleryController extends Controller with Logging with ExecutionContexts {
 
-  def renderMostViewed() = Action.async { implicit request =>
-
-    getMostViewedGallery map {
-      case Nil => JsonNotFound()
-      case galleries => renderMostViewedGallery(galleries)
+  def renderMostViewed() = Action { implicit request =>
+    getMostViewedGallery match {
+      case Nil => Cached(60) { JsonNotFound() }
+      case galleries => Cached(900) { renderMostViewedGallery(galleries) }
     }
-
   }
+  def renderMostViewedHtml() = renderMostViewed()
 
   private def getMostViewedGallery()(implicit request: RequestHeader): Seq[Content] = {
-
     val size = request.getQueryString("size").getOrElse("6").toInt
     MostViewedGalleryAgent.mostViewedGalleries().take(size)
-
   }
 
-  private def renderMostViewedGallery(galleries: Seq[Content])(implicit request: RequestHeader) = Cached(900) {
-
+  private def renderMostViewedGallery(galleries: Seq[Content])(implicit request: RequestHeader) = {
     val page = Page("More galleries", "inpictures", "More Galleries", "more galleries")
     val config = Config("multimedia/gallery", None, Some("more galleries"), None, Nil, Some("multimedia/gallery"))
     val collection = Collection(galleries)
@@ -38,10 +34,9 @@ object MostViewedGalleryController extends Controller with Logging with Executio
       1
     )(request, templateDeduping, config)
 
-    JsonComponent(
-      "html" -> html
-    )
+    val htmlResponse = () => views.html.mostViewedGalleries(page, html)
+    val jsonResponse = () => html
 
+    renderFormat(htmlResponse, jsonResponse, 900)
   }
-
 }

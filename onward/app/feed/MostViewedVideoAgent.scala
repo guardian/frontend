@@ -10,7 +10,7 @@ object MostViewedVideoAgent extends Logging with ExecutionContexts {
 
   case class QueryResult(id: String, count: Double, paths: Seq[String])
 
-  private val agent = AkkaAgent[Seq[Video]](Seq.empty)
+  private val agent = AkkaAgent[Seq[Video]](Nil)
 
   implicit val ophanQueryReads = Json.reads[QueryResult]
 

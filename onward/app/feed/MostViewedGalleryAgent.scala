@@ -1,38 +1,45 @@
 package feed
 
+import java.net.URL
+
 import conf.LiveContentApi
 import common._
 import model.{Content, Gallery}
+import play.api.libs.json.{JsArray, JsValue}
 import scala.concurrent.Future
-import play.api.libs.json._
 
 object MostViewedGalleryAgent extends Logging with ExecutionContexts {
 
-  case class QueryResult(id: String, count: Double, paths: Seq[String])
-
-  private val agent = AkkaAgent[Seq[Gallery]](Seq.empty)
-
-  implicit val ophanQueryReads = Json.reads[QueryResult]
+  private val agent = AkkaAgent[Seq[Gallery]](Nil)
 
   def mostViewedGalleries(): Seq[Gallery] = agent()
+
+  private def UrlToContentPath(url: String): String = {
+    var contentId = new URL(url).getPath
+    if (contentId.startsWith("/")) {
+      contentId = contentId.substring(1)
+    }
+    contentId
+  }
 
   def refresh() = {
     log.info("Refreshing most viewed galleries.")
 
-    val ophanResponse = services.OphanApi.getMostViewedVideos(hours = 3, count = 12)
+    val ophanResponse = services.OphanApi.getMostViewedGalleries(hours = 3, count = 12)
 
     ophanResponse.map { result =>
 
       val mostViewed: Iterable[Future[Option[Content]]] = for {
-        galleryResult <- result.asOpt[JsArray].map(_.value).getOrElse(Nil)
-        path <- galleryResult.validate[QueryResult].asOpt.map(_.paths).getOrElse(Nil) if path.contains("/gallery/")
+        item: JsValue <- result.asOpt[JsArray].map(_.value).getOrElse(Nil)
+        url <- (item \ "url").asOpt[String]
+        count <- (item \ "count").asOpt[Int]
       } yield {
-        LiveContentApi.item(path, Edition.defaultEdition).response.map(_.content.map(Content(_)))
+        LiveContentApi.item(UrlToContentPath(url), Edition.defaultEdition).response.map(_.content.map(Content(_)))
       }
 
       Future.sequence(mostViewed).map { contentSeq =>
         val galleries = contentSeq.toSeq.collect {
-          case Some(gallery: Gallery) => Gallery
+          case Some(gallery: Gallery) => gallery
         }
         agent alter galleries
       }
