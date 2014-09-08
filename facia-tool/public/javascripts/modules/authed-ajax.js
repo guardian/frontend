@@ -25,6 +25,16 @@ define(['modules/vars'], function(vars) {
             }
         });
 
+        var updateSize = _.size(_.filter(edits, function(t) { return !!_.isObject(t)}));
+
+        if (updateSize > 1) {
+            edits.type = 'UpdateAndRemove';
+        } else if (_.contains(_.keys(edits), 'update')) {
+            edits.type = 'Update';
+        } else {
+            edits.type = 'Remove';
+        }
+
         return request({
             url: vars.CONST.apiBase + '/edits',
             type: 'POST',
