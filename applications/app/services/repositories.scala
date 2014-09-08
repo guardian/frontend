@@ -29,13 +29,21 @@ trait Index extends ConciergeRepository with QueryDefaults {
     val conversions: Map[String, String] =
       Map("content" -> "type")
 
-    conversions.foldLeft(tag){
+    val convertedTag = conversions.foldLeft(tag){
       case (newTag, (from, to)) =>
         if (newTag.startsWith(s"$from/"))
           newTag.replace(from, to)
         else
           newTag
     }
+
+    convertedTag match {
+      // under the hoods some uk-news/... tags are actually uk/... Fixes loads of Googlebot 404s
+      // this just is a or statement e.g. uk-news/foo OR uk/foo
+      case UkNewsSection(lastPart) => s"($convertedTag|uk/$lastPart)"
+      case other => other
+    }
+
   }
 
   def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean): Future[Either[IndexPage, PlayResult]] = {
@@ -70,8 +78,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
         case Nil => Right(NotFound)
         case head :: _ =>
           //we can use .head here as the query is guaranteed to return the 2 tags
-          val tag1 = head.tags.find(_.id == firstTag).head
-          val tag2 = head.tags.find(_.id == secondTag).head
+          val tag1 = head.tags.find(tag => firstTag.contains(tag.id)).head
+          val tag2 = head.tags.find(tag => secondTag.contains(tag.id)).head
           val pageName = s"${tag1.name} + ${tag2.name}"
           val page = Page(
             s"$leftSide+$rightSide",
@@ -141,7 +149,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
     else
       Nil
 
-    val latest: Seq[Content] = response.results.map(Content(_)).filterNot(c => leadContent.map(_.id).exists(_ == c.id))
+    val latest: Seq[Content] = response.results.map(Content(_)).filterNot(c => leadContent.map(_.id).contains(c.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.id)
     tag map { IndexPage(_, allTrails) }
   }
@@ -150,6 +158,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
   // are at the top of the file :(
   val SinglePart = """([\w\d\.-]+)""".r
   val SeriesInSameSection = """(series/[\w\d\.-]+)""".r
+  val UkNewsSection = """^uk-news/(.+)$""".r
 }
 
 trait ImageQuery extends ConciergeRepository with QueryDefaults {
