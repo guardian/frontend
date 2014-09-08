@@ -130,11 +130,14 @@
 .ad-slot--container-inline,
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
+    width: 300px;
     margin: $gs-baseline auto;
     min-height: 50 + $mpu-ad-label-height;
-    width: 320px;
     text-align: center;
 
+    @include mq(mobileLandscape) {
+        width: 320px;
+    }
     @include mq(tablet) {
         height: 250px + $mpu-ad-label-height;
         width: auto;

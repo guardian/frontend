@@ -65,7 +65,7 @@ case class JsonMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)
         Message(
           MessageId(message.getMessageId),
           Json.fromJson[A](Json.parse(message.getBody)) getOrElse {
-            throw new RuntimeException(s"Couldn't parse JSON for message with ID ${message.getMessageId}")
+            throw new RuntimeException(s"Couldn't parse JSON for message with ID ${message.getMessageId}: '${message.getBody}'")
           },
           ReceiptHandle(message.getReceiptHandle)
         )

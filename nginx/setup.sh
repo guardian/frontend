@@ -9,3 +9,12 @@ sudo ln -fs $DIR/frontend-test.crt $nginxHome/frontend-test.crt
 sudo ln -fs $DIR/frontend-test.key $nginxHome/frontend-test.key
 sudo nginx -s stop
 sudo nginx
+
+FILE=$nginxHome/sites-enabled/frontend.conf
+
+if [ -f $FILE ];
+then
+   echo "File $FILE exists"
+else
+   echo "File $FILE does not exists"
+fi

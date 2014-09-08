@@ -484,7 +484,7 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
         " - video", " – video",
         " - video interview", " – video interview",
         " - video interviews"," – video interviews" )
-    suffixVariations.fold(webTitle.trim) { (str, suffix) => str.stripSuffix(suffix) }
+    suffixVariations.fold(headline.trim) { (str, suffix) => str.stripSuffix(suffix) }
   }
 
   def endSlatePath = EndSlateComponents.fromContent(this).toUriPath
