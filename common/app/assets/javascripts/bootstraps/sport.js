@@ -13,10 +13,10 @@ define([
 
         if (matchIdentifier) {
             var cricketScore = new Component(),
-                parentEl = $('.js-score')[0];
+                parentEl = $('.js-cricket-score')[0];
 
             cricketScore.endpoint = '/sport/cricket/match/' + matchIdentifier + '.json';
-            cricketScore.fetch(parentEl, 'scorecard');
+            cricketScore.fetch(parentEl, 'summary');
         }
     }
 
