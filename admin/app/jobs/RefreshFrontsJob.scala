@@ -39,16 +39,48 @@ object RefreshFrontsJob extends Logging {
       StandardFrequency(path)
   }
 
-  def run(): Unit = {
+  def runHighFrequency(): Unit = {
     if (FrontPressJobSwitch.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
-      log.info("Putting press jobs on Facia Cron")
+      log.info("Putting press jobs on Facia Cron (High Frequency)")
 
       for {
         updates <- getCronUpdates
-        update <- updates
+        update <- updates.collect{case f: HighFrequency => f}
       } {
         log.info(s"Pressing $update")
-        FrontPressNotification.sendWithoutSubject(update)
+        FrontPressNotification.sendWithoutSubject(update.path)
+      }
+    } else {
+      log.info("Not pressing jobs to Facia cron - is either turned off or no queue is set")
+    }
+  }
+
+  def runStandardFrequency(): Unit = {
+    if (FrontPressJobSwitch.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
+      log.info("Putting press jobs on Facia Cron (Standard Frequency)")
+
+      for {
+        updates <- getCronUpdates
+        update <- updates.collect{case f: StandardFrequency => f}
+      } {
+        log.info(s"Pressing $update")
+        FrontPressNotification.sendWithoutSubject(update.path)
+      }
+    } else {
+      log.info("Not pressing jobs to Facia cron - is either turned off or no queue is set")
+    }
+  }
+
+  def runCommercialFrequency(): Unit = {
+    if (FrontPressJobSwitch.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
+      log.info("Putting press jobs on Facia Cron (Commercial Frequency)")
+
+      for {
+        updates <- getCronUpdates
+        update <- updates.collect{case f: CommercialFrequency => f}
+      } {
+        log.info(s"Pressing $update")
+        FrontPressNotification.sendWithoutSubject(update.path)
       }
     } else {
       log.info("Not pressing jobs to Facia cron - is either turned off or no queue is set")
