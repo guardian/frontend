@@ -93,10 +93,6 @@ case class Block(
 
 sealed trait FaciaToolUpdate
 
-object FaciaToolUpdate {
-  implicit val format: Format[FaciaToolUpdate] = Variants.format[FaciaToolUpdate]("type")
-}
-
 case class UpdateList(
   id: String,
   item: String,
@@ -105,9 +101,29 @@ case class UpdateList(
   itemMeta: Option[Map[String, JsValue]],
   live: Boolean,
   draft: Boolean
-)
+) extends FaciaToolUpdate
 
-case class StreamUpdate(update: JsValue, action: String, email: String)
+case class Update(update: UpdateList) extends FaciaToolUpdate
+case class Remove(remove: UpdateList) extends FaciaToolUpdate
+
+case class UpdateAndRemove(update: UpdateList, remove: UpdateList) extends FaciaToolUpdate
+
+case class CollectionMetaUpdate(
+  displayName: Option[String],
+  href: Option[String]
+) extends FaciaToolUpdate
+
+case class DiscardUpdate(id: String) extends FaciaToolUpdate
+
+object UpdateList {
+  implicit val format: Format[UpdateList] = Json.format[UpdateList]
+}
+
+object FaciaToolUpdate {
+  implicit val format: Format[FaciaToolUpdate] = Variants.format[FaciaToolUpdate]("type")
+}
+
+case class StreamUpdate(update: FaciaToolUpdate, action: String, email: String)
 
 object StreamUpdate {
   implicit val streamUpdateFormat: Format[StreamUpdate] = Json.format[StreamUpdate]
