@@ -25,6 +25,8 @@ object Transformations {
       description =       createCommand.description,
       onPageDescription = createCommand.onPageDescription,
       imageUrl =          createCommand.imageUrl,
+      imageWidth =        createCommand.imageWidth,
+      imageHeight =       createCommand.imageHeight,
       isImageDisplayed =  createCommand.isImageDisplayed,
       priority =          createCommand.priority,
       editorialType =     createCommand.editorialType

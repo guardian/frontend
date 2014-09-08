@@ -19,6 +19,8 @@ case class CreateFront(
   webTitle: Option[String],
   title: Option[String],
   imageUrl: Option[String],
+  imageWidth: Option[Int],
+  imageHeight: Option[Int],
   isImageDisplayed: Option[Boolean],
   description: Option[String],
   onPageDescription: Option[String],

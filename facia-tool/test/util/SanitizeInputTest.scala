@@ -10,7 +10,7 @@ class SanitizeInputTest extends FlatSpec with Matchers {
                                     webTitle: Option[String] = None,
                                     description: Option[String] = None,
                                     onPageDescription: Option[String] = None): Config =
-    Config(Map("uk" -> Front(Nil, section, webTitle, title, description, onPageDescription, None, None, None, None)), Map.empty)
+    Config(Map("uk" -> Front(Nil, section, webTitle, title, description, onPageDescription, None, None, None, None, None, None)), Map.empty)
 
   "StripTags" should "strip tag from title" in {
     val config = createConfigWithFront(title = Option("<strip><me>now"))

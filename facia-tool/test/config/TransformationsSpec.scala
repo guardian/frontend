@@ -25,6 +25,8 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     description = Some("A test front"),
     onPageDescription = Some("A test front"),
     imageUrl = None,
+    imageWidth = None,
+    imageHeight = None,
     isImageDisplayed = None,
     priority = Some("high"),
     editorialType = None,
@@ -43,7 +45,7 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     None
   )
 
-  val emptyFrontFixture = Front(Nil, None, None, None, None, None, None, None, None, None)
+  val emptyFrontFixture = Front(Nil, None, None, None, None, None, None, None, None, None, None, None)
 
   val validConfigFixture = Config.empty.copy(
     fronts = Map("foo" -> emptyFrontFixture.copy(collections = List("bar"))),
@@ -65,6 +67,8 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
         description = Some("A test front"),
         onPageDescription = Some("A test front"),
         imageUrl = None,
+        imageWidth = None,
+        imageHeight = None,
         isImageDisplayed = None,
         priority = Some("high"),
         editorialType = None
