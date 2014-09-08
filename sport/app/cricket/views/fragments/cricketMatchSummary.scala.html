@@ -1,4 +1,4 @@
-@(theMatch: cricketModel.Match)(implicit request: RequestHeader)
+@(theMatch: cricketModel.Match, matchUrl: String)(implicit request: RequestHeader)
 
 <div class="sport-summary sport-summary--cricket" itemscope itemtype="http://schema.org/SportsEvent">
 
@@ -54,6 +54,7 @@
             </caption>
         </table>
     </div>
+    <a href=@matchUrl>Full Scorecard</a>
 </div>
 
 @miniScore(innings: cricketModel.Innings) = {

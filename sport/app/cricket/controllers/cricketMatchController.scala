@@ -8,7 +8,7 @@ import cricketPa.PaFeed.dateFormat
 import cricketModel.Match
 
 case class CricketMatchPage(theMatch: Match, matchId: String) extends MetaData with ExecutionContexts {
-  override lazy val id = s"sport/cricket/match/$matchId"
+  override lazy val id = s"/sport/cricket/match/$matchId"
   override lazy val section = "cricket"
   override lazy val webTitle = s"${theMatch.competitionName}, ${theMatch.venueName}"
   override lazy val analyticsName = s"GFE:Cricket:automatic:match:${dateFormat.print(theMatch.gameDate)}:${theMatch.homeTeam.name} v ${theMatch.awayTeam.name}"
@@ -28,7 +28,7 @@ object CricketMatchController extends Controller with Logging with ExecutionCont
         Cached(60){
           if (request.isJson)
             JsonComponent(
-              "summary" -> cricket.views.html.fragments.cricketMatchSummary(page.theMatch).toString
+              "summary" -> cricket.views.html.fragments.cricketMatchSummary(page.theMatch, page.id).toString
             )
           else
             Ok(cricket.views.html.cricketMatch(page))
