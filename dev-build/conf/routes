@@ -241,6 +241,7 @@ GET         /commercial/capi                                                    
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
 GET         /commercial/multi.json                                                                                   controllers.commercial.Multi.renderMulti
+GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate
 
 # Onward journeys
 GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)
