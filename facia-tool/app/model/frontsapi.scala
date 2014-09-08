@@ -123,7 +123,7 @@ object FaciaToolUpdate {
   implicit val format: Format[FaciaToolUpdate] = Variants.format[FaciaToolUpdate]("type")
 }
 
-case class StreamUpdate(update: FaciaToolUpdate, action: String, email: String)
+case class StreamUpdate(update: FaciaToolUpdate, email: String)
 
 object StreamUpdate {
   implicit val streamUpdateFormat: Format[StreamUpdate] = Json.format[StreamUpdate]

@@ -58,7 +58,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     block foreach { b =>
       UpdateActions.archivePublishBlock(id, b, identity)
       FaciaPress.press(PressCommand.forOneId(id).withPressDraft().withPressLive())
-      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(DiscardUpdate(id), "publish", identity.email))
+      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(DiscardUpdate(id), identity.email))
     }
     ContentApiPush.notifyContentApi(Set(id))
     NoCache(Ok)
@@ -68,7 +68,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val identity = request.user
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
-      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(DiscardUpdate(id), "discard", identity.email))
+      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(DiscardUpdate(id), identity.email))
       UpdateActions.archiveDiscardBlock(id, b, identity)
       FaciaPress.press(PressCommand.forOneId(id).withPressDraft())
     }
@@ -82,7 +82,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
         case update: Update =>
           val identity = request.user
 
-          FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(update, "update", identity.email))
+          FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(update, identity.email))
 
           val updatedCollections = UpdateActions.updateCollectionList(update.update.id, update.update, identity)
             .map(update.update.id -> _).toMap
