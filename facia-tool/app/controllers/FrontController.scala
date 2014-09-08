@@ -18,8 +18,12 @@ case class CreateFront(
   navSection: Option[String],
   webTitle: Option[String],
   title: Option[String],
+  imageUrl: Option[String],
+  isImageDisplayed: Option[Boolean],
   description: Option[String],
+  onPageDescription: Option[String],
   priority: Option[String],
+  editorialType: Option[String],
   initialCollection: Collection
 )
 

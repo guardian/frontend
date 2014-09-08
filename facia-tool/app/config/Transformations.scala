@@ -18,12 +18,16 @@ object Transformations {
 
   def createFront(createCommand: CreateFront, newCollectionId: String)(config: Config): Config = {
     val newFront = Front(
-      List(newCollectionId),
-      createCommand.navSection,
-      createCommand.webTitle,
-      createCommand.title,
-      createCommand.description,
-      createCommand.priority
+      collections =       List(newCollectionId),
+      navSection =        createCommand.navSection,
+      webTitle =          createCommand.webTitle,
+      title =             createCommand.title,
+      description =       createCommand.description,
+      onPageDescription = createCommand.onPageDescription,
+      imageUrl =          createCommand.imageUrl,
+      isImageDisplayed =  createCommand.isImageDisplayed,
+      priority =          createCommand.priority,
+      editorialType =     createCommand.editorialType
     )
 
     config.copy(

@@ -34,7 +34,11 @@ define([
             'webTitle',
             'title',
             'description',
-            'priority']);
+            'onPageDescription',
+            'imageUrl',
+            'isImageDisplayed',
+            'priority',
+            'editorialType']);
 
         populateObservables(this.props, opts);
 
@@ -97,6 +101,10 @@ define([
 
         this.placeholders.description  = ko.computed(function() {
             return this.props.description() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
+        }, this);
+
+        this.placeholders.onPageDescription  = ko.computed(function() {
+            return this.props.onPageDescription() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
         }, this);
     }
 
