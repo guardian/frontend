@@ -40,8 +40,12 @@ trait FrontPress extends Logging {
     }
 
   def generateJson(id: String, seoData: SeoData, collections: Iterable[(Config, Collection)]): Try[JsObject] = {
-    if (collections.flatMap(_._2.items).isEmpty) {
-      val errorMessage = s"Tried to generate pressed JSON for front $id but all collections were empty - aborting!"
+    val collectionsWithBackFills = collections.toList collect {
+      case (config, collection) if config.contentApiQuery.isDefined => collection
+    }
+
+    if (collectionsWithBackFills.nonEmpty && collectionsWithBackFills.forall(_.isBackFillEmpty)) {
+      val errorMessage = s"Tried to generate pressed JSON for front $id but all back fills were empty - aborting!"
       log.error(errorMessage)
       Failure(new RuntimeException(errorMessage))
     } else {
