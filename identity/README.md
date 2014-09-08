@@ -30,9 +30,11 @@ So the required steps are:
 * update your hosts file (also described in `/nginx`)
 * update your frontend.properties file with
 
-    <code># ID<br>
-    id.apiRoot=https://id.code.dev-guardianapis.com
-    id.apiClientToken=frontend-code-client-token</code>
+```
+# ID
+id.apiRoot=https://id.code.dev-guardianapis.com
+id.apiClientToken=frontend-code-client-token
+```
 
 * run the Identity subproject on port 9009
 
