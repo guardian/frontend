@@ -291,7 +291,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
     lazy val adminPressJobStandardPushRateInMinutes: Int =
       Try(configuration.getStringProperty("admin.pressjob.standard.push.rate.inminutes").get.toInt)
-        .getOrElse(3)
+        .getOrElse(5)
 
     lazy val adminPressJobHighPushRateInMinutes: Int =
       Try(configuration.getStringProperty("admin.pressjob.high.push.rate.inminutes").get.toInt)
