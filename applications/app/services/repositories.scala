@@ -78,8 +78,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
         case Nil => Right(NotFound)
         case head :: _ =>
           //we can use .head here as the query is guaranteed to return the 2 tags
-          val tag1 = head.tags.find(tag => firstTag.contains(tag.id)).head
-          val tag2 = head.tags.find(tag => secondTag.contains(tag.id)).head
+          val tag1 = findTag(head, firstTag)
+          val tag2 = findTag(head, secondTag)
           val pageName = s"${tag1.name} + ${tag2.name}"
           val page = Page(
             s"$leftSide+$rightSide",
@@ -98,6 +98,12 @@ trait Index extends ConciergeRepository with QueryDefaults {
       //this is the best handle we have on a wrong 'page' number
       .recover{ case ApiError(400, _) => Right(Found(s"/$leftSide+$rightSide")) }
   }
+
+  private def findTag(content: Content, tagId: String) = content.tags.filter(tag =>
+    tagId.contains(tag.id))
+    .sortBy(tag => tagId.replace(tag.id, "")) //effectively sorts by best match
+    .head
+
 
   private def pagination(response: ItemResponse) = Some(Pagination(
     response.currentPage.getOrElse(1),
