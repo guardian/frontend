@@ -25,15 +25,13 @@ object AccessTokenGenerator extends Controller {
       use10a = true)
   }
 
-  // explicit URL because this controller doesn't know about dev-build routes
-  private val callbackUrl = "http://localhost:9000/commercial/magento/token"
-
   private val unavailable: Result = ServiceUnavailable("Missing properties.")
 
   def generate = Action { implicit request =>
 
     def genRequestToken(): Result = {
       authService.fold(unavailable) { auth =>
+        val callbackUrl = routes.AccessTokenGenerator.generate().absoluteURL()
         auth.retrieveRequestToken(callbackUrl) match {
           case Right(t) =>
             Redirect(auth.redirectUrl(t.token)).withSession("token" -> t.token, "secret" -> t.secret)
