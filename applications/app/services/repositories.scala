@@ -39,7 +39,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
 
     convertedTag match {
       // under the hoods some uk-news/... tags are actually uk/... Fixes loads of Googlebot 404s
-      // this just is a or statement e.g. uk-news/foo OR uk/foo
+      // this just is an or statement e.g. uk-news/foo OR uk/foo
       case UkNewsSection(lastPart) => s"($convertedTag|uk/$lastPart)"
       case other => other
     }
