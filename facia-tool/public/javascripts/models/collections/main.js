@@ -188,7 +188,7 @@ define([
         }
 
         function getFrontAge(opts) {
-            var staleAge = vars.CONST.frontStaleAlertMs || 60000 * 60;
+            var staleAge = vars.CONST.frontStaleAlertMs || 60000 * 10;
 
             opts = opts || {};
 
