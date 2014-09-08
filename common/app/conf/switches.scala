@@ -304,11 +304,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 9, 30)
   )
 
-  val ChildrensBooksSwitch = Switch("Feature", "childrens-books-hide-popular",
-    "If switched on, video pages in the childrens books section will not show popular videos",
-    safeState = On, sellByDate = new LocalDate(2014, 9, 8)
-  )
-
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -422,7 +417,6 @@ object Switches extends Collections {
     ABSoulmatesLabelling,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
-    ChildrensBooksSwitch,
     MetricsSwitch,
     FootballFeedRecorderSwitch
   )
