@@ -27,6 +27,7 @@ define([
         var mostViewed = new Component(),
             container = $('.js-gallery-most-popular')[0];
 
+        mostViewed.manipulationType = 'html';
         mostViewed.endpoint = '/gallery/most-viewed.json';
         mostViewed.ready = function() {
             mediator.emit('ui:images:upgrade', container);
