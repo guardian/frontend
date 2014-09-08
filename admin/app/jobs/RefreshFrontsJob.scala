@@ -23,6 +23,17 @@ object RefreshFrontsJob extends Logging {
       .map(_.keys.toSeq)
   }
 
+  def getFrontType(json: JsValue)(path: String): FrontType = {
+    lazy val isCommercial: Boolean =
+      json.asOpt[Map[String, JsValue]].flatMap(_.get(path)).flatMap(_.asOpt[JsObject]).exists(_.keys.contains("commercial"))
+    if (HighFrequency.highFrequencyPaths.contains(path))
+      HighFrequency
+    else if (isCommercial)
+      Commercial
+    else
+      StandardFrequency
+  }
+
   def run(): Unit = {
     if (FrontPressJobSwitch.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
       log.info("Putting press jobs on Facia Cron")
