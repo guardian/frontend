@@ -1,5 +1,13 @@
+/* global _: true */
 define(function() {
-    return function(str){
-        return (str || '').split(/\s+/).filter(function(s) { return s; }).join(' ');
+    return function(s) {
+        if (_.isString(s)) {
+            return s.split(/\s+/).filter(function(s) { return s; }).join(' ');
+        } else {
+            return s;
+        }
     };
 });
+
+
+
