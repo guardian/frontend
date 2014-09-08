@@ -113,6 +113,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
             live = shouldUpdateLive,
             draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || remove.remove.draft)
           )
+          ContentApiPush.notifyContentApi(collectionIds)
           Ok(Json.toJson(updatedCollections)).as("application/json")
         case updateAndRemove: UpdateAndRemove =>
           val identity = request.user
@@ -129,6 +130,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
             live = shouldUpdateLive,
             draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || shouldUpdateDraft)
           )
+          ContentApiPush.notifyContentApi(collectionIds)
           Ok(Json.toJson(updatedCollections)).as("application/json")
         case _ => NotAcceptable
       } getOrElse NotFound
