@@ -1,0 +1,72 @@
+@(items: Seq[model.Trail], config: model.Config)(implicit requestHeader: RequestHeader)
+
+@import model.{FaciaDisplayElement, VideoPlayer, InlineVideo}
+@import views.html.fragments.media.video
+@import fragments.items.elements.{image, meta}
+@import views.support.{ContributorLinks, ItemKicker, RemoveOuterParaHtml, Video640}
+@import common.LinkTo
+
+<section class="container">
+    <ul class="items items--items-4 items--layout-m">
+        @items.map { item =>
+            <li class="item__container">
+                <div class="item">
+                    <div class="item__media-container">
+                        @FaciaDisplayElement.fromTrail(item) match {
+                            case InlineVideo(videoElement, title, endSlatePath) => {
+                                @video(VideoPlayer(
+                                    videoElement,
+                                    Video640,
+                                    title,
+                                    false,
+                                    false,
+                                    endSlatePath,
+                                    None
+                                ))
+                            }
+
+                            case _ => {
+                                @image(item)
+                            }
+                        }
+                    </div>
+                    <h1 class="item__headline">
+                        @ItemKicker.text(item, config).map { kickerText =>
+                            <small class="item__kicker">
+                                @ItemKicker.url(item, config) match {
+                                    case Some(url) => {
+                                        <a href="@url">@kickerText</a>
+                                    }
+
+                                    case None => {
+                                        @kickerText
+                                    }
+                                }
+                            </small>
+                        }
+
+                        @LinkTo(item) match {
+                            case Some(url) => {
+                                <a @LinkTo(item).map { url => href="@url"} data-link-name="article">@RemoveOuterParaHtml(item.headline)</a>
+                            }
+
+                            case None => {
+                                @RemoveOuterParaHtml(item.headline)
+                            }
+                        }
+                    </h1>
+                    @if(item.showByline) {
+                        @item.byline.map { byline =>
+                            @ContributorLinks(Html(byline), item.contributors)
+                        }
+                    }
+                    @item.trailText.map { text =>
+                        <div class="item__standfirst">@Html(text)</div>
+                    }
+                    @meta(item)
+                </div>
+            </li>
+        }
+
+    </ul>
+</section>
