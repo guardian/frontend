@@ -427,7 +427,7 @@ define([
             if (!config.isMedia) {
                 return;
             }
-            if (config.page.section === 'childrens-books-site' && config.switches.childrensBooksHidePopular) {
+            if (config.page.section === 'childrens-books-site') {
                 $('.content__secondary-column--media').addClass('u-h');
             } else {
                 var mostViewed = new Component();
