@@ -9,7 +9,7 @@ class CricketStatsPlugin(app: Application) extends Plugin with ExecutionContexts
 
   def scheduleJobs() {
 
-    Jobs.schedule("CricketAgentRefreshJob", "0 */5 * * * ?") {
+    Jobs.schedule("CricketAgentRefreshJob", "0 * * * * ?") {
       CricketStatsJob.run()
     }
   }

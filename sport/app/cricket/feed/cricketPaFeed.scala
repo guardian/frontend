@@ -1,6 +1,7 @@
 package cricketPa
 
 import common.{ExecutionContexts, Logging}
+import cricket.feed.ThrottledTask
 import org.joda.time.LocalDate
 import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
 import play.api.libs.ws.WS
@@ -19,7 +20,7 @@ object PaFeed extends ExecutionContexts with Logging {
   private val credentials = ("Apikey", conf.Configuration.pa.cricketKey)
   private val xmlContentType = ("Accept","application/xml")
 
-  private def getMatchPaResponse(apiMethod: String) : Future[String] = {
+  private def getMatchPaResponse(apiMethod: String) : Future[String] = ThrottledTask {
     val endpoint = s"$paEndpoint/$apiMethod"
     WS.url(endpoint)
       .withHeaders(credentials, xmlContentType)
@@ -41,7 +42,7 @@ object PaFeed extends ExecutionContexts with Logging {
       details: String <- getMatchPaResponse(s"match/$matchId")
       scorecard: String <- getMatchPaResponse(s"match/$matchId/scorecard")
     } yield {
-      Parser.parseMatch(scorecard, details, lineups)
+      Parser.parseMatch(scorecard, details, lineups, matchId)
     }
   }
 
@@ -56,7 +57,7 @@ object PaFeed extends ExecutionContexts with Logging {
     Future.sequence(Seq(fixtures, results)).map(_.flatten)
   }
 
-  private def getTeamMatches(matchType: String, startDate: LocalDate, endDate: LocalDate): Future[Seq[String]] = {
+  private def getTeamMatches(matchType: String, startDate: LocalDate, endDate: LocalDate): Future[Seq[String]] = ThrottledTask {
     val start = dateFormat.print(startDate)
     val end = dateFormat.print(endDate)
     val endpoint = s"$paEndpoint/team/$englandTeamId/$matchType"

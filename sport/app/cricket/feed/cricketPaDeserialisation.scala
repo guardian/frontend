@@ -9,8 +9,7 @@ import cricketModel._
 
 object Parser {
 
-  def parseMatch(scorecard: String, detail: String, lineups: String): Match = {
-
+  def parseMatch(scorecard: String, detail: String, lineups: String, matchId: String): Match = {
 
     val matchData = XML.loadString(detail) \ "match"
     val matchDetail = parseMatchDetail(matchData)
@@ -24,7 +23,8 @@ object Parser {
       matchDetail.venueName,
       matchDetail.result,
       matchDetail.gameDate,
-      matchDetail.officials
+      matchDetail.officials,
+      matchId
     )
   }
 

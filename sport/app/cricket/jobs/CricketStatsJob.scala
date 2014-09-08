@@ -4,8 +4,6 @@ import common.{AkkaAgent, ExecutionContexts, Logging}
 import cricketPa.{CricketFeedException, PaFeed}
 import cricketModel.Match
 
-import scala.concurrent.Future
-
 object CricketStatsJob extends ExecutionContexts with Logging {
 
   private val cricketStatsAgent = AkkaAgent[Map[String, Match]](Map.empty)
@@ -14,19 +12,22 @@ object CricketStatsJob extends ExecutionContexts with Logging {
 
   def run() {
 
-    val getMatchData: Future[Seq[Match]] = PaFeed.getEnglandMatchIds().flatMap { matchIds =>
-      Future.sequence(matchIds.map(PaFeed.getMatch)) }
+    PaFeed.getEnglandMatchIds().map { matchIds =>
+      // Find new ids which are not in the stats agent.
+      val knownMatches = cricketStatsAgent().values.map(_.matchId).toSeq
+      val matches = matchIds.filterNot(matchId => knownMatches.contains(matchId)).take(10)
 
-    getMatchData.foreach { matches =>
-      matches.foreach { matchData: Match =>
-        val date = PaFeed.dateFormat.print(matchData.gameDate)
-        log.info(s"Updating cricket match: ${matchData.homeTeam.name} v ${matchData.awayTeam.name}, $date}")
-        cricketStatsAgent.send { _ + (date -> matchData) }
+      matches.map { matchId =>
+
+        PaFeed.getMatch(matchId).map { matchData =>
+          val date = PaFeed.dateFormat.print(matchData.gameDate)
+          log.info(s"Updating cricket match: ${matchData.homeTeam.name} v ${matchData.awayTeam.name}, $date}")
+          cricketStatsAgent.send { _ + (date -> matchData) }
+        }.recover {
+          case paFeedError: CricketFeedException => log.warn(s"CricketStatsJob encountered errors:\n ${paFeedError.message}")
+          case error: Throwable => log.warn(error.getMessage)
+        }
       }
-    }
-    getMatchData.recover {
-      case paFeedError: CricketFeedException => log.warn(s"Get Match Ids failed :\n ${paFeedError.message}")
-      case error: Throwable => log.warn(error.getMessage)
     }
   }
 }

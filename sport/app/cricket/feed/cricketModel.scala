@@ -9,7 +9,8 @@ case class Match(
   venueName: String,
   result: String,
   gameDate: DateTime,
-  officials: List[String])
+  officials: List[String],
+  matchId: String)
 {
   def homeTeam: Team = teams.filter(_.home).head
   def awayTeam: Team = teams.filter(!_.home).head
