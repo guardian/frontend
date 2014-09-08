@@ -8,10 +8,11 @@ import conf.Configuration
 
 sealed trait FrontType
 
-object Commercial extends FrontType
-object StandardFrequency extends FrontType
-object HighFrequency extends FrontType {
+case class CommercialFrequency(path: String) extends FrontType
+case class StandardFrequency(path: String) extends FrontType
+case class HighFrequency(path: String) extends FrontType
 
+object HighFrequency {
   def highFrequencyPaths: List[String] = List("uk", "us", "au")
 }
 
