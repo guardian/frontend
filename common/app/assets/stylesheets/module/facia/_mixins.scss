@@ -34,3 +34,19 @@ $item-top-border-height: 1px;
         .i { display: none; }
     }
 }
+@mixin video-icon($type) {
+    content: '';
+    @include icon($type);
+    @include background-size(auto 100%);
+    margin-right: $gs-gutter/10;
+    height: .75em !important;
+    width: 1.2em !important;
+}
+@mixin audio-icon($type) {
+    content: '';
+    @include icon($type);
+    @include background-size(auto 100%);
+    margin-right: $gs-gutter/10;
+    height: .75em !important;
+    width: .95em !important;
+}

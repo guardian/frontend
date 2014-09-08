@@ -1,52 +1,7 @@
-@mixin media-icon($type) {
-    content: '';
-    @include icon($type);
-    @include background-size(auto 100%);
-    margin-right: $gs-gutter/10;
-    @if $type == camera-white-large {
-        height: .65em !important;
-        width: 1.04em !important;
-    } @else {
-        height: .75em !important;
-        width: 1.2em !important;
-    }
-}
-@mixin audio-icon($type) {
-    content: '';
-    @include icon($type);
-    @include background-size(auto 100%);
-    margin-right: $gs-gutter/10;
-    height: .75em !important;
-    width: .95em !important;
-}
-
 .container--multimedia {
     @include item--hide-tone-border;
     margin-bottom: 0;
 
-    .container__title,
-    .container__toggle__text,
-    .item__link,
-    .item__title,
-    .linkslist__action {
-        color: #ffffff;
-    }
-    .item__link:visited,
-    .item__link:visited .item__title,
-    .linkslist__action:visited {
-        color: mix(#ffffff, lighten($c-neutral1, 4%), 80%);
-    }
-    .item__tag {
-        &,
-        &:hover,
-        &:active,
-        &:focus {
-            color: mix(#ffffff, $c-neutral1, 70%);
-        }
-    }
-    .item__standfirst {
-        color: $c-neutral4;
-    }
     .linkslist__item {
         border-top-color: mix(#ffffff, lighten($c-neutral1, 8%), 50%);
     }
@@ -57,12 +12,6 @@
     .item__byline,
     .item__meta {
         display: none;
-    }
-    .item__title--video-icon:before {
-        @include media-icon(video-icon);
-    }
-    .item__title--gallery-icon:before {
-        @include media-icon(camera-white-large);
     }
     .facia-slice__item:before {
         border-left-color: lighten($c-neutral1, 16%);
@@ -149,31 +98,7 @@
 }
 
 
-.item__title:before {
-    .item--audio & {
-        @include audio-icon(volume-high-yellow);
-    }
-    .item--video & {
-        @include video-icon(video-icon-black);
-    }
-}
-.l-row--background-features {
-    .item--audio .item__title:before {
-        @include icon(volume-high-yellow);
-    }
-    .item--video .item__title:before {
-        @include icon(video-icon);
-    }
-}
 
-.linkslist__action:before {
-    .linkslist__item--audio & {
-        @include audio-icon(volume-high-yellow);
-    }
-    .linkslist__item--video & {
-        @include video-icon(video-icon-black);
-    }
-}
 .supporting__item {
     &.linkslist__item--audio,
     &.linkslist__item--video {

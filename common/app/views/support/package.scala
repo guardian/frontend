@@ -21,40 +21,6 @@ import scala.collection.JavaConversions._
 import java.text.DecimalFormat
 import java.util.regex.Pattern
 
-sealed trait Style {
-  val className: String
-  val showMore: Boolean
-}
-
-object Featured extends Style {
-  val className = "featured"
-  val showMore = false
-}
-
-/**
- * trails display trailText and thumbnail (if available)
- */
-object Thumbnail extends Style {
-  val className = "with-thumbnail"
-  val showMore = false
-}
-
-/**
- * trails only display headline
- */
-object Headline extends Style {
-  val className = "headline-only"
-  val showMore = false
-}
-
-/**
- * trails for the section fronts
- */
-object SectionFront extends Style {
-  val className = "section-front"
-  val showMore = false
-}
-
 /**
  * New 'collection' templates
  */
@@ -62,6 +28,7 @@ sealed trait Container {
   val containerType: String
   val showMore: Boolean
   val tone: String
+  val hasDarkBackground: Boolean = false
 }
 
 case class NewsContainer(showMore: Boolean = true) extends Container {
@@ -92,13 +59,14 @@ case class PeopleContainer(showMore: Boolean = true) extends Container {
   val containerType = "people"
   val tone = "feature"
 }
-case class SpecialContainer(showMore: Boolean = true) extends Container {
+case class SpecialContainer(showMore: Boolean = true, override val hasDarkBackground: Boolean = false) extends Container {
   val containerType = "special"
   val tone = "news"
 }
 case class MultimediaContainer(showMore: Boolean = true) extends Container {
   val containerType = "multimedia"
   val tone = "media"
+  override val hasDarkBackground = true
 }
 case class SeriesContainer(showMore: Boolean = true) extends Container {
   val containerType = "series"
@@ -842,7 +810,9 @@ object GetClasses {
       (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
         if (index == 0) "container--first" else "",
       (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (index > 0 && hasTitle && !(config.isAdvertisementFeature || config.isSponsored)) "js-container--toggle" else ""
+        if (index > 0 && hasTitle && !(config.isAdvertisementFeature || config.isSponsored)) "js-container--toggle" else "",
+      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
+        if (container.hasDarkBackground) "container--dark-background" else ""
     )
     val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(container, config, index, hasTitle)}
     RenderClasses(classes:_*)

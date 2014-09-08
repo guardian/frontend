@@ -3,7 +3,7 @@
 <div class="facia-container facia-container--layout-content">
     @fragments.containers.special(
         Collection(audios),
-        SpecialContainer(showMore = false),
+        SpecialContainer(showMore = false, hasDarkBackground = true),
         containerIndex = 0
-    )(request, templateDeduping, Config(s"foo/news/regular-stories", displayName = Some("Popular in audio")))
+    )(request, templateDeduping, Config("audio/most-viewed", displayName = Some("Popular in audio")))
 </div>

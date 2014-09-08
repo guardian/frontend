@@ -65,9 +65,6 @@
    Facia
    ========================================================================== */
 
-@import 'module/facia/_items';
-@import 'module/facia/_row-pattern';
-@import 'module/facia/_linkslist';
 @import 'module/facia/_facia-container';
 @include facia-container-head-common;
 

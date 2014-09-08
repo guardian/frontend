@@ -84,12 +84,19 @@
         min-height: get-line-height(headline, 1) * 2;
         margin-bottom: get-font-size(headline, 1);
     }
-
     &:visited {
         color: $c-neutral2;
     }
     &:active {
         color: $c-neutral1;
+    }
+    &:before {
+        .linkslist__item--audio & {
+            @include audio-icon(volume-high-yellow);
+        }
+        .linkslist__item--video & {
+            @include video-icon(video-icon-black);
+        }
     }
 }
 

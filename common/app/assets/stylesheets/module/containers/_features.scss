@@ -70,6 +70,12 @@
         padding-left: 7px;
         padding-right: 7px;
     }
+    .item--audio .item__title:before {
+        @include icon(volume-high-yellow);
+    }
+    .item--video .item__title:before {
+        @include icon(video-icon);
+    }
     .item__media-wrapper {
         margin-left: -7px;
         margin-right: -7px;
