@@ -36,7 +36,7 @@ trait AdminLifecycle extends GlobalSettings {
 
     //Every 3 minutes
     Jobs.schedule("FrontPressJob", s"0 0/$adminPressJobPushRateInMinutes * 1/1 * ? *") {
-      RefreshFrontsJob.run()
+      RefreshFrontsJob.runStandardFrequency()
     }
 
     Jobs.schedule("RebuildIndexJob", s"0 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {
