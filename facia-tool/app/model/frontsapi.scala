@@ -108,11 +108,6 @@ case class Remove(remove: UpdateList) extends FaciaToolUpdate
 
 case class UpdateAndRemove(update: UpdateList, remove: UpdateList) extends FaciaToolUpdate
 
-case class CollectionMetaUpdate(
-  displayName: Option[String],
-  href: Option[String]
-) extends FaciaToolUpdate
-
 case class DiscardUpdate(id: String) extends FaciaToolUpdate
 
 object UpdateList {
