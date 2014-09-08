@@ -58,7 +58,6 @@ define([
 
         capiBatchSize:         20,
 
-        frontStaleAlertMs:     60000 * 10, // 10 minutes
         collectionsPollMs:     10000,
         latestArticlesPollMs:  30000,
         configSettingsPollMs:  30000,
