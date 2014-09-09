@@ -57,6 +57,7 @@ define([
         mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
 
         mediator.emit('page:gallery:ready', config);
+        transcludeMostPopular();
     };
 
     return {
