@@ -238,6 +238,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       lazy val consumerKey = configuration.getStringProperty("magento.consumer.key")
       lazy val consumerSecret = configuration.getStringProperty("magento.consumer.secret")
       lazy val authorizationPath = configuration.getStringProperty("magento.auth.path")
+      lazy val isbnLookupPath = configuration.getStringProperty("magento.isbn.lookup.path")
     }
   }
 
