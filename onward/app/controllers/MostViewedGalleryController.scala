@@ -8,6 +8,9 @@ import feed.MostViewedGalleryAgent
 
 object MostViewedGalleryController extends Controller with Logging with ExecutionContexts {
 
+  private val page = Page("More galleries", "inpictures", "More Galleries", "more galleries")
+  private val config = Config("multimedia/gallery", None, Some("more galleries"), None, Nil, Some("multimedia/gallery"))
+
   def renderMostViewed() = Action { implicit request =>
     getMostViewedGallery match {
       case Nil => Cached(60) { JsonNotFound() }
@@ -22,8 +25,6 @@ object MostViewedGalleryController extends Controller with Logging with Executio
   }
 
   private def renderMostViewedGallery(galleries: Seq[Content])(implicit request: RequestHeader) = {
-    val page = Page("More galleries", "inpictures", "More Galleries", "more galleries")
-    val config = Config("multimedia/gallery", None, Some("more galleries"), None, Nil, Some("multimedia/gallery"))
     val collection = Collection(galleries)
     val templateDeduping = new TemplateDeduping
 
