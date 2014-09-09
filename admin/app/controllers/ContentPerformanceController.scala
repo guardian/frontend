@@ -64,7 +64,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
       NoCache(Ok("Reports not generated yet"))
     } else {
 
-      val lightboxColumns = List(Column("time", "Time", "date"), Column("lightboxes", "Lightbox launches per visit", "number"))
+      val lightboxColumns = List(Column("time", "Time", "date"), Column("lightboxes", "Lightbox hits per visit", "number"))
       val lightboxRows = reportsObject.toSeq.sortBy(_.simpleDate).map { row =>
         val dateCell = Cell(row.jsonDate)
         val lightboxCount = Cell(row.lightboxLaunchesPerVisit.toString)
@@ -72,13 +72,13 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
       }
       val lightboxChart = FormattedChart("Lightbox Launches per Gallery Visit", lightboxColumns, lightboxRows, ChartFormat(Colour.`tone-features-3`))
 
-      val galleryColumns = List(Column("time", "Time", "date"), Column("pvv", "Hits per visit", "number"))
+      val galleryColumns = List(Column("time", "Time", "date"), Column("pvv", "Gallery views per visit", "number"))
       val galleryRows = reportsObject.toSeq.sortBy(_.simpleDate).map { row =>
         val dateCell = Cell(row.jsonDate)
         val pageViews = Cell(row.pageViewsPerVisit.toString)
         Row(List(dateCell, pageViews))
       }
-      val galleryChart = FormattedChart("Gallery Page Views per Gallery Visit", galleryColumns, galleryRows, ChartFormat(Colour.`tone-news-2`))
+      val galleryChart = FormattedChart("Gallery Page Views per Gallery Visit", galleryColumns, galleryRows, ChartFormat(Colour.`tone-comment-2`))
 
       NoCache(Ok(views.html.contentGallery("PROD", galleryChart, lightboxChart, "Gallery Performance", reportTimestamp)))
     }
