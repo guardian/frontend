@@ -195,7 +195,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object facebook {
     lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
-    lazy val imageFallback = "http://static-secure.guim.co.uk/icons/social/og/gu-logo-fallback.png"
+    lazy val imageFallback = "http://static.guim.co.uk/icons/social/og/gu-logo-fallback.png"
   }
 
   object ios {
@@ -228,10 +228,17 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpSponsoredTagsDataKey = s"$dfpRoot/sponsored-tags-v2.json"
     lazy val dfpAdvertisementFeatureTagsDataKey = s"$dfpRoot/advertisement-feature-tags-v2.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
-    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v4.json"
+    lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v5.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems.json"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
+
+    object magento {
+      lazy val domain = configuration.getStringProperty("magento.domain")
+      lazy val consumerKey = configuration.getStringProperty("magento.consumer.key")
+      lazy val consumerSecret = configuration.getStringProperty("magento.consumer.secret")
+      lazy val authorizationPath = configuration.getStringProperty("magento.auth.path")
+    }
   }
 
   object open {
@@ -289,16 +296,6 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthCallback <- configuration.getStringProperty("faciatool.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
 
-    //It's not possible to take a batch size above 10
-    lazy val pressJobBatchSize: Int =
-      Try(configuration.getStringProperty("faciapress.batch.size").get.toInt)
-        .filter(_ <= 10).getOrElse(10)
-
-    //Above 59 would probably break the cron expression
-    lazy val pressJobConsumeRateInSeconds: Int =
-      Try(configuration.getStringProperty("faciapress.rate.inseconds").get.toInt)
-        .filter(_ <= 59).filter(_ > 0).getOrElse(10)
-
     lazy val adminPressJobPushRateInMinutes: Int =
       Try(configuration.getStringProperty("admin.pressjob.push.rate.inminutes").get.toInt)
         .getOrElse(3)
@@ -308,6 +305,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object pa {
     lazy val apiKey = configuration.getMandatoryStringProperty("pa.api.key")
+    lazy val cricketKey = configuration.getMandatoryStringProperty("pa.cricket.api.key")
 
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }

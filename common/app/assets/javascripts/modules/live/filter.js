@@ -17,7 +17,8 @@ define([
 ) {
     'use strict';
 
-    function Filter() {
+    function Filter(context) {
+        this.context = context;
         this.componentClass = 'live-filter';
         this.useBem = true;
     }
@@ -39,11 +40,11 @@ define([
     };
 
     Filter.prototype.toggle = function() {
-        var blocks = toArray($('.block').detach());
+        var blocks = toArray($('.block', this.context).detach());
         blocks.reverse();
 
         this.toggleState('order-by-oldest');
-        bonzo(document.body).prepend(blocks);
+        bonzo(this.context).prepend(blocks);
 
         mediator.emit('module:filter:toggle', this.hasState('order-by-oldest'));
     };

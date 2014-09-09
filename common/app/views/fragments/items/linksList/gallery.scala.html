@@ -1,8 +1,8 @@
 @(trail: Gallery, index: Int, imageAdjustOverride: Option[String] = None)(implicit request: RequestHeader)
 
 @defining(imageAdjustOverride.getOrElse(trail.imageAdjust)) { imageAdjust =>
-<li class="l-columns__item linkslist__item" data-link-name="trail | @{index + 1}">
-    <a href="@LinkTo{@trail.url}" class="linkslist__action action--has-icon@if(imageAdjust == "boost" && trail.trailPicture(5,3).nonEmpty){ action--has-image}" data-link-name="article">
+<li class="l-columns__item linkslist__item linkslist__item--gallery" data-link-name="trail | @{index + 1}">
+    <a href="@LinkTo{@trail.url}" class="linkslist__action @if(imageAdjust == "boost" && trail.trailPicture(5,3).nonEmpty){ action--has-image}" data-link-name="article">
         @if(imageAdjust == "boost") {
             @trail.trailPicture(5,3).map{ imageContainer =>
                 @ImgSrc.imager(imageContainer, Item120).map { imgSrc =>
@@ -10,7 +10,6 @@
                 }
             }
         }
-        <span class="i i-gallery-yellow-small linkslist__icon"></span>
         @RemoveOuterParaHtml(trail.headline)
     </a>
 </li>

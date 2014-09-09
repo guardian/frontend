@@ -20,6 +20,8 @@ GET         /counts.gif                                                         
 GET         /analytics/abtests                                                                                       controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                                                                                    controllers.admin.AnalyticsConfidenceController.renderConfidence()
 GET         /analytics/content/gallery                                                                               controllers.admin.ContentPerformanceController.renderGalleryDashboard()
+GET         /analytics/omniture/segments                                                                             controllers.admin.OmnitureReportController.getSegments()
+GET         /analytics/omniture/*reportName                                                                          controllers.admin.OmnitureReportController.getReport(reportName)
 GET         /analytics/commercial                                                                                    controllers.admin.CommercialController.renderCommercial()
 GET         /analytics/commercial/sponsorships                                                                       controllers.admin.CommercialController.renderSponsorships()
 GET         /analytics/commercial/pageskins                                                                          controllers.admin.CommercialController.renderPageskins()
@@ -74,10 +76,12 @@ GET         /video/section/:sectionId/*seriesId.json                            
 GET         /video/section/:sectionId.json                                                                           controllers.VideoInSectionController.renderSectionVideos(sectionId)
 GET         /video/most-viewed.json                                                                                  controllers.MostViewedVideoController.renderMostViewed()
 GET         /audio/most-viewed.json                                                                                  controllers.MostViewedAudioController.renderMostViewed()
+GET         /gallery/most-viewed.json                                                                                controllers.MostViewedGalleryController.renderMostViewed()
 GET         /video/end-slate/series/*seriesId.json                                                                   controllers.VideoEndSlateController.renderSeries(seriesId)
 GET         /video/end-slate/section/*sectionId.json                                                                 controllers.VideoEndSlateController.renderSection(sectionId)
 
 # Sport
+GET         /sport/cricket/match/:matchId.json                                                                       controllers.CricketMatchController.renderMatchIdJson(matchId)
 GET         /sport/cricket/match/:matchId                                                                            controllers.CricketMatchController.renderMatchId(matchId)
 
 GET         /football/fixtures/:year/:month/:day.json                                                                football.controllers.FixturesController.allFixturesForJson(year, month, day)
@@ -239,6 +243,7 @@ GET         /commercial/capi                                                    
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
 GET         /commercial/multi.json                                                                                   controllers.commercial.Multi.renderMulti
+GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate
 
 # Onward journeys
 GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)

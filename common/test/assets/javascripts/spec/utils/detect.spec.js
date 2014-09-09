@@ -66,6 +66,9 @@ define([
                 $style.html('body:after { content: "mobile"; }');
                 hasBreakpointChanged(callback);
                 expect(callback).toHaveBeenCalledWith('mobile', 'desktop');
+                $style.html('body:after { content: "tablet"; }');
+                hasBreakpointChanged(callback);
+                expect(callback).toHaveBeenCalledWith('tablet', 'mobile');
             });
 
             it('should not fire if no breakpoint crossed', function(){
@@ -98,6 +101,50 @@ define([
                 $style.html('body:after { content: "rightCol"; }');
                 hasBreakpointChanged(callback);
                 expect(callback).toHaveBeenCalledWith('rightCol', 'desktop');
+            });
+
+        });
+
+        describe('isBreakpoint', function () {
+
+            beforeEach(function () {
+                $style.html('body:after { content: "rightCol"; }');
+            });
+
+            it('should return true if breakpoint is at the given min breakpoint', function () {
+                expect(detect.isBreakpoint({ min: 'rightCol' })).toBe(true);
+            });
+
+            it('should return true if breakpoint is greater than the given min breakpoint', function () {
+                expect(detect.isBreakpoint({ min: 'tablet' })).toBe(true);
+            });
+
+            it('should return false if breakpoint is less than the given min breakpoint', function () {
+                expect(detect.isBreakpoint({ min: 'desktop' })).toBe(false);
+            });
+
+            it('should return true if breakpoint is at the given max breakpoint', function () {
+                expect(detect.isBreakpoint({ max: 'rightCol' })).toBe(true);
+            });
+
+            it('should return true if breakpoint is less than the given max breakpoint', function () {
+                expect(detect.isBreakpoint({ max: 'desktop' })).toBe(true);
+            });
+
+            it('should return false if breakpoint is greater than the given max breakpoint', function () {
+                expect(detect.isBreakpoint({ max: 'tablet' })).toBe(false);
+            });
+
+            it('should return true if breakpoint is at the given min and max breakpoint', function () {
+                expect(detect.isBreakpoint({ min: 'rightCol', max: 'rightCol' })).toBe(true);
+            });
+
+            it('should return true if breakpoint is within the given min and max breakpoint', function () {
+                expect(detect.isBreakpoint({ min: 'tablet', max: 'desktop' })).toBe(true);
+            });
+
+            it('should return false if breakpoint is without the given min and max breakpoint', function () {
+                expect(detect.isBreakpoint({ min: 'mobile', max: 'tablet' })).toBe(false);
             });
 
         });
