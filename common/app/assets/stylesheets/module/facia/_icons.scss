@@ -1,56 +1,28 @@
-@mixin media-icon($type) {
-    display: inline-block;
-    content: '';
-    height: .75em;
-    margin-right: $gs-gutter/10;
-    @include background-size(contain);
-    @extend %svg-i-#{$type};
-}
-@mixin video-icon($type) {
-    @if ($svg-support) {
-        .svg & {
-            @include media-icon($type);
-            width: 1.2em;
-        }
+@if ($svg-support) {
+    .item--audio .item__title:before,
+    .item--video .item__title:before,
+    .linkslist__item--audio .linkslist__action:before,
+    .linkslist__item--video .linkslist__action:before {
+        content: '';
+        height: .75em;
+        margin-right: $gs-gutter/10;
     }
-}
-@mixin audio-icon($type) {
-    @if ($svg-support) {
-        .svg & {
-            @include media-icon($type);
-            width: .95em;
-        }
-    }
-}
-.item__title:before {
-    .item--audio & {
-        @include audio-icon(volume-high-black);
+    .item--audio .item__title:before,
+    .linkslist__item--audio .linkslist__action:before {
+        width: .95em;
+        @include icon(volume-high-black, $with-width: false);
 
         .container--dark-background & {
-            @include audio-icon(volume-high-yellow);
+            @extend %svg-i-volume-high-yellow;
         }
     }
-    .item--video & {
-        @include video-icon(video-icon-black);
+    .item--video .item__title:before,
+    .linkslist__item--video .linkslist__action:before {
+        @include icon(video-icon-black, $with-width: false);
+        width: 1.2em;
 
         .container--dark-background & {
-            @include audio-icon(video-icon);
-        }
-    }
-}
-.linkslist__action:before {
-    .linkslist__item--audio & {
-        @include audio-icon(volume-high-black);
-
-        .container--dark-background & {
-            @include audio-icon(volume-high-yellow);
-        }
-    }
-    .linkslist__item--video & {
-        @include video-icon(video-icon-black);
-
-        .container--dark-background & {
-            @include audio-icon(video-icon);
+            @extend %svg-i-video-icon;
         }
     }
 }

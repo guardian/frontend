@@ -108,12 +108,14 @@
     }
 }
 
-@mixin icon($name) {
-    display: inline-block;
-    @extend %i-#{$name};
-
+@mixin icon($name, $with-width: true) {
     @if ($svg-support) {
         .svg & {
+            @if ($with-width) {
+                @extend %i-#{$name};
+            }
+            display: inline-block;
+            background-repeat: no-repeat;
             @include background-size(contain);
             @extend %svg-i-#{$name};
         }

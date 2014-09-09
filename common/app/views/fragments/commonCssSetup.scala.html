@@ -9,14 +9,7 @@
     .caption:before,
     figcaption:before,
     blockquote.quoted:before {
-        display: inline-block;
-        background: url(@Static("images/global/sprite.png")) no-repeat;
-    }
-    .svg .i,
-    .svg .caption:before,
-    .svg figcaption:before,
-    .svg blockquote.quoted:before {
-        background-image: none;
+        background-image: url(@Static("images/global/sprite.png"));
     }
     .is-updating {
         background-image: url(@Static("images/auto-update-activity.gif"));
