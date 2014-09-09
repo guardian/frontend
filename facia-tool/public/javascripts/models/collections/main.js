@@ -52,7 +52,11 @@ define([
             detectPressFailureCount = 0;
 
         model.alert = ko.observable();
-        model.clearAlert = function() { model.alert(false); };
+        model.alertFrontIsStale = ko.observable();
+        model.clearAlerts = function() {
+            model.alert(false);
+            model.alertFrontIsStale(false);
+        };
 
         model.switches = ko.observable();
 
@@ -144,7 +148,7 @@ define([
         }, vars.CONST.detectPressFailureMs || 10000);
 
         model.pressLiveFront = function () {
-            model.clearAlert();
+            model.clearAlerts();
             if (model.front()) {
                 authedAjax.request({
                     url: '/press/live/' + model.front(),
@@ -205,12 +209,12 @@ define([
                 .always(function(resp) {
                     if (resp.status === 200 && resp.responseText) {
                         model.frontAge(humanTime(resp.responseText));
-                        model.alert(
+                        model.alertFrontIsStale(
                             opts.alertIfStale &&
                             pageConfig.env !== 'dev' &&
                             new Date() - new Date(resp.responseText) > getFrontAgeAlertMs()
-                            ? 'Warning, this front was last pressed ' + humanTime(resp.responseText) : false
                         );
+                        console.log(model.alertFrontIsStale())
                     } else {
                         model.frontAge(undefined);
                     }
