@@ -53,6 +53,9 @@ case class Collection(curated: Seq[Content],
                       updatedBy: Option[String],
                       updatedEmail: Option[String]) extends implicits.Collections with CollectionItems {
   override lazy val items: Seq[Content] = (curated ++ editorsPicks ++ mostViewed ++ results).distinctBy(_.url)
+
+  def isBackFillEmpty =
+    (editorsPicks ++ mostViewed ++ results).isEmpty
 }
 
 object Collection {

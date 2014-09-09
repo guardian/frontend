@@ -167,7 +167,7 @@
 .content--gallery {
     .content__headline {
         &:before {
-            @include icon(camera-yellow-large);
+            @include icon(camera-white-large);
             width: 28px !important;
 
             @include mq(mobileLandscape) {

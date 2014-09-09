@@ -67,9 +67,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
 
-  lazy val cricketMatch: Option[String] = delegate.references.find(_.`type` == "esa-cricket-match")
-    .map(_.id).map(Reference(_)).map(_._2)
-
   lazy val isbn: Option[String] = delegate.references.find(_.`type` == "isbn")
     .map(_.id).map(Reference(_)).map(_._2)
 
@@ -386,7 +383,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
 
   lazy val linkCounts = LinkTo.countLinks(body) + standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
-  override lazy val metaData: Map[String, JsValue] = {
+  override def metaData: Map[String, JsValue] = {
     val bookReviewIsbn = isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
     super.metaData ++ Map(
@@ -427,6 +424,14 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   )
 
   override lazy val hasClassicVersion: Boolean = super.hasClassicVersion && !(section == "football")
+
+  private lazy val cricketMetaData = if (isCricketLiveBlog) {
+    Map(("cricketMatch", JsString(webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
+  } else {
+    Map()
+  }
+
+  override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
 }
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
@@ -484,7 +489,7 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
         " - video", " – video",
         " - video interview", " – video interview",
         " - video interviews"," – video interviews" )
-    suffixVariations.fold(webTitle.trim) { (str, suffix) => str.stripSuffix(suffix) }
+    suffixVariations.fold(headline.trim) { (str, suffix) => str.stripSuffix(suffix) }
   }
 
   def endSlatePath = EndSlateComponents.fromContent(this).toUriPath

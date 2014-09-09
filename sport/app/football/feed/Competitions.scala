@@ -112,7 +112,8 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European", showInTeamsList = true, tableDividers = List(4, 6, 17)),
     Competition("620", "/football/ligue1football", "Ligue 1", "Ligue 1", "European", showInTeamsList = true, tableDividers = List(3, 4, 17)),
     Competition("625", "/football/bundesligafootball", "Bundesliga", "Bundesliga", "European", showInTeamsList = true, tableDividers = List(3, 4, 6, 15, 16)),
-    Competition("635", "/football/serieafootball", "Serie A", "Serie A", "European", showInTeamsList = true, tableDividers = List(3, 5, 17))
+    Competition("635", "/football/serieafootball", "Serie A", "Serie A", "European", showInTeamsList = true, tableDividers = List(3, 5, 17)),
+    Competition("751", "/football/euro-2016-qualifying", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals")
   )
 
   val competitionAgents = competitionDefinitions map { CompetitionAgent(_) }

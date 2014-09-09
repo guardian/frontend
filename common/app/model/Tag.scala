@@ -21,9 +21,11 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   override lazy val url: String = SupportedUrl(delegate)
 
   lazy val contributorImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Contributor))
-  lazy val sharingImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Item140)).map { s: String =>
+
+  lazy val openGraphImage: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Item140)).map { s: String =>
     if (s.startsWith("//")) s"http:$s" else s
   }
+  lazy val openGraphDescription: Option[String] = if (bio.nonEmpty) Some(bio) else description
 
   lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Item140))
   lazy val hasLargeContributorImage: Boolean = contributorLargeImagePath.nonEmpty
@@ -56,10 +58,17 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   override lazy val rssPath = Some(s"/$id/rss")
 
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
-    "keywords" -> JsString(name),
-    "keywordIds" -> JsString(id),
-    "content-type" -> JsString("Tag")
-  ) ++ Map(
-    "references" -> JsArray(delegate.references.toSeq.map(ref => Reference.toJavaScript(ref.id)))
+    ("keywords", JsString(name)),
+    ("keywordIds", JsString(id)),
+    ("content-type", JsString("Tag")),
+    ("references", JsArray(delegate.references.toSeq.map(ref => Reference.toJavaScript(ref.id))))
   )
+
+  override def openGraph: Map[String, String] = super.openGraph ++
+    Map("og:title" -> webTitle) ++
+    openGraphDescription.map { s => Map("og:description" -> s)}.getOrElse(Map())
+    openGraphImage.map { s => Map("og:image" -> s)}.getOrElse(Map())
+
+  override def cards: List[(String, String)] = super.cards ++
+    List("twitter:card" -> "summary")
 }
