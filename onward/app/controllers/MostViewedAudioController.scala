@@ -3,36 +3,23 @@ package controllers
 import common._
 import model.{Audio, Cached}
 import play.api.mvc.{RequestHeader, Controller, Action}
-import scala.concurrent.Future
-import conf.LiveContentApi
-import feed.MostReadAgent
+import feed.MostViewedAudioAgent
 import views.support.TemplateDeduping
 
 object MostViewedAudioController extends Controller with Logging with ExecutionContexts {
 
   private implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
-  def renderMostViewed() = Action.async { implicit request =>
-
-    val edition = Edition(request)
-    getMostViewedAudio(edition) map {
-      case Nil => JsonNotFound()
-      case audios => renderMostViewedAudio(audios)
+  def renderMostViewed() = Action { implicit request =>
+    getMostViewedAudio match {
+      case Nil => Cached(60) { JsonNotFound() }
+      case audio => Cached(900) { renderMostViewedAudio(audio) }
     }
-
   }
 
-  private def getMostViewedAudio(edition: Edition)(implicit request: RequestHeader): Future[Seq[Audio]] = {
-
+  private def getMostViewedAudio()(implicit request: RequestHeader): Seq[Audio] = {
     val size = request.getQueryString("size").getOrElse("4").toInt
-    val response = LiveContentApi.search(edition)
-      .tag("type/audio")
-      .pageSize(50)
-      .response
-    response.map { response =>
-      response.results.map(Audio(_)).sortBy(content => - MostReadAgent.getViewCount(content.id).getOrElse(0)).take(size)
-    }
-
+    MostViewedAudioAgent.mostViewedAudio().take(size)
   }
 
   private def renderMostViewedAudio(audios: Seq[Audio])(implicit request: RequestHeader) = Cached(900) {
