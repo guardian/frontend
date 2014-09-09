@@ -40,7 +40,7 @@ define([
     raven,
     preferences
 ) {
-    var isDesktop = /desktop|wide/.test(detect.getBreakpoint()),
+    var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
         // Advert and content events used by analytics. The expected order of bean events is:
         EVENTS = [
@@ -358,8 +358,10 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if (bonzo(el).attr('data-show-end-slate') === 'true' &&
-                                    /desktop|wide/.test(detect.getBreakpoint())) {
+                                if (
+                                    bonzo(el).attr('data-show-end-slate') === 'true' &&
+                                    detect.isBreakpoint({ min: 'desktop' })
+                                ) {
                                     modules.initEndSlate(player, bonzo(el).attr('data-end-slate'));
                                 }
                             } else {
@@ -425,7 +427,7 @@ define([
             if (!config.isMedia) {
                 return;
             }
-            if (config.page.section === 'childrens-books-site' && config.switches.childrensBooksHidePopular) {
+            if (config.page.section === 'childrens-books-site') {
                 $('.content__secondary-column--media').addClass('u-h');
             } else {
                 var mostViewed = new Component();

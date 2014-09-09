@@ -35,9 +35,11 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
   private def alphaTitle(key: String) = key.toUpperCase.replace("-", "–")
 
   def rebuildKeywordIndexes() = {
-    /** Keywords are indexed both alphabetically and by their parent section */
-    ContentApiTagsEnumerator.enumerateTagTypeFiltered("keyword")
-      .run(Enumeratee.zip(bySection, byWebTitle)) map { case (sectionMap, alphaMap) =>
+    val keywords = ContentApiTagsEnumerator.enumerateTagTypeFiltered("keyword")
+    val series = ContentApiTagsEnumerator.enumerateTagTypeFiltered("series")
+
+    /** Subjects are indexed both alphabetically and by their parent section */
+    (keywords andThen series).run(Enumeratee.zip(bySection, byWebTitle)) map { case (sectionMap, alphaMap) =>
         blocking {
           saveToS3("keywords", toPages(alphaMap)(alphaTitle))
           saveToS3("keywords_by_section", toPages(sectionMap)(ValidSections(_)))

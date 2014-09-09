@@ -14,22 +14,22 @@ class DfpAgentTest extends FlatSpec with Matchers {
       1234L,
       Seq(s"$dfpAdUnitRoot/business/front"),
       Seq(Country("United Kingdom", "UK")),
-      false),
+      false, false),
     PageSkinSponsorship("lineItemName2",
       12345L,
       Seq(s"$dfpAdUnitRoot/music/front"),
       Nil,
-      false),
+      false, false),
     PageSkinSponsorship("lineItemName3",
       123456L,
       Seq(s"$dfpAdUnitRoot/sport"),
       Nil,
-      false),
+      false, false),
     PageSkinSponsorship("lineItemName4",
       1234567L,
       Seq(s"$dfpAdUnitRoot/testSport/front"),
       Seq(Country("United Kingdom", "UK")),
-      true)
+      false, true)
   )
 
   private def toKeyword(tagId: String): Tag = Tag(ApiTag(id = tagId, `type` = "keyword", webTitle = "title", webUrl = "url", apiUrl = "url"))

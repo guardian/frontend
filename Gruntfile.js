@@ -63,9 +63,9 @@ module.exports = function (grunt) {
 
     grunt.registerTask('sass:compile', ['concurrent:sass']);
 
-    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration', 'imagemin']);
+    grunt.registerTask('compile:images', ['copy:images', 'shell:spriteGeneration']);
     grunt.registerTask('compile:css', function(fullCompile) {
-        grunt.task.run(['compile:images', 'sass:compile', 'sass:compileStyleguide']);
+        grunt.task.run(['mkdir:css', 'compile:images', 'sass:compile', 'sass:compileStyleguide']);
 
         if (options.isDev) {
             grunt.task.run(['replace:cssSourceMaps', 'copy:css']);

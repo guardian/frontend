@@ -35,19 +35,23 @@
     </ol>
 
     <h3>Behind Test Cookie</h3>
-    <ol>
-    @for(sponsorship <- pageSkinnedAdUnits.testSponsorships) {
-        <li style="margin: 20px">@sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
-            @if(sponsorship.countries.nonEmpty){<br />Editions: @for(country <- sponsorship.countries){@{country.editionId}<span style="font-size:75%">&nbsp;&nbsp;&nbsp;[deduced from country: @{country.name}]</span>}}
-        <br />Ad Units:
-        <ul>
-        @for(adUnit <- sponsorship.adUnits) {
-            <li>@SiteLink.adUnit(adUnit).map{link => <a href="@link">@adUnit</a>}.getOrElse{@adUnit}</li>
+    @if(pageSkinnedAdUnits.testSponsorships.isEmpty) {
+        <p>None</p>
+    } else {
+        <ol>
+        @for(sponsorship <- pageSkinnedAdUnits.testSponsorships) {
+            <li style="margin : 20px">@sponsorship.lineItemName (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+                @if(sponsorship.countries.nonEmpty){<br />Editions: @for(country <- sponsorship.countries) {@{country.editionId} <span style="font-size : 75 %">&nbsp;&nbsp;&nbsp;[deduced from country: @{country.name}]</span>}}
+            <br />Ad Units:
+            <ul>
+            @for(adUnit <- sponsorship.adUnits) {
+                <li>@SiteLink.adUnit(adUnit).map { link => <a href="@link">@adUnit</a>}.getOrElse {@adUnit}</li>
+            }
+            </ul>
+            </li>
         }
-        </ul>
-        </li>
+        </ol>
     }
-    </ol>
 
     <h3>R2 Only</h3>
     <ol>

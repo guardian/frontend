@@ -1,8 +1,9 @@
 package dfp
 
-import common.ExecutionContexts
+import common.{AkkaAsync, Jobs, ExecutionContexts}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import play.api.{Application, GlobalSettings}
 import play.api.libs.json.Json.{toJson, _}
 import play.api.libs.json.{JsValue, Json, Writes}
 import tools.Store
@@ -93,27 +94,6 @@ object DfpDataCacheJob extends ExecutionContexts {
     }
   }
 
-  private implicit val countryWrites = new Writes[Country] {
-    def writes(country: Country): JsValue = {
-      Json.obj(
-        "name" -> country.name,
-        "editionId" -> country.editionId
-      )
-    }
-  }
-
-  private implicit val pageSkinSponsorshipWrites = new Writes[PageSkinSponsorship] {
-    def writes(sponsorship: PageSkinSponsorship): JsValue = {
-      Json.obj(
-        "lineItem" -> sponsorship.lineItemName,
-        "lineItemId" -> sponsorship.lineItemId,
-        "adUnits" -> sponsorship.adUnits,
-        "countries" -> sponsorship.countries,
-        "isAdTest" -> sponsorship.targetsAdTest
-      )
-    }
-  }
-
   private implicit val pageSkinSponsorshipReportWrites = new Writes[PageSkinSponsorshipReport] {
     def writes(report: PageSkinSponsorshipReport): JsValue = {
       Json.obj(
@@ -164,5 +144,30 @@ object DfpDataCacheJob extends ExecutionContexts {
         Store.putDfpLineItemsReport(stringify(toJson(data.lineItems)))
       }
     }
+  }
+}
+
+
+trait DfpDataCacheLifecycle extends GlobalSettings {
+
+  private val jobName = "DfpDataCacheJob"
+  private val every5Mins = "0 2/5 * * * ?"
+
+  override def onStart(app: Application) {
+    super.onStart(app)
+
+    Jobs.deschedule(jobName)
+    Jobs.schedule(jobName, every5Mins) {
+      DfpDataCacheJob.run()
+    }
+
+    AkkaAsync {
+      DfpDataCacheJob.run()
+    }
+  }
+
+  override def onStop(app: Application) {
+    Jobs.deschedule(jobName)
+    super.onStop(app)
   }
 }

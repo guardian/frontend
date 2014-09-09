@@ -45,9 +45,7 @@ module.exports = function(grunt, options) {
             files: [{
                 expand: true,
                 cwd: sassDir,
-                src: options.isDev ?
-                    ['global.scss', 'head.default.scss', 'head.facia.scss'] :
-                    ['*.scss', '!{_*,ie9.*,old-ie.*}'],
+                src: ['*.scss', '!{_*,ie9.*,old-ie.*}'],
                 dest: options.staticTargetDir + 'stylesheets/',
                 rename: function(dest, src) {
                     return dest + src.replace('scss', 'css');

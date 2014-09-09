@@ -41,8 +41,6 @@ POST          /edits                     controllers.FaciaToolController.collect
 GET           /collection                controllers.FaciaToolController.listCollections
 GET           /config                    controllers.FaciaToolController.getConfig
 
-POST          /collectionmeta/*id        controllers.FaciaToolController.updateCollectionMeta(id)
-
 # endpoints for proxying https
 GET           /switches                  controllers.SwitchesProxy.getSwitches()
 GET           /api/proxy/*path           controllers.FaciaContentApiProxy.proxy(path)

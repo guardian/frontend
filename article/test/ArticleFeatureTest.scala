@@ -349,8 +349,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         And("the placeholder has the correct data attributes")
         adPlaceholder.getAttribute("data-name") should be("top-above-nav")
-        adPlaceholder.getAttribute("data-tabletportrait") should be("728,90")
-        adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|940,230|900,250")
+        adPlaceholder.getAttribute("data-mobile") should be("728,90")
+        adPlaceholder.getAttribute("data-right-col") should be("728,90|940,230|900,250")
         adPlaceholder.getAttribute("data-wide") should be("728,90|940,230|900,250|970,250")
 
         And("the placeholder has the correct class name")
@@ -677,14 +677,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    scenario("More on this story gallery lightbox") {
-      Given("I see a gallery trail")
-      HtmlUnit("/culture/2014/jul/27/-sp-jennifer-hudson-the-only-constant-is-my-voice-grief") { browser =>
-        import browser._
-        Then("it should have a relative data gallery url attribute")
-        $("div[data-gallery-url]").getAttribute("data-gallery-url") should be ("/music/gallery/2014/jul/27/jennifer-hudson-in-pictures")
-      }
-    }
   }
 
 }
