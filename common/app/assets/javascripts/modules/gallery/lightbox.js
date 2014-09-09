@@ -131,10 +131,10 @@ define([
                         crossOrigin: true,
                         success: function (response) {
                             self.galleryJson = response.gallery;
-                            self.trigger('loadJson')
+                            self.trigger('loadJson');
                         },
                         error: function () {
-                            console.log('error');
+                            // TODO: error message
                         }
                     });
                 }
@@ -283,8 +283,7 @@ define([
         this.trigger('open');
     };
 
-    GalleryLightbox.prototype.preloadImage = function(index) {
-
+    GalleryLightbox.prototype.preloadImage = function() {
     };
 
     GalleryLightbox.prototype.show = function() {
@@ -302,12 +301,12 @@ define([
         var $body = bonzo(document.body);
         $body.removeClass('has-overlay');
         bean.off(document.body, 'keydown', this.handleKeyEvents);
-        window.setTimeout((function() {
+        window.setTimeout(function() {
             $body.scrollTop(this.bodyScrollPosition);
             this.$lightboxEl.removeClass('gallery-lightbox--open');
-            mediator.emit("ui:images:upgrade");
-            mediator.emit("ui:images:vh");
-        }).bind(this), 1);
+            mediator.emit('ui:images:upgrade');
+            mediator.emit('ui:images:vh');
+        }.bind(this), 1);
     };
 
     GalleryLightbox.prototype.pulseButton = function(button) {
@@ -332,14 +331,14 @@ define([
         mediator.emit('module:clickstream:interaction', str);
     };
 
-    function bootstrap(config) {
+    function bootstrap(/*config*/) {
         var lightbox;
         bean.on(document.body, 'click', '.js-gallerythumbs', function(e) {
             e.preventDefault();
 
             var $el = bonzo(e.currentTarget),
                 galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
-                galleryHrefParts = galleryHref.split("?index="),
+                galleryHrefParts = galleryHref.split('?index='),
                 galleryId = galleryHrefParts[0],
                 parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
                 galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
