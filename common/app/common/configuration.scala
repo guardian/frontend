@@ -232,6 +232,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems.json"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
+
+    object magento {
+      lazy val domain = configuration.getStringProperty("magento.domain")
+      lazy val consumerKey = configuration.getStringProperty("magento.consumer.key")
+      lazy val consumerSecret = configuration.getStringProperty("magento.consumer.secret")
+      lazy val authorizationPath = configuration.getStringProperty("magento.auth.path")
+    }
   }
 
   object open {
@@ -289,15 +296,24 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthCallback <- configuration.getStringProperty("faciatool.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
 
-    lazy val adminPressJobPushRateInMinutes: Int =
-      Try(configuration.getStringProperty("admin.pressjob.push.rate.inminutes").get.toInt)
-        .getOrElse(3)
+    lazy val adminPressJobStandardPushRateInMinutes: Int =
+      Try(configuration.getStringProperty("admin.pressjob.standard.push.rate.inminutes").get.toInt)
+        .getOrElse(5)
+
+    lazy val adminPressJobHighPushRateInMinutes: Int =
+      Try(configuration.getStringProperty("admin.pressjob.high.push.rate.inminutes").get.toInt)
+        .getOrElse(1)
+
+    lazy val adminPressJobCommercialPushRateInMinutes: Int =
+      Try(configuration.getStringProperty("admin.pressjob.commercial.push.rate.inminutes").get.toInt)
+        .getOrElse(60)
 
     lazy val faciaToolUpdatesStream: Option[String] = configuration.getStringProperty("faciatool.updates.stream")
   }
 
   object pa {
     lazy val apiKey = configuration.getMandatoryStringProperty("pa.api.key")
+    lazy val cricketKey = configuration.getStringProperty("pa.cricket.api.key")
 
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }

@@ -11,6 +11,7 @@ define([
     'utils/deep-get',
     'utils/snap',
     'utils/human-time',
+    'utils/validate-image-src',
     'modules/copied-article',
     'modules/authed-ajax',
     'modules/content-api',
@@ -28,6 +29,7 @@ define([
         deepGet,
         snap,
         humanTime,
+        validateImageSrc,
         copiedArticle,
         authedAjax,
         contentApi,
@@ -372,37 +374,11 @@ define([
         };
 
         Article.prototype.validateImageSrc = function(src) {
-            var defer = $.Deferred(),
-                img;
-
-            if (!src) {
-                defer.resolve();
-
-            } else if (!src.match(new RegExp('^http://.*\\.' + vars.CONST.imageCdnDomain + '/'))) {
-                defer.reject('Images must come from *.' + vars.CONST.imageCdnDomain);
-
-            } else {
-                img = new Image();
-                img.onerror = function() {
-                    defer.reject('That image could not be found');
-                };
-                img.onload = function() {
-                    var width = this.width || 1,
-                        height = this.height || 1,
-                        err =  width > 940 ? 'Images cannot be more than 2048 pixels wide' :
-                               width < 620 ? 'Images cannot be less than 620 pixels wide'  :
-                               Math.abs((width * 3)/(height * 5) - 1) > 0.01 ?  'Images must have a 5x3 aspect ratio' : false;
-
-                    if (err) {
-                        defer.reject(err);
-                    } else {
-                        defer.resolve(width, height);
-                    }
-                };
-                img.src = src;
-            }
-
-            return defer.promise();
+            return validateImageSrc(src, {
+                maxWidth: 940,
+                minWidth: 620,
+                widthAspectRatio: 3,
+                heightAspectRatio: 5});
         };
 
         Article.prototype.convertToSnap = function() {

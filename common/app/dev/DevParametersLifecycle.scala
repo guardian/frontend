@@ -29,7 +29,10 @@ trait DevParametersLifecycle extends GlobalSettings with implicits.Requests {
     "t", // specific item targetting
     "switchesOn", // turn switches on for non-prod, http requests
     "switchesOff", // turn switches off for non-prod, http requests
-    "test" // used for integration tests
+    "test", // used for integration tests
+
+    "oauth_token", // for generating Magento tokens for bookshop service
+    "oauth_verifier" // for generating Magento tokens for bookshop service
   )
 
   val allowedParams = CanonicalLink.significantParams ++ insignificantParams

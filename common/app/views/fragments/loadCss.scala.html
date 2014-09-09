@@ -1,7 +1,7 @@
 @()(implicit request: RequestHeader)
 @import conf.Switches._
 
-@if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
+@if(InlineCriticalCss.isSwitchedOn && !play.Play.isDev()) {
     @*
       - Include any browser [<!-->]
       - Exclude IE < 10 [(gt IE 9)]
