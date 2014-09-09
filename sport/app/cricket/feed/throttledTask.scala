@@ -9,6 +9,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.reflect.ClassTag
 
+// ThrottledTask receives code blocks and executes them at a controlled rate, eg a maximum of 1 execution per second.
 object ThrottledTask extends common.ExecutionContexts {
 
   private lazy val throttler = actorSystem.actorOf(Props(classOf[TimerBasedThrottler], 1.msgsPerSecond), name = "cricket-throttle")
