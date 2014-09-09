@@ -153,22 +153,6 @@
         @include show-only-if-svg-is-supported;
     }
 }
-.item__title:before {
-    .item--audio & {
-        @include audio-icon(volume-high-yellow);
-
-        .container--dark-background & {
-            @include audio-icon(volume-high-yellow);
-        }
-    }
-    .item--video & {
-        @include video-icon(video-icon-black);
-
-        .container--dark-background & {
-            @include audio-icon(video-icon);
-        }
-    }
-}
 
 // This is for when the accompanying media element is a video and the h2/h3
 // element is displaying to the left of the video - the h2/h3 should show

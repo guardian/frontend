@@ -94,15 +94,11 @@
    Facia
    ========================================================================== */
 
-@import 'module/facia/_facia-container';
-@import 'module/facia/_container';
-@import 'module/facia/_row-pattern';
-@import 'module/facia/_linkslist';
-@import 'module/facia/_item';
 @include facia-container--layout-content;
 @include facia-container--layout-discussion;
 @include facia-container--default-heading;
 
+@import 'module/facia/_icons';
 @import 'module/facia/_show-more';
 @import 'module/facia/_pagination';
 @import 'module/facia/_container-related-keywords';

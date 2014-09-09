@@ -90,14 +90,6 @@
     &:active {
         color: $c-neutral1;
     }
-    &:before {
-        .linkslist__item--audio & {
-            @include audio-icon(volume-high-yellow);
-        }
-        .linkslist__item--video & {
-            @include video-icon(video-icon-black);
-        }
-    }
 }
 
 
