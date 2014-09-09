@@ -179,44 +179,32 @@ define([
             });
         };
 
-        Article.prototype.opener = function(key) {
+        Article.prototype.editor = function(key) {
             var self = this;
 
-            return function() {
-                mediator.emit('ui:open', self.meta[key]);
-            }
-        };
-
-        Article.prototype.overrideOrVal = function(key) {
-            return ko.computed({
-                read: function() {
-                    var meta  = this.meta[key]   ? this.meta[key]()   : undefined;
-                    var field = this.fields[key] ? this.fields[key]() : undefined;
-
-                    return meta || field || 'Add ' + key + '...';
-                },
-                write: function(value) {
-                    var el = document.createElement('div');
-                    el.innerHTML = value;
-                    this.meta[key](el.innerHTML);
-                },
-                owner: this
-            });
-        };
-
-        Article.prototype.reverter = function(key) {
-            return function() {
-                this.meta[key](undefined);
-            };
-        };
-
-        Article.prototype.editor = function(key) {
             return {
                 key:           key,
-                element:       this.meta[key],
-                overrideOrVal: this.overrideOrVal(key),
-                reverter:      this.reverter(key),
-                opener:        this.opener(key)
+
+                element:       self.meta[key],
+
+                reverter:      function() { self.meta[key](undefined); },
+
+                opener:        function() { mediator.emit('ui:open', self.meta[key]); },
+
+                overrideOrVal: ko.computed({
+                    read: function() {
+                        var meta  = self.meta[key]   ? self.meta[key]()   : undefined;
+                        var field = self.fields[key] ? self.fields[key]() : undefined;
+
+                        return meta || field || 'Add ' + key + '...';
+                    },
+                    write: function(value) {
+                        var el = document.createElement('div');
+                        el.innerHTML = value;
+                        self.meta[key](el.innerHTML);
+                    },
+                    owner: self
+                })
             }
         }
 
