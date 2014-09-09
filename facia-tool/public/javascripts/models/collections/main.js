@@ -210,11 +210,11 @@ define([
                     if (resp.status === 200 && resp.responseText) {
                         model.frontAge(humanTime(resp.responseText));
                         model.alertFrontIsStale(
+                            true ||
                             opts.alertIfStale &&
                             pageConfig.env !== 'dev' &&
                             new Date() - new Date(resp.responseText) > getFrontAgeAlertMs()
                         );
-                        console.log(model.alertFrontIsStale())
                     } else {
                         model.frontAge(undefined);
                     }
@@ -293,8 +293,6 @@ define([
             }, vars.CONST.configSettingsPollMs, true)
             .done(function() {
                 var wasPopstate = false;
-
-                console.log(vars.CONST.frontAgeAlertMs);
 
                 model.setFront(getFront());
                 loadFront(getFront());
