@@ -89,8 +89,8 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val CssFromStorageSwitch = Switch("Performance", "css-from-storage",
-    "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
+  val InlineCriticalCss = Switch("Performance", "inline-critical-css",
+    "If this switch is on critical CSS will be inlined into the head of the document.",
     safeState = On, sellByDate = never
   )
 
@@ -377,7 +377,7 @@ object Switches extends Collections {
     SearchSwitch,
     ReleaseMessageSwitch,
     IdentityProfileNavigationSwitch,
-    CssFromStorageSwitch,
+    InlineCriticalCss,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityAvatarUploadSwitch,

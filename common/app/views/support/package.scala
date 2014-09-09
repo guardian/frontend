@@ -696,13 +696,6 @@ object StripHtmlTagsAndUnescapeEntities{
   }
 }
 
-object CricketMatch {
-  def apply(trail: Trail): Option[String] = trail match {
-    case c: Content => c.cricketMatch
-    case _ => None
-  }
-}
-
 object TableEmbedComplimentaryToP extends HtmlCleaner {
 
   override def clean(document: Document): Document = {

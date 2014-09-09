@@ -16,6 +16,7 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
         MostPopularExpandableAgent.refresh()
         GeoMostPopularAgent.refresh()
         MostViewedVideoAgent.refresh()
+        MostViewedGalleryAgent.refresh()
       }
 
       // fire every hour
@@ -28,6 +29,7 @@ trait OnwardJourneyLifecycle extends GlobalSettings {
         MostPopularExpandableAgent.refresh()
         GeoMostPopularAgent.refresh()
         MostViewedVideoAgent.refresh()
+        MostViewedGalleryAgent.refresh()
         DayMostPopularAgent.refresh()
       }
   }

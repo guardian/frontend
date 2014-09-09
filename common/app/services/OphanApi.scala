@@ -67,4 +67,6 @@ object OphanApi extends ExecutionContexts with Logging {
   def getSurgingContent() = getBody("surging?")
 
   def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] = getBody(s"video/mostviewed?hours=$hours&count=$count")
+
+  def getMostViewedGalleries(hours: Int, count: Int): Future[JsValue] = getBody(s"mostread?content-type=gallery&hours=$hours&count=$count")
 }

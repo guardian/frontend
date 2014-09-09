@@ -12,6 +12,8 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
   private val R1ArtifactUrl = """www.theguardian.com/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val PathPattern = s"""www.theguardian.com/([\\w\\d-]+)/(.*)""".r
   private val GoogleBot = """.*(Googlebot).*""".r
+  private val CombinerSection = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+$""".r
+  private val CombinerSectionRss = """^(www.theguardian.com/[\w\d-]+)[\w\d-/]*\+[\w\d-/]+/rss$""".r
 
   def lookup(path: String) = Action.async{ implicit request =>
 
@@ -20,10 +22,15 @@ object ArchiveController extends Controller with Logging with ExecutionContexts 
 
       // if we do not have a location in the database then follow these rules
       path match {
-        case Decoded(decodedPath) => redirectTo(decodedPath)
-        case Gallery(gallery)     => redirectTo(gallery)
-        case Century(century)     => redirectTo(century)
-        case Lowercase(lower)     => redirectTo(lower)
+        case Decoded(decodedPath)         => redirectTo(decodedPath)
+        case Gallery(gallery)             => redirectTo(gallery)
+        case Century(century)             => redirectTo(century)
+        case Lowercase(lower)             => redirectTo(lower)
+
+        // Googlebot hits a bunch of really old combiners and combiner RSS
+        // bounce these to the section
+        case CombinerSectionRss(section)  => redirectTo(s"$section/rss")
+        case CombinerSection(section)     => redirectTo(section)
 
         case _ =>
           log404(request)

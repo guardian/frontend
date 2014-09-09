@@ -68,7 +68,10 @@ object Frontend extends Build with Prototypes {
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies += "com.gu" %% "pa-client" % paVersion,
+    libraryDependencies ++= Seq(
+      "com.gu" %% "pa-client" % paVersion,
+      "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
+    ),
     TwirlKeys.templateImports ++= Seq(
       "pa._",
       "feed._",
