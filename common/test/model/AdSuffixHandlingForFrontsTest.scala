@@ -36,15 +36,15 @@ class AdSuffixHandlingForFrontsTest extends FlatSpec with Matchers  {
 
 
   "Editionalised Network Front pages" should "have editions in the ad unit suffix and end with 'front'" in {
-    NetworkFronts.extractAdUnitSuffixFrom("uk") should equal("uk/front")
+    NetworkFronts.extractAdUnitSuffixFrom("uk") should equal("uk/front/ng")
   }
 
   "Editionalised Section fronts" should "end with front, and do not have editions in the ad unit suffix" in {
-    SectionFront.extractAdUnitSuffixFrom("uk/business") should equal("business/front")
+    SectionFront.extractAdUnitSuffixFrom("uk/business") should equal("business/front/ng")
   }
 
   "Non-editionlised section fronts" should "end with 'front'" in {
-    SectionFront.extractAdUnitSuffixFrom("business") should equal("business/front")
+    SectionFront.extractAdUnitSuffixFrom("business") should equal("business/front/ng")
   }
 
   "Tag Fronts ad units" should "be the section, plus the word 'subsection'" in {

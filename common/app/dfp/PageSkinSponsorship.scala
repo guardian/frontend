@@ -70,7 +70,7 @@ object PageSkinSponsorship {
 case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[PageSkinSponsorship]) {
 
   val (deliverableAndTestSponsorships, legacySponsorships) = sponsorships partition { sponsorship =>
-    sponsorship.adUnits.exists(adUnit => adUnit.endsWith("/front") || adUnit.endsWith("/front/ng")) && (!sponsorship.isR2Only)
+    sponsorship.adUnits.exists(isValidForNextGenPageSkin) && (!sponsorship.isR2Only)
   }
   val (testSponsorships, deliverableSponsorships) = deliverableAndTestSponsorships partition (_.targetsAdTest)
 }
