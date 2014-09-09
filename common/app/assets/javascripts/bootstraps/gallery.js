@@ -1,10 +1,14 @@
 define([
     'common/utils/mediator',
     'common/utils/$',
+    'common/utils/config',
+    'qwery',
     'common/modules/component'
 ], function(
     mediator,
     $,
+    config,
+    qwery,
     Component
 ) {
 
@@ -24,15 +28,20 @@ define([
     };
 
     var transcludeMostPopular = function() {
-        var mostViewed = new Component(),
-            container = $('.js-gallery-most-popular')[0];
 
-        mostViewed.manipulationType = 'html';
-        mostViewed.endpoint = '/gallery/most-viewed.json';
-        mostViewed.ready = function() {
-            mediator.emit('ui:images:upgrade', container);
-        };
-        mostViewed.fetch(container, 'html');
+        if (config.page.section === 'childrens-books-site') {
+            $('.js-gallery-most-popular').addClass('u-h');
+        } else {
+            var mostViewed = new Component(),
+                container = qwery('.js-gallery-most-popular')[0];
+
+            mostViewed.manipulationType = 'html';
+            mostViewed.endpoint = '/gallery/most-viewed.json';
+            mostViewed.ready = function () {
+                mediator.emit('ui:images:upgrade', container);
+            };
+            mostViewed.fetch(container, 'html');
+        }
     };
 
     var ready = function (config) {

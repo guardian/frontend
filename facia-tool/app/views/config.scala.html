@@ -182,16 +182,38 @@
                             attr: {placeholder: placeholders.title},
                             value: props.title"></textarea>
 
-                        <label>Description</label>
+                        <label>Meta description</label>
                         <textarea data-bind="
                             attr: {placeholder: placeholders.description},
                             value: props.description"></textarea>
+
+                        <label>On-page description</label>
+                        <textarea data-bind="
+                            attr: {placeholder: placeholders.onPageDescription},
+                            value: props.onPageDescription"></textarea>
+
+                        <label>Image</label>
+                        <input type="text" placeholder="Image URL, e.g. copied from Batch Uploader"
+                            data-bind="value: provisionalImageUrl" />
+
+                        <label>Display image</label>
+                        <input type="checkbox" data-bind="
+                            checked: props.isImageDisplayed,
+                            enable: props.imageUrl" />
 
                         <label>Type</label>
                         <input type="radio" name="group02" data-bind="checkedValue: undefined, checked: props.priority" />
                         <span class="radio-label">editorial</span>
                         <input type="radio" name="group02" value="commercial" data-bind="checked: props.priority" />
                         <span class="radio-label">commercial</span>
+
+                        <label>Editorial type</label>
+                        <input type="radio" name="group03" data-bind="checkedValue: undefined, checked: props.editorialType" />
+                        <span class="radio-label">keyword</span>
+                        <input type="radio" name="group03" value="series" data-bind="checked: props.editorialType" />
+                        <span class="radio-label">series</span>
+                        <input type="radio" name="group03" value="contributor" data-bind="checked: props.editorialType" />
+                        <span class="radio-label">contributor</span>
 
                         <div class="tools">
                             <span class="tool" data-bind="click: saveProps">Save metadata</span>
