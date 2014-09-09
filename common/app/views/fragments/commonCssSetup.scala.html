@@ -19,7 +19,7 @@
   - Include IE Mobile [|(IEMobile)]
 *@
 <!--[if (gt IE 9)|(IEMobile)]><!-->
-@if(play.Play.isDev()) {
+@if(play.Play.isDev() || !InlineCriticalCss.isSwitchedOn) {
     <link rel="stylesheet" data-reload="head@projectName.map("." + _).getOrElse(".default")" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(".default") + ".css")" />
 } else {
     <style>
