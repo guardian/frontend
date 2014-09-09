@@ -15,6 +15,7 @@ object OmnitureVariables {
 
   // Segments
   val segmentGalleryVisits = Some("53fddc4fe4b08891cec2831a")
+  val segmentGalleryHits = Some("5400793ee4b0230c643d3a96")
   val segmentGalleryLightboxHits = Some("5400a89fe4b0230c643d3b46")
 }
 
@@ -48,7 +49,7 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
         dateTo = dateTo.toString("yyyy-MM-dd"),
         dateFrom = dateFrom.toString("yyyy-MM-dd"),
         metrics = List(OmnitureMetric(pageViews)),
-        segment_id = segmentGalleryVisits
+        segment_id = segmentGalleryHits
       ), QUEUE_OVERTIME, galleryPageViews)
     })
 
