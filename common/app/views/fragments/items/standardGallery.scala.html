@@ -17,14 +17,8 @@
         <div class="item__container">
             <div class="item__tonal-border tone-accent-border"></div>
             <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="gallery" data-is-ajax>
-                <div class="item__media-wrapper item__media-wrapper--has-icon js-gallerythumbs" data-gallery-url="@trail.url">
-                    <div class="item__cta item__cta--gallery">
-                        <p>Expand</p>
-                        <span class="item__cta__icon">
-                            <span class="i i-camera-black-large"></span>
-                            <span class="i i-camera-yellow-large"></span>
-                        </span>
-                    </div>
+                    <div class="item__media-wrapper">
+
                     @trail.trailPicture(5,3).map{ imageContainer =>
                         @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                             <div class="item__image-container u-responsive-ratio js-image-upgrade @if(inlineImages){ inlined-image}" data-src="@imgSrc">
@@ -41,8 +35,8 @@
                 </div>
             </a>
             <div class="item__header">
-                <h@headingLevel class="item__title item__title--has-icon-mobile">
-                    <span class="i i-gallery-yellow-small"></span>
+                <h@headingLevel class="item__title item__title--gallery-icon">
+
                     @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
                     <a href="@LinkTo{@trail.url}" class="item__link" data-link-name="article">
                         <span class="u-faux-block-link__cta">@RemoveOuterParaHtml(trail.headline)</span>

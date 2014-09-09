@@ -44,4 +44,9 @@ class GalleryTemplateTest extends FlatSpec with Matchers {
   it should "include the index parameter in direct links" in HtmlUnit("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre?index=2") { browser =>
     browser.findFirst("link[rel='canonical']").getAttribute("href") should endWith("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre?index=2")
   }
+
+  it should "render link to gallery most view onward journey page" in HtmlUnit("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
+    import browser._
+    $(".most-viewed-no-js").first.getText should be("More galleries")
+  }
 }

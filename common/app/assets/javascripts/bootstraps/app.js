@@ -20,7 +20,8 @@ define([
     'common/bootstraps/media',
     'common/bootstraps/gallery',
     'common/bootstraps/identity',
-    'common/bootstraps/profile'
+    'common/bootstraps/profile',
+    'common/bootstraps/sport'
 ], function (
     raven,
     qwery,
@@ -42,7 +43,8 @@ define([
     media,
     gallery,
     identity,
-    profile
+    profile,
+    sport
 ) {
 
     var bootstrapContext = function(featureName, boostrap) {
@@ -124,6 +126,10 @@ define([
 
             if (config.page.section === 'football') {
                 bootstrapContext('footbal', football);
+            }
+
+            if (config.page.section === 'sport') {
+                bootstrapContext('sport', sport);
             }
 
             if (config.page.section === 'identity') {

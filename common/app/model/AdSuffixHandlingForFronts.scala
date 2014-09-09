@@ -14,8 +14,8 @@ trait AdSuffixHandlingForFronts extends MetaData{
 
     path.split("/").toList match {
       case cc :: Nil  if supportedCountries contains cc => (cc :: frontSuffixList).mkString("/")
-      case cc :: bitsAfterTheEdition if (supportedCountries.contains(cc) &&
-        bitsAfterTheEdition == List(section))=> (section :: frontSuffixList).mkString("/")
+      case cc :: bitsAfterTheEdition if supportedCountries.contains(cc) &&
+        bitsAfterTheEdition == List(section) => (section :: frontSuffixList).mkString("/")
       case nonEditionalisedPath if nonEditionalisedPath == List(section) => (section :: frontSuffixList).mkString("/")
       case _  => (section :: tagPageSuffixList).mkString("/")
     }
