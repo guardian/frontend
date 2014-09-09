@@ -25,12 +25,12 @@ object CricketStatsJob extends ExecutionContexts with Logging {
           cricketStatsAgent.send { _ + (date -> matchData) }
         }.recover {
           case paFeedError: CricketFeedException => log.warn(s"CricketStatsJob encountered errors: ${paFeedError.message}")
-          case error: Throwable => log.warn(error.getMessage)
+          case error: Exception => log.warn(error.getMessage)
         }
       }
     }.recover {
       case paFeedError: CricketFeedException => log.warn(s"CricketStatsJob couldn't find matches: ${paFeedError.message}")
-      case error: Throwable => log.warn(error.getMessage)
+      case error: Exception => log.warn(error.getMessage)
     }
   }
 }
