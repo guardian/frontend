@@ -9,32 +9,33 @@ class SanitizeInputTest extends FlatSpec with Matchers {
                                     title: Option[String] = None,
                                     webTitle: Option[String] = None,
                                     description: Option[String] = None,
-                                    onPageDescription: Option[String] = None): Config =
-    Config(Map("uk" -> Front(Nil, section, webTitle, title, description, onPageDescription, None, None, None, None, None, None)), Map.empty)
+                                    onPageDescription: Option[String] = None) = Config(
+    Map("uk" -> Front(Nil, section, webTitle, title, description, onPageDescription, None, None, None, None, None, None)),
+    Map.empty)
 
   "StripTags" should "strip tag from title" in {
     val config = createConfigWithFront(title = Option("<strip><me>now"))
-    SanitizeInput.fromConfigSeo(config).fronts.head._2.title.get should be("now")
+    SanitizeInput.fromConfigSeo(config).fronts("uk").title.get should be("now")
   }
 
   it should "strip tag from webTitle" in {
     val config = createConfigWithFront(webTitle = Option("a<strip>b</me>c"))
-    SanitizeInput.fromConfigSeo(config).fronts.head._2.webTitle.get should be("abc")
+    SanitizeInput.fromConfigSeo(config).fronts("uk").webTitle.get should be("abc")
   }
 
   it should "strip tag from description" in {
     val config = createConfigWithFront(description = Option("<strip><me>"))
-    SanitizeInput.fromConfigSeo(config).fronts.head._2.description.get should be("")
+    SanitizeInput.fromConfigSeo(config).fronts("uk").description.get should be("")
   }
 
   it should "strip tag from on-page description" in {
     val config = createConfigWithFront(onPageDescription = Option("<strip><me>"))
-    SanitizeInput.fromConfigSeo(config).fronts.head._2.onPageDescription.get should be("")
+    SanitizeInput.fromConfigSeo(config).fronts("uk").onPageDescription.get should be("")
   }
 
   it should "strip tag from section" in {
     val config = createConfigWithFront(section = Option("<strip>hello<me>"))
-    SanitizeInput.fromConfigSeo(config).fronts.head._2.navSection.get should be("hello")
+    SanitizeInput.fromConfigSeo(config).fronts("uk").navSection.get should be("hello")
   }
 
   it should "strip empty brackets regex" in {
