@@ -119,12 +119,12 @@
         <!-- ko if: $data.element === $root.uiOpenElement() -->
             <textarea data-bind="
                 attr: {class: key},
-                valueUpdate:'afterkeydown',
+                valueUpdate: 'afterkeydown',
                 hasFocus: true,
                 value: overrideOrVal"></textarea>
         <!-- /ko -->
         <!-- ko ifnot: $data.element === $root.uiOpenElement() -->
-            <div class="headline" data-bind="
+            <div data-bind="
                 attr: {class: key},
                 click: opener,
                 html: overrideOrVal"></div>

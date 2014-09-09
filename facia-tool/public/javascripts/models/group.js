@@ -23,14 +23,6 @@ define([
         this.parentType = opts.parentType;
         this.keepCopy   = opts.keepCopy;
 
-        this.closeAllExcept = function(article) {
-            this.items().forEach(function(a) {
-                if (a !== article) {
-                    a.close();
-                }
-            });
-        }
-
         this.pasteItem = function() {
             var sourceItem = copiedArticle.get(true);
 
