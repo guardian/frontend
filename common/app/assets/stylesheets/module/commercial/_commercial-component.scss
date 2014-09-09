@@ -189,95 +189,95 @@ $commercial-cta-diameter: (
             color: #ffffff;
         }
     }
-}
 
-.ad-slot--im {
-    padding-right: $gs-gutter;
-    width: 50%;
-    float: left;
-    @include mq(leftCol) {
+    .ad-slot--im {
+        padding-right: $gs-gutter;
+        width: 50%;
+        float: left;
+        @include mq(leftCol) {
+            @include box-sizing(border-box);
+            width: $left-column + $gs-gutter;
+            margin-left: -($left-column + $gs-gutter);
+        }
+        @include mq(wide) {
+            width: $left-column-wide + $gs-gutter;
+            margin-left: -($left-column-wide + $gs-gutter);
+        }
+    }
+
+    .commercial__head {
         @include box-sizing(border-box);
-        width: $left-column + $gs-gutter;
-        margin-left: -($left-column + $gs-gutter);
+        background-color: #ffffff;
+        border-top: 1px solid $c-neutral4;
+        overflow: hidden;
+        height: 40px;
     }
-    @include mq(wide) {
-        width: $left-column-wide + $gs-gutter;
-        margin-left: -($left-column-wide + $gs-gutter);
+    .commercial__logo {
+        margin-bottom: $gs-baseline/2;
+        float: left;
     }
-}
-
-.commercial__head {
-    @include box-sizing(border-box);
-    background-color: #ffffff;
-    border-top: 1px solid $c-neutral4;
-    overflow: hidden;
-    height: 40px;
-}
-.commercial__logo {
-    margin-bottom: $gs-baseline/2;
-    float: left;
-}
-.commercial__title {
-    @include fs-header(3);
-    margin-bottom: $gs-baseline*2;
-    float: left;
-    clear: both;
-}
-.commercial__call-to-action {
-    display: block;
-    float: right;
-    @include fs-bodyHeading(2);
-
-    &:hover {
-        text-decoration: none;
+    .commercial__title {
+        @include fs-header(3);
+        margin-bottom: $gs-baseline*2;
+        float: left;
+        clear: both;
     }
-}
-.commercial__body {
-    padding: $comercial-comp-baseline;
-    overflow: hidden;
-}
-.commercial__foot {
-    padding: ($gs-baseline/3)*2 0;
-    clear: both;
-    overflow: hidden;
-}
-.commercial__search {
-    position: relative;
-    width: 100%;
-    margin-bottom: 0;
-    float: right;
-    overflow: hidden;
-}
-.commercial__search__input {
-    @include box-sizing(border-box);
-    width: 100%;
-    height: $gs-row-height;
-    padding: $gs-baseline/3 32px $gs-baseline/3 8px;
-    @include fs-textSans(2);
-    border: 0;
-    @include border-radius(18px);
-    float: left;
-    overflow: hidden;
+    .commercial__call-to-action {
+        display: block;
+        float: right;
+        @include fs-bodyHeading(2);
 
-    &:hover,
-    &:focus {
-        outline: none;
+        &:hover {
+            text-decoration: none;
+        }
     }
-}
-.commercial__search__submit {
-    @include rem((
-        width: $gs-baseline*3,
-        height: $gs-baseline*3
-    ));
-    position: absolute;
-    right: 0;
-    opacity: .67;
+    .commercial__body {
+        padding: $comercial-comp-baseline;
+        overflow: hidden;
+    }
+    .commercial__foot {
+        padding: ($gs-baseline/3)*2 0;
+        clear: both;
+        overflow: hidden;
+    }
+    .commercial__search {
+        position: relative;
+        width: 100%;
+        margin-bottom: 0;
+        float: right;
+        overflow: hidden;
+    }
+    .commercial__search__input {
+        @include box-sizing(border-box);
+        width: 100%;
+        height: $gs-row-height;
+        padding: $gs-baseline/3 32px $gs-baseline/3 8px;
+        @include fs-textSans(2);
+        border: 0;
+        @include border-radius(18px);
+        float: left;
+        overflow: hidden;
 
-    &:hover,
-    &:focus,
-    &:active {
-        outline: none;
-        opacity: 1;
+        &:hover,
+        &:focus {
+            outline: none;
+        }
+    }
+    .commercial__search__submit {
+        @include rem((
+            width: $gs-baseline*3,
+            height: $gs-baseline*3
+        ));
+        position: absolute;
+        right: 0;
+        opacity: .67;
+
+        &:hover,
+        &:focus,
+        &:active {
+            outline: none;
+            opacity: 1;
+        }
     }
 }
 

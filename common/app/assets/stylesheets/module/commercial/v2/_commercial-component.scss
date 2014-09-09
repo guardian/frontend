@@ -283,22 +283,72 @@ $commercial-cta-diameter: (
             margin-left: $left-column + $gs-gutter;
         }
     }
+}
 
-// DEPRECATED FRONTS CONTAINER STYLES?
-//    @include mq(wide) {
-//        .has-page-skin & {
-//            .facia-container__inner {
-//                padding-left: 0;
-//                padding-right: 0;
-//            }
-//            .container__body {
-//                width: 100%;
-//            }
-//            .container__header {
-//                margin-bottom: 0;
-//            }
-//        }
-//    }
+/* ==========================================================================
+   Commercial container layout adaptions for front pages with page skins
+   Update once breakpoints synced
+   ========================================================================== */
+.facia-container--layout-front .commercial--v2 {
+    .has-page-skin & {
+        @include mq(wide) {
+            .container__header__inner,
+            .container__body,
+            .container__foot {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .container__header__inner {
+                @include box-sizing(content-box);
+                margin: 0;
+                padding-left: $gs-gutter;
+                padding-right: $gs-gutter;
+                height: auto;
+            }
+
+            .container__header {
+                width: 100%;
+                position: relative;
+
+                .commercial__search {
+                    right: $gs-gutter;
+                }
+
+                .commercial__cta {
+                    top: $gs-baseline/2;
+                    right: $gs-gutter;
+                    bottom: auto;
+                    left: auto;
+                    width: gs-span(3);
+                }
+            }
+
+            .commercial__title {
+                .i-guardian-logo-commercial {
+                    display: inline-block;
+                }
+                .i-marque-54 {
+                    display: none;
+                }
+                .i-commercial-brand {
+                    opacity: .8;
+                }
+            }
+
+            .commercial__desc {
+                margin-top: $gs-baseline*-1.333;
+            }
+
+            .container__body,
+            .container__foot {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+//.facia-container--layout-front .commercial--v2 {
 //    &.commercial--high {
 //        @include mq(tablet) {
 //            .commercial__relevance-high,
@@ -311,12 +361,6 @@ $commercial-cta-diameter: (
 //            }
 //        }
 //        @include mq(desktop) {
-//            .commercial__head .commercial__search {
-//                display: block;
-//            }
-//            .commercial__body {
-//                padding-left: $gs-gutter;
-//            }
 //            .commercial__relevance-high {
 //                width: percentage(2/3);
 //            }
@@ -333,17 +377,8 @@ $commercial-cta-diameter: (
 //            .commercial__foot {
 //                display: none;
 //            }
-//            .commercial__home-link {
-//                position: absolute;
-//            }
 //        }
 //        @include mq(faciaLeftCol) {
-//            .commercial__head {
-//                width: gs-span(2) + $gs-gutter;
-//            }
-//            .commercial__body {
-//                padding-left: 0;
-//            }
 //            .commercial__relevance-high,
 //            .commercial__relevance-low,
 //            .lineitem {
@@ -362,14 +397,13 @@ $commercial-cta-diameter: (
 //            }
 //        }
 //    }
-}
+//}
 
 
 /* ==========================================================================
    Common commercial container styles
    ========================================================================== */
 .facia-container .commercial--v2 {
-
     .facia-container__inner--commercial {
         position: relative;
         overflow: hidden;
@@ -444,8 +478,6 @@ $commercial-cta-diameter: (
     }
 
     .commercial__search {
-        margin: 0; // override v1
-
         .commercial__search__inner {
             width: 100%;
             position: relative;
@@ -519,198 +551,5 @@ $commercial-cta-diameter: (
     .commercial__header {
         @include fs-header(2);
         margin-bottom: $gs-gutter;
-    }
-}
-
-
-/* ==========================================================================
-   Line items
-   ========================================================================== */
-.commercial--v2 {
-    .lineitems,
-    .highitem {
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
-    }
-    .highitem {
-        position: relative;
-        border-bottom: 1px solid $c-neutral4;
-    }
-    .lineitem {
-        list-style-type: none;
-        @include box-sizing(border-box);
-        position: relative;
-        padding: 0;
-        @include fs-headline(2);
-
-        &:nth-child(n + 4) {
-            display: none;
-        }
-        &:first-child .lineitem__img {
-            display: block;
-        }
-        + .lineitem {
-            border-top: 1px solid $c-neutral4;
-        }
-    }
-    .lineitem__title {
-        color: $c-neutral1;
-        @include fs-headline(2);
-        margin-bottom: $gs-baseline;
-        font-weight: normal;
-        text-overflow: ellipsis;
-        white-space: pre;
-        overflow: hidden;
-    }
-    .lineitem__description {
-        @include fs-data(4);
-
-        strong {
-            color: $c-neutral1;
-            font-weight: normal;
-        }
-    }
-    .lineitem__link {
-        margin-bottom: $gs-baseline;
-    }
-    .lineitem__meta {
-        color: $c-neutral2;
-        @include fs-textSans(2);
-        margin-bottom: $gs-baseline/2;
-    }
-    .lineitem__img,
-    .highitem__img {
-        height: 100px;
-        display: none;
-        margin-right: $gs-gutter/2;
-        float: left;
-        text-align: center;
-
-        .responsive-img {
-            width: auto;
-            height: 100%;
-        }
-    }
-    .highitem__img {
-        display: block;
-        height: auto;
-        width: 80px;
-    }
-    .highitem__details {
-        margin-left: 90px;
-    }
-
-    &.commercial--high {
-        .lineitem__title {
-            clear: none;
-        }
-        .commercial__head .commercial__search {
-            display: none;
-        }
-        .commercial__relevance-low {
-            .lineitem_link {
-                width: 100%;
-            }
-            .lineitem__img {
-                height: auto;
-            }
-        }
-        .commercial__relevance-high {
-            .lineitem__title {
-                white-space: normal;
-            }
-        }
-        .highitem__details {
-            padding-right: $gs-gutter/2;
-        }
-        @include mq(tablet) {
-            .lineitem {
-                width: 50%;
-            }
-            .highitem {
-                border-bottom: 0;
-                padding-bottom: 0;
-            }
-            .commercial__relevance-high {
-                width: percentage(2/3);
-                float: left;
-            }
-            .commercial__relevance-low {
-                width: percentage(1/3);
-                float: right;
-            
-                .lineitem:first-child .lineitem__img {
-                    display: block;
-                }
-            }
-        }
-        @include mq(leftCol) {
-            .commercial__relevance-high,
-            .commercial__relevance-low,
-            .lineitem {
-                width: 50%;
-            }
-            .lineitem:nth-child(n+2) {
-                display: block;
-            }           
-        }
-    }
-
-    @include mq(tablet) {
-        .lineitem {
-            width: 20%;
-            padding-left: $gs-gutter/2;
-            padding-right: $gs-gutter/2;
-            padding: 0;
-            float: left;
-
-            &:nth-child(n + 4) {
-                display: block;
-            }
-
-            + .lineitem {
-                border-top: 0;
-                border-left: 1px solid $c-neutral4;
-            }
-        }
-        .lineitem__title {
-            white-space: nowrap;
-            clear: both;
-        }
-        .lineitem__img {
-            display: block;
-            margin-bottom: $gs-baseline;
-        }
-        .highitem__details {
-            margin-left: 110px;
-        }
-        .highitem__img {
-            width: 100px;
-        }
-    }
-
-    @include mq(desktop) {
-        .lineitem__title {
-            white-space: normal;
-        }
-    }
-
-    .commercial--v-high__body {
-        @include mq($until: mobileLandscape) {
-            .highitem__img {
-                width: 100px;
-                float: none;
-                margin-bottom: $gs-baseline/2;
-            }
-        }
-
-        @include mq(leftCol, wide) {
-            .highitem__img {
-                width: 100%;
-                float: none;
-                margin-bottom: $gs-baseline/2;
-            }
-        }
     }
 }

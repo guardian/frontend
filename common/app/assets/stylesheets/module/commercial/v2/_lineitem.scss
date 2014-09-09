@@ -1,0 +1,285 @@
+/* ==========================================================================
+   Line items
+   ========================================================================== */
+.commercial--v2 {
+    .lineitems {
+        padding: 0;
+        margin: 0 $gs-gutter*-.5;
+        overflow: hidden;
+    }
+
+    .lineitem {
+        @include box-sizing(border-box);
+        list-style-type: none;
+        padding: 0 $gs-gutter/2;
+        border-right: 1px solid $c-neutral4;
+        position: relative;
+        float: left;
+
+        &:last-child {
+            border-right: 0;
+        }
+
+        @include mq($to: tablet) {
+            width: percentage(1/2);
+
+            &:nth-child(n+2) {
+                border-right: 0;
+            }
+
+            &:nth-child(n+3) {
+                display: none;
+            }
+        }
+
+        @include mq(tablet) {
+            width: percentage(1/3);
+
+            &:nth-child(n+3) {
+                border-right: 0;
+            }
+
+            &:nth-child(n+4) {
+                display: none;
+            }
+        }
+
+        @include mq(rightCol) {
+            width: percentage(1/4);
+        }
+    }
+
+    .lineitem__link {
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    .lineitem__image {
+        width: 100%;
+    }
+
+    .lineitem__title {
+        color: $c-neutral1;
+        @include fs-headline(2);
+        margin-bottom: $gs-baseline*1.5;
+        text-overflow: ellipsis;
+        white-space: pre;
+        overflow: hidden;
+    }
+
+    .lineitem__meta {
+        color: $c-neutral2;
+        @include fs-textSans(2);
+        margin-bottom: $gs-baseline/2;
+    }
+
+    .commercial__relevance {
+        width: 50%;
+        float: left;
+    }
+
+    .commercial__relevance--high {
+        @include box-sizing(border-box);
+        padding-right: $gs-gutter/2;
+
+        .lineitem--high {
+            border-right: 1px solid $c-neutral4;
+            padding-right: $gs-gutter/2;
+            width: percentage(1/1);
+        }
+    }
+
+    .commercial__relevance--low {
+        @include box-sizing(border-box);
+        padding-left: $gs-gutter/2;
+
+        .lineitem {
+            width: percentage(1/2);
+        }
+    }
+}
+
+
+.facia-container--layout-front .commercial--v2 {
+    
+}
+
+.facia-container--layout-content .commercial--v2 {
+    
+}
+
+
+//.commercial--v2 {
+//    .lineitems,
+//    .highitem {
+//        padding: 0;
+//        margin: 0;
+//        overflow: hidden;
+//    }
+//    .highitem {
+//        position: relative;
+//        border-bottom: 1px solid $c-neutral4;
+//    }
+//    .lineitem {
+//        @include box-sizing(border-box);
+//        position: relative;
+//        padding: 0;
+//        @include fs-headline(2);
+//
+//        &:nth-child(n + 4) {
+//            display: none;
+//        }
+//        &:first-child .lineitem__img {
+//            display: block;
+//        }
+//        + .lineitem {
+//            border-top: 1px solid $c-neutral4;
+//        }
+//    }
+//    .lineitem__description {
+//        @include fs-data(4);
+//
+//        strong {
+//            color: $c-neutral1;
+//            font-weight: normal;
+//        }
+//    }
+//    .lineitem__link {
+//        margin-bottom: $gs-baseline;
+//    }
+//    .lineitem__img,
+//    .highitem__img {
+//        height: 100px;
+//        display: none;
+//        margin-right: $gs-gutter/2;
+//        float: left;
+//        text-align: center;
+//
+//        .responsive-img {
+//            width: auto;
+//            height: 100%;
+//        }
+//    }
+//    .highitem__img {
+//        display: block;
+//        height: auto;
+//        width: 80px;
+//    }
+//    .highitem__details {
+//        margin-left: 90px;
+//    }
+//
+//    &.commercial--high {
+//        .lineitem__title {
+//            clear: none;
+//        }
+//        .commercial__head .commercial__search {
+//            display: none;
+//        }
+//        .commercial__relevance-low {
+//            .lineitem_link {
+//                width: 100%;
+//            }
+//            .lineitem__img {
+//                height: auto;
+//            }
+//        }
+//        .commercial__relevance-high {
+//            .lineitem__title {
+//                white-space: normal;
+//            }
+//        }
+//        .highitem__details {
+//            padding-right: $gs-gutter/2;
+//        }
+//        @include mq(tablet) {
+//            .lineitem {
+//                width: 50%;
+//            }
+//            .highitem {
+//                border-bottom: 0;
+//                padding-bottom: 0;
+//            }
+//            .commercial__relevance-high {
+//                width: percentage(2/3);
+//                float: left;
+//            }
+//            .commercial__relevance-low {
+//                width: percentage(1/3);
+//                float: right;
+//
+//                .lineitem:first-child .lineitem__img {
+//                    display: block;
+//                }
+//            }
+//        }
+//        @include mq(leftCol) {
+//            .commercial__relevance-high,
+//            .commercial__relevance-low,
+//            .lineitem {
+//                width: 50%;
+//            }
+//            .lineitem:nth-child(n+2) {
+//                display: block;
+//            }
+//        }
+//    }
+//
+//    @include mq(tablet) {
+//        .lineitem {
+//            width: 20%;
+//            padding-left: $gs-gutter/2;
+//            padding-right: $gs-gutter/2;
+//            padding: 0;
+//            float: left;
+//
+//            &:nth-child(n + 4) {
+//                display: block;
+//            }
+//
+//            + .lineitem {
+//                border-top: 0;
+//                border-left: 1px solid $c-neutral4;
+//            }
+//        }
+//        .lineitem__title {
+//            white-space: nowrap;
+//            clear: both;
+//        }
+//        .lineitem__img {
+//            display: block;
+//            margin-bottom: $gs-baseline;
+//        }
+//        .highitem__details {
+//            margin-left: 110px;
+//        }
+//        .highitem__img {
+//            width: 100px;
+//        }
+//    }
+//
+//    @include mq(desktop) {
+//        .lineitem__title {
+//            white-space: normal;
+//        }
+//    }
+//
+//    .commercial--v-high__body {
+//        @include mq($until: mobileLandscape) {
+//            .highitem__img {
+//                width: 100px;
+//                float: none;
+//                margin-bottom: $gs-baseline/2;
+//            }
+//        }
+//
+//        @include mq(leftCol, wide) {
+//            .highitem__img {
+//                width: 100%;
+//                float: none;
+//                margin-bottom: $gs-baseline/2;
+//            }
+//        }
+//    }
+//}
