@@ -8,23 +8,23 @@ import conf.Configuration
 
 sealed trait FrontType
 
-case class CommercialFrequency(path: String) extends FrontType
-case class StandardFrequency(path: String) extends FrontType
-case class HighFrequency(path: String) extends FrontType
-
-object HighFrequency {
+object CommercialFrequency extends FrontType
+object StandardFrequency extends FrontType
+object HighFrequency extends FrontType {
   def highFrequencyPaths: List[String] = List("uk", "us", "au")
 }
 
+case class CronUpdate(path: String, frontType: FrontType)
+
 object RefreshFrontsJob extends Logging {
-  def getCronUpdates: Option[Seq[FrontType]] = {
+  def getCronUpdates: Option[Seq[CronUpdate]] = {
     val masterConfigJson: Option[JsValue] = S3FrontsApi.getMasterConfig.map(Json.parse)
     for (json <- masterConfigJson)
       yield
       (for {
         path <- (json \ "fronts").asOpt[Map[String, JsValue]].getOrElse(Map.empty).keys
     } yield {
-        getFrontType(json, path)
+        CronUpdate(path, getFrontType(json, path))
       }).toSeq
   }
 
@@ -32,11 +32,11 @@ object RefreshFrontsJob extends Logging {
     lazy val isCommercial: Boolean =
       json.asOpt[Map[String, JsValue]].flatMap(_.get(path)).flatMap(_.asOpt[JsObject]).exists(_.keys.contains("commercial"))
     if (HighFrequency.highFrequencyPaths.contains(path))
-      HighFrequency(path)
+      HighFrequency
     else if (isCommercial)
-      CommercialFrequency(path)
+      CommercialFrequency
     else
-      StandardFrequency(path)
+      StandardFrequency
   }
 
   def runHighFrequency(): Unit = {
@@ -45,7 +45,7 @@ object RefreshFrontsJob extends Logging {
 
       for {
         updates <- getCronUpdates
-        update <- updates.collect{case f: HighFrequency => f}
+        update <- updates.filter(_.frontType == HighFrequency)
       } {
         log.info(s"Pressing $update")
         FrontPressNotification.sendWithoutSubject(update.path)
@@ -61,7 +61,7 @@ object RefreshFrontsJob extends Logging {
 
       for {
         updates <- getCronUpdates
-        update <- updates.collect{case f: StandardFrequency => f}
+        update <- updates.filter(_.frontType == StandardFrequency)
       } {
         log.info(s"Pressing $update")
         FrontPressNotification.sendWithoutSubject(update.path)
@@ -77,7 +77,7 @@ object RefreshFrontsJob extends Logging {
 
       for {
         updates <- getCronUpdates
-        update <- updates.collect{case f: CommercialFrequency => f}
+        update <- updates.filter(_.frontType == CommercialFrequency)
       } {
         log.info(s"Pressing $update")
         FrontPressNotification.sendWithoutSubject(update.path)
