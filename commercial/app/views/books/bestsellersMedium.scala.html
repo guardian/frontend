@@ -7,37 +7,37 @@
 </style>
 
 @defining(("1_0", "2014-05-23")) { case (version, date) =>
-    <div class="commercial--v2 commercial--low commercial--medium commercial--books" role="complementary">
-        <div class="facia-container__inner--commercial">
-
-            <div class="container__header">
-                <div class="container__header__inner">
+    <div class="commercial commercial--low commercial--medium commercial--books" role="complementary">
+        <div class="facia-container__inner">
+            <div class="commercial__head container__title">
+                <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
                     <h3 class="commercial__title">
-                        <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
-                            <i class="i i-marque-54"></i><i class="i i-guardian-logo-commercial"></i><i class="i i-bookshop-logo i-commercial-brand"></i>
-                            <span class="u-h">The Guardian</span> <span class="u-h">Bookshop</span>
-                        </a>
+                        <span class="i i--commercial i-bookshop-logo--guardian"></span><span class="i i--commercial i-bookshop-logo--bookshop"></span>
+                        <span class="u-h">Guardian bookshop</span>
                     </h3>
-                    <form class="commercial__search hide-on-mobile" action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" name="QuickSearchForm">
-                        <div class="commercial__search__inner">
-                            <label for="bookshop" class="u-h">Search bookshop:</label>
-                            <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search books" />
-                            <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-search">
-                                <i class="i i-search-grey-36"></i>
-                                <span class="u-h">Search the Guardian bookshop</span>
-                            </button>
-                            <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
-                        </div>
-                    </form>
-                    <a class="commercial__cta button button--tertiary button--large" href="@AdLink{@Configuration.commercial.books_url}" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
-                        <i class="i i-arrow-white-right i-right"></i>
-                        <span class="hide-on-mobile">Visit shop</span>
-                    </a>
-                </div>
+                </a>
+                <h4 class="commercial__title hide-on-mobile">This week's bestsellers</h4>
+                <form action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" class="commercial__search hide-on-mobile" name="QuickSearchForm">
+                    <div>
+                        <label for="bookshop" class="u-h">Search bookshop:</label>
+                        <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search books" />
+                        <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-search">
+                            <i class="i i-search-grey-36"></i>
+                            <span class="u-h">Search the Guardian bookshop</span>
+                        </button>
+                        <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
+                    </div>
+                </form>
+                <a href="@AdLink{@Configuration.commercial.books_url}"
+                    class="commercial__home-link"
+                    data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-visit-shop">
+                    Visit shop
+                    <span class="commercial__home-link__cta">
+                        <span class="i i-arrow-white-right-36"></span>
+                    </span>
+                </a>
             </div>
-
-            <div class="container__body">
-                <h4 class="commercial__header hide-on-mobile">This week’s bestsellers</h4>
+            <div class="commercial__body">
                 <ul class="u-unstyled lineitems">
                 @books.map { book =>
                     <li class="lineitem u-cf" itemscope itemtype="http://schema.org/Book">
@@ -60,17 +60,14 @@
                             }
                             </p>
                         </a>
-                        <a class="lineitem__link button button--primary button--small" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-@{book.isbn}-@{book.author}-@{book.title}-button">
-                            Buy now<i class="i i-arrow-white-right i-right"></i>
-                        </a>
+                        <a href="@AdLink{@book.buyUrl}" class="commercial--books__buy-now-button" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-@{book.isbn}-@{book.author}-@{book.title}-button">Buy now</a>
                     </li>
                 }
                 </ul>
             </div>
-
-            <div class="container__foot">
-                <form class="commercial__search" action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" name="QuickSearchForm">
-                    <div class="commercial__search__inner">
+            <div class="commercial__foot">
+                <form action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" class="commercial__search" name="QuickSearchForm">
+                    <div>
                         <label for="bookshop" class="u-h">Search bookshop:</label>
                         <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
                         <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-search">
