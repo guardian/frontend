@@ -4,8 +4,8 @@
 
 @index.page match {
     case tag: Tag => {
-        <meta name="twitter:url" content="@LinkTo(request.uri)" />
-        <meta name="og:title" content="@views.support.Title(index.page)" />
+        <meta property="twitter:url" content="@LinkTo(request.uri)" />
+        <meta property="og:title" content="@views.support.Title(index.page)" />
     }
     case _ => { }
 }
