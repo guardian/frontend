@@ -111,7 +111,7 @@ $commercial-cta-diameter: (
         }
         .i-commercial-brand {
             @include mq($to: leftCol) {
-                opacity: 0.8;
+                opacity: .8;
             }
         }
     }
@@ -266,7 +266,7 @@ $commercial-cta-diameter: (
         }
         .i-commercial-brand {
             @include mq($to: faciaLeftCol) {
-                opacity: 0.8;
+                opacity: .8;
             }
         }
     }
@@ -431,11 +431,11 @@ $commercial-cta-diameter: (
     .commercial__title {
         @include fs-header(3);
         min-height: $gs-baseline*3;
-        color: #fff;
+        color: #ffffff;
         margin: 0;
 
         a {
-            color: #fff;
+            color: #ffffff;
         }
 
         .i-marque-36 {
@@ -456,8 +456,8 @@ $commercial-cta-diameter: (
             @include box-sizing(border-box);
             @include border-radius(18px);
             @include fs-textSans(2);
-            background-color: rgba(#fff, 0.9);
-            border: none;
+            background-color: rgba(#ffffff, .9);
+            border: 0;
             width: 100%;
             height: $gs-row-height;
             padding: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 $gs-baseline*3;
@@ -470,7 +470,7 @@ $commercial-cta-diameter: (
             }
 
             &:focus {
-                background-color: #fff;
+                background-color: #ffffff;
             }
         }
 
@@ -493,7 +493,7 @@ $commercial-cta-diameter: (
 
     .commercial__cta {
         &.button {
-            @include button-colour(transparent, #fff, transparent, #fff);
+            @include button-colour(transparent, #ffffff, transparent, #ffffff);
             border-color: rgba(#ffffff, .3);
         }
         
@@ -512,7 +512,7 @@ $commercial-cta-diameter: (
     }
 
     .commercial__desc {
-        color: #fff;
+        color: #ffffff;
         margin-bottom: $gs-baseline/2;
     }
 
