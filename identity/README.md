@@ -28,7 +28,7 @@ So the required steps are:
 
 * configure and run nginx (see `/nginx`)
 * update your hosts file (also described in `/nginx`)
-* update your frontend.properties file with
+* make sure that your frontend.properties file contains
 
 ```
 # ID
