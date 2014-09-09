@@ -9,7 +9,8 @@ define([
     'models/config/persistence',
     'utils/as-observable-props',
     'utils/populate-observables',
-    'utils/find-first-by-id'
+    'utils/find-first-by-id',
+    'utils/validate-image-src'
 ], function(
     ko,
     pageConfig,
@@ -20,7 +21,8 @@ define([
     persistence,
     asObservableProps,
     populateObservables,
-    findFirstById
+    findFirstById,
+    validateImageSrc
 ) {
     function Front(opts) {
         var self = this;
@@ -34,7 +36,13 @@ define([
             'webTitle',
             'title',
             'description',
-            'priority']);
+            'onPageDescription',
+            'imageUrl',
+            'imageWidth',
+            'imageHeight',
+            'isImageDisplayed',
+            'priority',
+            'editorialType']);
 
         populateObservables(this.props, opts);
 
@@ -72,6 +80,31 @@ define([
             }
         }, this);
 
+        this.provisionalImageUrl = ko.observable();
+
+        this.props.imageUrl.subscribe(function(src){
+            this.provisionalImageUrl(src);
+        }, this);
+        this.provisionalImageUrl(this.props.imageUrl());
+
+        this.provisionalImageUrl.subscribe(function(src) {
+            var self = this;
+
+            if (src === this.props.imageUrl()) { return; }
+
+            validateImageSrc(src, {minWidth: 120})
+            .done(function(width, height) {
+                self.props.imageUrl(src);
+                self.props.imageWidth(width);
+                self.props.imageHeight(height);
+                self.saveProps();
+            })
+            .fail(function(err) {
+                self.provisionalImageUrl(undefined);
+                window.alert('Sorry! ' + err);
+            });
+        }, this);
+
         this.depopulateCollection = this._depopulateCollection.bind(this);
 
         this.placeholders = {};
@@ -97,6 +130,10 @@ define([
 
         this.placeholders.description  = ko.computed(function() {
             return this.props.description() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
+        }, this);
+
+        this.placeholders.onPageDescription  = ko.computed(function() {
+            return this.props.onPageDescription() || this.capiProps.description() || ('Latest ' + this.placeholders.webTitle() + ' news, comment and analysis from the Guardian, the world\'s leading liberal voice');
         }, this);
     }
 
