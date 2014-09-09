@@ -71,6 +71,9 @@
     &.show-more--hidden {
         display: none;
     }
+    .container--dark-background & {
+        border-top-color: mix(#ffffff, lighten($c-neutral1, 8%), 50%);
+    }
 }
 .linkslist__action {
     position: relative;

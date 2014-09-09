@@ -109,7 +109,7 @@
 }
 
 @mixin icon($name) {
-    @extend %i;
+    display: inline-block;
     @extend %i-#{$name};
 
     @if ($svg-support) {

@@ -17,6 +17,9 @@
 .item__tonal-border {
     border-top: $item-top-border-height solid $c-newsAccent;
 }
+.container--dark-background {
+    @include item--hide-tone-border;
+}
 .item__link,
 .item__title,
 .linkslist__action {
@@ -232,6 +235,10 @@
 .item__standfirst,
 .item__meta {
     color: $c-neutral2;
+
+    .container--dark-background & {
+        color: $c-neutral4;
+    }
 }
 .item__standfirst {
     display: none;

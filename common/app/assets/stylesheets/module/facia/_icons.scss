@@ -1,6 +1,6 @@
 @mixin media-icon($type) {
-    content: '';
     display: inline-block;
+    content: '';
     height: .75em;
     margin-right: $gs-gutter/10;
     @include background-size(contain);

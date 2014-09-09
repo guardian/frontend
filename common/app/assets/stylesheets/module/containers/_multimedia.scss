@@ -1,10 +1,6 @@
 .container--multimedia {
-    @include item--hide-tone-border;
     margin-bottom: 0;
 
-    .linkslist__item {
-        border-top-color: mix(#ffffff, lighten($c-neutral1, 8%), 50%);
-    }
     .item {
         margin-bottom: 0;
     }
@@ -12,9 +8,6 @@
     .item__byline,
     .item__meta {
         display: none;
-    }
-    .facia-slice__item:before {
-        border-left-color: lighten($c-neutral1, 16%);
     }
     .collection__show-more {
         top: -$gs-baseline;
@@ -36,8 +29,6 @@
         }
     }
     @include mq(tablet) {
-        @include item--hide-tone-border;
-
         .facia-slice-wrapper--position-1 {
             .facia-slice__item:first-child {
                 @include flex-grow(2);

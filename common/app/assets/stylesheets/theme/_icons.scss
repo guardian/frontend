@@ -9,38 +9,20 @@
 }
 
 .caption--img:before {
-    @include background-size(contain);
-    @extend %i;
-    @extend %i-image;
-    display: inline-block;
     content: '';
     vertical-align: top;
     margin: 1px 4px 0 0;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend %svg-i-image;
-        }
-    }
+    @include icon(image);
 }
 
 // Quotes
 .from-content-api blockquote.quoted:before {
-    @include background-size(contain);
-    @extend %i;
-    @extend %i-quote-marks;
     content: '';
     position: absolute;
     left: 0;
     @include transform(scale(.8));
     @include transform-origin(0);
-
-    @if ($svg-support) {
-        .svg & {
-            @extend %svg-i-quote-marks;
-        }
-    }
-
+    @include icon(quote-marks);
 }
 
 .item--dark .i-comment-light-grey {

@@ -138,6 +138,9 @@ $snap-points: (
         .facia-container__inner {
             @include facia-container__inner--layout-content;
         }
+        .container--dark-background .container__border {
+            border-color: lighten($c-neutral1, 16%);
+        }
         @include mq(leftCol) {
             .container__title {
                 margin-bottom: 0;
