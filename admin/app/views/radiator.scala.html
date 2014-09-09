@@ -19,6 +19,15 @@
         <h2>Pingdom <small>(external monitoring of our host names)</small></h2>
         <ul id="pingdom"></ul>
     </div>
+
+    <div class="build-wrapper">
+        <h2>Teamcity builds</h2>
+        @*
+            To add another build just append another &buildTypeId=XXXXXX
+            Note, it will not show unless you enable the "External status widget" for the build in Teamcity
+        *@
+        <script type="text/javascript" src="https://teamcity.gutools.co.uk/externalStatus.html?js=1&buildTypeId=bt1304"></script>
+    </div>
     
     <div class="expiring-wrapper">
         <h2>Expiring features</h2>
