@@ -3,6 +3,7 @@ define([
     'config',
     'knockout',
     'modules/vars',
+    'utils/mediator',
     'utils/fetch-settings',
     'utils/query-params',
     'utils/ammended-query-str',
@@ -22,6 +23,7 @@ define([
     pageConfig,
     ko,
     vars,
+    mediator,
     fetchSettings,
     queryParams,
     ammendedQueryStr,
@@ -163,6 +165,8 @@ define([
             }
         };
 
+        model.uiOpenElement = ko.observable();
+
         function getFront() {
             return queryParams().front;
         }
@@ -296,6 +300,8 @@ define([
 
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
+
+                mediator.on('ui:open', model.uiOpenElement);
             });
 
             listManager.init(newItems);

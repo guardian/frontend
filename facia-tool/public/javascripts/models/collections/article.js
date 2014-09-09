@@ -38,7 +38,8 @@ define([
             overridableFields = [
                 'headline',
                 'trailText',
-                'byline'],
+                'byline',
+                'kicker'],
 
             allFields = [
                 'isLive',
@@ -81,6 +82,8 @@ define([
                 'ophanUrl',
                 'sparkUrl']);
 
+            this.editors = overridableFields.map(this.editor, this);
+
             this.id = ko.observable(opts.id);
 
             this.group = opts.group;
@@ -114,10 +117,6 @@ define([
                     vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl()) :
                     this.meta.href() || this.props.webUrl();
             }, this);
-
-            this.headlineEdit = this.editor('headline');
-            this.trailTextEdit = this.editor('trailText');
-            this.kickerEdit = this.editor('kicker');
 
             this.provisionalImageSrc = ko.observable();
 
@@ -181,20 +180,14 @@ define([
         };
 
         Article.prototype.opener = function(key) {
+            var self = this;
+
             return function() {
-                this.isOpenMeta[key](true);
-                console.log('open:' + key);
+                mediator.emit('ui:open', self.meta[key]);
             }
         };
 
-        Article.prototype.closer = function(key) {
-            return function() {
-                this.isOpenMeta[key](false);
-                console.log('close:' + key);
-            }
-        };
-
-        Article.prototype.overriden = function(key) {
+        Article.prototype.overrideOrVal = function(key) {
             return ko.computed({
                 read: function() {
                     var meta  = this.meta[key]   ? this.meta[key]()   : undefined;
@@ -219,10 +212,11 @@ define([
 
         Article.prototype.editor = function(key) {
             return {
-                overriden: this.overriden(key),
-                reverter: this.reverter(key),
-                opener: this.opener(key),
-                closer: this.closer(key)
+                key:           key,
+                element:       this.meta[key],
+                overrideOrVal: this.overrideOrVal(key),
+                reverter:      this.reverter(key),
+                opener:        this.opener(key)
             }
         }
 
@@ -417,7 +411,11 @@ define([
 
         Article.prototype.open = function() {
             if (this.uneditable) { return; }
-            this.state.isOpen(true);
+
+            if (!this.state.isOpen()) {
+                 this.state.isOpen(true);
+                 mediator.emit('ui:open', this.meta.headline);
+            }
         };
 
         Article.prototype.close = function() {
@@ -427,17 +425,8 @@ define([
         Article.prototype.closeAndSave = function() {
             this.close();
             this.save();
+            return false;
         };
-
-        Article.prototype.select = function() {
-            if (!this.group) { return; }
-
-            if (this.group.parentType === 'Article') {
-               this.group.closeAllExcept(this);
-            } else {
-               this.meta.supporting.closeAllExcept();
-            }
-        }
 
         return Article;
     });

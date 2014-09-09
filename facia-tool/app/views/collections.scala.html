@@ -115,6 +115,22 @@
 
     <!-- templates -->
 
+    <script type="text/html" id="template_editor">
+        <!-- ko if: $data.element === $root.uiOpenElement() -->
+            <textarea data-bind="
+                attr: {class: key},
+                valueUpdate:'afterkeydown',
+                hasFocus: true,
+                value: overrideOrVal"></textarea>
+        <!-- /ko -->
+        <!-- ko ifnot: $data.element === $root.uiOpenElement() -->
+            <div class="headline" data-bind="
+                attr: {class: key},
+                click: opener,
+                html: overrideOrVal"></div>
+        <!-- /ko -->
+    </script>
+
     <script type="text/html" id="template_collection">
         <div class="collection">
             <div class="list-header" data-bind="
@@ -206,7 +222,7 @@
 
     <script type="text/html" id="template_article">
         <div class="article" data-bind="
-            click: select,
+            click: open,
             clickBubble: false,
             css: {
                 open: state.isOpen,
@@ -224,61 +240,7 @@
                 <div class="article__overrides">
                     <div class="article__overrides__fields">
 
-                        <!-- ko if: isOpenMeta.headline -->
-                            <textarea class="headline" data-bind="
-                                valueUpdate:'afterkeydown',
-                                hasFocus: true,
-                                value: headlineEdit.overriden,
-                                event: {blur: headlineEdit.closer},
-                                attr: {
-                                    maxlength: $root.headlineLength,
-                                    placeholder: fields.headline() || 'Headline'
-                                }"></textarea>
-                            <span class="headline-length" data-bind="
-                                css: {'headline-length--alert': headlineLengthAlert},
-                                text: headlineLength"></span>
-                            <a class="revert revert--headline" data-bind="
-                                click: headlineEdit.reverter,
-                                attr: {title: 'Revert to: ' + fields.headline()},
-                                visible: meta.headline"><i class="icon-fast-backward"></i></a>
-                        <!-- /ko -->
-                        <!-- ko ifnot: isOpenMeta.headline -->
-                            <div class="headline" data-bind="
-                                html: headlineEdit.overriden(),
-                                click: headlineEdit.opener"></div>
-                        <!-- /ko -->
-
-                        <!-- ko if: isOpenMeta.trailText -->
-                            <textarea class="trailtext" data-bind="
-                                valueUpdate: 'afterkeydown',
-                                hasFocus: true,
-                                value: trailTextEdit.overriden,
-                                event: {blur: trailTextEdit.closer},
-                                attr: {placeholder: fields.trailText() || 'Trailtext'}"></textarea>
-                            <a class="revert revert--trailtext" data-bind="
-                                click: trailTextEdit.reverter,
-                                attr: {title: 'Revert to: ' + fields.trailText()},
-                                visible: meta.trailText"><i class="icon-fast-backward"></i></a>
-                        <!-- /ko -->
-                        <!-- ko ifnot: isOpenMeta.trailText -->
-                            <div class="trailtext" data-bind="
-                                html: trailTextEdit.overriden(),
-                                click: trailTextEdit.opener"></div>
-                        <!-- /ko -->
-
-                        <!-- ko if: isOpenMeta.kicker -->
-                            <select data-bind="
-                                hasFocus: true,
-                                options: $root.kickers,
-                                value: meta.kicker,
-                                optionsCaption: 'Kicker...'"></select>
-                        <!-- /ko -->
-                        <!-- ko ifnot: isOpenMeta.kicker -->
-                            <div data-bind="
-                                attr: {class: 'kicker kicker--' + meta.kicker()},
-                                html: meta.kicker,
-                                click: kickerEdit.opener"></div>
-                        <!-- /ko -->
+                        <div data-bind="template: {name: 'template_editor', foreach: editors}"></div>
 
                         <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
                             visible: isSnap,
@@ -326,7 +288,9 @@
                 </div>
 
                 <div class="tools">
-                    <a class="tool tool--done" data-bind="click: closeAndSave">Save edits</a>
+                    <a class="tool tool--done" data-bind="
+                        clickBubble: false,
+                        click: closeAndSave">Save edits</a>
                 </div>
             </div>
 
@@ -392,8 +356,7 @@
                     <a class="headline" data-bind="
                         html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
                         css: {'is-empty': isSnap() && !meta.headline()},
-                        attr: {href: id},
-                        click: open"></a>
+                        attr: {href: id}"></a>
 
                     <!-- ko if: meta.supporting && meta.supporting.items().length -->
                         <span class="count">(<span class="non-zero" data-bind="text: meta.supporting.items().length"></span>)</span>
