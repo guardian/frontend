@@ -4,6 +4,7 @@
 @import play.api.Play
 @import play.api.Play.current
 @import views.support._
+@import common.editions.EditionalisedSections
 
 @* Additional meta data that does not impact rendering speed (and can live at the end of the <head>) *@
 
@@ -11,6 +12,14 @@
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32-dev.ico")" />
 } else {
     <link rel="shortcut icon" type="image/png" href="@Static("images/favicons/32x32.ico")" />
+}
+
+@*
+    ONLY for EDITONALISED sections
+    https://support.google.com/webmasters/answer/189077
+*@
+@EditionalisedSections.otherPagesFor(item).map{ link =>
+    <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.lang" />
 }
 
 <link rel="apple-touch-icon" sizes="152x152" href="@Static("images/favicons/152x152.png")" />
