@@ -170,7 +170,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
   private def batchGetContentApiItems(collectionItems: Seq[CollectionItem],
                                       edition: Edition): Future[Map[CollectionItem, ApiContent]] = {
-    Futures.batchedTraverse(collectionItems, 10)({ collectionItem =>
+    Futures.batchedTraverse(collectionItems, Configuration.faciatool.frontPressItemBatchSize)({ collectionItem =>
       getContentApiItemFromCollectionItem(collectionItem, edition) map { maybeItem =>
         maybeItem.map(collectionItem -> _)
       }
