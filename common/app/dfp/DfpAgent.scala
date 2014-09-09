@@ -47,7 +47,7 @@ trait DfpAgent {
   def hasInlineMerchandise(tags: Seq[Tag]): Boolean = tags exists inlineMerchandisingTargetedTags.hasTag
 
   def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
-    if (adUnitWithoutRoot endsWith "front") {
+    if (isValidForNextGenPageSkin(adUnitWithoutRoot)) {
       val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
       def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
