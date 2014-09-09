@@ -51,7 +51,8 @@ trait DfpAgent {
       val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
       def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
-        sponsorship.adUnits.contains(adUnitWithRoot) &&
+        val adUnits = sponsorship.adUnits map (_.stripSuffix("/ng"))
+        adUnits.contains(adUnitWithRoot) &&
           (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id)) &&
           !sponsorship.isR2Only
       }
