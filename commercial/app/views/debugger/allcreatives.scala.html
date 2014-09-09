@@ -23,27 +23,30 @@
            return false; 
         });
 
-        $(".codeContainer pre").hide();
+        $(".codeContainer").hide();
         $(".show-code").click(function() {
-            $(this).next().slideToggle();
+            $(this).parent().next().slideToggle();
             return false;
         });
         
         $("#dfp-number").on('change', function() {
             $('.commercial--dfp-multiple').removeClass("commercial--items-dfp-2 commercial--items-dfp-3 commercial--items-dfp-4").addClass("commercial--items-dfp-" + this.value);
             return false;
-        });        
-        
+        });
     });
     </script>
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.facia.css")" />
     <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.default.css")" />
     <style>
-        .facia-container {
-            margin-top: 12px;
+        .test-page-head {
+            font-size: 2rem;
+        }
+        .test-page-subhead {
+            font-size: 1.4rem;
+            margin: 1em 0;
         }
         pre {
-            font-size: 10px;
+            font-size: 11px;
         }
         #dfp-ad--merchandising-high {
             display: block;
@@ -71,7 +74,6 @@
     </style>
 
     <div class="facia-container__inner">
-        <h1>All components</h1>
         <div class="facia-switch-wrapper">
             <a id="switchFronts" href="#">Fronts</a>
             <a id="switchArticles" href="#" class="current">Articles</a>
@@ -85,10 +87,39 @@
         </div>
     </div>
 
-
     <article id="article" class="content content--article tone-news tone-news--article section-books">
         <div class="gs-container">
-            <h2>DFP component v1 (not applicable for non-article pages)</h2>
+            <h1 class="content__headline">All components</h1>
+            <h2 class="test-page-head">DFP Component A (Article pages only)</h2>
+
+            <h3 class="test-page-subhead">v1 <a class="show-code">Show code</a></h3>
+            <div class="codeContainer">
+                <pre><code>
+&lt;div class="breakout__html"&gt;
+    &lt;div class="commercial commercial--v-high commercial--dfp-[%URI_ENCODE:omniture_id%]" role="complementary"&gt;
+        &lt;a href="%%CLICK_URL_ESC%%[%base_url%]" data-link-name="merchandising-[%omniture_id%]-title"&gt;
+            &lt;h3 class="commercial__title"&gt;[%component_title%]&lt;/h3&gt;
+        &lt;/a&gt;
+        &lt;div class="commercial--v-high__head"&gt;
+            &lt;h4 class="lineitem__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" data-link-name="merchandising-[%omniture_id%]-lineitemtitlelink"&gt;[%offer_title%]&lt;/a&gt;&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;div class="commercial--v-high__body"&gt;
+            &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="lineitem__link" data-link-name="merchandising-[%omniture_id%]-lineitemlink"&gt;
+                &lt;img class="highitem__img" src="[%offer_image%]" alt="" /&gt;
+                &lt;p class="commercial--v-high__price"&gt;[%offer_meta%]&lt;/p&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class="commercial--v-high__footer"&gt;
+            &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="commercial__home-link" data-link-name="merchandising-[%omniture_id%]-buynowlink"&gt;
+                &lt;span class="commercial__home-link__pill"&gt;
+                    Buy now &lt;span class="i i-arrow-white-right-36"&gt;&lt;/span&gt;
+                &lt;/span&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </code></pre>
+            </div>
             <div class="content__main-column content__main-column--article">
                 <div class="from-content-api js-article__body">
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
@@ -122,40 +153,35 @@
                     <p>Its episodic chapters may not appeal to some, but as a beach read, Twenty Thousand Leagues is the perfect book to pick up and put down. You are consistently rewarded with iconic scenes: a battle with a giant squid, an underwater funeral, a trip to Atlantis. Verne's detailed descriptions of geography and sea life fill me with a curiously Victorian sense of potential for discovering the unknown.</p>
                 </div>
             </div>
-        </div>
-        <div class="codeContainer facia-container__inner">
-            <span class="show-code">Show code for DFP component v1 ></span>
-            <pre>
-                <code>
-                    &lt;div class="breakout__html"&gt;
-                        &lt;div class="commercial commercial--v-high commercial--dfp-[%URI_ENCODE:omniture_id%]" role="complementary"&gt;
-                            &lt;a href="%%CLICK_URL_ESC%%[%base_url%]" data-link-name="merchandising-[%omniture_id%]-title"&gt;
-                                &lt;h3 class="commercial__title"&gt;[%component_title%]&lt;/h3&gt;
-                            &lt;/a&gt;
-                            &lt;div class="commercial--v-high__head"&gt;
-                                &lt;h4 class="lineitem__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" data-link-name="merchandising-[%omniture_id%]-lineitemtitlelink"&gt;[%offer_title%]&lt;/a&gt;&lt;/h4&gt;
-                            &lt;/div&gt;
-                            &lt;div class="commercial--v-high__body"&gt;
-                                &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="lineitem__link" data-link-name="merchandising-[%omniture_id%]-lineitemlink"&gt;
-                                    &lt;img class="highitem__img" src="[%offer_image%]" alt="" /&gt;
-                                    &lt;p class="commercial--v-high__price"&gt;[%offer_meta%]&lt;/p&gt;
-                                &lt;/a&gt;
-                            &lt;/div&gt;
-                            &lt;div class="commercial--v-high__footer"&gt;
-                                &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="commercial__home-link" data-link-name="merchandising-[%omniture_id%]-buynowlink"&gt;
-                                    &lt;span class="commercial__home-link__pill"&gt;
-                                        Buy now &lt;span class="i i-arrow-white-right-36"&gt;&lt;/span&gt;
-                                    &lt;/span&gt;
-                                &lt;/a&gt;            
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                </code>
-            </pre>
-        </div>
 
-        <div class="gs-container">
-            <h2>DFP Component v2 (not applicable for non-article pages)</h2>
+            <h3 class="test-page-subhead">v2 <a class="show-code">Show code</a></h3>
+            <div class="codeContainer">
+                <pre><code>
+&lt;div class="breakout__html"&gt;
+    &lt;div class="commercial--v2 commercial--v-high commercial--dfp-[%URI_ENCODE:omniture_id%]" role="complementary"&gt;
+        &lt;a href="%%CLICK_URL_ESC%%[%base_url%]" data-link-name="merchandising-[%omniture_id%]-title"&gt;
+            &lt;h3 class="commercial__title"&gt;[%component_title%]&lt;/h3&gt;
+        &lt;/a&gt;
+        &lt;div class="commercial--v-high__head"&gt;
+            &lt;h4 class="lineitem__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" data-link-name="merchandising-[%omniture_id%]-lineitemtitlelink"&gt;[%offer_title%]&lt;/a&gt;&lt;/h4&gt;
+        &lt;/div&gt;
+        &lt;div class="commercial--v-high__body"&gt;
+            &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="lineitem__link" data-link-name="merchandising-[%omniture_id%]-lineitemlink"&gt;
+                &lt;img class="highitem__img" src="[%offer_image%]" alt="" /&gt;
+                &lt;p class="commercial--v-high__price"&gt;[%offer_meta%]&lt;/p&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class="commercial--v-high__footer"&gt;
+            &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="commercial__home-link" data-link-name="merchandising-[%omniture_id%]-buynowlink"&gt;
+                &lt;span class="lineitem__link button button--primary button--small"&gt;
+                    Buy now&lt;span class="i i-arrow-white-right i-right"&gt;&lt;/span&gt;
+                &lt;/span&gt;
+            &lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+                </code></pre>
+            </div>
             <div class="content__main-column content__main-column--article">
                 <div class="from-content-api js-article__body">
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
@@ -190,54 +216,79 @@
                 </div>
             </div>
         </div>
-        <div class="codeContainer facia-container__inner">
-            <span class="show-code">Show code for DFP component v2 ></span>
-            <pre>
-                <code>
-                    &lt;div class="breakout__html"&gt;
-                        &lt;div class="commercial--v2 commercial--v-high commercial--dfp-[%URI_ENCODE:omniture_id%]" role="complementary"&gt;
-                            &lt;a href="%%CLICK_URL_ESC%%[%base_url%]" data-link-name="merchandising-[%omniture_id%]-title"&gt;
-                                &lt;h3 class="commercial__title"&gt;[%component_title%]&lt;/h3&gt;
-                            &lt;/a&gt;
-                            &lt;div class="commercial--v-high__head"&gt;
-                                &lt;h4 class="lineitem__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" data-link-name="merchandising-[%omniture_id%]-lineitemtitlelink"&gt;[%offer_title%]&lt;/a&gt;&lt;/h4&gt;
-                            &lt;/div&gt;
-                            &lt;div class="commercial--v-high__body"&gt;
-                                &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="lineitem__link" data-link-name="merchandising-[%omniture_id%]-lineitemlink"&gt;
-                                    &lt;img class="highitem__img" src="[%offer_image%]" alt="" /&gt;
-                                    &lt;p class="commercial--v-high__price"&gt;[%offer_meta%]&lt;/p&gt;
-                                &lt;/a&gt;
-                            &lt;/div&gt;
-                            &lt;div class="commercial--v-high__footer"&gt;
-                                &lt;a href="%%CLICK_URL_ESC%%[%offer_url%]" class="commercial__home-link" data-link-name="merchandising-[%omniture_id%]-buynowlink"&gt;
-                                    &lt;span class="lineitem__link button button--primary button--small"&gt;
-                                        Buy now&lt;span class="i i-arrow-white-right i-right"&gt;&lt;/span&gt;
-                                    &lt;/span&gt;
-                                &lt;/a&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                </code>
-            </pre>
-        </div>
     </article>
 
     <hr/>
 
     <div class="facia-container facia-container--layout-content facia-container--commercial">
-        <h2>DFP component v1</h2>
-        <div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-test-id="ad-slot-merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-mobile="88,88" data-node-uid="4"><style type="text/css">
-            .commercial--dfp-single.commercial--dfp-987654321 .commercial__title,
-            .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link  {
-                color: #651981;
-            }
-            .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link .commercial__home-link__cta,
-            .commercial--dfp-single.commercial--dfp-987654321 .lineitem__link .i.i-arrow-white-right-18 {
-                background-color: #651981;
-            }
-            .commercial--dfp-single.commercial--dfp-987654321 .commercial__title span {
-                color: #c07ed6;
-            }
+        <h2 class="facia-container__inner test-page-head">DFP Component B</h2>
+
+        <h3 class="facia-container__inner test-page-subhead">v1 <a class="show-code">Show code</a></h3>
+        <div class="facia-container__inner codeContainer">
+            <pre><code>
+&lt;div class="breakout__html"&gt;
+    &lt;style type="text/css"&gt;
+        .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__title,
+        .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__home-link  {
+            color: #[%commercial__colour1%];
+        }
+        .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__home-link .commercial__home-link__cta,
+        .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .lineitem__link .i.i-arrow-white-right-18 {
+            background-color: #[%commercial__colour1%];
+        }
+        .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__title span {
+            color: #[%commercial__colour2%];
+        }
+    &lt;/style&gt;
+    &lt;div class="commercial commercial--dfp commercial--dfp-single commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
+        &lt;div class="facia-container__inner"&gt;
+            &lt;div class="commercial__head container__title container__title-[%commercial__titlelogo%]"&gt;
+                &lt;div class="container__title__wrapper i-[%commercial__titlelogo%]-title-background"&gt;
+                    &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
+                &lt;/div&gt;
+                &lt;p class="commercial__explainer"&gt;[%commercial__explainer%]&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="container__body commercial__body"&gt;
+                &lt;a class="lineitem__link-image" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%URI_ENCODE:commercial__offertitle%]"&gt;
+                    &lt;img class="lineitem__image" src="[%commercial__offerimage%]" alt="" /&gt;
+                &lt;/a&gt;
+                &lt;div class="lineitem__offer"&gt;
+                    &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offertitle%]-link"&gt;
+                        &lt;h4 class="lineitem__title"&gt;[%commercial__offertitle%]&lt;/h4&gt;
+                    &lt;/a&gt;
+                    &lt;p class="lineitem__meta"&gt;[%commercial__offertext%]&lt;/p&gt;
+                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                        &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offertitle%]-link"&gt;&lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
+                    &lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="commercial__footer [%commercial__showctalink%]"&gt;
+                &lt;div class="commercial__footer-inner"&gt;
+                    &lt;a class="commercial__home-link" href="%%CLICK_URL_ESC%%[%commercial__seemoreurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-viewall"&gt;[%commercial__viewalltext%]
+                        &lt;span class="commercial__home-link__cta"&gt;
+                            &lt;span class="i i-arrow-white-right-36"&gt;&lt;/span&gt;
+                        &lt;/span&gt;
+                    &lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+            </code></pre>
+        </div>
+        <div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-test-id="ad-slot-merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-mobile="88,88" data-node-uid="4">
+            <style type="text/css">
+                .commercial--dfp-single.commercial--dfp-987654321 .commercial__title,
+                .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link  {
+                    color: #651981;
+                }
+                .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link .commercial__home-link__cta,
+                .commercial--dfp-single.commercial--dfp-987654321 .lineitem__link .i.i-arrow-white-right-18 {
+                    background-color: #651981;
+                }
+                .commercial--dfp-single.commercial--dfp-987654321 .commercial__title span {
+                    color: #c07ed6;
+                }
             </style>
             <div class="commercial commercial--dfp commercial--dfp-single commercial--dfp-987654321" role="complementary">
                 <div class="facia-container__inner">
@@ -273,180 +324,204 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="codeContainer facia-container__inner">
-        <span class="show-code">Show code for DFP component v1 ></span>
-        <pre>
-        <code>
-            &lt;div class="breakout__html"&gt;
-                &lt;style type="text/css"&gt;
-                .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__title,
-                .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__home-link  {
-                    color: #[%commercial__colour1%];
-                }
-                .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__home-link .commercial__home-link__cta,
-                .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .lineitem__link .i.i-arrow-white-right-18 {
-                    background-color: #[%commercial__colour1%];
-                }
-                .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__title span {
-                    color: #[%commercial__colour2%];
-                }
-                &lt;/style&gt;
-                &lt;div class="commercial commercial--dfp commercial--dfp-single commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
-                    &lt;div class="facia-container__inner"&gt;
-                        &lt;div class="commercial__head container__title container__title-[%commercial__titlelogo%]"&gt;
-                            &lt;div class="container__title__wrapper i-[%commercial__titlelogo%]-title-background"&gt;
-                                &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
-                            &lt;/div&gt;
-                            &lt;p class="commercial__explainer"&gt;[%commercial__explainer%]&lt;/p&gt;
-                        &lt;/div&gt;
-                        &lt;div class="container__body commercial__body"&gt;
-                            &lt;a class="lineitem__link-image" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%URI_ENCODE:commercial__offertitle%]"&gt;
-                                &lt;img class="lineitem__image" src="[%commercial__offerimage%]" alt="" /&gt;
-                            &lt;/a&gt;
-                            &lt;div class="lineitem__offer"&gt;
-                                &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offertitle%]-link"&gt;
-                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offertitle%]&lt;/h4&gt;
-                                &lt;/a&gt;
-                                &lt;p class="lineitem__meta"&gt;[%commercial__offertext%]&lt;/p&gt;
-                                &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                    &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offertitle%]-link"&gt;&lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
-                                &lt;/p&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                        &lt;div class="commercial__footer [%commercial__showctalink%]"&gt;
-                            &lt;div class="commercial__footer-inner"&gt;
-                                &lt;a class="commercial__home-link" href="%%CLICK_URL_ESC%%[%commercial__seemoreurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-viewall"&gt;[%commercial__viewalltext%]
-                                    &lt;span class="commercial__home-link__cta"&gt;
-                                        &lt;span class="i i-arrow-white-right-36"&gt;&lt;/span&gt;
-                                    &lt;/span&gt;
-                                &lt;/a&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
+
+        <h3 class="facia-container__inner test-page-subhead">v2 <a class="show-code">Show code</a></h3>
+        <div class="facia-container__inner codeContainer">
+            <pre><code>
+&lt;div class="breakout__html"&gt;
+    &lt;style type="text/css"&gt;
+        .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__title,
+        .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__home-link  {
+            color: #[%commercial__colour1%];
+        }
+        .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__home-link .commercial__home-link__cta,
+        .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .lineitem__link .i.i-arrow-white-right-18 {
+            background-color: #[%commercial__colour1%];
+        }
+        .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__title span {
+            color: #[%commercial__colour2%];
+        }
+    &lt;/style&gt;
+    &lt;div class="commercial--v2 commercial--dfp commercial--dfp-single commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
+        &lt;div class="facia-container__inner--commercial"&gt;
+            &lt;div class="container__header container__header-[%commercial__titlelogo%]"&gt;
+                &lt;div class="container__header__inner i-[%commercial__titlelogo%]-title-background"&gt;
+                    &lt;h3 class="commercial__title"&gt;
+                        &lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;
+                            [%commercial__title%]
+                        &lt;/a&gt;
+                    &lt;/h3&gt;
+                &lt;/div&gt;
+                &lt;p class="commercial__header"&gt;[%commercial__explainer%]&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="container__body"&gt;
+                &lt;a class="lineitem__link-image" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%URI_ENCODE:commercial__offertitle%]"&gt;
+                    &lt;img class="lineitem__image" src="[%commercial__offerimage%]" alt="" /&gt;
+                &lt;/a&gt;
+                &lt;div class="lineitem__offer"&gt;
+                    &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offertitle%]-link"&gt;
+                        &lt;h4 class="lineitem__title"&gt;[%commercial__offertitle%]&lt;/h4&gt;
+                    &lt;/a&gt;
+                    &lt;p class="lineitem__meta"&gt;[%commercial__offertext%]&lt;/p&gt;
+                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                        &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offertitle%]-link"&gt;&lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
+                    &lt;/p&gt;
                 &lt;/div&gt;
             &lt;/div&gt;
-        </code>
-        </pre>
-    </div>
-
-    <div class="facia-container facia-container--layout-content facia-container--commercial">
-        <h2>DFP component v2</h2>
-        <div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-test-id="ad-slot-merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-mobile="88,88" data-node-uid="4"><style type="text/css">
-            .commercial--dfp-single.commercial--dfp-987654321 .commercial__title,
-            .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link  {
-                color: #651981;
-            }
-            .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link .commercial__home-link__cta,
-            .commercial--dfp-single.commercial--dfp-987654321 .lineitem__link .i.i-arrow-white-right-18 {
-                background-color: #651981;
-            }
-            .commercial--dfp-single.commercial--dfp-987654321 .commercial__title span {
-                color: #c07ed6;
-            }
-            </style>
-            <div class="commercial--v2 commercial--dfp commercial--dfp-single commercial--dfp-987654321" role="complementary">
-                <div class="facia-container__inner--commercial">
-                    <div class="container__header container__header-jobs">
-                        <div class="container__header__inner i-jobs-title-background">
-                            <h3 class="commercial__title">
-                                <a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-987654321-high-title">
-                                    Guardian Vintage
+            &lt;div class="commercial__footer [%commercial__showctalink%]"&gt;
+                &lt;div class="commercial__footer-inner"&gt;
+                    &lt;a class="commercial__cta button button--tertiary button--large" href="%%CLICK_URL_ESC%%[%commercial__seemoreurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-viewall"&gt;
+                        &lt;span class="i i-arrow-white-right i-right"&gt;&lt;/span&gt;
+                        &lt;span class="hide-on-mobile"&gt;[%commercial__viewalltext%]&lt;/span&gt;
+                    &lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+            </code></pre>
+        </div>
+        <div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-test-id="ad-slot-merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-mobile="88,88" data-node-uid="4">
+                    <style type="text/css">
+                        .commercial--dfp-single.commercial--dfp-987654321 .commercial__title,
+                        .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link  {
+                            color: #651981;
+                        }
+                        .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link .commercial__home-link__cta,
+                        .commercial--dfp-single.commercial--dfp-987654321 .lineitem__link .i.i-arrow-white-right-18 {
+                            background-color: #651981;
+                        }
+                        .commercial--dfp-single.commercial--dfp-987654321 .commercial__title span {
+                            color: #c07ed6;
+                        }
+                    </style>
+                    <div class="commercial--v2 commercial--dfp commercial--dfp-single commercial--dfp-987654321" role="complementary">
+                        <div class="facia-container__inner--commercial">
+                            <div class="container__header container__header-jobs">
+                                <div class="container__header__inner i-jobs-title-background">
+                                    <h3 class="commercial__title">
+                                        <a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-987654321-high-title">
+                                            Guardian Vintage
+                                        </a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="container__body">
+                                <p class="commercial__header">Another old car</p>
+                                <a class="lineitem__link-image" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/offer-url" data-link-name="merchandising-987654321-high-Nice%20long%20title%20for%20this%20element">
+                                    <img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDj37aTvQEQARgBMggn21vgyxz-YQ" alt="">
                                 </a>
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="container__body">
-                        <p class="commercial__header">Another old car</p>
-                        <a class="lineitem__link-image" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/offer-url" data-link-name="merchandising-987654321-high-Nice%20long%20title%20for%20this%20element">
-                            <img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDj37aTvQEQARgBMggn21vgyxz-YQ" alt="">
-                        </a>
-                        <div class="lineitem__offer">
-                            <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/offer-url" data-link-name="merchandising-987654321-high-Nice long title for this element-link">
-                                <h4 class="lineitem__title">Nice long title for this element</h4>
-                            </a>
-                            <p class="lineitem__meta">Weddepohl makes the point that sharing involves not just less waste but more social interaction. It’s a lesson he had to learn by fire.</p>
-                            <p class="lineitem__description commercial--generic__item__description">
-                                <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/offer-url" data-link-name="merchandising-987654321-high-Nice long title for this element-link"><i class="i i-arrow-white-right-18"></i>This is nice long link, in design appears to be sentence length</a>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="commercial__footer hide-cta-link">
-                        <div class="commercial__footer-inner">
-                            <a class="commercial__cta button button--tertiary button--large" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/seemore-url" data-link-name="merchandising-987654321-high-viewall">
-                                <i class="i i-arrow-white-right i-right"></i>
-                                <span class="hide-on-mobile">See more cars</span>
-                            </a>
+                                <div class="lineitem__offer">
+                                    <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/offer-url" data-link-name="merchandising-987654321-high-Nice long title for this element-link">
+                                        <h4 class="lineitem__title">Nice long title for this element</h4>
+                                    </a>
+                                    <p class="lineitem__meta">Weddepohl makes the point that sharing involves not just less waste but more social interaction. It’s a lesson he had to learn by fire.</p>
+                                    <p class="lineitem__description commercial--generic__item__description">
+                                        <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/offer-url" data-link-name="merchandising-987654321-high-Nice long title for this element-link"><i class="i i-arrow-white-right-18"></i>This is nice long link, in design appears to be sentence length</a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="commercial__footer hide-cta-link">
+                                <div class="commercial__footer-inner">
+                                    <a class="commercial__cta button button--tertiary button--large" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/seemore-url" data-link-name="merchandising-987654321-high-viewall">
+                                        <i class="i i-arrow-white-right i-right"></i>
+                                        <span class="hide-on-mobile">See more cars</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="codeContainer facia-container__inner">
-        <span class="show-code">Show code for DFP component v2 ></span>
-        <pre>
-        <code>
-            &lt;div class="breakout__html"&gt;
-                &lt;style type="text/css"&gt;
-                .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__title,
-                .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__home-link  {
-                    color: #[%commercial__colour1%];
-                }
-                .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__home-link .commercial__home-link__cta,
-                .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .lineitem__link .i.i-arrow-white-right-18 {
-                    background-color: #[%commercial__colour1%];
-                }
-                .commercial--dfp-single.commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] .commercial__title span {
-                    color: #[%commercial__colour2%];
-                }
-                &lt;/style&gt;
-                &lt;div class="commercial--v2 commercial--dfp commercial--dfp-single commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
-                    &lt;div class="facia-container__inner--commercial"&gt;
-                        &lt;div class="container__header container__header-[%commercial__titlelogo%]"&gt;
-                            &lt;div class="container__header__inner i-[%commercial__titlelogo%]-title-background"&gt;
-                                &lt;h3 class="commercial__title"&gt;
-                                    &lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;
-                                        [%commercial__title%]
-                                    &lt;/a&gt;
-                                &lt;/h3&gt;
-                            &lt;/div&gt;
-                            &lt;p class="commercial__header"&gt;[%commercial__explainer%]&lt;/p&gt;
-                        &lt;/div&gt;
-                        &lt;div class="container__body"&gt;
-                            &lt;a class="lineitem__link-image" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%URI_ENCODE:commercial__offertitle%]"&gt;
-                                &lt;img class="lineitem__image" src="[%commercial__offerimage%]" alt="" /&gt;
-                            &lt;/a&gt;
-                            &lt;div class="lineitem__offer"&gt;
-                                &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offertitle%]-link"&gt;
-                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offertitle%]&lt;/h4&gt;
-                                &lt;/a&gt;
-                                &lt;p class="lineitem__meta"&gt;[%commercial__offertext%]&lt;/p&gt;
-                                &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                    &lt;a class="lineitem__link commercial--generic__description__link" href="%%CLICK_URL_ESC%%[%commercial__offerurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offertitle%]-link"&gt;&lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]&lt;/a&gt;
-                                &lt;/p&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                        &lt;div class="commercial__footer [%commercial__showctalink%]"&gt;
-                            &lt;div class="commercial__footer-inner"&gt;
-                                &lt;a class="commercial__cta button button--tertiary button--large" href="%%CLICK_URL_ESC%%[%commercial__seemoreurl%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-viewall"&gt;
-                                    &lt;span class="i i-arrow-white-right i-right"&gt;&lt;/span&gt;
-                                    &lt;span class="hide-on-mobile"&gt;[%commercial__viewalltext%]&lt;/span&gt;
-                                &lt;/a&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-
-        </code>
-        </pre>
     </div>
 
     <hr/>
 
     <div class="facia-container facia-container--layout-content facia-container--commercial">
-        <h2>DFP component v1</h2>
+        <h2 class="facia-container__inner test-page-head">DFP Component C</h2>
+
+        <h3 class="facia-container__inner test-page-subhead">v1 <a class="show-code">Show code</a></h3>
+        <div class="facia-container__inner codeContainer">
+            <pre><code>
+&lt;div class="breakout__html"&gt;
+    &lt;style type="text/css"&gt;
+        [%commercial__css%]
+    &lt;/style&gt;
+    &lt;div class="commercial commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
+        &lt;div class="facia-container__inner"&gt;
+            &lt;div class="commercial__head container__title"&gt;
+                &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
+                &lt;p class="commercial__explainer"&gt;[%commercial__explainer%]&lt;/p&gt;
+                &lt;a class="commercial__home-link" href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-viewall"&gt;[%commercial__viewalltext%]
+                    &lt;span class="commercial__home-link__cta"&gt;
+                        &lt;span class="i i-arrow-white-right-36"&gt;&lt;/span&gt;
+                    &lt;/span&gt;
+                &lt;/a&gt;
+            &lt;/div&gt;
+            &lt;div class="container__body commercial__body"&gt;
+                &lt;ul class="lineitems"&gt;
+                    &lt;li class="lineitem"&gt;
+                        &lt;div&gt;
+                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer1url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%URI_ENCODE:commercial__offer1title%]"&gt;
+                                &lt;img class="lineitem__image" src="[%commercial__offer1image%]" alt="" /&gt;
+                                &lt;div class="lineitem__offer"&gt;
+                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer1title%]&lt;/h4&gt;
+                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer1meta%]&lt;/p&gt;
+                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
+                                    &lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/li&gt;
+                    &lt;li class="lineitem"&gt;
+                        &lt;div&gt;
+                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer2url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer2title%]"&gt;
+                                &lt;img class="lineitem__image" src="[%commercial__offer2image%]" alt="" /&gt;
+                                &lt;div class="lineitem__offer"&gt;
+                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer2title%]&lt;/h4&gt;
+                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer2meta%]&lt;/p&gt;
+                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
+                                    &lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/li&gt;
+                    &lt;li class="lineitem"&gt;
+                        &lt;div&gt;
+                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer3url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer3title%]"&gt;
+                                &lt;img class="lineitem__image" src="[%commercial__offer3image%]" alt="" /&gt;
+                                &lt;div class="lineitem__offer"&gt;
+                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer3title%]&lt;/h4&gt;
+                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer3meta%]&lt;/p&gt;
+                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
+                                    &lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/li&gt;
+                    &lt;li class="lineitem"&gt;
+                        &lt;div&gt;
+                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer4url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer4title%]"&gt;
+                                &lt;img class="lineitem__image" src="[%commercial__offer4image%]" alt="" /&gt;
+                                &lt;div class="lineitem__offer"&gt;
+                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer4title%]&lt;/h4&gt;
+                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer4meta%]&lt;/p&gt;
+                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
+                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
+                                    &lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+        </div>
         <div class="commercial commercial--dfp commercial--dfp-1234567890 commercial--dfp-multiple commercial--items-dfp-4" role="complementary">
             <div class="facia-container__inner">
                 <div class="commercial__head container__title">
@@ -520,95 +595,91 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="codeContainer facia-container__inner">
-        <span class="show-code">Show code for DFP component v1 ></span>
-        <pre>
-            <code>
-                &lt;div class="breakout__html"&gt;
-                    &lt;style type="text/css"&gt;
-                        [%commercial__css%]
-                    &lt;/style&gt;
-                    &lt;div class="commercial commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
-                        &lt;div class="facia-container__inner"&gt;
-                            &lt;div class="commercial__head container__title"&gt;
-                                &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
-                                &lt;p class="commercial__explainer"&gt;[%commercial__explainer%]&lt;/p&gt;
-                                &lt;a class="commercial__home-link" href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-viewall"&gt;[%commercial__viewalltext%]
-                                    &lt;span class="commercial__home-link__cta"&gt;
-                                        &lt;span class="i i-arrow-white-right-36"&gt;&lt;/span&gt;
-                                    &lt;/span&gt;
-                                &lt;/a&gt;
-                            &lt;/div&gt;
-                            &lt;div class="container__body commercial__body"&gt;
-                                &lt;ul class="lineitems"&gt;
-                                    &lt;li class="lineitem"&gt;
-                                        &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer1url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%URI_ENCODE:commercial__offer1title%]"&gt;
-                                                &lt;img class="lineitem__image" src="[%commercial__offer1image%]" alt="" /&gt;
-                                                &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer1title%]&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer1meta%]&lt;/p&gt;
-                                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
-                                                    &lt;/p&gt;
-                                                &lt;/div&gt;
-                                            &lt;/a&gt;
-                                        &lt;/div&gt;
-                                    &lt;/li&gt;
-                                    &lt;li class="lineitem"&gt;
-                                        &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer2url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer2title%]"&gt;
-                                                &lt;img class="lineitem__image" src="[%commercial__offer2image%]" alt="" /&gt;
-                                                &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer2title%]&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer2meta%]&lt;/p&gt;
-                                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
-                                                    &lt;/p&gt;
-                                                &lt;/div&gt;
-                                            &lt;/a&gt;
-                                        &lt;/div&gt;
-                                    &lt;/li&gt;
-                                    &lt;li class="lineitem"&gt;
-                                        &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer3url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer3title%]"&gt;
-                                                &lt;img class="lineitem__image" src="[%commercial__offer3image%]" alt="" /&gt;
-                                                &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer3title%]&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer3meta%]&lt;/p&gt;
-                                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
-                                                    &lt;/p&gt;
-                                                &lt;/div&gt;
-                                            &lt;/a&gt;
-                                        &lt;/div&gt;
-                                    &lt;/li&gt;
-                                    &lt;li class="lineitem"&gt;
-                                        &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer4url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer4title%]"&gt;
-                                                &lt;img class="lineitem__image" src="[%commercial__offer4image%]" alt="" /&gt;
-                                                &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer4title%]&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer4meta%]&lt;/p&gt;
-                                                    &lt;p class="lineitem__description commercial--generic__item__description"&gt;
-                                                        &lt;i class="i i-arrow-white-right-18"&gt;&lt;/i&gt;[%commercial__offerlinktext%]
-                                                    &lt;/p&gt;
-                                                &lt;/div&gt;
-                                            &lt;/a&gt;
-                                        &lt;/div&gt;
-                                    &lt;/li&gt;
-                                &lt;/ul&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            </code>
-        </pre>
-    </div>
 
-    <div class="facia-container facia-container--layout-content facia-container--commercial">
-        <h2>DFP component v2</h2>
+        <h3 class="facia-container__inner test-page-subhead">v2 <a class="show-code">Show code</a></h3>
+        <div class="codeContainer facia-container__inner">
+            <pre><code>
+&lt;div class="breakout__html"&gt;
+    &lt;style type="text/css"&gt;
+        [%commercial__css%]
+    &lt;/style&gt;
+    &lt;div class="commercial--v2 commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
+        &lt;div class="facia-container__inner--commercial"&gt;
+            &lt;div class="container__header"&gt;
+                &lt;div class="container__header__inner"&gt;
+                    &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
+                    &lt;p class="commercial__header"&gt;[%commercial__explainer%]&lt;/p&gt;
+                    &lt;a class="commercial__cta button button--tertiary button--large" href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-viewall"&gt;
+                        &lt;span class="i i-arrow-white-right-36"&gt;&lt;/span&gt;
+                        &lt;span class="hide-on-mobile"&gt;[%commercial__viewalltext%]&lt;/span&gt;
+                    &lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class="container__body"&gt;
+                &lt;ul class="lineitems"&gt;
+                    &lt;li class="lineitem"&gt;
+                        &lt;div&gt;
+                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer1url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%URI_ENCODE:commercial__offer1title%]"&gt;
+                                &lt;img class="lineitem__image" src="[%commercial__offer1image%]" alt="" /&gt;
+                                &lt;div class="lineitem__offer"&gt;
+                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer1title%]&lt;/h4&gt;
+                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer1meta%]&lt;/p&gt;
+                                    &lt;p class="lineitem__link button button--primary button--small"&gt;
+                                        [%commercial__offerlinktext%]&lt;i class="i i-arrow-white-right i-right"&gt;&lt;/i&gt;
+                                    &lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/li&gt;
+                    &lt;li class="lineitem"&gt;
+                        &lt;div&gt;
+                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer2url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer2title%]"&gt;
+                                &lt;img class="lineitem__image" src="[%commercial__offer2image%]" alt="" /&gt;
+                                &lt;div class="lineitem__offer"&gt;
+                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer2title%]&lt;/h4&gt;
+                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer2meta%]&lt;/p&gt;
+                                    &lt;p class="lineitem__link button button--primary button--small"&gt;
+                                        [%commercial__offerlinktext%]&lt;i class="i i-arrow-white-right i-right"&gt;&lt;/i&gt;
+                                    &lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/li&gt;
+                    &lt;li class="lineitem"&gt;
+                        &lt;div&gt;
+                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer3url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer3title%]"&gt;
+                                &lt;img class="lineitem__image" src="[%commercial__offer3image%]" alt="" /&gt;
+                                &lt;div class="lineitem__offer"&gt;
+                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer3title%]&lt;/h4&gt;
+                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer3meta%]&lt;/p&gt;
+                                    &lt;p class="lineitem__link button button--primary button--small"&gt;
+                                        [%commercial__offerlinktext%]&lt;i class="i i-arrow-white-right i-right"&gt;&lt;/i&gt;
+                                    &lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/li&gt;
+                    &lt;li class="lineitem"&gt;
+                        &lt;div&gt;
+                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer4url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer4title%]"&gt;
+                                &lt;img class="lineitem__image" src="[%commercial__offer4image%]" alt="" /&gt;
+                                &lt;div class="lineitem__offer"&gt;
+                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer4title%]&lt;/h4&gt;
+                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer4meta%]&lt;/p&gt;
+                                    &lt;p class="lineitem__link button button--primary button--small"&gt;
+                                        [%commercial__offerlinktext%]&lt;i class="i i-arrow-white-right i-right"&gt;&lt;/i&gt;
+                                    &lt;/p&gt;
+                                &lt;/div&gt;
+                            &lt;/a&gt;
+                        &lt;/div&gt;
+                    &lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+            </code></pre>
+        </div>
         <div class="commercial--v2 commercial--dfp commercial--dfp-1234567890 commercial--dfp-multiple commercial--items-dfp-4" role="complementary">
             <div class="facia-container__inner--commercial">
                 <div class="container__header">
@@ -684,98 +755,13 @@
             </div>
         </div>
     </div>
-    <div class="codeContainer facia-container__inner">
-        <span class="show-code">Show code for DFP component v2 ></span>
-        <pre>
-            <code>
-                &lt;div class="breakout__html"&gt;
-                    &lt;style type="text/css"&gt;
-                        [%commercial__css%]
-                    &lt;/style&gt;
-                    &lt;div class="commercial--v2 commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
-                        &lt;div class="facia-container__inner--commercial"&gt;
-                            &lt;div class="container__header"&gt;
-                                &lt;div class="container__header__inner"&gt;
-                                    &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
-                                    &lt;p class="commercial__header"&gt;[%commercial__explainer%]&lt;/p&gt;
-                                    &lt;a class="commercial__cta button button--tertiary button--large" href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-viewall"&gt;
-                                        &lt;span class="i i-arrow-white-right-36"&gt;&lt;/span&gt;
-                                        &lt;span class="hide-on-mobile"&gt;[%commercial__viewalltext%]&lt;/span&gt;
-                                    &lt;/a&gt;
-                                &lt;/div&gt;
-                            &lt;/div&gt;
-                            &lt;div class="container__body"&gt;
-                                &lt;ul class="lineitems"&gt;
-                                    &lt;li class="lineitem"&gt;
-                                        &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer1url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%URI_ENCODE:commercial__offer1title%]"&gt;
-                                                &lt;img class="lineitem__image" src="[%commercial__offer1image%]" alt="" /&gt;
-                                                &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer1title%]&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer1meta%]&lt;/p&gt;
-                                                    &lt;p class="lineitem__link button button--primary button--small"&gt;
-                                                        [%commercial__offerlinktext%]&lt;i class="i i-arrow-white-right i-right"&gt;&lt;/i&gt;
-                                                    &lt;/p&gt;
-                                                &lt;/div&gt;
-                                            &lt;/a&gt;
-                                        &lt;/div&gt;
-                                    &lt;/li&gt;
-                                    &lt;li class="lineitem"&gt;
-                                        &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer2url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer2title%]"&gt;
-                                                &lt;img class="lineitem__image" src="[%commercial__offer2image%]" alt="" /&gt;
-                                                &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer2title%]&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer2meta%]&lt;/p&gt;
-                                                    &lt;p class="lineitem__link button button--primary button--small"&gt;
-                                                        [%commercial__offerlinktext%]&lt;i class="i i-arrow-white-right i-right"&gt;&lt;/i&gt;
-                                                    &lt;/p&gt;
-                                                &lt;/div&gt;
-                                            &lt;/a&gt;
-                                        &lt;/div&gt;
-                                    &lt;/li&gt;
-                                    &lt;li class="lineitem"&gt;
-                                        &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer3url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer3title%]"&gt;
-                                                &lt;img class="lineitem__image" src="[%commercial__offer3image%]" alt="" /&gt;
-                                                &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer3title%]&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer3meta%]&lt;/p&gt;
-                                                    &lt;p class="lineitem__link button button--primary button--small"&gt;
-                                                        [%commercial__offerlinktext%]&lt;i class="i i-arrow-white-right i-right"&gt;&lt;/i&gt;
-                                                    &lt;/p&gt;
-                                                &lt;/div&gt;
-                                            &lt;/a&gt;
-                                        &lt;/div&gt;
-                                    &lt;/li&gt;
-                                    &lt;li class="lineitem"&gt;
-                                        &lt;div&gt;
-                                            &lt;a class="lineitem__link" href="%%CLICK_URL_ESC%%[%commercial__offer4url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-[%commercial__offer4title%]"&gt;
-                                                &lt;img class="lineitem__image" src="[%commercial__offer4image%]" alt="" /&gt;
-                                                &lt;div class="lineitem__offer"&gt;
-                                                    &lt;h4 class="lineitem__title"&gt;[%commercial__offer4title%]&lt;/h4&gt;
-                                                    &lt;p class="lineitem__meta"&gt;[%commercial__offer4meta%]&lt;/p&gt;
-                                                    &lt;p class="lineitem__link button button--primary button--small"&gt;
-                                                        [%commercial__offerlinktext%]&lt;i class="i i-arrow-white-right i-right"&gt;&lt;/i&gt;
-                                                    &lt;/p&gt;
-                                                &lt;/div&gt;
-                                            &lt;/a&gt;
-                                        &lt;/div&gt;
-                                    &lt;/li&gt;
-                                &lt;/ul&gt;
-                            &lt;/div&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            </code>
-        </pre>
-    </div>
 
     <hr/>
 
-    <h2 class="facia-container__inner">Travel</h2>
-    <h3 class="facia-container__inner">Low relevance v1</h3>
     <div class="facia-container facia-container--layout-content">
+        <h2 class="facia-container__inner test-page-head">Travel</h2>
+
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/travel/offers.json", function( json ) {
@@ -783,10 +769,8 @@
                 });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">Low relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/travel/offers-v2.json", function( json ) {
@@ -794,10 +778,8 @@
                 });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v1</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/travel/offers-high.json", function( json ) {
@@ -805,10 +787,8 @@
                 });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/travel/offers-high-v2.json", function( json ) {
@@ -820,9 +800,10 @@
 
     <hr/>
 
-    <h2 class="facia-container__inner">Jobs</h2>
-    <h3 class="facia-container__inner">Low relevance v1</h3>
     <div class="facia-container facia-container--layout-content">
+        <h2 class="facia-container__inner test-page-head">Jobs</h2>
+
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/jobs.json", function( json ) {
@@ -830,10 +811,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">Low relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/jobs-v2.json", function( json ) {
@@ -841,10 +820,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v1</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/jobs-high.json", function( json ) {
@@ -852,10 +829,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/jobs-high-v2.json", function( json ) {
@@ -867,9 +842,10 @@
 
     <hr/>
 
-    <h2 class="facia-container__inner">Masterclasses</h2>
-    <h3 class="facia-container__inner">Low relevance v1</h3>
     <div class="facia-container facia-container--layout-content">
+        <h2 class="facia-container__inner test-page-head">Masterclasses</h2>
+
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/masterclasses.json", function( json ) {
@@ -877,10 +853,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">Low relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/masterclasses-v2.json", function( json ) {
@@ -888,10 +862,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v1</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/masterclasses-high.json", function( json ) {
@@ -899,10 +871,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/masterclasses-high-v2.json", function( json ) {
@@ -914,9 +884,10 @@
 
     <hr/>
 
-    <h2 class="facia-container__inner">Best Buys</h2>
-    <h3 class="facia-container__inner">Low relevance v1</h3>
     <div class="facia-container facia-container--layout-content">
+        <h2 class="facia-container__inner test-page-head">Best Buys</h2>
+
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/money/bestbuys.json", function( json ) {
@@ -924,10 +895,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">Low relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/money/bestbuys-v2.json", function( json ) {
@@ -935,10 +904,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v1</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/money/bestbuys-high.json", function( json ) {
@@ -946,10 +913,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/money/bestbuys-high-v2.json", function( json ) {
@@ -961,9 +926,10 @@
 
     <hr/>
 
-    <h2 class="facia-container__inner">Books</h3>
-    <h3 class="facia-container__inner">Low relevance v1</h3>
     <div class="facia-container facia-container--layout-content">
+        <h2 class="facia-container__inner test-page-head">Books</h3>
+
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers.json", function( json ) {
@@ -971,10 +937,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">Low relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers-v2.json", function( json ) {
@@ -982,10 +946,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">Medium relevance v1</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">Medium relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-medium ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers-medium.json", function( json ) {
@@ -993,10 +955,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">Medium relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">Medium relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-medium-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers-medium-v2.json", function( json ) {
@@ -1004,10 +964,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v1</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers-high.json", function( json ) {
@@ -1015,10 +973,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/books/bestsellers-high-v2.json", function( json ) {
@@ -1030,9 +986,10 @@
 
     <hr/>
 
-    <h2 class="facia-container__inner">Soulmates</h2>
-    <h3 class="facia-container__inner">Low relevance v1</h3>
     <div class="facia-container facia-container--layout-content">
+        <h2 class="facia-container__inner test-page-head">Soulmates</h2>
+
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/soulmates/mixed.json", function( json ) {
@@ -1040,10 +997,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">Low relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/soulmates/mixed-v2.json", function( json ) {
@@ -1051,10 +1006,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v1</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/soulmates/mixed-high.json", function( json ) {
@@ -1062,10 +1015,8 @@
              });
             </script>
         </div>
-    </div>
 
-    <h3 class="facia-container__inner">High relevance v2</h3>
-    <div class="facia-container facia-container--layout-content">
+        <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
                 $.getJSON( "/commercial/soulmates/mixed-high-v2.json", function( json ) {

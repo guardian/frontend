@@ -1,0 +1,46 @@
+@(book: model.commercial.books.Book)(implicit request: RequestHeader)
+
+<style>
+    .i--commercial { background-image: url(@Static("images/commercial/sprite.png")); }
+</style>
+
+@defining(("1_0", "2014-07-10")) { case (version, date) =>
+    
+<div class="commercial--v2 commercial--v-high commercial--books" role="complementary" itemscope itemtype="http://schema.org/Book">
+    <h3 class="commercial__title">
+        <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
+            <i class="i i-marque-54"></i><i class="i i-guardian-logo-commercial"></i><span class="u-h">The Guardian</span>
+            <i class="i i-bookshop-logo"></i><span class="u-h">Book Shop</span>
+        </a>
+    </h3>
+    <div class="commercial--v-high__head">
+        <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-@{book.isbn}-@{book.author}-@{book.title}-title">
+            <h4 itemprop="name" class="lineitem__title">@book.title</h4>
+            <meta itemprop="isbn" content="@{book.isbn}" />
+            <p itemprop="author" class="lineitem__meta">@book.author</p>
+        </a>
+    </div>
+    <div class="commercial--v-high__body">
+        <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-@{book.isbn}-@{book.author}-@{book.title}">
+            @book.jacketUrl.map { url =>
+            <img itemprop="image" class="highitem__img" src="@url" alt="" />
+            }
+            <p itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="commercial--v-high__price commercial--books__price">
+                @book.price.map { price =>
+                <span class="commercial--v-high__price__rrp commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
+                }
+                @book.offerPrice.map { price =>
+                <span class="commercial--v-high__price__our commercial--books__price__our">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
+                <meta itemprop="priceCurrency" content="GBP" />
+                }
+            </p>
+        </a>
+    </div>
+    <div class="commercial--v-high__footer">
+        <a class="commercial__cta" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
+            <span class="i i-arrow-white-right-36"></span>
+            <span class="commercial__cta__label">Buy now</span>
+        </a>
+    </div>
+</div>
+}
