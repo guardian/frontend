@@ -19,23 +19,6 @@ define([
 
     var galleryCache = {};
 
-    function fetchGalleryJson(galleryId, successCallback, errorCallback) {
-        ajax({
-            url: galleryId + '/lightbox.json',
-            type: 'json',
-            method: 'get',
-            crossOrigin: true,
-            success: successCallback,
-            error: errorCallback || function() {}
-        });
-    }
-
-    function preloadCache(galleryId) {
-        fetchGalleryJson(galleryId, function(response) {
-            galleryCache[galleryId] = response.gallery;
-        });
-    }
-
     function GalleryLightbox() {
 
         // CONFIG
@@ -115,8 +98,27 @@ define([
         this.fsm.trigger(event);
     };
 
-    GalleryLightbox.prototype.setGalleryJson = function(json) {
-        galleryCache[json.gallery.id] = json.gallery;
+    GalleryLightbox.prototype.fetchGalleryJson = function(galleryId, successCallback, errorCallback) {
+        ajax({
+            url: galleryId + '/lightbox.json',
+            type: 'json',
+            method: 'get',
+            crossOrigin: true,
+            success: successCallback,
+            error: errorCallback || function() {}
+        });
+    };
+
+    GalleryLightbox.prototype.preloadCache = function(galleryId) {
+        this.fetchGalleryJson(galleryId, function(response) {
+            galleryCache[galleryId] = response.gallery;
+        });
+    };
+
+    GalleryLightbox.prototype.loadGalleryfromJson = function(galleryJson, startIndex) {
+        this.galleryJson = galleryJson;
+        this.index = startIndex;
+        this.trigger('open');
     };
 
     GalleryLightbox.prototype.loadGalleryById = function(galleryId, startIndex) {
@@ -124,7 +126,6 @@ define([
         this.index = startIndex;
         this.trigger('open');
     };
-
 
     GalleryLightbox.prototype.states = {
 
@@ -154,7 +155,7 @@ define([
                     this.trigger('loadJson');
                 }
                 else if (this.galleryId) {
-                    fetchGalleryJson(this.galleryId, function (response) {
+                    this.fetchGalleryJson(this.galleryId, function (response) {
                         this.galleryJson = galleryCache[this.galleryId] = response.gallery;
                         this.trigger('loadJson');
                     }.bind(this));
@@ -318,7 +319,9 @@ define([
         $body.removeClass('has-overlay');
         bean.off(document.body, 'keydown', this.handleKeyEvents);
         window.setTimeout(function() {
-            $body.scrollTop(this.bodyScrollPosition);
+            if (this.bodyScrollPosition) {
+                $body.scrollTop(this.bodyScrollPosition);
+            }
             this.$lightboxEl.removeClass('gallery-lightbox--open');
             mediator.emit('ui:images:upgrade');
             mediator.emit('ui:images:vh');
@@ -363,7 +366,8 @@ define([
         });
 
         if (config.page.contentType === 'Gallery') {
-            preloadCache('/' + config.page.pageId);
+            lightbox = lightbox || new GalleryLightbox();
+            lightbox.preloadCache('/' + config.page.pageId);
         }
     }
 
