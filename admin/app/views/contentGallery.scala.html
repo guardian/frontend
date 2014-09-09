@@ -1,4 +1,4 @@
-@(env: String, pageViewsChart: tools.FormattedChart, lightboxLaunchesChart: tools.FormattedChart, title: String, reportTimestamp: Option[String])
+@(env: String, pageViewsChart: tools.FormattedChart, lightboxLaunchesChart: tools.FormattedChart, sentryChart: tools.FormattedChart, title: String, reportTimestamp: Option[String])
 
 @admin_main("Gallery Dashboard", env, isAuthed = true, hasCharts = true) {
 
@@ -6,6 +6,7 @@
 
     @fragments.formattedChart(pageViewsChart)
     @fragments.formattedChart(lightboxLaunchesChart)
+    @fragments.formattedChart(sentryChart)
 
     @reportTimestamp.map { timestamp =>
         <em>Omniture reports generated at @timestamp</em>

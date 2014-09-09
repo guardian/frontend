@@ -1,7 +1,6 @@
 package model
 
 import commercial.TravelOffersCacheJob
-import commercial.TravelOffersCacheJob
 import conf.Configuration
 import football.feed.MatchDayRecorder
 import play.api.GlobalSettings
@@ -53,6 +52,10 @@ trait AdminLifecycle extends GlobalSettings {
       OmnitureReportJob.run()
     }
 
+    Jobs.schedule("SentryReportJob", "0 */5 * * * ?") {
+      SentryReportJob.run()
+    }
+
     Jobs.schedule("MatchDayRecorderJob", "0 * * * * ?") {
       MatchDayRecorder.record()
     }
@@ -69,6 +72,7 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("RebuildIndexJob")
     Jobs.deschedule("OmnitureReportJob")
     Jobs.deschedule("MatchDayRecorderJob")
+    Jobs.deschedule("SntryReportJob")
   }
 
   override def onStart(app: play.api.Application) {
@@ -80,6 +84,7 @@ trait AdminLifecycle extends GlobalSettings {
       RebuildIndexJob.run()
       TravelOffersCacheJob.run()
       OmnitureReportJob.run()
+      SentryReportJob.run()
     }
   }
 
