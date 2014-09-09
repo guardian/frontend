@@ -16,7 +16,25 @@ define([
     FiniteStateMachine
 ) {
 
+
     var galleryCache = {};
+
+    function fetchGalleryJson(galleryId, successCallback, errorCallback) {
+        ajax({
+            url: galleryId + '/lightbox.json',
+            type: 'json',
+            method: 'get',
+            crossOrigin: true,
+            success: successCallback,
+            error: errorCallback || function() {}
+        });
+    }
+
+    function preloadCache(galleryId) {
+        fetchGalleryJson(galleryId, function(response) {
+            galleryCache[galleryId] = response.gallery;
+        });
+    }
 
     function GalleryLightbox() {
 
@@ -97,11 +115,24 @@ define([
         this.fsm.trigger(event);
     };
 
+    GalleryLightbox.prototype.setGalleryJson = function(json) {
+        galleryCache[json.gallery.id] = json.gallery;
+    };
+
+    GalleryLightbox.prototype.loadGalleryById = function(galleryId, startIndex) {
+        this.galleryId = galleryId;
+        this.index = startIndex;
+        this.trigger('open');
+    };
+
+
     GalleryLightbox.prototype.states = {
 
         'closed': {
             enter: function() {
                 this.hide();
+                this.galleryJson = undefined;
+                this.galleryId = undefined;
             },
             leave: function() {
                 this.show();
@@ -122,22 +153,16 @@ define([
                     this.galleryJson = galleryCache[this.galleryId];
                     this.trigger('loadJson');
                 }
-                else {
-                    var self = this; // :(
-                    ajax({
-                        url: this.galleryId + '/lightbox.json',
-                        type: 'json',
-                        method: 'get',
-                        crossOrigin: true,
-                        success: function (response) {
-                            self.galleryJson = response.gallery;
-                            self.trigger('loadJson');
-                        },
-                        error: function () {
-                            // TODO: error message
-                        }
-                    });
+                else if (this.galleryId) {
+                    fetchGalleryJson(this.galleryId, function (response) {
+                        this.galleryJson = galleryCache[this.galleryId] = response.gallery;
+                        this.trigger('loadJson');
+                    }.bind(this));
                 }
+                else {
+                    throw 'Gallery lightbox opened with no gallery json/id';
+                }
+
             },
             events: {
                 'loadJson': function() {
@@ -194,7 +219,7 @@ define([
                 },
                 'prev': function() {
                     this.trackInteraction('keyboard:previous');
-                    this.pulseButton(this.nextBtn);
+                    this.pulseButton(this.prevBtn);
                     if (this.index === 1) { // first img
                         if (this.showEndslate) {
                             this.state = 'endslate';
@@ -277,15 +302,6 @@ define([
         return this.showAdverts && !this.galleryJson.shouldHideAdverts;
     };
 
-    GalleryLightbox.prototype.loadGalleryById = function(galleryId, startIndex) {
-        this.galleryId = galleryId;
-        this.index = startIndex;
-        this.trigger('open');
-    };
-
-    GalleryLightbox.prototype.preloadImage = function() {
-    };
-
     GalleryLightbox.prototype.show = function() {
         var $body = bonzo(document.body);
         this.bodyScrollPosition = $body.scrollTop();
@@ -331,7 +347,7 @@ define([
         mediator.emit('module:clickstream:interaction', str);
     };
 
-    function bootstrap(/*config*/) {
+    function bootstrap(config) {
         var lightbox;
         bean.on(document.body, 'click', '.js-gallerythumbs', function(e) {
             e.preventDefault();
@@ -345,9 +361,14 @@ define([
             lightbox = lightbox || new GalleryLightbox();
             lightbox.loadGalleryById(galleryId, galleryIndex);
         });
+
+        if (config.page.contentType === 'Gallery') {
+            preloadCache('/' + config.page.pageId);
+        }
     }
 
     return {
-        init: bootstrap
+        init: bootstrap,
+        GalleryLightbox: GalleryLightbox
     };
 });
