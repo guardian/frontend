@@ -48,7 +48,7 @@ define([
             now,
             guConfig = {
                 page: {
-                    stripePublicToken: "pk_test_Qm3CGRdrV4WfGYCpm0sftR0f"
+                    stripePublicToken: "pk_test_xxxxxxxxxxxxx"
                 }
             };
 

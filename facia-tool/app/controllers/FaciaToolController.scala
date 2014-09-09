@@ -1,6 +1,5 @@
 package controllers
 
-import util.SanitizeInput
 import frontsapi.model._
 import frontsapi.model.UpdateList
 import play.api.mvc._
@@ -122,7 +121,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     FaciaPressQueue.enqueue(PressJob(FrontPath(path), Draft))
     NoCache(Ok)
   }
-  
+
   def updateCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
     FaciaPress.press(PressCommand.forOneId(id).withPressDraft().withPressLive())
     ContentApiPush.notifyContentApi(Set(id))

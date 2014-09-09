@@ -232,6 +232,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems.json"
 
     lazy val travelOffersS3Key = s"${environment.stage.toUpperCase}/commercial/cache/traveloffers.xml"
+
+    object magento {
+      lazy val domain = configuration.getStringProperty("magento.domain")
+      lazy val consumerKey = configuration.getStringProperty("magento.consumer.key")
+      lazy val consumerSecret = configuration.getStringProperty("magento.consumer.secret")
+      lazy val authorizationPath = configuration.getStringProperty("magento.auth.path")
+    }
   }
 
   object open {
@@ -300,6 +307,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
 
   object pa {
     lazy val apiKey = configuration.getMandatoryStringProperty("pa.api.key")
+    lazy val cricketKey = configuration.getMandatoryStringProperty("pa.cricket.api.key")
 
     lazy val host = configuration.getStringProperty("football.api.host").getOrElse("http://pads6.pa-sport.com")
   }

@@ -146,7 +146,7 @@ category: Common
     line-height: $button-size + 2px;
     border-width: 1px;
     border-style: solid;
-    
+
     .i {
         width: $button-size;
         height: $button-size;
@@ -167,13 +167,13 @@ category: Common
     color: $text-colour;
     background-color: $fill-colour;
     border-color: $fill-colour;
-    
+
     &:hover,
     &:focus,
     &:active {
         background-color: $hover-colour;
         border-color: $hover-border;
-    }    
+    }
 }
 .button {
     display: inline-block;
@@ -200,7 +200,7 @@ category: Common
 .button--tertiary {
     @include button-colour(transparent, $c-neutral2, transparent, $c-neutral3);
     border-color: $c-neutral3;
-    
+
     &:hover,
     &:focus,
     &:active {
