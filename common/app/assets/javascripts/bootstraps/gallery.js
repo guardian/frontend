@@ -2,11 +2,13 @@ define([
     'common/utils/mediator',
     'common/utils/$',
     'common/utils/config',
+    'qwery',
     'common/modules/component'
 ], function(
     mediator,
     $,
     config,
+    qwery,
     Component
 ) {
 
@@ -31,7 +33,7 @@ define([
             $('.js-gallery-most-popular').addClass('u-h');
         } else {
             var mostViewed = new Component(),
-                container = $('.js-gallery-most-popular')[0];
+                container = qwery('.js-gallery-most-popular')[0];
 
             mostViewed.manipulationType = 'html';
             mostViewed.endpoint = '/gallery/most-viewed.json';
