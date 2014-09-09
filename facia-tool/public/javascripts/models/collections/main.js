@@ -294,6 +294,8 @@ define([
             .done(function() {
                 var wasPopstate = false;
 
+                console.log(vars.CONST.frontAgeAlertMs);
+
                 model.setFront(getFront());
                 loadFront(getFront());
 
