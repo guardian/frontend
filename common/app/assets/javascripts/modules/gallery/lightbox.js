@@ -306,6 +306,7 @@ define([
             $body.scrollTop(this.bodyScrollPosition);
             this.$lightboxEl.removeClass('gallery-lightbox--open');
             mediator.emit("ui:images:upgrade");
+            mediator.emit("ui:images:vh");
         }).bind(this), 1);
     };
 

@@ -27,7 +27,7 @@
 
                                             @GalleryInitialImage.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
 
-                                                <img class="gallery2__img js-vh-images responsive-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                                                <img class="gallery2__img js-gallery-img responsive-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
                                                     src="@url"
                                                     alt="@image.altText.getOrElse("")"
                                                     itemprop="contentUrl" />
