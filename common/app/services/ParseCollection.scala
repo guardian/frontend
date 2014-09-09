@@ -84,7 +84,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     val collectionJson: Future[JsValue] = requestCollection(id)
       .map(responseToJson)
 
-    val curatedItems: Future[List[Content]] = collectionJson
+    val curatedItems: Future[Seq[Content]] = collectionJson
         .map(retrieveItemsFromCollectionJson)
         .flatMap { items => getArticles(items, edition) }
     val executeDraftContentApiQuery: Future[Result] =
@@ -135,51 +135,50 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
   }
 
-  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[List[Content]]
-    = getArticles(collectionItems, edition, hasParent=false)
+  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[Seq[Content]] = {
+    batchGetContentApiItems(collectionItems ++ collectionItems.flatMap(retrieveSupportingLinks), edition) map { items =>
+      collectionItems flatMap { collectionItem =>
+        val supporting = retrieveSupportingLinks(collectionItem).flatMap({ collectionItem =>
+          items.get(collectionItem) map { item =>
+            Content(
+              item,
+              Nil,
+              collectionItem.metaData
+            )
+          }
+        })
 
-  //hasParent is here to break out of the recursive loop and make sure we only go one deep
-  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition, hasParent: Boolean): Future[List[Content]] = {
-    if (collectionItems.isEmpty) {
-      Future.successful(Nil)
-    }
-    else {
-      val results = collectionItems.foldLeft(Future[List[Content]](Nil)) {
-        (foldListFuture, collectionItem) =>
-          lazy val supportingAsContent: Future[List[Content]] = {
-            lazy val supportingLinks: List[CollectionItem] = retrieveSupportingLinks(collectionItem)
-            if (!hasParent) getArticles(supportingLinks, edition, hasParent = true) else Future.successful(Nil)
+        if (collectionItem.isSnap) {
+          Some(new Snap(
+            collectionItem.id,
+            supporting,
+            collectionItem.webPublicationDate.getOrElse(DateTime.now),
+            collectionItem.metaData.getOrElse(Map.empty)
+          ))
+        } else {
+          items.get(collectionItem) map { item =>
+            validateContent(Content(
+              item,
+              supporting,
+              collectionItem.metaData
+            ))
           }
-          if (collectionItem.isSnap) {
-            for {
-              contentList <- foldListFuture
-              supporting  <- supportingAsContent
-            } yield contentList :+ new Snap(collectionItem.id, supporting, collectionItem.webPublicationDate.getOrElse(DateTime.now), collectionItem.metaData.getOrElse(Map.empty))
-          }
-          else {
-            val content: Future[Option[ApiContent]] = getContentApiItemFromCollectionItem(collectionItem, edition)
-            supportingAsContent.onFailure {
-              case t: Throwable => log.warn("Supporting links: %s: %s".format(collectionItem.id, t.toString))
-            }
-
-            for {
-              contentList <- foldListFuture
-              itemResponse <- content
-              supporting <- supportingAsContent
-            } yield {
-              itemResponse
-                .map(Content(_, supporting, collectionItem.metaData))
-                .map(validateContent)
-                .map(contentList :+ _)
-                .getOrElse(contentList)
-            }
-          }
+        }
       }
-      results
     }
   }
 
-  private def getContentApiItemFromCollectionItem(collectionItem: CollectionItem, edition: Edition): Future[Option[ApiContent]] = {
+  private def batchGetContentApiItems(collectionItems: Seq[CollectionItem],
+                                      edition: Edition): Future[Map[CollectionItem, ApiContent]] = {
+    Futures.batchedTraverse(collectionItems, 10)({ collectionItem =>
+      getContentApiItemFromCollectionItem(collectionItem, edition) map { maybeItem =>
+        maybeItem.map(collectionItem -> _)
+      }
+    }).map(_.flatten.toMap)
+  }
+
+  private def getContentApiItemFromCollectionItem(collectionItem: CollectionItem,
+                                                  edition: Edition): Future[Option[ApiContent]] = {
     lazy val response = client.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery)
       .response
       .map(Option.apply)
@@ -218,8 +217,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     collectionItem.metaData.map(_.get("supporting").flatMap(_.asOpt[List[JsValue]]).getOrElse(Nil)
       .map(json => CollectionItem((json \ "id").as[String], (json \ "meta").asOpt[Map[String, JsValue]], (json \ "frontPublicationDate").asOpt[DateTime]))
     ).getOrElse(Nil)
-
-
 
   def executeContentApiQueryViaCache(queryString: String, edition: Edition): Future[Result] = {
     lazy val contentApiQuery = executeContentApiQuery(queryString, edition)
