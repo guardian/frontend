@@ -96,7 +96,7 @@
             loadFontsFromStorage();
         }
 
-        @if(CssFromStorageSwitch.isSwitchedOn && !play.Play.isDev()) {
+        @if(InlineCriticalCss.isSwitchedOn && !play.Play.isDev()) {
             function loadCssFromStorage() {
                 var c = localStorage.getItem('gu.css.@Static("stylesheets/global.css").md5Key'), s, head;
                 if(c) {
