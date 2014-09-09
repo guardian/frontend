@@ -29,19 +29,19 @@
                             <h4 class="commercial__headline">Featured offers on fixed rate mortgages</h4>
                             <table class="table--commercial">
                                 <thead class="table--commercial__head">
-                                    <th class="table--commercial__table--cell">Name</th>
-                                    <th class="table--commercial__table--cell">Initial&nbsp;rate</th>
-                                    <th class="table--commercial__table--cell hide-cell-on-mobile">Scheme type</th>
-                                    <th class="table--commercial__table--cell hide-cell-on-mobile">Overall cost for comparison (APR %)</th>
+                                    <th class="table--commercial__cell" scope="col">Name</th>
+                                    <th class="table--commercial__cell" scope="col">Initial&nbsp;rate</th>
+                                    <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Scheme type</th>
+                                    <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Overall cost for comparison (APR %)</th>
                                 </thead>
                                 <tbody class="table--commercial__body">
                                  @bestBuys.mortgages.take(3).map { mortgage =>
                                     <tr class="table--commercial__row">
-                                        <td class="table--commercial__table--cell"><a href="@AdLink{@mortgage.detailsUrl}" class="apply-to-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-@mortgage.lender">@mortgage.lender</a></td>
-                                        <td class="table--commercial__table--cell">@mortgage.rate</td>
-                                        <td class="table--commercial__table--cell hide-cell-on-mobile">@mortgage.description</td>
-                                        <td class="table--commercial__table--cell hide-cell-on-mobile">@mortgage.overallCost%</td>
-                                        <td class="table--commercial__table--cell"><a href="@AdLink{@mortgage.detailsUrl}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-@mortgage.lender-more">More <span class="u-h">about @mortgage.lender's offer</span></a></td>
+                                        <th class="table--commercial__cell" scope="row"><a href="@AdLink{@mortgage.detailsUrl}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-@mortgage.lender">@mortgage.lender</a></th>
+                                        <td class="table--commercial__cell">@mortgage.rate</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile">@mortgage.description</td>
+                                        <td class="table--commercial__cell hide-cell-on-mobile">@mortgage.overallCost%</td>
+                                        <td class="table--commercial__cell"><a href="@AdLink{@mortgage.detailsUrl}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-@mortgage.lender-more">More <span class="u-h">about @mortgage.lender's offer</span></a></td>
                                     </tr>
                                 }
                                 </tbody>
@@ -58,17 +58,17 @@
                             <h4 class="commercial__headline">Looking after your day-to-day finances</h4>
                             <table class="table--commercial">
                                 <thead class="table--commercial__head">
-                                    <th class="table--commercial__table--cell">Provider</th>
-                                    <th class="table--commercial__table--cell">Account</th>
-                                    <th class="table--commercial__table--cell">Interest</th>
+                                    <th class="table--commercial__cell" scope="col">Provider</th>
+                                    <th class="table--commercial__cell" scope="col">Account</th>
+                                    <th class="table--commercial__cell" scope="col">Interest</th>
                                 </thead>
                                 <tbody class="table--commercial__body">
                                 @bestBuys.currentAccounts.get("reward-incentive").getOrElse(Nil).take(3).map { account =>
                                     <tr class="table--commercial__row">
-                                        <td class="table--commercial__table--cell"><a href="@AdLink{@account.applyUrl}" class="apply-to-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-@account.provider">@account.provider</a></td>
-                                        <td class="table--commercial__table--cell">@account.name</td>
-                                        <td class="table--commercial__table--cell">@account.interestRate%</td>
-                                        <td class="table--commercial__table--cell"><a href="@AdLink{@account.applyUrl}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-@account.provider-more">More <span class="u-h">about @account.provider's offer</span></a></td>
+                                        <th class="table--commercial__cell" scope="row"><a href="@AdLink{@account.applyUrl}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-@account.provider">@account.provider</a></th>
+                                        <td class="table--commercial__cell">@account.name</td>
+                                        <td class="table--commercial__cell">@account.interestRate%</td>
+                                        <td class="table--commercial__cell"><a href="@AdLink{@account.applyUrl}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-@account.provider-more">More <span class="u-h">about @account.provider's offer</span></a></td>
                                     </tr>
                                 }
                                 </tbody>
@@ -85,17 +85,17 @@
                             <h4 class="commercial__headline">A safe home for your nest egg</h4>
                             <table class="table--commercial">
                                 <thead class="table--commercial__head">
-                                    <th class="table--commercial__table--cell">Name</th>
-                                    <th class="table--commercial__table--cell hide-cell-on-mobile">Account</th>
-                                    <th class="table--commercial__table--cell">AER</th>
+                                    <th class="table--commercial__cell" scope="col">Name</th>
+                                    <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Account</th>
+                                    <th class="table--commercial__cell" scope="col">AER</th>
                                 </thead>
                                 <tbody class="table--commercial__body">
                                 @bestBuys.savings.get("easy-access").getOrElse(Nil).take(3).map { account =>
                                     <tr class="table--commercial__row">
-                                        <td class="table--commercial__table--cell"><a href="@AdLink{@account.applyUrl}" class="apply-to-link" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-@account.provider">@account.provider</a></td>
-                                        <td class="table--commercial__table--cell hide-cell-on-mobile">@account.name</td>
-                                        <td class="table--commercial__table--cell">@account.interestRate%</td>
-                                        <td class="table--commercial__table--cell"><a href="@AdLink{@account.applyUrl}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-@account.provider-more">More <span class="u-h">about @account.provider's offer</span></a></td>
+                                        <th class="table--commercial__cell" scope="row"><a href="@AdLink{@account.applyUrl}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-@account.provider">@account.provider</a></th>
+                                        <td class="table--commercial__cell hide-cell-on-mobile">@account.name</td>
+                                        <td class="table--commercial__cell">@account.interestRate%</td>
+                                        <td class="table--commercial__cell"><a href="@AdLink{@account.applyUrl}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-@account.provider-more">More <span class="u-h">about @account.provider's offer</span></a></td>
                                     </tr>
                                 }
                                 </tbody>

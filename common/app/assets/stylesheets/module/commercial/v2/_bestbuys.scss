@@ -9,118 +9,16 @@
         background-color: $c-commercial-bestbuys-1;
     }
 
-    .tabs__container {
-        background-color: $c-neutral5;
-        margin: $gs-baseline*-.5 $gs-gutter*-1 $gs-baseline;
-    }
-    .tabs__content {
-        padding: 0;
-        border: 0;
-    }
-    .tabs__tab {
-        width: auto;
-        border-bottom: 0;
-        border-color: $c-neutral5;
-
-        + .tabs__tab a {
-            border-left-color: $c-neutral6;
-        }
-
-        a {
-            background-color: transparent;
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-    }
     .tabs__tab--selected {
-        background-color: $c-neutral6;
         border-color: $c-commercial-bestbuys-2;
 
         a {
-            background-color: transparent;
             color: $c-commercial-bestbuys-2;
-            font-weight: bold;
         }
     }
-    .table--commercial {
-        border-bottom: 1px solid $c-neutral5;
-        margin-bottom: $gs-baseline;
-        @include fs-textSans(4);
-    }
-    .table--commercial__head {
-        color: $c-neutral2;
 
-        .table--commercial__table--cell {
-            span:last-child {
-                display: none;
-            }
-        }
-    }
-    .table--commercial__body {
-        .table--commercial__row {
-            border-top: 1px solid $c-neutral5;
-        }
-    }
-    .table--commercial__table--cell {
-        padding: $gs-baseline/3 0 $gs-baseline;
-        vertical-align: top;
-        line-height: 1;
-    }
-    .apply-to-link {
-        font-weight: bold;
-    }
     .lineitem__meta {
-        color: #a3a3a3;
         @include fs-data(1);
     }
-    @include mq($to: tablet) {
-        .hide-cell-on-mobile {
-            display: none;
-        }
-    }
-    @include mq(tablet) {
-        .tabs__tab a,
-        .tabs__tab .tab__link {
-            padding-top: 8px;
-        }
-    }
-}
 
-/* Fronts */
-.facia-container--layout-front .commercial--v2.commercial--bestbuys {
-    @include mq(tablet) {
-        .tabs__content {
-            margin-bottom: $gs-baseline;
-        }
-    }
-    @include mq(desktop) {
-        .tabs__content {
-            margin-bottom: 0;
-        }
-    }
-    @include mq(faciaLeftCol) {
-        .has-page-skin & {
-            .facia-container__inner {
-                width: 100%;
-                padding: 0 $gs-gutter/2;
-            }
-            .container__body {
-                width: 100%;
-                margin-left: 0;
-                
-                &.tabs__container {
-                    width: auto;
-                }
-            }
-        }
-    }
-}
-
-/* Articles */
-.facia-container--layout-content .commercial--v2.commercial--bestbuys {
-    @include mq(tablet, rightCol) {
-        .tabs__content {
-            padding-bottom: $gs-baseline;
-        }
-    }
 }

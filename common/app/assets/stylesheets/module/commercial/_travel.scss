@@ -6,7 +6,7 @@ $c-commercial-travel-light: #2cace7;
 $c-commercial-travel-dark: #002b6c;
 $travelBlue: #066ec9;
 
-.commercial--travel {
+.commercial--v1.commercial--travel {
     .commercial__head {
         border-top: 0;
         margin-top: $gs-baseline;
@@ -303,7 +303,7 @@ $travelBlue: #066ec9;
 
 /* Fronts */
 
-.facia-container--layout-front .commercial--travel {
+.facia-container--layout-front .commercial--v1.commercial--travel {
     @include mq(desktop) {
         .commercial__head {
             width: auto;
@@ -325,7 +325,7 @@ $travelBlue: #066ec9;
 
 /* Articles */
 
-.facia-container--layout-content .commercial--travel {
+.facia-container--layout-content .commercial--v1.commercial--travel {
     @include mq(leftCol) {
         @include c-travel-leftCol;
 

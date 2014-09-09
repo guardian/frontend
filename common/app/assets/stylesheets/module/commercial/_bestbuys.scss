@@ -4,7 +4,7 @@
 
 $c-money-high: #63007f;
 
-.commercial--bestbuys {
+.commercial--v1.commercial--bestbuys {
     .tabs .commercial__head {
         height: auto;
         border: 0;
@@ -148,7 +148,7 @@ $c-money-high: #63007f;
 }
 
 /* fronts */
-.facia-container--layout-front .commercial--bestbuys {
+.facia-container--layout-front .commercial--v1.commercial--bestbuys {
     @include mq(tablet) {
         .commercial__home-link {
             bottom: $comercial-comp-baseline;
@@ -243,7 +243,7 @@ $c-money-high: #63007f;
     }
 }
 /* article */
-.facia-container--layout-content .commercial--bestbuys {
+.facia-container--layout-content .commercial--v1.commercial--bestbuys {
     @include mq(tablet) {
         .tools__calculators {
             right: $gs-gutter;

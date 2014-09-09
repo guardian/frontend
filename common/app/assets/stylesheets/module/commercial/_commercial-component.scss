@@ -5,7 +5,7 @@ $commercial-cta-diameter: (
     tablet: 36px
 );
 
-.facia-container--layout-front .commercial {
+.facia-container--layout-front .commercial--v1 {
     padding: 0;
 
     @include mq(leftCol) {
@@ -102,7 +102,7 @@ $commercial-cta-diameter: (
     }
 }
 
-.facia-container--layout-content .commercial {
+.facia-container--layout-content .commercial--v1 {
     &.commercial--high {
         @include mq(tablet, leftCol) {
             .lineitem {
@@ -131,7 +131,7 @@ $commercial-cta-diameter: (
     }
 }
 
-.commercial {
+.commercial--v1 {
     @include box-sizing(border-box);
     width: 100%;
     position: relative;
@@ -285,7 +285,7 @@ $commercial-cta-diameter: (
 /* ==========================================================================
    Entries
    ========================================================================== */
-.commercial {
+.commercial--v1 {
     .lineitems,
     .highitem {
         padding: 0;
