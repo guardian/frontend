@@ -1,13 +1,17 @@
 define([
     'common/utils/mediator',
     'common/utils/$',
+    'common/utils/config',
     'common/modules/component',
-    'bonzo'
+    'bonzo',
+    'qwery'
 ], function(
     mediator,
     $,
+    config,
     Component,
-    bonzo
+    bonzo,
+    qwery
 ) {
 
     var verticallyResponsiveImages = function() {
