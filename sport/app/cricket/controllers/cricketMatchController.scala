@@ -33,7 +33,7 @@ object CricketMatchController extends Controller with Logging with ExecutionCont
           else
             Ok(cricket.views.html.cricketMatch(page))
         }
-      }.getOrElse(NotFound)
+      }.getOrElse(NoCache(NotFound))
     }
   }
 }
