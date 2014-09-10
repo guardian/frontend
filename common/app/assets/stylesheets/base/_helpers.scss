@@ -159,7 +159,10 @@
 
 /**
  * Add/Remove padding
+ *
+ * Modification of Harry Roberts's
+ * https://github.com/csswizardry/inuit.css/blob/master/generic/_helper.scss
  */
 
-.flushp      { padding:     0; }
-.flushp--top { padding-top: 0; }
+.flushp      { padding:     0!important; }
+.flushp--top { padding-top: 0!important; }
