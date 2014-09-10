@@ -11,7 +11,7 @@
         @include icon(volume-high-black, $with-width: false);
 
         .container--dark-background & {
-            @extend %svg-i-volume-high-yellow;
+            @extend %svg-i-volume-high-white;
         }
     }
     .item--video .item__title:before,
@@ -21,7 +21,7 @@
         @include icon(video-icon-black, $with-width: false);
 
         .container--dark-background & {
-            @extend %svg-i-video-icon;
+            @extend %svg-i-video-icon-white;
         }
     }
     .item--gallery .item__title:before,

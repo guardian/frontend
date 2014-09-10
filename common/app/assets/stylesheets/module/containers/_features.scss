@@ -70,14 +70,16 @@
         padding-left: 7px;
         padding-right: 7px;
     }
-    .item--audio .item__title:before {
-        @include icon(volume-high-yellow, $with-width: false);
-    }
-    .item--video .item__title:before {
-        @include icon(video-icon, $with-width: false);
-    }
-    .item--gallery .item__title:before {
-        @include icon(camera-white-large, $with-width: false);
+    @if ($svg-support) {
+        .item--audio .item__title:before {
+            @extend %svg-i-volume-high-white;
+        }
+        .item--video .item__title:before {
+            @extend %svg-i-video-icon-white;
+        }
+        .item--gallery .item__title:before {
+            @extend %svg-i-camera-white-large;
+        }
     }
     .item__media-wrapper {
         margin-left: -7px;
