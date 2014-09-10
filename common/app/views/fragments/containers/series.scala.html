@@ -1,5 +1,8 @@
 @(collection: Collection, style: Container, containerIndex: Int, description: Option[String])(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
+@import model.{Collection, Config, FaciaComponentName}
+@import views.support.{Container, RenderClasses, TemplateDeduping}
+
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (displayName, href) =>
 
     @defining(templateDeduping(5, collection.items)) { items =>
