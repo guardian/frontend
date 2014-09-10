@@ -49,7 +49,8 @@ define([
         this.capiProps = asObservableProps([
             'section',
             'webTitle',
-            'description']);
+            'description',
+            'type']);
 
         this.state = asObservableProps([
             'isOpen',
@@ -78,6 +79,10 @@ define([
             if (this.id()) {
                 this.setOpen(true);
             }
+        }, this);
+
+        this.capiProps.type.subscribe(function (type) {
+            this.props.editorialType(type);
         }, this);
 
         this.provisionalImageUrl = ko.observable();
@@ -154,7 +159,6 @@ define([
 
         if(checkUniqueness && _.filter(vars.model.fronts(), function(front) { return front.id() === self.id(); }).length > 1) {
             this.id(undefined);
-            return;
         }
     };
 
@@ -168,15 +172,18 @@ define([
     };
 
     Front.prototype.openProps = function() {
-        var self = this;
-
         this.state.isOpenProps(true);
         this.collections.items().map(function(collection) { collection.close(); });
 
-        contentApi.fetchMetaForPath(this.id())
-        .done(function(meta) {
+        this.loadCapiProps();
+    };
+
+    Front.prototype.loadCapiProps = function(){
+        var self = this;
+        contentApi.fetchMetaForPath(self.id())
+        .done(function (meta) {
             meta = meta || {};
-            _.each(self.capiProps, function(val, key) {
+            _.each(self.capiProps, function (val, key) {
                 val(meta[key]);
             });
         });
@@ -194,6 +201,11 @@ define([
         collection.parents.push(this);
         this.collections.items.push(collection);
         vars.model.collections.unshift(collection);
+
+        var isNewFront = this.collections.items().length === 1;
+        if(isNewFront){
+            this.loadCapiProps();
+        }
     };
 
     Front.prototype._depopulateCollection = function(collection) {
