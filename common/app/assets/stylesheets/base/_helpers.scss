@@ -23,6 +23,12 @@
     }
 }
 
+.desktop-only {
+    @include mq($until: desktop) {
+        display: none !important;
+    }
+}
+
 .hide-on-mobile {
     display: none !important;
 
@@ -46,6 +52,7 @@
         display: none !important;
     }
 }
+
 .hide-on-tablet {
     @include mq(mobile, desktop) {
         display: none !important;

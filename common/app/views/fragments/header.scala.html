@@ -26,33 +26,35 @@ to apply any necessary changes to non-shared code there too.
                 </div>
             }
 
-            <div class="brand-bar__item has-nav-popup brand-bar__item--has-control brand-bar__item--joinus" data-component="joinus">
-                <a href="#guardian-join-us" class="brand-bar__item--action nav-popup__toggle" data-link-name="topNav : join us"
-                class="brand-bar__item--action nav-popup__toggle js-search-toggle" data-toggle="top-bar__popup--joinus">
-                    <span class="control__icon-wrapper">
-                        <span class="control__icon flushp">
-                            <i class="i i-g-white-36"></i>
+            @if(Edition(request) == Uk) {
+                <div class="brand-bar__item has-nav-popup brand-bar__item--has-control brand-bar__item--joinus desktop-only" data-component="joinus">
+                    <a href="#guardian-join-us" class="brand-bar__item--action nav-popup__toggle" data-link-name="topNav : join us"
+                    class="brand-bar__item--action nav-popup__toggle js-search-toggle" data-toggle="top-bar__popup--joinus">
+                        <span class="control__icon-wrapper">
+                            <span class="control__icon flushp">
+                                <i class="i i-g-white-36"></i>
+                            </span>
                         </span>
-                    </span>
-                    <span class="control__info">join us</span>
-                </a>
-                <div class="nav-popup is-off top-bar__popup--joinus" id="guardian-services-top-menu">
-                    <ul class="nav-popup__group">
-                        <li class="nav-popup__item">
-                            <a class="brand-bar__item--action" data-link-name="uk : topNav : membership"
-                            href="http://membership.theguardian.com">
-                                membership
-                            </a>
-                        </li>
-                        <li class="nav-popup__item">
-                            <a class="brand-bar__item--action" data-link-name="uk : topNav : subscribe"
-                            href="http://subscribe.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SUBSCRIBE">
-                                subscribe
-                            </a>
-                        </li>
-                    </ul>
+                        <span class="control__info">join us</span>
+                    </a>
+                    <div class="nav-popup is-off top-bar__popup--joinus" id="guardian-services-top-menu">
+                        <ul class="nav-popup__group">
+                            <li class="nav-popup__item">
+                                <a class="brand-bar__item--action" data-link-name="uk : topNav : membership"
+                                href="http://membership.theguardian.com">
+                                    membership
+                                </a>
+                            </li>
+                            <li class="nav-popup__item">
+                                <a class="brand-bar__item--action" data-link-name="uk : topNav : subscribe"
+                                href="http://subscribe.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SUBSCRIBE">
+                                    subscribe
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            }
 
             @if(SearchSwitch.isSwitchedOn) {
                 <div class="brand-bar__item has-nav-popup brand-bar__item--has-control brand-bar__item--search" data-component="search">
