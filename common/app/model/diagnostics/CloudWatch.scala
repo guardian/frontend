@@ -38,9 +38,13 @@ trait CloudWatch extends Logging {
   case class AsyncHandlerForMetric(metric: FrontendMetric, points: List[DataPoint]) extends LoggingAsyncHandler {
     override def onError(exception: Exception) = {
       metric.putDataPoints(points)
+      log.warn(s"Failed to put ${metric.name}: $exception")
       super.onError(exception)
     }
-    override def onSuccess(request: PutMetricDataRequest, result: Void ) = super.onSuccess(request, result)
+    override def onSuccess(request: PutMetricDataRequest, result: Void ) = {
+      log.info(s"Successfully put ${metric.name}")
+      super.onSuccess(request, result)
+    }
   }
 
   def put(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]): Any = {
