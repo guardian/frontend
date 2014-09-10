@@ -1,4 +1,8 @@
-@(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
+@(collection: model.Collection, style: views.support.Container, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
+
+@import common.LinkTo
+@import model.{FaciaComponentName, MostPopular}
+@import views.support.RenderClasses
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
