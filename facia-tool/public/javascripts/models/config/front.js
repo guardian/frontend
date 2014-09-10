@@ -49,7 +49,8 @@ define([
         this.capiProps = asObservableProps([
             'section',
             'webTitle',
-            'description']);
+            'description',
+            'type']);
 
         this.state = asObservableProps([
             'isOpen',
@@ -78,6 +79,10 @@ define([
             if (this.id()) {
                 this.setOpen(true);
             }
+        }, this);
+
+        this.capiProps.type.subscribe(function(x){
+            this.props.editorialType(x);
         }, this);
 
         this.provisionalImageUrl = ko.observable();
