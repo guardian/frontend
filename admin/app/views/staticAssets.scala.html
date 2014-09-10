@@ -21,9 +21,9 @@
 }
 
 @data(asset: tools.AssetData, index: Int) = {
-    <h4><i class="icon icon-file"></i> @asset.name</h4>
+    <h4 id="asset-@index"><i class="glyphicon glyphicon-file"></i> @asset.name</h4>
     <hr />
-    <div class="row" id="asset-@index">
+    <div class="row">
         <div class="col-md-8">
             <table class="table table-bordered table--asset">
                 <thead>
@@ -52,9 +52,7 @@
                     <tr>
                         <td>@asset.raw.latest.floor Kb</td>
                         <td>@asset.zipped.latest.floor Kb</td>
-                        <td>
-                        @change(asset)
-                        </td>
+                        <td>@change(asset)</td>
                     </tr>
                     @if(asset.isCSS) {
                         <tr>
@@ -122,9 +120,7 @@
                         </a>
                     <td>@{"%.2f".format(asset.raw.latest)} Kb</td>
                     <td>@{"%.2f".format(asset.zipped.latest)} Kb</td>
-                    <td>
-                        @change(asset)
-                    </td>
+                    <td>@change(asset)</td>
                 </tr>
             }
         </tbody>
