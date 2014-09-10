@@ -20,45 +20,47 @@
             </div>
 
             <div class="container__body">
-                <ul class="u-unstyled commercial--jobs__sectors">
-                    @Seq(
-                        Seq("arts", "Arts"),
-                        Seq("graduate", "Graduate"),
-                        Seq("social-care", "Social care"),
-                        Seq("charity", "Charity"),
-                        Seq("health", "Health"),
-                        Seq("higher-education", "Higher education"),
-                        Seq("environment", "Environment"),
-                        Seq("housing", "Housing"),
-                        Seq("schools", "Schools"),
-                        Seq("government", "Government"),
-                        Seq("media", "Media"),
-                        Seq("", "All sectors")
-                    ).map { sector =>
-                        <li class="commercial--jobs__sector">
-                            <a href="@AdLink{@jobsHost/@sector(0)}"
-                               class="commercial--jobs__sector__link"
-                               data-link-name="merchandising-jobs-v@{version}_@{date}-low-sector-@if(sector(0).nonEmpty){sector(0)}else{all}">
-                                @sector(1) <span class="i i-double-arrow-right-mask"></span>
-                            </a>
-                        </li>
-                    }
-                </ul>
-                @if(jobs.nonEmpty) {
-                    <ul class="u-unstyled commercial--jobs__jobs">
-                        @jobs.map { job =>
-                            <li class="commercial--jobs__job">
-                                <a href="@AdLink{@job.listingUrl}"
-                                   class="commercial--jobs__job__link"
-                                   data-link-name="merchandising-jobs-v@{version}_@{date}-low-job-@{job.id}">
-                                    <h3 class="commercial--jobs__job__title">@job.title</h3>
-                                    <img src="@job.recruiterLogoUrl" class="commercial--jobs__job__logo" alt="" />
-                                </a>
-                                <p class="commercial--jobs__job__salary">@job.locationDescription - @job.shortSalaryDescription</p>
-                                <p class="commercial--jobs__job__recruiter"><a href="@AdLink{@job.recruiterPageUrl}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-recruiter">@job.recruiterName</a></p>
+                <div class="commercial__relevance commercial__relevance--high u-cf">
+                    <h4 class="commercial__header">Sectors</h4>
+                    <ul class="commercial--jobs__sectors">
+                        @Seq(
+                            Seq("arts", "Arts"),
+                            Seq("graduate", "Graduate"),
+                            Seq("social-care", "Social care"),
+                            Seq("charity", "Charity"),
+                            Seq("health", "Health"),
+                            Seq("higher-education", "Higher education"),
+                            Seq("environment", "Environment"),
+                            Seq("housing", "Housing"),
+                            Seq("schools", "Schools"),
+                            Seq("government", "Government"),
+                            Seq("media", "Media"),
+                            Seq("", "All sectors")
+                        ).map { sector =>
+                            <li class="commercial--jobs__sector">
+                                <a class="commercial--jobs__sector__link" href="@AdLink{@jobsHost/@sector(0)}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-sector-@if(sector(0).nonEmpty){sector(0)}else{all}">@sector(1)</a>
                             </li>
                         }
                     </ul>
+                </div>
+                @if(jobs.nonEmpty) {
+                <div class="commercial__relevance commercial__relevance--low u-cf">
+                    <h4 class="commercial__header">Featured jobs</h4>
+                    <ul class="lineitems">
+                        @jobs.map { job =>
+                            <li class="lineitem">
+                                <a class="lineitem__link" href="@AdLink{@job.listingUrl}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-job-@{job.id}">
+                                    <img class="lineitem__image" src="@job.recruiterLogoUrl" alt=""/>
+                                    <h4 class="lineitem__title">@job.title</h4>
+                                    <p class="lineitem__meta">
+                                        <span class="lineitem__meta__highlight">@job.recruiterName</span><br/>
+                                        @job.locationDescription - @job.shortSalaryDescription
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
                 }
             </div>
 

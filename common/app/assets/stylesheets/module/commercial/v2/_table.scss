@@ -4,7 +4,6 @@
 .commercial--v2 {
     .table--commercial {
         @include fs-textSans(4);
-        border-bottom: 1px solid $c-neutral5;
         margin-bottom: $gs-baseline;
     }
 
@@ -16,6 +15,10 @@
 
     .table--commercial__head {
         color: $c-neutral2;
+
+        .table--commercial__row {
+            border-top: 1px solid $c-neutral3;
+        }
     }
 
     .table--commercial__body {

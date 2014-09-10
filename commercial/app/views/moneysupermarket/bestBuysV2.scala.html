@@ -22,17 +22,20 @@
                     <ol class="tabs__container js-tabs" role="tablist">
                         <li id="mortgages-tab" class="tabs__tab tabs__tab--selected" role="tab" aria-selected="true" aria-controls="mortgages"><a href="#mortgages">Mortgages</a></li>
                         <li id="current-accounts-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="current-accounts"><a href="#current-accounts">Current accounts</a></li>
-                        <li id="savings-account-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="savings-account"><a href="#savings-account">Savings <span>account</span></a></li>
+                        <li id="savings-account-tab" class="tabs__tab" role="tab" aria-selected="false" aria-controls="savings-account"><a href="#savings-account">Savings <span class="hide-on-mobile-inline">account</span></a></li>
                     </ol>
                     <div class="tabs__content">
                         <div class="tabs__pane mortgages" id="mortgages" role="tabpanel" aria-labelledby="mortgages-tab">
                             <h4 class="commercial__headline">Featured offers on fixed rate mortgages</h4>
                             <table class="table--commercial">
                                 <thead class="table--commercial__head">
-                                    <th class="table--commercial__cell" scope="col">Name</th>
-                                    <th class="table--commercial__cell" scope="col">Initial&nbsp;rate</th>
-                                    <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Scheme type</th>
-                                    <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Overall cost for comparison (APR %)</th>
+                                    <tr class="table--commercial__row">
+                                        <th class="table--commercial__cell" scope="col">Name</th>
+                                        <th class="table--commercial__cell" scope="col">Initial&nbsp;rate</th>
+                                        <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Scheme type</th>
+                                        <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Overall cost for comparison (APR %)</th>
+                                        <th class="table--commercial__cell"></th>
+                                    </tr>
                                 </thead>
                                 <tbody class="table--commercial__body">
                                  @bestBuys.mortgages.take(3).map { mortgage =>
@@ -46,10 +49,10 @@
                                 }
                                 </tbody>
                             </table>
-                            <a class="lineitem__link button button--primary button--small" href="@AdLink{http://guardian.lcplc-online.co.uk/}">
+                            <a class="lineitem__cta button button--primary button--small" href="@AdLink{http://guardian.lcplc-online.co.uk/}">
                                 Get free mortgage advice<i class="i i-arrow-white-right i-right"></i>
                             </a>
-                            <a class="lineitem__link button button--tertiary button--small" href="@AdLink{http://www.theguardian.com/money/financial-tools-calculators-mortgage-debt-consolidation-loan-repayment-savings}">
+                            <a class="lineitem__cta button button--tertiary button--small" href="@AdLink{http://www.theguardian.com/money/financial-tools-calculators-mortgage-debt-consolidation-loan-repayment-savings}">
                                 Tools and calculators<i class="i i-arrow-black-right i-right"></i>
                             </a>
                             <p class="lineitem__meta">Data provided by London &amp; Country Mortgages Ltd</p>
@@ -58,9 +61,12 @@
                             <h4 class="commercial__headline">Looking after your day-to-day finances</h4>
                             <table class="table--commercial">
                                 <thead class="table--commercial__head">
-                                    <th class="table--commercial__cell" scope="col">Provider</th>
-                                    <th class="table--commercial__cell" scope="col">Account</th>
-                                    <th class="table--commercial__cell" scope="col">Interest</th>
+                                    <tr class="table--commercial__row">
+                                        <th class="table--commercial__cell" scope="col">Provider</th>
+                                        <th class="table--commercial__cell" scope="col">Account</th>
+                                        <th class="table--commercial__cell" scope="col">Interest</th>
+                                        <th class="table--commercial__cell"></th>
+                                    </tr>
                                 </thead>
                                 <tbody class="table--commercial__body">
                                 @bestBuys.currentAccounts.get("reward-incentive").getOrElse(Nil).take(3).map { account =>
@@ -73,10 +79,10 @@
                                 }
                                 </tbody>
                             </table>
-                            <a class="lineitem__link button button--primary button--small" href="@AdLink{http://www.moneysupermarket.com/partners/guardian/currentaccounts/}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-compare-current-rates">
+                            <a class="lineitem__cta button button--primary button--small" href="@AdLink{http://www.moneysupermarket.com/partners/guardian/currentaccounts/}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-compare-current-rates">
                                 Compare rates on current accounts<i class="i i-arrow-white-right i-right"></i>
                             </a>
-                            <a class="lineitem__link button button--tertiary button--small" href="@AdLink{http://www.theguardian.com/money/financial-tools-calculators-mortgage-debt-consolidation-loan-repayment-savings}">
+                            <a class="lineitem__cta button button--tertiary button--small" href="@AdLink{http://www.theguardian.com/money/financial-tools-calculators-mortgage-debt-consolidation-loan-repayment-savings}">
                                 Tools and calculators<i class="i i-arrow-black-right i-right"></i>
                             </a>
                             <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>
@@ -85,9 +91,12 @@
                             <h4 class="commercial__headline">A safe home for your nest egg</h4>
                             <table class="table--commercial">
                                 <thead class="table--commercial__head">
-                                    <th class="table--commercial__cell" scope="col">Name</th>
-                                    <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Account</th>
-                                    <th class="table--commercial__cell" scope="col">AER</th>
+                                    <tr class="table--commercial__row">
+                                        <th class="table--commercial__cell" scope="col">Name</th>
+                                        <th class="table--commercial__cell hide-cell-on-mobile" scope="col">Account</th>
+                                        <th class="table--commercial__cell" scope="col">AER</th>
+                                        <th class="table--commercial__cell"></th>
+                                    </tr>
                                 </thead>
                                 <tbody class="table--commercial__body">
                                 @bestBuys.savings.get("easy-access").getOrElse(Nil).take(3).map { account =>
@@ -100,10 +109,10 @@
                                 }
                                 </tbody>
                             </table>
-                            <a class="lineitem__link button button--primary button--small" href="@AdLink{http://www.moneysupermarket.com/partners/guardian/savings/}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-compare-saving-rates">
+                            <a class="lineitem__cta button button--primary button--small" href="@AdLink{http://www.moneysupermarket.com/partners/guardian/savings/}" data-link-name="merchandising-moneydeals-v@{version}_@{date}-@{relevance}-browse-compare-saving-rates">
                                 Compare over 4,000 savings accounts<i class="i i-arrow-white-right i-right"></i>
                             </a>
-                            <a class="lineitem__link button button--tertiary button--small" href="@AdLink{http://www.theguardian.com/money/financial-tools-calculators-mortgage-debt-consolidation-loan-repayment-savings}">
+                            <a class="lineitem__cta button button--tertiary button--small" href="@AdLink{http://www.theguardian.com/money/financial-tools-calculators-mortgage-debt-consolidation-loan-repayment-savings}">
                                 Tools and calculators<i class="i i-arrow-black-right i-right"></i>
                             </a>
                             <p class="lineitem__meta">Data provided by Moneysupermarket.com. Moneysupermarket.com Limited is an appointed representative of Moneysupermarket.com Financial Group Limited &copy;, which is authorised and regulated by the Financial Services Authority (FSA FRN 303190). Moneysupermarket.com Financial group Limited, registered in England No. 3157344. Registered Office: Moneysupermarket House, St. David's Park, Ewloe, CH5 3UZ. Telephone 01244 665700.</p>

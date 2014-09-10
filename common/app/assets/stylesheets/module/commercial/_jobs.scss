@@ -2,9 +2,7 @@
    Jobs component
    ========================================================================== */
 
-/* remove top margin on the footer to make component sit on top of it as per design */
-
-.commercial--jobs {
+.commercial--v1.commercial--jobs {
     .commercial__head {
         background-color: transparent;
         height: auto;
@@ -148,7 +146,7 @@
 }
 
 /* fronts */
-.facia-container--layout-front .commercial--jobs {
+.facia-container--layout-front .commercial--v1.commercial--jobs {
     padding: $gs-gutter/2;
     @include mq(tablet) {
         .commercial--jobs__sectors {
@@ -219,7 +217,7 @@
     }
 }
 /* article */
-.facia-container--layout-content .commercial--jobs {
+.facia-container--layout-content .commercial--v1.commercial--jobs {
     @include mq(tablet) {
         .commercial--jobs__sectors {
             float: left;
