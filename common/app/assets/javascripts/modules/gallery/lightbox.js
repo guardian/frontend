@@ -44,7 +44,7 @@ define([
             return templ.replace(/{{label}}/g, label);
         }
         this.galleryLightboxHtml =
-            '<div class="overlay gallery-lightbox gallery-lightbox--closed">' +
+            '<div class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">' +
                 '<div class="pamplemousse gallery-lightbox__loader">' +
                     '<div class="pamplemousse__pip"><i></i></div>' +
                     '<div class="pamplemousse__pip"><i></i></div>' +
@@ -95,6 +95,7 @@ define([
         bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
         bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
+        bean.one(this.lightboxEl[0], 'touchstart', this.disableHover.bind(this));
         this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
         this.toggleInfo = this.trigger.bind(this, 'toggle-info');
         this.resize = this.trigger.bind(this, 'resize');
@@ -117,6 +118,10 @@ define([
             states: this.states
         });
     }
+
+    GalleryLightbox.prototype.disableHover = function() {
+        this.$lightboxEl.removeClass('gallery-lightbox--hover');
+    };
 
     GalleryLightbox.prototype.trigger = function(event) {
         this.fsm.trigger(event);
