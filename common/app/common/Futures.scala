@@ -1,10 +1,7 @@
 package common
 
-import akka.actor.Scheduler
-
-import scala.concurrent.{Promise, Future}
+import scala.concurrent.Future
 import scala.annotation.tailrec
-import scala.concurrent.duration.FiniteDuration
 
 object Futures extends ExecutionContexts {
   def batchedTraverse[A, B](as: Seq[A], batchSize: Int)(f: A => Future[B]): Future[Seq[B]] = {
