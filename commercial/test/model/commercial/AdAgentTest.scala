@@ -1,5 +1,8 @@
 package model.commercial
 
+import java.lang.management.{MemoryPoolMXBean, ManagementFactory}
+import java.util
+
 import org.scalatest.{Matchers, FlatSpec}
 import common.ExecutionContexts
 
@@ -40,5 +43,18 @@ class AdAgentTest extends FlatSpec with Matchers with ExecutionContexts {
     val ads = adAgent.adsTargetedAt(segment)
 
     ads should be(fallbackAds)
+  }
+
+  "This test" should "allow me to see the memory usage of this thing" in {
+    import collection.JavaConversions._
+    val iterator: util.Iterator[MemoryPoolMXBean] = ManagementFactory.getMemoryPoolMXBeans.iterator()
+
+    iterator.foreach { item =>
+      val name = item.getName
+      val usage = item.getUsage
+      val typp = item.getType
+      println("### Hello world")
+      println(s"$name ($typp): $usage")
+    }
   }
 }
