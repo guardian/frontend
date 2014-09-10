@@ -1,72 +1,49 @@
-@(items: Seq[model.Trail], config: model.Config)(implicit requestHeader: RequestHeader)
+@(collection: model.Collection, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
-@import model.{FaciaDisplayElement, VideoPlayer, InlineVideo}
-@import views.html.fragments.media.video
-@import fragments.items.elements.{image, meta}
-@import views.support.{ContributorLinks, ItemKicker, RemoveOuterParaHtml, Video640}
+@import views.support.{GetClasses, FourColumns}
+@import views.html.fragments.containers.show_more
+@import views.html.fragments.items.new_style.standard
+@import model.FaciaComponentName
 @import common.LinkTo
 
-<section class="container">
-    <ul class="items items--items-4 items--layout-m">
-        @items.map { item =>
-            <li class="item__container">
-                <div class="item">
-                    <div class="item__media-container">
-                        @FaciaDisplayElement.fromTrail(item) match {
-                            case InlineVideo(videoElement, title, endSlatePath) => {
-                                @video(VideoPlayer(
-                                    videoElement,
-                                    Video640,
-                                    title,
-                                    false,
-                                    false,
-                                    endSlatePath,
-                                    None
-                                ))
-                            }
+@defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
-                            case _ => {
-                                @image(item)
+    @defining(templateDeduping(4, collection.items)) { items =>
+        @if(items.nonEmpty) {
+            <section
+            class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
+            data-link-name="@FaciaComponentName(config, collection)"
+            data-id="@config.id"
+            @config.sponsorshipKeyword.map { keyword =>
+                data-keywords="@keyword"
+            }
+            data-component="@FaciaComponentName(config, collection)">
+                <div class="facia-container__inner">
+                    <div class="container__header">
+                    @title.map { title =>
+                        <h2 class="container__title">
+                            @href.map { href =>
+                            <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                            }.getOrElse{
+                                <span class="container__title__label u-text-hyphenate">@Html(title)</span>
                             }
-                        }
+                        </h2>
+                    }
                     </div>
-                    <h1 class="item__headline">
-                        @ItemKicker.text(item, config).map { kickerText =>
-                            <small class="item__kicker">
-                                @ItemKicker.url(item, config) match {
-                                    case Some(url) => {
-                                        <a href="@url">@kickerText</a>
-                                    }
-
-                                    case None => {
-                                        @kickerText
-                                    }
-                                }
-                            </small>
-                        }
-
-                        @LinkTo(item) match {
-                            case Some(url) => {
-                                <a @LinkTo(item).map { url => href="@url"} data-link-name="article">@RemoveOuterParaHtml(item.headline)</a>
+                    <div class="container__body container--rolled-up-hide">
+                        <div class="facia-slice-wrapper">
+                            <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
+                            @items.slice(0, 4).zipWithIndex.map{ case (trail, index) =>
+                                @standard(trail, index + 3, containerIndex)
                             }
-
-                            case None => {
-                                @RemoveOuterParaHtml(item.headline)
+                            </ul>
+                            @defining(items.slice(4, 24)) { items =>
+                                @show_more(items, 4, containerIndex, FourColumns)
                             }
-                        }
-                    </h1>
-                    @if(item.showByline) {
-                        @item.byline.map { byline =>
-                            @ContributorLinks(Html(byline), item.contributors)
-                        }
-                    }
-                    @item.trailText.map { text =>
-                        <div class="item__standfirst">@Html(text)</div>
-                    }
-                    @meta(item)
+                        </div>
+                    </div>
                 </div>
-            </li>
+            </section>
         }
-
-    </ul>
-</section>
+    }
+}

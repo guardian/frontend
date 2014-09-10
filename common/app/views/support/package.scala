@@ -834,25 +834,33 @@ object GetClasses {
     case _  => Nil
   }
 
-  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
-    val baseClasses = Seq(
-      "container",
-      s"container--${container.containerType}"
-    ) ++ extraClasses
-    val f: Seq[(Container, Config, Int, Boolean) => String] = Seq(
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (config.isSponsored) "container--sponsored" else "",
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (config.isAdvertisementFeature && !config.isSponsored) "container--advertisement-feature" else "",
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (index == 0) "container--first" else "",
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (index > 0 && hasTitle && !(config.isAdvertisementFeature || config.isSponsored)) "js-container--toggle" else ""
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(container, config, index, hasTitle)}
-    RenderClasses(classes:_*)
+  private def commonContainerStyles(config: Config, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+    Seq(
+      "container" -> true,
+      "container--sponsored" -> config.isSponsored,
+      "container--advertisement-feature" -> (config.isAdvertisementFeature && ! config.isSponsored),
+      "container--first" -> isFirst,
+      "js-container--toggle" -> (isFirst && hasTitle && !(config.isAdvertisementFeature || config.isSponsored))
+    ) collect {
+      case (kls, true) => kls
+    }
   }
 
+  def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+    RenderClasses(
+      "container--new-style" +:
+        (commonContainerStyles(config, isFirst, hasTitle) ++
+        extraClasses): _*
+    )
+  }
+
+  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
+    RenderClasses(
+      s"container--${container.containerType}" +:
+        (commonContainerStyles(config, index == 0, hasTitle) ++
+        extraClasses): _*
+    )
+  }
 }
 
 object LatestUpdate {
