@@ -24,14 +24,4 @@ object Futures extends ExecutionContexts {
 
     iter(as.grouped(batchSize).toSeq, Future.successful(Seq.empty[B]))
   }
-
-  def completeAfter(scheduler: Scheduler, delay: FiniteDuration): Future[Unit] = {
-    val promise = Promise[Unit]()
-
-    scheduler.scheduleOnce(delay) {
-      promise.success(())
-    }
-
-    promise.future
-  }
 }
