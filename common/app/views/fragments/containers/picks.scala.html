@@ -1,5 +1,9 @@
 @(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
+@import common.LinkTo
+@import model.{Collection, Config}
+@import views.support.{GetClasses, Container, TemplateDeduping, Seq2zipWithRowInfo}
+
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
     @defining(templateDeduping(5, collection.items)) { items =>
