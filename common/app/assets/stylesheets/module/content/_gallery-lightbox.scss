@@ -299,7 +299,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         top: 0;
         right: 0;
         z-index: 4; // above img/sidebar
-        padding: $gs-baseline/2 $gs-gutter/2 $gs-gutter $gs-gutter;
+        padding: $gs-baseline/2 $gs-gutter/2 $gs-gutter*4 $gs-gutter;
 
         .gallery-lightbox__btn-body {
             background-color: rgba(51, 51, 51, .6);
