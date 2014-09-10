@@ -71,10 +71,13 @@
         padding-right: 7px;
     }
     .item--audio .item__title:before {
-        @include icon(volume-high-yellow);
+        @include icon(volume-high-yellow, $with-width: false);
     }
     .item--video .item__title:before {
-        @include icon(video-icon);
+        @include icon(video-icon, $with-width: false);
+    }
+    .item--gallery .item__title:before {
+        @include icon(camera-white-large, $with-width: false);
     }
     .item__media-wrapper {
         margin-left: -7px;
