@@ -1,7 +1,6 @@
 /* ==========================================================================
 Multi component (AKA Frankenponent)
 ========================================================================== */
-
 .facia-container--layout-front,
 .facia-container--layout-content {
     .commercial--v2.commercial--multi {
@@ -89,8 +88,8 @@ Multi component (AKA Frankenponent)
     }
 }
 
-/* Fronts */
 
+/* Fronts */
 .facia-container--layout-front .commercial--v2.commercial--multi {
     @include mq(faciaLeftCol) {
         .commercial__head {
@@ -100,8 +99,8 @@ Multi component (AKA Frankenponent)
     }
 }
 
-/* Articles */
 
+/* Articles */
 .facia-container--layout-content .commercial--v2.commercial--multi {
     @include mq(leftCol) {
         .commercial__head {

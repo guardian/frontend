@@ -1,11 +1,13 @@
 .article-wrapper {
     max-width: none;
 }
+
 .msm-item-list {
     font-size: 0;
     max-width: gs-span(7);
     margin-top: $gs-baseline*2;
 }
+
 .msm-item {
     width: 50%;
     display: inline-block;
@@ -13,12 +15,15 @@
     @include fs-data(5);
     @include box-sizing(border-box);
 }
+
 .msm-item--selected {
     font-weight: bold;
 }
+
 .table--msm {
     margin-top: $gs-baseline*2;
 }
+
 .loan__name {
     @include fs-data(3);
 
@@ -26,6 +31,7 @@
         @include fs-data(5, $size-only: true);
     }
 }
+
 .loan__logo {
     display: none;
 
@@ -34,6 +40,7 @@
         margin-top: $gs-baseline/2;
     }
 }
+
 .loan__data {
     display: block;
 }

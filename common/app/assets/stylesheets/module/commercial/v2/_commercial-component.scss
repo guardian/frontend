@@ -1,8 +1,3 @@
-$commercial-cta-diameter: (
-    mobile: 24px,
-    tablet: 36px
-);
-
 /* ==========================================================================
    Common commercial styles
    ========================================================================== */
@@ -131,35 +126,6 @@ $commercial-cta-diameter: (
             margin-left: $left-column-wide + $gs-gutter;
         }
     }
-
-// DEPRECATED CONTENT CONTAINER STYLES?
-//    &.commercial--high {
-//        @include mq(tablet, leftCol) {
-//            .lineitem {
-//                width: 100%;
-//
-//                &:nth-child(n+2) {
-//                    display: none;
-//                }
-//            }
-//        }
-//        @include mq(rightCol) {
-//            .container__title {
-//                float: left;
-//                outline: 2px solid red;
-//
-//                .commercial__search {
-//                    display: block;
-//                }
-//            }
-//            .commercial__home-link {
-//                position: absolute;
-//            }
-//            .commercial__foot {
-//                display: none;
-//            }
-//        }
-//    }
 }
 
 
@@ -285,6 +251,7 @@ $commercial-cta-diameter: (
     }
 }
 
+
 /* ==========================================================================
    Commercial container layout adaptions for front pages with page skins
    Update once breakpoints synced
@@ -347,57 +314,6 @@ $commercial-cta-diameter: (
         }
     }
 }
-
-//.facia-container--layout-front .commercial--v2 {
-//    &.commercial--high {
-//        @include mq(tablet) {
-//            .commercial__relevance-high,
-//            .commercial__relevance-low,
-//            .lineitem {
-//                width: 50%;
-//            }
-//            .lineitem:nth-child(n+2) {
-//                display: block;
-//            }
-//        }
-//        @include mq(desktop) {
-//            .commercial__relevance-high {
-//                width: percentage(2/3);
-//            }
-//            .commercial__relevance-low {
-//                width: percentage(1/3);
-//            }
-//            .lineitem {
-//                width: 100%;
-//
-//                &:nth-child(n+2) {
-//                    display: none;
-//                }
-//            }
-//            .commercial__foot {
-//                display: none;
-//            }
-//        }
-//        @include mq(faciaLeftCol) {
-//            .commercial__relevance-high,
-//            .commercial__relevance-low,
-//            .lineitem {
-//                width: 50%;
-//            }
-//            .commercial__relevance-low {
-//                @include box-sizing(border-box);
-//            }
-//            .lineitem {
-//                &:nth-child(1) {
-//                    padding-left: 0;
-//                }
-//                &:nth-child(n+2) {
-//                    display: block;
-//                }
-//            }
-//        }
-//    }
-//}
 
 
 /* ==========================================================================

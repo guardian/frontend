@@ -1,7 +1,6 @@
 /* ==========================================================================
    DFP bespoke component
    ========================================================================== */
-
 @mixin commercial-double-item {
     &.commercial--items-dfp-2 {
         .lineitem {
@@ -17,6 +16,7 @@
         }
     }
 }
+
 
 .commercial--v2.commercial--dfp {
     $c-commercial-dfp-1: $c-neutral2;
@@ -90,7 +90,7 @@
             .container__header-soulmates {
                 width: gs-span(3);
                 @include c-soulmates-branding;
-                
+
                 .i-soulmates-title-background {
                     padding-top: $gs-baseline*3;
                     width: 100%;
@@ -147,7 +147,7 @@
     @include mq(tablet) {
         &.commercial--items-dfp-2 .lineitem {
             width: 50%;
-            
+
             &:nth-child(n+3) {
                 display: none;
             }
@@ -164,12 +164,13 @@
     }
 }
 
+
 .facia-container--layout-content .commercial--v2.commercial--dfp.commercial--dfp-single {
     @include mq(rightCol) {
         .commercial__footer {
             position: absolute;
             bottom: $gs-baseline/2;
-        }     
+        }
     }
     @include mq(leftCol) {
         .lineitem__link-image {
@@ -202,6 +203,7 @@
         }
     }
 }
+
 
 .facia-container--layout-front .commercial--v2.commercial--dfp.commercial--dfp-single {
     @include mq(tablet) {
@@ -241,25 +243,16 @@
     }
 }
 
+
 .facia-container--layout-content .commercial--v2.commercial--dfp {
     @include mq(rightCol) {
         @include commercial-double-item;
     }
 }
 
+
 .facia-container--layout-front .commercial--v2.commercial--dfp {
     @include mq(desktop) {
         @include commercial-double-item;
-    }
-    @include mq(wide) {
-        .has-page-skin & {
-//            .commercial__home-link {
-//                width: auto;
-//                top: $gs-baseline*2;
-//                right: 0;
-//                left: auto;
-//                bottom: auto;
-//            }
-        }
     }
 }
