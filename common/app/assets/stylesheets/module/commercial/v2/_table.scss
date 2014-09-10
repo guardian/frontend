@@ -28,7 +28,7 @@
         }
     }
 
-    @include mq($to: tablet) {
+    @include mq($until: tablet) {
         .hide-cell-on-mobile {
             display: none;
         }

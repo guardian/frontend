@@ -37,13 +37,11 @@
                     @offers.take(4).map { offer =>
                         <li class="lineitem">
                             <a class="lineitem__link" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-low-@{offer.title}">
-                                <img class="lineitem__image" src="@offer.imageUrl" alt=""/>
-                                <div class="lineitem__offer">
-                                    <h4 class="lineitem__title">@offer.title</h4>
-                                    <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
-                                </div>
+                                <div class="lineitem__image-crop"><img class="lineitem__image" src="@offer.imageUrl" alt=""/></div>
+                                <h4 class="lineitem__title">@offer.title</h4>
+                                <p class="lineitem__meta">@offer.durationInWords from <span class="lineitem__price">£@offer.fromPrice</span></p>
                             </a>
-                            <a class="lineitem__link button button--primary button--small" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-low-@{offer.title}-book-now">
+                            <a class="lineitem__cta button button--primary button--small" href="@AdLink{@offer.offerUrl}" data-link-name="merchandising-travel-v@{version}_@{date}-low-@{offer.title}-book-now">
                                 Book now<i class="i i-arrow-white-right i-right"></i>
                             </a>
                         </li>

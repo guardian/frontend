@@ -19,7 +19,7 @@
         border-bottom: 0;
         border-color: $c-neutral5;
 
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             width: auto;
         }
 

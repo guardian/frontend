@@ -22,15 +22,15 @@ $commercial-cta-diameter: (
         }
         @include mq(leftCol) {
             padding-left: 0;
-            padding-right: $gs-gutter;
-            max-width: gs-span(14) + $gs-gutter;
+            padding-right: 0;
+            max-width: gs-span(14) + $gs-gutter*2;
         }
     }
 
     .container__header__inner,
     .container__body,
     .container__foot {
-        @include mq($to: leftCol) {
+        @include mq($until: leftCol) {
             margin-left: auto;
             margin-right: auto;
         }
@@ -76,7 +76,7 @@ $commercial-cta-diameter: (
         }
 
         .commercial__cta {
-            @include mq($to: leftCol) {
+            @include mq($until: leftCol) {
                 top: $gs-baseline/2;
                 right: $gs-gutter;
             }
@@ -94,7 +94,7 @@ $commercial-cta-diameter: (
 
     .commercial__title {
         .i-guardian-logo-commercial {
-            @include mq($to: leftCol) {
+            @include mq($until: leftCol) {
                 display: inline-block;
             }
             @include mq($from: leftCol) {
@@ -102,7 +102,7 @@ $commercial-cta-diameter: (
             }
         }
         .i-marque-54 {
-            @include mq($to: leftCol) {
+            @include mq($until: leftCol) {
                 display: none;
             }
             @include mq($from: leftCol) {
@@ -110,14 +110,14 @@ $commercial-cta-diameter: (
             }
         }
         .i-commercial-brand {
-            @include mq($to: leftCol) {
+            @include mq($until: leftCol) {
                 opacity: .8;
             }
         }
     }
 
     .commercial__desc {
-        @include mq($to: leftCol) {
+        @include mq($until: leftCol) {
             margin-top: $gs-baseline*-1.333;
         }
     }
@@ -182,7 +182,7 @@ $commercial-cta-diameter: (
     .container__header__inner,
     .container__body,
     .container__foot {
-        @include mq($to: faciaLeftCol) {
+        @include mq($until: faciaLeftCol) {
             margin-left: auto;
             margin-right: auto;
         }
@@ -231,7 +231,7 @@ $commercial-cta-diameter: (
         }
 
         .commercial__cta {
-            @include mq($to: faciaLeftCol) {
+            @include mq($until: faciaLeftCol) {
                 top: $gs-baseline/2;
                 right: $gs-gutter;
             }
@@ -249,7 +249,7 @@ $commercial-cta-diameter: (
 
     .commercial__title {
         .i-guardian-logo-commercial {
-            @include mq($to: faciaLeftCol) {
+            @include mq($until: faciaLeftCol) {
                 display: inline-block;
             }
             @include mq($from: faciaLeftCol) {
@@ -257,7 +257,7 @@ $commercial-cta-diameter: (
             }
         }
         .i-marque-54 {
-            @include mq($to: faciaLeftCol) {
+            @include mq($until: faciaLeftCol) {
                 display: none;
             }
             @include mq($from: faciaLeftCol) {
@@ -265,14 +265,14 @@ $commercial-cta-diameter: (
             }
         }
         .i-commercial-brand {
-            @include mq($to: faciaLeftCol) {
+            @include mq($until: faciaLeftCol) {
                 opacity: .8;
             }
         }
     }
 
     .commercial__desc {
-        @include mq($to: faciaLeftCol) {
+        @include mq($until: faciaLeftCol) {
             margin-top: $gs-baseline*-1.333;
         }
     }
@@ -411,8 +411,8 @@ $commercial-cta-diameter: (
         margin-right: auto;
 
         @include mq(wide) {
-            padding-right: $gs-gutter;
-            width: gs-span(16) + $gs-gutter;
+            padding-right: 0;
+            width: gs-span(16) + $gs-gutter*2;
             max-width: none;
         }
     }
@@ -529,7 +529,7 @@ $commercial-cta-diameter: (
             border-color: rgba(#ffffff, .3);
         }
         
-        @include mq($to: tablet) {
+        @include mq($until: tablet) {
             .i-right {
                 margin: -1px $gs-baseline*-1 0;
                 float: none;
@@ -550,6 +550,6 @@ $commercial-cta-diameter: (
 
     .commercial__header {
         @include fs-header(2);
-        margin-bottom: $gs-gutter;
+        margin-bottom: $gs-baseline;
     }
 }
