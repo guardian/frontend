@@ -39,6 +39,13 @@ trait FrontPress extends Logging {
       json
     }
 
+  def generateJson(id: String, futureFront: Future[Iterable[(Config, Collection)]]): Future[JsObject] = {
+    for {
+      seoData <- SeoData.getSeoData(id)
+      front <- futureFront
+    } yield generateJson(id, seoData, front).get
+  }
+
   def generateJson(id: String, seoData: SeoData, collections: Iterable[(Config, Collection)]): Try[JsObject] = {
     val collectionsWithBackFills = collections.toList collect {
       case (config, collection) if config.contentApiQuery.isDefined => collection
@@ -57,19 +64,9 @@ trait FrontPress extends Logging {
     }
   }
 
-  def generateLiveJson(id: String): Future[JsObject] = {
-    for {
-      seoData <- SeoData.getSeoData(id)
-      front <- retrieveFrontByPath(id)
-    } yield generateJson(id, seoData, front).get
-  }
+  def generateLiveJson(id: String): Future[JsObject] = generateJson(id, retrieveFrontByPath(id))
 
-  def generateDraftJson(id: String): Future[JsObject] = {
-    for {
-      seoData <- SeoData.getSeoData(id)
-      front <- retrieveDraftFrontByPath(id)
-    } yield generateJson(id, seoData, front).get
-  }
+  def generateDraftJson(id: String): Future[JsObject] = generateJson(id, retrieveDraftFrontByPath(id))
 }
 
 object FrontPress extends FrontPress

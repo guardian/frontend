@@ -7,7 +7,6 @@ import common.FaciaToolMetrics.{EnqueuePressFailure, EnqueuePressSuccess}
 import common.{ExecutionContexts, JsonMessageQueue, Logging}
 import common.SQSQueues._
 import conf.Configuration
-import conf.Switches._
 import scala.concurrent.Future
 import scala.util.{Success, Failure}
 
