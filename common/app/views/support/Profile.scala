@@ -58,7 +58,6 @@ case class VideoProfile(
 object Contributor extends Profile(Some(140), Some(140))
 object GalleryInitialImage extends Profile(Some(300), None)
 object GalleryUpgradedImage extends Profile(Some(800), None)
-object GalleryFullscreenImage extends Profile(Some(1368), None)
 object GalleryLargeImage extends Profile(Some(1024), None)
 object GalleryLargeTrail extends Profile(Some(480), Some(288))
 object GallerySmallTrail extends Profile(Some(280), Some(168))

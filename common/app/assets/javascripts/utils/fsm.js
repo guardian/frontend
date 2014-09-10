@@ -38,7 +38,8 @@ define([], function() {
         this.states = config.states || {};
         this.context.state = config.initial || '';
         this.debug = config.debug || false;
-        this.onChangeState = config.onChangeState || function() {};
+        this.onChangeState = config.onChangeState.bind(this.context) || function() {};
+        this.onChangeState('', this.context.state);
     }
 
     FiniteStateMachine.prototype.log = function() {
@@ -59,7 +60,7 @@ define([], function() {
         // execute leave/enter callbacks if present and we have changed state
         if (state !== this.context.state || this.context.reloadState) {
             this.context.reloadState = false;
-            this.onChangeState.call(this.context, state, this.context.state);
+            this.onChangeState(state, this.context.state);
             (this.states[state].leave || noop).apply(this.context);
             (this.states[this.context.state].enter || noop).apply(this.context);
 

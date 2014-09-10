@@ -1,5 +1,6 @@
 define([
     'common/utils/$',
+    'common/utils/_',
     'bean',
     'common/utils/mediator',
     'bonzo',
@@ -7,9 +8,11 @@ define([
     'common/utils/ajax',
     'common/utils/fsm',
     'common/utils/detect',
-    'common/modules/component'
+    'common/modules/component',
+    'common/modules/ui/images'
 ], function (
     $,
+    _,
     bean,
     mediator,
     bonzo,
@@ -17,8 +20,10 @@ define([
     ajax,
     FiniteStateMachine,
     detect,
-    Component
+    Component,
+    imagesModule
 ) {
+
 
     var galleryCache = {};
 
@@ -30,6 +35,12 @@ define([
         this.showAdverts  = false;
 
         // TEMPLATE
+        function generateButtonHTML(label) {
+            var templ = '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
+                        '<div class="gallery-lightbox__btn-body"><i></i></div>' +
+                    '</div>';
+            return templ.replace(/{{label}}/g, label);
+        }
         this.galleryLightboxHtml =
             '<div class="overlay gallery-lightbox">' +
                 '<div class="pamplemousse gallery-lightbox__loader">' +
@@ -38,15 +49,15 @@ define([
                     '<div class="pamplemousse__pip"><i></i></div>' +
                 '</div>' +
                 '<div class="gallery-lightbox__sidebar">' +
-                    '<div class="gallery-lightbox__close js-gallery-close"><i></i></div>' +
+                    generateButtonHTML('close') +
                     '<div class="gallery-lightbox__progress  gallery-lightbox__progress--sidebar">' +
                         '<span class="gallery-lightbox__index js-gallery-index"></span>' +
                         '<span class="gallery-lightbox__progress-separator"></span>' +
                         '<span class="gallery-lightbox__count js-gallery-count"></span>' +
                     '</div>' +
-                    '<div class="gallery-lightbox__next js-gallery-next"><i></i></div>' +
-                    '<div class="gallery-lightbox__prev js-gallery-prev"><i></i></div>' +
-                    '<div class="gallery-lightbox__info-button js-gallery-info-button"><i></i></div>' +
+                    generateButtonHTML('next') +
+                    generateButtonHTML('prev') +
+                    generateButtonHTML('info-button') +
                 '</div>' +
                 '<div class="gallery-lightbox__content js-gallery-content" data-src="">' +
                     '<div class="gallery-lightbox__ad js-gallery-lightbox-ad"></div>' +
@@ -84,6 +95,7 @@ define([
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
         this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
         this.toggleInfo = this.trigger.bind(this, 'toggle-info');
+        this.resize = this.trigger.bind(this, 'resize');
 
         // FSM CONFIG
         this.fsm = new FiniteStateMachine({
@@ -102,11 +114,55 @@ define([
         this.fsm.trigger(event);
     };
 
+    GalleryLightbox.prototype.fetchGalleryJson = function(galleryId, successCallback, errorCallback) {
+        ajax({
+            url: galleryId + '/lightbox.json',
+            type: 'json',
+            method: 'get',
+            crossOrigin: true,
+            success: successCallback,
+            error: errorCallback || function() {}
+        });
+    };
+
+    GalleryLightbox.prototype.preloadCache = function(galleryId) {
+        this.fetchGalleryJson(galleryId, function(response) {
+            galleryCache[galleryId] = response.gallery;
+        });
+    };
+
+    GalleryLightbox.prototype.loadGalleryfromJson = function(galleryJson, startIndex) {
+        this.galleryJson = galleryJson;
+        this.index = startIndex;
+        this.trigger('open');
+    };
+
+    GalleryLightbox.prototype.loadGalleryById = function(galleryId, startIndex) {
+        this.galleryId = galleryId;
+        this.index = startIndex;
+        this.trigger('open');
+    };
+
+    GalleryLightbox.prototype.getImgSrc = function(imgJson) {
+        var dim = this.$lightboxEl.dim(),
+            possibleWidths = _.filter(imagesModule.availableWidths, function(w) {
+                var widthBigger = w > dim.width,
+                    calculatedHeight = (w/imgJson.ratio),
+                    heightBigger =  calculatedHeight > dim.height;
+                return widthBigger || heightBigger;
+            }).sort(function(a,b){ return a > b; }),
+            chosenWidth = possibleWidths.length ? possibleWidths[0] : '-';
+
+        return imgJson.src.replace('{width}', chosenWidth);
+    };
+
     GalleryLightbox.prototype.states = {
 
         'closed': {
             enter: function() {
                 this.hide();
+                this.galleryJson = undefined;
+                this.galleryId = undefined;
             },
             leave: function() {
                 this.show();
@@ -127,22 +183,16 @@ define([
                     this.galleryJson = galleryCache[this.galleryId];
                     this.trigger('loadJson');
                 }
-                else {
-                    var self = this; // :(
-                    ajax({
-                        url: this.galleryId + '/lightbox.json',
-                        type: 'json',
-                        method: 'get',
-                        crossOrigin: true,
-                        success: function (response) {
-                            self.galleryJson = response.gallery;
-                            self.trigger('loadJson');
-                        },
-                        error: function () {
-                            // TODO: error message
-                        }
-                    });
+                else if (this.galleryId) {
+                    this.fetchGalleryJson(this.galleryId, function (response) {
+                        this.galleryJson = galleryCache[this.galleryId] = response.gallery;
+                        this.trigger('loadJson');
+                    }.bind(this));
                 }
+                else {
+                    throw 'Gallery lightbox opened with no gallery json/id';
+                }
+
             },
             events: {
                 'loadJson': function() {
@@ -156,20 +206,31 @@ define([
         'image': {
             enter: function() {
                 this.$lightboxEl.addClass('gallery-lightbox--loading-img');
-                var img = this.galleryJson.images[this.index - 1];
-                this.imgEl = bonzo.create('<img class="gallery-lightbox__img responsive-img"/>')[0];
+
+                // create image and append to lightbox
+                var img = this.galleryJson.images[this.index - 1],
+                    imgHtml = '<img class="gallery-lightbox__img" src="' + this.getImgSrc(img) + '"/>';
+                this.imgEl = bonzo.create(imgHtml)[0];
                 this.$contentEl.append(this.imgEl);
+
+                // event bindings
                 bean.on(this.imgEl, 'load', this.trigger.bind(this, 'loaded'));
                 bean.on(this.$contentEl[0], 'click', this.toggleInfo);
+                mediator.on('window:resize', this.resize);
 
+                // meta
                 this.$indexEl.text(this.index);
                 this.$imgTitleEl.text(img.title);
-                this.$contentEl.attr('data-src', img.src);
                 this.$imgCaptionEl.html(img.caption);
                 this.$imgCreditEl.text(img.displayCredit ? img.credit : '');
 
-                this.$contentEl.addClass('js-image-upgrade');
-                mediator.emit('ui:images:upgrade', this.lightboxEl);
+                // preload next image if we aren't at the end
+                if (this.index < this.imgCount) {
+                    var nextImg = this.galleryJson.images[this.index],
+                        nextImgHtml = '<img class="gallery-lightbox__preload-img" src="' + this.getImgSrc(nextImg) + '"/>';
+                    this.preloadImgEl = bonzo.create(nextImgHtml)[0];
+                    this.$contentEl.append(this.preloadImgEl);
+                }
 
                 if(this.index > (this.imgCount - 3) && !this.endslate) {
                     this.loadEndslate();
@@ -177,9 +238,10 @@ define([
             },
             leave: function() {
                 bonzo(this.imgEl).remove();
+                bonzo(this.preloadImgEl).remove();
                 bean.off(this.$contentEl[0], 'click', this.toggleInfo);
+                mediator.off('window:resize', this.resize);
                 this.imgEl = undefined;
-                this.$contentEl.removeClass('js-image-upgrade');
             },
             events: {
                 'next': function() {
@@ -203,7 +265,7 @@ define([
                 },
                 'prev': function() {
                     this.trackInteraction('keyboard:previous');
-                    this.pulseButton(this.nextBtn);
+                    this.pulseButton(this.prevBtn);
                     if (this.index === 1) { // first img
                         if (this.showEndslate) {
                             this.state = 'endslate';
@@ -223,14 +285,13 @@ define([
                 'toggle-info': function() {
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
-                    if (!this.$lightboxEl.hasClass('gallery-lightbox--show-info')) {
-                        window.setTimeout(function() {
-                            mediator.emit('ui:images:upgrade');
-                        }, 100);
-                    }
                 },
                 'loaded': function() {
                     this.$lightboxEl.removeClass('gallery-lightbox--loading-img');
+                },
+                'resize': function() {
+                    var imgSrc = this.getImgSrc(this.galleryJson.images[this.index - 1]);
+                    bonzo(this.imgEl).attr('src', imgSrc);
                 },
                 'close': function() { this.state = 'closed'; }
             }
@@ -287,15 +348,6 @@ define([
         return this.showAdverts && !this.galleryJson.shouldHideAdverts;
     };
 
-    GalleryLightbox.prototype.loadGalleryById = function(galleryId, startIndex) {
-        this.galleryId = galleryId;
-        this.index = startIndex;
-        this.trigger('open');
-    };
-
-    GalleryLightbox.prototype.preloadImage = function() {
-    };
-
     GalleryLightbox.prototype.show = function() {
         var $body = bonzo(document.body);
         this.bodyScrollPosition = $body.scrollTop();
@@ -312,7 +364,9 @@ define([
         $body.removeClass('has-overlay');
         bean.off(document.body, 'keydown', this.handleKeyEvents);
         window.setTimeout(function() {
-            $body.scrollTop(this.bodyScrollPosition);
+            if (this.bodyScrollPosition) {
+                $body.scrollTop(this.bodyScrollPosition);
+            }
             this.$lightboxEl.removeClass('gallery-lightbox--open');
             mediator.emit('ui:images:upgrade');
             mediator.emit('ui:images:vh');
@@ -356,7 +410,7 @@ define([
         mediator.emit('module:clickstream:interaction', str);
     };
 
-    function bootstrap(/*config*/) {
+    function bootstrap(config) {
         var lightbox;
         bean.on(document.body, 'click', '.js-gallerythumbs', function(e) {
             e.preventDefault();
@@ -370,9 +424,15 @@ define([
             lightbox = lightbox || new GalleryLightbox();
             lightbox.loadGalleryById(galleryId, galleryIndex);
         });
+
+        if (config.page.contentType === 'Gallery') {
+            lightbox = lightbox || new GalleryLightbox();
+            lightbox.preloadCache('/' + config.page.pageId);
+        }
     }
 
     return {
-        init: bootstrap
+        init: bootstrap,
+        GalleryLightbox: GalleryLightbox
     };
 });
