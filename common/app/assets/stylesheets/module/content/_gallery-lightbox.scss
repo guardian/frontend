@@ -283,11 +283,13 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 .gallery-lightbox__btn-body {
     margin: auto;
     background: $c-gallery-lightbox-btn;
-    .gallery-lightbox__btn:hover & {
-        @include transition(none);
-        background: $c-gallery-lightbox-btn--active;
-    }
+
     @include transition(background-color .2s);
+}
+
+.gallery-lightbox--hover .gallery-lightbox__btn:hover .gallery-lightbox__btn-body {
+    @include transition(none);
+    background: $c-gallery-lightbox-btn--active;
 }
 
 .gallery-lightbox__btn--close {
