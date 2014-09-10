@@ -66,7 +66,14 @@ define([
             if (supportsPushState) {
                 window.history[replace? 'replaceState' : 'pushState'](state, title, url);
             }
+        },
+
+        back: function() {
+            if (supportsPushState) {
+                window.history.back();
+            }
         }
+
     };
 
     // pubsub
@@ -76,7 +83,9 @@ define([
     return {
         getUrlVars: model.getUrlVars,
         pushUrl: model.pushUrl,
-        constructQuery: model.constructQuery
+        constructQuery: model.constructQuery,
+        back: model.back,
+        hasHistorySupport: supportsPushState
     };
 
 });

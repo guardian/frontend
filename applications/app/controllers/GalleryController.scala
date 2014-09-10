@@ -49,6 +49,7 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
         Cached(60) {
           JsonComponent(JsObject(Seq(
               "gallery" -> JsObject(Seq(
+                  "id" -> JsString(model.gallery.id),
                   "headline" -> JsString(model.gallery.headline),
                   "shouldHideAdverts" -> JsBoolean(model.gallery.shouldHideAdverts),
                   "standfirst" -> JsString(model.gallery.standfirst.getOrElse("")),
