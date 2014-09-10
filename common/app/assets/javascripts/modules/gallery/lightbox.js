@@ -253,7 +253,7 @@ define([
                     this.$contentEl.append(this.preloadImgEl);
                 }
 
-                if(this.index > (this.imgCount - 3) && !this.endslate) {
+                if(this.index > (this.imgCount - 3)) {
                     this.loadEndslate();
                 }
             },
@@ -343,6 +343,7 @@ define([
 
         'endslate': {
             enter: function() {
+                this.loadEndslate();
                 this.endslate.removeState('is-hidden');
                 this.$indexEl.text(this.imgCount + 1);
             },
@@ -417,16 +418,17 @@ define([
     };
 
     GalleryLightbox.prototype.loadEndslate = function() {
-        this.endslate.componentClass = 'gallery-lightbox__endslate';
-        this.endslate.endpoint = '/gallery/most-viewed.json';
-        this.endslate.ready = function () {
-            mediator.emit('ui:images:upgrade', this.$contentEl);
-        };
-        this.endslate.prerender = function() {
-            bonzo(this.elem).addClass(this.componentClass);
-            this.setState('is-hidden');
-        };
-        this.endslate.fetch(this.$contentEl, 'html');
+        if (!this.endslate.rendered) {
+            this.endslate.componentClass = 'gallery-lightbox__endslate';
+            this.endslate.endpoint = '/gallery/most-viewed.json';
+            this.endslate.ready = function () {
+                mediator.emit('ui:images:upgrade', this.$contentEl);
+            };
+            this.endslate.prerender = function() {
+                bonzo(this.elem).addClass(this.componentClass);
+            };
+            this.endslate.fetch(this.$contentEl, 'html');
+        }
     };
 
     GalleryLightbox.prototype.trackInteraction = function (str) {

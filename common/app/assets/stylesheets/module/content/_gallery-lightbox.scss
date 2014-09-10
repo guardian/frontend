@@ -312,11 +312,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 }
 
-.gallery-lightbox__btn-hitbox {
-    cursor: pointer;
-    padding: $gs-baseline/1.5;
-}
-
 .gallery-lightbox__button-pulse .gallery-lightbox__btn-body {
     @include transition(none);
     background-color: $c-gallery-lightbox-btn--active;
@@ -365,10 +360,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     margin: 0 auto;
     margin-top: gs-height(1);
 
-    @include mq(tablet) {
-        display: block;
-    }
-
     @include mq(leftCol) {
         width: gs-span(12) + $gs-gutter*2;
 
@@ -390,8 +381,11 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         }
     }
 
-    &.gallery-lightbox__endslate--is-hidden {
-        display: none;
+
+    @include mq(tablet) {
+        .gallery-lightbox--endslate & {
+            display: block;
+        }
     }
 
     .l-side-margins {
