@@ -2,6 +2,7 @@ define([], function() {
     return {
         barbie: {
             "gallery": {
+                "id": "lifeandstyle/gallery/2014/sep/05/lego-vs-barbie-in-pictures",
                 "headline": "Lego vs Barbie - in pictures",
                 "shouldHideAdverts": false,
                 "standfirst": "<p>Lego has overtaken Barbie doll-maker Mattel as the world’s best-selling toy firm after <a href=\"http://www.theguardian.com/lifeandstyle/2014/sep/04/rise-bricks-lego-builds-profits-lego-movie\">Lego</a><a>’s profits rose</a> thanks to the success of the <a href=\"http://www.theguardian.com/film/2014/feb/11/lego-film-subversive-countercultural\">Lego Movie</a>. We take a look at how the rival toy figures have changed over time</p>",
