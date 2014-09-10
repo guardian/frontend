@@ -6,7 +6,7 @@ import com.amazonaws.services.cloudwatch.model._
 import common.Logging
 import conf.Configuration
 import conf.Configuration._
-import metrics.{DataPoint, FrontendMetric}
+import metrics.{FrontendStatisticSet, DataPoint, FrontendMetric}
 import services.AwsEndpoints
 
 import scala.collection.JavaConversions._
@@ -76,25 +76,29 @@ trait CloudWatch extends Logging {
 
   def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
     for {
-      metric <- metrics
-      dataPointGroup <- metric.getAndResetDataPoints.grouped(20)
+      metricGroup <- metrics.grouped(20)
+      metric <- metricGroup.filterNot(_.isEmpty)
     } {
+      val statisticSet: FrontendStatisticSet = FrontendStatisticSet(metric.getAndResetDataPoints)
       val request = new PutMetricDataRequest()
         .withNamespace(metricNamespace)
         .withMetricData {
-          for (dataPoint <- dataPointGroup) yield {
-            val metricDatum = new MetricDatum()
-              .withValue(dataPoint.value)
+            new MetricDatum()
+              .withStatisticValues(frontendMetricToStatisticSet(statisticSet))
               .withUnit(metric.metricUnit)
               .withMetricName(metric.name)
               .withDimensions(dimensions)
-
-            dataPoint.time.fold(metricDatum) { t => metricDatum.withTimestamp(t.toDate)}
-          }
         }
-      CloudWatch.cloudwatch.foreach(_.putMetricDataAsync(request, AsyncHandlerForMetric(metric, dataPointGroup)))
+      CloudWatch.cloudwatch.foreach(_.putMetricDataAsync(request, AsyncHandlerForMetric(metric, statisticSet.datapoints)))
     }
   }
+
+  private def frontendMetricToStatisticSet(metricStatistics: FrontendStatisticSet): StatisticSet =
+    new StatisticSet()
+      .withMaximum(metricStatistics.maximum)
+      .withMinimum(metricStatistics.minimum)
+      .withSampleCount(metricStatistics.sampleCount)
+      .withSum(metricStatistics.sum)
 
 }
 
