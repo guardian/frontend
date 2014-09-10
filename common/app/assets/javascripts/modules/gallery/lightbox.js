@@ -1,19 +1,23 @@
 define([
     'common/utils/$',
+    'common/utils/_',
     'bean',
     'common/utils/mediator',
     'bonzo',
     'qwery',
     'common/utils/ajax',
-    'common/utils/fsm'
+    'common/utils/fsm',
+    'common/modules/ui/images'
 ], function (
     $,
+    _,
     bean,
     mediator,
     bonzo,
     qwery,
     ajax,
-    FiniteStateMachine
+    FiniteStateMachine,
+    imagesModule
 ) {
 
 
@@ -86,6 +90,7 @@ define([
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
         this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
         this.toggleInfo = this.trigger.bind(this, 'toggle-info');
+        this.resize = this.trigger.bind(this, 'resize');
 
         // FSM CONFIG
         this.fsm = new FiniteStateMachine({
@@ -131,6 +136,19 @@ define([
         this.galleryId = galleryId;
         this.index = startIndex;
         this.trigger('open');
+    };
+
+    GalleryLightbox.prototype.getImgSrc = function(imgJson) {
+        var dim = this.$lightboxEl.dim(),
+            possibleWidths = _.filter(imagesModule.availableWidths, function(w) {
+                var widthBigger = w > dim.width,
+                    calculatedHeight = (w/imgJson.ratio),
+                    heightBigger =  calculatedHeight > dim.height;
+                return widthBigger || heightBigger;
+            }).sort(function(a,b){ return a > b; }),
+            chosenWidth = possibleWidths.length ? possibleWidths[0] : '-';
+
+        return imgJson.src.replace('{width}', chosenWidth);
     };
 
     GalleryLightbox.prototype.states = {
@@ -183,26 +201,24 @@ define([
         'image': {
             enter: function() {
                 this.$lightboxEl.addClass('gallery-lightbox--loading-img');
-                var img = this.galleryJson.images[this.index - 1];
-                this.imgEl = bonzo.create('<img class="gallery-lightbox__img responsive-img"/>')[0];
+                var img = this.galleryJson.images[this.index - 1],
+                    imgHtml = '<img class="gallery-lightbox__img" src="' + this.getImgSrc(img) + '"/>';
+                this.imgEl = bonzo.create(imgHtml)[0];
                 this.$contentEl.append(this.imgEl);
                 bean.on(this.imgEl, 'load', this.trigger.bind(this, 'loaded'));
                 bean.on(this.$contentEl[0], 'click', this.toggleInfo);
+                mediator.on('window:resize', this.resize);
 
                 this.$indexEl.text(this.index);
                 this.$imgTitleEl.text(img.title);
-                this.$contentEl.attr('data-src', img.src);
                 this.$imgCaptionEl.html(img.caption);
                 this.$imgCreditEl.text(img.displayCredit ? img.credit : '');
-
-                this.$contentEl.addClass('js-image-upgrade');
-                mediator.emit('ui:images:upgrade', this.lightboxEl);
             },
             leave: function() {
                 bonzo(this.imgEl).remove();
                 bean.off(this.$contentEl[0], 'click', this.toggleInfo);
+                mediator.off('window:resize', this.resize);
                 this.imgEl = undefined;
-                this.$contentEl.removeClass('js-image-upgrade');
             },
             events: {
                 'next': function() {
@@ -246,14 +262,13 @@ define([
                 'toggle-info': function() {
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
-                    if (!this.$lightboxEl.hasClass('gallery-lightbox--show-info')) {
-                        window.setTimeout(function() {
-                            mediator.emit('ui:images:upgrade');
-                        }, 100);
-                    }
                 },
                 'loaded': function() {
                     this.$lightboxEl.removeClass('gallery-lightbox--loading-img');
+                },
+                'resize': function() {
+                    var imgSrc = this.getImgSrc(this.galleryJson.images[this.index - 1]);
+                    bonzo(this.imgEl).attr('src', imgSrc);
                 },
                 'close': function() { this.state = 'closed'; }
             }

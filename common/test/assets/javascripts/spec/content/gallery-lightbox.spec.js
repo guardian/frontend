@@ -14,6 +14,12 @@ define([
     bonzo
 ) {
 
+    function testImageSrc(srcActual, srcTemplate) {
+        var parts1 = srcTemplate.split('/'),
+            parts2 = srcActual.split('/');
+        expect(parts1[parts1.length - 1]).toContain(parts2[parts2.length - 1]);
+    }
+
     describe("Gallery lightbox", function() {
 
         var lightbox,
@@ -38,7 +44,7 @@ define([
 
         it("should start on correct index", function() {
             lightbox.loadGalleryfromJson(testJson, 4); // 1-based index
-            expect(lightbox.$contentEl.attr('data-src')).toBe(testJson.images[3].src); // 0-based index
+            testImageSrc(bonzo(lightbox.imgEl).attr('src'), testJson.images[3].src);
         });
 
         it("should hide when closed", function() {
@@ -55,20 +61,20 @@ define([
 
         it("should load next image when next button is clicked", function() {
             lightbox.loadGalleryfromJson(testJson, 1);
-            expect(lightbox.$contentEl.attr('data-src')).toBe(testJson.images[0].src); // 0-based index
+            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[0].src);
             bean.fire(lightbox.nextBtn, 'click');
-            expect(lightbox.$contentEl.attr('data-src')).toBe(testJson.images[1].src); // 0-based index
+            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[1].src);
             bean.fire(lightbox.nextBtn, 'click');
-            expect(lightbox.$contentEl.attr('data-src')).toBe(testJson.images[2].src); // 0-based index
+            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[2].src);
         });
 
         it("should load previous image when prev button is clicked", function() {
             lightbox.loadGalleryfromJson(testJson, 4);
-            expect(lightbox.$contentEl.attr('data-src')).toBe(testJson.images[3].src); // 0-based index
+            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[3].src);
             bean.fire(lightbox.prevBtn, 'click');
-            expect(lightbox.$contentEl.attr('data-src')).toBe(testJson.images[2].src); // 0-based index
+            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[2].src);
             bean.fire(lightbox.prevBtn, 'click');
-            expect(lightbox.$contentEl.attr('data-src')).toBe(testJson.images[1].src); // 0-based index
+            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[1].src);
         });
 
         it("should show the endslate after the last image", function() {
@@ -114,7 +120,7 @@ define([
             expect(lightbox.adIndex).toBe(1);
             bean.fire(lightbox.nextBtn, 'click');
             expectAdvert(false); // 5
-            expect(lightbox.$contentEl.attr('data-src')).toBe(testJson.images[4].src); // 0-based index
+            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[4].src);
         });
 
         it("should toggle info when info button is clicked", function() {

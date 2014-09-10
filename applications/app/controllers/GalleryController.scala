@@ -4,10 +4,10 @@ import common._
 import conf._
 import model._
 import play.api.mvc.{ RequestHeader, Controller, Action }
-import play.api.libs.json.{ JsObject, JsArray, JsString, JsBoolean }
+import play.api.libs.json.{ JsObject, JsArray, JsString, JsBoolean, JsNumber }
 import views.support.RenderOtherStatus
 import conf.Switches.RelatedContentSwitch
-import views.support.{ ImgSrc, GalleryFullscreenImage }
+import views.support.{ ImgSrc }
 
 case class GalleryPage(
   gallery: Gallery,
@@ -41,7 +41,8 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
               "caption" -> JsString(img.caption.getOrElse("")),
               "credit" -> JsString(img.credit.getOrElse("")),
               "displayCredit" -> JsBoolean(img.displayCredit),
-              "src" -> JsString(ImgSrc.imager(imgContainer, GalleryFullscreenImage).getOrElse(""))
+              "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
+              "ratio" -> JsNumber(img.width.toFloat / img.height)
             ))
           }
         }
