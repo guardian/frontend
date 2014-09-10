@@ -2,14 +2,13 @@ package frontpress
 
 import common.Logging
 import common.editions.Uk
-import conf.Switches._
 import model._
+import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json._
-import services._
-import scala.concurrent.Future
-import play.api.Play.current
+import services.{S3FrontsApi, ConfigAgent, LiveCollections}
 
+import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
 trait FrontPress extends Logging {
