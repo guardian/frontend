@@ -72,21 +72,11 @@
         overflow: visible; // opacity cuts borders off on chrome otherwise
     }
 
-    .content__headline {
-        &:before {
-            content: '';
-            @include background-size(auto 100%);
-            height: 20px !important;
-            margin-right: $gs-gutter/3;
-
-            @include mq(mobileLandscape) {
-                height: 25px !important;
-                margin-right: $gs-gutter/2;
-            }
-            @include mq(tablet) {
-                height: 27px !important;
-            }
-        }
+    .content__headline:before {
+        content: '';
+        display: inline-block;
+        height: .65em;
+        margin-right: .3em;
     }
 
     .social-wrapper--bottom {
@@ -130,53 +120,18 @@
         }
     }
 }
-
-.content--media--audio {
-    .content__headline {
-        &:before {
-            @include icon(volume-high-yellow);
-            width: 24px !important;
-
-            @include mq(mobileLandscape) {
-                width: 30px !important;
-            }
-            @include mq(tablet) {
-                width: 33px !important;
-            }
-        }
+.content__headline:before {
+    .content--media--audio & {
+        width: .8em;
+        @include icon(volume-high-white, $with-width: false);
     }
-}
-
-.content--media--video {
-    .content__headline {
-        &:before {
-            @include icon(video-icon);
-            width: 34px !important;
-
-            @include mq(mobileLandscape) {
-                width: 40px !important;
-            }
-            @include mq(tablet) {
-                width: 43px !important;
-            }
-        }
+    .content--media--video & {
+        width: 1.04em;
+        @include icon(video-icon-white, $with-width: false);
     }
-}
-
-
-.content--gallery {
-    .content__headline {
-        &:before {
-            @include icon(camera-white-large);
-            width: 28px !important;
-
-            @include mq(mobileLandscape) {
-                width: 35px !important;
-            }
-            @include mq(tablet) {
-                width: 37px !important;
-            }
-        }
+    .content--gallery & {
+        width: .9em;
+        @include icon(camera-white-large, $with-width: false);
     }
 }
 
