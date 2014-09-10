@@ -10,7 +10,7 @@ define([
      * @param criteria. validation criteria object. defines: maxWidth, minWidth, widthAspectRatio, heightAspectRatio
      * @returns jQuery.Deferred object: rejects with (error) OR resolves with (width, height)
      */
-    var validateImageSrc = function(src, criteria) {
+    function validateImageSrc(src, criteria) {
         var defer = $.Deferred(),
             img,
             defaultCriteria = {
@@ -54,7 +54,7 @@ define([
         }
 
         return defer.promise();
-    };
+    }
 
     return validateImageSrc;
 });
