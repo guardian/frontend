@@ -201,21 +201,35 @@ define([
         'image': {
             enter: function() {
                 this.$lightboxEl.addClass('gallery-lightbox--loading-img');
+
+                // create image and append to lightbox
                 var img = this.galleryJson.images[this.index - 1],
                     imgHtml = '<img class="gallery-lightbox__img" src="' + this.getImgSrc(img) + '"/>';
                 this.imgEl = bonzo.create(imgHtml)[0];
                 this.$contentEl.append(this.imgEl);
+
+                // event bindings
                 bean.on(this.imgEl, 'load', this.trigger.bind(this, 'loaded'));
                 bean.on(this.$contentEl[0], 'click', this.toggleInfo);
                 mediator.on('window:resize', this.resize);
 
+                // meta
                 this.$indexEl.text(this.index);
                 this.$imgTitleEl.text(img.title);
                 this.$imgCaptionEl.html(img.caption);
                 this.$imgCreditEl.text(img.displayCredit ? img.credit : '');
+
+                // preload next image if we aren't at the end
+                if (this.index <= this.imgCount) {
+                    var nextImg = this.galleryJson.images[this.index],
+                        nextImgHtml = '<img class="gallery-lightbox__preload-img" src="' + this.getImgSrc(nextImg) + '"/>';
+                    this.preloadImgEl = bonzo.create(nextImgHtml)[0];
+                    this.$contentEl.append(this.preloadImgEl);
+                }
             },
             leave: function() {
                 bonzo(this.imgEl).remove();
+                bonzo(this.preloadImgEl).remove();
                 bean.off(this.$contentEl[0], 'click', this.toggleInfo);
                 mediator.off('window:resize', this.resize);
                 this.imgEl = undefined;

@@ -146,6 +146,11 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 }
 
+.gallery-lightbox__preload-img {
+    position: absolute;
+    visibility: hidden;
+}
+
 /* Meta
    ========================================================================== */
 
