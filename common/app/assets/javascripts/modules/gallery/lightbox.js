@@ -402,7 +402,7 @@ define([
         this.endslate.prerender = function() {
             bonzo(this.elem).addClass(this.componentClass);
             this.setState('is-hidden');
-        }
+        };
         this.endslate.fetch(this.$contentEl, 'html');
     };
 
