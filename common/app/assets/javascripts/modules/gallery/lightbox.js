@@ -5,7 +5,9 @@ define([
     'bonzo',
     'qwery',
     'common/utils/ajax',
-    'common/utils/fsm'
+    'common/utils/fsm',
+    'common/utils/detect',
+    'common/modules/component'
 ], function (
     $,
     bean,
@@ -13,7 +15,9 @@ define([
     bonzo,
     qwery,
     ajax,
-    FiniteStateMachine
+    FiniteStateMachine,
+    detect,
+    Component
 ) {
 
     var galleryCache = {};
@@ -22,7 +26,7 @@ define([
 
         // CONFIG
         this.adStep = 4; // advert between every 4th and 5th image
-        this.showEndslate = false;
+        this.showEndslate = !detect.isBreakpoint('mobile');
         this.showAdverts  = false;
 
         // TEMPLATE
@@ -51,7 +55,8 @@ define([
                     '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
                         '<span class="gallery-lightbox__index js-gallery-index"></span>' +
                         '<span class="gallery-lightbox__progress-separator"></span>' +
-                        '<span class="gallery-lightbox__count js-gallery-count"></span>' +
+                        '<span class="gallery-lightbox__count js-gal' +
+                '.0lery-count"></span>' +
                     '</div>' +
                     '<div class="gallery-lightbox__img-title js-gallery-img-title"></div>' +
                     '<div class="gallery-lightbox__img-caption js-gallery-img-caption"></div>' +
@@ -165,6 +170,10 @@ define([
 
                 this.$contentEl.addClass('js-image-upgrade');
                 mediator.emit('ui:images:upgrade', this.lightboxEl);
+
+                if(this.index > (this.imgCount - 3) && !this.endslate) {
+                    this.loadEndslate();
+                }
             },
             leave: function() {
                 bonzo(this.imgEl).remove();
@@ -252,10 +261,11 @@ define([
 
         'endslate': {
             enter: function() {
+                this.endslate.removeState('is-hidden');
                 this.$indexEl.text(this.imgCount + 1);
             },
             leave: function() {
-
+                this.endslate.setState('is-hidden');
             },
             events: {
                 'next': function() {
@@ -325,6 +335,21 @@ define([
         } else if (e.keyCode === 73) { // 'i'
             this.trigger('toggle-info');
         }
+    };
+
+    GalleryLightbox.prototype.loadEndslate = function() {
+        this.endslate = new Component();
+
+        this.endslate.componentClass = 'gallery-lightbox__endslate';
+        this.endslate.endpoint = '/gallery/most-viewed.json';
+        this.endslate.ready = function () {
+            mediator.emit('ui:images:upgrade', this.$contentEl);
+        };
+        this.endslate.prerender = function() {
+            bonzo(this.elem).addClass(this.componentClass);
+            this.setState('is-hidden');
+        }
+        this.endslate.fetch(this.$contentEl, 'html');
     };
 
     GalleryLightbox.prototype.trackInteraction = function (str) {
