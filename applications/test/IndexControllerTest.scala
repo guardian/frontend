@@ -135,4 +135,12 @@ class IndexControllerTest extends FlatSpec with Matchers with BeforeAndAfterAll 
     contentAsString(result) should startWith("<?xml")
   }
 
+  it should "resolve uk-news combiner pages" in Fake {
+    val result = controllers.IndexController.renderCombiner("uk-news/series/writlarge", "law/trial-by-jury")(TestRequest("/uk-news/series/writlarge+law/trial-by-jury"))
+    status(result) should be(200)
+
+    val result2 = controllers.IndexController.renderCombiner("uk-news/the-northerner", "blackpool")(TestRequest("/uk-news/the-northerner+blackpool"))
+    status(result2) should be(200)
+  }
+
 }

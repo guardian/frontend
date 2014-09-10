@@ -677,14 +677,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    scenario("More on this story gallery lightbox") {
-      Given("I see a gallery trail")
-      HtmlUnit("/culture/2014/jul/27/-sp-jennifer-hudson-the-only-constant-is-my-voice-grief") { browser =>
-        import browser._
-        Then("it should have a relative data gallery url attribute")
-        $("div[data-gallery-url]").getAttribute("data-gallery-url") should be ("/music/gallery/2014/jul/27/jennifer-hudson-in-pictures")
-      }
-    }
   }
 
 }
