@@ -164,6 +164,8 @@ define([
         return imgJson.src.replace('{width}', chosenWidth);
     };
 
+    GalleryLightbox.prototype.endslate = new Component();
+
     GalleryLightbox.prototype.states = {
 
         'closed': {
@@ -410,8 +412,6 @@ define([
     };
 
     GalleryLightbox.prototype.loadEndslate = function() {
-        this.endslate = new Component();
-
         this.endslate.componentClass = 'gallery-lightbox__endslate';
         this.endslate.endpoint = '/gallery/most-viewed.json';
         this.endslate.ready = function () {
