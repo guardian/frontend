@@ -220,7 +220,7 @@ define([
                 this.$imgCreditEl.text(img.displayCredit ? img.credit : '');
 
                 // preload next image if we aren't at the end
-                if (this.index <= this.imgCount) {
+                if (this.index < this.imgCount) {
                     var nextImg = this.galleryJson.images[this.index],
                         nextImgHtml = '<img class="gallery-lightbox__preload-img" src="' + this.getImgSrc(nextImg) + '"/>';
                     this.preloadImgEl = bonzo.create(nextImgHtml)[0];
