@@ -40,6 +40,17 @@ define([
     LatestArticles,
     newItems
 ) {
+
+    ko.bindingHandlers.autoResize = {
+        init: function(el, valueAccessor) {
+            setTimeout(function() {
+                console.log(el.scrollHeight, el.clientHeight);
+                el.style.height = '1px';
+                el.style.height = (el.scrollHeight + 3) + 'px';
+            })
+        }
+    };
+
     return function() {
 
         var model = vars.model = {};

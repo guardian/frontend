@@ -39,7 +39,8 @@ define([
                 'headline',
                 'trailText',
                 'byline',
-                'kicker'],
+                'kicker',
+                'imageSrc'],
 
             allFields = [
                 'isLive',

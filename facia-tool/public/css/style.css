@@ -8,6 +8,9 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 16px;
 }
 
 p {
@@ -375,7 +378,7 @@ h1 {
 }
 
 .article_content {
-    margin: 1px 100px 0 85px;
+    margin: 3px 100px 0 85px;
     line-height: 0;
 }
 
@@ -408,26 +411,26 @@ a.headline:hover {
     color: #000000;
 }
 
-.kicker {
+span.kicker {
     color: #376ABF;
     font-size: 10px;
     text-transform: uppercase;
     font-weight: bold;
 }
 
-.kicker--draft {
+span.kicker--draft {
     color: #ffc107;
 }
 
-.kicker--takedown {
+span.kicker--takedown {
     color: #DD4B39;
 }
 
-.kicker--football {
+span.kicker--football {
     color: #65b045;
 }
 
-.kicker--breaking-news {
+span.kicker--breaking-news {
     color: #DD4B39;
 }
 
@@ -482,23 +485,8 @@ a.headline:hover {
 
 .article__overrides {
     position: relative;
-    margin: 0 0 0 85px;
+    margin: 3px 0 0 85px;
     color: #666666;
-}
-
-.article__overrides input,
-.article__overrides textarea {
-    padding-right: 10px;
-    background: #fafafa;
-    width: 100%;
-}
-
-.article__overrides a {
-}
-
-.article__overrides__other {
-    margin-right: 65px;
-    min-height: 30px;
 }
 
 .article__overrides .tools {
@@ -525,15 +513,8 @@ a.headline:hover {
 }
 
 .open .image__overrides {
-    position: absolute;
-    top: 50px;
-    width: 75px;
     font-size: 12px;
     line-height: 14px;
-}
-
-.open .image__overrides a {
-    display: block;
 }
 
 .supporting-message {
@@ -541,7 +522,10 @@ a.headline:hover {
     color: #999999;
 }
 
-.supporting .trailtext,
+.supporting .trailText,
+.supporting .byline,
+.supporting .kicker,
+.supporting .imageSrc,
 .supporting .tool--done,
 .supporting .image__overrides,
 .supporting .supporting-message {
@@ -585,13 +569,30 @@ select{
 }
 
 select,
+textarea,
 input[type="text"] {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    height: 25px;
     padding: 1px 5px;
-    margin: 2px 0 0 0;
-    color: #000000;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 16px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #ffc107;
+}
+
+input[type="text"] {
+    padding: 2px 5px;
 }
 
 select {
@@ -605,24 +606,12 @@ select {
     padding: 0 10px 0 2px;
 }
 
-textarea.headline,
-textarea.trailtext {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+textarea.editor {
     width: 100%;
-    font-size: 14px;
-    line-height: 16px;
-    padding: 2px 30px 0 5px;
-    margin: 0;
-    color: #000000;
-}
-
-textarea.headline {
-    height: 46px;
-}
-
-textarea.trailtext {
-    height: 55px;
+    padding: 0 30px 0 2px;
+    position: absolute;
+    margin: -1px 0 0 -3px;
+    z-index: 10;
 }
 
 button {

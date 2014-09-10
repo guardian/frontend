@@ -118,17 +118,16 @@
     <script type="text/html" id="template_editor">
         <!-- ko if: $data.element === $root.uiOpenElement() -->
             <textarea data-bind="
-                attr: {class: key},
+                attr: {class: 'editor editor--' + key},
+                autoResize: true,
                 valueUpdate: 'afterkeydown',
                 hasFocus: true,
                 value: overrideOrVal"></textarea>
         <!-- /ko -->
-        <!-- ko ifnot: $data.element === $root.uiOpenElement() -->
-            <div data-bind="
-                attr: {class: key},
-                click: opener,
-                html: overrideOrVal"></div>
-        <!-- /ko -->
+        <div data-bind="
+            attr: {class: key},
+            click: opener,
+            html: overrideOrVal"></div>
     </script>
 
     <script type="text/html" id="template_collection">
@@ -238,43 +237,45 @@
 
             <div data-bind="if: state.isOpen">
                 <div class="article__overrides">
-                    <div class="article__overrides__fields">
 
-                        <div data-bind="template: {name: 'template_editor', foreach: editors}"></div>
+                    <div data-bind="template: {name: 'template_editor', foreach: editors}"></div>
 
-                        <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
-                            visible: isSnap,
-                            value: meta.href"/>
+                    <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
+                        visible: isSnap,
+                        value: meta.href"/>
 
-                        <div data-bind="if: state.isOpenImage() || meta.imageSrc()">
-                            <input type="text" placeholder="Image URL, eg. copied from Batch Uploader" data-bind="
-                                hasFocus: state.isOpenImage,
-                                value: provisionalImageSrc"/>
-                        </div>
+                    <div data-bind="if: state.isOpenImage() || meta.imageSrc()">
+                        <input type="text" placeholder="Image URL, eg. copied from Batch Uploader" data-bind="
+                            hasFocus: state.isOpenImage,
+                            value: provisionalImageSrc"/>
                     </div>
 
-                    <div class="supporting-message">Add supporting content below</div>
-                </div>
+                    <div class="image__overrides">
+                        Image
+                        <a data-bind="
+                            click: toggleOpenImage,
+                            text: meta.imageSrc() ? 'replaced:' : 'replace',
+                            css: {selected: meta.imageSrc}"></a>
+                        &middot;
+                        <a data-bind="
+                            click: toggleImageAdjustBoost,
+                            text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
+                            css: {selected: meta.imageAdjust() === 'boost'}"></a>
+                        &middot;
+                        <a data-bind="
+                            click: toggleImageAdjustHide,
+                            text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
+                            css: {selected: meta.imageAdjust() === 'hide'}"></a>
+                        <!-- ko if: mainMediaType() === 'video' -->
+                        &middot;
+                        <a data-bind="
+                            click: toggleShowMainVideo,
+                            css: {selected: meta.showMainVideo}">video</a>
+                        <!-- /ko -->
+                    </div>
 
-                <div class="image__overrides">
-                    Image:
-                    <a data-bind="
-                        click: toggleImageAdjustHide,
-                        text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
-                        css: {selected: meta.imageAdjust() === 'hide'}"></a>
-                    <a data-bind="
-                        click: toggleImageAdjustBoost,
-                        text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
-                        css: {selected: meta.imageAdjust() === 'boost'}"></a>
-                    <a data-bind="
-                        click: toggleOpenImage,
-                        text: meta.imageSrc() ? 'replaced:' : 'replace',
-                        css: {selected: meta.imageSrc}"></a>
-                    <!-- ko if: mainMediaType() === 'video' -->
-                    <a data-bind="
-                        click: toggleShowMainVideo,
-                        css: {selected: meta.showMainVideo}">video</a>
-                    <!-- /ko -->
+
+                    <div class="supporting-message">Add supporting content below</div>
                 </div>
 
                 <div data-bind="if: group.parentType === 'Collection' || group.parentType === 'Clipboard'">
@@ -389,7 +390,7 @@
                                 text: meta.kicker"></span>
                         <!-- /ko -->
 
-                        <span class="trailtext" data-bind="
+                        <span class="trailText" data-bind="
                             html: meta.trailText() || fields.trailText()"></span>
                     </div>
                 </div>
