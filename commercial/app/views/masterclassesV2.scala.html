@@ -25,18 +25,18 @@
             <div class="container__body">
                 <ul class="lineitems">
                     @events.take(4).map { event =>
-                        <li class="lineitem commercial--masterclasses__class">
-                            <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@event.eventBriteEvent.name">
-                            @event.mainPicture.map{ picture =>
-                                @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
-                            }
+                        <li class="lineitem">
+                            <a class="lineitem__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@event.eventBriteEvent.name">
+                                @event.mainPicture.map{ picture =>
+                                    @Item300.bestFor(picture).map{ url => <div class="lineitem__image-crop"><img class="lineitem__image" src="@url" alt=""/></div> }
+                                }
                                 <h4 class="lineitem__title">@event.eventBriteEvent.name</h4>
-                                <p class="commercial--masterclasses__class__date">@event.eventBriteEvent.readableDate</p>
+                                <p class="lineitem__meta">
+                                    <span class="lineitem__meta__strong">@event.eventBriteEvent.readableDate &#20; <span class="lineitem__meta__highlight">@event.eventBriteEvent.displayPrice</span></span><br/>
+                                    @event.eventBriteEvent.venue.description
+                                </p>
                             </a>
-                            <a class="lineitem__link commercial--masterclasses__class__link__sub" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@event.eventBriteEvent.name">
-                                <p class="commercial--masterclasses__class__meta">@event.eventBriteEvent.venue.description | @event.eventBriteEvent.displayPrice</p>
-                            </a>
-                            <a class="lineitem__link button button--primary button--small" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@event.eventBriteEvent.name">
+                            <a class="lineitem__cta button button--primary button--small" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@event.eventBriteEvent.name">
                                 Book now<i class="i i-arrow-white-right i-right"></i>
                             </a>
                         </li>

@@ -19,6 +19,7 @@
 
     .lineitem__meta {
         @include fs-data(1);
+        margin-top: $gs-baseline;
     }
 
 }

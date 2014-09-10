@@ -2,7 +2,7 @@
    Masterclass component
    ========================================================================== */
 
-.commercial--masterclasses {
+.commercial--v1.commercial--masterclasses {
     .commercial__head {
         border-top: 0;
         background-color: transparent;
@@ -144,7 +144,7 @@
 }
 
 /* fronts */
-.facia-container--layout-front .commercial--masterclasses {
+.facia-container--layout-front .commercial--v1.commercial--masterclasses {
     .commercial__body.container__body {
         padding-left: 0;
     }
@@ -229,7 +229,7 @@
     }
 }
 /* article */
-.facia-container--layout-content .commercial--masterclasses {
+.facia-container--layout-content .commercial--v1.commercial--masterclasses {
     @include mq(rightCol) {
         .commercial--masterclasses__class {
             padding-left: $gs-gutter/2;

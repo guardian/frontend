@@ -23,52 +23,57 @@
             </div>
 
             <div class="container__body">
-                <div class="commercial__relevance commercial__relevance-high u-cf">
-                    <div class="highitem">
-                        <h4 class="commercial__header">Featured class</h4>
+                <div class="commercial__relevance commercial__relevance--high u-cf">
+                    <h4 class="commercial__header">Featured class</h4>
+                    <div class="lineitems lineitems--high">
                         @events.take(1).map { event =>
-                            <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
-                                @event.mainPicture.map{ picture =>
-                                @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" />}
-                                }
-                            </a>
-                        <div class="lineitem__offer">
-                            <h4 class="lineitem__title">@event.eventBriteEvent.name</h4>
-                            <p class="commercial--masterclasses__class__date">@event.eventBriteEvent.readableDate</p>
-                            <a class="lineitem__link commercial--masterclasses__class__link__sub" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
-                                <p class="commercial--masterclasses__class__meta">@event.eventBriteEvent.venue.description | @event.eventBriteEvent.displayPrice</p>
-                            </a>
-                            <a class="lineitem__link button button--primary button--small" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
-                                Book now<i class="i i-arrow-white-right i-right"></i>
-                            </a>
-                        </div>
+                            <div class="lineitem lineitem--high">
+                                <div class="lineitem--high__feature">
+                                    <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
+                                        @event.mainPicture.map{ picture =>
+                                            @Item300.bestFor(picture).map{ url => <div class="lineitem__image-crop"><img class="lineitem__image" src="@url" alt=""/></div> }
+                                        }
+                                    </a>
+                                </div>
+                                <div class="lineitem__offer">
+                                    <a class="lineitem__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
+                                        <h4 class="lineitem__title">@event.eventBriteEvent.name</h4>
+                                        <p class="lineitem__meta">
+                                            <span class="lineitem__meta__strong">@event.eventBriteEvent.readableDate &#20; <span class="lineitem__meta__highlight">@event.eventBriteEvent.displayPrice</span></span><br/>
+                                            @event.eventBriteEvent.venue.description
+                                        </p>
+                                    </a>
+                                    <a class="lineitem__cta button button--primary button--small" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
+                                        Book now<i class="i i-arrow-white-right i-right"></i>
+                                    </a>
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>
-                <div class="commercial__relevance commercial__relevance-low u-cf">
-                    <h4 class="commercial__header commercial__relevance-title-low">You also might like</h4>
+                <div class="commercial__relevance commercial__relevance--low u-cf">
+                    <h4 class="commercial__header">You also might like</h4>
                     <ul class="lineitems">
-                    @events.drop(1).take(2).map { event =>
-                        <li class="lineitem commercial--masterclasses__class">
-                            <a class="lineitem__link commercial--masterclasses__class__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
-                                @event.mainPicture.map{ picture =>
-                                    @Item300.bestFor(picture).map{ url => <img src="@url" alt="" class="lineitem__image" /> }
-                                }
-                                <h4 class="lineitem__title">@event.eventBriteEvent.name</h4>
-                                <p class="commercial--masterclasses__class__date">@event.eventBriteEvent.readableDate</p>
-                            </a>
-                            <a class="lineitem__link commercial--masterclasses__class__link__sub" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
-                                <p class="commercial--masterclasses__class__meta">@event.eventBriteEvent.venue.description | @event.eventBriteEvent.displayPrice</p>
-                            </a>
-                            <a class="lineitem__link button button--primary button--small" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
-                                Book now<i class="i i-arrow-white-right i-right"></i>
-                            </a>
-                        </li>
-                    }
+                        @events.drop(1).take(2).map { event =>
+                            <li class="lineitem">
+                                <a class="lineitem__link" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
+                                    @event.mainPicture.map{ picture =>
+                                        @Item300.bestFor(picture).map{ url => <div class="lineitem__image-crop"><img class="lineitem__image" src="@url" alt=""/></div> }
+                                    }
+                                    <h4 class="lineitem__title">@event.eventBriteEvent.name</h4>
+                                    <p class="lineitem__meta">
+                                        <span class="lineitem__meta__strong">@event.eventBriteEvent.readableDate &#20; <span class="lineitem__meta__highlight">@event.eventBriteEvent.displayPrice</span></span><br/>
+                                        @event.eventBriteEvent.venue.description
+                                    </p>
+                                </a>
+                                <a class="lineitem__link button button--primary button--small" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-v@{version}_@{date}-@{relevance}-profile-@event.eventBriteEvent.name">
+                                    Book now<i class="i i-arrow-white-right i-right"></i>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </div>
     </div>
 }
-
