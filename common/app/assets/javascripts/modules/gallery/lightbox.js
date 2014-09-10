@@ -27,6 +27,12 @@ define([
         this.showAdverts  = false;
 
         // TEMPLATE
+        function generateButtonHTML(label) {
+            var templ = '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
+                        '<div class="gallery-lightbox__btn-body"><i></i></div>' +
+                    '</div>';
+            return templ.replace(/{{label}}/g, label);
+        }
         this.galleryLightboxHtml =
             '<div class="overlay gallery-lightbox">' +
                 '<div class="pamplemousse gallery-lightbox__loader">' +
@@ -35,15 +41,15 @@ define([
                     '<div class="pamplemousse__pip"><i></i></div>' +
                 '</div>' +
                 '<div class="gallery-lightbox__sidebar">' +
-                    '<div class="gallery-lightbox__close js-gallery-close"><i></i></div>' +
+                    generateButtonHTML('close') +
                     '<div class="gallery-lightbox__progress  gallery-lightbox__progress--sidebar">' +
                         '<span class="gallery-lightbox__index js-gallery-index"></span>' +
                         '<span class="gallery-lightbox__progress-separator"></span>' +
                         '<span class="gallery-lightbox__count js-gallery-count"></span>' +
                     '</div>' +
-                    '<div class="gallery-lightbox__next js-gallery-next"><i></i></div>' +
-                    '<div class="gallery-lightbox__prev js-gallery-prev"><i></i></div>' +
-                    '<div class="gallery-lightbox__info-button js-gallery-info-button"><i></i></div>' +
+                    generateButtonHTML('next') +
+                    generateButtonHTML('prev') +
+                    generateButtonHTML('info-button') +
                 '</div>' +
                 '<div class="gallery-lightbox__content js-gallery-content" data-src="">' +
                     '<div class="gallery-lightbox__ad js-gallery-lightbox-ad"></div>' +
