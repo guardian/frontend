@@ -1,4 +1,8 @@
-@(collection: Collection, style: CassouletContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: model.Collection, style: views.support.CassouletContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+
+@import common.LinkTo
+@import model.FaciaComponentName
+@import views.support.GetClasses
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
