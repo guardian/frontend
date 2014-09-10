@@ -10,6 +10,10 @@ import play.api.mvc.{Action, Controller}
 
 /**
  * This allows us to check the content of protected Magento endpoints.
+ *
+ * See:
+ * http://www.magentocommerce.com/api/rest/Resources/resources.html
+ * http://www.magentocommerce.com/api/rest/get_filters.html
  */
 object ApiSandbox extends Controller with ExecutionContexts {
 
