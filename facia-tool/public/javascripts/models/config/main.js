@@ -61,7 +61,6 @@ define([
         });
 
         model.createFront = function() {
-            window.console.log("Creating new Front");
             var front;
 
             if (vars.model.fronts().length <= vars.CONST.maxFronts) {
