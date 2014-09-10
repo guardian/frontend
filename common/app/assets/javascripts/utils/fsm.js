@@ -39,7 +39,6 @@ define([], function() {
         this.context.state = config.initial || '';
         this.debug = config.debug || false;
         this.onChangeState = config.onChangeState.bind(this.context) || function() {};
-        this.onChangeState('', this.context.state);
     }
 
     FiniteStateMachine.prototype.log = function() {

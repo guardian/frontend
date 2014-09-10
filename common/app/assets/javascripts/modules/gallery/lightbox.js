@@ -9,7 +9,8 @@ define([
     'common/utils/fsm',
     'common/utils/detect',
     'common/modules/component',
-    'common/modules/ui/images'
+    'common/modules/ui/images',
+    'common/utils/url'
 ], function (
     $,
     _,
@@ -21,7 +22,8 @@ define([
     FiniteStateMachine,
     detect,
     Component,
-    imagesModule
+    imagesModule,
+    url
 ) {
 
 
@@ -42,7 +44,7 @@ define([
             return templ.replace(/{{label}}/g, label);
         }
         this.galleryLightboxHtml =
-            '<div class="overlay gallery-lightbox">' +
+            '<div class="overlay gallery-lightbox gallery-lightbox--closed">' +
                 '<div class="pamplemousse gallery-lightbox__loader">' +
                     '<div class="pamplemousse__pip"><i></i></div>' +
                     '<div class="pamplemousse__pip"><i></i></div>' +
@@ -91,11 +93,17 @@ define([
         this.infoBtn = qwery('.js-gallery-info-button', this.lightboxEl)[0];
         bean.on(this.nextBtn, 'click', this.trigger.bind(this, 'next'));
         bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
-        bean.on(this.closeBtn, 'click', this.trigger.bind(this, 'close'));
+        bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
         this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
         this.toggleInfo = this.trigger.bind(this, 'toggle-info');
         this.resize = this.trigger.bind(this, 'resize');
+
+        bean.on(window, 'popstate', function(event) {
+            if (event.state === null) {
+                this.trigger('close');
+            }
+        }.bind(this));
 
         // FSM CONFIG
         this.fsm = new FiniteStateMachine({
@@ -176,6 +184,7 @@ define([
 
         'loading': {
             enter: function() { // loads gallery from json or id
+
                 if (this.galleryJson) {
                     this.trigger('loadJson');
                 }
@@ -194,6 +203,9 @@ define([
                 }
 
             },
+            leave: function() {
+                url.pushUrl({}, document.title, '/' + this.galleryJson.id);
+            },
             events: {
                 'loadJson': function() {
                     this.imgCount = this.galleryJson.images.length;
@@ -205,6 +217,8 @@ define([
 
         'image': {
             enter: function() {
+                url.pushUrl({}, document.title, '/' + this.galleryJson.id + '?index=' + this.index, true);
+
                 this.$lightboxEl.addClass('gallery-lightbox--loading-img');
 
                 // create image and append to lightbox
@@ -357,6 +371,10 @@ define([
         bean.on(document.body, 'keydown', this.handleKeyEvents);
     };
 
+    GalleryLightbox.prototype.close = function() {
+        url.hasHistorySupport ? url.back() : this.trigger('close');
+    };
+
     GalleryLightbox.prototype.hide = function() {
         // remove has-overlay first to show body behind lightbox then scroll and
         // close the lightbox at the same time. this way we get no scroll flicker
@@ -385,7 +403,7 @@ define([
         } else if (e.keyCode === 39) { // right
             this.trigger('next');
         } else if (e.keyCode === 27) { // esc
-            this.trigger('close');
+            this.close();
         } else if (e.keyCode === 73) { // 'i'
             this.trigger('toggle-info');
         }
@@ -427,7 +445,15 @@ define([
 
         if (config.page.contentType === 'Gallery') {
             lightbox = lightbox || new GalleryLightbox();
-            lightbox.preloadCache('/' + config.page.pageId);
+            var galleryId = '/' + config.page.pageId,
+                match = /\?index=(\d+)/.exec(document.location.href);
+            if (match) { // index specified so launch lightbox at that index
+                url.pushUrl(null, document.title, galleryId, true); // lets back work properly
+                lightbox.loadGalleryById(galleryId, parseInt(match[1], 10));
+            } else { // preload gallery json
+                lightbox.preloadCache(galleryId);
+            }
+
         }
     }
 
