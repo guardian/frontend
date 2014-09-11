@@ -45,6 +45,22 @@ define([
                     '</div>';
             return templ.replace(/{{label}}/g, label);
         }
+
+        this.imgElementHtml =
+            '<li class="gallery-lightbox__item">' +
+                '<img class="gallery-lightbox__img" src="${src}">' +
+                '<div class="gallery-lightbox__info">' +
+                    '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
+                        '<span class="gallery-lightbox__index">${index}</span>' +
+                        '<span class="gallery-lightbox__progress-separator"></span>' +
+                        '<span class="gallery-lightbox__count">${count}</span>' +
+                    '</div>' +
+                    '<div class="gallery-lightbox__img-caption">${caption}</div>' +
+                    '<div class="gallery-lightbox__img-credit">${credit}</div>' +
+                '</div>' +
+            '</li>';
+
+
         this.galleryLightboxHtml =
             '<div class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">' +
                 '<div class="pamplemousse gallery-lightbox__loader">' +
@@ -63,19 +79,12 @@ define([
                     generateButtonHTML('prev') +
                     generateButtonHTML('info-button') +
                 '</div>' +
-                '<div class="gallery-lightbox__content js-gallery-content" data-src="">' +
-                    '<div class="gallery-lightbox__ad js-gallery-lightbox-ad"></div>' +
+
+                '<div class="js-gallery-swipe gallery-lightbox__swipe-container">' +
+                    '<ul class="gallery-lightbox__content js-gallery-content">' +
+                    '</ul>' +
                 '</div>' +
-                '<div class="gallery-lightbox__info">' +
-                    '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
-                        '<span class="gallery-lightbox__index js-gallery-index"></span>' +
-                        '<span class="gallery-lightbox__progress-separator"></span>' +
-                        '<span class="gallery-lightbox__count js-gallery-count"></span>' +
-                    '</div>' +
-                    '<div class="gallery-lightbox__img-title js-gallery-img-title"></div>' +
-                    '<div class="gallery-lightbox__img-caption js-gallery-img-caption"></div>' +
-                    '<div class="gallery-lightbox__img-credit js-gallery-img-credit"></div>' +
-                '</div>' +
+
             '</div>';
 
         // ELEMENT BINDINGS
@@ -123,6 +132,27 @@ define([
     }
 
     GalleryLightbox.prototype.initSwipe = function() {
+
+        require('js!swipe', function() {
+
+            this.swipe = new Swipe(qwery('.js-gallery-swipe')[0], {
+                startSlide: this.index,
+                speed: 200,
+                continuous: true,
+                callback: function(index) {
+                    var swipeDir = (index > this.index) ? 'next' : 'prev';
+//                    self.trackInteraction('Lightbox gallery swipe - ' + swipeDir);
+                    console.log('Lightbox gallery swipe - ' + swipeDir);
+
+                    this.trigger(swipeDir);
+                }.bind(this)
+            });
+
+
+        }.bind(this));
+
+        return;
+
         var threshold, ox, dx;
 
         bean.on(this.$contentEl[0], 'touchstart', function(e) {
@@ -234,6 +264,18 @@ define([
                     url.pushUrl({}, document.title, '/' + this.galleryJson.id);
                     this.imgCount = this.galleryJson.images.length;
                     this.$countEl.text(this.imgCount + (this.showEndslate ? 1 : 0));
+
+                    _.each(this.galleryJson.images, function(img, i) {
+                        var thisEl = bonzo.create(_.template(this.imgElementHtml, {
+                            src: img.src,
+                            index: i+1,
+                            count: this.imgCount,
+                            caption: img.caption,
+                            credit: img.credit
+                        }));
+                        this.$contentEl.append(thisEl);
+                    }.bind(this));
+
                     this.state = 'image';
                 }
             }

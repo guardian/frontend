@@ -116,6 +116,23 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     @include transform(translateZ(0)); // promote to gpu to stop buggy transition and janky swipe
 }
 
+.gallery-lightbox__swipe-container {
+    height: 100%;
+    overflow: hidden;
+    visibility: hidden;
+    position: relative;
+    > div {
+        overflow: hidden;
+        position: relative;
+    }
+}
+
+.gallery-lightbox__content {
+    float:left;
+    width:100%;
+    position: relative;
+}
+
 .gallery-lightbox__loader {
     position: absolute;
     top: 0;
