@@ -1,6 +1,6 @@
 define([
     'common/utils/storage'
-], function(
+], function (
     storage
 ) {
 
@@ -48,12 +48,16 @@ define([
     }
 
     function setPrefs(loc) {
-        var qs = loc.hash.substr(1).split('&');
+        var qs = loc.hash.substr(1).split('&'),
+            m,
+            key,
+            val,
+            v;
         for (var i = 0, j = qs.length; i<j; ++i) {
-            var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
+            m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
             if (m) {
-                var key = m[1],
-                    val = m[2];
+                key = m[1];
+                val = m[2];
                 switch (key) {
                     case 'switchOn':
                         switchOn(val);
@@ -64,7 +68,7 @@ define([
                     default:
                         // 1. +val casts any number (int, float) from a string
                         // 2. String(val) === "true" converts a string to bool
-                        var v = (isNumeric(val) ? +val : isBoolean(val) ? (String(val).toLowerCase() === 'true') : val);
+                        v = (isNumeric(val) ? +val : isBoolean(val) ? (String(val).toLowerCase() === 'true') : val);
                         set(key, v);
                 }
             }

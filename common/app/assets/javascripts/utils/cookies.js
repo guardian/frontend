@@ -1,6 +1,6 @@
 define([
     'lodash/collections/forEach'
-], function(
+], function (
     forEach
 ) {
 
