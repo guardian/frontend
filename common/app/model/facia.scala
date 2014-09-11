@@ -110,58 +110,7 @@ object SeoData extends ExecutionContexts with Logging {
 
   def descriptionFromWebTitle(webTitle: String): Option[String] = Option(s"Latest $webTitle news, comment and analysis from the Guardian, the world's leading liberal voice")
 
-  def getSeoData(path: String): Future[SeoData] = {
-    for {
-      itemResp <- getCapiItemResponseForPath(path)
-    } yield {
-      val sc = ConfigAgent.getSeoDataJsonFromConfig(path)
-      val seoData = SeoData.fromPath(path)
 
-      val navSection:  String = sc.navSection
-        .orElse(itemResp.flatMap(getNavSectionFromItemResponse))
-        .getOrElse(seoData.navSection)
-      val webTitle: String = sc.webTitle
-        .orElse(itemResp.flatMap(getWebTitleFromItemResponse))
-        .getOrElse(seoData.webTitle)
-      val title: Option[String] = sc.title
-      val description: Option[String] = sc.description
-        .orElse(SeoData.descriptionFromWebTitle(webTitle))
-
-      SeoData(path, navSection, webTitle, title, description)
-    }
-  }
-
-  private def getNavSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
-    itemResponse.tag.flatMap(_.sectionId)
-      .orElse(itemResponse.section.map(_.id).map(removeLeadEditionFromSectionId))
-
-  private def getWebTitleFromItemResponse(itemResponse: ItemResponse): Option[String] =
-    itemResponse.tag.map(_.webTitle)
-      .orElse(itemResponse.section.map(_.webTitle))
-
-  //This will turn au/culture into culture. We want to stay consistent with the manual entry and autogeneration
-  private def removeLeadEditionFromSectionId(sectionId: String): String = sectionId.split('/').toList match {
-    case edition :: tail if Edition.all.map(_.id.toLowerCase).contains(edition.toLowerCase) => tail.mkString("/")
-    case _ => sectionId
-  }
-
-  private def getCapiItemResponseForPath(id: String): Future[Option[ItemResponse]] = {
-    val contentApiResponse:Future[ItemResponse] = LiveContentApi
-      .item(id, Edition.defaultEdition)
-      .showEditorsPicks(false)
-      .pageSize(0)
-      .response
-
-    contentApiResponse.onSuccess { case _ =>
-      ContentApiSeoRequestSuccess.increment()
-      log.info(s"Getting SEO data from content API for $id")}
-    contentApiResponse.onFailure { case e: Exception =>
-      log.warn(s"Error getting SEO data from content API for $id: $e")
-      ContentApiSeoRequestFailure.increment()
-    }
-
-    contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
-  }
 
   lazy val empty: SeoData = SeoData("", "", "", None, None)
 }
