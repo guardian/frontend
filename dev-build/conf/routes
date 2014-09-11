@@ -243,7 +243,11 @@ GET         /commercial/capi                                                    
 GET         /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.renderToApprove()
 POST        /commercialtools/adunits/toapprove                                                                       controllers.admin.CommercialAdUnitController.approve()
 GET         /commercial/multi.json                                                                                   controllers.commercial.Multi.renderMulti
+# dev-build only
 GET         /commercial/magento/token                                                                                controllers.commercial.magento.AccessTokenGenerator.generate
+GET         /commercial/magento/resource                                                                             controllers.commercial.magento.ApiSandbox.getResource(t: String)
+GET         /commercial/magento/books                                                                                controllers.commercial.magento.ApiSandbox.getBooks(t: String)
+
 
 # Onward journeys
 GET         /series/*path.json                                                                                       controllers.SeriesController.renderSeriesStories(path)
