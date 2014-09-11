@@ -25,8 +25,7 @@ case class Front(
   imageWidth: Option[Int],
   imageHeight: Option[Int],
   isImageDisplayed: Option[Boolean],
-  priority: Option[String],
-  editorialType: Option[String]
+  priority: Option[String]
 )
 
 object Collection {

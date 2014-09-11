@@ -29,7 +29,6 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     imageHeight = None,
     isImageDisplayed = None,
     priority = Some("high"),
-    editorialType = None,
     initialCollection = collectionFixture
   )
 
@@ -70,8 +69,7 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
         imageWidth = None,
         imageHeight = None,
         isImageDisplayed = None,
-        priority = Some("high"),
-        editorialType = None
+        priority = Some("high")
       ))
   }
 
