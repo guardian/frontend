@@ -37,7 +37,7 @@ define([
                 scriptElement.src = '//platform.twitter.com/widgets.js';
                 $(document.body).append(scriptElement);
             } else {
-                if (twttr && 'widgets' in twttr && 'load' in twttr.widgets) {
+                if (typeof twttr !== 'undefined' && 'widgets' in twttr && 'load' in twttr.widgets) {
                     twttr.widgets.load();
                 }
             }
