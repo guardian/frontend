@@ -6,6 +6,7 @@ import play.api.libs.json.{JsString, JsValue}
 
 case class FaciaPage(id: String,
                      seoData: SeoData,
+                     frontProperties: FrontProperties,
                      collections: List[(Config, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
 
   override lazy val description: Option[String] = seoData.description
@@ -46,5 +47,5 @@ case class FaciaPage(id: String,
 }
 
 object FaciaPage {
-  def defaultFaciaPage: FaciaPage = FaciaPage("", SeoData.empty, Nil)
+  def defaultFaciaPage: FaciaPage = FaciaPage("", SeoData.empty, FrontProperties(), Nil)
 }

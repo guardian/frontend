@@ -71,12 +71,12 @@ case class SeoData(
   description: Option[String])
 
 case class FrontProperties(
-  onPageDescription: Option[String],
-  imageUrl: Option[String],
-  imageWidth: Option[String],
-  imageHeight: Option[String],
-  isImageDisplayed: Boolean,
-  editorialType: Option[String]
+  onPageDescription: Option[String] = None,
+  imageUrl: Option[String] = None,
+  imageWidth: Option[String] = None,
+  imageHeight: Option[String] = None,
+  isImageDisplayed: Boolean = false,
+  editorialType: Option[String] = None
 )
 
 object SeoData extends ExecutionContexts with Logging {
