@@ -18,17 +18,15 @@ import scala.util.{Failure, Success, Try}
 trait FrontPress extends Logging {
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
-  def pressDraftByPathId(id: String): Future[JsObject] =
-    generateJson(id, DraftCollections).map { json =>
-      (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
-      json
-    }
+  def pressDraftByPathId(id: String): Future[JsObject] = generateJson(id, DraftCollections).map { json =>
+    (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
+    json
+  }
 
-  def pressLiveByPathId(id: String): Future[JsObject] =
-    generateJson(id, LiveCollections).map { json =>
-      (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
-      json
-    }
+  def pressLiveByPathId(id: String): Future[JsObject] = generateJson(id, LiveCollections).map { json =>
+    (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
+    json
+  }
 
   def generateJson(id: String,
                    seoData: SeoData,
@@ -73,7 +71,6 @@ trait FrontPress extends Logging {
   private def getFrontSeoAndProperties(path: String): Future[(SeoData, FrontProperties)] =
     for {
       itemResp <- getCapiItemResponseForPath(path)
-
     } yield {
       val seoFromConfig = ConfigAgent.getSeoDataJsonFromConfig(path)
       val seoFromPath = SeoData.fromPath(path)
@@ -119,6 +116,7 @@ trait FrontPress extends Logging {
     contentApiResponse.onSuccess { case _ =>
       ContentApiSeoRequestSuccess.increment()
       log.info(s"Getting SEO data from content API for $id")}
+
     contentApiResponse.onFailure { case e: Exception =>
       log.warn(s"Error getting SEO data from content API for $id: $e")
       ContentApiSeoRequestFailure.increment()

@@ -98,7 +98,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       imageWidth = formatValue("imageWidth"),
       imageHeight = formatValue("imageHeight"),
       isImageDisplayed = (frontPropsJson \ "isImageDisplayed").asOpt[Boolean].getOrElse(false),
-      editorialType = None
+      editorialType = None // value found in Content API
     )
   }
 }
