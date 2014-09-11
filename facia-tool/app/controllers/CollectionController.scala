@@ -1,6 +1,5 @@
 package controllers
 
-import com.gu.googleauth.UserIdentity
 import frontsapi.model.Collection
 import services.PressAndNotify
 import util.Requests._
@@ -28,7 +27,7 @@ object CollectionController extends Controller {
   def create = ExpiringActions.ExpiringAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
-        val identity =  UserIdentity("12345", "nobody@gmail.com", "emergency", "user", 60L * 1000 * 60, None)//request.user
+        val identity = request.user
         val collectionId = UpdateManager.addCollection(frontIds, collection, identity)
         PressAndNotify(Set(collectionId))
         Ok(Json.toJson(CreateCollectionResponse(collectionId)))
@@ -40,7 +39,7 @@ object CollectionController extends Controller {
   def update(collectionId: String) = ExpiringActions.ExpiringAuthAction { request =>
     request.body.read[CollectionRequest] match {
       case Some(CollectionRequest(frontIds, collection)) =>
-        val identity = UserIdentity("12345", "nobody@gmail.com", "emergency", "user", 60L * 1000 * 60, None)//request.user
+        val identity = request.user
         UpdateManager.updateCollection(collectionId, frontIds, collection, identity)
         PressAndNotify(Set(collectionId))
         Ok
