@@ -66,17 +66,11 @@ trait FrontPress extends Logging {
 
   private def generateJson(id: String, parseCollection: ParseCollection): Future[JsObject] =
     for {
-      (seoData, frontProperties) <- CapiClient.getSeoData(id)
+      (seoData, frontProperties) <- getFrontSeoAndProperties(id)
       collections <- retrieveCollectionsById(id, parseCollection)
     } yield generateJson(id, seoData, frontProperties, collections).get
 
-}
-
-object FrontPress extends FrontPress
-
-object CapiClient {
-
-  def getSeoData(path: String): Future[(SeoData, FrontProperties)] =
+  private def getFrontSeoAndProperties(path: String): Future[(SeoData, FrontProperties)] =
     for {
       itemResp <- getCapiItemResponseForPath(path)
 
@@ -133,3 +127,5 @@ object CapiClient {
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
   }
 }
+
+object FrontPress extends FrontPress
