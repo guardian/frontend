@@ -36,15 +36,15 @@ trait AdminLifecycle extends GlobalSettings {
       VideoSanityCheckJob.run()
     }
 
-    Jobs.schedule("FrontPressJob", s"0 0/$adminPressJobHighPushRateInMinutes * 1/1 * ? *") {
+    Jobs.schedule("FrontPressJobHighFrequency", s"0 0/$adminPressJobHighPushRateInMinutes * 1/1 * ? *") {
       RefreshFrontsJob.runHighFrequency()
     }
 
-    Jobs.schedule("FrontPressJob", s"0 0/$adminPressJobStandardPushRateInMinutes * 1/1 * ? *") {
+    Jobs.schedule("FrontPressJobStandardFrequency", s"0 0/$adminPressJobStandardPushRateInMinutes * 1/1 * ? *") {
       RefreshFrontsJob.runStandardFrequency()
     }
 
-    Jobs.schedule("FrontPressJob", s"0 0/$adminPressJobCommercialPushRateInMinutes * 1/1 * ? *") {
+    Jobs.schedule("FrontPressJobLowFrequency", s"0 0/$adminPressJobCommercialPushRateInMinutes * 1/1 * ? *") {
       RefreshFrontsJob.runLowFrequency()
     }
 
