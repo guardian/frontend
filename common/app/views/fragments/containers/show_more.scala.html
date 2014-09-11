@@ -13,7 +13,7 @@
  * TODO use the number of columns here
  *@
 @if(items.nonEmpty) {
-    <div class="js-container--show-more">
+    <div class="linkslist-container js-container--show-more">
         <ul class="u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
         @items.zipWithIndex.map { case (trail, index) =>
             @standard(trail, index + indexOffset, containerIndex)
