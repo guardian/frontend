@@ -1,7 +1,8 @@
-@(page: MetaData, collection: Collection, style: FeaturesVolumesContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
-@import common.Edition
+@(page: model.MetaData, collection: model.Collection, style: views.support.FeaturesVolumesContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
-@import org.joda.time.DateTime
+@import common.{Edition, LinkTo}
+@import model.FaciaComponentName
+@import views.support.GetClasses
 
 @defining(config.displayName.orElse(collection.displayName), config.href.orElse(collection.href)) { case (title, href) =>
     @defining(templateDeduping(10, collection.items)) { items =>

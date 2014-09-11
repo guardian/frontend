@@ -40,3 +40,15 @@
 .label-warning {
     color: #ffffff !important;
 }
+
+.big-metric {
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+}
+.big-metric-value {
+    color: #005689;
+}
+.big-metric-name {
+    color: #00456e;
+}

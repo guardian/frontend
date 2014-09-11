@@ -183,6 +183,7 @@ case class FormattedChart(
 
   lazy val id = UUID.randomUUID().toString
   lazy val labels: Seq[String] = columns.map(_.label)
+  lazy val lastValue: Option[String] = rows.lastOption.flatMap {_.c.lastOption.map(_.v) }
 
   def asJson() = Json.toJson(FormattedChart.DataTable(columns, rows))
 }

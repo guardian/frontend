@@ -1,7 +1,8 @@
 package controllers.commercial
 
 import common.ExecutionContexts
-import model.commercial.books.{BestsellersAgent, Book}
+import conf.Switches.MagentoServiceSwitch
+import model.commercial.books.{BestsellersAgent, Book, BookFinder}
 import model.{Cached, NoCache}
 import performance.MemcachedAction
 import play.api.mvc._
@@ -79,6 +80,21 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
     }
   }
 
+  private def renderSingleBookUsingMagentoService(format: Format) = MemcachedAction { implicit request =>
+    specificId map { isbn =>
+      BookFinder.findByIsbn(isbn) map { optBook =>
+        val result = optBook map { book =>
+          format.result(views.html.books.bestsellersSuperHigh(book))
+        } getOrElse {
+          format.nilResult
+        }
+        Cached(componentMaxAge)(result)
+      }
+    } getOrElse {
+      Future.successful(NoCache(format.nilResult))
+    }
+  }
+
   def bestsellersLowHtml = renderBestsellers(lowRelevance, htmlFormat)
   def bestsellersLowJson = renderBestsellers(lowRelevance, jsonFormat)
   def bestsellersLowJsonV2 = renderBestsellers(lowRelevanceV2, jsonFormat)
@@ -91,7 +107,11 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
   def bestsellersHighJson = renderBestsellers(highRelevance, jsonFormat)
   def bestsellersHighJsonV2 = renderBestsellers(highRelevanceV2, jsonFormat)
 
+
   def bestsellersSuperHighHtml = renderSingleBook(htmlFormat)
   def bestsellersSuperHighJson = renderSingleBook(jsonFormat)
   def bestsellersSuperHighJsonV2 = renderSingleBookV2(jsonFormat)
+
+  def bestsellersSuperHighJson = if (MagentoServiceSwitch.isSwitchedOn) renderSingleBookUsingMagentoService(jsonFormat) else renderSingleBook(jsonFormat)
+  def bestsellersSuperHighHtml = if (MagentoServiceSwitch.isSwitchedOn) renderSingleBookUsingMagentoService(htmlFormat) else renderSingleBook(htmlFormat)
 }
