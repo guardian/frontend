@@ -11,8 +11,7 @@ define([
     'common/utils/mediator',
     'common/utils/config',
     'common/modules/analytics/mvt-cookie',
-    'common/modules/experiments/tests/high-commercial-component',
-    'common/modules/experiments/tests/soulmates-labelling'
+    'common/modules/experiments/tests/high-commercial-component'
 ], function (
     raven,
     filter,
@@ -26,13 +25,11 @@ define([
     mediator,
     globalConfig,
     mvtCookie,
-    HighCommercialComponent,
-    SoulmatesLabelling
+    HighCommercialComponent
     ) {
 
     var TESTS = [
-            new HighCommercialComponent(),
-            new SoulmatesLabelling()
+            new HighCommercialComponent()
         ],
         participationsKey = 'gu.ab.participations';
 
