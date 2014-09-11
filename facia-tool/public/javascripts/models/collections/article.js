@@ -82,7 +82,12 @@ define([
                 'ophanUrl',
                 'sparkUrl']);
 
-            this.editors = overridableFields.map(this.editor, this);
+            this.editors = [
+                { key: 'headline', maxLength: 90 },
+                { key: 'trailText' },
+                { key: 'byline' },
+                { key: 'kicker' },
+            ].map(this.editor, this);
 
             this.id = ko.observable(opts.id);
 
@@ -179,8 +184,9 @@ define([
             });
         };
 
-        Article.prototype.editor = function(key) {
-            var self = this;
+        Article.prototype.editor = function(opts) {
+            var key = opts.key,
+                self = this;
 
             return {
                 key:           key,
