@@ -117,21 +117,27 @@
 
     <script type="text/html" id="template_editor">
         <div class="editor">
-            <!-- ko if: $data.element === $root.uiOpenElement() -->
+            <!-- ko if: $data.meta === $root.uiOpenElement() -->
                 <textarea data-bind="
-                    attr: {class: 'editor__' + key + ' element__' + key},
+                    attr: {
+                        class: 'editor__' + key + ' element__' + key,
+                        placeholder: field() || key
+                    },
                     autoResize: true,
                     valueUpdate: 'afterkeydown',
                     hasFocus: true,
                     value: overrideOrVal"></textarea>
-                <a class="editor__reverter" data-bind="
-                    visible: element,
-                    click: reverter">revert</a>
+                <span class="editor__length" data-bind="
+                    css: {'editor__length--alert': lengthAlert},
+                    text: length"></span>
+                <a class="editor__revert" data-bind="
+                    visible: meta,
+                    click: revert">revert</a>
             <!-- /ko -->
             <div data-bind="
                 attr: {class: 'element element__' + key},
-                click: opener,
-                html: overrideOrVal"></div>
+                click: open,
+                html: overrideOrVal() || key"></div>
         </div>
     </script>
 

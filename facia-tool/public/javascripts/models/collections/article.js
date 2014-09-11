@@ -83,10 +83,10 @@ define([
                 'sparkUrl']);
 
             this.editors = [
-                { key: 'headline', maxLength: 90 },
-                { key: 'trailText' },
-                { key: 'byline' },
-                { key: 'kicker' },
+                { key: 'headline', maxLength: 90},
+                { key: 'trailText'},
+                { key: 'byline'},
+                { key: 'kicker', maxLength: 30},
             ].map(this.editor, this);
 
             this.id = ko.observable(opts.id);
@@ -185,31 +185,35 @@ define([
         };
 
         Article.prototype.editor = function(opts) {
-            var key = opts.key,
-                self = this;
+            var self = this,
+                key = opts.key,
+                meta = self.meta[key] || function() {},
+                field = self.fields[key] || function() {};
 
             return {
-                key:           key,
+                key:    key,
+                meta:   meta,
+                field:  field,
+                revert: function() { meta(undefined); },
+                open:   function() { mediator.emit('ui:open', meta); },
 
-                element:       self.meta[key],
+                length: ko.computed(function() {
+                    return opts.maxLength ? (meta() || field() || '').length : undefined;
+                }, self),
 
-                reverter:      function() { self.meta[key](undefined); },
-
-                opener:        function() { mediator.emit('ui:open', self.meta[key]); },
-
-                isOverriden:   self.meta[key] && self.meta[key](),
+                lengthAlert: ko.computed(function() {
+                    return opts.maxLength && (meta() || field() || '').length > opts.maxLength;
+                }, self),
 
                 overrideOrVal: ko.computed({
                     read: function() {
-                        var meta  = self.meta[key]   ? self.meta[key]()   : undefined;
-                        var field = self.fields[key] ? self.fields[key]() : undefined;
-
-                        return meta || field || 'Add ' + key + '...';
+                        return meta() || field();
                     },
                     write: function(value) {
-                        var el = document.createElement('div');
-                        el.innerHTML = value;
-                        self.meta[key](el.innerHTML);
+                        //var el = document.createElement('div');
+                        //el.innerHTML = value;
+                        //meta(el.innerHTML);
+                        meta(value);
                     },
                     owner: self
                 })

@@ -411,18 +411,14 @@ h1 {
 .element,
 .element a {
     color: #000000;
-    text-decoration: none;
-}
-
-.element__headline {
-    cursor: move;
+    cursor: pointer;
     text-decoration: none;
 }
 
 .element__trailText {
     font-size: 12px;
     line-height: 16px;
-    color: #666666;
+    color: #999999;
 }
 
 span.kicker {
@@ -527,36 +523,6 @@ span.kicker--breaking-news {
     display: none;
 }
 
-.revert {
-    position: absolute;
-    right: 5px;
-    opacity: 0.5;
-}
-
-.revert:hover {
-    opacity: 0.9;
-}
-
-.revert--headline {
-    top: 20px;
-}
-
-.revert--trailtext {
-    top: 58px;
-}
-
-.headline-length {
-    position: absolute;
-    right: 6px;
-    top: 4px;
-    color: #999999;
-}
-
-.headline-length--alert {
-    font-weight: bold;
-    color: #DD4B39;
-}
-
 input[type="text"],
 textarea,
 select{
@@ -613,11 +579,25 @@ select {
     z-index: 10;
 }
 
-.editor__reverter {
+.editor__revert,
+.editor__length {
     position: absolute;
-    right: -32px;
     top: 3px;
+    width: 0px;
     font-size: 12px;
+}
+
+.editor__length {
+    right: -2px;
+}
+
+.editor__revert {
+    right: -25px;
+}
+
+.editor__length--alert {
+    font-weight: bold;
+    color: #DD4B39;
 }
 
 button {
