@@ -39,11 +39,11 @@ define([
         return store.get(storagePrefix + 'switch.' + name) === false;
     }
 
-    function isNumeric(str){
+    function isNumeric(str) {
         return !isNaN(str);
     }
 
-    function isBoolean(str){
+    function isBoolean(str) {
         return (str === 'true' || str === 'false');
     }
 
@@ -52,8 +52,9 @@ define([
             m,
             key,
             val,
-            v;
-        for (var i = 0, j = qs.length; i<j; ++i) {
+            v,
+            i;
+        for (i = 0, j = qs.length; i < j; ++i) {
             m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
             if (m) {
                 key = m[1];
