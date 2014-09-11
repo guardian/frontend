@@ -1,6 +1,7 @@
 define([
     'common/utils/$',
     'common/utils/_',
+    'common/utils/config',
     'bean',
     'common/utils/mediator',
     'bonzo',
@@ -14,6 +15,7 @@ define([
 ], function (
     $,
     _,
+    config,
     bean,
     mediator,
     bonzo,
@@ -25,10 +27,6 @@ define([
     imagesModule,
     url
 ) {
-
-
-    var galleryCache = {};
-
     function GalleryLightbox() {
 
         // CONFIG
@@ -127,31 +125,8 @@ define([
         this.fsm.trigger(event);
     };
 
-    GalleryLightbox.prototype.fetchGalleryJson = function(galleryId, successCallback, errorCallback) {
-        ajax({
-            url: galleryId + '/lightbox.json',
-            type: 'json',
-            method: 'get',
-            crossOrigin: true,
-            success: successCallback,
-            error: errorCallback || function() {}
-        });
-    };
-
-    GalleryLightbox.prototype.preloadCache = function(galleryId) {
-        this.fetchGalleryJson(galleryId, function(response) {
-            galleryCache[galleryId] = response.gallery;
-        });
-    };
-
     GalleryLightbox.prototype.loadGalleryfromJson = function(galleryJson, startIndex) {
         this.galleryJson = galleryJson;
-        this.index = startIndex;
-        this.trigger('open');
-    };
-
-    GalleryLightbox.prototype.loadGalleryById = function(galleryId, startIndex) {
-        this.galleryId = galleryId;
         this.index = startIndex;
         this.trigger('open');
     };
@@ -177,44 +152,13 @@ define([
             enter: function() {
                 this.hide();
                 this.galleryJson = undefined;
-                this.galleryId = undefined;
             },
             leave: function() {
                 this.show();
             },
             events: {
                 'open': function() {
-                    this.state = 'loading';
-                }
-            }
-        },
-
-        'loading': {
-            enter: function() { // loads gallery from json or id
-
-                if (this.galleryJson) {
-                    this.trigger('loadJson');
-                }
-                else if (this.galleryId in galleryCache) { // json is cached so no need to hit endpoint again
-                    this.galleryJson = galleryCache[this.galleryId];
-                    this.trigger('loadJson');
-                }
-                else if (this.galleryId) {
-                    this.fetchGalleryJson(this.galleryId, function (response) {
-                        this.galleryJson = galleryCache[this.galleryId] = response.gallery;
-                        this.trigger('loadJson');
-                    }.bind(this));
-                }
-                else {
-                    throw 'Gallery lightbox opened with no gallery json/id';
-                }
-
-            },
-            leave: function() {
-                url.pushUrl({}, document.title, '/' + this.galleryJson.id);
-            },
-            events: {
-                'loadJson': function() {
+                    url.pushUrl({}, document.title, '/' + this.galleryJson.id);
                     this.imgCount = this.galleryJson.images.length;
                     this.$countEl.text(this.imgCount + (this.showEndslate ? 1 : 0));
                     this.state = 'image';
@@ -435,7 +379,7 @@ define([
         mediator.emit('module:clickstream:interaction', str);
     };
 
-    function bootstrap(config) {
+    function bootstrap() {
         var lightbox;
         bean.on(document.body, 'click', '.js-gallerythumbs', function(e) {
             e.preventDefault();
@@ -443,11 +387,10 @@ define([
             var $el = bonzo(e.currentTarget),
                 galleryHref = $el.attr('href') || $el.attr('data-gallery-url'),
                 galleryHrefParts = galleryHref.split('?index='),
-                galleryId = galleryHrefParts[0],
                 parsedGalleryIndex = parseInt(galleryHrefParts[1], 10),
                 galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex;// 1-based index
             lightbox = lightbox || new GalleryLightbox();
-            lightbox.loadGalleryById(galleryId, galleryIndex);
+            lightbox.loadGalleryfromJson(config.page.galleryLightbox, galleryIndex);
         });
 
         if (config.page.contentType === 'Gallery') {
@@ -456,11 +399,8 @@ define([
                 match = /\?index=(\d+)/.exec(document.location.href);
             if (match) { // index specified so launch lightbox at that index
                 url.pushUrl(null, document.title, galleryId, true); // lets back work properly
-                lightbox.loadGalleryById(galleryId, parseInt(match[1], 10));
-            } else { // preload gallery json
-                lightbox.preloadCache(galleryId);
+                lightbox.loadGalleryfromJson(config.page.galleryLightbox, parseInt(match[1], 10));
             }
-
         }
     }
 

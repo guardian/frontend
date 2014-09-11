@@ -183,8 +183,8 @@ define([
         },
 
         initLightboxGalleries: function () {
-            mediator.on('page:common:ready', function(config) {
-                LightboxGallery.init(config);
+            mediator.on('page:common:ready', function() {
+                LightboxGallery.init();
             });
 
         },
