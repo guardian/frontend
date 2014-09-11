@@ -14,14 +14,14 @@ import scala.util.{Failure, Success, Try}
 trait FrontPress extends Logging {
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
-  def pressDraftByPathId(path: String): Future[JsObject] =
-    generateJson(path, retrieveFrontByPath(path, DraftCollections)).map { json =>
+  def pressDraftByPathId(id: String): Future[JsObject] =
+    generateJson(id, DraftCollections).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
       json
     }
 
-  def pressLiveByPathId(path: String): Future[JsObject] =
-    generateJson(path, retrieveFrontByPath(path, LiveCollections)).map { json =>
+  def pressLiveByPathId(id: String): Future[JsObject] =
+    generateJson(id, LiveCollections).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
       json
     }
@@ -52,10 +52,10 @@ trait FrontPress extends Logging {
     Future.sequence(collections).map(_.toMap)
   }
 
-  private def generateJson(id: String, frontData: Future[Map[Config, Collection]]): Future[JsObject] = {
+  private def generateJson(id: String, parseCollection: ParseCollection): Future[JsObject] = {
     for {
       seoData <- SeoData.getSeoData(id)
-      front <- frontData
+      front <- retrieveFrontByPath(id, parseCollection)
     } yield generateJson(id, seoData, front).get
   }
 }
