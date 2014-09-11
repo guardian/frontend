@@ -36,7 +36,6 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
     errorCount: Long
   ) {
     lazy val jsonDate = s"Date(${date.getYear},${date.getMonthOfYear - 1},${date.getDayOfMonth})"
-    lazy val simpleDate = date.toString("yyyy-MM-dd")
   }
 
   def renderGalleryDashboard() = AuthActions.AuthActionTest { request =>
@@ -77,7 +76,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
         }
         val galleryChart = FormattedChart("Gallery Page Views per Gallery Visit", galleryColumns, galleryRows, ChartFormat(Colour.`tone-comment-2`))
 
-      NoCache(Ok(views.html.contentGallery("PROD", galleryChart, lightboxChart, sentryChart, "Gallery Performance", reportTimestamp)))
+        NoCache(Ok(views.html.contentGallery("PROD", galleryChart, lightboxChart, sentryChart, "Gallery Performance", reportTimestamp)))
     }
   }
 
@@ -102,7 +101,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
     }
 
     val resultsMap = reportCounts.toMap
-    val reports = for {
+    val reportsObject = for {
       name <- resultsMap.get(galleryVisits).map(_.keys).getOrElse(Nil)
       galleryViewsReport <- resultsMap.get(galleryPageViews)
       galleryVisitsReport <- resultsMap.get(galleryVisits)
@@ -114,9 +113,9 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
       visits <- galleryVisits.counts.headOption.map(_.toDouble)
       lightboxes <- lightboxLaunches.counts.headOption.map(_.toDouble)
     } yield {
-      val date = new DateTime(galleryViews.year, galleryViews.month, galleryViews.day, 0, 0)
-      GalleryPerformance(date, views / visits, lightboxes / views)
+        val date = new DateTime(galleryViews.year, galleryViews.month, galleryViews.day, 0, 0)
+        GalleryPerformance(date, views / visits, lightboxes / views)
     }
-    reports.toSeq
+    reportsObject.toSeq
   }
 }
