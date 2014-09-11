@@ -48,7 +48,7 @@ object Book {
       (JsPath \ "description").readNullable[String] and
       (JsPath \ "images")(0).readNullable[String] and
       (JsPath \ "product_url").readNullable[String] and
-      (JsPath \ "bestseller_rank").readNullable[String].map(_.map(_.toDouble.toInt)) and
+      (JsPath \ "guardian_bestseller_rank").readNullable[String].map(_.map(_.toDouble.toInt)) and
       ((JsPath \ "categories")(0) \ "name").readNullable[String] and
       (JsPath \ "keywordIds").readNullable[Seq[String]].map(_ getOrElse Nil)
     )(Book.apply _)
