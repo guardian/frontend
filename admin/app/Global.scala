@@ -7,11 +7,11 @@ import play.api.mvc.{WithFilters, Results, RequestHeader}
 import scala.concurrent.Future
 
 object Global extends WithFilters(Gzipper)
-with AdminLifecycle
-with CloudWatchApplicationMetrics
-with Results
-with SurgingContentAgentLifecycle
-with DfpDataCacheLifecycle {
+  with AdminLifecycle
+  with CloudWatchApplicationMetrics
+  with Results
+  with SurgingContentAgentLifecycle
+  with DfpDataCacheLifecycle {
 
   override lazy val applicationName = "frontend-admin"
 

@@ -1,8 +1,0 @@
-package tools
-
-object ConfigurableDb {
-
-
-
-
-}
