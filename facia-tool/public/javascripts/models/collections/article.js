@@ -39,8 +39,7 @@ define([
                 'headline',
                 'trailText',
                 'byline',
-                'kicker',
-                'imageSrc'],
+                'kicker'],
 
             allFields = [
                 'isLive',
@@ -191,6 +190,8 @@ define([
                 reverter:      function() { self.meta[key](undefined); },
 
                 opener:        function() { mediator.emit('ui:open', self.meta[key]); },
+
+                isOverriden:   self.meta[key] && self.meta[key](),
 
                 overrideOrVal: ko.computed({
                     read: function() {

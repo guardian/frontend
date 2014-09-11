@@ -204,7 +204,7 @@ h1 {
 .list-header {
     color: #999999;
     overflow: hidden;
-    padding: 5px 0 1px 0;
+    padding: 5px 0;
     height: 23px;
 }
 
@@ -324,6 +324,7 @@ h1 {
     overflow: hidden;
     padding: 0 2px 3px 4px;
     position: relative;
+    height: 61px;
     color: #999999;
     background: #ffffff;
     border-top: 5px solid #ffffff;
@@ -353,6 +354,8 @@ h1 {
 }
 
 .article.open {
+    height: inherit;
+    min-height: 61px;
     background: #dddddd !important;
 }
 
@@ -369,20 +372,22 @@ h1 {
 }
 
 .article .thumb {
-    float: left;
+    position: absolute;
+    top: 6px;
+}
+
+.article .thumb img {
     width: 75px;
     height: 45px;
-    margin: 3px 0 0 0;
-    background-color: #eeeeee;
     border-radius: 2px;
+    background-color: #eeeeee;
 }
 
-.article_content {
-    margin: 3px 100px 0 85px;
-    line-height: 0;
+.article__content {
+    margin: 0 130px 0 85px;
 }
 
-.article_content .icon-pencil {
+.article__content .icon-pencil {
     cursor: pointer;
     opacity: 0.5;
 }
@@ -397,18 +402,27 @@ h1 {
     font-size: 12px;
 }
 
-a.headline,
-div.headline {
-    font-size: 14px;
-    line-height: 16px;
+.element {
+    display: inline-block;
+    margin: 3px 0 0 0;
+    width: 100%;
+}
+
+.element,
+.element a {
     color: #000000;
-    cursor: move;
-    margin: 1px 0 0 0;
     text-decoration: none;
 }
 
-a.headline:hover {
-    color: #000000;
+.element__headline {
+    cursor: move;
+    text-decoration: none;
+}
+
+.element__trailText {
+    font-size: 12px;
+    line-height: 16px;
+    color: #666666;
 }
 
 span.kicker {
@@ -445,27 +459,10 @@ span.kicker--breaking-news {
     font-size: 12px;
 }
 
-.secondary {
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 100%;
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-break: break-all;
-    word-wrap: break-word;
-    height: 15px;
-    line-height: 16px;
-    padding-right: 50px;
-    font-size: 12px;
-    color: #999999;
-}
-
 .article__time {
     position: absolute;
     right: 3px;
-    top: 2px;
+    top: 7px;
     font-size: 10px;
     line-height: 12px;
     color: #999;
@@ -484,9 +481,7 @@ span.kicker--breaking-news {
 }
 
 .article__overrides {
-    position: relative;
-    margin: 3px 0 0 85px;
-    color: #666666;
+    margin: 0 94px 0 85px;
 }
 
 .article__overrides .tools {
@@ -500,7 +495,7 @@ span.kicker--breaking-news {
 
 .closed .image__overrides {
     position: absolute;
-    bottom: 4px;
+    top: 8px;
     font-size: 12px;
     font-weight: bold;
     line-height: 12px;
@@ -522,10 +517,10 @@ span.kicker--breaking-news {
     color: #999999;
 }
 
-.supporting .trailText,
-.supporting .byline,
-.supporting .kicker,
-.supporting .imageSrc,
+.supporting .element__trailText,
+.supporting .element__byline,
+.supporting .element__kicker,
+.supporting .element__imageSrc,
 .supporting .tool--done,
 .supporting .image__overrides,
 .supporting .supporting-message {
@@ -606,12 +601,23 @@ select {
     padding: 0 10px 0 2px;
 }
 
-textarea.editor {
+.editor {
+    position: relative;
+}
+
+.editor textarea {
     width: 100%;
     padding: 0 30px 0 2px;
     position: absolute;
-    margin: -1px 0 0 -3px;
+    margin: 2px 0 0 -3px;
     z-index: 10;
+}
+
+.editor__reverter {
+    position: absolute;
+    right: -32px;
+    top: 3px;
+    font-size: 12px;
 }
 
 button {
@@ -629,7 +635,7 @@ button {
 
 .article__spark {
     position: absolute;
-    top: 13px;
+    top: 18px;
     right: 3px;
 }
 
@@ -810,7 +816,8 @@ button {
 .article__tools {
     display: none;
     position: absolute;
-    right: 0;
+    top: 2px;
+    right: 4px;
     width: 88px;
     height: 51px;
 }
@@ -849,7 +856,7 @@ button {
 
 .article > .closed .tool--small {
     float: left;
-    margin: 1px 0 0 1px;
+    margin: 2px 0 0 2px;
 }
 
 .latest-articles .tool--small--remove,
@@ -1096,7 +1103,7 @@ button {
     .left-col {
         width: 40%;
     }
-    .left-col .article .article_content {
+    .left-col .article .article__content {
         margin-right: 50px;
     }
     .left-col .article__spark,
@@ -1140,7 +1147,7 @@ button {
     .article__spark {
         display: none;
     }
-    .article .article_content {
+    .article .article__content {
         margin-right: 5px;
     }
     .article > .closed .tool--remove {
@@ -1152,7 +1159,7 @@ button {
 }
 
 @media (max-width: 350px) {
-    .article .article_content {
+    .article .article__content {
         margin-left: 0;
     }
     h1,

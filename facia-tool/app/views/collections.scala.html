@@ -116,18 +116,23 @@
     <!-- templates -->
 
     <script type="text/html" id="template_editor">
-        <!-- ko if: $data.element === $root.uiOpenElement() -->
-            <textarea data-bind="
-                attr: {class: 'editor editor--' + key},
-                autoResize: true,
-                valueUpdate: 'afterkeydown',
-                hasFocus: true,
-                value: overrideOrVal"></textarea>
-        <!-- /ko -->
-        <div data-bind="
-            attr: {class: key},
-            click: opener,
-            html: overrideOrVal"></div>
+        <div class="editor">
+            <!-- ko if: $data.element === $root.uiOpenElement() -->
+                <textarea data-bind="
+                    attr: {class: 'editor__' + key + ' element__' + key},
+                    autoResize: true,
+                    valueUpdate: 'afterkeydown',
+                    hasFocus: true,
+                    value: overrideOrVal"></textarea>
+                <a class="editor__reverter" data-bind="
+                    visible: element,
+                    click: reverter">revert</a>
+            <!-- /ko -->
+            <div data-bind="
+                attr: {class: 'element element__' + key},
+                click: opener,
+                html: overrideOrVal"></div>
+        </div>
     </script>
 
     <script type="text/html" id="template_collection">
@@ -228,16 +233,13 @@
                 underDrag: state.underDrag
             }">
 
-            <a class="article__lhs" target="article" data-bind="
-                attr: {href: id},
-                click: open">
-                <img class="thumb" draggable="false" data-bind="
+            <a class="thumb" target="article" data-bind="attr: {href: id}">
+                <img draggable="false" data-bind="
                     attr: {src: meta.imageSrc() || fields.thumbnail(), title: id}"/>
             </a>
 
             <div data-bind="if: state.isOpen">
                 <div class="article__overrides">
-
                     <div data-bind="template: {name: 'template_editor', foreach: editors}"></div>
 
                     <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
@@ -347,52 +349,48 @@
                         <i class="icon-trash"></i></a>
                 </div>
 
-                <div class="article_content is-empty" data-bind="if: state.isEmpty">
+                <div class="article__content is-empty" data-bind="if: state.isEmpty">
                     <span target="article" class="is-empty__url" data-bind="
                         text: id"></span>
                     This content is currently unavailable
                 </div>
 
-                <div class="article_content" data-bind="if: !state.isEmpty()">
-                    <a class="headline" data-bind="
-                        html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
-                        css: {'is-empty': isSnap() && !meta.headline()},
-                        attr: {href: id}"></a>
+                <div class="article__content" data-bind="if: !state.isEmpty()">
+                    <div class="element element__headline">
+                        <a data-bind="
+                            html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
+                            css: {'is-empty': isSnap() && !meta.headline()},
+                            attr: {href: id}"></a>
 
-                    <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                        <span class="count">(<span class="non-zero" data-bind="text: meta.supporting.items().length"></span>)</span>
-                    <!-- /ko -->
-
-                    <!-- ko if: meta.headline -->
-                        <i class="icon-pencil"></i>
-                    <!-- /ko -->
-
-                    <div class="secondary" data-bind="click: open">
-                        <!-- ko if: fields.isLive() === 'false' -->
-                            <span class="kicker" data-bind="
-                                css: {
-                                    'kicker--takedown': fields.firstPublicationDate(),
-                                    'kicker--draft':   !fields.firstPublicationDate(),
-                                },
-                                text: fields.firstPublicationDate() ? 'Taken down' : 'Draft',
-                                click: open"></span>
+                        <!-- ko if: meta.supporting && meta.supporting.items().length -->
+                            <span class="count">(<span class="non-zero" data-bind="text: meta.supporting.items().length"></span>)</span>
                         <!-- /ko -->
-
-                        <!-- ko if: isSnap -->
-                            <span data-bind="
-                                attr: {class: 'kicker' + (meta.snapCss() ? ' kicker--' + meta.snapCss() : '')},
-                                text: meta.snapCss() || 'snap'"></span>
-                        <!-- /ko -->
-
-                        <!-- ko if: meta.kicker -->
-                            <span data-bind="
-                                attr: {class: 'kicker kicker--' + meta.kicker()},
-                                text: meta.kicker"></span>
-                        <!-- /ko -->
-
-                        <span class="trailText" data-bind="
-                            html: meta.trailText() || fields.trailText()"></span>
                     </div>
+
+                    <!-- ko if: fields.isLive() === 'false' -->
+                        <span class="kicker" data-bind="
+                            css: {
+                                'kicker--takedown': fields.firstPublicationDate(),
+                                'kicker--draft':   !fields.firstPublicationDate(),
+                            },
+                            text: fields.firstPublicationDate() ? 'Taken down' : 'Draft',
+                            click: open"></span>
+                    <!-- /ko -->
+
+                    <!-- ko if: isSnap -->
+                        <span data-bind="
+                            attr: {class: 'kicker' + (meta.snapCss() ? ' kicker--' + meta.snapCss() : '')},
+                            text: meta.snapCss() || 'snap'"></span>
+                    <!-- /ko -->
+
+                    <!-- ko if: meta.kicker -->
+                        <span data-bind="
+                            attr: {class: 'kicker kicker--' + meta.kicker()},
+                            text: meta.kicker"></span>
+                    <!-- /ko -->
+
+                    <span class="element element__trailText" data-bind="
+                        html: meta.trailText() || fields.trailText()"></span>
                 </div>
             </div>
         </div>
