@@ -237,7 +237,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       lazy val domain = configuration.getStringProperty("magento.domain")
       lazy val consumerKey = configuration.getStringProperty("magento.consumer.key")
       lazy val consumerSecret = configuration.getStringProperty("magento.consumer.secret")
+      lazy val accessToken = configuration.getStringProperty("magento.access.token")
+      lazy val accessTokenSecret = configuration.getStringProperty("magento.access.token.secret")
       lazy val authorizationPath = configuration.getStringProperty("magento.auth.path")
+      lazy val isbnLookupPath = configuration.getStringProperty("magento.isbn.lookup.path")
     }
   }
 
@@ -287,6 +290,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val contentApiPostEndpoint = configuration.getStringProperty("contentapi.post.endpoint")
     lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
+    /** When retrieving items from Content API, maximum number of requests to make concurrently */
+    lazy val frontPressItemBatchSize = configuration.getIntegerProperty("frontpress.item_batch_size", 30)
     lazy val configBeforePressTimeout: Int = 1000
 
     val oauthCredentials: Option[OAuthCredentials] =

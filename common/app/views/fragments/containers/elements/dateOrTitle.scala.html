@@ -1,6 +1,8 @@
-@(collection: Collection, items: Seq[Trail])(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: model.Collection, items: Seq[model.Trail])(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+
 @import common.Edition
 @import org.joda.time.DateTime
+@import views.support.{Format, LatestUpdate}
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
     @if(!Edition.editionFronts.contains(request.uri.toLowerCase)) {

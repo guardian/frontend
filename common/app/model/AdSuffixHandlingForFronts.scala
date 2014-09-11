@@ -9,7 +9,7 @@ trait AdSuffixHandlingForFronts extends MetaData{
   }
 
   def extractAdUnitSuffixFrom(path: String) = {
-    val frontSuffixList = List("front", "ng")
+    val frontSuffixList = List("front")
     val tagPageSuffixList = List("subsection")
 
     path.split("/").toList match {

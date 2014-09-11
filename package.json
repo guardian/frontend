@@ -44,7 +44,8 @@
     "phantomjs": "~1.9.1",
     "svgo": "0.4.4",
     "time-grunt": "^0.4.0",
-    "grunt-bytesize": "^0.1.1"
+    "grunt-bytesize": "^0.1.1",
+    "grunt-jscs": "^0.7.1"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"

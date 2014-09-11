@@ -83,7 +83,8 @@ case class Block(
                   updatedEmail: String,
                   displayName: Option[String],
                   href: Option[String],
-                  diff: Option[JsValue]
+                  diff: Option[JsValue],
+                  previously: Option[List[Trail]]
                   ) {
 
   def sortByGroup: Block = this.copy(
@@ -96,6 +97,22 @@ case class Block(
     trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
   }
 
+  def updatePreviously(update: UpdateList): Block = {
+    if (update.live) {
+      val itemFromLive: Option[Trail] = live.find(_.id == update.item)
+      val updatedPreviously: Option[List[Trail]] =
+        (for {
+          previousList <- previously
+          trail <- itemFromLive
+        } yield {
+          val previouslyWithoutItem: List[Trail] = previousList.filterNot(_.id == update.item)
+          (trail +: previouslyWithoutItem).take(20)
+        }).orElse(itemFromLive.map(List.apply(_)))
+      this.copy(previously=updatedPreviously)
+    }
+    else
+      this
+  }
 }
 
 sealed trait FaciaToolUpdate
@@ -233,6 +250,7 @@ trait UpdateActions extends Logging {
   def updateCollectionFilter(id: String, update: UpdateList, identity: UserIdentity): Option[Block] = {
     lazy val updateJson = Json.toJson(update)
     getBlock(id)
+      .map(_.updatePreviously(update))
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
       .map(_.sortByGroup)
@@ -273,9 +291,9 @@ trait UpdateActions extends Logging {
 
   def createBlock(id: String, identity: UserIdentity, update: UpdateList): Option[Block] = {
     if (update.live)
-      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList))), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList))), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
     else
-      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList)))), DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList)))), DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
   }
 
   def capCollection(block: Block): Block =
