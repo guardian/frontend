@@ -6,7 +6,7 @@ import model._
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json._
-import services.{S3FrontsApi, ConfigAgent, LiveCollections}
+import services.{ParseCollection, S3FrontsApi, ConfigAgent, LiveCollections}
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
@@ -14,31 +14,21 @@ import scala.util.{Failure, Success, Try}
 trait FrontPress extends Logging {
   private lazy implicit val frontPressContext = Akka.system.dispatchers.lookup("play.akka.actor.front-press")
 
-  private def retrieveFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
-    val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
-    val collections = collectionIds.map(config => LiveCollections.getCollection(config.id, config, Uk).map((config, _)))
-    Future.sequence(collections)
-  }
-
-  private def retrieveDraftFrontByPath(id: String): Future[Iterable[(Config, Collection)]] = {
-    val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
-    val collections = collectionIds.map(config => DraftCollections.getCollection(config.id, config, Uk).map((config, _)))
-    Future.sequence(collections)
-  }
-
   def pressDraftByPathId(path: String): Future[JsObject] =
-    generateDraftJson(path).map { json =>
+    generateJson(path, retrieveFrontByPath(path, DraftCollections)).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putDraftPressedJson(_, Json.stringify(json)))
       json
     }
 
   def pressLiveByPathId(path: String): Future[JsObject] =
-    generateLiveJson(path).map { json =>
+    generateJson(path, retrieveFrontByPath(path, LiveCollections)).map { json =>
       (json \ "id").asOpt[String].foreach(S3FrontsApi.putLivePressedJson(_, Json.stringify(json)))
       json
     }
 
-  def generateJson(id: String, seoData: SeoData, collections: Iterable[(Config, Collection)]): Try[JsObject] = {
+  def generateJson(id: String,
+                   seoData: SeoData,
+                   collections: Iterable[(Config, Collection)]): Try[JsObject] = {
     val collectionsWithBackFills = collections.toList collect {
       case (config, collection) if config.contentApiQuery.isDefined => collection
     }
@@ -56,17 +46,16 @@ trait FrontPress extends Logging {
     }
   }
 
-  def generateLiveJson(id: String): Future[JsObject] = {
-    for {
-      seoData <- SeoData.getSeoData(id)
-      front <- retrieveFrontByPath(id)
-    } yield generateJson(id, seoData, front).get
+  private def retrieveFrontByPath(id: String, parseCollection: ParseCollection): Future[Map[Config, Collection]] = {
+    val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
+    val collections = collectionIds.map(config => parseCollection.getCollection(config.id, config, Uk).map((config, _)))
+    Future.sequence(collections).map(_.toMap)
   }
 
-  def generateDraftJson(id: String): Future[JsObject] = {
+  private def generateJson(id: String, frontData: Future[Map[Config, Collection]]): Future[JsObject] = {
     for {
       seoData <- SeoData.getSeoData(id)
-      front <- retrieveDraftFrontByPath(id)
+      front <- frontData
     } yield generateJson(id, seoData, front).get
   }
 }
