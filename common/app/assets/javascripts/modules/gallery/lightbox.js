@@ -68,8 +68,7 @@ define([
                     '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
                         '<span class="gallery-lightbox__index js-gallery-index"></span>' +
                         '<span class="gallery-lightbox__progress-separator"></span>' +
-                        '<span class="gallery-lightbox__count js-gal' +
-                '.0lery-count"></span>' +
+                        '<span class="gallery-lightbox__count js-gallery-count"></span>' +
                     '</div>' +
                     '<div class="gallery-lightbox__img-title js-gallery-img-title"></div>' +
                     '<div class="gallery-lightbox__img-caption js-gallery-img-caption"></div>' +
