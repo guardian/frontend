@@ -76,6 +76,15 @@ case class SeoData(
   title: Option[String],
   description: Option[String])
 
+case class FrontProperties(
+  onPageDescription: String,
+  imageUrl: Option[String],
+  imageWidth: Option[String],
+  imageHeight: Option[String],
+  displayImage: Boolean,
+  editorialType: Option[String]
+)
+
 object SeoData extends ExecutionContexts with Logging {
   implicit val jsonFormat = Json.format[SeoData]
 
@@ -102,18 +111,21 @@ object SeoData extends ExecutionContexts with Logging {
   def descriptionFromWebTitle(webTitle: String): Option[String] = Option(s"Latest $webTitle news, comment and analysis from the Guardian, the world's leading liberal voice")
 
   def getSeoData(path: String): Future[SeoData] = {
-    val itemResponseForPath: Future[Option[ItemResponse]] = getSectionOrTagWebTitle(path)
-
     for {
-      ir <- itemResponseForPath
+      itemResp <- getCapiItemResponseForPath(path)
     } yield {
       val sc = ConfigAgent.getSeoDataJsonFromConfig(path)
-      val sp = SeoData.fromPath(path)
+      val seoData = SeoData.fromPath(path)
 
-      val navSection:  String = sc.navSection.orElse(ir.flatMap(getNavSectionFromItemResponse)).getOrElse(sp.navSection)
-      val webTitle: String = sc.webTitle.orElse(ir.flatMap(getWebTitleFromItemResponse)).getOrElse(sp.webTitle)
+      val navSection:  String = sc.navSection
+        .orElse(itemResp.flatMap(getNavSectionFromItemResponse))
+        .getOrElse(seoData.navSection)
+      val webTitle: String = sc.webTitle
+        .orElse(itemResp.flatMap(getWebTitleFromItemResponse))
+        .getOrElse(seoData.webTitle)
       val title: Option[String] = sc.title
-      val description: Option[String] = sc.description.orElse(SeoData.descriptionFromWebTitle(webTitle))
+      val description: Option[String] = sc.description
+        .orElse(SeoData.descriptionFromWebTitle(webTitle))
 
       SeoData(path, navSection, webTitle, title, description)
     }
@@ -133,8 +145,8 @@ object SeoData extends ExecutionContexts with Logging {
     case _ => sectionId
   }
 
-  private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] = {
-    val contentApiResponse = LiveContentApi
+  private def getCapiItemResponseForPath(id: String): Future[Option[ItemResponse]] = {
+    val contentApiResponse:Future[ItemResponse] = LiveContentApi
       .item(id, Edition.defaultEdition)
       .showEditorsPicks(false)
       .pageSize(0)
@@ -148,7 +160,7 @@ object SeoData extends ExecutionContexts with Logging {
       ContentApiSeoRequestFailure.increment()
     }
 
-    contentApiResponse.map(Option.apply).fallbackTo(Future.successful(None))
+    contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
   }
 
   lazy val empty: SeoData = SeoData("", "", "", None, None)
