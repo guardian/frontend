@@ -37,7 +37,7 @@ define([
         this.adStep = 4; // advert between every 4th and 5th image
         this.showEndslate = !detect.isBreakpoint('mobile');
         this.showAdverts  = false;
-        this.swipeThreshold = 0.35; // minimum width (0 to 1.0) for swipe to trigger next/prev event
+        this.swipeThreshold = 0.3; // minimum width (0 to 1.0) for swipe to trigger next/prev event
         this.swipeSpeed = 250; // ms to ease into next image after touchend
 
         // TEMPLATE
@@ -218,6 +218,32 @@ define([
 
     GalleryLightbox.prototype.endslate = new Component();
 
+    GalleryLightbox.prototype.createPreloadImages = function() {
+
+        if (this.index !== this.imgCount) {
+            var nextIndex = this.state === 'endslate' ? 0 : this.index,
+                nextImg = this.galleryJson.images[nextIndex],
+                nextImgHtml = '<img class="gallery-lightbox__img gallery-lightbox__img--next" src="' + this.getImgSrc(nextImg) + '"/>';
+            this.nextImgEl = bonzo.create(nextImgHtml)[0];
+            this.$contentEl.append(this.nextImgEl);
+        }
+
+        // preload prev image if we aren't at the beginning
+        if (this.index !== 1) {
+            var prevIndex = this.state === 'endslate' ? this.imgCount-1 : this.index-2,
+                prevImg = this.galleryJson.images[prevIndex],
+                prevImgHtml = '<img class="gallery-lightbox__img gallery-lightbox__img--prev" src="' + this.getImgSrc(prevImg) + '"/>';
+            this.prevImgEl = bonzo.create(prevImgHtml)[0];
+            this.$contentEl.append(this.prevImgEl);
+        }
+
+    };
+
+    GalleryLightbox.prototype.destroyPreloadImages = function() {
+        bonzo(this.nextImgEl).remove();
+        bonzo(this.prevImgEl).remove();
+    };
+
     GalleryLightbox.prototype.states = {
 
         'closed': {
@@ -292,21 +318,7 @@ define([
                 this.$imgCaptionEl.html(img.caption);
                 this.$imgCreditEl.text(img.displayCredit ? img.credit : '');
 
-                // preload next image if we aren't at the end
-                if (this.index < this.imgCount) {
-                    var nextImg = this.galleryJson.images[this.index],
-                        nextImgHtml = '<img class="gallery-lightbox__img gallery-lightbox__img--next" src="' + this.getImgSrc(nextImg) + '"/>';
-                    this.nextImgEl = bonzo.create(nextImgHtml)[0];
-                    this.$contentEl.append(this.nextImgEl);
-                }
-
-                // preload prev image if we aren't at the beginning
-                if (this.index !== 1) {
-                    var prevImg = this.galleryJson.images[this.index-2],
-                        prevImgHtml = '<img class="gallery-lightbox__img gallery-lightbox__img--prev" src="' + this.getImgSrc(prevImg) + '"/>';
-                    this.prevImgEl = bonzo.create(prevImgHtml)[0];
-                    this.$contentEl.append(this.prevImgEl);
-                }
+                this.createPreloadImages();
 
                 if(this.index > (this.imgCount - 3)) {
                     this.loadEndslate();
@@ -314,8 +326,7 @@ define([
             },
             leave: function() {
                 bonzo(this.imgEl).remove();
-                bonzo(this.nextImgEl).remove();
-                bonzo(this.prevImgEl).remove();
+                this.destroyPreloadImages();
                 bean.off(this.$contentEl[0], 'click', this.toggleInfo);
                 mediator.off('window:resize', this.resize);
                 this.imgEl = undefined;
@@ -400,11 +411,12 @@ define([
         'endslate': {
             enter: function() {
                 this.loadEndslate();
-                this.endslate.removeState('is-hidden');
                 this.$indexEl.text(this.imgCount + 1);
+                this.index = this.imgCount + 1;
+                this.createPreloadImages();
             },
             leave: function() {
-                this.endslate.setState('is-hidden');
+                this.destroyPreloadImages();
             },
             events: {
                 'next': function() {
