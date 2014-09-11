@@ -6,30 +6,38 @@ import play.api.libs.json.Json
 class BookTest extends FlatSpec with Matchers {
 
   private val json = Json.parse(
-    """{"entity_id":"201","attribute_set_id":"10","type_id":"simple","sku":"9780000034649","name":"Spanish Pronouns & Prepositions",
-      |"options_container":"container1","msrp_enabled":"2","msrp_display_actual_price_type":"4","isbn":"9780000034649","publisher":"BARRONS",
-      |"author_firstname":"Frank","author_lastname":"Nuessel","url_key":"spanish-pronouns-prepositions","price":"8.4915","weight":"0.0000","msrp":"9.9900",
-      |"taxable_amount":"0.0000","width":"0.0000","height":"0.0000","depth":"0.0000","bestseller_rank":"213.0000","status":"1","visibility":"4",
-      |"tax_class_id":"2","binding_type":"4","date_published":"2007-01-01 00:00:00","description":"&nbsp;","short_description":"&nbsp;"}""".stripMargin)
+    """{"sku":"9780001712768",
+      |"isbn":"9780001712768",
+      |"name":"In a People House",
+      |"author_firstname":"Dr",
+      |"author_lastname":"Seuss",
+      |"bestseller_rank":"223.0000",
+      |"categories":[
+      |{"name":"Picture books","bic":"YYTG,YBC"},
+      |{"name":"All fiction and poetry","bic":
+      |"FC,FA,FF,FH,FJ,FK,FL,FM,FP,FQ,FR,FT,FV,FW,FX,FY,FZ,FG,CTC,FBC,FBN,FBV,FGB,FGC,FGH,FGL,FGM,FGN,FGQ,FGU,FGV,FGW,FNB,FND,FNG,FNS,FS"}
+      |],
+      |"images":[
+      |"http:\/\/guardianbookshop.staging.lab.co.uk\/image\/9df78eab33525d08d6e5fb8d27136e95\/media2\/73e70a25faab42aa1b411b8b59382416.jpg"
+      |],
+      |"product_url":"http:\/\/guardianbookshop.staging.lab.co.uk\/index.php\/in-a-people-house.html",
+      |"regular_price_with_tax":"5.0915",
+      |"regular_price_without_tax":"5.0915",
+      |"final_price_with_tax":5.0915,
+      |"final_price_without_tax":5.0915}""".stripMargin)
 
   "Book" should "create a Book from json" in {
-
-    json.validate[Book].fold(
-      invalid => println(invalid),
-      valid => println(valid)
-    )
-
     json.validate[Book].asOpt shouldBe Some(Book(
-      title = "Spanish Pronouns & Prepositions",
-      author = Some("Frank Nuessel"),
-      isbn = "9780000034649",
-      price = Some(8.4915),
-      offerPrice = None,
-      description = Some("&nbsp;"),
-      jacketUrl = None,
-      buyUrl = None,
-      position = Some(213),
-      category = None,
+      title = "In a People House",
+      author = Some("Dr Seuss"),
+      isbn = "9780001712768",
+      price = Some(5.0915),
+      offerPrice = Some(5.0915),
+      description = None,
+      jacketUrl = Some("http://guardianbookshop.staging.lab.co.uk/image/9df78eab33525d08d6e5fb8d27136e95/media2/73e70a25faab42aa1b411b8b59382416.jpg"),
+      buyUrl = Some("http://guardianbookshop.staging.lab.co.uk/index.php/in-a-people-house.html"),
+      position = Some(223),
+      category = Some("Picture books"),
       keywordIds = Nil
     ))
   }
