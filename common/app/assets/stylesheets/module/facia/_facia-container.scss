@@ -5,9 +5,7 @@
     .facia-container__inner {
         overflow: hidden;
         position: relative;
-
         margin-left: $gs-gutter / 2;
-
         margin-right: $gs-gutter / 2;
 
         @include mq(mobileLandscape) {
@@ -26,7 +24,7 @@
 $mobile-max-container-width: gs-span(8);
 $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
-@mixin facia-container__inner--layout-front(
+@mixin facia-container__inner(
     $snap-points: (
         containerWidestMobile: $mobile-max-container-width,
         tablet:                gs-span(9),
@@ -48,7 +46,7 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
 @mixin facia-container--layout-front {
     .facia-container--layout-front {
         .facia-container__inner {
-            @include facia-container__inner--layout-front;
+            @include facia-container__inner;
         }
         @include mq(faciaLeftCol) {
             .container__title {
@@ -114,30 +112,10 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
     }
 }
 
-@mixin facia-container__inner--layout-content(
-    $snap-points: (
-        containerWidestMobile: $mobile-max-container-width,
-        tablet:                gs-span(9),
-        rightCol:              calc(100% - #{$gs-gutter * 2}),
-        desktop:               calc(100% - #{$gs-gutter * 2}),
-        leftCol:               gs-span(14),
-        wide:                  gs-span(16)
-    )
-) {
-    @each $breakpoint, $container-width in $snap-points {
-        @include mq($breakpoint) {
-            @if (index($snap-points, ($breakpoint $container-width)) == 1) {
-                margin-left: auto;
-                margin-right: auto;
-            }
-            width: $container-width;
-        }
-    }
-}
 @mixin facia-container--layout-content {
     .facia-container--layout-content {
         .facia-container__inner {
-            @include facia-container__inner--layout-content;
+            @include facia-container__inner;
         }
         @include mq(leftCol) {
             .container__title {
@@ -153,7 +131,13 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
         }
         @include mq(wide) {
             .container__title {
+                float: left;
                 width: $left-column-wide !important;
+                margin-right: $gs-gutter;
+            }
+            .container__body {
+                margin-left: $left-column-wide + $gs-gutter;
+                width: gs-span(12);
             }
             .container__border {
                 margin-right: -(gs-span(1) + $gs-gutter*2);

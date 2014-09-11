@@ -55,8 +55,8 @@ $mq-breakpoints: (
     phablet: gs-span(8) + $gs-gutter*2, // 660px
 
     // Content
-    rightCol: gs-span(11) + $gs-gutter*2, // 900px
-    leftCol:  gs-span(13) + $gs-gutter*2, // 1060px
+    rightCol: gs-span(12) + $gs-gutter*2, // 980px
+    leftCol:  gs-span(14) + $gs-gutter*2, // 1140px
 
     // Facia
     faciaLeftCol: gs-span(14) + $gs-gutter*2 // 1140px
@@ -66,7 +66,7 @@ $mq-breakpoints: (
 // Show the current breakpoint in the top right corner of the viewport:
 // see https://github.com/guardian/sass-mq#seeing-the-currently-active-breakpoint
 // Uncomment to activate during development
-//$mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
+$mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
 
 
 // Guss defaults overrides
