@@ -38,29 +38,29 @@
 
             <div class="container__body">
                 <h4 class="commercial__header hide-on-mobile">This week’s bestsellers</h4>
-                <ul class="u-unstyled lineitems">
+                <ul class="lineitems">
                 @books.map { book =>
-                    <li class="lineitem u-cf" itemscope itemtype="http://schema.org/Book">
+                    <li class="lineitem" itemscope itemtype="http://schema.org/Book">
                         <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-@{book.isbn}-@{book.author}-@{book.title}">
                             @book.jacketUrl.map { url =>
-                            <img itemprop="image" class="lineitem__img" src="@url" alt="" />
+                            <img class="lineitem__image" itemprop="image" src="@url" alt=""/>
                             }
                             <h4 class="lineitem__title" itemprop="name">@book.title</h4>
                         @if(book.author) {
-                            <p class="lineitem__meta" itemprop="author">By @book.author</p>
+                            <p class="lineitem__meta lineitem__author" itemprop="author">By @book.author</p>
                         }
-                            <meta itemprop="isbn" content="@{book.isbn}" />
-                            <p class="commercial--books__price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                            <meta itemprop="isbn" content="@{book.isbn}"/>
+                            <p class="lineitem__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                             @book.price.map { price =>
-                                <span class="commercial--books__price__rrp">RRP &pound;@("%.2f".format(price))</span>
+                                RRP &pound;@("%.2f".format(price))<br/>
                             }
                             @book.offerPrice.map { price =>
-                                <span class="commercial--books__price__our">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
-                                <meta itemprop="priceCurrency" content="GBP" />
+                                <span class="lineitem__meta__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
+                                <meta itemprop="priceCurrency" content="GBP"/>
                             }
                             </p>
                         </a>
-                        <a class="lineitem__link button button--primary button--small" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-@{book.isbn}-@{book.author}-@{book.title}-button">
+                        <a class="lineitem__cta button button--primary button--small" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-@{book.isbn}-@{book.author}-@{book.title}-button">
                             Buy now<i class="i i-arrow-white-right i-right"></i>
                         </a>
                     </li>

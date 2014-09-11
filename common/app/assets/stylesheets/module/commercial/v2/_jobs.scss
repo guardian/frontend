@@ -13,6 +13,10 @@
         color: $c-commercial-jobs-1;
     }
 
+    .lineitem__image {
+        border: 5px solid #fff;
+    }
+
     @include mq(tablet) {
         .lineitem {
             min-height: $gs-baseline*18;
