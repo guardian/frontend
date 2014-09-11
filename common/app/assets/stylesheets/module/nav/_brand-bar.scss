@@ -112,8 +112,6 @@
     float: left;
 }
 
-.brand-bar__item--joinus {
-    .control__icon-wrapper {
-        border: 0;
-    }
+.brand-bar__item--joinus .control__icon-wrapper {
+    border: 0;
 }
