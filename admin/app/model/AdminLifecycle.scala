@@ -45,7 +45,7 @@ trait AdminLifecycle extends GlobalSettings {
     }
 
     Jobs.schedule("FrontPressJob", s"0 0/$adminPressJobCommercialPushRateInMinutes * 1/1 * ? *") {
-      RefreshFrontsJob.runCommercialFrequency()
+      RefreshFrontsJob.runLowFrequency()
     }
 
     Jobs.schedule("RebuildIndexJob", s"0 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {

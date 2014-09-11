@@ -8,7 +8,7 @@ import conf.Configuration
 
 sealed trait FrontType
 
-object CommercialFrequency extends FrontType
+object LowFrequency extends FrontType
 object StandardFrequency extends FrontType
 object HighFrequency extends FrontType {
   def highFrequencyPaths: List[String] = List("uk", "us", "au")
@@ -34,7 +34,7 @@ object RefreshFrontsJob extends Logging {
     if (HighFrequency.highFrequencyPaths.contains(path))
       HighFrequency
     else if (isCommercial)
-      CommercialFrequency
+      LowFrequency
     else
       StandardFrequency
   }
@@ -71,13 +71,13 @@ object RefreshFrontsJob extends Logging {
     }
   }
 
-  def runCommercialFrequency(): Unit = {
+  def runLowFrequency(): Unit = {
     if (FrontPressJobSwitch.isSwitchedOn && Configuration.aws.frontPressSns.filter(_.nonEmpty).isDefined) {
       log.info("Putting press jobs on Facia Cron (Commercial Frequency)")
 
       for {
         updates <- getCronUpdates
-        update <- updates.filter(_.frontType == CommercialFrequency)
+        update <- updates.filter(_.frontType == LowFrequency)
       } {
         log.info(s"Pressing $update")
         FrontPressNotification.sendWithoutSubject(update.path)
