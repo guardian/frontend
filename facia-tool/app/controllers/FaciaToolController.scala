@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.googleauth.UserIdentity
 import frontsapi.model._
 import frontsapi.model.UpdateList
 import play.api.mvc._
@@ -15,17 +16,17 @@ import auth.ExpiringActions
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
 
   def priorities() = ExpiringActions.ExpiringAuthAction { request =>
-    val identity = request.user
+    val identity = UserIdentity("12345", "nobody@gmail.com", "emergency", "user", 60L * 1000 * 60, None)//request.user
     Cached(60) { Ok(views.html.priority(Configuration.environment.stage, "", Option(identity))) }
   }
 
   def collectionEditor(priority: String) = ExpiringActions.ExpiringAuthAction { request =>
-    val identity = request.user
+    val identity = UserIdentity("12345", "nobody@gmail.com", "emergency", "user", 60L * 1000 * 60, None)//request.user
     Cached(60) { Ok(views.html.collections(Configuration.environment.stage, priority, Option(identity))) }
   }
 
   def configEditor(priority: String) = ExpiringActions.ExpiringAuthAction { request =>
-    val identity = request.user
+    val identity = UserIdentity("12345", "nobody@gmail.com", "emergency", "user", 60L * 1000 * 60, None)//request.user
     Cached(60) { Ok(views.html.config(Configuration.environment.stage, priority, Option(identity))) }
   }
 
@@ -53,7 +54,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def publishCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
-    val identity = request.user
+    val identity = UserIdentity("12345", "nobody@gmail.com", "emergency", "user", 60L * 1000 * 60, None)//request.user
     FaciaToolMetrics.DraftPublishCount.increment()
     val block = FaciaApi.publishBlock(id, identity)
     block foreach { b =>
@@ -66,7 +67,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   }
 
   def discardCollection(id: String) = ExpiringActions.ExpiringAuthAction { request =>
-    val identity = request.user
+    val identity = UserIdentity("12345", "nobody@gmail.com", "emergency", "user", 60L * 1000 * 60, None)//request.user
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
       FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(Json.obj("id" -> id), "discard", identity.email))
@@ -81,7 +82,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     NoCache {
       request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
         case update: Map[String, UpdateList] =>
-          val identity = request.user
+          val identity = UserIdentity("12345", "nobody@gmail.com", "emergency", "user", 60L * 1000 * 60, None)//request.user
 
           update.foreach{ case (action, u) =>
             FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(Json.toJson(u), action, identity.email))}

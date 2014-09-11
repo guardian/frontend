@@ -25,20 +25,23 @@ object ExpiringActions extends implicits.Dates with implicits.Requests with Exec
   private def withinAllowedTime(session: Session): Boolean = session.get(Configuration.cookies.lastSeenKey).map(new DateTime(_)).exists(_.age < Configuration.cookies.sessionExpiryTime)
 
   object ExpiringAuthAction {
-    def async(f: Security.AuthenticatedRequest[AnyContent, UserIdentity] => Future[Result]) = AuthActions.AuthAction.async { request =>
-      if (withinAllowedTime(request.session)) {
-        f(request).map(_.withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)))
-      }
-      else {
-        ExpiredRequestCount.increment()
-        if (request.isXmlHttpRequest)
-          Future.successful(Forbidden.withNewSession)
-        else {
-          Future.successful(Redirect(AuthActions.loginTarget).withNewSession)
-        }
-      }
-    }
+    def async(f: Request[AnyContent] => Future[Result]) = Action.async(f)
 
-    def apply(f: Security.AuthenticatedRequest[AnyContent, UserIdentity] => Result) = async(request => Future.successful(f(request)))
+
+//      AuthActions.AuthAction.async { request =>
+//      if (withinAllowedTime(request.session)) {
+//        f(request).map(_.withSession(request.session + (Configuration.cookies.lastSeenKey , DateTime.now.toString)))
+//      }
+//      else {
+//        ExpiredRequestCount.increment()
+//        if (request.isXmlHttpRequest)
+//          Future.successful(Forbidden.withNewSession)
+//        else {
+//          Future.successful(Redirect(AuthActions.loginTarget).withNewSession)
+//        }
+//      }
+//    }
+
+    def apply(f: Request[AnyContent] => Result) = async(request => Future.successful(f(request)))
   }
 }
