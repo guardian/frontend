@@ -146,9 +146,14 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 }
 
-.gallery-lightbox__preload-img {
-    position: absolute;
-    visibility: hidden;
+.gallery-lightbox__img--prev {
+    left: -100%;
+    right: auto;
+}
+
+.gallery-lightbox__img--next {
+    left: 100%;
+    right: auto;
 }
 
 /* Meta

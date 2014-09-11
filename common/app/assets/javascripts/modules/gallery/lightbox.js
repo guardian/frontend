@@ -10,7 +10,8 @@ define([
     'common/utils/detect',
     'common/modules/component',
     'common/modules/ui/images',
-    'common/utils/url'
+    'common/utils/url',
+    'common/utils/easing'
 ], function (
     $,
     _,
@@ -23,7 +24,8 @@ define([
     detect,
     Component,
     imagesModule,
-    url
+    url,
+    easing
 ) {
 
 
@@ -35,6 +37,8 @@ define([
         this.adStep = 4; // advert between every 4th and 5th image
         this.showEndslate = !detect.isBreakpoint('mobile');
         this.showAdverts  = false;
+        this.swipeThreshold = 0.35; // minimum width (0 to 1.0) for swipe to trigger next/prev event
+        this.swipeSpeed = 250; // ms to ease into next image after touchend
 
         // TEMPLATE
         function generateButtonHTML(label) {
@@ -99,6 +103,8 @@ define([
         this.toggleInfo = this.trigger.bind(this, 'toggle-info');
         this.resize = this.trigger.bind(this, 'resize');
 
+        this.initSwipe();
+
         bean.on(window, 'popstate', function(event) {
             if (event.state === null) {
                 this.trigger('close');
@@ -117,6 +123,48 @@ define([
             states: this.states
         });
     }
+
+    GalleryLightbox.prototype.initSwipe = function() {
+        var threshold, ox, dx;
+
+        bean.on(this.$contentEl[0], 'touchstart', function(e) {
+            threshold = this.$contentEl.dim().width * this.swipeThreshold;
+            ox = e.touches[0].pageX;
+            dx = 0;
+        }.bind(this));
+
+        bean.on(this.$contentEl[0], 'touchmove', function(e) {
+            dx = e.touches[0].pageX - ox;
+            this.$contentEl.css('left', dx);
+        }.bind(this));
+
+        bean.on(this.$contentEl[0], 'touchend', function(e) {
+            var direction;
+            if (Math.abs(dx) > threshold) {
+                direction = dx > threshold ? 1 : -1;
+            } else {
+                direction = 0;
+            }
+            var targetLeft = this.$contentEl.dim().width * direction,
+                remaining = targetLeft - dx,
+                ease = easing.create('easeOutQuad', this.swipeSpeed),
+                interval = window.setInterval(function(){
+                var easeVal = ease();
+                if (easeVal < 1) {
+                    var leftVal = dx + (easeVal * remaining);
+                    this.$contentEl.css('left', leftVal);
+                } else {
+                    this.$contentEl.css('left', 0);
+                    if (direction === 1) {
+                        this.trigger('prev');
+                    } else if (direction === -1) {
+                        this.trigger('next');
+                    }
+                    window.clearInterval(interval);
+                }
+            }.bind(this), 10);
+        }.bind(this));
+    };
 
     GalleryLightbox.prototype.disableHover = function() {
         this.$lightboxEl.removeClass('gallery-lightbox--hover');
@@ -247,9 +295,17 @@ define([
                 // preload next image if we aren't at the end
                 if (this.index < this.imgCount) {
                     var nextImg = this.galleryJson.images[this.index],
-                        nextImgHtml = '<img class="gallery-lightbox__preload-img" src="' + this.getImgSrc(nextImg) + '"/>';
-                    this.preloadImgEl = bonzo.create(nextImgHtml)[0];
-                    this.$contentEl.append(this.preloadImgEl);
+                        nextImgHtml = '<img class="gallery-lightbox__img gallery-lightbox__img--next" src="' + this.getImgSrc(nextImg) + '"/>';
+                    this.nextImgEl = bonzo.create(nextImgHtml)[0];
+                    this.$contentEl.append(this.nextImgEl);
+                }
+
+                // preload prev image if we aren't at the beginning
+                if (this.index !== 1) {
+                    var prevImg = this.galleryJson.images[this.index-2],
+                        prevImgHtml = '<img class="gallery-lightbox__img gallery-lightbox__img--prev" src="' + this.getImgSrc(prevImg) + '"/>';
+                    this.prevImgEl = bonzo.create(prevImgHtml)[0];
+                    this.$contentEl.append(this.prevImgEl);
                 }
 
                 if(this.index > (this.imgCount - 3)) {
@@ -258,7 +314,8 @@ define([
             },
             leave: function() {
                 bonzo(this.imgEl).remove();
-                bonzo(this.preloadImgEl).remove();
+                bonzo(this.nextImgEl).remove();
+                bonzo(this.prevImgEl).remove();
                 bean.off(this.$contentEl[0], 'click', this.toggleInfo);
                 mediator.off('window:resize', this.resize);
                 this.imgEl = undefined;
