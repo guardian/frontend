@@ -12,7 +12,7 @@ trait AdminLifecycle extends GlobalSettings {
 
   lazy val adminPressJobStandardPushRateInMinutes: Int = Configuration.faciatool.adminPressJobStandardPushRateInMinutes
   lazy val adminPressJobHighPushRateInMinutes: Int = Configuration.faciatool.adminPressJobHighPushRateInMinutes
-  lazy val adminPressJobCommercialPushRateInMinutes: Int = Configuration.faciatool.adminPressJobCommercialPushRateInMinutes
+  lazy val adminPressJobLowPushRateInMinutes: Int = Configuration.faciatool.adminPressJobLowPushRateInMinutes
   lazy val adminRebuildIndexRateInMinutes: Int = Configuration.indexes.adminRebuildIndexRateInMinutes
 
   private def scheduleJobs() {
