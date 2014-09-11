@@ -32,6 +32,7 @@ trait FrontPress extends Logging {
 
   def generateJson(id: String,
                    seoData: SeoData,
+                   frontProperties: FrontProperties,
                    collections: Iterable[(Config, Collection)]): Try[JsObject] = {
     val collectionsWithBackFills = collections.toList collect {
       case (config, collection) if config.contentApiQuery.isDefined => collection
@@ -46,9 +47,13 @@ trait FrontPress extends Logging {
         Json.obj(config.id -> Json.toJson(CollectionJson.fromCollection(config, collection)))
       }.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject}
 
+      implicit val seoFormatter = Json.format[SeoData]
+      implicit val propsFormatter = Json.format[FrontProperties]
+
       Success(Json.obj(
         "id" -> id,
         "seoData" -> seoData,
+        "frontProperties" -> frontProperties,
         "collections" -> collectionsJson))
     }
   }
@@ -61,33 +66,40 @@ trait FrontPress extends Logging {
 
   private def generateJson(id: String, parseCollection: ParseCollection): Future[JsObject] =
     for {
-      seoData <- CapiClient.getSeoData(id)
+      (seoData, frontProperties) <- CapiClient.getSeoData(id)
       collections <- retrieveCollectionsById(id, parseCollection)
-    } yield generateJson(id, seoData, collections).get
+    } yield generateJson(id, seoData, frontProperties, collections).get
 
 }
 
+object FrontPress extends FrontPress
+
 object CapiClient {
-  def getSeoData(path: String): Future[SeoData] = {
+
+  def getSeoData(path: String): Future[(SeoData, FrontProperties)] =
     for {
       itemResp <- getCapiItemResponseForPath(path)
-    } yield {
-      val sc = ConfigAgent.getSeoDataJsonFromConfig(path)
-      val seoData = SeoData.fromPath(path)
 
-      val navSection: String = sc.navSection
+    } yield {
+      val seoFromConfig = ConfigAgent.getSeoDataJsonFromConfig(path)
+      val seoFromPath = SeoData.fromPath(path)
+
+      val navSection: String = seoFromConfig.navSection
         .orElse(itemResp.flatMap(getNavSectionFromItemResponse))
-        .getOrElse(seoData.navSection)
-      val webTitle: String = sc.webTitle
+        .getOrElse(seoFromPath.navSection)
+      val webTitle: String = seoFromConfig.webTitle
         .orElse(itemResp.flatMap(getWebTitleFromItemResponse))
-        .getOrElse(seoData.webTitle)
-      val title: Option[String] = sc.title
-      val description: Option[String] = sc.description
+        .getOrElse(seoFromPath.webTitle)
+      val title: Option[String] = seoFromConfig.title
+      val description: Option[String] = seoFromConfig.description
         .orElse(SeoData.descriptionFromWebTitle(webTitle))
 
-      SeoData(path, navSection, webTitle, title, description)
+      val frontProperties: FrontProperties = ConfigAgent.fetchFrontProperties(path)
+        .copy(editorialType = itemResp.flatMap(_.tag).map(_.`type`))
+
+      val seoData: SeoData = SeoData(path, navSection, webTitle, title, description)
+      (seoData, frontProperties)
     }
-  }
 
   private def getNavSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
     itemResponse.tag.flatMap(_.sectionId)
@@ -121,5 +133,3 @@ object CapiClient {
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
   }
 }
-
-object FrontPress extends FrontPress

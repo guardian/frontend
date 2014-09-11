@@ -1,14 +1,8 @@
 package model
 
-import org.joda.time.DateTime
-import common.{Logging, ExecutionContexts, Edition}
-import play.api.libs.json.Json
-import scala.concurrent.Future
-import com.gu.openplatform.contentapi.model.ItemResponse
-import conf.LiveContentApi
-import services.ConfigAgent
-import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
+import common.{Edition, ExecutionContexts, Logging}
 import dfp.DfpAgent
+import org.joda.time.DateTime
 
 case class Config(
                    id: String,
@@ -77,16 +71,15 @@ case class SeoData(
   description: Option[String])
 
 case class FrontProperties(
-  onPageDescription: String,
+  onPageDescription: Option[String],
   imageUrl: Option[String],
   imageWidth: Option[String],
   imageHeight: Option[String],
-  displayImage: Boolean,
+  isImageDisplayed: Boolean,
   editorialType: Option[String]
 )
 
 object SeoData extends ExecutionContexts with Logging {
-  implicit val jsonFormat = Json.format[SeoData]
 
   val editions = Edition.all.map(_.id.toLowerCase)
 
@@ -109,8 +102,6 @@ object SeoData extends ExecutionContexts with Logging {
   def webTitleFromTail(tail: List[String]): String = tail.flatMap(_.split('-')).flatMap(_.split('/')).map(_.capitalize).mkString(" ")
 
   def descriptionFromWebTitle(webTitle: String): Option[String] = Option(s"Latest $webTitle news, comment and analysis from the Guardian, the world's leading liberal voice")
-
-
 
   lazy val empty: SeoData = SeoData("", "", "", None, None)
 }
