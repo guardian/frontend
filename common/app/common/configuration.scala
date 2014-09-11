@@ -301,9 +301,17 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthCallback <- configuration.getStringProperty("faciatool.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
 
-    lazy val adminPressJobPushRateInMinutes: Int =
-      Try(configuration.getStringProperty("admin.pressjob.push.rate.inminutes").get.toInt)
-        .getOrElse(3)
+    lazy val adminPressJobStandardPushRateInMinutes: Int =
+      Try(configuration.getStringProperty("admin.pressjob.standard.push.rate.inminutes").get.toInt)
+        .getOrElse(5)
+
+    lazy val adminPressJobHighPushRateInMinutes: Int =
+      Try(configuration.getStringProperty("admin.pressjob.high.push.rate.inminutes").get.toInt)
+        .getOrElse(1)
+
+    lazy val adminPressJobLowPushRateInMinutes: Int =
+      Try(configuration.getStringProperty("admin.pressjob.low.push.rate.inminutes").get.toInt)
+        .getOrElse(60)
 
     lazy val faciaToolUpdatesStream: Option[String] = configuration.getStringProperty("faciatool.updates.stream")
   }
