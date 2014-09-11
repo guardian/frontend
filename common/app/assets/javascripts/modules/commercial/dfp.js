@@ -426,6 +426,9 @@ define([
                             eval($breakout.html());
                         } else {
                             $iFrameParent.append($breakout.html());
+                            window.setTimeout(function () {
+                                $('.ad--responsive', $iFrameParent[0]).addClass('ad--responsive--open');
+                            }, 100);
                         }
                     }
                 });
