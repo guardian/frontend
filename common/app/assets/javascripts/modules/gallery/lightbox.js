@@ -138,7 +138,7 @@ define([
             this.$contentEl.css('left', dx);
         }.bind(this));
 
-        bean.on(this.$contentEl[0], 'touchend', function(e) {
+        bean.on(this.$contentEl[0], 'touchend', function() {
             var direction;
             if (Math.abs(dx) > threshold) {
                 direction = dx > threshold ? 1 : -1;
