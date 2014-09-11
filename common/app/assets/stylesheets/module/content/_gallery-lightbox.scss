@@ -113,6 +113,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     position: relative;
     z-index: 2; // above loader / below sidebar
     @include box-sizing(border-box);
+    @include transform(translateZ(0)); // promote to gpu to stop buggy transition and janky swipe
 }
 
 .gallery-lightbox__loader {
@@ -142,7 +143,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
     @include mq($gallery-lightbox-sidebar-breakpoint) {
         margin: 0 auto;
-        @include transform(translateZ(0)); // promote to gpu to stop buggy transition behaviour
     }
 }
 
