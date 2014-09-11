@@ -1,0 +1,19 @@
+@(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta", showTag: Boolean = false)(implicit request: RequestHeader, config: Config)
+
+@defining((trail.visualTone, if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, headingLevel) =>
+<h@headingLevel class="item__title">
+@if(trail.isBreaking){
+    <span class="item__live-indicator">Breaking News</span>
+}
+@if(trail.isLive && !trail.isBreaking){
+    <span class="item__live-indicator">Live</span>
+}
+@if(tone == "comment") {
+    <span class="i i-quote-grey"></span>
+}
+@if(showTag) {
+    @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
+}
+<a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span></a>
+</h@headingLevel>
+}

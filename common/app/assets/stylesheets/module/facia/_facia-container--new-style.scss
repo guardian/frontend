@@ -5,6 +5,13 @@
     border-top: 1px solid $c-newsAccent;
     background-color: #f4f4f4;
 
+    padding-bottom: $gs-baseline;
+    margin-bottom: 0;
+
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline*2;
+    }
+
     .facia-slice__item {
         @include flex-display;
         padding-bottom: 0;
@@ -12,7 +19,8 @@
 
     .item__header,
     .item__standfirst,
-    .item__meta {
+    .item__meta,
+    .item__byline {
         padding-left: $item-gutter;
         padding-right: $item-gutter;
     }
@@ -29,6 +37,76 @@
         padding-bottom: $gs-baseline * 2;
 
         background-color: #ffffff;
+    }
+
+    .item__header {
+        min-height: 0 !important;
+    }
+
+    .tone-live {
+        &.item {
+            background-color: $c-live;
+            &,
+            & a {
+                color: #ffffff;
+            }
+        }
+        .item__meta {
+            &,
+            & a {
+                color: $c-liveMute;
+            }
+        }
+    }
+
+    .tone-comment {
+        &.item {
+            background-color: $c-commentBackground;
+        }
+        .item__title .i {
+            display: inline-block;
+            height: .9em;
+            width: 1em;
+            background-position: center;
+        }
+    }
+
+    .tone-feature {
+        &.item {
+            background-color: $c-featureDefault;
+            &,
+            & a {
+                color: $c-featureAccent;
+            }
+        }
+        .item__title .i {
+            display: inline-block;
+            height: .9em;
+            width: 1em;
+            background-position: center;
+        }
+        .item__meta {
+            &,
+            & a {
+                color: mix(#ffffff, $c-featureAccent, 50%);
+            }
+        }
+    }
+
+    .item__live-indicator {
+        background-color: #ffffff;
+        color: $c-live;
+        font: inherit;
+        font-size: inherit;
+        line-height: 1;
+        // height: 1em;
+        text-transform: capitalize;
+        padding: .1em .2em .05em;
+        top: 0;
+        // float: left;
+        // padding: .1em .2em 0;
+        // margin-top: $gs-baseline * .5;
+        // margin-bottom: 0 - $gs-baseline * .25;
     }
 
     .item__title {
