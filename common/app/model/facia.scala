@@ -74,6 +74,8 @@ case class SeoData(
 object SeoData extends ExecutionContexts with Logging {
   implicit val jsonFormat = Json.format[SeoData]
 
+  implicit val seoFormatter = Json.format[SeoData]
+
   val editions = Edition.all.map(_.id.toLowerCase)
 
   def fromPath(path: String): SeoData = path.split('/').toList match {
