@@ -137,10 +137,7 @@ define([
                 disableScroll: true,
                 callback: function(index) {
                     var swipeDir = (index > this.index) ? 'next' : 'prev';
-//                    self.trackInteraction('Lightbox gallery swipe - ' + swipeDir);
-                    console.log('Lightbox gallery swipe - ' + swipeDir);
-
-                    this.trigger(swipeDir);
+                    this.trigger(swipeDir, 'swipe');
                 }.bind(this)
             });
         }.bind(this));
@@ -257,8 +254,8 @@ define([
                 this.imgEl = undefined;
             },
             events: {
-                'next': function() {
-                    this.trackInteraction('keyboard:next');
+                'next': function(interactionType) {
+                    this.trackInteraction(interactionType + ':next');
                     this.pulseButton(this.nextBtn);
                     if (this.index === this.images.length) { // last img
                         if (this.showEndslate) {
@@ -276,8 +273,8 @@ define([
                         this.reloadState = true;
                     }
                 },
-                'prev': function() {
-                    this.trackInteraction('keyboard:previous');
+                'prev': function(interactionType) {
+                    this.trackInteraction(interactionType + ':previous');
                     this.pulseButton(this.prevBtn);
                     if (this.index === 1) { // first img
                         if (this.showEndslate) {
@@ -318,12 +315,14 @@ define([
                 // hide advert
             },
             events: {
-                'next': function() {
+                'next': function(interactionType) {
+                    this.trackInteraction(interactionType + ':next');
                     this.pulseButton(this.nextBtn);
                     this.index = (this.adIndex * this.adStep) + 1;
                     this.state = 'image';
                 },
-                'prev': function() {
+                'prev': function(interactionType) {
+                    this.trackInteraction(interactionType + ':previous');
                     this.pulseButton(this.prevBtn);
                     this.index = this.adIndex * this.adStep;
                     this.state = 'image';
@@ -341,12 +340,14 @@ define([
             leave: function() {
             },
             events: {
-                'next': function() {
+                'next': function(interactionType) {
+                    this.trackInteraction(interactionType + ':next');
                     this.pulseButton(this.nextBtn);
                     this.index = 1;
                     this.state = 'image';
                 },
-                'prev': function() {
+                'prev': function(interactionType) {
+                    this.trackInteraction(interactionType + ':previous');
                     this.pulseButton(this.prevBtn);
                     this.index = this.images.length;
                     this.state = 'image';
@@ -397,9 +398,9 @@ define([
 
     GalleryLightbox.prototype._handleKeyEvents = function(e) {
         if (e.keyCode === 37) { // left
-            this.trigger('prev');
+            this.trigger('prev', 'keyboard');
         } else if (e.keyCode === 39) { // right
-            this.trigger('next');
+            this.trigger('next', 'keyboard');
         } else if (e.keyCode === 27) { // esc
             this.close();
         } else if (e.keyCode === 73) { // 'i'
