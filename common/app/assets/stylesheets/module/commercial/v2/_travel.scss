@@ -37,4 +37,28 @@
             width: percentage(1/4);
         }
     }
+
+    // Low relevance line items
+    .commercial__relevance--low {
+        @include mq(tablet) {
+            padding-left: $gs-gutter/2;
+            width: 50%;
+            float: left;
+        }
+
+        @include mq($until: tablet) {
+            .lineitem.lineitem--low {
+                padding-left: 88px + $gs-gutter/2;
+            }
+
+            .lineitem__image-crop {
+                float: left;
+                width: 88px;
+                padding-bottom: 53px;
+                position: absolute;
+                left: 0;
+                top: $gs-baseline/2;
+            }
+        }
+    }
 }

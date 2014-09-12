@@ -16,14 +16,31 @@
     }
 
     // Line items
-    .lineitem {
-        @include mq(tablet) {
-            width: percentage(1/2);
-        }
+    .lineitem__image {
+        border: $gs-gutter/4 solid #fff;
     }
 
-    .lineitem__image {
-        border: 5px solid #fff;
+    // Low relevance line items
+    .commercial__relevance--low {
+        @include mq(tablet) {
+            padding-left: $gs-gutter/2;
+            width: percentage(1/2);
+            float: left;
+        }
+
+        @include mq($until: tablet) {
+            .lineitem.lineitem--low {
+                padding-left: 120px + $gs-gutter*1;
+            }
+
+            .lineitem__image {
+                float: left;
+                width: 120px;
+                position: absolute;
+                left: 0;
+                top: $gs-baseline/2;
+            }
+        }
     }
 
     // Sector navigation
@@ -34,7 +51,6 @@
 
         @include mq(tablet) {
             padding-right: $gs-gutter/2;
-            border-right: 1px solid $c-neutral3;
         }
     }
 
