@@ -82,6 +82,9 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("OmnitureReportJob")
     Jobs.deschedule("MatchDayRecorderJob")
     Jobs.deschedule("SntryReportJob")
+    Jobs.deschedule("FrontPressJobHighFrequency")
+    Jobs.deschedule("FrontPressJobStandardFrequency")
+    Jobs.deschedule("FrontPressJobLowFrequency")
   }
 
   override def onStart(app: play.api.Application) {
