@@ -13,12 +13,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     position: fixed;
     background-color: lighten(colour(tone-media-1), 2.5%);
     overflow: hidden;
-    @include box-sizing(border-box);
-
-    @include mq($gallery-lightbox-sidebar-breakpoint) {
-        padding-right: $gallery-lightbox-sidebar-width;
-        @include transition(padding-right .1s ease-in);
-    }
 }
 
 .gallery-lightbox--open {
@@ -26,15 +20,21 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 }
 
 .gallery-lightbox--show-info {
+
     @include mq($gallery-lightbox-sidebar-breakpoint) {
-        padding-right: $gallery-lightbox-sidebar-width + $gallery-lightbox-info-width-desktop;
+        .gallery-lightbox__item--img {
+            padding-right: $gallery-lightbox-info-width-desktop;
+        }
 
         .gallery-lightbox__info {
             right: $gallery-lightbox-sidebar-width;
         }
     }
+
     @include mq(wide) {
-        padding-right: $gallery-lightbox-sidebar-width + $gallery-lightbox-info-width-wide;
+        .gallery-lightbox__item--img {
+            padding-right: $gallery-lightbox-info-width-wide;
+        }
     }
 
     .gallery-lightbox__info,
@@ -43,29 +43,19 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 }
 
+.gallery-lightbox--advert,
 .gallery-lightbox--endslate {
-    @include mq($gallery-lightbox-sidebar-breakpoint) {
-        padding-right: $gallery-lightbox-sidebar-width;
-    }
-    .gallery-lightbox__info {
-        display: none;
-    }
-}
-
-.gallery-lightbox--advert {
-
-    .gallery-lightbox__ad {
-        display: block;
-    }
-
     .gallery-lightbox__progress,
     .gallery-lightbox__index {
         color: colour(neutral-2);
     }
-
-    .gallery-lightbox__info > * {
+    .gallery-lightbox__info {
         display: none;
     }
+//    .gallery-lightbox__item {
+//        padding-right: 0;
+//        @include transition(none);
+//    }
 }
 
 .gallery-lightbox--loading {
@@ -82,10 +72,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
             display: none;
         }
     }
-
-    .gallery-lightbox__loader {
-        display: block;
-    }
 }
 
 .gallery-lightbox--advert .gallery-lightbox__btn--info-button,
@@ -100,56 +86,60 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 }
 
-.gallery-lightbox--loading-img .gallery-lightbox__loader {
-    display: block;
-}
-
 /* Content
    ========================================================================== */
 
 .gallery-lightbox__content {
-    width: 100%;
     height: 100%;
     position: relative;
     z-index: 2; // above loader / below sidebar
     @include box-sizing(border-box);
     margin: 0;
+    white-space: nowrap;
+    @include transition(transform 20ms);
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: -webkit-transform;
+    transition-property: -moz-transform;
+    transition-property: transform;
 }
 
 .gallery-lightbox__swipe-container {
-    //@include transform(translateZ(0)); // promote to gpu to stop buggy transition and janky swipe
-    .gallery-lightbox--swipe & {
-        height: 100%;
-        overflow: hidden;
-        visibility: hidden;
-        position: relative;
-        > div {
-            overflow: hidden;
-            position: relative;
-        }
-    }
-}
-
-.gallery-lightbox__item {
-    float:left;
-    width:100%;
     height: 100%;
+    width: 100%;
+    overflow: hidden;
     position: relative;
 }
 
-.gallery-lightbox__loader {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    z-index: 1; // behind everything
-    display: none;
+.gallery-lightbox__item {
+    display: inline-block;
+    width:100%;
+    height: 100%;
+    position: relative;
+    z-index: 3;
+    background-color: lighten(colour(tone-media-1), 2.5%);
+    vertical-align: top;
+
+    @include box-sizing(border-box);
+
+    @include mq($gallery-lightbox-sidebar-breakpoint) {
+        padding-right: $gallery-lightbox-sidebar-width;
+    }
 }
 
-.gallery-lightbox__ad {
-    display: none;
+.gallery-lightbox__item--img {
+    @include transition(padding-right .1s ease-in);
+}
+
+.gallery-lightbox__item--endslate {
+    background-color: colour(tone-media-1);
+}
+
+.gallery-lightbox__img-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    @include box-sizing(border-box);
 }
 
 .gallery-lightbox__img {
@@ -161,26 +151,32 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     margin: auto;
     top: 0;
     bottom: 0;
+    z-index: 4;
 
     @include mq($gallery-lightbox-sidebar-breakpoint) {
         margin: 0 auto;
     }
 }
 
-.gallery-lightbox__img--prev {
-    left: -100%;
-    right: auto;
+.gallery-lightbox__loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    z-index: 3; // behind img
 }
 
-.gallery-lightbox__img--next {
-    left: 100%;
-    right: auto;
+.gallery-lightbox__ad {
+    display: none;
 }
 
 /* Meta
    ========================================================================== */
 
 .gallery-lightbox__info {
+    white-space: normal;
     position: absolute;
     z-index: 2;
     color: colour(neutral-8);
@@ -268,7 +264,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         height: 100%;
         right: 0;
         width: $gallery-lightbox-sidebar-width;
-        z-index: 3; // above content
+        z-index: 4; // above content
         border-left: 1px solid colour(tone-media-2);
         background: colour(tone-media-1);
     }
@@ -324,7 +320,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         position: absolute;
         top: 0;
         right: 0;
-        z-index: 4; // above img/sidebar
+        z-index: 5; // above img/sidebar
         padding: $gs-baseline/2 $gs-gutter/2 $gs-gutter*4 $gs-gutter;
 
         .gallery-lightbox__btn-body {
@@ -376,11 +372,8 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 /* Endslate
    ========================================================================== */
 
-.gallery-lightbox--endslate {
-    background-color: $c-neutral1;
-}
-
 .gallery-lightbox__endslate {
+    white-space: normal;
     display: none;
     width: gs-span(9) + $gs-gutter*2;
     margin: 0 auto;
