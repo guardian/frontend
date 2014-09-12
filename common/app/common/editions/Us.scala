@@ -5,8 +5,12 @@ import org.joda.time.DateTimeZone
 import contentapi.QueryDefaults
 import common.NavItem
 
-object Us extends Edition(id = "US", displayName = "US edition", timezone = DateTimeZone.forID("America/New_York"))
-  with QueryDefaults {
+object Us extends Edition(
+  id = "US",
+  displayName = "US edition",
+  timezone = DateTimeZone.forID("America/New_York"),
+  lang = "en-us"
+) with QueryDefaults {
 
   implicit val US = Us
 

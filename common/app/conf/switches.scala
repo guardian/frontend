@@ -202,6 +202,10 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
+  val MagentoServiceSwitch = Switch("Commercial", "magento",
+    "If this switch is on, Guardian Bookshop components will be fed by Magento instead of Bertrams.",
+    safeState = Off, sellByDate = new LocalDate(2014, 10, 1))
+
 
   // Monitoring
 
@@ -311,11 +315,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ABSoulmatesLabelling = Switch("A/B Tests", "ab-soulmates-labelling",
-    "If this switch is turned on, run the SoulmatesLabelling A/B test",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 11)
-  )
-
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
@@ -400,6 +399,7 @@ object Switches extends Collections {
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
+    MagentoServiceSwitch,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
@@ -414,7 +414,6 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
-    ABSoulmatesLabelling,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
     MetricsSwitch,
