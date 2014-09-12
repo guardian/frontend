@@ -50,7 +50,8 @@ define([
             allMeta = [
                 'href',
                 'kicker',
-                'imageAdjust',
+                'imageAdjust', // deprecate
+                'replaceImage',
                 'imageSrc',
                 'imageSrcWidth',
                 'imageSrcHeight',
@@ -64,7 +65,85 @@ define([
                 'group',
                 'snapType',
                 'snapCss',
-                'snapUri'].concat(overridableFields);
+                'snapUri'].concat(overridableFields),
+
+            editors = [
+                {
+                    key: 'headline',
+                    label: 'Headline',
+                    type: 'text',
+                    maxLength: 90
+                },
+                {
+                    key: 'trailText',
+                    label: 'Trail text',
+                    type: 'text'
+                },
+                {
+                    key: 'byline',
+                    label: 'Byline',
+                    type: 'text'
+                },
+                {
+                    key: 'boostHeadline',
+                    singleton: 'headline',
+                    label: 'boost headline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'quoteHeadline',
+                    singleton: 'headline',
+                    label: 'quote headline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showKicker',
+                    label: 'show kicker',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showByline',
+                    label: 'show byline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showMainVideo',
+                    singleton: 'images',
+                    label: 'show video',
+                    type: 'boolean'
+                },
+                {
+                    key: 'hideImage',
+                    singleton: 'images',
+                    label: 'hide image',
+                    type: 'boolean'
+                },
+                {
+                    key: 'altImage',
+                    singleton: 'images',
+                    label: 'cutout image',
+                    type: 'boolean'
+                },
+                {
+                    key: 'replaceImage',
+                    singleton: 'images',
+                    label: 'replace image',
+                    type: 'boolean'
+                },
+                {
+                    key: 'kicker',
+                    label: 'Kicker',
+                    requires: 'showKicker',
+                    maxLength: 30,
+                    type: 'text'
+                },
+                {
+                    key: 'imageSrc',
+                    label: 'Image URL',
+                    requires: 'replaceImage',
+                    type: 'text'
+                }
+            ];
 
         function Article(opts) {
             var self = this;
@@ -88,70 +167,7 @@ define([
                 'ophanUrl',
                 'sparkUrl']);
 
-            this.editors = [
-                {
-                    key: 'headline',
-                    label: 'Headline',
-                    type: 'text',
-                    maxLength: 90
-                },
-                {
-                    key: 'trailText',
-                    label: 'Trail text',
-                    type: 'text'
-                },
-                {
-                    key: 'byline',
-                    label: 'Byline',
-                    type: 'text'
-                },
-                {
-                    key: 'kicker',
-                    label: 'Kicker',
-                    maxLength: 30,
-                    type: 'text'
-                },
-                {
-                    key: 'boostHeadline',
-                    group: 'headline',
-                    label: 'boost headline',
-                    type: 'boolean'
-                },
-                {
-                    key: 'quoteHeadline',
-                    group: 'headline',
-                    label: 'quote headline',
-                    type: 'boolean'
-                },
-                {
-                    key: 'showKicker',
-                    label: 'show kicker',
-                    type: 'boolean'
-                },
-                {
-                    key: 'showByline',
-                    label: 'show byline',
-                    type: 'boolean'
-                },
-                {
-                    key: 'showMainVideo',
-                    group: 'images',
-                    label: 'show video',
-                    type: 'boolean'
-                },
-                {
-                    key: 'hideImage',
-                    group: 'images',
-                    label: 'hide image',
-                    type: 'boolean'
-                },
-                {
-                    key: 'altImage',
-                    group: 'images',
-                    label: 'cutout image',
-                    type: 'boolean'
-                }
-            ].map(this.editor, this);
+            this.editors = editors.map(this.editor, this);
 
             this.id = ko.observable(opts.id);
 
@@ -264,21 +280,25 @@ define([
                 revert: function() { meta(undefined); },
                 open:   function() { mediator.emit('ui:open', meta); },
 
-                toggle: function() {
-                    var group = opts.group;
+                visible: ko.computed(function() {
+                    return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
+                }, self),
 
-                    if(group) {
+                toggle: function() {
+                    if(opts.singleton) {
                        _.chain(all)
-                        .filter(function(editor) { return editor.group === group; })
+                        .filter(function(editor) { return editor.singleton === opts.singleton; })
                         .filter(function(editor) { return editor.key !== key; })
                         .pluck('key')
-                        .each(function(key) {
-                            console.log(key);
-                            self.meta[key](undefined)
-                        })
+                        .each(function(key) { self.meta[key](undefined) })
                     }
 
                     meta(!meta());
+
+                   _.chain(all)
+                    .filter(function(editor) { return editor.requires === key; })
+                    .first(1)
+                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key]); })
                 },
 
                 length: ko.computed(function() {

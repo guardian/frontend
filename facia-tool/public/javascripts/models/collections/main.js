@@ -46,7 +46,7 @@ define([
             setTimeout(function() {
                 console.log(el.scrollHeight, el.clientHeight);
                 el.style.height = '1px';
-                el.style.height = (el.scrollHeight + 3) + 'px';
+                el.style.height = (Math.max(el.scrollHeight + 3, 19)) + 'px';
             })
         }
     };
@@ -312,7 +312,10 @@ define([
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
 
-                mediator.on('ui:open', model.uiOpenElement);
+                mediator.on('ui:open', function(e) {
+                    console.log(e);
+                    model.uiOpenElement(e)
+                });
             });
 
             listManager.init(newItems);
