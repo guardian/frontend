@@ -13,8 +13,18 @@
         .facia-slice__item {
             @include flex-grow(initial);
             @include flex-basis(50%);
+            width: 50%;
+
+            &:nth-child(4n+1) {
+                clear: all;
+                &:before {
+                    border: 0;
+                }
+            }
+
             @include mq(tablet) {
                 @include flex-basis(25%);
+                width: 25%;
             }
         }
     }
