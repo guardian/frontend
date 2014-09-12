@@ -55,28 +55,4 @@
     .item__meta {
         bottom: $gs-baseline * .25;
     }
-
-    .linkslist-container:before {
-        display: none;
-    }
-
-    .linkslist-container {
-        margin: 0;
-
-        .facia-slice {
-            @include flex-wrap(wrap);
-        }
-
-        .facia-slice__item {
-            @include flex-grow(initial);
-            @include flex-basis(50%);
-            @include mq(tablet) {
-                @include flex-basis(25%);
-            }
-        }
-
-        .item__media-wrapper {
-            display: none;
-        }
-    }
 }
