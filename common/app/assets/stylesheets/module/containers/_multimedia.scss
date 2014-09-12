@@ -1,10 +1,15 @@
-@mixin video-icon($type) {
+@mixin media-icon($type) {
     content: '';
     @include icon($type);
     @include background-size(auto 100%);
     margin-right: $gs-gutter/10;
-    height: .75em !important;
-    width: 1.2em !important;
+    @if $type == camera-white-large {
+        height: .65em !important;
+        width: 1.04em !important;
+    } @else {
+        height: .75em !important;
+        width: 1.2em !important;
+    }
 }
 
 .container--multimedia {
@@ -31,6 +36,9 @@
             color: mix(#ffffff, $c-neutral1, 70%);
         }
     }
+    .item__standfirst {
+        color: $c-neutral4;
+    }
     .linkslist__item {
         border-top-color: mix(#ffffff, lighten($c-neutral1, 8%), 50%);
     }
@@ -43,7 +51,10 @@
         display: none;
     }
     .item__title--video-icon:before {
-        @include video-icon(video-icon);
+        @include media-icon(video-icon);
+    }
+    .item__title--gallery-icon:before {
+        @include media-icon(camera-white-large);
     }
     .facia-slice__item:before {
         border-left-color: lighten($c-neutral1, 16%);
@@ -93,7 +104,6 @@
             .facia-slice__item:nth-child(3) {
                 .item__standfirst {
                     display: block;
-                    color: $c-neutral4;
                 }
             }
         }
@@ -130,9 +140,19 @@
     margin-top: 0;
 }
 
+.container--gallery .container__border.tone-accent-border {
+    border-color: $c-neutral2;
+}
+
+.item--gallery {
+    .item__title:before {
+        @include media-icon(camera-black-large);
+    }
+}
+
 .item--video {
     .item__title:before {
-        @include video-icon(video-icon-black);
+        @include media-icon(video-icon-black);
     }
 
     .l-row--background-features & {
@@ -144,7 +164,19 @@
 
 .linkslist__item--video {
     .linkslist__action:before {
-        @include video-icon(video-icon-black);
+        @include media-icon(video-icon-black);
+    }
+
+    &.supporting__item {
+        .linkslist__action:before {
+            margin-top: -1 * $gs-baseline;
+        }
+    }
+}
+
+.linkslist__item--gallery {
+    .linkslist__action:before {
+        @include media-icon(camera-black-large);
     }
 
     &.supporting__item {
