@@ -45,9 +45,6 @@ trait FrontPress extends Logging {
         Json.obj(config.id -> Json.toJson(CollectionJson.fromCollection(config, collection)))
       }.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject}
 
-      implicit val seoFormatter = Json.format[SeoData]
-      implicit val propsFormatter = Json.format[FrontProperties]
-
       Success(Json.obj(
         "id" -> id,
         "seoData" -> seoData,
