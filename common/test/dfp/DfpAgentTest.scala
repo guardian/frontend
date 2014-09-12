@@ -7,6 +7,7 @@ import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
 
+
 class DfpAgentTest extends FlatSpec with Matchers {
 
   val examplePageSponsorships = Seq(
@@ -339,4 +340,24 @@ class DfpAgentTest extends FlatSpec with Matchers {
   "non production DfpAgent" should "should recognise adtest targetted line items" in {
     notProductionTestDfpAgent.isPageSkinned("testSport/front", Edition.defaultEdition) should be(true)
   }
+
+
+  "Get sponsorship count of Tags" should "recognise when a tag is sponsored by multiple sponsors" in {
+    val universitySponsorships = Sponsorship(List("universityguide", "university A"), Some("University Sponsor A")) ::
+      Sponsorship(List("universityguide"), Some("University Sponsor B")) :: Nil
+
+    val result: Map[String, Int] = DfpAgent.sponsorshipToSponsorCountMap(universitySponsorships)
+    result should contain key("universityguide")
+    result("universityguide") should be(2)
+    result("university A") should be (1)
+  }
+
+  it should "not be bothered by None Sponsors" in {
+    val withNones = Sponsorship(List("videogames", "sports"), None) :: Sponsorship(List("videogames"), Some("videogame publisher")) :: Nil
+
+    val result: Map[String, Int] = DfpAgent.sponsorshipToSponsorCountMap(withNones)
+    result should contain key("videogames")
+    result("videogames") should be (2)
+  }
+
 }
