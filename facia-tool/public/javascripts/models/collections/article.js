@@ -54,6 +54,12 @@ define([
                 'imageSrc',
                 'imageSrcWidth',
                 'imageSrcHeight',
+                'boostHeadline',
+                'quoteHeadline',
+                'hideImage',
+                'altImage',
+                'showKicker',
+                'showByline',
                 'showMainVideo',
                 'group',
                 'snapType',
@@ -83,10 +89,68 @@ define([
                 'sparkUrl']);
 
             this.editors = [
-                { key: 'headline', maxLength: 90},
-                { key: 'trailText'},
-                { key: 'byline'},
-                { key: 'kicker', maxLength: 30},
+                {
+                    key: 'headline',
+                    label: 'Headline',
+                    type: 'text',
+                    maxLength: 90
+                },
+                {
+                    key: 'trailText',
+                    label: 'Trail text',
+                    type: 'text'
+                },
+                {
+                    key: 'byline',
+                    label: 'Byline',
+                    type: 'text'
+                },
+                {
+                    key: 'kicker',
+                    label: 'Kicker',
+                    maxLength: 30,
+                    type: 'text'
+                },
+                {
+                    key: 'boostHeadline',
+                    group: 'headline',
+                    label: 'boost headline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'quoteHeadline',
+                    group: 'headline',
+                    label: 'quote headline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showKicker',
+                    label: 'show kicker',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showByline',
+                    label: 'show byline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showMainVideo',
+                    group: 'images',
+                    label: 'show video',
+                    type: 'boolean'
+                },
+                {
+                    key: 'hideImage',
+                    group: 'images',
+                    label: 'hide image',
+                    type: 'boolean'
+                },
+                {
+                    key: 'altImage',
+                    group: 'images',
+                    label: 'cutout image',
+                    type: 'boolean'
+                }
             ].map(this.editor, this);
 
             this.id = ko.observable(opts.id);
@@ -184,7 +248,7 @@ define([
             });
         };
 
-        Article.prototype.editor = function(opts) {
+        Article.prototype.editor = function(opts, index, all) {
             var self = this,
                 key = opts.key,
                 meta = self.meta[key] || function() {},
@@ -192,10 +256,30 @@ define([
 
             return {
                 key:    key,
+                label:  opts.label,
+                type:   opts.type,
+
                 meta:   meta,
                 field:  field,
                 revert: function() { meta(undefined); },
                 open:   function() { mediator.emit('ui:open', meta); },
+
+                toggle: function() {
+                    var group = opts.group;
+
+                    if(group) {
+                       _.chain(all)
+                        .filter(function(editor) { return editor.group === group; })
+                        .filter(function(editor) { return editor.key !== key; })
+                        .pluck('key')
+                        .each(function(key) {
+                            console.log(key);
+                            self.meta[key](undefined)
+                        })
+                    }
+
+                    meta(!meta());
+                },
 
                 length: ko.computed(function() {
                     return opts.maxLength ? (meta() || field() || '').length : undefined;

@@ -116,29 +116,43 @@
     <!-- templates -->
 
     <script type="text/html" id="template_editor">
-        <div class="editor">
-            <!-- ko if: $data.meta === $root.uiOpenElement() -->
-                <textarea data-bind="
-                    attr: {
-                        class: 'editor__' + key + ' element__' + key,
-                        placeholder: field() || key
-                    },
-                    autoResize: true,
-                    valueUpdate: 'afterkeydown',
-                    hasFocus: true,
-                    value: overrideOrVal"></textarea>
-                <span class="editor__length" data-bind="
-                    css: {'editor__length--alert': lengthAlert},
-                    text: length"></span>
-                <a class="editor__revert" data-bind="
-                    visible: meta,
-                    click: revert">revert</a>
-            <!-- /ko -->
-            <div data-bind="
-                attr: {class: 'element element__' + key},
-                click: open,
-                html: overrideOrVal() || key"></div>
-        </div>
+        <!-- ko if: type === 'text' -->
+            <div class="editor editor--text">
+                <div data-bind="
+                    attr: {class: 'element element__' + key},
+                    click: open,
+                    html: overrideOrVal() || key"></div>
+                <!-- ko if: $data.meta === $root.uiOpenElement() -->
+                        <textarea data-bind="
+                            attr: {
+                                class: 'editor__' + key + ' element__' + key,
+                                placeholder: field() || key
+                            },
+                            autoResize: true,
+                            valueUpdate: 'afterkeydown',
+                            hasFocus: true,
+                            value: overrideOrVal"></textarea>
+                        <span class="editor__length" data-bind="
+                            css: {'editor__length--alert': lengthAlert},
+                            text: length"></span>
+                        <a class="editor__revert" data-bind="
+                            visible: meta,
+                            click: revert">revert</a>
+                <!-- /ko -->
+            </div>
+        <!-- /ko -->
+
+        <!-- ko if: type === 'boolean' -->
+            <span class="editor--boolean" data-bind="
+                css: {selected: meta}">
+                <span class="editor--boolean__label" data-bind="
+                    click: toggle,
+                    text: label"></span>
+                <span class="editor--boolean__state" data-bind="
+                    click: toggle,
+                    visible: meta">&#10004;</span>
+            </span>
+        <!-- /ko -->
     </script>
 
     <script type="text/html" id="template_collection">
@@ -258,32 +272,7 @@
                             value: provisionalImageSrc"/>
                     </div>
 
-                    <div class="image__overrides">
-                        Image
-                        <a data-bind="
-                            click: toggleOpenImage,
-                            text: meta.imageSrc() ? 'replaced:' : 'replace',
-                            css: {selected: meta.imageSrc}"></a>
-                        &middot;
-                        <a data-bind="
-                            click: toggleImageAdjustBoost,
-                            text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
-                            css: {selected: meta.imageAdjust() === 'boost'}"></a>
-                        &middot;
-                        <a data-bind="
-                            click: toggleImageAdjustHide,
-                            text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
-                            css: {selected: meta.imageAdjust() === 'hide'}"></a>
-                        <!-- ko if: mainMediaType() === 'video' -->
-                        &middot;
-                        <a data-bind="
-                            click: toggleShowMainVideo,
-                            css: {selected: meta.showMainVideo}">video</a>
-                        <!-- /ko -->
-                    </div>
-
-
-                    <div class="supporting-message">Add supporting content below</div>
+                    <!--div class="supporting-message">Add supporting content below</div-->
                 </div>
 
                 <div data-bind="if: group.parentType === 'Collection' || group.parentType === 'Clipboard'">

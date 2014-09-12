@@ -415,10 +415,12 @@ h1 {
     text-decoration: none;
 }
 
-.element__trailText {
+.element__trailText,
+.element__byline,
+.element__kicker {
     font-size: 12px;
     line-height: 16px;
-    color: #999999;
+    color: #666666;
 }
 
 span.kicker {
@@ -477,7 +479,7 @@ span.kicker--breaking-news {
 }
 
 .article__overrides {
-    margin: 0 94px 0 85px;
+    margin: 0 100px 0 85px;
 }
 
 .article__overrides .tools {
@@ -573,8 +575,10 @@ select {
 
 .editor textarea {
     width: 100%;
-    padding: 0 30px 0 2px;
+    padding: 0 2px;
     position: absolute;
+    top: 0;
+    left: 0;
     margin: 2px 0 0 -3px;
     z-index: 10;
 }
@@ -598,6 +602,25 @@ select {
 .editor__length--alert {
     font-weight: bold;
     color: #DD4B39;
+}
+
+.editor--boolean {
+    font-size: 12px;
+    position: relative;
+    display: inline-block;
+    padding: 0 13px 0 0;
+    margin: 0 5px 0 0;
+}
+
+.editor--boolean.selected {
+    color: #2ea3eb;
+}
+
+.editor--boolean__state {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-weight: bold;
 }
 
 button {
@@ -866,7 +889,6 @@ button {
 
 .selected {
     color: #DD4B39;
-    font-weight: bold;
 }
 
 [class^="icon-"], [class*=" icon-"] {
