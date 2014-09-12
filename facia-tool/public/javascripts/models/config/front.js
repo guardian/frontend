@@ -41,8 +41,7 @@ define([
             'imageWidth',
             'imageHeight',
             'isImageDisplayed',
-            'priority',
-            'editorialType']);
+            'priority']);
 
         populateObservables(this.props, opts);
 

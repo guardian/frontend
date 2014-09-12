@@ -10,7 +10,7 @@ import play.api.Play.current
 
 object Configuration extends GuardianConfiguration("frontend", webappConfDirectory = "env")
 
-object LiveContentApi extends ElasticSearchLiveContentApiClient()
+object LiveContentApi extends ElasticSearchLiveContentApiClient
 
 object Static extends Assets(Configuration.assets.path)
 

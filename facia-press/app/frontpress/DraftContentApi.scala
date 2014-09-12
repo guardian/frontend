@@ -1,15 +1,14 @@
-package services
+package frontpress
 
 import conf.Configuration
 import contentapi.{ContentApiClient, ElasticSearchLiveContentApiClient}
 import org.joda.time.DateTime
 import play.api.libs.json.{JsObject, JsValue}
+import services.ParseCollection
 
-class ElasticSearchDraftContentApiClient extends ElasticSearchLiveContentApiClient {
+object DraftContentApi extends ElasticSearchLiveContentApiClient {
   override val targetUrl = Configuration.contentApi.contentApiDraftHost
 }
-
-object DraftContentApi extends ElasticSearchDraftContentApiClient()
 
 object DraftCollections extends ParseCollection {
   def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] =
