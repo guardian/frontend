@@ -408,7 +408,7 @@ define([
                         if ($breakout.length) {
                             if ($breakout[0].nodeName.toLowerCase() === 'script') {
                                 // evil, but we own the returning js snippet
-                                eval($breakout.html());
+                                eval($breakout.remove().html());
                             } else {
                                 $breakout.detach().insertAfter(iFrame);
                             }
