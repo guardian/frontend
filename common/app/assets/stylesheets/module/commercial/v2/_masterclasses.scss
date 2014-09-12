@@ -4,8 +4,8 @@
 .commercial--masterclasses--v2 {
 
     // Colours
-    $c-commercial-masterclasses-1: #a60947;
-    $c-commercial-masterclasses-2: #ff9b0b;
+    $c-commercial-masterclasses-1: guss-colour(live-support-3, $pasteup-palette);
+    $c-commercial-masterclasses-2: guss-colour(live-support-1, $pasteup-palette);
 
     .container__header {
         background-color: $c-commercial-masterclasses-1;

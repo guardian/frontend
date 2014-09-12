@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <!--article id="article" class="content content--article tone-news tone-news--article section-books">
+    <article id="article" class="content content--article tone-news tone-news--article section-books">
         <div class="gs-container">
             <h1 class="content__headline">All components</h1>
             <h2 class="test-page-head">DFP Component A (Article pages only)</h2>
@@ -96,7 +96,7 @@
             <div class="codeContainer">
                 <pre><code>
 &lt;div class="breakout__html"&gt;
-    &lt;div class="commercial commercial--v-high commercial--dfp-[%URI_ENCODE:omniture_id%]" role="complementary"&gt;
+    &lt;div class="commercial--v1 commercial--v-high commercial--dfp-[%URI_ENCODE:omniture_id%]" role="complementary"&gt;
         &lt;a href="%%CLICK_URL_ESC%%[%base_url%]" data-link-name="merchandising-[%omniture_id%]-title"&gt;
             &lt;h3 class="commercial__title"&gt;[%component_title%]&lt;/h3&gt;
         &lt;/a&gt;
@@ -124,7 +124,7 @@
                 <div class="from-content-api js-article__body">
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
                     <div id="dfp-ad--im" class="ad-slot ad-slot--dfp ad-slot--im ad-slot--im" data-link-name="ad slot im" data-test-id="ad-slot-im" data-name="im" data-mobile="88,89" data-refresh="false" data-label="false" data-node-uid="3">
-                        <div class="commercial commercial--v-high commercial--dfp-123456789" role="complementary">
+                        <div class="commercial--v1 commercial--v-high commercial--dfp-123456789" role="complementary">
                             <a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBtdlPTiPSU9vAFsqZigb12YGYA_fhkJMFAAAAEAEg75TfITgAWJeKiNqiAWC7vq6D0AqyAQlsb2NhbGhvc3S6AQlnZnBfaW1hZ2XIAQnaAXZodHRwOi8vbG9jYWxob3N0OjkwMDAvYm9va3MvYm9va3NibG9nLzIwMTQvanVsLzI0L2Jvb2stZm9yLXRoZS1iZWFjaC10d2VudHktdGhvdXNhbmQtbGVhZ3Vlcy11bmRlci10aGUtc2VhLWp1bGVzLXZlcm5lqQKY-ncJR3q8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vYm9va3MvYm9va3NibG9n-AL50R6AAwGQA4wGmAOMBqgDAeAEAaAGHw%2526num%253D0%2526sig%253DAOD64_04uVjvjKcSOt1Pw_sspwn5MRBdHg%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-123456789-title">
                                 <h3 class="commercial__title">Life of <span>Austin</span></h3>
                             </a>
@@ -216,11 +216,11 @@
                 </div>
             </div>
         </div>
-    </article-->
+    </article>
 
     <hr/>
 
-    <!--div class="facia-container facia-container--layout-content facia-container--commercial">
+    <div class="facia-container facia-container--layout-content facia-container--commercial">
         <h2 class="facia-container__inner test-page-head">DFP Component B</h2>
 
         <h3 class="facia-container__inner test-page-subhead">v1 <a class="show-code">Show code</a></h3>
@@ -240,7 +240,7 @@
             color: #[%commercial__colour2%];
         }
     &lt;/style&gt;
-    &lt;div class="commercial commercial--dfp commercial--dfp-single commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
+    &lt;div class="commercial--v1 commercial--dfp commercial--dfp-single commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
         &lt;div class="facia-container__inner"&gt;
             &lt;div class="commercial__head container__title container__title-[%commercial__titlelogo%]"&gt;
                 &lt;div class="container__title__wrapper i-[%commercial__titlelogo%]-title-background"&gt;
@@ -290,7 +290,7 @@
                     color: #c07ed6;
                 }
             </style>
-            <div class="commercial commercial--dfp commercial--dfp-single commercial--dfp-987654321" role="complementary">
+            <div class="commercial--v1 commercial--dfp commercial--dfp-single commercial--dfp-987654321" role="complementary">
                 <div class="facia-container__inner">
                     <div class="commercial__head container__title container__title-jobs">
                         <div class="container__title__wrapper i-jobs-title-background">
@@ -432,11 +432,11 @@
                         </div>
                     </div>
                 </div>
-    </div-->
+    </div>
 
     <hr/>
 
-    <!--div class="facia-container facia-container--layout-content facia-container--commercial">
+    <div class="facia-container facia-container--layout-content facia-container--commercial">
         <h2 class="facia-container__inner test-page-head">DFP Component C</h2>
 
         <h3 class="facia-container__inner test-page-subhead">v1 <a class="show-code">Show code</a></h3>
@@ -446,7 +446,7 @@
     &lt;style type="text/css"&gt;
         [%commercial__css%]
     &lt;/style&gt;
-    &lt;div class="commercial commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
+    &lt;div class="commercial--v1 commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
         &lt;div class="facia-container__inner"&gt;
             &lt;div class="commercial__head container__title"&gt;
                 &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
@@ -522,7 +522,7 @@
 &lt;/div&gt;
 </code></pre>
         </div>
-        <div class="commercial commercial--dfp commercial--dfp-1234567890 commercial--dfp-multiple commercial--items-dfp-4" role="complementary">
+        <div class="commercial--v1 commercial--dfp commercial--dfp-1234567890 commercial--dfp-multiple commercial--items-dfp-4" role="complementary">
             <div class="facia-container__inner">
                 <div class="commercial__head container__title">
                     <h3 class="commercial__title"><a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DB7VJwyhXRU6PzIs-tiga94IDwAt_qkZcFAAAAEAEg75TfITgAWO-wiMKUAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFcaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vZ2xvYmFsLWRldmVsb3BtZW50L3ZpZGVvLzIwMTQvanVsLzA3L21hbGktbGFuZC1ncmFicy1mYXJtZXItdmlkZW-pAtZN5GxziLw-wAIC4AIA6gIuLzU5NjY2MDQ3L3RoZWd1YXJkaWFuLmNvbS9uZXdzL3Nlcmllcy9kb2N1YmVhdPgC-dEekAOMBpgDjAaoAwHQBJBO4AQBoAYf%2526num%253D0%2526sig%253DAOD64_1a7IqhLv6ApJJ2HxwcfxqBWa481Q%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.guardian.co.uk" data-link-name="merchandising-1234567890-high-title">Guardian Vintage Motoring</a></h3>
@@ -754,13 +754,13 @@
                 </div>
             </div>
         </div>
-    </div-->
+    </div>
 
     <hr/>
 
     <div class="facia-container facia-container--layout-content">
         <h2 class="facia-container__inner test-page-head">Travel</h2>
-        <!--
+
         <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -769,7 +769,7 @@
                 });
             </script>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -778,7 +778,7 @@
                 });
             </script>
         </div>
-        <!--
+
         <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -787,7 +787,7 @@
                 });
             </script>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-travel-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -802,7 +802,7 @@
 
     <div class="facia-container facia-container--layout-content">
         <h2 class="facia-container__inner test-page-head">Jobs</h2>
-        <!--
+
         <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -811,7 +811,7 @@
              });
             </script>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -820,7 +820,7 @@
              });
             </script>
         </div>
-        <!--
+
         <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -829,7 +829,7 @@
              });
             </script>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-jobs-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -844,7 +844,7 @@
 
     <div class="facia-container facia-container--layout-content">
         <h2 class="facia-container__inner test-page-head">Masterclasses</h2>
-        <!--
+
         <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -853,7 +853,7 @@
              });
             </script>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -862,7 +862,7 @@
              });
             </script>
         </div>
-        <!--
+
         <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -871,7 +871,7 @@
              });
             </script>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-masterclasses-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -886,7 +886,7 @@
 
     <div class="facia-container facia-container--layout-content">
         <h2 class="facia-container__inner test-page-head">Best Buys</h2>
-        <!--
+
         <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -895,7 +895,7 @@
              });
             </script>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -904,7 +904,7 @@
              });
             </script>
         </div>
-        <!--
+
         <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -913,7 +913,7 @@
              });
             </script>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-bestbuy-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -928,7 +928,7 @@
 
     <div class="facia-container facia-container--layout-content">
         <h2 class="facia-container__inner test-page-head">Books</h3>
-        <!--
+
         <h3 class="facia-container__inner test-page-subhead">Low relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -937,7 +937,7 @@
              });
             </script>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -946,7 +946,7 @@
              });
             </script>
         </div>
-        <!--
+
         <h3 class="facia-container__inner test-page-subhead">Medium relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-medium ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -955,7 +955,7 @@
              });
             </script>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">Medium relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-medium-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -964,7 +964,7 @@
              });
             </script>
         </div>
-        <!--
+
         <h3 class="facia-container__inner test-page-subhead">High relevance v1</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
@@ -973,7 +973,7 @@
              });
             </script>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">High relevance v2</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-books-high-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>

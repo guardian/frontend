@@ -4,8 +4,8 @@
 .commercial--jobs--v2 {
 
     // Colours
-    $c-commercial-jobs-1: #197caa;
-    $c-commercial-jobs-2: #005689;
+    $c-commercial-jobs-1: guss-colour(news-support-2, $pasteup-palette);
+    $c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
 
     .container__header {
         background-color: $c-commercial-jobs-1;

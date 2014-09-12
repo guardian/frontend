@@ -4,8 +4,8 @@
 .commercial--bestbuys--v2 {
 
     // Colours
-    $c-commercial-bestbuys-1: #4bc6df;
-    $c-commercial-bestbuys-2: #197caa;
+    $c-commercial-bestbuys-1: guss-colour(news-main-2, $pasteup-palette);
+    $c-commercial-bestbuys-2: guss-colour(news-support-2, $pasteup-palette);
 
     .container__header {
         background-color: $c-commercial-bestbuys-1;

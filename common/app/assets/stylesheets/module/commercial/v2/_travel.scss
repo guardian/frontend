@@ -4,8 +4,8 @@
 .commercial--travel--v2 {
 
     // Colours
-    $c-commercial-travel-1: #5ebfba;
-    $c-commercial-travel-2: #52a8a4;
+    $c-commercial-travel-1: guss-colour(maps-support-3, $pasteup-palette);
+    $c-commercial-travel-2: guss-colour(maps-main-1, $pasteup-palette);
 
     .container__header {
         background-color: $c-commercial-travel-1;

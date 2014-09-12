@@ -116,7 +116,7 @@
 
         @include mq(tablet) {
             width: percentage(1/2);
-            padding: 0 $gs-baseline/2;
+            padding: 0 $gs-gutter/2;
 
             &:first-child {
                 border-left: 1px solid $c-neutral3;
@@ -143,13 +143,16 @@
             margin: 0;
 
             @include mq(tablet) {
-                margin-left: -$gs-gutter*-0.5;
-                margin-right: 0;
+                margin-left: $gs-gutter*-.5;
             }
         }
 
         .lineitem.lineitem--high {
-            padding: 0;
+            padding-left: 0;
+
+            @include mq(tablet) {
+                padding-left: $gs-gutter*0.5;
+            }
         }
     }
 
@@ -161,8 +164,7 @@
             margin: 0;
 
             @include mq(tablet) {
-                margin-left: -$gs-gutter*-0.5;
-                margin-right: 0;
+                margin: 0 $gs-gutter*-.5;
             }
         }
     }
