@@ -4,6 +4,7 @@
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640}
 @import views.html.fragments.media.video
+@import views.html.fragments.items.facia_cards.meta
 
 <li class="@GetClasses.forCollectionItem(trail)">
 
@@ -62,7 +63,7 @@
         <div class="item__standfirst">@Html(text)</div>
     }
 
-    @fragments.items.elements.meta(trail)
+    @meta(trail)
 </div>
 <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 </div>
