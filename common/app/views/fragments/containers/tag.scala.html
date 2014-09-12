@@ -23,9 +23,10 @@
                     @title.map { title =>
                         @fragments.containers.elements.tagMeta(None, collection.href, page.description, title)
                     }
+
+                    @fragments.contributor(page)
                 </div>
                 <div class="container__body container--rolled-up-hide">
-                    @fragments.contributor(page)
                     @fragments.collections.tag(collection.items, style, containerIndex)
                 </div>
                 @pagination.map{ paginate => @fragments.pagination(page, paginate)}
