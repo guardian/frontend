@@ -123,12 +123,24 @@
 }
 
 .gallery2__fullscreen {
-    width: 30px;
-    height: 30px;
     @include border-radius(50%);
     top: 0;
     right: 0;
-    @include icon-button(44px, -11px);
+
+    width: 44px;
+    height: 44px;
+    @include border-radius(50%);
+    display: inline-block;
+
+    .i {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
     background-color: rgba(51, 51, 51, .6);
     position: absolute;
     margin: $gs-gutter/2;

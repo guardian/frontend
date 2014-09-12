@@ -255,19 +255,19 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
 
 .gallery-lightbox__btn--close .gallery-lightbox__btn-body {
-    @include icon-button2(close, 44px);
+    @include icon-button(close, 44px);
 }
 
 .gallery-lightbox__btn--next .gallery-lightbox__btn-body {
-    @include icon-button2(right-arrow, 44px);
+    @include icon-button(right-arrow, 44px);
 }
 
 .gallery-lightbox__btn--prev .gallery-lightbox__btn-body {
-    @include icon-button2(left-arrow, 44px);
+    @include icon-button(left-arrow, 44px);
 }
 
 .gallery-lightbox__btn--info-button .gallery-lightbox__btn-body {
-    @include icon-button2(info, 44px);
+    @include icon-button(info, 44px);
 }
 
 

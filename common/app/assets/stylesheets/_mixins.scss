@@ -90,24 +90,6 @@
     }
 }
 
-// icon button (circular element containing an offset/centered icon)
-@mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: null) {
-    width: $buttonSize;
-    height: $buttonSize;
-    @include border-radius($buttonSize);
-    position: relative;
-    display: inline-block;
-
-    .i {
-        position: absolute;
-        text-indent: -9999px;
-        top: 50%;
-        left: 50%;
-        margin-top: $iconOffsetX;
-        margin-left: if(not $iconOffsetY, $iconOffsetX, $iconOffsetY);
-    }
-}
-
 @mixin icon($name) {
     @extend %i;
     @extend %i-#{$name};
@@ -121,7 +103,7 @@
 }
 
 // icon button (circular element containing a centered icon)
-@mixin icon-button2($name, $buttonSize) {
+@mixin icon-button($name, $buttonSize) {
     cursor: pointer;
     width: $buttonSize;
     height: $buttonSize;
