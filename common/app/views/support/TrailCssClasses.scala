@@ -11,4 +11,14 @@ object TrailCssClasses {
       case _ => "i-clock-light-grey"
     }
   }
+
+  def toneClass(trail: Trail) = {
+    CardStyle(trail) match {
+      case Media => "tone-media"
+      case Comment => "tone-comment"
+      case LiveBlog => "tone-live"
+      case Feature => "tone-feature"
+      case _ => "tone-news"
+    }
+  }
 }
