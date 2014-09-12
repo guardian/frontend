@@ -104,6 +104,7 @@ $c-featureDefault: guss-colour(tone-features-1, $pasteup-palette);
 $c-featureAccent: guss-colour(tone-features-2, $pasteup-palette);
 $c-featureAccent2: #b62766;
 $c-featuresVariant: guss-colour(tone-features-4, $pasteup-palette);
+$c-featuresMute: guss-colour(features-support-3, $pasteup-palette);
 
 $c-commentDefault: guss-colour(tone-comment-1, $pasteup-palette);
 $c-commentAccent: guss-colour(tone-comment-2, $pasteup-palette);
@@ -114,7 +115,7 @@ $c-commentBackground: guss-colour(comment-support-2, $pasteup-palette);
 $c-live: #c0031b;
 $c-liveDefault: guss-colour(tone-live-1, $pasteup-palette);
 $c-liveAccent: guss-colour(tone-live-2, $pasteup-palette);
-$c-liveMute: mix($c-live, #ffffff, 30%);
+$c-liveMute: guss-colour(features-support-3, $pasteup-palette);
 
 $c-mediaDefault: $c-commentAccent;
 $c-mediaBackground: guss-colour(tone-media-1, $pasteup-palette);

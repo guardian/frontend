@@ -49,7 +49,7 @@
         .item__meta {
             &,
             & a {
-                color: mix(#ffffff, $c-featureAccent, 50%);
+                color: $c-featuresMute;
             }
         }
     }
