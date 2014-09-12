@@ -53,4 +53,22 @@
             }
         }
     }
+
+    .tone-media {
+        &.item {
+            background-color: $c-neutral1;
+
+            &,
+            & a {
+                color: #ffffff;
+            }
+        }
+
+        .item__meta {
+            &,
+            & a {
+                color: $c-mediaDefault;
+            }
+        }
+    }
 }
