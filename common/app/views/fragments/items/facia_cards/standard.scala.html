@@ -10,7 +10,7 @@
 
 @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
     <div
-    class="@GetClasses.forItem(trail, isFirstContainer, forceTone = forceTone)"
+    class="@GetClasses.forNewStyleItem(trail, isFirstContainer)"
     @if(trail.isCommentable) {
         @trail.discussionId.map{ id =>
         data-discussion-id="@id"
