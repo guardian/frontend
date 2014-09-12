@@ -227,7 +227,7 @@ define([
                 }
             }.bind(this));
 
-        _(this.$images[i]).each(function(el, i) { // perf
+        _(this.$images).each(function(el, i) { // perf
             el.style.visibility = (surroundingIndices.indexOf(i) !== -1 ? 'visible' : 'hidden');
         })
 

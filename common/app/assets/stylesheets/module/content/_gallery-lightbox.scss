@@ -178,7 +178,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 .gallery-lightbox__info {
     white-space: normal;
     position: absolute;
-    z-index: 2;
+    z-index: 5;
     color: colour(neutral-8);
     @include box-sizing(border-box);
     word-wrap: break-word;
@@ -264,7 +264,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         height: 100%;
         right: 0;
         width: $gallery-lightbox-sidebar-width;
-        z-index: 4; // above content
+        z-index: 6; // above content
         border-left: 1px solid colour(tone-media-2);
         background: colour(tone-media-1);
     }
@@ -320,7 +320,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         position: absolute;
         top: 0;
         right: 0;
-        z-index: 5; // above img/sidebar
+        z-index: 7; // above img/sidebar
         padding: $gs-baseline/2 $gs-gutter/2 $gs-gutter*4 $gs-gutter;
 
         .gallery-lightbox__btn-body {
