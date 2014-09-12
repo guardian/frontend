@@ -3,7 +3,6 @@
   "version": "0.1.0 ",
   "dependencies": {
     "html5shiv": "~3.7.0",
-    "swipe": "thebird/Swipe#32c19c95ea09092167cd07cc783da24f79f5adf6",
     "zxcvbn": "dropbox/zxcvbn",
     "JSON-js": "*"
   },
