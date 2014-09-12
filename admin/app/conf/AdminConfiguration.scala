@@ -43,4 +43,13 @@ object AdminConfiguration {
       userName <- configuration.getStringProperty("admin.omniture.username")
       secret <- configuration.getStringProperty("admin.omniture.secret")
     } yield OmnitureCredentials(userName, secret)
+
+  object db {
+    object default {
+      lazy val driver = configuration.getStringProperty("default.driver")
+      lazy val url = configuration.getStringProperty("default.url")
+      lazy val user = configuration.getStringProperty("default.user")
+      lazy val password = configuration.getStringProperty("default.password")
+    }
+  }
 }

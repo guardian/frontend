@@ -1,7 +1,7 @@
 package services
 
-import play.api.libs.json.{JsResult, JsValue, Format, Json}
 import com.gu.openplatform.contentapi.model._
+import play.api.libs.json.Json
 
 object ParseCollectionJsonImplicits {
   implicit val referenceFormats = Json.format[Reference]

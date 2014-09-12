@@ -127,6 +127,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val sessionExpiryTime = configuration.getIntegerProperty("auth.timeout").getOrElse(60000)
   }
 
+  object db {
+    lazy val sentry_db_driver = configuration.getStringProperty("db.sentry.driver").getOrElse("")
+    lazy val sentry_db_url = configuration.getStringProperty("db.sentry.url").getOrElse("")
+    lazy val sentry_db_username = configuration.getStringProperty("db.sentry.user").getOrElse("")
+    lazy val sentry_db_password = configuration.getStringProperty("db.sentry.password").getOrElse("")
+  }
+
   object proxy {
     lazy val isDefined: Boolean = hostOption.isDefined && portOption.isDefined
 

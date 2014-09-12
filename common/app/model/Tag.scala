@@ -65,7 +65,6 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   )
 
   override def openGraph: Map[String, String] = super.openGraph ++
-    Map("og:title" -> webTitle) ++
     openGraphDescription.map { s => Map("og:description" -> s) }.getOrElse(Map()) ++
     openGraphImage.map { s => Map("og:image" -> s)}.getOrElse(Map())
 
