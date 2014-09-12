@@ -40,12 +40,15 @@
         }
         @include side-margins-position(gs-span(9));
     }
+
     @include mq(desktop) {
         @include side-margins-position(gs-span(12));
     }
+
     @include mq(leftCol) {
         @include side-margins-position(gs-span(14));
     }
+
     @include mq(wide) {
         @include side-margins-position(gs-span(16));
 

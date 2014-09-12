@@ -12,6 +12,7 @@
             margin-left: $gs-gutter;
             margin-right: $gs-gutter;
         }
+
         @include mq(desktop) {
             margin-left: auto;
             margin-right: auto;
@@ -48,6 +49,7 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
         .facia-container__inner {
             @include facia-container__inner;
         }
+
         @include mq(faciaLeftCol) {
             .container__title {
                 margin-bottom: 0;
@@ -69,6 +71,7 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
                 }
             }
         }
+
         @include mq(wide) {
             .container__title {
                 float: left;
@@ -117,6 +120,7 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
         .facia-container__inner {
             @include facia-container__inner;
         }
+
         @include mq(leftCol) {
             .container__title {
                 margin-bottom: 0;
@@ -129,6 +133,7 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
                 margin-left: $left-column + $gs-gutter;
             }
         }
+
         @include mq(wide) {
             .container__title {
                 float: left;
@@ -164,12 +169,15 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
 @mixin container__meta($leftColumn, $halfWidthBreakpoint) {
     .container__meta {
         padding-top: $gs-baseline/2;
+
         @include mq($halfWidthBreakpoint) {
             padding-top: $gs-baseline/1.5;
         }
+
         @include mq($halfWidthBreakpoint, $leftColumn) {
             max-width: 50%;
         }
+
         @include mq($leftColumn) {
             margin-bottom: 0;
             float: left;
@@ -177,6 +185,7 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
             width: $left-column !important;
             margin-right: $gs-gutter;
         }
+
         @include mq(wide) {
             width: $left-column-wide !important;
         }
