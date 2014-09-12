@@ -43,7 +43,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 }
 
-.gallery-lightbox--advert,
 .gallery-lightbox--endslate {
     .gallery-lightbox__progress,
     .gallery-lightbox__index {
@@ -74,18 +73,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 }
 
-.gallery-lightbox--advert .gallery-lightbox__btn--info-button,
-.gallery-lightbox--loading .gallery-lightbox__btn--info-button,
-.gallery-lightbox--loading .gallery-lightbox__btn--prev,
-.gallery-lightbox--loading .gallery-lightbox__btn--next {
-    cursor: default;
-    background-color: $c-gallery-lightbox-btn !important;
-
-    i {
-        opacity: .15;
-    }
-}
-
 /* Content
    ========================================================================== */
 
@@ -113,7 +100,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
 .gallery-lightbox__item {
     display: inline-block;
-    width:100%;
+    width: 100%;
     height: 100%;
     position: relative;
     z-index: 3;

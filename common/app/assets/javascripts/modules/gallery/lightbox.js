@@ -30,10 +30,8 @@ define([
     function GalleryLightbox() {
 
         // CONFIG
-        this.adStep = 4; // advert between every 4th and 5th image
         this.mobile = detect.getBreakpoint() === 'mobile';
         this.showEndslate = !this.mobile;
-        this.showAdverts  = false;
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.3;
 
@@ -148,7 +146,9 @@ define([
 
         var touchMove = function(e) {
             e.preventDefault();
-            if ( e.touches.length > 1 || e.scale && e.scale !== 1) return;
+            if ( e.touches.length > 1 || e.scale && e.scale !== 1) {
+                return;
+            }
             dx = e.touches[0].pageX - ox;
             this.translateContent(this.index, dx, updateTime);
         }.bind(this);
@@ -229,7 +229,7 @@ define([
 
         _(this.$images).each(function(el, i) { // perf
             el.style.visibility = (surroundingIndices.indexOf(i) !== -1 ? 'visible' : 'hidden');
-        })
+        });
 
     };
 
@@ -326,10 +326,6 @@ define([
                             this.index = 1;
                             this.reloadState = true;
                         }
-                    }
-                    else if (this.showShouldAds() && this.index % this.adStep === 0) {
-                        this.adIndex = this.index / this.adStep;
-                        this.state = 'advert';
                     } else {
                         this.index += 1;
                         this.reloadState = true;
@@ -345,10 +341,6 @@ define([
                             this.index = this.images.length;
                             this.reloadState = true;
                         }
-                    }
-                    else if (this.showShouldAds() && (this.index - 1) % this.adStep === 0) {
-                        this.adIndex = (this.index - 1) / this.adStep;
-                        this.state = 'advert';
                     } else {
                         this.index -= 1;
                         this.reloadState = true;
@@ -366,31 +358,6 @@ define([
                     this.loadSurroundingImages(this.index, this.images.length); // regenerate src
                     this.mobile = detect.getBreakpoint() === 'mobile';
                     this.translateContent(this.index, 0, 0);
-                },
-                'close': function() { this.state = 'closed'; }
-            }
-        },
-
-        'advert': {
-            enter: function() {
-                // show advert (use this.adIndex if needed)
-
-            },
-            leave: function() {
-                // hide advert
-            },
-            events: {
-                'next': function(interactionType) {
-                    this.trackInteraction(interactionType + ':next');
-                    this.pulseButton(this.nextBtn);
-                    this.index = (this.adIndex * this.adStep) + 1;
-                    this.state = 'image';
-                },
-                'prev': function(interactionType) {
-                    this.trackInteraction(interactionType + ':previous');
-                    this.pulseButton(this.prevBtn);
-                    this.index = this.adIndex * this.adStep;
-                    this.state = 'image';
                 },
                 'close': function() { this.state = 'closed'; }
             }
@@ -419,10 +386,6 @@ define([
                 'close': function() { this.state = 'closed'; }
             }
         }
-    };
-
-    GalleryLightbox.prototype.showShouldAds = function() {
-        return this.showAdverts && !this.galleryJson.shouldHideAdverts;
     };
 
     GalleryLightbox.prototype.show = function() {
