@@ -10,7 +10,9 @@ import jobs._
 
 trait AdminLifecycle extends GlobalSettings {
 
-  lazy val adminPressJobPushRateInMinutes: Int = Configuration.faciatool.adminPressJobPushRateInMinutes
+  lazy val adminPressJobStandardPushRateInMinutes: Int = Configuration.faciatool.adminPressJobStandardPushRateInMinutes
+  lazy val adminPressJobHighPushRateInMinutes: Int = Configuration.faciatool.adminPressJobHighPushRateInMinutes
+  lazy val adminPressJobLowPushRateInMinutes: Int = Configuration.faciatool.adminPressJobLowPushRateInMinutes
   lazy val adminRebuildIndexRateInMinutes: Int = Configuration.indexes.adminRebuildIndexRateInMinutes
 
   private def scheduleJobs() {
@@ -34,9 +36,16 @@ trait AdminLifecycle extends GlobalSettings {
       VideoSanityCheckJob.run()
     }
 
-    //Every 3 minutes
-    Jobs.schedule("FrontPressJob", s"0 0/$adminPressJobPushRateInMinutes * 1/1 * ? *") {
-      RefreshFrontsJob.run()
+    Jobs.schedule("FrontPressJobHighFrequency", s"0 0/$adminPressJobHighPushRateInMinutes * 1/1 * ? *") {
+      RefreshFrontsJob.runHighFrequency()
+    }
+
+    Jobs.schedule("FrontPressJobStandardFrequency", s"0 0/$adminPressJobStandardPushRateInMinutes * 1/1 * ? *") {
+      RefreshFrontsJob.runStandardFrequency()
+    }
+
+    Jobs.schedule("FrontPressJobLowFrequency", s"0 0/$adminPressJobLowPushRateInMinutes * 1/1 * ? *") {
+      RefreshFrontsJob.runLowFrequency()
     }
 
     Jobs.schedule("RebuildIndexJob", s"0 0/$adminRebuildIndexRateInMinutes * 1/1 * ? *") {

@@ -163,6 +163,13 @@ trait Elements {
   lazy val thumbnail: Option[ImageElement] = images.find(_.isThumbnail)
 
   def elements: Seq[Element] = Nil
+  def elements(relation: String): Seq[Element] = relation match {
+    case "main" => elements.filter(_.isMain)
+    case "body" => elements.filter(_.isBody)
+    case "gallery" => elements.filter(_.isGallery)
+    case "thumbnail" => elements.filter(_.isThumbnail)
+    case _ => Nil
+  }
 
   protected lazy val images: Seq[ImageElement] = elements.flatMap {
     case image :ImageElement => Some(image)
