@@ -133,6 +133,8 @@ define([
                 startSlide: this.index,
                 speed: 200,
                 continuous: true,
+                stopPropagation: true,
+                disableScroll: true,
                 callback: function(index) {
                     var swipeDir = (index > this.index) ? 'next' : 'prev';
 //                    self.trackInteraction('Lightbox gallery swipe - ' + swipeDir);
