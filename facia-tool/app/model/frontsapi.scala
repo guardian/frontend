@@ -6,6 +6,7 @@ import conf.Configuration
 import org.joda.time.DateTime
 import play.api.libs.json.{Format, JsValue, Json}
 import tools.FaciaApi
+
 import scala.util.{Failure, Success, Try}
 
 
@@ -19,7 +20,13 @@ case class Front(
   webTitle: Option[String],
   title: Option[String],
   description: Option[String],
-  priority: Option[String]
+  onPageDescription: Option[String],
+  imageUrl: Option[String],
+  imageWidth: Option[Int],
+  imageHeight: Option[Int],
+  isImageDisplayed: Option[Boolean],
+  priority: Option[String],
+  editorialType: Option[String]
 )
 
 object Collection {
@@ -75,7 +82,8 @@ case class Block(
                   updatedEmail: String,
                   displayName: Option[String],
                   href: Option[String],
-                  diff: Option[JsValue]
+                  diff: Option[JsValue],
+                  previously: Option[List[Trail]]
                   ) {
 
   def sortByGroup: Block = this.copy(
@@ -88,6 +96,22 @@ case class Block(
     trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
   }
 
+  def updatePreviously(update: UpdateList): Block = {
+    if (update.live) {
+      val itemFromLive: Option[Trail] = live.find(_.id == update.item)
+      val updatedPreviously: Option[List[Trail]] =
+        (for {
+          previousList <- previously
+          trail <- itemFromLive
+        } yield {
+          val previouslyWithoutItem: List[Trail] = previousList.filterNot(_.id == update.item)
+          (trail +: previouslyWithoutItem).take(20)
+        }).orElse(itemFromLive.map(List.apply(_)))
+      this.copy(previously=updatedPreviously)
+    }
+    else
+      this
+  }
 }
 
 object UpdateList {
@@ -212,6 +236,7 @@ trait UpdateActions extends Logging {
   def updateCollectionFilter(id: String, update: UpdateList, identity: UserIdentity): Option[Block] = {
     lazy val updateJson = Json.toJson(update)
     getBlock(id)
+      .map(_.updatePreviously(update))
       .map(deleteFromLive(update, _))
       .map(deleteFromDraft(update, _))
       .map(_.sortByGroup)
@@ -252,9 +277,9 @@ trait UpdateActions extends Logging {
 
   def createBlock(id: String, identity: UserIdentity, update: UpdateList): Option[Block] = {
     if (update.live)
-      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList))), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList))), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
     else
-      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList)))), DateTime.now.toString, identity.fullName, identity.email, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList)))), DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
   }
 
   def capCollection(block: Block): Block =

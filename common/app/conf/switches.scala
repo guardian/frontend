@@ -89,8 +89,8 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
-  val CssFromStorageSwitch = Switch("Performance", "css-from-storage",
-    "If this switch is on CSS will be cached in users localStorage and read from there on subsequent requests.",
+  val InlineCriticalCss = Switch("Performance", "inline-critical-css",
+    "If this switch is on critical CSS will be inlined into the head of the document.",
     safeState = On, sellByDate = never
   )
 
@@ -202,6 +202,10 @@ object Switches extends Collections {
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
 
+  val MagentoServiceSwitch = Switch("Commercial", "magento",
+    "If this switch is on, Guardian Bookshop components will be fed by Magento instead of Bertrams.",
+    safeState = Off, sellByDate = new LocalDate(2014, 10, 1))
+
 
   // Monitoring
 
@@ -311,11 +315,6 @@ object Switches extends Collections {
     safeState = Off, sellByDate = never
   )
 
-  val ABSoulmatesLabelling = Switch("A/B Tests", "ab-soulmates-labelling",
-    "If this switch is turned on, run the SoulmatesLabelling A/B test",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 11)
-  )
-
   // Facia
 
   val ToolDisable = Switch("Facia", "facia-tool-disable",
@@ -377,7 +376,7 @@ object Switches extends Collections {
     SearchSwitch,
     ReleaseMessageSwitch,
     IdentityProfileNavigationSwitch,
-    CssFromStorageSwitch,
+    InlineCriticalCss,
     FacebookAutoSigninSwitch,
     IdentityFormstackSwitch,
     IdentityAvatarUploadSwitch,
@@ -400,6 +399,7 @@ object Switches extends Collections {
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
+    MagentoServiceSwitch,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
@@ -414,7 +414,6 @@ object Switches extends Collections {
     FaciaToolDraftContent,
     GuShiftCookieSwitch,
     ABHighCommercialComponent,
-    ABSoulmatesLabelling,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
     MetricsSwitch,

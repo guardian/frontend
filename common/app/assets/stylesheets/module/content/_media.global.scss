@@ -111,8 +111,8 @@
             display: block;
             position: relative;
             width: 100%;
-            max-width: gs-span(8);
-            margin: auto;
+            max-width: gs-span(9);
+            margin: $gs-baseline*2 auto 0;
         }
         @include mq(rightCol) {
             padding-left: $gs-gutter/2;
@@ -167,7 +167,7 @@
 .content--gallery {
     .content__headline {
         &:before {
-            @include icon(camera-yellow-large);
+            @include icon(camera-white-large);
             width: 28px !important;
 
             @include mq(mobileLandscape) {

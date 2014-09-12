@@ -1,9 +1,13 @@
 package model.commercial.books
 
-import model.commercial.{AdAgent, Segment, Ad}
 import common.ExecutionContexts
+import model.commercial.{Ad, AdAgent, Segment, intersects, lastPart}
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads._
+import play.api.libs.json.{JsPath, Reads}
+
 import scala.concurrent.Future
-import model.commercial.{intersects, lastPart}
+
 
 case class Book(title: String,
                 author: Option[String],
@@ -20,6 +24,34 @@ case class Book(title: String,
   extends Ad {
 
   def isTargetedAt(segment: Segment): Boolean = intersects(lastPart(keywordIds), segment.context.keywords)
+}
+
+object Book {
+
+  private val authorReads = {
+    ((JsPath \ "author_firstname").readNullable[String] and
+      (JsPath \ "author_lastname").readNullable[String])
+      .tupled.map { case (optFirstName, optLastName) =>
+      for {
+        firstName <- optFirstName
+        lastName <- optLastName
+      } yield s"$firstName $lastName"
+    }
+  }
+
+  implicit val bookReads: Reads[Book] = (
+    (JsPath \ "name").read[String] and
+      authorReads and
+      (JsPath \ "isbn").read[String] and
+      (JsPath \ "regular_price_with_tax").readNullable[String].map(_.map(_.toDouble)) and
+      (JsPath \ "final_price_with_tax").readNullable[Double] and
+      (JsPath \ "description").readNullable[String] and
+      (JsPath \ "images")(0).readNullable[String] and
+      (JsPath \ "product_url").readNullable[String] and
+      (JsPath \ "guardian_bestseller_rank").readNullable[String].map(_.map(_.toDouble.toInt)) and
+      ((JsPath \ "categories")(0) \ "name").readNullable[String] and
+      (JsPath \ "keywordIds").readNullable[Seq[String]].map(_ getOrElse Nil)
+    )(Book.apply _)
 }
 
 

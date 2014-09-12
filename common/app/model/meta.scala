@@ -163,6 +163,13 @@ trait Elements {
   lazy val thumbnail: Option[ImageElement] = images.find(_.isThumbnail)
 
   def elements: Seq[Element] = Nil
+  def elements(relation: String): Seq[Element] = relation match {
+    case "main" => elements.filter(_.isMain)
+    case "body" => elements.filter(_.isBody)
+    case "gallery" => elements.filter(_.isGallery)
+    case "thumbnail" => elements.filter(_.isThumbnail)
+    case _ => Nil
+  }
 
   protected lazy val images: Seq[ImageElement] = elements.flatMap {
     case image :ImageElement => Some(image)
@@ -214,6 +221,10 @@ trait Tags {
   lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
   lazy val isFeature = tones.exists(t => Tags.featureMappings.contains(t.id))
   lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
+
+  lazy val isCricketLiveBlog = isLiveBlog &&
+    tags.exists(t => t.id == "sport/england-cricket-team") &&
+    tags.exists(t => t.id == "sport/over-by-over-reports")
 }
 
 object Tags {

@@ -1,5 +1,9 @@
 @(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
+@import common.LinkTo
+@import model.{Collection, Config, FaciaComponentName}
+@import views.support.{Container, RenderClasses}
+
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
     @if(collection.items.nonEmpty) {
         <section
