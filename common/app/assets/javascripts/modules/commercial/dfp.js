@@ -398,25 +398,23 @@ define([
             /* jshint evil: true */
             $('iframe', $slot[0]).each(function (iFrame) {
 
-                var removeIFrame   = false,
-                    ifFrameContext = iFrame.contentDocument.body;
+                var ifFrameContext = iFrame.contentDocument.body,
+                    $iFrameParent  = bonzo(iFrame).parent();
 
                 if (ifFrameContext) {
 
                     for (var breakoutClass in breakoutClasses) {
                         var $breakout = $('.' + breakoutClass, ifFrameContext);
                         if ($breakout.length) {
+                            // remove the iframe before breaking out
+                            bonzo(iFrame).remove();
                             if ($breakout[0].nodeName.toLowerCase() === 'script') {
                                 // evil, but we own the returning js snippet
                                 eval($breakout.remove().html());
                             } else {
-                                bonzo(iFrame).after($breakout.remove().html());
+                                $iFrameParent.append($breakout.html());
                             }
-                            removeIFrame = true;
                         }
-                    }
-                    if (removeIFrame) {
-                        bonzo(iFrame).remove();
                     }
 
                 }
