@@ -1,7 +1,9 @@
 /* ==========================================================================
    Jobs component
    ========================================================================== */
-.commercial--v2.commercial--jobs {
+.commercial--jobs--v2 {
+
+    // Colours
     $c-commercial-jobs-1: #197caa;
     $c-commercial-jobs-2: #005689;
 
@@ -13,14 +15,15 @@
         color: $c-commercial-jobs-1;
     }
 
-    .lineitem__image {
-        border: 5px solid #fff;
+    // Line items
+    .lineitem {
+        @include mq(tablet) {
+            width: percentage(1/2);
+        }
     }
 
-    @include mq(tablet) {
-        .lineitem {
-            min-height: $gs-baseline*18;
-        }
+    .lineitem__image {
+        border: 5px solid #fff;
     }
 
     // Sector navigation
@@ -31,6 +34,7 @@
 
         @include mq(tablet) {
             padding-right: $gs-gutter/2;
+            border-right: 1px solid $c-neutral3;
         }
     }
 
@@ -57,7 +61,7 @@
     }
 }
 
-.facia-container--layout-front .commercial--v2 {
+.facia-container--layout-front .commercial--jobs--v2 {
     @include mq(faciaLeftCol) {
         .i-jobs-logo {
             margin-left: 7px;
@@ -65,7 +69,7 @@
     }
 }
 
-.facia-container--layout-content .commercial--v2 {
+.facia-container--layout-content .commercial--jobs--v2 {
     @include mq(leftCol) {
         .i-jobs-logo {
             margin-left: 7px;

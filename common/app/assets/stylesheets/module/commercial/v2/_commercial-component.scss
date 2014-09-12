@@ -23,8 +23,7 @@
     }
 
     .container__header__inner,
-    .container__body,
-    .container__foot {
+    .container__body {
         @include mq($until: leftCol) {
             margin-left: auto;
             margin-right: auto;
@@ -118,8 +117,7 @@
         }
     }
 
-    .container__body,
-    .container__foot {
+    .container__body {
         @include mq(leftCol) {
             margin-left: $left-column + $gs-gutter;
         }
@@ -147,8 +145,7 @@
     }
 
     .container__header__inner,
-    .container__body,
-    .container__foot {
+    .container__body {
         @include mq($until: faciaLeftCol) {
             margin-left: auto;
             margin-right: auto;
@@ -245,8 +242,7 @@
         }
     }
 
-    .container__body,
-    .container__foot {
+    .container__body {
         @include mq(faciaLeftCol, wide) {
             margin-left: $left-column + $gs-gutter;
         }
@@ -262,8 +258,7 @@
     .has-page-skin & {
         @include mq(wide) {
             .container__header__inner,
-            .container__body,
-            .container__foot {
+            .container__body {
                 margin-left: auto;
                 margin-right: auto;
             }
@@ -309,8 +304,7 @@
                 margin-top: $gs-baseline*-1.333;
             }
 
-            .container__body,
-            .container__foot {
+            .container__body {
                 margin-left: 0;
             }
         }
@@ -352,8 +346,7 @@
     }
 
     .container__header__inner,
-    .container__body,
-    .container__foot {
+    .container__body {
         padding-top: $gs-baseline/2;
         padding-bottom: $gs-baseline/2;
         position: relative;
@@ -364,9 +357,7 @@
         }
     }
 
-    .container__body,
-    .container__foot {
-        padding-bottom: $gs-baseline*3;
+    .container__body {
         padding-left: $gs-gutter/2;
         padding-right: $gs-gutter/2;
 

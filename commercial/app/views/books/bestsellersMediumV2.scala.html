@@ -7,7 +7,7 @@
 </style>
 
 @defining(("1_0", "2014-05-23")) { case (version, date) =>
-    <div class="commercial--v2 commercial--low commercial--medium commercial--books" role="complementary">
+    <div class="commercial--v2 commercial--books--v2 commercial--medium" role="complementary">
         <div class="facia-container__inner--commercial">
 
             <div class="container__header">
@@ -41,7 +41,7 @@
                 <ul class="lineitems">
                 @books.map { book =>
                     <li class="lineitem" itemscope itemtype="http://schema.org/Book">
-                        <a href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-@{book.isbn}-@{book.author}-@{book.title}">
+                        <a class="lineitem__link" href="@AdLink{@book.buyUrl}" class="lineitem__link" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-@{book.isbn}-@{book.author}-@{book.title}">
                             @book.jacketUrl.map { url =>
                             <img class="lineitem__image" itemprop="image" src="@url" alt=""/>
                             }
@@ -68,19 +68,6 @@
                 </ul>
             </div>
 
-            <div class="container__foot">
-                <form class="commercial__search" action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" name="QuickSearchForm">
-                    <div class="commercial__search__inner">
-                        <label for="bookshop" class="u-h">Search bookshop:</label>
-                        <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
-                        <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-medium-search">
-                            <i class="i i-search-grey-36"></i>
-                            <span class="u-h">Search the Guardian bookshop</span>
-                        </button>
-                        <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 }

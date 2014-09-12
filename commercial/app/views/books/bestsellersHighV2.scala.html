@@ -7,7 +7,7 @@
 </style>
 
 @defining(("1_0", "2014-05-8")) { case (version, date) =>
-    <div class="commercial--v2 commercial--high commercial--books" role="complementary">
+    <div class="commercial--v2 commercial--books--v2 commercial--high" role="complementary">
         <div class="facia-container__inner--commercial">
 
             <div class="container__header">
@@ -37,23 +37,58 @@
             </div>
 
             <div class="container__body">
-                <div class="commercial__relevance commercial__relevance-high u-cf">
-                    <div class="highitem" itemscope itemtype="http://schema.org/Book">
-                        <h4 class="commercial__header">Featured book</h4>
+                <div class="commercial__relevance commercial__relevance--high u-cf">
+                    <h4 class="commercial__header">Featured book</h4>
+                    <div class="lineitems" itemscope itemtype="http://schema.org/Book">
                         @books.take(1).map { book =>
-                        <a class="lineitem__link" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-image">
-                            @book.jacketUrl.map { url =>
-                            <img class="highitem__image" itemprop="image" src="@url" alt="" />
-                            }
-                        </a>
-                        <div class="highitem__details">
+                            <div class="lineitem lineitem--high">
+                                <div class="lineitem--high__feature">
+                                    <a class="lineitem__link" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-image">
+                                        @book.jacketUrl.map { url =>
+                                            <img class="lineitem__image" itemprop="image" src="@url" alt="" />
+                                        }
+                                    </a>
+                                </div>
+                                <div class="lineitem--high__offer">
+                                    <a class="lineitem__link" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
+                                        <h4 itemprop="name" class="lineitem__title">@book.title</h4>
+                                        @if(book.author) {
+                                            <p class="lineitem__meta lineitem__author" itemprop="author">By @book.author</p>
+                                        }
+                                        <meta itemprop="isbn" content="@{book.isbn}" />
+                                        <p class="lineitem__desc" itemprop="description">@book.description</p>
+                                        <p class="lineitem__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+                                        @book.price.map { price =>
+                                            RRP &pound;@("%.2f".format(price))<br/>
+                                        }
+                                        @book.offerPrice.map { price =>
+                                            <span class="lineitem__meta__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
+                                            <meta itemprop="priceCurrency" content="GBP"/>
+                                        }
+                                        </p>
+                                    </a>
+                                    <a class="lineitem__cta button button--primary button--small" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-button">
+                                        Buy now<i class="i i-arrow-white-right i-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="commercial__relevance commercial__relevance--low u-cf">
+                    <h4 class="commercial__header">You also might like</h4>
+                    <ul class="lineitems">
+                        @books.drop(1).take(2).map { book =>
+                        <li class="lineitem lineitem--low" itemscope itemtype="http://schema.org/Book">
                             <a class="lineitem__link" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
-                                <h4 itemprop="name" class="lineitem__title">@book.title</h4>
-                                @if(book.author) {
-                                    <p class="lineitem__meta lineitem__author" itemprop="author">By @book.author</p>
+                                @book.jacketUrl.map { url =>
+                                <img class="lineitem__image" itemprop="image" src="@url" alt=""/>
                                 }
-                                <meta itemprop="isbn" content="@{book.isbn}" />
-                                <p class="lineitem__description" itemprop="description">@book.description</p>
+                                <h4 class="lineitem__title" itemprop="name">@book.title</h4>
+                                @if(book.author) {
+                                <p class="lineitem__meta lineitem__author" itemprop="author">By @book.author</p>
+                                }
+                                <meta itemprop="isbn" content="@{book.isbn}"/>
                                 <p class="lineitem__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
                                 @book.price.map { price =>
                                     RRP &pound;@("%.2f".format(price))<br/>
@@ -67,59 +102,10 @@
                             <a class="lineitem__cta button button--primary button--small" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-button">
                                 Buy now<i class="i i-arrow-white-right i-right"></i>
                             </a>
-                        </div>
-                        }
-                    </div>
-                </div>
-                <div class="commercial__relevance commercial__relevance-low u-cf">
-                    <h4 class="commercial__header commercial__relevance-title-low">You also might like</h4>
-                    <ul class="lineitems">
-                        @books.drop(1).take(2).map { book =>
-                        <li itemscope itemtype="http://schema.org/Book" class="lineitem u-cf">
-                            <a href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-cover">
-                                @book.jacketUrl.map { url =>
-                                <img class="lineitem__image" itemprop="image" src="@url" alt=""/>
-                                }
-                            </a>
-                            <div class="lowitem__details">
-                                <a href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}">
-                                    <h4 class="lineitem__title" itemprop="name">@book.title</h4>
-                                    @if(book.author) {
-                                    <p class="lineitem__meta lineitem__author" itemprop="author">By @book.author</p>
-                                    }
-                                    <meta itemprop="isbn" content="@{book.isbn}"/>
-                                    <p class="lineitem__meta" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-                                    @book.price.map { price =>
-                                        RRP &pound;@("%.2f".format(price))<br/>
-                                    }
-                                    @book.offerPrice.map { price =>
-                                        <span class="lineitem__meta__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
-                                        <meta itemprop="priceCurrency" content="GBP"/>
-                                    }
-                                    </p>
-                                </a>
-                                <a class="lineitem__cta button button--primary button--small" href="@AdLink{@book.buyUrl}" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-@{book.isbn}-@{book.author}-@{book.title}-button">
-                                    Buy now<i class="i i-arrow-white-right i-right"></i>
-                                </a>
-                            </div>
                         </li>
                         }
                     </ul>
                 </div>
-            </div>
-
-            <div class="container__foot">
-                <form class="commercial__search" action="@Configuration.commercial.books_url/BerteShopWeb/search.do" method="POST" name="QuickSearchForm">
-                    <div class="commercial__search__inner">
-                        <label for="bookshop" class="u-h">Search bookshop:</label>
-                        <input id="bookshop" name="keyword" class="commercial__search__input" type="text" placeholder="Search bookshop" />
-                        <button type="submit" class="u-button-reset commercial__search__submit" data-link-name="merchandising-bookshop-v@{version}_@{date}-high-search">
-                            <i class="i i-search-grey-36"></i>
-                            <span class="u-h">Search the Guardian bookshop</span>
-                        </button>
-                        <input value="%JustOmnitureToken%" name="INTCMP" type="hidden" />
-                    </div>
-                </form>
             </div>
 
         </div>

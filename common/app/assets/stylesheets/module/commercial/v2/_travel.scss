@@ -1,11 +1,40 @@
 /* ==========================================================================
    Travel component
    ========================================================================== */
-.commercial--v2.commercial--travel {
+.commercial--travel--v2 {
+
+    // Colours
     $c-commercial-travel-1: #5ebfba;
     $c-commercial-travel-2: #52a8a4;
 
     .container__header {
         background-color: $c-commercial-travel-1;
+    }
+
+    .lineitem__meta__highlight {
+        color: $c-commercial-travel-1;
+    }
+
+    // Line items
+    .lineitem {
+        @include mq($until: tablet) {
+            width: percentage(1/2);
+
+            &:nth-child(n+3) {
+                display: none;
+            }
+        }
+
+        @include mq(tablet, rightCol) {
+            width: percentage(1/3);
+
+            &:nth-child(n+4) {
+                display: none;
+            }
+        }
+
+        @include mq(rightCol) {
+            width: percentage(1/4);
+        }
     }
 }

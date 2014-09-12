@@ -1,12 +1,18 @@
 /* ==========================================================================
    Best Buys component
    ========================================================================== */
-.commercial--v2.commercial--bestbuys {
+.commercial--bestbuys--v2 {
+
+    // Colours
     $c-commercial-bestbuys-1: #4bc6df;
     $c-commercial-bestbuys-2: #197caa;
 
     .container__header {
         background-color: $c-commercial-bestbuys-1;
+    }
+
+    .lineitem__meta__highlight {
+        color: $c-commercial-bestbuys-1;
     }
 
     .tabs__tab--selected {
@@ -17,6 +23,7 @@
         }
     }
 
+    // Line items
     .lineitem__meta {
         @include fs-data(1);
         margin-top: $gs-baseline;

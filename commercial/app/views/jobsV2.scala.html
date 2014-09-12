@@ -1,7 +1,7 @@
 @(jobs: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
 
 @defining("http://jobs.theguardian.com", "0_2", "2014-04-30") { case (jobsHost, version, date) =>
-    <div class="commercial--v2 commercial--jobs">
+    <div class="commercial--v2 commercial--jobs--v2 commercial--low">
         <div class="facia-container__inner--commercial">
 
             <div class="container__header">
@@ -20,7 +20,7 @@
             </div>
 
             <div class="container__body">
-                <div class="commercial__relevance commercial__relevance--high u-cf">
+                <div class="commercial__relevance commercial__relevance--high">
                     <h4 class="commercial__header">Sectors</h4>
                     <ul class="commercial--jobs__sectors">
                         @Seq(
@@ -44,11 +44,11 @@
                     </ul>
                 </div>
                 @if(jobs.nonEmpty) {
-                <div class="commercial__relevance commercial__relevance--low u-cf">
+                <div class="commercial__relevance commercial__relevance--low">
                     <h4 class="commercial__header">Featured jobs</h4>
                     <ul class="lineitems">
                         @jobs.map { job =>
-                            <li class="lineitem">
+                            <li class="lineitem lineitem--low">
                                 <a class="lineitem__link" href="@AdLink{@job.listingUrl}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-job-@{job.id}">
                                     <img class="lineitem__image" src="@job.recruiterLogoUrl" alt=""/>
                                     <h4 class="lineitem__title">@job.title</h4>

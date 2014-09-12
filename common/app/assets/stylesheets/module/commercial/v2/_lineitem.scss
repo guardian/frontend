@@ -2,6 +2,8 @@
    Line items
    ========================================================================== */
 .commercial--v2 {
+
+    // Common styles
     .lineitems {
         padding: 0;
         margin: 0 $gs-gutter*-.5;
@@ -20,24 +22,8 @@
             border-left: 0;
         }
 
-        @include mq($until: tablet) {
-            width: percentage(1/2);
-
-            &:nth-child(n+3) {
-                display: none;
-            }
-        }
-
-        @include mq(tablet, rightCol) {
-            width: percentage(1/3);
-
-            &:nth-child(n+4) {
-                display: none;
-            }
-        }
-
-        @include mq(rightCol) {
-            width: percentage(1/4);
+        @include mq(tablet) {
+            min-height: $gs-baseline*19;
         }
     }
 
@@ -72,7 +58,16 @@
         color: $c-neutral1;
         @include fs-headline(2);
         padding-top: 2px;
-        margin-bottom: $gs-baseline*1.5;
+        margin-bottom: $gs-baseline;
+
+        @include mq(tablet) {
+            min-height: $gs-baseline*3.5;
+        }
+    }
+
+    .lineitem__desc {
+        @include fs-headline(1);
+        color: $c-neutral2;
     }
 
     .lineitem__meta {
@@ -90,14 +85,50 @@
         font-weight: bold;
     }
 
-    .lineitem__cta {
-        margin-bottom: $gs-baseline/2;
+    // High relevance line items
+    .lineitem.lineitem--high {
+        padding-right: $gs-gutter/2;
+        width: 100%;
+
+        .lineitem--high__feature {
+            @include box-sizing(border-box);
+            width: 50%;
+            float: right;
+            padding-left: $gs-gutter/2;
+        }
+
+        .lineitem--high__offer {
+            @include box-sizing(border-box);
+            width: 50%;
+            float: left;
+            padding: 0 $gs-gutter/2 0 0;
+        }
     }
 
+    // Low relevance line items
+    .lineitem.lineitem--low {
+        @include mq($until: tablet) {
+            width: 100%;
+            border-left: 0;
+            border-bottom: 1px solid $c-neutral3;
+            padding-bottom: $gs-baseline/2;
+            margin-bottom: $gs-baseline/2;
 
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
 
+        @include mq(tablet) {
+            width: percentage(1/2);
 
+            &:first-child {
+                border-left: 1px solid $c-neutral3;
+            }
+        }
+    }
 
+    // High relevance container
     .commercial__relevance--high {
         @include box-sizing(border-box);
 
@@ -112,64 +143,33 @@
             float: left;
         }
 
-        .lineitem--high {
-            padding-right: $gs-gutter/2;
-            width: percentage(1/1);
-
-            &:first-child {
-                border-left: 0;
-            }
-
-            .lineitem__link {
-                display: block;
-                overflow: hidden;
-            }
-
-            .lineitem--high__feature {
-                @include box-sizing(border-box);
-                width: 50%;
-                float: right;
-                padding-left: $gs-gutter/2;
-                @include mq(tablet) {
-                    padding-right: $gs-gutter/2;
-                }
-            }
-
-            .lineitem--high__offer {
-                @include box-sizing(border-box);
-                width: 50%;
-                float: left;
-                padding: 0 $gs-gutter/2 0 0;
-            }
+        .lineitems {
+            margin-right: 0;
         }
     }
 
+    // Low relevance container
     .commercial__relevance--low {
         @include box-sizing(border-box);
+
         @include mq(tablet) {
             padding-left: $gs-gutter/2;
             width: 50%;
             float: left;
+
+            &:last-child {
+                border-bottom: 0;
+            }
         }
 
-        .lineitem {
-            width: percentage(1/2);
-
-            @include mq(tablet) {
-                &:first-child {
-                    border-left: 1px solid $c-neutral3;
-                }
+        @include mq($until: tablet) {
+            .lineitem__image-crop {
+                float: left;
+                width: 88px;
+                padding-bottom: 53px;
+                margin-right: $gs-gutter/2;
+                border-left: 0;
             }
         }
     }
-}
-
-
-.facia-container--layout-front .commercial--v2 {
-    
-}
-
-
-.facia-container--layout-content .commercial--v2 {
-    
 }
