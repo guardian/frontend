@@ -3,7 +3,11 @@ package common.editions
 import common._
 import org.joda.time.DateTimeZone
 
-object Uk extends Edition(id = "UK", displayName = "UK edition", timezone = DateTimeZone.forID("Europe/London")){
+object Uk extends Edition(
+  id = "UK",
+  displayName = "UK edition",
+  timezone = DateTimeZone.forID("Europe/London"),
+  lang = "en-gb"){
 
   implicit val UK = Uk
 

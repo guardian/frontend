@@ -25,6 +25,11 @@ define(['modules/vars'], function(vars) {
             }
         });
 
+        edits.type = [
+            edits.update ? 'Update' : null,
+            edits.remove ? 'Remove' : null
+        ].filter(function(s) { return s; }).join('And');
+
         return request({
             url: vars.CONST.apiBase + '/edits',
             type: 'POST',
