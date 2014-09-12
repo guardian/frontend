@@ -410,7 +410,7 @@ define([
                                 // evil, but we own the returning js snippet
                                 eval($breakout.remove().html());
                             } else {
-                                $breakout.detach().insertAfter(iFrame);
+                                bonzo(iFrame).after($breakout.remove().html());
                             }
                             removeIFrame = true;
                         }
