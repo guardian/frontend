@@ -1,6 +1,6 @@
 .container--facia-cards {
 
-    $item-gutter: $gs-gutter * .25;
+    $item-gutter: $gs-gutter * .33;
 
     .facia-slice__item {
         @include flex-display;
@@ -20,7 +20,7 @@
 
         padding-left: 0;
         padding-right: 0;
-        padding-bottom: $gs-baseline * 2;
+        padding-bottom: $gs-baseline * 2.5;
 
         margin-left: $gs-gutter * .5;
         margin-right: $gs-gutter * .5;
@@ -45,7 +45,7 @@
     }
 
     .item__title {
-        padding-top: $gs-baseline * .2;
+        padding-top: $gs-baseline * .333;
     }
 
     .item__image-container {
@@ -53,6 +53,6 @@
     }
 
     .item__meta {
-        bottom: $gs-baseline * .25;
+        bottom: $gs-baseline * .333;
     }
 }
