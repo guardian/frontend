@@ -35,14 +35,17 @@ trait CloudWatch extends Logging {
 
   object LoggingAsyncHandler extends LoggingAsyncHandler
 
-  case class AsyncHandlerForMetric(metric: FrontendMetric, points: List[DataPoint]) extends LoggingAsyncHandler {
+  case class AsyncHandlerForMetric(frontendStatisticSets: List[FrontendStatisticSet]) extends LoggingAsyncHandler {
     override def onError(exception: Exception) = {
-      metric.putDataPoints(points)
-      log.warn(s"Failed to put ${metric.name}: $exception")
+      log.warn(s"Failed to put ${frontendStatisticSets.size} metrics: $exception")
+      log.warn(s"Failed to put ${frontendStatisticSets.map(_.metric.name).mkString(",")}")
+      frontendStatisticSets.foreach { _.reset() }
       super.onError(exception)
     }
     override def onSuccess(request: PutMetricDataRequest, result: Void ) = {
-      log.info(s"Successfully put ${metric.name}")
+      log.info(s"Successfully put ${frontendStatisticSets.size} metrics")
+      log.info(s"Successfully put ${frontendStatisticSets.map(_.metric.name).mkString(",")}")
+
       super.onSuccess(request, result)
     }
   }
@@ -76,20 +79,22 @@ trait CloudWatch extends Logging {
 
   def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
     for {
-      metricGroup <- metrics.grouped(20)
-      metric <- metricGroup.filterNot(_.isEmpty)
+      metricGroup <- metrics.filterNot(_.isEmpty).grouped(20)
     } {
-      val statisticSet: FrontendStatisticSet = FrontendStatisticSet(metric.getAndResetDataPoints)
+      val metricsAsStatistics: List[FrontendStatisticSet] =
+        metricGroup.map( metric => FrontendStatisticSet(metric, metric.getAndResetDataPoints))
       val request = new PutMetricDataRequest()
         .withNamespace(metricNamespace)
         .withMetricData {
+          for(metricStatistic <- metricsAsStatistics) yield {
             new MetricDatum()
-              .withStatisticValues(frontendMetricToStatisticSet(statisticSet))
-              .withUnit(metric.metricUnit)
-              .withMetricName(metric.name)
+              .withStatisticValues(frontendMetricToStatisticSet(metricStatistic))
+              .withUnit(metricStatistic.metric.metricUnit)
+              .withMetricName(metricStatistic.metric.name)
               .withDimensions(dimensions)
+          }
         }
-      CloudWatch.cloudwatch.foreach(_.putMetricDataAsync(request, AsyncHandlerForMetric(metric, statisticSet.datapoints)))
+      CloudWatch.cloudwatch.foreach(_.putMetricDataAsync(request, AsyncHandlerForMetric(metricsAsStatistics)))
     }
   }
 
