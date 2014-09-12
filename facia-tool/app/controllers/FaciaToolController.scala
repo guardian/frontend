@@ -1,15 +1,14 @@
 package controllers
 
-import frontsapi.model._
-import frontsapi.model.UpdateList
-import play.api.mvc._
-import play.api.libs.json._
-import common.{FaciaToolMetrics, ExecutionContexts, Logging}
-import conf.Configuration
-import tools.FaciaApi
-import model.{NoCache, Cached}
-import services._
 import auth.ExpiringActions
+import common.{ExecutionContexts, FaciaToolMetrics, Logging}
+import conf.Configuration
+import frontsapi.model._
+import model.{Cached, NoCache}
+import play.api.libs.json._
+import play.api.mvc._
+import services._
+import tools.FaciaApi
 
 
 object FaciaToolController extends Controller with Logging with ExecutionContexts {
@@ -59,7 +58,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     block foreach { b =>
       UpdateActions.archivePublishBlock(id, b, identity)
       FaciaPress.press(PressCommand.forOneId(id).withPressDraft().withPressLive())
-      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(Json.obj("id" -> id), "publish", identity.email))
+      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(DiscardUpdate(id), identity.email))
     }
     ContentApiPush.notifyContentApi(Set(id))
     NoCache(Ok)
@@ -69,7 +68,7 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
     val identity = request.user
     val block = FaciaApi.discardBlock(id, identity)
     block.foreach { b =>
-      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(Json.obj("id" -> id), "discard", identity.email))
+      FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(DiscardUpdate(id), identity.email))
       UpdateActions.archiveDiscardBlock(id, b, identity)
       FaciaPress.press(PressCommand.forOneId(id).withPressDraft())
     }
@@ -79,35 +78,61 @@ object FaciaToolController extends Controller with Logging with ExecutionContext
   def collectionEdits(): Action[AnyContent] = ExpiringActions.ExpiringAuthAction { request =>
     FaciaToolMetrics.ApiUsageCount.increment()
     NoCache {
-      request.body.asJson flatMap (_.asOpt[Map[String, UpdateList]]) map {
-        case update: Map[String, UpdateList] =>
+      request.body.asJson.flatMap (_.asOpt[FaciaToolUpdate]).map {
+        case update: Update =>
           val identity = request.user
 
-          update.foreach{ case (action, u) =>
-            FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(Json.toJson(u), action, identity.email))}
+          FaciaToolUpdatesStream.putStreamUpdate(StreamUpdate(update, identity.email))
 
-          val updatedCollections: Map[String, Block] = update.collect {
-            case ("update", updateList) =>
-              UpdateActions.updateCollectionList(updateList.id, updateList, identity).map(updateList.id -> _)
-            case ("remove", updateList) =>
-              UpdateActions.updateCollectionFilter(updateList.id, updateList, identity).map(updateList.id -> _)
-          }.flatten.toMap
+          val updatedCollections = UpdateActions.updateCollectionList(update.update.id, update.update, identity)
+            .map(update.update.id -> _).toMap
 
-          val shouldUpdateLive: Boolean = update.exists(_._2.live)
+          val shouldUpdateLive: Boolean = update.update.live
 
           val collectionIds = updatedCollections.keySet
 
           FaciaPress.press(PressCommand(
             collectionIds,
             live = shouldUpdateLive,
-            draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || update.exists(_._2.draft)
-          ))
+            draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || update.update.draft)
+          )
           ContentApiPush.notifyContentApi(collectionIds)
 
           if (updatedCollections.nonEmpty)
             Ok(Json.toJson(updatedCollections)).as("application/json")
           else
             NotFound
+        case remove: Remove =>
+          val identity = request.user
+          val updatedCollections = UpdateActions.updateCollectionFilter(remove.remove.id, remove.remove, identity)
+            .map(remove.remove.id -> _).toMap
+          val shouldUpdateLive: Boolean = remove.remove.live
+          val collectionIds = updatedCollections.keySet
+          FaciaPress.press(PressCommand(
+            collectionIds,
+            live = shouldUpdateLive,
+            draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || remove.remove.draft)
+          )
+          ContentApiPush.notifyContentApi(collectionIds)
+          Ok(Json.toJson(updatedCollections)).as("application/json")
+        case updateAndRemove: UpdateAndRemove =>
+          val identity = request.user
+          val updatedCollections =
+            List(UpdateActions.updateCollectionList(updateAndRemove.update.id, updateAndRemove.update, identity).map(updateAndRemove.update.id -> _),
+                 UpdateActions.updateCollectionFilter(updateAndRemove.remove.id, updateAndRemove.remove, identity).map(updateAndRemove.remove.id -> _)
+            ).flatten.toMap
+
+          val shouldUpdateLive: Boolean = updateAndRemove.remove.live || updateAndRemove.update.live
+          val shouldUpdateDraft: Boolean = updateAndRemove.remove.draft || updateAndRemove.update.draft
+          val collectionIds = updatedCollections.keySet
+          FaciaPress.press(PressCommand(
+            collectionIds,
+            live = shouldUpdateLive,
+            draft = (updatedCollections.values.exists(_.draft.isEmpty) && shouldUpdateLive) || shouldUpdateDraft)
+          )
+          ContentApiPush.notifyContentApi(collectionIds)
+          Ok(Json.toJson(updatedCollections)).as("application/json")
+        case _ => NotAcceptable
       } getOrElse NotFound
     }
   }
