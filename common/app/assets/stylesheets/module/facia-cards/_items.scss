@@ -54,5 +54,9 @@
 
     .item__meta {
         bottom: $gs-baseline * .333;
+
+        .item__timestamp i {
+            top: 2px;
+        }
     }
 }

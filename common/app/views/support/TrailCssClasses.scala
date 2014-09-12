@@ -6,7 +6,7 @@ object TrailCssClasses {
   def iClockClass(trail: Trail) = {
     CardStyle(trail) match {
       case Media => "i-clock-yellow"
-      case Feature => "i-clock-light-purple"
+      case Feature => "i-clock-light-pink"
       case LiveBlog => "i-clock-light-pink"
       case _ => "i-clock-light-grey"
     }
