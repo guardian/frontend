@@ -3,6 +3,7 @@ package model
 import common.{Edition, ExecutionContexts, Logging}
 import dfp.DfpAgent
 import org.joda.time.DateTime
+import play.api.libs.json.Json
 
 case class Config(
                    id: String,
@@ -70,16 +71,9 @@ case class SeoData(
   title: Option[String],
   description: Option[String])
 
-case class FrontProperties(
-  onPageDescription: Option[String],
-  imageUrl: Option[String],
-  imageWidth: Option[String],
-  imageHeight: Option[String],
-  isImageDisplayed: Boolean,
-  editorialType: Option[String]
-)
-
 object SeoData extends ExecutionContexts with Logging {
+
+  implicit val seoFormatter = Json.format[SeoData]
 
   val editions = Edition.all.map(_.id.toLowerCase)
 
@@ -104,6 +98,19 @@ object SeoData extends ExecutionContexts with Logging {
   def descriptionFromWebTitle(webTitle: String): Option[String] = Option(s"Latest $webTitle news, comment and analysis from the Guardian, the world's leading liberal voice")
 
   lazy val empty: SeoData = SeoData("", "", "", None, None)
+}
+
+case class FrontProperties(
+  onPageDescription: Option[String],
+  imageUrl: Option[String],
+  imageWidth: Option[String],
+  imageHeight: Option[String],
+  isImageDisplayed: Boolean,
+  editorialType: Option[String]
+)
+
+object FrontProperties{
+  implicit val propsFormatter = Json.format[FrontProperties]
 }
 
 object FaciaComponentName {
