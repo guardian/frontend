@@ -3,6 +3,7 @@ define([
     'common/utils/$',
     'common/utils/config',
     'common/modules/component',
+    'common/modules/gallery/lightbox',
     'bonzo',
     'qwery'
 ], function(
@@ -10,6 +11,7 @@ define([
     $,
     config,
     Component,
+    LightboxGallery,
     bonzo,
     qwery
 ) {
@@ -52,6 +54,7 @@ define([
     };
 
     var ready = function (config) {
+        LightboxGallery.init();
         verticallyResponsiveImages();
         $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
         mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
