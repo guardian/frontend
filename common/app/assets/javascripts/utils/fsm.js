@@ -47,14 +47,14 @@ define([], function() {
         }
     };
 
-    FiniteStateMachine.prototype.trigger = function(event) {
+    FiniteStateMachine.prototype.trigger = function(event, data) {
 
         this.log('fsm: (event)', event);
 
         var state = this.context.state,
             noop = function() {};
 
-        (this.states[state].events[event] || noop).apply(this.context);
+        (this.states[state].events[event] || noop).call(this.context, data);
 
         // execute leave/enter callbacks if present and we have changed state
         if (state !== this.context.state || this.context.reloadState) {

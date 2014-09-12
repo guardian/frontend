@@ -11,8 +11,7 @@ define([
     'common/utils/detect',
     'common/modules/component',
     'common/modules/ui/images',
-    'common/utils/url',
-    'common/utils/easing'
+    'common/utils/url'
 ], function (
     $,
     _,
@@ -26,8 +25,7 @@ define([
     detect,
     Component,
     imagesModule,
-    url,
-    easing
+    url
 ) {
     function GalleryLightbox() {
 
@@ -35,8 +33,7 @@ define([
         this.adStep = 4; // advert between every 4th and 5th image
         this.showEndslate = !detect.isBreakpoint('mobile');
         this.showAdverts  = false;
-        this.swipeThreshold = 0.3; // minimum width (0 to 1.0) for swipe to trigger next/prev event
-        this.swipeSpeed = 250; // ms to ease into next image after touchend
+        this.useSwipe = detect.hasTouchScreen();
 
         // TEMPLATE
         function generateButtonHTML(label) {
@@ -48,7 +45,7 @@ define([
 
         this.imgElementHtml =
             '<li class="gallery-lightbox__item">' +
-                '<img class="gallery-lightbox__img" src="${src}">' +
+                '<img class="gallery-lightbox__img js-gallery-lightbox-img"">' +
                 '<div class="gallery-lightbox__info">' +
                     '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
                         '<span class="gallery-lightbox__index">${index}</span>' +
@@ -93,10 +90,6 @@ define([
         this.$indexEl = $('.js-gallery-index', this.lightboxEl);
         this.$countEl = $('.js-gallery-count', this.lightboxEl);
         this.$contentEl = $('.js-gallery-content', this.lightboxEl);
-        this.$imgTitleEl = $('.js-gallery-img-title', this.lightboxEl);
-        this.$imgCaptionEl = $('.js-gallery-img-caption', this.lightboxEl);
-        this.$imgCreditEl = $('.js-gallery-img-credit', this.lightboxEl);
-        this.$advert = $('.js-gallery-lightbox-ad', this.lightboxEl);
         this.nextBtn = qwery('.js-gallery-next', this.lightboxEl)[0];
         this.prevBtn = qwery('.js-gallery-prev', this.lightboxEl)[0];
         this.closeBtn = qwery('.js-gallery-close', this.lightboxEl)[0];
@@ -105,12 +98,13 @@ define([
         bean.on(this.prevBtn, 'click', this.trigger.bind(this, 'prev'));
         bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
-        bean.one(this.lightboxEl[0], 'touchstart', this.disableHover.bind(this));
         this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
         this.toggleInfo = this.trigger.bind(this, 'toggle-info');
         this.resize = this.trigger.bind(this, 'resize');
 
-        this.initSwipe();
+        if (detect.hasTouchScreen()) {
+            this.disableHover();
+        }
 
         bean.on(window, 'popstate', function(event) {
             if (event.state === null) {
@@ -132,9 +126,9 @@ define([
     }
 
     GalleryLightbox.prototype.initSwipe = function() {
-
+        this.swipe && this.swipe.kill();
+        this.$lightboxEl.addClass('gallery-lightbox--swipe');
         require('js!swipe', function() {
-
             this.swipe = new Swipe(qwery('.js-gallery-swipe')[0], {
                 startSlide: this.index,
                 speed: 200,
@@ -147,50 +141,6 @@ define([
                     this.trigger(swipeDir);
                 }.bind(this)
             });
-
-
-        }.bind(this));
-
-        return;
-
-        var threshold, ox, dx;
-
-        bean.on(this.$contentEl[0], 'touchstart', function(e) {
-            threshold = this.$contentEl.dim().width * this.swipeThreshold;
-            ox = e.touches[0].pageX;
-            dx = 0;
-        }.bind(this));
-
-        bean.on(this.$contentEl[0], 'touchmove', function(e) {
-            dx = e.touches[0].pageX - ox;
-            this.$contentEl.css('left', dx);
-        }.bind(this));
-
-        bean.on(this.$contentEl[0], 'touchend', function() {
-            var direction;
-            if (Math.abs(dx) > threshold) {
-                direction = dx > threshold ? 1 : -1;
-            } else {
-                direction = 0;
-            }
-            var targetLeft = this.$contentEl.dim().width * direction,
-                remaining = targetLeft - dx,
-                ease = easing.create('easeOutQuad', this.swipeSpeed),
-                interval = window.setInterval(function(){
-                var easeVal = ease();
-                if (easeVal < 1) {
-                    var leftVal = dx + (easeVal * remaining);
-                    this.$contentEl.css('left', leftVal);
-                } else {
-                    this.$contentEl.css('left', 0);
-                    if (direction === 1) {
-                        this.trigger('prev');
-                    } else if (direction === -1) {
-                        this.trigger('next');
-                    }
-                    window.clearInterval(interval);
-                }
-            }.bind(this), 10);
         }.bind(this));
     };
 
@@ -198,14 +148,17 @@ define([
         this.$lightboxEl.removeClass('gallery-lightbox--hover');
     };
 
-    GalleryLightbox.prototype.trigger = function(event) {
-        this.fsm.trigger(event);
+    GalleryLightbox.prototype.trigger = function(event, data) {
+        this.fsm.trigger(event, data);
     };
 
     GalleryLightbox.prototype.loadGalleryfromJson = function(galleryJson, startIndex) {
-        this.galleryJson = galleryJson;
         this.index = startIndex;
-        this.trigger('open');
+        if (this.galleryJson && galleryJson.id === this.galleryJson.id) {
+            this.trigger('open');
+        } else {
+            this.trigger('loadJson', galleryJson);
+        }
     };
 
     GalleryLightbox.prototype.getImgSrc = function(imgJson) {
@@ -223,30 +176,13 @@ define([
 
     GalleryLightbox.prototype.endslate = new Component();
 
-    GalleryLightbox.prototype.createPreloadImages = function() {
-
-        if (this.index !== this.imgCount) {
-            var nextIndex = this.state === 'endslate' ? 0 : this.index,
-                nextImg = this.galleryJson.images[nextIndex],
-                nextImgHtml = '<img class="gallery-lightbox__img gallery-lightbox__img--next" src="' + this.getImgSrc(nextImg) + '"/>';
-            this.nextImgEl = bonzo.create(nextImgHtml)[0];
-            this.$contentEl.append(this.nextImgEl);
-        }
-
-        // preload prev image if we aren't at the beginning
-        if (this.index !== 1) {
-            var prevIndex = this.state === 'endslate' ? this.imgCount-1 : this.index-2,
-                prevImg = this.galleryJson.images[prevIndex],
-                prevImgHtml = '<img class="gallery-lightbox__img gallery-lightbox__img--prev" src="' + this.getImgSrc(prevImg) + '"/>';
-            this.prevImgEl = bonzo.create(prevImgHtml)[0];
-            this.$contentEl.append(this.prevImgEl);
-        }
-
-    };
-
-    GalleryLightbox.prototype.destroyPreloadImages = function() {
-        bonzo(this.nextImgEl).remove();
-        bonzo(this.prevImgEl).remove();
+    GalleryLightbox.prototype.loadSurroundingImages = function(index, count) {
+        _([-1,0,1]).each(function(i){
+            var imgIndex = index+i === 0 ? count - 1 : (index-1+i) % count, // wrap both ways
+                imgSrc = this.getImgSrc(this.images[imgIndex]),
+                $img = bonzo(this.$images[imgIndex]);
+            $img.attr('src', imgSrc); // src can change with width so overwrite every time
+        }.bind(this));
     };
 
     GalleryLightbox.prototype.states = {
@@ -258,23 +194,32 @@ define([
             },
             leave: function() {
                 this.show();
+                url.pushUrl({}, document.title, '/' + this.galleryJson.id);
             },
             events: {
                 'open': function() {
-                    url.pushUrl({}, document.title, '/' + this.galleryJson.id);
-                    this.imgCount = this.galleryJson.images.length;
-                    this.$countEl.text(this.imgCount + (this.showEndslate ? 1 : 0));
+                    this.swipe && this.swipe.slide(this.index, 0);
+                    this.state = 'image';
+                },
+                'loadJson': function(json) {
+                    this.galleryJson = json;
+                    this.images = json.images;
+                    this.$countEl.text(this.images.length + (this.showEndslate ? 1 : 0));
 
-                    _.each(this.galleryJson.images, function(img, i) {
-                        var thisEl = bonzo.create(_.template(this.imgElementHtml, {
-                            src: img.src,
-                            index: i+1,
-                            count: this.imgCount,
-                            caption: img.caption,
-                            credit: img.credit
-                        }));
-                        this.$contentEl.append(thisEl);
-                    }.bind(this));
+                    var imagesHtml = _(this.images)
+                        .map(function(img, i) {
+                            return _(this.imgElementHtml)
+                                .template({count: this.images.length, index: i + 1}, {imports: img});
+                        }.bind(this))
+                        .join('');
+
+                    this.$contentEl.html(imagesHtml);
+
+                    this.$images = $('.js-gallery-lightbox-img', this.$contentEl[0]);
+
+                    if (this.useSwipe) {
+                        this.initSwipe();
+                    }
 
                     this.state = 'image';
                 }
@@ -285,34 +230,26 @@ define([
             enter: function() {
                 url.pushUrl({}, document.title, '/' + this.galleryJson.id + '?index=' + this.index, true);
 
-                this.$lightboxEl.addClass('gallery-lightbox--loading-img');
-
-                // create image and append to lightbox
-                var img = this.galleryJson.images[this.index - 1],
-                    imgHtml = '<img class="gallery-lightbox__img" src="' + this.getImgSrc(img) + '"/>';
-                this.imgEl = bonzo.create(imgHtml)[0];
-                this.$contentEl.append(this.imgEl);
-
                 // event bindings
-                bean.on(this.imgEl, 'load', this.trigger.bind(this, 'loaded'));
                 bean.on(this.$contentEl[0], 'click', this.toggleInfo);
                 mediator.on('window:resize', this.resize);
+                if (!this.$images[this.index-1].src) {
+                    this.$lightboxEl.addClass('gallery-lightbox--loading-img');
+                    bean.one(this.$images[this.index-1], 'load', this.trigger.bind(this, 'loaded'));
+                }
 
                 // meta
                 this.$indexEl.text(this.index);
-                this.$imgTitleEl.text(img.title);
-                this.$imgCaptionEl.html(img.caption);
-                this.$imgCreditEl.text(img.displayCredit ? img.credit : '');
 
-                this.createPreloadImages();
+                // load prev/current/next
+                this.loadSurroundingImages(this.index, this.images.length);
 
-                if(this.index > (this.imgCount - 3)) {
+                if(this.index > (this.images.length - 3)) {
                     this.loadEndslate();
                 }
             },
             leave: function() {
                 bonzo(this.imgEl).remove();
-                this.destroyPreloadImages();
                 bean.off(this.$contentEl[0], 'click', this.toggleInfo);
                 mediator.off('window:resize', this.resize);
                 this.imgEl = undefined;
@@ -321,7 +258,7 @@ define([
                 'next': function() {
                     this.trackInteraction('keyboard:next');
                     this.pulseButton(this.nextBtn);
-                    if (this.index === this.imgCount) { // last img
+                    if (this.index === this.images.length) { // last img
                         if (this.showEndslate) {
                             this.state = 'endslate';
                         } else {
@@ -344,7 +281,7 @@ define([
                         if (this.showEndslate) {
                             this.state = 'endslate';
                         } else {
-                            this.index = this.imgCount;
+                            this.index = this.images.length;
                             this.reloadState = true;
                         }
                     }
@@ -364,8 +301,7 @@ define([
                     this.$lightboxEl.removeClass('gallery-lightbox--loading-img');
                 },
                 'resize': function() {
-                    var imgSrc = this.getImgSrc(this.galleryJson.images[this.index - 1]);
-                    bonzo(this.imgEl).attr('src', imgSrc);
+                    this.loadSurroundingImages(this.index, this.images.length); // regenerate src
                 },
                 'close': function() { this.state = 'closed'; }
             }
@@ -397,12 +333,10 @@ define([
         'endslate': {
             enter: function() {
                 this.loadEndslate();
-                this.$indexEl.text(this.imgCount + 1);
-                this.index = this.imgCount + 1;
-                this.createPreloadImages();
+                this.$indexEl.text(this.images.length + 1);
+                this.index = this.images.length + 1;
             },
             leave: function() {
-                this.destroyPreloadImages();
             },
             events: {
                 'next': function() {
@@ -412,7 +346,7 @@ define([
                 },
                 'prev': function() {
                     this.pulseButton(this.prevBtn);
-                    this.index = this.imgCount;
+                    this.index = this.images.length;
                     this.state = 'image';
                 },
                 'close': function() { this.state = 'closed'; }

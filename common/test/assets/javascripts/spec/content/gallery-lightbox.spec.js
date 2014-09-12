@@ -15,9 +15,11 @@ define([
 ) {
 
     function testImageSrc(srcActual, srcTemplate) {
-        var parts1 = srcTemplate.split('/'),
-            parts2 = srcActual.split('/');
-        expect(parts1[parts1.length - 1]).toContain(parts2[parts2.length - 1]);
+        if(expect(srcActual).not.toBe(null)) {
+            var parts1 = srcTemplate.split('/'),
+                parts2 = (srcActual).split('/');
+            expect(parts1[parts1.length - 1]).toContain(parts2[parts2.length - 1]);
+        }
     }
 
     describe("Gallery lightbox", function() {
@@ -43,8 +45,8 @@ define([
         });
 
         it("should start on correct index", function() {
-            lightbox.loadGalleryfromJson(testJson, 4); // 1-based index
-            testImageSrc(bonzo(lightbox.imgEl).attr('src'), testJson.images[3].src);
+            lightbox.loadGalleryfromJson(testJson, 4);
+            expect(lightbox.index).toBe(4);
         });
 
         it("should hide when closed", function() {
@@ -60,22 +62,39 @@ define([
             expect(lightbox.$lightboxEl.hasClass('gallery-lightbox--closed')).toBe(true);
         });
 
-        it("should load next image when next button is clicked", function() {
+        it("should load surrounding images", function() {
             lightbox.loadGalleryfromJson(testJson, 1);
-            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[0].src);
-            bean.fire(lightbox.nextBtn, 'click');
-            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[1].src);
-            bean.fire(lightbox.nextBtn, 'click');
-            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[2].src);
+            lightbox.loadSurroundingImages(4, testJson.images.length);
+            expect(lightbox.$images[2].src).toBeTruthy();
+            expect(lightbox.$images[3].src).toBeTruthy();
+            expect(lightbox.$images[4].src).toBeTruthy();
+            expect(lightbox.$images[5].src).toBeFalsy();
+            testImageSrc(lightbox.$images[2].src, testJson.images[2].src);
+            testImageSrc(lightbox.$images[3].src, testJson.images[3].src);
+            testImageSrc(lightbox.$images[4].src, testJson.images[4].src);
         });
 
-        it("should load previous image when prev button is clicked", function() {
-            lightbox.loadGalleryfromJson(testJson, 4);
-            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[3].src);
+        it("should load/preload images correctly", function() {
+            lightbox.loadGalleryfromJson(testJson, 1);
+
+            expect      (lightbox.$images[testJson.images.length-2].src).toBeFalsy();
+            testImageSrc(lightbox.$images[testJson.images.length-1].src, testJson.images[testJson.images.length-1].src);
+            testImageSrc(lightbox.$images[0].src, testJson.images[0].src);
+            testImageSrc(lightbox.$images[1].src, testJson.images[1].src);
+            expect      (lightbox.$images[2].src).toBeFalsy();
+
+            bean.fire(lightbox.nextBtn, 'click');
+            testImageSrc(lightbox.$images[2].src, testJson.images[2].src);
+            expect      (lightbox.$images[3].src).toBeFalsy();
+            bean.fire(lightbox.nextBtn, 'click');
+            testImageSrc(lightbox.$images[3].src, testJson.images[3].src);
+            expect      (lightbox.$images[4].src).toBeFalsy();
+
             bean.fire(lightbox.prevBtn, 'click');
-            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[2].src);
             bean.fire(lightbox.prevBtn, 'click');
-            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[1].src);
+            bean.fire(lightbox.prevBtn, 'click');
+            testImageSrc(lightbox.$images[testJson.images.length-2].src, testJson.images[testJson.images.length-2].src);
+            expect      (lightbox.$images[testJson.images.length-3].src).toBeFalsy();
         });
 
         it("should show the endslate after the last image", function() {
@@ -99,29 +118,6 @@ define([
             expect(lightbox.$lightboxEl.hasClass('gallery-lightbox--endslate')).toBe(true);
             bean.fire(lightbox.nextBtn, 'click');
             expect(lightbox.$lightboxEl.hasClass('gallery-lightbox--endslate')).toBe(false);
-        });
-
-        it("should show adverts after every nth image", function() {
-            lightbox.loadGalleryfromJson(testJson, 1);
-            lightbox.showAdverts = true;
-            lightbox.adStep = 4;
-            var expectAdvert = function(bool) {
-                expect(lightbox.$lightboxEl.hasClass('gallery-lightbox--advert')).toBe(bool);
-            };
-
-            expectAdvert(false); // 1
-            bean.fire(lightbox.nextBtn, 'click');
-            expectAdvert(false); // 2
-            bean.fire(lightbox.nextBtn, 'click');
-            expectAdvert(false); // 3
-            bean.fire(lightbox.nextBtn, 'click');
-            expectAdvert(false); // 4
-            bean.fire(lightbox.nextBtn, 'click');
-            expectAdvert(true); // advert
-            expect(lightbox.adIndex).toBe(1);
-            bean.fire(lightbox.nextBtn, 'click');
-            expectAdvert(false); // 5
-            testImageSrc(lightbox.$contentEl.attr('data-src'), testJson.images[4].src);
         });
 
         it("should toggle info when info button is clicked", function() {
