@@ -1,0 +1,56 @@
+.container--facia-cards {
+    .tone-live {
+        &.item {
+            background-color: $c-live;
+            &,
+            & a {
+                color: #ffffff;
+            }
+        }
+
+        .item__meta {
+            &,
+            & a {
+                color: $c-liveMute;
+            }
+        }
+    }
+
+    .tone-comment {
+        &.item {
+            background-color: $c-commentBackground;
+        }
+
+        .item__title .i {
+            display: inline-block;
+            height: .9em;
+            width: 1em;
+            background-position: center;
+        }
+    }
+
+    .tone-feature {
+        &.item {
+            background-color: $c-featureDefault;
+
+            &,
+            & a {
+                color: $c-featureAccent;
+            }
+        }
+
+        .item__title .i {
+            display: inline-block;
+            height: .9em;
+            width: 1em;
+            background-position: center;
+        }
+
+        .item__meta {
+            &,
+            & a {
+                color: mix(#ffffff, $c-featureAccent, 50%);
+            }
+        }
+    }
+}

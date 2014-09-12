@@ -69,7 +69,9 @@
 @import 'module/facia/_row-pattern';
 @import 'module/facia/_linkslist';
 @import 'module/facia/_facia-container';
-@import 'module/facia/_facia-container--new-style';
+@import 'module/facia-cards/_container';
+@import 'module/facia-cards/_items';
+@import 'module/facia-cards/_tones';
 @include facia-container-head-common;
 
 
