@@ -100,9 +100,7 @@
     }
 }
 .top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, rightCol) {
-        text-align: center;
-    }
+    text-align: center;
 }
 
 /**
