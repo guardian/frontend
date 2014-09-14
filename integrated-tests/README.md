@@ -24,7 +24,7 @@ Setup
  
 In the file `[USER_HOME]/.gu/frontend.properties` you can configure the following...
 
-    #integration tests - all these are optional and have defaults
+    #integration tests - all these are optional and, where possible, have defaults
     
     # if set to remote then tests will run on saucelabs
     # uncomment to run tests against saucelabs
