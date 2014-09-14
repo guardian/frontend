@@ -5,24 +5,24 @@ import java.util.Properties
 
 object Config {
 
-  private val userConfig = new File(s"${System.getProperty("user.home")}/.gu/integrated-tests.properties")
-  private val machineConfig = new File(s"/etc/gu/integrated-tests.properties")
+  private val userConfig = new File(s"${System.getProperty("user.home")}/.gu/frontend.properties")
+  private val machineConfig = new File(s"/etc/gu/frontend.properties")
 
-  private val configFile: Option[File] = if (machineConfig.exists()) {
-    Some(machineConfig)
-  } else if (userConfig.exists()) {
-    Some(userConfig)
-  } else {
-    None
-  }
+  // NOTE - order is important
+  private val configFiles: Seq[File] = Seq(
+    someFileOrNone(userConfig),
+    someFileOrNone(machineConfig)
+  ).flatten
+
+  private def someFileOrNone(file: File) = if (file.exists) Some(file) else None
 
   private val properties = {
-    val props =new Properties()
-    configFile.foreach(file => props.load(new FileInputStream(file)))
+    val props = new Properties()
+    configFiles.foreach(file => props.load(new FileInputStream(file)))
     props
   }
 
-  val remoteMode = optionalProperty("tests.mode").contains("remote")
+  val remoteMode = optionalProperty("tests.mode").exists(_ == "remote")
   val baseUrl = optionalProperty("tests.baseUrl").getOrElse("http://www.theguardian.com")
 
   object stack {

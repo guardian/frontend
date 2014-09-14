@@ -9,7 +9,6 @@ class FootballLiveBlogComponentsTest extends FreeSpec with Matchers with Driver 
 
   "Football live blogs" - {
 
-
     go to theguardian("/football/live/2014/aug/16/-sp-arsenal-v-crystal-palace-premier-league-live-report")
 
     "should show the 'scores' component" in {
