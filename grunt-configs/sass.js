@@ -6,7 +6,8 @@ module.exports = function(grunt, options) {
             style: 'compressed',
             sourcemap: options.isDev,
             noCache: true,
-            quiet: options.isDev ? false : true
+            quiet: options.isDev ? false : true,
+            bundleExec: true
         },
         compileStyleguide: {
             files: [{

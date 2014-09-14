@@ -68,7 +68,10 @@ object Frontend extends Build with Prototypes {
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
-    libraryDependencies += "com.gu" %% "pa-client" % paVersion,
+    libraryDependencies ++= Seq(
+      "com.gu" %% "pa-client" % paVersion,
+      "com.typesafe.akka" %% "akka-contrib" % "2.3.5"
+    ),
     TwirlKeys.templateImports ++= Seq(
       "pa._",
       "feed._",
@@ -96,11 +99,18 @@ object Frontend extends Build with Prototypes {
       "com.typesafe.slick" %% "slick" % "1.0.0",
       "postgresql" % "postgresql" % "8.4-703.jdbc4" from "http://jdbc.postgresql.org/download/postgresql-8.4-703.jdbc4.jar",
       "com.gu" %% "pa-client" % paVersion,
-      "com.google.api-ads" % "dfp-axis" % "1.27.0"
+      "com.google.api-ads" % "dfp-axis" % "1.27.0",
+      anorm,
+      jdbc
     )
   )
 
-  val faciaTool = application("facia-tool").dependsOn(commonWithTests)
+  val faciaTool = application("facia-tool").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies ++= Seq(
+      "org.julienrf" %% "play-json-variants" % "0.2"
+    )
+  )
+
 
   val faciaPress = application("facia-press").dependsOn(commonWithTests)
 

@@ -12,7 +12,6 @@ import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.openplatform.contentapi.ApiError
 import controllers.ImageContentPage
-import conf.Switches.RelatedContentSwitch
 
 object IndexPagePagination {
   def pageSize: Int = 20 //have a good think before changing this
@@ -29,13 +28,21 @@ trait Index extends ConciergeRepository with QueryDefaults {
     val conversions: Map[String, String] =
       Map("content" -> "type")
 
-    conversions.foldLeft(tag){
+    val convertedTag = conversions.foldLeft(tag){
       case (newTag, (from, to)) =>
         if (newTag.startsWith(s"$from/"))
           newTag.replace(from, to)
         else
           newTag
     }
+
+    convertedTag match {
+      // under the hoods some uk-news/... tags are actually uk/... Fixes loads of Googlebot 404s
+      // this just is an or statement e.g. uk-news/foo OR uk/foo
+      case UkNewsSection(lastPart) => s"($convertedTag|uk/$lastPart)"
+      case other => other
+    }
+
   }
 
   def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean): Future[Either[IndexPage, PlayResult]] = {
@@ -70,8 +77,8 @@ trait Index extends ConciergeRepository with QueryDefaults {
         case Nil => Right(NotFound)
         case head :: _ =>
           //we can use .head here as the query is guaranteed to return the 2 tags
-          val tag1 = head.tags.find(_.id == firstTag).head
-          val tag2 = head.tags.find(_.id == secondTag).head
+          val tag1 = findTag(head, firstTag)
+          val tag2 = findTag(head, secondTag)
           val pageName = s"${tag1.name} + ${tag2.name}"
           val page = Page(
             s"$leftSide+$rightSide",
@@ -90,6 +97,12 @@ trait Index extends ConciergeRepository with QueryDefaults {
       //this is the best handle we have on a wrong 'page' number
       .recover{ case ApiError(400, _) => Right(Found(s"/$leftSide+$rightSide")) }
   }
+
+  private def findTag(content: Content, tagId: String) = content.tags.filter(tag =>
+    tagId.contains(tag.id))
+    .sortBy(tag => tagId.replace(tag.id, "")) //effectively sorts by best match
+    .head
+
 
   private def pagination(response: ItemResponse) = Some(Pagination(
     response.currentPage.getOrElse(1),
@@ -141,7 +154,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
     else
       Nil
 
-    val latest: Seq[Content] = response.results.map(Content(_)).filterNot(c => leadContent.map(_.id).exists(_ == c.id))
+    val latest: Seq[Content] = response.results.map(Content(_)).filterNot(c => leadContent.map(_.id).contains(c.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.id)
     tag map { IndexPage(_, allTrails) }
   }
@@ -150,9 +163,10 @@ trait Index extends ConciergeRepository with QueryDefaults {
   // are at the top of the file :(
   val SinglePart = """([\w\d\.-]+)""".r
   val SeriesInSameSection = """(series/[\w\d\.-]+)""".r
+  val UkNewsSection = """^uk-news/(.+)$""".r
 }
 
-trait ImageQuery extends ConciergeRepository with QueryDefaults {
+trait ImageQuery extends ConciergeRepository {
 
   def image(edition: Edition, path: String): Future[Either[ImageContentPage, PlayResult]]= {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
@@ -160,7 +174,7 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
       .showExpired(true)
       .showFields("all")
       .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
-      .response.map { response =>
+      .response.map { response:ItemResponse =>
       val mainContent: Option[Content] = response.content.filter { c => c.isImageContent } map {Content(_)}
       val storyPackage: List[Trail] = response.storyPackage map { Content(_) }
       mainContent.map { content => Left(ImageContentPage(content, RelatedContent(content, response))) }.getOrElse(Right(NotFound))

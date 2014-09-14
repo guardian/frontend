@@ -85,8 +85,8 @@ case class TagIndexPage(
     Maps.insertWith(acc, tag.webTitle, 1) { _ + _ }
   }
 
-  def hasDuplicateWebTitle(tagDefiniton: TagDefinition) =
-    countsByWebTitle.get(tagDefiniton.webTitle).exists(_ > 1)
+  def hasDuplicateWebTitle(tagDefinition: TagDefinition) =
+    countsByWebTitle.get(tagDefinition.webTitle).exists(_ > 1)
 
   def indexTitle(tagDefinition: TagDefinition) =
     tagDefinition.webTitle + (if (hasDuplicateWebTitle(tagDefinition))

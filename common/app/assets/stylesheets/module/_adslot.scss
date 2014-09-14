@@ -100,27 +100,7 @@
     }
 }
 .top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, rightCol) {
-        text-align: center;
-    }
-    @include mq(rightCol) {
-        margin: 0 0 0 $gs-gutter;
-    }
-    @include mq(leftCol) {
-        margin: 0 auto;
-        max-width: gs-span(14) + ($gs-gutter*2) - ($left-column + ($gs-gutter*2));
-        padding-left: $left-column + ($gs-gutter*2);
-    }
-    @include mq(wide) {
-        max-width: gs-span(16) + ($gs-gutter*2) - ($left-column-wide + ($gs-gutter*2));
-        padding-left: $left-column-wide + ($gs-gutter*2);
-    }
-    @include mq(tablet, rightCol) {
-        .ad-slot__label {
-            width: 728px;
-            margin: 0 auto;
-        }
-    }
+    text-align: center;
 }
 
 /**
@@ -130,11 +110,14 @@
 .ad-slot--container-inline,
 .ad-slot--gallery-inline,
 .ad-slot--liveblog-inline {
+    width: 300px;
     margin: $gs-baseline auto;
     min-height: 50 + $mpu-ad-label-height;
-    width: 320px;
     text-align: center;
 
+    @include mq(mobileLandscape) {
+        width: 320px;
+    }
     @include mq(tablet) {
         height: 250px + $mpu-ad-label-height;
         width: auto;
@@ -396,11 +379,11 @@
             @include comm-paid-logo-placement;
         }
     }
-    
+
     @include mq(faciaLeftCol) {
         @include comm-paid-logo-placement;
     }
-    
+
     @include mq(wide) {
         .has-page-skin & {
             margin-left: 50%;

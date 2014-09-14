@@ -1,14 +1,9 @@
 package model
 
-import org.joda.time.DateTime
-import common.{Logging, ExecutionContexts, Edition}
-import play.api.libs.json.Json
-import scala.concurrent.Future
-import com.gu.openplatform.contentapi.model.ItemResponse
-import conf.LiveContentApi
-import services.ConfigAgent
-import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
+import common.{Edition, ExecutionContexts, Logging}
 import dfp.DfpAgent
+import org.joda.time.DateTime
+import play.api.libs.json.Json
 
 case class Config(
                    id: String,
@@ -53,6 +48,9 @@ case class Collection(curated: Seq[Content],
                       updatedBy: Option[String],
                       updatedEmail: Option[String]) extends implicits.Collections with CollectionItems {
   override lazy val items: Seq[Content] = (curated ++ editorsPicks ++ mostViewed ++ results).distinctBy(_.url)
+
+  def isBackFillEmpty =
+    (editorsPicks ++ mostViewed ++ results).isEmpty
 }
 
 object Collection {
@@ -74,7 +72,8 @@ case class SeoData(
   description: Option[String])
 
 object SeoData extends ExecutionContexts with Logging {
-  implicit val jsonFormat = Json.format[SeoData]
+
+  implicit val seoFormatter = Json.format[SeoData]
 
   val editions = Edition.all.map(_.id.toLowerCase)
 
@@ -98,57 +97,20 @@ object SeoData extends ExecutionContexts with Logging {
 
   def descriptionFromWebTitle(webTitle: String): Option[String] = Option(s"Latest $webTitle news, comment and analysis from the Guardian, the world's leading liberal voice")
 
-  def getSeoData(path: String): Future[SeoData] = {
-    val itemResponseForPath: Future[Option[ItemResponse]] = getSectionOrTagWebTitle(path)
-
-    for {
-      ir <- itemResponseForPath
-    } yield {
-      val sc = ConfigAgent.getSeoDataJsonFromConfig(path)
-      val sp = SeoData.fromPath(path)
-
-      val navSection:  String = sc.navSection.orElse(ir.flatMap(getNavSectionFromItemResponse)).getOrElse(sp.navSection)
-      val webTitle: String = sc.webTitle.orElse(ir.flatMap(getWebTitleFromItemResponse)).getOrElse(sp.webTitle)
-      val title: Option[String] = sc.title
-      val description: Option[String] = sc.description.orElse(SeoData.descriptionFromWebTitle(webTitle))
-
-      SeoData(path, navSection, webTitle, title, description)
-    }
-  }
-
-  private def getNavSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
-    itemResponse.tag.flatMap(_.sectionId)
-      .orElse(itemResponse.section.map(_.id).map(removeLeadEditionFromSectionId))
-
-  private def getWebTitleFromItemResponse(itemResponse: ItemResponse): Option[String] =
-    itemResponse.tag.map(_.webTitle)
-      .orElse(itemResponse.section.map(_.webTitle))
-
-  //This will turn au/culture into culture. We want to stay consistent with the manual entry and autogeneration
-  private def removeLeadEditionFromSectionId(sectionId: String): String = sectionId.split('/').toList match {
-    case edition :: tail if Edition.all.map(_.id.toLowerCase).contains(edition.toLowerCase) => tail.mkString("/")
-    case _ => sectionId
-  }
-
-  private def getSectionOrTagWebTitle(id: String): Future[Option[ItemResponse]] = {
-    val contentApiResponse = LiveContentApi
-      .item(id, Edition.defaultEdition)
-      .showEditorsPicks(false)
-      .pageSize(0)
-      .response
-
-    contentApiResponse.onSuccess { case _ =>
-      ContentApiSeoRequestSuccess.increment()
-      log.info(s"Getting SEO data from content API for $id")}
-    contentApiResponse.onFailure { case e: Exception =>
-      log.warn(s"Error getting SEO data from content API for $id: $e")
-      ContentApiSeoRequestFailure.increment()
-    }
-
-    contentApiResponse.map(Option.apply).fallbackTo(Future.successful(None))
-  }
-
   lazy val empty: SeoData = SeoData("", "", "", None, None)
+}
+
+case class FrontProperties(
+  onPageDescription: Option[String],
+  imageUrl: Option[String],
+  imageWidth: Option[String],
+  imageHeight: Option[String],
+  isImageDisplayed: Boolean,
+  editorialType: Option[String]
+)
+
+object FrontProperties{
+  implicit val propsFormatter = Json.format[FrontProperties]
 }
 
 object FaciaComponentName {
