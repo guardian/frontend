@@ -34,6 +34,8 @@ object Config {
     throw new RuntimeException(s"property not found $key")
   )
 
-  private def optionalProperty(key: String) = Option(properties.getProperty(key))
+  private def optionalProperty(key: String) =
+    Option(System.getProperty(s"ng.$key")) // allow overriding with a system property
+    .orElse(Option(properties.getProperty(key)))
 
 }
