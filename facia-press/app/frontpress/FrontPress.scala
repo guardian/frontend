@@ -31,7 +31,7 @@ trait FrontPress extends Logging {
   def generateJson(id: String,
                    seoData: SeoData,
                    frontProperties: FrontProperties,
-                   collections: Iterable[(Config, Collection)]): Try[JsObject] = {
+                   collections: Seq[(Config, Collection)]): Try[JsObject] = {
     val collectionsWithBackFills = collections.toList collect {
       case (config, collection) if config.contentApiQuery.isDefined => collection
     }
@@ -53,10 +53,10 @@ trait FrontPress extends Logging {
     }
   }
 
-  private def retrieveCollectionsById(id: String, parseCollection: ParseCollection): Future[Map[Config, Collection]] = {
+  private def retrieveCollectionsById(id: String, parseCollection: ParseCollection): Future[Seq[(Config, Collection)]] = {
     val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
     val collections = collectionIds.map(config => parseCollection.getCollection(config.id, config, Uk).map((config, _)))
-    Future.sequence(collections).map(_.toMap)
+    Future.sequence(collections)
   }
 
   private def generateJson(id: String, parseCollection: ParseCollection): Future[JsObject] =

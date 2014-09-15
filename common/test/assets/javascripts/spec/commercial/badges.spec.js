@@ -26,14 +26,14 @@ define([
                 ]
             },
             adPreBadgeHtml = function(sponsor) {
-                return '<div class="ad-slot--paid-for-badge__inner">' +
+                return '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
                     '<h3 class="ad-slot--paid-for-badge__header">Advertisement feature</h3>' +
                     '<p class="ad-slot--paid-for-badge__label">in association with</p>' +
                     '<p class="ad-slot--paid-for-badge__header">' + sponsor + '</p>' +
                 '</div>';
             },
             spPreBadgeHtml = function(sponsor) {
-                return '<div class="ad-slot--paid-for-badge__inner">' +
+                return '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
                     '<h3 class="ad-slot--paid-for-badge__header">Sponsored by:</h3>' +
                     '<p class="ad-slot--paid-for-badge__header">' + sponsor + '</p>' +
                 '</div>';

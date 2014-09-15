@@ -356,11 +356,9 @@ trait CloudWatchApplicationMetrics extends GlobalSettings {
     )}
 
   private def report() {
-    val systemMetrics  = this.systemMetrics
-    val applicationMetrics  = this.applicationMetrics
+    val allMetrics: List[FrontendMetric] = this.systemMetrics ::: this.applicationMetrics
     if (!Configuration.environment.isNonProd || Switches.MetricsSwitch.isSwitchedOn) {
-      CloudWatch.putSystemMetricsWithStage(systemMetrics, applicationDimension)
-      CloudWatch.putMetricsWithStage(applicationMetrics, applicationDimension)
+      CloudWatch.putMetricsWithStage(allMetrics, applicationDimension)
     }
   }
 

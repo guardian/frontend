@@ -15,7 +15,7 @@
                 <ul class="gallery2">
                     @defining(Seq("inline1", "inline2"), 4) { case(adSlots, adInterval) =>
                         @gallery.largestCrops.zipWithRowInfo.map{ case(image, row) =>
-                            <li class="gallery2__item" data-link-name="Gallery item | @row.rowNum">
+                            <li class="gallery2__item js-gallery-item" data-link-name="Gallery item | @row.rowNum">
                                 <figure itemscope itemtype="http://schema.org/ImageObject">
 
                                     @ImgSrc.imager(gallery.imageContainer(row.rowNum-1), GalleryUpgradedImage).map { imgSrc =>
@@ -27,7 +27,7 @@
 
                                             @GalleryInitialImage.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
 
-                                                <img class="gallery2__img js-vh-images responsive-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                                                <img class="gallery2__img js-gallery-img responsive-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
                                                     src="@url"
                                                     alt="@image.altText.getOrElse("")"
                                                     itemprop="contentUrl" />
