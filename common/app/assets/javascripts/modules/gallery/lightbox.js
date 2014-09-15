@@ -384,6 +384,9 @@ define([
                     this.index = this.images.length;
                     this.state = 'image';
                 },
+                'reload': function() {
+                    this.reloadState = true;
+                },
                 'resize': function() {
                     this.swipeContainerWidth = this.$swipeContainer.dim().width;
                     this.translateContent(this.$slides.length, 0, 0);
