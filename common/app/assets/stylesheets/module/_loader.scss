@@ -23,6 +23,8 @@ $pamplemousse-dot-smallscale: .45;
 
 .pamplemousse {
     position: relative;
+    width: $pamplemousse-dot-spacing*3;
+    height: $pamplemousse-dot-spacing;
 }
 
 .pamplemousse__pip {

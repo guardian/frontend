@@ -94,10 +94,15 @@
 
                 </div>
 
-                <div class="content__secondary-column content__secondary-column--media content__secondary-column--@mediaType"
-                    aria-hidden="true">
-                    <div class="js-video-components-container"></div>
-                </div>
+                @media match {
+                    case video: Video => {
+                        <div class="content__secondary-column content__secondary-column--media content__secondary-column--@mediaType"
+                            aria-hidden="true">
+                            <div class="js-video-components-container"></div>
+                        </div>
+                    }
+                    case _ => { }
+                }
 
             </div>
         </div>

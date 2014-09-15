@@ -4,15 +4,15 @@ import java.net.URL
 
 import conf.LiveContentApi
 import common._
-import model.{Content, Gallery}
+import model.{Audio, Content}
 import play.api.libs.json.{JsArray, JsValue}
 import scala.concurrent.Future
 
-object MostViewedGalleryAgent extends Logging with ExecutionContexts {
+object MostViewedAudioAgent extends Logging with ExecutionContexts {
 
-  private val agent = AkkaAgent[Seq[Gallery]](Nil)
+  private val agent = AkkaAgent[Seq[Audio]](Nil)
 
-  def mostViewedGalleries(): Seq[Gallery] = agent()
+  def mostViewedAudio(): Seq[Audio] = agent()
 
   private def UrlToContentPath(url: String): String = {
     val path = new URL(url).getPath
@@ -20,9 +20,9 @@ object MostViewedGalleryAgent extends Logging with ExecutionContexts {
   }
 
   def refresh() = {
-    log.info("Refreshing most viewed galleries.")
+    log.info("Refreshing most viewed audio.")
 
-    val ophanResponse = services.OphanApi.getMostViewedGalleries(hours = 3, count = 12)
+    val ophanResponse = services.OphanApi.getMostViewedAudio(hours = 3, count = 12)
 
     ophanResponse.map { result =>
 
@@ -35,10 +35,10 @@ object MostViewedGalleryAgent extends Logging with ExecutionContexts {
       }
 
       Future.sequence(mostViewed).map { contentSeq =>
-        val galleries = contentSeq.toSeq.collect {
-          case Some(gallery: Gallery) => gallery
+        val audio = contentSeq.toSeq.collect {
+          case Some(audio: Audio) => audio
         }
-        agent alter galleries
+        agent alter audio
       }
     }
   }

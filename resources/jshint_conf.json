@@ -31,7 +31,6 @@
     "globals"   : {
         "require": false,
         "define" : false,
-        "s"      : false,
-        "Swipe"  : false
+        "s"      : false
     }
 }
