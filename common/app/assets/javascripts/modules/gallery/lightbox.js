@@ -204,8 +204,6 @@ define([
         return imgJson.src.replace('{width}', chosenWidth);
     };
 
-    GalleryLightbox.prototype.endslate = new Component();
-
     GalleryLightbox.prototype.loadSurroundingImages = function(index, count) {
 
         var dim = this.$lightboxEl.dim();
@@ -430,6 +428,8 @@ define([
         }
     };
 
+    GalleryLightbox.prototype.endslate = new Component();
+
     GalleryLightbox.prototype.loadEndslate = function() {
         if (!this.endslate.rendered) {
             this.endslateEl = bonzo.create(this.endslateHTML);
@@ -439,7 +439,7 @@ define([
             this.endslate.endpoint = '/gallery/most-viewed.json';
             this.endslate.ready = function () {
                 mediator.emit('ui:images:upgrade', this.endslateEl);
-            };
+            }.bind(this);
             this.endslate.prerender = function() {
                 bonzo(this.elem).addClass(this.componentClass);
             };

@@ -337,7 +337,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
 .gallery-lightbox__endslate {
     white-space: normal;
-    display: none;
     width: gs-span(9) + $gs-gutter*2;
     margin: 0 auto;
     margin-top: gs-height(1);
@@ -364,10 +363,8 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 
 
-    @include mq(tablet) {
-        .gallery-lightbox--endslate & {
-            display: block;
-        }
+    @include mq($until: tablet) {
+        display: none;
     }
 
     .l-side-margins {
