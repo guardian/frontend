@@ -9,4 +9,15 @@
             <source src="@encoding.url" type="@encoding.format" />
         }
     </audio>
+    <ul>
+        @player.audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
+            <li><a href="@iTunesSubscriptionUrl">Subscribe via iTunes</a></li>
+        }
+        @player.audio.downloadUrl.map { downloadUrl =>
+            <li><a href="@downloadUrl">Downlaod MP3</a></li>
+        }
+        @player.audio.seriesFeedUrl.map { seriesFeedUrl =>
+            <li><a href="@seriesFeedUrl">Podcast feed URL</a></li>
+        }
+    </ul>
 </div>

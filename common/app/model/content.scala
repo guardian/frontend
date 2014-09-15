@@ -1,6 +1,8 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
+import com.gu.openplatform.contentapi.model.{
+  Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, Podcast
+}
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
 import ophan.SurgingContentAgent
@@ -455,6 +457,13 @@ class Audio(content: ApiContentWithMeta) extends Media(content) {
 
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map("contentType" -> JsString(contentType), "blockVideoAds" -> JsBoolean(blockVideoAds))
+
+  lazy val downloadUrl: Option[String] = mainAudio
+    .flatMap(_.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
+
+  private lazy val podcastTag: Option[Tag] = tags.find(_.podcast.nonEmpty)
+  lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.podcast.flatMap(_.subscriptionUrl))
+  lazy val seriesFeedUrl: Option[String] = podcastTag.map(tag => s"/${tag.id}/podcast.xml")
 }
 
 object Audio {
