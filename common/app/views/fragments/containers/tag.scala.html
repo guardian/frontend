@@ -1,4 +1,4 @@
-@(page: model.MetaData, collection: model.Collection, style: views.support.NewsContainer, containerIndex: Int, pagination: Option[common.Pagination] = None)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+@(page: model.MetaData, collection: model.Collection, style: views.support.CommentAndDebateContainer, containerIndex: Int, pagination: Option[common.Pagination] = None)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
 @import model.FaciaComponentName
 @import views.html.fragments.keywordList
@@ -9,7 +9,7 @@
 
     @if(collection.items.nonEmpty) {
         <section
-            class="@GetClasses.forContainer(style, config, containerIndex, false, Seq("container--tag"))"
+            class="@GetClasses.forContainer(style, config, containerIndex, false, Seq("u-cf"))"
             data-link-name="@FaciaComponentName(config, collection)"
             data-id="@config.id"
             data-type="@style.containerType"

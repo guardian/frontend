@@ -1,4 +1,4 @@
-@(items: Seq[model.Trail], style: views.support.NewsContainer, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
+@(items: Seq[model.Trail], style: views.support.CommentAndDebateContainer, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
 
 @defining(items.filter(_.group == Option("3"))) { baguetteItems =>
 

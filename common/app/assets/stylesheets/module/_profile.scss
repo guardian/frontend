@@ -4,7 +4,6 @@ title: Profile
 name: profile
 category: Common
 ---
-[Why is this .scss file called tag?]
 
 ```html_example
 <div class="profile media">
@@ -21,6 +20,8 @@ category: Common
 .profile {
     margin-top: $gs-baseline/3;
     margin-bottom: $gs-baseline/2;
+    clear: left;
+    float: left;
 }
 
 .profile__img {
