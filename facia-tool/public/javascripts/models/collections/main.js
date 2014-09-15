@@ -47,7 +47,7 @@ define([
         init: function(el, valueAccessor) {
             setTimeout(function() {
                 el.style.height = '1px';
-                el.style.height = (Math.max(el.scrollHeight + 3, 19)) + 'px';
+                el.style.height = (Math.max(el.scrollHeight, 19)) + 'px';
             })
         }
     };

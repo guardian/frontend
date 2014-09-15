@@ -415,6 +415,10 @@ h1 {
     text-decoration: none;
 }
 
+.element:hover {
+    color: #000000;
+}
+
 .element.empty,
 .element.empty a {
     font-style: italic;
@@ -422,8 +426,8 @@ h1 {
 
 .element__headline a,
 .element__headline {
-    font-size: 15px;
-    line-height: 18px;
+    font-size: 16px;
+    line-height: 16px;
     color: #000000;
 }
 
@@ -580,10 +584,11 @@ select {
 
 .editor textarea {
     width: 100%;
-    padding: 0 2px;
+    padding: 1px 0 0 3px;
     position: absolute;
     top: 0;
     left: 0;
+    border: 0;
     margin: 2px 0 0 -3px;
     z-index: 10;
 }
@@ -621,7 +626,7 @@ select {
 }
 
 .editor--boolean__label:hover {
-    color: #666666;
+    color: #000000;
 }
 
 .editor--boolean__label.selected,
