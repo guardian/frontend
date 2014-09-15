@@ -3,13 +3,16 @@
     margin-bottom: 0;
 
     background-color: #f4f4f4;
-    border-top: 1px solid $c-newsAccent;
-
-    &.container--first {
-        border: 0;
-    }
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline * 2;
+    }
+
+    .facia-container__inner {
+        border-top: 1px solid $c-newsAccent;
+    }
+
+    &.container--first .facia-container__inner {
+        border: 0;
     }
 }
