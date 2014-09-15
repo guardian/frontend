@@ -121,7 +121,7 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
             @include facia-container__inner;
         }
         .container--dark-background .container__border {
-            border-color: lighten($c-neutral1, 16%);
+            border-color: colour(neutral-2);
         }
         @include mq(leftCol) {
             .container__title {
