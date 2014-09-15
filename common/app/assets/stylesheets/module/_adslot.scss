@@ -106,6 +106,21 @@
     @include mq(rightCol) {
         margin: 0 0 0 $gs-gutter;
     }
+    @include mq(leftCol) {
+        margin: 0 auto;
+        max-width: gs-span(14) + ($gs-gutter*2) - ($left-column + ($gs-gutter*2));
+        padding-left: $left-column + ($gs-gutter*2);
+    }
+    @include mq(wide) {
+        max-width: gs-span(16) + ($gs-gutter*2) - ($left-column-wide + ($gs-gutter*2));
+        padding-left: $left-column-wide + ($gs-gutter*2);
+    }
+    @include mq(tablet, rightCol) {
+        .ad-slot__label {
+            width: 728px;
+            margin: 0 auto;
+        }
+    }
 }
 
 /**
@@ -384,11 +399,11 @@
             @include comm-paid-logo-placement;
         }
     }
-
+    
     @include mq(faciaLeftCol) {
         @include comm-paid-logo-placement;
     }
-
+    
     @include mq(wide) {
         .has-page-skin & {
             margin-left: 50%;
