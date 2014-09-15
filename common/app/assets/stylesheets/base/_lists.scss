@@ -20,10 +20,8 @@ nav ol {
 // Some list helpers
 
 // Remove margin and bullets from lists.
-.u-unstyled,
-%u-unstyled {
-    margin: 0;
-    list-style: none;
+.u-unstyled {
+    @extend %u-unstyled;
 }
 
 // List of inline items

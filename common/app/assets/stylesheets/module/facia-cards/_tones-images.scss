@@ -1,0 +1,53 @@
+@mixin media-icon($type) {
+    content: '';
+    @include icon($type);
+    @include background-size(auto 100%);
+    margin: 0;
+}
+
+.container--facia-cards {
+    .item__timestamp:before {
+        @include media-icon(clock-light-grey);
+        top: 1px;
+        position: relative;
+        height: 11px !important;
+        width: 11px !important;
+        margin-right: 2px;
+    }
+
+    .tone-media {
+        .item__title:before {
+            @include media-icon(camera-yellow-large);
+            height: .75em !important;
+            width: 1.2em !important;
+        }
+
+        .item__timestamp:before {
+            @include media-icon(clock-yellow);
+        }
+    }
+
+    .tone-live {
+        .item__timestamp:before {
+            @include media-icon(clock-light-pink);
+        }
+    }
+
+    .tone-feature {
+        .item__timestamp:before {
+            @include media-icon(clock-light-pink);
+        }
+    }
+
+    .tone-comment {
+        .item__title:before {
+            @include media-icon(quote-grey);
+            height: .8em !important;
+            width: 1em !important;
+        }
+
+        .item__timestamp:before {
+            @include media-icon(clock-grey);
+        }
+    }
+}

@@ -6,7 +6,7 @@ import com.amazonaws.services.cloudwatch.model._
 import common.Logging
 import conf.Configuration
 import conf.Configuration._
-import metrics.{DataPoint, FrontendMetric}
+import metrics.{FrontendStatisticSet, DataPoint, FrontendMetric}
 import services.AwsEndpoints
 
 import scala.collection.JavaConversions._
@@ -35,12 +35,19 @@ trait CloudWatch extends Logging {
 
   object LoggingAsyncHandler extends LoggingAsyncHandler
 
-  case class AsyncHandlerForMetric(metric: FrontendMetric, points: List[DataPoint]) extends LoggingAsyncHandler {
+  case class AsyncHandlerForMetric(frontendStatisticSets: List[FrontendStatisticSet]) extends LoggingAsyncHandler {
     override def onError(exception: Exception) = {
-      metric.putDataPoints(points)
+      log.warn(s"Failed to put ${frontendStatisticSets.size} metrics: $exception")
+      log.warn(s"Failed to put ${frontendStatisticSets.map(_.metric.name).mkString(",")}")
+      frontendStatisticSets.foreach { _.reset() }
       super.onError(exception)
     }
-    override def onSuccess(request: PutMetricDataRequest, result: Void ) = super.onSuccess(request, result)
+    override def onSuccess(request: PutMetricDataRequest, result: Void ) = {
+      log.info(s"Successfully put ${frontendStatisticSets.size} metrics")
+      log.info(s"Successfully put ${frontendStatisticSets.map(_.metric.name).mkString(",")}")
+
+      super.onSuccess(request, result)
+    }
   }
 
   def put(namespace: String, metrics: Map[String, Double], dimensions: Seq[Dimension]): Any = {
@@ -72,25 +79,31 @@ trait CloudWatch extends Logging {
 
   def putMetrics(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
     for {
-      metric <- metrics
-      dataPointGroup <- metric.getAndResetDataPoints.grouped(20)
+      metricGroup <- metrics.filterNot(_.isEmpty).grouped(20)
     } {
+      val metricsAsStatistics: List[FrontendStatisticSet] =
+        metricGroup.map( metric => FrontendStatisticSet(metric, metric.getAndResetDataPoints))
       val request = new PutMetricDataRequest()
         .withNamespace(metricNamespace)
         .withMetricData {
-          for (dataPoint <- dataPointGroup) yield {
-            val metricDatum = new MetricDatum()
-              .withValue(dataPoint.value)
-              .withUnit(metric.metricUnit)
-              .withMetricName(metric.name)
+          for(metricStatistic <- metricsAsStatistics) yield {
+            new MetricDatum()
+              .withStatisticValues(frontendMetricToStatisticSet(metricStatistic))
+              .withUnit(metricStatistic.metric.metricUnit)
+              .withMetricName(metricStatistic.metric.name)
               .withDimensions(dimensions)
-
-            dataPoint.time.fold(metricDatum) { t => metricDatum.withTimestamp(t.toDate)}
           }
         }
-      CloudWatch.cloudwatch.foreach(_.putMetricDataAsync(request, AsyncHandlerForMetric(metric, dataPointGroup)))
+      CloudWatch.cloudwatch.foreach(_.putMetricDataAsync(request, AsyncHandlerForMetric(metricsAsStatistics)))
     }
   }
+
+  private def frontendMetricToStatisticSet(metricStatistics: FrontendStatisticSet): StatisticSet =
+    new StatisticSet()
+      .withMaximum(metricStatistics.maximum)
+      .withMinimum(metricStatistics.minimum)
+      .withSampleCount(metricStatistics.sampleCount)
+      .withSum(metricStatistics.sum)
 
 }
 

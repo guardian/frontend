@@ -1,30 +1,51 @@
 .container--facia-cards {
-    .linkslist-container:before {
-        display: none;
-    }
 
     .linkslist-container {
-        margin: 0;
-
-        .facia-slice {
-            @include flex-wrap(wrap);
+        margin: 0 !important;
+        &:before {
+            display: none;
         }
+    }
+
+    .linkslist {
+        margin: 0;
+        display: block;
 
         .facia-slice__item {
-            @include flex-grow(initial);
-            @include flex-basis(50%);
-            width: 50%;
+            width: 100%;
+            float: left;
 
             &:nth-child(4n+1) {
-                clear: all;
+                clear: both;
                 &:before {
                     border: 0;
                 }
             }
 
+            @include mq(mobileLandscape) {
+                width: 50%;
+            }
+
             @include mq(tablet) {
-                @include flex-basis(25%);
                 width: 25%;
+            }
+        }
+
+        .flex-wrap & {
+            @include flex-display;
+            @include flex-wrap(wrap);
+
+            .facia-slice__item {
+                @include flex-grow(0);
+                @include flex-basis(100%);
+
+                @include mq(mobileLandscape) {
+                    @include flex-basis(50%);
+                }
+
+                @include mq(tablet) {
+                    @include flex-basis(25%);
+                }
             }
         }
     }

@@ -55,8 +55,8 @@ $mq-breakpoints: (
     phablet: gs-span(8) + $gs-gutter*2, // 660px
 
     // Content
-    rightCol: gs-span(11) + $gs-gutter*2, // 900px
-    leftCol:  gs-span(13) + $gs-gutter*2, // 1060px
+    rightCol: gs-span(12) + $gs-gutter*2, // 980px
+    leftCol:  gs-span(14) + $gs-gutter*2, // 1140px
 
     // Facia
     faciaLeftCol: gs-span(14) + $gs-gutter*2 // 1140px

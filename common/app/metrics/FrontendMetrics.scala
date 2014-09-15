@@ -24,11 +24,23 @@ case class GaugeDataPoint(value: Long) extends DataPoint {
   val time: Option[DateTime] = None
 }
 
+case class FrontendStatisticSet(metric: FrontendMetric, datapoints: List[DataPoint]) {
+  lazy val sampleCount: Double = datapoints.size
+  lazy val maximum: Double = Try(datapoints.maxBy(_.value).value).getOrElse(0L).toDouble
+  lazy val minimum: Double = Try(datapoints.minBy(_.value).value).getOrElse(0L).toDouble
+  lazy val sum: Double = datapoints.map(_.value).sum
+  lazy val average: Double =
+    Try(sum / sampleCount).toOption.getOrElse(0L)
+
+  def reset(): Unit = metric.putDataPoints(datapoints)
+}
+
 sealed trait FrontendMetric {
   val name: String
   val metricUnit: StandardUnit
   def getAndResetDataPoints: List[DataPoint]
   def putDataPoints(points: List[DataPoint]): Unit
+  def isEmpty: Boolean
 }
 
 case class FrontendTimingMetric(name: String, description: String) extends FrontendMetric {
@@ -47,11 +59,14 @@ case class FrontendTimingMetric(name: String, description: String) extends Front
   def getAndReset: Long = getAndResetDataPoints.map(_.value).reduce(_ + _)
 
   def putDataPoints(points: List[DataPoint]): Unit = points.map(_.value).map(recordDuration)
+
+  def isEmpty: Boolean = currentCount.get() == 0L
 }
 
 case class GaugeMetric(name: String, description: String, get: () => Long, metricUnit: StandardUnit = StandardUnit.Megabytes) extends FrontendMetric {
   def getAndResetDataPoints: List[DataPoint] = List(GaugeDataPoint(get()))
   def putDataPoints(points: List[DataPoint]): Unit = ()
+  def isEmpty: Boolean = false
 }
 
 case class CountMetric(name: String, description: String) extends FrontendMetric {
@@ -66,6 +81,7 @@ case class CountMetric(name: String, description: String) extends FrontendMetric
 
   def record(): Unit = count.incrementAndGet()
   def increment(): Unit = record()
+  def isEmpty: Boolean = count.get() == 0L
 }
 
 case class DurationMetric(name: String, metricUnit: StandardUnit) extends FrontendMetric {
@@ -87,6 +103,7 @@ case class DurationMetric(name: String, metricUnit: StandardUnit) extends Fronte
   def record(dataPoint: DurationDataPoint): Unit = dataPoints.alter(dataPoint :: _)
 
   def recordDuration(timeInMillis: Long): Unit = record(DurationDataPoint(timeInMillis, Option(DateTime.now)))
+  def isEmpty: Boolean = dataPoints.get().isEmpty
 }
 
 object UkPressLatencyMetric extends DurationMetric("uk-press-latency", StandardUnit.Milliseconds)
