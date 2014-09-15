@@ -367,6 +367,9 @@ define([
         parseAd = function (event) {
             var $slot = $('#' + event.slot.getSlotId().getDomId());
 
+            // remove any placeholder ad content
+            $('.ad-slot__content--placeholder', $slot[0]).remove();
+
             if (event.isEmpty) {
                 removeLabel($slot);
             } else {
