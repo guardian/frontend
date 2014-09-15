@@ -163,10 +163,10 @@ category: Common
         float: right;
     }
 }
-@mixin button-colour($fill-colour, $text-colour, $hover-colour, $hover-border: $hover-colour) {
+@mixin button-colour($fill-colour, $text-colour, $hover-colour, $hover-border: $hover-colour, $border-color: $fill-colour) {
     color: $text-colour;
     background-color: $fill-colour;
-    border-color: $fill-colour;
+    border-color: $border-color;
 
     &:hover,
     &:focus,
@@ -175,6 +175,7 @@ category: Common
         border-color: $hover-border;
     }
 }
+
 .button {
     display: inline-block;
     vertical-align: top;
@@ -208,6 +209,48 @@ category: Common
         border-color: $c-neutral1;
     }
 }
+
+.button--tone-media {
+    @include button-colour($c-mediaAccent2, #ffffff, $c-neutral2);
+}
+
+.button--tone-media-more {
+    @include button-colour($c-mediaBackground, #ffffff, $c-mediaBackground, $c-neutral3, $c-neutral2);
+}
+
+.button--tone-news {
+    @include button-colour($c-neutral7, $c-newsDefault, darken($c-neutral7, 10%));
+}
+
+.button--tone-news-more {
+    @include button-colour(#ffffff, $c-newsDefault, #ffffff, darken($c-neutral3, 10%), $c-neutral3);
+}
+
+.button--tone-feature {
+    @include button-colour($c-neutral7, $c-featureDefault, darken($c-neutral7, 10%));
+}
+
+.button--tone-feature-more {
+    @include button-colour(#ffffff, $c-featureDefault, #ffffff, darken($c-neutral3, 10%), $c-neutral3);
+}
+
+.button--tone-comment {
+    @include button-colour($c-neutral7, $c-commentDefault, darken($c-neutral7, 10%));
+}
+
+.button--tone-comment-more {
+    @include button-colour(#ffffff, $c-commentDefault, #ffffff, darken($c-neutral3, 10%), $c-neutral3);
+}
+
+.button--tone-live {
+    @include button-colour($c-neutral6, $c-newsDefault, darken($c-neutral6, 10%));
+}
+
+.button--tone-live-more {
+    @include button-colour($c-neutral8, $c-newsDefault, $c-neutral8, darken($c-neutral3, 10%), $c-neutral3);
+}
+
+
 .button--xlarge {
     @include button-height(44px);
 }
@@ -229,6 +272,32 @@ category: Common
     line-height: $gs-baseline * 1.5 - 1px;
     font-weight: bold;
 }
+
+.button--tag {
+    margin-right: $gs-gutter / 5;
+    margin-bottom: $gs-row-height / 4.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: gs-span(4);
+
+    @include mq(leftCol) {
+        max-width: $left-column;
+    }
+
+    @include mq(wide) {
+        max-width: $left-column-wide;
+    }
+
+    .related-keywords & {
+        max-width: none;
+    }
+
+    .content__keywords & {
+        max-width: none;
+    }
+}
+
 .button--show-more {
     @include fs-textSans(3);
     margin-bottom: $gs-baseline;
@@ -246,5 +315,11 @@ category: Common
         .i {
             margin-top: $gs-baseline / 4;
         }
+    }
+}
+
+.button--more {
+    @if $old-ie {
+        display: none;
     }
 }

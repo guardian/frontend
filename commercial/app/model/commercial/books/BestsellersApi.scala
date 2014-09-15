@@ -1,8 +1,9 @@
 package model.commercial.books
 
-import model.commercial.XmlAdsApi
-import model.commercial.OptString
+import conf.Configuration.commercial.magento
 import conf.{CommercialConfiguration, Switches}
+import model.commercial.{OptString, XmlAdsApi}
+
 import scala.xml.Elem
 
 trait BestsellersApi extends XmlAdsApi[Book] {
@@ -16,7 +17,7 @@ trait BestsellersApi extends XmlAdsApi[Book] {
 
   protected val path: String
 
-  final protected def url = CommercialConfiguration.getProperty("gu.bookshop.api.url") map (_ + path)
+  protected def url = CommercialConfiguration.getProperty("gu.bookshop.api.url") map (_ + path)
 
   override protected val loadTimeout = 5000
 
@@ -25,14 +26,17 @@ trait BestsellersApi extends XmlAdsApi[Book] {
     xml \ "Entry" map {
       entry =>
         val book = entry \ "book"
+
+        def getPrice(eltName: String): Option[Double] = Some((book \ eltName).text).map(_.stripPrefix("£").toDouble)
+
         Book(
           title = (book \ "title").text,
           author = OptString((book \ "author").text),
           isbn = (book \ "isbn").text,
-          price = Some((book \ "price").text).map(_.toDouble),
-          offerPrice = (book \ "offerprice").headOption.map(_.text).map(_.toDouble),
+          price = getPrice("price"),
+          offerPrice = getPrice("offerprice"),
           description = OptString((book \ "description").text),
-          jacketUrl = (book \ "jacketurl").headOption.map(node => (s"http:${node.text}").
+          jacketUrl = (book \ "jacketurl").headOption.map(node => s"http:${node.text}".
             replace("http://images.bertrams.com/ProductImages/services/GetImage", "http://c.guim.co.uk/books")),
           buyUrl = Some((book \ "bookurl").text),
           position = Some((entry \ "Position").text).map(_.toInt),
@@ -116,4 +120,18 @@ object FoodDrinkBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Food & Drink"
   protected val keywordIds = Seq("lifeandstyle/food-and-drink", "travel/restaurants", "lifeandstyle/chefs")
   protected val path = "/Feed11.jsp"
+}
+
+
+// temporary implementation while waiting for new endpoint
+object MagentoBestsellersFeed extends BestsellersApi {
+  protected lazy val category = "General"
+  protected val keywordIds = Nil
+  protected val path = "bertrams/feed/independentsTop20"
+
+  override protected def url: Option[String] = magento.domain map (domain => s"http://$domain/$path")
+
+  override def parse(xml: Elem): Seq[Book] = {
+    super.parse(xml) map (book => book.copy(jacketUrl = book.jacketUrl.map(_.stripPrefix("http:"))))
+  }
 }

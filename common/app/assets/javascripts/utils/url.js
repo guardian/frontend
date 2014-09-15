@@ -36,13 +36,15 @@ define([
             // params object requires a "querystring" property
             // and optionally takes a "state" and "title" property too
             pushQueryString: function (params) {
-                if (!params.querystring) { return; }
+                if (!params.querystring) {
+                    return;
+                }
                 if (supportsPushState) {
                     if (model.getCurrentQueryString() !== params.querystring) {
                         history.pushState(
-                            params.state || {},
-                            params.title || window.title,
-                            params.querystring + window.location.hash
+                                params.state || {},
+                                params.title || window.title,
+                                params.querystring + window.location.hash
                         );
                     }
                 }
@@ -65,6 +67,12 @@ define([
                 if (supportsPushState) {
                     window.history[replace ? 'replaceState' : 'pushState'](state, title, url);
                 }
+            },
+
+            back: function () {
+                if (supportsPushState) {
+                    window.history.back();
+                }
             }
         };
 
@@ -75,7 +83,9 @@ define([
     return {
         getUrlVars: model.getUrlVars,
         pushUrl: model.pushUrl,
-        constructQuery: model.constructQuery
+        constructQuery: model.constructQuery,
+        back: model.back,
+        hasHistorySupport: supportsPushState
     };
 
 });

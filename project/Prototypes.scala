@@ -84,6 +84,7 @@ trait Prototypes {
 
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.
     javaOptions in Test += "-DAPP_SECRET=this_is_not_a_real_secret_just_for_tests",
+    javaOptions in Test += "-XX:MaxPermSize=680m",
     baseDirectory in Test := file(".")
   )
 

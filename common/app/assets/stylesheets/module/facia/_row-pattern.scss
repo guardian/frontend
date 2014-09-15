@@ -17,6 +17,16 @@
     margin-left: 0;
     margin-right: 0;
 }
+
+.facia-slice {
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+
+    @include mq(tablet) {
+        overflow: visible; // Prevents height issue in Firefox < 22
+    }
+}
 .facia-slice__item {
     position: relative;
 
@@ -118,7 +128,7 @@
 
         .item__title {
             padding-top: 0;
-            @include fs-headline(5, true);
+            @include fs-headline(3, true);
         }
         .item__standfirst {
             display: block;
@@ -144,13 +154,19 @@
 .row-of-two--boost-first .facia-slice__item:nth-child(1) .item__media-wrapper,
 .row-of-two--boost-second .facia-slice__item:nth-child(2) .item__media-wrapper {
     @include mq(tablet) {
-        width: gs-span(4);
+        width: gs-span(4) + $gs-gutter*2;
     }
     @include mq(desktop) {
         width: gs-span(6);
     }
 }
 @include mq(desktop) {
+    .row-of-two--boost-first .facia-slice__item:nth-child(1),
+    .row-of-two--boost-second .facia-slice__item:nth-child(2) {
+        .item__title {
+            @include fs-headline(5, true);
+        }
+    }
     .row-of-two {
         .item__standfirst {
             display: block;
