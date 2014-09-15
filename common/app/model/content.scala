@@ -518,7 +518,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
     "contentType" -> JsString(contentType),
-    "gallerySize" -> JsNumber(size)
+    "gallerySize" -> JsNumber(size),
+    "galleryLightbox" -> lightbox
   )
 
   override lazy val openGraphImage: String = galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
@@ -537,7 +538,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
     "article:author" -> contributors.map(_.webUrl).mkString(",")
   )
 
-  private lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
+  lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
 
   override def cards: List[(String, String)] = super.cards ++ Seq(
@@ -546,6 +547,28 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   ) ++ largestCrops.sortBy(_.index).take(5).zipWithIndex.map { case (image, index) =>
     image.path.map(s"twitter:image$index:src" ->)
   }.flatten
+
+  lazy val lightbox: JsObject = {
+    val imageContainers = galleryImages.filter(_.isGallery)
+    val imageJson = imageContainers.map{ imgContainer =>
+      imgContainer.largestImage.map { img =>
+        JsObject(Seq(
+          "caption" -> JsString(img.caption.getOrElse("")),
+          "credit" -> JsString(img.credit.getOrElse("")),
+          "displayCredit" -> JsBoolean(img.displayCredit),
+          "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
+          "ratio" -> JsNumber(img.width.toFloat / img.height)
+        ))
+      }
+    }
+    JsObject(Seq(
+      "id" -> JsString(id),
+      "headline" -> JsString(headline),
+      "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
+      "standfirst" -> JsString(standfirst.getOrElse("")),
+      "images" -> JsArray(imageJson.flatten)
+    ))
+  }
 }
 
 object Gallery {

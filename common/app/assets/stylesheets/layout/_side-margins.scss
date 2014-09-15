@@ -21,7 +21,7 @@
 .l-side-margins {
     position: relative;
 
-    @include mq(desktop) {
+    @include mq(tablet) {
         &:after,
         &:before {
             content: '';
@@ -38,8 +38,17 @@
         &:after {
             right: 0;
         }
+        @include side-margins-position(gs-span(9));
+    }
+
+    @include mq(desktop) {
         @include side-margins-position(gs-span(12));
     }
+
+    @include mq(leftCol) {
+        @include side-margins-position(gs-span(14));
+    }
+
     @include mq(wide) {
         @include side-margins-position(gs-span(16));
 
@@ -52,26 +61,12 @@
     }
 }
 .l-side-margins--layout-front {
-    @include mq(faciaLeftCol, wide) {
-        @include side-margins-position(gs-span(14));
-    }
     @include mq(wide) {
         .has-page-skin & {
             margin-left: auto;
             margin-right: auto;
             width: gs-span(12) + ($gs-gutter*2);
         }
-    }
-}
-.l-side-margins--layout-content {
-    @include mq(rightCol, leftCol) {
-        &:before,
-        &:after {
-            display: none;
-        }
-    }
-    @include mq(leftCol, wide) {
-        @include side-margins-position(gs-span(14));
     }
 }
 
