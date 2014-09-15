@@ -81,7 +81,7 @@ trait AdminLifecycle extends GlobalSettings {
     Jobs.deschedule("RebuildIndexJob")
     Jobs.deschedule("OmnitureReportJob")
     Jobs.deschedule("MatchDayRecorderJob")
-    Jobs.deschedule("SentryReportJob")
+    Jobs.deschedule("SntryReportJob")
     Jobs.deschedule("FrontPressJobHighFrequency")
     Jobs.deschedule("FrontPressJobStandardFrequency")
     Jobs.deschedule("FrontPressJobLowFrequency")

@@ -74,7 +74,10 @@
                         }
                     }
                 </ul>
-                @fragments.tags(gallery, "white", Some("media"))
+
+                <div class="social-wrapper social-wrapper--bottom" data-component="share">
+                    @fragments.social(gallery, iconModifier = "white")
+                </div>
             </div>
         </div>
     </article>

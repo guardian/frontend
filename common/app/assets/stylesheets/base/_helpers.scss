@@ -12,12 +12,6 @@
     }
 }
 
-.u-h--up-to-left-col {
-    @include mq($until: leftCol) {
-        @include u-h;
-    }
-}
-
 .is-hidden,
 [hidden] {
     display: none !important;
