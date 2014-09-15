@@ -28,7 +28,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
         .gallery-lightbox__info {
             right: $gallery-lightbox-sidebar-width;
-            opacity: 1.0;
+            opacity: 1;
         }
     }
 
@@ -54,7 +54,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 
     .gallery-lightbox__btn--info-button {
-        opacity: 0.3;
+        opacity: .3;
         cursor: default;
         pointer-events: none;
     }
