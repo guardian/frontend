@@ -4,6 +4,10 @@
 
     .js-off & {
         display: none;
+
+        &.ad-slot--force-display {
+            display: block;
+        }
     }
 }
 .ad-slot__label {
