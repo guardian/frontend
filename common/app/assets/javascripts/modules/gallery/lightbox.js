@@ -227,10 +227,6 @@ define([
                 }
             }.bind(this));
 
-        _(this.$images).each(function(el, i) { // perf
-            el.style.visibility = (surroundingIndices.indexOf(i) !== -1 ? 'visible' : 'hidden');
-        });
-
     };
 
     GalleryLightbox.prototype.translateContent = function(imgIndex, offset, duration) {
