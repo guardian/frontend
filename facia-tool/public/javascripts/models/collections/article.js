@@ -82,7 +82,7 @@ define([
                     type: 'text'
                 },
                 {
-                    key: 'byline',isBreaking
+                    key: 'byline',
                     label: 'Byline',
                     type: 'text'
                 },

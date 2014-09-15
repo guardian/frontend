@@ -164,6 +164,7 @@ trait UpdateActions extends Logging {
     "imageSrc",
     "imageSrcWidth",
     "imageSrcHeight",
+    "isBreaking",
     "showMainVideo"
   )
 

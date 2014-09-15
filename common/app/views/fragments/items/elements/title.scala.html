@@ -5,7 +5,7 @@
         @if(trail.isLive){
             <span class="item__kicker item__kicker--live">Live</span>
         }
-        @if(trail.kicker == Some("breaking-news")) {
+        @if(trail.isBreaking) {
             <span class="item__kicker item__kicker--breaking-news">Breaking news</span>
         }
         @if(tone == "comment") {
