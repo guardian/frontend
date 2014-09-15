@@ -204,6 +204,7 @@ object Content {
       case article if apiContent.delegate.isArticle || apiContent.delegate.isSudoku => new Article(apiContent)
       case gallery if apiContent.delegate.isGallery => new Gallery(apiContent)
       case video if apiContent.delegate.isVideo => new Video(apiContent)
+      case audio if apiContent.delegate.isAudio => new Audio(apiContent)
       case picture if apiContent.delegate.isImageContent => new ImageContent(apiContent)
       case _ => new Content(apiContent)
     }
