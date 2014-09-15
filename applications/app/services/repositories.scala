@@ -12,7 +12,6 @@ import scala.concurrent.Future
 import play.api.mvc.{RequestHeader, Result => PlayResult}
 import com.gu.openplatform.contentapi.ApiError
 import controllers.ImageContentPage
-import conf.Switches.RelatedContentSwitch
 
 object IndexPagePagination {
   def pageSize: Int = 20 //have a good think before changing this
@@ -167,7 +166,7 @@ trait Index extends ConciergeRepository with QueryDefaults {
   val UkNewsSection = """^uk-news/(.+)$""".r
 }
 
-trait ImageQuery extends ConciergeRepository with QueryDefaults {
+trait ImageQuery extends ConciergeRepository {
 
   def image(edition: Edition, path: String): Future[Either[ImageContentPage, PlayResult]]= {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
@@ -175,7 +174,7 @@ trait ImageQuery extends ConciergeRepository with QueryDefaults {
       .showExpired(true)
       .showFields("all")
       .showRelated(InlineRelatedContentSwitch.isSwitchedOn)
-      .response.map { response =>
+      .response.map { response:ItemResponse =>
       val mainContent: Option[Content] = response.content.filter { c => c.isImageContent } map {Content(_)}
       val storyPackage: List[Trail] = response.storyPackage map { Content(_) }
       mainContent.map { content => Left(ImageContentPage(content, RelatedContent(content, response))) }.getOrElse(Right(NotFound))

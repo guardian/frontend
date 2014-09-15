@@ -43,13 +43,13 @@ object Book {
     (JsPath \ "name").read[String] and
       authorReads and
       (JsPath \ "isbn").read[String] and
-      (JsPath \ "price").readNullable[String].map(_.map(_.toDouble)) and
-      (JsPath \ "offerPrice").readNullable[String].map(_.map(_.toDouble)) and
+      (JsPath \ "regular_price_with_tax").readNullable[String].map(_.map(_.toDouble)) and
+      (JsPath \ "final_price_with_tax").readNullable[Double] and
       (JsPath \ "description").readNullable[String] and
-      (JsPath \ "jacketUrl").readNullable[String] and
-      (JsPath \ "buyUrl").readNullable[String] and
-      (JsPath \ "bestseller_rank").readNullable[String].map(_.map(_.toDouble.toInt)) and
-      (JsPath \ "category").readNullable[String] and
+      (JsPath \ "images")(0).readNullable[String] and
+      (JsPath \ "product_url").readNullable[String] and
+      (JsPath \ "guardian_bestseller_rank").readNullable[String].map(_.map(_.toDouble.toInt)) and
+      ((JsPath \ "categories")(0) \ "name").readNullable[String] and
       (JsPath \ "keywordIds").readNullable[Seq[String]].map(_ getOrElse Nil)
     )(Book.apply _)
 }

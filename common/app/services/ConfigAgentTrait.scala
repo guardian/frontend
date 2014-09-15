@@ -2,13 +2,12 @@ package services
 
 import common._
 import play.api.libs.json.{JsNull, Json, JsValue}
-import model.Config
+import model.{FrontProperties, Config, SeoDataJson}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
 import conf.Configuration
 import play.api.{Application, GlobalSettings}
-import model.SeoDataJson
 
 trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
@@ -87,6 +86,19 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       webTitle  = (frontJson \ "webTitle").asOpt[String].filter(_.nonEmpty),
       title  = (frontJson \ "title").asOpt[String].filter(_.nonEmpty),
       description  = (frontJson \ "description").asOpt[String].filter(_.nonEmpty)
+    )
+  }
+
+  def fetchFrontProperties(id: String): FrontProperties = {
+    val frontPropsJson: JsValue = (configAgent.get() \ "fronts" \ id).as[JsValue]
+    def formatValue(fieldName: String) = (frontPropsJson \ fieldName).asOpt[String].filter(_.nonEmpty)
+    FrontProperties(
+      onPageDescription = formatValue("onPageDescription"),
+      imageUrl = formatValue("imageUrl"),
+      imageWidth = formatValue("imageWidth"),
+      imageHeight = formatValue("imageHeight"),
+      isImageDisplayed = (frontPropsJson \ "isImageDisplayed").asOpt[Boolean].getOrElse(false),
+      editorialType = None // value found in Content API
     )
   }
 }
