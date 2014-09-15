@@ -27,6 +27,7 @@
             background-color: $c-featureDefault;
 
             &,
+            .item__standfirst,
             & a {
                 color: #ffffff;
             }
@@ -38,6 +39,7 @@
             width: 1em;
             background-position: center;
         }
+
 
         .item__meta {
             &,
