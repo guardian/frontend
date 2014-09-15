@@ -11,7 +11,7 @@ define([
     'common/utils/fsm',
     'common/utils/detect',
     'common/modules/component',
-    'common/modules/ui/images',
+    'common/modules/ui/images'
 ], function (
     _,
     bean,
@@ -209,8 +209,7 @@ define([
     GalleryLightbox.prototype.loadSurroundingImages = function(index, count) {
 
         var dim = this.$lightboxEl.dim();
-        var surroundingIndices = _([-1,0,1])
-            .map(function(i) { return index+i === 0 ? count - 1 : (index-1+i) % count; })
+        _([-1,0,1]).map(function(i) { return index+i === 0 ? count - 1 : (index-1+i) % count; })
             .each(function(i){
                 var imgSrc = this.getImgSrc(this.images[i], dim.width, dim.height),
                     $img = bonzo(this.$images[i]);
