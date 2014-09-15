@@ -35,7 +35,16 @@
                     @BodyCleaner(article, article.body)
                 </div>
 
-                @fragments.tags(article)
+                <div class="tag-wrapper">
+                    <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-link-name="keywords">
+                        <h2 class="social__head u-h--up-to-left-col">Tags</h2>
+                        @fragments.keywordList(article.keywords, tone = article.visualTone)
+                    </div>
+                    <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-component="share">
+                        <h2 class="social__head u-h--up-to-left-col">Share this article</h2>
+                        @fragments.social(article)
+                    </div>
+                </div>
 
                 <div class="after-article js-after-article"></div>
 

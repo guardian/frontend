@@ -242,6 +242,14 @@ category: Common
     @include button-colour(#ffffff, $c-commentDefault, #ffffff, darken($c-neutral3, 10%), $c-neutral3);
 }
 
+.button--tone-live {
+  @include button-colour($c-neutral6, $c-newsDefault, darken($c-neutral6, 10%));
+}
+
+.button--tone-live-more {
+  @include button-colour($c-neutral8, $c-newsDefault, $c-neutral8, darken($c-neutral3, 10%), $c-neutral3);
+}
+
 
 .button--xlarge {
     @include button-height(44px);
@@ -282,6 +290,10 @@ category: Common
     }
 
     .related-keywords & {
+        max-width: none;
+    }
+
+    .content__keywords & {
         max-width: none;
     }
 }
