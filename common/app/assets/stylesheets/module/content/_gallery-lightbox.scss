@@ -42,6 +42,10 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     .gallery-lightbox__btn--close {
         display: block;
     }
+
+    .gallery-lightbox__btn--info-button .gallery-lightbox__btn-body {
+        background-color: $c-gallery-lightbox-btn--active;
+    }
 }
 
 .gallery-lightbox--endslate {
