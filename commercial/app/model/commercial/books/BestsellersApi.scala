@@ -1,14 +1,16 @@
 package model.commercial.books
 
+import common.{ExecutionContexts, Logging}
+import conf.CommercialConfiguration
 import conf.Configuration.commercial.magento
-import conf.{CommercialConfiguration, Switches}
-import model.commercial.{OptString, XmlAdsApi}
+import conf.Switches._
+import model.commercial._
 
-import scala.xml.Elem
+import scala.concurrent.Future
+import scala.concurrent.duration._
+import scala.xml.{Elem, XML}
 
-trait BestsellersApi extends XmlAdsApi[Book] {
-
-  final protected val switch = Switches.GuBookshopFeedsSwitch
+trait BestsellersApi extends ExecutionContexts with Logging {
 
   protected val category: String
   protected val keywordIds: Seq[String]
@@ -18,8 +20,6 @@ trait BestsellersApi extends XmlAdsApi[Book] {
   protected val path: String
 
   protected def url = CommercialConfiguration.getProperty("gu.bookshop.api.url") map (_ + path)
-
-  override protected val loadTimeout = 5000
 
   def parse(xml: Elem): Seq[Book] = {
 
@@ -45,6 +45,31 @@ trait BestsellersApi extends XmlAdsApi[Book] {
         )
     }
   }
+
+  def loadAds(): Future[Seq[Book]] = {
+    url map { u =>
+      val result = FeedReader.read(FeedRequest(GuBookshopFeedsSwitch, u, timeout = 5.seconds)) { body =>
+        val xml = XML.loadString(body)
+        parse(xml)
+      }
+      result map {
+        case Left(FeedReadWarning(message)) =>
+          log.warn(s"Reading $adTypeName feed failed: $message")
+          Nil
+        case Left(FeedReadException(message)) =>
+          log.error(s"Reading $adTypeName feed failed: $message")
+          Nil
+        case Right(jobs) => jobs
+        case other =>
+          log.error(s"Something unexpected has happened: $other")
+          Nil
+      }
+    } getOrElse {
+      log.warn(s"Reading $adTypeName feed failed: missing URL")
+      Future.successful(Nil)
+    }
+  }
+
 }
 
 object GeneralBestsellersFeed extends BestsellersApi {
@@ -94,6 +119,7 @@ object PoliticsBestsellersFeed extends BestsellersApi {
   protected val keywordIds = Seq("politics/politics")
   protected val path = "/Feed7.jsp"
 }
+
 
 object MusicFilmBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Music & Film"
