@@ -378,6 +378,7 @@ define([
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
                 bean.on(window, 'resize', this.resize);
+                mediator.emit('ui:images:upgrade', this.endslateEl);
             },
             leave: function() {
                 bean.off(window, 'resize', this.resize);
