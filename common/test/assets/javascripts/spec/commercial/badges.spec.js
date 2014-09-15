@@ -87,7 +87,7 @@ define([
                         expect($adSlot.hasClass('ad-slot--paid-for-badge--front')).toBeTruthy();
                     });
 
-                    it('should add pre-badge if sponsor\'s name available', function() {
+                    xit('should add pre-badge if sponsor\'s name available', function() {
                         var sponsor = 'Unilever',
                             container = $('.facia-container').first()
                                 .addClass('facia-container--' + badge.type)
@@ -134,7 +134,7 @@ define([
             });
 
             configs.forEach(function(badge) {
-                it('should add pre-badge if sponsor\'s name available', function() {
+                xit('should add pre-badge if sponsor\'s name available', function() {
                     var sponsor = 'Unilever',
                         container = $('.facia-container .container').first()
                             .addClass('container--' + badge.type)
