@@ -206,7 +206,9 @@ trait Tags {
   lazy val types: Seq[Tag] = tagsOfType("type")
 
   def isSponsored = DfpAgent.isSponsored(tags)
+  def hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
+  def hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags)
   def hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags)
   def sponsor = DfpAgent.getSponsor(tags)
 

@@ -15,9 +15,9 @@ import scala.io.Codec.UTF8
 trait DfpAgent {
 
   protected def sponsorships: Seq[Sponsorship]
-  protected def sponsorshipCount: Map[String, Int]
+  protected def tagToSponsorsMap: Map[String, Seq[String]]
   protected def advertisementFeatureSponsorships: Seq[Sponsorship]
-  protected def featureAdvertiserCount: Map[String, Int]
+  protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Seq[String]]
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
@@ -40,8 +40,27 @@ trait DfpAgent {
   def isSponsored(tagId: String): Boolean = sponsorships exists (_.hasTag(tagId))
   def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
 
-  def hasMultipleSponsors(tagId: String): Boolean = (sponsorshipCount contains tagId) && (sponsorshipCount(tagId) > 1)
-  def hasMultipleFeatureAdvertisers(tagId: String): Boolean = (featureAdvertiserCount contains tagId) && (featureAdvertiserCount(tagId) > 1)
+  def hasMultipleSponsors(tags: Seq[Tag]): Boolean = {
+    tags.map { tag =>
+      tagToSponsorsMap.getOrElse(tag.id, Seq[String]())
+    }.flatten.toSeq.size > 1
+  }
+
+  def hasMultipleSponsors(tagId: String): Boolean = {
+    (tagToSponsorsMap contains tagId) &&
+      (tagToSponsorsMap(tagId).size > 1)
+  }
+
+  def hasMultipleFeatureAdvertisers(tags: Seq[Tag]): Boolean = {
+    tags.map { tag =>
+      tagToAdvertisementFeatureSponsorsMap.getOrElse(tag.id, Seq[String]())
+    }.flatten.toSeq.size > 1
+  }
+
+  def hasMultipleFeatureAdvertisers(tagId: String): Boolean = {
+    (tagToAdvertisementFeatureSponsorsMap contains tagId) &&
+      (tagToAdvertisementFeatureSponsorsMap(tagId).size > 1)
+  }
 
   def isAdvertisementFeature(tags: Seq[Tag]): Boolean = getKeywordTags(tags) exists (tag => isAdvertisementFeature(tag.id))
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
@@ -99,23 +118,29 @@ trait DfpAgent {
 object DfpAgent extends DfpAgent with ExecutionContexts {
 
   private lazy val sponsoredTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
-  private lazy val tagSponsorCountAgent = AkkaAgent[Map[String, Int]] (Map[String, Int]())
+  private lazy val tagToSponsorsMapAgent = AkkaAgent[Map[String, Seq[String]]] (Map[String, Seq[String]]())
   private lazy val advertisementFeatureTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
-  private lazy val featureAdvertiserCountAgent = AkkaAgent[Map[String, Int]] (Map[String, Int]())
+  private lazy val tagToAdvertisementFeatureSponsorsMapAgent = AkkaAgent[Map[String, Seq[String]]] (Map[String, Seq[String]]())
   private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
 
   protected def sponsorships: Seq[Sponsorship] = sponsoredTagsAgent get()
-  protected def sponsorshipCount = tagSponsorCountAgent get()
+  protected def tagToSponsorsMap = tagToSponsorsMapAgent get()
   protected def advertisementFeatureSponsorships: Seq[Sponsorship] = advertisementFeatureTagsAgent get()
-  protected def featureAdvertiserCount = featureAdvertiserCountAgent get()
+  protected def tagToAdvertisementFeatureSponsorsMap = tagToAdvertisementFeatureSponsorsMapAgent get()
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
 
-
-  def sponsorshipToSponsorCountMap(sponsorships: Seq[Sponsorship]) = {
-    val allThemTags: List[String] = sponsorships.foldLeft(List[String]()) { (z, i) => i.tags.toList ::: z}
-    allThemTags.toSet.foldLeft(Map[String, Int]()) {(z, i) => z.updated(i, allThemTags.count(_ == i))}
+  def generateTagToSponsorsMap(sponsorships: Seq[Sponsorship]) = {
+    var collector = Map[String, Set[String]]()
+    sponsorships.foreach { sponsorship =>
+      sponsorship.sponsor foreach { sponsor =>  // sponsor is an Option
+        sponsorship.tags foreach { tag =>
+          collector = collector.updated(tag, collector.getOrElse(tag, Set[String]()) + sponsor)
+        }
+      }
+    }
+    collector
   }
 
   def refresh() {
@@ -168,11 +193,11 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
     val sponsoredTags: Seq[Sponsorship] = grabSponsorshipsFromStore(dfpSponsoredTagsDataKey)
     update(sponsoredTagsAgent, sponsoredTags)
-    updateMap(tagSponsorCountAgent, sponsorshipToSponsorCountMap(sponsoredTags))
+    updateMap(tagToSponsorsMapAgent, generateTagToSponsorsMap(sponsoredTags))
 
     val advertisementFeatures: Seq[Sponsorship] = grabSponsorshipsFromStore(dfpAdvertisementFeatureTagsDataKey)
     update(advertisementFeatureTagsAgent, advertisementFeatures)
-    updateMap(featureAdvertiserCountAgent, sponsorshipToSponsorCountMap(advertisementFeatures))
+    updateMap(tagToAdvertisementFeatureSponsorsMapAgent, generateTagToSponsorsMap(advertisementFeatures))
 
 
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))

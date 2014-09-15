@@ -341,23 +341,25 @@ class DfpAgentTest extends FlatSpec with Matchers {
     notProductionTestDfpAgent.isPageSkinned("testSport/front", Edition.defaultEdition) should be(true)
   }
 
-
-  "Get sponsorship count of Tags" should "recognise when a tag is sponsored by multiple sponsors" in {
+  "generate tag to sponsors map" should "glom sponsorships together" in {
     val universitySponsorships = Sponsorship(List("universityguide", "university A"), Some("University Sponsor A")) ::
       Sponsorship(List("universityguide"), Some("University Sponsor B")) :: Nil
 
-    val result: Map[String, Int] = DfpAgent.sponsorshipToSponsorCountMap(universitySponsorships)
-    result should contain key("universityguide")
-    result("universityguide") should be(2)
-    result("university A") should be (1)
+    val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(universitySponsorships)
+    sponsorsMap should contain key("universityguide")
+    sponsorsMap("universityguide") should equal(Set("University Sponsor A", "University Sponsor B"))
+    sponsorsMap("university A") should equal(Set("University Sponsor A"))
+
   }
 
-  it should "not be bothered by None Sponsors" in {
-    val withNones = Sponsorship(List("videogames", "sports"), None) :: Sponsorship(List("videogames"), Some("videogame publisher")) :: Nil
+  "generate tag to sponsors map" should "not bother with tag with no detected sponsors" in {
+    val sponsorshipsWithANone = Sponsorship(List("universityguide", "university A"), Some("University Sponsor A")) ::
+      Sponsorship(List("videogames"), None) :: Nil
 
-    val result: Map[String, Int] = DfpAgent.sponsorshipToSponsorCountMap(withNones)
-    result should contain key("videogames")
-    result("videogames") should be (2)
+    val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(sponsorshipsWithANone)
+    sponsorsMap should contain key("universityguide")
+    sponsorsMap("universityguide") should equal(Set("University Sponsor A"))
+    sponsorsMap should not contain key("videogames")
   }
 
 }
