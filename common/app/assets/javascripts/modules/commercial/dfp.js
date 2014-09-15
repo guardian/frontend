@@ -1,5 +1,6 @@
 /* global googletag: false */
 define([
+    'bean',
     'bonzo',
     'qwery',
     'lodash/functions/debounce',
@@ -27,6 +28,7 @@ define([
     'common/modules/commercial/user-ad-targeting',
     'common/modules/experiments/ab'
 ], function (
+    bean,
     bonzo,
     qwery,
     debounce,
@@ -387,21 +389,24 @@ define([
         },
         breakoutIFrame = function (iFrame) {
             /* jshint evil: true */
-            var $iFrameParent  = bonzo(iFrame).parent();
+            var iFrameBody    = iFrame.contentDocument.body,
+                $iFrameParent = bonzo(iFrame).parent();
 
-            forEach (breakoutClasses, function (breakoutClass) {
-                var $breakout = $('.' + breakoutClass, iFrame.contentDocument.body);
-                if ($breakout.length) {
-                    // remove the iframe before breaking out
-                    bonzo(iFrame).remove();
-                    if ($breakout[0].nodeName.toLowerCase() === 'script') {
-                        // evil, but we own the returning js snippet
-                        eval($breakout.html());
-                    } else {
-                        $iFrameParent.append($breakout.html());
+            if (iFrameBody) {
+                forEach (breakoutClasses, function (breakoutClass) {
+                    var $breakout = $('.' + breakoutClass, iFrameBody);
+                    if ($breakout.length) {
+                        // remove the iframe before breaking out
+                        bonzo(iFrame).remove();
+                        if ($breakout[0].nodeName.toLowerCase() === 'script') {
+                            // evil, but we own the returning js snippet
+                            eval($breakout.html());
+                        } else {
+                            $iFrameParent.append($breakout.html());
+                        }
                     }
-                }
-            });
+                });
+            }
         },
         /**
          * Checks the contents of the ad for special classes (see breakoutClasses).
@@ -414,22 +419,18 @@ define([
          */
         checkForBreakout = function ($slot) {
             $('iframe', $slot[0]).each(function (iFrame) {
-
-                if (iFrame.contentDocument.body) {
-
-                    // IE needs the iFrame to have loaded before we can interact with it
-                    if (iFrame.readyState && iFrame.readyState !== 'complete') {
-                        bean.on(iFrame, 'readystatechange', function (e) {
-                            if (e.srcElement.readyState === 'complete') {
-                                breakoutIFrame(e.srcElement);
-                            }
-                        });
-                    } else {
-                        breakoutIFrame(iFrame);
-                    }
-
+                // IE needs the iFrame to have loaded before we can interact with it
+                if (iFrame.readyState && iFrame.readyState !== 'complete') {
+                    bean.on(iFrame, 'readystatechange', function (e) {
+                        var updatedIFrame = e.srcElement;
+                        if (updatedIFrame.readyState === 'complete') {
+                            breakoutIFrame(updatedIFrame);
+                            bean.off(updatedIFrame, 'readystatechange');
+                        }
+                    });
+                } else {
+                    breakoutIFrame(iFrame);
                 }
-
             });
         },
         breakpointNameToAttribute = function (breakpointName) {
