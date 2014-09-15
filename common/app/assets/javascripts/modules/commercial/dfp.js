@@ -85,10 +85,10 @@ define([
         slots = {},
         slotsToRefresh = [],
         config = {},
-        breakoutClasses = {
-            'breakout__html': '%content%',
-            'breakout__script': '<script>%content%</script>'
-        },
+        breakoutClasses = [
+            'breakout__html',
+            'breakout__script'
+        ],
         adSlotDefinitions = {
             right: {
                 sizeMappings: {
@@ -385,6 +385,24 @@ define([
         shouldRenderLabel = function ($slot) {
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
         },
+        breakoutIFrame = function (iFrame) {
+            /* jshint evil: true */
+            var $iFrameParent  = bonzo(iFrame).parent();
+
+            forEach (breakoutClasses, function (breakoutClass) {
+                var $breakout = $('.' + breakoutClass, iFrame.contentDocument.body);
+                if ($breakout.length) {
+                    // remove the iframe before breaking out
+                    bonzo(iFrame).remove();
+                    if ($breakout[0].nodeName.toLowerCase() === 'script') {
+                        // evil, but we own the returning js snippet
+                        eval($breakout.html());
+                    } else {
+                        $iFrameParent.append($breakout.html());
+                    }
+                }
+            });
+        },
         /**
          * Checks the contents of the ad for special classes (see breakoutClasses).
          *
@@ -395,26 +413,19 @@ define([
          * can inherit fonts.
          */
         checkForBreakout = function ($slot) {
-            /* jshint evil: true */
             $('iframe', $slot[0]).each(function (iFrame) {
 
-                var ifFrameContext = iFrame.contentDocument.body,
-                    $iFrameParent  = bonzo(iFrame).parent();
+                if (iFrame.contentDocument.body) {
 
-                if (ifFrameContext) {
-
-                    for (var breakoutClass in breakoutClasses) {
-                        var $breakout = $('.' + breakoutClass, ifFrameContext);
-                        if ($breakout.length) {
-                            // remove the iframe before breaking out
-                            bonzo(iFrame).remove();
-                            if ($breakout[0].nodeName.toLowerCase() === 'script') {
-                                // evil, but we own the returning js snippet
-                                eval($breakout.remove().html());
-                            } else {
-                                $iFrameParent.append($breakout.html());
+                    // IE needs the iFrame to have loaded before we can interact with it
+                    if (iFrame.readyState && iFrame.readyState !== 'complete') {
+                        bean.on(iFrame, 'readystatechange', function (e) {
+                            if (e.srcElement.readyState === 'complete') {
+                                breakoutIFrame(e.srcElement);
                             }
-                        }
+                        });
+                    } else {
+                        breakoutIFrame(iFrame);
                     }
 
                 }
