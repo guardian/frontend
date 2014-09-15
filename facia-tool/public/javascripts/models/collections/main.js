@@ -209,11 +209,7 @@ define([
                 .always(function(resp) {
                     if (resp.status === 200 && resp.responseText) {
                         model.frontAge(humanTime(resp.responseText));
-                        model.alertFrontIsStale(
-                            opts.alertIfStale &&
-                            pageConfig.env !== 'dev' &&
-                            new Date() - new Date(resp.responseText) > getFrontAgeAlertMs()
-                        );
+                        model.alertFrontIsStale(opts.alertIfStale && new Date() - new Date(resp.responseText) > getFrontAgeAlertMs());
                     } else {
                         model.frontAge(undefined);
                     }
