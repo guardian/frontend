@@ -4,7 +4,7 @@
 
 $c-commercial-books-dark: #630d4c;
 
-.commercial--v1.commercial--books {
+.commercial.commercial--books {
     padding: $comercial-comp-baseline 0;
     .commercial__branding,
     .commercial__head {
@@ -195,7 +195,7 @@ $c-commercial-books-dark: #630d4c;
 }
 
 /* fronts */
-.facia-container--layout-front .commercial--v1.commercial--books {
+.facia-container--layout-front .commercial.commercial--books {
     padding: $gs-gutter/2;
     @include mq(leftCol) {
         .commercial__head {
@@ -242,7 +242,7 @@ $c-commercial-books-dark: #630d4c;
 }
 
 /* article */
-.facia-container--layout-content .commercial--v1.commercial--books {
+.facia-container--layout-content .commercial.commercial--books {
     @include mq(rightCol) {
         .commercial__head {
             float: left;

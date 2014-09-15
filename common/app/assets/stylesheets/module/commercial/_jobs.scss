@@ -2,7 +2,7 @@
    Jobs component
    ========================================================================== */
 
-.commercial--v1.commercial--jobs {
+.commercial.commercial--jobs {
     .commercial__head {
         background-color: transparent;
         height: auto;
@@ -146,7 +146,7 @@
 }
 
 /* fronts */
-.facia-container--layout-front .commercial--v1.commercial--jobs {
+.facia-container--layout-front .commercial.commercial--jobs {
     padding: $gs-gutter/2;
     @include mq(tablet) {
         .commercial--jobs__sectors {
@@ -217,7 +217,7 @@
     }
 }
 /* article */
-.facia-container--layout-content .commercial--v1.commercial--jobs {
+.facia-container--layout-content .commercial.commercial--jobs {
     @include mq(tablet) {
         .commercial--jobs__sectors {
             float: left;

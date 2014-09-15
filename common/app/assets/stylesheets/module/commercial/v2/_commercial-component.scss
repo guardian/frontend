@@ -8,9 +8,8 @@
 
 /* ==========================================================================
    Commercial container layout adaptions for content pages
-   Merge into common commercial styles once breakpoints synced
    ========================================================================== */
-.facia-container--layout-content .commercial--v2 {
+.facia-container .commercial--v2 {
     .facia-container__inner--commercial {
         @include mq(tablet, rightCol) {
             max-width: none;
@@ -28,8 +27,11 @@
             margin-left: auto;
             margin-right: auto;
         }
-        @include mq(tablet, rightCol) {
+        @include mq(tablet) {
             max-width: gs-span(9);
+        }
+        @include mq(desktop) {
+            max-width: gs-span(12);
         }
     }
 
@@ -123,128 +125,6 @@
         }
         @include mq(wide) {
             margin-left: $left-column-wide + $gs-gutter;
-        }
-    }
-}
-
-
-/* ==========================================================================
-   Commercial container layout adaptions for front pages
-   Merge into common commercial styles once breakpoints synced
-   ========================================================================== */
-.facia-container--layout-front .commercial--v2 {
-    .facia-container__inner--commercial {
-        @include mq(gs-span(7), tablet) {
-            max-width: none;
-        }
-        @include mq(faciaLeftCol) {
-            padding-left: 0;
-            padding-right: $gs-gutter;
-            max-width: gs-span(14) + $gs-gutter;
-        }
-    }
-
-    .container__header__inner,
-    .container__body {
-        @include mq($until: faciaLeftCol) {
-            margin-left: auto;
-            margin-right: auto;
-        }
-        @include mq(tablet) {
-            max-width: gs-span(9);
-        }
-        @include mq(desktop) {
-            max-width: gs-span(12);
-        }
-    }
-
-    .container__header__inner {
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
-        @include mq(mobileLandscape, faciaLeftCol) {
-            padding-left: $gs-gutter;
-            padding-right: $gs-gutter;
-        }
-        @include mq(faciaLeftCol) {
-            @include box-sizing(border-box);
-            padding-left: $gs-gutter/2;
-            padding-right: $gs-gutter/2;
-            height: 100%;
-        }
-    }
-
-    .container__header {
-        @include mq(faciaLeftCol, wide) {
-            width: $left-column + $gs-gutter;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-        }
-
-        .commercial__search {
-            @include mq(mobileLandscape, faciaLeftCol) {
-                right: $gs-gutter;
-            }
-            @include mq(faciaLeftCol) {
-                position: absolute;
-                top: auto;
-                right: $gs-gutter/2;
-                bottom: $gs-baseline*5;
-                left: $gs-gutter/2;
-            }
-        }
-
-        .commercial__cta {
-            top: $gs-baseline/2;
-            right: $gs-gutter/2;
-            @include mq(mobileLandscape, leftCol) {
-                right: $gs-gutter;
-            }
-            @include mq(tablet, faciaLeftCol) {
-                width: gs-span(3);
-            }
-            @include mq(faciaLeftCol) {
-                top: auto;
-                right: $gs-gutter/2;
-                bottom: $gs-baseline;
-                left: $gs-gutter/2;
-            }
-        }
-    }
-
-    .commercial__title {
-        .i-guardian-logo-commercial {
-            @include mq($until: faciaLeftCol) {
-                display: inline-block;
-            }
-            @include mq($from: faciaLeftCol) {
-                display: none;
-            }
-        }
-        .i-marque-54 {
-            @include mq($until: faciaLeftCol) {
-                display: none;
-            }
-            @include mq($from: faciaLeftCol) {
-                display: block;
-            }
-        }
-        .i-commercial-brand {
-            @include mq($until: faciaLeftCol) {
-                opacity: .8;
-            }
-        }
-    }
-
-    .commercial__desc {
-        @include mq($until: faciaLeftCol) {
-            margin-top: $gs-baseline*-1.333;
-        }
-    }
-
-    .container__body {
-        @include mq(faciaLeftCol, wide) {
-            margin-left: $left-column + $gs-gutter;
         }
     }
 }

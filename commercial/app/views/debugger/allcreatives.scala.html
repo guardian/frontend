@@ -1,77 +1,81 @@
 @(page: model.MetaData)(implicit request: RequestHeader)
 
 @main(page){ }{
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script>
-    jQuery(function($) {
-        $("#switchFronts").click(function() {
-            $('.facia-container').removeClass("facia-container--layout-content").addClass("facia-container--layout-front");
-            $('#switchArticles').removeClass('current');
-            $('#article').slideUp();
-            $(this).addClass('current');
-            return false;
-        });
-        $("#switchArticles").click(function() {
-            $('.facia-container').removeClass("facia-container--layout-front").addClass("facia-container--layout-content");
-            $('#switchFronts').removeClass('current');
-            $('#article').slideDown();
-            $(this).addClass('current');
-            return false;
-        });
-        $("#pageSkin").click(function() {
-            $('body').toggleClass('has-page-skin');
-           return false; 
-        });
-
-        $(".codeContainer").hide();
-        $(".show-code").click(function() {
-            $(this).parent().next().slideToggle();
-            return false;
-        });
-        
-        $("#dfp-number").on('change', function() {
-            $('.commercial--dfp-multiple').removeClass("commercial--items-dfp-2 commercial--items-dfp-3 commercial--items-dfp-4").addClass("commercial--items-dfp-" + this.value);
-            return false;
-        });
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+jQuery(function($) {
+    $("#switchFronts").click(function() {
+        $('.l-side-margins').removeClass("l-side-margins--layout-content").addClass("l-side-margins--layout-front");
+        $('.facia-container').removeClass("facia-container--layout-content").addClass("facia-container--layout-front");
+        $('#switchArticles').removeClass('current');
+        $('#article').slideUp();
+        $(this).addClass('current');
+        return false;
     });
-    </script>
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.facia.css")" />
-    <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.default.css")" />
-    <style>
-        .test-page-head {
-            font-size: 2rem;
-        }
-        .test-page-subhead {
-            font-size: 1.4rem;
-            margin: 1em 0;
-        }
-        pre {
-            font-size: 11px;
-        }
-        #dfp-ad--merchandising-high {
-            display: block;
-        }
-        .facia-switch-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1100;
-            background: #fff;
-            padding: 12px 10px;
-            border: 1px solid #ccc;
-        }
-        .has-page-skin {
-            background-image: url(http://adimage.guardian.co.uk/pageskins/M34681-Guardian-takeover-Skin-1600x1200-6_1.gif);
-            background-attachment: fixed;
-            background-position: 50% 0;
-        }
-        hr {
-            height: 8px;
-            border: 0 none;
-            border-top: 8px dashed #ddd;
-            margin: 2em 0;
-        }
-    </style>
+    $("#switchArticles").click(function() {
+        $('.l-side-margins').removeClass("l-side-margins--layout-front").addClass("l-side-margins--layout-content");
+        $('.facia-container').removeClass("facia-container--layout-front").addClass("facia-container--layout-content");
+        $('#switchFronts').removeClass('current');
+        $('#article').slideDown();
+        $(this).addClass('current');
+        return false;
+    });
+    $("#pageSkin").click(function() {
+        $('body').toggleClass('has-page-skin');
+       return false; 
+    });
+
+    $(".codeContainer").hide();
+    $(".show-code").click(function() {
+        $(this).parent().next().slideToggle();
+        return false;
+    });
+    
+    $("#dfp-number").on('change', function() {
+        $('.commercial--dfp-multiple').removeClass("commercial--items-dfp-2 commercial--items-dfp-3 commercial--items-dfp-4").addClass("commercial--items-dfp-" + this.value);
+        return false;
+    });
+});
+</script>
+<link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.facia.css")" />
+<link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.default.css")" />
+<style>
+    .test-page-head {
+        font-size: 2rem;
+    }
+    .test-page-subhead {
+        font-size: 1.4rem;
+        margin: 1em 0;
+    }
+    pre {
+        font-size: 11px;
+    }
+    #dfp-ad--merchandising-high {
+        display: block;
+    }
+    .facia-switch-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1100;
+        background: #fff;
+        padding: 12px 10px;
+        border: 1px solid #ccc;
+    }
+    .has-page-skin {
+        background-image: url(http://adimage.guardian.co.uk/pageskins/M34681-Guardian-takeover-Skin-1600x1200-6_1.gif);
+        background-attachment: fixed;
+        background-position: 50% 0;
+    }
+    hr {
+        height: 8px;
+        border: 0 none;
+        border-top: 8px dashed #ddd;
+        margin: 2em 0;
+    }
+</style>
+
+<div class="l-side-margins">
 
     <div class="facia-container__inner">
         <div class="facia-switch-wrapper">
@@ -96,7 +100,7 @@
             <div class="codeContainer">
                 <pre><code>
 &lt;div class="breakout__html"&gt;
-    &lt;div class="commercial--v1 commercial--v-high commercial--dfp-[%URI_ENCODE:omniture_id%]" role="complementary"&gt;
+    &lt;div class="commercial commercial--v-high commercial--dfp-[%URI_ENCODE:omniture_id%]" role="complementary"&gt;
         &lt;a href="%%CLICK_URL_ESC%%[%base_url%]" data-link-name="merchandising-[%omniture_id%]-title"&gt;
             &lt;h3 class="commercial__title"&gt;[%component_title%]&lt;/h3&gt;
         &lt;/a&gt;
@@ -124,7 +128,7 @@
                 <div class="from-content-api js-article__body">
                     <p>The relationship between Aronnax and Nemo is an intriguing dance between understanding and uneasiness. Initially, both of them delight in finding another academic mind. Aronnax is thrilled by the unexpected luxuries of the Nautilus, with its world-class collections of underwater treasures, inventively cooked seafood dishes and unending supply of seaweed cigars. Meanwhile, Nemo revels in showing off the Nautilus's capabilities to someone who understands them, taking Aronnax on little field trips to hunt sharks, visit the South Pole and explore the underwater city of Atlantis.</p>
                     <div id="dfp-ad--im" class="ad-slot ad-slot--dfp ad-slot--im ad-slot--im" data-link-name="ad slot im" data-test-id="ad-slot-im" data-name="im" data-mobile="88,89" data-refresh="false" data-label="false" data-node-uid="3">
-                        <div class="commercial--v1 commercial--v-high commercial--dfp-123456789" role="complementary">
+                        <div class="commercial commercial--v-high commercial--dfp-123456789" role="complementary">
                             <a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBtdlPTiPSU9vAFsqZigb12YGYA_fhkJMFAAAAEAEg75TfITgAWJeKiNqiAWC7vq6D0AqyAQlsb2NhbGhvc3S6AQlnZnBfaW1hZ2XIAQnaAXZodHRwOi8vbG9jYWxob3N0OjkwMDAvYm9va3MvYm9va3NibG9nLzIwMTQvanVsLzI0L2Jvb2stZm9yLXRoZS1iZWFjaC10d2VudHktdGhvdXNhbmQtbGVhZ3Vlcy11bmRlci10aGUtc2VhLWp1bGVzLXZlcm5lqQKY-ncJR3q8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vYm9va3MvYm9va3NibG9n-AL50R6AAwGQA4wGmAOMBqgDAeAEAaAGHw%2526num%253D0%2526sig%253DAOD64_04uVjvjKcSOt1Pw_sspwn5MRBdHg%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-123456789-title">
                                 <h3 class="commercial__title">Life of <span>Austin</span></h3>
                             </a>
@@ -240,7 +244,7 @@
             color: #[%commercial__colour2%];
         }
     &lt;/style&gt;
-    &lt;div class="commercial--v1 commercial--dfp commercial--dfp-single commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
+    &lt;div class="commercial commercial--dfp commercial--dfp-single commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
         &lt;div class="facia-container__inner"&gt;
             &lt;div class="commercial__head container__title container__title-[%commercial__titlelogo%]"&gt;
                 &lt;div class="container__title__wrapper i-[%commercial__titlelogo%]-title-background"&gt;
@@ -290,7 +294,7 @@
                     color: #c07ed6;
                 }
             </style>
-            <div class="commercial--v1 commercial--dfp commercial--dfp-single commercial--dfp-987654321" role="complementary">
+            <div class="commercial commercial--dfp commercial--dfp-single commercial--dfp-987654321" role="complementary">
                 <div class="facia-container__inner">
                     <div class="commercial__head container__title container__title-jobs">
                         <div class="container__title__wrapper i-jobs-title-background">
@@ -446,7 +450,7 @@
     &lt;style type="text/css"&gt;
         [%commercial__css%]
     &lt;/style&gt;
-    &lt;div class="commercial--v1 commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
+    &lt;div class="commercial commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
         &lt;div class="facia-container__inner"&gt;
             &lt;div class="commercial__head container__title"&gt;
                 &lt;h3 class="commercial__title"&gt;&lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;[%commercial__title%]&lt;/a&gt;&lt;/h3&gt;
@@ -522,7 +526,7 @@
 &lt;/div&gt;
 </code></pre>
         </div>
-        <div class="commercial--v1 commercial--dfp commercial--dfp-1234567890 commercial--dfp-multiple commercial--items-dfp-4" role="complementary">
+        <div class="commercial commercial--dfp commercial--dfp-1234567890 commercial--dfp-multiple commercial--items-dfp-4" role="complementary">
             <div class="facia-container__inner">
                 <div class="commercial__head container__title">
                     <h3 class="commercial__title"><a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DB7VJwyhXRU6PzIs-tiga94IDwAt_qkZcFAAAAEAEg75TfITgAWO-wiMKUAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFcaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vZ2xvYmFsLWRldmVsb3BtZW50L3ZpZGVvLzIwMTQvanVsLzA3L21hbGktbGFuZC1ncmFicy1mYXJtZXItdmlkZW-pAtZN5GxziLw-wAIC4AIA6gIuLzU5NjY2MDQ3L3RoZWd1YXJkaWFuLmNvbS9uZXdzL3Nlcmllcy9kb2N1YmVhdPgC-dEekAOMBpgDjAaoAwHQBJBO4AQBoAYf%2526num%253D0%2526sig%253DAOD64_1a7IqhLv6ApJJ2HxwcfxqBWa481Q%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.guardian.co.uk" data-link-name="merchandising-1234567890-high-title">Guardian Vintage Motoring</a></h3>
@@ -1001,4 +1005,6 @@
             </script>
         </div>
     </div>
+    
+</div>
 }
