@@ -28,6 +28,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
         .gallery-lightbox__info {
             right: $gallery-lightbox-sidebar-width;
+            opacity: 1.0;
         }
     }
 
@@ -164,11 +165,12 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         display: block;
         height: 100%;
         top: 0;
+        opacity: 0;
         bottom: auto;
         padding-top: gs-height(2) + $gs-baseline - 2px;
         padding-right: $gs-gutter*2;
         padding-left: $gs-gutter;
-        @include transition(right .1s ease-in);
+        @include transition(right .1s ease-in, opacity .1s ease-in);
         background-color: colour(tone-media-1);
         right: (-1 * $gallery-lightbox-info-width-desktop) + $gallery-lightbox-sidebar-width;
         width: $gallery-lightbox-info-width-desktop;
