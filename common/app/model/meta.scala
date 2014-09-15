@@ -211,6 +211,14 @@ trait Tags {
   def sponsor = DfpAgent.getSponsor(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
+  /**
+   * NOTE:
+   *
+   * This is used only for OLD-STYLE containers. It only includes the visual tones those containers care about. For
+   * the new container equivalent, see `views.support.CardStyle`.
+   *
+   * TODO: Once we've deleted all of the old-style containers, remove this.
+   */
   lazy val visualTone: String =
     if (isLiveBlog) Tags.VisualTone.Live
     else if (isComment) Tags.VisualTone.Comment
