@@ -51,7 +51,7 @@
                     navSections: [@Html(FaciaToolConfiguration.sectionsFromNav.mkString("'", "', '", "'"))],
                     email: '@identity.map(_.email).getOrElse("")',
                     avatarUrl: '@identity.map(_.avatarUrl).getOrElse("")',
-                    commercialFrequency: @Configuration.faciatool.adminPressJobCommercialPushRateInMinutes,
+                    lowFrequency: @Configuration.faciatool.adminPressJobLowPushRateInMinutes,
                     highFrequency: @Configuration.faciatool.adminPressJobHighPushRateInMinutes,
                     standardFrequency: @Configuration.faciatool.adminPressJobStandardPushRateInMinutes
                 }

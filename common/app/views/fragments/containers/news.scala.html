@@ -1,7 +1,8 @@
 @(page: MetaData, collection: Collection, style: NewsContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
-@import common.Edition
 
-@import org.joda.time.DateTime
+@import common.Edition
+@import model.{Collection, Config, FaciaComponentName, MetaData}
+@import views.support.{GetClasses, NewsContainer, RenderClasses, TemplateDeduping}
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
     @defining(templateDeduping(10, collection.items)) { items =>

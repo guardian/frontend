@@ -71,7 +71,7 @@ define([
      * for all ads in that slot until another breakpoint is detected, in the above case, that's desktop.
      *
      * There is also a function for breaking the ad content out of their iframes. This can be done by
-     * adding the classes below (breakoutHash) to the ad content (in DFP).
+     * adding the classes below (breakoutClasses) to the ad content (in DFP).
      *
      * Labels are automatically prepended to an ad that was successfully loaded.
      *
@@ -85,7 +85,7 @@ define([
         slots = {},
         slotsToRefresh = [],
         config = {},
-        breakoutHash = {
+        breakoutClasses = {
             'breakout__html': '%content%',
             'breakout__script': '<script>%content%</script>'
         },
@@ -386,7 +386,7 @@ define([
             return $slot.data('label') !== false && qwery('.ad-slot__label', $slot[0]).length === 0;
         },
         /**
-         * Checks the contents of the ad for special classes (see breakoutHash).
+         * Checks the contents of the ad for special classes (see breakoutClasses).
          *
          * If one of these classes is detected, then the contents of that iframe is retrieved
          * and written onto the parent page.
@@ -396,29 +396,30 @@ define([
          */
         checkForBreakout = function ($slot) {
             /* jshint evil: true */
-            var iFrame = qwery('iframe', $slot[0])[0];
+            $('iframe', $slot[0]).each(function (iFrame) {
 
-            if (iFrame) {
+                var ifFrameContext = iFrame.contentDocument.body,
+                    $iFrameParent  = bonzo(iFrame).parent();
 
-                var frameContents = iFrame.contentDocument.body;
+                if (ifFrameContext) {
 
-                for (var cls in breakoutHash) {
-                    var $el = $('.' + cls, frameContents);
-
-                    if ($el.length > 0) {
-                        if ($el[0].nodeName.toLowerCase() === 'script') {
-                            // evil, but we own the returning js snippet
-                            eval($el.html());
-                        } else {
-                            $slot
-                                .html('')
-                                .first()
-                                .append(breakoutHash[cls].replace(/%content%/g, $el.html()));
+                    for (var breakoutClass in breakoutClasses) {
+                        var $breakout = $('.' + breakoutClass, ifFrameContext);
+                        if ($breakout.length) {
+                            // remove the iframe before breaking out
+                            bonzo(iFrame).remove();
+                            if ($breakout[0].nodeName.toLowerCase() === 'script') {
+                                // evil, but we own the returning js snippet
+                                eval($breakout.remove().html());
+                            } else {
+                                $iFrameParent.append($breakout.html());
+                            }
                         }
                     }
+
                 }
 
-            }
+            });
         },
         breakpointNameToAttribute = function (breakpointName) {
             return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();

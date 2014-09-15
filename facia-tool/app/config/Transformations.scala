@@ -28,8 +28,7 @@ object Transformations {
       imageWidth =        createCommand.imageWidth,
       imageHeight =       createCommand.imageHeight,
       isImageDisplayed =  createCommand.isImageDisplayed,
-      priority =          createCommand.priority,
-      editorialType =     createCommand.editorialType
+      priority =          createCommand.priority
     )
 
     config.copy(

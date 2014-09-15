@@ -40,16 +40,15 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
 
     /** Subjects are indexed both alphabetically and by their parent section */
     (keywords andThen series).run(Enumeratee.zip(bySection, byWebTitle)) map { case (sectionMap, alphaMap) =>
-        blocking {
-          saveToS3("keywords", toPages(alphaMap)(alphaTitle))
-          saveToS3("keywords_by_section", toPages(sectionMap)(ValidSections(_)))
-        }
+      blocking {
+        saveToS3("keywords", toPages(alphaMap)(alphaTitle))
+        saveToS3("keywords_by_section", toPages(sectionMap)(ValidSections(_)))
+      }
     }
   }
 
   def rebuildContributorIndex() = {
-    ContentApiTagsEnumerator.enumerateTagTypeFiltered("contributor")
-      .run(byWebTitle) map { alphaMap =>
+    ContentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(byWebTitle) map { alphaMap =>
       blocking {
         saveToS3("contributors", toPages(alphaMap)(alphaTitle))
       }
@@ -59,8 +58,7 @@ object RebuildIndexJob extends ExecutionContexts with Logging {
   implicit class RichFuture[A](future: Future[A]) {
     def withErrorLogging = {
       future onFailure {
-        case throwable: Throwable =>
-          log.error("Error rebuilding index", throwable)
+        case throwable: Throwable => log.error("Error rebuilding index", throwable)
       }
 
       future
