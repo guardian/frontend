@@ -57,7 +57,7 @@ define([
         this.imgElementHtml =
             '<li class="gallery-lightbox__item gallery-lightbox__item--img js-gallery-slide">' +
                 '<div class="gallery-lightbox__img-container"><img class="gallery-lightbox__img js-gallery-lightbox-img""></div>' +
-                '<div class="gallery-lightbox__info">' +
+                '<div class="gallery-lightbox__info js-gallery-lightbox-info">' +
                     '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
                         '<span class="gallery-lightbox__index">${index}</span>' +
                         '<span class="gallery-lightbox__progress-separator"></span>' +
@@ -108,6 +108,12 @@ define([
         this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
         this.toggleInfo = this.trigger.bind(this, 'toggle-info');
         this.resize = this.trigger.bind(this, 'resize');
+
+        this.stopPropagationOnMouseClick = function(e) {
+            if (detect.isBreakpoint({min: 'desktop'})) {
+                e.stop();
+            }
+        }.bind(this);
 
         if (detect.hasTouchScreen()) {
             this.disableHover();
@@ -297,14 +303,16 @@ define([
                 url.pushUrl({}, document.title, '/' + this.galleryJson.id + '?index=' + this.index, true);
 
                 // event bindings
-                bean.on(this.$contentEl[0], 'click', this.toggleInfo);
+                bean.on(this.$swipeContainer[0], 'click', '.js-gallery-content', this.toggleInfo);
+                bean.on(this.$contentEl[0], 'click', '.js-gallery-lightbox-info', this.stopPropagationOnMouseClick);
                 bean.on(window, 'resize', this.resize);
 
                 // meta
                 this.$indexEl.text(this.index);
             },
             leave: function() {
-                bean.off(this.$contentEl[0], 'click', this.toggleInfo);
+                bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
+                bean.off(this.$contentEl[0], 'click', this.stopPropagationOnMouseClick);
                 bean.off(window, 'resize', this.resize);
             },
             events: {
@@ -341,7 +349,7 @@ define([
                 'reload': function() {
                     this.reloadState = true;
                 },
-                'toggle-info': function() {
+                'toggle-info': function(e) {
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
                 },
