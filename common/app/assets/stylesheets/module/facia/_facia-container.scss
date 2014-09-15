@@ -1,3 +1,7 @@
 .facia-container {
     @include clearfix;
 }
+
+.has-page-skin .facia-container--layout-front {
+    background-color: #ffffff;
+}
