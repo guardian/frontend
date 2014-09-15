@@ -30,7 +30,7 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
     val index = request.getQueryString("index") map (_.toInt) getOrElse 1
     lookup(path, index, isTrail=false) map {
       case Right(other) => RenderOtherStatus(other)
-      case Left(model) => Cached(60) { JsonComponent(model.gallery.lightbox) }
+      case Left(model) => Cached(model.gallery) { JsonComponent(model.gallery.lightbox) }
     }
   }
 
