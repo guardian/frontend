@@ -95,6 +95,31 @@
 
     (function(isModern) {
 
+        function testCssSupport(prop, value) {
+            var valueIsDefined = value !== undefined
+            if(valueIsDefined && ('CSS' in window && 'supports' in window.CSS)) {
+                return window.CSS.supports(prop, value);
+            } else {
+                var elm = document.createElement('test');
+                if(elm.style[prop] !== undefined) {
+                    if(valueIsDefined){
+                        var before = elm.style[prop];
+                        try { elm.style[prop] = value } catch (e) {}
+                        if(elm.style[prop] != before) {
+                            delete elm;
+                            return true;
+                        } else {
+                            delete elm;
+                            return false;
+                        }
+                    }
+                    delete elm;
+                    return true;
+                }
+                return false;
+            }
+         }
+
         // must always be set before the Omniture file is parsed
         window.s_account = guardian.config.page.omnitureAccount;
 
@@ -107,6 +132,9 @@
             }
             if (hasSvgSupport()) {
                 document.documentElement.className += ' svg';
+            }
+            if(testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
+                document.documentElement.className += ' has-flex-wrap';
             }
             document.documentElement.className = document.documentElement.className.replace(/\bis-not-modern\b/g, 'is-modern');
         }
