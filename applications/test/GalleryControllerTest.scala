@@ -46,10 +46,9 @@ class GalleryControllerTest extends FlatSpec with Matchers {
     val fakeRequest = TestRequest(s"/${galleryUrl}/lightbox.json")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = controllers.GalleryController.renderLightbox(galleryUrl)(fakeRequest)
+    val result = controllers.GalleryController.lightboxJson(galleryUrl)(fakeRequest)
     status(result) should be(200)
     header("Content-Type", result).get should be("application/json; charset=utf-8")
-    contentAsString(result) should startWith("{\"config\"")
-    contentAsString(result) should include("gallery--lightbox")
+    contentAsString(result) should startWith("{\"id\"")
   }
 }

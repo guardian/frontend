@@ -34,7 +34,6 @@ define([
     'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
     'common/modules/discussion/comment-count',
-    'common/modules/gallery/lightbox',
     'common/modules/onward/history',
     'common/modules/onward/breaking-news',
     'common/modules/ui/message',
@@ -81,7 +80,6 @@ define([
     liveStats,
     ab,
     CommentCount,
-    LightboxGallery,
     history,
     breakingNews,
     Message,
@@ -180,16 +178,6 @@ define([
             mediator.on('page:common:ready', function() {
                 CommentCount.init();
             });
-        },
-
-        initLightboxGalleries: function () {
-            var thisPageId;
-            mediator.on('page:common:ready', function(config) {
-                var galleries = new LightboxGallery(config);
-                thisPageId = config.page.pageId;
-                galleries.init();
-            });
-
         },
 
         initRightHandComponent: function(config) {
@@ -397,7 +385,6 @@ define([
         modules.showRelativeDates();
         modules.initClickstream();
         modules.transcludeCommentCounts();
-        modules.initLightboxGalleries();
         modules.optIn();
         modules.displayReleaseMessage(config);
         modules.logReadingHistory();

@@ -90,24 +90,6 @@
     }
 }
 
-// icon button (circular element containing an offset/centered icon)
-@mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: null) {
-    width: $buttonSize;
-    height: $buttonSize;
-    @include border-radius($buttonSize);
-    position: relative;
-    display: inline-block;
-
-    .i {
-        position: absolute;
-        text-indent: -9999px;
-        top: 50%;
-        left: 50%;
-        margin-top: $iconOffsetX;
-        margin-left: if(not $iconOffsetY, $iconOffsetX, $iconOffsetY);
-    }
-}
-
 @mixin icon($name, $with-width: true) {
     @if ($svg-support) {
         .svg & {
@@ -119,6 +101,27 @@
             background-repeat: no-repeat;
             @include background-size(contain);
         }
+    }
+}
+
+// icon button (circular element containing a centered icon)
+@mixin icon-button($name, $buttonSize) {
+    cursor: pointer;
+    width: $buttonSize;
+    height: $buttonSize;
+    @include border-radius($buttonSize);
+    position: relative;
+    display: block;
+
+    i,
+    .i {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        @include icon($name);
     }
 }
 
@@ -199,4 +202,8 @@
             padding-right: $gap * .5;
         }
     }
+}
+
+@function colour($color, $pallet: $pasteup-palette) {
+    @return guss-colour($color, $pallet);
 }
