@@ -1,31 +1,31 @@
 define([
-    'common/utils/$',
     'common/utils/_',
-    'common/utils/config',
     'bean',
-    'common/utils/mediator',
     'bonzo',
     'qwery',
+    'common/utils/$',
     'common/utils/ajax',
+    'common/utils/url',
+    'common/utils/config',
+    'common/utils/mediator',
     'common/utils/fsm',
     'common/utils/detect',
     'common/modules/component',
     'common/modules/ui/images',
-    'common/utils/url'
 ], function (
-    $,
     _,
-    config,
     bean,
-    mediator,
     bonzo,
     qwery,
+    $,
     ajax,
+    url,
+    config,
+    mediator,
     FiniteStateMachine,
     detect,
     Component,
-    imagesModule,
-    url
+    imagesModule
 ) {
     function GalleryLightbox() {
 
@@ -33,7 +33,7 @@ define([
         this.mobile = detect.getBreakpoint() === 'mobile';
         this.showEndslate = !this.mobile;
         this.useSwipe = detect.hasTouchScreen();
-        this.swipeThreshold = 0.3;
+        this.swipeThreshold = 0.05;
 
         // TEMPLATE
         function generateButtonHTML(label) {
