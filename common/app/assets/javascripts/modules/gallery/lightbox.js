@@ -300,7 +300,7 @@ define([
                 // load prev/current/next
                 this.loadSurroundingImages(this.index, this.images.length);
 
-                this.translateContent(this.index, 0, (this.useSwipe && this.mobile ? 100 : 0));
+                this.translateContent(this.index, 0, (this.useSwipe && detect.isBreakpoint({max: 'tablet'}) ? 100 : 0));
 
                 url.pushUrl({}, document.title, '/' + this.galleryJson.id + '?index=' + this.index, true);
 
