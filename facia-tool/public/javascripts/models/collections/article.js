@@ -229,7 +229,7 @@ define([
                  ].filter(function(prop) {return !deepGet(opts, prop);});
 
                 if (missingProps.length) {
-                    vars.model.statusCapiErrors(true);
+                    vars.model.alert('ContentApi is returning invalid data. Fronts may not update.');
                     window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
                 } else {
                     this.state.isLoaded(true);

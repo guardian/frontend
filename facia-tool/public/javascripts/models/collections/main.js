@@ -8,7 +8,7 @@ define([
     'utils/ammended-query-str',
     'utils/update-scrollables',
     'utils/terminate',
-    'utils/is-valid-date',
+    'utils/human-time',
     'utils/sanitize-html',
     'modules/list-manager',
     'modules/droppable',
@@ -28,7 +28,7 @@ define([
     ammendedQueryStr,
     updateScrollables,
     terminate,
-    isValidDate,
+    humanTime,
     sanitizeHtml,
     listManager,
     droppable,
@@ -48,13 +48,14 @@ define([
 
     return function() {
 
-        var model = vars.model = {};
+        var model = vars.model = {},
+            detectPressFailureCount = 0;
 
-        model.statusCapiErrors = ko.observable(false);
-        model.statusPressFailure = ko.observable(false);
-        model.clearStatuses = function() {
-            model.statusCapiErrors(false);
-            model.statusPressFailure(false);
+        model.alert = ko.observable();
+        model.alertFrontIsStale = ko.observable();
+        model.clearAlerts = function() {
+            model.alert(false);
+            model.alertFrontIsStale(false);
         };
 
         model.switches = ko.observable();
@@ -64,6 +65,8 @@ define([
         model.fronts = ko.observableArray();
 
         model.front = ko.observable();
+
+        model.frontAge = ko.observable();
 
         model.headlineLength = ko.computed(function() {
             return _.contains(vars.CONST.restrictHeadlinesOn, model.front()) ? vars.CONST.restrictedHeadlineLength : vars.CONST.headlineLength;
@@ -115,15 +118,11 @@ define([
             }
         });
 
-        model.detectPressFailureCount = 0;
-
         model.deferredDetectPressFailure = _.debounce(function () {
             var count;
 
             if (model.front()) {
-                model.statusPressFailure(false);
-
-                count = ++model.detectPressFailureCount;
+                count = ++detectPressFailureCount;
 
                 authedAjax.request({
                     url: '/front/lastmodified/' + model.front()
@@ -131,15 +130,16 @@ define([
                 .always(function(resp) {
                     var lastPressed;
 
-                    if (model.detectPressFailureCount === count && resp.status === 200) {
+                    if (detectPressFailureCount === count && resp.status === 200) {
                         lastPressed = new Date(resp.responseText);
 
-                        if (isValidDate(lastPressed)) {
-                            model.statusPressFailure(
+                        if (_.isDate(lastPressed)) {
+                            model.frontAge(humanTime(resp.responseText));
+                            model.alert(
                                 _.some(model.collections(), function(collection) {
                                     var l = new Date(collection.state.lastUpdated());
-                                    return isValidDate(l) ? l > lastPressed : false;
-                                })
+                                    return _.isDate(l) ? l > lastPressed : false;
+                                }) ? 'Sorry, the latest edit to this front hasn\'t gone live.' : false
                             );
                         }
                     }
@@ -148,7 +148,7 @@ define([
         }, vars.CONST.detectPressFailureMs || 10000);
 
         model.pressLiveFront = function () {
-            model.statusPressFailure(false);
+            model.clearAlerts();
             if (model.front()) {
                 authedAjax.request({
                     url: '/press/live/' + model.front(),
@@ -173,7 +173,7 @@ define([
             return queryParams().front;
         }
 
-        function loadCollections(frontId) {
+        function loadFront(frontId) {
             model.collections(
                 ((vars.state.config.fronts[frontId] || {}).collections || [])
                 .filter(function(id) { return vars.state.config.collections[id]; })
@@ -195,6 +195,34 @@ define([
                     );
                 })
             );
+
+            getFrontAge({alertIfStale: true});
+        }
+
+        function getFrontAge(opts) {
+            opts = opts || {};
+
+            if (model.front()) {
+                authedAjax.request({
+                    url: '/front/lastmodified/' + model.front()
+                })
+                .always(function(resp) {
+                    if (resp.status === 200 && resp.responseText) {
+                        model.frontAge(humanTime(resp.responseText));
+                        model.alertFrontIsStale(opts.alertIfStale && new Date() - new Date(resp.responseText) > getFrontAgeAlertMs());
+                    } else {
+                        model.frontAge(undefined);
+                    }
+                });
+            } else {
+                model.frontAge(undefined);
+            }
+        }
+
+        function getFrontAgeAlertMs() {
+            return vars.CONST.frontAgeAlertMs[
+                vars.CONST.editions.indexOf(model.front()) > -1 ? 'front' : vars.priority || 'editorial'
+            ];
         }
 
         var startCollectionsPoller = _.once(function() {
@@ -228,6 +256,7 @@ define([
                 model.collections().forEach(function(list){
                     list.refreshRelativeTimes();
                 });
+                getFrontAge();
             }, period);
         });
 
@@ -261,7 +290,7 @@ define([
                 var wasPopstate = false;
 
                 model.setFront(getFront());
-                loadCollections(getFront());
+                loadFront(getFront());
 
                 window.onpopstate = function() {
                     wasPopstate = true;
@@ -275,7 +304,7 @@ define([
                         history.pushState({}, '', window.location.pathname + '?' + ammendedQueryStr('front', front));
                     }
                     wasPopstate = false;
-                    loadCollections(front);
+                    loadFront(front);
 
                     if (!model.liveMode()) {
                         model.pressDraftFront();
