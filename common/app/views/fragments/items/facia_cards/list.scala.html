@@ -1,15 +1,16 @@
-@(trail: model.Trail, index: Int, containerIndex: Int, forceTone: Option[String] = None)(implicit request: RequestHeader, config: Config)
+@(trail: model.Trail, index: Int, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640}
 @import views.html.fragments.media.video
+@import views.html.fragments.items.facia_cards.meta
 
 <li class="@GetClasses.forCollectionItem(trail)">
 
 @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
 <div
-class="@GetClasses.forItem(trail, isFirstContainer, forceTone = forceTone)"
+class="@GetClasses.forNewStyleItem(trail, isFirstContainer)"
     @if(trail.isCommentable) {
         @trail.discussionId.map{ id =>
         data-discussion-id="@id"
@@ -42,7 +43,7 @@ data-link-name="trail | @{index + 1}"
             <div class="item__standfirst">@Html(text)</div>
         }
 
-        @fragments.items.elements.meta(trail)
+        @meta(trail)
     </div>
     <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 </div>

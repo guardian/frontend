@@ -1,25 +1,51 @@
 .container--facia-cards {
-    .linkslist-container:before {
-        display: none;
-    }
 
     .linkslist-container {
-        margin: 0;
+        margin: 0 !important;
+        &:before {
+            display: none;
+        }
+    }
 
-        .facia-slice {
+    .linkslist {
+        margin: 0;
+        display: inline-block;
+
+        @include mq(tablet) {
+            @include flex-display;
             @include flex-wrap(wrap);
         }
 
         .facia-slice__item {
-            @include flex-grow(initial);
-            @include flex-basis(50%);
-            width: 50%;
+            float: left;
+        }
+    }
+
+    // @supports (not (flex-wrap: wrap)) and (not (-webkit-flex-wrap: wrap)) {
+    //     .linkslist {
+    //         display: inline-block;
+    //         .facia-slice__item {
+    //             float: left;
+    //         }
+    //     }
+    // }
+
+    .linkslist {
+        .facia-slice__item {
+            @include flex-grow(0);
+            @include flex-basis(100%);
+            width: 100%;
 
             &:nth-child(4n+1) {
-                clear: all;
+                clear: both;
                 &:before {
                     border: 0;
                 }
+            }
+
+            @include mq(mobileLandscape) {
+                @include flex-basis(50%);
+                width: 50%;
             }
 
             @include mq(tablet) {

@@ -45,7 +45,7 @@
     }
 
     .item__title {
-        padding-top: $gs-baseline * .333;
+        padding-top: $gs-baseline / 3;
     }
 
     .item__image-container {
@@ -53,10 +53,10 @@
     }
 
     .item__meta {
-        bottom: $gs-baseline * .333;
+        bottom: $gs-baseline / 3;
+    }
 
-        .item__timestamp i {
-            top: 2px;
-        }
+    .item__timestamp {
+        padding-left: 0;
     }
 }

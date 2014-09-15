@@ -8,9 +8,6 @@
 @if(trail.isLive && !trail.isBreaking){
     <span class="item__live-indicator">Live</span>
 }
-@if(tone == "comment") {
-    <span class="i i-quote-grey"></span>
-}
 @if(showTag) {
     @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
 }
