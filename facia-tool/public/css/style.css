@@ -408,17 +408,23 @@ h1 {
 
 .element,
 .element a {
-    color: #000000;
+    font-size: 12px;
+    line-height: 16px;
+    color: #666666;
     cursor: pointer;
     text-decoration: none;
 }
 
-.element__trailText,
-.element__byline,
-.element__kicker {
-    font-size: 12px;
-    line-height: 16px;
-    color: #666666;
+.element.empty,
+.element.empty a {
+    font-style: italic;
+}
+
+.element__headline a,
+.element__headline {
+    font-size: 17px;
+    line-height: 18px;
+    color: #000000;
 }
 
 span.kicker {
@@ -607,7 +613,7 @@ select {
     font-size: 12px;
     position: relative;
     display: inline-block;
-    width: 95px;
+    padding-right: 20px;
 }
 
 .editor--boolean__label {

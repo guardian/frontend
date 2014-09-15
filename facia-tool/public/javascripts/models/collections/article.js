@@ -54,17 +54,15 @@ define([
             allMeta = [
                 'href',
                 'kicker',
+                'showKicker',
+                'boost',
+                'isBreaking',
                 'imageAdjust', // deprecate
-                'replaceImage',
+                'imageHide',
+                'imageReplace',
                 'imageSrc',
                 'imageSrcWidth',
                 'imageSrcHeight',
-                'boostHeadline',
-                'quoteHeadline',
-                'hideImage',
-                'altImage',
-                'showKicker',
-                'showByline',
                 'showMainVideo',
                 'group',
                 'snapType',
@@ -89,25 +87,13 @@ define([
                     type: 'text'
                 },
                 {
-                    key: 'boostHeadline',
-                    singleton: 'headline',
-                    label: 'boost headline',
+                    key: 'boost',
+                    label: 'boost',
                     type: 'boolean'
                 },
                 {
-                    key: 'quoteHeadline',
-                    singleton: 'headline',
-                    label: 'quote headline',
-                    type: 'boolean'
-                },
-                {
-                    key: 'showKicker',
-                    label: 'show kicker',
-                    type: 'boolean'
-                },
-                {
-                    key: 'showByline',
-                    label: 'show byline',
+                    key: 'isBreaking',
+                    label: 'breaking news',
                     type: 'boolean'
                 },
                 {
@@ -117,34 +103,32 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'hideImage',
+                    key: 'imageHide',
                     singleton: 'images',
                     label: 'hide image',
                     type: 'boolean'
                 },
                 {
-                    key: 'altImage',
-                    singleton: 'images',
-                    label: 'cutout image',
-                    type: 'boolean'
-                },
-                {
-                    key: 'replaceImage',
+                    key: 'imageReplace',
                     singleton: 'images',
                     label: 'replace image',
                     type: 'boolean'
                 },
                 {
+                    key: 'showKicker',
+                    label: 'show kicker',
+                    type: 'boolean'
+                },
+                {
                     key: 'kicker',
-                    label: 'Kicker',
+                    label: 'kicker',
                     requires: 'showKicker',
-                    maxLength: 30,
                     type: 'text'
                 },
                 {
                     key: 'imageSrc',
-                    label: 'Image URL',
-                    requires: 'replaceImage',
+                    label: 'image URL',
+                    requires: 'imageReplace',
                     type: 'text'
                 }
             ];
@@ -165,7 +149,6 @@ define([
             this.state = asObservableProps([
                 'underDrag',
                 'isOpen',
-                'isOpenImage',
                 'isLoaded',
                 'isEmpty',
                 'ophanUrl',
@@ -223,7 +206,6 @@ define([
                     self.meta.imageSrc(src);
                     self.meta.imageSrcWidth(width);
                     self.meta.imageSrcHeight(height);
-                    self.state.isOpenImage(false);
                 })
                 .fail(function(err) {
                     self.open();
@@ -390,22 +372,6 @@ define([
             if (vars.model.switches()['facia-tool-sparklines']) {
                 this.state.sparkUrl.valueHasMutated();
             }
-        };
-
-        Article.prototype.toggleImageAdjustHide = function() {
-            this.meta.imageAdjust(this.meta.imageAdjust() === 'hide' ? undefined : 'hide');
-        };
-
-        Article.prototype.toggleShowMainVideo = function () {
-            this.meta.showMainVideo(!this.meta.showMainVideo());
-        };
-
-        Article.prototype.toggleImageAdjustBoost = function() {
-            this.meta.imageAdjust(this.meta.imageAdjust() === 'boost' ? undefined : 'boost');
-        };
-
-        Article.prototype.toggleOpenImage = function() {
-            this.state.isOpenImage(!this.state.isOpenImage());
         };
 
         Article.prototype.get = function() {

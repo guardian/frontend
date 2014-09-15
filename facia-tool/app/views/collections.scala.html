@@ -123,15 +123,19 @@
         <!-- ko if: type === 'text' -->
             <div class="editor editor--text" data-bind="
                 visible: visible">
-                <div data-bind="
-                    attr: {class: 'element element__' + key},
+                <a data-bind="
+                    attr: {
+                        class: 'element element__' + key,
+                        title: label
+                    },
                     click: open,
-                    html: overrideOrVal() || key"></div>
+                    css: {empty: !overrideOrVal()},
+                    html: overrideOrVal() || label + '...'"></a>
                 <!-- ko if: $data.meta === $root.uiOpenElement() -->
                         <textarea data-bind="
                             attr: {
                                 class: 'editor__' + key + ' element__' + key,
-                                placeholder: field() || key
+                                placeholder: field() || label + '...'
                             },
                             autoResize: true,
                             valueUpdate: 'afterkeydown',
@@ -270,12 +274,6 @@
                     <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
                         visible: isSnap,
                         value: meta.href"/>
-
-                    <div data-bind="if: state.isOpenImage() || meta.imageSrc()">
-                        <input type="text" placeholder="Image URL, eg. copied from Batch Uploader" data-bind="
-                            hasFocus: state.isOpenImage,
-                            value: provisionalImageSrc"/>
-                    </div>
 
                     <!--div class="supporting-message">Add supporting content below</div-->
                 </div>

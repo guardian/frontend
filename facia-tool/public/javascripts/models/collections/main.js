@@ -46,7 +46,6 @@ define([
     ko.bindingHandlers.autoResize = {
         init: function(el, valueAccessor) {
             setTimeout(function() {
-                console.log(el.scrollHeight, el.clientHeight);
                 el.style.height = '1px';
                 el.style.height = (Math.max(el.scrollHeight + 3, 19)) + 'px';
             })
@@ -348,7 +347,6 @@ define([
                 model.latestArticles.startPoller();
 
                 mediator.on('ui:open', function(e) {
-                    console.log(e);
                     model.uiOpenElement(e)
                 });
             });
