@@ -1,5 +1,9 @@
 @(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
+@import common.LinkTo
+@import model.{Collection, Config, FaciaComponentName}
+@import views.support.{GetClasses, Container, TemplateDeduping}
+
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
     @defining(templateDeduping(9, collection.items)) { items =>
@@ -15,15 +19,17 @@
                 data-component="@style.containerType">
                 <div class="facia-container__inner">
                     <div class="container__border tone-@style.tone tone-accent-border"></div>
-                    @title.map { title =>
-                        <h2 class="container__title">
-                            @href.map { href =>
-                            <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                            }.getOrElse{
-                                <span class="container__title__label u-text-hyphenate">@Html(title)</span>
-                            }
-                        </h2>
-                    }
+                    <div class="container__header">
+                        @title.map { title =>
+                            <h2 class="container__title">
+                                @href.map { href =>
+                                <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                                }.getOrElse{
+                                    <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                                }
+                            </h2>
+                        }
+                    </div>
                     <div class="container__body container--rolled-up-hide">
                         @fragments.collections.raclette(items, style, containerIndex)
                     </div>

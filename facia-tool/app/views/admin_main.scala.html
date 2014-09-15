@@ -1,5 +1,7 @@
 @(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None)(content: Html)
 
+@import conf.Configuration
+
 <!DOCTYPE html>
 
 <html ng-app>
@@ -48,7 +50,10 @@
                     editions: [@Html(Edition.all.map(_.id.toLowerCase).mkString("'","','", "'"))],
                     navSections: [@Html(FaciaToolConfiguration.sectionsFromNav.mkString("'", "', '", "'"))],
                     email: '@identity.map(_.email).getOrElse("")',
-                    avatarUrl: '@identity.map(_.avatarUrl).getOrElse("")'
+                    avatarUrl: '@identity.map(_.avatarUrl).getOrElse("")',
+                    lowFrequency: @Configuration.faciatool.adminPressJobLowPushRateInMinutes,
+                    highFrequency: @Configuration.faciatool.adminPressJobHighPushRateInMinutes,
+                    standardFrequency: @Configuration.faciatool.adminPressJobStandardPushRateInMinutes
                 }
             });
         </script>

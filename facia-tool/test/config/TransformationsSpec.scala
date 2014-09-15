@@ -23,6 +23,11 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     webTitle = Some("New Front!"),
     title = Some("New front"),
     description = Some("A test front"),
+    onPageDescription = Some("A test front"),
+    imageUrl = None,
+    imageWidth = None,
+    imageHeight = None,
+    isImageDisplayed = None,
     priority = Some("high"),
     initialCollection = collectionFixture
   )
@@ -39,7 +44,7 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
     None
   )
 
-  val emptyFrontFixture = Front(Nil, None, None, None, None, None)
+  val emptyFrontFixture = Front(Nil, None, None, None, None, None, None, None, None, None, None)
 
   val validConfigFixture = Config.empty.copy(
     fronts = Map("foo" -> emptyFrontFixture.copy(collections = List("bar"))),
@@ -54,13 +59,18 @@ class TransformationsSpec extends FlatSpec with ShouldMatchers {
   it should "add the front to the config with the given front id" in {
     Transformations.createFront(createCommandFixture, "new collection id")(Config.empty)
       .fronts.get("new front id") shouldEqual Some(Front(
-      collections = List("new collection id"),
-      navSection = Some("uk"),
-      webTitle = Some("New Front!"),
-      title = Some("New front"),
-      description = Some("A test front"),
-      priority = Some("high")
-    ))
+        collections = List("new collection id"),
+        navSection = Some("uk"),
+        webTitle = Some("New Front!"),
+        title = Some("New front"),
+        description = Some("A test front"),
+        onPageDescription = Some("A test front"),
+        imageUrl = None,
+        imageWidth = None,
+        imageHeight = None,
+        isImageDisplayed = None,
+        priority = Some("high")
+      ))
   }
 
   "prune" should "remove collections that are not referred to by any fronts" in {

@@ -7,9 +7,11 @@ define([
     'utils/as-observable-props',
     'utils/populate-observables',
     'utils/full-trim',
+    'utils/sanitize-html',
     'utils/deep-get',
     'utils/snap',
     'utils/human-time',
+    'utils/validate-image-src',
     'modules/copied-article',
     'modules/authed-ajax',
     'modules/content-api',
@@ -23,9 +25,11 @@ define([
         asObservableProps,
         populateObservables,
         fullTrim,
+        sanitizeHtml,
         deepGet,
         snap,
         humanTime,
+        validateImageSrc,
         copiedArticle,
         authedAjax,
         contentApi,
@@ -355,7 +359,7 @@ define([
                  ].filter(function(prop) {return !deepGet(opts, prop);});
 
                 if (missingProps.length) {
-                    vars.model.statusCapiErrors(true);
+                    vars.model.alert('ContentApi is returning invalid data. Fronts may not update.');
                     window.console.error('ContentApi missing: "' + missingProps.join('", "') + '" for ' + this.id());
                 } else {
                     this.state.isLoaded(true);
@@ -422,8 +426,8 @@ define([
                 .filter(function(p){ return !_.isUndefined(p[1]); })
                 // reject false properties:
                 .filter(function(p){ return p[1] !== false; })
-                // trim strings:
-                .map(function(p){ return [p[0], _.isString(p[1]) ? fullTrim(p[1]) : p[1]]; })
+                // trim and sanitize strings:
+                .map(function(p){ return [p[0], sanitizeHtml(fullTrim(p[1]))]; })
                 // reject whitespace-only strings:
                 .filter(function(p){ return _.isString(p[1]) ? p[1] : true; })
                 // reject vals that are equivalent to the fields (if any) that they're overwriting:
@@ -474,37 +478,11 @@ define([
         };
 
         Article.prototype.validateImageSrc = function(src) {
-            var defer = $.Deferred(),
-                img;
-
-            if (!src) {
-                defer.resolve();
-
-            } else if (!src.match(new RegExp('^http://.*\\.' + vars.CONST.imageCdnDomain + '/'))) {
-                defer.reject('Images must come from *.' + vars.CONST.imageCdnDomain);
-
-            } else {
-                img = new Image();
-                img.onerror = function() {
-                    defer.reject('That image could not be found');
-                };
-                img.onload = function() {
-                    var width = this.width || 1,
-                        height = this.height || 1,
-                        err =  width > 940 ? 'Images cannot be more than 2048 pixels wide' :
-                               width < 620 ? 'Images cannot be less than 620 pixels wide'  :
-                               Math.abs((width * 3)/(height * 5) - 1) > 0.01 ?  'Images must have a 5x3 aspect ratio' : false;
-
-                    if (err) {
-                        defer.reject(err);
-                    } else {
-                        defer.resolve(width, height);
-                    }
-                };
-                img.src = src;
-            }
-
-            return defer.promise();
+            return validateImageSrc(src, {
+                maxWidth: 940,
+                minWidth: 620,
+                widthAspectRatio: 3,
+                heightAspectRatio: 5});
         };
 
         Article.prototype.convertToSnap = function() {

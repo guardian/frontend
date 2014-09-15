@@ -1,6 +1,8 @@
 @(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
-@import views.support.GetClasses
+@import common.LinkTo
+@import model.{Collection, Config, FaciaComponentName}
+@import views.support.{GetClasses, Container, TemplateDeduping}
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
@@ -17,7 +19,6 @@
                 data-component="@FaciaComponentName(config, collection)">
                 <div class="facia-container__inner">
                     <div class="container__border tone-@style.tone tone-accent-border"></div>
-
                     <div class="container__header">
                         @title.map { title =>
                             <h2 class="container__title">

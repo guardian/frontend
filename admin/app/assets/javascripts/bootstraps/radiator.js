@@ -145,13 +145,16 @@ define([
                     .draw(google.visualization.arrayToDataTable(graphData), {
                         title: 'Page views',
                         backgroundColor: '#fff',
-                        colors: ['#333'],
-                        height: 125,
+                        colors: ['#e6711b'],
+                        height: 160,
                         legend: 'none',
                         fontName: 'Georgia',
                         titleTextStyle: {color: '#999'},
                         hAxis: { textStyle: {color: '#ccc'}, gridlines: { count: 0 }, showTextEvery: 15, baselineColor: '#fff' },
-                        smoothLine: true
+                        smoothLine: true,
+                        chartArea: {
+                            width: "85%"
+                        }
                     });
 
                 // Average pageviews now
@@ -160,7 +163,18 @@ define([
                 var viewsPerSecond = Math.round(lastOphanEntry/60);
                 $('.pageviews-per-second').html('(' + viewsPerSecond + ' views/sec)');
             }
-        )
+        );
+
+        // "upgrade" build icons
+        $('.buildConfigurationName').each(function(build){
+            var icon = $('img', build);
+            var success = icon.attr('src').indexOf("success.png") >= 0;
+            var link = $('a', build);
+            var buildName = link[0].innerText;
+            var status = success ? 'success' : 'failure';
+            icon.replaceWith('<div title="' + buildName + '" class="' + status + '">' + buildName + '</div>');
+            link.remove();
+        });
     }
 
     return {

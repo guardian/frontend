@@ -58,7 +58,11 @@ define([
     };
 
     ScrollDepth.prototype.setData = function(type) {
-        var currentDepth = this.getPercentageInViewPort(this.config[type + 'El']);
+        var el = this.config[type + 'El'];
+        if (!el) {
+            return false;
+        }
+        var currentDepth = this.getPercentageInViewPort(el);
         if((currentDepth - this.data[type].depth) > this.config.changeThreshold) {
             this.data[type].depth = currentDepth;
             if(typeof this.data[type].duration === 'number') {

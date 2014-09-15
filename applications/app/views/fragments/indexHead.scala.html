@@ -1,17 +1,12 @@
 @(index: services.IndexPage)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
-
-@import model.Tag
-@import views.helpers.ApplicationsTemplateHelper.head._
 @import common.LinkTo
+@import model.Tag
 
 @index.page match {
-    case tag:Tag => {
-        <meta name="twitter:card" content="summary" />
+    case tag: Tag => {
         <meta name="twitter:url" content="@LinkTo(request.uri)" />
-
-        @openGraphDescription(tag).map { desc => <meta name="og:description" content="@desc" />}
-        <meta name="og:title" content="@views.support.Title(tag)" />
-        <meta name="og:image" content="@openGraphImage(tag)" />
+        <meta property="og:title" content="@views.support.Title(index.page)" />
     }
     case _ => { }
 }
+

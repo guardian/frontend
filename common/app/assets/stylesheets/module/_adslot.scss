@@ -100,27 +100,7 @@
     }
 }
 .top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, rightCol) {
-        text-align: center;
-    }
-    @include mq(rightCol) {
-        margin: 0 0 0 $gs-gutter;
-    }
-    @include mq(leftCol) {
-        margin: 0 auto;
-        max-width: gs-span(14) + ($gs-gutter*2) - ($left-column + ($gs-gutter*2));
-        padding-left: $left-column + ($gs-gutter*2);
-    }
-    @include mq(wide) {
-        max-width: gs-span(16) + ($gs-gutter*2) - ($left-column-wide + ($gs-gutter*2));
-        padding-left: $left-column-wide + ($gs-gutter*2);
-    }
-    @include mq(tablet, rightCol) {
-        .ad-slot__label {
-            width: 728px;
-            margin: 0 auto;
-        }
-    }
+    text-align: center;
 }
 
 /**
@@ -128,26 +108,33 @@
  */
 .ad-slot--inline,
 .ad-slot--container-inline,
-.ad-slot--gallery-inline {
+.ad-slot--gallery-inline,
+.ad-slot--liveblog-inline {
+    width: 300px;
+    margin: $gs-baseline auto;
     min-height: 50 + $mpu-ad-label-height;
     text-align: center;
 
+    @include mq(mobileLandscape) {
+        width: 320px;
+    }
     @include mq(tablet) {
         height: 250px + $mpu-ad-label-height;
+        width: auto;
     }
     .ad-slot__label {
-        max-width: 320px;
+        background-color: transparent;
     }
 }
 .ad-slot--inline,
 .ad-slot--container-inline {
+    background-color: $c-neutral8;
+
     @include mq(tablet) {
         width: 300px;
     }
 }
 .ad-slot--inline {
-    margin-bottom: $gs-baseline;
-
     @include mq(tablet) {
         float: right;
         margin-top: $gs-baseline/3;
@@ -155,29 +142,35 @@
     }
 }
 .ad-slot--container-inline {
-    margin: $gs-baseline 0 $gs-baseline/2;
-
     @include mq(tablet) {
         position: absolute;
         top: 1px;
         right: 0;
         margin: 0;
-        background-color: $c-neutral8;
+    }
+}
+.ad-slot--gallery-inline,
+.ad-slot--liveblog-inline {
+    @include mq(tablet) {
+        margin-top: $gs-baseline*2;
+        margin-bottom: $gs-baseline*2;
+        padding-bottom: $gs-baseline*2;
     }
 }
 .ad-slot--gallery-inline {
-    @include mq(tablet) {
-        padding-bottom: $gs-baseline*2;
-        background-color: lighten($c-mediaBackground, 2.5%);
-    }
+    background-color: lighten($c-mediaBackground, 2.5%);
+
     .ad-slot__label {
         color: $c-neutral3;
-        background-color: lighten($c-mediaBackground, 2.5%);
         border-top-color: $c-neutral2;
+    }
+}
+.ad-slot--liveblog-inline {
+    background-color: $c-neutral6;
 
-        @include mq(tablet) {
-            max-width: none;
-        }
+    .ad-slot__label {
+        color: $c-neutral2;
+        border-top-color: $c-neutral3;
     }
 }
 .ad-slot--mpu-banner-ad {
@@ -386,11 +379,11 @@
             @include comm-paid-logo-placement;
         }
     }
-    
+
     @include mq(faciaLeftCol) {
         @include comm-paid-logo-placement;
     }
-    
+
     @include mq(wide) {
         .has-page-skin & {
             margin-left: 50%;

@@ -47,12 +47,14 @@ trait DfpAgent {
   def hasInlineMerchandise(tags: Seq[Tag]): Boolean = tags exists inlineMerchandisingTargetedTags.hasTag
 
   def isPageSkinned(adUnitWithoutRoot: String, edition: Edition): Boolean = {
-    if (adUnitWithoutRoot endsWith "front") {
+    if (PageSkin.isValidForNextGenPageSkin(adUnitWithoutRoot)) {
       val adUnitWithRoot: String = s"$dfpAdUnitRoot/$adUnitWithoutRoot"
 
       def targetsAdUnitAndMatchesTheEdition(sponsorship: PageSkinSponsorship) = {
-        sponsorship.adUnits.contains(adUnitWithRoot) &&
-          (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id))
+        val adUnits = sponsorship.adUnits map (_.stripSuffix("/ng"))
+        adUnits.contains(adUnitWithRoot) &&
+          (sponsorship.countries.isEmpty || sponsorship.countries.exists(_.editionId == edition.id)) &&
+          !sponsorship.isR2Only
       }
 
       if (isProd) {
@@ -161,7 +163,7 @@ trait DfpAgentLifecycle extends GlobalSettings {
     super.onStart(app)
 
     Jobs.deschedule("DfpDataRefreshJob")
-    Jobs.schedule("DfpDataRefreshJob", "0 6/30 * * * ?") {
+    Jobs.schedule("DfpDataRefreshJob", "0 6/5 * * * ?") {
       DfpAgent.refresh()
     }
 

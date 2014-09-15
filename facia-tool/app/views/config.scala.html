@@ -182,10 +182,24 @@
                             attr: {placeholder: placeholders.title},
                             value: props.title"></textarea>
 
-                        <label>Description</label>
+                        <label>Meta description</label>
                         <textarea data-bind="
                             attr: {placeholder: placeholders.description},
                             value: props.description"></textarea>
+
+                        <label>On-page description</label>
+                        <textarea data-bind="
+                            attr: {placeholder: placeholders.onPageDescription},
+                            value: props.onPageDescription"></textarea>
+
+                        <label>Image</label>
+                        <input type="text" placeholder="Image URL, e.g. copied from Batch Uploader"
+                            data-bind="value: provisionalImageUrl" />
+
+                        <label>Display image</label>
+                        <input type="checkbox" data-bind="
+                            checked: props.isImageDisplayed,
+                            enable: props.imageUrl" />
 
                         <label>Type</label>
                         <input type="radio" name="group02" data-bind="checkedValue: undefined, checked: props.priority" />

@@ -1,39 +1,6 @@
-@mixin video-icon($type) {
-    content: '';
-    @include icon($type);
-    @include background-size(auto 100%);
-    margin-right: $gs-gutter/10;
-    height: .75em !important;
-    width: 1.2em !important;
-}
-
 .container--multimedia {
-    @include item--hide-tone-border;
     margin-bottom: 0;
 
-    .container__title,
-    .container__toggle__text,
-    .item__link,
-    .item__title,
-    .linkslist__action {
-        color: #ffffff;
-    }
-    .item__link:visited,
-    .item__link:visited .item__title,
-    .linkslist__action:visited {
-        color: mix(#ffffff, lighten($c-neutral1, 4%), 80%);
-    }
-    .item__tag {
-        &,
-        &:hover,
-        &:active,
-        &:focus {
-            color: mix(#ffffff, $c-neutral1, 70%);
-        }
-    }
-    .linkslist__item {
-        border-top-color: mix(#ffffff, lighten($c-neutral1, 8%), 50%);
-    }
     .item {
         margin-bottom: 0;
     }
@@ -41,12 +8,6 @@
     .item__byline,
     .item__meta {
         display: none;
-    }
-    .item__title--video-icon:before {
-        @include video-icon(video-icon);
-    }
-    .facia-slice__item:before {
-        border-left-color: lighten($c-neutral1, 16%);
     }
     .collection__show-more {
         top: -$gs-baseline;
@@ -68,8 +29,6 @@
         }
     }
     @include mq(tablet) {
-        @include item--hide-tone-border;
-
         .facia-slice-wrapper--position-1 {
             .facia-slice__item:first-child {
                 @include flex-grow(2);
@@ -93,7 +52,6 @@
             .facia-slice__item:nth-child(3) {
                 .item__standfirst {
                     display: block;
-                    color: $c-neutral4;
                 }
             }
         }
@@ -130,24 +88,11 @@
     margin-top: 0;
 }
 
-.item--video {
-    .item__title:before {
-        @include video-icon(video-icon-black);
-    }
 
-    .l-row--background-features & {
-        .item__title:before {
-            @include icon(video-icon);
-        }
-    }
-}
 
-.linkslist__item--video {
-    .linkslist__action:before {
-        @include video-icon(video-icon-black);
-    }
-
-    &.supporting__item {
+.supporting__item {
+    &.linkslist__item--audio,
+    &.linkslist__item--video {
         .linkslist__action:before {
             margin-top: -1 * $gs-baseline;
         }

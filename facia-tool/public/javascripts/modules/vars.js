@@ -68,6 +68,12 @@ define([
         sparksRefreshMs:       300000,
         pubTimeRefreshMs:      30000,
 
+        frontAgeAlertMs: {
+            front:      60000 * 2 * (pageConfig.highFrequency || 1),
+            editorial:  60000 * 2 * (pageConfig.standardFrequency || 5),
+            commercial: 60000 * 2 * (pageConfig.lowFrequency || 60)
+        },
+
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
         apiSearchParams:       'show-fields=internalContentCode,isLive,firstPublicationDate,headline,trailText,byline,thumbnail&show-elements=video',

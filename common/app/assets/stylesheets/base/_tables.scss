@@ -45,6 +45,7 @@ td {
 .table {
     background: $c-neutral8;
     border-top: 1px solid $c-newsAccent;
+    border-collapse: inherit;
 
     th,
     td,

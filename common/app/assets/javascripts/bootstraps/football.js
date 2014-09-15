@@ -160,7 +160,7 @@ define([
 
                     if(!/^\s+$/.test(scoreBoard.template)) {
                         scoreBoard.endpoint = endpoint;
-                        scoreBoard.updateEvery = /desktop|wide/.test(detect.getBreakpoint()) ? 30 : 60;
+                        scoreBoard.updateEvery = detect.isBreakpoint({ min: 'desktop' }) ? 30 : 60;
                         scoreBoard.autoupdated = match.isLive;
 
                         scoreBoard.render(scoreContainer);

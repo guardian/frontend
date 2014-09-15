@@ -5,8 +5,12 @@ import org.joda.time.DateTime
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   def isPositive(targetName: String) = name == targetName && op == "IS"
+  def isNegative(targetName: String) = name == targetName && op == "IS_NOT"
 
   def isSlot(value: String) = isPositive("slot") && values.contains(value)
+
+  def isPlatform(value: String) = isPositive("p") && values.contains(value)
+  def isNotPlatform(value: String) = isNegative("p") && values.contains(value)
 
   val isSponsoredSlot = isSlot("spbadge")
 
@@ -19,10 +23,13 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isKeywordTag = isPositive("k")
   val isSeriesTag = isPositive("se")
   val isContributorTag = isPositive("co")
+
+  val targetsR2Only: Boolean = isPlatform("r2") || isNotPlatform("ng")
 }
 
 
 case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
+
   def filterTags(tagCriteria: CustomTarget => Boolean)(bySlotType: CustomTarget => Boolean) = {
     if (targets exists bySlotType) {
       targets.filter(tagCriteria).flatMap(_.values).distinct
@@ -38,6 +45,8 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val inlineMerchandisingTargetedContributors = filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
 
   val targetsAdTest = targets.exists(_.targetsAdTest)
+
+  val targetsR2Only: Boolean = targets exists (_.targetsR2Only)
 }
 
 
@@ -48,9 +57,10 @@ case class GuAdUnit(id: String, path: Seq[String])
 
 
 case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargets: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet]) {
-  def hasAdTestTargetting = {
-    customTargetSets.exists(_.targetsAdTest)
-  }
+
+  def hasAdTestTargetting = customTargetSets.exists(_.targetsAdTest)
+
+  def targetsR2Only = customTargetSets exists (_.targetsR2Only)
 }
 
 

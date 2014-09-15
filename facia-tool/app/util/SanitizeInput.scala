@@ -19,6 +19,7 @@ object SanitizeInput {
       title = front.title.map(fromString),
       webTitle = front.webTitle.map(fromString),
       navSection = front.navSection.map(fromString),
-      description = front.description.map(fromString)
+      description = front.description.map(fromString),
+      onPageDescription = front.onPageDescription.map(fromString)
     )
 }

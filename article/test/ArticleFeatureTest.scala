@@ -349,9 +349,8 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
         And("the placeholder has the correct data attributes")
         adPlaceholder.getAttribute("data-name") should be("top-above-nav")
-        adPlaceholder.getAttribute("data-tabletportrait") should be("728,90")
-        adPlaceholder.getAttribute("data-tabletlandscape") should be("728,90|940,230|900,250")
-        adPlaceholder.getAttribute("data-wide") should be("728,90|940,230|900,250|970,250")
+        adPlaceholder.getAttribute("data-mobile") should be("88,70|728,90")
+        adPlaceholder.getAttribute("data-desktop") should be("88,70|728,90|940,230|900,250|970,250")
 
         And("the placeholder has the correct class name")
         adPlaceholder.getAttribute("class") should be("ad-slot ad-slot--dfp ad-slot--top-above-nav ad-slot--top-banner-ad")
@@ -593,10 +592,10 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       HtmlUnit("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         import browser._
         Then("I should see twitter cards")
-        $("meta[property='twitter:site']").getAttributes("content").head  should be ("@guardian")
-        $("meta[property='twitter:card']").getAttributes("content").head  should be ("summary_large_image")
-        $("meta[property='twitter:app:url:googleplay']").getAttributes("content").head should startWith ("guardian://www.theguardian.com/world")
-        $("meta[property='twitter:image:src']").getAttributes("content").head should endWith ("/Irans-President-Hassan-Ro-011.jpg")
+        $("meta[name='twitter:site']").getAttributes("content").head  should be ("@guardian")
+        $("meta[name='twitter:card']").getAttributes("content").head  should be ("summary_large_image")
+        $("meta[name='twitter:app:url:googleplay']").getAttributes("content").head should startWith ("guardian://www.theguardian.com/world")
+        $("meta[name='twitter:image:src']").getAttributes("content").head should endWith ("/Irans-President-Hassan-Ro-011.jpg")
       }
     }
 
@@ -677,14 +676,6 @@ class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
       }
     }
 
-    scenario("More on this story gallery lightbox") {
-      Given("I see a gallery trail")
-      HtmlUnit("/culture/2014/jul/27/-sp-jennifer-hudson-the-only-constant-is-my-voice-grief") { browser =>
-        import browser._
-        Then("it should have a relative data gallery url attribute")
-        $("div[data-gallery-url]").getAttribute("data-gallery-url") should be ("/music/gallery/2014/jul/27/jennifer-hudson-in-pictures")
-      }
-    }
   }
 
 }

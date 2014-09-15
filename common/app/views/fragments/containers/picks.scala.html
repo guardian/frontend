@@ -1,5 +1,9 @@
 @(collection: Collection, style: Container, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
+@import common.LinkTo
+@import model.{Collection, Config}
+@import views.support.{GetClasses, Container, TemplateDeduping, Seq2zipWithRowInfo}
+
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
     @defining(templateDeduping(5, collection.items)) { items =>
@@ -14,26 +18,28 @@
                 data-component="@style.containerType">
                 <div class="facia-container__inner">
                     <div class="container__border"></div>
-                    @title.map { title =>
-                        <h2 class="container__title">
-                            @href.map { href =>
-                            <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                            }.getOrElse{
-                                <span class="container__title__label u-text-hyphenate">@Html(title)</span>
-                            }
-                        </h2>
+                    <div class="container__header">
+                        @title.map { title =>
+                            <h2 class="container__title">
+                                @href.map { href =>
+                                <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                                }.getOrElse{
+                                    <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                                }
+                            </h2>
 
-                        @config.href.map { link =>
-                            <div class="container__meta">
-                                <dl class="content-meta">
-                                    <dt class="content-meta__label">Series</dt>
-                                    <dd class="content-meta__item">
-                                        <a href="@LinkTo{/@link}" class="tone-colour">@config.id</a>
-                                    </dd>
-                                </dl>
-                            </div>
+                            @config.href.map { link =>
+                                <div class="container__meta">
+                                    <dl class="content-meta">
+                                        <dt class="content-meta__label">Series</dt>
+                                        <dd class="content-meta__item">
+                                            <a href="@LinkTo{/@link}" class="tone-colour">@config.id</a>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            }
                         }
-                    }
+                    </div>
                     <div class="container__body container--rolled-up-hide">
                         @defining(items.filter( i => i.group == Some("0") || i.group == None), items.filter(_.group == Some("1"))) { case (standardItems, bigItems) =>
                             @if(bigItems.nonEmpty){ @fragments.collections.series(bigItems, style, containerIndex) }
