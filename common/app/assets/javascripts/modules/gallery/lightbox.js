@@ -345,6 +345,14 @@ define([
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
                 },
+                'hide-info': function() {
+                    this.pulseButton(this.infoBtn);
+                    this.$lightboxEl.removeClass('gallery-lightbox--show-info');
+                },
+                'show-info': function() {
+                    this.pulseButton(this.infoBtn);
+                    this.$lightboxEl.addClass('gallery-lightbox--show-info');
+                },
                 'resize': function() {
                     this.swipeContainerWidth = this.$swipeContainer.dim().width;
                     this.loadSurroundingImages(this.index, this.images.length); // regenerate src
@@ -422,9 +430,13 @@ define([
 
     GalleryLightbox.prototype._handleKeyEvents = function(e) {
         if (e.keyCode === 37) { // left
-            this.trigger('prev', 'keyboard');
+            this.trigger('prev');
         } else if (e.keyCode === 39) { // right
-            this.trigger('next', 'keyboard');
+            this.trigger('next');
+        } else if (e.keyCode === 38) { // up
+            this.trigger('hide-info');
+        } else if (e.keyCode === 40) { // down
+            this.trigger('show-info');
         } else if (e.keyCode === 27) { // esc
             this.close();
         } else if (e.keyCode === 73) { // 'i'
