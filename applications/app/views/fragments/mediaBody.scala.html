@@ -4,7 +4,7 @@
 @import views.support.{Video640, SeoOptimisedContentImage, StripHtmlTags}
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
-<div class="l-side-margins l-side-margins--layout-content">
+<div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
     <article class="content content--media content--media--@mediaType tone-@media.visualTone"
         itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
         <div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
