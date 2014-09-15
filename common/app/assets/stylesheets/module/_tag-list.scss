@@ -1,3 +1,24 @@
+.tag-wrapper {
+    width: 100%;
+
+    .content--article & {
+        margin-bottom: $gs-baseline/2;
+    }
+
+    @include mq(leftCol) {
+        width: $left-column;
+        position: absolute;
+        bottom: 0;
+        left: -160px;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+        left: -$left-column-wide - $gs-gutter;
+    }
+}
+
+
 .show-more-tags {
     vertical-align: bottom;
     display: inline-block;
