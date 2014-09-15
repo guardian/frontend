@@ -17,9 +17,11 @@
         } else {
             legend: { position: "in" },
         }
-        chartArea: { width: "94%" },
+        chartArea: { width: "90%" },
+        titleTextStyle: {color: '#999'},
         axisTitlesPosition: 'in',
-        fontName : 'Arial'
+        fontName : 'Arial',
+        smoothLine: true
     };
 
     chart.draw(data, options);

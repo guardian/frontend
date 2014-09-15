@@ -17,7 +17,6 @@
         } else {
             @fragments.headDefault(article)
         }
-
         <div class="gs-container">
             <div class="content__main-column content__main-column--article">
 
@@ -36,13 +35,7 @@
                     @BodyCleaner(article, article.body)
                 </div>
 
-                <div class="content__keywords" data-link-name="article keywords">
-                    @fragments.keywordList(article.keywords)
-                </div>
-
-                <div class="social-wrapper" data-component="share">
-                    @fragments.social(article)
-                </div>
+                @fragments.tags(article)
 
                 <div class="after-article js-after-article"></div>
 

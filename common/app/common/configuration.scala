@@ -107,7 +107,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object ophan {
-    lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("http://j.ophan.co.uk/ophan.ng")
+    lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("//j.ophan.co.uk/ophan.ng")
   }
 
   object googletag {
@@ -125,6 +125,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object cookies {
     lazy val lastSeenKey: String = "lastseen"
     lazy val sessionExpiryTime = configuration.getIntegerProperty("auth.timeout").getOrElse(60000)
+  }
+
+  object db {
+    lazy val sentry_db_driver = configuration.getStringProperty("db.sentry.driver").getOrElse("")
+    lazy val sentry_db_url = configuration.getStringProperty("db.sentry.url").getOrElse("")
+    lazy val sentry_db_username = configuration.getStringProperty("db.sentry.user").getOrElse("")
+    lazy val sentry_db_password = configuration.getStringProperty("db.sentry.password").getOrElse("")
   }
 
   object proxy {
@@ -237,7 +244,10 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
       lazy val domain = configuration.getStringProperty("magento.domain")
       lazy val consumerKey = configuration.getStringProperty("magento.consumer.key")
       lazy val consumerSecret = configuration.getStringProperty("magento.consumer.secret")
+      lazy val accessToken = configuration.getStringProperty("magento.access.token")
+      lazy val accessTokenSecret = configuration.getStringProperty("magento.access.token.secret")
       lazy val authorizationPath = configuration.getStringProperty("magento.auth.path")
+      lazy val isbnLookupPath = configuration.getStringProperty("magento.isbn.lookup.path")
     }
   }
 
@@ -287,6 +297,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val contentApiPostEndpoint = configuration.getStringProperty("contentapi.post.endpoint")
     lazy val frontPressCronQueue = configuration.getStringProperty("frontpress.sqs.cron_queue_url")
     lazy val frontPressToolQueue = configuration.getStringProperty("frontpress.sqs.tool_queue_url")
+    /** When retrieving items from Content API, maximum number of requests to make concurrently */
+    lazy val frontPressItemBatchSize = configuration.getIntegerProperty("frontpress.item_batch_size", 30)
     lazy val configBeforePressTimeout: Int = 1000
 
     val oauthCredentials: Option[OAuthCredentials] =
@@ -296,9 +308,17 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
         oauthCallback <- configuration.getStringProperty("faciatool.oauth.callback")
       } yield OAuthCredentials(oauthClientId, oauthSecret, oauthCallback)
 
-    lazy val adminPressJobPushRateInMinutes: Int =
-      Try(configuration.getStringProperty("admin.pressjob.push.rate.inminutes").get.toInt)
-        .getOrElse(3)
+    lazy val adminPressJobStandardPushRateInMinutes: Int =
+      Try(configuration.getStringProperty("admin.pressjob.standard.push.rate.inminutes").get.toInt)
+        .getOrElse(5)
+
+    lazy val adminPressJobHighPushRateInMinutes: Int =
+      Try(configuration.getStringProperty("admin.pressjob.high.push.rate.inminutes").get.toInt)
+        .getOrElse(1)
+
+    lazy val adminPressJobLowPushRateInMinutes: Int =
+      Try(configuration.getStringProperty("admin.pressjob.low.push.rate.inminutes").get.toInt)
+        .getOrElse(60)
 
     lazy val faciaToolUpdatesStream: Option[String] = configuration.getStringProperty("faciatool.updates.stream")
   }

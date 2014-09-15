@@ -5,7 +5,7 @@
 @import views.support.Video640
 @import views.BodyCleaner
 
-@if(article.hasMainEmbed) {
+@if(article.hasMainEmbed || article.elements("main").isEmpty) {
     <div class="media-primary">
         @BodyCleaner(article, article.main)
     </div>

@@ -1,5 +1,9 @@
 @(collection: Collection, style: PeopleContainer, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
+@import common.LinkTo
+@import model.{Collection, Config, FaciaComponentName}
+@import views.support.{GetClasses, PeopleContainer, TemplateDeduping}
+
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
 
     @defining(templateDeduping(11, collection.items)) { items =>

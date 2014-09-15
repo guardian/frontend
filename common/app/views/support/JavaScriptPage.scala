@@ -11,7 +11,8 @@ import play.api.Play.current
 import play.api.libs.json.{JsBoolean, JsString, Json}
 import play.api.mvc.RequestHeader
 
-case class JavaScriptPage(metaData: MetaData, request: RequestHeader) {
+case class JavaScriptPage(metaData: MetaData)(implicit request: RequestHeader) {
+
   def get = {
     val edition = Edition(request)
 
@@ -35,6 +36,7 @@ case class JavaScriptPage(metaData: MetaData, request: RequestHeader) {
       ("isSSL", JsBoolean(Configuration.environment.secure)),
       ("assetsPath", JsString(Configuration.assets.path)),
       ("hasPageSkin", JsBoolean(metaData.hasPageSkin(edition))),
+      ("showClassicVersion", JsBoolean(HasClassicVersion(metaData))),
       ("shouldHideAdverts", JsBoolean(metaData match {
         case c: Content if c.shouldHideAdverts => true
         case _ => false
