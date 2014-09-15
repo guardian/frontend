@@ -317,11 +317,6 @@ object Switches extends Collections {
 
   // Facia
 
-  val KickersSwitch = Switch("Feature Switches", "show-kickers",
-    "If this is switched on then kickers are shown on sublinks",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 30)
-  )
-
   val ToolDisable = Switch("Facia", "facia-tool-disable",
     "If this is switched on then the fronts tool is disabled",
     safeState = Off, sellByDate = never
@@ -421,7 +416,6 @@ object Switches extends Collections {
     ABHighCommercialComponent,
     EnhancedMediaPlayerSwitch,
     BreakingNewsSwitch,
-    KickersSwitch,
     MetricsSwitch,
     FootballFeedRecorderSwitch
   )

@@ -28,15 +28,6 @@ define([
             {name: 'prototype/raclette'}
         ],
 
-        kickers: [
-            'analysis',
-            'background',
-            'breaking-news',
-            'detail',
-            'in-depth',
-            'reaction'
-        ],
-
         headlineLength: 200,
         restrictedHeadlineLength: 90,
 
