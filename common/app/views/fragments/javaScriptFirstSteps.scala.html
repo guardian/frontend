@@ -94,17 +94,23 @@
     };
 
     (function(isModern) {
+        function cssToDOM( name ) {
+            return name.replace(/([a-z])-([a-z])/g, function(str, m1, m2) {
+                return m1 + m2.toUpperCase();
+            }).replace(/^-/, '');
+        }
 
         function testCssSupport(prop, value) {
-            var valueIsDefined = value !== undefined
+            var valueIsDefined = value !== undefined;
             if(valueIsDefined && ('CSS' in window && 'supports' in window.CSS)) {
                 return window.CSS.supports(prop, value);
             } else {
                 var elm = document.createElement('test');
+                prop = cssToDOM(prop);
                 if(elm.style[prop] !== undefined) {
                     if(valueIsDefined){
                         var before = elm.style[prop];
-                        try { elm.style[prop] = value } catch (e) {}
+                        try { elm.style[prop] = value; } catch (e) {}
                         if(elm.style[prop] != before) {
                             delete elm;
                             return true;
