@@ -55,9 +55,8 @@ define([
                 'href',
                 'kicker',
                 'showKicker',
-                'isBoosted',
                 'isBreaking',
-                'imageAdjust', // deprecate
+                'isBoosted',
                 'imageHide',
                 'imageReplace',
                 'imageSrc',

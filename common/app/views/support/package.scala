@@ -738,13 +738,15 @@ object GetClasses {
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
         if (trail.isLive) "item--live" else "",
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")){
+        if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageHide)){
           "item--has-no-image"
         }else{
           "item--has-image"
         },
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else "",
+        if (forceHasImage || !trail.trailPicture(5,3).isEmpty){
+            if(trail.isBoosted) "item--imageadjust-boost" else if(trail.imageHide) "item--imageadjust-hide" else "item--imageadjust-default"
+        } else "",
       (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
         if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
     )
@@ -752,28 +754,34 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
-  def forFromage(trail: Trail, imageAdjust: String): String = {
+  def forFromage(trail: Trail, isBoosted: Boolean, imageHide: Boolean): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
       s"tone-${trail.visualTone}",
       "u-faux-block-link",
       "tone-accent-border"
     )
-    val f: Seq[(Trail, String) => String] = Seq(
-      (trail: Trail, imageAdjust: String) =>
+    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
         if (trail.isLive) "item--live" else "",
-      (trail: Trail, imageAdjust: String) =>
-        if (trail.trailPicture(5,3).isEmpty || imageAdjust == "hide"){
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
+        if (trail.trailPicture(5,3).isEmpty || imageHide){
           "fromage--has-no-image"
         }else{
           "fromage--has-image"
         },
-      (trail: Trail, imageAdjust: String) =>
-        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else "",
-      (trail: Trail, imageAdjust: String) =>
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
+        if (!trail.trailPicture(5,3).isEmpty && isBoosted){
+          s"fromage--imageadjust-boost"
+        }
+        else if (!trail.trailPicture(5,3).isEmpty && imageHide){
+          s"fromage--imageadjust-hide"
+        }
+        else "item--imageadjust-default",
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
         if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, isBoosted, imageHide)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 

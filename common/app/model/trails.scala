@@ -38,7 +38,8 @@ trait FaciaFields {
   def imageSrc: Option[String] = None
   def imageSrcWidth: Option[String] = None
   def imageSrcHeight: Option[String] = None
-  def imageAdjust: String = "default"
+  def isBoosted: Boolean = false
+  def imageHide: Boolean = false
   def isBreaking: Boolean = false
   def kicker: Option[String] = None
   def showMainVideo: Boolean = false

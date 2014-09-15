@@ -317,15 +317,6 @@
                     <img data-bind="attr: {src: state.sparkUrl}" />
                 </a>
 
-                <div class="image__overrides" data-bind="click: open">
-                    <div data-bind="
-                        visible: meta.imageAdjust() === 'boost'">Boosted</div>
-                    <div data-bind="
-                        visible: meta.imageAdjust() === 'hide'">Hidden</div>
-                    <div data-bind="
-                        visible: meta.imageSrc">Replaced</div>
-                </div>
-
                 <div class="article__tools">
                     <a class="tool tool--small tool--small--copy" data-bind="
                         clickBubble: false,
@@ -370,8 +361,7 @@
                                 'kicker--takedown': fields.firstPublicationDate(),
                                 'kicker--draft':   !fields.firstPublicationDate(),
                             },
-                            text: fields.firstPublicationDate() ? 'Taken down' : 'Draft',
-                            click: open"></span>
+                            text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
                     <!-- /ko -->
 
                     <!-- ko if: isSnap -->
@@ -384,6 +374,12 @@
                         <span data-bind="
                             attr: {class: 'kicker kicker--' + meta.kicker()},
                             text: meta.kicker"></span>
+                    <!-- /ko -->
+
+                    <!-- ko foreach: editors -->
+                        <!-- ko if: type === 'boolean' && meta() -->
+                            <span class="editor--boolean editor--boolean__label selected" data-bind="text: label"></span>
+                        <!-- /ko -->
                     <!-- /ko -->
 
                     <span class="element element__trailText" data-bind="
