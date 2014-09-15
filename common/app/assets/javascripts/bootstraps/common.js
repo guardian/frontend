@@ -246,7 +246,7 @@ define([
 
             if (
                 config.switches.releaseMessage &&
-                config.page.hasClassicVersion &&
+                config.page.showClassicVersion &&
                 (detect.getBreakpoint() !== 'mobile')
             ) {
                 // force the visitor in to the alpha release for subsequent visits
