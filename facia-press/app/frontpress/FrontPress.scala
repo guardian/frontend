@@ -53,10 +53,10 @@ trait FrontPress extends Logging {
     }
   }
 
-  private def retrieveCollectionsById(id: String, parseCollection: ParseCollection): Future[Map[Config, Collection]] = {
+  private def retrieveCollectionsById(id: String, parseCollection: ParseCollection): Future[Iterable[(Config, Collection)]] = {
     val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
     val collections = collectionIds.map(config => parseCollection.getCollection(config.id, config, Uk).map((config, _)))
-    Future.sequence(collections).map(_.toMap)
+    Future.sequence(collections)
   }
 
   private def generateJson(id: String, parseCollection: ParseCollection): Future[JsObject] =
