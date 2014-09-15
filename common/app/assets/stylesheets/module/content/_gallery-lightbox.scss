@@ -34,7 +34,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
     @include mq(wide) {
         .gallery-lightbox__item--img {
-            padding-right: $gallery-lightbox-info-width-wide;
+            padding-right: $gallery-lightbox-sidebar-width + $gallery-lightbox-info-width-wide;
         }
     }
 
