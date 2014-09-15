@@ -18,12 +18,20 @@ category: Common
 */
 
 .profile {
-    margin: $gs-baseline/3 $gs-gutter $gs-baseline/2 0;
-    clear: left;
-    float: left;
+    margin: $gs-baseline/3 $gs-gutter 0 0;
 
-    @include mq(desktop) {
+    @include mq(tablet) {
+        margin: $gs-baseline/2 $gs-gutter $gs-baseline/2 0;
+    }
+
+    @include mq($from: leftCol) {
+        margin-bottom: 0;
+    }
+
+    @include mq(faciaLeftCol) {
         width: $left-column;
+        clear: left;
+        float: left;
     }
 
     @include mq(wide) {
@@ -33,12 +41,16 @@ category: Common
 
 .profile__img {
     display: inline-block;
-    margin: 0 $gs-gutter 0 0;
+    margin: 0 $gs-gutter $gs-baseline/2 0;
     overflow: hidden;
 
     @include border-radius(50%);
 
-    @include mq(desktop) {
+    @include mq(tablet) {
+        margin: $gs-baseline/2 $gs-gutter 0 0;
+    }
+
+    @include mq(faciaLeftCol) {
         margin: $gs-baseline * 2 0 $gs-baseline 0;
     }
 
@@ -54,17 +66,23 @@ category: Common
 }
 
 .profile__bio {
-    vertical-align: middle;
-
     @include fs-bodyCopy(1);
 
     @include mq(tablet) {
         height: 80px;
+        vertical-align: middle;
+        display: table-cell;
 
         @include fs-bodyCopy(2, true);
     }
+
     @include mq(desktop) {
         max-width: gs-span(7);
+        height: 120px;
+    }
+
+    @include mq(wide) {
+        display: block;
         height: auto;
         clear: both;
 

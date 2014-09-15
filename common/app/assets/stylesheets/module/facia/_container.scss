@@ -84,11 +84,13 @@
         padding-top: $gs-baseline/1.5;
     }
 }
+
 .container__body {
     @include mq(leftCol) {
         padding-top: $gs-baseline/2;
     }
 }
+
 .container__updated {
     display: block;
     @include fs-headline(2);
