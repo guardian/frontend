@@ -107,7 +107,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object ophan {
-    lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("http://j.ophan.co.uk/ophan.ng")
+    lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("//j.ophan.co.uk/ophan.ng")
   }
 
   object googletag {
