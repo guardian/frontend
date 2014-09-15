@@ -1,9 +1,10 @@
 .container--facia-cards {
 
-    $item-gutter: $gs-gutter * .33;
+    $item-gutter: $gs-gutter / 3;
 
     .facia-slice__item {
         @include flex-display;
+        width: 25%;
         padding-bottom: 0;
     }
 
