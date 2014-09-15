@@ -149,22 +149,14 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
     }
 
     def update[T](agent: Agent[Seq[T]], freshData: Seq[T]) {
-      agent sendOff { oldData =>
-        if (freshData.nonEmpty) {
-          freshData
-        } else {
-          oldData
-        }
+      if (freshData.nonEmpty) {
+        agent send freshData
       }
     }
 
-    def update[G,T](agent: Agent[Map[G,T]], freshData: Map[G,T]) {
-      agent sendOff { oldData =>
-        if (freshData.nonEmpty) {
-          freshData
-        } else {
-          oldData
-        }
+    def updateMap[G, T](agent: Agent[Map[G, T]], freshData: Map[G, T]) {
+      if (freshData.nonEmpty) {
+        agent send freshData
       }
     }
 
@@ -176,11 +168,11 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
 
     val sponsoredTags: Seq[Sponsorship] = grabSponsorshipsFromStore(dfpSponsoredTagsDataKey)
     update(sponsoredTagsAgent, sponsoredTags)
-    update(tagSponsorCountAgent, sponsorshipToSponsorCountMap(sponsoredTags))
+    updateMap(tagSponsorCountAgent, sponsorshipToSponsorCountMap(sponsoredTags))
 
     val advertisementFeatures: Seq[Sponsorship] = grabSponsorshipsFromStore(dfpAdvertisementFeatureTagsDataKey)
     update(advertisementFeatureTagsAgent, advertisementFeatures)
-    update(featureAdvertiserCountAgent, sponsorshipToSponsorCountMap(advertisementFeatures))
+    updateMap(featureAdvertiserCountAgent, sponsorshipToSponsorCountMap(advertisementFeatures))
 
 
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
