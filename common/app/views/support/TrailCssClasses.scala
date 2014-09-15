@@ -18,6 +18,7 @@ object TrailCssClasses {
       case Comment => "tone-comment"
       case LiveBlog => "tone-live"
       case Feature => "tone-feature"
+      case Analysis => "tone-analysis"
       case _ => "tone-news"
     }
   }
