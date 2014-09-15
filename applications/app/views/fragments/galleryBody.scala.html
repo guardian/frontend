@@ -74,9 +74,15 @@
                         }
                     }
                 </ul>
-
-                <div class="social-wrapper social-wrapper--bottom" data-component="share">
-                    @fragments.social(gallery, iconModifier = "white")
+                <div class="tag-wrapper">
+                    <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-link-name="keywords">
+                        <h2 class="social__head u-h--up-to-left-col">Tags</h2>
+                        @fragments.keywordList(gallery.keywords, tone = "media")
+                    </div>
+                    <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-component="share">
+                        <h2 class="social__head u-h--up-to-left-col">Share this article</h2>
+                        @fragments.social(gallery, iconModifier = "white")
+                    </div>
                 </div>
             </div>
         </div>
