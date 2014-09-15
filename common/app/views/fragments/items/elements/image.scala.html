@@ -2,7 +2,7 @@
 
 @import views.support.{ImgSrc, Item300}
 
-@if(trail.imageHide) {
+@if(!trail.imageHide) {
     @trail.trailPicture(5,3).map{ imageContainer =>
         @ImgSrc.imager(imageContainer, maxWidth).map { imgSrc =>
             <div class="item__media-wrapper">

@@ -1,4 +1,4 @@
-@(trail: model.Trail, index: Int, boostOverride: Option[Boolean] = Some(false))(implicit request: RequestHeader, config: model.Config)
+@(trail: model.Trail, index: Int, boostOverride: Option[Boolean] = None)(implicit request: RequestHeader, config: model.Config)
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo}
@@ -22,7 +22,7 @@
                     @fromageVideo(videoElement, title, true, endSlatePath)
                 }
                 case _ => {
-                    @if(imageHide) {
+                    @if(!imageHide) {
                         @trail.trailPicture(5,3).map{ imageContainer =>
                             @ImgSrc.imager(imageContainer, Item620).map { imgSrc =>
                                 <div class="fromage__media-wrapper fromage__media-wrapper--first">
