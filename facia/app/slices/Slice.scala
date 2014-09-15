@@ -8,35 +8,35 @@ sealed trait Slice
  * |________|________|________|________|
  * |________|________|________|________|
  */
-case object Mothra extends Slice
+case object QlQlQlQl extends Slice
 
 /* .________.________.________.________.
  * |########|________|________|________|
  * |########|________|________|________|
  * |________|________|________|________|
  */
-case object Reptilicus extends Slice
+case object QuarterQlQlQl extends Slice
 
 /* .________.________.________.________.
  * |########|########|________|________|
  * |########|########|________|________|
  * |________|________|________|________|
  */
-case object Gappa extends Slice
+case object QuarterQuarterQlQl extends Slice
 
 /* .________.________.________.________.
  * |########|########|########|________|
  * |########|########|########|________|
  * |________|________|________|________|
  */
-case object Daimajin extends Slice
+case object QuarterQuarterQuarterQl extends Slice
 
 /* .________.________.________.________.
  * |########|########|########|########|
  * |########|########|########|########|
  * |________|________|________|________|
  */
-case object Ultraman extends Slice
+case object QuarterQuarterQuarterQuarter extends Slice
 
 /* ._________________.________.________.
  * |#################|________|________|
@@ -44,7 +44,7 @@ case object Ultraman extends Slice
  * |#################|________|________|
  * |_________________|________|________|
  */
-case object Ghidorah extends Slice
+case object HalfQl4Ql4 extends Slice
 
 /* .________.________.________.________.
  * |#################|########|________|
@@ -52,7 +52,7 @@ case object Ghidorah extends Slice
  * |#################|________|________|
  * |_________________|________|________|
  */
-case object Anguirus extends Slice
+case object HalfQuarterQl2Ql3 extends Slice
 
 /* ._________________._________________.
  * |_________________|_________________|
@@ -60,7 +60,7 @@ case object Anguirus extends Slice
  * |_________________|_________________|
  * |_________________|_________________|
  */
-case object Minilla extends Slice
+case object Hl4Hl4 extends Slice
 
 /* ._________________.________.________.
  * |_________________|########|########|
@@ -68,7 +68,7 @@ case object Minilla extends Slice
  * |_________________|        |        |
  * |_________________|________|________|
  */
-case object Destoroyah extends Slice
+case object Hl4QuarterQuarter extends Slice
 
 /* ._________________._________________.
  * |_________________|#################|
@@ -76,7 +76,7 @@ case object Destoroyah extends Slice
  * |_________________|#################|
  * |_________________|_________________|
  */
-case object Gigan extends Slice
+case object Hl4Half extends Slice
 
 /* .__________________________.________.
  * |        ##################|########|
@@ -85,7 +85,7 @@ case object Gigan extends Slice
  * |        ##################|        |
  * `--------------------------'--------'
  */
-case object Rodan extends Slice
+case object ThreeQuarterQuarter extends Slice
 
 /* .________.__________________________.
  * |########|##################        |
@@ -94,7 +94,7 @@ case object Rodan extends Slice
  * |        |##################        |
  * `--------'--------------------------'
  */
-case object Pulgasari extends Slice
+case object QuarterThreeQuarter extends Slice
 
 /* ._________________._________________.
  * |#################|#################|
@@ -103,7 +103,7 @@ case object Pulgasari extends Slice
  * |                 |                 |
  * `-----------------'-----------------'
  */
-case object Negadon extends Slice
+case object HalfHalf extends Slice
 
 /* .___________________________________.
  * |         ##########################|
@@ -112,7 +112,7 @@ case object Negadon extends Slice
  * |         ##########################|
  * `-----------------------------------'
  */
-case object Mechagodzilla extends Slice
+case object Full extends Slice
 
 /* .___________________________________.
  * |###################################|
@@ -121,4 +121,4 @@ case object Mechagodzilla extends Slice
  * |                                   |
  * `-----------------------------------'
  */
-case object Godzilla extends Slice
+case object MegaFull extends Slice
