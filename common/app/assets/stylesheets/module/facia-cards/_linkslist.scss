@@ -15,19 +15,15 @@
             width: 100%;
             float: left;
 
-            &:nth-child(4n+1) {
-                clear: both;
-                &:before {
-                    border: 0;
-                }
-            }
-
             @include mq(mobileLandscape) {
                 width: 50%;
-            }
 
-            @include mq(tablet) {
-                width: 25%;
+                &:nth-child(2n+1) {
+                    clear: both;
+                    &:before {
+                        border: 0;
+                    }
+                }
             }
         }
 
