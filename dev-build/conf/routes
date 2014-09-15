@@ -278,7 +278,7 @@ GET         /$path<[^/]+(/[^/]+)?>/rss                                          
 GET         /$path<[^/]+(/[^/]+)?>.json                                                                              controllers.FaciaController.renderFrontJson(path)
 GET         /$path<[^/]+(/[^/]+)?>                                                                                   controllers.FaciaController.renderFront(path)
 
-GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                                                    controllers.GalleryController.renderLightbox(path)
+GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>/lightbox.json                                                    controllers.GalleryController.lightboxJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>.json                                                             controllers.GalleryController.renderJson(path)
 GET         /$path<[\w\d-]*(/[\w\d-]*)?/gallery/.*>                                                                  controllers.GalleryController.render(path)
 

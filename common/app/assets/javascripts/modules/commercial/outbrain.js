@@ -10,7 +10,7 @@ define([
     var outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 
     function load() {
-        if (config.switches.outbrain && detect.isBreakpoint({ min: 'desktop' })) {
+        if (config.switches.outbrain) {
             var widgetIds = {
                 mobile: 'MB_2',
                 tablet: 'MB_1',
