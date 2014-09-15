@@ -120,15 +120,15 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'kicker',
-                    label: 'kicker',
-                    requires: 'showKicker',
-                    type: 'text'
-                },
-                {
                     key: 'imageSrc',
                     label: 'image URL',
                     requires: 'imageReplace',
+                    type: 'text'
+                },
+                {
+                    key: 'kicker',
+                    label: 'kicker',
+                    requires: 'showKicker',
                     type: 'text'
                 }
             ];
