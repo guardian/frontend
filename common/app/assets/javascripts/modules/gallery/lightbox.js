@@ -30,8 +30,7 @@ define([
     function GalleryLightbox() {
 
         // CONFIG
-        this.mobile = detect.getBreakpoint() === 'mobile';
-        this.showEndslate = !this.mobile;
+        this.showEndslate = detect.getBreakpoint() !== 'mobile';
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
 
@@ -349,7 +348,6 @@ define([
                 'resize': function() {
                     this.swipeContainerWidth = this.$swipeContainer.dim().width;
                     this.loadSurroundingImages(this.index, this.images.length); // regenerate src
-                    this.mobile = detect.getBreakpoint() === 'mobile';
                     this.translateContent(this.index, 0, 0);
                 },
                 'close': function() { this.state = 'closed'; }
@@ -360,8 +358,10 @@ define([
             enter: function() {
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
+                mediator.on('window:resize', this.resize);
             },
             leave: function() {
+                mediator.off('window:resize', this.resize);
             },
             events: {
                 'next': function(interactionType) {
@@ -375,6 +375,10 @@ define([
                     this.pulseButton(this.prevBtn);
                     this.index = this.images.length;
                     this.state = 'image';
+                },
+                'resize': function() {
+                    this.swipeContainerWidth = this.$swipeContainer.dim().width;
+                    this.translateContent(this.$slides.length, 0, 0);
                 },
                 'close': function() { this.state = 'closed'; }
             }
