@@ -1,6 +1,6 @@
 .facia-container__related-keywords {
     margin: $gs-baseline $gs-gutter;
-    @include facia-container__inner--layout-front;
+    @include facia-container__inner;
     @include fs-data(4);
 
     @include mq(wide) {

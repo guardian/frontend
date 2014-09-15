@@ -4,15 +4,14 @@ $item-top-border-height: 1px;
     .facia-container__inner {
         overflow: hidden;
         position: relative;
-
         margin-left: $gs-gutter / 2;
-
         margin-right: $gs-gutter / 2;
 
         @include mq(mobileLandscape) {
             margin-left: $gs-gutter;
             margin-right: $gs-gutter;
         }
+
         @include mq(desktop) {
             margin-left: auto;
             margin-right: auto;
@@ -25,12 +24,12 @@ $item-top-border-height: 1px;
 $mobile-max-container-width: gs-span(8);
 $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
 
-@mixin facia-container__inner--layout-front(
+@mixin facia-container__inner(
     $snap-points: (
             containerWidestMobile: $mobile-max-container-width,
             tablet:                gs-span(9),
             desktop:               gs-span(12),
-            faciaLeftCol:          gs-span(14),
+            leftCol:               gs-span(14),
             wide:                  gs-span(16)
     )
 ) {
@@ -44,11 +43,13 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
         }
     }
 }
+
 @mixin facia-container--layout-front {
     .facia-container--layout-front {
         .facia-container__inner {
-            @include facia-container__inner--layout-front;
+            @include facia-container__inner;
         }
+
         @include mq(faciaLeftCol) {
             .container__title {
                 margin-bottom: 0;
@@ -70,6 +71,7 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
                 }
             }
         }
+
         @include mq(wide) {
             .container__title {
                 float: left;
@@ -113,30 +115,10 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
     }
 }
 
-@mixin facia-container__inner--layout-content(
-$snap-points: (
-        containerWidestMobile: $mobile-max-container-width,
-        tablet:                gs-span(9),
-        rightCol:              calc(100% - #{$gs-gutter * 2}),
-        desktop:               calc(100% - #{$gs-gutter * 2}),
-        leftCol:               gs-span(14),
-        wide:                  gs-span(16)
-)
-) {
-    @each $breakpoint, $container-width in $snap-points {
-        @include mq($breakpoint) {
-            @if (index($snap-points, ($breakpoint $container-width)) == 1) {
-                margin-left: auto;
-                margin-right: auto;
-            }
-            width: $container-width;
-        }
-    }
-}
 @mixin facia-container--layout-content {
     .facia-container--layout-content {
         .facia-container__inner {
-            @include facia-container__inner--layout-content;
+            @include facia-container__inner;
         }
         .container--dark-background .container__border {
             border-color: lighten($c-neutral1, 16%);
@@ -153,9 +135,16 @@ $snap-points: (
                 margin-left: $left-column + $gs-gutter;
             }
         }
+
         @include mq(wide) {
             .container__title {
+                float: left;
                 width: $left-column-wide !important;
+                margin-right: $gs-gutter;
+            }
+            .container__body {
+                margin-left: $left-column-wide + $gs-gutter;
+                width: gs-span(12);
             }
             .container__border {
                 margin-right: -(gs-span(1) + $gs-gutter*2);
@@ -164,6 +153,7 @@ $snap-points: (
         @include container__meta(leftCol, rightCol);
     }
 }
+
 @mixin facia-container--layout-discussion {
     .facia-container--layout-discussion {
         .container__title {
@@ -171,6 +161,7 @@ $snap-points: (
         }
     }
 }
+
 @mixin facia-container--default-heading {
     .facia-container--default-heading {
         .container__border,
@@ -179,6 +170,7 @@ $snap-points: (
         }
     }
 }
+
 @mixin container__meta($leftColumn, $halfWidthBreakpoint) {
     .container__meta {
         padding-top: $gs-baseline/2;
@@ -200,6 +192,7 @@ $snap-points: (
         }
     }
 }
+
 @mixin vertical-item-separator {
     &:before {
         content: '';
@@ -217,6 +210,7 @@ $snap-points: (
         }
     }
 }
+
 @mixin item--hide-tone-border {
     .item__tonal-border {
         border-top-width: 0 !important;
@@ -225,6 +219,7 @@ $snap-points: (
         margin-top: 0 !important;
     }
 }
+
 @mixin show-only-if-svg-is-supported {
     display: none;
     .svg & { display: block; }
