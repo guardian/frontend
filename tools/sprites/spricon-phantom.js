@@ -57,10 +57,6 @@ var sprite = require( "webpage" ).create();
     sprite.viewportSize = { width: 600, height: 1 };
     sprite.content = '<html><body><div id="container" style="overflow:auto;"></div></body></html>';
 
-// add a single reference to the sprite background
-pngcssrules.push("%i, .i { background-repeat: no-repeat; display: inline-block; }");
-pngcssrules.push(".svg .i { @include background-size(contain); }");
-
 
 // increment the current file index and process it
 function nextFile(){
@@ -116,7 +112,7 @@ function processFile() {
             //If we want to generate base64 svg css
             if(generatesvg) {
                 // add rules to svg data css file
-                datacssrules.push( "    %svg-" + cssprefix + filenamenoext +", .svg-" + cssprefix + filenamenoext +" { background-image: url(" + svgdatauri + "); background-position: 0 0; background-repeat: no-repeat; }\n    .svg ." + cssprefix + filenamenoext + " { @extend %svg-" + cssprefix + filenamenoext +" !optional; }\n" );
+                datacssrules.push( "    %svg-" + cssprefix + filenamenoext +", .svg-" + cssprefix + filenamenoext +" { background-image: url(" + svgdatauri + "); background-position: 0 0; }\n    .svg ." + cssprefix + filenamenoext + " { @extend %svg-" + cssprefix + filenamenoext +" !optional; }\n" );
             }
 
             // set page viewport size to svg dimensions

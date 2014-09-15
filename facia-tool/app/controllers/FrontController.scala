@@ -25,7 +25,6 @@ case class CreateFront(
   description: Option[String],
   onPageDescription: Option[String],
   priority: Option[String],
-  editorialType: Option[String],
   initialCollection: Collection
 )
 

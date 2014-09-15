@@ -18,7 +18,7 @@ object FaciaToolUpdatesStream extends Logging {
 
   object KinesisLoggingAsyncHandler extends AsyncHandler[PutRecordRequest, PutRecordResult] with Logging {
     def onError(exception: Exception) {
-      log.info(s"Kinesis PutRecordRequest error: ${exception.getMessage}}")
+      log.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")
     }
     def onSuccess(request: PutRecordRequest, result: PutRecordResult) {
       log.info(s"Put diff to stream:${request.getStreamName} Seq:${result.getSequenceNumber}")

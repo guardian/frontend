@@ -3,6 +3,7 @@ package frontsapi.model
 import com.gu.googleauth.UserIdentity
 import common.Logging
 import conf.Configuration
+import julienrf.variants.Variants
 import org.joda.time.DateTime
 import play.api.libs.json.{Format, JsValue, Json}
 import tools.FaciaApi
@@ -25,8 +26,7 @@ case class Front(
   imageWidth: Option[Int],
   imageHeight: Option[Int],
   isImageDisplayed: Option[Boolean],
-  priority: Option[String],
-  editorialType: Option[String]
+  priority: Option[String]
 )
 
 object Collection {
@@ -114,9 +114,7 @@ case class Block(
   }
 }
 
-object UpdateList {
-  implicit val jsonFormat = Json.format[UpdateList]
-}
+sealed trait FaciaToolUpdate
 
 case class UpdateList(
   id: String,
@@ -126,9 +124,24 @@ case class UpdateList(
   itemMeta: Option[Map[String, JsValue]],
   live: Boolean,
   draft: Boolean
-)
+) extends FaciaToolUpdate
 
-case class StreamUpdate(update: JsValue, action: String, email: String)
+case class Update(update: UpdateList) extends FaciaToolUpdate
+case class Remove(remove: UpdateList) extends FaciaToolUpdate
+
+case class UpdateAndRemove(update: UpdateList, remove: UpdateList) extends FaciaToolUpdate
+
+case class DiscardUpdate(id: String) extends FaciaToolUpdate
+
+object UpdateList {
+  implicit val format: Format[UpdateList] = Json.format[UpdateList]
+}
+
+object FaciaToolUpdate {
+  implicit val format: Format[FaciaToolUpdate] = Variants.format[FaciaToolUpdate]("type")
+}
+
+case class StreamUpdate(update: FaciaToolUpdate, email: String)
 
 object StreamUpdate {
   implicit val streamUpdateFormat: Format[StreamUpdate] = Json.format[StreamUpdate]

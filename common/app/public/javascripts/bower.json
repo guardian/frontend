@@ -3,7 +3,6 @@
   "version": "0.1.0 ",
   "dependencies": {
     "html5shiv": "~3.7.0",
-    "swipe": "~2.0.0",
     "zxcvbn": "dropbox/zxcvbn",
     "JSON-js": "*"
   },
