@@ -55,7 +55,7 @@ define([
                 'href',
                 'kicker',
                 'showKicker',
-                'boost',
+                'isBoosted',
                 'isBreaking',
                 'imageAdjust', // deprecate
                 'imageHide',
@@ -82,12 +82,12 @@ define([
                     type: 'text'
                 },
                 {
-                    key: 'byline',
+                    key: 'byline',isBreaking
                     label: 'Byline',
                     type: 'text'
                 },
                 {
-                    key: 'boost',
+                    key: 'isBoosted',
                     label: 'boost',
                     type: 'boolean'
                 },
