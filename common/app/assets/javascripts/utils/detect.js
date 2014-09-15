@@ -55,7 +55,7 @@ define([
             {
                 name: 'rightCol',
                 isTweakpoint: true,
-                width: 900
+                width: 980
             },
             {
                 name: 'desktop',
@@ -65,7 +65,7 @@ define([
             {
                 name: 'leftCol',
                 isTweakpoint: true,
-                width: 1060
+                width: 1140
             },
             {
                 name: 'faciaLeftCol',

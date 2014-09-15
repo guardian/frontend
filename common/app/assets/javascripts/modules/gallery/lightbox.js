@@ -30,8 +30,7 @@ define([
     function GalleryLightbox() {
 
         // CONFIG
-        this.mobile = detect.getBreakpoint() === 'mobile';
-        this.showEndslate = !this.mobile;
+        this.showEndslate = detect.getBreakpoint() !== 'mobile';
         this.useSwipe = detect.hasTouchScreen();
         this.swipeThreshold = 0.05;
 
@@ -299,14 +298,14 @@ define([
 
                 // event bindings
                 bean.on(this.$contentEl[0], 'click', this.toggleInfo);
-                mediator.on('window:resize', this.resize);
+                bean.on(window, 'resize', this.resize);
 
                 // meta
                 this.$indexEl.text(this.index);
             },
             leave: function() {
                 bean.off(this.$contentEl[0], 'click', this.toggleInfo);
-                mediator.off('window:resize', this.resize);
+                bean.off(window, 'resize', this.resize);
             },
             events: {
                 'next': function(interactionType) {
@@ -346,10 +345,17 @@ define([
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
                 },
+                'hide-info': function() {
+                    this.pulseButton(this.infoBtn);
+                    this.$lightboxEl.removeClass('gallery-lightbox--show-info');
+                },
+                'show-info': function() {
+                    this.pulseButton(this.infoBtn);
+                    this.$lightboxEl.addClass('gallery-lightbox--show-info');
+                },
                 'resize': function() {
                     this.swipeContainerWidth = this.$swipeContainer.dim().width;
                     this.loadSurroundingImages(this.index, this.images.length); // regenerate src
-                    this.mobile = detect.getBreakpoint() === 'mobile';
                     this.translateContent(this.index, 0, 0);
                 },
                 'close': function() { this.state = 'closed'; }
@@ -360,8 +366,10 @@ define([
             enter: function() {
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
+                bean.on(window, 'resize', this.resize);
             },
             leave: function() {
+                bean.off(window, 'resize', this.resize);
             },
             events: {
                 'next': function(interactionType) {
@@ -375,6 +383,10 @@ define([
                     this.pulseButton(this.prevBtn);
                     this.index = this.images.length;
                     this.state = 'image';
+                },
+                'resize': function() {
+                    this.swipeContainerWidth = this.$swipeContainer.dim().width;
+                    this.translateContent(this.$slides.length, 0, 0);
                 },
                 'close': function() { this.state = 'closed'; }
             }
@@ -418,9 +430,13 @@ define([
 
     GalleryLightbox.prototype._handleKeyEvents = function(e) {
         if (e.keyCode === 37) { // left
-            this.trigger('prev', 'keyboard');
+            this.trigger('prev');
         } else if (e.keyCode === 39) { // right
-            this.trigger('next', 'keyboard');
+            this.trigger('next');
+        } else if (e.keyCode === 38) { // up
+            this.trigger('hide-info');
+        } else if (e.keyCode === 40) { // down
+            this.trigger('show-info');
         } else if (e.keyCode === 27) { // esc
             this.close();
         } else if (e.keyCode === 73) { // 'i'

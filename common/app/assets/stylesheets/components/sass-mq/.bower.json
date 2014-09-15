@@ -26,12 +26,12 @@
     "url": "https://github.com/guardian/sass-mq"
   },
   "homepage": "https://github.com/guardian/sass-mq",
-  "version": "2.1.0",
-  "_release": "2.1.0",
+  "version": "2.1.1",
+  "_release": "2.1.1",
   "_resolution": {
     "type": "version",
-    "tag": "v2.1.0",
-    "commit": "567209ab7c5f9a20366ab00670bb6428977ec986"
+    "tag": "v2.1.1",
+    "commit": "454e5e7e0cb53661240d5546a8a701cf6415a7f8"
   },
   "_source": "git://github.com/guardian/sass-mq.git",
   "_target": "~2",
