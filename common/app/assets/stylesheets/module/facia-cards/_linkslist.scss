@@ -31,7 +31,7 @@
             }
         }
 
-        .flex-wrap & {
+        .has-flex-wrap & {
             @include flex-display;
             @include flex-wrap(wrap);
 
@@ -41,10 +41,6 @@
 
                 @include mq(mobileLandscape) {
                     @include flex-basis(50%);
-                }
-
-                @include mq(tablet) {
-                    @include flex-basis(25%);
                 }
             }
         }
