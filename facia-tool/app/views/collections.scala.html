@@ -131,7 +131,7 @@
                     click: open,
                     css: {empty: !overrideOrVal()},
                     html: overrideOrVal() || label + '...'"></a>
-                <!-- ko if: $data.meta === $root.uiOpenElement() -->
+                <!-- ko if: meta === $root.uiOpenElement() -->
                         <textarea data-bind="
                             attr: {
                                 class: 'editor__' + key + ' element__' + key,
@@ -158,7 +158,6 @@
                     css: {selected: meta},
                     text: label"></a>
                 <span class="editor--boolean__state" data-bind="
-                    click: toggle,
                     visible: meta">&#10004;</span>
             </span>
         <!-- /ko -->
