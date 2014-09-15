@@ -21,40 +21,6 @@ import scala.collection.JavaConversions._
 import java.text.DecimalFormat
 import java.util.regex.Pattern
 
-sealed trait Style {
-  val className: String
-  val showMore: Boolean
-}
-
-object Featured extends Style {
-  val className = "featured"
-  val showMore = false
-}
-
-/**
- * trails display trailText and thumbnail (if available)
- */
-object Thumbnail extends Style {
-  val className = "with-thumbnail"
-  val showMore = false
-}
-
-/**
- * trails only display headline
- */
-object Headline extends Style {
-  val className = "headline-only"
-  val showMore = false
-}
-
-/**
- * trails for the section fronts
- */
-object SectionFront extends Style {
-  val className = "section-front"
-  val showMore = false
-}
-
 /**
  * New 'collection' templates
  */
@@ -62,6 +28,7 @@ sealed trait Container {
   val containerType: String
   val showMore: Boolean
   val tone: String
+  val hasDarkBackground: Boolean = false
 }
 
 case class NewsContainer(showMore: Boolean = true) extends Container {
@@ -92,13 +59,14 @@ case class PeopleContainer(showMore: Boolean = true) extends Container {
   val containerType = "people"
   val tone = "feature"
 }
-case class SpecialContainer(showMore: Boolean = true) extends Container {
+case class SpecialContainer(showMore: Boolean = true, override val hasDarkBackground: Boolean = false) extends Container {
   val containerType = "special"
   val tone = "news"
 }
 case class MultimediaContainer(showMore: Boolean = true) extends Container {
   val containerType = "multimedia"
   val tone = "media"
+  override val hasDarkBackground = true
 }
 case class SeriesContainer(showMore: Boolean = true) extends Container {
   val containerType = "series"
@@ -734,6 +702,7 @@ object GetClasses {
       (trail: Trail) => trail match {
         case _: Gallery => "facia-slice__item--content-type-gallery"
         case _: Video   => "facia-slice__item--content-type-video"
+        case _: Audio   => "facia-slice__item--content-type-audio"
         case _          => ""
       }
     )
@@ -758,6 +727,7 @@ object GetClasses {
     val itemClass = trail match {
       case _: Gallery => Some("item--gallery")
       case _: Video => Some("item--video")
+      case _: Audio => Some("item--audio")
       case _ => None
     }
 
@@ -852,7 +822,7 @@ object GetClasses {
     }
   }
 
-  def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+  def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {  
     RenderClasses(
       "container--facia-cards" +:
         (commonContainerStyles(config, isFirst, hasTitle) ++
@@ -861,10 +831,14 @@ object GetClasses {
   }
 
   def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
+    val oldClasses = Seq(
+      Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
+    ).flatten
+  
     RenderClasses(
       s"container--${container.containerType}" +:
         (commonContainerStyles(config, index == 0, hasTitle) ++
-        extraClasses): _*
+        extraClasses ++ oldClasses): _*
     )
   }
 }

@@ -8,6 +8,7 @@ import PlayKeys._
 import play._
 import play.twirl.sbt.Import._
 import com.typesafe.sbt.web.Import._
+import Dependencies._
 
 object Frontend extends Build with Prototypes {
 
@@ -43,6 +44,8 @@ object Frontend extends Build with Prototypes {
 
       "com.gu" %% "play-googleauth" % "0.1.56-SNAPSHOT",
 
+      scalaCheck,
+
       filters,
       ws
     )
@@ -63,7 +66,10 @@ object Frontend extends Build with Prototypes {
   
   val sanityTest = application("sanity-tests")
 
-  val facia = application("facia").dependsOn(commonWithTests).aggregate(common)
+  val facia = application("facia").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies += scalaCheck
+  )
+
   val article = application("article").dependsOn(commonWithTests).aggregate(common)
   val applications = application("applications").dependsOn(commonWithTests).aggregate(common)
   val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
@@ -105,7 +111,12 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val faciaTool = application("facia-tool").dependsOn(commonWithTests)
+  val faciaTool = application("facia-tool").dependsOn(commonWithTests).aggregate(common).settings(
+    libraryDependencies ++= Seq(
+      "org.julienrf" %% "play-json-variants" % "0.2"
+    )
+  )
+
 
   val faciaPress = application("facia-press").dependsOn(commonWithTests)
 

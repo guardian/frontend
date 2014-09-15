@@ -53,7 +53,7 @@ object SentryReportJob extends ExecutionContexts with Logging with SentryDb {
            }
        }
      } catch {
-       case ex: SQLException  => log.error("Could not connect to sentry database")
+       case ex: SQLException  => log.error("Could not connect to sentry database" + ex.getMessage)
      }
   }
 }
