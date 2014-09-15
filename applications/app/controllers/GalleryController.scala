@@ -16,8 +16,8 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request =>
-    val index = request.getQueryString("index") map (_.toInt) getOrElse 1
-    val isTrail = request.getQueryString("trail") map (_.toBoolean) getOrElse false
+    val index = request.getIntParameter("index") getOrElse 1
+    val isTrail = request.getBooleanParameter("trail") getOrElse false
 
     lookup(path, index, isTrail) map {
       case Left(model) if model.gallery.isExpired => RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
@@ -27,7 +27,7 @@ object GalleryController extends Controller with Logging with ExecutionContexts 
   }
 
   def lightboxJson(path: String) = Action.async { implicit request =>
-    val index = request.getQueryString("index") map (_.toInt) getOrElse 1
+    val index = request.getIntParameter("index") getOrElse 1
     lookup(path, index, isTrail=false) map {
       case Right(other) => RenderOtherStatus(other)
       case Left(model) => Cached(model.gallery) { JsonComponent(model.gallery.lightbox) }
