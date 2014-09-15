@@ -53,22 +53,6 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     }
 }
 
-.gallery-lightbox--loading {
-
-    .gallery-lightbox__progress {
-        &:after {
-            content: 'loading';
-            @include fs-textSans(1);
-            color: colour(neutral-8);
-            text-align: center;
-            display: block;
-        }
-        > * {
-            display: none;
-        }
-    }
-}
-
 /* Content
    ========================================================================== */
 
