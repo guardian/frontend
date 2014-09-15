@@ -21,9 +21,9 @@
 }
 
 @data(asset: tools.AssetData, index: Int) = {
-    <h4><i class="icon icon-file"></i> @asset.name</h4>
+    <h4 id="asset-@index"><i class="glyphicon glyphicon-file"></i> @asset.name</h4>
     <hr />
-    <div class="row" id="asset-@index">
+    <div class="row">
         <div class="col-md-8">
             <table class="table table-bordered table--asset">
                 <thead>
@@ -52,9 +52,7 @@
                     <tr>
                         <td>@asset.raw.latest.floor Kb</td>
                         <td>@asset.zipped.latest.floor Kb</td>
-                        <td>
-                        @change(asset)
-                        </td>
+                        <td>@change(asset)</td>
                     </tr>
                     @if(asset.isCSS) {
                         <tr>
@@ -78,10 +76,22 @@
 }
 
 @change(asset: tools.AssetData) = {
-    @defining(asset.isPositiveChange) { change =>
-        <span class="label @if(change) { label-success } else { label-important }">
-            <i class="icon-arrow-@if(change) {down} else {up} icon-white"></i>
-            @{"%.2f".format(asset.rawChange) } Kb
+    @defining(asset.rawChange) { change =>
+        <span class="label label-@change match {
+                case c if c < 0 => {success}
+                case c if c > 0 => {danger}
+                case _ => {info}
+            }">
+            @if(change == 0.0) {
+                No change
+            } else {
+                <i class="glyphicon glyphicon-@change match {
+                    case c if c < 0 => {arrow-down}
+                    case c if c > 0 => {arrow-up}
+                    case _ => {}
+                }"></i>
+                @{"%.2f".format(asset.rawChange)} Kb
+            }
         </span>
     }
 }
@@ -106,13 +116,11 @@
                 <tr>
                     <td>
                         <a href="#asset-@index">
-                            <strong>@asset.name</strong></td>
+                            <strong>@asset.name</strong>
                         </a>
-                    <td>@asset.raw.latest.floor Kb</td>
-                    <td>@asset.zipped.latest.floor Kb</td>
-                    <td>
-                        @change(asset)
-                    </td>
+                    <td>@{"%.2f".format(asset.raw.latest)} Kb</td>
+                    <td>@{"%.2f".format(asset.zipped.latest)} Kb</td>
+                    <td>@change(asset)</td>
                 </tr>
             }
         </tbody>

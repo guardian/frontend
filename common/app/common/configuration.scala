@@ -107,7 +107,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object ophan {
-    lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("http://j.ophan.co.uk/ophan.ng")
+    lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("//j.ophan.co.uk/ophan.ng")
   }
 
   object googletag {
@@ -125,6 +125,13 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   object cookies {
     lazy val lastSeenKey: String = "lastseen"
     lazy val sessionExpiryTime = configuration.getIntegerProperty("auth.timeout").getOrElse(60000)
+  }
+
+  object db {
+    lazy val sentry_db_driver = configuration.getStringProperty("db.sentry.driver").getOrElse("")
+    lazy val sentry_db_url = configuration.getStringProperty("db.sentry.url").getOrElse("")
+    lazy val sentry_db_username = configuration.getStringProperty("db.sentry.user").getOrElse("")
+    lazy val sentry_db_password = configuration.getStringProperty("db.sentry.password").getOrElse("")
   }
 
   object proxy {

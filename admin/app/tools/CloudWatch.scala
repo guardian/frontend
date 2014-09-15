@@ -85,12 +85,15 @@ object CloudWatch extends Logging with ExecutionContexts {
 
   val assetsFiles = Seq(
     "app.js",
+    "commercial.js",
     "facia.js",
     "global.css",
+    "head.commercial.css",
     "head.default.css",
     "head.facia.css",
     "head.football.css",
-    "head.identity.css"
+    "head.identity.css",
+    "head.index.css"
   )
 
   def shortStackLatency = latency(primaryLoadBalancers)
