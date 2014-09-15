@@ -107,7 +107,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
   }
 
   object ophan {
-    lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("http://j.ophan.co.uk/ophan.ng")
+    lazy val jsLocation = configuration.getStringProperty("ophan.js.location").getOrElse("//j.ophan.co.uk/ophan.ng")
   }
 
   object googletag {
@@ -231,7 +231,7 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val travel_url = configuration.getMandatoryStringProperty("commercial.travel_url")
     lazy val traveloffers_url = configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
 
-    private lazy val dfpRoot = s"${environment.stage.toUpperCase}/commercial/dfp"
+    private lazy val dfpRoot = s"PROD/commercial/dfp"
     lazy val dfpSponsoredTagsDataKey = s"$dfpRoot/sponsored-tags-v2.json"
     lazy val dfpAdvertisementFeatureTagsDataKey = s"$dfpRoot/advertisement-feature-tags-v2.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"

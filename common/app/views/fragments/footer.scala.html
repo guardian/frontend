@@ -1,14 +1,15 @@
-@(page: MetaData, showNav: Boolean=true)(implicit request: RequestHeader)
+@(page: model.MetaData, showNav: Boolean=true)(implicit request: RequestHeader)
+@import views.support.HasClassicVersion
 
 @import conf.Switches._
 @import org.joda.time.DateTime
 @import common.Edition
-@import common.editions._
+@import common.LinkTo
+@import common.editions.{Au, Uk, Us}
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
 
-    @if(ReleaseMessageSwitch.isSwitchedOn &&
-        page.hasClassicVersion) {
+    @if(ReleaseMessageSwitch.isSwitchedOn && HasClassicVersion(page)) {
         <div class="site-message--footer is-hidden js-footer-message" data-link-name="release message">
             <div class="gs-container">
                 <div class="site-message__inner">
@@ -80,7 +81,7 @@
             <li class="colophon__item"><a data-link-name="privacy" href="@LinkTo("/help/privacy-policy")">privacy policy</a></li>
             <li class="colophon__item"><a data-link-name="cookie" href="@LinkTo("/info/cookies")">cookie policy</a></li>
 
-        @if(page.hasClassicVersion) {
+        @if(HasClassicVersion(page)) {
             <li class="colophon__item hide-on-mobile">@fragments.mainSiteLink(page, label = "use current version")</li>
             <li class="colophon__item mobile-only">@fragments.mainSiteLink(page, label = "desktop site")</li>
         }
