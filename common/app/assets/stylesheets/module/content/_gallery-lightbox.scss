@@ -52,6 +52,12 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     .gallery-lightbox__info {
         display: none;
     }
+
+    .gallery-lightbox__btn--info-button {
+        opacity: 0.3;
+        cursor: default;
+        pointer-events: none;
+    }
 }
 
 /* Content
