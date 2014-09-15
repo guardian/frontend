@@ -243,11 +243,11 @@ category: Common
 }
 
 .button--tone-live {
-  @include button-colour($c-neutral6, $c-newsDefault, darken($c-neutral6, 10%));
+    @include button-colour($c-neutral6, $c-newsDefault, darken($c-neutral6, 10%));
 }
 
 .button--tone-live-more {
-  @include button-colour($c-neutral8, $c-newsDefault, $c-neutral8, darken($c-neutral3, 10%), $c-neutral3);
+    @include button-colour($c-neutral8, $c-newsDefault, $c-neutral8, darken($c-neutral3, 10%), $c-neutral3);
 }
 
 
