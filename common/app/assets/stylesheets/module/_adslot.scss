@@ -103,6 +103,9 @@
     @include mq(mobile, rightCol) {
         text-align: center;
     }
+    @include mq(rightCol) {
+        margin: 0 0 0 $gs-gutter;
+    }
 }
 
 /**
