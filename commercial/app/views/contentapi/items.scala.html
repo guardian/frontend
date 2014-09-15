@@ -1,18 +1,14 @@
 @(items: Seq[model.Content])(implicit request: RequestHeader)
 
 @defining(("1_0", "2014-08-14")) { case (version, date) =>
-    <div class="commercial--v2 commercial--low commercial--capi">
-        <div class="facia-container__inner--commercial">
-
-            <div class="container__header">
-                <div class="container__header__inner">
-                    <h3 class="commercial__title">
-                        <i class="i i-marque-54"></i><i class="i i-guardian-logo-commercial"></i><span class="u-h">The Guardian</span>
-                    </h3>
-                </div>
+    <div class="commercial commercial--low commercial--capi">
+        <div class="facia-container__inner">
+            <div class="container__title commercial__head">
+                <h3 class="commercial__title">
+                    The Guardian
+                </h3>
             </div>
-
-            <div class="container__body">
+            <div class="container__body commercial__body">
                 <ul class="lineitems">
                     @for(item <- items) {
                         <li class="lineitem">
@@ -41,7 +37,6 @@
                     }
                 </ul>
             </div>
-
         </div>
     </div>
 }
