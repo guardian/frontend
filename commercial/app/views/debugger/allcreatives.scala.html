@@ -225,7 +225,7 @@ jQuery(function($) {
     <hr/>
 
     <div class="facia-container facia-container--layout-content facia-container--commercial">
-        <h2 class="facia-container__inner test-page-head">DFP Component B</h2>
+        <h2 class="facia-container__inner test-page-head">DFP Component (Single)</h2>
         
         <h3 class="facia-container__inner test-page-subhead">v1 <a class="show-code">Show code</a></h3>
         <div class="facia-container__inner codeContainer">
@@ -316,7 +316,8 @@ jQuery(function($) {
                             </p>
                         </div>
                     </div>
-                    <div class="commercial__footer hide-cta-link">
+                    <!--div class="commercial__footer hide-cta-link"-->
+                    <div class="commercial__footer">
                         <div class="commercial__footer-inner">
                             <a class="commercial__home-link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/seemore-url" data-link-name="merchandising-987654321-high-viewall">See more cars
                                 <span class="commercial__home-link__cta">
@@ -346,13 +347,14 @@ jQuery(function($) {
             color: #[%commercial__colour2%];
         }
     &lt;/style&gt;
-    &lt;div class="commercial--v2 commercial--dfp commercial--dfp-single commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
+    &lt;div class="commercial--v2 commercial--dfp--v2 commercial--dfp-single--v2 commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
         &lt;div class="facia-container__inner--commercial"&gt;
-            &lt;div class="container__header container__header-[%commercial__titlelogo%]"&gt;
-                &lt;div class="container__header__inner i-[%commercial__titlelogo%]-title-background"&gt;
+            &lt;div class="container__header"&gt;
+                &lt;div class="container__header__inner"&gt;
                     &lt;h3 class="commercial__title"&gt;
                         &lt;a href="%%CLICK_URL_ESC%%[%commercial__base__url%]" data-link-name="merchandising-[%commercial__omnitureid%]-[%URI_ENCODE:commercial__relevance%]-title"&gt;
-                            [%commercial__title%]
+                            &lt;i class="i i-marque-54">&lt;/i&gt;&lt;i class="i i-guardian-logo-commercial"&gt;&lt;/i&gt;&lt;i class="i i-[%commercial__titlelogo%]-logo i-commercial-brand">&lt;/i&gt;
+                            &lt;span class="u-h">The Guardian&lt;/span&gt; &lt;span class="u-h">[%commercial__title%]&lt;/span&gt;
                         &lt;/a&gt;
                     &lt;/h3&gt;
                 &lt;/div&gt;
@@ -386,63 +388,54 @@ jQuery(function($) {
             </code></pre>
         </div>
         <div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-test-id="ad-slot-merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-mobile="88,88" data-node-uid="4">
-                    <style type="text/css">
-                        .commercial--dfp-single.commercial--dfp-987654321 .commercial__title,
-                        .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link  {
-                            color: #651981;
-                        }
-                        .commercial--dfp-single.commercial--dfp-987654321 .commercial__home-link .commercial__home-link__cta,
-                        .commercial--dfp-single.commercial--dfp-987654321 .lineitem__link .i.i-arrow-white-right-18 {
-                            background-color: #651981;
-                        }
-                        .commercial--dfp-single.commercial--dfp-987654321 .commercial__title span {
-                            color: #c07ed6;
-                        }
-                    </style>
-                    <div class="commercial--v2 commercial--dfp commercial--dfp-single commercial--dfp-987654321" role="complementary">
-                        <div class="facia-container__inner--commercial">
-                            <div class="container__header container__header-jobs">
-                                <div class="container__header__inner i-jobs-title-background">
-                                    <h3 class="commercial__title">
-                                        <a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-987654321-high-title">
-                                            Guardian Vintage
-                                        </a>
-                                    </h3>
-                                </div>
-                            </div>
-                            <div class="container__body">
-                                <p class="commercial__header">Another old car</p>
-                                <a class="lineitem__link-image" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/offer-url" data-link-name="merchandising-987654321-high-Nice%20long%20title%20for%20this%20element">
-                                    <img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDj37aTvQEQARgBMggn21vgyxz-YQ" alt="">
+            <style type="text/css">
+                .commercial--dfp-single.commercial--dfp-987654321 .container__header,
+                .commercial--dfp-single.commercial--dfp-987654321 .lineitem__link .i.i-arrow-white-right-18 {
+                    background-color: #651981;
+                }
+            </style>
+            <div class="commercial--v2 commercial--dfp--v2 commercial--dfp-single--v2 commercial--dfp-987654321" role="complementary">
+                <div class="facia-container__inner--commercial">
+                    <div class="container__header">
+                        <div class="container__header__inner">
+                            <h3 class="commercial__title">
+                                <a href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk" data-link-name="merchandising-987654321-high-title">
+                                    <i class="i i-marque-54"></i><i class="i i-guardian-logo-commercial"></i>
+                                    <span class="u-h">The Guardian</span> <span class="commercial__title__logo">vintage</span>
                                 </a>
-                                <div class="lineitem__offer">
-                                    <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/offer-url" data-link-name="merchandising-987654321-high-Nice long title for this element-link">
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="container__body">
+                        <div class="lineitems">
+                            <div class="lineitem lineitem--dfp-single">
+                                <div class="lineitem--dfp-single__offer">
+                                    <a class="lineitem__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/offer-url" data-link-name="merchandising-987654321-high-Nice%20long%20title%20for%20this%20element">
+                                        <div class="lineitem__image-crop"><img class="lineitem__image" src="http://pagead2.googlesyndication.com/pagead/imgad?id=CICAgKDj37aTvQEQARgBMggn21vgyxz-YQ" alt=""></div>
                                         <h4 class="lineitem__title">Nice long title for this element</h4>
+                                        <p class="lineitem__desc">Weddepohl makes the point that sharing involves not just less waste but more social interaction. It’s a lesson he had to learn by fire.</p>
                                     </a>
-                                    <p class="lineitem__meta">Weddepohl makes the point that sharing involves not just less waste but more social interaction. It’s a lesson he had to learn by fire.</p>
-                                    <p class="lineitem__description commercial--generic__item__description">
-                                        <a class="lineitem__link commercial--generic__description__link" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/offer-url" data-link-name="merchandising-987654321-high-Nice long title for this element-link"><i class="i i-arrow-white-right-18"></i>This is nice long link, in design appears to be sentence length</a>
-                                    </p>
+                                    <a class="lineitem__cta button button--primary button--small" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/offer-url" data-link-name="merchandising-987654321-high-Nice long title for this element-link">
+                                        Find out more and join<i class="i i-arrow-white-right i-right"></i>
+                                    </a>
                                 </div>
-                            </div>
-                            <div class="commercial__footer hide-cta-link">
-                                <div class="commercial__footer-inner">
-                                    <a class="commercial__cta button button--tertiary button--large" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/seemore-url" data-link-name="merchandising-987654321-high-viewall">
-                                        <i class="i i-arrow-white-right i-right"></i>
-                                        <span class="hide-on-mobile">See more cars</span>
+                                <div class="lineitem--dfp-single__cta hide-on-mobile">
+                                    <a class="commercial__cta button button--primary button--large" href="http://adclick.g.doubleclick.net/aclk%253Fsa%253DL%2526ai%253DBdo1TWwrRU4eGDPLCiQb_wYDgCN_qkZcFAAAAEAEg75TfITgAWI_5r8CZAWC7vq6D0AqyARN3d3cudGhlZ3VhcmRpYW4uY29tugEJZ2ZwX2ltYWdlyAEJ2gFIaHR0cDovL3d3dy50aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9nLzIwMTQvanVsLzI0L3Bob25lLWRyb25lLWZsb25lqQLWTeRsc4i8PsACAuACAOoCKS81OTY2NjA0Ny90aGVndWFyZGlhbi5jb20vdGVjaG5vbG9neS9ibG9n-AL50R6QA4wGmAOMBqgDAdAEkE7gBAGgBh8%2526num%253D0%2526sig%253DAOD64_1BfMP3uvLJveumGTQJ56b--TIupQ%2526client%253Dca-pub-4830087483992392%2526adurl%253Dhttp://www.austinharris.co.uk/seemore-url" data-link-name="merchandising-987654321-high-viewall">
+                                        See more cars<i class="i i-arrow-white-right i-right"></i>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
     </div>
 
     <hr/>
 
     <div class="facia-container facia-container--layout-content facia-container--commercial">
-        <h2 class="facia-container__inner test-page-head">DFP Component C</h2>
-        <!--
+        <h2 class="facia-container__inner test-page-head">DFP Component (Multiple)</h2>
         <h3 class="facia-container__inner test-page-subhead">v1 <a class="show-code">Show code</a></h3>
         <div class="facia-container__inner codeContainer">
             <pre><code>
@@ -599,7 +592,7 @@ jQuery(function($) {
                 </div>
             </div>
         </div>
-        -->
+
         <h3 class="facia-container__inner test-page-subhead">v2 <a class="show-code">Show code</a></h3>
         <div class="codeContainer facia-container__inner">
             <pre><code>
@@ -607,7 +600,7 @@ jQuery(function($) {
     &lt;style type="text/css"&gt;
         [%commercial__css%]
     &lt;/style&gt;
-    &lt;div class="commercial--v2 commercial--dfp commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--dfp-multiple commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
+    &lt;div class="commercial--v2 commercial--dfp--v2 commercial--dfp-multiple--v2 commercial--dfp-[%URI_ENCODE:commercial__omnitureid%] commercial--items-dfp-[%commercial__offeramount%]" role="complementary"&gt;
         &lt;div class="facia-container__inner--commercial"&gt;
             &lt;div class="container__header"&gt;
                 &lt;div class="container__header__inner"&gt;
@@ -676,7 +669,7 @@ jQuery(function($) {
 &lt;/div&gt;
             </code></pre>
         </div>
-        <div class="commercial--v2 commercial--dfp--v2 commercial--dfp-1234567890 commercial--dfp-multiple commercial--items-dfp-4" role="complementary">
+        <div class="commercial--v2 commercial--dfp--v2 commercial--dfp-multiple--v2 commercial--dfp-1234567890 commercial--items-dfp-4" role="complementary">
             <div class="facia-container__inner--commercial">
                 <div class="container__header">
                     <div class="container__header__inner">

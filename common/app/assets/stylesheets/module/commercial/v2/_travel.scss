@@ -38,6 +38,20 @@
         }
     }
 
+    .lineitem__image-crop {
+        .lineitem__image {
+            left: -7.5%;
+            right: -7.5%;
+            width: 116.6667%;
+        }
+    }
+
+    .lineitem__title {
+        @include mq(tablet) {
+            min-height: $gs-baseline*3.5;
+        }
+    }
+
     // Low relevance line items
     .commercial__relevance--low {
         @include mq(tablet) {

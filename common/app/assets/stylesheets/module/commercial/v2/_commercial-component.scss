@@ -222,6 +222,18 @@
         .commercial__cta {
             position: absolute;
             margin-right: 0;
+
+            &.button {
+                @include button-colour(transparent, #ffffff, transparent, #ffffff);
+                border-color: rgba(#ffffff, .3);
+            }
+
+            @include mq($until: tablet) {
+                .i-right {
+                    margin: -1px $gs-baseline*-1 0;
+                    float: none;
+                }
+            }
         }
     }
 
@@ -308,20 +320,6 @@
             &:active {
                 outline: none;
                 opacity: 1;
-            }
-        }
-    }
-
-    .commercial__cta {
-        &.button {
-            @include button-colour(transparent, #ffffff, transparent, #ffffff);
-            border-color: rgba(#ffffff, .3);
-        }
-        
-        @include mq($until: tablet) {
-            .i-right {
-                margin: -1px $gs-baseline*-1 0;
-                float: none;
             }
         }
     }

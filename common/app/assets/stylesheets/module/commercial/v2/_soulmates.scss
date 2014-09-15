@@ -2,6 +2,8 @@
    Soulmates component
    ========================================================================== */
 
+$c-soulmates-high: $c-neutral1;
+
 @mixin c-soulmates-branding-small {
     .container__header__inner {
         height: auto;
@@ -12,7 +14,7 @@
             background-size: cover;
         }
     }
-    .commercial__explainer {
+    .commercial__desc {
         color: $c-soulmates-high;
         position: absolute;
         bottom: 0;
@@ -41,7 +43,7 @@
 }
 
 @mixin c-soulmates-branding {
-    .commercial__explainer {
+    .commercial__desc {
         position: static;
         color: #ffffff;
         width: gs-span(2)-$gs-gutter;
@@ -62,43 +64,15 @@
     }
 }
 
-$c-soulmates-high: $c-neutral1;
-
-.commercial--v2.commercial--soulmates {
-    .commercial__head {
-        height: auto;
-        border: 0;
-        position: relative;
-    }
-    .container__header {
-        margin-bottom: 0;
-        padding: 0;
-    }
-    .commercial__title {
-        float: none;
-        margin-bottom: 0;
-        text-align: center;
-        line-height: 1;
-    }
-
+.commercial--v2.commercial--soulmates--v2 {
+    background-color: #F5F3E7;
+    
     @include c-soulmates-branding-small;
 
-    @include mq(tablet) {
-        .commercial__header {
-            float: left;
-            margin-bottom: 0;
-            width: gs-span(3);
-        }
-    }
-    .commercial__body {
-        padding: $gs-baseline 0;
-        position: relative;
-    }
     .lineitems {
-        @include mq(tablet) {
-            float: left;
-        }
+        float: left;
     }
+
     .lineitem {
         text-align: center;
         width: 50%;
@@ -110,6 +84,7 @@ $c-soulmates-high: $c-neutral1;
         &:nth-child(n+3) {
             display: none;
         }
+
         @include mq(mobileLandscape) {
             width: 25%;
 
@@ -117,6 +92,7 @@ $c-soulmates-high: $c-neutral1;
                 display: block;
             }
         }
+
         @include mq(tablet) {
             width: 25%;
 
@@ -124,6 +100,7 @@ $c-soulmates-high: $c-neutral1;
                 display: block;
             }
         }
+
         @include mq(desktop) {
             width: percentage(1/6);
 
@@ -133,30 +110,35 @@ $c-soulmates-high: $c-neutral1;
             }
         }
     }
+
     .lineitem__title {
         @include fs-header(1);
         font-size: 14px;
+        margin-bottom: 0;
 
         &:hover {
             text-decoration: underline;
         }
     }
+
     .commercial__search {
         @include box-sizing(border-box);
         width: auto;
         float: none;
         margin-top: $gs-baseline;
+
         @include mq(tablet) {
             margin-top: 0;
             float: right;
             width: gs-span(3) - $gs-gutter/2;
         }
     }
+
     .search__dropdown {
+        @include fs-data(3);
         display: block;
         border-top: 1px solid  $c-neutral4;
         overflow: hidden;
-        @include fs-data(3);
         padding-top: $gs-baseline/2;
         margin-top: $gs-baseline/2;
 
@@ -164,11 +146,14 @@ $c-soulmates-high: $c-neutral1;
             margin-top: 0;
         }
     }
+
     .search__dropdown__options {
         float: right;
         min-width: 50%;
     }
+
     $search-submit-cta-diameter: 18px;
+
     .search__submit {
         border: 0;
         background: transparent;
@@ -179,6 +164,7 @@ $c-soulmates-high: $c-neutral1;
         @include fs-header(1);
         margin-top: $gs-baseline;
     }
+
     .search__submit__cta {
         position: absolute;
         top: 50%;
@@ -208,10 +194,8 @@ $c-soulmates-high: $c-neutral1;
             }
         }
     }
+
     @include mq(wide) {
-        .commercial__explainer {
-            padding-left: $gs-gutter*2;
-        }
         .commercial__buy-now-button {
             margin-left: $gs-gutter;
         }
@@ -226,7 +210,7 @@ $c-soulmates-high: $c-neutral1;
 
 
 /* Fronts */
-.facia-container--layout-front .commercial--v2.commercial--soulmates {
+.facia-container--layout-front .commercial--v2.commercial--soulmates--v2 {
     @include mq(tablet) {
         .lineitems {
             width: percentage(2/3);
@@ -276,7 +260,7 @@ $c-soulmates-high: $c-neutral1;
                 background-size: cover;
             }
         }
-        .commercial__explainer {
+        .commercial__desc {
             padding-left: $gs-gutter*2;
             padding-top: 0;
         }
@@ -296,7 +280,7 @@ $c-soulmates-high: $c-neutral1;
 
 
 /* Articles */
-.facia-container--layout-content .commercial--v2.commercial--soulmates {
+.facia-container--layout-content .commercial--v2.commercial--soulmates--v2 {
     @include mq(tablet) {
         .lineitems {
             width: gs-span(6) - $gs-gutter*3;
@@ -342,7 +326,7 @@ $c-soulmates-high: $c-neutral1;
             padding-left: 0;
             padding-right: 0;
         }
-        .commercial__explainer {
+        .commercial__desc {
             margin-top: $gs-baseline;
         }
         .commercial__search {
@@ -361,7 +345,7 @@ $c-soulmates-high: $c-neutral1;
                 background-size: cover;
             }
         }
-        .commercial__explainer {
+        .commercial__desc {
             padding-left: $gs-gutter*2;
             margin-top: $gs-baseline;
         }
