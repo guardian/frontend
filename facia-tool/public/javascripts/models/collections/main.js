@@ -210,7 +210,6 @@ define([
                     if (resp.status === 200 && resp.responseText) {
                         model.frontAge(humanTime(resp.responseText));
                         model.alertFrontIsStale(
-                            true ||
                             opts.alertIfStale &&
                             pageConfig.env !== 'dev' &&
                             new Date() - new Date(resp.responseText) > getFrontAgeAlertMs()

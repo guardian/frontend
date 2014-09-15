@@ -68,7 +68,7 @@ define([
         frontAgeAlertMs: {
             front:      60000 * 2 * (pageConfig.highFrequency || 1),
             editorial:  60000 * 2 * (pageConfig.standardFrequency || 5),
-            commercial: 60000 * 2 * (pageConfig.commercialFrequency || 60)
+            commercial: 60000 * 2 * (pageConfig.lowFrequency || 60)
         },
 
         apiBase:               '',
