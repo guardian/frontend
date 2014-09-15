@@ -26,8 +26,8 @@ case class GaugeDataPoint(value: Long) extends DataPoint {
 
 case class FrontendStatisticSet(metric: FrontendMetric, datapoints: List[DataPoint]) {
   lazy val sampleCount: Double = datapoints.size
-  lazy val maximum: Double = Try(datapoints.maxBy(_.value).value).toOption.getOrElse(0L).toDouble
-  lazy val minimum: Double = Try(datapoints.minBy(_.value).value).toOption.getOrElse(0L).toDouble
+  lazy val maximum: Double = Try(datapoints.maxBy(_.value).value).getOrElse(0L).toDouble
+  lazy val minimum: Double = Try(datapoints.minBy(_.value).value).getOrElse(0L).toDouble
   lazy val sum: Double = datapoints.map(_.value).sum
   lazy val average: Double =
     Try(sum / sampleCount).toOption.getOrElse(0L)
