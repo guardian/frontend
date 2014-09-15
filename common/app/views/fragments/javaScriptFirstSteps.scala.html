@@ -108,6 +108,9 @@
             if (hasSvgSupport()) {
                 document.documentElement.className += ' svg';
             }
+            if('flex-wrap' in document.documentElement.style || '-webkit-flex-wrap' in document.documentElement.style || '-ms-flex-wrap' in document.documentElement.style) {
+                document.documentElement.className += ' flex-wrap';
+            }
             document.documentElement.className = document.documentElement.className.replace(/\bis-not-modern\b/g, 'is-modern');
         }
     })(guardian.isModernBrowser);
