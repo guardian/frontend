@@ -298,14 +298,14 @@ define([
 
                 // event bindings
                 bean.on(this.$contentEl[0], 'click', this.toggleInfo);
-                mediator.on('window:resize', this.resize);
+                bean.on(window, 'resize', this.resize);
 
                 // meta
                 this.$indexEl.text(this.index);
             },
             leave: function() {
                 bean.off(this.$contentEl[0], 'click', this.toggleInfo);
-                mediator.off('window:resize', this.resize);
+                bean.off(window, 'resize', this.resize);
             },
             events: {
                 'next': function(interactionType) {
@@ -358,10 +358,10 @@ define([
             enter: function() {
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
-                mediator.on('window:resize', this.resize);
+                bean.on(window, 'resize', this.resize);
             },
             leave: function() {
-                mediator.off('window:resize', this.resize);
+                bean.off(window, 'resize', this.resize);
             },
             events: {
                 'next': function(interactionType) {
