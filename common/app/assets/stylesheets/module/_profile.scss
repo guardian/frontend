@@ -17,11 +17,15 @@ category: Common
 ```
 */
 
+// This is based on profile image sizes
+$profile-bio-mobile-size: 80px;
+$profile-bio-desktop-size: 120px;
+
 .profile {
     margin: $gs-baseline/3 $gs-gutter $gs-baseline/2 0;
 
     @include mq(tablet) {
-        margin: $gs-baseline 0 0 0;
+        margin: $gs-baseline 0 0;
     }
 
     @include mq(faciaLeftCol) {
@@ -47,16 +51,16 @@ category: Common
     }
 
     @include mq(faciaLeftCol) {
-        margin: $gs-baseline * 2 0 $gs-baseline 0;
+        margin: $gs-baseline * 2 0 $gs-baseline;
     }
 
     img {
-        width: 80px;
-        height: 80px;
+        width: $profile-bio-mobile-size;
+        height: $profile-bio-mobile-size;
 
         @include mq(desktop) {
-            width: 120px;
-            height: 120px;
+            width: $profile-bio-desktop-size;
+            height: $profile-bio-desktop-size;
         }
     }
 }
@@ -65,7 +69,7 @@ category: Common
     @include fs-bodyCopy(1);
 
     @include mq($from: mobile) {
-        height: 80px;
+        height: $profile-bio-mobile-size;
         vertical-align: middle;
         display: table-cell;
     }
@@ -76,7 +80,7 @@ category: Common
 
     @include mq(desktop) {
         max-width: gs-span(7);
-        height: 120px;
+        height: $profile-bio-desktop-size;
     }
 
     @include mq(wide) {
