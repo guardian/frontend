@@ -349,7 +349,7 @@ define([
                 'reload': function() {
                     this.reloadState = true;
                 },
-                'toggle-info': function(e) {
+                'toggle-info': function() {
                     this.pulseButton(this.infoBtn);
                     this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
                 },
