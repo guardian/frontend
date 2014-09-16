@@ -11,7 +11,8 @@ define([
     'common/utils/fsm',
     'common/utils/detect',
     'common/modules/component',
-    'common/modules/ui/images'
+    'common/modules/ui/images',
+    'common/utils/template'
 ], function (
     _,
     bean,
@@ -25,7 +26,8 @@ define([
     FiniteStateMachine,
     detect,
     Component,
-    imagesModule
+    imagesModule,
+    template
 ) {
     function GalleryLightbox() {
 
@@ -36,10 +38,11 @@ define([
 
         // TEMPLATE
         function generateButtonHTML(label) {
-            var templ = '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
-                        '<div class="gallery-lightbox__btn-body"><i></i></div>' +
-                    '</div>';
-            return templ.replace(/{{label}}/g, label);
+            var tmpl =
+                '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
+                    '<button class="gallery-lightbox__btn-body"><i></i>{{label}}</button>' +
+                '</div>';
+            return template(tmpl, {label: label});
         }
 
         this.endslateHTML =
@@ -57,7 +60,7 @@ define([
         this.imgElementHtml =
             '<li class="gallery-lightbox__item gallery-lightbox__item--img js-gallery-slide">' +
                 '<div class="gallery-lightbox__img-container"><img class="gallery-lightbox__img js-gallery-lightbox-img""></div>' +
-                '<div class="gallery-lightbox__info">' +
+                '<div class="gallery-lightbox__info js-gallery-lightbox-info">' +
                     '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
                         '<span class="gallery-lightbox__index">${index}</span>' +
                         '<span class="gallery-lightbox__progress-separator"></span>' +
@@ -108,6 +111,12 @@ define([
         this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
         this.toggleInfo = this.trigger.bind(this, 'toggle-info');
         this.resize = this.trigger.bind(this, 'resize');
+
+        this.stopPropagationOnMouseClick = function(e) {
+            if (detect.isBreakpoint({min: 'desktop'})) {
+                e.stop();
+            }
+        }.bind(this);
 
         if (detect.hasTouchScreen()) {
             this.disableHover();
@@ -297,14 +306,16 @@ define([
                 url.pushUrl({}, document.title, '/' + this.galleryJson.id + '?index=' + this.index, true);
 
                 // event bindings
-                bean.on(this.$contentEl[0], 'click', this.toggleInfo);
+                bean.on(this.$swipeContainer[0], 'click', '.js-gallery-content', this.toggleInfo);
+                bean.on(this.$contentEl[0], 'click', '.js-gallery-lightbox-info', this.stopPropagationOnMouseClick);
                 bean.on(window, 'resize', this.resize);
 
                 // meta
                 this.$indexEl.text(this.index);
             },
             leave: function() {
-                bean.off(this.$contentEl[0], 'click', this.toggleInfo);
+                bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
+                bean.off(this.$contentEl[0], 'click', this.stopPropagationOnMouseClick);
                 bean.off(window, 'resize', this.resize);
             },
             events: {
@@ -384,6 +395,9 @@ define([
                     this.index = this.images.length;
                     this.state = 'image';
                 },
+                'reload': function() {
+                    this.reloadState = true;
+                },
                 'resize': function() {
                     this.swipeContainerWidth = this.$swipeContainer.dim().width;
                     this.translateContent(this.$slides.length, 0, 0);
@@ -434,9 +448,9 @@ define([
         } else if (e.keyCode === 39) { // right
             this.trigger('next');
         } else if (e.keyCode === 38) { // up
-            this.trigger('hide-info');
-        } else if (e.keyCode === 40) { // down
             this.trigger('show-info');
+        } else if (e.keyCode === 40) { // down
+            this.trigger('hide-info');
         } else if (e.keyCode === 27) { // esc
             this.close();
         } else if (e.keyCode === 73) { // 'i'
