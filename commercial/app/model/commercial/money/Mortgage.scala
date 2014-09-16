@@ -21,7 +21,7 @@ case class Mortgage(lender: String,
 
 object MortgagesApi extends ExecutionContexts with Logging {
 
-  protected def url = CommercialConfiguration.getProperty("lc.mortgages.api.url")
+  private lazy val url = CommercialConfiguration.getProperty("lc.mortgages.api.url")
 
   def parse(xml: Elem): Seq[Mortgage] = {
     xml \ "RefProducts" map {

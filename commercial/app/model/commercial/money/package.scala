@@ -3,11 +3,10 @@ package model.commercial
 import common.{ExecutionContexts, Logging}
 import conf.CommercialConfiguration
 import conf.Switches._
-import model.commercial.money.MortgagesApi._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.xml.{Elem, XML}
+import scala.xml.Elem
 
 package object money {
 

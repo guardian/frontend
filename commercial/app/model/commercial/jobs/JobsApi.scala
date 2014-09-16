@@ -3,13 +3,13 @@ package model.commercial.jobs
 import common.{ExecutionContexts, Logging}
 import conf.CommercialConfiguration
 import conf.Switches.JobFeedSwitch
-import model.commercial._
+import model.commercial.{FeedReader, FeedRequest, OptString}
 import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
 import org.joda.time._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.xml.Elem
+import scala.xml.{XML, Elem}
 
 object JobsApi extends ExecutionContexts with Logging {
 
@@ -44,7 +44,9 @@ object JobsApi extends ExecutionContexts with Logging {
   }
 
   def loadAds(): Future[Seq[Job]] = {
-    FeedReader.readSeqFromXml[Job](FeedRequest("Jobs", JobFeedSwitch, url, responseEncoding = Some("utf-8"), timeout = 30.seconds))(parse)
+    FeedReader.readSeq[Job](FeedRequest("Jobs", JobFeedSwitch, url, responseEncoding = Some("utf-8"), timeout = 30.seconds)) { body =>
+      parse(XML.loadString(body.dropWhile(_ != '<')))
+    }
   }
 
 }

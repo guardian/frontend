@@ -8,7 +8,7 @@ import model.commercial._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.xml.{Elem, XML}
+import scala.xml.Elem
 
 trait BestsellersApi extends ExecutionContexts with Logging {
 
@@ -137,7 +137,8 @@ object MagentoBestsellersFeed extends BestsellersApi {
 
   override protected def url: Option[String] = magento.domain map (domain => s"http://$domain/$path")
 
-  override def parse(xml: Elem): Seq[Book] = {
-    super.parse(xml) map (book => book.copy(jacketUrl = book.jacketUrl.map(_.stripPrefix("http:"))))
+  override def loadAds(): Future[Seq[Book]] = super.loadAds() map {
+    _ map (book => book.copy(jacketUrl = book.jacketUrl.map(_.stripPrefix("http:"))))
   }
+
 }
