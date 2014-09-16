@@ -58,8 +58,6 @@
             }
         }
 
-        @trail.hasLargeContributorImage
-
         @if(trail.hasLargeContributorImage) {
             @trail.contributors.headOption.map { profile =>
                 @profile.contributorLargeImagePath.map{ image =>

@@ -60,4 +60,26 @@
     .item__timestamp {
         padding-left: 0;
     }
+
+    .item--has-cutout {
+        padding-bottom: 60%;
+
+        .item__media-wrapper {
+            display: none;
+        }
+
+        .item__avatar {
+            position: absolute;
+            overflow: hidden;
+            width: 80%;
+            bottom: -1 * ($gs-baseline / 2);
+            right: $gs-gutter / 2;
+        }
+
+        .item__avatar__media {
+            position: relative;
+            width: 100%;
+            right: -1 * ($gs-gutter * 2);
+        }
+    }
 }
