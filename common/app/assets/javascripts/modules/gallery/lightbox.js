@@ -445,9 +445,9 @@ define([
         } else if (e.keyCode === 39) { // right
             this.trigger('next');
         } else if (e.keyCode === 38) { // up
-            this.trigger('hide-info');
-        } else if (e.keyCode === 40) { // down
             this.trigger('show-info');
+        } else if (e.keyCode === 40) { // down
+            this.trigger('hide-info');
         } else if (e.keyCode === 27) { // esc
             this.close();
         } else if (e.keyCode === 73) { // 'i'
