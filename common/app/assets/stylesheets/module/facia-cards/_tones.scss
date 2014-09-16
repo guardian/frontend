@@ -1,4 +1,10 @@
 .container--facia-cards {
+    .tone-news {
+        .item__kicker {
+            color: $c-analysisAccent;
+        }
+    }
+
     .tone-live {
         &.item {
             background-color: $c-live;
@@ -20,17 +26,25 @@
         &.item {
             background-color: $c-commentBackground;
         }
+
+        .item__kicker {
+            color: $c-commentDefault;
+        }
     }
 
     .tone-feature {
         &.item {
             background-color: $c-featureDefault;
+            color: #ffffff;
+        }
 
-            &,
-            .item__standfirst,
-            & a {
-                color: #ffffff;
-            }
+        a,
+        .item__standfirst {
+            color: #ffffff;
+        }
+
+        .item__kicker {
+            color: $c-featureAccent;
         }
 
         .item__title .i {
@@ -39,7 +53,6 @@
             width: 1em;
             background-position: center;
         }
-
 
         .item__meta {
             &,
@@ -62,11 +75,15 @@
     .tone-media {
         &.item {
             background-color: $c-neutral1;
+            color: #ffffff;
+        }
 
-            &,
-            & a {
-                color: #ffffff;
-            }
+        a {
+            color: #ffffff;
+        }
+
+        .item__kicker {
+            color: $c-mediaDefault;
         }
 
         .item__meta {
