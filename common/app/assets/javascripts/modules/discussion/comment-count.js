@@ -45,9 +45,9 @@ define([
                 var commentOrComments = (c.count === 1 ? 'comment' : 'comments');
 
                 if (node.getAttribute('data-discussion-inline-upgrade') === 'true') {
-                    $('.js-item__comment-count').append(c.count + '');
-                    $('.js-item__comment-or-comments').append(commentOrComments);
-                    $('.js-item__inline-comment-template').show('inline');
+                    $('.js-item__comment-count', node).append(c.count + '');
+                    $('.js-item__comment-or-comments', node).append(commentOrComments);
+                    $('.js-item__inline-comment-template', node).show('inline');
                 } else {
                     var url = getContentUrl(node),
                         data = tpl.replace('[URL]', url);
