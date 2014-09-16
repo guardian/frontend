@@ -282,6 +282,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     background: $c-gallery-lightbox-btn;
     border: 0;
     outline: none;
+    text-indent: -9999px;
 
     @include transition(background-color .2s);
     &:focus {

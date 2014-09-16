@@ -38,9 +38,10 @@ define([
 
         // TEMPLATE
         function generateButtonHTML(label) {
-            var tmpl = '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
-                        '<button class="gallery-lightbox__btn-body"><i></i></button>' +
-                    '</div>';
+            var tmpl =
+                '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
+                    '<button class="gallery-lightbox__btn-body"><i></i>{{label}}</button>' +
+                '</div>';
             return template(tmpl, {label: label});
         }
 
