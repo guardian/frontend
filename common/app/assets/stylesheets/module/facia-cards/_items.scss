@@ -4,8 +4,11 @@
 
     .facia-slice__item {
         @include flex-display;
-        width: 25%;
         padding-bottom: 0;
+
+        @if not $browser-supports-flexbox {
+            width: 25%;
+        }
     }
 
     .item__header,
