@@ -1,13 +1,16 @@
 define([
-    'common/utils/mediator',
+    '$',
     'bonzo',
+    'qwery',
+    'common/utils/mediator',
     'common/utils/ajax'
 ], function (
-    mediator,
+    $,
     bonzo,
+    qwery,
+    mediator,
     ajax
 ) {
-
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',
         tpl = '<span class="trail__count trail__count--commentcount tone-colour">';
@@ -42,9 +45,9 @@ define([
                 var commentOrComments = (c.count === 1 ? 'comment' : 'comments');
 
                 if (node.getAttribute('data-discussion-inline-upgrade') === 'true') {
-                    bonzo(node.querySelector('.js-item__comment-count')).append(c.count + '');
-                    bonzo(node.querySelector('.js-item__comment-or-comments')).append(commentOrComments);
-                    bonzo(node.querySelector('.js-item__inline-comment-template')).show('inline');
+                    $('.js-item__comment-count').append(c.count + '');
+                    $('.js-item__comment-or-comments').append(commentOrComments);
+                    $('.js-item__inline-comment-template').show('inline');
                 } else {
                     var url = getContentUrl(node),
                         data = tpl.replace('[URL]', url);
@@ -52,7 +55,7 @@ define([
                     data = data.replace('[LABEL]', commentOrComments);
 
                     // put in trail__meta, if exists
-                    var meta = node.querySelector('.item__meta, .card__meta, .js-append-commentcount'),
+                    var meta = qwery('.item__meta, .card__meta, .js-append-commentcount'),
                         $node = meta ? bonzo(meta) : bonzo(node);
 
                     $node.append(data.replace('[COUNT]', c.count));
