@@ -624,7 +624,14 @@ select {
     display: inline-block;
     font-weight: bold;
     width: 11px;
-    background: #fffff;
+}
+
+.editor--boolean--showMainVideo {
+    display: none;
+}
+
+.hasMainMediaVideo .editor--boolean--showMainVideo {
+    display: inline-block;
 }
 
 button {

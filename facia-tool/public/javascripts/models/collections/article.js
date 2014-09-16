@@ -83,13 +83,13 @@ define([
                     type: 'text'
                 },
                 {
-                    key: 'isBoosted',
-                    label: 'boost',
+                    key: 'isBreaking',
+                    label: 'breaking news',
                     type: 'boolean'
                 },
                 {
-                    key: 'isBreaking',
-                    label: 'breaking news',
+                    key: 'isBoosted',
+                    label: 'boost',
                     type: 'boolean'
                 },
                 {
@@ -322,11 +322,7 @@ define([
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
 
-            var mainMedia = mainMediaType(opts);
-
-            if (mainMedia) {
-                this.mainMediaType(mainMedia);
-            }
+            this.mainMediaType(mainMediaType(opts));
 
             this.setRelativeTimes();
 
