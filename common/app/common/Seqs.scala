@@ -7,5 +7,7 @@ object Seqs {
     def isDescending(implicit ordering: Ordering[A]) = as == reverseSorted
 
     def reverseSorted(implicit ordering: Ordering[A]) = as.sorted(ordering.reverse)
+
+    def countWhile(f: A => Boolean) = as.takeWhile(f).length
   }
 }

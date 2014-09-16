@@ -23,7 +23,7 @@ define([
         addPreBadge = function($adSlot, isSponsored, sponsor) {
             if (sponsor) {
                 $adSlot.append(template(
-                    '<div class="ad-slot--paid-for-badge__inner">' +
+                    '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
                         '<h3 class="ad-slot--paid-for-badge__header">{{header}}</h3>' +
                         '<p class="ad-slot--paid-for-badge__header">{{sponsor}}</p>' +
                     '</div>',
