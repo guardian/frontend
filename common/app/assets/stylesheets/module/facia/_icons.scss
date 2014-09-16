@@ -1,31 +1,28 @@
 @if ($svg-support) {
-    .item--audio .item__title:before,
-    .linkslist__item--audio .linkslist__action:before {
+    .item--audio .item__title,
+    .linkslist__item--audio .linkslist__action {
         @extend %pseudo-icon;
-        width: .95em;
-        @include icon(volume-high-black, $with-width: false);
+        @extend %pseudo-icon--audio--black;
 
-        .container--dark-background & {
+        .container--dark-background &:before {
             @extend %svg-i-volume-high-white;
         }
     }
-    .item--video .item__title:before,
-    .linkslist__item--video .linkslist__action:before {
+    .item--video .item__title,
+    .linkslist__item--video .linkslist__action {
         @extend %pseudo-icon;
-        width: 1.2em;
-        @include icon(video-icon-black, $with-width: false);
+        @extend %pseudo-icon--video--black;
 
-        .container--dark-background & {
+        .container--dark-background &:before {
             @extend %svg-i-video-icon-white;
         }
     }
     .item--gallery .item__title:before,
     .linkslist__item--gallery .linkslist__action:before {
         @extend %pseudo-icon;
-        width: 1.04em;
-        @include icon(camera-black-large, $with-width: false);
+        @extend %pseudo-icon--gallery--black;
 
-        .container--dark-background & {
+        .container--dark-background &:before {
             @extend %svg-i-camera-white-large;
         }
     }
