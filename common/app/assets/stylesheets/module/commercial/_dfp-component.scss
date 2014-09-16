@@ -283,7 +283,7 @@
             top: 0;
             width: gs-span(3) + $gs-gutter/2;
             padding: $gs-baseline 0;
-            left: gs-span(11) + ($gs-gutter/2);
+            left: gs-span(11) + ($gs-gutter*1.5);
         }
         .commercial__footer-inner {
             height: 100%;
