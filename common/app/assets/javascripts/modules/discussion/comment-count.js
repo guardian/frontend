@@ -55,7 +55,7 @@ define([
                     data = data.replace('[LABEL]', commentOrComments);
 
                     // put in trail__meta, if exists
-                    var meta = qwery('.item__meta, .card__meta, .js-append-commentcount'),
+                    var meta = qwery('.item__meta, .card__meta, .js-append-commentcount', node),
                         $node = meta ? bonzo(meta) : bonzo(node);
 
                     $node.append(data.replace('[COUNT]', c.count));
