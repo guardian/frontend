@@ -400,3 +400,14 @@ $cta-icon-gap: 2px;
         color: #9c9c9c; //Darkest we can go to pass accessiblity
     }
 }
+.item--has-cutout {
+    .item__media-wrapper {
+        display: none;
+    }
+
+    .item__avatar {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}

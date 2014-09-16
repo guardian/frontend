@@ -747,6 +747,7 @@ object GetClasses {
       itemClass,
       if (isFirstContainer) Some("item--force-image-upgrade") else None,
       if (trail.isLive) Some("item--live") else None,
+      if (trail.isComment) Some("item--has-cut-out") else None,
       if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
         Some(s"item--imageadjust-${trail.imageAdjust}")
       else
@@ -822,7 +823,7 @@ object GetClasses {
     }
   }
 
-  def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {  
+  def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
       "container--facia-cards" +:
         (commonContainerStyles(config, isFirst, hasTitle) ++
@@ -834,7 +835,7 @@ object GetClasses {
     val oldClasses = Seq(
       Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
     ).flatten
-  
+
     RenderClasses(
       s"container--${container.containerType}" +:
         (commonContainerStyles(config, index == 0, hasTitle) ++
