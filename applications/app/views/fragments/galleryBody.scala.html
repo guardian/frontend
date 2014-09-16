@@ -1,5 +1,5 @@
 @(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
-<div class="l-side-margins l-side-margins--layout-content">
+<div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
     <article class="content content--media content--gallery tone-@gallery.visualTone"
         itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
 
@@ -74,9 +74,15 @@
                         }
                     }
                 </ul>
-
-                <div class="social-wrapper social-wrapper--bottom" data-component="share">
-                    @fragments.social(gallery, iconModifier = "white")
+                <div class="tag-wrapper">
+                    <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-link-name="keywords">
+                        <h2 class="social__head u-h--up-to-left-col">Tags</h2>
+                        @fragments.keywordList(gallery.keywords, tone = "media")
+                    </div>
+                    <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-component="share">
+                        <h2 class="social__head u-h--up-to-left-col">Share this article</h2>
+                        @fragments.social(gallery, iconModifier = "white")
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,7 +92,7 @@
         <div class="container container--popular">
             <div class="facia-container__inner">
                 <h2 class="container__title">
-                    <a class="most-viewed-no-js tone-colour" href="@LinkTo{"/gallery/most-viewed"}" data-link-name="Most viewed galleries">More galleries</a>
+                    <a class="most-viewed-no-js tone-colour" href="@LinkTo{/gallery/most-viewed}" data-link-name="Most viewed galleries">More galleries</a>
                 </h2>
             </div>
         </div>

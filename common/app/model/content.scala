@@ -282,7 +282,8 @@ object Content {
         apiUrl          = "",
         references      = Nil,
         bio             = None,
-        bylineImageUrl  = (tagJson \ "bylineImageUrl").asOpt[String]
+        bylineImageUrl  = (tagJson \ "bylineImageUrl").asOpt[String],
+        bylineLargeImageUrl  = (tagJson \ "bylineLargeImageUrl").asOpt[String]
       )
     }
 

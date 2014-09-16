@@ -121,8 +121,8 @@
 
 .content__keywords {
     @include fs-data(4);
-    margin-top: $gs-baseline;
-    margin-bottom: $gs-baseline;
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline/3;
     
     .content--media & a {
         color: $c-neutral5;
