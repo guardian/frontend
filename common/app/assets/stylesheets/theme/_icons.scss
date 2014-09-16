@@ -52,7 +52,7 @@ blockquote.quoted:before {
         .svg &:before {
             content: '';
             height: .7em;
-            margin-right: .3em;
+            padding-right: .3em;
             vertical-align: baseline;
             display: inline-block;
             background-repeat: no-repeat;

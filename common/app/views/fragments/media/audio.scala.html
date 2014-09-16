@@ -14,23 +14,20 @@
             <ul class="podcast-meta u-unstyled">
                 @audio.iTunesSubscriptionUrl.map { iTunesSubscriptionUrl =>
                     <li class="podcast-meta__item podcast-meta__item--itunes">
-                        <a class="podcast-meta__item__link pseudo-icon pseudo-icon--audio--white" href="@iTunesSubscriptionUrl">
-                            Subscribe via iTunes
-                        </a>
+                        <a class="podcast-meta__item__link pseudo-icon pseudo-icon--audio--white"
+                            href="@iTunesSubscriptionUrl">Subscribe via iTunes</a>
                     </li>
                 }
                 @audio.downloadUrl.map { downloadUrl =>
                     <li class="podcast-meta__item podcast-meta__item--download">
-                        <a class="podcast-meta__item__link pseudo-icon pseudo-icon--download--white" href="@downloadUrl">
-                            Download MP3
-                        </a>
+                        <a class="podcast-meta__item__link pseudo-icon pseudo-icon--download--white"
+                            href="@downloadUrl">Download MP3</a>
                     </li>
                 }
                 @audio.seriesFeedUrl.map { seriesFeedUrl =>
                     <li class="podcast-meta__item podcast-meta__item--feed">
-                        <a class="podcast-meta__item__link pseudo-icon pseudo-icon--rss--white" href="@seriesFeedUrl">
-                            Podcast feed URL
-                        </a>
+                        <a class="podcast-meta__item__link pseudo-icon pseudo-icon--rss--white"
+                            href="@seriesFeedUrl">Podcast feed URL</a>
                     </li>
                 }
             </ul>
