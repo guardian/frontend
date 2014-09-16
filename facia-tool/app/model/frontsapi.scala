@@ -161,6 +161,7 @@ trait UpdateActions extends Logging {
     "supporting",
     "isBoosted",
     "imageHide",
+    "imageReplace",
     "imageSrc",
     "imageSrcWidth",
     "imageSrcHeight",

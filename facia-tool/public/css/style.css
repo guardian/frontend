@@ -407,7 +407,7 @@ h1 {
 
 .element,
 .element a {
-    color: #333333;
+    color: #999999;
     cursor: pointer;
     text-decoration: none;
 }
@@ -423,13 +423,14 @@ h1 {
 
 .element__headline a,
 .element__headline {
+    color: #000000;
     font-size: 16px;
     line-height: 16px;
-    color: #000000;
 }
 
-.element__byline {
-    color: #999999;
+.element__trailText a,
+.element__trailText {
+    color: #333333;
 }
 
 .article__ammends {
@@ -481,7 +482,7 @@ h1 {
 }
 
 .article__overrides {
-    margin: 0 0 0 85px;
+    margin: 0 0 10px 85px;
 }
 
 .article__overrides .tools {
