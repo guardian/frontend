@@ -108,14 +108,14 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'imageReplace',
-                    singleton: 'images',
-                    label: 'replace image',
+                    key: 'showKicker',
+                    label: 'show kicker',
                     type: 'boolean'
                 },
                 {
-                    key: 'showKicker',
-                    label: 'show kicker',
+                    key: 'imageReplace',
+                    singleton: 'images',
+                    label: 'replace image',
                     type: 'boolean'
                 },
                 {

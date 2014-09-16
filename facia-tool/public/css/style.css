@@ -138,7 +138,6 @@ h1 {
 }
 
 .count {
-    color: #dbd8c9;
     font-weight: normal;
 }
 
@@ -371,7 +370,7 @@ h1 {
 
 .article .thumb {
     position: absolute;
-    top: 6px;
+    top: 4px;
 }
 
 .article .thumb img {
@@ -431,26 +430,19 @@ h1 {
     color: #000000;
 }
 
-span.kicker {
-    color: #376ABF;
-    font-size: 10px;
-    text-transform: uppercase;
-    font-weight: bold;
+.article__ammends {
+    font-size: 12px;
 }
 
-span.kicker--draft {
+.article__ammends .draft {
+    font-size: 12px;
+    color: #DD4B39;
+    text-transform: uppercase;
     color: #ffc107;
 }
 
-span.kicker--takedown {
-    color: #DD4B39;
-}
-
-span.kicker--football {
-    color: #65b045;
-}
-
-span.kicker--breaking-news {
+.article__ammends .takedown {
+    text-transform: uppercase;
     color: #DD4B39;
 }
 
@@ -616,29 +608,19 @@ select {
 
 .editor--boolean {
     font-size: 12px;
-    position: relative;
     display: inline-block;
-    padding-right: 20px;
 }
 
-.editor--boolean__label {
-    color: #999999;
-}
-
-.editor--boolean__label:hover {
-    color: #000000;
-}
-
-.editor--boolean__label.selected,
-.editor--boolean__state {
-    color: #349124;
+.editor--boolean__label.selected {
+    color: #DD4B39;
 }
 
 .editor--boolean__state {
-    position: absolute;
-    top: 1px;
-    left: -12px;
+    color: #DD4B39;
+    display: inline-block;
     font-weight: bold;
+    width: 11px;
+    background: #fffff;
 }
 
 button {

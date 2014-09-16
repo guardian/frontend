@@ -157,11 +157,22 @@
                     click: toggle,
                     css: {selected: meta},
                     text: label"></a>
-                <span class="editor--boolean__state" data-bind="
-                    visible: meta">&#10004;</span>
+                <span class="editor--boolean__state">
+                    <span data-bind="visible: meta">&#10004;</span>
+                </span>
             </span>
         <!-- /ko -->
     </script>
+
+    <script type="text/html" id="template_editor_boolean_states">
+        <!-- ko if: type === 'boolean' && meta() -->
+            <span class="editor--boolean">
+                <span class="editor--boolean__label selected" data-bind="text: label"></span>
+                <span class="editor--boolean__state">&#10004;</span>
+            </span>
+        <!-- /ko -->
+    </script>
+
 
     <script type="text/html" id="template_collection">
         <div class="collection">
@@ -349,40 +360,28 @@
                             html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
                             css: {'is-empty': isSnap() && !meta.headline()},
                             attr: {href: id}"></a>
-                        <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                            <span class="count">(<span class="non-zero" data-bind="text: meta.supporting.items().length"></span>)</span>
-                        <!-- /ko -->
                     </div>
 
-                    <!-- ko if: fields.isLive() === 'false' -->
-                        <span class="kicker" data-bind="
-                            css: {
-                                'kicker--takedown': fields.firstPublicationDate(),
-                                'kicker--draft':   !fields.firstPublicationDate(),
-                            },
-                            text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
-                    <!-- /ko -->
-
-                    <!-- ko if: isSnap -->
-                        <span data-bind="
-                            attr: {class: 'kicker' + (meta.snapCss() ? ' kicker--' + meta.snapCss() : '')},
-                            text: meta.snapCss() || 'snap'"></span>
-                    <!-- /ko -->
-
-                    <!-- ko if: meta.kicker -->
-                        <span data-bind="
-                            attr: {class: 'kicker kicker--' + meta.kicker()},
-                            text: meta.kicker"></span>
-                    <!-- /ko -->
-
-                    <!-- ko foreach: editors -->
-                        <!-- ko if: type === 'boolean' && meta() -->
-                            <span class="editor--boolean editor--boolean__label selected" data-bind="text: label"></span>
+                    <div class="article__ammends">
+                        <!-- ko if: fields.isLive() === 'false' -->
+                            <span data-bind="
+                                css: {
+                                    'takedown': fields.firstPublicationDate(),
+                                    'draft':   !fields.firstPublicationDate(),
+                                },
+                                text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
                         <!-- /ko -->
-                    <!-- /ko -->
 
-                    <span class="element element__trailText" data-bind="
-                        html: meta.trailText() || fields.trailText()"></span>
+                        <!-- ko if: isSnap -->
+                            <span data-bind="text: meta.snapCss() || 'snap'"></span>
+                        <!-- /ko -->
+
+                        <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
+
+                        <!-- ko if: meta.supporting && meta.supporting.items().length -->
+                            <span><span data-bind="text: meta.supporting.items().length"></span> sublinks</span>
+                        <!-- /ko -->
+                    </div>
                 </div>
             </div>
         </div>

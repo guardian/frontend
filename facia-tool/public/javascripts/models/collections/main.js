@@ -339,7 +339,7 @@ define([
                 updateScrollables();
                 window.onresize = updateScrollables;
 
-                startCollectionsPoller();
+                //startCollectionsPoller();
                 startSparksPoller();
                 startRelativeTimesPoller();
 
