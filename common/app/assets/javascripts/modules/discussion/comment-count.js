@@ -42,7 +42,7 @@ define([
                 var commentOrComments = (c.count === 1 ? 'comment' : 'comments');
 
                 if (node.getAttribute('data-discussion-inline-upgrade') === 'true') {
-                    bonzo(node.querySelector('.js-item__comment-count')).append(c.count + "");
+                    bonzo(node.querySelector('.js-item__comment-count')).append(c.count + '');
                     bonzo(node.querySelector('.js-item__comment-or-comments')).append(commentOrComments);
                     bonzo(node.querySelector('.js-item__inline-comment-template')).show('inline');
                 } else {
