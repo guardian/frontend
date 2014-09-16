@@ -40,5 +40,8 @@
                 }
             }
         }
+        .item--has-cutout {
+            padding-bottom: $gs-baseline * 2.5;
+        }
     }
 }
