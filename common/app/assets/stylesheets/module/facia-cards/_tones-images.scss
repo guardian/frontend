@@ -58,9 +58,5 @@
             height: .8em;
             width: 1em;
         }
-
-        .item__timestamp:before {
-            @include icon(clock-grey, false);
-        }
     }
 }
