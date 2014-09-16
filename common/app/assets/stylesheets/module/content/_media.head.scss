@@ -1,5 +1,4 @@
 .content__main-column--media {
-    padding-bottom: $gs-baseline*2;
 
     @include mq(wide) {
         width: gs-span(9);
@@ -17,7 +16,6 @@
 .content--media {
     background-color: $c-neutral1;
     color: $c-neutral7;
-    padding-bottom: 0;
 
     .content__section .tone-colour {
         color: $c-commentAccent;
