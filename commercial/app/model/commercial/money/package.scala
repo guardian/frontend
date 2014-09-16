@@ -1,14 +1,19 @@
 package model.commercial
 
-import conf.{Switches, CommercialConfiguration}
-import common.ExecutionContexts
+import common.{ExecutionContexts, Logging}
+import conf.CommercialConfiguration
+import conf.Switches._
+import model.commercial.money.MortgagesApi._
+
 import scala.concurrent.Future
+import scala.concurrent.duration._
+import scala.xml.{Elem, XML}
 
 package object money {
 
-  trait MoneySupermarketApi[T <: Ad] extends XmlAdsApi[T] {
+  trait MoneySupermarketApi[T <: Ad] extends Logging {
 
-    protected val switch = Switches.MoneysupermarketFeedsSwitch
+    protected val adTypeName: String
 
     protected val path: String
 
@@ -22,7 +27,33 @@ package object money {
       }
     }
 
-    override protected val loadTimeout = 10000
+    protected def parse(xml: Elem): Seq[T]
+
+    protected def cleanResponseBody(body: String): String = body
+
+    def loadAds(): Future[Seq[T]] = {
+      url map { u =>
+        val result = FeedReader.read(FeedRequest(MoneysupermarketFeedsSwitch, u, timeout = 10.seconds)) { body =>
+          val xml = XML.loadString(cleanResponseBody(body))
+          parse(xml)
+        }
+        result map {
+          case Left(FeedReadWarning(message)) =>
+            log.warn(s"Reading $adTypeName feed failed: $message")
+            Nil
+          case Left(FeedReadException(message)) =>
+            log.error(s"Reading $adTypeName feed failed: $message")
+            Nil
+          case Right(jobs) => jobs
+          case other =>
+            log.error(s"Something unexpected has happened: $other")
+            Nil
+        }
+      } getOrElse {
+        log.warn(s"Reading $adTypeName feed failed: missing URL")
+        Future.successful(Nil)
+      }
+    }
   }
 
 
