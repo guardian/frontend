@@ -5,6 +5,12 @@
         margin-bottom: $gs-baseline/2;
     }
 
+    .content__main-column--gallery & {
+        @include mq(leftCol) {
+            padding-bottom: 48px;
+        }
+    }
+
     @include mq(leftCol) {
         width: $left-column;
         position: absolute;
