@@ -24,6 +24,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
   }
   case class GalleryPerformance(
     date: DateTime,
+    views: Double,
     pageViewsPerVisit: Double,
     lightboxLaunchesPerVisit: Double,
     percentageOfViewsShared: Double
@@ -52,17 +53,17 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
       case (false, true) => NoCache(Ok("Sentry reports not generated"))
       case (true, false) => NoCache(Ok("Omniture report not generated yet"))
       case _ =>
-        val sentryErrorColumns = List(Column("time", "Time", "date"), Column("Gallery Errors", "Gallery Js errors per day", "number"))
-        val sentryRows = sentryData.map {
-            row =>
-              val dateCell = Cell(row.jsonDate)
-              val count = Cell(row.errorCount.toString)
+        val sentryErrorColumns = List(Column("time", "Time", "date"), Column("Gallery Errors", "Gallery Js errors per day as % gallery visits ", "number"))
+        val sentryRows = sentryData.zip(reportsObject).map {
+          case (sentry, omniture) =>
+              val dateCell = Cell(sentry.jsonDate)
+              val count = Cell(((sentry.errorCount / omniture.views) * 100).toString)
               Row(List(dateCell, count))
         }
-        val sentryChart = FormattedChart("Sentry errors per day", sentryErrorColumns, sentryRows, ChartFormat(Colour.`tone-live-1`))
+        val sentryChart = FormattedChart("Sentry errors per day as a % of number of gallery visits", sentryErrorColumns, sentryRows, ChartFormat(Colour.`tone-live-1`))
 
         val lightboxColumns = List(Column("time", "Time", "date"), Column("lightboxes", "Lightbox views per gallery", "number"))
-        val lightboxRows = reportsObject.toSeq.sortBy(_.simpleDate).map { row =>
+        val lightboxRows = reportsObject.map { row =>
           val dateCell = Cell(row.jsonDate)
           val lightboxCount = Cell(row.lightboxLaunchesPerVisit.toString)
           Row(List(dateCell, lightboxCount))
@@ -70,7 +71,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
         val lightboxChart = FormattedChart("Lightbox Views per Gallery Page View", lightboxColumns, lightboxRows, ChartFormat(Colour.`tone-features-3`))
 
         val galleryColumns = List(Column("time", "Time", "date"), Column("pvv", "Gallery views per visit", "number"))
-        val galleryRows = reportsObject.toSeq.sortBy(_.simpleDate).map { row =>
+        val galleryRows = reportsObject.map { row =>
           val dateCell = Cell(row.jsonDate)
           val pageViews = Cell(row.pageViewsPerVisit.toString)
           Row(List(dateCell, pageViews))
@@ -79,7 +80,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
 
 
         val shareColumns = List(Column("time", "Time", "date"), Column("shares", "Social share per gallery(%)", "number"))
-        val shareRows = reportsObject.toSeq.sortBy(_.simpleDate).map {
+        val shareRows = reportsObject.map {
           row =>
             val dateCell = Cell(row.jsonDate)
             val galleryShares = Cell(row.percentageOfViewsShared.toString)
@@ -128,8 +129,8 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
       shares <- gallerySocialShares.counts.headOption.map(_.toDouble)
     } yield {
         val date = new DateTime(galleryViews.year, galleryViews.month, galleryViews.day, 0, 0)
-        GalleryPerformance(date, views / visits, lightboxes / views, (shares / views) * 100)
+        GalleryPerformance(date, views, views / visits, lightboxes / views, (shares / views) * 100)
     }
-    reportsObject.toSeq
+    reportsObject.toSeq.sortBy(_.simpleDate)
   }
 }
