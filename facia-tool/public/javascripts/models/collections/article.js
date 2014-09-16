@@ -42,8 +42,7 @@ define([
             overridableFields = [
                 'headline',
                 'trailText',
-                'byline',
-                'kicker'],
+                'byline'],
 
             allFields = [
                 'isLive',
@@ -53,8 +52,6 @@ define([
 
             allMeta = [
                 'href',
-                'kicker',
-                'showKicker',
                 'isBreaking',
                 'isBoosted',
                 'imageHide',
@@ -108,21 +105,10 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'showKicker',
-                    label: 'show kicker',
-                    type: 'boolean'
-                },
-                {
                     key: 'imageReplace',
                     singleton: 'images',
                     label: 'replace image',
                     type: 'boolean'
-                },
-                {
-                    key: 'kicker',
-                    label: 'kicker',
-                    requires: 'showKicker',
-                    type: 'text'
                 },
                 {
                     key: 'imageSrc',

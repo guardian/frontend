@@ -1,6 +1,6 @@
 @(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta", showTag: Boolean = false)(implicit request: RequestHeader, config: Config)
 
-@defining((trail.visualTone, trail.kicker, if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, kicker, headingLevel) =>
+@defining((trail.visualTone, if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, headingLevel) =>
     <h@headingLevel class="item__title">
         @if(trail.isLive){
             <span class="item__kicker item__kicker--live">Live</span>

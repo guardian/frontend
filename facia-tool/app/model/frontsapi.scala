@@ -153,7 +153,6 @@ trait UpdateActions extends Logging {
   val itemMetaWhitelistFields: Seq[String] = Seq(
     "headline",
     "href",
-    "kicker",
     "snapType",
     "snapCss",
     "snapUri",
