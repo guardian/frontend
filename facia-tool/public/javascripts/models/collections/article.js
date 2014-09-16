@@ -114,6 +114,7 @@ define([
                     key: 'imageSrc',
                     label: 'image URL',
                     requires: 'imageReplace',
+                    validator: validateAndProcessImageSrc,
                     type: 'text'
                 }
             ];
@@ -181,23 +182,6 @@ define([
                 this.provisionalImageSrc(src);
             }, this);
 
-            this.provisionalImageSrc.subscribe(function(src) {
-                var self = this;
-
-                if (src === this.meta.imageSrc()) { return; }
-
-                this.validateImageSrc(src)
-                .done(function(width, height) {
-                    self.meta.imageSrc(src);
-                    self.meta.imageSrcWidth(width);
-                    self.meta.imageSrcHeight(height);
-                })
-                .fail(function(err) {
-                    self.open();
-                    window.alert('Sorry! ' + err);
-                });
-            }, this);
-
             this.populate(opts);
 
             // Populate supporting
@@ -240,6 +224,13 @@ define([
                 key = opts.key,
                 meta = self.meta[key] || function() {},
                 field = self.fields[key] || function() {};
+
+            if (_.isFunction(opts.validator)) {
+                meta.extend({ rateLimit: 100 })
+                meta.subscribe(function() {
+                    opts.validator(meta, self.meta)
+                }, this);
+            }
 
             return {
                 key:    key,
@@ -285,9 +276,6 @@ define([
                         return meta() || field();
                     },
                     write: function(value) {
-                        //var el = document.createElement('div');
-                        //el.innerHTML = value;
-                        //meta(el.innerHTML);
                         meta(value);
                     },
                     owner: self
@@ -301,6 +289,30 @@ define([
             });
             return mainElement && mainElement.type;
         }
+
+        function validateAndProcessImageSrc(imageSrc, meta) {
+            if (imageSrc()) {
+                validateImageSrc(imageSrc(), {
+                    maxWidth: 940,
+                    minWidth: 620,
+                    widthAspectRatio: 3,
+                    heightAspectRatio: 5
+                })
+                .done(function(width, height) {
+                    meta.imageSrcWidth(width);
+                    meta.imageSrcHeight(height);
+                })
+                .fail(clearImageMeta);
+            } else {
+                clearImageMeta();
+            }
+
+            function clearImageMeta() {
+                meta.imageSrc(undefined);
+                meta.imageSrcWidth(undefined);
+                meta.imageSrcHeight(undefined);
+            };
+        };
 
         Article.prototype.populate = function(opts, validate) {
             var missingProps;
@@ -426,14 +438,6 @@ define([
                     }
                 });
             }
-        };
-
-        Article.prototype.validateImageSrc = function(src) {
-            return validateImageSrc(src, {
-                maxWidth: 940,
-                minWidth: 620,
-                widthAspectRatio: 3,
-                heightAspectRatio: 5});
         };
 
         Article.prototype.convertToSnap = function() {

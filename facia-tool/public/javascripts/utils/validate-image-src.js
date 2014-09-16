@@ -22,7 +22,7 @@ define([
         criteria = _.extend(defaultCriteria, criteria);
 
         if (!src) {
-            defer.resolve();
+            defer.reject();
 
         } else if (!src.match(new RegExp('^http://.*\\.' + vars.CONST.imageCdnDomain + '/'))) {
             defer.reject('Images must come from *.' + vars.CONST.imageCdnDomain);
