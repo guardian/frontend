@@ -1,11 +1,11 @@
 define([
-    'common/modules/ui/message',
     'common/utils/detect',
-    'common/utils/preferences'
+    'common/utils/preferences',
+    'common/modules/ui/message'
 ], function(
-    Message,
     detect,
-    preferences
+    preferences,
+    Message
 ) {
 
     var messages = {
@@ -40,9 +40,7 @@ define([
                         '</li>' +
                     '</ul>';
 
-                var releaseMessage = new Message('video', {pinOnHide: true});
-
-                releaseMessage.show(msg);
+                new Message('video', {pinOnHide: true}).show(msg);
             }
         },
         init: function(config) {
