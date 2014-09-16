@@ -1,64 +1,70 @@
-@mixin media-icon($type) {
+%facia-card-media-icon {
     content: '';
-    @include icon($type);
-    @include background-size(auto 100%);
     margin: 0;
 }
 
 .container--facia-cards {
     .item__timestamp:before {
-        @include media-icon(clock-light-grey);
+        @include icon(clock-light-grey, false);
+        @extend %facia-card-media-icon;
         top: 1px;
         position: relative;
-        height: 11px !important;
-        width: 11px !important;
+        height: 11px;
+        width: 11px;
         margin-right: 2px;
     }
 
     .tone-media {
         .item__timestamp:before {
-            @include media-icon(clock-yellow);
+            @include icon(clock-yellow, false);
+            @extend %facia-card-media-icon;
         }
     }
 
     .item--video {
         .item__title:before {
-            @include media-icon(video-icon);
-            height: .75em !important;
-            width: 1.2em !important;
+            @include icon(video-icon, false);
+            @extend %facia-card-media-icon;
+            height: .75em;
+            width: 1.2em;
             margin-right: 2px;
         }
     }
 
     .item--gallery {
         .item__title:before {
-            @include media-icon(camera-yellow-large);
-            height: .75em !important;
-            width: 1.2em !important;
+            @include icon(camera-yellow-large, false);
+            @extend %facia-card-media-icon;
+            height: .75em;
+            width: 1.2em;
         }
     }
 
     .tone-live {
         .item__timestamp:before {
-            @include media-icon(clock-light-pink);
+            @include icon(clock-light-pink, false);
+            @extend %facia-card-media-icon;
         }
     }
 
     .tone-feature {
         .item__timestamp:before {
-            @include media-icon(clock-light-pink);
+            @include icon(clock-light-pink, false);
+            @extend %facia-card-media-icon;
         }
     }
 
     .tone-comment {
         .item__title:before {
-            @include media-icon(quote-grey);
-            height: .8em !important;
-            width: 1em !important;
+            @include icon(quote-grey, false);
+            @extend %facia-card-media-icon;
+            height: .8em;
+            width: 1em;
         }
 
         .item__timestamp:before {
-            @include media-icon(clock-grey);
+            @include icon(clock-grey, false);
+            @extend %facia-card-media-icon;
         }
     }
 }
