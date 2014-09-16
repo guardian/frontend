@@ -23,29 +23,28 @@ define([
 
     var releaseMessage = {
         show: function(messageText, blogLink, surveyLink) {
-            if (detect.getBreakpoint() !== 'mobile' && !preferences.hasOptedIntoResponsive()) {
+            var msg =
+                '<p class="site-message__message" id="site-message__message">' +
+                    messageText +
+                '</p>' +
+                '<ul class="site-message__actions u-unstyled">' +
+                    '<li class="site-message__actions__item">' +
+                        '<i class="i i-arrow-white-right"></i>' +
+                        '<a href="' + blogLink + '" target="_blank">Find out more</a>' +
+                    '</li>' +
+                    '<li class="site-message__actions__item">' +
+                        '<i class="i i-arrow-white-right"></i>' +
+                        '<a href="' + surveyLink + '" target="_blank">Leave feedback</a>' +
+                    '</li>' +
+                '</ul>';
 
-                var msg =
-                    '<p class="site-message__message" id="site-message__message">' +
-                        messageText +
-                    '</p>' +
-                    '<ul class="site-message__actions u-unstyled">' +
-                        '<li class="site-message__actions__item">' +
-                            '<i class="i i-arrow-white-right"></i>' +
-                            '<a href="' + blogLink + '" target="_blank">Find out more</a>' +
-                        '</li>' +
-                        '<li class="site-message__actions__item">' +
-                            '<i class="i i-arrow-white-right"></i>' +
-                            '<a href="' + surveyLink + '" target="_blank">Leave feedback</a>' +
-                        '</li>' +
-                    '</ul>';
-
-                new Message('video', {pinOnHide: true}).show(msg);
-            }
+            new Message('video', {pinOnHide: true}).show(msg);
         },
         init: function(config) {
 
-            if (config.page.contentType){
+            if (detect.getBreakpoint() !== 'mobile' &&
+                    !preferences.hasOptedIntoResponsive() && config.page.contentType ) {
+
                 var contentType = config.page.contentType.toLowerCase();
                 if (messages[contentType]) {
                     var msg = messages[contentType];
