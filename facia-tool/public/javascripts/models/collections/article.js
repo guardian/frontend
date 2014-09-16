@@ -79,7 +79,7 @@ define([
                 },
                 {
                     key: 'byline',
-                    label: 'Byline',
+                    label: 'byline',
                     type: 'text'
                 },
                 {

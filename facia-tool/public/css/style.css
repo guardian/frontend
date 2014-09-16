@@ -671,11 +671,6 @@ button {
 
 .search-tools a {
     margin-left: 5px;
-    opacity: 0.5;
-}
-
-.search-tools a:hover {
-    opacity: 0.8;
 }
 
 .search-form {
@@ -1115,9 +1110,40 @@ button {
 }
 
 /*****************************************/
-/* MEDIA QUERIES */
+/* ICONS */
 /*****************************************/
 
+[class^="icon-"],
+[class*=" icon-"] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-top: 1px;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-image: url("./glyphicons-halflings.png");
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+}
+
+[class^="icon-"]:hover,
+[class*=" icon-"]:hover {
+    opacity: 0.9;
+}
+
+.icon-refresh { background-position: -240px -24px; }
+.icon-remove { background-position: -312px 0; }
+.icon-share-alt { background-position: -336px -96px; }
+.icon-trash { background-position: -456px 0; }
+.icon-fast-backward {
+    margin-top: -1px;
+    background-position: -216px -72px;
+ }
+
+/*****************************************/
+/* MEDIA QUERIES */
+/*****************************************/
 
 @media (max-width: 1100px) {
     .front-selector {
