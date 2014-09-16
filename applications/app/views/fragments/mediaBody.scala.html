@@ -4,109 +4,109 @@
 @import views.support.{Video640, SeoOptimisedContentImage, StripHtmlTags}
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
-<div class="l-side-margins l-side-margins--layout-content">
-    <article class="content content--media content--media--@mediaType tone-@media.visualTone"
-        itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
-        <div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
+<div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
+    <div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
+        <article class="content content--media content--media--@mediaType tone-@media.visualTone"
+            itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
 
-            @fragments.headDefault(media)
+                @fragments.headDefault(media)
 
-            <div class="gs-container">
-                <div class="content__main-column content__main-column--media content__main-column--@mediaType">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--media content__main-column--@mediaType">
+
+                        @media match {
+                            case audio: Audio if audio.mainAudio.exists(_.imageCrops.nonEmpty) => {
+                                @fragments.img(media.mainAudio, false, false)
+                            }
+                            case _ => { }
+                        }
+
+                        <div class="media-primary player">
+                            @media match {
+                                case audio: Audio => {
+                                    <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio">
+                                    @audio.mainAudio.map { audioElement =>
+                                        @fragments.media.audio(AudioPlayer(
+                                            audioElement,
+                                            audio.headline,
+                                            autoPlay = true
+                                        ))
+                                    }
+                                    </figure>
+                                }
+                                case video: Video => {
+                                    <figure itemprop="video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video">
+                                        <meta itemprop="name" content="@Html(video.headline)"/>
+                                        <meta itemprop="headline" content="@Html(video.headline)"/>
+                                        <meta itemprop="url" content="@video.url"/>
+                                        @video.trailText.map{ t =>
+                                            <meta itemprop="description" content="@StripHtmlTags(t)" />
+                                            <meta itemprop="about" content="@StripHtmlTags(t)" />
+                                        }
+
+                                        <meta itemprop="datePublished" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
+                                        <meta itemprop="name" content="@video.webTitle" />
+                                        <meta itemprop="uploadDate" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
+                                        @video.mainVideo.map { mv =>
+                                            <meta itemprop="duration" content="@mv.ISOduration" />
+                                            <meta itemprop="height" content="@mv.height" />
+                                            <meta itemprop="width" content="@mv.width" />
+                                        }
+                                        <meta itemprop="requiresSubscription" content="no" />
+                                        <meta itemprop="image" content="@video.openGraphImage" />
+                                        @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
+                                        @video.mainVideo.map { videoElement =>
+                                            @fragments.media.video(VideoPlayer(
+                                                videoElement,
+                                                Video640,
+                                                video.headline,
+                                                autoPlay = true,
+                                                showControlsAtStart = true,
+                                                endSlatePath = video.endSlatePath,
+                                                None
+                                            ))
+                                        }
+                                    </figure>
+                                }
+                            }
+                        </div>
+
+                        <div class="content__main-column__body" data-component="body">
+                            @media match {
+                                case v: Video => {
+                                    <div class="video-standfirst">
+                                        @fragments.standfirst(v)
+                                    </div>
+                                }
+                                case a: Audio => {
+                                    <div class="from-content-api">
+                                        @Html(a.body)
+                                    </div>
+                                }
+                            }
+                        </div>
+
+                        @fragments.contentMeta(media)
+
+                        <div class="social-wrapper social-wrapper--bottom" data-component="share">
+                            @fragments.social(media, iconModifier = "white")
+                        </div>
+
+                    </div>
 
                     @media match {
-                        case audio: Audio if audio.mainAudio.exists(_.imageCrops.nonEmpty) => {
-                            @fragments.img(media.mainAudio, false, false)
+                        case video: Video => {
+                            <div class="content__secondary-column content__secondary-column--media content__secondary-column--@mediaType"
+                                aria-hidden="true">
+                                <div class="js-video-components-container"></div>
+                            </div>
                         }
                         case _ => { }
                     }
 
-                    <div class="media-primary player">
-                        @media match {
-                            case audio: Audio => {
-                                <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio">
-                                @audio.mainAudio.map { audioElement =>
-                                    @fragments.media.audio(AudioPlayer(
-                                        audioElement,
-                                        audio.headline,
-                                        autoPlay = true
-                                    ))
-                                }
-                                </figure>
-                            }
-                            case video: Video => {
-                                <figure itemprop="video" itemscope itemtype="http://schema.org/VideoObject" data-component="main video">
-                                    <meta itemprop="name" content="@Html(video.headline)"/>
-                                    <meta itemprop="headline" content="@Html(video.headline)"/>
-                                    <meta itemprop="url" content="@video.url"/>
-                                    @video.trailText.map{ t =>
-                                        <meta itemprop="description" content="@StripHtmlTags(t)" />
-                                        <meta itemprop="about" content="@StripHtmlTags(t)" />
-                                    }
-
-                                    <meta itemprop="datePublished" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
-                                    <meta itemprop="name" content="@video.webTitle" />
-                                    <meta itemprop="uploadDate" content="@video.webPublicationDate.toString("yyyy-MM-dd")" />
-                                    @video.mainVideo.map { mv =>
-                                        <meta itemprop="duration" content="@mv.ISOduration" />
-                                        <meta itemprop="height" content="@mv.height" />
-                                        <meta itemprop="width" content="@mv.width" />
-                                    }
-                                    <meta itemprop="requiresSubscription" content="no" />
-                                    <meta itemprop="image" content="@video.openGraphImage" />
-                                    @video.thumbnail.map{ img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img)" /> }
-                                    @video.mainVideo.map { videoElement =>
-                                        @fragments.media.video(VideoPlayer(
-                                            videoElement,
-                                            Video640,
-                                            video.headline,
-                                            autoPlay = true,
-                                            showControlsAtStart = true,
-                                            endSlatePath = video.endSlatePath,
-                                            None
-                                        ))
-                                    }
-                                </figure>
-                            }
-                        }
-                    </div>
-
-                    <div class="content__main-column__body" data-component="body">
-                        @media match {
-                            case v: Video => {
-                                <div class="video-standfirst">
-                                    @fragments.standfirst(v)
-                                </div>
-                            }
-                            case a: Audio => {
-                                <div class="from-content-api">
-                                    @Html(a.body)
-                                </div>
-                            }
-                        }
-                    </div>
-
-                    @fragments.contentMeta(media)
-
-                    <div class="social-wrapper social-wrapper--bottom" data-component="share">
-                        @fragments.social(media, iconModifier = "white")
-                    </div>
-
                 </div>
-
-                @media match {
-                    case video: Video => {
-                        <div class="content__secondary-column content__secondary-column--media content__secondary-column--@mediaType"
-                            aria-hidden="true">
-                            <div class="js-video-components-container"></div>
-                        </div>
-                    }
-                    case _ => { }
-                }
-
-            </div>
-        </div>
-    </article>
+        </article>
+    </div>
 
     @fragments.contentFooter(media, page.related, "media")
 
