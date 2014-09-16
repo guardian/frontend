@@ -10,6 +10,10 @@
         position: absolute;
         bottom: 0;
         left: -160px;
+
+        .content__main-column--media & {
+            bottom: -($gs-baseline/4);
+        }
     }
 
     @include mq(wide) {

@@ -223,7 +223,7 @@ category: Common
 }
 
 .button--tone-news-more {
-    @include button-colour(#ffffff, $c-newsDefault, #ffffff, darken($c-neutral3, 10%), $c-neutral3);
+    @include button-colour(#ffffff, $c-newsDefault, #ffffff, darken($c-neutral3, 10%), $c-neutral5);
 }
 
 .button--tone-feature {
@@ -322,4 +322,8 @@ category: Common
     @if $old-ie {
         display: none;
     }
+}
+
+.content__main-column--media .content__main-column__body a {
+    text-decoration: none;
 }

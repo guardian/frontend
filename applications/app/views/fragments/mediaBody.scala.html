@@ -84,10 +84,24 @@
                                 </div>
                             }
                         }
+                        <div class="tag-wrapper u-h--up-to-left-col">
+                            @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                                <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-link-name="keywords">
+                                    <h2 class="social__head u-h--up-to-left-col">Topics</h2>
+                                    @fragments.keywordList(media.keywords, tone = "media")
+                                </div>
+                            }
+                        </div>
                     </div>
-
                     @fragments.contentMeta(media)
-
+                    <div class="tag-wrapper hide-after-right-col">
+                        @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                            <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-link-name="keywords">
+                                <h2 class="social__head u-h--up-to-left-col">Topics</h2>
+                                @fragments.keywordList(media.keywords, tone = "media")
+                            </div>
+                        }
+                    </div>
                     <div class="social-wrapper social-wrapper--bottom" data-component="share">
                         @fragments.social(media, iconModifier = "white")
                     </div>
