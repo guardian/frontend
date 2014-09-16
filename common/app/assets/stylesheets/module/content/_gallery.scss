@@ -122,6 +122,21 @@
     max-height: 700px;
 }
 
+.gallery2__img-initial.gallery2__img--landscape {
+    width: 100%;
+}
+
+.gallery2__img-container--portrait {
+    @include fix-aspect-ratio(1, 1);
+}
+
+.gallery2__img--portrait {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    right: 0;
+}
+
 .gallery2__fullscreen {
     @include border-radius(50%);
     top: 0;
@@ -239,4 +254,11 @@
         display: block;
     }
 
+}
+
+.gallery__most-popular .l-side-margins {
+    &:before,
+    &:after {
+        display: none;
+    }
 }

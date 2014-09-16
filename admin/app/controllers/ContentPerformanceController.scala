@@ -25,7 +25,8 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
   case class GalleryPerformance(
     date: DateTime,
     pageViewsPerVisit: Double,
-    lightboxLaunchesPerVisit: Double
+    lightboxLaunchesPerVisit: Double,
+    percentageOfViewsShared: Double
   ) {
     lazy val jsonDate = s"Date(${date.getYear},${date.getMonthOfYear - 1},${date.getDayOfMonth})"
     lazy val simpleDate = date.toString("yyyy-MM-dd")
@@ -76,7 +77,17 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
         }
         val galleryChart = FormattedChart("Gallery Page Views per Gallery Visit", galleryColumns, galleryRows, ChartFormat(Colour.`tone-comment-2`))
 
-        NoCache(Ok(views.html.contentGallery("PROD", galleryChart, lightboxChart, sentryChart, "Gallery Performance", reportTimestamp)))
+
+        val shareColumns = List(Column("time", "Time", "date"), Column("shares", "Social share per gallery(%)", "number"))
+        val shareRows = reportsObject.toSeq.sortBy(_.simpleDate).map {
+          row =>
+            val dateCell = Cell(row.jsonDate)
+            val galleryShares = Cell(row.percentageOfViewsShared.toString)
+            Row(List(dateCell, galleryShares))
+        }
+        val shareChart = FormattedChart("Social shares  per Gallery Page View(%)", shareColumns, shareRows, ChartFormat(Colour.`tone-live-2`))
+
+        NoCache(Ok(views.html.contentGallery("PROD", galleryChart, lightboxChart, sentryChart, shareChart, "Gallery Performance", reportTimestamp)))
     }
   }
 
@@ -93,7 +104,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
 
   private def getOmnitureReports: Seq[GalleryPerformance] = {
     val reportCounts: Seq[(String, Map[String, Seq[ReportResult]])] = for {
-      reportName <- List(galleryPageViews, galleryVisits, galleryLightBox)
+      reportName <- List(galleryPageViews, galleryVisits, galleryLightBox, gallerySocialShare)
       report <- jobs.OmnitureReportJob.getReport(reportName)
     } yield {
       val results = (report.data \ "report" \ "data").validate[Seq[ReportResult]].getOrElse(Nil)
@@ -106,15 +117,18 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
       galleryViewsReport <- resultsMap.get(galleryPageViews)
       galleryVisitsReport <- resultsMap.get(galleryVisits)
       lightboxLaunchesReport <- resultsMap.get(galleryLightBox)
+      gallerySocialSharesReport <- resultsMap.get(gallerySocialShare)
       galleryViews: ReportResult <- galleryViewsReport.get(name).flatMap(_.headOption)
       galleryVisits: ReportResult <- galleryVisitsReport.get(name).flatMap(_.headOption)
       lightboxLaunches: ReportResult <- lightboxLaunchesReport.get(name).flatMap(_.headOption)
+      gallerySocialShares: ReportResult <- gallerySocialSharesReport.get(name).flatMap(_.headOption)
       views <- galleryViews.counts.headOption.map(_.toDouble)
       visits <- galleryVisits.counts.headOption.map(_.toDouble)
       lightboxes <- lightboxLaunches.counts.headOption.map(_.toDouble)
+      shares <- gallerySocialShares.counts.headOption.map(_.toDouble)
     } yield {
         val date = new DateTime(galleryViews.year, galleryViews.month, galleryViews.day, 0, 0)
-        GalleryPerformance(date, views / visits, lightboxes / views)
+        GalleryPerformance(date, views / visits, lightboxes / views, (shares / views) * 100)
     }
     reportsObject.toSeq
   }
