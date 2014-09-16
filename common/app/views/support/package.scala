@@ -817,7 +817,7 @@ object GetClasses {
       "container--sponsored" -> config.isSponsored,
       "container--advertisement-feature" -> (config.isAdvertisementFeature && ! config.isSponsored),
       "container--first" -> isFirst,
-      "js-container--toggle" -> (isFirst && hasTitle && !(config.isAdvertisementFeature || config.isSponsored))
+      "js-container--toggle" -> (!isFirst && hasTitle && !(config.isAdvertisementFeature || config.isSponsored))
     ) collect {
       case (kls, true) => kls
     }
