@@ -11,18 +11,18 @@ object DynamicFast extends DynamicContainer {
     } else {
       Some(
         if (stories.forall(_.group == 0)) {
-          Mothra
+          QlQlQlQl
         } else if (isFirstBoosted) {
           bigs.length match {
-            case 1 => Ghidorah
-            case _ => Anguirus
+            case 1 => HalfQl4Ql4
+            case _ => HalfQuarterQl2Ql3
           }
         } else {
           bigs.length match {
-            case 1 => Reptilicus
-            case 2 => Gappa
-            case 3 => Daimajin
-            case _ => Ultraman
+            case 1 => QuarterQlQlQl
+            case 2 => QuarterQuarterQlQl
+            case 3 => QuarterQuarterQuarterQl
+            case _ => QuarterQuarterQuarterQuarter
           }
         }
       )

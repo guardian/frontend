@@ -21,18 +21,18 @@ private [slices] trait DynamicContainer {
     val veryBigs = byGroup.getOrElse(2, Seq.empty)
 
     if (huges.length > 0) {
-      Some((Godzilla, stories.drop(1)))
+      Some((MegaFull, stories.drop(1)))
     } else if (veryBigs.length == 1) {
-      Some((Mechagodzilla, stories.drop(1)))
+      Some((Full, stories.drop(1)))
     } else if (veryBigs.length >= 2) {
       val storiesInSlice = veryBigs.take(2)
 
       if (storiesInSlice.map(_.isBoosted).distinct.length == 1) {
-        Some((Negadon, stories.drop(2)))
+        Some((HalfHalf, stories.drop(2)))
       } else if (storiesInSlice(0).isBoosted) {
-        Some((Rodan, stories.drop(2)))
+        Some((ThreeQuarterQuarter, stories.drop(2)))
       } else {
-        Some((Pulgasari, stories.drop(2)))
+        Some((QuarterThreeQuarter, stories.drop(2)))
       }
     } else {
       None
