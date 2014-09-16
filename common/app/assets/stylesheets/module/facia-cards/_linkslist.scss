@@ -2,6 +2,7 @@
 
     .linkslist-container {
         margin: 0 !important;
+
         &:before {
             display: none;
         }
@@ -20,6 +21,7 @@
 
                 &:nth-child(2n+1) {
                     clear: both;
+
                     &:before {
                         border: 0;
                     }

@@ -25,11 +25,9 @@
         padding-left: 0;
         padding-right: 0;
         padding-bottom: $gs-baseline * 2.5;
-
         margin-left: $gs-gutter * .5;
         margin-right: $gs-gutter * .5;
         margin-bottom: 0;
-
         background-color: #ffffff;
     }
 
@@ -74,14 +72,14 @@
             position: absolute;
             overflow: hidden;
             width: 80%;
-            bottom: -1 * ($gs-baseline / 2);
+            bottom: 0 - $gs-baseline / 2;
             right: $gs-gutter / 2;
         }
 
         .item__avatar__media {
             position: relative;
             width: 100%;
-            right: -1 * ($gs-gutter * 2);
+            right: 0 - $gs-gutter * 2;
         }
     }
 }
