@@ -407,9 +407,7 @@ h1 {
 
 .element,
 .element a {
-    font-size: 12px;
-    line-height: 16px;
-    color: #666666;
+    color: #333333;
     cursor: pointer;
     text-decoration: none;
 }
@@ -428,6 +426,10 @@ h1 {
     font-size: 16px;
     line-height: 16px;
     color: #000000;
+}
+
+.element__byline {
+    color: #999999;
 }
 
 .article__ammends {
@@ -513,8 +515,11 @@ h1 {
 .supporting-message {
     font-size: 10px;
     color: #999999;
+    float: left;
+    margin: 5px 0 0 5px;
 }
 
+.supporting .editor--boolean,
 .supporting .element__trailText,
 .supporting .element__byline,
 .supporting .element__imageSrc,

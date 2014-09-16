@@ -284,8 +284,6 @@
                     <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
                         visible: isSnap,
                         value: meta.href"/>
-
-                    <!--div class="supporting-message">Add supporting content below</div-->
                 </div>
 
                 <div data-bind="if: group.parentType === 'Collection' || group.parentType === 'Clipboard'">
@@ -302,6 +300,7 @@
                     <a class="tool tool--done" data-bind="
                         clickBubble: false,
                         click: closeAndSave">Save edits</a>
+                    <span class="supporting-message">Add supporting content above</span>
                 </div>
             </div>
 
