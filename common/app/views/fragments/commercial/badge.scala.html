@@ -19,15 +19,23 @@
                 <div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">
                     <h3 class="ad-slot--paid-for-badge__header">
                         @if(content.isSponsored) {
-                            Sponsored by:
+                            @if(content.hasMultipleSponsors) {
+                                This content is sponsored.
+                            } else {
+                                Sponsored by:
+                            }
                         } else {
                             Advertisement feature
                         }
                     </h3>
-                    @if(!content.isSponsored) {
+
+                    @if(!content.isSponsored && !content.hasMultipleFeatureAdvertisers) {
                         <p class="ad-slot--paid-for-badge__label">in association with</p>
                     }
-                    <p class="ad-slot--paid-for-badge__header">@sponsor</p>
+
+                    @if(!content.hasMultipleSponsors && !content.hasMultipleFeatureAdvertisers) {
+                        <p class="ad-slot--paid-for-badge__header">@sponsor</p>
+                    }
                 </div>
             }
         }

@@ -15,9 +15,9 @@ import scala.io.Codec.UTF8
 trait DfpAgent {
 
   protected def sponsorships: Seq[Sponsorship]
-  protected def tagToSponsorsMap: Map[String, Seq[String]]
+  protected def tagToSponsorsMap: Map[String, Set[String]]
   protected def advertisementFeatureSponsorships: Seq[Sponsorship]
-  protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Seq[String]]
+  protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]]
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
@@ -42,7 +42,7 @@ trait DfpAgent {
 
   def hasMultipleSponsors(tags: Seq[Tag]): Boolean = {
     tags.map { tag =>
-      tagToSponsorsMap.getOrElse(tag.id, Seq[String]())
+      tagToSponsorsMap.getOrElse(tag.id.split("/").last, Seq[String]())
     }.flatten.toSeq.size > 1
   }
 
@@ -53,7 +53,7 @@ trait DfpAgent {
 
   def hasMultipleFeatureAdvertisers(tags: Seq[Tag]): Boolean = {
     tags.map { tag =>
-      tagToAdvertisementFeatureSponsorsMap.getOrElse(tag.id, Seq[String]())
+      tagToAdvertisementFeatureSponsorsMap.getOrElse(tag.id.split("/").last, Seq[String]())
     }.flatten.toSeq.size > 1
   }
 
@@ -118,9 +118,9 @@ trait DfpAgent {
 object DfpAgent extends DfpAgent with ExecutionContexts {
 
   private lazy val sponsoredTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
-  private lazy val tagToSponsorsMapAgent = AkkaAgent[Map[String, Seq[String]]] (Map[String, Seq[String]]())
+  private lazy val tagToSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val advertisementFeatureTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
-  private lazy val tagToAdvertisementFeatureSponsorsMapAgent = AkkaAgent[Map[String, Seq[String]]] (Map[String, Seq[String]]())
+  private lazy val tagToAdvertisementFeatureSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
 
@@ -131,7 +131,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
 
-  def generateTagToSponsorsMap(sponsorships: Seq[Sponsorship]) = {
+  def generateTagToSponsorsMap(sponsorships: Seq[Sponsorship]): Map[String, Set[String]] = {
     var collector = Map[String, Set[String]]()
     sponsorships.foreach { sponsorship =>
       sponsorship.sponsor foreach { sponsor =>  // sponsor is an Option
@@ -179,7 +179,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
       }
     }
 
-    def updateMap[G, T](agent: Agent[Map[G, T]], freshData: Map[G, T]) {
+    def updateMap(agent: Agent[Map[String, Set[String]]], freshData: Map[String, Set[String]]) {
       if (freshData.nonEmpty) {
         agent send freshData
       }
