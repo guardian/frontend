@@ -11,7 +11,8 @@ define([
     'common/utils/fsm',
     'common/utils/detect',
     'common/modules/component',
-    'common/modules/ui/images'
+    'common/modules/ui/images',
+    'common/utils/template'
 ], function (
     _,
     bean,
@@ -25,7 +26,8 @@ define([
     FiniteStateMachine,
     detect,
     Component,
-    imagesModule
+    imagesModule,
+    template
 ) {
     function GalleryLightbox() {
 
@@ -36,10 +38,10 @@ define([
 
         // TEMPLATE
         function generateButtonHTML(label) {
-            var templ = '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
+            var tmpl = '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
                         '<button class="gallery-lightbox__btn-body"><i></i></button>' +
                     '</div>';
-            return templ.replace(/{{label}}/g, label);
+            return template(tmpl, {label: label});
         }
 
         this.endslateHTML =
