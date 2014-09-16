@@ -187,8 +187,8 @@ object Frontend extends Build with Prototypes {
   val integrationTests = Project("integrated-tests", file("integrated-tests")).settings(
     libraryDependencies ++= Seq(
       scalaTest,
-      "org.seleniumhq.selenium" % "selenium-java" % "2.42.2" % Test,
-      "joda-time" % "joda-time" % "2.2" % Test
+      seleniumJava % Test,
+      jodaTime % Test
     )
   )
 
