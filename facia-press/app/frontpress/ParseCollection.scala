@@ -136,7 +136,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[Seq[Content]] = {
-    batchGetContentApiItems(collectionItems ++ collectionItems.flatMap(retrieveSupportingLinks), edition) map { items =>
+    batchGetContentApiItems((collectionItems ++ collectionItems.flatMap(retrieveSupportingLinks)).filterNot(_.isSnap), edition) map { items =>
       collectionItems flatMap { collectionItem =>
         val supporting = retrieveSupportingLinks(collectionItem).flatMap({ collectionItem =>
           items.get(collectionItem) map { item =>
