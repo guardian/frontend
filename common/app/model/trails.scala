@@ -26,6 +26,9 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
   def byline: Option[String] = None
   def trailType: Option[String] = None
 
+  /** TODO - this should be set in the Facia tool */
+  def showByline: Boolean = isComment
+
   lazy val shouldHidePublicationDate: Boolean = {
     isAdvertisementFeature && webPublicationDate.isOlderThan(2.weeks)
   }

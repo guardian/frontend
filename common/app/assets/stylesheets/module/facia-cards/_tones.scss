@@ -1,0 +1,96 @@
+.container--facia-cards {
+    .tone-news {
+        .item__kicker {
+            color: $c-analysisAccent;
+        }
+    }
+
+    .tone-live {
+        &.item {
+            background-color: $c-live;
+            &,
+            & a {
+                color: #ffffff;
+            }
+        }
+
+        .item__meta {
+            &,
+            & a {
+                color: $c-liveMute;
+            }
+        }
+    }
+
+    .tone-comment {
+        &.item {
+            background-color: $c-commentBackground;
+        }
+
+        .item__kicker {
+            color: $c-commentDefault;
+        }
+    }
+
+    .tone-feature {
+        &.item {
+            background-color: $c-featureDefault;
+            color: #ffffff;
+        }
+
+        a,
+        .item__standfirst {
+            color: #ffffff;
+        }
+
+        .item__kicker {
+            color: $c-featureAccent;
+        }
+
+        .item__title .i {
+            display: inline-block;
+            height: .9em;
+            width: 1em;
+            background-position: center;
+        }
+
+        .item__meta {
+            &,
+            & a {
+                color: $c-featuresMute;
+            }
+        }
+    }
+
+    .tone-analysis {
+        &.item {
+            background-color: $c-analysisBackground;
+        }
+
+        .item__kicker {
+            color: $c-analysisAccent;
+        }
+    }
+
+    .tone-media {
+        &.item {
+            background-color: $c-neutral1;
+            color: #ffffff;
+        }
+
+        a {
+            color: #ffffff;
+        }
+
+        .item__kicker {
+            color: $c-mediaDefault;
+        }
+
+        .item__meta {
+            &,
+            & a {
+                color: $c-mediaDefault;
+            }
+        }
+    }
+}
