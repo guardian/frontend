@@ -74,7 +74,7 @@
     @include mq(desktop) {
         &:after,
         &:before {
-            background: rgba($c-neutral1, .3);
+            background: rgba(0, 0, 0, .05);
 
             .container__banding + .container__banding & {
                 background: rgba($c-neutral1, .15);
