@@ -1,6 +1,8 @@
 @(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
 <div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
-    <article class="content content--media content--gallery tone-@gallery.visualTone"
+
+    <div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
+        <article class="content content--media content--gallery tone-@gallery.visualTone"
         itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
 
         @fragments.headDefault(gallery)
@@ -87,6 +89,7 @@
             </div>
         </div>
     </article>
+    </div>
 
     <div class="js-gallery-most-popular gallery__most-popular facia-container facia-container--layout-content facia-container--default-heading">
         <div class="container container--popular">
