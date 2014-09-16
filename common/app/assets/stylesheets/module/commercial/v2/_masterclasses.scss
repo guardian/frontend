@@ -1,11 +1,13 @@
 /* ==========================================================================
    Masterclass component
    ========================================================================== */
+$c-commercial-masterclasses-1: guss-colour(live-support-3, $pasteup-palette);
+$c-commercial-masterclasses-2: guss-colour(live-support-1, $pasteup-palette);
+
 .commercial--masterclasses--v2 {
 
-    // Colours
-    $c-commercial-masterclasses-1: guss-colour(live-support-3, $pasteup-palette);
-    $c-commercial-masterclasses-2: guss-colour(live-support-1, $pasteup-palette);
+    /* Colours */
+    background-color: $c-neutral6;
 
     .container__header {
         background-color: $c-commercial-masterclasses-1;
@@ -15,7 +17,7 @@
         color: $c-commercial-masterclasses-1;
     }
 
-    // Line items
+    /* Line items */
     .lineitem {
         @include mq($until: tablet) {
             width: percentage(1/2);
@@ -44,7 +46,7 @@
         }
     }
 
-    // Low relevance line items
+    /* Line items - low relevance */
     .commercial__relevance--low {
         @include mq(tablet) {
             padding-left: $gs-gutter/2;

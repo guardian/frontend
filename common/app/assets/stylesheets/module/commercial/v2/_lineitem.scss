@@ -2,8 +2,6 @@
    Line items
    ========================================================================== */
 .commercial--v2 {
-
-    // Common styles
     .lineitems {
         padding: 0;
         margin: 0 $gs-gutter*-.5;
@@ -79,10 +77,13 @@
         font-weight: bold;
     }
 
-    // High relevance line items
+    /* Line items - high relevance */
     .lineitem.lineitem--high {
-        padding-right: $gs-gutter/2;
         width: 100%;
+
+        @include mq($until: tablet) {
+            padding-right: 0;
+        }
 
         .lineitem--high__feature {
             @include box-sizing(border-box);
@@ -99,13 +100,24 @@
         }
     }
 
-    // Low relevance line items
+    /* Line items - low relevance */
     .lineitem.lineitem--low {
         @include mq($until: tablet) {
             width: 100%;
             border-left: 0;
             border-top: 1px solid $c-neutral4;
             padding: $gs-baseline/2 0;
+            position: relative;
+
+            .lineitem__title {
+                padding-right: $gs-gutter*5;
+            }
+
+            .lineitem__cta {
+                position: absolute;
+                top: $gs-baseline/2;
+                right: 0;
+            }
         }
 
         @include mq(tablet) {
@@ -118,7 +130,7 @@
         }
     }
 
-    // High relevance container
+    /* High relevance container */
     .commercial__relevance--high {
         @include box-sizing(border-box);
 
@@ -150,7 +162,7 @@
         }
     }
 
-    // Low relevance container
+    /* Low relevance container */
     .commercial__relevance--low {
         @include box-sizing(border-box);
 

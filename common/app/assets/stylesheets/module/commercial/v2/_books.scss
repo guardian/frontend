@@ -1,11 +1,13 @@
 /* ==========================================================================
    Books components
    ========================================================================== */
+$c-commercial-books-1: guss-colour(features-main-2, $pasteup-palette);
+$c-commercial-books-2: guss-colour(features-support-1, $pasteup-palette);
+
 .commercial--books--v2 {
 
-    // Colours
-    $c-commercial-books-1: guss-colour(features-main-2, $pasteup-palette);
-    $c-commercial-books-2: guss-colour(features-support-1, $pasteup-palette);
+    /* Colours */
+    background-color: $c-neutral6;
 
     .container__header {
         background-color: $c-commercial-books-1;
@@ -16,7 +18,7 @@
         font-weight: bold;
     }
 
-    // Line items
+    /* Line items */
     .lineitem {
         @include mq($until: mobileLandscape) {
             width: percentage(1/2);
@@ -56,7 +58,7 @@
         margin-bottom: $gs-baseline*2;
     }
 
-    // High relevance line items
+    /* Line items - High relevance */
     .commercial__relevance--high {
         .lineitem.lineitem--high {
             width: 100%;
@@ -80,7 +82,7 @@
         }
     }
 
-    // Low relevance line items
+    /* Line items - low relevance */
     .commercial__relevance--low {
         @include mq(tablet) {
             padding-left: $gs-gutter/2;

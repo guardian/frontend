@@ -18,18 +18,19 @@
 /* ==========================================================================
    v2 - .commercial--v2
    ========================================================================== */
-@import 'v2/_commercial-component';
-
+/* Common */
+@import 'v2/_facia-container';
 @import 'v2/_lineitem';
 @import 'v2/_table';
 @import 'v2/_tabs';
 
+/* Components */
 @import 'v2/_bestbuys';
 @import 'v2/_books';
 @import 'v2/_jobs';
 @import 'v2/_masterclasses';
 @import 'v2/_travel';
-@import 'v2/_dfp-component.scss';
+@import 'v2/_dfp.scss';
 
 
 /* ==========================================================================

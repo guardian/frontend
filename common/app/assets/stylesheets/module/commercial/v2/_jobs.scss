@@ -1,11 +1,13 @@
 /* ==========================================================================
    Jobs component
    ========================================================================== */
+$c-commercial-jobs-1: guss-colour(news-support-2, $pasteup-palette);
+$c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
+
 .commercial--jobs--v2 {
 
-    // Colours
-    $c-commercial-jobs-1: guss-colour(news-support-2, $pasteup-palette);
-    $c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
+    /* Colours */
+    background-color: $c-neutral6;
 
     .container__header {
         background-color: $c-commercial-jobs-1;
@@ -15,12 +17,19 @@
         color: $c-commercial-jobs-1;
     }
 
-    // Line items
+    /* Logo adjustment */
+    @include mq(leftCol) {
+        .i-jobs-logo {
+            margin-left: 7px;
+        }
+    }
+
+    /* Line items */
     .lineitem__image {
         border: $gs-gutter/4 solid #fff;
     }
 
-    // Low relevance line items
+    /* Line items - low relevance */
     .commercial__relevance--low {
         @include mq(tablet) {
             padding-left: $gs-gutter/2;
@@ -31,6 +40,10 @@
         @include mq($until: tablet) {
             .lineitem.lineitem--low {
                 padding-left: 120px + $gs-gutter*1;
+                
+                &:nth-child(2) {
+                    display: none;
+                }
             }
 
             .lineitem__image {
@@ -43,7 +56,7 @@
         }
     }
 
-    // Sector navigation
+    /* Sector navigation */
     .commercial--jobs__sectors {
         padding: 0;
         margin: 0;
@@ -74,21 +87,5 @@
         border-top: 1px solid $c-neutral4;
         padding: $gs-baseline/1.5 0;
         display: block;
-    }
-}
-
-.facia-container--layout-front .commercial--jobs--v2 {
-    @include mq(faciaLeftCol) {
-        .i-jobs-logo {
-            margin-left: 7px;
-        }
-    }
-}
-
-.facia-container--layout-content .commercial--jobs--v2 {
-    @include mq(leftCol) {
-        .i-jobs-logo {
-            margin-left: 7px;
-        }
     }
 }

@@ -1,13 +1,5 @@
 /* ==========================================================================
-   Common commercial styles
-   ========================================================================== */
-.commercial--v2 {
-    background-color: $c-neutral6;
-}
-
-
-/* ==========================================================================
-   Commercial container layout adaptions for content pages
+   Commercial container layout adaptions
    ========================================================================== */
 .facia-container .commercial--v2 {
     .facia-container__inner--commercial {
@@ -201,7 +193,7 @@
 
         @include mq($until: tablet) {
             .i-right {
-                margin: -1px $gs-baseline*-1 0;
+                margin: -1px -13px 0;
                 float: none;
             }
         }

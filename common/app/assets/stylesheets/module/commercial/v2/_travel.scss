@@ -1,11 +1,13 @@
 /* ==========================================================================
    Travel component
    ========================================================================== */
+$c-commercial-travel-1: guss-colour(maps-support-3, $pasteup-palette);
+$c-commercial-travel-2: guss-colour(maps-main-1, $pasteup-palette);
+
 .commercial--travel--v2 {
 
-    // Colours
-    $c-commercial-travel-1: guss-colour(maps-support-3, $pasteup-palette);
-    $c-commercial-travel-2: guss-colour(maps-main-1, $pasteup-palette);
+    /* Colours */
+    background-color: $c-neutral6;
 
     .container__header {
         background-color: $c-commercial-travel-1;
@@ -15,7 +17,7 @@
         color: $c-commercial-travel-1;
     }
 
-    // Line items
+    /* Line items */
     .lineitem {
         @include mq($until: tablet) {
             width: percentage(1/2);
@@ -52,7 +54,7 @@
         }
     }
 
-    // Low relevance line items
+    /* Line items - low relevance */
     .commercial__relevance--low {
         @include mq(tablet) {
             padding-left: $gs-gutter/2;
