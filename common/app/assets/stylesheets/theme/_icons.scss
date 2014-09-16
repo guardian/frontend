@@ -60,26 +60,26 @@ blockquote.quoted:before {
     }
     %pseudo-icon--audio--white {
         &:before {
-            width: .95em;
             @extend %svg-i-volume-high-white;
+            width: .95em;
         }
     }
     %pseudo-icon--video--white {
         &:before {
-            width: 1.2em;
             @extend %svg-i-video-icon-white;
+            width: 1.2em;
         }
     }
     %pseudo-icon--download--white {
         &:before {
-            width: .65em;
             @extend %svg-i-download-white;
+            width: .65em;
         }
     }
     %pseudo-icon--rss--white {
         &:before {
-            width: .68em;
             @extend %svg-i-rss-white;
+            width: .68em;
         }
     }
 }
