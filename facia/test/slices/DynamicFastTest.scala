@@ -6,26 +6,26 @@ import org.scalatest.OptionValues._
 class DynamicFastTest extends DynamicContainerTest {
   override val slicesFor: (Seq[Story]) => Option[Seq[Slice]] = DynamicFast.slicesFor
 
-  it should "for n standard (0) items return Mothra" in {
+  it should "for n standard (0) items return QlQlQlQl" in {
     forAll(Gen.choose(1, 20)) { n: Int =>
       slicesFor(Seq.fill(n)(0).map(Story.unboosted)).value shouldEqual Seq(
-        Mothra
+        QlQlQlQl
       )
     }
   }
 
-  it should "for one big unboosted item and n standard return Reptilicus" in {
+  it should "for one big unboosted item and n standard return QuarterQlQlQl" in {
     forAll(Gen.choose(0, 20)) { n: Int =>
       slicesFor((1 +: Seq.fill(n)(0)).map(Story.unboosted)).value shouldEqual Seq(
-        Reptilicus
+        QuarterQlQlQl
       )
     }
   }
 
-  it should "for two big unboosted items and m standard return Gappa" in {
+  it should "for two big unboosted items and m standard return QuarterQuarterQlQl" in {
     forAll(Gen.choose(0, 20)) { m: Int =>
       slicesFor((Seq.fill(2)(1) ++ Seq.fill(m)(0)).map(Story.unboosted)).value shouldEqual Seq(
-        Gappa
+        QuarterQuarterQlQl
       )
     }
   }
@@ -33,33 +33,33 @@ class DynamicFastTest extends DynamicContainerTest {
   it should "for three big unboosted items and m standard return Daimaijin" in {
     forAll(Gen.choose(0, 20)) { m: Int =>
       slicesFor((Seq.fill(3)(1) ++ Seq.fill(m)(0)).map(Story.unboosted)).value shouldEqual Seq(
-        Daimajin
+        QuarterQuarterQuarterQl
       )
     }
   }
 
-  it should "for n > 3 big unboosted items and m standard return Ultraman" in {
+  it should "for n > 3 big unboosted items and m standard return QuarterQuarterQuarterQuarter" in {
     forAll(Gen.choose(4, 20), Gen.choose(0, 20)) { (n: Int, m: Int) =>
       slicesFor((Seq.fill(n)(1) ++ Seq.fill(m)(0)).map(Story.unboosted)).value shouldEqual Seq(
-        Ultraman
+        QuarterQuarterQuarterQuarter
       )
     }
   }
 
-  it should "for one big boosted item and n standard return Ghidorah" in {
+  it should "for one big boosted item and n standard return HalfQl4Ql4" in {
     forAll(Gen.choose(1, 20)) { n: Int =>
       slicesFor(Story(1, isBoosted = true) +: Seq.fill(n)(Story.unboosted(0))).value shouldEqual Seq(
-        Ghidorah
+        HalfQl4Ql4
       )
     }
   }
 
-  it should "for one big boosted, n >= 1 big, and m standards, return Anguirus" in {
+  it should "for one big boosted, n >= 1 big, and m standards, return HalfQuarterQl2Ql3" in {
     forAll(Gen.choose(1, 20), Gen.choose(1, 20)) { (m: Int, n: Int) =>
       slicesFor(
         Story(1, isBoosted = true) +:
           (Seq.fill(m)(Story.unboosted(1)) ++
-            Seq.fill(n)(Story.unboosted(0)))).value shouldEqual Seq(Anguirus)
+            Seq.fill(n)(Story.unboosted(0)))).value shouldEqual Seq(HalfQuarterQl2Ql3)
     }
   }
 }

@@ -72,44 +72,44 @@ trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPr
     }
   }
 
-  it should "for 0 huge and n >= 2 very big, with 1st boosted, return Rodan as the optional 1st slice" in {
+  it should "for 0 huge and n >= 2 very big, with 1st boosted, return ThreeQuarterQuarter as the optional 1st slice" in {
     forAll(storySeqGen(2)) { stories: Seq[Story] =>
       slicesFor(
         Story(2, isBoosted = true) +: Story.unboosted(2) +: stories
-      ).value.headOption.value shouldEqual Rodan
+      ).value.headOption.value shouldEqual ThreeQuarterQuarter
     }
   }
 
-  it should "for 0 huge and n >= 2 very big, with 2nd boosted, return Pulgasari as the optional 1st slice" in {
+  it should "for 0 huge and n >= 2 very big, with 2nd boosted, return QuarterThreeQuarter as the optional 1st slice" in {
     forAll(storySeqGen(1)) { stories: Seq[Story] =>
       slicesFor(
         Story.unboosted(2) +: Story(2, isBoosted = true) +: stories
-      ).value.headOption.value shouldEqual Pulgasari
+      ).value.headOption.value shouldEqual QuarterThreeQuarter
     }
   }
 
-  it should "for 0 huge and n >= 2 very big, without boosting, return Negadon as the optional 1st slice" in {
+  it should "for 0 huge and n >= 2 very big, without boosting, return HalfHalf as the optional 1st slice" in {
     forAll(storySeqGen(2)) { stories: Seq[Story] =>
-      slicesFor(Seq.fill(2)(Story.unboosted(2)) ++ stories).value.headOption.value shouldEqual Negadon
+      slicesFor(Seq.fill(2)(Story.unboosted(2)) ++ stories).value.headOption.value shouldEqual HalfHalf
     }
   }
 
-  it should "for 0 huge and n >= 2 very big, with first 2 boosted, return Negadon as the optional 1st slice" in {
+  it should "for 0 huge and n >= 2 very big, with first 2 boosted, return HalfHalf as the optional 1st slice" in {
     forAll(storySeqGen(2)) { stories: Seq[Story] =>
-      slicesFor(Seq.fill(2)(Story(2, isBoosted = true)) ++ stories).value.headOption.value shouldEqual Negadon
+      slicesFor(Seq.fill(2)(Story(2, isBoosted = true)) ++ stories).value.headOption.value shouldEqual HalfHalf
     }
   }
 
-  it should "for 0 huge and one very big, return Mechagodzilla as the optional first slice" in {
+  it should "for 0 huge and one very big, return FullThreeQuarterImage as the optional first slice" in {
     forAll { stories: Seq[Story] =>
-      slicesFor(Story.unboosted(2) +: stories.dropWhile(_.group >= 2)).value.headOption.value shouldEqual Mechagodzilla
+      slicesFor(Story.unboosted(2) +: stories.dropWhile(_.group >= 2)).value.headOption.value shouldEqual FullThreeQuarterImage
     }
   }
 
-  it should "for any number of huge stories >= 1, return Godzilla as the optional first slice" in {
+  it should "for any number of huge stories >= 1, return Full as the optional first slice" in {
     forAll { stories: Seq[Story] =>
       whenever(stories.headOption.exists(_.group == 3)) {
-        slicesFor(stories).value.headOption.value shouldEqual Godzilla
+        slicesFor(stories).value.headOption.value shouldEqual Full
       }
     }
   }

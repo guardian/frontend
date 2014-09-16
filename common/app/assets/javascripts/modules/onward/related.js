@@ -104,6 +104,8 @@ define([
                     }
                 }).load();
             }
+        } else {
+            $('.js-related').addClass('u-h');
         }
     };
 

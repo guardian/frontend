@@ -46,7 +46,8 @@ define([
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/faux-block-link',
-    'common/modules/discussion/loader'
+    'common/modules/discussion/loader',
+    'common/modules/release-message'
 ], function (
     $,
     mediator,
@@ -92,7 +93,8 @@ define([
     MoreTags,
     smartAppBanner,
     fauxBlockLink,
-    DiscussionLoader
+    DiscussionLoader,
+    releaseMessage
 ) {
 
     var modules = {
@@ -368,6 +370,10 @@ define([
             if (queryParams.test) {
                 Cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
             }
+        },
+
+        initReleaseMessage: function(config) {
+            releaseMessage.init(config);
         }
     };
 
@@ -404,6 +410,7 @@ define([
         modules.transcludeRelated(config);
         modules.transcludeOnwardContent(config);
         modules.initRightHandComponent(config);
+        modules.initReleaseMessage(config);
 
         mediator.emit('page:common:ready', config);
     };

@@ -184,6 +184,14 @@ object Frontend extends Build with Prototypes {
     onward
   )
 
+  val integrationTests = Project("integrated-tests", file("integrated-tests")).settings(
+    libraryDependencies ++= Seq(
+      scalaTest,
+      seleniumJava % Test,
+      jodaTime % Test
+    )
+  )
+
   val main = root().aggregate(
     common,
     facia,
