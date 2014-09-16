@@ -47,6 +47,7 @@ blockquote.quoted:before {
 
 
 @if ($svg-support) {
+    .pseudo-icon,
     %pseudo-icon {
         .svg &:before {
             content: '';
@@ -58,25 +59,25 @@ blockquote.quoted:before {
             @include background-size(contain);
         }
     }
-    %pseudo-icon--audio--white {
+    .pseudo-icon--audio--white {
         &:before {
             @extend %svg-i-volume-high-white;
             width: .95em;
         }
     }
-    %pseudo-icon--video--white {
+    .pseudo-icon--video--white {
         &:before {
             @extend %svg-i-video-icon-white;
             width: 1.2em;
         }
     }
-    %pseudo-icon--download--white {
+    .pseudo-icon--download--white {
         &:before {
             @extend %svg-i-download-white;
             width: .65em;
         }
     }
-    %pseudo-icon--rss--white {
+    .pseudo-icon--rss--white {
         &:before {
             @extend %svg-i-rss-white;
             width: .68em;

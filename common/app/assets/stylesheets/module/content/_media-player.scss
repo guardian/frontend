@@ -641,7 +641,9 @@ $vjs-progress-inset-bottom: 4px;
 .podcast-meta {
     background-color: $vjs-control-colour;
     text-align: left;
-    padding-left: 7px;
+    border-top: 1px solid lighten($c-neutral1, 16%);
+    margin-top: $gs-baseline/2;
+    padding: $gs-baseline/2 7px;
 }
 .podcast-meta__item {
     display: inline-block;
@@ -652,16 +654,5 @@ $vjs-progress-inset-bottom: 4px;
     }
 }
 .podcast-meta__item__link {
-    @extend %pseudo-icon !optional;
     color: $c-neutral7;
-
-    .podcast-meta__item--itunes & {
-        @extend %pseudo-icon--audio--white !optional;
-    }
-    .podcast-meta__item--download & {
-        @extend %pseudo-icon--download--white !optional;
-    }
-    .podcast-meta__item--feed & {
-        @extend %pseudo-icon--rss--white !optional;
-    }
 }
