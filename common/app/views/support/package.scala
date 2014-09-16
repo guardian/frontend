@@ -747,7 +747,7 @@ object GetClasses {
       itemClass,
       if (isFirstContainer) Some("item--force-image-upgrade") else None,
       if (trail.isLive) Some("item--live") else None,
-      if (trail.isComment) Some("item--has-cutout") else None,
+      if (trail.isComment && trail.hasLargeContributorImage) Some("item--has-cutout") else None,
       if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
         Some(s"item--imageadjust-${trail.imageAdjust}")
       else
