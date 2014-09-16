@@ -16,14 +16,26 @@
     }
 
     .tone-media {
+
+        .item__timestamp:before {
+            @include media-icon(clock-yellow);
+        }
+    }
+
+    .item--video {
+        .item__title:before {
+            @include media-icon(video-icon);
+            height: .75em !important;
+            width: 1.2em !important;
+            margin-right: 2px;
+        }
+    }
+
+    .item--gallery {
         .item__title:before {
             @include media-icon(camera-yellow-large);
             height: .75em !important;
             width: 1.2em !important;
-        }
-
-        .item__timestamp:before {
-            @include media-icon(clock-yellow);
         }
     }
 

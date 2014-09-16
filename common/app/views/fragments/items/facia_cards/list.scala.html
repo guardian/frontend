@@ -27,7 +27,7 @@ data-link-name="trail | @{index + 1}"
         ("item__header", true),
         ("item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
     ))">
-        @fragments.items.elements.facia_cards.title(trail, index, containerIndex, showTag = true)
+        @fragments.items.elements.facia_cards.title(trail, index, containerIndex)
         @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
     </div>
 

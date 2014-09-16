@@ -1,16 +1,36 @@
-@(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta", showTag: Boolean = false)(implicit request: RequestHeader, config: Config)
+@(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader, config: Config)
 
-@defining((trail.visualTone, if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, headingLevel) =>
-<h@headingLevel class="item__title">
-@if(trail.isBreaking){
-    <span class="item__live-indicator">Breaking News</span>
-}
-@if(trail.isLive && !trail.isBreaking){
-    <span class="item__live-indicator">Live</span>
-}
-@if(showTag) {
-    @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
-}
-<a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span></a>
-</h@headingLevel>
+@import common.LinkTo
+@import model.{Config, Trail}
+@import views.html.fragments.items.elements.facia_cards.itemHeader
+@import views.support._
+
+@itemHeader(containerIndex == 0 && itemIndex == 0) {
+    @ItemKicker.fromTrail(trail, config).map {
+        case BreakingNewsKicker => {
+            <span class="item__live-indicator">Breaking News</span>
+        }
+
+        case LiveKicker => {
+            <span class="item__live-indicator">Live</span>
+        }
+
+        case AnalysisKicker => {
+            <span class="item__kicker">Analysis</span>
+        }
+
+        case TagKicker(tagName, tagLink) => {
+            <a href="@LinkTo(tagLink)" class="item__kicker">@tagName</a>
+        }
+
+        case SectionKicker(sectionName, sectionLink) => {
+            <a href="@LinkTo(sectionLink)" class="item__kicker">@sectionName</a>
+        }
+    }
+
+    @LinkTo(trail).map { url =>
+        <a href="@url" class="item__link" data-link-name="article">
+            <span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span>
+        </a>
+    }
 }

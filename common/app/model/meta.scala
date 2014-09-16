@@ -211,6 +211,14 @@ trait Tags {
   def sponsor = DfpAgent.getSponsor(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
+  /**
+   * NOTE:
+   *
+   * This is used only for OLD-STYLE containers. It only includes the visual tones those containers care about. For
+   * the new container equivalent, see `views.support.CardStyle`.
+   *
+   * TODO: Once we've deleted all of the old-style containers, remove this.
+   */
   lazy val visualTone: String =
     if (isLiveBlog) Tags.VisualTone.Live
     else if (isComment) Tags.VisualTone.Comment
@@ -222,6 +230,7 @@ trait Tags {
   lazy val isFeature = tones.exists(t => Tags.featureMappings.contains(t.id))
   lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
   lazy val isMedia = types.exists(t => Tags.mediaTypes.contains(t.id))
+  lazy val isAnalysis = tones.exists(_.id == Tags.Analysis)
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
 
@@ -231,6 +240,7 @@ trait Tags {
 }
 
 object Tags {
+  val Analysis = "tone/analysis"
 
   object VisualTone {
     val Live = "live"
