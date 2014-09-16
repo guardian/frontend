@@ -435,14 +435,14 @@ h1 {
 }
 
 .article__ammends .draft {
-    font-size: 12px;
-    color: #DD4B39;
     text-transform: uppercase;
+    font-weight: bold;
     color: #ffc107;
 }
 
 .article__ammends .takedown {
     text-transform: uppercase;
+    font-weight: bold;
     color: #DD4B39;
 }
 
