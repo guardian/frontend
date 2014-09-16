@@ -1,12 +1,7 @@
 @if ($svg-support) {
-    %pseudo-icon--media {
-        content: '';
-        height: .75em;
-        margin-right: $gs-gutter/10;
-    }
     .item--audio .item__title:before,
     .linkslist__item--audio .linkslist__action:before {
-        @extend %pseudo-icon--media;
+        @extend %pseudo-icon;
         width: .95em;
         @include icon(volume-high-black, $with-width: false);
 
@@ -16,7 +11,7 @@
     }
     .item--video .item__title:before,
     .linkslist__item--video .linkslist__action:before {
-        @extend %pseudo-icon--media;
+        @extend %pseudo-icon;
         width: 1.2em;
         @include icon(video-icon-black, $with-width: false);
 
@@ -26,7 +21,7 @@
     }
     .item--gallery .item__title:before,
     .linkslist__item--gallery .linkslist__action:before {
-        @extend %pseudo-icon--media;
+        @extend %pseudo-icon;
         width: 1.04em;
         @include icon(camera-black-large, $with-width: false);
 

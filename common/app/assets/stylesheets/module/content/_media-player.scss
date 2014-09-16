@@ -20,7 +20,6 @@ $vjs-progress-inset-bottom: 4px;
     margin-bottom: $gs-baseline * 1.5;
 }
 .gu-media-wrapper--audio {
-    height: $vjs-control-height;
     padding-top: $vjs-progress-visual-height-resting;
 
     // naughty videojs removes classes, so have to select by element
@@ -186,7 +185,6 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-control-bar {
     cursor: default;
     width: 100%;
-    position: absolute;
     z-index: 4;
     left: 0;
     background-color: $vjs-control-colour;
@@ -198,6 +196,7 @@ $vjs-progress-inset-bottom: 4px;
     transition-delay: 1s;
 
     .gu-media--video & {
+        position: absolute;
         bottom: $gs-baseline*-5;
     }
     .vjs-fullscreen & {
@@ -636,5 +635,33 @@ $vjs-progress-inset-bottom: 4px;
                 }
             }
         }
+    }
+}
+
+.podcast-meta {
+    background-color: $vjs-control-colour;
+    text-align: left;
+    padding-left: 7px;
+}
+.podcast-meta__item {
+    display: inline-block;
+    margin-left: $gs-gutter;
+
+    &:first-child {
+        margin-left: 0;
+    }
+}
+.podcast-meta__item__link {
+    @extend %pseudo-icon !optional;
+    color: $c-neutral7;
+
+    .podcast-meta__item--itunes & {
+        @extend %pseudo-icon--audio--white !optional;
+    }
+    .podcast-meta__item--download & {
+        @extend %pseudo-icon--download--white !optional;
+    }
+    .podcast-meta__item--feed & {
+        @extend %pseudo-icon--rss--white !optional;
     }
 }
