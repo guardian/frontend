@@ -8,10 +8,10 @@
         width: gs-span(2);
         padding: $gs-baseline*2 0 $gs-baseline/2;
         margin: 0 0 $gs-baseline*2.5;
+        background-repeat: none;
         .svg & {
             background-size: cover;
         }
-        background-repeat: none;
     }
     .commercial__explainer {
         color: $c-soulmates-high;
