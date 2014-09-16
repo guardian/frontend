@@ -49,6 +49,14 @@
         }
     }
 
+    .tone-analysis {
+        &.item {
+            background-color: $c-analysisBackground;
+        }
+
+
+    }
+
     .tone-media {
         &.item {
             background-color: $c-neutral1;

@@ -1,0 +1,7 @@
+@(isFirstItemOnPage: Boolean)(html: Html)
+
+@if(isFirstItemOnPage) {
+    <h1 class="item__title">@html</h1>
+} else {
+    <h2 class="item__title">@html</h2>
+}

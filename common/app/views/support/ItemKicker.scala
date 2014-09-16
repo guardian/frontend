@@ -1,31 +1,35 @@
 package views.support
 
-import common.LinkTo
-import model.{Content, Trail, Tag}
-import play.api.mvc.RequestHeader
-import Function.const
+import model.{Trail, Tag}
 
 object ItemKicker {
   private def firstTag(item: Trail): Option[Tag] = item.tags.headOption
 
-  def text(item: Trail, config: model.Config) =
-    firstTag(item) match {
-      case _ if item.isBreaking => Some("Breaking News")
-      case _ if item.isLive => Some("Live")
-      case Some(tag) if config.showTags => Some(tag.name)
-      case _ if config.showSections => Some(item.sectionName.capitalize)
-      case _ => None
-    }
+  def fromTrail(trail: Trail, config: model.Config): Option[ItemKicker] = {
+    lazy val maybeTag = firstTag(trail)
 
-  def url(item: Trail, config: model.Config): Option[String] =
-    firstTag(item).map(_.webUrl).filter(const(config.showTags)) orElse
-      (item match {
-        case c: Content => Some(c.section)
-        case _ => None
-      }).filter(const(config.showSections))
-
-  def linkTo(item: Trail, config: model.Config)(implicit requestHeader: RequestHeader) =
-    url(item, config) map { urlString =>
-      "/" + LinkTo(urlString)
+    if (trail.isBreaking) {
+      Some(BreakingNewsKicker)
+    } else if (trail.isLive) {
+      Some(LiveKicker)
+    } else if (trail.isAnalysis) {
+      Some(AnalysisKicker)
+    } else if (config.showTags && maybeTag.isDefined) {
+      maybeTag map { tag =>
+        TagKicker(tag.name, tag.webUrl)
+      }
+    } else if (config.showSections) {
+      Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
+    } else {
+      None
     }
+  }
 }
+
+sealed trait ItemKicker
+
+case object BreakingNewsKicker extends ItemKicker
+case object LiveKicker extends ItemKicker
+case object AnalysisKicker extends ItemKicker
+case class TagKicker(name: String, url: String) extends ItemKicker
+case class SectionKicker(name: String, url: String) extends ItemKicker
