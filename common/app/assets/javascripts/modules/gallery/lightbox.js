@@ -37,7 +37,7 @@ define([
         // TEMPLATE
         function generateButtonHTML(label) {
             var templ = '<div class="gallery-lightbox__btn gallery-lightbox__btn--{{label}} js-gallery-{{label}}">' +
-                        '<div class="gallery-lightbox__btn-body"><i></i></div>' +
+                        '<button class="gallery-lightbox__btn-body"><i></i></button>' +
                     '</div>';
             return templ.replace(/{{label}}/g, label);
         }

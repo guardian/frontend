@@ -280,8 +280,13 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 .gallery-lightbox__btn-body {
     margin: auto;
     background: $c-gallery-lightbox-btn;
+    border: 0;
+    outline: none;
 
     @include transition(background-color .2s);
+    &:focus {
+        background-color: lighten($c-gallery-lightbox-btn, 8%);
+    }
 }
 
 .gallery-lightbox--hover .gallery-lightbox__btn:hover .gallery-lightbox__btn-body {
