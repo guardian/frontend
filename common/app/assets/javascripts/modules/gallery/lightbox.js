@@ -378,6 +378,7 @@ define([
                 this.translateContent(this.$slides.length, 0, 0);
                 this.index = this.images.length + 1;
                 bean.on(window, 'resize', this.resize);
+                imagesModule.upgrade(this.endslateEl);
             },
             leave: function() {
                 bean.off(window, 'resize', this.resize);
@@ -431,7 +432,7 @@ define([
                 $body.scrollTop(this.bodyScrollPosition);
             }
             this.$lightboxEl.removeClass('gallery-lightbox--open');
-            mediator.emit('ui:images:upgrade');
+            imagesModule.upgrade();
             mediator.emit('ui:images:vh');
         }.bind(this), 1);
     };
@@ -468,7 +469,7 @@ define([
             this.endslate.componentClass = 'gallery-lightbox__endslate';
             this.endslate.endpoint = '/gallery/most-viewed.json';
             this.endslate.ready = function () {
-                mediator.emit('ui:images:upgrade', this.endslateEl);
+                imagesModule.upgrade(this.endslateEl);
             }.bind(this);
             this.endslate.prerender = function() {
                 bonzo(this.elem).addClass(this.componentClass);
