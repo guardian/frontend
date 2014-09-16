@@ -38,17 +38,26 @@ define([
                 if (node.getAttribute('data-discussion-closed') === 'true' && c.count === 0) {
                     return; // Discussion is closed and had no comments, we don't want to show a comment count
                 }
-                var url = getContentUrl(node),
-                    data = tpl.replace('[URL]', url);
 
-                data = data.replace('[LABEL]', (c.count === 1 ? 'comment' : 'comments'));
+                var commentOrComments = (c.count === 1 ? 'comment' : 'comments');
 
-                // put in trail__meta, if exists
-                var meta = node.querySelector('.item__meta, .card__meta, .js-append-commentcount'),
-                    $node = meta ? bonzo(meta) : bonzo(node);
+                if (node.getAttribute('data-discussion-inline-upgrade') === 'true') {
+                    bonzo(node.querySelector('.js-item__comment-count')).append(c.count + "");
+                    bonzo(node.querySelector('.js-item__comment-or-comments')).append(commentOrComments);
+                    bonzo(node.querySelector('.js-item__inline-comment-template')).show('inline');
+                } else {
+                    var url = getContentUrl(node),
+                        data = tpl.replace('[URL]', url);
 
-                $node.append(data.replace('[COUNT]', c.count));
-                node.removeAttribute(attributeName);
+                    data = data.replace('[LABEL]', commentOrComments);
+
+                    // put in trail__meta, if exists
+                    var meta = node.querySelector('.item__meta, .card__meta, .js-append-commentcount'),
+                        $node = meta ? bonzo(meta) : bonzo(node);
+
+                    $node.append(data.replace('[COUNT]', c.count));
+                    node.removeAttribute(attributeName);
+                }
             }
         });
     }

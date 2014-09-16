@@ -1,9 +1,8 @@
 @(trail: model.Trail, index: Int, containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 @import common.LinkTo
-@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
-@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640}
-@import views.html.fragments.media.video
+@import model.{FaciaDisplayElement, Config}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData}
 @import views.html.fragments.items.facia_cards.meta
 
 <li class="@GetClasses.forCollectionItem(trail)">
@@ -16,6 +15,7 @@ class="@GetClasses.forNewStyleItem(trail, isFirstContainer)"
         data-discussion-id="@id"
         }
         data-discussion-closed="@trail.isClosedForComments"
+        data-discussion-inline-upgrade="true"
     }
 data-link-name="trail | @{index + 1}"
     @SnapData(trail)>

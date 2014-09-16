@@ -3,14 +3,19 @@ package views.support
 import model.Trail
 
 object TrailCssClasses {
-  def iClockClass(trail: Trail) = {
-    CardStyle(trail) match {
-      case Media => "i-clock-yellow"
-      case Feature => "i-clock-light-pink"
-      case LiveBlog => "i-clock-light-pink"
-      case _ => "i-clock-light-grey"
+  private def svgClass(trail: Trail, imageName: String) = {
+    val colour = CardStyle(trail) match {
+      case Media => "yellow"
+      case Feature => "light-pink"
+      case LiveBlog => "light-pink"
+      case _ => "light-grey"
     }
+
+    s"i-$imageName-$colour"
   }
+
+  def iClockClass(trail: Trail) = svgClass(trail, "clock")
+  def commentCountClass(trail: Trail) = svgClass(trail, "comment")
 
   def toneClass(trail: Trail) = {
     CardStyle(trail) match {

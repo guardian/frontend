@@ -15,13 +15,12 @@ class="@GetClasses.forItem(trail, isFirstContainer, forceTone = forceTone)"
         data-discussion-id="@id"
         }
         data-discussion-closed="@trail.isClosedForComments"
+        data-discussion-inline-upgrade="true"
     }
 data-link-name="trail | @{index + 1}"
     @SnapData(trail)>
 
     <div class="item__container">
-
-
         <div class="@RenderClasses(Map(
             ("item__header", true),
             ("item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
