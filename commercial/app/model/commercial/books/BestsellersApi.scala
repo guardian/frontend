@@ -47,27 +47,7 @@ trait BestsellersApi extends ExecutionContexts with Logging {
   }
 
   def loadAds(): Future[Seq[Book]] = {
-    url map { u =>
-      val result = FeedReader.read(FeedRequest(GuBookshopFeedsSwitch, u, timeout = 5.seconds)) { body =>
-        val xml = XML.loadString(body)
-        parse(xml)
-      }
-      result map {
-        case Left(FeedReadWarning(message)) =>
-          log.warn(s"Reading $adTypeName feed failed: $message")
-          Nil
-        case Left(FeedReadException(message)) =>
-          log.error(s"Reading $adTypeName feed failed: $message")
-          Nil
-        case Right(jobs) => jobs
-        case other =>
-          log.error(s"Something unexpected has happened: $other")
-          Nil
-      }
-    } getOrElse {
-      log.warn(s"Reading $adTypeName feed failed: missing URL")
-      Future.successful(Nil)
-    }
+    FeedReader.readSeqFromXml[Book](FeedRequest(adTypeName, GuBookshopFeedsSwitch, url, timeout = 5.seconds))(parse)
   }
 
 }

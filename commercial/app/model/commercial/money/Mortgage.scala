@@ -6,7 +6,7 @@ import conf.Switches._
 import model.commercial._
 
 import scala.concurrent.Future
-import scala.xml.{Elem, XML}
+import scala.xml.Elem
 
 case class Mortgage(lender: String,
                     rate: String,
@@ -37,28 +37,9 @@ object MortgagesApi extends ExecutionContexts with Logging {
   }
 
   def loadAds(): Future[Seq[Mortgage]] = {
-    url map { u =>
-      val result = FeedReader.read(FeedRequest(LCMortgageFeedSwitch, u)) { body =>
-        val xml = XML.loadString(body)
-        parse(xml)
-      }
-      result map {
-        case Left(FeedReadWarning(message)) =>
-          log.warn(s"Reading Mortgages feed failed: $message")
-          Nil
-        case Left(FeedReadException(message)) =>
-          log.error(s"Reading Mortgages feed failed: $message")
-          Nil
-        case Right(jobs) => jobs
-        case other =>
-          log.error(s"Something unexpected has happened: $other")
-          Nil
-      }
-    } getOrElse {
-      log.warn("Reading Mortgages feed failed: missing URL")
-      Future.successful(Nil)
-    }
+    FeedReader.readSeqFromXml[Mortgage](FeedRequest("Mortgages", LCMortgageFeedSwitch, url))(parse)
   }
+
 }
 
 

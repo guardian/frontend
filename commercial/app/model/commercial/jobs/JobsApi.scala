@@ -9,7 +9,7 @@ import org.joda.time._
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import scala.xml.{Elem, XML}
+import scala.xml.Elem
 
 object JobsApi extends ExecutionContexts with Logging {
 
@@ -44,26 +44,7 @@ object JobsApi extends ExecutionContexts with Logging {
   }
 
   def loadAds(): Future[Seq[Job]] = {
-    url map { u =>
-      val result = FeedReader.read(FeedRequest(JobFeedSwitch, u, responseEncoding = Some("utf-8"), timeout = 30.seconds)) { body =>
-        val xml = XML.loadString(body.dropWhile(_ != '<'))
-        parse(xml)
-      }
-      result map {
-        case Left(FeedReadWarning(message)) =>
-          log.warn(s"Reading Jobs feed failed: $message")
-          Nil
-        case Left(FeedReadException(message)) =>
-          log.error(s"Reading Jobs feed failed: $message")
-          Nil
-        case Right(jobs) => jobs
-        case other =>
-          log.error(s"Something unexpected has happened: $other")
-          Nil
-      }
-    } getOrElse {
-      log.warn("Reading Jobs feed failed: missing URL")
-      Future.successful(Nil)
-    }
+    FeedReader.readSeqFromXml[Job](FeedRequest("Jobs", JobFeedSwitch, url, responseEncoding = Some("utf-8"), timeout = 30.seconds))(parse)
   }
+
 }
