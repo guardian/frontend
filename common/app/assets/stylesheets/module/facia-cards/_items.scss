@@ -38,11 +38,14 @@
         background-color: #ffffff;
         color: $c-live;
         font: inherit;
-        font-size: inherit;
         line-height: 1;
         text-transform: capitalize;
         padding: .1em .2em .05em;
         top: 0;
+    }
+
+    .item__analysis-kicker {
+        color: $c-analysisAccent;
     }
 
     .item__title {
