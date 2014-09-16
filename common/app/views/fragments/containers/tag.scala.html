@@ -1,4 +1,4 @@
-@(page: model.MetaData, collection: model.Collection, style: views.support.CommentAndDebateContainer, containerIndex: Int, pagination: Option[common.Pagination] = None)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+@(page: model.MetaData, collection: model.Collection, style: views.support.NewsContainer, containerIndex: Int, pagination: Option[common.Pagination] = None)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
 @import model.FaciaComponentName
 @import views.html.fragments.keywordList
@@ -21,7 +21,7 @@
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
                 <div class="container__header">
                     @title.map { title =>
-                        @fragments.containers.elements.tagMeta(None, collection.href, page.description, title)
+                        @fragments.containers.elements.tagMeta(None, collection.href, page.description, title, page.isContributorsPage)
                     }
 
                     @fragments.contributor(page)
