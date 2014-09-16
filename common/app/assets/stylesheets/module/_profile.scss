@@ -18,14 +18,10 @@ category: Common
 */
 
 .profile {
-    margin: $gs-baseline/3 $gs-gutter 0 0;
+    margin: $gs-baseline/3 $gs-gutter $gs-baseline/2 0;
 
     @include mq(tablet) {
-        margin: $gs-baseline/2 $gs-gutter $gs-baseline/2 0;
-    }
-
-    @include mq($from: leftCol) {
-        margin-bottom: 0;
+        margin: $gs-baseline 0 0 0;
     }
 
     @include mq(faciaLeftCol) {
@@ -47,7 +43,7 @@ category: Common
     @include border-radius(50%);
 
     @include mq(tablet) {
-        margin: $gs-baseline/2 $gs-gutter 0 0;
+        margin: 0 $gs-gutter 0 0;
     }
 
     @include mq(faciaLeftCol) {
@@ -68,11 +64,13 @@ category: Common
 .profile__bio {
     @include fs-bodyCopy(1);
 
-    @include mq(tablet) {
+    @include mq($from: mobile) {
         height: 80px;
         vertical-align: middle;
         display: table-cell;
+    }
 
+    @include mq(tablet) {
         @include fs-bodyCopy(2, true);
     }
 
@@ -85,7 +83,5 @@ category: Common
         display: block;
         height: auto;
         clear: both;
-
-        @include fs-bodyCopy(2, true);
     }
 }
