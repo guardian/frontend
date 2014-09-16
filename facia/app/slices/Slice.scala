@@ -112,7 +112,7 @@ case object HalfHalf extends Slice
  * |         ##########################|
  * `-----------------------------------'
  */
-case object Full extends Slice
+case object FullThreeQuarterImage extends Slice
 
 /* .___________________________________.
  * |###################################|
@@ -121,4 +121,4 @@ case object Full extends Slice
  * |                                   |
  * `-----------------------------------'
  */
-case object MegaFull extends Slice
+case object Full extends Slice
