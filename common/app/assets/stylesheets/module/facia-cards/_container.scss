@@ -1,7 +1,7 @@
 .container--facia-cards {
     padding-bottom: $gs-baseline;
     margin-bottom: 0;
-    background-color: $c-neutral8;
+    background-color: $c-neutral7;
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline * 2;
