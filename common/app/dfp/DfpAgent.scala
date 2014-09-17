@@ -132,15 +132,16 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
 
   def generateTagToSponsorsMap(sponsorships: Seq[Sponsorship]): Map[String, Set[String]] = {
-    var collector = Map[String, Set[String]]()
-    sponsorships.foreach { sponsorship =>
-      sponsorship.sponsor foreach { sponsor =>  // sponsor is an Option
-        sponsorship.tags foreach { tag =>
-          collector = collector.updated(tag, collector.getOrElse(tag, Set[String]()) + sponsor)
-        }
-      }
+    sponsorships.foldLeft(Map.empty[String, Set[String]]) { (soFar, sponsorship) =>
+      val sponsorshipSponsors = (for {
+        tag <- sponsorship.tags
+        sponsor <- sponsorship.sponsor
+      } yield {
+        tag -> (soFar.getOrElse(tag, Set.empty[String]) + sponsor)
+      }).toMap
+
+      soFar ++ sponsorshipSponsors
     }
-    collector
   }
 
   def refresh() {
