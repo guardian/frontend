@@ -274,7 +274,7 @@ define([
                                 index: i + 1,
                                 caption: img.caption,
                                 credit: img.displayCredit ? img.credit : ''
-                            })
+                            });
                         }.bind(this))
                         .join('');
 
