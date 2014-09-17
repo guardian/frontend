@@ -14,4 +14,8 @@
     &.container--first .facia-container__inner {
         border: 0;
     }
+
+    .container__toggle {
+        border-left: 1px solid $c-neutral7;
+    }
 }
