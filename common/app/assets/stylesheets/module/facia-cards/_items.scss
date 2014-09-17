@@ -54,11 +54,13 @@
     }
 
     .item__meta {
-        bottom: $gs-baseline / 3;
+        padding-top: $gs-baseline / 3;
+        padding-bottom: $gs-baseline / 3;
     }
 
     .item__timestamp {
         padding-left: 0;
+        padding-right: 0;
     }
 
     .item--has-cutout {
