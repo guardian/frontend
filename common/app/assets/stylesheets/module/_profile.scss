@@ -32,6 +32,7 @@ $profile-bio-desktop-size: 120px;
         width: $left-column;
         clear: left;
         float: left;
+        margin-top: 0;
     }
 
     @include mq(wide) {
