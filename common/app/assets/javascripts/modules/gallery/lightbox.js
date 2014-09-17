@@ -62,12 +62,12 @@ define([
                 '<div class="gallery-lightbox__img-container"><img class="gallery-lightbox__img js-gallery-lightbox-img""></div>' +
                 '<div class="gallery-lightbox__info js-gallery-lightbox-info">' +
                     '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
-                        '<span class="gallery-lightbox__index">${index}</span>' +
+                        '<span class="gallery-lightbox__index">{{index]}</span>' +
                         '<span class="gallery-lightbox__progress-separator"></span>' +
-                        '<span class="gallery-lightbox__count">${count}</span>' +
+                        '<span class="gallery-lightbox__count">{{count}}</span>' +
                     '</div>' +
-                    '<div class="gallery-lightbox__img-caption">${caption}</div>' +
-                    '<div class="gallery-lightbox__img-credit">${credit}</div>' +
+                    '<div class="gallery-lightbox__img-caption">{{caption}}</div>' +
+                    '<div class="gallery-lightbox__img-credit">{{credit}}</div>' +
                 '</div>' +
             '</li>';
 
@@ -269,8 +269,12 @@ define([
 
                     var imagesHtml = _(this.images)
                         .map(function(img, i) {
-                            return _(this.imgElementHtml)
-                                .template({count: this.images.length, index: i + 1}, {imports: img});
+                            return template(this.imgElementHtml, {
+                                count: this.images.length,
+                                index: i + 1,
+                                caption: img.caption,
+                                credit: img.displayCredit ? img.credit : ''
+                            });
                         }.bind(this))
                         .join('');
 
