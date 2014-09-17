@@ -18,7 +18,7 @@
     }
 }
 
-.hide-after-right-col {
+.hide-from-left-col {
     @include mq($from: leftCol) {
         @include u-h;
     }
