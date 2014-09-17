@@ -20,6 +20,7 @@ $vjs-progress-inset-bottom: 4px;
     margin-bottom: $gs-baseline * 1.5;
 }
 .gu-media-wrapper--audio {
+    background-color: $vjs-control-colour;
     padding-top: $vjs-progress-visual-height-resting;
 
     // naughty videojs removes classes, so have to select by element
@@ -639,20 +640,22 @@ $vjs-progress-inset-bottom: 4px;
 }
 
 .podcast-meta {
-    background-color: $vjs-control-colour;
     text-align: left;
     border-top: 1px solid lighten($c-neutral1, 16%);
     margin-top: $gs-baseline/2;
-    padding: $gs-baseline/2 7px;
+    padding: $gs-baseline/2 $gs-gutter/2;
 }
 .podcast-meta__item {
-    display: inline-block;
-    margin-left: $gs-gutter;
+    margin-right: $gs-gutter;
 
-    &:first-child {
-        margin-left: 0;
+    @include mq(phablet) {
+        display: inline-block;
+    }
+    &:last-child {
+        margin-right: 0;
     }
 }
 .podcast-meta__item__link {
     color: $c-neutral7;
+    @include fs-textSans(1);
 }

@@ -47,86 +47,33 @@ blockquote.quoted:before {
 
 
 @if ($svg-support) {
-    .pseudo-icon,
-    %pseudo-icon {
+    .pseudo-icon {
         .svg &:before {
             content: '';
-            height: .7em;
+            height: 1em;
             padding-right: .3em;
-            vertical-align: baseline;
+            vertical-align: -10%;
             display: inline-block;
             background-repeat: no-repeat;
             @include background-size(contain);
         }
     }
-    .pseudo-icon--audio--white,
-    %pseudo-icon--audio--white {
+    .pseudo-icon--audio--white {
         &:before {
             @extend %svg-i-volume-high-white;
-            width: .95em;
+            width: 1.23em;
         }
     }
-    .pseudo-icon--audio--black,
-    %pseudo-icon--audio--black {
-        &:before {
-            @extend %svg-i-volume-high-white;
-            width: .95em;
-        }
-    }
-    .pseudo-icon--video--white,
-    %pseudo-icon--video--white {
-        &:before {
-            @extend %svg-i-video-icon-white;
-            width: 1.2em;
-        }
-    }
-    .pseudo-icon--video--black,
-    %pseudo-icon--video--black {
-        &:before {
-            @extend %svg-i-video-icon-white;
-            width: 1.2em;
-        }
-    }
-    .pseudo-icon--gallery--white,
-    %pseudo-icon--gallery--white {
-        &:before {
-            @extend %svg-i-camera-white-large;
-            width: 1.04em;
-        }
-    }
-    .pseudo-icon--gallery--black,
-    %pseudo-icon--gallery--black {
-        &:before {
-            @extend %svg-i-camera-black-large;
-            width: 1.04em;
-        }
-    }
-    .pseudo-icon--download--white,
-    %pseudo-icon--download--white {
+    .pseudo-icon--download--white {
         &:before {
             @extend %svg-i-download-white;
-            width: .65em;
+            width: 1em;
         }
     }
-    .pseudo-icon--download--black,
-    %pseudo-icon--download--black {
-        &:before {
-            @extend %svg-i-download-white;
-            width: .65em;
-        }
-    }
-    .pseudo-icon--rss--white,
-    %pseudo-icon--rss--white {
+    .pseudo-icon--rss--white {
         &:before {
             @extend %svg-i-rss-white;
-            width: .68em;
-        }
-    }
-    .pseudo-icon--rss--black,
-    %pseudo-icon--rss--black {
-        &:before {
-            @extend %svg-i-rss-white;
-            width: .68em;
+            width: 1em;
         }
     }
 }
