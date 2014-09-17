@@ -81,10 +81,10 @@
     }
 }
 .top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, faciaLeftCol) {
+    @include mq(mobile, leftCol) {
         text-align: center;
     }
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         margin: 0 auto;
         width: gs-span(14) - ($left-column + $gs-gutter);
         padding-left: $left-column + $gs-gutter;
@@ -93,7 +93,7 @@
         width: gs-span(16) - ($left-column-wide + $gs-gutter);
         padding-left: $left-column-wide + $gs-gutter;
     }
-    @include mq(tablet, faciaLeftCol) {
+    @include mq(tablet, leftCol) {
         .ad-slot__label {
             width: 728px;
         }
@@ -314,7 +314,7 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2-contrasted;
     }
-    @include mq(mobile, $until: faciaLeftCol) {
+    @include mq(mobile, $until: leftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             margin-top: get-line-height(data, 3)*-2;
 
@@ -330,7 +330,7 @@
         color: $c-neutral2;
     }
 
-    @include mq(mobile, $until: faciaLeftCol) {
+    @include mq(mobile, $until: leftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             margin-top: get-line-height(data, 3)*-1;
         }
@@ -374,7 +374,7 @@
     @include mq(desktop) {
         margin-left: 62%;
     }
-    @include mq(tablet, $until: faciaLeftCol) {
+    @include mq(tablet, $until: leftCol) {
         .container--has-toggle & {
             margin-right: gs-span(1);
         }
@@ -398,9 +398,6 @@
         .l-side-margins--layout-content .ad-slot--commercial-component & {
             @include comm-paid-logo-placement;
         }
-    }
-    
-    @include mq(faciaLeftCol) {
         @include comm-paid-logo-placement;
     }
     
@@ -436,7 +433,7 @@
         @include mq(tablet) {
             margin-top: 78px;
         }
-        @include mq(faciaLeftCol) {
+        @include mq(leftCol) {
             margin-top: 0;
         }
     }

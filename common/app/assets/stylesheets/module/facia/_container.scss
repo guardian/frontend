@@ -31,7 +31,7 @@
     @include mq(tablet) {
         padding-top: $gs-baseline/2;
     }
-    @include mq(faciaLeftCol, wide) {
+    @include mq(leftCol, wide) {
         .facia-slice-wrapper:first-child {
             padding-top: 0;
         }
@@ -63,7 +63,7 @@
     color: $c-neutral1;
 
     .today__sub {
-        @include mq(faciaLeftCol) {
+        @include mq(leftCol) {
             @include fs-headline(2);
         }
         @include mq(wide) {
@@ -99,7 +99,7 @@
     @include box-sizing(border-box);
     width: 100%;
 
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         .i--clock {
             display: none;
         }

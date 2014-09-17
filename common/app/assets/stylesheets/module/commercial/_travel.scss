@@ -162,8 +162,6 @@ $travelBlue: #066ec9;
                     right: $gs-gutter;
                 }
             }
-        }
-        @include mq(faciaLeftCol) {
             .facia-container--layout-front & {
                 .lineitem:nth-child(1) {
                     padding-left: $gs-gutter/2;
@@ -309,7 +307,7 @@ $travelBlue: #066ec9;
             width: auto;
         }
     }
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         @include c-travel-leftCol;
         
         &.commercial--high .commercial__head,
