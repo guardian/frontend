@@ -139,13 +139,10 @@ category: Common
 */
 
 @mixin button-height($button-size) {
-    @include box-sizing(border-box);
     height: $button-size;
     padding: 0 ($button-size / 3);
     margin-right: $button-size / 3;
     line-height: $button-size + 2px;
-    border-width: 1px;
-    border-style: solid;
 
     .i {
         width: $button-size;
@@ -154,15 +151,12 @@ category: Common
     }
     .i-left {
         margin-left: -($button-size / 3);
-        margin-right: 0;
-        float: left;
     }
     .i-right {
         margin-right: -($button-size / 3);
-        margin-left: 0;
-        float: right;
     }
 }
+
 @mixin button-colour($fill-colour, $text-colour, $hover-colour, $hover-border: $hover-colour, $border-color: $fill-colour) {
     color: $text-colour;
     background-color: $fill-colour;
@@ -177,37 +171,42 @@ category: Common
 }
 
 .button {
-    display: inline-block;
-    vertical-align: top;
-    width: auto;
+    @include box-sizing(border-box);
     @include fs-textSans(2);
-    font-weight: bold;
     @include button-height(gs-height(1) - $gs-baseline / 2);
     @include border-radius(50%);
     @include button-colour($c-newsAccent, #ffffff, $c-newsDefault);
+
+    display: inline-block;
+    vertical-align: top;
+    width: auto;
+    font-weight: bold;
+    border-width: 1px;
+    border-style: solid;
 
     &:hover,
     &:focus,
     &:active {
         text-decoration: none;
     }
-}
-.button--primary {
-    @include button-colour($c-brandBlue, #ffffff, darken($c-newsDefault, 10%));
-}
-.button--secondary {
-    @include button-colour($c-neutral2, #ffffff, $c-neutral1);
-}
-.button--tertiary {
-    @include button-colour(transparent, $c-neutral2, transparent, $c-neutral3);
-    border-color: $c-neutral3;
 
-    &:hover,
-    &:focus,
-    &:active {
-        color: $c-neutral1;
-        border-color: $c-neutral1;
+    .i-left {
+        margin-right: 0;
+        float: left;
     }
+
+    .i-right {
+        margin-left: 0;
+        float: right;
+    }
+}
+
+.button--small {
+    @include button-height($gs-baseline * 2);
+    @include fs-textSans(1);
+
+    line-height: $gs-baseline * 2 - 1px;
+    font-weight: bold;
 }
 
 .button--tone-media {
@@ -250,29 +249,6 @@ category: Common
     @include button-colour($c-neutral8, $c-newsDefault, $c-neutral8, darken($c-neutral3, 10%), $c-neutral3);
 }
 
-
-.button--xlarge {
-    @include button-height(44px);
-}
-.button--large {
-    @include button-height($gs-baseline * 3);
-}
-.button--medium {
-    @include button-height(gs-height(1) - $gs-baseline / 2);
-}
-.button--small {
-    @include button-height($gs-baseline * 2);
-    @include fs-textSans(1);
-    line-height: $gs-baseline * 2 - 1px;
-    font-weight: bold;
-}
-.button--xsmall {
-    @include button-height($gs-baseline * 1.5);
-    @include fs-textSans(1);
-    line-height: $gs-baseline * 1.5 - 1px;
-    font-weight: bold;
-}
-
 .button--tag {
     margin-right: $gs-gutter / 5;
     margin-bottom: $gs-row-height / 4.5;
@@ -300,12 +276,14 @@ category: Common
 
 .button--show-more {
     @include fs-textSans(3);
+
     margin-bottom: $gs-baseline;
     padding: ($gs-baseline / 3) * 2 0;
     text-align: center;
 
     .i-center {
         @include border-radius($gs-baseline * 3);
+        
         height: $gs-baseline * 2;
         margin-right: $gs-gutter / 2;
         width: $gs-baseline * 2;
