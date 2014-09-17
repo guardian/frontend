@@ -476,7 +476,7 @@ a {
                 self.populateHiddenFields(user);
 
                 // Events
-                window.addEventListener('unload', self.unload, false)
+                window.addEventListener('unload', self.unload, false);
                 dom.$form.addEventListener('submit', self.submit, false);
 
                 // Display
@@ -484,7 +484,7 @@ a {
                 document.getElementsByTagName('html')[0].className += ' iframed--overflow-hidden';
 
                 // Update iframe height
-                self.sendHeight();
+                window.addEventListener('resize', self.sendHeight, false);
 
                 dom.$form.className = dom.$form.className.replace('is-hidden', '');
 
