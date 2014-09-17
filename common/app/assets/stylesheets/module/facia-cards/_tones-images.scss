@@ -1,0 +1,62 @@
+%facia-card-media-icon {
+    content: '';
+    margin: 0;
+}
+
+.container--facia-cards {
+    .item__timestamp:before {
+        @include icon(clock-light-grey, false);
+        @extend %facia-card-media-icon;
+        top: 1px;
+        position: relative;
+        height: 11px;
+        width: 11px;
+        margin-right: 2px;
+    }
+
+    .tone-media {
+        .item__timestamp:before {
+            @include icon(clock-yellow, false);
+        }
+    }
+
+    .item--video {
+        .item__title:before {
+            @include icon(video-icon, false);
+            @extend %facia-card-media-icon;
+            height: .75em;
+            width: 1.2em;
+            margin-right: 2px;
+        }
+    }
+
+    .item--gallery {
+        .item__title:before {
+            @include icon(camera-yellow-large, false);
+            @extend %facia-card-media-icon;
+            height: .75em;
+            width: 1.2em;
+        }
+    }
+
+    .tone-live {
+        .item__timestamp:before {
+            @include icon(clock-light-pink, false);
+        }
+    }
+
+    .tone-feature {
+        .item__timestamp:before {
+            @include icon(clock-light-pink, false);
+        }
+    }
+
+    .tone-comment {
+        .item__title:before {
+            @include icon(quote-grey, false);
+            @extend %facia-card-media-icon;
+            height: .8em;
+            width: 1em;
+        }
+    }
+}

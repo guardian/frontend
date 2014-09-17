@@ -176,6 +176,12 @@
     display: flex;
 }
 
+@mixin flex-wrap($wrap) {
+    -webkit-flex-wrap: $wrap;
+    -ms-flex-wrap: $wrap;
+    flex-wrap: $wrap;
+}
+
 @mixin flex-direction($direction) {
     -webkit-flex-direction: $direction;
     -ms-flex-direction: $direction;
