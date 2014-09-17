@@ -66,7 +66,7 @@ $mq-breakpoints: (
 // Show the current breakpoint in the top right corner of the viewport:
 // see https://github.com/guardian/sass-mq#seeing-the-currently-active-breakpoint
 // Uncomment to activate during development
-//$mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
+$mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
 
 
 // Guss defaults overrides
@@ -94,25 +94,31 @@ $c-neutral6: guss-colour(neutral-6, $pasteup-palette);
 $c-neutral7: guss-colour(neutral-7, $pasteup-palette);
 $c-neutral8: guss-colour(neutral-8, $pasteup-palette);
 
+$c-neutral6-warm: guss-colour(neutral-6-warm, $pasteup-palette);
+$c-neutral7-warm: guss-colour(neutral-7-warm, $pasteup-palette);
+
 // Tones
 // =============================================================================
 
 $c-newsDefault: guss-colour(tone-news-1, $pasteup-palette);
 $c-newsAccent: guss-colour(tone-news-2, $pasteup-palette);
+$c-newsSupport: guss-colour(news-support-2, $pasteup-palette);
 
 $c-featureDefault: guss-colour(tone-features-1, $pasteup-palette);
-$c-featureAccent: guss-colour(tone-features-2, $pasteup-palette);
+$c-featureAccent: guss-colour(features-support-3, $pasteup-palette);
 $c-featureAccent2: #b62766;
 $c-featuresVariant: guss-colour(tone-features-4, $pasteup-palette);
 
 $c-commentDefault: guss-colour(tone-comment-1, $pasteup-palette);
 $c-commentAccent: guss-colour(tone-comment-2, $pasteup-palette);
 $c-commentAccent2: #ffce4b;
+$c-commentAccent3: guss-colour(comment-main-1, $pasteup-palette);
 $c-commentDark: #d3a034;
 
 $c-live: #c0031b;
 $c-liveDefault: guss-colour(tone-live-1, $pasteup-palette);
 $c-liveAccent: guss-colour(tone-live-2, $pasteup-palette);
+$c-liveAccent2: guss-colour(live-support-1, $pasteup-palette);
 
 $c-mediaDefault: $c-commentAccent;
 $c-mediaBackground: guss-colour(tone-media-1, $pasteup-palette);
@@ -152,7 +158,7 @@ $mpu-ad-label-height: $gs-baseline*2;
 
 $action-icon-width: 23px;
 $action-icon-rightspace: 7px;
-$content-top-padding: $gs-baseline;
+$content-top-padding: $gs-baseline/2;
 
 
 // Video.JS player

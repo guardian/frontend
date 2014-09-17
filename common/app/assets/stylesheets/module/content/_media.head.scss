@@ -17,8 +17,22 @@
     background-color: $c-neutral1;
     color: $c-neutral7;
 
+    .content__meta {
+        border-bottom-color: rgba($c-neutral3, .25);
+    }
+
     .content__section .tone-colour {
         color: $c-commentAccent;
+    }
+
+    .content__series {
+        &:before {
+            color: rgba($c-neutral3, .5);
+        }
+    }
+
+    .content__series .tone-colour {
+        color: $c-neutral3;
     }
 
     .byline {

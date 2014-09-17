@@ -129,23 +129,17 @@
     }
 }
 
-.content__section {
-    @include fs-header(3);
+.content__meta {
     @include box-sizing(border-box);
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
-    padding-bottom: $gs-baseline;
+    padding: $gs-baseline/2 0;
+    margin-top: -2px;
+    overflow: hidden;
 
-    @include mq($until: tablet) {
-        border-bottom: 1px solid $c-neutral7;
-
-        .has-localnav & {
-            display: none;
-        }
-    }
-
-    @include mq(tablet) {
-        padding-bottom: $gs-baseline/2;
+    @include mq($until: leftCol) {
+        margin-bottom: $gs-baseline/2;
+        border-bottom: 1px dotted $c-neutral5;
     }
 
     @include mq(leftCol) {
@@ -159,6 +153,39 @@
     }
 }
 
+.content__section {
+    @include fs-header(2);
+
+    &:first-letter {
+        text-transform: capitalize;
+    }
+
+    @include mq($until: leftCol) {
+        @include fs-header(1);
+        float: left;
+        margin-right: $gs-gutter/5;
+
+//        .has-localnav & {
+//            display: none;
+//        }
+    }
+
+//    @include mq(tablet) {
+//        padding-bottom: $gs-baseline/2;
+//    }
+}
+
+.content__series {
+    @include fs-header(1);
+
+    @include mq($until: leftCol) {
+        &:before {
+            content: "\0387";
+//            padding-right: $gs-gutter/5;
+        }
+    }
+}
+
 .content__inline-section {
     @include fs-header(3);
     @include box-sizing(border-box);
@@ -169,7 +196,7 @@
 .content__headline {
     @include fs-headline(5);
     padding-bottom: $gs-baseline*2;
-    padding-top: $gs-baseline/2;
+//    padding-top: $gs-baseline/2;
 
     @include mq(mobileLandscape) {
         @include fs-headline(7, true);

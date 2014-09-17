@@ -823,12 +823,23 @@ $timeline-width: 14px;
         }
     }
 
-    &.tone-live .content__head--tonal .content__section {
+    &.tone-live .content__head--tonal .content__meta {
 
         @include mq(rightCol) {
             float: left;
             width: gs-span(3);
-            padding-top: $content-top-padding;
+//            padding-top: $content-top-padding;
+            margin-left: (gs-span(4) + $gs-gutter) * -1;
+            border-bottom: 0;
+
+            .content__section {
+                @include fs-header(2);
+                float: none;
+            }
+
+            .content__meta {
+                @include fs-header(2);
+            }
 
             .tone-colour {
                 // overriding tonal head style here as liveblog section breaks differently

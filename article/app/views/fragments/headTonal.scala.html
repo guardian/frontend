@@ -3,19 +3,25 @@
 <header class="content__head content__head--tonal
 @if(content.hasTonalHeaderByline && content.hasLargeContributorImage) { content__head--byline-pic}">
 
-    <div class="gs-container">
+    <!--div class="gs-container">
         <div class="content__main-column content__main-column--wide">
             <div class="content__section">
                 <a class="tone-colour" data-link-name="article section" href="@LinkTo {/@content.section}">@Html(content.sectionName.toLowerCase)</a>
             </div>
         </div>
-    </div>
+    </div-->
 
     <div class="tone-background">
         <div class="gs-container">
             <div class="content__main-column">
 
-                @fragments.meta.metaInline(content)
+                <div class="content__meta">
+                    <div class="content__section">
+                        <a class="tone-colour" data-link-name="article section" href="@LinkTo {/@content.section}">@Html(content.sectionName.toLowerCase)</a>
+                    </div>
+
+                    @fragments.meta.metaInline(content)
+                </div>
 
                 <h1 itemprop="headline" class="content__headline js-score">
                     @Html(content.headline)

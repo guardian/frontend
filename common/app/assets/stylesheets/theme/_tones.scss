@@ -64,23 +64,20 @@
     }
 }
 
-@mixin article-header-tone($tone, $colour, $accentColour, $textColour, $commentIcon) {
+@mixin article-header-tone($tone, $colour, $accentColour, $textAccentColour, $textColour, $commentIcon) {
     .tone-#{$tone} .content__head--tonal {
-        .content__section {
-            @include mq(leftCol) {
-                padding-top: $content-top-padding;
-            }
-        }
         .content__section .tone-colour {
-            color: $colour;
-
-            @include mq(leftCol) {
-                color: $textColour;
-            }
+            color: $textColour;
         }
-        .content__headline,
-        .content__standfirst,
-        .content__standfirst a {
+        .content__series .tone-colour {
+            color: $textAccentColour;
+        }
+//        .content__headline,
+//        .content__standfirst,
+//        .content__standfirst a {
+//            color: $textColour;
+//        }
+        .content__headline {
             color: $textColour;
         }
         .tone-background {
@@ -91,6 +88,16 @@
         }
         .content__head__comment-count .commentcount {
             color: $textColour;
+        }
+
+        .content__meta {
+            border-bottom-color: rgba($textColour, .25);
+        }
+
+        .content__series {
+            &:before {
+                color: rgba($textAccentColour, .5);
+            }
         }
 
         .content-meta__item a {
