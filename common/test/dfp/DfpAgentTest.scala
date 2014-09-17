@@ -350,8 +350,8 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "generate tag to sponsors map" should "glom sponsorships together" in {
-    val universitySponsorships = Sponsorship(List("universityguide", "university A"), Some("University Sponsor A")) ::
-      Sponsorship(List("universityguide"), Some("University Sponsor B")) :: Nil
+    val universitySponsorships = Sponsorship(List("universityguide", "university A"), Some("University Sponsor A"), 1) ::
+      Sponsorship(List("universityguide"), Some("University Sponsor B"), 2) :: Nil
 
     val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(universitySponsorships)
     sponsorsMap should contain key("universityguide")
@@ -361,11 +361,11 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "generate tag to sponsors map" should "not bother with tag with no detected sponsors" in {
-    val sponsorshipsWithANone = Sponsorship(List("universityguide", "university A"), Some("University Sponsor A")) ::
-      Sponsorship(List("videogames"), None) :: Nil
+    val sponsorshipsWithANone = Sponsorship(List("universityguide", "university A"), Some("University Sponsor A"), 3) ::
+      Sponsorship(List("videogames"), None, 4) :: Nil
 
     val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(sponsorshipsWithANone)
-    sponsorsMap should contain key("universityguide")
+    sponsorsMap should contain key "universityguide"
     sponsorsMap("universityguide") should equal(Set("University Sponsor A"))
     sponsorsMap should not contain key("videogames")
   }
