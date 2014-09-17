@@ -9,6 +9,7 @@
         @defining(Edition.editionFronts.contains(request.uri.toLowerCase)) { isEdition =>
             @if(items.nonEmpty) {
                 <section
+                    id="@FaciaComponentName(config, collection)"
                     class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty, if (!isEdition) Seq("container--tag") else Nil)"
                     data-link-name="@FaciaComponentName(config, collection)"
                     data-id="@config.id"
