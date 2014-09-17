@@ -33,7 +33,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isBlog: Boolean = blogs.nonEmpty
   lazy val isSeries: Boolean = series.nonEmpty
-  lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
   lazy val primaryKeyWordTag: Option[Tag] = tags.find(!_.isSectionTag)
   lazy val keywordTags: Seq[Tag] = keywords.filter(tag => !tag.isSectionTag)
@@ -283,7 +282,8 @@ object Content {
         apiUrl          = "",
         references      = Nil,
         bio             = None,
-        bylineImageUrl  = (tagJson \ "bylineImageUrl").asOpt[String]
+        bylineImageUrl  = (tagJson \ "bylineImageUrl").asOpt[String],
+        bylineLargeImageUrl  = (tagJson \ "bylineLargeImageUrl").asOpt[String]
       )
     }
 

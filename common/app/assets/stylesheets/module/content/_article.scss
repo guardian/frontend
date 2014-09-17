@@ -85,7 +85,11 @@
     @include mq(rightCol) {
         max-width: none;
     }
+    .content__main-column--image & {
+        padding-bottom: 0;
+    }
 }
+
 
 @include mq(tablet) {
     .caption--main {

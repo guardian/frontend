@@ -28,7 +28,6 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   lazy val openGraphDescription: Option[String] = if (bio.nonEmpty) Some(bio) else description
 
   lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Item140))
-  lazy val hasLargeContributorImage: Boolean = contributorLargeImagePath.nonEmpty
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
   lazy val bio: String = delegate.bio.getOrElse("")

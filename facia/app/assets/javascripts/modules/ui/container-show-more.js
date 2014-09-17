@@ -25,7 +25,7 @@ define([
         this._className = 'show-more--hidden';
 
         this._$button = bonzo(bonzo.create(
-            '<button class="collection__show-more tone-background" data-link-name="Show more | 0">' +
+            '<button class="collection__show-more tone-background" data-link-name="Show more | 1">' +
                 '<span class="collection__show-more__icon">' +
                     '<span class="i i-plus-white-mask"></span>' +
                     '<span class="i i-plus-white"></span>' +
@@ -57,32 +57,13 @@ define([
             }.bind(this));
         };
 
-        this._incrementButtonCounter = function() {
-            var newDataAttr = this._$button.attr('data-link-name').replace(/^(.* | )(\d+)$/, function(match, prefix, count) {
-                // http://nicolaasmatthijs.blogspot.co.uk/2009/05/missing-radix-parameter.html
-                return prefix + (parseInt(count, 10) + 1);
-            });
-            this._$button.attr('data-link-name', newDataAttr);
-        };
-
         this.showMore = function() {
-            this._$button.attr('disabled', true);
+            this._removeButton();
             this._$container.removeClass(this._className);
-            bonzo(this._items.splice(0, this._showCount))
-                .removeClass(this._className);
-            this._incrementButtonCounter();
-            if (this._items.length === 0) {
-                this._removeButton();
-            } else {
-                this._$button.attr('disabled', false);
-            }
         };
 
         this.addShowMore = function() {
             this._$container.addClass(this._className);
-            this._items = $('.linkslist > .linkslist__item', this._$container)
-                .addClass(this._className)
-                .map(function(item) { return item; });
             this._renderButton();
             this._$container.removeClass('js-container--show-more');
         };

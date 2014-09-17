@@ -426,7 +426,7 @@ define([
                 if (iFrame.readyState && iFrame.readyState !== 'complete') {
                     bean.on(iFrame, 'readystatechange', function (e) {
                         var updatedIFrame = e.srcElement;
-                        if (updatedIFrame.readyState === 'complete') {
+                        if (typeof updatedIFrame.readyState !== 'unknown' && updatedIFrame.readyState === 'complete') {
                             breakoutIFrame(updatedIFrame);
                             bean.off(updatedIFrame, 'readystatechange');
                         }

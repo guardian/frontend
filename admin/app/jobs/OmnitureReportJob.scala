@@ -12,6 +12,7 @@ object OmnitureVariables {
   val pageViews = "pageViews"
   val visits = "visits"
   val navigationalInteractionEvent = "event37"
+  val socialInteractionEvent = "event16"
 
   // Segments
   val segmentGalleryVisits = Some("53fddc4fe4b08891cec2831a")
@@ -23,6 +24,7 @@ object OmnitureReports {
   val galleryVisits = "gallery-visits"
   val galleryPageViews = "gallery-page-views"
   val galleryLightBox = "gallery-launch-lightbox"
+  val gallerySocialShare = "gallery-social-share"
 }
 
 object OmnitureReportJob extends ExecutionContexts with Logging {
@@ -71,6 +73,16 @@ object OmnitureReportJob extends ExecutionContexts with Logging {
         metrics = List(OmnitureMetric(navigationalInteractionEvent)),
         segment_id = segmentGalleryLightboxHits
       ), QUEUE_OVERTIME, galleryLightBox)
+    })
+
+    akka.pattern.after(15.seconds, actorSystem.scheduler) ( future {
+      generateReport(OmnitureReportDescription(
+        dateGranularity = Some("day"),
+        dateTo = dateTo.toString("yyyy-MM-dd"),
+        dateFrom = dateFrom.toString("yyyy-MM-dd"),
+        metrics = List(OmnitureMetric(socialInteractionEvent)),
+        segment_id = segmentGalleryVisits
+      ), QUEUE_OVERTIME, gallerySocialShare)
     })
   }
 
