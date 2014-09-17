@@ -38,13 +38,8 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
         }
     }
 
-    .gallery-lightbox__info,
-    .gallery-lightbox__btn--close {
+    .gallery-lightbox__info {
         display: block;
-    }
-
-    .gallery-lightbox__btn--info-button .gallery-lightbox__btn-body {
-        background-color: $c-gallery-lightbox-btn--active;
     }
 }
 
@@ -259,7 +254,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 }
 
 .gallery-lightbox__btn--info-button .gallery-lightbox__btn-body {
-    @include icon-button(info, 44px);
+    @include icon-button(info-white, 44px);
 }
 
 
@@ -293,6 +288,23 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 .gallery-lightbox--hover .gallery-lightbox__btn:hover .gallery-lightbox__btn-body {
     @include transition(none);
     background: $c-gallery-lightbox-btn--active;
+}
+
+.gallery-lightbox--show-info {
+    .gallery-lightbox__btn--close {
+        display: block;
+    }
+
+    .gallery-lightbox__btn--info-button .gallery-lightbox__btn-body {
+        background: colour(neutral-7);
+        i {
+            @include icon(info-black);
+        }
+    }
+
+    &.gallery-lightbox--hover .gallery-lightbox__btn--info-button:hover .gallery-lightbox__btn-body {
+        background: colour(neutral-8);
+    }
 }
 
 .gallery-lightbox__btn--close {
