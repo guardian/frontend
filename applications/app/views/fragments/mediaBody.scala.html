@@ -5,9 +5,9 @@
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
 <div class="l-side-margins l-side-margins--layout-content">
-    <article class="content content--media content--media--@mediaType tone-@media.visualTone"
-        itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
-        <div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
+    <div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
+        <article class="content content--media content--media--@mediaType tone-@media.visualTone"
+            itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
 
             @fragments.headDefault(media)
 
@@ -119,9 +119,8 @@
                 }
 
             </div>
-        </div>
-    </article>
-
+        </article>
+    </div>
     @fragments.contentFooter(media, page.related, "media")
 
     }
