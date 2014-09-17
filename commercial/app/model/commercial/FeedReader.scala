@@ -74,7 +74,9 @@ object FeedReader extends ExecutionContexts with Logging {
 
   def readSeq[T](request: FeedRequest)(parse: String => Seq[T]): Future[Seq[T]] = {
     read(request)(parse) map {
-      case Some(items) => items
+      case Some(items) =>
+        log.info(s"Loaded ${items.size} ${request.feedName} from ${request.url.get}")
+        items
       case None =>
         log.warn(s"Empty ${request.feedName} feed")
         Nil
