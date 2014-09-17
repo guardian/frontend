@@ -14,11 +14,6 @@
         }
     }
 
-    .item__title:before {
-        content: '';
-        margin: 0;
-    }
-
     .trail__count {
         &:before {
             @include icon(comment-light-grey, false);
@@ -45,6 +40,7 @@
     .item--video {
         .item__title:before {
             @include icon(video-icon, false);
+            content: '';
             height: .75em;
             width: 1.2em;
             margin-right: 2px;
@@ -58,6 +54,7 @@
     .item--gallery {
         .item__title:before {
             @include icon(camera-yellow-large, false);
+            content: '';
             height: .75em;
             width: 1.2em;
         }
@@ -90,6 +87,7 @@
     .tone-comment {
         .item__title:before {
             @include icon(quote-grey, false);
+            content: '';
             height: .8em;
             width: 1em;
         }
