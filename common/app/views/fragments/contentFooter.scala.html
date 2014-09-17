@@ -26,9 +26,11 @@
         @fragments.mostPopularPlaceholder(content.section, content.visualTone)
     </div>
 
-    <div class="facia-container facia-container--layout-content facia-container--outbrain">
-        @fragments.outbrainPlaceholder()
-    </div>
+    @if(!content.isAdvertisementFeature) {
+        <div class="facia-container facia-container--layout-content facia-container--outbrain">
+            @fragments.outbrainPlaceholder()
+        </div>
+    }
 
     @if(!content.shouldHideAdverts) {
         <div class="facia-container facia-container--layout-content facia-container--commercial">
