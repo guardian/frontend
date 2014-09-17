@@ -2,6 +2,7 @@ package test
 
 import conf.{LiveContentApi, Configuration}
 import java.net.URLEncoder
+import org.scalatestplus.play._
 import play.api.test._
 import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
@@ -118,6 +119,48 @@ trait FakeApplication extends TestSettings {
   ) { block }
 }
 
+trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with HtmlUnitFactory {
+  this: ConfiguredTestSuite with org.scalatest.Suite =>
+
+  lazy val host = s"http://localhost:${port}"
+  lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
+  lazy val testBrowser = TestBrowser(webDriver, None)
+
+  def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
+
+  def UK[T](path: String)(block: TestBrowser => T): T = goTo(path)(block)
+
+  def US[T](path: String)(block: TestBrowser => T): T = {
+      val editionPath = if (path.contains("?")) s"$path&_edition=US" else s"$path?_edition=US"
+      goTo(editionPath)(block)
+  }
+
+  protected def goTo[T](path: String)(block: TestBrowser => T): T = {
+      htmlUnitDriver.setJavascriptEnabled(false)
+      testBrowser.goTo(host + path)
+      block(testBrowser)
+  }
+
+  def withHost(path: String) = s"http://localhost:$port$path"
+
+  def classicVersionLink(path: String) = s"http://localhost:$port/preference/platform/classic?page=${URLEncoder.encode(s"$path?view=classic", "UTF-8")}"
+}
+
+trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrowserPerSuite with HtmlUnitFactory {
+
+  this: SingleServerSuite with org.scalatest.Suite =>
+
+  implicit override lazy val app = FakeApplication(
+    withoutPlugins = disabledPlugins,
+      withGlobal = globalSettingsOverride,
+      additionalPlugins = testPlugins,
+      additionalConfiguration = Map(
+        ("application.secret", "this_is_not_a_real_secret_just_for_tests")
+      )
+  )
+}
+
+// Get rid of this soon, it is not single server.
 object Fake extends FakeApplication
 
 object TestRequest {

@@ -33,7 +33,8 @@ object Frontend extends Build with Prototypes {
       playGoogleAuth,
       scalaCheck,
       filters,
-      ws
+      ws,
+      scalaTestPlus
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
