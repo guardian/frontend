@@ -8,7 +8,7 @@ Part of the [Pasteup](https://github.com/guardian/pasteup) collection.
 ## Installation
 
 ```
-bower install pasteup-forms --save
+bower install pasteup-palette --save
 ```
 
 ## Usage

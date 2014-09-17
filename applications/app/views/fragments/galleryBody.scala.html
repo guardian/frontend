@@ -1,6 +1,8 @@
 @(gallery: model.Gallery, related: model.RelatedContent, index: Int)(implicit request: RequestHeader)
 <div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
-    <article class="content content--media content--gallery tone-@gallery.visualTone"
+
+    <div class="l-side-margins l-side-margins--layout-content l-side-margins--media">
+        <article class="content content--media content--gallery tone-@gallery.visualTone"
         itemprop="mainContentOfPage" itemscope itemtype="@gallery.schemaType" role="main">
 
         @fragments.headDefault(gallery)
@@ -20,26 +22,29 @@
 
                                     @ImgSrc.imager(gallery.imageContainer(row.rowNum-1), GalleryUpgradedImage).map { imgSrc =>
 
-                                        <a  class="gallery2__img-container js-gallerythumbs js-delayed-image-upgrade"
-                                            href="@LinkTo{@gallery.url?index=@row.rowNum}"
-                                            data-src="@imgSrc"
-                                            data-link-name="Launch Gallery Lightbox" data-is-ajax>
+                                        @GalleryInitialImage.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
 
-                                            @GalleryInitialImage.bestFor(gallery.imageContainer(row.rowNum-1)).map { url =>
+                                            <a class="gallery2__img-container js-gallerythumbs js-delayed-image-upgrade @if(image.width >= image.height) {gallery2__img-container--landscape} else {gallery2__img-container--portrait}"
+                                                href="@LinkTo{@gallery.url?index=@row.rowNum}"
+                                                data-src="@imgSrc"
+                                                data-link-name="Launch Gallery Lightbox" data-is-ajax>
 
-                                                <img class="gallery2__img js-gallery-img responsive-img @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                                                <img class="gallery2__img js-gallery-img gallery2__img-initial @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
                                                     src="@url"
                                                     alt="@image.altText.getOrElse("")"
                                                     itemprop="contentUrl" />
 
-                                            }
+                                                <img class="gallery2__img js-gallery-img responsive-img u-h @if(image.width >= image.height) {gallery2__img--landscape} else {gallery2__img--portrait}"
+                                                    alt="@image.altText.getOrElse("")"
+                                                    itemprop="contentUrl" />
 
-                                            <span class="gallery2__fullscreen">
-                                                <i class="i i-expand-white"></i>
-                                                <i class="i i-expand-black"></i>
-                                            </span>
+                                                <span class="gallery2__fullscreen">
+                                                    <i class="i i-expand-white"></i>
+                                                    <i class="i i-expand-black"></i>
+                                                </span>
 
-                                        </a>
+                                            </a>
+                                        }
                                     }
 
                                     <div class="gallery2__figcaption">
@@ -87,6 +92,7 @@
             </div>
         </div>
     </article>
+    </div>
 
     <div class="js-gallery-most-popular gallery__most-popular facia-container facia-container--layout-content facia-container--default-heading">
         <div class="container container--popular">

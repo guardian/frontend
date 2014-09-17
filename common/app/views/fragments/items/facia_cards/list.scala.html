@@ -1,0 +1,48 @@
+@(trail: model.Trail, index: Int, containerIndex: Int)(implicit request: RequestHeader, config: Config)
+
+@import common.LinkTo
+@import model.{FaciaDisplayElement, Config}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData}
+@import views.html.fragments.items.facia_cards.meta
+
+<li class="@GetClasses.forCollectionItem(trail)">
+@defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
+<div class="@GetClasses.forNewStyleItem(trail, isFirstContainer)"
+    @if(trail.isCommentable) {
+        @trail.discussionId.map{ id =>
+        data-discussion-id="@id"
+        }
+        data-discussion-closed="@trail.isClosedForComments"
+        data-discussion-inline-upgrade="true"
+    }
+    data-link-name="trail | @{index + 1}"
+    @SnapData(trail)>
+
+        <div class="item__container">
+
+            <div class="@RenderClasses(Map(
+                ("item__header", true),
+                ("item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
+            ))">
+                @fragments.items.elements.facia_cards.title(trail, index, containerIndex)
+                @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+            </div>
+
+            @if(tone == "comment") {
+                @trail.byline.map { byLine =>
+                    @trail match { case content:model.Content =>
+                    <p class="item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                    }
+                }
+            }
+
+            @trail.trailText.map { text =>
+                <div class="item__standfirst">@Html(text)</div>
+            }
+
+            @meta(trail)
+        </div>
+        <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
+    </div>
+}
+</li>
