@@ -61,7 +61,9 @@ class JavaNetSyncHttpClient extends Http {
       Right(connection)
     } catch {
       case e: MalformedURLException => {
-        logger.error("MalformedURLException", e)
+        if (!play.Play.isTest) {
+          logger.error("MalformedURLException", e)
+        }
         Left(List(Error("MalformedURLException", e.getMessage)))
       }
       case e: ProtocolException => {

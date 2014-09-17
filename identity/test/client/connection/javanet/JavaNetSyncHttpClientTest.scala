@@ -62,7 +62,7 @@ class JavaNetSyncHttpClientTest extends path.FreeSpec with Matchers with Mockito
         override protected def getURL(url: String) = throw new MalformedURLException("Test MalformedURLException")
       }
 
-      "should return a MalformedURLException error" in {
+      "should return a MalformedURLException error" in test.Fake {
         TestJavaNetSyncHttpClient.getConnection("http bad url", Iterable.empty, Iterable.empty, "GET") match {
           case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(connection) => connection(0) should have('message("MalformedURLException"))
