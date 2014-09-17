@@ -45,7 +45,6 @@ blockquote.quoted:before {
     }
 }
 
-
 @if ($svg-support) {
     .pseudo-icon {
         .svg &:before {

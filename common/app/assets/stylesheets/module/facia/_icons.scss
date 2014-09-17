@@ -7,31 +7,31 @@
 
     .item--audio .item__title:before,
     .linkslist__item--audio .linkslist__action:before {
-        @extend %pseudo-icon--media;;
+        @extend %pseudo-icon--media;
         width: .95em;
         @include icon(volume-high-black, $with-width: false);
 
-        .container--dark-background &:before {
+        .container--dark-background & {
             @extend %svg-i-volume-high-white;
         }
     }
     .item--video .item__title:before,
     .linkslist__item--video .linkslist__action:before {
-        @extend %pseudo-icon--media;;
+        @extend %pseudo-icon--media;
         width: 1.2em;
         @include icon(video-icon-black, $with-width: false);
 
-        .container--dark-background &:before {
+        .container--dark-background & {
             @extend %svg-i-video-icon-white;
         }
     }
     .item--gallery .item__title:before,
     .linkslist__item--gallery .linkslist__action:before {
-        @extend %pseudo-icon--media;;
+        @extend %pseudo-icon--media;
         width: 1.04em;
         @include icon(camera-black-large, $with-width: false);
 
-        .container--dark-background &:before {
+        .container--dark-background & {
             @extend %svg-i-camera-white-large;
         }
     }
