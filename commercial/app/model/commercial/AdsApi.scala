@@ -97,12 +97,3 @@ trait JsonAdsApi[T <: Ad] extends AdsApi[JsValue, T] {
 
   def parse(json: JsValue): Seq[T]
 }
-
-trait XmlAdsApi[T <: Ad] extends AdsApi[Elem, T] {
-
-  protected def cleanResponseBody(body: String): String = body
-
-  final def transform(body: String): Elem = XML.loadString(cleanResponseBody(body))
-
-  def parse(xml: Elem): Seq[T]
-}
