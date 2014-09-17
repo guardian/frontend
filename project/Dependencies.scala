@@ -44,5 +44,5 @@ object Dependencies {
   val slf4jExt = "org.slf4j" % "slf4j-ext" % slf4jVersion
   val snappyJava = "org.xerial.snappy" % "snappy-java" % "1.0.5.1"
   val uaDetectorResources = "net.sf.uadetector" % "uadetector-resources" % "2013.04"
-  val scalaTestPlus = "org.scalatestplus" % "play_2.10" % "1.1.0" % "test"
+  val scalaTestPlus = "org.scalatestplus" % "play_2.10" % "1.3.0" % "test"
 }
