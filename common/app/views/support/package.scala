@@ -719,9 +719,42 @@ object GetClasses {
 
   def forNewStyleItem(trail: Trail, isFirstContainer: Boolean): String = {
     RenderClasses(
-      TrailCssClasses.toneClass(trail) +: commonItemClasses(trail, isFirstContainer, forceHasImage = false): _*
+      TrailCssClasses.toneClass(trail) +: commonFcItemClasses(trail, isFirstContainer, forceHasImage = false): _*
     )
   }
+
+  def commonFcItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
+    val itemClass = trail match {
+      case _: Gallery => Some("fc-item--gallery")
+      case _: Video => Some("fc-item--video")
+      case _: Audio => Some("fc-item--audio")
+      case _ => None
+    }
+
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")) {
+      "fc-item--has-no-image"
+    } else {
+      "fc-item--has-image"
+    }
+
+    val discussionClass = if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
+
+    Seq(
+      "fc-item",
+      imageClass,
+      discussionClass
+    ) ++ Seq(
+      itemClass,
+      if (isFirstContainer) Some("fc-item--force-image-upgrade") else None,
+      if (trail.isLive) Some("fc-item--live") else None,
+      if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
+      if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
+        Some(s"fc-item--imageadjust-${trail.imageAdjust}")
+      else
+        None
+    ).flatten ++ makeSnapClasses(trail)
+  }
+
 
   def commonItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
     val itemClass = trail match {

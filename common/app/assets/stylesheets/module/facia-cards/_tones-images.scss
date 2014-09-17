@@ -1,5 +1,5 @@
 .container--facia-cards {
-    .item__timestamp {
+    .fc-item__timestamp {
         padding-left: 0;
 
         &:before {
@@ -14,7 +14,7 @@
         }
     }
 
-    .trail__count {
+    .fc-trail__count {
         &:before {
             @include icon(comment-light-grey, false);
             width: 16px;
@@ -28,7 +28,7 @@
     }
 
     .tone-media {
-        .item__timestamp:before {
+        .fc-item__timestamp:before {
             @include icon(clock-yellow, false);
         }
 
@@ -37,8 +37,8 @@
         }
     }
 
-    .item--video {
-        .item__title:before {
+    .fc-item--video {
+        .fc-item__title:before {
             @include icon(video-icon, false);
             content: '';
             height: .75em;
@@ -51,8 +51,8 @@
         }
     }
 
-    .item--gallery {
-        .item__title:before {
+    .fc-item--gallery {
+        .fc-item__title:before {
             @include icon(camera-yellow-large, false);
             content: '';
             height: .75em;
@@ -65,7 +65,7 @@
     }
 
     .tone-live {
-        .item__timestamp:before {
+        .fc-item__timestamp:before {
             @include icon(clock-light-pink, false);
         }
 
@@ -75,7 +75,7 @@
     }
 
     .tone-feature {
-        .item__timestamp:before {
+        .fc-item__timestamp:before {
             @include icon(clock-light-pink, false);
         }
 
@@ -85,7 +85,7 @@
     }
 
     .tone-comment {
-        .item__title:before {
+        .fc-item__title:before {
             @include icon(quote-grey, false);
             content: '';
             height: .8em;

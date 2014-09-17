@@ -1,95 +1,128 @@
-.container--facia-cards {
+$fc-item-gutter: $gs-gutter / 3;
 
-    $item-gutter: $gs-gutter / 3;
+.facia-slice__item {
+    @include flex-display;
 
-    .facia-slice__item {
-        @include flex-display;
-        padding-bottom: 0;
+    @if not $browser-supports-flexbox {
+        width: 25%;
+    }
+}
 
-        @if not $browser-supports-flexbox {
-            width: 25%;
+.fc-item__header,
+.fc-item__standfirst,
+.fc-item__meta,
+.fc-item__byline {
+    padding-left: $fc-item-gutter;
+    padding-right: $fc-item-gutter;
+}
+
+.fc-item {
+    @include flex(1);
+    padding-bottom: $gs-baseline * 2.5;
+    margin-left: $gs-gutter * .5;
+    margin-right: $gs-gutter * .5;
+    background-color: #ffffff;
+    display: block;
+
+    .stars {
+        margin-top: $gs-baseline * .25;
+
+        @include mq(tablet) {
+            margin-bottom: $gs-baseline * 1.25;
         }
     }
+}
 
-    .item__header,
-    .item__standfirst,
-    .item__meta,
-    .item__byline {
-        padding-left: $item-gutter;
-        padding-right: $item-gutter;
+.fc-item__live-indicator {
+    background-color: #ffffff;
+    color: $c-live;
+    font: inherit;
+    line-height: 1;
+    text-transform: capitalize;
+    padding: .1em .2em .05em;
+}
+
+.fc-item__title {
+    padding-top: $gs-baseline / 3;
+    @include fs-headline(2, true);
+    word-wrap: break-word;
+}
+
+.fc-item__image-container {
+}
+
+.fc-item__meta {
+    padding-top: $gs-baseline / 3;
+    padding-bottom: $gs-baseline / 3;
+}
+
+.fc-trail__count {
+    padding-left: $gs-baseline / 2;
+}
+
+.fc-item__timestamp {
+}
+
+.fc-item--has-cutout {
+    padding-bottom: 60%;
+
+    .fc-item__media-wrapper {
+        display: none;
     }
 
-    .item {
-        @include flex(1);
-
-        padding-left: 0;
-        padding-right: 0;
-        padding-bottom: $gs-baseline * 2.5;
-        margin-left: $gs-gutter * .5;
-        margin-right: $gs-gutter * .5;
-        margin-bottom: 0;
-        background-color: #ffffff;
+    .fc-item__avatar {
+        position: absolute;
+        overflow: hidden;
+        width: 80%;
+        bottom: 0 - $gs-baseline / 2;
+        right: $gs-gutter / 2;
     }
 
-    .item__header {
-        min-height: 0 !important;
+    .fc-item__avatar__media {
+        position: relative;
+        width: 100%;
+        right: 0 - $gs-gutter * 2;
     }
+}
 
-    .item__live-indicator {
-        background-color: #ffffff;
-        color: $c-live;
-        font: inherit;
-        line-height: 1;
-        text-transform: capitalize;
-        padding: .1em .2em .05em;
-        top: 0;
+@mixin fc-item--list {}
+@mixin fc-item--list-media {}
+@mixin fc-item--standard {}
+
+.fc-item {}
+
+.fc-item--list {
+    @include mq($until: tablet) {
+        @include fc-item--list;
     }
+}
 
-    .item__title {
-        padding-top: $gs-baseline / 3;
+.fc-item--list-tablet {
+    @include mq(tablet) {
+        @include fc-item--list;
     }
+}
 
-    .item__image-container {
-        margin-top: 0;
+.fc-item--list-media {
+    @include mq($until: tablet) {
+        @include fc-item--list-media;
     }
+}
 
-    .item__meta {
-        padding-top: $gs-baseline / 3;
-        padding-bottom: $gs-baseline / 3;
+.fc-item--list-media-tablet {
+    @include mq(tablet) {
+        @include fc-item--list-media;
     }
+}
 
-    .trail__count {
-        padding-left: $gs-baseline / 2;
-
-        a {
-            padding: 0;
-        }
+.fc-item--standard {
+    @include mq($until: tablet) {
+        @include fc-item--standard;
     }
+}
 
-    .item__timestamp {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    .item--has-cutout {
-        padding-bottom: 60%;
-
-        .item__media-wrapper {
-            display: none;
-        }
-
-        .item__avatar {
-            position: absolute;
-            overflow: hidden;
-            width: 80%;
-            bottom: 0 - $gs-baseline / 2;
-            right: $gs-gutter / 2;
-        }
-
-        .item__avatar__media {
-            position: relative;
-            width: 100%;
-            right: 0 - $gs-gutter * 2;
-        }
+.fc-item--standard-tablet {
+    @include mq(tablet) {
+        @include fc-item--standard;
     }
 }

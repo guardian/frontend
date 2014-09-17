@@ -24,8 +24,8 @@
 <div class="item__container">
     @FaciaDisplayElement.fromTrail(trail) match {
         case InlineVideo(videoElement, title, endSlatePath) if trail.imageAdjust == "boost" => {
-            <div class="item__media-wrapper item__media-wrapper--has-icon u-faux-block-link__promote">
-                <div class="item__video-container">
+            <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
+                <div class="fc-item__video-container">
                 @video(VideoPlayer(
                     videoElement,
                     Video640,
@@ -45,8 +45,8 @@
     }
 
     <div class="@RenderClasses(Map(
-        ("item__header", true),
-        ("item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
+        ("fc-item__header", true),
+        ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
     ))">
         @fragments.items.elements.facia_cards.title(trail, index, containerIndex)
         @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
@@ -55,15 +55,15 @@
     @if(tone == "comment") {
         @trail.byline.map { byLine =>
             @trail match { case content:model.Content =>
-            <p class="item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+            <p class="fc-item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
             }
         }
 
         @if(trail.hasLargeContributorImage) {
             @trail.contributors.headOption.map { profile =>
                 @profile.contributorLargeImagePath.map{ image =>
-                    <div class="item__avatar">
-                        <img src="@image" alt="@profile.name" class="item__avatar__media" />
+                    <div class="fc-item__avatar">
+                        <img src="@image" alt="@profile.name" class="fc-item__avatar__media" />
                     </div>
                 }
             }
