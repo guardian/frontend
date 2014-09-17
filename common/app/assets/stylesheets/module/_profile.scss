@@ -1,0 +1,92 @@
+/*doc
+---
+title: Profile
+name: profile
+category: Common
+---
+
+```html_example
+<div class="profile media">
+    <div class="profile__img media__img">
+        <img src="http://i.guim.co.uk/w-140/h-140/q-95/sys-images/Guardian/Pix/pictures/2014/4/22/1398168161144/GeorgeMonbiot.jpg" alt="George Monbiot" />
+    </div>
+    <div class="profile__bio">
+        George Monbiot is the author of the bestselling books The Age of Consent: A Manifesto for a New World Order and Captive State: The Corporate Takeover of Britain, as well as the investigative travel books Poisoned Arrows, Amazon Watershed and No Man's Land. His latest book is <a href="http://www.guardianbookshop.co.uk/BerteShopWeb/viewProduct.do?ISBN=9781846147487">Feral: Searching for Enchantment on the Frontiers of Rewilding</a> (being published in paperback as Feral: Rewilding the Land, Sea and Human Life)
+    </div>
+</div>
+```
+*/
+
+// This is based on profile image sizes
+$profile-bio-mobile-size: 80px;
+$profile-bio-desktop-size: 120px;
+
+.profile {
+    margin: $gs-baseline/3 $gs-gutter $gs-baseline/2 0;
+
+    @include mq(tablet) {
+        margin: $gs-baseline 0 0;
+    }
+
+    @include mq(faciaLeftCol) {
+        width: $left-column;
+        clear: left;
+        float: left;
+        margin-top: 0;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
+}
+
+.profile__img {
+    display: inline-block;
+    margin: 0 $gs-gutter $gs-baseline/2 0;
+    overflow: hidden;
+
+    @include border-radius(50%);
+
+    @include mq(tablet) {
+        margin: 0 $gs-gutter 0 0;
+    }
+
+    @include mq(faciaLeftCol) {
+        margin: $gs-baseline * 2 0 $gs-baseline;
+    }
+
+    img {
+        width: $profile-bio-mobile-size;
+        height: $profile-bio-mobile-size;
+
+        @include mq(desktop) {
+            width: $profile-bio-desktop-size;
+            height: $profile-bio-desktop-size;
+        }
+    }
+}
+
+.profile__bio {
+    @include fs-bodyCopy(1);
+
+    @include mq($from: mobile) {
+        height: $profile-bio-mobile-size;
+        vertical-align: middle;
+        display: table-cell;
+    }
+
+    @include mq(tablet) {
+        @include fs-bodyCopy(2, true);
+    }
+
+    @include mq(desktop) {
+        max-width: gs-span(7);
+        height: $profile-bio-desktop-size;
+    }
+
+    @include mq(wide) {
+        display: block;
+        height: auto;
+        clear: both;
+    }
+}

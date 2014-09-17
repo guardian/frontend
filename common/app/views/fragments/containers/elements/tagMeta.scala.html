@@ -1,4 +1,4 @@
-@(displayName: Option[String], href: Option[String], description: Option[String], tagId: String)(implicit request: RequestHeader)
+@(displayName: Option[String], href: Option[String], description: Option[String], tagId: String, isContributorsPage: Boolean = false)(implicit request: RequestHeader)
 
 @import common.LinkTo
 
@@ -7,7 +7,12 @@
         <h2 class="container__meta__label hide-on-mobile">@name</h2>
     }
     <dl class="container__meta__description">
+
+    @if(isContributorsPage) {
+        <dt class="container__meta__title tone-comment tone-colour">
+    } else {
         <dt class="container__meta__title">
+    }
             @if(href) {
                 <a href="@LinkTo{/@href}" data-link-name="tag heading">@tagId</a>
             } else {

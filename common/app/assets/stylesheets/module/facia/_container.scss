@@ -84,11 +84,13 @@
         padding-top: $gs-baseline/1.5;
     }
 }
+
 .container__body {
     @include mq(leftCol) {
         padding-top: $gs-baseline/2;
     }
 }
+
 .container__updated {
     display: block;
     @include fs-headline(2);
@@ -128,7 +130,6 @@
     right: 0;
     height: 100%;
     border: 0;
-    border-left: 1px solid #ffffff;
     background-color: transparent;
     @include fs-data(4, $size-only: true);
     color: #ffffff;
