@@ -5,12 +5,12 @@
   ],
   "dependencies": {},
   "homepage": "https://github.com/guardian/pasteup-palette",
-  "version": "2.0.0",
-  "_release": "2.0.0",
+  "version": "2.1.0",
+  "_release": "2.1.0",
   "_resolution": {
     "type": "version",
-    "tag": "v2.0.0",
-    "commit": "3a180669528a60fb9497d8ecc727e5a7fa39cc30"
+    "tag": "v2.1.0",
+    "commit": "2b867ee459126646f0ce45ae1c7fb819300889a6"
   },
   "_source": "git://github.com/guardian/pasteup-palette.git",
   "_target": "~2",

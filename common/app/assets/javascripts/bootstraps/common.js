@@ -34,7 +34,6 @@ define([
     'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
     'common/modules/discussion/comment-count',
-    'common/modules/gallery/lightbox',
     'common/modules/onward/history',
     'common/modules/onward/breaking-news',
     'common/modules/ui/message',
@@ -47,7 +46,8 @@ define([
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/faux-block-link',
-    'common/modules/discussion/loader'
+    'common/modules/discussion/loader',
+    'common/modules/release-message'
 ], function (
     $,
     mediator,
@@ -81,7 +81,6 @@ define([
     liveStats,
     ab,
     CommentCount,
-    LightboxGallery,
     history,
     breakingNews,
     Message,
@@ -94,7 +93,8 @@ define([
     MoreTags,
     smartAppBanner,
     fauxBlockLink,
-    DiscussionLoader
+    DiscussionLoader,
+    releaseMessage
 ) {
 
     var modules = {
@@ -182,16 +182,6 @@ define([
             });
         },
 
-        initLightboxGalleries: function () {
-            var thisPageId;
-            mediator.on('page:common:ready', function(config) {
-                var galleries = new LightboxGallery(config);
-                thisPageId = config.page.pageId;
-                galleries.init();
-            });
-
-        },
-
         initRightHandComponent: function(config) {
             if(config.page.contentType === 'Article' &&
                 detect.getBreakpoint() !== 'mobile' &&
@@ -246,7 +236,7 @@ define([
 
             if (
                 config.switches.releaseMessage &&
-                config.page.hasClassicVersion &&
+                config.page.showClassicVersion &&
                 (detect.getBreakpoint() !== 'mobile')
             ) {
                 // force the visitor in to the alpha release for subsequent visits
@@ -380,6 +370,10 @@ define([
             if (queryParams.test) {
                 Cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
             }
+        },
+
+        initReleaseMessage: function(config) {
+            releaseMessage.init(config);
         }
     };
 
@@ -397,7 +391,6 @@ define([
         modules.showRelativeDates();
         modules.initClickstream();
         modules.transcludeCommentCounts();
-        modules.initLightboxGalleries();
         modules.optIn();
         modules.displayReleaseMessage(config);
         modules.logReadingHistory();
@@ -417,6 +410,7 @@ define([
         modules.transcludeRelated(config);
         modules.transcludeOnwardContent(config);
         modules.initRightHandComponent(config);
+        modules.initReleaseMessage(config);
 
         mediator.emit('page:common:ready', config);
     };

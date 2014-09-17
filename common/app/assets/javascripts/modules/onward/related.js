@@ -59,7 +59,7 @@ define([
     Related.prototype.renderRelatedComponent = function(config) {
         var container;
 
-        var fetchRelated = config.switches.relatedContent && config.switches.ajaxRelatedContent && config.page.showRelatedContent;
+        var fetchRelated = config.switches.relatedContent && config.switches.ajaxRelatedContent && config.page.showRelatedContent &&
             config.page.section !== 'childrens-books-site';
 
         if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
@@ -104,6 +104,8 @@ define([
                     }
                 }).load();
             }
+        } else {
+            $('.js-related').addClass('u-h');
         }
     };
 

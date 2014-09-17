@@ -65,6 +65,8 @@ trait Prototypes {
     )
   )
 
+  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.1" % Test
+
   val frontendTestSettings = Seq(
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
@@ -76,12 +78,13 @@ trait Prototypes {
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.0" % Test,
+      scalaTest,
       "org.mockito" % "mockito-all" % "1.9.5" % Test
     ),
 
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.
     javaOptions in Test += "-DAPP_SECRET=this_is_not_a_real_secret_just_for_tests",
+    javaOptions in Test += "-XX:MaxPermSize=680m",
     baseDirectory in Test := file(".")
   )
 
@@ -99,6 +102,6 @@ trait Prototypes {
         "commons-io" % "commons-io" % "2.4"
       )
     )
-    .settings((name in Universal := applicationName))
+    .settings(name in Universal := applicationName)
   }
 }

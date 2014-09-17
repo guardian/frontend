@@ -2,28 +2,45 @@ define([
     'common/utils/mediator',
     'common/utils/$',
     'common/utils/config',
+    'common/modules/component',
+    'common/modules/gallery/lightbox',
+    'lodash/collections/forEach',
+    'bonzo',
     'qwery',
-    'common/modules/component'
+    'bean'
 ], function(
     mediator,
     $,
     config,
+    Component,
+    LightboxGallery,
+    forEach,
+    bonzo,
     qwery,
-    Component
+    bean
 ) {
 
     var verticallyResponsiveImages = function() {
+
         var setHeight = function() {
-            var $imgs = $('.js-vh-images'),
-                min = 300, // stops images getting too small
-                max = $imgs.parent().dim().width, // portrait images shouldn't be taller than landscapes are wide
-                maxHeight = Math.max(min, Math.min(max, window.innerHeight * 0.9));
-            $imgs.css('max-height', maxHeight);
+            if (!bonzo(document.body).hasClass('has-overlay')) {
+                var $imgs = $('.js-gallery-img'),
+                    min = 300, // stops images getting too small
+                    max = $imgs.parent().dim().width, // portrait images shouldn't be taller than landscapes are wide
+                    height = Math.max(min, Math.min(max, window.innerHeight * 0.9));
+                $imgs.css('max-height', height);
+
+                // Portrait containers use padding-bottom to set the height of the container prior to upgrading.
+                // This needs to be synchronised with the new image height.
+                $('.gallery2__img-container--portrait').css('padding-bottom', height);
+            }
         };
+
         setHeight();
         mediator.addListeners({
             'window:resize': setHeight,
-            'window:orientationchange': setHeight
+            'window:orientationchange': setHeight,
+            'ui:images:vh': setHeight
         });
     };
 
@@ -45,8 +62,16 @@ define([
     };
 
     var ready = function (config) {
+        LightboxGallery.init();
         verticallyResponsiveImages();
         $('.js-delayed-image-upgrade').removeClass('js-delayed-image-upgrade').addClass('js-image-upgrade');
+
+        forEach(qwery('.js-gallery-img.responsive-img'), function(responsiveImage) {
+            bean.one(responsiveImage , 'load', function(e) {
+                bonzo(e.currentTarget).removeClass('u-h').previous().hide();
+            });
+        });
+
         mediator.emit('ui:images:upgrade', $('.gallery2')[0]);
 
         mediator.emit('page:gallery:ready', config);

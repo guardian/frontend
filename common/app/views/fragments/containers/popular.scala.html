@@ -8,6 +8,7 @@
 
     @if(collection.items.nonEmpty) {
         <section
+            id="@FaciaComponentName(config, collection)"
             class="@RenderClasses(Map(
                 ("container", true),
                 (s"container--${style.containerType}", true),
