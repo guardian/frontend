@@ -11,6 +11,7 @@
     @defining(templateDeduping(4, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
+            id="@FaciaComponentName(config, collection)"
             class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
             data-link-name="@FaciaComponentName(config, collection)"
             data-id="@config.id"
