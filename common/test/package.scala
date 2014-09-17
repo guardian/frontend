@@ -119,7 +119,7 @@ trait FakeApplication extends TestSettings {
   ) { block }
 }
 
-trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with HtmlUnitFactory {
+trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser {
   this: ConfiguredTestSuite with org.scalatest.Suite =>
 
   lazy val host = s"http://localhost:${port}"
@@ -136,6 +136,7 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with H
   }
 
   protected def goTo[T](path: String)(block: TestBrowser => T): T = {
+      // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       htmlUnitDriver.setJavascriptEnabled(false)
       testBrowser.goTo(host + path)
       block(testBrowser)
@@ -149,6 +150,8 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with H
 trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrowserPerSuite with HtmlUnitFactory {
 
   this: SingleServerSuite with org.scalatest.Suite =>
+
+  BrowserVersion.setDefault(BrowserVersion.CHROME)
 
   implicit override lazy val app = FakeApplication(
     withoutPlugins = disabledPlugins,
