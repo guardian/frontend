@@ -20,5 +20,6 @@
     case Some("prototype/quichelorraine")   => { @containers.quichelorraine(block._2, QuicheLorraineContainer(), index)(request, templateDeduping, block._1) }
     case Some("prototype/raclette")         => { @containers.raclette(block._2, RacletteContainer(), index)(request, templateDeduping, block._1) }
     case Some("comment/comment-and-debate") => { @containers.commentanddebate(block._2, CommentAndDebateContainer(), index)(request, templateDeduping, block._1) }
+    case Some("fixed/small/slow-IV")        => { @containers.slow_small_IV(block._2, index)(request, templateDeduping, block._1) }
     case _                                  => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
 }

@@ -9,6 +9,7 @@
     @defining(templateDeduping(5, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
+                id="@FaciaComponentName(config, collection)"
                 class="@GetClasses.forContainer(
                     style,
                     config,

@@ -1,0 +1,49 @@
+.container--facia-cards {
+
+    .linkslist-container {
+        margin: 0 !important;
+
+        &:before {
+            display: none;
+        }
+    }
+
+    .linkslist {
+        margin-top: 0;
+        display: block;
+
+        .facia-slice__item {
+            width: 100%;
+            float: left;
+
+            @include mq(mobileLandscape) {
+                width: 50%;
+
+                &:nth-child(2n+1) {
+                    clear: both;
+
+                    &:before {
+                        border: 0;
+                    }
+                }
+            }
+        }
+
+        .has-flex-wrap & {
+            @include flex-display;
+            @include flex-wrap(wrap);
+
+            .facia-slice__item {
+                @include flex-grow(0);
+                @include flex-basis(100%);
+
+                @include mq(mobileLandscape) {
+                    @include flex-basis(50%);
+                }
+            }
+        }
+        .item--has-cutout {
+            padding-bottom: $gs-baseline * 2.5;
+        }
+    }
+}
