@@ -11,7 +11,7 @@
     // Tonal article styles
     @include article-header-tone(news, #ffffff, #ffffff, $c-newsSupport, $c-neutral1, 'white');
     @include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, $c-featureAccent, #ffffff, 'white');
-    @include article-header-tone(comment, $c-neutral6-warm, $c-neutral7-warm, $c-commentAccent3, $c-neutral1, 'black');
+    @include article-header-tone(comment, $c-commentAccent, $c-commentAccent2, $c-commentAccent, $c-neutral1, 'black');
     @include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, #ffffff, 'white');
 
     .content__head--tonal {
@@ -160,7 +160,7 @@
         }
 
         .content__headline--byline .tone-colour {
-            color: $c-commentAccent3;
+            color: $c-commentAccent;
             &:hover {
                 text-decoration: none;
                 border-bottom: 2px solid;

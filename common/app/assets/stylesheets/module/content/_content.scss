@@ -163,7 +163,6 @@
     @include mq($until: leftCol) {
         @include fs-header(1);
         float: left;
-        margin-right: $gs-gutter/5;
 
 //        .has-localnav & {
 //            display: none;
@@ -180,8 +179,7 @@
 
     @include mq($until: leftCol) {
         &:before {
-            content: "\0387";
-//            padding-right: $gs-gutter/5;
+            content: "\00A0\0387\00A0";
         }
     }
 }

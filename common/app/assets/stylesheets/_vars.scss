@@ -94,9 +94,6 @@ $c-neutral6: guss-colour(neutral-6, $pasteup-palette);
 $c-neutral7: guss-colour(neutral-7, $pasteup-palette);
 $c-neutral8: guss-colour(neutral-8, $pasteup-palette);
 
-$c-neutral6-warm: guss-colour(neutral-6-warm, $pasteup-palette);
-$c-neutral7-warm: guss-colour(neutral-7-warm, $pasteup-palette);
-
 // Tones
 // =============================================================================
 
@@ -112,13 +109,11 @@ $c-featuresVariant: guss-colour(tone-features-4, $pasteup-palette);
 $c-commentDefault: guss-colour(tone-comment-1, $pasteup-palette);
 $c-commentAccent: guss-colour(tone-comment-2, $pasteup-palette);
 $c-commentAccent2: #ffce4b;
-$c-commentAccent3: guss-colour(comment-main-1, $pasteup-palette);
 $c-commentDark: #d3a034;
 
 $c-live: #c0031b;
 $c-liveDefault: guss-colour(tone-live-1, $pasteup-palette);
 $c-liveAccent: guss-colour(tone-live-2, $pasteup-palette);
-$c-liveAccent2: guss-colour(live-support-1, $pasteup-palette);
 
 $c-mediaDefault: $c-commentAccent;
 $c-mediaBackground: guss-colour(tone-media-1, $pasteup-palette);
