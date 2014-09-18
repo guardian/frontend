@@ -77,9 +77,9 @@ define([
             });
 
             it('should not fire if similar tweakpoints crossed', function(){
-                $style.html('body:after { content: "desktop"; }');
+                $style.html('body:after { content: "mobileLandscape"; }');
                 var hasBreakpointChanged = detect.hasCrossedBreakpoint();
-                $style.html('body:after { content: "rightCol"; }');
+                $style.html('body:after { content: "phablet"; }');
                 hasBreakpointChanged(callback);
                 expect(callback).not.toHaveBeenCalled();
             });
