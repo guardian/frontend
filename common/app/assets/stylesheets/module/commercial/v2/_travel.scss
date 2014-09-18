@@ -54,14 +54,63 @@ $c-commercial-travel-2: guss-colour(maps-main-1, $pasteup-palette);
         }
     }
 
+    /* Line items - high relevance */
+    .commercial__relevance--high {
+        @include mq(tablet) {
+            .lineitem--high {
+                position: relative;
+
+                .lineitem--high__feature {
+                    float: none;
+                    width: 100%;
+                    padding: 0;
+                }
+
+                .lineitem--high__offer {
+                    @include simple-gradient(rgba($c-neutral1, 0), $c-neutral1);
+                    float: none;
+                    width: auto;
+                    position: absolute;
+                    right: $gs-gutter/2;
+                    bottom: 0;
+                    left: $gs-gutter/2;
+                    padding: $gs-baseline $gs-gutter*5 0 $gs-gutter/2;
+                }
+
+                .lineitem__title {
+                    color: #fff;
+                    margin-bottom: 0;
+                }
+
+                .lineitem__meta {
+                    color: $c-neutral3;
+                }
+                
+                .lineitem__cta {
+                    position: absolute;
+                    right: 0;
+                    bottom: $gs-baseline;
+                }
+            }
+        }
+    }
+
     /* Line items - low relevance */
     .commercial__relevance--low {
-        @include mq($until: tablet) {
-            .lineitem.lineitem--low {
+        .lineitem.lineitem--low {
+            @include mq($until: tablet) {
                 padding-left: 88px + $gs-gutter/2;
             }
+            @include mq(tablet) {
+                min-height: $gs-baseline*17;
+            }
+            @include mq(desktop) {
+                min-height: $gs-baseline*23;
+            }
+        }
 
-            .lineitem__image-crop {
+        .lineitem__image-crop {
+            @include mq($until: tablet) {
                 float: left;
                 width: 88px;
                 padding-bottom: 53px;

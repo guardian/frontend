@@ -155,6 +155,10 @@
             @include mq(tablet) {
                 padding-left: $gs-gutter*0.5;
             }
+
+            .lineitem__title {
+                min-height: 0;
+            }
         }
     }
 
