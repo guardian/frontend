@@ -2,24 +2,28 @@
 
 @import views.support._
 @import views.html.fragments.containers
+@import slices._
+@import layout._
 
-@block._1.collectionType match {
-    case Some("news")                       => { @containers.news(front, block._2, NewsContainer(), index)(request, templateDeduping, block._1) }
-    case Some("news/auto")                  => { @containers.news(front, ForceGroupsCollection.firstTwoBig(block._2), NewsContainer(), index)(request, templateDeduping, block._1) }
-    case Some("news/headline")              => { @containers.headline(block._2, HeadlineContainer(), index)(request, block._1) }
-    case Some("news/most-popular")          => { @containers.popular(block._2, PopularContainer(), index)(request, block._1) }
-    case Some("news/people")                => { @containers.people(block._2, PeopleContainer(), index)(request, templateDeduping, block._1) }
-    case Some("news/small-list")            => { @containers.small_list(block._2, SpecialContainer(), index)(request, block._1) }
-    case Some("news/special")               => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
-    case Some("features")                   => { @containers.features(block._2, FeaturesContainer(), index)(request, templateDeduping, block._1) }
-    case Some("features/auto")              => { @containers.featuresauto(block._2, FeaturesAutoContainer(), index)(request, templateDeduping, block._1) }
-    case Some("features/multimedia")        => { @containers.multimedia(block._2, MultimediaContainer(), index, useInlinePlayer = true)(request, templateDeduping, block._1) }
-    case Some("features/picks")             => { @containers.picks(block._2, PicksContainer(), index)(request, templateDeduping, block._1) }
-    case Some("features/volumes")           => { @containers.featuresvolumes(front, block._2, FeaturesVolumesContainer(), index)(request, templateDeduping, block._1) }
-    case Some("prototype/cassoulet")        => { @containers.cassoulet(block._2, CassouletContainer(), index)(request, templateDeduping, block._1) }
-    case Some("prototype/quichelorraine")   => { @containers.quichelorraine(block._2, QuicheLorraineContainer(), index)(request, templateDeduping, block._1) }
-    case Some("prototype/raclette")         => { @containers.raclette(block._2, RacletteContainer(), index)(request, templateDeduping, block._1) }
-    case Some("comment/comment-and-debate") => { @containers.commentanddebate(block._2, CommentAndDebateContainer(), index)(request, templateDeduping, block._1) }
-    case Some("fixed/small/slow-IV")        => { @containers.slow_small_IV(block._2, index)(request, templateDeduping, block._1) }
-    case _                                  => { @containers.special(block._2, SpecialContainer(), index)(request, templateDeduping, block._1) }
+@defining(block){ case (config, collection) =>
+    @config.collectionType match {
+        case Some("news")                       => { @containers.news(front, collection, NewsContainer(), index)(request, templateDeduping, config) }
+        case Some("news/auto")                  => { @containers.news(front, ForceGroupsCollection.firstTwoBig(collection), NewsContainer(), index)(request, templateDeduping, config) }
+        case Some("news/headline")              => { @containers.headline(collection, HeadlineContainer(), index)(request, config) }
+        case Some("news/most-popular")          => { @containers.popular(collection, PopularContainer(), index)(request, config) }
+        case Some("news/people")                => { @containers.people(collection, PeopleContainer(), index)(request, templateDeduping, config) }
+        case Some("news/small-list")            => { @containers.small_list(collection, SpecialContainer(), index)(request, config) }
+        case Some("news/special")               => { @containers.special(collection, SpecialContainer(), index)(request, templateDeduping, config) }
+        case Some("features")                   => { @containers.features(collection, FeaturesContainer(), index)(request, templateDeduping, config) }
+        case Some("features/auto")              => { @containers.featuresauto(collection, FeaturesAutoContainer(), index)(request, templateDeduping, config) }
+        case Some("features/multimedia")        => { @containers.multimedia(collection, MultimediaContainer(), index, useInlinePlayer = true)(request, templateDeduping, config) }
+        case Some("features/picks")             => { @containers.picks(collection, PicksContainer(), index)(request, templateDeduping, config) }
+        case Some("features/volumes")           => { @containers.featuresvolumes(front, collection, FeaturesVolumesContainer(), index)(request, templateDeduping, config) }
+        case Some("prototype/cassoulet")        => { @containers.cassoulet(collection, CassouletContainer(), index)(request, templateDeduping, config) }
+        case Some("prototype/quichelorraine")   => { @containers.quichelorraine(collection, QuicheLorraineContainer(), index)(request, templateDeduping, config) }
+        case Some("prototype/raclette")         => { @containers.raclette(collection, RacletteContainer(), index)(request, templateDeduping, config) }
+        case Some("comment/comment-and-debate") => { @containers.commentanddebate(collection, CommentAndDebateContainer(), index)(request, templateDeduping, config) }
+        case Some("fixed/small/slow-IV")        => { @containers.slow_small_IV(collection, Slice(collection, QuarterQuarterQuarterQuarter), index)(request, templateDeduping, config) }
+        case _                                  => { @containers.special(collection, SpecialContainer(), index)(request, templateDeduping, config) }
+    }
 }

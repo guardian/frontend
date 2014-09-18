@@ -1,9 +1,9 @@
-@(items: Seq[Trail], indexOffset: Int, containerIndex: Int, numberOfColumns: ShowMoreColumns)(implicit request: RequestHeader, config: Config)
+@(cards: Seq[layout.Card], indexOffset: Int, containerIndex: Int, numberOfColumns: ShowMoreColumns)(implicit request: RequestHeader, config: Config)
 
 @import model.Config
 @import model.Trail
 @import views.support.ShowMoreColumns
-@import fragments.items.facia_cards.list
+@import fragments.items.facia_cards.standard
 
 @* Show More for the new style containers should identical, differing only in number of columns (3 or 4).
  *
@@ -12,11 +12,11 @@
  *
  * TODO use the number of columns here
  *@
-@if(items.nonEmpty) {
+@if(cards.nonEmpty) {
     <div class="linkslist-container js-container--show-more">
-        <ul class="linkslist u-unstyled l-row l-row--items-4 l-row--layout-m facia-slice">
-        @items.zipWithIndex.map { case (trail, index) =>
-            @list(trail, index + indexOffset, containerIndex)
+        <ul class="linkslist u-unstyled l-row l-row--items-4 facia-slice">
+        @cards.map { card =>
+            @standard(card, "fc-item--list-media-mobile fc-item--list-media-tablet", containerIndex)
         }
         </ul>
     </div>
