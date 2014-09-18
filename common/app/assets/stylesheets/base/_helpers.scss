@@ -18,8 +18,14 @@
     }
 }
 
-.hide-from-left-col {
-    @include mq($from: leftCol) {
+.u-h--up-to-wide {
+    @include mq($until: wide) {
+        @include u-h;
+    }
+}
+
+.u-h--from-wide {
+    @include mq($from: wide) {
         @include u-h;
     }
 }
