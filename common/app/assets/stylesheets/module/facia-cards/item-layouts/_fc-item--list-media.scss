@@ -5,10 +5,11 @@
  ************************************************/
 
 @mixin fc-item--list-media {
+    @include fc-item--list;
 
     // values to set image height
-    $headline-size: 1;
     $text-lines-per-media-object: 4;
+    $headline-size: 1;
 
     // calculate image width
     $media-ratio: 5 / 3;
@@ -18,8 +19,6 @@
 
     // display: block;
     // position: relative;
-    padding-bottom: 0;
-    padding-right: $fc-item-gutter;
     min-height: $item-min-height;
 
     &.fc-item--has-image {
@@ -33,7 +32,6 @@
     }
 
     &.fc-item--has-no-image {
-        padding-left: $fc-item-gutter;
         padding-left: $fc-item-gutter;
     }
 
@@ -57,36 +55,13 @@
     .fc-item__image-container {
         // padding-top: 0;
         // margin-top: 0;
-        // display: block;
+        display: block;
     }
 
     .fc-item__media-wrapper {
         float: left;
         margin-left: 0 - $image-width - $fc-item-gutter;
         width: $image-width;
-    }
-
-    .fc-item__byline,
-    .fc-item__title {
-        @include fs-headline($headline-size);
-    }
-
-    .fc-item__header,
-    .fc-item__byline {
-        margin-bottom: 0;
-        padding-left: 0;
-    }
-
-    .fc-item__title {
-        padding-top: $item-vertical-padding;
-    }
-
-    .fc-item__link {
-        color: $c-neutral1;
-    }
-
-    .fc-item__meta {
-        display: none;
     }
 
     // &.fc-item--has-image.fc-item--has-icon {

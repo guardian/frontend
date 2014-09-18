@@ -4,4 +4,37 @@
 
  ************************************************/
 
-@mixin fc-item--list {}
+@mixin fc-item--list {
+    $headline-size: 1;
+    $item-vertical-padding: $gs-baseline * .25;
+
+    padding-bottom: 0;
+
+    .fc-item__byline,
+    .fc-item__title {
+        @include fs-headline($headline-size);
+    }
+
+    .fc-item__header {
+        margin-bottom: 0;
+        padding-left: $fc-item-gutter;
+        padding-bottom: $gs-baseline * 2;
+    }
+
+    .fc-item__title {
+        padding-top: $item-vertical-padding;
+        padding-bottom: $item-vertical-padding;
+    }
+
+    .fc-item__link {
+        color: $c-neutral1;
+    }
+
+    .fc-item__meta {
+        // display: none;
+    }
+
+    .fc-item__media-wrapper {
+        display: none;
+    }
+}
