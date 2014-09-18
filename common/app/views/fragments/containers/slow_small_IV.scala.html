@@ -1,50 +1,72 @@
-@(collection: model.Collection, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+@(collection: model.Collection, sliceWithRemaining: (layout.SliceWithCards, Seq[layout.Card]), containerIndex: Int)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
 @import views.support.{GetClasses, FourColumns}
+@import layout.{ColumnAndCards, SingleItem, Rows}
 @import views.html.fragments.containers.show_more
 @import views.html.fragments.items.facia_cards.standard
 @import model.FaciaComponentName
 @import common.LinkTo
 
-@defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
+@defining(sliceWithRemaining){ case (slice, remainingCards) =>
 
-    @defining(templateDeduping(4, collection.items)) { items =>
-        @if(items.nonEmpty) {
-            <section
-            id="@FaciaComponentName(config, collection)"
-            class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
-            data-link-name="@FaciaComponentName(config, collection)"
-            data-id="@config.id"
-            @config.sponsorshipKeyword.map { keyword =>
-                data-keywords="@keyword"
-            }
-            data-component="@FaciaComponentName(config, collection)">
-                <div class="facia-container__inner">
-                    <div class="container__header">
-                    @title.map { title =>
-                        <h2 class="container__title">
-                            @href.map { href =>
-                            <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                            }.getOrElse{
-                                <span class="container__title__label u-text-hyphenate">@Html(title)</span>
-                            }
-                        </h2>
-                    }
-                    </div>
-                    <div class="container__body container--rolled-up-hide">
-                        <div class="facia-slice-wrapper">
-                            <ul class="u-unstyled l-row l-row--items-4 facia-slice">
-                            @items.slice(0, 4).zipWithIndex.map{ case (trail, index) =>
-                                @standard(trail, index + 3, containerIndex)
-                            }
-                            </ul>
-                            @defining(items.slice(4, 24)) { items =>
-                                @show_more(items, 4, containerIndex, FourColumns)
-                            }
+    @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
+
+        @defining(templateDeduping(4, collection.items)) { items =>
+            @if(items.nonEmpty) {
+                <section
+                id="@FaciaComponentName(config, collection)"
+                class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty) slice slice--@slice.cssClassName"
+                data-link-name="@FaciaComponentName(config, collection)"
+                data-id="@config.id"
+                @config.sponsorshipKeyword.map { keyword =>
+                    data-keywords="@keyword"
+                }
+                data-component="@FaciaComponentName(config, collection)">
+                    <div class="facia-container__inner">
+                        <div class="container__header">
+                        @title.map { title =>
+                            <h2 class="container__title">
+                                @href.map { href =>
+                                <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
+                                }.getOrElse{
+                                    <span class="container__title__label u-text-hyphenate">@Html(title)</span>
+                                }
+                            </h2>
+                        }
+                        </div>
+                        <div class="container__body container--rolled-up-hide">
+                            <div class="facia-slice-wrapper">
+                                <ul class="u-unstyled l-row l-row--items-@slice.columns.size facia-slice">
+                                @for(ColumnAndCards(column, cards) <- slice.columns) {
+
+                                    @column match {
+
+                                        case SingleItem(width, itemClasses) => {
+                                            @cards.headOption.map { card =>
+                                                @standard(card, itemClasses.classes, containerIndex)
+                                            }
+                                        }
+
+                                        case Rows(flexWidth, columns, rows, itemClasses) => {
+                                            @if(cards.nonEmpty) {
+                                                @cards.map{ card =>
+                                                    @standard(card, itemClasses.classes, containerIndex)
+                                                }
+                                            }
+                                        }
+
+                                        case _ => { @* TODO *@ }
+                                    }
+                                }
+                                </ul>
+                                @show_more(remainingCards, 4, containerIndex, FourColumns)
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            }
         }
     }
+
 }
