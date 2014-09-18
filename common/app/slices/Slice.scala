@@ -1,26 +1,34 @@
 package slices
 
 import layout._
+import model.Collection
 
 sealed trait Slice {
   /** TODO: once we get rid of all the not-implementeds below, turn this into a val */
   def layout: SliceLayout
 }
 
+object Slice {
+  def apply(collection: Collection, slice: Slice) = {
+    val cards = collection.items.zipWithIndex.map{case (trail, index) => Card(index, trail)}
+    SliceWithCards.fromItems(cards, slice.layout)
+  }
+}
+
 /* .________.________.________.________.
- * |________|________|________|________|
- * |________|________|________|________|
- * |________|________|________|________|
- */
+* |________|________|________|________|
+* |________|________|________|________|
+* |________|________|________|________|
+*/
 case object QlQlQlQl extends Slice {
   def layout = ???
 }
 
 /* .________.________.________.________.
- * |########|________|________|________|
- * |########|________|________|________|
- * |________|________|________|________|
- */
+* |########|________|________|________|
+* |########|________|________|________|
+* |________|________|________|________|
+*/
 case object QuarterQlQlQl extends Slice {
   def layout = ???
 }
@@ -49,7 +57,18 @@ case object QuarterQuarterQuarterQl extends Slice {
  * |________|________|________|________|
  */
 case object QuarterQuarterQuarterQuarter extends Slice {
-  def layout = ???
+    val layout = SliceLayout(
+      cssClassName = "q-q-q-q",
+      columns = Seq(
+        SingleItem(
+          width = 1,
+          ItemClasses(
+            mobile = "list-media",
+            desktop = "standard-quarter"
+          )
+        )
+      )
+    )
 }
 
 /* ._________________.________.________.
