@@ -12,6 +12,7 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
+import conf.Switches.LiveblogCachingSwitch
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -156,9 +157,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) ++ Map(seriesMeta: _*)
   }
 
+
+  private lazy val liveCacheTime = if (LiveblogCachingSwitch.isSwitchedOn) 5 else 30
   override lazy val cacheSeconds = {
-    if (isLive) 30 // live blogs can expect imminent updates
-    else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
+    if (isLive) liveCacheTime // live blogs can expect imminent updates
+    else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
