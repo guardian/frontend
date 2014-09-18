@@ -14,7 +14,7 @@ case class SplitColumn(width: Int, topItemLayout: ItemLayout, bottomItemsLayout:
 case object MPU extends Column
 
 object SliceWithCards {
-  private def itemsToConsume(column: Column) = column match {
+  def itemsToConsume(column: Column) = column match {
     case _: SingleItem => 1
     case Rows(_, columns, rows, _) => columns * rows
     case _: SplitColumn => 3
