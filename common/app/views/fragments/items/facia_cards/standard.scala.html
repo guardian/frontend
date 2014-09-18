@@ -21,7 +21,7 @@
     data-link-name="trail | @{index + 1}"
     @SnapData(trail)>
 
-<div class="item__container">
+<div class="fc-item__container">
     @FaciaDisplayElement.fromTrail(trail) match {
         case InlineVideo(videoElement, title, endSlatePath) if trail.imageAdjust == "boost" => {
             <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
@@ -71,7 +71,7 @@
     }
 
     @trail.trailText.map { text =>
-        <div class="item__standfirst">@Html(text)</div>
+        <div class=fc-item__standfirst">@Html(text)</div>
     }
 
     @meta(trail)
