@@ -36,6 +36,14 @@
         padding-left: $fc-item-gutter;
         padding-left: $fc-item-gutter;
     }
+    
+    &.item--has-discussion {
+        // background-color: purple !important;
+
+        .fc-item__container {
+            padding-bottom: 24px;
+        }
+    }
 
     .fc-item__avatar {
         top: 0;
@@ -72,7 +80,8 @@
     }
 
     .fc-item__header,
-    .fc-item__byline {
+    .fc-item__byline,
+    .fc-item__meta {
         margin-bottom: 0;
         padding-left: 0;
     }
@@ -83,10 +92,6 @@
 
     .fc-item__link {
         color: $c-neutral1;
-    }
-
-    .fc-item__meta {
-        display: none;
     }
 
     // &.fc-item--has-image.fc-item--has-icon {
