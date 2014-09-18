@@ -14,31 +14,33 @@
 .gallery2__item {
     position: relative;
     @include box-sizing(border-box);
-    padding-top: $gs-baseline;
     min-height: 200px;
+    margin-bottom: $gs-baseline;
 
     @include mq($until: rightCol) {
         border-top: 1px dotted $c-mediaAccent2;
+        padding-top: $gs-baseline;
 
         &:first-child {
             border-top: 0;
-            padding-top: 0;
         }
         &:last-child {
             border-bottom: 1px dotted $c-mediaAccent2;
-            margin-bottom: $gs-baseline;
         }
         .gallery2__item--advert + & {
-            margin-top: $gs-baseline*2;
         }
     }
     @include mq(rightCol) {
-        padding-top: 0;
-        margin-top: $gs-baseline*2;
         padding-right: gs-span(3) + $gs-gutter;
+        margin-bottom: $gs-baseline*3;
 
         &:last-child {
             margin-bottom: $gs-baseline*2;
+        }
+    }
+    @include mq(rightCol, leftCol) {
+        &:first-child {
+            margin-top: $gs-baseline*2;
         }
     }
 }
@@ -122,6 +124,21 @@
     max-height: 700px;
 }
 
+.gallery2__img-initial.gallery2__img--landscape {
+    width: 100%;
+}
+
+.gallery2__img-container--portrait {
+    @include fix-aspect-ratio(1, 1);
+}
+
+.gallery2__img--portrait {
+    position: absolute;
+    height: 100%;
+    left: 0;
+    right: 0;
+}
+
 .gallery2__fullscreen {
     @include border-radius(50%);
     top: 0;
@@ -162,6 +179,7 @@
 
 .content__main-column--gallery {
     margin-right: auto;
+    padding-bottom: $gs-baseline*2;
 }
 
 .content--gallery {

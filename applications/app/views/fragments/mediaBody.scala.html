@@ -5,9 +5,9 @@
 
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
 <div class="l-side-margins l-side-margins--layout-content">
-    <article class="content content--media content--media--@mediaType tone-@media.visualTone"
-        itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
-        <div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
+    <div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
+        <article class="content content--media content--media--@mediaType tone-@media.visualTone"
+            itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
 
             @fragments.headDefault(media)
 
@@ -27,6 +27,7 @@
                                 <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio">
                                 @audio.mainAudio.map { audioElement =>
                                     @fragments.media.audio(AudioPlayer(
+                                        audio,
                                         audioElement,
                                         audio.headline,
                                         autoPlay = true
@@ -84,10 +85,24 @@
                                 </div>
                             }
                         }
+                        <div class="tag-wrapper u-h--up-to-left-col">
+                            @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                                <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-link-name="keywords">
+                                    <h2 class="social__head u-h--up-to-left-col">Topics</h2>
+                                    @fragments.keywordList(media.keywords, tone = "media")
+                                </div>
+                            }
+                        </div>
                     </div>
-
                     @fragments.contentMeta(media)
-
+                    <div class="tag-wrapper hide-from-left-col">
+                        @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                            <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-link-name="keywords">
+                                <h2 class="social__head u-h--up-to-left-col">Topics</h2>
+                                @fragments.keywordList(media.keywords, tone = "media")
+                            </div>
+                        }
+                    </div>
                     <div class="social-wrapper social-wrapper--bottom" data-component="share">
                         @fragments.social(media, iconModifier = "white")
                     </div>
@@ -96,7 +111,7 @@
 
                 @media match {
                     case video: Video => {
-                        <div class="content__secondary-column content__secondary-column--media content__secondary-column--@mediaType"
+                        <div class="content__secondary-column content__secondary-column--media content__secondary-column--video"
                             aria-hidden="true">
                             <div class="js-video-components-container"></div>
                         </div>
@@ -105,9 +120,8 @@
                 }
 
             </div>
-        </div>
-    </article>
-
+        </article>
+    </div>
     @fragments.contentFooter(media, page.related, "media")
 
     }

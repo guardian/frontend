@@ -1,14 +1,16 @@
 package model.commercial.books
 
+import common.{ExecutionContexts, Logging}
+import conf.CommercialConfiguration
 import conf.Configuration.commercial.magento
-import conf.{CommercialConfiguration, Switches}
-import model.commercial.{OptString, XmlAdsApi}
+import conf.Switches._
+import model.commercial._
 
+import scala.concurrent.Future
+import scala.concurrent.duration._
 import scala.xml.Elem
 
-trait BestsellersApi extends XmlAdsApi[Book] {
-
-  final protected val switch = Switches.GuBookshopFeedsSwitch
+trait BestsellersApi extends ExecutionContexts with Logging {
 
   protected val category: String
   protected val keywordIds: Seq[String]
@@ -18,8 +20,6 @@ trait BestsellersApi extends XmlAdsApi[Book] {
   protected val path: String
 
   protected def url = CommercialConfiguration.getProperty("gu.bookshop.api.url") map (_ + path)
-
-  override protected val loadTimeout = 5000
 
   def parse(xml: Elem): Seq[Book] = {
 
@@ -45,6 +45,11 @@ trait BestsellersApi extends XmlAdsApi[Book] {
         )
     }
   }
+
+  def loadAds(): Future[Seq[Book]] = {
+    FeedReader.readSeqFromXml[Book](FeedRequest(adTypeName, GuBookshopFeedsSwitch, url, timeout = 5.seconds))(parse)
+  }
+
 }
 
 object GeneralBestsellersFeed extends BestsellersApi {
@@ -95,6 +100,7 @@ object PoliticsBestsellersFeed extends BestsellersApi {
   protected val path = "/Feed7.jsp"
 }
 
+
 object MusicFilmBestsellersFeed extends BestsellersApi {
   protected lazy val category = "Music & Film"
   protected val keywordIds = Seq("music/music", "film/film")
@@ -131,7 +137,8 @@ object MagentoBestsellersFeed extends BestsellersApi {
 
   override protected def url: Option[String] = magento.domain map (domain => s"http://$domain/$path")
 
-  override def parse(xml: Elem): Seq[Book] = {
-    super.parse(xml) map (book => book.copy(jacketUrl = book.jacketUrl.map(_.stripPrefix("http:"))))
+  override def loadAds(): Future[Seq[Book]] = super.loadAds() map {
+    _ map (book => book.copy(jacketUrl = book.jacketUrl.map(_.stripPrefix("http:"))))
   }
+
 }

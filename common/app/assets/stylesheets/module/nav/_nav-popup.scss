@@ -222,7 +222,7 @@ $control-offset: 36 + $gs-gutter/2;
         padding-top: $gs-gutter + 5px; // manual amount, determined by google, not guss-grid-system
     }
 
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         left: 50%;
         margin-left: 0 - (gs-span(7) + $gs-gutter);
     }

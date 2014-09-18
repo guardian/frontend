@@ -1,4 +1,9 @@
 @(comment: Comment, showMore: Boolean = false)(implicit request: RequestHeader)
+
+@import common.Edition
+@import discussion.model.Comment
+@import views.support.{BulletCleaner, InBodyLinkCleaner, Format}
+
 <div class="comment comment--speechy" itemscope itemtype="http://schema.org/Comment">
     <h2 class="article__meta-heading">Featured comment</h2>
     <div class="comment__inner">

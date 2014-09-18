@@ -6,6 +6,7 @@ import sbt.Keys._
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.SbtNativePackager._
 import play.twirl.sbt.Import._
+import Dependencies._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -76,8 +77,8 @@ trait Prototypes {
     unmanagedClasspath in Test <+= (baseDirectory) map { bd => Attributed.blank(bd / "test") },
 
     libraryDependencies ++= Seq(
-      "org.scalatest" %% "scalatest" % "2.2.0" % Test,
-      "org.mockito" % "mockito-all" % "1.9.5" % Test
+      scalaTest,
+      mockito
     ),
 
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.
@@ -97,9 +98,9 @@ trait Prototypes {
     .settings(VersionInfo.settings:_*)
     .settings(
       libraryDependencies ++= Seq(
-        "commons-io" % "commons-io" % "2.4"
+        commonsIo
       )
     )
-    .settings((name in Universal := applicationName))
+    .settings(name in Universal := applicationName)
   }
 }

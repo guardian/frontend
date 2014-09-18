@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val cucumberVersion = "1.1.5"
   val identityLibVersion = "3.41"
-  val seleniumVersion = "2.39.0"
+  val seleniumVersion = "2.42.2"
   val slf4jVersion = "1.7.5"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
@@ -15,7 +15,8 @@ object Dependencies {
   val chargebee = "org.json" % "org.json" % "chargebee-1.0"
   val commonsCodec = "commons-codec" % "commons-codec" % "1.6"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
-  val contentApiClient = "com.gu" %% "content-api-client" % "2.19"
+  val commonsIo = "commons-io" % "commons-io" % "2.4"
+  val contentApiClient = "com.gu" %% "content-api-client" % "2.20"
   val cucumberJava = "info.cukes" % "cucumber-java" % cucumberVersion
   val cucumberJUnit = "info.cukes" % "cucumber-junit" % cucumberVersion
   val cucumberPicoContainer = "info.cukes" % "cucumber-picocontainer" % cucumberVersion
@@ -39,6 +40,7 @@ object Dependencies {
   val mezaConfig = "hu.meza.tools" % "config" % "1.0.1"
   val mezaGaLib = "hu.meza.tools" % "galib" % "1.0.2"
   val mezaHttpClientWrapper = "hu.meza.tools" % "http-client-wrapper" % "0.1.9"
+  val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
   val openCsv = "net.sf.opencsv" % "opencsv" % "2.3"
   val paClient = "com.gu" %% "pa-client" % "5.0.1-NG"
@@ -50,6 +52,7 @@ object Dependencies {
   val romeModules = "org.rometools" % "rome-modules" % "1.0"
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.11.5" % "test"
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
+  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.1" % Test
   val seeGuice = "com.tzavellas" % "sse-guice" % "0.7.1"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % seleniumVersion
   val seleniumServer = "org.seleniumhq.selenium" % "selenium-server" % seleniumVersion

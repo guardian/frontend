@@ -8,11 +8,11 @@ object DynamicSlow extends DynamicContainer {
       None
     } else {
       Some(if (bigs.length == 0) {
-        Minilla
+        Hl4Hl4
       } else if (bigs.length == 1) {
-        Gigan
+        Hl4Half
       } else {
-        Destoroyah
+        Hl4QuarterQuarter
       })
     }
   }
