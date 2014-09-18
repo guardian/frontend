@@ -57,7 +57,7 @@ a {
     }
 
     .fc-item__kicker {
-        color: $c-featureAccent !important;
+        color: $c-featureMute !important;
     }
 
     .fc-item__title .i {
@@ -70,7 +70,7 @@ a {
     .fc-item__meta {
         &,
         & a {
-            color: $c-featuresMute;
+            color: $c-featureMute;
         }
     }
 }
