@@ -20,7 +20,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=30")
+    headers("Cache-Control") should be("max-age=30, stale-while-revalidate=3, stale-if-error=864000")
   }
 
   it should "cache content less than 1 hour old for 1 minute" in {
@@ -32,7 +32,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60")
+    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
   }
 
   it should "cache older content for 15 minutes" in {
@@ -44,7 +44,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=900")
+    headers("Cache-Control") should be("max-age=900, stale-while-revalidate=90, stale-if-error=864000")
   }
 
   it should "cache other things for 1 minute" in {
@@ -63,7 +63,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val result = Cached(page)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60")
+    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
   }
 
   it should "double the cache time if DoubleCacheTimesSwitch is switched on" in {
@@ -75,7 +75,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=120")
+    headers("Cache-Control") should be("max-age=120, stale-while-revalidate=12, stale-if-error=864000")
   }
 
   private def content(lastModified: DateTime, live: Boolean): Content = {
