@@ -52,15 +52,16 @@
                 ))">
                     @fragments.items.elements.facia_cards.title(trail, index, containerIndex)
                     @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+                    @if(tone == "comment") {
+                        @trail.byline.map { byLine =>
+                            @trail match { case content:model.Content =>
+                            <p class="fc-item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                            }
+                        }
+                    }
                 </div>
 
                 @if(tone == "comment") {
-                    @trail.byline.map { byLine =>
-                        @trail match { case content:model.Content =>
-                            <p class="fc-item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
-                        }
-                    }
-
                     @if(trail.hasLargeContributorImage) {
                         @trail.contributors.headOption.map { profile =>
                             @profile.contributorLargeImagePath.map{ image =>
