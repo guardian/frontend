@@ -30,6 +30,10 @@
         .item__kicker {
             color: $c-commentDefault;
         }
+
+        .item__meta {
+            background-color: fade-out($c-commentBackground, .5);
+        }
     }
 
     .tone-feature {

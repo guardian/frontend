@@ -38,6 +38,7 @@
                     class="media-primary media-content">
                     @article.mainAudio.map { audioElement =>
                         @fragments.media.audio(AudioPlayer(
+                            article,
                             audioElement,
                             article.headline,
                             autoPlay = false

@@ -242,23 +242,44 @@ define([
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
 
-                var exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
-                    msg = '<p class="site-message__message" id="site-message__message">' +
-                            'You’re viewing a beta release of the Guardian’s responsive website.' +
-                            ' We’d love to hear what you think.' +
-                        '</p>' +
-                        '<ul class="site-message__actions u-unstyled">' +
-                            '<li class="site-message__actions__item">' +
-                               '<i class="i i-back"></i>' +
-                                   '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                                       'data-link-name="opt-out">Use current version</a>' +
-                            '</li>' +
-                            '<li class="site-message__actions__item">' +
+                var exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
+
+                var msg = '<p class="site-message__message" id="site-message__message">' +
+                        'You’re viewing a beta release of the Guardian’s responsive website.' +
+                        ' We’d love to hear what you think.' +
+                    '</p>' +
+                    '<ul class="site-message__actions u-unstyled">' +
+                        '<li class="site-message__actions__item">' +
+                           '<i class="i i-back"></i>' +
+                               '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
+                                   'data-link-name="opt-out">Use current version</a>' +
+                        '</li>' +
+                        '<li class="site-message__actions__item">' +
+                        '<i class="i i-arrow-white-right"></i>' +
+                        '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
+                        '</li>' +
+                    '</ul>';
+
+                var usMsg = '<p class="site-message__message" id="site-message__message">' +
+                        'You’re viewing a beta release of the Guardian’s responsive website.' +
+                        ' We’d love to hear what you think.' +
+                    '</p>' +
+                    '<ul class="site-message__actions u-unstyled">' +
+                        '<li class="site-message__actions__item">' +
                             '<i class="i i-arrow-white-right"></i>' +
                             '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
-                            '</li>' +
-                        '</ul>';
-                releaseMessage.show(msg);
+                        '</li>' +
+                        '<li class="site-message__actions__item">' +
+                            '<i class="i i-arrow-white-right"></i>' +
+                            '<a href="http://next.theguardian.com" target="_blank">Find out more</a>' +
+                        '</li>' +
+                    '</ul>';
+
+                if (config.page.edition === 'US') {
+                    releaseMessage.show(usMsg);
+                } else {
+                    releaseMessage.show(msg);
+                }
             }
         },
 

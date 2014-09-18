@@ -223,7 +223,7 @@ category: Common
 }
 
 .button--tone-news-more {
-    @include button-colour(#ffffff, $c-newsDefault, #ffffff, darken($c-neutral3, 10%), $c-neutral3);
+    @include button-colour(#ffffff, $c-newsDefault, #ffffff, darken($c-neutral3, 10%), $c-neutral5);
 }
 
 .button--tone-feature {
@@ -294,6 +294,10 @@ category: Common
     }
 
     .content__keywords & {
+        max-width: none;
+    }
+
+    .facia-container__related-keywords__body & {
         max-width: none;
     }
 }

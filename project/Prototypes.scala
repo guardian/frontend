@@ -6,6 +6,7 @@ import sbt.Keys._
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.SbtNativePackager._
 import play.twirl.sbt.Import._
+import Dependencies._
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -65,8 +66,6 @@ trait Prototypes {
     )
   )
 
-  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.1" % Test
-
   val frontendTestSettings = Seq(
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
@@ -79,7 +78,7 @@ trait Prototypes {
 
     libraryDependencies ++= Seq(
       scalaTest,
-      "org.mockito" % "mockito-all" % "1.9.5" % Test
+      mockito
     ),
 
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.
@@ -99,7 +98,7 @@ trait Prototypes {
     .settings(VersionInfo.settings:_*)
     .settings(
       libraryDependencies ++= Seq(
-        "commons-io" % "commons-io" % "2.4"
+        commonsIo
       )
     )
     .settings(name in Universal := applicationName)

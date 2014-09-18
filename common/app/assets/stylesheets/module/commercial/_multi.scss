@@ -84,7 +84,7 @@ Multi component (AKA Frankenponent)
                 }
             }
         }
-        @include mq(faciaLeftCol) {
+        @include mq(leftCol) {
             .commercial__body {
                 padding: $gs-baseline 0;
             }
@@ -98,7 +98,7 @@ Multi component (AKA Frankenponent)
 /* Fronts */
 
 .facia-container--layout-front .commercial.commercial--multi {
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         .commercial__head {
             width: gs-span(2) + $gs-gutter;
             float: left;
@@ -113,5 +113,5 @@ Multi component (AKA Frankenponent)
         .commercial__head {
             float: left;
         }
-    }    
+    }
 }

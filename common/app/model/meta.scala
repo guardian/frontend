@@ -200,13 +200,16 @@ trait Tags {
 
   lazy val keywords: Seq[Tag] = tagsOfType("keyword")
   lazy val contributors: Seq[Tag] = tagsOfType("contributor")
+  lazy val isContributorPage: Boolean = contributors.nonEmpty
   lazy val series: Seq[Tag] = tagsOfType("series")
   lazy val blogs: Seq[Tag] = tagsOfType("blog")
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
 
   def isSponsored = DfpAgent.isSponsored(tags)
+  def hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
+  def hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags)
   def hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags)
   def sponsor = DfpAgent.getSponsor(tags)
 

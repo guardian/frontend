@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Tag => ApiTag}
+import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Podcast}
 import common.{Pagination, Reference}
 import play.api.libs.json.{JsArray, JsString, JsValue}
 import views.support.{Contributor, ImgSrc, Item140}
@@ -69,4 +69,6 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   override def cards: List[(String, String)] = super.cards ++
     List("twitter:card" -> "summary")
+
+  lazy val podcast: Option[Podcast] = delegate.podcast
 }

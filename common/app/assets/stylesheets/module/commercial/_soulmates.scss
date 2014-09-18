@@ -256,7 +256,7 @@ $c-soulmates-high: $c-neutral1;
             width: auto;
         }
     }
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         .commercial__head {
             position: static;
             width: gs-span(2) + $gs-gutter;
@@ -322,6 +322,7 @@ $c-soulmates-high: $c-neutral1;
     @include mq(leftCol) {
         .commercial__search {
             width: gs-span(3) - $gs-gutter;
+            width: $left-column-wide;
             padding: 0;
         }
         .commercial__head {
@@ -329,6 +330,8 @@ $c-soulmates-high: $c-neutral1;
             width: $left-column + $gs-gutter !important;
             margin-top: 8px;
             margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
         }
         .commercial__body {
             padding: $gs-baseline 0;
@@ -343,19 +346,10 @@ $c-soulmates-high: $c-neutral1;
                 background-size: contain;
             }
         }
-        @include c-soulmates-branding;
-    }
-    @include mq(faciaLeftCol) {
-        .commercial__head {
-            padding-left: 0;
-            padding-right: 0;
-        }
         .commercial__explainer {
             margin-top: $gs-baseline;
         }
-        .commercial__search {
-            width: $left-column-wide;
-        }
+        @include c-soulmates-branding;
     }
     @include mq(wide) {
         .commercial__head {
