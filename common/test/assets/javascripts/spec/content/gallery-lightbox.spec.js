@@ -1,17 +1,19 @@
 define([
+    'bonzo',
+    'qwery',
+    'bean',
     'common/utils/$',
     'common/utils/mediator',
     'common/modules/gallery/lightbox',
-    'bean',
-    'fixtures/content/gallery-lightbox',
-    'bonzo'
+    'fixtures/content/gallery-lightbox'
 ], function(
+    bonzo,
+    qwery,
+    bean,
     $,
     mediator,
     galleryLightbox,
-    bean,
-    lightboxFixtures,
-    bonzo
+    lightboxFixtures
 ) {
 
     function testImageSrc(srcActual, srcTemplate) {
@@ -130,6 +132,27 @@ define([
             expectInfo(true);
             bean.fire(lightbox.infoBtn, 'click');
             expectInfo(false);
+        });
+
+        it("should generate the correct image HTML", function() {
+            lightbox.loadGalleryfromJson(testJson, testJson.images.length);
+            var img = testJson.images[2],
+                imgEl = bonzo.create(lightbox.generateImgHTML(img, 2));
+
+            expect($('.gallery-lightbox__index', imgEl).text()).toEqual('2');
+            expect($('.gallery-lightbox__count', imgEl).text()).toEqual(testJson.images.length.toString());
+            expect($('.gallery-lightbox__img-caption', imgEl).text()).toEqual(img.caption);
+            expect($('.gallery-lightbox__img-credit', imgEl).text()).toEqual(img.credit);
+
+        });
+
+        it("should not show the credit where displayCredit is false", function() {
+            lightbox.loadGalleryfromJson(testJson, testJson.images.length);
+            var img = testJson.images[3],
+                imgEl = bonzo.create(lightbox.generateImgHTML(img, 3));
+
+            expect($('.gallery-lightbox__img-credit', imgEl).text()).toEqual('');
+
         });
 
     });

@@ -484,7 +484,11 @@ a {
                 document.getElementsByTagName('html')[0].className += ' iframed--overflow-hidden';
 
                 // Update iframe height
+                // This should really use http://interactive.guim.co.uk/libs/iframe-messenger/iframeMessenger.js
+                // but it isn't available over SSL at the moment.
+                self.sendHeight();
                 window.addEventListener('resize', self.sendHeight, false);
+                setInterval(self.sendHeight, 500);
 
                 dom.$form.className = dom.$form.className.replace('is-hidden', '');
 

@@ -5,7 +5,9 @@ import common.{ExecutionContexts, Logging}
 import conf.Switch
 import model.diagnostics.CloudWatch
 import play.api.Play.current
+import play.api.libs.json.JsValue
 import play.api.libs.ws.WS
+import play.api.libs.json.Json
 
 import scala.concurrent.Future
 import scala.concurrent.duration.{Duration, _}
@@ -86,6 +88,12 @@ object FeedReader extends ExecutionContexts with Logging {
   def readSeqFromXml[T](request: FeedRequest)(parse: Elem => Seq[T]): Future[Seq[T]] = {
     readSeq(request) { body =>
       parse(XML.loadString(body))
+    }
+  }
+
+  def readSeqFromJson[T](request: FeedRequest)(parse: JsValue => Seq[T]): Future[Seq[T]] = {
+    readSeq(request) { body =>
+      parse(Json.parse(body))
     }
   }
 

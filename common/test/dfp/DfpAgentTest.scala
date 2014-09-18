@@ -7,6 +7,7 @@ import org.scalatest.Inspectors._
 import org.scalatest.{FlatSpec, Matchers}
 import com.gu.openplatform.contentapi.model.{ Tag => ApiTag }
 
+
 class DfpAgentTest extends FlatSpec with Matchers {
 
   val examplePageSponsorships = Seq(
@@ -52,6 +53,10 @@ class DfpAgentTest extends FlatSpec with Matchers {
       InlineMerchandisingTagSet(keywords = Set("ad-feature", "film"))
 
     override def isProd = true
+
+    override protected def tagToSponsorsMap: Map[String, Set[String]] = ???
+
+    override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = ???
   }
 
   private object notProductionTestDfpAgent extends DfpAgent {
@@ -64,6 +69,10 @@ class DfpAgentTest extends FlatSpec with Matchers {
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
 
     override protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = InlineMerchandisingTagSet()
+
+    override protected def tagToSponsorsMap: Map[String, Set[String]] = ???
+
+    override protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]] = ???
   }
 
   def apiQuery(apiQuery: String) = {
@@ -339,4 +348,26 @@ class DfpAgentTest extends FlatSpec with Matchers {
   "non production DfpAgent" should "should recognise adtest targetted line items" in {
     notProductionTestDfpAgent.isPageSkinned("testSport/front", Edition.defaultEdition) should be(true)
   }
+
+  "generate tag to sponsors map" should "glom sponsorships together" in {
+    val universitySponsorships = Sponsorship(List("universityguide", "university A"), Some("University Sponsor A"), 1) ::
+      Sponsorship(List("universityguide"), Some("University Sponsor B"), 2) :: Nil
+
+    val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(universitySponsorships)
+    sponsorsMap should contain key("universityguide")
+    sponsorsMap("universityguide") should equal(Set("University Sponsor A", "University Sponsor B"))
+    sponsorsMap("university A") should equal(Set("University Sponsor A"))
+
+  }
+
+  "generate tag to sponsors map" should "not bother with tag with no detected sponsors" in {
+    val sponsorshipsWithANone = Sponsorship(List("universityguide", "university A"), Some("University Sponsor A"), 3) ::
+      Sponsorship(List("videogames"), None, 4) :: Nil
+
+    val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(sponsorshipsWithANone)
+    sponsorsMap should contain key "universityguide"
+    sponsorsMap("universityguide") should equal(Set("University Sponsor A"))
+    sponsorsMap should not contain key("videogames")
+  }
+
 }

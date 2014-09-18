@@ -62,7 +62,7 @@ define([
                 '<div class="gallery-lightbox__img-container"><img class="gallery-lightbox__img js-gallery-lightbox-img""></div>' +
                 '<div class="gallery-lightbox__info js-gallery-lightbox-info">' +
                     '<div class="gallery-lightbox__progress gallery-lightbox__progress--info">' +
-                        '<span class="gallery-lightbox__index">{{index]}</span>' +
+                        '<span class="gallery-lightbox__index">{{index}}</span>' +
                         '<span class="gallery-lightbox__progress-separator"></span>' +
                         '<span class="gallery-lightbox__count">{{count}}</span>' +
                     '</div>' +
@@ -140,6 +140,15 @@ define([
             states: this.states
         });
     }
+
+    GalleryLightbox.prototype.generateImgHTML = function(img, i) {
+        return template(this.imgElementHtml, {
+            count: this.images.length,
+            index: i,
+            caption: img.caption,
+            credit: img.displayCredit ? img.credit : ''
+        });
+    };
 
     GalleryLightbox.prototype.initSwipe = function() {
 
@@ -268,14 +277,7 @@ define([
                     this.$countEl.text(this.images.length);
 
                     var imagesHtml = _(this.images)
-                        .map(function(img, i) {
-                            return template(this.imgElementHtml, {
-                                count: this.images.length,
-                                index: i + 1,
-                                caption: img.caption,
-                                credit: img.displayCredit ? img.credit : ''
-                            });
-                        }.bind(this))
+                        .map(function(img, i) { return this.generateImgHTML(img, i+1); }.bind(this))
                         .join('');
 
                     this.$contentEl.html(imagesHtml);
