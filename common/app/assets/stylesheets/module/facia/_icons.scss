@@ -4,6 +4,7 @@
         height: .75em;
         margin-right: $gs-gutter/10;
     }
+
     .item--audio .item__title:before,
     .linkslist__item--audio .linkslist__action:before {
         @extend %pseudo-icon--media;

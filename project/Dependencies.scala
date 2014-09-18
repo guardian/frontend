@@ -16,7 +16,7 @@ object Dependencies {
   val commonsCodec = "commons-codec" % "commons-codec" % "1.6"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
   val commonsIo = "commons-io" % "commons-io" % "2.4"
-  val contentApiClient = "com.gu" %% "content-api-client" % "2.19"
+  val contentApiClient = "com.gu" %% "content-api-client" % "2.20"
   val cucumberJava = "info.cukes" % "cucumber-java" % cucumberVersion
   val cucumberJUnit = "info.cukes" % "cucumber-junit" % cucumberVersion
   val cucumberPicoContainer = "info.cukes" % "cucumber-picocontainer" % cucumberVersion
