@@ -4,141 +4,61 @@ title: Buttons
 name: buttons
 category: Common
 ---
-```html_example
-<div>
-    <a href="#" class="button button--primary">Link to somewhere</a>
-    <a href="#" class="button button--secondary">Link to somewhere</a>
-    <a href="#" class="button button--tertiary">Link to somewhere</a>
-</div>
-<br/>
-<div>
-    <a href="#" class="button button--primary button--xlarge">Link to somewhere</a>
-    <a href="#" class="button button--primary button--large">Link to somewhere</a>
-    <a href="#" class="button button--primary button--medium">Link to somewhere</a>
-    <a href="#" class="button button--primary button--small">Link to somewhere</a>
-    <a href="#" class="button button--primary button--xsmall">Link to somewhere</a>
-</div>
-<br/>
-<div>
-    <a href="#" class="button button--primary button--xlarge">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
-    <a href="#" class="button button--primary button--large">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
-    <a href="#" class="button button--primary button--medium">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
-    <a href="#" class="button button--primary button--small">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
-    <a href="#" class="button button--primary button--xsmall">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
-</div>
-<br/>
-<div>
-    <a href="#" class="button button--primary">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
-    <a href="#" class="button button--secondary">Link to somewhere<i class="i i-arrow-white-right i-right"></i></a>
-    <a href="#" class="button button--tertiary">Link to somewhere<i class="i i-arrow-grey-right i-right"></i></a>
-</div>
-<br/>
-<div>
-    <a href="#" class="button button--primary"><i class="i i-arrow-white-right i-left"></i>Link to somewhere</a>
-    <a href="#" class="button button--secondary"><i class="i i-arrow-white-right i-left"></i>Link to somewhere</a>
-    <a href="#" class="button button--tertiary"><i class="i i-arrow-grey-right i-left"></i>Link to somewhere</a>
-</div>
-```
+
+Button styles can be applied to any element. Typically you'll want to use either a `<button>` or an `<a>` element:
 
 ```html_example
-<div>
-    <a href="#" class="button button--primary button--xlarge">
-        <i class="i i-arrow-white-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--primary button--large">
-        <i class="i i-arrow-white-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--primary button--medium">
-        <i class="i i-arrow-white-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--primary button--small">
-        <i class="i i-arrow-white-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--primary button--xsmall">
-        <i class="i i-arrow-white-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-</div>
-<br/>
-<div>
-    <a href="#" class="button button--secondary button--xlarge">
-        <i class="i i-arrow-white-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--secondary button--large">
-        <i class="i i-arrow-white-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--secondary button--medium">
-        <i class="i i-arrow-white-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--secondary button--small">
-        <i class="i i-arrow-white-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--secondary button--xsmall">
-        <i class="i i-arrow-white-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-</div>
-<br/>
-<div>
-    <a href="#" class="button button--tertiary button--xlarge">
-        <i class="i i-arrow-grey-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--tertiary button--large">
-        <i class="i i-arrow-grey-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--tertiary button--medium">
-        <i class="i i-arrow-grey-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--tertiary button--small">
-        <i class="i i-arrow-grey-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-    <a href="#" class="button button--tertiary button--xsmall">
-        <i class="i i-arrow-grey-right"></i>
-        <span class="u-h">Link to somewhere</span>
-    </a>
-</div>
+<button class="button">Push me</button>
+<a href="#" class="button">Link to somewhere</a>
 ```
+There are 3 standard levels - `primary`, `secondary` and `tertiary`:
 
 ```html_example
-<div>
-    <button type="button" class="button button--primary">Button to somewhere</button>
-    <button type="button" class="button button--secondary">Button to somewhere</button>
-    <button type="button" class="button button--tertiary">Button to somewhere</button>
-</div>
-<br/>
-<div>
-    <button type="button" class="button button--primary button--xlarge">Button to somewhere</button>
-    <button type="button" class="button button--primary button--large">Button to somewhere</button>
-    <button type="button" class="button button--primary button--medium">Button to somewhere</button>
-    <button type="button" class="button button--primary button--small">Button to somewhere</button>
-    <button type="button" class="button button--primary button--xsmall">Button to somewhere</button>
-</div>
-<br/>
-<div>
-    <button type="button" class="button button--primary button--xlarge">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
-    <button type="button" class="button button--primary button--large">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
-    <button type="button" class="button button--primary button--medium">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
-    <button type="button" class="button button--primary button--small">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
-    <button type="button" class="button button--primary button--xsmall">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
-</div>
-<br/>
-<div>
-    <button type="button" class="button button--primary">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
-    <button type="button" class="button button--secondary">Button to somewhere<i class="i i-arrow-white-right i-right"></i></button>
-    <button type="button" class="button button--tertiary">Button to somewhere<i class="i i-arrow-grey-right i-right"></i></button>
-</div>
+<a href="#" class="button button--primary">Link to somewhere</a>
+<a href="#" class="button button--secondary">Link to somewhere</a>
+<a href="#" class="button button--tertiary">Link to somewhere</a>
+```
+Also available in the associated tones:
+
+```html_example
+<a href="#" class="button button--tone-media">Link to somewhere</a>
+<a href="#" class="button button--tone-news">Link to somewhere</a>
+<a href="#" class="button button--tone-feature">Link to somewhere</a>
+<a href="#" class="button button--tone-comment">Link to somewhere</a>
+<a href="#" class="button button--tone-live">Link to somewhere</a>
+```
+And a variant of that tone:
+
+```html_example
+<a href="#" class="button button--tone-media-variant">Link to somewhere</a>
+<a href="#" class="button button--tone-news-variant">Link to somewhere</a>
+<a href="#" class="button button--tone-feature-variant">Link to somewhere</a>
+<a href="#" class="button button--tone-comment-variant">Link to somewhere</a>
+<a href="#" class="button button--tone-live-variant">Link to somewhere</a>
+```
+
+They come in different sizes:
+
+```html_example
+<a href="#" class="button button--xlarge">Link to somewhere</a>
+<a href="#" class="button button--large">Link to somewhere</a>
+<a href="#" class="button button--medium">Link to somewhere</a>
+<a href="#" class="button button--small">Link to somewhere</a>
+<a href="#" class="button button--xsmall">Link to somewhere</a>
+```
+
+And with inline icons:
+
+```html_example
+<a href="#" class="button">
+    Link to somewhere<i class="i i-arrow-white-right i-right"></i>
+</a>
+<a href="#" class="button">
+    <i class="i i-arrow-white-right i-left"></i>Link to somewhere
+</a>
+<a href="#" class="button">
+    <i class="i i-arrow-white-right"></i><span class="u-h">Link to somewhere</span>
+</a>
 ```
 */
 
@@ -169,10 +89,16 @@ category: Common
         float: right;
     }
 }
-@mixin button-colour($fill-colour, $text-colour, $hover-colour, $hover-border: $hover-colour) {
+@mixin button-colour(
+    $fill-colour,
+    $text-colour,
+    $hover-colour,
+    $hover-border: $hover-colour,
+    $border-color: $fill-colour
+) {
     color: $text-colour;
     background-color: $fill-colour;
-    border-color: $fill-colour;
+    border-color: $border-color;
 
     &:hover,
     &:focus,
@@ -193,7 +119,11 @@ category: Common
     // as older versions of WebKit do not support % in border-radius
     -webkit-border-radius: 1000px;
     border-radius: 1000px;
-    @include button-colour(guss-colour(tone-news-2, $pasteup-palette), #ffffff, guss-colour(tone-news-1, $pasteup-palette));
+    @include button-colour(
+        guss-colour(tone-news-2, $pasteup-palette),
+        #ffffff,
+         guss-colour(tone-news-1, $pasteup-palette)
+     );
 
     &:hover,
     &:focus,
@@ -202,13 +132,22 @@ category: Common
     }
 }
 .button--primary {
-    @include button-colour(guss-colour(guardian-brand, $pasteup-palette), #ffffff, darken(guss-colour(tone-news-1, $pasteup-palette), 10%));
+    @include button-colour(
+        guss-colour(guardian-brand, $pasteup-palette),
+        #ffffff,
+        darken(guss-colour(tone-news-1, $pasteup-palette), 10%)
+    );
 }
 .button--secondary {
     @include button-colour(guss-colour(neutral-2, $pasteup-palette), #ffffff, guss-colour(neutral-1, $pasteup-palette));
 }
 .button--tertiary {
-    @include button-colour(transparent, guss-colour(neutral-2, $pasteup-palette), transparent, guss-colour(neutral-3, $pasteup-palette));
+    @include button-colour(
+        transparent,
+        guss-colour(neutral-2, $pasteup-palette),
+        transparent,
+        guss-colour(neutral-3, $pasteup-palette)
+    );
     border-color: guss-colour(neutral-3, $pasteup-palette);
 
     &:hover,
@@ -218,6 +157,88 @@ category: Common
         border-color: guss-colour(neutral-1, $pasteup-palette);
     }
 }
+
+.button--tone-media {
+    @include button-colour(
+        guss-colour(tone-media-2, $pasteup-palette),
+        #ffffff,
+        guss-colour(neutral-2, $pasteup-palette)
+    );
+}
+.button--tone-media-variant {
+    @include button-colour(
+        guss-colour(tone-media-1, $pasteup-palette),
+        #ffffff,
+        guss-colour(tone-media-1, $pasteup-palette),
+        guss-colour(neutral-3, $pasteup-palette),
+        guss-colour(neutral-2, $pasteup-palette)
+    );
+}
+.button--tone-news {
+    @include button-colour(
+        guss-colour(neutral-7, $pasteup-palette),
+        guss-colour(tone-news-1, $pasteup-palette),
+        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+    );
+}
+.button--tone-news-variant {
+    @include button-colour(
+        #ffffff,
+        guss-colour(tone-news-1, $pasteup-palette),
+        #ffffff,
+        darken(guss-colour(neutral-3, $pasteup-palette), 10%),
+        guss-colour(neutral-5, $pasteup-palette)
+    );
+}
+.button--tone-feature {
+    @include button-colour(
+        guss-colour(neutral-7, $pasteup-palette),
+        guss-colour(tone-features-1, $pasteup-palette),
+        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+    );
+}
+.button--tone-feature-variant {
+    @include button-colour(
+        #ffffff,
+        guss-colour(tone-features-1, $pasteup-palette),
+        #ffffff,
+        darken(guss-colour(neutral-3, $pasteup-palette), 10%),
+        guss-colour(neutral-3, $pasteup-palette)
+    );
+}
+.button--tone-comment {
+    @include button-colour(
+        guss-colour(neutral-7, $pasteup-palette),
+        guss-colour(tone-comment-1, $pasteup-palette),
+        darken(guss-colour(neutral-7, $pasteup-palette), 10%)
+    );
+}
+.button--tone-comment-variant {
+    @include button-colour(
+        #ffffff,
+        guss-colour(tone-comment-1, $pasteup-palette),
+        #ffffff,
+        darken(guss-colour(neutral-3, $pasteup-palette), 10%),
+        guss-colour(neutral-3, $pasteup-palette)
+    );
+}
+.button--tone-live {
+    @include button-colour(
+        guss-colour(neutral-6, $pasteup-palette),
+        guss-colour(tone-news-1, $pasteup-palette),
+        darken(guss-colour(neutral-6, $pasteup-palette), 10%)
+    );
+}
+.button--tone-live-variant {
+    @include button-colour(
+        guss-colour(neutral-8, $pasteup-palette),
+        guss-colour(tone-news-1, $pasteup-palette),
+        guss-colour(neutral-8, $pasteup-palette),
+        darken(guss-colour(neutral-3, $pasteup-palette), 10%),
+        guss-colour(neutral-3, $pasteup-palette)
+    );
+}
+
 .button--xlarge {
     @include button-height(44px);
 }
