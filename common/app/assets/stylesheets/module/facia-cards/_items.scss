@@ -2,6 +2,7 @@ $fc-item-gutter: $gs-gutter / 3;
 
 .facia-slice__item {
     @include flex-display;
+    padding-bottom: 0;
 
     @if not $browser-supports-flexbox {
         width: 25%;
@@ -50,8 +51,8 @@ $fc-item-gutter: $gs-gutter / 3;
     position: relative;
 }
 .fc-item--has-image {
-    .item__media-wrapper,
-    .item__image-container {
+    .fc-item__media-wrapper,
+    .fc-item__image-container {
         display: block;
 
         .js-off & {
@@ -129,28 +130,40 @@ $fc-item-gutter: $gs-gutter / 3;
 @mixin fc-item--list-media {
     display: block;
     position: relative;
-    color: $c-neutral1;
-    @include fs-headline(2);
-    margin-bottom: get-font-size(headline, 1);
+    padding-bottom: 0;
 
-    $image-width: 88px;
+    $image-width: 92px;
+
     &.fc-item--has-image {
         // Min height of 3 baselines
         min-height: get-line-height(headline, 1) * 3;
         // Override .svg .action--has-icon
-        padding-left: $action-image-width + $gs-gutter/2 !important;
+        padding-left: $image-width + $gs-gutter/2 !important;
     }
 
     .fc-item__media-wrapper,
-    .linkslist__image-container {
+    .fc-item__image-container {
+        padding-top: 0;
+        margin-top: 0;
         display: block;
     }
 
-    .fc__media-wrapper {
+    .fc-item__media-wrapper {
         float: left;
         margin-top: 3px;
-        margin-left: ($action-image-width + $gs-gutter/2) * -1;
-        width: $action-image-width;
+        margin-left: ($image-width + $gs-gutter/2) * -1;
+        width: $image-width;
+    }
+
+    .fc-item__standfirst,
+    .fc-item__meta {
+        display: none;
+    }
+
+    .fc-item__title {
+        color: $c-neutral1;
+        @include fs-headline(1);
+
     }
 
     &.fc-item--has-image.fc-item--has-icon {
@@ -164,11 +177,6 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 @mixin fc-item--standard {}
-@mixin fc-item--list-media {}
-@mixin fc-item--standard {
-
-}
-
 
 .fc-item {}
 
