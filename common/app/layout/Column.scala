@@ -2,11 +2,11 @@ package layout
 
 case class ItemClasses(mobile: String, desktop: String) {
   /** Template helper */
-  def classes = s"$mobile $desktop"
+  def classes = s"item--$mobile-mobile item--$desktop-tablet"
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column])
 
-sealed trait Column
+sealed trait  Column
 
 case class SingleItem(width: Int, itemClasses: ItemClasses) extends Column
 case class Rows(width: Int, columns: Int, rows: Int, itemClasses: ItemClasses) extends Column

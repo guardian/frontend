@@ -60,8 +60,10 @@ case object QuarterQuarterQuarterQuarter extends Slice {
     val layout = SliceLayout(
       cssClassName = "q-q-q-q",
       columns = Seq(
-        SingleItem(
+        Rows(
           width = 1,
+          columns = 4,
+          rows =1,
           ItemClasses(
             mobile = "list-media",
             desktop = "standard-quarter"
