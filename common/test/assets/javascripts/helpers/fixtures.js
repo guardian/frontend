@@ -12,14 +12,14 @@ define([
 
     function clean(id) {
         $('#' + id).remove();
-    };
+    }
 
      function add(id, fixtures) {
         $('body').append('<div id="' + id + '"></div>');
         fixtures.forEach(function(fixture) {
             $('#' + id).append(fixture);
         });
-     };
+     }
 
     return {
         render: function(conf) {
