@@ -40,6 +40,12 @@ $c-commercial-travel-2: guss-colour(maps-main-1, $pasteup-palette);
         }
     }
 
+    .lineitem__title {
+        @include mq(tablet) {
+            min-height: $gs-baseline*3.5;
+        }
+    }
+
     .lineitem__image-crop {
         .lineitem__image {
             left: -7.5%;
@@ -48,20 +54,8 @@ $c-commercial-travel-2: guss-colour(maps-main-1, $pasteup-palette);
         }
     }
 
-    .lineitem__title {
-        @include mq(tablet) {
-            min-height: $gs-baseline*3.5;
-        }
-    }
-
     /* Line items - low relevance */
     .commercial__relevance--low {
-        @include mq(tablet) {
-            padding-left: $gs-gutter/2;
-            width: 50%;
-            float: left;
-        }
-
         @include mq($until: tablet) {
             .lineitem.lineitem--low {
                 padding-left: 88px + $gs-gutter/2;

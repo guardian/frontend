@@ -27,8 +27,6 @@
 
     .container__header__inner,
     .container__body {
-        padding-top: $gs-baseline/2;
-        padding-bottom: $gs-baseline/2;
         position: relative;
         overflow: hidden;
 
@@ -51,8 +49,7 @@
     }
 
     .container__header__inner {
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+        padding: $gs-baseline/2 $gs-gutter/2;
 
         @include mq(mobileLandscape, leftCol) {
             padding-left: $gs-gutter;
@@ -86,8 +83,7 @@
     }
 
     .container__body {
-        padding-left: $gs-gutter/2;
-        padding-right: $gs-gutter/2;
+        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
 
         @include mq(leftCol) {
             margin-left: $left-column + $gs-gutter;
@@ -141,7 +137,7 @@
         border: 0;
         width: 100%;
         height: $gs-row-height;
-        padding: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 $gs-baseline*3;
+        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline/4 $gs-baseline*3;
         float: left;
         overflow: hidden;
 
@@ -161,13 +157,11 @@
         width: $gs-baseline*3;
         height: $gs-baseline*3;
         padding: $gs-baseline*.75;
-        opacity: .67;
 
         &:hover,
         &:focus,
         &:active {
             outline: none;
-            opacity: 1;
         }
     }
 
@@ -247,19 +241,21 @@
         }
     }
 
-    .commercial__desc {
-        color: #ffffff;
-        margin-bottom: $gs-baseline/2;
-
-        @include mq($until: leftCol) {
-            margin-top: $gs-baseline*-1.333;
-        }
-    }
-
-    .commercial__desc,
     .commercial__headline {
         @include fs-headline(2);
         margin-bottom: $gs-gutter;
+    }
+
+    .commercial__desc {
+        color: #ffffff;
+        @include fs-headline(2);
+        margin-top: $gs-baseline*-0.5;
+        margin-bottom: 0;
+
+        @include mq($until: leftCol) {
+            @include fs-headline(1);
+            margin-top: $gs-baseline*-1.5;
+        }
     }
 
     .commercial__header {

@@ -23,7 +23,7 @@
             </div>
 
             <div class="container__body">
-                <div class="commercial__relevance commercial__relevance--high u-cf">
+                <div class="commercial__relevance commercial__relevance--high">
                     <h4 class="commercial__header">Featured class</h4>
                     <div class="lineitems">
                         @events.take(1).map { event =>
@@ -51,7 +51,7 @@
                         }
                     </div>
                 </div>
-                <div class="commercial__relevance commercial__relevance--low u-cf">
+                <div class="commercial__relevance commercial__relevance--low">
                     <h4 class="commercial__header">You also might like</h4>
                     <ul class="lineitems">
                         @events.drop(1).take(2).map { event =>

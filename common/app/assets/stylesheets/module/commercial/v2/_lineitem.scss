@@ -19,10 +19,6 @@
         &:first-child {
             border-left: 0;
         }
-
-        @include mq(tablet) {
-            min-height: $gs-baseline*19;
-        }
     }
 
     .lineitem__link {
@@ -141,7 +137,7 @@
         }
 
         @include mq(tablet) {
-            width: 50%;
+            width: percentage(1/2);
             float: left;
         }
 
@@ -165,6 +161,12 @@
     /* Low relevance container */
     .commercial__relevance--low {
         @include box-sizing(border-box);
+
+        @include mq(tablet) {
+            padding-left: $gs-gutter/2;
+            width: percentage(1/2);
+            float: left;
+        }
 
         .lineitems {
             margin: 0;

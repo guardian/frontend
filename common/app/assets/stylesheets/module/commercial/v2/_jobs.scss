@@ -31,12 +31,6 @@ $c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
 
     /* Line items - low relevance */
     .commercial__relevance--low {
-        @include mq(tablet) {
-            padding-left: $gs-gutter/2;
-            width: percentage(1/2);
-            float: left;
-        }
-
         @include mq($until: tablet) {
             .lineitem.lineitem--low {
                 padding-left: 120px + $gs-gutter*1;
@@ -52,6 +46,12 @@ $c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
                 position: absolute;
                 left: 0;
                 top: $gs-baseline/2;
+            }
+        }
+
+        @include mq(tablet) {
+            .lineitems {
+                min-height: $gs-baseline*18;
             }
         }
     }

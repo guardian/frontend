@@ -40,13 +40,15 @@ $c-commercial-books-2: guss-colour(features-support-1, $pasteup-palette);
         }
         @include mq(leftCol) {
             width: percentage(1/5);
+            min-height: $gs-baseline*22;
         }
     }
 
+    /* Line items */
     .lineitem__image {
-        height: 110px;
-        outline: 1px solid $c-neutral4;
-        margin: 1px;
+        height: 100px;
+        width: 100px;
+        border: $gs-gutter/4 solid #fff;
     }
 
     .lineitem__title {
@@ -67,18 +69,14 @@ $c-commercial-books-2: guss-colour(features-support-1, $pasteup-palette);
                 float: left;
                 padding-right: $gs-gutter/2;
                 padding-left: 0;
-                width: 100px;
+                width: 118px;
             }
 
             .lineitem--high__offer {
                 float: right;
                 padding-right: 0;
-                width: calc(100% - 100px);
+                width: calc(100% - 118px);
             }
-        }
-
-        .lineitem__image {
-            width: 88px;
         }
     }
 
