@@ -14,7 +14,7 @@
  *@
 @if(cards.nonEmpty) {
     <div class="linkslist-container js-container--show-more">
-        <ul class="linkslist u-unstyled l-row l-row--items-4 facia-slice">
+        <ul class="linkslist u-unstyled l-row facia-slice">
         @cards.map { card =>
             @standard(card, "fc-item--list-media-mobile fc-item--list-media-tablet", containerIndex)
         }
