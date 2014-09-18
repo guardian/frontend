@@ -83,7 +83,7 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser {
       goTo(editionPath)(block)
   }
 
-  protected def goTo[T](path: String)(block: TestBrowser => T): T = {
+  protected def goTo[T](path: String)(block: TestBrowser => T): T = running(app) {
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       htmlUnitDriver.setJavascriptEnabled(false)
       testBrowser.goTo(host + path)
