@@ -858,7 +858,7 @@ object GetClasses {
 
   def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
-      "container--facia-cards" +:
+      "fc-container" +:
         (commonContainerStyles(config, isFirst, hasTitle) ++
         extraClasses): _*
     )
