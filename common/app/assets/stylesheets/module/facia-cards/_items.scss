@@ -133,7 +133,7 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
-.fc-item--list {
+.fc-item--list-mobile {
     @include mq($until: tablet) {
         @include fc-item--list;
     }
