@@ -21,7 +21,20 @@ object Slice {
 * |________|________|________|________|
 */
 case object QlQlQlQl extends Slice {
-  def layout = ???
+  val layout = SliceLayout(
+    cssClassName = "q-ql-ql-ql",
+    columns = Seq(
+      Rows(
+        colSpan = 1,
+        columns = 4,
+        rows = 3,
+        ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      )
+    )
+  )
 }
 
 /* .________.________.________.________.
@@ -30,7 +43,27 @@ case object QlQlQlQl extends Slice {
 * |________|________|________|________|
 */
 case object QuarterQlQlQl extends Slice {
-  def layout = ???
+  val layout = SliceLayout(
+    cssClassName = "q-ql-ql-ql",
+    columns = Seq(
+      SingleItem(
+        1,
+        ItemClasses(
+          mobile = "list-media-large",
+          desktop = "standard-quarter"
+        )
+      ),
+      Rows(
+        colSpan = 3,
+        columns = 3,
+        rows = 3,
+        ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      )
+    )
+  )
 }
 
 /* .________.________.________.________.
@@ -39,7 +72,34 @@ case object QuarterQlQlQl extends Slice {
  * |________|________|________|________|
  */
 case object QuarterQuarterQlQl extends Slice {
-  def layout = ???
+  val layout = SliceLayout(
+    cssClassName = "q-q-ql-ql",
+    columns = Seq(
+      SingleItem(
+        1,
+        ItemClasses(
+          mobile = "list-media-large",
+          desktop = "standard-quarter"
+        )
+      ),
+      SingleItem(
+        1,
+        ItemClasses(
+          mobile = "list-media-large",
+          desktop = "standard-quarter"
+        )
+      ),
+      Rows(
+        colSpan = 2,
+        columns = 2,
+        rows = 3,
+        ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      )
+    )
+  )
 }
 
 /* .________.________.________.________.
@@ -48,7 +108,41 @@ case object QuarterQuarterQlQl extends Slice {
  * |________|________|________|________|
  */
 case object QuarterQuarterQuarterQl extends Slice {
-  def layout = ???
+  val layout = SliceLayout(
+    cssClassName = "q-q-q-ql",
+    columns = Seq(
+      SingleItem(
+        1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard-quarter"
+        )
+      ),
+      SingleItem(
+        1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard-quarter"
+        )
+      ),
+      SingleItem(
+        1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard-quarter"
+        )
+      ),
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 3,
+        ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      )
+    )
+  )
 }
 
 /* .________.________.________.________.
@@ -63,7 +157,7 @@ case object QuarterQuarterQuarterQuarter extends Slice {
         SingleItem(
           1,
           ItemClasses(
-            mobile = "list-media-large",
+            mobile = "list-media",
             desktop = "standard-quarter"
           )
         ),
@@ -99,7 +193,27 @@ case object QuarterQuarterQuarterQuarter extends Slice {
  * |_________________|________|________|
  */
 case object HalfQl4Ql4 extends Slice {
-  def layout = ???
+  val layout = SliceLayout(
+    cssClassName = "h-ql-ql",
+    columns = Seq(
+      SingleItem(
+        colSpan = 2,
+        ItemClasses(
+          mobile = "standard",
+          desktop = "half"
+        )
+      ),
+      Rows(
+        colSpan = 2,
+        columns = 2,
+        rows = 4,
+        ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      )
+    )
+  )
 }
 
 /* .________.________.________.________.
@@ -119,7 +233,20 @@ case object HalfQuarterQl2Ql3 extends Slice {
  * |_________________|_________________|
  */
 case object Hl4Hl4 extends Slice {
-  def layout = ???
+  val layout = SliceLayout(
+    cssClassName = "hl-hl",
+    columns = Seq(
+      Rows(
+        colSpan = 1,
+        columns = 2,
+        rows = 4,
+        ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      )
+    )
+  )
 }
 
 /* ._________________.________.________.
@@ -129,17 +256,64 @@ case object Hl4Hl4 extends Slice {
  * |_________________|________|________|
  */
 case object Hl4QuarterQuarter extends Slice {
-  def layout = ???
+  val layout = SliceLayout(
+    cssClassName = "hl-hl",
+    columns = Seq(
+      Rows(
+        colSpan = 2,
+        columns = 1,
+        rows = 4,
+        ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard"
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard"
+        )
+      )
+    )
+  )
 }
 
 /* ._________________._________________.
- * |_________________|#################|
- * |_________________|#################|
- * |_________________|#################|
- * |_________________|_________________|
+ * |_###_____________|#################|
+ * |_###_____________|#################|
+ * |_###_____________|#################|
+ * |_###_____________|_________________|
  */
 case object Hl4Half extends Slice {
-  def layout = ???
+  val layout = SliceLayout(
+    cssClassName = "hl-h",
+    columns = Seq(
+      Rows(
+        colSpan = 1,
+        columns = 2,
+        rows = 4,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "list-media"
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "standard",
+          desktop = "half"
+        )
+      )
+    )
+  )
 }
 
 
@@ -153,7 +327,25 @@ case object Hl4Half extends Slice {
  * `--------------------------'--------'
  */
 case object ThreeQuarterQuarter extends Slice {
-  def layout = ???
+  val layout = SliceLayout(
+    cssClassName = "t-q",
+    columns = Seq(
+      SingleItem(
+        colSpan = 3,
+        ItemClasses(
+          mobile = "standard",
+          desktop = "third"
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "list-media-large",
+          desktop = "standard"
+        )
+      )
+    )
+  )
 }
 
 /* .________.__________________________.
@@ -164,7 +356,25 @@ case object ThreeQuarterQuarter extends Slice {
  * `--------'--------------------------'
  */
 case object QuarterThreeQuarter extends Slice {
-  def layout = ???
+  val layout = SliceLayout(
+    cssClassName = "q-t",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "list-media-large",
+          desktop = "standard"
+        )
+      ),
+      SingleItem(
+        colSpan = 3,
+        ItemClasses(
+          mobile = "standard",
+          desktop = "third"
+        )
+      )
+    )
+  )
 }
 
 /* ._________________._________________.
@@ -175,7 +385,25 @@ case object QuarterThreeQuarter extends Slice {
  * `-----------------'-----------------'
  */
 case object HalfHalf extends Slice {
-  def layout = ???
+  val layout = SliceLayout(
+    cssClassName = "h-h",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "standard",
+          desktop = "half"
+        )
+      ),
+      SingleItem(
+        colSpan = 3,
+        ItemClasses(
+          mobile = "standard",
+          desktop = "half"
+        )
+      )
+    )
+  )
 }
 
 /* .___________________________________.
@@ -187,13 +415,13 @@ case object HalfHalf extends Slice {
  */
 case object FullThreeQuarterImage extends Slice {
   val layout = SliceLayout(
-    cssClassName = "full-three-quarter",
+    cssClassName = "f",
     columns = Seq(
       SingleItem(
-        flexWidth = 1,
+        colSpan = 1,
         ItemClasses(
           mobile = "standard",
-          desktop = "full-three-quarter"
+          desktop = "full"
         )
       )
     )
@@ -209,13 +437,13 @@ case object FullThreeQuarterImage extends Slice {
  */
 case object Full extends Slice {
   val layout = SliceLayout(
-    cssClassName = "full",
+    cssClassName = "mf",
     columns = Seq(
       SingleItem(
-        flexWidth = 1,
+        colSpan = 1,
         ItemClasses(
           mobile = "standard",
-          desktop = "full"
+          desktop = "mega-full"
         )
       )
     )
@@ -235,7 +463,7 @@ case object TlTlMpu extends Slice {
     cssClassName = "tl-tl-mpu",
     columns = Seq(
       Rows(
-        flexWidth = 2,
+        colSpan = 2,
         columns = 2,
         rows = 3,
         ItemClasses(
@@ -244,7 +472,7 @@ case object TlTlMpu extends Slice {
         )
       ),
       MPU(
-        flexWidth = 1
+        colSpan = 1
       )
     )
   )
@@ -259,12 +487,12 @@ case object TlTlTl extends Slice {
     cssClassName = "tl-tl-tl",
     columns = Seq(
       Rows(
-        flexWidth = 1,
+        colSpan = 1,
         columns = 3,
         rows = 2,
         ItemClasses(
           mobile = "list",
-          desktop = "list"
+          desktop = "list-media"
         )
       )
     )
