@@ -15,7 +15,7 @@
 }
 
 .facia-container__related-keywords__body {
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         margin-left: $left-column + $gs-gutter;
     }
 

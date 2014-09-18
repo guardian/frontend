@@ -27,6 +27,7 @@
                                 <figure itemprop="audio" itemscope itemtype="http://schema.org/AudioObject" data-component="main audio">
                                 @audio.mainAudio.map { audioElement =>
                                     @fragments.media.audio(AudioPlayer(
+                                        audio,
                                         audioElement,
                                         audio.headline,
                                         autoPlay = true
@@ -110,7 +111,7 @@
 
                 @media match {
                     case video: Video => {
-                        <div class="content__secondary-column content__secondary-column--media content__secondary-column--@mediaType"
+                        <div class="content__secondary-column content__secondary-column--media content__secondary-column--video"
                             aria-hidden="true">
                             <div class="js-video-components-container"></div>
                         </div>
