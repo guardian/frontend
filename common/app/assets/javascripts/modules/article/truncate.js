@@ -40,7 +40,7 @@ define([
                     'View all updates'+
                 '</button>'
             ).each(function(el) {
-                $('.article-body').append(el);
+                $('.js-liveblog-body').append(el);
             });
 
             bean.on(document.body, 'click', '.article-elongator', removeTruncation.bind(this));

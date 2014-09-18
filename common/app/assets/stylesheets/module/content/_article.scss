@@ -22,12 +22,6 @@
     @include fs-bodyCopy(2);
 }
 
-.article-body {
-    @include mq(tablet) {
-        margin-bottom: ($gs-baseline/3)*4;
-    }
-}
-
 .article__inner,
 .article__main-column {
     position: relative;

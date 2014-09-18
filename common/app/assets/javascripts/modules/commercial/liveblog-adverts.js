@@ -93,11 +93,11 @@ define([
                         $adSlot = displaySlot ?
                             bonzo(dfp.createAdSlot(adSlotNames.shift(), 'liveblog-inline')) :
                             // otherwise get the ad furthest down the page
-                            $('.article-body .ad-slot')
+                            $('.js-liveblog-body .ad-slot')
                                 .last()
                                 .detach();
                     // put the ad slot after the latest post
-                    $('.article-body .block:first-child').after($adSlot);
+                    $('.js-liveblog-body .block:first-child').after($adSlot);
                     if (displaySlot) {
                         dfp.addSlot($adSlot);
                     } else {
