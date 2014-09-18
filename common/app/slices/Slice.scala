@@ -147,13 +147,13 @@ case object HalfHalf extends Slice {
  */
 case object FullThreeQuarterImage extends Slice {
   val layout = SliceLayout(
-    "full-three-quarter",
-    Seq(
+    cssClassName = "full-three-quarter",
+    columns = Seq(
       SingleItem(
         width = 1,
-        ItemLayout(
-          mobileClass = "standard",
-          desktopClass = "full-three-quarter"
+        ItemClasses(
+          mobile = "standard",
+          desktop = "full-three-quarter"
         )
       )
     )
@@ -169,13 +169,13 @@ case object FullThreeQuarterImage extends Slice {
  */
 case object Full extends Slice {
   val layout = SliceLayout(
-    "full",
-    Seq(
+    cssClassName = "full",
+    columns = Seq(
       SingleItem(
         width = 1,
-        ItemLayout(
-          mobileClass = "standard",
-          desktopClass = "full"
+        ItemClasses(
+          mobile = "standard",
+          desktop = "full"
         )
       )
     )
@@ -192,15 +192,15 @@ case object Full extends Slice {
  */
 case object TlTlMpu extends Slice {
   val layout = SliceLayout(
-    "tl-tl-mpu",
-    Seq(
+    cssClassName = "tl-tl-mpu",
+    columns = Seq(
       Rows(
         width = 2,
         columns = 2,
         rows = 3,
-        ItemLayout(
-          mobileClass = "list",
-          desktopClass = "media-list"
+        ItemClasses(
+          mobile = "list",
+          desktop = "media-list"
         )
       ),
       MPU(
@@ -216,15 +216,15 @@ case object TlTlMpu extends Slice {
  */
 case object TlTlTl extends Slice {
   val layout = SliceLayout(
-    "tl-tl-tl",
-    Seq(
+    cssClassName = "tl-tl-tl",
+    columns = Seq(
       Rows(
         width = 1,
         columns = 3,
         rows = 2,
-        ItemLayout(
-          mobileClass = "list",
-          desktopClass = "list"
+        ItemClasses(
+          mobile = "list",
+          desktop = "list"
         )
       )
     )

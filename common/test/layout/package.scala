@@ -5,7 +5,7 @@ package object layout {
   val itemLayoutGen = for {
     cls1 <- arbitrary[String]
     cls2 <- arbitrary[String]
-  } yield ItemLayout(cls1, cls2)
+  } yield ItemClasses(cls1, cls2)
 
   val singleItemGen = for {
     layout <- itemLayoutGen
