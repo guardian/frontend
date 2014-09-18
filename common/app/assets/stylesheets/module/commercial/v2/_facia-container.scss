@@ -28,7 +28,7 @@
     .container__header__inner,
     .container__body {
         padding-top: $gs-baseline/2;
-        padding-bottom: $gs-baseline;
+        padding-bottom: $gs-baseline/2;
         position: relative;
         overflow: hidden;
 
@@ -109,14 +109,20 @@
     }
 
     .commercial__search {
-        @include mq(mobileLandscape, leftCol) {
+        @include mq(mobileLandscape, tablet) {
             right: $gs-gutter;
+        }
+        @include mq(tablet, leftCol) {
+            position: absolute;
+            width: gs-span(3);
+            top: 0;
+            right: gs-span(3) + $gs-gutter*2;
         }
         @include mq(leftCol) {
             position: absolute;
             top: auto;
             right: $gs-gutter/2;
-            bottom: $gs-baseline*5;
+            bottom: $gs-baseline*4.5;
             left: $gs-gutter/2;
         }
     }
@@ -174,6 +180,10 @@
 
         @include mq(mobileLandscape, leftCol) {
             right: $gs-gutter;
+        }
+
+        @include mq(tablet, leftCol) {
+            width: gs-span(3);
         }
 
         @include mq(leftCol) {
