@@ -8,10 +8,10 @@ case class SliceLayout(cssClassName: String, columns: Seq[Column])
 
 sealed trait  Column
 
-case class SingleItem(width: Int, itemClasses: ItemClasses) extends Column
-case class Rows(width: Int, columns: Int, rows: Int, itemClasses: ItemClasses) extends Column
-case class SplitColumn(width: Int, topItemClasses: ItemClasses, bottomItemClasses: ItemClasses) extends Column
-case class MPU(width: Int) extends Column
+case class SingleItem(flexWidth: Int, itemClasses: ItemClasses) extends Column
+case class Rows(flexWidth: Int, columns: Int, rows: Int, itemClasses: ItemClasses) extends Column
+case class SplitColumn(flexWidth: Int, topItemClasses: ItemClasses, bottomItemClasses: ItemClasses) extends Column
+case class MPU(flexWidth: Int) extends Column
 
 object SliceWithCards {
   def itemsToConsume(column: Column) = column match {

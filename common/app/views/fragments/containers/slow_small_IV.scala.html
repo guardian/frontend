@@ -36,24 +36,29 @@
                         </div>
                         <div class="container__body container--rolled-up-hide">
                             <div class="facia-slice-wrapper">
-
+                                <ul class="u-unstyled l-row l-row--items-@slice.columns.size facia-slice">
                                 @for(ColumnAndCards(column, cards) <- slice.columns) {
+
                                     @column match {
+
+                                        case SingleItem(width, itemClasses) => {
+                                            @cards.headOption.map { card =>
+                                                @standard(card, itemClasses.classes, containerIndex)
+                                            }
+                                        }
 
                                         case Rows(flexWidth, columns, rows, itemClasses) => {
                                             @if(cards.nonEmpty) {
-                                                <ul class="u-unstyled l-row l-row--items-@columns facia-slice">
                                                 @cards.map{ card =>
                                                     @standard(card, itemClasses.classes, containerIndex)
                                                 }
-                                                </ul>
                                             }
                                         }
 
                                         case _ => { @* TODO *@ }
                                     }
                                 }
-
+                                </ul>
                                 @show_more(remainingCards, 4, containerIndex, FourColumns)
 
                             </div>

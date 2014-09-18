@@ -60,10 +60,29 @@ case object QuarterQuarterQuarterQuarter extends Slice {
     val layout = SliceLayout(
       cssClassName = "q-q-q-q",
       columns = Seq(
-        Rows(
-          width = 1,
-          columns = 4,
-          rows =1,
+        SingleItem(
+          1,
+          ItemClasses(
+            mobile = "list-media-large",
+            desktop = "standard-quarter"
+          )
+        ),
+        SingleItem(
+          1,
+          ItemClasses(
+            mobile = "list-media",
+            desktop = "standard-quarter"
+          )
+        ),
+        SingleItem(
+          1,
+          ItemClasses(
+            mobile = "list-media",
+            desktop = "standard-quarter"
+          )
+        ),
+        SingleItem(
+          1,
           ItemClasses(
             mobile = "list-media",
             desktop = "standard-quarter"
@@ -171,7 +190,7 @@ case object FullThreeQuarterImage extends Slice {
     cssClassName = "full-three-quarter",
     columns = Seq(
       SingleItem(
-        width = 1,
+        flexWidth = 1,
         ItemClasses(
           mobile = "standard",
           desktop = "full-three-quarter"
@@ -193,7 +212,7 @@ case object Full extends Slice {
     cssClassName = "full",
     columns = Seq(
       SingleItem(
-        width = 1,
+        flexWidth = 1,
         ItemClasses(
           mobile = "standard",
           desktop = "full"
@@ -216,7 +235,7 @@ case object TlTlMpu extends Slice {
     cssClassName = "tl-tl-mpu",
     columns = Seq(
       Rows(
-        width = 2,
+        flexWidth = 2,
         columns = 2,
         rows = 3,
         ItemClasses(
@@ -225,7 +244,7 @@ case object TlTlMpu extends Slice {
         )
       ),
       MPU(
-        width = 1
+        flexWidth = 1
       )
     )
   )
@@ -240,7 +259,7 @@ case object TlTlTl extends Slice {
     cssClassName = "tl-tl-tl",
     columns = Seq(
       Rows(
-        width = 1,
+        flexWidth = 1,
         columns = 3,
         rows = 2,
         ItemClasses(
