@@ -12,6 +12,10 @@
     }
 }
 
+.content__main-column--article {
+    min-height: gs-height(6);
+}
+
 
 /* Legacy classes to be refactored out (replaced by .content*)
    ========================================================================== */
