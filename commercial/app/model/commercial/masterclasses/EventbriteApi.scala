@@ -1,14 +1,14 @@
 package model.commercial.masterclasses
 
+import conf.Switches.MasterclassFeedSwitch
+import conf.{CommercialConfiguration, Configuration}
+import model.commercial.{FeedReader, FeedRequest}
 import play.api.libs.json.JsValue
-import conf.{Configuration, Switches, CommercialConfiguration}
-import model.commercial.JsonAdsApi
 
-object EventbriteApi extends JsonAdsApi[EventbriteMasterClass] {
+import scala.concurrent.Future
+import scala.concurrent.duration._
 
-  protected val adTypeName = "Masterclasses"
-
-  protected val switch = Switches.MasterclassFeedSwitch
+object EventbriteApi {
 
   lazy val organiserId = "684756979"
   lazy val apiKeyOption = CommercialConfiguration.getProperty("masterclasses.api.key")
@@ -23,14 +23,13 @@ object EventbriteApi extends JsonAdsApi[EventbriteMasterClass] {
     }
   }
 
-  override protected val characterEncoding = "utf-8"
-
-  override protected val loadTimeout = 60000
-
   def extractEventsFromFeed(jsValue: JsValue): Seq[JsValue] = jsValue \\ "event"
 
-  def parse(json: JsValue) = {
-    val maybes = extractEventsFromFeed(json) map (EventbriteMasterClass(_))
-    maybes.flatten
+  def loadAds(): Future[Seq[EventbriteMasterClass]] = {
+    FeedReader.readSeqFromJson(FeedRequest("Masterclasses", MasterclassFeedSwitch, url, timeout = 60.seconds, responseEncoding = Some("utf-8"))) { json =>
+      val maybes = extractEventsFromFeed(json) map (EventbriteMasterClass(_))
+      maybes.flatten
+    }
   }
+
 }
