@@ -9,8 +9,8 @@
 <li class="@GetClasses.forCollectionItem(trail)">
 
 @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
-    <div
-    class="@GetClasses.forNewStyleItem(trail, isFirstContainer)"
+<div
+    class="@GetClasses.forNewStyleItem(trail, isFirstContainer) fc-item--list-media-on-mobile"
     @if(trail.isCommentable) {
         @trail.discussionId.map{ id =>
         data-discussion-id="@id"
@@ -21,62 +21,62 @@
     data-link-name="trail | @{index + 1}"
     @SnapData(trail)>
 
-<div class="item__container">
-    @FaciaDisplayElement.fromTrail(trail) match {
-        case InlineVideo(videoElement, title, endSlatePath) if trail.imageAdjust == "boost" => {
-            <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
-                <div class="fc-item__video-container">
-                @video(VideoPlayer(
-                    videoElement,
-                    Video640,
-                    title,
-                    autoPlay = false,
-                    showControlsAtStart = false,
-                    endSlatePath,
-                    Some(false)
-                ))
+    <div class="item__container">
+        @FaciaDisplayElement.fromTrail(trail) match {
+            case InlineVideo(videoElement, title, endSlatePath) if trail.imageAdjust == "boost" => {
+                <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
+                    <div class="fc-item__video-container">
+                    @video(VideoPlayer(
+                        videoElement,
+                        Video640,
+                        title,
+                        autoPlay = false,
+                        showControlsAtStart = false,
+                        endSlatePath,
+                        Some(false)
+                    ))
+                    </div>
                 </div>
-            </div>
-        }
+            }
 
-        case _ => {
-            @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
-        }
-    }
-
-    <div class="@RenderClasses(Map(
-        ("fc-item__header", true),
-        ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
-    ))">
-        @fragments.items.elements.facia_cards.title(trail, index, containerIndex)
-        @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
-    </div>
-
-    @if(tone == "comment") {
-        @trail.byline.map { byLine =>
-            @trail match { case content:model.Content =>
-            <p class="fc-item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+            case _ => {
+                @fragments.items.elements.image(trail, inlineImage = containerIndex == 0 && index < 4)
             }
         }
 
-        @if(trail.hasLargeContributorImage) {
-            @trail.contributors.headOption.map { profile =>
-                @profile.contributorLargeImagePath.map{ image =>
-                    <div class="fc-item__avatar">
-                        <img src="@image" alt="@profile.name" class="fc-item__avatar__media" />
-                    </div>
+        <div class="@RenderClasses(Map(
+            ("fc-item__header", true),
+            ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
+        ))">
+            @fragments.items.elements.facia_cards.title(trail, index, containerIndex)
+            @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+        </div>
+
+        @if(tone == "comment") {
+            @trail.byline.map { byLine =>
+                @trail match { case content:model.Content =>
+                <p class="fc-item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                }
+            }
+
+            @if(trail.hasLargeContributorImage) {
+                @trail.contributors.headOption.map { profile =>
+                    @profile.contributorLargeImagePath.map{ image =>
+                        <div class="fc-item__avatar">
+                            <img src="@image" alt="@profile.name" class="fc-item__avatar__media" />
+                        </div>
+                    }
                 }
             }
         }
-    }
 
-    @trail.trailText.map { text =>
-        <div class="item__standfirst">@Html(text)</div>
-    }
+        @trail.trailText.map { text =>
+            <div class="item__standfirst">@Html(text)</div>
+        }
 
-    @meta(trail)
-</div>
-<a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
+        @meta(trail)
+    </div>
+    <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
 </div>
 }
 </li>
