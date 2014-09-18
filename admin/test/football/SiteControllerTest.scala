@@ -9,7 +9,7 @@ import test.ConfiguredTestSuite
 
 @DoNotDiscover class SiteControllerTest extends FreeSpec with GetPaClient with ExecutionContexts with ShouldMatchers with ConfiguredTestSuite {
 
-  "test index page loads" in fake {
+  "test index page loads" in {
     val Some(result) = route(FakeRequest(GET, "/admin/football"))
     status(result) should equal(OK)
   }

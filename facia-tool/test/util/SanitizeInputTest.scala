@@ -1,9 +1,10 @@
 package util
 
 import frontsapi.model.{Front, Config}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import test.ConfiguredTestSuite
 
-class SanitizeInputTest extends FlatSpec with Matchers {
+@DoNotDiscover class SanitizeInputTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   private def createConfigWithFront(section: Option[String] = None,
                                     title: Option[String] = None,

@@ -2,17 +2,16 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 
-class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+@DoNotDiscover class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
   feature("League Tables") {
 
     scenario("Visit 'all tables' page") {
       Given("I visit the a all tables page")
 
-      HtmlUnit("/football/tables") { browser =>
+      goTo("/football/tables") { browser =>
         import browser._
 
         Then("I should see the 4 few entries of each table")
@@ -38,7 +37,7 @@ class LeagueTablesFeatureTest extends FeatureSpec with GivenWhenThen with Matche
     scenario("Visit 'competition table' page") {
       Given("I visit the a competition league table page")
 
-      HtmlUnit("/football/premierleague/table") { browser =>
+      goTo("/football/premierleague/table") { browser =>
         import browser._
 
         Then("I should see all the teams in this league")

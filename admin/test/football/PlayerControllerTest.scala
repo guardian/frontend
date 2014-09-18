@@ -11,13 +11,13 @@ import test.ConfiguredTestSuite
 
 @DoNotDiscover class PlayerControllerTest extends FreeSpec with ShouldMatchers with GetPaClient with ExecutionContexts with ConfiguredTestSuite {
 
-  "test redirects player card form submission to correct player page" in fake {
+  "test redirects player card form submission to correct player page" in {
     val Some(result) = route(FakeRequest(POST, "/admin/football/player/card", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("player" -> List("123456"), "team" -> List("1"), "competition" -> List("100"), "playerCardType" -> List("attack")))))
     status(result) should equal(SEE_OTHER)
     redirectLocation(result) should equal(Some("/admin/football/player/card/competition/attack/123456/1/100"))
   }
 
-  "test player card renders correctly" in fake {
+  "test player card renders correctly" in {
     val Some(result) = route(FakeRequest(GET, "/admin/football/player/card/competition/attack/237670/19/100"))
     status(result) should equal(OK)
     val content = contentAsString(result)
@@ -25,7 +25,7 @@ import test.ConfiguredTestSuite
     content should include("Emmanuel Adebayor")
   }
 
-  "test player card renders correctly for date instead of competition" in fake {
+  "test player card renders correctly for date instead of competition" in {
     val Some(result) = route(FakeRequest(GET, "/admin/football/player/card/date/attack/237670/19/20140101"))
     status(result) should equal(OK)
     val content = contentAsString(result)
@@ -33,7 +33,7 @@ import test.ConfiguredTestSuite
     content should include("Emmanuel Adebayor")
   }
 
-  "test can load autocomplete JSON for a team's squad" in fake {
+  "test can load autocomplete JSON for a team's squad" in {
     val Some(result) = route(FakeRequest(GET, "/admin/football/api/squad/19"))
     status(result) should equal(OK)
     val content = contentAsJson(result)

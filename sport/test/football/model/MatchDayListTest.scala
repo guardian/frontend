@@ -2,9 +2,10 @@ package football.model
 
 import org.scalatest._
 import implicits.Football
+import test.ConfiguredTestSuite
 
 
-class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues {
+@DoNotDiscover class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
   "the live matches list" - {
     "for today" - {
       val matches = new MatchDayList(competitions, today)

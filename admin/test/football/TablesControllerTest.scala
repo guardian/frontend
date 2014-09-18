@@ -14,7 +14,7 @@ import scala.language.postfixOps
 
 @DoNotDiscover class TablesControllerTest extends FreeSpec with GetPaClient with ExecutionContexts with ShouldMatchers with ConfiguredTestSuite {
 
-  "test tables index page loads with leages" in fake {
+  "test tables index page loads with leagues" in {
     val Some(result) = route(FakeRequest(GET, "/admin/football/tables"))
     status(result) should equal(OK)
     val content = contentAsString(result)
@@ -24,13 +24,13 @@ import scala.language.postfixOps
       .foreach(seasonName => content should include(seasonName))
   }
 
-  "submitting a choice of league redirects to the correct table page" in fake {
+  "submitting a choice of league redirects to the correct table page" in {
     val Some(result) = route(FakeRequest(POST, "/admin/football/tables/league", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("competitionId" -> List("100"), "focus" -> List("none")))))
     status(result) should equal(SEE_OTHER)
     redirectLocation(result) should equal(Some("/admin/football/tables/league/100"))
   }
 
-  "submitting league with 'focus' redirects to focus of selected league" in fake {
+  "submitting league with 'focus' redirects to focus of selected league" in {
     val Some(resultTop) = route(FakeRequest(POST, "/admin/football/tables/league", FakeHeaders(), AnyContentAsFormUrlEncoded(Map("competitionId" -> List("100"), "focus" -> List("top")))))
     status(resultTop) should equal(SEE_OTHER)
     redirectLocation(resultTop) should equal(Some("/admin/football/tables/league/100/top"))
@@ -50,7 +50,7 @@ import scala.language.postfixOps
     redirectLocation(resultTeams) should equal(Some("/admin/football/tables/league/100/19/1006"))
   }
 
-  "can show full table for selected league" in fake {
+  "can show full table for selected league" in {
     val Some(result) = route(FakeRequest(GET, "/admin/football/tables/league/100"))
     status(result) should equal(OK)
     val content = contentAsString(result)

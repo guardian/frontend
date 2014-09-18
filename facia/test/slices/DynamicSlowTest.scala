@@ -1,11 +1,13 @@
 package slices
 
 import ArbitraryStories._
+import org.scalatest.DoNotDiscover
 import org.scalatest.OptionValues._
 import org.scalacheck.Arbitrary.arbitrary
 import common.Seqs._
+import test.ConfiguredTestSuite
 
-class DynamicSlowTest extends DynamicContainerTest {
+@DoNotDiscover class DynamicSlowTest extends DynamicContainerTest with ConfiguredTestSuite {
   override val slicesFor: (Seq[Story]) => Option[Seq[Slice]] = DynamicSlow.slicesFor
 
   it should "for only standard items return Hl4Hl4" in {

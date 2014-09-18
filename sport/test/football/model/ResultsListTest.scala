@@ -4,8 +4,9 @@ import org.scalatest._
 import implicits.Football
 import pa.{FootballMatch, Result, MatchDay}
 import model.Competition
+import test.ConfiguredTestSuite
 
-class ResultsListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues {
+@DoNotDiscover class ResultsListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
   "the all results list" - {
     "for today" - {
       val results = new ResultsList(today, competitions)
