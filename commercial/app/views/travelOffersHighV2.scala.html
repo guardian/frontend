@@ -34,7 +34,6 @@
 
             <div class="container__body">
                 <div class="commercial__relevance commercial__relevance--high">
-                    <h4 class="commercial__header">Featured trip</h4>
                     <div class="lineitems">
                         @offers.take(1).map { offer =>
                             <div class="lineitem lineitem--high">
@@ -57,7 +56,6 @@
                      </div>
                 </div>
                 <div class="commercial__relevance commercial__relevance--low">
-                    <h4 class="commercial__header">You also might like</h4>
                     <ul class="lineitems">
                         @offers.drop(1).take(2).map { offer =>
                             <li class="lineitem lineitem--low">

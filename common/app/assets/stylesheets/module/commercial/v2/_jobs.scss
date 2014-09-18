@@ -34,7 +34,7 @@ $c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
         @include mq($until: tablet) {
             .lineitem.lineitem--low {
                 padding-left: 120px + $gs-gutter*1;
-                
+
                 &:nth-child(2) {
                     display: none;
                 }
@@ -50,8 +50,8 @@ $c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
         }
 
         @include mq(tablet) {
-            .lineitems {
-                min-height: $gs-baseline*18;
+            .lineitem {
+                min-height: $gs-baseline*18.5;
             }
         }
     }
@@ -73,6 +73,7 @@ $c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
         float: left;
 
         &:last-child .commercial--jobs__sector__link {
+            color: $c-commercial-jobs-2;
             font-weight: bold;
         }
 

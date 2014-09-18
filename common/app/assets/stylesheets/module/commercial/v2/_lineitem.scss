@@ -101,7 +101,7 @@
         @include mq($until: tablet) {
             width: 100%;
             border-left: 0;
-            border-top: 1px solid $c-neutral4;
+            border-top: 1px solid $c-neutral3;
             padding: $gs-baseline/2 0;
             position: relative;
 
@@ -132,9 +132,7 @@
         @include box-sizing(border-box);
 
         @include mq($until: tablet) {
-            border-bottom: 1px solid $c-neutral3;
             padding-bottom: $gs-baseline;
-            margin-bottom: $gs-baseline/3;
         }
 
         @include mq(tablet) {
