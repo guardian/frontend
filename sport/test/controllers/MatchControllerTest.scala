@@ -1,9 +1,7 @@
-package controllers
+package test
 
 import play.api.test.Helpers._
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
-import test._
-import test.TestRequest
 
 @DoNotDiscover class MatchControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
   
