@@ -12,7 +12,7 @@
     }
 }
 
-.tag-wrapper--break-at-leftCol {
+.tag-wrapper--break-at-leftcol {
     @include mq(leftCol) {
         width: $left-column;
         position: absolute;
