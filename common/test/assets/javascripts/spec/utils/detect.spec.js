@@ -34,12 +34,12 @@ define([
             });
 
             it('should return the correct breakpoint if on tweakpoint', function(){
-                $style.html('body:after { content: "faciaLeftCol"; }');
+                $style.html('body:after { content: "leftCol"; }');
                 expect(detect.getBreakpoint()).toBe('desktop');
             });
 
             it('should return the tweakpoint if required', function(){
-                var breakpoint = 'faciaLeftCol';
+                var breakpoint = 'leftCol';
                 $style.html('body:after { content: "' + breakpoint + '"; }');
                 expect(detect.getBreakpoint(true)).toBe(breakpoint);
             });
