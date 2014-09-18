@@ -78,6 +78,26 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     headers("Cache-Control") should be("max-age=120, stale-while-revalidate=12, stale-if-error=864000")
   }
 
+  it should "set Surrogate-Control the same as Cache-Control" in {
+    Switches.DoubleCacheTimesSwitch.switchOff()
+
+    val page = new MetaData {
+      def id = ""
+
+      def section = ""
+
+      def webTitle = ""
+
+      def analyticsName = ""
+    }
+
+    val result = Cached(page)(Ok("foo"))
+    val headers = result.header.headers
+
+    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
+    headers("Cache-Control") should equal (headers("Surrogate-Control"))
+  }
+
   private def content(lastModified: DateTime, live: Boolean): Content = {
     Content(ApiContent("foo/2012/jan/07/bar", None, None, Some(new DateTime), "Some article",
       "http://www.guardian.co.uk/foo/2012/jan/07/bar",
