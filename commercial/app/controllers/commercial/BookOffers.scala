@@ -30,7 +30,7 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
   private def renderBestsellers(relevance: Relevance[Book], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
-        (BestsellersAgent.getSpecificBooks(specificIds) ++ BestsellersAgent.adsTargetedAt(segment))
+        (BestsellersAgent.getSpecificBooks(specificIds) ++ BestsellersAgent.bestsellersTargetedAt(segment))
           .distinctBy(_.isbn).take(5) match {
           case Nil => NoCache(format.nilResult)
           case books => Cached(componentMaxAge) {

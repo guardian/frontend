@@ -1,8 +1,8 @@
 package model.commercial.books
 
-import common.ExecutionContexts
+import common.{ExecutionContexts, AkkaAgent}
 import conf.Switches.MagentoServiceSwitch
-import model.commercial.{Ad, AdAgent, Segment, intersects, lastPart}
+import model.commercial._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
 import play.api.libs.json.{JsPath, Reads}
@@ -56,7 +56,9 @@ object Book {
 }
 
 
-object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
+object BestsellersAgent extends ExecutionContexts {
+
+  private lazy val agent = AkkaAgent[Seq[Book]](Nil)
 
   private val bertramFeeds = Seq(
     GeneralBestsellersFeed,
@@ -74,12 +76,15 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
 
   private val magentoFeeds = Seq(MagentoBestsellersFeed)
 
-  def getSpecificBook(isbn: String) = currentAds find(_.isbn == isbn)
-  def getSpecificBooks(specifics: Seq[String]) = currentAds.filter(specifics contains _.isbn)
+  def getSpecificBook(isbn: String) = agent() find (_.isbn == isbn)
+  def getSpecificBooks(specifics: Seq[String]) = agent() filter (specifics contains _.isbn)
 
-  override def adsTargetedAt(segment: Segment): Seq[Book] = super.adsTargetedAt(segment).sortBy(_.position).take(10)
-
-  override def defaultAds: Seq[Book] = currentAds filter (_.category.exists(_ == "General"))
+  def bestsellersTargetedAt(segment: Segment): Seq[Book] = {
+    val targetedBestsellers = agent() filter (_.isTargetedAt(segment))
+    lazy val defaultBestsellers = agent() filter (_.category.exists(_ == "General"))
+    val bestsellers = if (targetedBestsellers.isEmpty) defaultBestsellers else targetedBestsellers
+    bestsellers.sortBy(_.position).take(10)
+  }
 
   def refresh() {
 
@@ -88,14 +93,15 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
 
       feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
         (soFar, feed) =>
-          soFar :+ feed.loadAds().recover {
+          soFar :+ feed.loadBestsellers().recover {
             case _ => Nil
           }
       }
     }
 
     for (books <- bookListsLoading) {
-      updateCurrentAds(books.flatten.distinct)
+      MerchandiseAgent.updateAvailableMerchandise(agent, books.flatten.distinct)
     }
   }
+
 }

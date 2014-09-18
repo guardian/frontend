@@ -46,7 +46,7 @@ trait BestsellersApi extends ExecutionContexts with Logging {
     }
   }
 
-  def loadAds(): Future[Seq[Book]] = {
+  def loadBestsellers(): Future[Seq[Book]] = {
     FeedReader.readSeqFromXml[Book](FeedRequest(adTypeName, GuBookshopFeedsSwitch, url, timeout = 5.seconds))(parse)
   }
 
@@ -137,7 +137,7 @@ object MagentoBestsellersFeed extends BestsellersApi {
 
   override protected def url: Option[String] = magento.domain map (domain => s"http://$domain/$path")
 
-  override def loadAds(): Future[Seq[Book]] = super.loadAds() map {
+  override def loadBestsellers(): Future[Seq[Book]] = super.loadBestsellers() map {
     _ map (book => book.copy(jacketUrl = book.jacketUrl.map(_.stripPrefix("http:"))))
   }
 
