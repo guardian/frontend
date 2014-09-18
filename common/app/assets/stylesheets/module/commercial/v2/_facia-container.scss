@@ -166,6 +166,7 @@
     }
 
     .commercial__cta {
+        width: auto;
         margin-right: 0;
         position: absolute;
         top: $gs-baseline/2;
@@ -175,15 +176,17 @@
             right: $gs-gutter;
         }
 
-        @include mq(tablet, leftCol) {
-            width: gs-span(3);
-        }
-
         @include mq(leftCol) {
             top: auto;
             right: $gs-gutter/2;
             bottom: $gs-baseline;
             left: $gs-gutter/2;
+        }
+        
+        @include mq(leftCol, wide) {
+            .hide-on-mobile-inline {
+                display: none !important;
+            }
         }
 
         &.button {
@@ -191,7 +194,7 @@
             border-color: rgba(#ffffff, .3);
         }
 
-        @include mq($until: tablet) {
+        @include mq($until: mobile) {
             .i-right {
                 margin: -1px -13px 0;
                 float: none;
