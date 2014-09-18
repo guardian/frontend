@@ -154,7 +154,7 @@
 }
 
 .content__section {
-    @include fs-header(2);
+    @include fs-header(3);
 
     &:first-letter {
         text-transform: capitalize;
@@ -175,12 +175,15 @@
 }
 
 .content__series {
-    @include fs-header(1);
+    @include fs-headline(3);
 
     @include mq($until: leftCol) {
-        &:before {
-            content: "\00A0\0387\00A0";
-        }
+        @include fs-headline(2);
+        float: left;
+        padding-left: $gs-gutter/3;
+//        &:before {
+//            content: "\00A0\0387\00A0";
+//        }
     }
 }
 
