@@ -47,9 +47,9 @@
                                             }
                                         }
 
-                                        case Rows(flexWidth, columns, rows, itemClasses) => {
-                                            <li class="facia-slice__item l-row__item l-row__item--flex@flexWidth">
-                                                <ul class="u-unstyled l-row l-row--items-@columns l-row--list">
+                                        case Rows(colSpan, columns, rows, itemClasses) => {
+                                            <li class="facia-slice__item l-row__item l-row__item--span-@colSpan">
+                                                <ul class="u-unstyled l-row l-list l-list--columns-@columns l-list--rows-@rows">
                                                     @if(cards.nonEmpty) {
                                                         @cards.map{ card =>
                                                             @standard(card, itemClasses.classes, containerIndex)
@@ -63,6 +63,7 @@
                                     }
                                 }
                                 </ul>
+
                                 @show_more(remainingCards, 4, containerIndex, FourColumns)
 
                             </div>
