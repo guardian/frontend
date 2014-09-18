@@ -36,7 +36,7 @@ define([
         }
 
         var $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false,
-            adType = $mainCol && $mainCol.dim().height < 600 ? 'right-small' : 'right';
+            adType = !$mainCol.length || $mainCol.dim().height >= 600 ? 'right' : 'right-small';
 
         return $(config.adSlotContainerSelector)
             .append(dfp.createAdSlot(adType, 'mpu-banner-ad'));
