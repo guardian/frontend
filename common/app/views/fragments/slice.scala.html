@@ -11,35 +11,41 @@
             case SingleItem(width, itemLayout) => {
                 @cards.headOption.map { card =>
                     <div class="single-item-column @itemLayout.classes">
-
+                        @* Item goes here *@
                     </div>
                 }
             }
 
-            case Rows(width, columns, rows, itemLayout) => {
+            case Rows(flexWidth, columns, rows, itemLayout) => {
                 <div class="rows-column">
                     @if(cards.nonEmpty) {
                         <ul>
                         @cards.map { card =>
-                            <li class="@itemLayout.classes"></li>
+                            <li class="@itemLayout.classes">
+                                @* Item goes here *@
+                            </li>
                         }
                         </ul>
                     }
                 </div>
             }
 
-            case SplitColumn(width, topItemLayout, bottomItemsLayout) => {
+            case SplitColumn(flexWidth, topItemLayout, bottomItemsLayout) => {
                 <div class="split-column">
                     @if(cards.nonEmpty) {
-                        <div class="split-column-top">
-
+                        <div class="split-column-top @topItemLayout.classes">
+                            @cards.headOption.map { card =>
+                                @* Item goes here *@
+                            }
                         </div>
 
                         @if(cards.length > 1) {
                             <div class="split-column-bottom">
                                 <ul>
                                 @cards.drop(1).map { card =>
-                                    <li></li>
+                                    <li class="@bottomItemsLayout.classes">
+                                        @* Item goes here *@
+                                    </li>
                                 }
                                 </ul>
                             </div>
@@ -48,8 +54,10 @@
                 </div>
             }
 
-            case MPU(width) => {
-                <div class="mpu-slot"></div>
+            case MPU(flexWidth) => {
+                <div class="mpu-slot">
+                    @* MPU goes here *@
+                </div>
             }
         }
     }
