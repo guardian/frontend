@@ -7,7 +7,6 @@
 @import model.FaciaComponentName
 @import common.LinkTo
 
-
 @defining(sliceWithRemaining){ case (slice, remainingCards) =>
 
     @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>

@@ -3,7 +3,7 @@
 @import model.Config
 @import model.Trail
 @import views.support.ShowMoreColumns
-@import fragments.items.facia_cards.list
+@import fragments.items.facia_cards.standard
 
 @* Show More for the new style containers should identical, differing only in number of columns (3 or 4).
  *
@@ -16,7 +16,7 @@
     <div class="linkslist-container js-container--show-more">
         <ul class="linkslist u-unstyled l-row l-row--items-4 facia-slice">
         @items.zipWithIndex.map { case (trail, index) =>
-            @list(trail, index + indexOffset, containerIndex)
+            @standard(trail, index + indexOffset, containerIndex)
         }
         </ul>
     </div>

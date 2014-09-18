@@ -1,4 +1,4 @@
-.container--facia-cards {
+.fc-container {
 
     .linkslist-container {
         margin: 0 !important;
@@ -16,7 +16,7 @@
             width: 100%;
             float: left;
 
-            @include mq(mobileLandscape) {
+            @include mq(tablet) {
                 width: 50%;
 
                 &:nth-child(2n+1) {
@@ -37,7 +37,7 @@
                 @include flex-grow(0);
                 @include flex-basis(100%);
 
-                @include mq(mobileLandscape) {
+                @include mq(tablet) {
                     @include flex-basis(50%);
                 }
             }
