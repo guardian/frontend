@@ -1,6 +1,8 @@
-@(trail: Trail)(implicit request: RequestHeader)
+@(trail: model.Trail)(implicit request: RequestHeader)
 
-<div class="item__meta">
+@import views.support.Format
+
+<aside class="item__meta">
     @if(!trail.shouldHidePublicationDate) {
         <time
             class="item__timestamp js-item__timestamp"
@@ -11,4 +13,4 @@
             <span class="timestamp__text"><span class="u-h">Published: </span>@Format(trail.webPublicationDate, "d MMM y")</span>
         </time>
     }
-</div>
+</aside>

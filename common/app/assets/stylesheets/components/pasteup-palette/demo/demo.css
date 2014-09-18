@@ -38,148 +38,8 @@
  *
  * @group colours
  */
-.c-guardian-brand {
-  color: #005689;
-}
-
-.c-guardian-brand-light {
-  color: #94b1ca;
-}
-
-.c-guardian-brand-dark {
-  color: #00456e;
-}
-
-.c-error {
-  color: #d61d00;
-}
-
-.c-success {
-  color: #4a7801;
-}
-
-.c-neutral-1 {
-  color: #333333;
-}
-
-.c-neutral-2 {
-  color: #767676;
-}
-
-.c-neutral-3 {
-  color: #bdbdbd;
-}
-
-.c-neutral-4 {
-  color: gainsboro;
-}
-
-.c-neutral-5 {
-  color: #dfdfdf;
-}
-
-.c-neutral-6 {
-  color: #eaeaea;
-}
-
-.c-neutral-7 {
-  color: #f1f1f1;
-}
-
-.c-neutral-8 {
-  color: #f6f6f6;
-}
-
-.c-neutral-1-warm {
-  color: #333333;
-}
-
-.c-neutral-2-warm {
-  color: #767676;
-}
-
-.c-neutral-3-warm {
-  color: #bdbdbd;
-}
-
-.c-neutral-4-warm {
-  color: gainsboro;
-}
-
-.c-neutral-5-warm {
-  color: #e3e3db;
-}
-
-.c-neutral-6-warm {
-  color: #edede7;
-}
-
-.c-neutral-7-warm {
-  color: #f4f4ee;
-}
-
-.c-neutral-8-warm {
-  color: #f6f6f6;
-}
-
-.c-tone-news-1 {
-  color: #005689;
-}
-
-.c-tone-news-2 {
-  color: #4bc6df;
-}
-
-.c-tone-features-1 {
-  color: #951c55;
-}
-
-.c-tone-features-2 {
-  color: #f66980;
-}
-
-.c-tone-features-3 {
-  color: #b82266;
-}
-
-.c-tone-features-4 {
-  color: #7d0068;
-}
-
-.c-tone-comment-1 {
-  color: #e6711b;
-}
-
-.c-tone-comment-2 {
-  color: #ffbb00;
-}
-
-.c-tone-comment-3 {
-  color: #ffcf4c;
-}
-
-.c-tone-media-1 {
-  color: #333333;
-}
-
-.c-tone-media-2 {
-  color: #484848;
-}
-
-.c-tone-media-3 {
-  color: #ffbb00;
-}
-
-.c-tone-live-1 {
-  color: #b51800;
-}
-
-.c-tone-live-2 {
-  color: #cc2b12;
-}
-
 html {
-  max-width: 60em;
+  max-width: 74em;
   margin-left: auto;
   margin-right: auto;
   padding: 1em 1em 3em;
@@ -285,6 +145,134 @@ a {
 
 .b-neutral-8-warm {
   background-color: #f6f6f6;
+}
+
+.b-news-main-1 {
+  background-color: #005689;
+}
+
+.b-news-main-2 {
+  background-color: #4bc6df;
+}
+
+.b-news-support-1 {
+  background-color: #aad8f1;
+}
+
+.b-news-support-2 {
+  background-color: #197caa;
+}
+
+.b-news-support-3 {
+  background-color: #69d1ca;
+}
+
+.b-news-support-4 {
+  background-color: #66a998;
+}
+
+.b-news-support-5 {
+  background-color: #aad801;
+}
+
+.b-features-main-1 {
+  background-color: #7d0068;
+}
+
+.b-features-main-2 {
+  background-color: #b82266;
+}
+
+.b-features-support-1 {
+  background-color: #951c55;
+}
+
+.b-features-support-2 {
+  background-color: #4e0375;
+}
+
+.b-features-support-3 {
+  background-color: #fdadba;
+}
+
+.b-comment-main-1 {
+  background-color: #c05303;
+}
+
+.b-comment-main-2 {
+  background-color: #ff9b0b;
+}
+
+.b-comment-support-1 {
+  background-color: #83705e;
+}
+
+.b-comment-support-2 {
+  background-color: #e3e3db;
+}
+
+.b-comment-support-3 {
+  background-color: #ffbb00;
+}
+
+.b-multimedia-main-1 {
+  background-color: #333333;
+}
+
+.b-multimedia-main-2 {
+  background-color: #ffbb00;
+}
+
+.b-multimedia-support-1 {
+  background-color: #c5d4ea;
+}
+
+.b-multimedia-support-2 {
+  background-color: #507892;
+}
+
+.b-multimedia-support-3 {
+  background-color: #002c59;
+}
+
+.b-live-main-1 {
+  background-color: #b51800;
+}
+
+.b-live-main-2 {
+  background-color: #cc2b12;
+}
+
+.b-live-support-1 {
+  background-color: #ff5b3a;
+}
+
+.b-live-support-2 {
+  background-color: #800c0c;
+}
+
+.b-live-support-3 {
+  background-color: #a60947;
+}
+
+.b-maps-main-1 {
+  background-color: #1c6326;
+}
+
+.b-maps-main-2 {
+  background-color: #298422;
+}
+
+.b-maps-support-1 {
+  background-color: #ceb41d;
+}
+
+.b-maps-support-2 {
+  background-color: #a9af2b;
+}
+
+.b-maps-support-3 {
+  background-color: #5ebfba;
 }
 
 .b-tone-news-1 {
@@ -516,6 +504,306 @@ a {
 .b-neutral-8-warm:before {
   visibility: hidden;
   content: "neutral-8-warm";
+}
+
+.b-news-main-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-news-main-1:before {
+  visibility: hidden;
+  content: "news-main-1";
+}
+
+.b-news-main-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-news-main-2:before {
+  visibility: hidden;
+  content: "news-main-2";
+}
+
+.b-news-support-1:before {
+  visibility: hidden;
+  content: "news-support-1";
+}
+
+.b-news-support-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-news-support-2:before {
+  visibility: hidden;
+  content: "news-support-2";
+}
+
+.b-news-support-3 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-news-support-3:before {
+  visibility: hidden;
+  content: "news-support-3";
+}
+
+.b-news-support-4 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-news-support-4:before {
+  visibility: hidden;
+  content: "news-support-4";
+}
+
+.b-news-support-5 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-news-support-5:before {
+  visibility: hidden;
+  content: "news-support-5";
+}
+
+.b-features-main-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-features-main-1:before {
+  visibility: hidden;
+  content: "features-main-1";
+}
+
+.b-features-main-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-features-main-2:before {
+  visibility: hidden;
+  content: "features-main-2";
+}
+
+.b-features-support-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-features-support-1:before {
+  visibility: hidden;
+  content: "features-support-1";
+}
+
+.b-features-support-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-features-support-2:before {
+  visibility: hidden;
+  content: "features-support-2";
+}
+
+.b-features-support-3:before {
+  visibility: hidden;
+  content: "features-support-3";
+}
+
+.b-comment-main-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-comment-main-1:before {
+  visibility: hidden;
+  content: "comment-main-1";
+}
+
+.b-comment-main-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-comment-main-2:before {
+  visibility: hidden;
+  content: "comment-main-2";
+}
+
+.b-comment-support-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-comment-support-1:before {
+  visibility: hidden;
+  content: "comment-support-1";
+}
+
+.b-comment-support-2:before {
+  visibility: hidden;
+  content: "comment-support-2";
+}
+
+.b-comment-support-3 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-comment-support-3:before {
+  visibility: hidden;
+  content: "comment-support-3";
+}
+
+.b-multimedia-main-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-multimedia-main-1:before {
+  visibility: hidden;
+  content: "multimedia-main-1";
+}
+
+.b-multimedia-main-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-multimedia-main-2:before {
+  visibility: hidden;
+  content: "multimedia-main-2";
+}
+
+.b-multimedia-support-1:before {
+  visibility: hidden;
+  content: "multimedia-support-1";
+}
+
+.b-multimedia-support-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-multimedia-support-2:before {
+  visibility: hidden;
+  content: "multimedia-support-2";
+}
+
+.b-multimedia-support-3 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-multimedia-support-3:before {
+  visibility: hidden;
+  content: "multimedia-support-3";
+}
+
+.b-live-main-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-live-main-1:before {
+  visibility: hidden;
+  content: "live-main-1";
+}
+
+.b-live-main-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-live-main-2:before {
+  visibility: hidden;
+  content: "live-main-2";
+}
+
+.b-live-support-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-live-support-1:before {
+  visibility: hidden;
+  content: "live-support-1";
+}
+
+.b-live-support-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-live-support-2:before {
+  visibility: hidden;
+  content: "live-support-2";
+}
+
+.b-live-support-3 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-live-support-3:before {
+  visibility: hidden;
+  content: "live-support-3";
+}
+
+.b-maps-main-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-maps-main-1:before {
+  visibility: hidden;
+  content: "maps-main-1";
+}
+
+.b-maps-main-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-maps-main-2:before {
+  visibility: hidden;
+  content: "maps-main-2";
+}
+
+.b-maps-support-1 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-maps-support-1:before {
+  visibility: hidden;
+  content: "maps-support-1";
+}
+
+.b-maps-support-2 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-maps-support-2:before {
+  visibility: hidden;
+  content: "maps-support-2";
+}
+
+.b-maps-support-3 {
+  text-shadow: 0 0 3px #000000;
+  font-weight: 200;
+  color: #ffffff;
+}
+.b-maps-support-3:before {
+  visibility: hidden;
+  content: "maps-support-3";
 }
 
 .b-tone-news-1 {

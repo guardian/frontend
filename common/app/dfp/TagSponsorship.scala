@@ -4,13 +4,27 @@ import common.Logging
 import model.Tag
 import play.api.libs.json._
 
+
 object Sponsorship {
+
+  implicit val sponsorshipWrites = new Writes[Sponsorship] {
+    def writes(sponsorship: Sponsorship): JsValue = {
+      Json.obj(
+        "sponsor" -> sponsorship.sponsor,
+        "tags" -> sponsorship.tags,
+        "lineItemId" -> sponsorship.lineItemId
+      )
+    }
+  }
+
   implicit val jsonReads = Json.reads[Sponsorship]
+
 }
 
-case class Sponsorship(tags: Seq[String], sponsor: Option[String]) {
+case class Sponsorship(tags: Seq[String], sponsor: Option[String], lineItemId: Long) {
   def hasTag(tagId: String): Boolean = tags contains tagId.split('/').last
 }
+
 
 object InlineMerchandisingTagSet {
   implicit val jsonReads = Json.reads[InlineMerchandisingTagSet]
@@ -30,8 +44,20 @@ case class InlineMerchandisingTagSet(keywords: Set[String] = Set.empty, series: 
   def nonEmpty: Boolean = keywords.nonEmpty || series.nonEmpty || contributors.nonEmpty
 }
 
+
 object SponsorshipReport {
+
+  implicit val sponsorshipReportWrites = new Writes[SponsorshipReport] {
+    def writes(sponsorshipReport: SponsorshipReport): JsValue = {
+      Json.obj(
+        "updatedTimeStamp" -> sponsorshipReport.updatedTimeStamp,
+        "sponsorships" -> sponsorshipReport.sponsorships
+      )
+    }
+  }
+
   implicit val jsonReads = Json.reads[SponsorshipReport]
+
 }
 
 case class SponsorshipReport(updatedTimeStamp: String, sponsorships: Seq[Sponsorship])
@@ -47,6 +73,7 @@ object SponsorshipReportParser extends Logging {
     }
   }
 }
+
 
 object InlineMerchandisingTargetedTagsReport {
   implicit val jsonReads = Json.reads[InlineMerchandisingTargetedTagsReport]

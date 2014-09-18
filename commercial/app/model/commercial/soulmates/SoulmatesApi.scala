@@ -1,20 +1,22 @@
 package model.commercial.soulmates
 
-import conf.{Switches, CommercialConfiguration}
+import conf.CommercialConfiguration
+import conf.Switches.SoulmatesFeedSwitch
+import model.commercial.{FeedReader, FeedRequest}
 import play.api.libs.json.{JsArray, JsValue}
-import model.commercial.JsonAdsApi
 
-trait SoulmatesApi extends JsonAdsApi[Member] {
+import scala.concurrent.Future
+import scala.concurrent.duration._
 
-  protected val switch = Switches.SoulmatesFeedSwitch
+trait SoulmatesApi {
+
+  protected val adTypeName: String
 
   protected val path: String
 
-  protected val url: Option[String] = {
+  protected lazy val url: Option[String] = {
     CommercialConfiguration.getProperty("soulmates.api.url") map (url => s"$url/$path")
   }
-
-  override protected val loadTimeout = 10000
 
   def parse(json: JsValue): Seq[Member] = {
     json match {
@@ -31,6 +33,11 @@ trait SoulmatesApi extends JsonAdsApi[Member] {
       case other => Nil
     }
   }
+
+  def loadAds(): Future[Seq[Member]] = {
+    FeedReader.readSeqFromJson(FeedRequest(adTypeName, SoulmatesFeedSwitch, url, timeout = 10.seconds))(parse)
+  }
+
 }
 
 
