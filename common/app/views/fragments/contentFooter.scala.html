@@ -22,11 +22,11 @@
 
     <div class="js-repositioned-comments content__repositioned-comments"></div>
 
-    <div class="facia-container facia-container--layout-content facia-container--default-heading">
-        @fragments.mostPopularPlaceholder(content.section, content.visualTone)
-    </div>
-
     @if(!content.isAdvertisementFeature) {
+        <div class="facia-container facia-container--layout-content facia-container--default-heading">
+            @fragments.mostPopularPlaceholder(content.section, content.visualTone)
+        </div>
+
         <div class="facia-container facia-container--layout-content facia-container--outbrain">
             @fragments.outbrainPlaceholder()
         </div>
