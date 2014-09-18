@@ -5,7 +5,6 @@ import java.net.URLEncoder
 import org.scalatest.Suites
 import org.scalatestplus.play._
 import play.api.test._
-import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import java.io.File
 import com.gu.openplatform.contentapi.connection.Http
@@ -72,8 +71,6 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser {
   lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
   lazy val testBrowser = TestBrowser(webDriver, None)
 
-  def fake[T](block: => T): T = running(app) { block }
-
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 
   def UK[T](path: String)(block: TestBrowser => T): T = goTo(path)(block)
@@ -83,7 +80,7 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser {
       goTo(editionPath)(block)
   }
 
-  protected def goTo[T](path: String)(block: TestBrowser => T): T = running(app) {
+  protected def goTo[T](path: String)(block: TestBrowser => T): T = {
       // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
       htmlUnitDriver.setJavascriptEnabled(false)
       testBrowser.goTo(host + path)
