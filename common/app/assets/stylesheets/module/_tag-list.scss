@@ -10,7 +10,9 @@
             padding-bottom: $gs-baseline*4;
         }
     }
+}
 
+.tag-wrapper--break-at-leftCol {
     @include mq(leftCol) {
         width: $left-column;
         position: absolute;
@@ -25,6 +27,19 @@
     @include mq(wide) {
         width: $left-column-wide;
         left: -$left-column-wide - $gs-gutter;
+    }
+}
+
+.tag-wrapper--break-at-wide {
+    @include mq(wide) {
+        width: $left-column-wide;
+        position: absolute;
+        bottom: 0;
+        left: -$left-column-wide - $gs-gutter;
+
+        .content__main-column--media & {
+            bottom: -($gs-baseline/4);
+        }
     }
 }
 
