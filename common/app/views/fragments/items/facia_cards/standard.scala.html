@@ -23,7 +23,7 @@
 
 <div class="item__container">
     @FaciaDisplayElement.fromTrail(trail) match {
-        case InlineVideo(videoElement, title, endSlatePath) if trail.imageAdjust == "boost" => {
+        case InlineVideo(videoElement, title, endSlatePath) if trail.isBoosted => {
             <div class="item__media-wrapper item__media-wrapper--has-icon u-faux-block-link__promote">
                 <div class="item__video-container">
                 @video(VideoPlayer(
@@ -46,7 +46,7 @@
 
     <div class="@RenderClasses(Map(
         ("item__header", true),
-        ("item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
+        ("item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
     ))">
         @fragments.items.elements.facia_cards.title(trail, index, containerIndex)
         @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
