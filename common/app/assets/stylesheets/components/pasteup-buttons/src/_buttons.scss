@@ -38,7 +38,9 @@ category: Common
     <a href="#" class="button button--secondary"><i class="i i-arrow-white-right i-left"></i>Link to somewhere</a>
     <a href="#" class="button button--tertiary"><i class="i i-arrow-grey-right i-left"></i>Link to somewhere</a>
 </div>
-<br/>
+```
+
+```html_example
 <div>
     <a href="#" class="button button--primary button--xlarge">
         <i class="i i-arrow-white-right"></i>
@@ -107,7 +109,9 @@ category: Common
         <span class="u-h">Link to somewhere</span>
     </a>
 </div>
-<br/>
+```
+
+```html_example
 <div>
     <button type="button" class="button button--primary">Button to somewhere</button>
     <button type="button" class="button button--secondary">Button to somewhere</button>
@@ -139,7 +143,9 @@ category: Common
 */
 
 @mixin button-height($button-size) {
-    @include box-sizing(border-box);
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     height: $button-size;
     padding: 0 ($button-size / 3);
     margin-right: $button-size / 3;
@@ -163,10 +169,10 @@ category: Common
         float: right;
     }
 }
-@mixin button-colour($fill-colour, $text-colour, $hover-colour, $hover-border: $hover-colour, $border-color: $fill-colour) {
+@mixin button-colour($fill-colour, $text-colour, $hover-colour, $hover-border: $hover-colour) {
     color: $text-colour;
     background-color: $fill-colour;
-    border-color: $border-color;
+    border-color: $fill-colour;
 
     &:hover,
     &:focus,
@@ -175,16 +181,19 @@ category: Common
         border-color: $hover-border;
     }
 }
-
 .button {
     display: inline-block;
     vertical-align: top;
     width: auto;
     @include fs-textSans(2);
     font-weight: bold;
-    @include button-height(gs-height(1) - $gs-baseline / 2);
-    @include border-radius(50%);
-    @include button-colour($c-newsAccent, #ffffff, $c-newsDefault);
+    text-decoration: none;
+    @include button-height($gs-baseline * 2.5);
+    // If we want to draw a circle, output a pixel value instead,
+    // as older versions of WebKit do not support % in border-radius
+    -webkit-border-radius: 1000px;
+    border-radius: 1000px;
+    @include button-colour(guss-colour(tone-news-2, $pasteup-palette), #ffffff, guss-colour(tone-news-1, $pasteup-palette));
 
     &:hover,
     &:focus,
@@ -193,64 +202,22 @@ category: Common
     }
 }
 .button--primary {
-    @include button-colour($c-brandBlue, #ffffff, darken($c-newsDefault, 10%));
+    @include button-colour(guss-colour(guardian-brand, $pasteup-palette), #ffffff, darken(guss-colour(tone-news-1, $pasteup-palette), 10%));
 }
 .button--secondary {
-    @include button-colour($c-neutral2, #ffffff, $c-neutral1);
+    @include button-colour(guss-colour(neutral-2, $pasteup-palette), #ffffff, guss-colour(neutral-1, $pasteup-palette));
 }
 .button--tertiary {
-    @include button-colour(transparent, $c-neutral2, transparent, $c-neutral3);
-    border-color: $c-neutral3;
+    @include button-colour(transparent, guss-colour(neutral-2, $pasteup-palette), transparent, guss-colour(neutral-3, $pasteup-palette));
+    border-color: guss-colour(neutral-3, $pasteup-palette);
 
     &:hover,
     &:focus,
     &:active {
-        color: $c-neutral1;
-        border-color: $c-neutral1;
+        color: guss-colour(neutral-1, $pasteup-palette);
+        border-color: guss-colour(neutral-1, $pasteup-palette);
     }
 }
-
-.button--tone-media {
-    @include button-colour($c-mediaAccent2, #ffffff, $c-neutral2);
-}
-
-.button--tone-media-more {
-    @include button-colour($c-mediaBackground, #ffffff, $c-mediaBackground, $c-neutral3, $c-neutral2);
-}
-
-.button--tone-news {
-    @include button-colour($c-neutral7, $c-newsDefault, darken($c-neutral7, 10%));
-}
-
-.button--tone-news-more {
-    @include button-colour(#ffffff, $c-newsDefault, #ffffff, darken($c-neutral3, 10%), $c-neutral5);
-}
-
-.button--tone-feature {
-    @include button-colour($c-neutral7, $c-featureDefault, darken($c-neutral7, 10%));
-}
-
-.button--tone-feature-more {
-    @include button-colour(#ffffff, $c-featureDefault, #ffffff, darken($c-neutral3, 10%), $c-neutral3);
-}
-
-.button--tone-comment {
-    @include button-colour($c-neutral7, $c-commentDefault, darken($c-neutral7, 10%));
-}
-
-.button--tone-comment-more {
-    @include button-colour(#ffffff, $c-commentDefault, #ffffff, darken($c-neutral3, 10%), $c-neutral3);
-}
-
-.button--tone-live {
-    @include button-colour($c-neutral6, $c-newsDefault, darken($c-neutral6, 10%));
-}
-
-.button--tone-live-more {
-    @include button-colour($c-neutral8, $c-newsDefault, $c-neutral8, darken($c-neutral3, 10%), $c-neutral3);
-}
-
-
 .button--xlarge {
     @include button-height(44px);
 }
@@ -258,7 +225,7 @@ category: Common
     @include button-height($gs-baseline * 3);
 }
 .button--medium {
-    @include button-height(gs-height(1) - $gs-baseline / 2);
+    @include button-height($gs-baseline * 2.5);
 }
 .button--small {
     @include button-height($gs-baseline * 2);
@@ -271,59 +238,4 @@ category: Common
     @include fs-textSans(1);
     line-height: $gs-baseline * 1.5 - 1px;
     font-weight: bold;
-}
-
-.button--tag {
-    margin-right: $gs-gutter / 5;
-    margin-bottom: $gs-row-height / 4.5;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: gs-span(4);
-
-    @include mq(leftCol) {
-        max-width: $left-column;
-    }
-
-    @include mq(wide) {
-        max-width: $left-column-wide;
-    }
-
-    .related-keywords & {
-        max-width: none;
-    }
-
-    .content__keywords & {
-        max-width: none;
-    }
-
-    .facia-container__related-keywords__body & {
-        max-width: none;
-    }
-}
-
-.button--show-more {
-    @include fs-textSans(3);
-    margin-bottom: $gs-baseline;
-    padding: ($gs-baseline / 3) * 2 0;
-    text-align: center;
-
-    .i-center {
-        @include border-radius($gs-baseline * 3);
-        height: $gs-baseline * 2;
-        margin-right: $gs-gutter / 2;
-        width: $gs-baseline * 2;
-        display: inline-block;
-        vertical-align: middle;
-
-        .i {
-            margin-top: $gs-baseline / 4;
-        }
-    }
-}
-
-.button--more {
-    @if $old-ie {
-        display: none;
-    }
 }
