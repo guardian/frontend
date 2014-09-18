@@ -5,61 +5,71 @@
  ************************************************/
 
 @mixin fc-item--list-media {
-    display: block;
-    position: relative;
+
+    // values to set image height
+    $headline-size: 1;
+    $text-lines-per-media-object: 3;
+
+    // calculate image width
+    $media-ratio: 5 / 3;
+    $item-vertical-padding: $gs-baseline * .25;
+    $image-width: (($item-vertical-padding * 2) + get-line-height(headline, $headline-size) * $text-lines-per-media-object) * $media-ratio;
+
+    // display: block;
+    // position: relative;
     padding-bottom: 0;
 
-    $image-width: 100px;
 
     &.fc-item--has-image {
         // Min height of 3 baselines
-        min-height: get-line-height(headline, 1) * 3;
+        // min-height: get-line-height(headline, 1) * 3;
         // Override .svg .action--has-icon
-        padding-left: $image-width + $gs-gutter/2 !important;
+        padding-left: $image-width + ($gs-gutter / 2) !important;
     }
 
     .fc-item__media-wrapper,
     .fc-item__image-container {
-        padding-top: 0;
-        margin-top: 0;
-        display: block;
+        // padding-top: 0;
+        // margin-top: 0;
+        // display: block;
     }
 
     .fc-item__media-wrapper {
         float: left;
-        margin-left: ($image-width + $gs-gutter/2) * -1;
+        margin-left: 0 - $image-width - ($gs-gutter / 2);
         width: $image-width;
-    }
-
-    .fc-item__standfirst,
-    .fc-item__meta {
-        display: none;
     }
 
     .fc-item__byline,
     .fc-item__title {
-        @include fs-headline(1);
+        @include fs-headline($headline-size);
     }
 
-    .fc-item__header {
+    .fc-item__header,
+    .fc-item__byline {
+        margin-bottom: 0;
         padding-left: 0;
     }
 
     .fc-item__title {
-        padding-top: 3px;
+        padding-top: $item-vertical-padding;
     }
 
     .fc-item__link {
         color: $c-neutral1;
     }
 
-    &.fc-item--has-image.fc-item--has-icon {
-        .i {
-            position: absolute;
-            top: 5px;
-            left: 2px;
-            z-index: 1;
-            margin-left: 0;
-        }
+    .fc-item__meta {
+        display: none;
     }
+
+    // &.fc-item--has-image.fc-item--has-icon {
+    //     .i {
+    //         position: absolute;
+    //         top: 5px;
+    //         left: 2px;
+    //         z-index: 1;
+    //         margin-left: 0;
+    //     }
+    // }
 }
