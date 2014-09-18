@@ -1,4 +1,4 @@
-@(items: Seq[Trail], indexOffset: Int, containerIndex: Int, numberOfColumns: ShowMoreColumns)(implicit request: RequestHeader, config: Config)
+@(cards: Seq[layout.Card], indexOffset: Int, containerIndex: Int, numberOfColumns: ShowMoreColumns)(implicit request: RequestHeader, config: Config)
 
 @import model.Config
 @import model.Trail
@@ -12,11 +12,11 @@
  *
  * TODO use the number of columns here
  *@
-@if(items.nonEmpty) {
+@if(cards.nonEmpty) {
     <div class="linkslist-container js-container--show-more">
         <ul class="linkslist u-unstyled l-row l-row--items-4 facia-slice">
-        @items.zipWithIndex.map { case (trail, index) =>
-            @standard(trail, index + indexOffset, containerIndex)
+        @cards.map { card =>
+            @standard(card, "fc-item--list-media-mobile fc-item--list-media-tablet", containerIndex)
         }
         </ul>
     </div>

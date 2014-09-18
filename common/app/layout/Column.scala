@@ -2,7 +2,7 @@ package layout
 
 case class ItemClasses(mobile: String, desktop: String) {
   /** Template helper */
-  def classes = s"item--$mobile-mobile item--$desktop-tablet"
+  def classes = s"fc-item--$mobile-mobile fc-item--$desktop-tablet"
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column])
 
