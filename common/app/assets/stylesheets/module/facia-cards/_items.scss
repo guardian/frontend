@@ -164,3 +164,53 @@ $fc-item-gutter: $gs-gutter / 3;
         @include fc-item--standard;
     }
 }
+
+
+.l-list {
+    float: left;
+
+    .has-flex-wrap & {
+        @include flex-display;
+        @include flex-wrap(wrap);
+    }
+}
+
+@for $i from 1 through 4 {
+    .l-row__item--span-#{$i} {
+        @include flex($i)
+    }
+
+    .l-list--columns-#{$i} {
+        .l-row__item {
+            @include mq(tablet) {
+                width: 100% / $i;
+
+                &:nth-child(#{$i}n+1) {
+                    clear: both;
+
+                    &:before {
+                        border: 0;
+                    }
+                }
+            }
+
+            .has-flex-wrap & {
+                @include mq(tablet) {
+                    @include flex-basis(100% / $i);
+                }
+            }
+        }
+    }
+}
+
+.l-list--columns-3.l-list--rows-3 {
+    .l-row__item:nth-child(n+7) {
+        margin-bottom: 0;
+    }
+}
+
+.l-list--columns-4.l-list--rows-3 {
+    .l-row__item:nth-child(n+9) {
+        margin-bottom: 0;
+    }
+}
