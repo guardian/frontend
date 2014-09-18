@@ -46,7 +46,7 @@ define([
 
         removeSocialButtonsOnSmallArticles: function() {
             // remove the bottom social buttons when the body is small enough to fit comfortably in the screen
-            var $articleBody = $('.js-article-main-column');
+            var $articleBody = $('.js-content-main-column');
             if ($articleBody && $articleBody.dim().height < window.innerHeight * 0.8) {
                 $('.js-social--bottom').remove();
             }
