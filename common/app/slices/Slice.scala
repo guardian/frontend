@@ -1,42 +1,56 @@
 package slices
 
-/** These names are temporary. Sam is going to come up with ones that make even less sense. */
-sealed trait Slice
+import layout._
+
+sealed trait Slice {
+  /** TODO: once we get rid of all the not-implementeds below, turn this into a val */
+  def layout: SliceLayout
+}
 
 /* .________.________.________.________.
  * |________|________|________|________|
  * |________|________|________|________|
  * |________|________|________|________|
  */
-case object QlQlQlQl extends Slice
+case object QlQlQlQl extends Slice {
+  def layout = ???
+}
 
 /* .________.________.________.________.
  * |########|________|________|________|
  * |########|________|________|________|
  * |________|________|________|________|
  */
-case object QuarterQlQlQl extends Slice
+case object QuarterQlQlQl extends Slice {
+  def layout = ???
+}
 
 /* .________.________.________.________.
  * |########|########|________|________|
  * |########|########|________|________|
  * |________|________|________|________|
  */
-case object QuarterQuarterQlQl extends Slice
+case object QuarterQuarterQlQl extends Slice {
+  def layout = ???
+}
 
 /* .________.________.________.________.
  * |########|########|########|________|
  * |########|########|########|________|
  * |________|________|________|________|
  */
-case object QuarterQuarterQuarterQl extends Slice
+case object QuarterQuarterQuarterQl extends Slice {
+  def layout = ???
+}
 
 /* .________.________.________.________.
  * |########|########|########|########|
  * |########|########|########|########|
  * |________|________|________|________|
  */
-case object QuarterQuarterQuarterQuarter extends Slice
+case object QuarterQuarterQuarterQuarter extends Slice {
+  def layout = ???
+}
 
 /* ._________________.________.________.
  * |#################|________|________|
@@ -44,7 +58,9 @@ case object QuarterQuarterQuarterQuarter extends Slice
  * |#################|________|________|
  * |_________________|________|________|
  */
-case object HalfQl4Ql4 extends Slice
+case object HalfQl4Ql4 extends Slice {
+  def layout = ???
+}
 
 /* .________.________.________.________.
  * |#################|########|________|
@@ -52,7 +68,9 @@ case object HalfQl4Ql4 extends Slice
  * |#################|________|________|
  * |_________________|________|________|
  */
-case object HalfQuarterQl2Ql3 extends Slice
+case object HalfQuarterQl2Ql3 extends Slice {
+  def layout = ???
+}
 
 /* ._________________._________________.
  * |_________________|_________________|
@@ -60,7 +78,9 @@ case object HalfQuarterQl2Ql3 extends Slice
  * |_________________|_________________|
  * |_________________|_________________|
  */
-case object Hl4Hl4 extends Slice
+case object Hl4Hl4 extends Slice {
+  def layout = ???
+}
 
 /* ._________________.________.________.
  * |_________________|########|########|
@@ -68,7 +88,9 @@ case object Hl4Hl4 extends Slice
  * |_________________|        |        |
  * |_________________|________|________|
  */
-case object Hl4QuarterQuarter extends Slice
+case object Hl4QuarterQuarter extends Slice {
+  def layout = ???
+}
 
 /* ._________________._________________.
  * |_________________|#################|
@@ -76,7 +98,12 @@ case object Hl4QuarterQuarter extends Slice
  * |_________________|#################|
  * |_________________|_________________|
  */
-case object Hl4Half extends Slice
+case object Hl4Half extends Slice {
+  def layout = ???
+}
+
+
+/*** VOLUME SLICES ***/
 
 /* .__________________________.________.
  * |        ##################|########|
@@ -85,7 +112,9 @@ case object Hl4Half extends Slice
  * |        ##################|        |
  * `--------------------------'--------'
  */
-case object ThreeQuarterQuarter extends Slice
+case object ThreeQuarterQuarter extends Slice {
+  def layout = ???
+}
 
 /* .________.__________________________.
  * |########|##################        |
@@ -94,7 +123,9 @@ case object ThreeQuarterQuarter extends Slice
  * |        |##################        |
  * `--------'--------------------------'
  */
-case object QuarterThreeQuarter extends Slice
+case object QuarterThreeQuarter extends Slice {
+  def layout = ???
+}
 
 /* ._________________._________________.
  * |#################|#################|
@@ -103,7 +134,9 @@ case object QuarterThreeQuarter extends Slice
  * |                 |                 |
  * `-----------------'-----------------'
  */
-case object HalfHalf extends Slice
+case object HalfHalf extends Slice {
+  def layout = ???
+}
 
 /* .___________________________________.
  * |         ##########################|
@@ -112,7 +145,20 @@ case object HalfHalf extends Slice
  * |         ##########################|
  * `-----------------------------------'
  */
-case object FullThreeQuarterImage extends Slice
+case object FullThreeQuarterImage extends Slice {
+  val layout = SliceLayout(
+    "full-three-quarter",
+    Seq(
+      SingleItem(
+        width = 1,
+        ItemLayout(
+          mobileClass = "standard",
+          desktopClass = "full-three-quarter"
+        )
+      )
+    )
+  )
+}
 
 /* .___________________________________.
  * |###################################|
@@ -121,4 +167,60 @@ case object FullThreeQuarterImage extends Slice
  * |                                   |
  * `-----------------------------------'
  */
-case object Full extends Slice
+case object Full extends Slice {
+  val layout = SliceLayout(
+    "full",
+    Seq(
+      SingleItem(
+        width = 1,
+        ItemLayout(
+          mobileClass = "standard",
+          desktopClass = "full"
+        )
+      )
+    )
+  )
+}
+
+
+/*** LIST SLICES ***/
+
+/* .___________.___________.___________.
+ * |_##________|_##________|           |
+ * |_##________|_##________|   MPU!    |
+ * |_##________|_##________|___________|
+ */
+case object TlTlMpu extends Slice {
+  val layout = SliceLayout(
+    "tl-tl-mpu",
+    Seq(
+      Rows(
+        width = 2,
+        ItemLayout(
+          mobileClass = "list",
+          desktopClass = "media-list"
+        )
+      ),
+      MPU
+    )
+  )
+}
+
+/* .___________.___________.___________.
+ * |_##________|_##________|_##________|
+ * |_##________|_##________|_##________|
+ */
+case object TlTlTl extends Slice {
+  val layout = SliceLayout(
+    "tl-tl-tl",
+    Seq(
+      Rows(
+        width = 1,
+        ItemLayout(
+          mobileClass = "list",
+          desktopClass = "list"
+        )
+      )
+    )
+  )
+}
