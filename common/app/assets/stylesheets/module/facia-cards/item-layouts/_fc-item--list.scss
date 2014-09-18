@@ -18,12 +18,7 @@
     .fc-item__header {
         margin-bottom: 0;
         padding-left: $fc-item-gutter;
-        padding-bottom: $gs-baseline * 2;
-    }
-
-    .fc-item__title {
-        padding-top: $item-vertical-padding;
-        padding-bottom: $item-vertical-padding;
+        padding-bottom: $gs-baseline * 1.666;
     }
 
     .fc-item__meta {
