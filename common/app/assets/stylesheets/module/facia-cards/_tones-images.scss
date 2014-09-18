@@ -28,11 +28,11 @@
 
 .tone-media {
     .fc-item__timestamp:before {
-        @include icon(clock-yellow, false);
+        @include icon(clock-grey, false);
     }
 
     .fc-trail__count:before {
-        @include icon(comment-yellow, false);
+        @include icon(comment-grey, false);
     }
 }
 
@@ -44,10 +44,6 @@
         width: 1.2em;
         margin-right: 2px;
     }
-
-    .fc-trail__count:before {
-        @include icon(comment-yellow, false);
-    }
 }
 
 .fc-item--gallery {
@@ -56,10 +52,6 @@
         content: '';
         height: .75em;
         width: 1.2em;
-    }
-
-    .fc-trail__count:before {
-        @include icon(comment-yellow, false);
     }
 }
 

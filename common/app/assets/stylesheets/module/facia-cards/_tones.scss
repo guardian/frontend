@@ -1,5 +1,10 @@
 // DEFAULTS
-.fc-item__meta {
+a {
+    color: $c-neutral1;
+}
+
+.fc-item__meta,
+.fc-item__meta a {
     color: $c-neutral2;
 }
 
@@ -17,6 +22,10 @@
         & a {
             color: #ffffff;
         }
+    }
+
+    a.fc-item__kicker {
+        color: $c-liveMute;
     }
 
     .fc-item__meta {
@@ -53,7 +62,7 @@
     }
 
     .fc-item__kicker {
-        color: $c-featureAccent !important;
+        color: $c-featureMute !important;
     }
 
     .fc-item__title .i {
@@ -66,7 +75,7 @@
     .fc-item__meta {
         &,
         & a {
-            color: $c-featuresMute;
+            color: $c-featureMute;
         }
     }
 }
@@ -98,7 +107,7 @@
     .fc-item__meta {
         &,
         & a {
-            color: $c-mediaDefault;
+            color: $c-neutral2;
         }
     }
 }
