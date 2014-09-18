@@ -2,18 +2,11 @@ $fc-item-gutter: $gs-gutter / 3;
 
 .facia-slice__item {
     @include flex-display;
+    padding-bottom: 0;
 
     @if not $browser-supports-flexbox {
         width: 25%;
     }
-}
-
-.fc-item__header,
-.fc-item__standfirst,
-.fc-item__meta,
-.fc-item__byline {
-    padding-left: $fc-item-gutter;
-    padding-right: $fc-item-gutter;
 }
 
 .fc-item {
@@ -34,9 +27,15 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
-.fc-item__image-container {
-    margin-top: 4px;
+.fc-item__header,
+.fc-item__standfirst,
+.fc-item__meta,
+.fc-item__byline {
+    padding-left: $fc-item-gutter;
+    padding-right: $fc-item-gutter;
+}
 
+.fc-item__image-container {
     .js-off & {
         display: none;
     }
@@ -46,18 +45,24 @@ $fc-item-gutter: $gs-gutter / 3;
 .fc-item__image-container {
     display: none;
 }
+
 .fc-item__media-wrapper {
     position: relative;
 }
+
 .fc-item--has-image {
-    .item__media-wrapper,
-    .item__image-container {
+    .fc-item__media-wrapper,
+    .fc-item__image-container {
         display: block;
 
         .js-off & {
             display: none !important;
         }
     }
+}
+
+.fc-item__standfirst {
+    display: none;
 }
 
 .fc-item__live-indicator {
@@ -90,9 +95,10 @@ $fc-item-gutter: $gs-gutter / 3;
 }
 
 .fc-item__timestamp {
-    min-width: 50px - $gs-gutter/2 - 14px;
-    padding-right: $gs-gutter/2;
-    padding-left: 14px;
+    // this looks weird, commenting out before removing later
+    // min-width: 50px - $gs-gutter / 2 - 14px;
+    padding-right: $gs-gutter / 2;
+    padding-left: $fc-item-gutter;
 }
 
 .fc-trail__count {
@@ -165,9 +171,7 @@ $fc-item-gutter: $gs-gutter / 3;
 }
 @mixin fc-item--standard {}
 @mixin fc-item--list-media {}
-@mixin fc-item--standard {
-
-}
+@mixin fc-item--standard {}
 
 
 .fc-item {}
