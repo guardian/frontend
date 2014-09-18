@@ -8,10 +8,14 @@
             width: 100%;
         }
     }
+
+    @include mq($until: mobileLandscape) {
+        margin-left: $gs-gutter/2;
+    }
 }
 
 .facia-container__related-keywords__body {
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         margin-left: $left-column + $gs-gutter;
     }
 

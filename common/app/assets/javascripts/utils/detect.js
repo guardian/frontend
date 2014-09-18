@@ -68,11 +68,6 @@ define([
                 width: 1140
             },
             {
-                name: 'faciaLeftCol',
-                isTweakpoint: true,
-                width: 1140
-            },
-            {
                 name: 'wide',
                 isTweakpoint: false,
                 width: 1300
