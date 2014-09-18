@@ -99,13 +99,12 @@ $fc-item-gutter: $gs-gutter / 3;
 .fc-item__timestamp {
     // this looks weird, commenting out before removing later
     // min-width: 50px - $gs-gutter / 2 - 14px;
-    padding-right: $gs-gutter / 2;
-    padding-left: $fc-item-gutter;
+    // padding-right: $gs-gutter / 2;
+    // padding-left: $fc-item-gutter;
+    display: none;
 }
 
 .fc-trail__count {
-    padding-left: $gs-baseline / 2;
-
     &--inline-template {
         display: none;
     }
