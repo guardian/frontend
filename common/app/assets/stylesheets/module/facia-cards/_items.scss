@@ -138,7 +138,7 @@ $fc-item-gutter: $gs-gutter / 3;
     position: relative;
     padding-bottom: 0;
 
-    $image-width: 92px;
+    $image-width: 100px;
 
     &.fc-item--has-image {
         // Min height of 3 baselines
@@ -156,7 +156,6 @@ $fc-item-gutter: $gs-gutter / 3;
 
     .fc-item__media-wrapper {
         float: left;
-        margin-top: 3px;
         margin-left: ($image-width + $gs-gutter/2) * -1;
         width: $image-width;
     }
@@ -166,10 +165,21 @@ $fc-item-gutter: $gs-gutter / 3;
         display: none;
     }
 
+    .fc-item__byline,
     .fc-item__title {
-        color: $c-neutral1;
         @include fs-headline(1);
+    }
 
+    .fc-item__header {
+        padding-left: 0;
+    }
+
+    .fc-item__title {
+        padding-top: 3px;
+    }
+
+    .fc-item__link {
+        color: $c-neutral1;
     }
 
     &.fc-item--has-image.fc-item--has-icon {
