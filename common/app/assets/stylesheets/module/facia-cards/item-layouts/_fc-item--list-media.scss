@@ -19,16 +19,22 @@
     // display: block;
     // position: relative;
     padding-bottom: 0;
+    padding-right: $fc-item-gutter;
     min-height: $item-min-height;
 
     &.fc-item--has-image {
         // Override .svg .action--has-icon
-        padding-left: $image-width + ($gs-gutter / 2) !important;
+        padding-left: $image-width + $fc-item-gutter !important;
     }
 
     &.fc-item--has-cutout {
-        padding-left: ($gs-gutter / 2) !important;
+        padding-left: $fc-item-gutter !important;
         padding-right: $image-width / 2;
+    }
+
+    &.fc-item--has-no-image {
+        padding-left: $fc-item-gutter;
+        padding-left: $fc-item-gutter;
     }
 
     .fc-item__avatar {
@@ -56,7 +62,7 @@
 
     .fc-item__media-wrapper {
         float: left;
-        margin-left: 0 - $image-width - ($gs-gutter / 2);
+        margin-left: 0 - $image-width - $fc-item-gutter;
         width: $image-width;
     }
 

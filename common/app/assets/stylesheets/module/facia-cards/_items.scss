@@ -1,8 +1,8 @@
+$fc-item-gutter: $gs-gutter / 3;
+
 @import 'item-layouts/fc-item--standard';
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-media';
-
-$fc-item-gutter: $gs-gutter / 3;
 
 .facia-slice__item {
     @include flex-display;
