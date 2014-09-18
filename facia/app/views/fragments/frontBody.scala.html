@@ -23,7 +23,7 @@
             }
 
             @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
-                @collections.zipWithIndex.map { case (block, index) =>
+                @collections.zipWithIndex.map{ case(block, index) =>
                     @fragments.frontCollection(faciaPage, block, collections.size, index)
                 }
             }
