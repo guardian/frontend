@@ -5,6 +5,7 @@ import java.net.URLEncoder
 import org.scalatest.Suites
 import org.scalatestplus.play._
 import play.api.test._
+import play.api.test.Helpers._
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import java.io.File
 import com.gu.openplatform.contentapi.connection.Http
@@ -12,7 +13,6 @@ import recorder.ContentApiHttpRecorder
 import play.api.GlobalSettings
 import org.apache.commons.codec.digest.DigestUtils
 import com.gargoylesoftware.htmlunit.BrowserVersion
-import common._
 
 trait TestSettings {
   def globalSettingsOverride: Option[GlobalSettings] = None
@@ -72,7 +72,7 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser {
   lazy val htmlUnitDriver = webDriver.asInstanceOf[HtmlUnitDriver]
   lazy val testBrowser = TestBrowser(webDriver, None)
 
-  def fake[T](block: => T): T = play.api.test.Helpers.running(app) { block }
+  def fake[T](block: => T): T = running(app) { block }
 
   def apply[T](path: String)(block: TestBrowser => T): T = UK(path)(block)
 
@@ -110,8 +110,9 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
   )
 }
 
+// There is only one test suite in common that needs a play application.
 class CommonTestSuite extends Suites (
-  new RelativePathEscaperTest) with SingleServerSuite
+  new common.RelativePathEscaperTest) with SingleServerSuite
 
 object TestRequest {
   // MOST of the time we do not care what path is set on the request - only need to override where we do
