@@ -1,0 +1,57 @@
+@(slice: layout.SliceWithCards)
+
+@import layout.{ColumnAndCards, SingleItem, SplitColumn, Rows, MPU}
+
+@* This is a bullshit template - the point is to illustrate how we can build the HTML using the layout info we have.
+ *@
+
+<section class="facia-slice @slice.id">
+    @for(ColumnAndCards(column, cards) <- slice.columns) {
+        @column match {
+            case SingleItem(width, itemLayout) => {
+                @cards.headOption.map { card =>
+                    <div class="single-item-column @itemLayout.classes">
+
+                    </div>
+                }
+            }
+
+            case Rows(width, columns, rows, itemLayout) => {
+                <div class="rows-column">
+                    @if(cards.nonEmpty) {
+                        <ul>
+                        @cards.map { card =>
+                            <li class="@itemLayout.classes"></li>
+                        }
+                        </ul>
+                    }
+                </div>
+            }
+
+            case SplitColumn(width, topItemLayout, bottomItemsLayout) => {
+                <div class="split-column">
+                    @if(cards.nonEmpty) {
+                        <div class="split-column-top">
+
+                        </div>
+
+                        @if(cards.length > 1) {
+                            <div class="split-column-bottom">
+                                <ul>
+                                @cards.drop(1).map { card =>
+                                    <li></li>
+                                }
+                                </ul>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+
+            case MPU => {
+                <div class="mpu-slot"></div>
+            }
+        }
+    }
+</section>
+

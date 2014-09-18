@@ -196,6 +196,8 @@ case object TlTlMpu extends Slice {
     Seq(
       Rows(
         width = 2,
+        columns = 2,
+        rows = 3,
         ItemLayout(
           mobileClass = "list",
           desktopClass = "media-list"
@@ -216,6 +218,8 @@ case object TlTlTl extends Slice {
     Seq(
       Rows(
         width = 1,
+        columns = 3,
+        rows = 2,
         ItemLayout(
           mobileClass = "list",
           desktopClass = "list"
