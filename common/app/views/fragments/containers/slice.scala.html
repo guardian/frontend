@@ -48,11 +48,15 @@
                                         }
 
                                         case Rows(flexWidth, columns, rows, itemClasses) => {
-                                            @if(cards.nonEmpty) {
-                                                @cards.map{ card =>
-                                                    @standard(card, itemClasses.classes, containerIndex)
-                                                }
-                                            }
+                                            <li class="facia-slice__item l-row__item l-row__item--flex@flexWidth">
+                                                <ul class="u-unstyled l-row l-row--items-@columns l-row--list">
+                                                    @if(cards.nonEmpty) {
+                                                        @cards.map{ card =>
+                                                            @standard(card, itemClasses.classes, containerIndex)
+                                                        }
+                                                    }
+                                                </ul>
+                                            </li>
                                         }
 
                                         case _ => { @* TODO *@ }
