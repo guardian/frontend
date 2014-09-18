@@ -62,7 +62,8 @@ $fc-item-gutter: $gs-gutter / 3;
 }
 
 .fc-item__standfirst {
-    display: none;
+    @include fs-bodyCopy(1);
+    // display: none;
 }
 
 .fc-item__live-indicator {
@@ -76,7 +77,7 @@ $fc-item-gutter: $gs-gutter / 3;
 
 .fc-item__title {
     padding-top: $gs-baseline / 3;
-    @include fs-headline(2, true);
+    @include fs-headline(3);
     word-wrap: break-word;
 }
 
