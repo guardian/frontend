@@ -1,4 +1,11 @@
 @(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport)
+@import tools.DfpLink
+
+@listItem(sponsorship: dfp.Sponsorship) = {
+    <li style="padding-bottom:12px">@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
+        @{sponsorship.sponsor.map(sponsor => <br /> <small>[sponsored by <b>{sponsor}</b>]</small>)} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </li>
+}
 
 @admin_main("Commercial", env, isAuthed = true, hasCharts = true) {
 
@@ -10,24 +17,14 @@
 <h3>Sponsored Tags</h3>
 <p>Last updated: @sponsoredTags.updatedTimeStamp</p>
 <ol>
-    @for(sponsorship <- sponsoredTags.sponsorships) {
-    <li>@{sponsorship.tags.mkString(", ")}@{sponsorship.sponsor.map(sponsor =>
-        <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[sponsored by <b>{sponsor}</b>]</small>
-        )}
-    </li>
-    }
+    @for(sponsorship <- sponsoredTags.sponsorships){@listItem(sponsorship)}
 </ol>
 
 <h3>Advertisement Feature Tags</h3>
 <p>Last updated: @advertisementTags.updatedTimeStamp</p>
 
 <ol>
-    @for(sponsorship <- advertisementTags.sponsorships) {
-    <li>@{sponsorship.tags.mkString(", ")}@{sponsorship.sponsor.map(sponsor =>
-        <small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[sponsored by <b>{sponsor}</b>]</small>
-        )}
-    </li>
-    }
+    @for(sponsorship <- advertisementTags.sponsorships) {@listItem(sponsorship)}
 </ol>
 
 <h3><a name="criteria">Criteria:</a></h3>

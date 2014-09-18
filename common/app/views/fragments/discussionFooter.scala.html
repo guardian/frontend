@@ -3,10 +3,15 @@
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
 
+    <a class="modern-hidden d-discussion__show-all-comments js-show-discussion" href="@LinkTo{/discussion@discussionId}"
+       data-link-name="View all comments" rel="nofollow" data-test-id="view-all-comments">
+        Show comments…
+        <i class="i i-show-all-comments"></i>
+    </a>
+
     <div class="discussion__comments--top-comments">
         <h2 id="top-comments" class="js-top-comments container__title discussion__heading">Comments <span class="u-h discussion__comment-count"></span></h2>
-        <div class="discussion__comments__top">
-        </div>
+        <div class="discussion__comments__top"></div>
     </div>
 
     <div class="discussion__comments__container modern-hidden" data-test-id="comments-container">
