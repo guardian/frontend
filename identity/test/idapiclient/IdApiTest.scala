@@ -1,13 +1,13 @@
 package idapiclient
 
-import org.scalatest.path
+import org.scalatest.{Matchers => ShouldMatchers, DoNotDiscover, FreeSpec}
 import org.scalatest.mock.MockitoSugar
-import org.scalatest.{Matchers => ShouldMatchers}
 import org.mockito.Mockito._
 import org.mockito.Matchers.argThat
 import org.mockito.Matchers
 import client.connection.{HttpResponse, Http}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
+import test.ConfiguredTestSuite
 import scala.concurrent.{Await, Future, Promise, ExecutionContext}
 import client.{Error, Anonymous, Auth, Parameters, Response}
 import org.hamcrest.Description
@@ -23,7 +23,7 @@ import scala.language.postfixOps
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Formats
 
-class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+@DoNotDiscover class IdApiTest extends FreeSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
 
   implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer

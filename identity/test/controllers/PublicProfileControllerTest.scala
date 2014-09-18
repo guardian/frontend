@@ -10,13 +10,13 @@ import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
 import com.gu.identity.model.{UserDates, PublicFields, User}
 import services.IdentityRequest
-import test.{TestRequest, Fake}
+import test.{ConfiguredTestSuite, TestRequest}
 import org.joda.time.DateTime
 import scala.concurrent.Future
 import scala.util.Left
 import client.Auth
 
-class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+@DoNotDiscover class PublicProfileControllerTest extends FreeSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val api = mock[IdApiClient]
   val idRequestParser = mock[IdRequestParser]
@@ -43,7 +43,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
   val controller = new PublicProfileController(idUrlBuilder, api, idRequestParser)
   val request = TestRequest()
 
-  "Given renderProfileFromId is called" - Fake {
+  "Given renderProfileFromId is called" - {
     when(api.user(Matchers.anyString, Matchers.any[Auth])) thenReturn Future.successful(Left(Nil))
     when(api.user(userId)) thenReturn Future.successful(Right(user))
 
@@ -72,7 +72,7 @@ class PublicProfileControllerTest extends path.FreeSpec with ShouldMatchers with
     }
   }
 
-  "Given renderProfileFromVanityUrl is called" - Fake {
+  "Given renderProfileFromVanityUrl is called" - {
     when(api.userFromVanityUrl(Matchers.anyString, Matchers.any[Auth])) thenReturn Future.successful(Left(Nil))
     when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(user))
 

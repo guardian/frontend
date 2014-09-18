@@ -1,15 +1,12 @@
 package client.connection.dispatch
 
-import org.scalatest.path
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, FreeSpec, Matchers}
 import org.scalatest.mock.MockitoSugar
-import org.mockito.Mockito._
 import common.ExecutionContexts
 import client.connection.HttpResponse
-import dispatch.Req
+import test.ConfiguredTestSuite
 
-
-class DispatchAsyncHttpClientTest extends path.FreeSpec with Matchers with MockitoSugar {
+@DoNotDiscover class DispatchAsyncHttpClientTest extends FreeSpec with Matchers with MockitoSugar with ConfiguredTestSuite {
   val client = mock[dispatch.Http]
   object TestDispatchAsyncHttpClient extends DispatchAsyncHttpClient with ExecutionContexts
 

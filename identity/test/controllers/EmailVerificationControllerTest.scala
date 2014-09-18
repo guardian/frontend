@@ -1,10 +1,10 @@
 package controllers
 
-import org.scalatest.{ShouldMatchers, path}
+import org.scalatest.{FreeSpec, DoNotDiscover, ShouldMatchers}
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, IdentityRequest}
 import idapiclient.IdApiClient
 import org.scalatest.mock.MockitoSugar
-import test.{TestRequest, Fake}
+import test.{ConfiguredTestSuite, TestRequest}
 import play.api.mvc.{Request, RequestHeader}
 import scala.concurrent.Future
 import org.mockito.Mockito._
@@ -14,7 +14,7 @@ import idapiclient.TrackingData
 import client.Error
 import actions.AuthActionWithUser
 
-class EmailVerificationControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+@DoNotDiscover class EmailVerificationControllerTest extends FreeSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
   val api = mock[IdApiClient]
   val idRequestParser = mock[IdRequestParser]
   val authActionWithUser = mock[AuthActionWithUser]
@@ -31,7 +31,7 @@ class EmailVerificationControllerTest extends path.FreeSpec with ShouldMatchers 
 
   val controller = new EmailVerificationController(api, authActionWithUser, authenticationService, idRequestParser, idUrlBuilder)
 
-  "Given the verify method is called" - Fake {
+  "Given the verify method is called" - {
     val testRequest = TestRequest()
     val token = "myToken"
 

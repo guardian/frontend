@@ -1,11 +1,11 @@
 package client.filters
 
-import org.scalatest.Matchers
-import org.scalatest.FunSuite
+import org.scalatest.{DoNotDiscover, Matchers, FunSuite}
 import org.joda.time.format.ISODateTimeFormat
 import org.joda.time.DateTime
+import test.ConfiguredTestSuite
 
-class DateRangeTest extends FunSuite with Matchers {
+@DoNotDiscover class DateRangeTest extends FunSuite with Matchers with ConfiguredTestSuite {
   val dateTimeFormatter = ISODateTimeFormat.dateTime()
   val from = DateTime.now()
   val to = DateTime.now()

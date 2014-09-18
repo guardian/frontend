@@ -1,9 +1,8 @@
 package client.filters
 
-import org.scalatest.FunSuite
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, FunSuite, Matchers}
 
-class PaginationTest extends FunSuite with Matchers {
+@DoNotDiscover class PaginationTest extends FunSuite with Matchers {
   test("should apply page number") {
     Pagination(2).parameters should contain(("page", "2"))
   }

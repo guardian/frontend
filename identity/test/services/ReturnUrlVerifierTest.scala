@@ -1,12 +1,12 @@
 package services
 
-import org.scalatest.FunSuite
+import org.scalatest.{DoNotDiscover, FunSuite, Matchers}
 import conf.IdentityConfiguration
-import org.scalatest.Matchers
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsText, Request}
 import play.api.test.{FakeHeaders, FakeRequest}
+import test.ConfiguredTestSuite
 
-class ReturnUrlVerifierTest extends FunSuite with Matchers {
+@DoNotDiscover class ReturnUrlVerifierTest extends FunSuite with Matchers with ConfiguredTestSuite {
 
   val conf = new IdentityConfiguration
 

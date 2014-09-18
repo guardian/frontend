@@ -1,6 +1,6 @@
 package actions
 
-import org.scalatest.{ShouldMatchers, FunSuite}
+import org.scalatest.{DoNotDiscover, ShouldMatchers, FunSuite}
 import services.AuthenticationService
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
@@ -8,12 +8,13 @@ import play.api.mvc.{AnyContent, Request}
 import play.api.mvc.Results.{SeeOther, Ok}
 import com.gu.identity.model.User
 import idapiclient.ScGuU
+import test.ConfiguredTestSuite
 import scala.concurrent.{Future, Await}
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
 
-class AuthActionTest extends FunSuite with ShouldMatchers with MockitoSugar {
+@DoNotDiscover class AuthActionTest extends FunSuite with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
   val authService = mock[AuthenticationService]
   val request = mock[Request[AnyContent]]
   val badResponse = SeeOther("http://example.com/error")

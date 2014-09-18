@@ -1,11 +1,11 @@
 package utils
 
-import org.scalatest.FunSuite
+import org.scalatest.{DoNotDiscover, FunSuite, Matchers}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import org.scalatest.Matchers
+import test.ConfiguredTestSuite
 
-class RemoteAddressTest extends FunSuite with Matchers {
+@DoNotDiscover class RemoteAddressTest extends FunSuite with Matchers with ConfiguredTestSuite {
   object TestRemoteAddress extends RemoteAddress
 
   val xFor = "X-Forwarded-For"

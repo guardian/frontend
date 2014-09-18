@@ -1,13 +1,12 @@
 package client.connection.javanet
 
-import org.scalatest.path
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, FreeSpec, Matchers}
 import org.scalatest.mock.MockitoSugar
 import java.net.{MalformedURLException, HttpURLConnection}
 import org.mockito.Mockito._
+import test.ConfiguredTestSuite
 
-
-class JavaNetSyncHttpClientTest extends path.FreeSpec with Matchers with MockitoSugar {
+@DoNotDiscover class JavaNetSyncHttpClientTest extends FreeSpec with Matchers with MockitoSugar with ConfiguredTestSuite {
 
   val urlConnection = mock[HttpURLConnection]
 
@@ -62,7 +61,7 @@ class JavaNetSyncHttpClientTest extends path.FreeSpec with Matchers with Mockito
         override protected def getURL(url: String) = throw new MalformedURLException("Test MalformedURLException")
       }
 
-      "should return a MalformedURLException error" in test.Fake {
+      "should return a MalformedURLException error" in {
         TestJavaNetSyncHttpClient.getConnection("http bad url", Iterable.empty, Iterable.empty, "GET") match {
           case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
           case Left(connection) => connection(0) should have('message("MalformedURLException"))

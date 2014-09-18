@@ -1,18 +1,17 @@
 package client.connection.apache
 
-import org.scalatest.path
+import org.scalatest.{FreeSpec, DoNotDiscover, Matchers}
 import org.scalatest.mock.MockitoSugar
-import org.scalatest.Matchers
 import org.apache.commons.httpclient.{NameValuePair, HttpException, HttpMethod, HttpClient}
 import org.mockito.Mockito._
 import java.io.IOException
 import client.connection.HttpResponse
 import client.Parameters
+import test.ConfiguredTestSuite
 import scala.concurrent.ExecutionContext
 import client.connection.util.ExecutionContexts
 
-
-class ApacheSyncHttpClientTest extends path.FreeSpec with Matchers with MockitoSugar {
+@DoNotDiscover class ApacheSyncHttpClientTest extends FreeSpec with Matchers with MockitoSugar with ConfiguredTestSuite {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
   val mockHttpClient = mock[HttpClient]
 

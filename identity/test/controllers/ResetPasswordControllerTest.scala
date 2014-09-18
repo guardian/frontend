@@ -1,12 +1,11 @@
 package controllers
 
-import org.scalatest.path
-import org.scalatest.{Matchers => ShouldMatchers}
+import org.scalatest.{Matchers => ShouldMatchers, DoNotDiscover, FreeSpec}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import idapiclient.{TrackingData, IdApiClient}
-import test.{TestRequest, Fake}
+import test.{ConfiguredTestSuite, TestRequest}
 import play.api.test._
 import play.api.test.Helpers._
 import client.Error
@@ -15,7 +14,7 @@ import com.gu.identity.model.User
 import org.mockito.{ArgumentMatcher, Matchers}
 import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, AuthenticationService}
 
-class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+@DoNotDiscover class ResetPasswordControllerTest extends FreeSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
 
   val api = mock[IdApiClient]
   val requestParser = mock[IdRequestParser]
@@ -35,7 +34,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
   when(user.primaryEmailAddress).thenReturn("someone@test.com")
 
   "the renderPasswordRequest method" - {
-    "should render the password reset request form" in Fake {
+    "should render the password reset request form" in {
       val result = resetPasswordController.renderPasswordResetRequestForm()(TestRequest())
       status(result) should equal(OK)
     }
@@ -48,12 +47,12 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     "with an api response validating the user" - {
       when(api.sendPasswordResetEmail(any[String], any[TrackingData])).thenReturn(Future.successful(Right()))
 
-      "should ask the api to send a reset email to the the the specified user" in Fake {
+      "should ask the api to send a reset email to the the the specified user" in {
         resetPasswordController.processPasswordResetRequestForm(fakeRequest)
         verify(api).sendPasswordResetEmail(Matchers.eq(emailAddress), any[TrackingData])
       }
 
-      "should give the client's IP to the Identity API" in Fake {
+      "should give the client's IP to the Identity API" in {
         when(trackingData.ipAddress).thenReturn(Some("123.456.789.10"))
         resetPasswordController.processPasswordResetRequestForm(fakeRequest)
 
@@ -70,7 +69,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     "with an api is unable to locate the user" - {
       when(api.sendPasswordResetEmail(any[String], any[TrackingData])).thenReturn(Future.successful(Left(userNotFound)))
 
-        "should redirect to the form" in Fake {
+        "should redirect to the form" in {
           val result = resetPasswordController.processPasswordResetRequestForm(fakeRequest)
           status(result) should equal (SEE_OTHER)
         }
@@ -81,12 +80,12 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     val fakeRequest = FakeRequest(GET, "/c/1234")
     "when the token provided is valid" - {
        when(api.userForToken(Matchers.any[String])).thenReturn(Future.successful(Right(user)))
-       "should pass the token param to to the api" in Fake {
+       "should pass the token param to to the api" in {
          resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
          verify(api).userForToken(Matchers.eq("1234"))
        }
 
-       "should render the reset password form when the user token has not expired" in Fake {
+       "should render the reset password form when the user token has not expired" in {
          val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
          status(result) should equal(SEE_OTHER)
          header("Location", result).head should be ("/reset-password/1234")
@@ -95,7 +94,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
     "should render the reset password form when the user token is not valid" - {
       when(api.userForToken("1234")).thenReturn(Future.successful(Left(tokenExpired)))
-      "should render to the the to the request new password form" in Fake {
+      "should render to the the to the request new password form" in {
         val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
         header("Location", result).head should be ("/requestnewtoken")
@@ -108,11 +107,11 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
     val fakeRequest = FakeRequest(POST, "/reset_password" ).withFormUrlEncodedBody("password" -> "newpassword", "password-confirm" -> "newpassword", "email-address" -> "test@somewhere.com")
     "when the token provided is valid" - {
       when(api.resetPassword(Matchers.any[String], Matchers.any[String])).thenReturn(Future.successful(Right()))
-      "should call the api the password with the provided new password and token" in Fake {
+      "should call the api the password with the provided new password and token" in {
          resetPasswordController.resetPassword("1234")(fakeRequest)
          verify(api).resetPassword(Matchers.eq("1234"), Matchers.eq("newpassword"))
       }
-      "should return password confirmation view in" in Fake {
+      "should return password confirmation view in" in {
          val result = resetPasswordController.resetPassword("1234")(fakeRequest)
          status(result) should be (SEE_OTHER)
         header("Location", result).head should be ("/password/reset-confirmation")
@@ -121,7 +120,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
     "when the reset token has expired" - {
       when(api.resetPassword("1234","newpassword")).thenReturn(Future.successful(Left(tokenExpired)))
-      "should redirect to request request new password with a token expired" in Fake {
+      "should redirect to request request new password with a token expired" in {
         val result = resetPasswordController.resetPassword("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
         header("Location", result).head should be ("/requestnewtoken")
@@ -130,7 +129,7 @@ class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with
 
     "when the reset token is not valid" - {
       when(api.resetPassword("1234", "newpassword")).thenReturn(Future.successful(Left(accesssDenied)))
-      "should redirect to request new password with a problem resetting your password" in Fake {
+      "should redirect to request new password with a problem resetting your password" in {
         val result = resetPasswordController.resetPassword("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
         header("Location", result).head should be ("/reset")

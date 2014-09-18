@@ -1,6 +1,6 @@
 package controllers
 
-import org.scalatest.{ShouldMatchers, path}
+import org.scalatest.{DoNotDiscover, ShouldMatchers, FreeSpec}
 import org.scalatest.mock.MockitoSugar
 import services._
 import formstack.{FormstackForm, FormstackApi}
@@ -11,7 +11,7 @@ import idapiclient.ScGuU
 import com.gu.identity.model.{StatusFields, User}
 import org.mockito.Mockito._
 import org.mockito.Matchers
-import test.{TestRequest, Fake}
+import test.{ConfiguredTestSuite, TestRequest}
 import play.api.test.Helpers._
 import play.api.mvc.Result
 import services.IdentityRequest
@@ -19,8 +19,7 @@ import client.Error
 import idapiclient.TrackingData
 import actions.AuthRequest
 
-
-class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+@DoNotDiscover class FormstackControllerTest extends FreeSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val requestParser = mock[IdRequestParser]
   val idUrlBuilder = mock[IdentityUrlBuilder]
@@ -48,7 +47,7 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
   "when sitched off" - {
     Switches.IdentityFormstackSwitch.switchOff()
 
-    "the formstack page will not be displayed" in Fake {
+    "the formstack page will not be displayed" in {
       val result = controller.formstackForm("test-reference", false)(TestRequest())
       status(result) should equal(NOT_FOUND)
     }
@@ -60,7 +59,7 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
     "if the form is valid" - {
       when(formstackApi.checkForm(Matchers.any[FormstackForm])) thenReturn Future.successful(Right(FormstackForm("test-reference", "view-id", None)))
 
-      "the formstack page is displayed" in Fake {
+      "the formstack page is displayed" in {
         val result = controller.formstackForm("test-reference", false)(TestRequest())
         status(result) should equal(OK)
       }
@@ -69,7 +68,7 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
     "when the form is not valid" - {
       when(formstackApi.checkForm(Matchers.any[FormstackForm])) thenReturn Future.successful(Left(List(Error("Test message", "Test description", 404))))
 
-      "the formstack page should not be shown and passes status code from errors" in Fake {
+      "the formstack page should not be shown and passes status code from errors" in {
         val result = controller.formstackForm("test-reference", false)(TestRequest())
         status(result) should equal(404)
       }

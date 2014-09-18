@@ -1,12 +1,12 @@
 package controllers
 
-import org.scalatest.{ShouldMatchers, path}
+import org.scalatest.{FreeSpec, DoNotDiscover, ShouldMatchers}
 import services._
 import services.{ReturnUrlVerifier, IdRequestParser, IdentityUrlBuilder}
 import idapiclient.{ScGuU, IdApiClient}
 import conf.{FrontendIdentityCookieDecoder, IdentityConfiguration}
 import org.scalatest.mock.MockitoSugar
-import test.{FakeCSRFRequest, TestRequest, Fake}
+import test.{ConfiguredTestSuite, FakeCSRFRequest, TestRequest}
 import play.api.mvc.{RequestHeader, Request, Result}
 import scala.concurrent.Future
 import com.gu.identity.model.{StatusFields, User}
@@ -22,7 +22,7 @@ import client.{Auth, Error}
 import idapiclient.TrackingData
 import actions.AuthRequest
 
-class EmailControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+@DoNotDiscover class EmailControllerTest extends FreeSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val conf = mock[IdentityConfiguration]
   val api = mock[IdApiClient]
@@ -50,7 +50,7 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
   when(idUrlBuilder.buildUrl(any[String], any[IdentityRequest], any[(String, String)])) thenReturn "/email-prefs"
   val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authAction)
 
-  "The preferences method" - Fake {
+  "The preferences method" - {
     val testRequest = TestRequest()
     val authRequest = AuthRequest(testRequest, user, testAuth)
 
@@ -86,7 +86,7 @@ class EmailControllerTest extends path.FreeSpec with ShouldMatchers with Mockito
     }
   }
 
-  "The save preferences method" - Fake {
+  "The save preferences method" - {
     "When the form submission is valid" - {
       val gnmMarketing = "true"
       val thirdPartyMarketing = "true"

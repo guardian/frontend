@@ -1,14 +1,13 @@
 package client.parser
 
-import org.scalatest.path
-import net.liftweb.json.JsonAST.{JString, JValue}
+import org.scalatest.{DoNotDiscover, FreeSpec, Matchers}
+import net.liftweb.json.JsonAST.JValue
 import client.Error
 import client.connection.HttpResponse
-import org.scalatest.Matchers
-import net.liftweb.json.{DefaultFormats, Formats}
+import net.liftweb.json.DefaultFormats
+import test.ConfiguredTestSuite
 
-
-class JsonBodyParserTest extends path.FreeSpec with Matchers {
+@DoNotDiscover class JsonBodyParserTest extends FreeSpec with Matchers with ConfiguredTestSuite {
   case class TestType(test: String)
 
   val testErrors = List(Error("Test error", "Test description"))
