@@ -31,7 +31,7 @@
         @include icon(clock-yellow, false);
     }
 
-    .trail__count:before {
+    .fc-trail__count:before {
         @include icon(comment-yellow, false);
     }
 }
@@ -45,7 +45,7 @@
         margin-right: 2px;
     }
 
-    .trail__count:before {
+    .fc-trail__count:before {
         @include icon(comment-yellow, false);
     }
 }
@@ -58,7 +58,7 @@
         width: 1.2em;
     }
 
-    .trail__count:before {
+    .fc-trail__count:before {
         @include icon(comment-yellow, false);
     }
 }
@@ -68,7 +68,7 @@
         @include icon(clock-light-pink, false);
     }
 
-    .trail__count:before {
+    .fc-trail__count:before {
         @include icon(comment-light-pink, false);
     }
 }
@@ -78,7 +78,7 @@
         @include icon(clock-light-pink, false);
     }
 
-    .trail__count:before {
+    .fc-trail__count:before {
         @include icon(comment-light-pink, false);
     }
 }
