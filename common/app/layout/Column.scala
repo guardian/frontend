@@ -11,14 +11,14 @@ sealed trait Column
 case class SingleItem(width: Int, layout: ItemLayout) extends Column
 case class Rows(width: Int, columns: Int, rows: Int, layout: ItemLayout) extends Column
 case class SplitColumn(width: Int, topItemLayout: ItemLayout, bottomItemsLayout: ItemLayout) extends Column
-case object MPU extends Column
+case class MPU(width: Int) extends Column
 
 object SliceWithCards {
   def itemsToConsume(column: Column) = column match {
     case _: SingleItem => 1
     case Rows(_, columns, rows, _) => columns * rows
     case _: SplitColumn => 3
-    case MPU => 0
+    case _: MPU => 0
   }
 
   /** The slice with cards assigned to columns, and the remaining cards that were not consumed */

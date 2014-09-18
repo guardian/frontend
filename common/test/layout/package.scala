@@ -25,7 +25,11 @@ package object layout {
     width <- Gen.choose(1, 4)
   } yield SplitColumn(width, topLayout, bottomLayout)
 
-  val columnGen = Gen.oneOf(singleItemGen, rowGen, splitColumnGen, Gen.const(MPU))
+  val mpuGen = for {
+    width <- Gen.choose(1, 4)
+  } yield MPU(width)
+
+  val columnGen = Gen.oneOf(singleItemGen, rowGen, splitColumnGen, mpuGen)
 
   implicit val arbitrarySlice = Arbitrary {
     for {

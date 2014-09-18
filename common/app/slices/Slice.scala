@@ -203,7 +203,9 @@ case object TlTlMpu extends Slice {
           desktopClass = "media-list"
         )
       ),
-      MPU
+      MPU(
+        width = 1
+      )
     )
   )
 }
