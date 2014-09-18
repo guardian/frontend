@@ -2,7 +2,6 @@ package model
 
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import test.ConfiguredTestSuite
-import test.`package`._
 
 @DoNotDiscover class TopStoriesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
