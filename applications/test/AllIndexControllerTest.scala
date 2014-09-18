@@ -34,6 +34,12 @@ class AllIndexControllerTest extends FlatSpec with Matchers {
     header("Location", result).head should endWith ("/sport/cycling/2013/dec/23/all")
   }
 
+  it should "redirect without getting into a redirect loop for the US edition" in Fake {
+    val result = controllers.AllIndexController.allOn("sport/surfing", "16", "aug", "2014")(TestRequest().withHeaders("X-Gu-Edition" -> "US"))
+    status(result) should be(TemporaryRedirect)
+    header("Location", result).head should endWith ("/sport/surfing/2014/aug/14/all")
+  }
+
   it should "correctly parse the date" in Fake {
     //this would only error in UTC
     val oldTimezone = DateTimeZone.getDefault
