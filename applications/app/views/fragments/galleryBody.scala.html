@@ -81,7 +81,7 @@
                 </ul>
                 <div class="tag-wrapper tag-wrapper--break-at-leftcol" data-link-name="keywords">
                     @if(gallery.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                        <h2 class="social__head hide-until-leftcol">Topics</h2>
+                        <h2 class="social__head">Topics</h2>
                         @fragments.keywordList(gallery.keywords, tone = "media")
                     }
                     <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-component="share">
