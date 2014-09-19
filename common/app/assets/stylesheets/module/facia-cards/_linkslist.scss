@@ -10,12 +10,24 @@
 
     .linkslist {
         margin-top: 0;
+        width: 100%;
+
+        .facia-slice__item {
+            @include mq(tablet) {
+                width: 50%;
+
+                &:nth-child(2n+1) {
+                    clear: both;
+
+                    &:before {
+                        border: 0;
+                    }
+                }
+            }
+        }
 
         .has-flex-wrap & {
             .facia-slice__item {
-                @include flex(1);
-                @include flex-basis(100%);
-
                 @include mq(tablet) {
                     @include flex-grow(0);
                     @include flex-basis(50%);
@@ -26,6 +38,7 @@
                 }
             }
         }
+
         .item--has-cutout {
             padding-bottom: $gs-baseline * 2.5;
         }

@@ -189,6 +189,20 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
+.l-list__item {
+    width: 100%;
+    float: left;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .has-flex-wrap & {
+        @include flex-grow(0);
+        @include flex-basis(100%);
+    }
+}
+
 @for $column from 1 through 4 {
     .l-row__item--span-#{$column} {
         @include flex(#{$column});
@@ -196,12 +210,6 @@ $fc-item-gutter: $gs-gutter / 3;
 
     .l-list--columns-#{$column} {
         .l-list__item {
-            @include flex-basis(100%);
-
-            &:last-child {
-                margin-bottom: 0;
-            }
-
             @include mq(tablet) {
                 width: 100% / $column;
 

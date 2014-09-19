@@ -47,10 +47,10 @@
 
                                 case Rows(colSpan, columns, rows, itemClasses) => {
                                     <li class="facia-slice__item l-row__item l-row__item--span-@colSpan">
-                                        <ul class="u-unstyled l-row l-list l-list--columns-@columns l-list--rows-@rows">
+                                        <ul class="u-unstyled l-list l-list--columns-@columns l-list--rows-@rows">
                                             @if(cards.nonEmpty) {
                                                 @cards.map{ card =>
-                                                    @standard(card, itemClasses.classes, containerIndex)
+                                                    @standard(card, itemClasses.classes, containerIndex, isList = true)
                                                 }
                                             }
                                         </ul>
