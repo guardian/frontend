@@ -97,6 +97,12 @@ define([
                     mobile: '300,250|300,600'
                 }
             },
+            'right-small': {
+                name: 'right',
+                sizeMappings: {
+                    mobile: '300,250'
+                }
+            },
             im: {
                 label: false,
                 refresh: false,
@@ -316,7 +322,7 @@ define([
                         'data-name="{{name}}"' +
                         '{{sizeMappings}}></div>',
                     {
-                        name: name,
+                        name: definition.name || name,
                         types: map((isArray(types) ? types : [types]), function(type) { return 'ad-slot--' + type; }).join(' '),
                         sizeMappings: map(pairs(definition.sizeMappings), function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
                     }));

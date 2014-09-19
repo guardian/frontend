@@ -12,6 +12,10 @@
     }
 }
 
+.content__main-column--article {
+    min-height: gs-height(6);
+}
+
 .caption--main {
     min-height: ($gs-baseline / 3) * 7;
     max-width: gs-span(7);
