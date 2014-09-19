@@ -28,8 +28,6 @@
                 }
             }
 
-            @fragments.commercial.commercialComponent()
-
             @defining(topTags(faciaPage.allItems).take(20)) { tags =>
                 @if(tags.nonEmpty) {
                     <div class="facia-container__related-keywords">
@@ -39,6 +37,8 @@
                     </div>
                 }
             }
+
+            @fragments.commercial.commercialComponent()
         </div>
     </div>
 }
