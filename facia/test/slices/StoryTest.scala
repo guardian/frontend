@@ -1,10 +1,11 @@
 package slices
 
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import ArbitraryStories._
+import test.ConfiguredTestSuite
 
-class StoryTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
+@DoNotDiscover class StoryTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks with ConfiguredTestSuite {
   "segmentByGroup" should "preserve order" in {
     forAll { stories: Seq[Story] =>
       val segmented = Story.segmentByGroup(stories)

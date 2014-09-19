@@ -1,14 +1,13 @@
 package model.commercial.travel
 
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import common.ExecutionContexts
-import org.scalatest.FlatSpec
+import test.ConfiguredTestSuite
 import scala.xml.XML
 import play.api.test.FakeApplication
 import play.api.test.Helpers._
 
-
-class TravelOffersApiTest extends FlatSpec with Matchers with ExecutionContexts {
+@DoNotDiscover class TravelOffersApiTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite {
 
   val xml = XML.loadString {
     """

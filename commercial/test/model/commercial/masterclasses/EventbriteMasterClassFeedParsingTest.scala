@@ -1,12 +1,12 @@
 package model.commercial.masterclasses
 
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import play.api.libs.json._
 import play.api.test.Helpers._
 import play.api.test.FakeApplication
+import test.ConfiguredTestSuite
 
-class EventbriteMasterClassFeedParsingTest extends FlatSpec with Matchers {
+@DoNotDiscover class EventbriteMasterClassFeedParsingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
   val rawEventBriteFeed = """{ "events" : [ { "event" : { "background_color" : "FFFFFF",
                             |            "box_background_color" : "FFFFFF",
                             |            "box_border_color" : "D5D5D3",

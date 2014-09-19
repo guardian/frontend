@@ -1,5 +1,13 @@
 package test
 
-object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit(controllers.HealthCheck.testPort.toString)
+import org.scalatest.Suites
+
+class FaciaToolTestSuite extends Suites (
+  new config.TransformationsSpec,
+  new services.FaciaToolHealthcheckTest,
+  new util.EnumeratorsTest,
+  new util.RichFutureTest,
+  new util.SanitizeInputTest) with SingleServerSuite {
+
+  override lazy val port: Int = controllers.HealthCheck.testPort
 }
