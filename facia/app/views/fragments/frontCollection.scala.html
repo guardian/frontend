@@ -23,7 +23,7 @@
         case Some("prototype/quichelorraine")   => { @containers.quichelorraine(collection, QuicheLorraineContainer(), index)(request, templateDeduping, config) }
         case Some("prototype/raclette")         => { @containers.raclette(collection, RacletteContainer(), index)(request, templateDeduping, config) }
         case Some("comment/comment-and-debate") => { @containers.commentanddebate(collection, CommentAndDebateContainer(), index)(request, templateDeduping, config) }
-        case Some("fixed/small/slow-IV")        => { @containers.slice(collection, Slice(collection, QuarterQlQlQl), index)(request, templateDeduping, config) }
+        case Some("fixed/small/slow-IV")        => { @containers.slice(collection, Slice(collection, QuarterQuarterQuarterQuarter), index)(request, templateDeduping, config) }
         case _                                  => { @containers.special(collection, SpecialContainer(), index)(request, templateDeduping, config) }
     }
 }
