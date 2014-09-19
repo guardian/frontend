@@ -8,7 +8,7 @@
 
 @defining((card.item, card.index)) { case (trail, index) =>
 
-<li class="@GetClasses.forCollectionItem(trail)">
+<li class="@GetClasses.forCollectionItem(trail) l-list__item">
 
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
         <div
