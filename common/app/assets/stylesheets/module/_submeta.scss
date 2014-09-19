@@ -68,6 +68,7 @@
 }
 
 .submeta-container--break-at-wide {
+
     @include mq(wide) {
         margin-top: 0;
         width: $left-column-wide;
@@ -98,6 +99,36 @@
     border-top: 1px dotted $c-neutral4;
     .content--media & {
         border-color: $c-neutral2;
+    }
+}
+
+.content--article,
+.content--liveblog,
+.content--gallery,
+.content--media,
+.content--image {
+    .submeta--top {
+        @include mq($until: leftCol) {
+            display: none;
+        }
+    }
+}
+
+.content--interactive {
+    .submeta--top {
+        padding-top: $gs-baseline / 2;
+        margin-bottom: $gs-baseline;
+
+        .submeta__head {
+            display: none;
+        }
+
+        @include mq(rightCol) {
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-top: 0;
+        }
     }
 }
 
