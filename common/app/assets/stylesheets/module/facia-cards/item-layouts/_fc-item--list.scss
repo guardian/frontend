@@ -1,8 +1,14 @@
-/************************************************
- x x x x x x x x x x x x x x x x x x x x x x x
- x x x x x x x x x x x x x x x x x x x x x x x x
+/*
 
- ************************************************/
+List item. Looks a bit like this:
+
+***********************************************
+x x x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x x x x
+
+***********************************************
+
+ */
 
 @mixin fc-item--list {
     $headline-size: 1;
@@ -19,10 +25,6 @@
         margin-bottom: 0;
         padding-left: $fc-item-gutter;
         padding-bottom: $gs-baseline * 1.666;
-    }
-
-    .fc-item__meta {
-        // display: none;
     }
 
     .fc-item__media-wrapper {
