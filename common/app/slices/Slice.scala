@@ -1,19 +1,22 @@
 package slices
 
 import layout._
-import model.Collection
+import model.Trail
+import views.support.TemplateDeduping
 
 sealed trait Slice {
   /** TODO: once we get rid of all the not-implementeds below, turn this into a val */
   def layout: SliceLayout
-}
 
-object Slice {
-  def apply(collection: Collection, slice: Slice) = {
-    val cards = collection.items.zipWithIndex.map{case (trail, index) => Card(index, trail)}
-    SliceWithCards.fromItems(cards, slice.layout)
+  def apply(items: Seq[Trail])(implicit templateDeduping: TemplateDeduping) = {
+    val numItems = layout.columns.map(_.numItems).sum
+    val dedupedItems = (templateDeduping(items.take(numItems)) ++ items).distinct
+    val cards = dedupedItems.zipWithIndex.map{case (trail, index) => Card(index, trail)}
+
+    SliceWithCards.fromItems(cards, layout)
   }
 }
+
 
 /* .________.________.________.________.
 * |________|________|________|________|

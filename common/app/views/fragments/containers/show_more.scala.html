@@ -1,8 +1,6 @@
-@(cards: Seq[layout.Card], indexOffset: Int, containerIndex: Int, numberOfColumns: ShowMoreColumns)(implicit request: RequestHeader, config: Config)
+@(cards: Seq[layout.Card], containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 @import model.Config
-@import model.Trail
-@import views.support.ShowMoreColumns
 @import fragments.items.facia_cards.standard
 
 @* Show More for the new style containers should identical, differing only in number of columns (3 or 4).
