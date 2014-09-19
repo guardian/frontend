@@ -2,7 +2,6 @@ package slices
 
 import model.Trail
 import org.joda.time.DateTime
-import org.scala_tools.time.Imports
 import org.scalatest.{FlatSpec, Matchers}
 import views.support.TemplateDeduping
 
@@ -45,30 +44,23 @@ class DedupingTest extends FlatSpec with Matchers {
     val usedTrails = slice.columns.flatMap(_.cards.map(_.item))
 
     withClue("should include deduped items") {
-      usedTrails.map(_.url).take(4) should be (Seq("/item-1", "/item-2", "/item-3", "/item-4"))
+      usedTrails.map(_.url) should be (Seq("/item-1", "/item-2", "/item-3", "/item-4"))
     }
   }
 
   private def stubTrails: Seq[Trail] = (1 to 20).map{ index =>
     new Trail{
-      override def webPublicationDate: Imports.DateTime = DateTime.now
 
       override def url: String = s"/item-$index"
 
       override def isLive: Boolean = false
-
+      override def webPublicationDate: DateTime = DateTime.now
       override def section: String = ""
-
       override def trailText: Option[String] = None
-
       override def sectionName: String = ""
-
       override def linkText: String = ""
-
       override def headline: String = ""
-
       override def webUrl: String = ""
-
       override def toString = url
     }
   }
