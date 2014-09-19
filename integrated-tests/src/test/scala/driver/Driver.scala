@@ -39,7 +39,6 @@ trait Driver extends Suite with WebBrowser with BeforeAndAfterAll with Retries {
 
   protected def $(selector: String): List[Element] = findAll(cssSelector(selector)).toList
   protected def first(selector: String): Element = $(selector).head
-
 }
 
 
