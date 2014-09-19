@@ -187,7 +187,7 @@
             right: auto;
         }
     }
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         .commercial__head {
             width: gs-span(2) + $gs-gutter/2;
         }

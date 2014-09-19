@@ -42,9 +42,6 @@ head {
     @include mq(leftCol) {
         font-family: 'leftCol';
     }
-    @include mq(faciaLeftCol) {
-        font-family: 'faciaLeftCol';
-    }
     @include mq(wide) {
         font-family: 'wide';
     }
@@ -67,9 +64,6 @@ body:after {
     }
     @include mq(leftCol) {
         content: 'leftCol';
-    }
-    @include mq(faciaLeftCol) {
-        content: 'faciaLeftCol';
     }
     @include mq(wide) {
         content: 'wide';

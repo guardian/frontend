@@ -53,6 +53,7 @@
         display: none;
         min-height: 90 + ($gs-row-height/2);
         padding-bottom: $gs-row-height/2;
+        text-align: center;
 
         @include mq(tablet) {
             .js-on & {
@@ -61,6 +62,8 @@
         }
     }
     .ad-slot__label {
+        /* this is the minimum width of possible ads sizes */
+        width: 728px;
         text-align: left;
         border-top: 0;
         padding: 0;
@@ -71,25 +74,30 @@
         transform: translateZ(0);
         @include transition(height 1s cubic-bezier(0, 0, 0, .985));
     }
+}
+.top-banner-ad-container--non-center .ad-slot--top-banner-ad {
+    @include mq(leftCol) {
+        text-align: left;
+        margin: 0 auto;
+
+        .ad-slot__label {
+            margin: 0;
+        }
+    }
     @include mq(wide) {
         .has-page-skin & {
-            .ad-slot--top-banner-ad {
-                width: 970px;
-                padding-left: 0;
-                text-align: center;
-            }
+            width: auto !important;
+            padding-left: 0 !important;
+            text-align: center;
+
             .ad-slot__label {
-                width: 720px;
+                margin: 0 auto;
             }
         }
     }
 }
-.top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, faciaLeftCol) {
-        text-align: center;
-    }
-    @include mq(faciaLeftCol) {
-        margin: 0 auto;
+.top-banner-ad-container--non-center.top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
+    @include mq(leftCol) {
         width: gs-span(14) - ($left-column + $gs-gutter);
         padding-left: $left-column + $gs-gutter;
     }
@@ -97,33 +105,15 @@
         width: gs-span(16) - ($left-column-wide + $gs-gutter);
         padding-left: $left-column-wide + $gs-gutter;
     }
-    @include mq(tablet, faciaLeftCol) {
-        .ad-slot__label {
-            width: 728px;
-        }
-    }
 }
-.top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, rightCol) {
-        text-align: center;
-    }
-    @include mq(rightCol) {
-        margin: 0 0 0 $gs-gutter;
-    }
+.top-banner-ad-container--non-center.top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
     @include mq(leftCol) {
-        margin: 0 auto;
         max-width: gs-span(14) + ($gs-gutter*2) - ($left-column + ($gs-gutter*2));
         padding-left: $left-column + ($gs-gutter*2);
     }
     @include mq(wide) {
         max-width: gs-span(16) + ($gs-gutter*2) - ($left-column-wide + ($gs-gutter*2));
         padding-left: $left-column-wide + ($gs-gutter*2);
-    }
-    @include mq(tablet, rightCol) {
-        .ad-slot__label {
-            width: 728px;
-            margin: 0 auto;
-        }
     }
 }
 
@@ -318,7 +308,7 @@
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2-contrasted;
     }
-    @include mq(mobile, $until: faciaLeftCol) {
+    @include mq(mobile, $until: leftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             margin-top: get-line-height(data, 3)*-2;
 
@@ -334,7 +324,7 @@
         color: $c-neutral2;
     }
 
-    @include mq(mobile, $until: faciaLeftCol) {
+    @include mq(mobile, $until: leftCol) {
         &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             margin-top: get-line-height(data, 3)*-1;
         }
@@ -378,7 +368,7 @@
     @include mq(desktop) {
         margin-left: 62%;
     }
-    @include mq(tablet, $until: faciaLeftCol) {
+    @include mq(tablet, $until: leftCol) {
         .container--has-toggle & {
             margin-right: gs-span(1);
         }
@@ -402,9 +392,6 @@
         .l-side-margins--layout-content .ad-slot--commercial-component & {
             @include comm-paid-logo-placement;
         }
-    }
-    
-    @include mq(faciaLeftCol) {
         @include comm-paid-logo-placement;
     }
     
@@ -440,7 +427,7 @@
         @include mq(tablet) {
             margin-top: 78px;
         }
-        @include mq(faciaLeftCol) {
+        @include mq(leftCol) {
             margin-top: 0;
         }
     }

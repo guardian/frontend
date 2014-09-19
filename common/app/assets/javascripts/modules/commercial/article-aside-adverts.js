@@ -35,8 +35,11 @@ define([
             return false;
         }
 
+        var $mainCol = config.page.contentType === 'Article' ? $('.js-content-main-column') : false,
+            adType = !$mainCol.length || $mainCol.dim().height >= 600 ? 'right' : 'right-small';
+
         return $(config.adSlotContainerSelector)
-            .append(dfp.createAdSlot('right', 'mpu-banner-ad'));
+            .append(dfp.createAdSlot(adType, 'mpu-banner-ad'));
     }
 
     return {

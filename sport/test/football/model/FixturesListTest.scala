@@ -1,11 +1,12 @@
 package football.model
 
-import org.scalatest.{OptionValues, FreeSpec, ShouldMatchers}
+import org.scalatest.{DoNotDiscover, OptionValues, FreeSpec, ShouldMatchers}
 import implicits.Football
 import pa.{Fixture, FootballMatch, MatchDay}
 import model.Competition
+import test.ConfiguredTestSuite
 
-class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues {
+@DoNotDiscover class FixturesListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
 
   "the all fixtures list" - {
     "for today" - {

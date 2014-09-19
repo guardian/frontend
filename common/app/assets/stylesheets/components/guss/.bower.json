@@ -18,6 +18,6 @@
     "commit": "8c8d1aab511aa28f5f36d0bd21c08a0f8538335f"
   },
   "_source": "git://github.com/guardian/guss.git",
-  "_target": "~3",
+  "_target": "~3.3.0",
   "_originalSource": "guss"
 }

@@ -1,10 +1,9 @@
 package test
 
-import org.scalatest.Matchers
-import org.scalatest.{ GivenWhenThen, FeatureSpec }
+import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import scala.collection.JavaConversions._
 
-class MatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+@DoNotDiscover class MatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
   feature("MatchPage") {
 
@@ -12,7 +11,7 @@ class MatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I visit a match page")
 
-      HtmlUnit("/football/match/3518296") { browser =>
+      goTo("/football/match/3518296") { browser =>
         import browser._
 
         Then("I should see the home team score")

@@ -126,7 +126,7 @@ define([
     }
 
     function getUpdatePath() {
-        var blocks = qwery('.article-body .block'),
+        var blocks = qwery('.js-liveblog-body .block'),
             newestBlock = null;
 
         if (autoUpdate.getManipulationType() === 'append') {
@@ -181,7 +181,7 @@ define([
                 autoUpdate = new AutoUpdate({
                     path: getUpdatePath,
                     delay: timerDelay,
-                    attachTo: $('.article-body')[0],
+                    attachTo: $('.js-liveblog-body')[0],
                     switches: config.switches,
                     manipulationType: 'prepend'
                 });

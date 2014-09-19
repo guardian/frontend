@@ -28,7 +28,7 @@ $profile-bio-desktop-size: 120px;
         margin: $gs-baseline 0 0;
     }
 
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         width: $left-column;
         clear: left;
         float: left;
@@ -51,7 +51,7 @@ $profile-bio-desktop-size: 120px;
         margin: 0 $gs-gutter 0 0;
     }
 
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         margin: $gs-baseline * 2 0 $gs-baseline;
     }
 

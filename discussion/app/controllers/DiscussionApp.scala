@@ -14,7 +14,7 @@ trait DiscussionDispatcher
   with NonThreadedController
 
 object DiscussionApp extends DiscussionDispatcher {
-  protected val discussionApi = current.plugin(classOf[DiscussionApi]) getOrElse {
+  protected lazy val discussionApi = current.plugin(classOf[DiscussionApi]) getOrElse {
     throw new RuntimeException("No Discussion Api defined!")
   }
 }

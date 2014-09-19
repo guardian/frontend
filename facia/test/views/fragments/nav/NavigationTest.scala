@@ -1,16 +1,16 @@
 package views.fragments.nav
 
-import model.Page
 import org.jsoup.Jsoup
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.FakeRequest
+import test.ConfiguredTestSuite
 import scala.collection.JavaConversions._
 
-class NavigationTest extends FlatSpec with Matchers {
+@DoNotDiscover class NavigationTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   it should "render current section once (UK)" in {
 
-    val page: Page = Page(id="bla-bla", webTitle="bla-bla", section="football", analyticsName="bla-bla")
+    val page = model.Page(id="bla-bla", webTitle="bla-bla", section="football", analyticsName="bla-bla")
 
     val tpl = views.html.fragments.nav.navigation(page)(FakeRequest("GET", "/bla-bla"))
 
@@ -25,7 +25,7 @@ class NavigationTest extends FlatSpec with Matchers {
 
   it should "render current section once (US)" in {
 
-    val page: Page = Page(id="bla-bla", webTitle="bla-bla", section="football", analyticsName="bla-bla")
+    val page = model.Page(id="bla-bla", webTitle="bla-bla", section="football", analyticsName="bla-bla")
 
     val tpl = views.html.fragments.nav.navigation(page)(FakeRequest("GET", "/bla-bla?_edition=US"))
 

@@ -2,16 +2,16 @@ package test
 
 import java.net.URI
 
-import org.scalatest.{Matchers,FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import scala.collection.JavaConversions._
 
-class SectionTemplateTest extends FlatSpec with Matchers {
+@DoNotDiscover class SectionTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
-  it should "render front title" in HtmlUnit("/uk-news") { browser =>
+  it should "render front title" in goTo("/uk-news") { browser =>
     browser.$(".container__meta__title").first.getText should be ("UK news")
   }
 
-  it should "add alternate pages to editionalised sections for /uk/culture" in HtmlUnit("/uk/culture") { browser =>
+  it should "add alternate pages to editionalised sections for /uk/culture" in goTo("/uk/culture") { browser =>
     import browser._
 
     val alternateLinks = $("link[rel='alternate']").filterNot(_.getAttribute("type") == "application/rss+xml")
@@ -21,7 +21,7 @@ class SectionTemplateTest extends FlatSpec with Matchers {
 
   }
 
-  it should "add alternate pages to editionalised sections for /au/culture" in HtmlUnit("/au/culture") { browser =>
+  it should "add alternate pages to editionalised sections for /au/culture" in goTo("/au/culture") { browser =>
     import browser._
 
     val alternateLinks = $("link[rel='alternate']").filterNot(_.getAttribute("type") == "application/rss+xml")
@@ -30,7 +30,7 @@ class SectionTemplateTest extends FlatSpec with Matchers {
     alternateLinks.exists(link => toPath(link.getAttribute("href")) == "/uk/culture" && link.getAttribute("hreflang") == "en-gb") should be (true)
   }
 
-  it should "not add alternate pages to non editionalised sections" in HtmlUnit("/books") { browser =>
+  it should "not add alternate pages to non editionalised sections" in goTo("/books") { browser =>
     import browser._
 
     val alternateLinks = $("link[rel='alternate']").filterNot(_.getAttribute("type") == "application/rss+xml")
