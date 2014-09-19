@@ -37,14 +37,14 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
   private object testDfpAgent extends DfpAgent {
     override protected def sponsorships: Seq[Sponsorship] = Seq(
-      Sponsorship(Seq("spon-page"), Some("spon"), 1),
-      Sponsorship(Seq("media"), None, 2),
-      Sponsorship(Seq("healthyliving"), Some("Squeegee"), 3)
+      Sponsorship(Seq("spon-page"), Some("spon"), Nil, 1),
+      Sponsorship(Seq("media"), None, Nil, 2),
+      Sponsorship(Seq("healthyliving"), Some("Squeegee"), Nil, 3)
     )
 
     override protected def advertisementFeatureSponsorships: Seq[Sponsorship] = Seq(
-      Sponsorship(Seq("ad-feature"), Some("spon2"), 4),
-      Sponsorship(Seq("film"), None, 5)
+      Sponsorship(Seq("ad-feature"), Some("spon2"), Nil, 4),
+      Sponsorship(Seq("film"), None, Nil, 5)
     )
 
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
@@ -350,8 +350,10 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "generate tag to sponsors map" should "glom sponsorships together" in {
-    val universitySponsorships = Sponsorship(List("universityguide", "university A"), Some("University Sponsor A"), 1) ::
-      Sponsorship(List("universityguide"), Some("University Sponsor B"), 2) :: Nil
+    val universitySponsorships =
+      Sponsorship(List("universityguide", "university A"), Some("University Sponsor A"), Nil, 1) ::
+        Sponsorship(List("universityguide"), Some("University Sponsor B"), Nil, 2) ::
+        Nil
 
     val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(universitySponsorships)
     sponsorsMap should contain key("universityguide")
@@ -361,8 +363,10 @@ class DfpAgentTest extends FlatSpec with Matchers {
   }
 
   "generate tag to sponsors map" should "not bother with tag with no detected sponsors" in {
-    val sponsorshipsWithANone = Sponsorship(List("universityguide", "university A"), Some("University Sponsor A"), 3) ::
-      Sponsorship(List("videogames"), None, 4) :: Nil
+    val sponsorshipsWithANone =
+      Sponsorship(List("universityguide", "university A"), Some("University Sponsor A"), Nil, 3) ::
+        Sponsorship(List("videogames"), None, Nil, 4) ::
+        Nil
 
     val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(sponsorshipsWithANone)
     sponsorsMap should contain key "universityguide"
