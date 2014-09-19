@@ -27,7 +27,7 @@ define([
             {name: 'prototype/quichelorraine'},
             {name: 'prototype/raclette'},
             {name: 'fixed/small/slow-IV'},
-            {name: 'fixed/small/fast-VIII'}
+            {name: 'fixed/small/fast-VIII'},
             {name: 'fixed/small/fast-X'}
         ],
 
