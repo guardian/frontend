@@ -24,6 +24,7 @@
                     }
                 }
             }
+
             @include mq(desktop) {
                 width: (100% / 3);
 
@@ -35,6 +36,7 @@
                     }
                 }
             }
+
             &:last-child {
                 margin-bottom: $gs-baseline;
             }
