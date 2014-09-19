@@ -87,10 +87,10 @@
                             @fragments.contentMeta(media)
 
                             @defining(media match {
-                                case v: Video => v.standfirst.getOrElse("");
-                                case a: Audio => a.body
-                            }) { body =>
-                                <div class="tag-wrapper @if(body.length > 300) { tag-wrapper--break-at-wide }" data-link-name="keywords">
+                                case v: Video => v.standfirst.getOrElse("").length > 350
+                                case a: Audio => a.body.length > 800
+                            }) { breakIntoLeftCol =>
+                                <div class="tag-wrapper @if(breakIntoLeftCol) { tag-wrapper--break-at-wide }" data-link-name="keywords">
                                 @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
                                     <h2 class="social__head">Topics</h2>
                                     @fragments.keywordList(media.keywords, tone = "media")
