@@ -44,3 +44,35 @@ blockquote.quoted:before {
         }
     }
 }
+
+@if ($svg-support) {
+    .pseudo-icon {
+        .svg &:before {
+            content: '';
+            height: 1em;
+            padding-right: .3em;
+            vertical-align: -10%;
+            display: inline-block;
+            background-repeat: no-repeat;
+            @include background-size(contain);
+        }
+    }
+    .pseudo-icon--audio--white {
+        &:before {
+            @extend %svg-i-volume-high-white;
+            width: 1.23em;
+        }
+    }
+    .pseudo-icon--download--white {
+        &:before {
+            @extend %svg-i-download-white;
+            width: 1em;
+        }
+    }
+    .pseudo-icon--rss--white {
+        &:before {
+            @extend %svg-i-rss-white;
+            width: 1em;
+        }
+    }
+}

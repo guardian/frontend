@@ -1,19 +1,17 @@
 package model.commercial.jobs
 
-import conf.{CommercialConfiguration, Switches}
-import model.commercial.{OptString, XmlAdsApi}
+import common.{ExecutionContexts, Logging}
+import conf.CommercialConfiguration
+import conf.Switches.JobFeedSwitch
+import model.commercial.{FeedReader, FeedRequest, OptString}
 import org.apache.commons.lang.StringEscapeUtils.unescapeHtml
 import org.joda.time._
 
-import scala.xml.Elem
+import scala.concurrent.Future
+import scala.concurrent.duration._
+import scala.xml.{XML, Elem}
 
-object JobsApi extends XmlAdsApi[Job] {
-
-  protected val switch = Switches.JobFeedSwitch
-
-  protected val adTypeName = "Jobs"
-
-  override protected val characterEncoding = "utf-8"
+object JobsApi extends ExecutionContexts with Logging {
 
   // url changes daily so cannot be val
   protected def url = {
@@ -27,10 +25,6 @@ object JobsApi extends XmlAdsApi[Job] {
     val urlTemplate = CommercialConfiguration.getProperty("jobs.api.url.template")
     urlTemplate map (_ replace("yyyy-MM-dd", feedDate))
   }
-
-  override protected val loadTimeout = 30000
-
-  override def cleanResponseBody(body: String) = body.dropWhile(_ != '<')
 
   def parse(xml: Elem): Seq[Job] = {
     (xml \ "Job").filterNot(job => (job \ "RecruiterLogoURL").isEmpty).map {
@@ -48,4 +42,11 @@ object JobsApi extends XmlAdsApi[Job] {
         )
     }
   }
+
+  def loadAds(): Future[Seq[Job]] = {
+    FeedReader.readSeq[Job](FeedRequest("Jobs", JobFeedSwitch, url, responseEncoding = Some("utf-8"), timeout = 30.seconds)) { body =>
+      parse(XML.loadString(body.dropWhile(_ != '<')))
+    }
+  }
+
 }

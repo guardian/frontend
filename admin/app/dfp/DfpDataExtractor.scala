@@ -8,7 +8,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     lineItems.withFilter { lineItem =>
       lineItem.sponsoredTags.nonEmpty && lineItem.isCurrent
     }.map { lineItem =>
-      Sponsorship(lineItem.sponsoredTags, lineItem.sponsor)
+      Sponsorship(lineItem.sponsoredTags, lineItem.sponsor, lineItem.id)
     }.distinct
   }
 
@@ -16,7 +16,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     lineItems.withFilter { lineItem =>
       lineItem.advertisementFeatureTags.nonEmpty && lineItem.isCurrent
     }.map { lineItem =>
-      Sponsorship(lineItem.advertisementFeatureTags, lineItem.sponsor)
+      Sponsorship(lineItem.advertisementFeatureTags, lineItem.sponsor, lineItem.id)
     }.distinct
   }
 

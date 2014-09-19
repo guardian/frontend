@@ -1,5 +1,6 @@
 package model.commercial.money
 
+import scala.xml.XML
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import test.ConfiguredTestSuite
 
@@ -87,7 +88,7 @@ import test.ConfiguredTestSuite
       protected val adTypeName = "Current Accounts - Test"
       protected lazy val path = "current-accounts/test"
     }
-    val accounts = CurrentAccountsApi.parse(CurrentAccountsApi.transform(xmlStr))
+    val accounts = CurrentAccountsApi.parse(XML.loadString(CurrentAccountsApi.cleanResponseBody(xmlStr)))
 
     accounts should be(Seq(
 
@@ -95,7 +96,7 @@ import test.ConfiguredTestSuite
         "http://www.moneysupermarket.com/medias/sys_master/h8e/hdc/8806533103646/savings-first.direct.png",
         "http://www.moneysupermarket.com/shop/media-partner-best-buy-click/?product_sku=CUR_frstdirect_1st&source=GU6&channel_id=209",
         "£100 cashback when you switch", "No account charges", "A range of benefits are available", "",
-        Map(("Branch", true), ("Post office", true), ("Online", false), ("Post", false), ("Telephone" -> false))),
+        Map(("Branch", true), ("Post office", true), ("Online", false), ("Post", false), "Telephone" -> false)),
 
       CurrentAccount("Santander", "123 Current Account", Option(3.0), 3000, Option(0.00), Option(12),
         "http://www.moneysupermarket.com/medias/sys_master/h50/h7d/8827208990750/santander.png",

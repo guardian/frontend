@@ -13,7 +13,8 @@ object Dependencies {
   val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.2"
   val awsSdk = "com.amazonaws" % "aws-java-sdk" % "1.8.7"
   val commonsHttpClient = "commons-httpclient" % "commons-httpclient" % "3.1"
-  val contentApiClient = "com.gu" %% "content-api-client" % "2.19"
+  val commonsIo = "commons-io" % "commons-io" % "2.4"
+  val contentApiClient = "com.gu" %% "content-api-client" % "2.20"
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "1.27.0"
   val dnaCommon = "org.jboss.dna" % "dna-common" % "0.6"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.23"
@@ -27,6 +28,7 @@ object Dependencies {
   val jodaTime = "joda-time" % "joda-time" % "2.2"
   val jSoup = "org.jsoup" % "jsoup" % "1.6.3"
   val liftJson = "net.liftweb" %% "lift-json" % "2.5"
+  val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
   val openCsv = "net.sf.opencsv" % "opencsv" % "2.3"
   val paClient = "com.gu" %% "pa-client" % "5.0.1-NG"
@@ -38,6 +40,7 @@ object Dependencies {
   val romeModules = "org.rometools" % "rome-modules" % "1.0"
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.11.5" % "test"
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
+  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.1" % Test
   val seeGuice = "com.tzavellas" % "sse-guice" % "0.7.1"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % seleniumVersion
   val shadeMemcached = "com.bionicspirit" %% "shade" % "1.5.0"

@@ -31,7 +31,7 @@
     @include mq(tablet) {
         padding-top: $gs-baseline/2;
     }
-    @include mq(faciaLeftCol, wide) {
+    @include mq(leftCol, wide) {
         .facia-slice-wrapper:first-child {
             padding-top: 0;
         }
@@ -63,7 +63,7 @@
     color: $c-neutral1;
 
     .today__sub {
-        @include mq(faciaLeftCol) {
+        @include mq(leftCol) {
             @include fs-headline(2);
         }
         @include mq(wide) {
@@ -84,11 +84,13 @@
         padding-top: $gs-baseline/1.5;
     }
 }
+
 .container__body {
     @include mq(leftCol) {
         padding-top: $gs-baseline/2;
     }
 }
+
 .container__updated {
     display: block;
     @include fs-headline(2);
@@ -99,7 +101,7 @@
     @include box-sizing(border-box);
     width: 100%;
 
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         .i--clock {
             display: none;
         }
@@ -128,7 +130,6 @@
     right: 0;
     height: 100%;
     border: 0;
-    border-left: 1px solid #ffffff;
     background-color: transparent;
     @include fs-data(4, $size-only: true);
     color: #ffffff;
