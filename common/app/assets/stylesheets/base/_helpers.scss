@@ -18,6 +18,12 @@
     }
 }
 
+.hide-until-wide {
+    @include mq($until: wide) {
+        @include u-h;
+    }
+}
+
 .is-hidden,
 [hidden] {
     display: none !important;

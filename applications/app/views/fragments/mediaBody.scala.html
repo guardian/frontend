@@ -86,14 +86,17 @@
                             }
                             @fragments.contentMeta(media)
 
-                            <div class="tag-wrapper tag-wrapper--break-at-wide">
+                            @defining(media match {
+                                case v: Video => v.standfirst.getOrElse("");
+                                case a: Audio => a.body
+                            }) { body =>
+                                <div class="tag-wrapper @if(body.length > 300) { tag-wrapper--break-at-wide }" data-link-name="keywords">
                                 @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                                    <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-link-name="keywords">
-                                        <h2 class="social__head hide-until-wide">Topics</h2>
-                                        @fragments.keywordList(media.keywords, tone = "media")
-                                    </div>
+                                    <h2 class="social__head">Topics</h2>
+                                    @fragments.keywordList(media.keywords, tone = "media")
                                 }
-                            </div>
+                                </div>
+                            }
 
                             <div class="social-wrapper social-wrapper--bottom" data-component="share">
                                 @fragments.social(media, iconModifier = "white")
