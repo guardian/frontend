@@ -13,7 +13,7 @@
         width: 100%;
 
         .facia-slice__item {
-            @include mq(tablet) {
+            @include mq(tablet, desktop) {
                 width: 50%;
 
                 &:nth-child(2n+1) {
@@ -23,6 +23,20 @@
                         border: 0;
                     }
                 }
+            }
+            @include mq(desktop) {
+                width: 100% / 3;
+
+                &:nth-child(3n+1) {
+                    clear: both;
+
+                    &:before {
+                        border: 0;
+                    }
+                }
+            }
+            &:last-child {
+                margin-bottom: $gs-baseline;
             }
         }
 
