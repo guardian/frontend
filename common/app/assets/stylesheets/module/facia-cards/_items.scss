@@ -5,12 +5,14 @@ $fc-item-gutter: $gs-gutter / 3;
 @import 'item-layouts/fc-item--list-media';
 @import 'item-layouts/fc-item--list-media-large';
 
-.facia-slice__item {
-    @include flex-display;
-    padding-bottom: 0;
+.fc-container {
+    .facia-slice__item {
+        @include flex-display;
+        padding-bottom: 0;
 
-    @if not $browser-supports-flexbox {
-        width: 25%;
+        @if not $browser-supports-flexbox {
+            width: 25%;
+        }
     }
 }
 
