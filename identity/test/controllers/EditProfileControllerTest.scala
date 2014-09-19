@@ -15,13 +15,13 @@ import actions.AuthRequest
 import play.api.mvc.Result
 import services.IdentityRequest
 import idapiclient.TrackingData
-import test.{ConfiguredTestSuite, FakeCSRFRequest}
+import test.{FakeCSRFRequest, Fake}
 import play.api.test.FakeRequest
 import client.Auth
 import model.Countries
 
 //TODO test form validation and population of form fields.
-@DoNotDiscover class EditProfileControllerTest extends FreeSpec with ShouldMatchers with MockitoSugar with OptionValues with ConfiguredTestSuite {
+class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar with OptionValues {
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val api = mock[IdApiClient]
   val idRequestParser = mock[IdRequestParser]
@@ -50,7 +50,7 @@ import model.Countries
     val interests = "Other interesting things"
     val webPage = "http://example.com/test"
 
-    "with a valid CSRF request" - {
+    "with a valid CSRF request" - Fake{
       val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
         .withFormUrlEncodedBody(
           "location" -> location,
@@ -113,7 +113,7 @@ import model.Countries
     val postcode = "N1 9GU"
     val country = Countries.UK
 
-    "with a valid CSRF request" - {
+    "with a valid CSRF request" - Fake{
       val fakeRequest = FakeCSRFRequest(POST, "/email-prefs")
         .withFormUrlEncodedBody(
           ("primaryEmailAddress", primaryEmailAddress),

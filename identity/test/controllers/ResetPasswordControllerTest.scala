@@ -1,11 +1,12 @@
 package controllers
 
-import org.scalatest.{Matchers => ShouldMatchers, DoNotDiscover, FreeSpec}
+import org.scalatest.path
+import org.scalatest.{Matchers => ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Matchers._
 import org.mockito.Mockito._
 import idapiclient.{TrackingData, IdApiClient}
-import test.{ConfiguredTestSuite, TestRequest}
+import test.{TestRequest, Fake}
 import play.api.test._
 import play.api.test.Helpers._
 import client.Error
@@ -14,7 +15,7 @@ import com.gu.identity.model.User
 import org.mockito.{ArgumentMatcher, Matchers}
 import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, AuthenticationService}
 
-@DoNotDiscover class ResetPasswordControllerTest extends FreeSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
+class ResetPasswordControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
 
   val api = mock[IdApiClient]
   val requestParser = mock[IdRequestParser]
@@ -34,7 +35,7 @@ import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, Authentic
   when(user.primaryEmailAddress).thenReturn("someone@test.com")
 
   "the renderPasswordRequest method" - {
-    "should render the password reset request form" in {
+    "should render the password reset request form" in Fake {
       val result = resetPasswordController.renderPasswordResetRequestForm()(TestRequest())
       status(result) should equal(OK)
     }
@@ -47,12 +48,12 @@ import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, Authentic
     "with an api response validating the user" - {
       when(api.sendPasswordResetEmail(any[String], any[TrackingData])).thenReturn(Future.successful(Right()))
 
-      "should ask the api to send a reset email to the the the specified user" in {
+      "should ask the api to send a reset email to the the the specified user" in Fake {
         resetPasswordController.processPasswordResetRequestForm(fakeRequest)
         verify(api).sendPasswordResetEmail(Matchers.eq(emailAddress), any[TrackingData])
       }
 
-      "should give the client's IP to the Identity API" in {
+      "should give the client's IP to the Identity API" in Fake {
         when(trackingData.ipAddress).thenReturn(Some("123.456.789.10"))
         resetPasswordController.processPasswordResetRequestForm(fakeRequest)
 
@@ -69,7 +70,7 @@ import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, Authentic
     "with an api is unable to locate the user" - {
       when(api.sendPasswordResetEmail(any[String], any[TrackingData])).thenReturn(Future.successful(Left(userNotFound)))
 
-        "should redirect to the form" in {
+        "should redirect to the form" in Fake {
           val result = resetPasswordController.processPasswordResetRequestForm(fakeRequest)
           status(result) should equal (SEE_OTHER)
         }
@@ -80,12 +81,12 @@ import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, Authentic
     val fakeRequest = FakeRequest(GET, "/c/1234")
     "when the token provided is valid" - {
        when(api.userForToken(Matchers.any[String])).thenReturn(Future.successful(Right(user)))
-       "should pass the token param to to the api" in {
+       "should pass the token param to to the api" in Fake {
          resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
          verify(api).userForToken(Matchers.eq("1234"))
        }
 
-       "should render the reset password form when the user token has not expired" in {
+       "should render the reset password form when the user token has not expired" in Fake {
          val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
          status(result) should equal(SEE_OTHER)
          header("Location", result).head should be ("/reset-password/1234")
@@ -94,7 +95,7 @@ import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, Authentic
 
     "should render the reset password form when the user token is not valid" - {
       when(api.userForToken("1234")).thenReturn(Future.successful(Left(tokenExpired)))
-      "should render to the the to the request new password form" in {
+      "should render to the the to the request new password form" in Fake {
         val result = resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
         header("Location", result).head should be ("/requestnewtoken")
@@ -107,11 +108,11 @@ import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, Authentic
     val fakeRequest = FakeRequest(POST, "/reset_password" ).withFormUrlEncodedBody("password" -> "newpassword", "password-confirm" -> "newpassword", "email-address" -> "test@somewhere.com")
     "when the token provided is valid" - {
       when(api.resetPassword(Matchers.any[String], Matchers.any[String])).thenReturn(Future.successful(Right()))
-      "should call the api the password with the provided new password and token" in {
+      "should call the api the password with the provided new password and token" in Fake {
          resetPasswordController.resetPassword("1234")(fakeRequest)
          verify(api).resetPassword(Matchers.eq("1234"), Matchers.eq("newpassword"))
       }
-      "should return password confirmation view in" in {
+      "should return password confirmation view in" in Fake {
          val result = resetPasswordController.resetPassword("1234")(fakeRequest)
          status(result) should be (SEE_OTHER)
         header("Location", result).head should be ("/password/reset-confirmation")
@@ -120,7 +121,7 @@ import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, Authentic
 
     "when the reset token has expired" - {
       when(api.resetPassword("1234","newpassword")).thenReturn(Future.successful(Left(tokenExpired)))
-      "should redirect to request request new password with a token expired" in {
+      "should redirect to request request new password with a token expired" in Fake {
         val result = resetPasswordController.resetPassword("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
         header("Location", result).head should be ("/requestnewtoken")
@@ -129,7 +130,7 @@ import services.{IdentityRequest, IdentityUrlBuilder, IdRequestParser, Authentic
 
     "when the reset token is not valid" - {
       when(api.resetPassword("1234", "newpassword")).thenReturn(Future.successful(Left(accesssDenied)))
-      "should redirect to request new password with a problem resetting your password" in {
+      "should redirect to request new password with a problem resetting your password" in Fake {
         val result = resetPasswordController.resetPassword("1234")(fakeRequest)
         status(result) should equal(SEE_OTHER)
         header("Location", result).head should be ("/reset")

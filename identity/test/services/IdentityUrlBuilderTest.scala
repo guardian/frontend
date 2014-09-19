@@ -1,13 +1,13 @@
 package services
 
-import org.scalatest.{DoNotDiscover, FreeSpec, Matchers}
+import org.scalatest.path
 import conf.IdentityConfiguration
+import org.scalatest.Matchers
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import idapiclient.TrackingData
-import test.ConfiguredTestSuite
 
-@DoNotDiscover class IdentityUrlBuilderTest extends FreeSpec with Matchers with MockitoSugar with ConfiguredTestSuite {
+class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSugar {
   val conf = new IdentityConfiguration
   val idRequest = mock[IdentityRequest]
   val omnitureTracking = mock[TrackingData]

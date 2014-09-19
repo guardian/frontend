@@ -1,17 +1,17 @@
 package formstack
 
-import org.scalatest._
+import org.scalatest.{EitherValues, ShouldMatchers, FunSuite, path}
 import org.scalatest.mock.MockitoSugar
 import idapiclient.IdDispatchAsyncHttpClient
 import org.mockito.Mockito._
 import org.mockito.Matchers.any
 import client.Parameters
 import client.connection.HttpResponse
-import test.ConfiguredTestSuite
 import scala.concurrent.Future
 import common.ExecutionContexts
 
-@DoNotDiscover class FormstackApiTest extends FreeSpec with ShouldMatchers with MockitoSugar with ExecutionContexts with ConfiguredTestSuite {
+
+class FormstackApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar with ExecutionContexts {
   val httpClient = mock[IdDispatchAsyncHttpClient]
   val formstackApi = new FormstackApi(httpClient)
 

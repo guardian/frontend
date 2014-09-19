@@ -1,10 +1,11 @@
 package services
 
-import org.scalatest.{DoNotDiscover, FunSuite, Matchers}
+import org.scalatest.FunSuite
 import model.AvatarData
-import test.ConfiguredTestSuite
 
-@DoNotDiscover class AvatarSigningServiceTest extends FunSuite with Matchers with ConfiguredTestSuite {
+import org.scalatest.Matchers
+
+class AvatarSigningServiceTest extends FunSuite with Matchers {
 
 
   val base64Payload = "eyJ1c2VybmFtZSI6ImRhdmlkc291cCIsImltYWdlX3VwbG9hZF9zdWNjZXNzIjp0cnVlLCJ1c2VyX2lkIjoiMjE4MDE0MTkiLCJyZXF1aXJlZF9pbWFnZV9ob3N0IjoiaHR0cDpcL1wvc3RhdGljLmd1aW1jb2RlLmNvLnVrIiwiaXNfc29jaWFsIjpmYWxzZX0"

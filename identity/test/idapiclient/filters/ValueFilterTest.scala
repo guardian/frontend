@@ -1,9 +1,9 @@
 package client.filters
 
-import org.scalatest.{DoNotDiscover, FunSuite, Matchers}
-import test.ConfiguredTestSuite
+import org.scalatest.FunSuite
+import org.scalatest.Matchers
 
-@DoNotDiscover class ValueFilterTest extends FunSuite with Matchers with ConfiguredTestSuite {
+class ValueFilterTest extends FunSuite with Matchers {
   test("value filter should return correct querystring params") {
     ValueFilter("testName", "testVal").parameters should contain(("filter", "testName:testVal"))
   }

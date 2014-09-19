@@ -1,15 +1,16 @@
 package controllers
 
-import org.scalatest.{Matchers => ShouldMatchers, DoNotDiscover, FreeSpec}
+import org.scalatest.path
+import org.scalatest.{Matchers => ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import play.api.Play
 import services._
 import idapiclient.IdApiClient
-import play.api.test.Helpers.{cookies => playCookies, _}
+import play.api.test.Helpers._
 import play.api.test._
-import test.{ConfiguredTestSuite, TestRequest}
+import test.{TestRequest, Fake}
 import scala.concurrent.Future
 import client.Auth
 import conf.IdentityConfiguration
@@ -24,7 +25,8 @@ import idapiclient.responses.CookiesResponse
 import play.api.test.Helpers._
 import play.api.mvc.RequestHeader
 
-@DoNotDiscover class SigninControllerTest extends FreeSpec with ShouldMatchers with MockitoSugar with ConfiguredTestSuite {
+
+class SigninControllerTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val requestParser = mock[IdRequestParser]
   val idUrlBuilder = mock[IdentityUrlBuilder]
@@ -39,7 +41,7 @@ import play.api.mvc.RequestHeader
   when(returnUrlVerifier.getVerifiedReturnUrl(any[RequestHeader])).thenReturn(None)
 
   "the renderForm method" - {
-    "should render the signin form" in {
+    "should render the signin form" in Fake {
       val result = signinController.renderForm(None)(TestRequest())
       status(result) should equal(OK)
     }
@@ -49,12 +51,12 @@ import play.api.mvc.RequestHeader
     "should reject invalid credentials" - {
       val fakeRequest = FakeRequest(POST, "/signin").withFormUrlEncodedBody("email" -> "bad", "password" -> "bad")
 
-      "so api is not called" in {
+      "so api is not called" in Fake {
         signinController.processForm()(fakeRequest)
         verify(api, never).authBrowser(any[Auth], same(trackingData))
       }
 
-      "form is re-shown with errors" in {
+      "form is re-shown with errors" in Fake {
         signinController.processForm()(fakeRequest)
       }
     }
@@ -66,23 +68,23 @@ import play.api.mvc.RequestHeader
       "if api call succeeds" - {
         when(api.authBrowser(any[Auth], same(trackingData))).thenReturn(Future.successful(Right(CookiesResponse(DateTime.now, List(CookieResponse("testCookie", "testVal"), CookieResponse("SC_testCookie", "secureVal"))))))
 
-        "should call authBrowser with provided credentials" in {
+        "should call authBrowser with provided credentials" in Fake {
           signinController.processForm()(fakeRequest)
           verify(api).authBrowser(auth, trackingData)
         }
 
 
-        "should redirect the user to the returnUrl" in {
+        "should redirect the user to the returnUrl" in Fake {
           when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
           val result = signinController.processForm()(fakeRequest)
           status(result) should equal(SEE_OTHER)
           redirectLocation(result).get should equal("http://example.com/return")
         }
 
-        "should set login cookies on response" in {
+        "should set login cookies on response" in Fake {
           when(returnUrlVerifier.getVerifiedReturnUrl(fakeRequest)).thenReturn(Some("http://example.com/return"))
           val result = signinController.processForm()(fakeRequest)
-          val responseCookies: Cookies  = playCookies(result)
+          val responseCookies: Cookies  = cookies(result)
           val testCookie = responseCookies.get("testCookie").get
           testCookie should have('value("testVal"))
           testCookie should have('secure(false))
@@ -95,7 +97,7 @@ import play.api.mvc.RequestHeader
       }
     }
 
-    "should redirect without persisting the password" in {
+    "should redirect without persisting the password" in Fake {
 
       val postRequest = FakeRequest(POST, "/signin").withFormUrlEncodedBody("email" -> "bad-email", "password" -> "good-password")
       val postResult = signinController.processForm()(postRequest)
@@ -103,7 +105,7 @@ import play.api.mvc.RequestHeader
       status(postResult) should be (303)
       header("Location", postResult) should be (Some("/signin"))
 
-      val flashCookie = playCookies(postResult).apply("PLAY_FLASH")
+      val flashCookie = cookies(postResult).apply("PLAY_FLASH")
 
 
       withClue("the cookie should be encrypted"){

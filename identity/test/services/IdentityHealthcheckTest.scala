@@ -1,16 +1,18 @@
 package services
 
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{Matchers, FlatSpec}
 import play.api.libs.ws.WS
 import test._
 
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
-@DoNotDiscover class IdentityHealthcheckTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+class IdentityHealthcheckTest extends FlatSpec with Matchers {
 
-  "Healthchecks" should "pass" in goTo("/signin"){ _ =>
+  import play.api.Play.current
 
-    Await.result(WS.url(s"http://localhost:${port}/_healthcheck").get(), 10.seconds).status should be (200)
+  "Healthchecks" should "pass" in HtmlUnit("/signin"){ _ =>
+
+    Await.result(WS.url(s"http://localhost:${HtmlUnit.port}/_healthcheck").get(), 10.seconds).status should be (200)
   }
 }
