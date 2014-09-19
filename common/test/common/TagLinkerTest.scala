@@ -72,6 +72,11 @@ class TagLinkerTest extends FlatSpec with Matchers {
     cleaned.firstPara should be ("""Cycling is an awesome sport.""")
   }
 
+  it should "not blow up if there are 'regex' characters in the tag names" in Fake {
+    val cleaned = new TagLinker(article(tag("music/asap-rocky", "A$AP Rocky"))).clean(souped("""<p>such as Harlem rapper A$AP Rocky</p>"""))
+    cleaned.firstPara should be ("such as Harlem rapper A$AP Rocky")
+  }
+
   private def tag(id: String, name: String) = new ApiTag(id, "keyword", webTitle = name, webUrl = "does not matter",
     apiUrl = "does not matter", sectionId = Some("does not matter"))
 
