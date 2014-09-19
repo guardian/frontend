@@ -190,7 +190,6 @@ $fc-item-gutter: $gs-gutter / 3;
 }
 
 .l-list__item {
-    width: 100%;
     float: left;
 
     &:last-child {
@@ -211,7 +210,7 @@ $fc-item-gutter: $gs-gutter / 3;
     .l-list--columns-#{$column} {
         .l-list__item {
             @include mq(tablet) {
-                width: 100% / $column;
+                width: (100% / $column);
 
                 &:nth-child(#{$column}n+1) {
                     clear: both;

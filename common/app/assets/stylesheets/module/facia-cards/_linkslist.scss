@@ -25,7 +25,7 @@
                 }
             }
             @include mq(desktop) {
-                width: 100% / 3;
+                width: (100% / 3);
 
                 &:nth-child(3n+1) {
                     clear: both;
