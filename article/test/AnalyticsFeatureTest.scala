@@ -1,12 +1,11 @@
 package test
 
-import org.scalatest.Matchers
-import org.scalatest.{ GivenWhenThen, FeatureSpec }
+import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import collection.JavaConversions._
 import org.fluentlenium.core.domain.FluentWebElement
 import conf.Configuration
 
-class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+@DoNotDiscover class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
   implicit val config = Configuration
 
   feature("Analytics") {
@@ -22,7 +21,7 @@ class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers 
     scenario("Omniture tracks user actions") {
 
       Given("I am on an article entitled 'Olympic opening ceremony will recreate countryside with real animals'")
-      HtmlUnit("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
+      goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         import browser._
 
         Then("the Omniture webbug should record my visit")
@@ -40,10 +39,9 @@ class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers 
 
     scenario("Ensure all clicked links are recorded by Omniture") {
       Given("I am on an article entitled 'Olympic opening ceremony will recreate countryside with real animals'")
-      HtmlUnit("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
-        import browser._
+      goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         Then("all links on the page should be decorated with the Omniture meta-data attribute")
-        val anchorsWithNoDataLink = find("a").filter(hasNoLinkName)
+        val anchorsWithNoDataLink = browser.find("a").filter(hasNoLinkName)
         anchorsWithNoDataLink should have length (0)
       }
 

@@ -1,9 +1,9 @@
 package diagnostics
 
-import org.scalatest.{BeforeAndAfterEach, Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, BeforeAndAfterEach, Matchers, FlatSpec}
 import model.diagnostics.javascript.Metric
 
-class JavaScriptTest extends FlatSpec with Matchers with BeforeAndAfterEach {
+@DoNotDiscover class JavaScriptTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
   override def beforeEach() {
     Metric.reset()

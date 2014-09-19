@@ -1,8 +1,9 @@
 package model.commercial.jobs
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import test.ConfiguredTestSuite
 
-class JobTest extends FlatSpec with Matchers {
+@DoNotDiscover class JobTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   "mainIndustry" should "give a value for jobs" in {
     val job = Job(1, "title", "desc", None, "recruiter", None, "logo", Seq(218), "Unpaid Voluntary Work")

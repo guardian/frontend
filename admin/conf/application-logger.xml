@@ -15,19 +15,6 @@
         </encoder>
     </appender>
 
-    <appender name="AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/audit.log</file>
-
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/audit.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-
-        <encoder>
-            <pattern>%date [%thread] %-5level %logger{36} - %msg%n%xException{3}</pattern>
-        </encoder>
-    </appender>
-
     <!-- DFP API logging -->
     <logger name="com.google.api.ads.dfp.lib.client.DfpServiceClient.soapXmlLogger" level="OFF"/>
     <logger name="com.google.api.client.http.HttpTransport" level="OFF"/>
@@ -35,9 +22,5 @@
     <root level="INFO">
         <appender-ref ref="LOGFILE"/>
     </root>
-
-    <logger name="common.Audit" level="TRACE">
-        <appender-ref ref="AUDIT"/>
-    </logger>
 
 </configuration>

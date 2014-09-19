@@ -1,6 +1,7 @@
 package test
 
 import java.util.{ List => JList }
+import org.scalatest.Suites
 import collection.JavaConversions._
 
 object `package` {
@@ -9,3 +10,6 @@ object `package` {
     lazy val firstNonEmpty: Option[String] = list find { !_.isEmpty }
   }
 }
+
+class ArchiveTestSuite extends Suites (
+  new ArchiveControllerTest ) with SingleServerSuite

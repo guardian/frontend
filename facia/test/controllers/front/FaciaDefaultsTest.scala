@@ -1,9 +1,10 @@
 package controllers.front
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import play.api.libs.json._
+import test.ConfiguredTestSuite
 
-class FaciaDefaultsTest extends FlatSpec with Matchers {
+@DoNotDiscover class FaciaDefaultsTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   "FaciaDefaults" should "parse correctly" in {
     Json.parse(FaciaDefaults.defaultJson).isInstanceOf[JsValue] should be (true)
