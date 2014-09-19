@@ -1,10 +1,10 @@
 package common
 
 import conf.Static
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
-import test.ConfiguredTestSuite
+import org.scalatest.{Matchers, FlatSpec}
+import org.scalatestplus.play.OneAppPerSuite
 
-@DoNotDiscover class RelativePathEscaperTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+class RelativePathEscaperTest extends FlatSpec with Matchers with OneAppPerSuite {
   "RelativePathEscaper" should "escape javascript paths in Static.js.curl" in {
     val curlJs = Static.js.curl
     val escapedCurlJs = RelativePathEscaper.escapeLeadingDotPaths(curlJs)
