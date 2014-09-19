@@ -6,12 +6,22 @@ case class ItemClasses(mobile: String, desktop: String) {
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column])
 
-sealed trait  Column
+sealed trait  Column {
+  def numItems: Int
+}
 
-case class SingleItem(colSpan: Int, itemClasses: ItemClasses) extends Column
-case class Rows(colSpan: Int, columns: Int, rows: Int, itemClasses: ItemClasses) extends Column
-case class SplitColumn(colSpan: Int, topItemClasses: ItemClasses, bottomItemClasses: ItemClasses) extends Column
-case class MPU(colSpan: Int) extends Column
+case class SingleItem(colSpan: Int, itemClasses: ItemClasses) extends Column {
+  val numItems: Int = 1
+}
+case class Rows(colSpan: Int, columns: Int, rows: Int, itemClasses: ItemClasses) extends Column {
+  val numItems: Int = columns * rows
+}
+case class SplitColumn(colSpan: Int, topItemClasses: ItemClasses, bottomItemClasses: ItemClasses) extends Column {
+  val numItems: Int = 2
+}
+case class MPU(colSpan: Int) extends Column {
+  val numItems: Int = 0
+}
 
 object SliceWithCards {
   def itemsToConsume(column: Column) = column match {

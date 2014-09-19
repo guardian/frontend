@@ -202,12 +202,12 @@ $c-commercial-books-dark: #630d4c;
             float: left;
         }
     }
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         .commercial__head {
             width: gs-span(2);
         }
     }
-    @include mq(faciaLeftCol, wide) {
+    @include mq(leftCol, wide) {
         .commercial__title {
             line-height: 1;
             margin-bottom: $comercial-comp-baseline;

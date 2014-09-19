@@ -26,7 +26,8 @@ define([
             {name: 'prototype/cassoulet'},
             {name: 'prototype/quichelorraine'},
             {name: 'prototype/raclette'},
-            {name: 'fixed/small/slow-IV'}
+            {name: 'fixed/small/slow-IV'},
+            {name: 'fixed/small/fast'}
         ],
 
         headlineLength: 200,
