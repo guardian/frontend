@@ -1,8 +1,14 @@
-/************************************************
- x x x x x x x x x x x x x x x x x x x x x x x
- x x x x x x x x x x x x x x x x x x x x x x x x
+/*
 
- ************************************************/
+List item. Looks a bit like this:
+
+***********************************************
+x x x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x x x x
+
+***********************************************
+
+ */
 
 @mixin fc-item--list {
     $headline-size: 1;

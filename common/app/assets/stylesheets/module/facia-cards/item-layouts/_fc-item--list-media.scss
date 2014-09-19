@@ -1,8 +1,14 @@
-/************************************************
- 0000000  x x x x x x x x x x x x x x x x x x x
- 0000000  x x x x x x x x x x x x x x x x x x x x
- 0000000
- ************************************************/
+/*
+
+Media list item. Looks a bit like this:
+
+***********************************************
+0000000  x x x x x x x x x x x x x x x x x x x
+0000000  x x x x x x x x x x x x x x x x x x x x
+0000000
+***********************************************
+
+ */
 
 @mixin fc-item--list-media {
     @include fc-item--list;
