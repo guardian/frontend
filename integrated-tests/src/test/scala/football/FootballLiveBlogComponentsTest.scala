@@ -1,12 +1,13 @@
 package football
 
 import driver.Driver
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.tagobjects.Retryable
+import org.scalatest.{Retries, FlatSpec, Matchers}
 
 
 class FootballLiveBlogComponentsTest extends FlatSpec with Matchers with Driver {
 
-  "Football live blogs" should "have match stats components" in retryPage {
+  "Football live blogs" should "have match stats components" taggedAs Retryable in {
 
     go to theguardian("/football/live/2014/aug/16/-sp-arsenal-v-crystal-palace-premier-league-live-report")
 
