@@ -194,7 +194,7 @@ import test.ConfiguredTestSuite
 
 
 
-  "MasterClassFeedParser" should "parse out a list of Event JsValues" in running(FakeApplication()) {
+  "MasterClassFeedParser" should "parse out a list of Event JsValues" in {
     val eventBriteFeed: JsValue = Json.parse(rawEventBriteFeed)
   
     val events: Seq[JsValue] = EventbriteApi.extractEventsFromFeed(eventBriteFeed)
