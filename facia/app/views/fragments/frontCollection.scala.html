@@ -24,6 +24,7 @@
         case Some("prototype/raclette")         => { @containers.raclette(collection, RacletteContainer(), index)(request, templateDeduping, config) }
         case Some("comment/comment-and-debate") => { @containers.commentanddebate(collection, CommentAndDebateContainer(), index)(request, templateDeduping, config) }
         case Some("fixed/small/slow-IV")        => { @containers.slice(collection, QuarterQuarterQuarterQuarter(collection), index)(request, templateDeduping, config) }
+        case Some("fixed/small/fast")        => { @containers.slice(collection, QuarterQuarterQlQl(collection), index)(request, templateDeduping, config) }
         case _                                  => { @containers.special(collection, SpecialContainer(), index)(request, templateDeduping, config) }
     }
 }
