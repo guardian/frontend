@@ -68,7 +68,7 @@ import play.api.test.Helpers._
     """.stripMargin
   }
 
-  "OffersApi" should "build Offers from XML" in running(FakeApplication()) {
+  "OffersApi" should "build Offers from XML" in {
     val offers = TravelOffersApi.parse(xml)
     offers should be(Fixtures.untaggedOffers)
   }
