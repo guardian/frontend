@@ -19,7 +19,7 @@ import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
-import java.util.regex.Pattern
+import java.util.regex.{Matcher, Pattern}
 
 /**
  * New 'collection' templates
@@ -427,7 +427,7 @@ class TagLinker(article: Article)(implicit val edition: Edition, implicit val re
   private val question = Pattern.quote("?")
 
   private def keywordRegex(tag: Tag) = {
-    val tagName = Pattern.quote(tag.name)
+    val tagName = Pattern.quote(Matcher.quoteReplacement(tag.name))
     s"""(.*)( |^)($tagName)( |,|$$|$dot|$question)(.*)""".r
   }
 
