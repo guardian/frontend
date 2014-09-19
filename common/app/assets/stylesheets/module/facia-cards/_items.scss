@@ -38,6 +38,12 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
+.fc-item--has-image {
+    &:before {
+        background-color: rgba($c-neutral1, .15);
+    }
+}
+
 .fc-item__media-wrapper,
 .fc-item__image-container {
     display: none;
