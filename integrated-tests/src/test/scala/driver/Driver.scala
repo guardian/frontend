@@ -32,7 +32,7 @@ trait Driver extends Suite with WebBrowser with BeforeAndAfterAll with Retries {
 
   protected implicit val driver: WebDriver = if (remoteMode) remoteBrowser else localBrowser
 
-  override protected def afterAll() = quit()
+  override protected def afterAll(): Unit = quit()
 
   // helper methods for tests
   protected def theguardian(path: String) = s"$baseUrl$path?view=responsive&test=test#countmein"
