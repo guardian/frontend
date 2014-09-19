@@ -1,16 +1,16 @@
 package common
 
 import conf.Static
-import org.scalatest.{Matchers, FlatSpec}
-import test.Fake
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import test.ConfiguredTestSuite
 
-class RelativePathEscaperTest extends FlatSpec with Matchers {
-  "RelativePathEscaper" should "escape javascript paths in Static.js.curl" in Fake{
+@DoNotDiscover class RelativePathEscaperTest extends FlatSpec with Matchers with ConfiguredTestSuite {
+  "RelativePathEscaper" should "escape javascript paths in Static.js.curl" in {
     val curlJs = Static.js.curl
     val escapedCurlJs = RelativePathEscaper.escapeLeadingDotPaths(curlJs)
     escapedCurlJs should include ("[\"..\" + \"/\" + \"domReady\"]")
   }
-  it should "escape path-like json in football config references data" in Fake {
+  it should "escape path-like json in football config references data" in {
     val jsonFootballRefs = "\"references\":[{\"paFootballTeam\":\"13\"},{\"esaFootballTeam\":\"/football/team/32\"},{\"paFootballCompetition\":\"101\"},{\"esaFootballTeam\":\"/football/team/9\"},{\"optaFootballTournament\":\"10/2012\"},{\"paFootballTeam\":\"28\"},{\"optaFootballTeam\":\"2\"},{\"esaFootballTournament\":\"/football/tournament/div1\"},{\"optaFootballTeam\":\"103\"}]"
     val escapedJson = RelativePathEscaper.escapeLeadingSlashFootballPaths(jsonFootballRefs)
     escapedJson should not include ("""":"/football/team/32"""")

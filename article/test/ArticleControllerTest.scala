@@ -2,51 +2,50 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 
-class ArticleControllerTest extends FlatSpec with Matchers {
+@DoNotDiscover class ArticleControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
   val callbackName = "aFunction"
 
-  "Article Controller" should "200 when content type is article" in Fake {
+  "Article Controller" should "200 when content type is article" in {
     val result = controllers.ArticleController.renderArticle(articleUrl)(TestRequest(articleUrl))
     status(result) should be(200)
   }
 
-  it should "200 when content type is live blog" in Fake {
+  it should "200 when content type is live blog" in {
     val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
     status(result) should be(200)
   }
 
-  it should "count in body links" in Fake {
+  it should "count in body links" in {
     val result = controllers.ArticleController.renderArticle(liveBlogUrl)(TestRequest(liveBlogUrl))
     val body = contentAsString(result)
     body should include(""""inBodyInternalLinkCount":38""")
     body should include(""""inBodyExternalLinkCount":42""")
   }
 
-  it should "200 when content type is sudoku" in Fake {
+  it should "200 when content type is sudoku" in {
     val result = controllers.ArticleController.renderArticle(sudokuUrl)(TestRequest(sudokuUrl))
     status(result) should be(200)
   }
 
-  it should "not cache 404s" in Fake {
+  it should "not cache 404s" in {
     val result = controllers.ArticleController.renderArticle("oops")(TestRequest())
     status(result) should be(404)
     header("Cache-Control", result).head should be ("no-cache")
   }
 
-  it should "redirect for short urls" in Fake {
+  it should "redirect for short urls" in {
     val result = controllers.ArticleController.renderArticle("p/39heg")(TestRequest("/p/39heg"))
     status(result) should be (302)
     header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
   }
 
-  it should "return JSONP when callback is supplied" in Fake {
+  it should "return JSONP when callback is supplied" in {
     val fakeRequest = FakeRequest(GET, s"${articleUrl}?callback=$callbackName")
 
     val result = controllers.ArticleController.renderArticle(articleUrl)(fakeRequest)
@@ -55,7 +54,7 @@ class ArticleControllerTest extends FlatSpec with Matchers {
     contentAsString(result) should startWith(s"""$callbackName({\"config\"""")
   }
 
-  it should "return JSON when .json format is supplied" in Fake {
+  it should "return JSON when .json format is supplied" in {
     val fakeRequest = FakeRequest("GET", s"${articleUrl}.json")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
@@ -65,13 +64,13 @@ class ArticleControllerTest extends FlatSpec with Matchers {
     contentAsString(result) should startWith("{\"config\"")
   }
 
-  it should "redirect to classic when content type is not supported in app" in Fake {
+  it should "redirect to classic when content type is not supported in app" in {
     val result = controllers.ArticleController.renderArticle("world/interactive/2013/mar/04/choose-a-pope-interactive-guide")(TestRequest("/world/interactive/2013/mar/04/choose-a-pope-interactive-guide"))
     status(result) should be(303)
     header("Location", result).get should be("http://www.theguardian.com/world/interactive/2013/mar/04/choose-a-pope-interactive-guide?view=classic")
   }
 
-  it should "internal redirect unsupported content to classic" in Fake {
+  it should "internal redirect unsupported content to classic" in {
     val result = controllers.ArticleController.renderArticle("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("world/video/2012/feb/10/inside-tibet-heart-protest-video"))
     status(result) should be(200)
     header("X-Accel-Redirect", result).get should be("/applications/world/video/2012/feb/10/inside-tibet-heart-protest-video")
@@ -79,7 +78,7 @@ class ArticleControllerTest extends FlatSpec with Matchers {
 
   val expiredArticle = "football/2012/sep/14/zlatan-ibrahimovic-paris-st-germain-toulouse"
 
-  it should "return the latest blocks of a live blog" in Fake {
+  it should "return the latest blocks of a live blog" in {
     val fakeRequest = FakeRequest(GET, "/environment/blog/2013/jun/26/barack-obama-climate-action-plan.json?lastUpdate=block-51cae3aee4b02dad15c7494e")
       .withHeaders("host" -> "localhost:9000")
 

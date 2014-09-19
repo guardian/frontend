@@ -1,18 +1,16 @@
 package services
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import play.api.libs.ws.WS
 import test._
 
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
-class FaciaHealthcheckTest extends FlatSpec with Matchers {
+@DoNotDiscover class FaciaHealthcheckTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
-  import play.api.Play.current
+  "Healthchecks" should "pass" in goTo("/uk"){ _ =>
 
-  "Healthchecks" should "pass" in HtmlUnit("/uk"){ _ =>
-
-    Await.result(WS.url(s"http://localhost:${HtmlUnit.port}/_healthcheck").get(), 10.seconds).status should be (200)
+    Await.result(WS.url(s"http://localhost:${port}/_healthcheck").get(), 10.seconds).status should be (200)
   }
 }
