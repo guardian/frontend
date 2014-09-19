@@ -99,15 +99,16 @@ object Profile {
 
 object ImgSrc {
 
-  def imageHost = Configuration.images.path
+  def imageHost(host: String) = Configuration.images.path + host.stripSuffix(".guim.co.uk")
+  def imageHosts = Seq("static.guim.co.uk", "media.guim.co.uk")
 
   def apply(url: String, imageType: ElementProfile): String = {
     val uri = new URI(url.trim)
-
-    val isSupportedImage = uri.getHost == "static.guim.co.uk" && !uri.getPath.toLowerCase.endsWith(".gif")
+    val isSupportedImage = imageHosts.exists(h => h == uri.getHost) && !uri.getPath.toLowerCase.endsWith(".gif")
+    val host = imageHost(uri.getHost)
 
     if (ImageServerSwitch.isSwitchedOn && isSupportedImage)
-      s"$imageHost${imageType.resizeString}${uri.getPath}"
+      s"$host${imageType.resizeString}${uri.getPath}"
     else
       url
   }
