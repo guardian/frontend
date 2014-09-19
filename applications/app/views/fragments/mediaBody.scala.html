@@ -91,14 +91,14 @@
                                 case a: Audio => a.body.length > 800
                             }) { breakIntoLeftCol =>
                                 <div class="submeta-container @if(breakIntoLeftCol) { submeta-container--break-at-wide}">
-                                    <div class="submeta" data-link-name="keywords">
-                                        @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                                    @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                                        <div class="submeta" data-link-name="keywords">
                                             <h2 class="submeta__head">Topics</h2>
                                             @fragments.keywordList(media.keywords, tone = "media")
-                                        }
-                                    </div>
-
+                                        </div>
+                                    }
                                     <div class="submeta hide-from-leftcol" data-component="share">
+                                        <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
                                         @fragments.social(media, iconModifier = "white")
                                     </div>
 
