@@ -129,7 +129,7 @@ define([
                 it('should not add more than one of the same badge', function () {
                     $('.container').addClass('container--' + badge.type);
                     badges.init(config);
-                    expect(qwery('.facia-container .ad-slot').length).toBe(1);
+                    expect(qwery('.facia-container .ad-slot[data-name="' + badge.name + '"]').length).toBe(1);
                 });
             });
 
