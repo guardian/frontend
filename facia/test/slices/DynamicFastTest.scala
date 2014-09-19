@@ -1,9 +1,11 @@
 package slices
 
 import org.scalacheck.Gen
+import org.scalatest.DoNotDiscover
 import org.scalatest.OptionValues._
+import test.ConfiguredTestSuite
 
-class DynamicFastTest extends DynamicContainerTest {
+@DoNotDiscover class DynamicFastTest extends DynamicContainerTest with ConfiguredTestSuite {
   override val slicesFor: (Seq[Story]) => Option[Seq[Slice]] = DynamicFast.slicesFor
 
   it should "for n standard (0) items return QlQlQlQl" in {

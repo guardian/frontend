@@ -7,7 +7,7 @@ import controllers.AuthLogging
 import conf.{ Switches, Configuration }
 import play.api.mvc._
 import scala.concurrent.Future
-import services.{ Notification, Audit }
+import services.Notification
 import tools.Store
 import model.NoCache
 
@@ -73,7 +73,7 @@ object SwitchboardController extends Controller with AuthLogging with Logging wi
     val changes = updates filterNot { current contains _ }
     Notification.onSwitchChanges(requester, Configuration.environment.stage, changes)
     changes foreach { change =>
-      Audit(s"Switch change by ${requester}: ${change}")
+      log.info(s"Switch change by ${requester}: ${change}")
     }
 
     Redirect(routes.SwitchboardController.renderSwitchboard())

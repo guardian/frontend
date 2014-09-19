@@ -303,9 +303,14 @@ define([
                 tn      : parseTargets(page.tones)
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
-        createAdSlot = function (name, types, keywords) {
-            var definition = adSlotDefinitions[name],
-                dataAttrs = {
+        createAdSlot = function (name, types, keywords, slotTarget) {
+            var definition;
+            if (slotTarget) {
+                definition = adSlotDefinitions[slotTarget];
+            } else {
+                definition = adSlotDefinitions[name];
+            }
+            var dataAttrs = {
                     refresh: definition.refresh !== undefined ? definition.refresh : true,
                     label: definition.label !== undefined ? definition.label : true
                 },
@@ -326,6 +331,9 @@ define([
                     $adSlot.attr('data-' + attrName, 'false');
                 }
             }
+            if (slotTarget) {
+                $adSlot.attr('data-slot-target', slotTarget);
+            }
             if (keywords) {
                 $adSlot.attr('data-keywords', keywords);
             }
@@ -336,6 +344,10 @@ define([
      * Private functions
      */
     var defineSlot = function ($adSlot) {
+            var slotTarget = $adSlot.data('slot-target');
+            if (typeof slotTarget === 'undefined') {
+                slotTarget = $adSlot.data('name');
+            }
             var adUnit = config.page.adUnit,
                 id          = $adSlot.attr('id'),
                 sizeMapping = defineSlotSizes($adSlot),
@@ -355,7 +367,7 @@ define([
                     )
                     .addService(googletag.pubads())
                     .defineSizeMapping(sizeMapping)
-                    .setTargeting('slot', $adSlot.data('name'));
+                    .setTargeting('slot', slotTarget);
 
             if ($adSlot.data('keywords')) {
                 slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));

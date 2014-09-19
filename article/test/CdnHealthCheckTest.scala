@@ -1,13 +1,13 @@
 package test
 
 import conf.HealthCheck
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 
-class CdnHealthCheckTest extends FlatSpec with Matchers {
+@DoNotDiscover class CdnHealthCheckTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   //wrapping this in an HtmlUnit as we need a server running in order for the healthcheck to complete
-  "CDN health check" should "mimic the instance health check" in HtmlUnit("/_cdn_healthcheck") { browser =>
+  "CDN health check" should "mimic the instance health check" in goTo("/_cdn_healthcheck") { browser =>
 
     HealthCheck.break()
 

@@ -3,7 +3,6 @@ package views.support
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Element => ApiElement, Asset => ApiAsset}
 import model._
 import org.scalatest.{ Matchers, FlatSpec }
-import test.Fake
 import xml.XML
 import common.editions.Uk
 import conf.Configuration
@@ -93,7 +92,7 @@ class TemplatesTest extends FlatSpec with Matchers {
     }
   }
 
-  "InBodyLinkCleaner" should "clean links" in Fake {
+  "InBodyLinkCleaner" should "clean links" in {
     implicit val edition = Uk
     implicit val request = FakeRequest("GET", "/")
 

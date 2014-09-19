@@ -5,7 +5,7 @@
 <div class="l-side-margins l-side-margins--layout-content">
     <article id="article" data-test-id="article-root"
         class="content content--article tone-@article.visualTone tone-@article.visualTone--article section-@article.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
-        @if(article.isAdvertisementFeature && !article.isSponsored){article--advertisement-feature}"
+        @if(article.isAdvertisementFeature && !article.isSponsored){content--advertisement-feature}"
 
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
@@ -37,15 +37,13 @@
                 </div>
 
 
-                <div class="tag-wrapper">
+                <div class="tag-wrapper tag-wrapper--break-at-leftcol" data-link-name="keywords">
                     @if(article.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                        <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-link-name="keywords">
-                            <h2 class="social__head u-h--up-to-left-col">Topics</h2>
-                            @fragments.keywordList(article.keywords, tone = article.visualTone)
-                        </div>
+                        <h2 class="social__head">Topics</h2>
+                        @fragments.keywordList(article.keywords, tone = article.visualTone)
                     }
                     <div class="social-wrapper social-wrapper--aside social-wrapper--tags js-social--bottom" data-component="share">
-                        <h2 class="social__head u-h--up-to-left-col">Share this article</h2>
+                        <h2 class="social__head hide-until-leftcol">Share this article</h2>
                         @fragments.social(article)
                     </div>
                 </div>
