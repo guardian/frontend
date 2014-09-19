@@ -1,12 +1,12 @@
 package football
 
 import driver.Driver
-import org.scalatest.tagobjects.Retryable
+import org.scalatest.tags.Retryable
 import org.scalatest.{FlatSpec, Matchers}
 
-class MatchReportComponentsTest extends FlatSpec with Matchers with Driver {
+@Retryable class MatchReportComponentsTest extends FlatSpec with Matchers with Driver {
 
-  "Match reports" should "have match stats components" taggedAs Retryable in {
+  "Match reports" should "have match stats components" in {
 
     go to theguardian("/football/2014/aug/25/manchester-city-liverpool-premier-league-match-report")
 
