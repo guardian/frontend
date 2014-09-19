@@ -10,11 +10,10 @@ Media list item. Looks a bit like this:
 
  */
 
-@mixin fc-item--list-media {
+@mixin fc-item--list-media ($text-lines-per-media-object: 4) {
     @include fc-item--list;
 
     // values to set image height
-    $text-lines-per-media-object: 4;
     $headline-size: 1;
 
     // calculate image width
@@ -28,10 +27,22 @@ Media list item. Looks a bit like this:
     &.fc-item--has-image {
         // Override .svg .action--has-icon
         padding-left: $image-width !important;
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: $image-width;
+        }
     }
 
     &.fc-item--has-no-image {
         padding-left: $fc-item-gutter;
+    }
+
+    .fc-item__title {
+        @include fs-headline($headline-size);
     }
 
     .fc-item__media-wrapper,

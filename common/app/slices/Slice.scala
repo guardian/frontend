@@ -165,28 +165,28 @@ case object QuarterQuarterQuarterQuarter extends Slice {
         SingleItem(
           1,
           ItemClasses(
-            mobile = "list-media",
+            mobile = "list-media-large",
             desktop = "standard-quarter"
           )
         ),
         SingleItem(
           1,
           ItemClasses(
-            mobile = "list-media",
+            mobile = "list-media-large",
             desktop = "standard-quarter"
           )
         ),
         SingleItem(
           1,
           ItemClasses(
-            mobile = "list-media",
+            mobile = "list-media-large",
             desktop = "standard-quarter"
           )
         ),
         SingleItem(
           1,
           ItemClasses(
-            mobile = "list-media",
+            mobile = "list-media-large",
             desktop = "standard-quarter"
           )
         )

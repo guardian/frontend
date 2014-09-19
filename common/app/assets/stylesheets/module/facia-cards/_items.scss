@@ -3,6 +3,7 @@ $fc-item-gutter: $gs-gutter / 3;
 @import 'item-layouts/fc-item--standard';
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-media';
+@import 'item-layouts/fc-item--list-media-large';
 
 .facia-slice__item {
     @include flex-display;
@@ -101,12 +102,10 @@ $fc-item-gutter: $gs-gutter / 3;
 }
 
 .fc-item__timestamp {
-    // this looks weird, commenting out before removing later
-    // min-width: 50px - $gs-gutter / 2 - 14px;
     display: none;
 }
 
-.fc-trail__count__inline-template {
+.fc-trail__count--inline-template {
     display: none;
 }
 
@@ -153,6 +152,18 @@ $fc-item-gutter: $gs-gutter / 3;
 .fc-item--list-media-tablet {
     @include mq(tablet) {
         @include fc-item--list-media;
+    }
+}
+
+.fc-item--list-media-large-mobile {
+    @include mq($until: tablet) {
+        @include fc-item--list-media-large;
+    }
+}
+
+.fc-item--list-media-large-tablet {
+    @include mq(tablet) {
+        @include fc-item--list-media-large;
     }
 }
 
