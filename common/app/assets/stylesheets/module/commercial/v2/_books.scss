@@ -40,7 +40,7 @@ $c-commercial-books-2: guss-colour(features-support-1, $pasteup-palette);
         }
         @include mq(leftCol) {
             width: percentage(1/5);
-            min-height: $gs-baseline*22;
+            min-height: $gs-baseline*20;
         }
     }
 
