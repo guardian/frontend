@@ -107,10 +107,6 @@ trait SingleServerSuite extends OneServerPerSuite with TestSettings with OneBrow
   )
 }
 
-// There is only one test suite in common that needs a play application.
-class CommonTestSuite extends Suites (
-  new common.RelativePathEscaperTest) with SingleServerSuite
-
 object TestRequest {
   // MOST of the time we do not care what path is set on the request - only need to override where we do
   def apply(path: String = "/does-not-matter"): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
