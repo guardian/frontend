@@ -1,9 +1,10 @@
 package model.commercial.books
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.Json
+import test.ConfiguredTestSuite
 
-class MagentoExceptionTest extends FlatSpec with Matchers {
+@DoNotDiscover class MagentoExceptionTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   "apply" should "create a MagentoException from json" in {
     val json = Json.parse( """{"messages":{"error":[{"code":404,"message":"Resource not found."}]}}""")

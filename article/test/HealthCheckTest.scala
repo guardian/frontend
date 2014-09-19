@@ -1,16 +1,14 @@
 package test
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.ws.WS
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
-class HealthCheckTest extends FlatSpec with Matchers {
+@DoNotDiscover class HealthCheckTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
-  import play.api.Play.current
+  "Healthchecks" should "pass" in goTo("/world/2014/feb/05/libya-says-chemical-weapons-destroyed"){ browser =>
 
-  "Healthchecks" should "pass" in HtmlUnit("/world/2014/feb/05/libya-says-chemical-weapons-destroyed"){ browser =>
-
-    Await.result(WS.url(s"http://localhost:${HtmlUnit.port}/_healthcheck").get(), 10.seconds).status should be (200)
+    Await.result(WS.url(s"http://localhost:${port}/_healthcheck").get(), 10.seconds).status should be (200)
   }
 }

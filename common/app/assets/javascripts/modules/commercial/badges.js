@@ -18,9 +18,7 @@ define([
     dfp
 ) {
 
-    var hadSponsoredBadge = false,
-        hadAdvertisementFeatureBadge = false,
-        addPreBadge = function($adSlot, isSponsored, sponsor) {
+    var addPreBadge = function($adSlot, isSponsored, sponsor) {
             if (sponsor) {
                 $adSlot.append(template(
                     '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
@@ -39,18 +37,18 @@ define([
             }
         },
         createAdSlot = function(container, isSponsored, opts) {
-            if ((isSponsored && hadSponsoredBadge) || (!isSponsored && hadAdvertisementFeatureBadge)) {
-                return;
+            var slotTarget = (isSponsored ? 'sp' : 'ad') + 'badge';
+            var name = slotTarget;
+            if (opts.containerIndex) {
+                name += opts.containerIndex;
             }
             var $adSlot = bonzo(dfp.createAdSlot(
-                (isSponsored ? 'sp' : 'ad') + 'badge', ['paid-for-badge', 'paid-for-badge--front'], opts.keywords
+                name, ['paid-for-badge', 'paid-for-badge--front'], opts.keywords, slotTarget
             ));
             if (isSponsored) {
                 addPreBadge($adSlot, true, opts.sponsor);
-                hadSponsoredBadge = true;
             } else {
                 addPreBadge($adSlot, false, opts.sponsor);
-                hadAdvertisementFeatureBadge = true;
             }
             $('.container__header', container)
                 .after($adSlot);
@@ -77,13 +75,13 @@ define([
                     { sponsor: $faciaContainer.data('sponsor') }
                 );
             });
-            $('.container--sponsored, .container--advertisement-feature').each(function(container) {
+            $('.container--sponsored, .container--advertisement-feature').each(function(container, index) {
                 if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
                     var $container = bonzo(container);
                     createAdSlot(
                         container,
                         bonzo(container).hasClass('container--sponsored'),
-                        { keywords: $container.data('keywords'), sponsor: $container.data('sponsor') }
+                        { containerIndex: index, keywords: $container.data('keywords'), sponsor: $container.data('sponsor') }
                     );
                 }
             });
@@ -95,8 +93,6 @@ define([
             // really only useful for testing
             reset: function() {
                 badges.init = once(init);
-                hadSponsoredBadge = false;
-                hadAdvertisementFeatureBadge = false;
             }
 
         };

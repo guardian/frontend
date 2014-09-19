@@ -1,10 +1,8 @@
 package test
 
-import org.scalatest.Matchers
-import org.scalatest.{ GivenWhenThen, FeatureSpec }
+import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 
-
-class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+@DoNotDiscover class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
   feature("Related links") {
 
@@ -23,7 +21,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Shows related links for each article") {
 
       Given("there is an article 'Woman tortured during burglary tells of waterboarding ordeal'")
-      HtmlUnit("/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
+      goTo("/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
         import browser._
         Then("I should see the related links")
         $(".item") should have length 5
@@ -34,7 +32,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Shows article metadata for each related link") {
 
       Given("there is an article 'Woman tortured during burglary tells of waterboarding ordeal'")
-      HtmlUnit("/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
+      goTo("/related/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey") { browser =>
         import browser._
         Then("I should see the headline, trail text for each of the first five related links")
 
@@ -54,7 +52,7 @@ class RelatedFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
     scenario("Show the published dates for non-media trails") { // GFE-37
 
       Given("Shell spending millions of dollars on security in Nigeria, leaked data shows")
-      HtmlUnit("/related/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
+      goTo("/related/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("I see each trail block displays the published date of the corresponding article")
 

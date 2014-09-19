@@ -2,18 +2,18 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import common.ExecutionContexts
 import controllers.FaciaController
 
-class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts {
+@DoNotDiscover class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite {
 
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
-  "FaciaController" should "200 when content type is front" in Fake {
+  "FaciaController" should "200 when content type is front" in {
     val result = FaciaController.renderFront("uk")(TestRequest())
     status(result) should be(200)
   }

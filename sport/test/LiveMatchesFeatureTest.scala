@@ -1,11 +1,9 @@
 package test
 
-import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import tools.MatchListFeatureTools
 
-
-class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools {
+@DoNotDiscover class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools with ConfiguredTestSuite {
 
   feature("Live Matches") {
 
@@ -13,7 +11,7 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
 
       Given("I visit the live matches page")
 
-      HtmlUnit("/football/live") { browser =>
+      goTo("/football/live") { browser =>
         import browser._
 
         val matches = $(".football-match__team")
@@ -33,7 +31,7 @@ class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matcher
     scenario("Competition fixtures filter") {
 
       Given("I am on the premier league live matches page")
-      HtmlUnit("/football/premierleague/live") { browser =>
+      goTo("/football/premierleague/live") { browser =>
         import browser._
 
         val matches = $(".football-match__team")

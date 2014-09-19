@@ -2,13 +2,14 @@ package discussion
 
 import controllers.DiscussionParams
 import discussion.model.DiscussionKey
-import org.scalatest.FreeSpec
+import org.scalatest.{DoNotDiscover, FreeSpec}
 import play.api.libs.ws.WSResponse
+import test.ConfiguredTestSuite
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-class DiscussionApiTest extends FreeSpec {
+@DoNotDiscover class DiscussionApiTest extends FreeSpec with ConfiguredTestSuite {
 
 
   "Should do GET request on correct URL for topComments " in {
