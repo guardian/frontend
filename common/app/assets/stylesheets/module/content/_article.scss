@@ -13,7 +13,7 @@
 }
 
 .caption--main {
-    min-height: ($gs-baseline/3)*7;
+    min-height: ($gs-baseline / 3) * 7;
     max-width: gs-span(7);
 
     @include mq(tablet) {
