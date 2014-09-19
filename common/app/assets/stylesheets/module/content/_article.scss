@@ -12,6 +12,28 @@
     }
 }
 
+.caption--main {
+    min-height: ($gs-baseline / 3) * 7;
+    max-width: gs-span(7);
+
+    @include mq(tablet) {
+        max-width: gs-span(8);
+    }
+    @include mq(rightCol) {
+        max-width: none;
+    }
+    .content__main-column--image & {
+        padding-bottom: 0;
+    }
+}
+
+@include mq(tablet) {
+    .caption--main {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+
 
 /* Legacy classes to be refactored out (replaced by .content*)
    ========================================================================== */
@@ -20,32 +42,6 @@
     position: relative;
     margin-bottom: $gs-baseline*3.5;
     @include fs-bodyCopy(2);
-}
-
-.article--advertisement-feature {
-    background-color: $c-neutral8;
-
-    .content__standfirst,
-    .content__dateline,
-    .social__head,
-    .caption--main,
-    .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__label {
-        color: $c-neutral2-contrasted;
-    }
-    .content__headline,
-    .content__standfirst {
-        @include f-headlineSans;
-    }
-    .from-content-api {
-        @include f-textSans;
-    }
-}
-
-.article-body {
-    @include mq(tablet) {
-        margin-bottom: ($gs-baseline/3)*4;
-    }
 }
 
 .article__inner,
@@ -72,30 +68,7 @@
     border-top: 1px solid $c-neutral4;
 }
 
-/* Layout changes across devices
-   ========================================================================== */
-
-.caption--main {
-    min-height: ($gs-baseline/3)*7;
-    max-width: gs-span(7);
-
-    @include mq(tablet) {
-        max-width: gs-span(8);
-    }
-    @include mq(rightCol) {
-        max-width: none;
-    }
-    .content__main-column--image & {
-        padding-bottom: 0;
-    }
-}
-
-
 @include mq(tablet) {
-    .caption--main {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
     .article__columning-wrapper {
         padding-right: gs-span(1) + $gs-gutter;
     }
