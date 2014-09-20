@@ -114,7 +114,7 @@ object ImgSrc {
       .filter(_ => isSupportedImage)
       .filter(_ => ImageServerSwitch.isSwitchedOn)
       .map( pathPrefix =>
-        s"$imageHost$pathPrefix${imageType.resizeString}${uri.getPath}"
+        s"$imageHost/$pathPrefix${imageType.resizeString}${uri.getPath}"
       ).getOrElse(url)
   }
 
