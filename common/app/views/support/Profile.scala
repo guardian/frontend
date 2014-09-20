@@ -99,18 +99,25 @@ object Profile {
 
 object ImgSrc {
 
-  def imageHost(host: String) = Configuration.images.path + host.stripSuffix(".guim.co.uk")
-  def imageHosts = Seq("static.guim.co.uk", "media.guim.co.uk")
+  private val imageHost = Configuration.images.path
+
+  private val hostPrefixMapping = Map(
+    "static.guim.co.uk" -> "static",
+    "media.guim.co.uk" -> "media"
+  )
+
+  private def isSupportedImage(uri: URI) =
+    hostPrefixMapping.isDefinedAt(uri.getHost) && !uri.getPath.toLowerCase.endsWith(".gif")
 
   def apply(url: String, imageType: ElementProfile): String = {
     val uri = new URI(url.trim)
-    val isSupportedImage = imageHosts.exists(h => h == uri.getHost) && !uri.getPath.toLowerCase.endsWith(".gif")
-    val host = imageHost(uri.getHost)
 
-    if (ImageServerSwitch.isSwitchedOn && isSupportedImage)
-      s"$host${imageType.resizeString}${uri.getPath}"
-    else
+    if (ImageServerSwitch.isSwitchedOn && isSupportedImage(uri)) {
+      val hostWithPathPrefix = s"$imageHost${hostPrefixMapping(uri.getHost)}"
+      s"$hostWithPathPrefix${imageType.resizeString}${uri.getPath}"
+    } else {
       url
+    }
   }
 
   object Imager extends Profile(None, None) {
