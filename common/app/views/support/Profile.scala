@@ -106,18 +106,16 @@ object ImgSrc {
     "media.guim.co.uk" -> "media"
   )
 
-  private def isSupportedImage(uri: URI) =
-    hostPrefixMapping.isDefinedAt(uri.getHost) && !uri.getPath.toLowerCase.endsWith(".gif")
-
   def apply(url: String, imageType: ElementProfile): String = {
     val uri = new URI(url.trim)
+    val isSupportedImage = !uri.getPath.toLowerCase.endsWith(".gif")
 
-    if (ImageServerSwitch.isSwitchedOn && isSupportedImage(uri)) {
-      val hostWithPathPrefix = s"$imageHost${hostPrefixMapping(uri.getHost)}"
-      s"$hostWithPathPrefix${imageType.resizeString}${uri.getPath}"
-    } else {
-      url
-    }
+    hostPrefixMapping.get(uri.getHost)
+      .filter(_ => isSupportedImage)
+      .filter(_ => ImageServerSwitch.isSwitchedOn)
+      .map(pathPrefix =>
+        s"$imageHost$pathPrefix${imageType.resizeString}${uri.getPath}"
+      ).getOrElse(url)
   }
 
   object Imager extends Profile(None, None) {
