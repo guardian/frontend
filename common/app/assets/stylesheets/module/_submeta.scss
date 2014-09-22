@@ -41,7 +41,7 @@
         width: $left-column;
         position: absolute;
         bottom: 0;
-        left: -160px;
+        left: -1 * ($left-column + $gs-gutter);
 
         .content--media & {
             border-top: 0;
