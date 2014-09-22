@@ -14,6 +14,6 @@
         @if(showTag) {
             @trail match { case content:model.Content => @fragments.items.elements.tagOrSection(content) }
         }
-        <a @Html(LinkTo.getHrefWithRel(trail)) class="item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span></a>
+        <a @LinkTo(trail).map{url=>href="@url"} class="item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span></a>
     </h@headingLevel>
 }
