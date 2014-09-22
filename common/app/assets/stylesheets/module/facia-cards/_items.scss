@@ -203,8 +203,6 @@ $fc-item-gutter: $gs-gutter / 3;
 }
 
 .l-list__item {
-    float: left;
-
     &:last-child {
         margin-bottom: 0;
     }
