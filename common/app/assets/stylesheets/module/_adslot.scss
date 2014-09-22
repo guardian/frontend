@@ -247,13 +247,6 @@
         }
     }
 }
-.ad-slot--commercial-component-high {
-    display: none;
-
-    @include mq(desktop) {
-        display: block;
-    }
-}
 
 /**
  * Badges
