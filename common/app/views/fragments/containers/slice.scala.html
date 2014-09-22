@@ -39,9 +39,9 @@
 
                             @column match {
 
-                                case SingleItem(width, itemClasses) => {
+                                case SingleItem(colSpan, itemClasses) => {
                                     @cards.headOption.map { card =>
-                                        @standard(card, itemClasses.classes, containerIndex)
+                                        @standard(card, itemClasses.classes, containerIndex, colSpan = colSpan)
                                     }
                                 }
 

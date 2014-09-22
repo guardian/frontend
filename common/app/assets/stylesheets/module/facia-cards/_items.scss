@@ -1,6 +1,7 @@
 $fc-item-gutter: $gs-gutter / 3;
 
 @import 'item-layouts/fc-item--standard';
+@import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-media';
 @import 'item-layouts/fc-item--list-media-large';
@@ -178,6 +179,18 @@ $fc-item-gutter: $gs-gutter / 3;
 .fc-item--standard-tablet {
     @include mq(tablet) {
         @include fc-item--standard;
+    }
+}
+
+.fc-item--half {
+    @include mq($until: tablet) {
+        @include fc-item--half;
+    }
+}
+
+.fc-item--half-tablet {
+    @include mq(tablet) {
+        @include fc-item--half;
     }
 }
 
