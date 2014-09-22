@@ -19,7 +19,7 @@ object Multi extends Controller with ExecutionContexts with implicits.Collection
 
     Future.successful {
       val ads: Seq[Ad] = request.queryString("c").flatMap {
-        case "jobs" => JobsAgent.adsTargetedAt(segment).headOption
+        case "jobs" => JobsAgent.jobsTargetedAt(segment).headOption
         case "books" => BestsellersAgent.bestsellersTargetedAt(segment).headOption
         case "travel" => TravelOffersAgent.adsTargetedAt(segment).headOption
         case "masterclasses" => MasterClassAgent.adsTargetedAt(segment).headOption

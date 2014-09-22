@@ -21,7 +21,7 @@ object JobAds extends Controller {
   private def renderJobs(relevance: Relevance[Job], format: Format) =
     MemcachedAction { implicit request =>
       Future.successful {
-        (JobsAgent.specificJobs(specificIds) ++ JobsAgent.adsTargetedAt(segment)).distinct match {
+        (JobsAgent.specificJobs(specificIds) ++ JobsAgent.jobsTargetedAt(segment)).distinct match {
           case Nil => NoCache(format.nilResult)
           case jobs => Cached(componentMaxAge) {
             format.result(relevance.view(jobs take 2))
