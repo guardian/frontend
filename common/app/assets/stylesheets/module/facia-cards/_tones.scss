@@ -1,6 +1,8 @@
 // DEFAULTS
-a {
-    color: $c-neutral1;
+.fc-item {
+    a {
+        color: $c-neutral1;
+    }
 }
 
 .fc-item__meta,
@@ -14,10 +16,8 @@ a {
         color: $c-analysisAccent;
     }
 
-    &.fc-item--has-image {
-        &:before {
-            background-color: $c-neutral5;
-        }
+    &.fc-item--has-image:before {
+        background-color: $c-neutral5;
     }
 }
 
@@ -111,10 +111,8 @@ a {
         color: $c-mediaDefault;
     }
 
-    &.fc-item--has-image {
-        &:before {
-            background-color: fade-out(#000000, .75);
-        }
+    &.fc-item--has-image:before {
+        background-color: fade-out(#000000, .75);
     }
 
     .fc-item__meta {
