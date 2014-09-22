@@ -1,12 +1,12 @@
 package test
 
 import com.ning.http.client.FluentCaseInsensitiveStringsMap
-import com.ning.http.client.providers.netty.NettyResponse
 import common.ExecutionContexts
 import java.io.{File, InputStream}
 import java.nio.ByteBuffer
 import java.net.URI
 import java.util
+import org.scalatest.Suites
 import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
 import play.api.libs.ws.WSResponse
@@ -17,15 +17,30 @@ import io.Source
 import org.joda.time.LocalDate
 import scala.concurrent.Future
 
-object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit(conf.HealthCheck.testPort.toString) with implicits.Football {
-    override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
-    override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
-  }
-  object FakeSport extends FakeApplication {
-    override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
-    override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
-  }
+class SportTestSuite extends Suites (
+  new CompetitionListControllerTest,
+  new FixturesControllerTest,
+  new LeagueTableControllerTest,
+  new MatchControllerTest,
+  new MoreOnMatchFeatureTest,
+  new football.collections.RichListTest,
+  new football.model.CompetitionStageTest,
+  new football.model.FixturesListTest,
+  new football.model.MatchDayListTest,
+  new football.model.ResultsListTest,
+  new football.model.TeamColoursTest,
+  new services.SportHealthcheckTest,
+  new CompetitionAgentTest,
+  new FixturesFeatureTest,
+  new LeagueTablesFeatureTest,
+  new LiveMatchesFeatureTest,
+  new MatchFeatureTest,
+  new NavFeatureTest,
+  new ResultsFeatureTest ) with SingleServerSuite {
+
+  override lazy val port: Int = conf.HealthCheck.testPort
+  override lazy val testPlugins = super.testPlugins ++ Seq(classOf[StubFootballStatsPlugin].getName)
+  override lazy val disabledPlugins = super.disabledPlugins ++ Seq(classOf[FootballStatsPlugin].getName)
 }
 
 private case class Resp(getResponseBody: String) extends com.ning.http.client.Response {

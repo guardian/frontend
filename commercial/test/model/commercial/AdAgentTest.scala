@@ -1,9 +1,10 @@
 package model.commercial
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import common.ExecutionContexts
+import test.ConfiguredTestSuite
 
-class AdAgentTest extends FlatSpec with Matchers with ExecutionContexts {
+@DoNotDiscover class AdAgentTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite {
 
   private val ad = new Ad {
     def isTargetedAt(segment: Segment) = segment.context.section.isEmpty

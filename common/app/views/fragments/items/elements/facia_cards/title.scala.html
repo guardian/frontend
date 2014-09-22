@@ -8,28 +8,28 @@
 @itemHeader(containerIndex == 0 && itemIndex == 0) {
     @ItemKicker.fromTrail(trail, config).map {
         case BreakingNewsKicker => {
-            <span class="item__live-indicator">Breaking News</span>
+            <span class="fc-item__live-indicator">Breaking News</span>
         }
 
         case LiveKicker => {
-            <span class="item__live-indicator">Live</span>
+            <span class="fc-item__live-indicator">Live</span>
         }
 
         case AnalysisKicker => {
-            <span class="item__kicker">Analysis</span>
+            <span class="fc-item__kicker">Analysis</span>
         }
 
         case TagKicker(tagName, tagLink) => {
-            <a href="@LinkTo(tagLink)" class="item__kicker">@tagName</a>
+            <a href="@LinkTo(tagLink)" class="fc-item__kicker">@tagName</a>
         }
 
         case SectionKicker(sectionName, sectionLink) => {
-            <a href="@LinkTo(sectionLink)" class="item__kicker">@sectionName</a>
+            <a href="@LinkTo(sectionLink)" class="fc-item__kicker">@sectionName</a>
         }
     }
 
     @LinkTo(trail).map { url =>
-        <a href="@url" class="item__link" data-link-name="article">
+        <a href="@url" class="fc-item__link" data-link-name="article">
             <span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span>
         </a>
     }

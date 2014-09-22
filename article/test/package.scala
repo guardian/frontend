@@ -1,11 +1,16 @@
 package test
 
-import org.scalatest.Tag
-import conf.HealthCheck
+import org.scalatest.{Suites, Tag}
 
 object ArticleComponents extends Tag("article components")
 
-object `package` {
+class ArticleTestSuite extends Suites (
+  new AnalyticsFeatureTest,
+  new ArticleControllerTest,
+  new ArticleFeatureTest,
+  new CdnHealthCheckTest,
+  new HealthCheckTest,
+  new SectionsNavigationFeatureTest ) with SingleServerSuite {
 
-  object HtmlUnit extends EditionalisedHtmlUnit(HealthCheck.testPort.toString)
+  override lazy val port: Int = conf.HealthCheck.testPort
 }

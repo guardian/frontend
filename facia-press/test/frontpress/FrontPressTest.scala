@@ -2,10 +2,11 @@ package frontpress
 
 import model._
 import Config.emptyConfig
-import org.scalatest.{TryValues, Matchers, FlatSpec}
-import com.gu.openplatform.contentapi.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
+import org.scalatest.{DoNotDiscover, TryValues, Matchers, FlatSpec}
+import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import test.ConfiguredTestSuite
 
-class FrontPressTest extends FlatSpec with Matchers with TryValues {
+@DoNotDiscover class FrontPressTest extends FlatSpec with Matchers with TryValues with ConfiguredTestSuite {
   val seoDataFixture = SeoData(
     "",
     "",

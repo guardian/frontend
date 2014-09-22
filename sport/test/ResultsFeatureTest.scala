@@ -1,11 +1,10 @@
 package test
 
-import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import collection.JavaConversions._
 import tools.MatchListFeatureTools
 
-class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools {
+@DoNotDiscover class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools with ConfiguredTestSuite {
 
   feature("Football Results") {
 
@@ -13,7 +12,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
 
       Given("I visit the results page")
 
-      HtmlUnit("/football/results") { browser =>
+      goTo("/football/results") { browser =>
         import browser._
 
         val matches = $(".football-match__team")
@@ -42,7 +41,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
 
     scenario("Next results") {
       Given("I am on the results page")
-      HtmlUnit("/football/results") { browser =>
+      goTo("/football/results") { browser =>
         import browser._
 
         And("I click the 'next' results link")
@@ -58,7 +57,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
     scenario("Competition results filter") { // filter has been removed and will be re-implemented differently
 
       Given("I am on the the results page")
-      HtmlUnit("/football/results") { browser =>
+      goTo("/football/results") { browser =>
         import browser._
 
         When("I click the filter to premier league link")
@@ -80,7 +79,7 @@ class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers wi
 
     scenario("Link tracking") {
       Given("I visit the results page")
-      HtmlUnit("/football/results") { browser =>
+      goTo("/football/results") { browser =>
         import browser._
         Then("any links I click should be tracked")
         $("a").filter(link => !Option(link.getAttribute("data-link-name")).isDefined).foreach { link =>

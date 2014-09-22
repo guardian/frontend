@@ -2,25 +2,20 @@ package common.Assets
 
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
-import play.api.test.FakeApplication
-import play.api.test.Helpers._
+import org.scalatestplus.play.OneAppPerSuite
 
-class AssetsTest extends FlatSpec with Matchers {
+class AssetsTest extends FlatSpec with Matchers with OneAppPerSuite {
   "Static" should "collect asset maps" in {
-    running(FakeApplication()) {
-      val static = new Assets("simon says", "assets/testassets.map")
+    val static = new Assets("simon says", "assets/testassets.map")
 
-      static("zen1").toString should be("simon says" + "no snowflake ever falls in the wrong place.")
-      static("zen2").toString should be("simon says" + "water which is too pure has no fish.")
-      static("zen3").toString should be("simon says" + "the quieter you become the more you are able to hear.")
-    }
+    static("zen1").toString should be("simon says" + "no snowflake ever falls in the wrong place.")
+    static("zen2").toString should be("simon says" + "water which is too pure has no fish.")
+    static("zen3").toString should be("simon says" + "the quieter you become the more you are able to hear.")
   }
 
   it should "render as a JS Module" in {
-    running(FakeApplication()) {
-      val static = new Assets("simon says", "assets/testassets2.map")
+    val static = new Assets("simon says", "assets/testassets2.map")
 
-      static("jsmodule").asModulePath should be("simon says" + "http://www.foo.bar.com/name")
-    }
+    static("jsmodule").asModulePath should be("simon says" + "http://www.foo.bar.com/name")
   }
 }

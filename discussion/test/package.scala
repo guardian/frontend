@@ -1,6 +1,6 @@
 package test
 
-import java.io.File
+import org.scalatest.Suites
 import play.api.libs.ws.ning.NingWSResponse
 import recorder.HttpRecorder
 import com.ning.http.client.{Response => NingResponse, FluentCaseInsensitiveStringsMap}
@@ -12,8 +12,6 @@ import java.io.{File, InputStream}
 import java.nio.ByteBuffer
 import play.api.Plugin
 import discussion.DiscussionApi
-import common.ExecutionContexts
-import controllers.DiscussionApiPlugin
 
 private case class Resp(getResponseBody: String) extends NingResponse {
   def getContentType: String = "application/json"
@@ -67,12 +65,20 @@ class DiscussionApiStub(app: Application) extends DiscussionApi with Plugin{
 
 }
 
-object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit(conf.HealthCheck.testPort.toString)
+class DiscussionTestSuite extends Suites (
+  new services.DiscussionHealthcheckTest,
+  new CommentPageControllerTest,
+  new controllers.DiscussionApiPluginIntegrationTest,
+  new controllers.ProfileActivityControllerTest,
+  new discussion.model.CommentTest,
+  new discussion.model.DiscussionKeyTest,
+  new discussion.DiscussionApiTest,
+  new CommentBoxControllerTest,
+  new CommentCountControllerTest,
+  new ProfileTest
+  ) with SingleServerSuite {
 
-  object FakeDiscussion extends FakeApplication {
-
-    override def disabledPlugins = super.disabledPlugins :+ classOf[DiscussionApiPlugin].getName
-    override def testPlugins = super.testPlugins :+ "test.DiscussionApiStub"
-  }
+  override def disabledPlugins = super.disabledPlugins :+ classOf[controllers.DiscussionApiPlugin].getName
+  override def testPlugins = super.testPlugins :+ "test.DiscussionApiStub"
+  override lazy val port: Int = conf.HealthCheck.testPort
 }

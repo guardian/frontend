@@ -2,7 +2,6 @@
 
     .byline,
     .content__dateline,
-    .social-wrapper--aside,
     .content__meta-container,
     .ad-slot--paid-for-badge--article,
     .commentcount {
@@ -49,12 +48,6 @@
         margin-bottom: 0;
     }
 
-    .social-wrapper--bottom {
-        @include mq(leftCol) {
-            display: none;
-        }
-    }
-
     .social-icon-wrapper {
         opacity: .8;
 
@@ -79,16 +72,11 @@
         margin-right: .3em;
     }
 
-    .social-wrapper--bottom {
-        max-width: none;
-    }
-
-    $video-most-viewed-container: 525px;
     $audio-most-viewed-container: 358px;
 
     .content__main-column--video {
         @include mq(rightCol) {
-            min-height: $video-most-viewed-container;
+            min-height: gs-height(12);
         }
     }
     .content__main-column--audio {
@@ -111,7 +99,7 @@
     }
     .content__secondary-column--video {
         @include mq(rightCol) {
-            height: $video-most-viewed-container;
+            height: auto;
         }
     }
     .content__secondary-column--audio {
@@ -279,30 +267,6 @@
             width: 404px; //Magic, as video items below are off grid at 33.3% width
             margin-right: $gs-gutter;
             margin-bottom: $gs-baseline*2;
-        }
-        .social-wrapper--bottom {
-            float: right;
-            width: 192px;
-        }
-    }
-
-    .social-wrapper {
-        border-top: 1px dotted $c-neutral2;
-        padding-top: 0;
-
-        &:before {
-            content: 'Share this page';
-            @include fs-data(3);
-            color: $c-neutral3;
-            margin-top: $gs-baseline/4;
-        }
-
-        .social {
-            padding-top: $gs-baseline/3;
-        }
-
-        .social__head {
-            display: none;
         }
     }
 
