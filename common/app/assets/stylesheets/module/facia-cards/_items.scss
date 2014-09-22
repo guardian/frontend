@@ -14,6 +14,16 @@ $fc-item-gutter: $gs-gutter / 3;
             width: 25%;
         }
     }
+
+    &.fc-show-more--hidden .fc-show-more__hide-on-mobile {
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
+
+    &.fc-show-more--hidden .fc-show-more__hide {
+        display: none;
+    }
 }
 
 .fc-item {
