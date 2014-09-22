@@ -62,10 +62,29 @@
         }
     }
 
-    .content__section {
+    .content__meta {
+        margin-bottom: $gs-baseline/2;
+        border-bottom: 1px dotted $c-neutral5;
+        width: 100%;
+        float: none;
+
         @include mq(leftCol) {
-            width: gs-span(6);
-            padding-bottom: $gs-baseline;
+            margin-left: -($left-column + $gs-gutter);
+        }
+        @include mq(wide) {
+            margin-left: -($left-column-wide + $gs-gutter);
+        }
+    }
+
+    .content__section {
+        @include mq(desktop) {
+            float: left;
+        }
+    }
+
+    .content__series {
+        @include mq(desktop) {
+            float: left;
         }
     }
 

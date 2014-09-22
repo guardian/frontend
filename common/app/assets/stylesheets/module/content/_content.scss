@@ -175,6 +175,10 @@
         @include fs-headline(3);
         float: none;
     }
+
+    .tone-colour {
+        color: $c-neutral2;
+    }
 }
 
 .content__inline-section {
