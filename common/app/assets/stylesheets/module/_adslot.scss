@@ -53,6 +53,7 @@
         display: none;
         min-height: 90 + ($gs-row-height/2);
         padding-bottom: $gs-row-height/2;
+        text-align: center;
 
         @include mq(tablet) {
             .js-on & {
@@ -61,6 +62,8 @@
         }
     }
     .ad-slot__label {
+        /* this is the minimum width of possible ads sizes */
+        width: 728px;
         text-align: left;
         border-top: 0;
         padding: 0;
@@ -71,25 +74,30 @@
         transform: translateZ(0);
         @include transition(height 1s cubic-bezier(0, 0, 0, .985));
     }
+}
+.top-banner-ad-container--non-center .ad-slot--top-banner-ad {
+    @include mq(leftCol) {
+        text-align: left;
+        margin: 0 auto;
+
+        .ad-slot__label {
+            margin: 0;
+        }
+    }
     @include mq(wide) {
         .has-page-skin & {
-            .ad-slot--top-banner-ad {
-                width: 970px;
-                padding-left: 0;
-                text-align: center;
-            }
+            width: auto !important;
+            padding-left: 0 !important;
+            text-align: center;
+
             .ad-slot__label {
-                width: 720px;
+                margin: 0 auto;
             }
         }
     }
 }
-.top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, leftCol) {
-        text-align: center;
-    }
+.top-banner-ad-container--non-center.top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
     @include mq(leftCol) {
-        margin: 0 auto;
         width: gs-span(14) - ($left-column + $gs-gutter);
         padding-left: $left-column + $gs-gutter;
     }
@@ -97,33 +105,15 @@
         width: gs-span(16) - ($left-column-wide + $gs-gutter);
         padding-left: $left-column-wide + $gs-gutter;
     }
-    @include mq(tablet, leftCol) {
-        .ad-slot__label {
-            width: 728px;
-        }
-    }
 }
-.top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
-    @include mq(mobile, rightCol) {
-        text-align: center;
-    }
-    @include mq(rightCol) {
-        margin: 0 0 0 $gs-gutter;
-    }
+.top-banner-ad-container--non-center.top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
     @include mq(leftCol) {
-        margin: 0 auto;
         max-width: gs-span(14) + ($gs-gutter*2) - ($left-column + ($gs-gutter*2));
         padding-left: $left-column + ($gs-gutter*2);
     }
     @include mq(wide) {
         max-width: gs-span(16) + ($gs-gutter*2) - ($left-column-wide + ($gs-gutter*2));
         padding-left: $left-column-wide + ($gs-gutter*2);
-    }
-    @include mq(tablet, rightCol) {
-        .ad-slot__label {
-            width: 728px;
-            margin: 0 auto;
-        }
     }
 }
 

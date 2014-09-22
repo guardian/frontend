@@ -10,8 +10,9 @@ object Sponsorship {
   implicit val sponsorshipWrites = new Writes[Sponsorship] {
     def writes(sponsorship: Sponsorship): JsValue = {
       Json.obj(
-        "sponsor" -> sponsorship.sponsor,
         "tags" -> sponsorship.tags,
+        "sponsor" -> sponsorship.sponsor,
+        "countries" -> sponsorship.countries,
         "lineItemId" -> sponsorship.lineItemId
       )
     }
@@ -21,7 +22,10 @@ object Sponsorship {
 
 }
 
-case class Sponsorship(tags: Seq[String], sponsor: Option[String], lineItemId: Long) {
+case class Sponsorship(tags: Seq[String],
+                       sponsor: Option[String],
+                       countries: Seq[String],
+                       lineItemId: Long) {
   def hasTag(tagId: String): Boolean = tags contains tagId.split('/').last
 }
 

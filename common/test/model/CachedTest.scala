@@ -78,6 +78,15 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     headers("Cache-Control") should be("max-age=120, stale-while-revalidate=12, stale-if-error=864000")
   }
 
+  it should "have at least 1 second stale-while-revalidate" in {
+    DoubleCacheTimesSwitch.switchOff()
+
+    val result = Cached(5)(Ok("foo"))
+    val headers = result.header.headers
+
+    headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=864000")
+  }
+
   it should "set Surrogate-Control the same as Cache-Control" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
 

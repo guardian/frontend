@@ -14,11 +14,6 @@
     max-width: gs-span(8);
 }
 
-.content__main-column--media .content__main-column__body {
-    position: relative;
-}
-
-
 .content--media {
     background-color: $c-neutral1;
     color: $c-neutral7;
@@ -76,4 +71,8 @@
             }
         }
     }
+}
+
+.media-body {
+    position: relative;
 }

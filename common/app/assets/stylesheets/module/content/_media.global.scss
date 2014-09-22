@@ -5,6 +5,7 @@
     .social-wrapper--aside,
     .content__meta-container,
     .ad-slot--paid-for-badge--article,
+    .tag-wrapper,
     .commentcount {
         border-color: $c-neutral2;
     }
@@ -83,12 +84,11 @@
         max-width: none;
     }
 
-    $video-most-viewed-container: 525px;
     $audio-most-viewed-container: 358px;
 
     .content__main-column--video {
         @include mq(rightCol) {
-            min-height: $video-most-viewed-container;
+            min-height: gs-height(12);
         }
     }
     .content__main-column--audio {
@@ -111,7 +111,7 @@
     }
     .content__secondary-column--video {
         @include mq(rightCol) {
-            height: $video-most-viewed-container;
+            height: auto;
         }
     }
     .content__secondary-column--audio {

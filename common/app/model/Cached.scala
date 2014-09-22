@@ -35,8 +35,8 @@ object Cached extends implicits.Dates {
     // http://tools.ietf.org/html/rfc5861
     // http://www.fastly.com/blog/stale-while-revalidate
     // http://docs.fastly.com/guides/22966608/40347813
-    val staleWhileRevalidate = maxAge / 10
-    val cacheControl = s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidate, stale-if-error=$tenDaysInSeconds"
+    val staleWhileRevalidateSeconds = math.max(maxAge / 10, 1)
+    val cacheControl = s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
     result.withHeaders(
       "Surrogate-Control" -> cacheControl,
       "Cache-Control" -> cacheControl,

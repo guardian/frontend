@@ -1,6 +1,8 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
+import com.gu.openplatform.contentapi.model.{
+  Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, Podcast
+}
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
 import ophan.SurgingContentAgent
@@ -10,6 +12,7 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
+import conf.Switches.LiveblogCachingSwitch
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -62,6 +65,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
+  lazy val isInappropriateForSponsorship: Boolean = fields.get("isInappropriateForSponsorship").exists(_.toBoolean)
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
@@ -154,9 +158,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) ++ Map(seriesMeta: _*)
   }
 
+
+  private lazy val liveCacheTime = if (LiveblogCachingSwitch.isSwitchedOn) 5 else 30
   override lazy val cacheSeconds = {
-    if (isLive) 30 // live blogs can expect imminent updates
-    else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
+    if (isLive) liveCacheTime // live blogs can expect imminent updates
+    else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
@@ -455,6 +461,13 @@ class Audio(content: ApiContentWithMeta) extends Media(content) {
 
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map("contentType" -> JsString(contentType), "blockVideoAds" -> JsBoolean(blockVideoAds))
+
+  lazy val downloadUrl: Option[String] = mainAudio
+    .flatMap(_.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
+
+  private lazy val podcastTag: Option[Tag] = tags.find(_.podcast.nonEmpty)
+  lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.podcast.flatMap(_.subscriptionUrl))
+  lazy val seriesFeedUrl: Option[String] = podcastTag.map(tag => s"/${tag.id}/podcast.xml")
 }
 
 object Audio {

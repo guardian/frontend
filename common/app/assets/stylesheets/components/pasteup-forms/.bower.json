@@ -21,6 +21,5 @@
   },
   "_source": "git://github.com/guardian/pasteup-forms.git",
   "_target": "~4.0.0",
-  "_originalSource": "pasteup-forms",
-  "_direct": true
+  "_originalSource": "pasteup-forms"
 }

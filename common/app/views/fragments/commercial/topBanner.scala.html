@@ -1,16 +1,24 @@
 @(metaData: model.MetaData)
+@import conf.Switches._
 
 <div class="top-banner-ad-container top-banner-ad-container--desktop top-banner-ad-container--@metaData match {
         case _: Article => {article}
         case _          => {facia}
-    }-layout">
-    @fragments.commercial.standardAd(
-        "top-above-nav",
-        Seq("top-banner-ad"),
-        Map(
-            "mobile" -> Seq("88,70", "728,90"),
-            "right-col" -> Seq("88,70", "728,90", "940,230", "900,250"),
-            "wide" -> Seq("88,70", "728,90", "940,230", "900,250", "970,250")
-        )
-    )
+    }-layout @if(CentreTopBannerAd.isSwitchedOff) {top-banner-ad-container--non-center}">
+    @defining(
+        if(CentreTopBannerAd.isSwitchedOff) {
+            Map(
+                "mobile" -> Seq("88,70", "728,90"),
+                "right-col" -> Seq("88,70", "728,90", "940,230", "900,250"),
+                "wide" -> Seq("88,70", "728,90", "940,230", "900,250", "970,250")
+            )
+        } else {
+            Map(
+                "mobile" -> Seq("88,70", "728,90"),
+                "desktop" -> Seq("88,70", "728,90", "940,230", "900,250", "970,250")
+            )
+        }
+    ) { sizeMappings =>
+        @fragments.commercial.standardAd("top-above-nav", Seq("top-banner-ad"), sizeMappings)
+    }
 </div>

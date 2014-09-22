@@ -7,10 +7,9 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.remote.{DesiredCapabilities, RemoteWebDriver}
 import org.scalatest.selenium.WebBrowser
-import org.scalatest.{BeforeAndAfterAll, Suite}
+import org.scalatest.{BeforeAndAfterAll, Retries, Suite}
 
-
-trait Driver extends Suite with WebBrowser with BeforeAndAfterAll {
+trait Driver extends Suite with WebBrowser with BeforeAndAfterAll with Retries {
 
   private val url: String = s"http://${stack.userName}:${stack.automateKey}@ondemand.saucelabs.com:80/wd/hub"
 
@@ -20,6 +19,13 @@ trait Driver extends Suite with WebBrowser with BeforeAndAfterAll {
     // this makes the test name appear in the Saucelabs UI
     capabilities.setCapability("name", getClass.getSimpleName)
     new RemoteWebDriver(new URL(url), capabilities)
+  }
+
+  override def withFixture(test: NoArgTest) = {
+    if (isRetryable(test))
+      withRetry { super.withFixture(test) }
+    else
+      super.withFixture(test)
   }
 
   private lazy val localBrowser = new FirefoxDriver()
