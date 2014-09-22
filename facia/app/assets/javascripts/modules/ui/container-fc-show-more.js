@@ -14,7 +14,7 @@ define([
     return function(container) {
         var $container = bonzo(container),
             className ='fc-show-more--hidden',
-            $button = bonzo(bonzo.create(
+            $button = bonzo(
                 '<button class="collection__show-more tone-background tone-news" data-link-name="Show more | 1">' +
                 '<span class="collection__show-more__icon">' +
                 '<span class="i i-plus-white-mask"></span>' +
@@ -22,7 +22,7 @@ define([
                 '</span>' +
                 '<span class="u-h">Show more</span>' +
                 '</button>'
-        ));
+        );
 
         function removeButton() {
             // listen to the clickstream, as happens later, before removing
