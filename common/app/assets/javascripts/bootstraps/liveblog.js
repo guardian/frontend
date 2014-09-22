@@ -121,10 +121,6 @@ define([
         return recursiveRender(events, '');
     }
 
-    function wrapWithFirstAndLast(html) {
-        return createKeyEventHTML(getFirstBlock()) + html + createKeyEventHTML(getLastBlock());
-    }
-
     function getUpdatePath() {
         var blocks = qwery('.js-liveblog-body .block'),
             newestBlock = null;
@@ -154,11 +150,9 @@ define([
         createTimeline: function() {
             var allEvents = getKeyEvents();
             if(allEvents.length > 0) {
-                var timelineHTML = wrapWithFirstAndLast(getTimelineHTML(allEvents));
+                var timelineHTML = getTimelineHTML(allEvents);
 
                 $('.js-live-blog__timeline').append(timelineHTML);
-                $('.js-live-blog__timeline li:first-child .timeline__title').text('Latest post');
-                $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
 
                 if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0) {
                     var topMarker = qwery('.js-top-marker')[0];
