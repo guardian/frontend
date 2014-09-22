@@ -1,16 +1,3 @@
-// DEFAULTS
-.fc-item {
-    a {
-        color: $c-neutral1;
-    }
-}
-
-.fc-item__meta,
-.fc-item__meta a {
-    color: $c-neutral2;
-}
-
-// TONAL OVERRIDES
 .tone-news {
     .fc-item__kicker {
         color: $c-analysisAccent;
