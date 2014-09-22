@@ -25,7 +25,10 @@ define([
             {name: 'comment/comment-and-debate'},
             {name: 'prototype/cassoulet'},
             {name: 'prototype/quichelorraine'},
-            {name: 'prototype/raclette'}
+            {name: 'prototype/raclette'},
+            {name: 'fixed/small/slow-IV'},
+            {name: 'fixed/small/fast-VIII'},
+            {name: 'fixed/small/fast-X'}
         ],
 
         headlineLength: 200,

@@ -1,8 +1,16 @@
-@(name: String, adTypes: Seq[String], sizeMapping: Map[String, Seq[String]], showLabel: Boolean = true, refresh: Boolean = true, outOfPage: Boolean = false)
+@(
+    name: String,
+    adTypes: Seq[String],
+    sizeMapping: Map[String, Seq[String]],
+    showLabel: Boolean = true,
+    refresh: Boolean = true,
+    outOfPage: Boolean = false,
+    forceDisplay: Boolean = false
+)(placeholderContent: Html)
 
 <div
     id="dfp-ad--@name"
-    class="ad-slot ad-slot--dfp ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ")"
+    class="ad-slot ad-slot--dfp ad-slot--@name @adTypes.map{ adType =>ad-slot--@adType}.mkString(" ")@if(forceDisplay) { ad-slot--force-display}"
     data-link-name="ad slot @name"
     data-test-id="ad-slot-@name"
     data-name="@name"
@@ -11,4 +19,4 @@
     @if(outOfPage){ data-out-of-page="true" }
     @sizeMapping.map{ case(breakpoint, sizes) =>
         data-@breakpoint="@sizes.mkString("|")"
-    }></div>
+    }>@placeholderContent</div>

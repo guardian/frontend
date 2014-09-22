@@ -20,7 +20,7 @@ $vjs-progress-inset-bottom: 4px;
     margin-bottom: $gs-baseline * 1.5;
 }
 .gu-media-wrapper--audio {
-    height: $vjs-control-height;
+    background-color: $vjs-control-colour;
     padding-top: $vjs-progress-visual-height-resting;
 
     // naughty videojs removes classes, so have to select by element
@@ -31,9 +31,6 @@ $vjs-progress-inset-bottom: 4px;
         border-left: $gs-gutter/2 solid transparent;
         border-right: $gs-gutter/2 solid transparent;
     }
-}
-.video-standfirst {
-    margin-bottom: ($gs-baseline/3)*4;
 }
 
 .element-video {
@@ -186,7 +183,6 @@ $vjs-progress-inset-bottom: 4px;
 .vjs-control-bar {
     cursor: default;
     width: 100%;
-    position: absolute;
     z-index: 4;
     left: 0;
     background-color: $vjs-control-colour;
@@ -198,6 +194,7 @@ $vjs-progress-inset-bottom: 4px;
     transition-delay: 1s;
 
     .gu-media--video & {
+        position: absolute;
         bottom: $gs-baseline*-5;
     }
     .vjs-fullscreen & {
@@ -637,4 +634,25 @@ $vjs-progress-inset-bottom: 4px;
             }
         }
     }
+}
+
+.podcast-meta {
+    text-align: left;
+    border-top: 1px solid lighten($c-neutral1, 16%);
+    margin-top: $gs-baseline/2;
+    padding: $gs-baseline/2 $gs-gutter/2;
+}
+.podcast-meta__item {
+    margin-right: $gs-gutter;
+
+    @include mq(phablet) {
+        display: inline-block;
+    }
+    &:last-child {
+        margin-right: 0;
+    }
+}
+.podcast-meta__item__link {
+    color: $c-neutral7;
+    @include fs-textSans(1);
 }

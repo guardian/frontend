@@ -9,7 +9,7 @@
 
     @if(collection.items.nonEmpty) {
         <section
-            class="@GetClasses.forContainer(style, config, containerIndex, false, Seq("container--tag"))"
+            class="@GetClasses.forContainer(style, config, containerIndex, false, Seq("u-cf"))"
             data-link-name="@FaciaComponentName(config, collection)"
             data-id="@config.id"
             data-type="@style.containerType"
@@ -21,11 +21,12 @@
                 <div class="container__border tone-@style.tone tone-accent-border"></div>
                 <div class="container__header">
                     @title.map { title =>
-                        @fragments.containers.elements.tagMeta(None, collection.href, page.description, title)
+                        @fragments.containers.elements.tagMeta(None, collection.href, page.description, title, page.isContributorPage)
                     }
+
+                    @fragments.contributor(page)
                 </div>
                 <div class="container__body container--rolled-up-hide">
-                    @fragments.contributor(page)
                     @fragments.collections.tag(collection.items, style, containerIndex)
                 </div>
                 @pagination.map{ paginate => @fragments.pagination(page, paginate)}

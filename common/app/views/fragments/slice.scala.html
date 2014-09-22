@@ -1,0 +1,65 @@
+@(slice: layout.SliceWithCards)
+
+@import layout.{ColumnAndCards, SingleItem, SplitColumn, Rows, MPU}
+
+@* This is a bullshit template - the point is to illustrate how we can build the HTML using the layout info we have.
+ *@
+
+<section class="facia-slice @slice.cssClassName">
+    @for(ColumnAndCards(column, cards) <- slice.columns) {
+        @column match {
+            case SingleItem(width, itemClasses) => {
+                @cards.headOption.map { card =>
+                    <div class="single-item-column @itemClasses.classes">
+                        @* Item goes here *@
+                    </div>
+                }
+            }
+
+            case Rows(flexWidth, columns, rows, itemClasses) => {
+                <div class="rows-column">
+                    @if(cards.nonEmpty) {
+                        <ul>
+                        @cards.map { card =>
+                            <li class="@itemClasses.classes">
+                                @* Item goes here *@
+                            </li>
+                        }
+                        </ul>
+                    }
+                </div>
+            }
+
+            case SplitColumn(flexWidth, topItemClasses, bottomItemClasses) => {
+                <div class="split-column">
+                    @if(cards.nonEmpty) {
+                        <div class="split-column-top @topItemClasses.classes">
+                            @cards.headOption.map { card =>
+                                @* Item goes here *@
+                            }
+                        </div>
+
+                        @if(cards.length > 1) {
+                            <div class="split-column-bottom">
+                                <ul>
+                                @cards.drop(1).map { card =>
+                                    <li class="@bottomItemClasses.classes">
+                                        @* Item goes here *@
+                                    </li>
+                                }
+                                </ul>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+
+            case MPU(flexWidth) => {
+                <div class="mpu-slot">
+                    @* MPU goes here *@
+                </div>
+            }
+        }
+    }
+</section>
+

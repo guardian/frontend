@@ -188,7 +188,7 @@ $c-money-high: #63007f;
             bottom: $comercial-comp-baseline;
         }
     }
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         .commercial__head {
             width: $left-column + $gs-gutter;
         }
@@ -222,7 +222,7 @@ $c-money-high: #63007f;
             }
         }
     }
-    @include mq(faciaLeftCol, wide) {
+    @include mq(leftCol, wide) {
         .commercial__home-link {
             line-height: 1;
             width: gs-span(1) + $gs-gutter*2;

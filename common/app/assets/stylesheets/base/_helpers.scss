@@ -6,8 +6,20 @@
     @include u-h;
 }
 
-.u-h--up-to-right-col {
+.hide-until-rightcol {
     @include mq($until: rightCol) {
+        @include u-h;
+    }
+}
+
+.hide-until-leftcol {
+    @include mq($until: leftCol) {
+        @include u-h;
+    }
+}
+
+.hide-until-wide {
+    @include mq($until: wide) {
         @include u-h;
     }
 }

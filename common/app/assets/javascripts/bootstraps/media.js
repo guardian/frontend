@@ -17,8 +17,7 @@ define([
     'common/modules/analytics/omnitureMedia',
     'common/modules/commercial/dfp',
     'common/modules/component',
-    'common/modules/ui/images',
-    'common/modules/ui/message'
+    'common/modules/ui/images'
 ], function(
     bean,
     bonzo,
@@ -37,8 +36,7 @@ define([
     OmnitureMedia,
     dfp,
     Component,
-    images,
-    Message
+    images
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
@@ -440,33 +438,6 @@ define([
                         images.upgrade(attachTo);
                     });
             }
-        },
-        displayReleaseMessage: function(config) {
-
-            if (config.page.contentType &&
-                config.page.contentType.toLowerCase() === 'video' &&
-                detect.getBreakpoint() !== 'mobile' &&
-                !preferences.hasOptedIntoResponsive()
-            ) {
-
-                var msg = '<p class="site-message__message" id="site-message__message">' +
-                        'We’ve redesigned our video pages to make it easier to find and experience our best video content. We’d love to hear what you think.' +
-                        '</p>' +
-                        '<ul class="site-message__actions u-unstyled">' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
-                        '</li>' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="https://www.surveymonkey.com/s/guardianvideo" target="_blank">Leave feedback</a>' +
-                        '</li>' +
-                        '</ul>';
-
-                var releaseMessage = new Message('video', {pinOnHide: true});
-
-                releaseMessage.show(msg);
-            }
         }
     };
 
@@ -474,7 +445,6 @@ define([
         modules.initPlayer(config);
         modules.initMoreInSection(config);
         modules.initMostViewedMedia(config);
-        modules.displayReleaseMessage(config);
 
         mediator.emit('page:media:ready', config);
     };

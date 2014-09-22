@@ -1,7 +1,7 @@
 package controllers
 
-import org.scalatest.{FlatSpecLike, Matchers, BeforeAndAfterAll, FlatSpec}
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest._
+import test.ConfiguredTestSuite
 import scala.concurrent.{Future, Await}
 import scala.language.postfixOps
 import scala.concurrent.duration._
@@ -10,7 +10,7 @@ import play.api.mvc.Results._
 import play.api.test._
 import play.api.libs.json.JsValue
 
-class DiscussionApiPluginIntegrationTest extends DiscussionApiPlugin(null) with FlatSpecLike with Matchers with BeforeAndAfterAll {
+@DoNotDiscover class DiscussionApiPluginIntegrationTest extends DiscussionApiPlugin(null) with FlatSpecLike with Matchers with BeforeAndAfterAll with ConfiguredTestSuite {
 
   val fakeDiscussionApiServer = FakeDiscussionServer()
 

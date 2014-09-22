@@ -51,7 +51,9 @@ private[performance] trait MemcachedSupport extends ExecutionContexts with impli
       }
 
       val newHeaders = originalCacheTime.map{ t =>
-        headers + ("Cache-Control" -> headers("Cache-Control").replaceAll("""max-age=\d+""", s"max-age=${t - secondsAgo}"))
+
+        val cacheControl = headers("Cache-Control").replaceAll("""max-age=\d+""", s"max-age=${t - secondsAgo}")
+        headers + ("Cache-Control" -> cacheControl) + ("Surrogate-Control" -> cacheControl)
       }.getOrElse(headers)
 
       CachedResponse(Result(ResponseHeader(status, newHeaders), Enumerator(body.getBytes("utf-8")) ), body)

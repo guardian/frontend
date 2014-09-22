@@ -1,8 +1,12 @@
 package model.commercial.money
 
-import model.commercial.{XmlAdsApi, Segment, Ad}
+import common.{ExecutionContexts, Logging}
+import conf.CommercialConfiguration
+import conf.Switches._
+import model.commercial._
+
+import scala.concurrent.Future
 import scala.xml.Elem
-import conf.{CommercialConfiguration, Switches}
 
 case class Mortgage(lender: String,
                     rate: String,
@@ -15,13 +19,9 @@ case class Mortgage(lender: String,
 }
 
 
-object MortgagesApi extends XmlAdsApi[Mortgage] {
+object MortgagesApi extends ExecutionContexts with Logging {
 
-  protected val switch = Switches.LCMortgageFeedSwitch
-
-  protected val adTypeName = "Mortgages"
-
-  protected def url = CommercialConfiguration.getProperty("lc.mortgages.api.url")
+  private lazy val url = CommercialConfiguration.getProperty("lc.mortgages.api.url")
 
   def parse(xml: Elem): Seq[Mortgage] = {
     xml \ "RefProducts" map {
@@ -35,6 +35,11 @@ object MortgagesApi extends XmlAdsApi[Mortgage] {
         )
     }
   }
+
+  def loadAds(): Future[Seq[Mortgage]] = {
+    FeedReader.readSeqFromXml[Mortgage](FeedRequest("Mortgages", LCMortgageFeedSwitch, url))(parse)
+  }
+
 }
 
 

@@ -19,7 +19,7 @@ import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
-import java.util.regex.Pattern
+import java.util.regex.{Matcher, Pattern}
 
 /**
  * New 'collection' templates
@@ -427,7 +427,7 @@ class TagLinker(article: Article)(implicit val edition: Edition, implicit val re
   private val question = Pattern.quote("?")
 
   private def keywordRegex(tag: Tag) = {
-    val tagName = Pattern.quote(tag.name)
+    val tagName = Pattern.quote(Matcher.quoteReplacement(tag.name))
     s"""(.*)( |^)($tagName)( |,|$$|$dot|$question)(.*)""".r
   }
 
@@ -717,39 +717,86 @@ object GetClasses {
     RenderClasses(classes:_*)
   }
 
-  def forItem(trail: Trail,
-              firstContainer: Boolean,
-              forceHasImage: Boolean = false,
-              forceTone: Option[String] = None): String = {
-    val tone = forceTone.getOrElse(trail.visualTone)
-    val baseClasses: Seq[String] = Seq(
+  def forNewStyleItem(trail: Trail, isFirstContainer: Boolean): String = {
+    RenderClasses(
+      TrailCssClasses.toneClass(trail) +: commonFcItemClasses(trail, isFirstContainer, forceHasImage = false): _*
+    )
+  }
+
+  def commonFcItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
+    val itemClass = trail match {
+      case _: Gallery => Some("fc-item--gallery")
+      case _: Video => Some("fc-item--video")
+      case _: Audio => Some("fc-item--audio")
+      case _ => None
+    }
+
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")) {
+      "fc-item--has-no-image"
+    } else {
+      "fc-item--has-image"
+    }
+
+    val discussionClass = if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
+
+    Seq(
+      "fc-item",
+      imageClass,
+      discussionClass
+    ) ++ Seq(
+      itemClass,
+      if (isFirstContainer) Some("fc-item--force-image-upgrade") else None,
+      if (trail.isLive) Some("fc-item--live") else None,
+      if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
+      if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
+        Some(s"fc-item--imageadjust-${trail.imageAdjust}")
+      else
+        None
+    ).flatten ++ makeSnapClasses(trail)
+  }
+
+
+  def commonItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
+    val itemClass = trail match {
+      case _: Gallery => Some("item--gallery")
+      case _: Video => Some("item--video")
+      case _: Audio => Some("item--audio")
+      case _ => None
+    }
+
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")) {
+      "item--has-no-image"
+    } else {
+      "item--has-image"
+    }
+
+    val discussionClass = if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
+
+    Seq(
       "item",
-      s"tone-${tone}"
+      imageClass,
+      discussionClass
+    ) ++ Seq(
+      itemClass,
+      if (isFirstContainer) Some("item--force-image-upgrade") else None,
+      if (trail.isLive) Some("item--live") else None,
+      if (trail.isComment && trail.hasLargeContributorImage) Some("item--has-cutout") else None,
+      if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
+        Some(s"item--imageadjust-${trail.imageAdjust}")
+      else
+        None
+    ).flatten ++ makeSnapClasses(trail)
+  }
+
+  def forItem(
+    trail: Trail,
+    firstContainer: Boolean,
+    forceHasImage: Boolean = false,
+    forceTone: Option[String] = None
+  ): String = {
+    RenderClasses(
+      s"tone-${forceTone.getOrElse(trail.visualTone)}" +: commonItemClasses(trail, firstContainer, forceHasImage): _*
     )
-    val f: Seq[(Trail, Boolean, Boolean, Option[String]) => String] = Seq(
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) => trail match {
-        case _: Gallery => "item--gallery"
-        case _: Video   => "item--video"
-        case _: Audio   => "item--audio"
-        case _          => ""
-      },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (firstContainer) "item--force-image-upgrade" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (trail.isLive) "item--live" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")){
-          "item--has-no-image"
-        }else{
-          "item--has-image"
-        },
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (forceHasImage || !trail.trailPicture(5,3).isEmpty) s"item--imageadjust-${trail.imageAdjust}" else "",
-      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
-        if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage, forceTone)} ++ makeSnapClasses(trail)
-    RenderClasses(classes:_*)
   }
 
   def forFromage(trail: Trail, imageAdjust: String): String = {
@@ -797,27 +844,37 @@ object GetClasses {
     case _  => Nil
   }
 
-  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
-    val baseClasses = Seq(
-      "container",
-      s"container--${container.containerType}"
-    ) ++ extraClasses
-    val f: Seq[(Container, Config, Int, Boolean) => String] = Seq(
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (config.isSponsored) "container--sponsored" else "",
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (config.isAdvertisementFeature && !config.isSponsored) "container--advertisement-feature" else "",
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (index == 0) "container--first" else "",
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (index > 0 && hasTitle && !(config.isAdvertisementFeature || config.isSponsored)) "js-container--toggle" else "",
-      (container: Container, config: Config, index: Int, hasTitle: Boolean) =>
-        if (container.hasDarkBackground) "container--dark-background" else ""
-    )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(container, config, index, hasTitle)}
-    RenderClasses(classes:_*)
+  private def commonContainerStyles(config: Config, isFirst: Boolean, hasTitle: Boolean): Seq[String] = {
+    Seq(
+      "container" -> true,
+      "container--sponsored" -> config.isSponsored,
+      "container--advertisement-feature" -> (config.isAdvertisementFeature && ! config.isSponsored),
+      "container--first" -> isFirst,
+      "js-container--toggle" -> (!isFirst && hasTitle && !(config.isAdvertisementFeature || config.isSponsored))
+    ) collect {
+      case (kls, true) => kls
+    }
   }
 
+  def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
+    RenderClasses(
+      "fc-container" +:
+        (commonContainerStyles(config, isFirst, hasTitle) ++
+        extraClasses): _*
+    )
+  }
+
+  def forContainer(container: Container, config: Config, index: Int, hasTitle: Boolean, extraClasses: Seq[String] = Nil): String = {
+    val oldClasses = Seq(
+      Some("container--dark-background").filter(Function.const(container.hasDarkBackground))
+    ).flatten
+
+    RenderClasses(
+      s"container--${container.containerType}" +:
+        (commonContainerStyles(config, index == 0, hasTitle) ++
+        extraClasses ++ oldClasses): _*
+    )
+  }
 }
 
 object LatestUpdate {

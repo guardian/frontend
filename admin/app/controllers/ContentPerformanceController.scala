@@ -9,8 +9,16 @@ import play.api.mvc._
 import tools.FormattedChart.{Cell, Row, Column}
 import tools._
 import jobs.OmnitureReports._
+import scala.math.pow
 
 object ContentPerformanceController extends Controller with AuthLogging with Logging with ExecutionContexts {
+
+  implicit class ExtendedDouble(n: Double) {
+    def rounded(x: Int) = {
+      val w = pow(10, x)
+      (n * w).toLong.toDouble / w
+    }
+  }
 
   case class ReportResult(
     name: String,
@@ -24,8 +32,10 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
   }
   case class GalleryPerformance(
     date: DateTime,
+    views: Double,
     pageViewsPerVisit: Double,
-    lightboxLaunchesPerVisit: Double
+    lightboxLaunchesPerVisit: Double,
+    percentageOfViewsShared: Double
   ) {
     lazy val jsonDate = s"Date(${date.getYear},${date.getMonthOfYear - 1},${date.getDayOfMonth})"
     lazy val simpleDate = date.toString("yyyy-MM-dd")
@@ -51,32 +61,46 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
       case (false, true) => NoCache(Ok("Sentry reports not generated"))
       case (true, false) => NoCache(Ok("Omniture report not generated yet"))
       case _ =>
-        val sentryErrorColumns = List(Column("time", "Time", "date"), Column("Gallery Errors", "Gallery Js errors per day", "number"))
-        val sentryRows = sentryData.map {
-            row =>
-              val dateCell = Cell(row.jsonDate)
-              val count = Cell(row.errorCount.toString)
+        val sentryErrorColumns = List(Column("time", "Time", "date"), Column("Gallery Errors", "Gallery Js errors per gallery visits(%) ", "number"))
+        val sentryRows = sentryData.zip(reportsObject).map {
+          case (sentry, omniture) =>
+              val dateCell = Cell(sentry.jsonDate)
+              val roundedCount = ((sentry.errorCount / omniture.views) * 100).rounded(3).toString
+              val count = Cell(roundedCount)
               Row(List(dateCell, count))
         }
-        val sentryChart = FormattedChart("Sentry errors per day", sentryErrorColumns, sentryRows, ChartFormat(Colour.`tone-live-1`))
+        val sentryChart = FormattedChart("Sentry errors per day as a % of number of gallery visits", sentryErrorColumns, sentryRows, ChartFormat(Colour.`tone-live-1`))
 
         val lightboxColumns = List(Column("time", "Time", "date"), Column("lightboxes", "Lightbox views per gallery", "number"))
-        val lightboxRows = reportsObject.toSeq.sortBy(_.simpleDate).map { row =>
+        val lightboxRows = reportsObject.map { row =>
           val dateCell = Cell(row.jsonDate)
-          val lightboxCount = Cell(row.lightboxLaunchesPerVisit.toString)
+          val roundedCount = row.lightboxLaunchesPerVisit.rounded(3).toString
+          val lightboxCount = Cell(roundedCount)
           Row(List(dateCell, lightboxCount))
         }
         val lightboxChart = FormattedChart("Lightbox Views per Gallery Page View", lightboxColumns, lightboxRows, ChartFormat(Colour.`tone-features-3`))
 
         val galleryColumns = List(Column("time", "Time", "date"), Column("pvv", "Gallery views per visit", "number"))
-        val galleryRows = reportsObject.toSeq.sortBy(_.simpleDate).map { row =>
+        val galleryRows = reportsObject.map { row =>
           val dateCell = Cell(row.jsonDate)
-          val pageViews = Cell(row.pageViewsPerVisit.toString)
+          val roundedPageViews = row.pageViewsPerVisit.rounded(3).toString
+          val pageViews = Cell(roundedPageViews)
           Row(List(dateCell, pageViews))
         }
         val galleryChart = FormattedChart("Gallery Page Views per Gallery Visit", galleryColumns, galleryRows, ChartFormat(Colour.`tone-comment-2`))
 
-        NoCache(Ok(views.html.contentGallery("PROD", galleryChart, lightboxChart, sentryChart, "Gallery Performance", reportTimestamp)))
+
+        val shareColumns = List(Column("time", "Time", "date"), Column("shares", "Social share per gallery(%)", "number"))
+        val shareRows = reportsObject.map {
+          row =>
+            val dateCell = Cell(row.jsonDate)
+            val roundedShares = row.percentageOfViewsShared.rounded(3).toString
+            val galleryShares = Cell(roundedShares)
+            Row(List(dateCell, galleryShares))
+        }
+        val shareChart = FormattedChart("Social shares  per Gallery Page View(%)", shareColumns, shareRows, ChartFormat(Colour.`tone-live-2`))
+
+        NoCache(Ok(views.html.contentGallery("PROD", galleryChart, lightboxChart, sentryChart, shareChart, "Gallery Performance", reportTimestamp)))
     }
   }
 
@@ -93,7 +117,7 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
 
   private def getOmnitureReports: Seq[GalleryPerformance] = {
     val reportCounts: Seq[(String, Map[String, Seq[ReportResult]])] = for {
-      reportName <- List(galleryPageViews, galleryVisits, galleryLightBox)
+      reportName <- List(galleryPageViews, galleryVisits, galleryLightBox, gallerySocialShare)
       report <- jobs.OmnitureReportJob.getReport(reportName)
     } yield {
       val results = (report.data \ "report" \ "data").validate[Seq[ReportResult]].getOrElse(Nil)
@@ -106,16 +130,19 @@ object ContentPerformanceController extends Controller with AuthLogging with Log
       galleryViewsReport <- resultsMap.get(galleryPageViews)
       galleryVisitsReport <- resultsMap.get(galleryVisits)
       lightboxLaunchesReport <- resultsMap.get(galleryLightBox)
+      gallerySocialSharesReport <- resultsMap.get(gallerySocialShare)
       galleryViews: ReportResult <- galleryViewsReport.get(name).flatMap(_.headOption)
       galleryVisits: ReportResult <- galleryVisitsReport.get(name).flatMap(_.headOption)
       lightboxLaunches: ReportResult <- lightboxLaunchesReport.get(name).flatMap(_.headOption)
+      gallerySocialShares: ReportResult <- gallerySocialSharesReport.get(name).flatMap(_.headOption)
       views <- galleryViews.counts.headOption.map(_.toDouble)
       visits <- galleryVisits.counts.headOption.map(_.toDouble)
       lightboxes <- lightboxLaunches.counts.headOption.map(_.toDouble)
+      shares <- gallerySocialShares.counts.headOption.map(_.toDouble)
     } yield {
         val date = new DateTime(galleryViews.year, galleryViews.month, galleryViews.day, 0, 0)
-        GalleryPerformance(date, views / visits, lightboxes / views)
+        GalleryPerformance(date, views, (views / visits), lightboxes / views, (shares / views) * 100)
     }
-    reportsObject.toSeq
+    reportsObject.toSeq.sortBy(_.simpleDate)
   }
 }

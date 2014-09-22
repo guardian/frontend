@@ -557,3 +557,24 @@
         @extend %u-h;
     }
 }
+
+
+.content--advertisement-feature {
+    background-color: $c-neutral8;
+
+    .content__standfirst,
+    .content__dateline,
+    .social__head,
+    .caption--main,
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label {
+        color: $c-neutral2-contrasted;
+    }
+    .content__headline,
+    .content__standfirst {
+        @include f-headlineSans;
+    }
+    .from-content-api {
+        @include f-textSans;
+    }
+}

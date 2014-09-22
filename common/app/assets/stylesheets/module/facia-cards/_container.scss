@@ -1,0 +1,17 @@
+.fc-container {
+    padding-bottom: $gs-baseline;
+    margin-bottom: 0;
+    background-color: $c-neutral7;
+
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline * 2;
+    }
+
+    .facia-container__inner {
+        border-top: 1px solid $c-newsAccent;
+    }
+
+    &.container--first .facia-container__inner {
+        border: 0;
+    }
+}

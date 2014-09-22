@@ -8,6 +8,7 @@
         text-decoration: underline;
     }
 }
+
 .content__main-column--audio .content__main-column__body {
     margin-top: $gs-baseline;
     max-width: gs-span(8);
@@ -84,4 +85,8 @@
             }
         }
     }
+}
+
+.media-body {
+    position: relative;
 }
