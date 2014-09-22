@@ -24,6 +24,12 @@
     }
 }
 
+.hide-from-leftcol {
+    @include mq(leftCol) {
+        @include u-h;
+    }
+}
+
 .is-hidden,
 [hidden] {
     display: none !important;
