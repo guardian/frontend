@@ -26,6 +26,13 @@
         width: $left-column-wide;
         left: -$left-column-wide - $gs-gutter;
     }
+
+    .container--rolled-up-hide & {
+        left: 20px;
+        float:left;
+        clear: both;
+        padding-bottom: $gs-baseline/1.5;
+    }
 }
 
 .button--tag {
