@@ -1,29 +1,5 @@
 .content--interactive {
 
-    .social-wrapper--aside {
-        display: block;
-        max-width: none;
-        padding-top: $gs-baseline/2;
-
-        @include mq(rightCol) {
-            border-top: 0;
-            position: absolute;
-            padding-top: 0;
-            right: 0;
-            top: $gs-baseline/2;
-            right: -$gs-gutter/2;
-        }
-
-        @include mq(leftCol) {
-            right: 0;
-            top: $gs-baseline/2;
-        }
-
-        @include mq(wide) {
-            right: -$gs-gutter/2;
-        }
-    }
-
     @include mq(rightCol) {
         .content__meta-container {
             .content__dateline {

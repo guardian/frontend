@@ -90,17 +90,20 @@
                                 case v: Video => v.standfirst.getOrElse("").length > 350
                                 case a: Audio => a.body.length > 800
                             }) { breakIntoLeftCol =>
-                                <div class="tag-wrapper @if(breakIntoLeftCol) { tag-wrapper--break-at-wide }" data-link-name="keywords">
-                                @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                                    <h2 class="social__head">Topics</h2>
-                                    @fragments.keywordList(media.keywords, tone = "media")
-                                }
+                                <div class="submeta-container @if(breakIntoLeftCol) { submeta-container--break-at-wide}">
+                                    @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                                        <div class="submeta" data-link-name="keywords">
+                                            <h2 class="submeta__head">Topics</h2>
+                                            @fragments.keywordList(media.keywords, tone = "media")
+                                        </div>
+                                    }
+                                    <div class="submeta hide-from-leftcol" data-component="share">
+                                        <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
+                                        @fragments.social(media, iconModifier = "white")
+                                    </div>
+
                                 </div>
                             }
-
-                            <div class="social-wrapper social-wrapper--bottom" data-component="share">
-                                @fragments.social(media, iconModifier = "white")
-                            </div>
 
                         </div>
 
