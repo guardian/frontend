@@ -66,10 +66,10 @@
 
 @mixin article-header-tone($tone, $colour, $accentColour, $textAccentColour, $textColour, $commentIcon) {
     .tone-#{$tone} .content__head--tonal {
-        .content__section .tone-colour {
+        .content__section-label .tone-colour {
             color: $textColour;
         }
-        .content__series .tone-colour {
+        .content__series-label .tone-colour {
             color: $textAccentColour;
         }
         .content__headline,
@@ -90,11 +90,11 @@
             color: $textColour;
         }
 
-        .content__meta {
+        .content__labels {
             border-bottom-color: rgba($textColour, .3);
         }
 
-        .content__series {
+        .content__series-label {
             &:before {
                 color: rgba($textAccentColour, .5);
             }

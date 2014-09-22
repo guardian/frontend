@@ -62,7 +62,7 @@
         }
     }
 
-    .content__meta {
+    .content__labels {
         margin-bottom: $gs-baseline/2;
         border-bottom: 1px dotted $c-neutral5;
         width: 100%;
@@ -76,13 +76,13 @@
         }
     }
 
-    .content__section {
+    .content__section-label {
         @include mq(desktop) {
             float: left;
         }
     }
 
-    .content__series {
+    .content__series-label {
         @include mq(desktop) {
             float: left;
         }

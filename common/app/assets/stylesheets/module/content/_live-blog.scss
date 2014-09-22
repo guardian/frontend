@@ -825,7 +825,7 @@ $timeline-width: 14px;
     }
 
     &.tone-live .content__head--tonal {
-        .content__meta {
+        .content__labels {
             @include mq(desktop) {
                 float: left;
                 width: gs-span(3);
@@ -834,14 +834,14 @@ $timeline-width: 14px;
             }
         }
 
-        .content__section {
+        .content__section-label {
             @include mq(desktop) {
                 @include fs-header(3);
                 float: none;
             }
         }
 
-        .content__series {
+        .content__series-label {
             @include mq(desktop) {
                 @include fs-headline(3);
                 float: none;
@@ -896,8 +896,11 @@ $timeline-width: 14px;
     .tone-background {
         background-color: #ffffff;
     }
-    .content__section .tone-colour {
+    .content__section-label .tone-colour {
         color: $c-liveDefault !important;
+    }
+    .content__series-label .tone-colour {
+        color: $c-neutral2 !important;
     }
     .content__headline {
         color: $c-neutral1;

@@ -129,7 +129,7 @@
     }
 }
 
-.content__meta {
+.content__labels {
     @include box-sizing(border-box);
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
@@ -152,7 +152,7 @@
     }
 }
 
-.content__section {
+.content__section-label {
     @include fs-header(1);
     float: left;
     padding-right: $gs-gutter/3;
@@ -167,7 +167,7 @@
     }
 }
 
-.content__series {
+.content__series-label {
     @include fs-headline(2);
     float: left;
 
