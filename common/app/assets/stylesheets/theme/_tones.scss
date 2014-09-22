@@ -66,12 +66,6 @@
 
 @mixin article-header-tone($tone, $colour, $accentColour, $textAccentColour, $textColour, $commentIcon) {
     .tone-#{$tone} .content__head--tonal {
-        .content__section-label .tone-colour {
-            color: $textColour;
-        }
-        .content__series-label .tone-colour {
-            color: $textAccentColour;
-        }
         .content__headline,
         .content__standfirst,
         .content__standfirst a {
@@ -89,23 +83,14 @@
         .content__head__comment-count .commentcount {
             color: $textColour;
         }
-
         .content__labels {
             border-bottom-color: rgba($textColour, .3);
         }
-
-        .content__series-label {
-            &:before {
-                color: rgba($textAccentColour, .5);
-            }
-        }
-
-        .content-meta__item a {
+        .content__section-label .tone-colour {
             color: $textColour;
         }
-
-        .content-meta__label {
-            color: lighten($accentColour, 25);
+        .content__series-label .tone-colour {
+            color: $textAccentColour;
         }
         .content__standfirst .bullet:before {
             background-color: lighten($accentColour, 25);

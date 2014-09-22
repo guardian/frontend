@@ -107,18 +107,9 @@
     }
 
     .content__headline {
-        @include mq(rightCol, leftCol) {
+        @include mq(desktop, leftCol) {
             padding-bottom: $gs-baseline*2;
         }
-    }
-
-    .content-meta {
-        @include mq(tablet) {
-            padding-top: $gs-baseline/2;
-        }
-    }
-    .content__headline,
-    .content-meta {
         @include mq(leftCol) {
             @include box-sizing(border-box);
             float: left;

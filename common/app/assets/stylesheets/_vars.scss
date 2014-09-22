@@ -63,7 +63,7 @@ $mq-breakpoints: (
 // Show the current breakpoint in the top right corner of the viewport:
 // see https://github.com/guardian/sass-mq#seeing-the-currently-active-breakpoint
 // Uncomment to activate during development
-$mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
+// $mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
 
 
 // Guss defaults overrides
@@ -96,7 +96,6 @@ $c-neutral8: guss-colour(neutral-8, $pasteup-palette);
 
 $c-newsDefault: guss-colour(tone-news-1, $pasteup-palette);
 $c-newsAccent: guss-colour(tone-news-2, $pasteup-palette);
-$c-newsSupport: guss-colour(news-support-2, $pasteup-palette);
 
 $c-featureDefault: guss-colour(tone-features-1, $pasteup-palette);
 $c-featureAccent: guss-colour(features-support-3, $pasteup-palette);

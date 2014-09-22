@@ -24,11 +24,6 @@
             margin-bottom: 0;
         }
 
-        .content-meta {
-            padding-top: $gs-baseline/3;
-            border-top: 0 !important;
-        }
-
         .tone-background .content__main-column:after {
             // not including clearfix here because we only want to clear at :after
             content: '';
