@@ -48,17 +48,6 @@ define([
         return qwery('.is-key-event').slice(0, 7);
     }
 
-    function getBlocks() {
-        return qwery('.block');
-    }
-
-    function getFirstBlock() {
-        return getBlocks().shift();
-    }
-
-    function getLastBlock() {
-        return getBlocks().pop();
-    }
 
     function createScrollTransitions (){
 
