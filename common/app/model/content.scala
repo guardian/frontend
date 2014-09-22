@@ -552,8 +552,6 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
 
-  lazy val largestEditorialCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestEditorialCrop)
-
   override def cards: List[(String, String)] = super.cards ++ Seq(
     "twitter:card" -> "gallery",
     "twitter:title" -> linkText
