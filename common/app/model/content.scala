@@ -211,7 +211,7 @@ object Content {
     }
   }
 
-  def apply(delegate: ApiContent, supporting: List[Content], metaData: Option[com.gu.facia.client.models.TrailMetaData]): Content = {
+  def apply(delegate: ApiContent, supporting: List[Content], metaData: Option[com.gu.facia.client.models.MetaDataCommonFields]): Content = {
     metaData match {
       case Some(meta) => apply(ApiContentWithMeta(delegate, supporting, metaData))
       case _ => apply(ApiContentWithMeta(delegate))
@@ -599,4 +599,4 @@ class ImageContent(content: ApiContentWithMeta) extends Content(content) {
   ) ++ mainPicture.flatMap(_.largestImage.flatMap(_.path.map("twitter:image:src" ->)))
 }
 
-case class ApiContentWithMeta(delegate: ApiContent, supporting: List[Content] = Nil, metaData: Option[com.gu.facia.client.models.TrailMetaData] = None)
+case class ApiContentWithMeta(delegate: ApiContent, supporting: List[Content] = Nil, metaData: Option[com.gu.facia.client.models.MetaDataCommonFields] = None)

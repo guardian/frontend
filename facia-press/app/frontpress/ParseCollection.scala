@@ -1,27 +1,26 @@
 package services
 
 import com.amazonaws.services.s3.AmazonS3Client
-import com.gu.facia.client.models.{SupportingItemMetaData, TrailMetaData}
+import com.gu.facia.client.models.{SupportingItem, Trail, SupportingItemMetaData, TrailMetaData}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
+import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import common.S3Metrics.S3AuthorizationError
 import common._
-import conf.LiveContentApi
-import conf.Configuration
-import model._
-import play.api.libs.json.Json._
-import play.api.libs.json._
-import scala.concurrent.Future
+import conf.{Configuration, LiveContentApi}
+import conf.Switches.FaciaToolCachedContentApiSwitch
 import contentapi.{ContentApiClient, QueryDefaults}
-import scala.util.{Failure, Success, Try}
+import model._
+import org.apache.commons.codec.digest.DigestUtils._
 import org.joda.time.DateTime
 import performance._
-import org.apache.commons.codec.digest.DigestUtils._
-import ParseCollectionJsonImplicits._
-import com.gu.openplatform.contentapi.model.{Content => ApiContent}
+import play.api.libs.json.Json._
+import play.api.libs.json._
 import play.api.libs.ws.WSResponse
-import play.api.libs.json.JsObject
+import services.ParseCollectionJsonImplicits._
+
+import scala.concurrent.Future
 import scala.concurrent.duration._
-import conf.Switches.FaciaToolCachedContentApiSwitch
-import common.S3Metrics.S3AuthorizationError
+import scala.util.Try
 
 
 object Path {
@@ -48,6 +47,8 @@ object Result {
   val empty: Result = Result(Nil, Nil, Nil, Nil)
 }
 
+case class TrailId(id: String) extends AnyVal
+
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
   implicit def apiContentCodec = JsonCodecs.snappyCodec[Option[ApiContent]]
 
@@ -59,7 +60,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     ApiClient("aws-frontend-store", Configuration.facia.stage, AmazonSdkS3Client(new AmazonS3Client(Configuration.aws.credentials.get)))
 
   val client: ContentApiClient
-  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.Collection): Seq[CollectionItem]
+  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.Collection): Seq[Trail]
 
   case class InvalidContent(id: String) extends Exception(s"Invalid Content: $id")
   val showFieldsQuery: String = FaciaDefaults.showFields
@@ -73,10 +74,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     href: Option[String])
   object CollectionMeta {
     def empty: CollectionMeta = CollectionMeta(None, None, None, None, None)
-  }
-
-  case class CollectionItem(id: String, metaData: Option[TrailMetaData], webPublicationDate: Option[DateTime]) {
-    val isSnap: Boolean = Snap.isSnap(id)
   }
 
   def requestCollection(id: String): Future[WSResponse] = {
@@ -93,8 +90,8 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         .recover { case _: Throwable => None }
 
     val curatedItems: Future[Seq[Content]] = collection.flatMap { collectionOption =>
-      val items: Seq[CollectionItem] =
-        collectionOption.fold[Seq[CollectionItem]](Nil)(retrieveItemsFromCollectionJson)
+      val items: Seq[Trail] =
+        collectionOption.fold[Seq[Trail]](Nil)(retrieveItemsFromCollectionJson)
       getArticles(items, edition)
     }
 
@@ -145,15 +142,17 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
   }
 
-  def getArticles(collectionItems: Seq[CollectionItem], edition: Edition): Future[Seq[Content]] = {
-    batchGetContentApiItems(collectionItems ++ collectionItems.flatMap(retrieveSupportingLinks), edition) map { items =>
+  def getArticles(collectionItems: Seq[Trail], edition: Edition): Future[Seq[Content]] = {
+    val itemIds: Seq[String]  =
+      (collectionItems.map(_.id) ++ collectionItems.flatMap(retrieveSupportingLinks).map(_.id)).filterNot(Snap.isSnap)
+    batchGetContentApiItems(itemIds, edition) map { items =>
       collectionItems flatMap { collectionItem =>
-        val supporting = retrieveSupportingLinks(collectionItem).flatMap({ collectionItem =>
-          items.get(collectionItem) map { item =>
+        val supporting: List[Content] = retrieveSupportingLinks(collectionItem).flatMap({ collectionItem =>
+          items.get(collectionItem.id) map { item =>
             Content(
               item,
               Nil,
-              collectionItem.metaData
+              collectionItem.meta
             )
           }
         })
@@ -162,15 +161,15 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
           Some(new Snap(
             collectionItem.id,
             supporting,
-            collectionItem.webPublicationDate.getOrElse(DateTime.now),
-            collectionItem.metaData
+            new DateTime(collectionItem.frontPublicationDate),
+            collectionItem.meta
           ))
         } else {
-          items.get(collectionItem) map { item =>
+          items.get(collectionItem.id) map { item =>
             validateContent(Content(
               item,
               supporting,
-              collectionItem.metaData
+              collectionItem.meta
             ))
           }
         }
@@ -178,8 +177,8 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
   }
 
-  private def batchGetContentApiItems(collectionItems: Seq[CollectionItem],
-                                      edition: Edition): Future[Map[CollectionItem, ApiContent]] = {
+  private def batchGetContentApiItems(collectionItems: Seq[String],
+                                      edition: Edition): Future[Map[String, ApiContent]] = {
     Futures.batchedTraverse(collectionItems, Configuration.faciatool.frontPressItemBatchSize)({ collectionItem =>
       getContentApiItemFromCollectionItem(collectionItem, edition) map { maybeItem =>
         maybeItem.map(collectionItem -> _)
@@ -187,18 +186,18 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }).map(_.flatten.toMap)
   }
 
-  private def getContentApiItemFromCollectionItem(collectionItem: CollectionItem,
+  private def getContentApiItemFromCollectionItem(collectionItem: String,
                                                   edition: Edition): Future[Option[ApiContent]] = {
-    lazy val response = client.item(collectionItem.id, edition).showFields(showFieldsWithBodyQuery)
+    lazy val response = client.item(collectionItem, edition).showFields(showFieldsWithBodyQuery)
       .response
       .map(Option.apply)
       .recover {
       case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 404 => {
-        log.warn(s"Content API Error: 404 for ${collectionItem.id}")
+        log.warn(s"Content API Error: 404 for $collectionItem")
         None
       }
       case apiError: com.gu.openplatform.contentapi.ApiError if apiError.httpStatus == 410 => {
-        log.warn(s"Content API Error: 410 for ${collectionItem.id}")
+        log.warn(s"Content API Error: 410 for $collectionItem")
         None
       }
       case jsonParseError: net.liftweb.json.JsonParser.ParseException => {
@@ -210,13 +209,13 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
         throw mappingException
       }
       case t: Throwable => {
-        log.warn("%s: %s".format(collectionItem.id, t.toString))
+        log.warn("%s: %s".format(collectionItem, t.toString))
         throw t
       }
     }.map(_.flatMap(_.content))
 
     if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
-      MemcachedFallback.withMemcachedFallBack(collectionItem.id, cacheDuration)(response)
+      MemcachedFallback.withMemcachedFallBack(collectionItem, cacheDuration)(response)
     }
     else {
       response
@@ -243,10 +242,8 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       imageHide = None
     )
 
-  private def retrieveSupportingLinks(collectionItem: CollectionItem): List[CollectionItem] =
-    collectionItem.metaData.flatMap(_.supporting.map(_.map { supportingItem =>
-      CollectionItem(supportingItem.id, supportingItem.meta.map(makeSupportingMeta), None) //supportingItem)
-    })).getOrElse(Nil)
+  private def retrieveSupportingLinks(collectionItem: Trail): List[SupportingItem] =
+    collectionItem.meta.flatMap(_.supporting).getOrElse(Nil)
 
   def executeContentApiQueryViaCache(queryString: String, edition: Edition): Future[Result] = {
     lazy val contentApiQuery = executeContentApiQuery(queryString, edition)
@@ -341,13 +338,8 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 }
 
 object LiveCollections extends ParseCollection {
-  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.Collection): Seq[CollectionItem] =
-    collection.live.map { trail =>
-      CollectionItem(
-        trail.id,
-        trail.meta,
-        Option(new DateTime(trail.frontPublicationDate)))
-    }
+  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.Collection): Seq[Trail] =
+    collection.live
 
   override val client: ContentApiClient = LiveContentApi
 }
