@@ -1,4 +1,3 @@
-/*global s_i_guardiangu-frontend_guardiangu-network:true */
 define([
     'common/utils/detect',
     'common/modules/experiments/ab',
