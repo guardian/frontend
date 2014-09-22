@@ -305,13 +305,6 @@ case object Hl4Half extends Slice {
   val layout = SliceLayout(
     cssClassName = "hl-h",
     columns = Seq(
-      SingleItem(
-        colSpan = 1,
-        ItemClasses(
-          mobile = "standard",
-          desktop = "half"
-        )
-      ),
       Rows(
         colSpan = 1,
         columns = 2,
@@ -319,6 +312,13 @@ case object Hl4Half extends Slice {
         ItemClasses(
           mobile = "list-media",
           desktop = "list-media"
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "standard",
+          desktop = "half"
         )
       )
     )
