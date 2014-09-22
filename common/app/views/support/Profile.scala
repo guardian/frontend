@@ -99,17 +99,23 @@ object Profile {
 
 object ImgSrc {
 
-  def imageHost = Configuration.images.path
+  private val imageHost = Configuration.images.path
+
+  private val hostPrefixMapping = Map(
+    "static.guim.co.uk" -> "static",
+    "media.guim.co.uk" -> "media"
+  )
 
   def apply(url: String, imageType: ElementProfile): String = {
     val uri = new URI(url.trim)
+    val isSupportedImage = !uri.getPath.toLowerCase.endsWith(".gif")
 
-    val isSupportedImage = uri.getHost == "static.guim.co.uk" && !uri.getPath.toLowerCase.endsWith(".gif")
-
-    if (ImageServerSwitch.isSwitchedOn && isSupportedImage)
-      s"$imageHost${imageType.resizeString}${uri.getPath}"
-    else
-      url
+    hostPrefixMapping.get(uri.getHost)
+      .filter(_ => isSupportedImage)
+      .filter(_ => ImageServerSwitch.isSwitchedOn)
+      .map( pathPrefix =>
+        s"$imageHost/$pathPrefix${imageType.resizeString}${uri.getPath}"
+      ).getOrElse(url)
   }
 
   object Imager extends Profile(None, None) {
