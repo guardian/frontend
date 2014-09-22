@@ -23,24 +23,9 @@ class ImgSrcTest extends FlatSpec with Matchers  {
 
   val image = ImageContainer(Seq(imageAsset), null, imageAsset.index) // yep null, sorry but the tests don't need it
 
-  val mediaImageAsset = ImageAsset(Asset(
-    "image",
-    Some("image/jpeg"),
-    Some("http://media.guim.co.uk/knly7wcp46fuadowlsnitzpawm/437_0_3819_2291/1000.jpg"),
-    Map.empty[String, String]
-  ), 1)
-
-  val mediaImage = ImageContainer(Seq(mediaImageAsset), null, mediaImageAsset.index)
-
-
-  "ImgSrc" should "convert the URL of a static image to the resizing endpoint with a /static prefix" in {
+  "ImgSrc" should "convert the URL of the image to the resizing endpoint" in {
     ImageServerSwitch.switchOn()
-      GalleryLargeTrail.bestFor(image) should be (Some(s"${imageHost}/static/w-480/h-288/q-95/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
-  }
-
-  it should "convert the URL of a media service to the resizing endpoint with a /media prefix" in {
-    ImageServerSwitch.switchOn()
-      GalleryLargeTrail.bestFor(mediaImage) should be (Some(s"${imageHost}/media/w-480/h-288/q-95/knly7wcp46fuadowlsnitzpawm/437_0_3819_2291/1000.jpg"))
+      GalleryLargeTrail.bestFor(image) should be (Some(s"$imageHost/w-480/h-288/q-95/sys-images/Guardian/Pix/pictures/2013/7/5/1373023097878/b6a5a492-cc18-4f30-9809-88467e07ebfa-460x276.jpeg"))
   }
 
   it should "not convert the URL of the image if it is disabled" in {
