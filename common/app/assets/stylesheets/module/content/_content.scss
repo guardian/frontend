@@ -175,10 +175,7 @@
         @include fs-headline(7, true);
     }
     @include mq(tablet) {
-        @include fs-headline(8, true);
         padding-bottom: $gs-row-height;
-        padding-top: $gs-baseline/6;
-        border-top: 0;
     }
     a {
         &,
