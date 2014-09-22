@@ -896,11 +896,14 @@ $timeline-width: 14px;
     .tone-background {
         background-color: #ffffff;
     }
+    .content__labels {
+        border-bottom-color: $c-neutral5;
+    }
     .content__section-label .tone-colour {
-        color: $c-liveDefault !important;
+        color: $c-liveDefault;
     }
     .content__series-label .tone-colour {
-        color: $c-neutral2 !important;
+        color: $c-neutral2;
     }
     .content__headline {
         color: $c-neutral1;
