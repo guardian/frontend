@@ -218,8 +218,10 @@ $fc-item-gutter: $gs-gutter / 3;
     @for $span from 1 through $column {
         .l-row--items-#{$column} {
             .l-row__item--span-#{$span} {
-                @include flex($span);
-                width: (100% / $column) * $span;
+                @include mq(tablet) {
+                    @include flex($span);
+                    width: (100% / $column) * $span;
+                }
             }
         }
     }
