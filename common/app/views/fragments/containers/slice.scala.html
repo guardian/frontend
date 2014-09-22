@@ -13,7 +13,7 @@
 
         <section
         id="@FaciaComponentName(config, collection)"
-        class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty) slice slice--@slice.cssClassName"
+        class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
         data-link-name="@FaciaComponentName(config, collection)"
         data-id="@config.id"
         @config.sponsorshipKeyword.map { keyword =>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="container__body container--rolled-up-hide">
                     <div class="facia-slice-wrapper">
-                        <ul class="u-unstyled l-row l-row--items-@slice.columns.size facia-slice">
+                        <ul class="u-unstyled l-row l-row--items-@slice.columns.size facia-slice facia-slice--@slice.cssClassName">
                         @for(ColumnAndCards(column, cards) <- slice.columns) {
 
                             @column match {
