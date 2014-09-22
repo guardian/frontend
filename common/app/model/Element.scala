@@ -37,10 +37,10 @@ trait ImageContainer extends Element {
   // The image crop with the largest width.
   lazy val largestImage: Option[ImageAsset] = imageCrops.headOption
 
-  // almost all images with a width of 2048 and 1024 have been auto-cropped to a 4:3 aspect. except for portrait
-  // images that are scaled to this width by chance (rare edge case with no nasty side effects). this is a temporary
-  // solution until the new media service is in use and we can properly distinguish crops by their intended usage
-  lazy val largestEditorialCrop: Option[ImageAsset] = imageCrops.find(img => img.width != 2048 && img.width != 1024)
+  // all landscape images with a width of 1024 or 2048 have been auto-cropped to 4:3. portrait images are never
+  // auto-cropped.. this is a temporary solution until the new media service is in use and we can properly
+  // distinguish crops by their intended usage
+  lazy val largestEditorialCrop: Option[ImageAsset] = imageCrops.find(img => img.width < img.height || (img.width != 2048 && img.width != 1024))
 }
 
 object ImageContainer {
