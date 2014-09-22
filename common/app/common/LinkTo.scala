@@ -41,6 +41,19 @@ trait LinkTo extends Logging {
     case t: Trail => Option(apply(t.url))
   }
 
+  def getHrefWithRel(trail: Trail)(implicit request: RequestHeader): String = {
+    def toHrefWithRel(optionUrl: Option[String], noFollow: Boolean): String = (optionUrl, noFollow) match {
+      case (Some(url), true) => s"""href="$url" rel="nofollow""""
+      case (Some(url), false) => s"""href="$url""""
+      case (None, _) => ""
+    }
+
+    trail match {
+      case snap: Snap => toHrefWithRel(snap.snapUrl.filter(_.nonEmpty), true)
+      case t: Trail => toHrefWithRel(Option(apply(t.url)), false)
+    }
+  }
+
   private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(path, edition)}"
 
   private def homeLink(edition: Edition, region: Option[Region]) = region.map(_.id.toLowerCase)
