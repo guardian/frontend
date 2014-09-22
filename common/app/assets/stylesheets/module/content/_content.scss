@@ -169,7 +169,6 @@
 .content__headline {
     @include fs-headline(5);
     padding-bottom: $gs-baseline*2;
-    padding-top: $gs-baseline/2;
 
     @include mq(mobileLandscape) {
         @include fs-headline(7, true);
