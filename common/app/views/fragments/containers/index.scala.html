@@ -48,15 +48,13 @@
                             </div>
                         }
                     </div>
-
                     @defining(topTags(collection.items).filterNot(_.id == page.id).take(20)) { tags =>
                         @if(tags.nonEmpty) {
                             <div class="related-keywords">
-                            @keywordList(tags, 5, "See also")
+                                @keywordList(tags, 5, "See also")
                             </div>
                         }
                     }
-
                 </div>
             </section>
         }
