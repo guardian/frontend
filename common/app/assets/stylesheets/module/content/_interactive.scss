@@ -1,4 +1,13 @@
 .content--interactive {
+    // Ensure margins don't overlay interactives
+    position: relative;
+    z-index: 2;
+
+    // Ensure margins don't overlay full-page take over interactives
+    .element-interactive {
+        background-color: #fff;
+    }
+
     .byline {
         @include mq(leftCol) {
             border-top: 0;
