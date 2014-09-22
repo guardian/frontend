@@ -552,6 +552,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
 
+  lazy val largestEditorialCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestEditorialCrop)
+
   override def cards: List[(String, String)] = super.cards ++ Seq(
     "twitter:card" -> "gallery",
     "twitter:title" -> linkText
@@ -562,7 +564,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   lazy val lightbox: JsObject = {
     val imageContainers = galleryImages.filter(_.isGallery)
     val imageJson = imageContainers.map{ imgContainer =>
-      imgContainer.largestImage.map { img =>
+      imgContainer.largestEditorialCrop.map { img =>
         JsObject(Seq(
           "caption" -> JsString(img.caption.getOrElse("")),
           "credit" -> JsString(img.credit.getOrElse("")),
