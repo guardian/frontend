@@ -20,15 +20,15 @@ sealed trait Slice extends implicits.Collections {
   def apply(collection: Collection)(implicit templateDeduping: TemplateDeduping): (SliceWithCards, Seq[Card]) = {
     this(collection.items)
   }
-  
+
 }
 
 
 /* .________.________.________.________.
-* |________|________|________|________|
-* |________|________|________|________|
-* |________|________|________|________|
-*/
+ * |________|________|________|________|
+ * |________|________|________|________|
+ * |________|________|________|________|
+ */
 case object QlQlQlQl extends Slice {
   val layout = SliceLayout(
     cssClassName = "q-ql-ql-ql",
@@ -47,10 +47,10 @@ case object QlQlQlQl extends Slice {
 }
 
 /* .________.________.________.________.
-* |########|________|________|________|
-* |########|________|________|________|
-* |________|________|________|________|
-*/
+ * |########|________|________|________|
+ * |########|________|________|________|
+ * |________|________|________|________|
+ */
 case object QuarterQlQlQl extends Slice {
   val layout = SliceLayout(
     cssClassName = "q-ql-ql-ql",
