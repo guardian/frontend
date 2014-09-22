@@ -29,10 +29,5 @@ x x x x x x x x x x x x x x x x x x
 @mixin fc-item--half {
     .fc-item__title {
         @include fs-headline(4);
-        padding-bottom: $gs-baseline;
-    }
-
-    .fc-item__standfirst{
-        display: block
     }
 }

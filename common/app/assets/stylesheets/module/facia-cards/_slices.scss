@@ -1,0 +1,31 @@
+.facia-slice--hl4-h {
+    flex-direction: row-reverse;
+
+    .fc-item--half-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet, desktop) {
+                display: block;
+            }
+        }
+    }
+}
+
+.facia-slice--h-ql4-ql4 {
+    .fc-item--half-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet, desktop) {
+                display: block;
+            }
+        }
+    }
+}
+
+.facia-slice--h-q-q {
+    .fc-item--standard-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
+}

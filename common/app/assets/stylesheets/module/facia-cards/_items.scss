@@ -87,6 +87,7 @@ $fc-item-gutter: $gs-gutter / 3;
 
 .fc-item__standfirst {
     @include fs-bodyCopy(1);
+    padding-top: $gs-baseline;
     display: none;
 }
 
