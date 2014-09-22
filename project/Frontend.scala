@@ -32,6 +32,7 @@ object Frontend extends Build with Prototypes {
       liftJson,
       playGoogleAuth,
       scalaCheck,
+      "com.gu" %% "facia-api-client" % "0.6-SNAPSHOT",
       filters,
       ws
     )
