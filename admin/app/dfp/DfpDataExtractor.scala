@@ -43,7 +43,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
   }
 
   def countriesTargeted(lineItem: GuLineItem): Seq[Country] = {
-    lineItem.targeting.geoTargets map (geoTarget => Country.fromName(geoTarget.name))
+    lineItem.targeting.geoTargetsIncluded map (geoTarget => Country.fromName(geoTarget.name))
   }
 
   def countryNamesTargeted(lineItem: GuLineItem): Seq[String] = {

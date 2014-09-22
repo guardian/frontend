@@ -1,6 +1,8 @@
 package dfp
 
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
+import play.api.libs.json.{JsValue, Json, Writes}
 
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
@@ -27,6 +29,20 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val targetsR2Only: Boolean = isPlatform("r2") || isNotPlatform("ng")
 }
 
+object CustomTarget {
+
+  implicit val customTargetWrites = new Writes[CustomTarget] {
+    def writes(target: CustomTarget): JsValue = {
+      Json.obj(
+        "name" -> target.name,
+        "op" -> target.op,
+        "values" -> target.values
+      )
+    }
+  }
+
+}
+
 
 case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
 
@@ -49,11 +65,52 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val targetsR2Only: Boolean = targets exists (_.targetsR2Only)
 }
 
+object CustomTargetSet {
+
+  implicit val customTargetSetWrites = new Writes[CustomTargetSet] {
+    def writes(targetSet: CustomTargetSet): JsValue = {
+      Json.obj(
+        "op" -> targetSet.op,
+        "targets" -> targetSet.targets
+      )
+    }
+  }
+
+}
+
 
 case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name: String)
 
+object GeoTarget {
+
+  implicit val geoTargetWrites = new Writes[GeoTarget] {
+    def writes(geoTarget: GeoTarget): JsValue = {
+      Json.obj(
+        "id" -> geoTarget.id,
+        "parentId" -> geoTarget.parentId,
+        "locationType" -> geoTarget.locationType,
+        "name" -> geoTarget.name
+      )
+    }
+  }
+
+}
+
 
 case class GuAdUnit(id: String, path: Seq[String])
+
+object GuAdUnit {
+
+  implicit val adUnitWrites = new Writes[GuAdUnit] {
+    def writes(adUnit: GuAdUnit): JsValue = {
+      Json.obj(
+        "id" -> adUnit.id,
+        "path" -> adUnit.path
+      )
+    }
+  }
+
+}
 
 
 case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargetsIncluded: Seq[GeoTarget], geoTargetsExcluded: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet]) {
@@ -61,6 +118,21 @@ case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargetsIncluded: Seq[GeoTarget
   def hasAdTestTargetting = customTargetSets.exists(_.targetsAdTest)
 
   def targetsR2Only = customTargetSets exists (_.targetsR2Only)
+}
+
+object GuTargeting {
+
+  implicit val targetingWrites = new Writes[GuTargeting] {
+    def writes(targeting: GuTargeting): JsValue = {
+      Json.obj(
+        "adUnits" -> targeting.adUnits,
+        "geoTargetsIncluded" -> targeting.geoTargetsIncluded,
+        "geoTargetsExcluded" -> targeting.geoTargetsExcluded,
+        "customTargetSets" -> targeting.customTargetSets
+      )
+    }
+  }
+
 }
 
 
@@ -81,4 +153,23 @@ case class GuLineItem(id: Long,
   val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
   val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
   val inlineMerchandisingTargetedContributors: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
+}
+
+object GuLineItem {
+
+  implicit val lineItemWrites = new Writes[GuLineItem] {
+    def writes(lineItem: GuLineItem): JsValue = {
+      val timePattern = DateTimeFormat.forPattern("dd-MMM-YYYY HH:mm z")
+      Json.obj(
+        "id" -> lineItem.id,
+        "name" -> lineItem.name,
+        "startTime" -> timePattern.print(lineItem.startTime),
+        "endTime" -> lineItem.endTime.map(endTime => timePattern.print(endTime)),
+        "isPageSkin" -> lineItem.isPageSkin,
+        "sponsor" -> lineItem.sponsor,
+        "targeting" -> lineItem.targeting
+      )
+    }
+  }
+
 }
