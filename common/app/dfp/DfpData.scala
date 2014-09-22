@@ -56,7 +56,7 @@ case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name
 case class GuAdUnit(id: String, path: Seq[String])
 
 
-case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargets: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet]) {
+case class GuTargeting(adUnits: Seq[GuAdUnit], geoTargetsIncluded: Seq[GeoTarget], geoTargetsExcluded: Seq[GeoTarget], customTargetSets: Seq[CustomTargetSet]) {
 
   def hasAdTestTargetting = customTargetSets.exists(_.targetsAdTest)
 
