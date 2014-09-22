@@ -134,7 +134,6 @@
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
     padding: $gs-baseline/2 0;
-    margin-top: -2px;
     overflow: hidden;
 
     @include mq($until: leftCol) {
@@ -154,36 +153,27 @@
 }
 
 .content__section {
-    @include fs-header(3);
+    @include fs-header(1);
+    float: left;
+    padding-right: $gs-gutter/3;
+
+    @include mq(leftCol) {
+        @include fs-header(3);
+        float: none;
+    }
 
     &:first-letter {
         text-transform: capitalize;
     }
-
-    @include mq($until: leftCol) {
-        @include fs-header(1);
-        float: left;
-
-//        .has-localnav & {
-//            display: none;
-//        }
-    }
-
-//    @include mq(tablet) {
-//        padding-bottom: $gs-baseline/2;
-//    }
 }
 
 .content__series {
-    @include fs-headline(3);
+    @include fs-headline(2);
+    float: left;
 
-    @include mq($until: leftCol) {
-        @include fs-headline(2);
-        float: left;
-        padding-left: $gs-gutter/3;
-//        &:before {
-//            content: "\00A0\0387\00A0";
-//        }
+    @include mq(leftCol) {
+        @include fs-headline(3);
+        float: none;
     }
 }
 

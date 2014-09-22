@@ -818,32 +818,33 @@ $timeline-width: 14px;
         @include mq(tablet) {
             @include fs-headline(6, true);
         }
-        @include mq(rightCol) {
+
+        @include mq(desktop) {
             padding-bottom: $gs-row-height + ($gs-baseline * 2);
         }
     }
 
-    &.tone-live .content__head--tonal .content__meta {
+    &.tone-live .content__head--tonal {
+        .content__meta {
+            @include mq(desktop) {
+                float: left;
+                width: gs-span(3);
+                margin-left: (gs-span(4) + $gs-gutter) * -1;
+                border-bottom: 0;
+            }
+        }
 
-        @include mq(rightCol) {
-            float: left;
-            width: gs-span(3);
-//            padding-top: $content-top-padding;
-            margin-left: (gs-span(4) + $gs-gutter) * -1;
-            border-bottom: 0;
-
-            .content__section {
-                @include fs-header(2);
+        .content__section {
+            @include mq(desktop) {
+                @include fs-header(3);
                 float: none;
             }
+        }
 
-            .content__meta {
-                @include fs-header(2);
-            }
-
-            .tone-colour {
-                // overriding tonal head style here as liveblog section breaks differently
-                color: #ffffff;
+        .content__series {
+            @include mq(desktop) {
+                @include fs-headline(3);
+                float: none;
             }
         }
     }

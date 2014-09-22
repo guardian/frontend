@@ -20,12 +20,11 @@
         .tone-background--accent {
             padding: $gs-baseline/2 0 $gs-baseline;
         }
+
         .content__standfirst {
             margin-bottom: 0;
         }
-//        .content__headline {
-//            min-height: 60px;
-//        }
+
         .content-meta {
             padding-top: $gs-baseline/3;
             border-top: 0 !important;
@@ -41,9 +40,7 @@
 
     /* Tonal byline / contributor image
        ========================================================================== */
-
     .content__head--tonal {
-
         .content__headline--byline {
             padding-bottom: $gs-baseline*2;
             min-height: 0;
@@ -90,11 +87,13 @@
 
     .content__head--byline-pic {
         .content__headline {
-
             @include mq(mobileLandscape) {
                 padding-right: gs-span(2) + $gs-gutter;
             }
-            @include mq(rightCol) {
+            @include mq(tablet) {
+                min-height: 60px;
+            }
+            @include mq(desktop) {
                 padding-right: $gs-gutter*2;
             }
         }
@@ -106,11 +105,7 @@
 
     /* Tone specific rules/overrides
        ========================================================================== */
-
     .tone-live .content__head--tonal {
-//        .content-meta__label {
-//            color: $c-liveAccent2;
-//        }
         .content__headline {
             font-weight: normal;
         }
@@ -139,14 +134,6 @@
 
     .content.tone-comment {
         .content__head--tonal {
-//            .content__section .tone-colour {
-//                @include mq($until: leftCol) {
-//                    color: $c-commentDefault;
-//                }
-//            }
-//            .content-meta__label {
-//                color: $c-neutral2;
-//            }
             .bullet:before,
             ul > li:before {
                 background-color: $c-commentDark;
