@@ -55,7 +55,6 @@
             padding-top: 0;
             border-top: 1px dotted $c-neutral4;
         }
-
         .submeta__head {
             display: block;
         }
@@ -97,6 +96,7 @@
 
 .submeta {
     border-top: 1px dotted $c-neutral4;
+
     .content--media & {
         border-color: $c-neutral2;
     }
