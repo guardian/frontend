@@ -208,7 +208,7 @@ $fc-item-gutter: $gs-gutter / 3;
         .l-row--items-#{$column} {
             .l-row__item--span-#{$span} {
                 @include flex($span);
-                width: (100% / $column) * $span
+                width: (100% / $column) * $span;
             }
         }
     }
