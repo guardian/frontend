@@ -1,5 +1,5 @@
 .facia-slice--hl4-h {
-    flex-direction: row-reverse;
+    @include flex-direction(row-reverse);
 
     .fc-item--half-tablet {
         .fc-item__standfirst {
