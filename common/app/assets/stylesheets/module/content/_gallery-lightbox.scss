@@ -23,7 +23,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
 
     @include mq($gallery-lightbox-sidebar-breakpoint) {
         .gallery-lightbox__item--img {
-            padding-right: $gallery-lightbox-info-width-desktop;
+            padding-right: $gallery-lightbox-sidebar-width + $gallery-lightbox-info-width-desktop;
         }
 
         .gallery-lightbox__info {
