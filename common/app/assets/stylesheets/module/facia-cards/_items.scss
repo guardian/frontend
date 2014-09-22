@@ -9,20 +9,20 @@ $fc-item-gutter: $gs-gutter / 3;
     .facia-slice__item {
         @include flex-display;
         padding-bottom: 0;
-
-        @if not $browser-supports-flexbox {
-            width: 25%;
-        }
     }
 }
 
 .fc-item {
     @include flex(1);
+    @include box-sizing(border-box);
+    display: block;
+    @include clearfix;
+
     padding-bottom: $gs-baseline * 2.5;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
+
     background-color: #ffffff;
-    display: block;
     position: relative;
 
     .stars {
@@ -183,7 +183,7 @@ $fc-item-gutter: $gs-gutter / 3;
 
 
 .l-list {
-    float: left;
+    width: 100%;
 
     .has-flex-wrap & {
         @include flex-display;
@@ -192,7 +192,6 @@ $fc-item-gutter: $gs-gutter / 3;
 }
 
 .l-list__item {
-    float: left;
 
     &:last-child {
         margin-bottom: 0;
@@ -204,10 +203,19 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
-@for $column from 1 through 4 {
-    .l-row__item--span-#{$column} {
-        @include flex(#{$column});
+// We only need this functionality for 3 & 4 column rows.
+@for $column from 3 through 4 {
+    @for $span from 1 through $column {
+        .l-row--items-#{$column} {
+            .l-row__item--span-#{$span} {
+                @include flex($span);
+                width: (100% / $column) * $span
+            }
+        }
     }
+}
+
+@for $column from 1 through 4 {
 
     .l-list--columns-#{$column} {
         .l-list__item {
