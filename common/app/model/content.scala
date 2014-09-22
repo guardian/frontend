@@ -1,5 +1,6 @@
 package model
 
+import com.gu.facia.client.models.TrailMetaData
 import com.gu.openplatform.contentapi.model.{Asset, Content => ApiContent, Element => ApiElement, Tag => ApiTag}
 import common.{LinkCounts, LinkTo, Reference}
 import conf.Configuration.facebook
@@ -122,8 +123,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val webTitle: String = delegate.webTitle
   override lazy val analyticsName = s"GFE:$section:${id.substring(id.lastIndexOf("/") + 1)}"
   override lazy val description: Option[String] = trailText
-  override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
-  override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
+  override lazy val headline: String = apiContent.metaData.flatMap(_.headline).getOrElse(fields("headline"))
+  override lazy val trailText: Option[String] = apiContent.metaData.flatMap(_.trailText).orElse(fields.get("trailText"))
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
   // Meta Data used by plugins on the page
@@ -176,22 +177,21 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .getOrElse(Nil)
 
   // Inherited from FaciaFields
-  override lazy val group: Option[String] = apiContent.metaData.get("group").flatMap(_.asOpt[String])
+  override lazy val group: Option[String] = apiContent.metaData.flatMap(_.group)
   override lazy val supporting: List[Content] = apiContent.supporting
-  override lazy val isBoosted: Boolean = apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val imageHide: Boolean = apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
-  override lazy val imageSrcWidth: Option[String] = apiContent.metaData.get("imageSrcWidth").flatMap(_.asOpt[String])
-  override lazy val imageSrcHeight: Option[String] = apiContent.metaData.get("imageSrcHeight").flatMap(_.asOpt[String])
+  override lazy val isBoosted: Boolean = apiContent.metaData.flatMap(_.isBoosted).getOrElse(false)
+  override lazy val imageHide: Boolean = apiContent.metaData.flatMap(_.imageHide).getOrElse(false)
+  override lazy val isBreaking: Boolean = apiContent.metaData.flatMap(_.isBreaking).getOrElse(false)
+  override lazy val imageSrc: Option[String] = apiContent.metaData.flatMap(_.imageSrc)
+  override lazy val imageSrcWidth: Option[String] = apiContent.metaData.flatMap(_.imageSrcWidth)
+  override lazy val imageSrcHeight: Option[String] = apiContent.metaData.flatMap(_.imageSrcHeight)
   lazy val imageElement: Option[ApiElement] = for {
     src <- imageSrc
     width <- imageSrcWidth
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height)
 
-  override lazy val showMainVideo: Boolean =
-    apiContent.metaData.get("showMainVideo").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val showMainVideo: Boolean = apiContent.metaData.flatMap(_.showMainVideo).getOrElse(false)
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 }
@@ -211,9 +211,9 @@ object Content {
     }
   }
 
-  def apply(delegate: ApiContent, supporting: List[Content], metaData: Option[Map[String, JsValue]]): Content = {
+  def apply(delegate: ApiContent, supporting: List[Content], metaData: Option[com.gu.facia.client.models.TrailMetaData]): Content = {
     metaData match {
-      case Some(meta) => apply(ApiContentWithMeta(delegate, supporting, meta))
+      case Some(meta) => apply(ApiContentWithMeta(delegate, supporting, metaData))
       case _ => apply(ApiContentWithMeta(delegate))
     }
   }
@@ -224,7 +224,7 @@ object Content {
     val contentFields: Option[Map[String, String]] = (json \ "safeFields").asOpt[Map[String, String]]
     val itemId: String = (json \ "id").as[String]
     if (Snap.isSnap(itemId)) {
-      val snapMeta: Map[String, JsValue] = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+      val snapMeta: Option[TrailMetaData] = (json \ "meta").asOpt[TrailMetaData]
       Option(
         new Snap(
           snapId = itemId,
@@ -253,7 +253,7 @@ object Content {
           ),
           supporting = (json \ "meta" \ "supporting").asOpt[List[JsValue]].getOrElse(Nil)
             .flatMap(Content.fromPressedJson),
-          metaData = (json \ "meta").asOpt[Map[String, JsValue]].getOrElse(Map.empty)
+          metaData = (json \ "meta").asOpt[TrailMetaData]
         )
         )
       )
@@ -336,15 +336,15 @@ object SnapApiContent {
 class Snap(snapId: String,
            snapSupporting: List[Content],
            snapWebPublicationDate: DateTime,
-           snapMeta: Map[String, JsValue],
+           snapMeta: Option[com.gu.facia.client.models.TrailMetaData],
            snapElements: List[ApiElement] = Nil
             ) extends Content(new ApiContentWithMeta(SnapApiContent(snapElements), supporting = snapSupporting, metaData = snapMeta)) {
 
-  val snapType: Option[String] = snapMeta.get("snapType").flatMap(_.asOpt[String])
-  val snapCss: Option[String] = snapMeta.get("snapCss").flatMap(_.asOpt[String])
-  val snapUri: Option[String] = snapMeta.get("snapUri").flatMap(_.asOpt[String])
+  val snapType: Option[String] = snapMeta.flatMap(_.snapType)
+  val snapCss: Option[String] = snapMeta.flatMap(_.snapCss)
+  val snapUri: Option[String] = snapMeta.flatMap(_.snapUri)
 
-  lazy val snapUrl: Option[String] = snapMeta.get("href").flatMap(_.asOpt[String])
+  lazy val snapUrl: Option[String] = snapMeta.flatMap(_.href)
 
   //We set this to snapId as TemplateDeduping uses this ID to dedupe
   override lazy val url: String = snapId
@@ -354,7 +354,7 @@ class Snap(snapId: String,
 
   //Trail implementations
   override lazy val shortUrl: String = ""
-  override lazy val headline: String = snapMeta.get("headline").flatMap(_.asOpt[String]).getOrElse("Link")
+  override lazy val headline: String = snapMeta.flatMap(_.headline).getOrElse("Link")
 
   //Meta implementations
   override lazy val webPublicationDate = snapWebPublicationDate
@@ -599,4 +599,4 @@ class ImageContent(content: ApiContentWithMeta) extends Content(content) {
   ) ++ mainPicture.flatMap(_.largestImage.flatMap(_.path.map("twitter:image:src" ->)))
 }
 
-case class ApiContentWithMeta(delegate: ApiContent, supporting: List[Content] = Nil, metaData: Map[String, JsValue] = Map.empty)
+case class ApiContentWithMeta(delegate: ApiContent, supporting: List[Content] = Nil, metaData: Option[com.gu.facia.client.models.TrailMetaData] = None)

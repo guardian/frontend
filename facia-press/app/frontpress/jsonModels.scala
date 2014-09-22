@@ -53,18 +53,18 @@ object ItemMeta {
   implicit lazy val jsonFormat = Json.format[ItemMeta]
 
   def fromContent(content: Content): ItemMeta = ItemMeta(
-    headline = content.apiContent.metaData.get("headline"),
-    trailText = content.apiContent.metaData.get("trailText"),
-    group = content.apiContent.metaData.get("group"),
-    isBoosted = content.apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]),
-    imageHide = content.apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]),
-    isBreaking = content.apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]),
+    headline = content.apiContent.metaData.flatMap(_.headline).map(JsString),
+    trailText = content.apiContent.metaData.flatMap(_.trailText).map(JsString),
+    group = content.apiContent.metaData.flatMap(_.group).map(JsString),
+    isBoosted = content.apiContent.metaData.flatMap(_.isBoosted),
+    imageHide = content.apiContent.metaData.flatMap(_.imageHide),
+    isBreaking = content.apiContent.metaData.flatMap(_.isBreaking),
     supporting = Option(content.supporting.map(item => Json.toJson(TrailJson.fromContent(item)))).filter(_.nonEmpty),
-    href = content.apiContent.metaData.get("href"),
-    snapType = content.apiContent.metaData.get("snapType"),
-    snapCss = content.apiContent.metaData.get("snapCss"),
-    snapUri = content.apiContent.metaData.get("snapUri"),
-    showMainVideo = content.apiContent.metaData.get("showMainVideo")
+    href = content.apiContent.metaData.flatMap(_.href).map(JsString),
+    snapType = content.apiContent.metaData.flatMap(_.snapType).map(JsString),
+    snapCss = content.apiContent.metaData.flatMap(_.snapCss).map(JsString),
+    snapUri = content.apiContent.metaData.flatMap(_.snapUri).map(JsString),
+    showMainVideo = content.apiContent.metaData.flatMap(_.showMainVideo).map(JsBoolean)
   )
 }
 

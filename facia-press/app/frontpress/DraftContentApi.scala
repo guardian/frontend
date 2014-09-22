@@ -11,12 +11,12 @@ object DraftContentApi extends ElasticSearchLiveContentApiClient {
 }
 
 object DraftCollections extends ParseCollection {
-  def retrieveItemsFromCollectionJson(collectionJson: JsValue): Seq[CollectionItem] =
-    (collectionJson \ "draft").asOpt[Seq[JsObject]].orElse((collectionJson \ "live").asOpt[Seq[JsObject]]).getOrElse(Nil).map { trail =>
+  def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.Collection): Seq[CollectionItem] =
+    collection.draft.getOrElse(Nil).map { trail =>
       CollectionItem(
-        (trail \ "id").as[String],
-        (trail \ "meta").asOpt[Map[String, JsValue]],
-        (trail \ "frontPublicationDate").asOpt[DateTime])
+        trail.id,
+        trail.meta,
+        Option(new DateTime(trail.frontPublicationDate)))
     }
 
   override val client: ContentApiClient = DraftContentApi

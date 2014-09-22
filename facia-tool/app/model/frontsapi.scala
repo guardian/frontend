@@ -1,5 +1,6 @@
 package frontsapi.model
 
+import com.gu.facia.client.models.{TrailMetaData, Trail}
 import com.gu.googleauth.UserIdentity
 import common.Logging
 import conf.Configuration
@@ -59,16 +60,6 @@ case class Config(
   collections: Map[String, Collection]
 )
 
-object Trail {
-  implicit val jsonFormat = Json.format[Trail]
-}
-
-case class Trail(
-  id: String,
-  frontPublicationDate: Option[DateTime],
-  meta: Option[Map[String, JsValue]]
-)
-
 object Block {
   implicit val jsonFormat = Json.format[Block]
 }
@@ -92,7 +83,7 @@ case class Block(
   )
 
   private def sortTrailsByGroup(trails: List[Trail]): List[Trail] = {
-    val trailGroups = trails.groupBy(_.meta.getOrElse(Map.empty).get("group").flatMap(_.asOpt[String]).map(_.toInt).getOrElse(0))
+    val trailGroups = trails.groupBy(_.meta.flatMap(_.group).map(_.toInt).getOrElse(0))
     trailGroups.keys.toList.sorted(Ordering.Int.reverse).flatMap(trailGroups.getOrElse(_, Nil))
   }
 
@@ -121,7 +112,7 @@ case class UpdateList(
   item: String,
   position: Option[String],
   after: Option[Boolean],
-  itemMeta: Option[Map[String, JsValue]],
+  itemMeta: Option[TrailMetaData],
   live: Boolean,
   draft: Boolean
 ) extends FaciaToolUpdate
@@ -263,10 +254,10 @@ trait UpdateActions extends Logging {
     val trail: Trail = blocks
       .find(_.id == update.item)
       .map { currentTrail =>
-        val newMeta = for (updateMeta <- update.itemMeta.map(itemMetaWhiteList)) yield updateMeta
+        val newMeta = for (updateMeta <- update.itemMeta) yield updateMeta
         currentTrail.copy(meta = newMeta)
       }
-      .getOrElse(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList)))
+      .getOrElse(Trail(update.item, DateTime.now.getMillis, update.itemMeta))
 
     val listWithoutItem = blocks.filterNot(_.id == update.item)
 
@@ -288,13 +279,14 @@ trait UpdateActions extends Logging {
     splitList._1 ::: (trail +: splitList._2)
   }
 
+  //TODO: Remove Whitelist
   def itemMetaWhiteList(itemMeta: Map[String, JsValue]): Map[String, JsValue] = itemMeta.filter{case (k, v) => itemMetaWhitelistFields.contains(k)}
 
   def createBlock(id: String, identity: UserIdentity, update: UpdateList): Option[Block] = {
     if (update.live)
-      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList))), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, List(Trail(update.item, DateTime.now.getMillis, update.itemMeta)), None, DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
     else
-      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, Option(DateTime.now), update.itemMeta.map(itemMetaWhiteList)))), DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
+      Option(FaciaApi.putBlock(id, Block(None, Nil, Some(List(Trail(update.item, DateTime.now.getMillis, update.itemMeta))), DateTime.now.toString, identity.fullName, identity.email, None, None, None, None), identity))
   }
 
   def capCollection(block: Block): Block =

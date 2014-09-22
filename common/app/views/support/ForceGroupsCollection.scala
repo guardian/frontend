@@ -1,19 +1,21 @@
 package views.support
 
 import model.{CollectionItems, Collection, Content}
-import play.api.libs.json.{JsValue, JsString, JsBoolean}
 
 trait FirstTwoBigItems extends CollectionItems {
-  private def setMetaFields(c: Content, fields: Map[String, JsValue]): Content = {
-    Content(apiContent = c.apiContent.copy(metaData = c.apiContent.metaData ++ fields))
-  }
-
   override lazy val items: Seq[Content] = {
     super.items match {
       case x :: y :: tail =>
-        setMetaFields(x, Map("group" -> JsString("1"), "isBoosted" -> JsBoolean(true))) ::
-          setMetaFields(y, Map("group" -> JsString("1"))) :: tail
-      case x => x.map(setMetaFields(_, Map("group" -> JsString("1"), "isBoosted" -> JsBoolean(true))))
+        Content(x.apiContent.copy(metaData = x.apiContent.metaData.map { meta =>
+          meta.copy(group = Option("1"), isBoosted = Option(true))
+        })) ::
+        Content(y.apiContent.copy(metaData = y.apiContent.metaData.map { meta =>
+            meta.copy(group = Option("1"))})) ::
+        tail
+      case x => x.map{ content =>
+        Content(content.apiContent.copy(metaData = content.apiContent.metaData.map { meta =>
+          meta.copy(group = Option("1"), isBoosted = Option(true))}))
+      }
     }
   }
 }

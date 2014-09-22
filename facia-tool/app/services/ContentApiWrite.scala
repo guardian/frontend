@@ -3,7 +3,7 @@ package services
 import common.FaciaToolMetrics.{ContentApiPutFailure, ContentApiPutSuccess}
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
-import frontsapi.model.Trail
+import com.gu.facia.client.models.{TrailMetaData, Trail}
 import model.{Snap, Config}
 import org.joda.time.DateTime
 import play.Play
@@ -22,7 +22,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   case class Item(
                    id: String,
-                   metadata: Option[Map[String, JsValue]]
+                   metadata: Option[TrailMetaData]
                    )
 
   case class ContentApiPut(
@@ -89,7 +89,7 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
 
   private def generateItems(items: List[Trail]): List[Item] =
     items.filterNot(t => Snap.isSnap(t.id)).map { trail =>
-      Item(trail.id, trail.meta.map(_.map(convertFields)))
+      Item(trail.id, trail.meta)
     }
 
   //TODO: These are in transition and will be removed
