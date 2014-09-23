@@ -1,4 +1,4 @@
-define([], function() {
+define([], function () {
 
     /*
         simple practical and flexible "finite state machine" implementation
@@ -38,21 +38,21 @@ define([], function() {
         this.states = config.states || {};
         this.context.state = config.initial || '';
         this.debug = config.debug || false;
-        this.onChangeState = config.onChangeState.bind(this.context) || function() {};
+        this.onChangeState = config.onChangeState.bind(this.context) || function () {};
     }
 
-    FiniteStateMachine.prototype.log = function() {
+    FiniteStateMachine.prototype.log = function () {
         if (this.debug && window.console) {
             window.console.log.apply(window.console, arguments);
         }
     };
 
-    FiniteStateMachine.prototype.trigger = function(event, data) {
+    FiniteStateMachine.prototype.trigger = function (event, data) {
 
         this.log('fsm: (event)', event);
 
         var state = this.context.state,
-            noop = function() {};
+            noop = function () {};
 
         (this.states[state].events[event] || noop).call(this.context, data);
 
