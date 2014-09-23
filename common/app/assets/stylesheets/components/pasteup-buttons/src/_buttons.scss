@@ -203,7 +203,7 @@ And with inline icons:
         guss-colour(tone-features-1, $pasteup-palette),
         #ffffff,
         darken(guss-colour(neutral-3, $pasteup-palette), 10%),
-        guss-colour(neutral-3, $pasteup-palette)
+        guss-colour(neutral-5, $pasteup-palette)
     );
 }
 .button--tone-comment {
@@ -219,7 +219,7 @@ And with inline icons:
         guss-colour(tone-comment-1, $pasteup-palette),
         #ffffff,
         darken(guss-colour(neutral-3, $pasteup-palette), 10%),
-        guss-colour(neutral-3, $pasteup-palette)
+        guss-colour(neutral-5, $pasteup-palette)
     );
 }
 .button--tone-live {
