@@ -11,6 +11,13 @@ object MostViewedGalleryController extends Controller with Logging with Executio
   private val page = Page("More galleries", "inpictures", "More Galleries", "more galleries")
   private val config = Config("multimedia/gallery", None, Some("more galleries"), None, Nil, Some("multimedia/gallery"))
 
+  val featuredSeries = Seq(
+    ("Photographs of the day", "/news/series/ten-best-photographs-of-the-day"),
+    ("Eyewitness", "/world/series/eyewitness"),
+    ("From the agencies", "/artanddesign/series/from-the-agencies"),
+    ("Sport picture of the day", "/sport/series/sport-picture-of-the-day")
+  )
+
   def renderMostViewed() = Action { implicit request =>
     getMostViewedGallery match {
       case Nil => Cached(60) { JsonNotFound() }
@@ -32,7 +39,8 @@ object MostViewedGalleryController extends Controller with Logging with Executio
       page,
       ForceGroupsCollection.firstTwoBig(collection),
       MultimediaContainer(),
-      1
+      1,
+      featuredSeries = featuredSeries
     )(request, templateDeduping, config)
 
     val htmlResponse = () => views.html.mostViewedGalleries(page, html)

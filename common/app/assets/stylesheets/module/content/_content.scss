@@ -169,16 +169,12 @@
 .content__headline {
     @include fs-headline(5);
     padding-bottom: $gs-baseline*2;
-    padding-top: $gs-baseline/2;
 
     @include mq(mobileLandscape) {
         @include fs-headline(7, true);
     }
     @include mq(tablet) {
-        @include fs-headline(8, true);
         padding-bottom: $gs-row-height;
-        padding-top: $gs-baseline/6;
-        border-top: 0;
     }
     a {
         &,
@@ -536,7 +532,6 @@
 
     .content__standfirst,
     .content__dateline,
-    .social__head,
     .caption--main,
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
