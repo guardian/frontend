@@ -8,6 +8,14 @@
             }
         }
     }
+
+    .fc-item--list-media-tablet {
+        @include mq(tablet) {
+            .fc-item__title {
+                @include fs-headline(2, true);
+            }
+        }
+    }
 }
 
 .facia-slice--h-ql4-ql4 {
