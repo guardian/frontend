@@ -210,12 +210,12 @@ case object QuarterQuarterQuarterQuarter extends Slice {
  */
 case object HalfQl4Ql4 extends Slice {
   val layout = SliceLayout(
-    cssClassName = "h-ql-ql",
+    cssClassName = "h-ql4-ql4",
     columns = Seq(
       SingleItem(
         colSpan = 2,
         ItemClasses(
-          mobile = "standard",
+          mobile = "list-media",
           desktop = "half"
         )
       ),
@@ -226,6 +226,41 @@ case object HalfQl4Ql4 extends Slice {
         ItemClasses(
           mobile = "list",
           desktop = "list"
+        )
+      )
+    )
+  )
+}
+
+/* ._________________.________.________.
+ * |#################|########|########|
+ * |#################|########|########|
+ * |#################|########|########|
+ * |_________________|________|________|
+ */
+case object HalfQQ extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "h-q-q",
+    columns = Seq(
+      SingleItem(
+        colSpan = 2,
+        ItemClasses(
+          mobile = "standard",
+          desktop = "half"
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard"
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard"
         )
       )
     )
@@ -273,7 +308,7 @@ case object Hl4Hl4 extends Slice {
  */
 case object Hl4QuarterQuarter extends Slice {
   val layout = SliceLayout(
-    cssClassName = "hl-hl",
+    cssClassName = "h14-q-q",
     columns = Seq(
       Rows(
         colSpan = 2,
@@ -310,22 +345,22 @@ case object Hl4QuarterQuarter extends Slice {
  */
 case object Hl4Half extends Slice {
   val layout = SliceLayout(
-    cssClassName = "hl-h",
+    cssClassName = "hl4-h",
     columns = Seq(
-      Rows(
-        colSpan = 1,
-        columns = 2,
-        rows = 4,
-        ItemClasses(
-          mobile = "list-media",
-          desktop = "list-media"
-        )
-      ),
       SingleItem(
         colSpan = 1,
         ItemClasses(
           mobile = "standard",
           desktop = "half"
+        )
+      ),
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 4,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "list-media"
         )
       )
     )
@@ -412,7 +447,7 @@ case object HalfHalf extends Slice {
         )
       ),
       SingleItem(
-        colSpan = 3,
+        colSpan = 1,
         ItemClasses(
           mobile = "standard",
           desktop = "half"

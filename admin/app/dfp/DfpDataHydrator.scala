@@ -95,18 +95,22 @@ object DfpDataHydrator extends Logging {
 
         val adUnits = (directAdUnits ++ adUnitsDerivedFromPlacements).sortBy(_.path.mkString).distinct
 
-        val geoTargets = Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
-          Option(geoTargeting.getTargetedLocations) map { locations =>
-            locations.map { location =>
-              GeoTarget(
-                location.getId,
-                optJavaInt(location.getCanonicalParentId),
-                location.getType,
-                location.getDisplayName
-              )
-            }.toSeq
-          }
-        } getOrElse Nil
+        def geoTargets(locations: GeoTargeting => Array[Location]): Seq[GeoTarget] = {
+          Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
+            Option(locations(geoTargeting)) map { locations =>
+              locations.map { location =>
+                GeoTarget(
+                  location.getId,
+                  optJavaInt(location.getCanonicalParentId),
+                  location.getType,
+                  location.getDisplayName
+                )
+              }.toSeq
+            }
+          } getOrElse Nil
+        }
+        val geoTargetsIncluded = geoTargets(_.getTargetedLocations)
+        val geoTargetsExcluded = geoTargets(_.getExcludedLocations)
 
         val customTargetSets = Option(dfpTargeting.getCustomTargeting) map { customTargeting =>
           buildCustomTargetSets(customTargeting, allCustomTargetingKeys, allCustomTargetingValues)
@@ -119,7 +123,7 @@ object DfpDataHydrator extends Logging {
           endTime = if (dfpLineItem.getUnlimitedEndDateTime) None else Some(toJodaTime(dfpLineItem.getEndDateTime)),
           isPageSkin = isPageSkin(dfpLineItem),
           sponsor = sponsor,
-          targeting = GuTargeting(adUnits, geoTargets, customTargetSets)
+          targeting = GuTargeting(adUnits, geoTargetsIncluded, geoTargetsExcluded, customTargetSets)
         )
       }
 
