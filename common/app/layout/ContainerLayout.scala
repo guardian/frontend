@@ -5,7 +5,7 @@ import slices.{ContainerDefinition, Slice}
 import views.support.TemplateDeduping
 
 object ContainerLayout extends implicits.Collections {
-  def apply(sliceDefinitions: Seq[Slice], items: Seq[Trail], nToShowOnMobile: Int = 6): ContainerLayout = {
+  def apply(sliceDefinitions: Seq[Slice], items: Seq[Trail], nToShowOnMobile: Int): ContainerLayout = {
     val cards = items.zipWithIndex map {
       case (trail, index) => Card(
         index,
