@@ -63,6 +63,13 @@ define([
             curBinding = bean.one(document, 'scroll', function() { unselect(); });
         }
 
+        bean.on(document.body, 'click', 'a', function(e) {
+            var id = e.currentTarget.href.match(/.*(#.*)/)[1];
+            if (id && $(id).hasClass('truncated-block')) {
+                mediator.emit('module:liveblog:showkeyevents', true);
+            }
+        });
+
         bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e) {
             mediator.emit('module:liveblog:showkeyevents', true);
             $('.dropdown--live-feed').addClass('dropdown--active');
