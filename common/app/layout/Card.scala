@@ -13,8 +13,8 @@ case class Card(
   hideUpTo: Option[Breakpoint]
 ) {
   def cssClasses = hideUpTo match {
-    case Some(Mobile) => "fc-show-more__hide-on-mobile"
-    case Some(Desktop) => "fc-show-more__hide"
+    case Some(Mobile) => "fc-show-more--hide-on-mobile"
+    case Some(Desktop) => "fc-show-more--hide"
     case _ => ""
   }
 }
