@@ -1,9 +1,15 @@
 {
   "name": "frontend-common-css",
   "dependencies": {
-    "guss": "~3.3.0",
     "pasteup-forms": "~4.0.0",
     "pasteup-palette": "~2.1.0",
-    "pasteup-buttons": "~0.3.0"
+    "pasteup-buttons": "~0.3.0",
+    "guss-colours": "~3.0.0",
+    "guss-css3": "~2.2.1",
+    "guss-grid-system": "~1.2.1",
+    "guss-layout": "~1.3.3",
+    "guss-rem": "~1.2.0",
+    "guss-typography": "~3.0.0",
+    "guss-webfonts": "~3.0.0"
   }
 }

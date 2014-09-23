@@ -1,15 +1,21 @@
 /**
- * Charset
- *
- * - ascii: 256 characters only, very small
- * - latin1: latin 1 character set
- * - original: full character set
+ * Base URL
+ * URL can be an absolute HTTP (`//pasteup.guim.co.uk/fonts/`) or relative (`../`)
  *
  * @type String
  *
  * @group webfonts
  */
-$guss-webfonts-charset: 'original' !default;
+$guss-webfonts-base-url: './' !default;
+
+/**
+ * Version of the fonts to use
+ *
+ * @type String
+ *
+ * @group webfonts
+ */
+$guss-webfonts-version: '0.1.0' !default;
 
 /**
  * Hinting
@@ -35,16 +41,18 @@ $guss-webfonts-hinting: 'on' !default;
  */
 $guss-webfonts-kerning: 'on' !default;
 
-
 /**
- * Base URL
- * URL can be an absolute HTTP (`//pasteup.guim.co.uk/fonts/`) or relative (`../`)
+ * Charset
+ *
+ * - ascii: 256 characters only, very small
+ * - latin1: latin 1 character set
+ * - original: full character set
  *
  * @type String
  *
  * @group webfonts
  */
-$guss-webfonts-base-url: './' !default;
+$guss-webfonts-charset: 'original' !default;
 
 /**
  * Complete path
@@ -57,7 +65,7 @@ $guss-webfonts-base-url: './' !default;
  *
  * @group webfonts
  */
-$guss-webfonts-path: 'webfonts/hinting-#{$guss-webfonts-hinting}_kerning-#{$guss-webfonts-kerning}/#{$guss-webfonts-charset}/' !default;
+$guss-webfonts-path: '#{$guss-webfonts-version}/hinting-#{$guss-webfonts-hinting}/kerning-#{$guss-webfonts-kerning}/#{$guss-webfonts-charset}/' !default;
 
 
 /**
@@ -118,46 +126,46 @@ $guss-webfonts: (
     'Guardian Agate Sans 1 Web': (
         (weight: 'regular', style: 'normal'),
         (weight: 'regular', style: 'italic'),
-        (weight: 'bold',    style: 'normal'),
-        (weight: 'bold',    style: 'italic'),
+        (weight: 'bold', style: 'normal'),
+        (weight: 'bold', style: 'italic'),
     ),
     'Guardian Egyptian Web': (
-        (weight: 'light',    style: 'normal'),
-        (weight: 'regular',  style: 'normal'),
-        (weight: 'regular',  style: 'italic'),
+        (weight: 'light', style: 'normal'),
+        (weight: 'regular', style: 'normal'),
+        (weight: 'regular', style: 'italic'),
         (weight: 'semibold', style: 'normal'),
         (weight: 'semibold', style: 'italic'),
-        (weight: 'medium',   style: 'normal'),
-        (weight: 'bold',     style: 'normal'),
-        (weight: 'bold',     style: 'italic'),
+        (weight: 'medium', style: 'normal'),
+        (weight: 'bold', style: 'normal'),
+        (weight: 'bold', style: 'italic'),
     ),
     'Guardian Sans Web': (
-        (weight: 'light',    style: 'normal'),
-        (weight: 'regular',  style: 'normal'),
+        (weight: 'light', style: 'normal'),
+        (weight: 'regular', style: 'normal'),
         (weight: 'semibold', style: 'normal'),
     ),
     'Guardian Text Egyptian Web': (
-        (weight: 'regular',  style: 'normal'),
-        (weight: 'regular',  style: 'italic'),
-        (weight: 'medium',   style: 'normal'),
-        (weight: 'medium',   style: 'italic'),
-        (weight: 'bold',     style: 'normal'),
-        (weight: 'bold',     style: 'italic'),
-        (weight: 'black',    style: 'normal'),
-        (weight: 'black',    style: 'italic'),
+        (weight: 'regular', style: 'normal'),
+        (weight: 'regular', style: 'italic'),
+        (weight: 'medium', style: 'normal'),
+        (weight: 'medium', style: 'italic'),
+        (weight: 'bold', style: 'normal'),
+        (weight: 'bold', style: 'italic'),
+        (weight: 'black', style: 'normal'),
+        (weight: 'black', style: 'italic'),
     ),
     'Guardian Text Sans Web': (
-        (weight: 'regular',  style: 'normal'),
-        (weight: 'regular',  style: 'italic'),
-        (weight: 'medium',   style: 'normal'),
-        (weight: 'medium',   style: 'italic'),
-        (weight: 'bold',     style: 'normal'),
-        (weight: 'bold',     style: 'italic'),
-        (weight: 'black',    style: 'normal'),
-        (weight: 'black',    style: 'italic'),
+        (weight: 'regular', style: 'normal'),
+        (weight: 'regular', style: 'italic'),
+        (weight: 'medium', style: 'normal'),
+        (weight: 'medium', style: 'italic'),
+        (weight: 'bold', style: 'normal'),
+        (weight: 'bold', style: 'italic'),
+        (weight: 'black', style: 'normal'),
+        (weight: 'black', style: 'italic'),
     ),
     'Guardian Compact Web': (
-        (weight: 'black',    style: 'normal'),
+        (weight: 'black', style: 'normal'),
     ),
     'Guardian Titlepiece Web': (
         (weight: 'regular', style: 'normal'),
