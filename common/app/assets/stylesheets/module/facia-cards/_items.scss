@@ -2,6 +2,7 @@ $fc-item-gutter: $gs-gutter / 3;
 
 @import 'item-layouts/fc-item--standard';
 @import 'item-layouts/fc-item--half';
+@import 'item-layouts/fc-item--three-quarters';
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-media';
 @import 'item-layouts/fc-item--list-media-large';
@@ -206,6 +207,12 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
+.fc-item--three-quarters-tablet {
+    @include mq(tablet) {
+        @include fc-item--three-quarters;
+    }
+}
+
 
 .l-list {
     width: 100%;
@@ -228,8 +235,8 @@ $fc-item-gutter: $gs-gutter / 3;
 }
 
 // We only need this functionality for 3 & 4 column rows.
-@for $column from 3 through 4 {
-    @for $span from 1 through $column {
+@for $column from 2 through 4 {
+    @for $span from 1 through 4 {
         .l-row--items-#{$column} {
             .l-row__item--span-#{$span} {
                 @include mq(tablet) {
