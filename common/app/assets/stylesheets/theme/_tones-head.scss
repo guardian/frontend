@@ -9,9 +9,9 @@
 
 @mixin tones-content {
     // Tonal article styles
-    @include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, #ffffff, 'white');
-    @include article-header-tone(comment, $c-commentAccent, $c-commentAccent2, $c-neutral1, 'black');
-    @include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, 'white');
+    @include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, $c-featureAccent, #ffffff, 'white');
+    @include article-header-tone(comment, $c-commentAccent, $c-commentAccent2, $c-neutral1, $c-neutral1, 'black');
+    @include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, #ffffff, 'white');
 
     .content__head--tonal {
         background-color: #ffffff;
@@ -19,21 +19,9 @@
         .tone-background--accent {
             padding: $gs-baseline/2 0 $gs-baseline;
         }
-        .content__headline {
-            font-weight: 200;
-        }
+
         .content__standfirst {
             margin-bottom: 0;
-        }
-        .content__headline {
-            min-height: 60px;
-        }
-        .content-meta {
-            padding-top: $gs-baseline/3;
-        }
-        .content__section,
-        .content-meta {
-            border-top: 0 !important;
         }
 
         .tone-background .content__main-column:after {
@@ -46,9 +34,7 @@
 
     /* Tonal byline / contributor image
        ========================================================================== */
-
     .content__head--tonal {
-
         .content__headline--byline {
             padding-bottom: $gs-baseline*2;
             min-height: 0;
@@ -59,6 +45,7 @@
             display: block;
             padding-top: 0;
             margin-top: -$gs-baseline*2;
+
             @include mq(tablet) {
                 margin-top: -$gs-baseline*3;
             }
@@ -71,6 +58,7 @@
             @include mq($until: mobileLandscape) {
                 margin-left: -(gs-span(1) + $gs-gutter);
             }
+
             @include mq(mobileLandscape) {
                 width: 0;
                 position: absolute;
@@ -79,10 +67,12 @@
                 right: gs-span(3);
                 max-height: gs-height(4) + ($gs-baseline*2);
             }
+
             @include mq(tablet) {
                 height: 95%;
                 min-height: gs-span(2) + ($gs-gutter*2);
             }
+
             @include mq(rightCol) {
                 height: 110%;
                 right: gs-span(1) + $gs-gutter;
@@ -95,11 +85,15 @@
 
     .content__head--byline-pic {
         .content__headline {
-
             @include mq(mobileLandscape) {
                 padding-right: gs-span(2) + $gs-gutter;
             }
-            @include mq(rightCol) {
+
+            @include mq(tablet) {
+                min-height: 60px;
+            }
+
+            @include mq(desktop) {
                 padding-right: $gs-gutter*2;
             }
         }
@@ -111,11 +105,7 @@
 
     /* Tone specific rules/overrides
        ========================================================================== */
-
     .tone-live .content__head--tonal {
-        .content-meta__label {
-            color: #e4845a;
-        }
         .content__headline {
             font-weight: normal;
         }
@@ -123,6 +113,10 @@
 
     .tone-feature--article,
     .tone-comment--article {
+        .content__headline {
+            font-weight: 200;
+        }
+
         @include mq(tablet) {
             .content__main-column--article {
                 margin-top: $gs-baseline*2;
@@ -130,20 +124,21 @@
         }
     }
 
+    .content.tone-feature {
+        .content__head--tonal {
+            .content__standfirst {
+                color: #ffffff;
+            }
+        }
+    }
+
     .content.tone-comment {
         .content__head--tonal {
-            .content__section .tone-colour {
-                @include mq($until: leftCol) {
-                    color: $c-commentDefault;
-                }
-            }
-            .content-meta__label {
-                color: $c-neutral2;
-            }
             .bullet:before,
             ul > li:before {
                 background-color: $c-commentDark;
             }
+
             .u-underline {
                 border-bottom-color: $c-commentDark;
                 &:hover {
@@ -153,12 +148,13 @@
         }
 
         .content__headline--byline .tone-colour {
-            color: $c-neutral2;
+            color: $c-commentAccent;
             &:hover {
                 text-decoration: none;
                 border-bottom: 2px solid;
             }
         }
+
         .drop-cap {
             color: #333333;
         }
