@@ -120,7 +120,7 @@
 }
 
 .content__keywords {
-    @include fs-data(4);
+    @include fs-textSans(2);
     padding-top: $gs-baseline;
     padding-bottom: $gs-baseline/3;
     
