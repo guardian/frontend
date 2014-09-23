@@ -19,7 +19,7 @@
     color: $c-neutral2-contrasted;
     text-align: right;
     @include box-sizing(border-box);
-    @include f-data;
+    @include f-textSans;
     @include font-size(12, 20);
 }
 
