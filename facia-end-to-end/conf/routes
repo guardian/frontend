@@ -16,6 +16,7 @@ GET           /logout                    controllers.OAuthLoginController.logout
 
 # static files
 GET           /humans.txt                controllers.Assets.at(path="/public", file="humans.txt")
+GET           /assets/stylesheets/*file  dev.DevAssetsController.atStylesheets(file)
 GET           /assets/*file              controllers.Assets.at(path="/public", file)
 
 ##################### NOTE ############################
