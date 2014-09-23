@@ -8,11 +8,13 @@
     @defining(templateDeduping(5, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
-                class="facia-container--default-heading
-                    @RenderClasses(Map(
-                    ("container", true),
-                    (s"container--${style.containerType}", true),
-                    ("js-container--toggle", (containerIndex > 0 && displayName.nonEmpty))))"
+                class="@GetClasses.forContainer(
+                    style,
+                    config,
+                    containerIndex,
+                    displayName.nonEmpty,
+                    Seq("facia-container--default-heading")
+                )"
                 data-link-name="@FaciaComponentName(config, collection)"
                 data-id="@config.id"
                 data-type="@style.containerType"
