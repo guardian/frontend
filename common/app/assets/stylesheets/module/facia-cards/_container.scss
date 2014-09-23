@@ -14,5 +14,12 @@
     &.container--first .facia-container__inner {
         border: 0;
     }
+.fc-show-more--hidden .fc-show-more--hide-on-mobile {
+    @include mq($until: tablet) {
+        display: none !important;
+    }
 }
 
+.fc-show-more--hidden .fc-show-more--hide {
+    display: none !important;
+}
