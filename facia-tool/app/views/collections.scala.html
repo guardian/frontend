@@ -120,9 +120,8 @@
     <!-- templates -->
 
     <script type="text/html" id="template_editor">
-        <!-- ko if: type === 'text' -->
-            <div class="editor" data-bind="
-                visible: visible">
+        <!-- ko if: type === 'text' && visible() -->
+            <div class="editor">
                 <!-- ko ifnot: meta === $root.uiOpenElement() -->
                     <a data-bind="
                         attr: {
@@ -135,13 +134,14 @@
                 <!-- /ko -->
                 <!-- ko if: meta === $root.uiOpenElement() -->
                         <textarea data-bind="
+                            hasFocus: true,
                             attr: {
                                 class: 'editor__' + key + ' element__' + key,
                                 placeholder: field() || label + '...'
                             },
                             autoResize: true,
+                            tabCycleEditors: true,
                             valueUpdate: 'afterkeydown',
-                            hasFocus: true,
                             value: overrideOrVal"></textarea>
                         <span class="editor__length" data-bind="
                             css: {'editor__length--alert': lengthAlert},
@@ -325,11 +325,9 @@
                     <!-- /ko -->
                 </div>
 
-                <a class="article__spark" target="ophan" data-bind="
+                <img class="article__spark" data-bind="
                     visible: state.sparkUrl,
-                    attr: {href: state.ophanUrl}">
-                    <img data-bind="attr: {src: state.sparkUrl}" />
-                </a>
+                    attr: {src: state.sparkUrl}" />
 
                 <div class="article__tools">
                     <a class="tool tool--small tool--small--copy" data-bind="

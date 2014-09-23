@@ -430,7 +430,7 @@ h1 {
 
 .element__trailText a,
 .element__trailText {
-    color: #333333;
+    color: #666666;
 }
 
 .article__ammends {
@@ -527,7 +527,7 @@ h1 {
 .supporting .tool--done,
 .supporting .image__overrides,
 .supporting .supporting-message {
-    display: none;
+    display: none !important;
 }
 
 input[type="text"],
@@ -584,7 +584,6 @@ select {
     padding: 1px 0 0 2px;
     border: 0;
     margin: 2px 0 -3px -2px;
-    z-index: 10;
 }
 
 .editor__revert,

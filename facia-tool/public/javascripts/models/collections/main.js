@@ -10,7 +10,6 @@ define([
     'utils/update-scrollables',
     'utils/terminate',
     'utils/human-time',
-    'utils/sanitize-html',
     'modules/list-manager',
     'modules/droppable',
     'modules/authed-ajax',
@@ -31,7 +30,6 @@ define([
     updateScrollables,
     terminate,
     humanTime,
-    sanitizeHtml,
     listManager,
     droppable,
     authedAjax,
@@ -42,21 +40,6 @@ define([
     LatestArticles,
     newItems
 ) {
-
-    ko.bindingHandlers.autoResize = {
-        update: function(el, valueAccessor) {
-            setTimeout(function() {
-                el.style.height = '1px';
-                el.style.height = (Math.max(el.scrollHeight, 19)) + 'px';
-            })
-        }
-    };
-
-    ko.bindingHandlers.saneHtml = {
-        update: function (element, valueAccessor) {
-            ko.utils.setHtml(element, sanitizeHtml(ko.utils.unwrapObservable(valueAccessor())));
-        }
-    };
 
     return function() {
 
@@ -355,5 +338,6 @@ define([
             droppable.init();
             copiedArticle.flush();
         };
+
     };
 });

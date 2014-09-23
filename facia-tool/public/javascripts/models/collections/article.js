@@ -41,8 +41,7 @@ define([
 
             overridableFields = [
                 'headline',
-                'trailText',
-                'byline'],
+                'trailText'],
 
             allFields = [
                 'isLive',
@@ -75,11 +74,6 @@ define([
                 {
                     key: 'trailText',
                     label: 'Trail text',
-                    type: 'text'
-                },
-                {
-                    key: 'byline',
-                    label: 'byline',
                     type: 'text'
                 },
                 {
@@ -459,6 +453,46 @@ define([
             this.close();
             this.save();
             return false;
+        };
+
+        function mod(n, m) {
+            return ((n % m) + m) % m;
+        }
+
+        function resize(el) {
+            el.style.height = (Math.max(el.scrollHeight, 19)) + 'px';
+        }
+
+        ko.bindingHandlers.autoResize = {
+            init: function(el) {
+                resize(el);
+                $(el).on('keydown', function() { resize(el); });
+            }
+        };
+
+        ko.bindingHandlers.tabCycleEditors = {
+            init: function(el, valueAccessor, allBindings, viewModel, bindingContext) {
+                $(el).on('keydown', function(e) {
+                    var keyCode = e.keyCode || e.which,
+                        editor,
+                        editors,
+                        nextIndex;
+
+                    if (keyCode === 9) {
+                        e.preventDefault();
+                        editor = bindingContext.$rawData;
+                        editors = _.filter(bindingContext.$parent.editors, function(ed) { return ed.type === "text" && ed.visible(); });
+                        nextIndex = mod(editors.indexOf(editor) + (e.shiftKey ? -1 : 1), editors.length);
+                        mediator.emit('ui:open', editors[nextIndex].meta);
+                    }
+                });
+            }
+        };
+
+        ko.bindingHandlers.saneHtml = {
+            update: function (element, valueAccessor) {
+                ko.utils.setHtml(element, sanitizeHtml(ko.utils.unwrapObservable(valueAccessor())));
+            }
         };
 
         return Article;
