@@ -3,7 +3,8 @@
 
 @listItem(sponsorship: dfp.Sponsorship) = {
     <li style="padding-bottom:12px">@{sponsorship.tags.mkString(", ")} (<a href="@DfpLink.lineItem(sponsorship.lineItemId)">@sponsorship.lineItemId</a>)
-        @{sponsorship.sponsor.map(sponsor => <br /> <small>[sponsored by <b>{sponsor}</b>]</small>)} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        @{sponsorship.sponsor.map(sponsor => <br /><small>[sponsored by <b>{sponsor}</b>]</small>)}
+        @if(sponsorship.countries.nonEmpty){<br /><small>Geotargeted to @{sponsorship.countries.mkString(", ")}</small>}
     </li>
 }
 

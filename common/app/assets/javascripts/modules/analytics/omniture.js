@@ -1,4 +1,3 @@
-/*global s_i_guardian:true */
 define([
     'common/utils/detect',
     'common/modules/experiments/ab',
@@ -240,8 +239,8 @@ define([
                 s.prop30 = 'non-content';
             }
 
-            if(s.getQueryParam('INTCMP') !== '') {
-                s.eVar50 = s.getQueryParam('INTCMP');
+            if(s.Util.getQueryParam('INTCMP') !== '') {
+                s.eVar50 = s.Util.getQueryParam('INTCMP');
             }
             s.eVar50 = s.getValOnce(s.eVar50,'s_intcampaign', 0);
 
@@ -297,11 +296,11 @@ define([
             // Can be used as a way to prevent other events to fire earlier than the pageview
             var self = this;
             var checkForPageViewInterval = setInterval(function() {
-                // s_i_guardian is a globally defined Image() object created by Omniture
+                // s_i_guardiangu-frontend_guardiangu-network is a globally defined Image() object created by Omniture
                 // It does not sit in the DOM tree, and seems to be the only surefire way
                 // to check if the intial beacon has been successfully sent
-                if (typeof(s_i_guardian) !== 'undefined' &&
-                    (s_i_guardian.complete === true || s_i_guardian.width + s_i_guardian.height > 0)) {
+                var img = window['s_i_guardiangu-frontend_guardiangu-network'];
+                if (typeof(img) !== 'undefined' && (img.complete === true || img.width + img.height > 0)) {
                     clearInterval(checkForPageViewInterval);
 
                     self.pageviewSent = true;

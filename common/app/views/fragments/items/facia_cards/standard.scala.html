@@ -1,4 +1,4 @@
-@(card: layout.Card, modifierClasses: String, containerIndex: Int, isList: Boolean = false, forceTone: Option[String] = None)(implicit request: RequestHeader, config: Config)
+@(card: layout.Card, modifierClasses: String, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: Config)
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
@@ -8,7 +8,7 @@
 
 @defining((card.item, card.index)) { case (trail, index) =>
 
-<li class="@GetClasses.forCollectionItem(trail) @if(isList){ l-list__item }">
+<li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-1 @if(isList){ l-list__item }@card.cssClasses">
 
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
         <div

@@ -322,7 +322,7 @@
 
         .membership-tab__update-button {
             display: block;
-            box-sizing: box-sizing();
+            @include box-sizing(border-box);
             width: 120px;
             margin: ($gs-baseline/2) 0 0;
 
