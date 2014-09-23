@@ -1,7 +1,5 @@
 package common
 
-import java.io.Serializable
-
 import play.twirl.api.Html
 import play.api.mvc.{Result, AnyContent, Request, RequestHeader}
 import conf.Configuration
