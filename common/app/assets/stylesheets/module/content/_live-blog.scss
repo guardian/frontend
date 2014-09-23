@@ -241,7 +241,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .block--notification {
-    border-top-color: $c-live;
+    border-top-color: $c-liveDefault;
 }
 
 .notify {
@@ -252,7 +252,7 @@ $block-padding-right: $gs-gutter;
     text-align: left;
     @include fs-textSans(3);
     font-weight: bold;
-    color: $c-live;
+    color: $c-liveDefault;
 }
 
 .autoupdate--has-animation {

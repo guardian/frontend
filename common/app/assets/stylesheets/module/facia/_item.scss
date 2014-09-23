@@ -103,7 +103,7 @@
 
 .item__live-indicator {
     color: #ffffff;
-    background-color: $c-live;
+    background-color: $c-liveDefault;
     @include fs-data(2, $size-only: true);
     display: inline-block;
     padding: 0 3px;
