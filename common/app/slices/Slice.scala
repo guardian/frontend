@@ -401,7 +401,7 @@ case object ThreeQuarterQuarter extends Slice {
  */
 case object QuarterThreeQuarter extends Slice {
   val layout = SliceLayout(
-    cssClassName = "q-t",
+    cssClassName = "q-qqq",
     columns = Seq(
       SingleItem(
         colSpan = 1,
@@ -414,7 +414,7 @@ case object QuarterThreeQuarter extends Slice {
         colSpan = 3,
         ItemClasses(
           mobile = "standard",
-          desktop = "three-quarters"
+          desktop = "three-quarters-right"
         )
       )
     )

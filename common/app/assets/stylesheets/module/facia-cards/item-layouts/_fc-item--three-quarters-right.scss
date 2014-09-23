@@ -20,72 +20,18 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
 */
 
+@mixin fc-item--three-quarters-right {
 
-@mixin fc-item--three-quarters {
-    padding-bottom: 0;
+    @include fc-item--three-quarters;
 
     .fc-item__media-wrapper,
     .fc-item__avatar {
-        float: right;
-    }
-
-    .fc-item__media-wrapper {
-        width: gs-span(4) + $gs-gutter;
-
-        @include mq(desktop) {
-            width: gs-span(6) + $gs-gutter;
-        }
-    }
-
-    .fc-item__avatar {
-        width: gs-span(3) + $gs-gutter;
-
-        @include mq(desktop) {
-            width: gs-span(4) + $gs-gutter;
-        }
-    }
-
-    .fc-item__title {
-        @include mq(desktop) {
-            @include fs-headline(4, true);
-        }
-    }
-
-    .fc-item__standfirst {
-        @include mq(desktop) {
-            display: block;
-        }
-    }
-
-    &.fc-item--has-no-image  {
-        .fc-item__standfirst {
-            display: block;
-        }
+        float: left;
     }
 
     .fc-item__header,
     .fc-item__standfirst,
     .fc-item__byline {
-        @include box-sizing(border-box);
-        width: gs-span(3) - $gs-gutter;
-
-        @include mq(desktop) {
-            width: gs-span(3);
-        }
-    }
-
-    &.fc-item--has-cutout,
-    &.fc-item--has-no-image {
-        min-height: gs-height(4);
-
-        .fc-item__header,
-        .fc-item__standfirst,
-        .fc-item__byline {
-            width: 100%;
-
-            @include mq(desktop) {
-                width: gs-span(6) + $gs-gutter;
-            }
-        }
+        float: right;
     }
 }
