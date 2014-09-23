@@ -44,7 +44,7 @@ define([
 ) {
 
     ko.bindingHandlers.autoResize = {
-        init: function(el, valueAccessor) {
+        update: function(el, valueAccessor) {
             setTimeout(function() {
                 el.style.height = '1px';
                 el.style.height = (Math.max(el.scrollHeight, 19)) + 'px';
