@@ -22,5 +22,6 @@ object DevAssetsController extends Controller with ExecutionContexts {
     )
   }
 
+  def atJavascripts(file: String) = at(s"javascripts/$file")
   def atStylesheets(file: String) = at(s"stylesheets/$file")
 }
