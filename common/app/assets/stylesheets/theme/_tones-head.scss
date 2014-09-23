@@ -136,11 +136,11 @@
         .content__head--tonal {
             .bullet:before,
             ul > li:before {
-                background-color: $c-commentDark;
+                background-color: fade-out($c-commentDefault, .6);
             }
 
             .u-underline {
-                border-bottom-color: $c-commentDark;
+                border-bottom-color: fade-out($c-commentDefault, .6);
                 &:hover {
                     border-bottom-color: $c-neutral1;
                 }
@@ -148,7 +148,7 @@
         }
 
         .content__headline--byline .tone-colour {
-            color: $c-commentAccent;
+            color: $c-neutral2;
             &:hover {
                 text-decoration: none;
                 border-bottom: 2px solid;
