@@ -1,9 +1,11 @@
 @(front: model.MetaData, block: (model.Config, model.Collection), collectionsSize: Int = 1, index: Int = 1)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping)
 
+@import layout.ContainerLayout
 @import views.support._
 @import views.html.fragments.containers
-@import slices._
-@import layout._
+@import slices.FixedContainers
+
+@* This nastiness will go once everything moves to the new Facia Cards pattern *@
 
 @defining(block){ case (config, collection) =>
     @config.collectionType match {
@@ -23,10 +25,7 @@
         case Some("prototype/quichelorraine")   => { @containers.quichelorraine(collection, QuicheLorraineContainer(), index)(request, templateDeduping, config) }
         case Some("prototype/raclette")         => { @containers.raclette(collection, RacletteContainer(), index)(request, templateDeduping, config) }
         case Some("comment/comment-and-debate") => { @containers.commentanddebate(collection, CommentAndDebateContainer(), index)(request, templateDeduping, config) }
-        case Some("fixed/small/slow-IV")        => { @containers.facia_cards.slice(collection, QuarterQuarterQuarterQuarter(collection), index)(request, templateDeduping, config) }
-        case Some("fixed/small/slow-V")         => { @containers.facia_cards.slice(collection, Hl4Half(collection), index)(request, templateDeduping, config) }
-        case Some("fixed/small/fast-VIII")      => { @containers.facia_cards.slice(collection, QuarterQuarterQlQl(collection), index)(request, templateDeduping, config) }
-        case Some("fixed/small/fast-X")         => { @containers.facia_cards.slice(collection, QuarterQlQlQl(collection), index)(request, templateDeduping, config) }
+        case FixedContainers(containerDefinition) => { @containers.facia_cards.container(collection, ContainerLayout(containerDefinition, collection, templateDeduping), index)(request, templateDeduping, config) }
         case _                                  => { @containers.special(collection, SpecialContainer(), index)(request, templateDeduping, config) }
     }
 }
