@@ -6,7 +6,6 @@
     .lineitem {
         @include mq($until: mobileLandscape) {
             width: percentage(1/2);
-            background-color: red;
 
             &:nth-child(n+2) {
                 display: block;

@@ -10,6 +10,10 @@
         color: $c-commercial-books-2;
     }
 
+    .container__title {
+        color: #ffffff;
+    }
+
     .container__header {
         background-color: $c-commercial-books-1;
     }
@@ -39,6 +43,10 @@
 
     .commercial--tone__highlight {
         color: $c-commercial-jobs-1;
+    }
+
+    .container__title {
+        color: #ffffff;
     }
 
     .container__header {
@@ -72,8 +80,20 @@
         color: $c-commercial-masterclasses-1;
     }
 
+    .container__title {
+        color: $c-commercial-masterclasses-2;
+    }
+
     .container__header {
         background-color: $c-commercial-masterclasses-1;
+
+        .commercial__cta.button {
+            border-color: rgba($c-commercial-masterclasses-2, 0.3);
+
+            &:hover {
+                border-color: rgba($c-commercial-masterclasses-2, 1);
+            }
+        }
     }
 
     .button--primary {
@@ -91,14 +111,6 @@
             color: $c-commercial-masterclasses-1;
         }
     }
-
-    .commercial__cta.button {
-        border-color: rgba($c-commercial-masterclasses-2, 0.3);
-
-        &:hover {
-            border-color: rgba($c-commercial-masterclasses-2, 1);
-        }
-    }
 }
 
 
@@ -109,6 +121,10 @@
 
     .commercial--tone__highlight {
         color: $c-commercial-money-1;
+    }
+
+    .container__title {
+        color: #ffffff;
     }
 
     .container__header {
@@ -140,6 +156,10 @@
 
     .commercial--tone__highlight {
         color: $c-commercial-travel-1;
+    }
+
+    .container__title {
+        color: #ffffff;
     }
 
     .container__header {

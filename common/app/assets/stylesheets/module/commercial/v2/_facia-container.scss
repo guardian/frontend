@@ -83,6 +83,11 @@
             top: 0;
             bottom: 0;
         }
+
+        .commercial__cta.button {
+            @include button-colour(transparent, #ffffff, transparent, #ffffff);
+            border-color: rgba(#ffffff, .3);
+        }
     }
 
     .container__body {
@@ -190,19 +195,14 @@
             left: $gs-gutter/2;
         }
         
-        @include mq(leftCol, wide) {
-            .hide-on-mobile-inline {
+        .hide-on-mobile-inline {
+            @include mq(leftCol, wide) {
                 display: none !important;
             }
         }
 
-        &.button {
-            @include button-colour(transparent, #ffffff, transparent, #ffffff);
-            border-color: rgba(#ffffff, .3);
-        }
-
-        @include mq($until: mobile) {
-            .i-right {
+        .i-right {
+            @include mq($until: mobile) {
                 margin: -1px -13px 0;
                 float: none;
             }
@@ -211,6 +211,7 @@
 
     .commercial__title {
         @include fs-header(3);
+        line-height: 1;
         min-height: $gs-baseline*3;
         color: #ffffff;
         margin: 0;
@@ -244,6 +245,13 @@
         }
     }
 
+    .commercial__title__logo {
+        @include fs-header(2);
+        display: inline-block;
+        position: relative;
+        top: -5px;
+    }
+
     .commercial__headline {
         @include fs-headline(2);
         margin-bottom: $gs-gutter;
@@ -251,19 +259,28 @@
 
     .commercial__desc {
         color: #ffffff;
-        @include fs-headline(2);
-        margin-top: $gs-baseline*-0.5;
+        @include fs-headline(1);
+        margin-top: $gs-baseline*-1.5;
         margin-bottom: 0;
 
-        @include mq($until: leftCol) {
-            @include fs-headline(1);
-            margin-top: $gs-baseline*-1.5;
+        @include mq(leftCol) {
+            @include fs-headline(2);
+            margin-top: 0;
         }
     }
 
     .commercial__header {
         @include fs-header(2);
         margin-bottom: $gs-baseline;
+    }
+    
+    .button--tertiary {
+        .i-arrow-black-right {
+            opacity: 0.3;
+        }
+        &:hover .i-arrow-black-right {
+            opacity: 1;
+        }
     }
 }
 
