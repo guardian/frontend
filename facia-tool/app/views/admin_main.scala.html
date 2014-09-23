@@ -1,6 +1,7 @@
 @(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None)(content: Html)
 
 @import conf.Configuration
+@import slices.FixedContainers
 
 <!DOCTYPE html>
 
@@ -55,6 +56,10 @@
                     highFrequency: @Configuration.faciatool.adminPressJobHighPushRateInMinutes,
                     standardFrequency: @Configuration.faciatool.adminPressJobStandardPushRateInMinutes
                 }
+            });
+
+            define('fixed-containers', function () {
+                return @Html(FixedContainers.idsJson);
             });
         </script>
 

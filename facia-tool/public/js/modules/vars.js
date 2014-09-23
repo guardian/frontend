@@ -1,10 +1,12 @@
 /* global _: true */
 define([
     'knockout',
-    'config'
+    'config',
+    'fixed-containers'
 ], function(
     ko,
-    pageConfig
+    pageConfig,
+    fixedContainers
 ){
     var CONST = {
         editions: ['uk', 'us', 'au'],
@@ -25,12 +27,8 @@ define([
             {name: 'comment/comment-and-debate'},
             {name: 'prototype/cassoulet'},
             {name: 'prototype/quichelorraine'},
-            {name: 'prototype/raclette'},
-            {name: 'fixed/small/slow-IV'},
-            {name: 'fixed/small/slow-V'},
-            {name: 'fixed/small/fast-VIII'},
-            {name: 'fixed/small/fast-X'}
-        ],
+            {name: 'prototype/raclette'}
+        ].concat(fixedContainers),
 
         headlineLength: 200,
         restrictedHeadlineLength: 90,
