@@ -1,9 +1,8 @@
 package test
 
-import org.scalatest.{ FeatureSpec, GivenWhenThen }
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 
-class NavFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+@DoNotDiscover class NavFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
   feature("Football Nav") {
 
@@ -11,7 +10,7 @@ class NavFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I visit the results front")
 
-      HtmlUnit("/football/results") { browser =>
+      goTo("/football/results") { browser =>
         import browser._
 
         Then("the live link should point to all live matches")
@@ -30,7 +29,7 @@ class NavFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I visit the premier league results front")
 
-      HtmlUnit("/football/premierleague/results") { browser =>
+      goTo("/football/premierleague/results") { browser =>
         import browser._
 
         Then("the live link should point to premier league live matches")
@@ -49,7 +48,7 @@ class NavFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I visit the premier league results front")
 
-      HtmlUnit("/football/premierleague/fixtures") { browser =>
+      goTo("/football/premierleague/fixtures") { browser =>
         import browser._
 
         Then("the live link should point to premier league live matches")
@@ -68,7 +67,7 @@ class NavFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
 
       Given("I visit the premier league results front")
 
-      HtmlUnit("/football/premierleague/live") { browser =>
+      goTo("/football/premierleague/live") { browser =>
         import browser._
 
         Then("the fixtures link should point to premier league fixtures")

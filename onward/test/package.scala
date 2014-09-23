@@ -1,6 +1,20 @@
 package test
 
-object `package` {
+import org.scalatest.Suites
 
-  object HtmlUnit extends EditionalisedHtmlUnit(conf.HealthCheck.testPort.toString)
+class OnwardTestSuite extends Suites (
+  new controllers.ChangeEditionControllerTest,
+  new model.TopStoriesFeatureTest,
+  new services.OnwardHealthcheckTest,
+  new ChangeViewControllerTest,
+  new MostPopularControllerTest,
+  new MostPopularFeatureTest,
+  new MostViewedVideoTest,
+  new RelatedControllerTest,
+  new RelatedFeatureTest,
+  new SeriesControllerTest,
+  new TopStoriesControllerTest,
+  new VideoInSectionTest ) with SingleServerSuite {
+
+  override lazy val port: Int = conf.HealthCheck.testPort
 }

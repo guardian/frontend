@@ -23,9 +23,7 @@
 
         @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
 
-        <section class="no-indent-article__zone facia-container__inner">
-            @fragments.footballNav(index.page)
-        </section>
+        @fragments.footballNav(index.page)
 
         @fragments.commercial.commercialComponent()
     </div>

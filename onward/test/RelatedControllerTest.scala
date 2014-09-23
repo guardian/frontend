@@ -2,17 +2,16 @@ package test
 
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 
-class RelatedControllerTest extends FlatSpec with Matchers {
+@DoNotDiscover class RelatedControllerTest extends FlatSpec with Matchers with ConfiguredTestSuite {
   
   val article = "uk/2012/aug/07/woman-torture-burglary-waterboard-surrey"
   val badArticle = "i/am/not/here"
   val articleWithoutRelated = "uk/2012/aug/29/eva-rausing-information-murder-olaf-palme"
   val callback = "aFunction"
 
-  it should "serve the correct headers when given a callback parameter" in Fake {
+  it should "serve the correct headers when given a callback parameter" in {
     val fakeRequest = FakeRequest(GET, s"/related/${article}.json?callback=$callback")
       .withHeaders("host" -> "http://localhost:9000")
         
@@ -22,7 +21,7 @@ class RelatedControllerTest extends FlatSpec with Matchers {
     contentAsString(result) should startWith(s"""${callback}({\"html\"""") // the callback
   }
 
-  it should "serve JSON when .json format is supplied" in Fake {
+  it should "serve JSON when .json format is supplied" in {
     val fakeRequest = FakeRequest(GET, s"/related/${article}.json")
       .withHeaders("host" -> "http://localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
@@ -33,12 +32,12 @@ class RelatedControllerTest extends FlatSpec with Matchers {
     contentAsString(result) should startWith("{\"html\"")
   }
 
-  it should "404 when article does not exist" in Fake {
+  it should "404 when article does not exist" in {
     val result = controllers.RelatedController.render(badArticle)(TestRequest())
     status(result) should be(404)
   }
 
-  it should "404 when article does not have related content" in Fake {
+  it should "404 when article does not have related content" in {
     val result = controllers.RelatedController.render(articleWithoutRelated)(TestRequest())
     status(result) should be(404)
   }

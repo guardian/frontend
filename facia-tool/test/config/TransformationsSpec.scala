@@ -3,8 +3,9 @@ package config
 import frontsapi.model.{Front, Collection, Config}
 import org.scalatest._
 import controllers.CreateFront
+import test.ConfiguredTestSuite
 
-class TransformationsSpec extends FlatSpec with ShouldMatchers {
+@DoNotDiscover class TransformationsSpec extends FlatSpec with ShouldMatchers with ConfiguredTestSuite {
   val collectionFixture = Collection(
     displayName = Some("New collection"),
     apiQuery = Some("backfill"),

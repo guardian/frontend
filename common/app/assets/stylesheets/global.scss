@@ -21,7 +21,7 @@
     @include pasteup-forms-fix-ie8-password-field-webfonts-display;
 }
 @include pasteup-forms-defaults;
-@import 'base/_buttons';
+@import 'components/pasteup-buttons/src/_buttons';
 
 
 /* ==========================================================================
@@ -62,6 +62,7 @@
 @import 'module/onward/_popular';
 @import 'module/onward/_breaking-news';
 @import 'module/_clamp';
+@import 'module/_submeta';
 
 
 /* ==========================================================================

@@ -2,20 +2,19 @@ package test
 
 import feed.{CompetitionSupport, Competitions, CompetitionAgent}
 import model.Competition
-import org.scalatest.FlatSpec
-import org.scalatest.Matchers
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import org.scalatest.concurrent.Eventually
 import org.scalatest.time.{Millis, Span}
 import org.joda.time.LocalDate
 
 
-class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Football with Eventually {
+@DoNotDiscover class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Football with Eventually with ConfiguredTestSuite {
 
-  override implicit lazy val patienceConfig = PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
+  override implicit val patienceConfig = PatienceConfig(timeout = scaled(Span(3000, Millis)), interval = scaled(Span(100, Millis)))
 
   lazy val seasonStart = Some(new LocalDate(2012, 8, 1))
 
-  "CompetitionAgentTest" should "load fixtures" in FakeSport {
+  "CompetitionAgentTest" should "load fixtures" in {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(
@@ -32,7 +31,7 @@ class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Footbal
     )
   }
 
-  it should "load results" in FakeSport {
+  it should "load results" in {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(
@@ -48,7 +47,7 @@ class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Footbal
     )
   }
 
-  it should "load live matches" in FakeSport {
+  it should "load live matches" in {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(
@@ -63,7 +62,7 @@ class CompetitionAgentTest extends FlatSpec with Matchers with implicits.Footbal
 
   }
 
-  it should "load league tables" in FakeSport {
+  it should "load league tables" in {
 
     object TestCompetitions extends Competitions {
       override val competitionAgents = Seq(

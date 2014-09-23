@@ -19,7 +19,7 @@ import play.api.mvc.Result
 import play.twirl.api.Html
 import scala.collection.JavaConversions._
 import java.text.DecimalFormat
-import java.util.regex.Pattern
+import java.util.regex.{Matcher, Pattern}
 
 /**
  * New 'collection' templates
@@ -427,7 +427,7 @@ class TagLinker(article: Article)(implicit val edition: Edition, implicit val re
   private val question = Pattern.quote("?")
 
   private def keywordRegex(tag: Tag) = {
-    val tagName = Pattern.quote(tag.name)
+    val tagName = Pattern.quote(Matcher.quoteReplacement(tag.name))
     s"""(.*)( |^)($tagName)( |,|$$|$dot|$question)(.*)""".r
   }
 
@@ -719,9 +719,42 @@ object GetClasses {
 
   def forNewStyleItem(trail: Trail, isFirstContainer: Boolean): String = {
     RenderClasses(
-      TrailCssClasses.toneClass(trail) +: commonItemClasses(trail, isFirstContainer, forceHasImage = false): _*
+      TrailCssClasses.toneClass(trail) +: commonFcItemClasses(trail, isFirstContainer, forceHasImage = false): _*
     )
   }
+
+  def commonFcItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
+    val itemClass = trail match {
+      case _: Gallery => Some("fc-item--gallery")
+      case _: Video => Some("fc-item--video")
+      case _: Audio => Some("fc-item--audio")
+      case _ => None
+    }
+
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")) {
+      "fc-item--has-no-image"
+    } else {
+      "fc-item--has-image"
+    }
+
+    val discussionClass = if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
+
+    Seq(
+      "fc-item",
+      imageClass,
+      discussionClass
+    ) ++ Seq(
+      itemClass,
+      if (isFirstContainer) Some("fc-item--force-image-upgrade") else None,
+      if (trail.isLive) Some("fc-item--live") else None,
+      if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
+      if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
+        Some(s"fc-item--imageadjust-${trail.imageAdjust}")
+      else
+        None
+    ).flatten ++ makeSnapClasses(trail)
+  }
+
 
   def commonItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
     val itemClass = trail match {
@@ -857,7 +890,7 @@ object GetClasses {
 
   def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
-      "container--facia-cards" +:
+      "fc-container" +:
         (commonContainerStyles(config, isFirst, hasTitle) ++
         extraClasses): _*
     )
