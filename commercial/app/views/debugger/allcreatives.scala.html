@@ -12,6 +12,7 @@ jQuery(function($) {
         $(this).addClass('current');
         return false;
     });
+
     $("#switchArticles").click(function() {
         $('.l-side-margins').removeClass("l-side-margins--layout-front").addClass("l-side-margins--layout-content");
         $('.facia-container').removeClass("facia-container--layout-front").addClass("facia-container--layout-content");
@@ -20,6 +21,7 @@ jQuery(function($) {
         $(this).addClass('current');
         return false;
     });
+
     $("#pageSkin").click(function() {
         $('body').toggleClass('has-page-skin');
        return false; 
@@ -30,9 +32,14 @@ jQuery(function($) {
         $(this).parent().next().slideToggle();
         return false;
     });
-    
+
     $("#dfp-number").on('change', function() {
         $('.commercial--dfp-multiple, .commercial--dfp-multiple--v2').removeClass("commercial--items-dfp-2 commercial--items-dfp-3 commercial--items-dfp-4").addClass("commercial--items-dfp-" + this.value);
+        return false;
+    });
+
+    $("#dfp-palette").on('change', function() {
+        $('.commercial--dfp-single--v2').removeClass("commercial--tone--brand commercial--tone--subscriptions commercial--tone--membership commercial--tone--live commercial--tone--jobs commercial--tone--networks commercial--tone--books commercial--tone--masterclasses commercial--tone--travel commercial--tone--shop commercial--tone--money commercial--tone--gardening").addClass("commercial--tone-" + this.value);
         return false;
     });
 });
@@ -40,32 +47,8 @@ jQuery(function($) {
 <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.facia.css")" />
 <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.default.css")" />
 <style>
-    .test-page-head {
-        font-size: 2rem;
-    }
-    .test-page-subhead {
-        font-size: 1.4rem;
-        margin: 1em 0;
-    }
     pre {
         font-size: 11px;
-    }
-    #dfp-ad--merchandising-high {
-        display: block;
-    }
-    .facia-switch-wrapper {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 1100;
-        background: #fff;
-        padding: 12px 10px;
-        border: 1px solid #ccc;
-    }
-    .has-page-skin {
-        background-image: url(http://adimage.guardian.co.uk/pageskins/M34681-Guardian-takeover-Skin-1600x1200-6_1.gif);
-        background-attachment: fixed;
-        background-position: 50% 0;
     }
     hr {
         height: 8px;
@@ -73,22 +56,81 @@ jQuery(function($) {
         border-top: 8px dashed #ddd;
         margin: 2em 0;
     }
+    #dfp-ad--merchandising-high {
+        display: block;
+    }
+    .test-page-head {
+        font-size: 2rem;
+    }
+    .test-page-subhead {
+        font-size: 1.4rem;
+        margin: 1em 0;
+    }
+    .facia-switch {
+        font-family: sans-serif;
+        font-size: 12px;
+        margin: 0;
+        border: 1px solid #ccc;
+        border-right: 0;
+        background: #fff;
+        box-shadow: 0 0 2px rgba(0, 0, 0 ,0.3);
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1100;
+    }
+    .facia-switch dt {
+        color: #767676;
+        padding: 6px 10px;
+        margin: 0;
+        display: inline-block;
+    }
+    .facia-switch dd {
+        border-right: 1px solid #ccc;
+        padding: 6px 10px;
+        margin: 0;
+        display: inline-block;
+    }
+    .has-page-skin {
+        background-image: url(http://adimage.guardian.co.uk/pageskins/M34681-Guardian-takeover-Skin-1600x1200-6_1.gif);
+        background-attachment: fixed;
+        background-position: 50% 0;
+    }
 </style>
 
 <div class="l-side-margins">
 
     <div class="facia-container__inner">
-        <div class="facia-switch-wrapper">
-            <a id="switchFronts" href="#">Fronts</a>
-            <a id="switchArticles" href="#" class="current">Articles</a>
-            <a id="pageSkin" href="#">Page skin?</a><br>
-            Number of items for DFP multiple template
-            <select id="dfp-number">
-                <option value="4">4</option>
-                <option value="3">3</option>
-                <option value="2">2</option>
-            </select>
-        </div>
+        <dl class="facia-switch">
+            <dt>Layout</dt>
+            <dd><a id="switchFronts" href="#">Fronts</a> • <a id="switchArticles" href="#" class="current">Articles</a> • <a id="pageSkin" href="#">Page skin?</a></dd>
+            <dt>Items in multiple DFP</dt>
+            <dd>
+                <select id="dfp-number">
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                </select>
+            </dd>
+            <dt>Palette for single DFP</dt>
+            <dd>
+                <select id="dfp-palette">
+                    <option value="brand">Brand</option>
+                    <option value="subscriptions">Subscriptions</option>
+                    <option value="membership">Membership</option>
+                    <option value="live">Live</option>
+                    <option value="jobs">Jobs</option>
+                    <option value="networks">Networks</option>
+                    <option value="books">Books</option>
+                    <option value="masterclasses">Masterclasses</option>
+                    <option value="travel">Travel</option>
+                    <option value="shop">Shop</option>
+                    <option value="money">Money</option>
+                    <option value="gardening">Gardening</option>
+                </select>
+            </dd>
+        </dl>
     </div>
 
     <article id="article" class="content content--article tone-news tone-news--article section-books">
@@ -270,7 +312,7 @@ jQuery(function($) {
         <h3 class="facia-container__inner test-page-subhead">v2 <a class="show-code">Show code</a></h3>
         <div class="facia-container__inner codeContainer">
             <pre><code>
-&lt;div class="commercial--v2 commercial--dfp--v2 commercial--dfp-single--v2 commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
+&lt;div class="commercial--v2 commercial--dfp--v2 commercial--dfp-single--v2 commercial--tone-brand commercial--dfp-[%URI_ENCODE:commercial__omnitureid%]" role="complementary"&gt;
     &lt;div class="facia-container__inner--commercial"&gt;
         &lt;div class="container__header"&gt;
             &lt;div class="container__header__inner"&gt;
@@ -310,7 +352,7 @@ jQuery(function($) {
             </code></pre>
         </div>
         <div id="dfp-ad--merchandising-high" class="ad-slot ad-slot--dfp ad-slot--merchandising-high ad-slot--commercial-component-high" data-link-name="ad slot merchandising-high" data-test-id="ad-slot-merchandising-high" data-name="merchandising-high" data-label="false" data-refresh="false" data-mobile="88,88" data-node-uid="4">
-            <div class="commercial--v2 commercial--dfp--v2 commercial--dfp-single--v2 commercial--dfp-987654321" role="complementary">
+            <div class="commercial--v2 commercial--dfp--v2 commercial--dfp-single--v2 commercial--tone-brand commercial--dfp-987654321" role="complementary">
                 <div class="facia-container__inner--commercial">
                     <div class="container__header">
                         <div class="container__header__inner">
