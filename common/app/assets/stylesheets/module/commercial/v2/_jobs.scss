@@ -23,6 +23,13 @@
             height: 60px;
         }
     }
+    
+    @include mq($from: tablet, $until:desktop) {
+        .lineitem__image {
+            width: 100%;
+            @include box-sizing(border-box);
+        }
+    }
 
     /* Line items - low relevance */
     .commercial__relevance--low {

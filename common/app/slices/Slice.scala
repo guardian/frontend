@@ -4,14 +4,15 @@ import layout._
 import model.{Collection, Trail}
 import views.support.TemplateDeduping
 
-sealed trait Slice {
+sealed trait Slice extends implicits.Collections {
   /** TODO: once we get rid of all the not-implementeds below, turn this into a val */
   def layout: SliceLayout
 
   def apply(items: Seq[Trail])(implicit templateDeduping: TemplateDeduping): (SliceWithCards, Seq[Card]) = {
     val numItems = layout.columns.map(_.numItems).sum
-    val dedupedItems = (templateDeduping(items.take(numItems)) ++ items).distinct
-    val cards = dedupedItems.zipWithIndex.map{case (trail, index) => Card(index, trail)}
+    val unusedTrailsForThisSlice = templateDeduping(numItems, items).take(numItems)
+    val dedupePrioritisedTrails = (unusedTrailsForThisSlice ++ items).distinctBy(_.url)
+    val cards = dedupePrioritisedTrails.zipWithIndex.map{case (trail, index) => Card(index, trail)}
 
     SliceWithCards.fromItems(cards, layout)
   }
@@ -19,15 +20,15 @@ sealed trait Slice {
   def apply(collection: Collection)(implicit templateDeduping: TemplateDeduping): (SliceWithCards, Seq[Card]) = {
     this(collection.items)
   }
-  
+
 }
 
 
 /* .________.________.________.________.
-* |________|________|________|________|
-* |________|________|________|________|
-* |________|________|________|________|
-*/
+ * |________|________|________|________|
+ * |________|________|________|________|
+ * |________|________|________|________|
+ */
 case object QlQlQlQl extends Slice {
   val layout = SliceLayout(
     cssClassName = "q-ql-ql-ql",
@@ -46,10 +47,10 @@ case object QlQlQlQl extends Slice {
 }
 
 /* .________.________.________.________.
-* |########|________|________|________|
-* |########|________|________|________|
-* |________|________|________|________|
-*/
+ * |########|________|________|________|
+ * |########|________|________|________|
+ * |________|________|________|________|
+ */
 case object QuarterQlQlQl extends Slice {
   val layout = SliceLayout(
     cssClassName = "q-ql-ql-ql",
