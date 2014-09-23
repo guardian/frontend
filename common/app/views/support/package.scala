@@ -731,7 +731,7 @@ object GetClasses {
       case _ => None
     }
 
-    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")) {
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
       "fc-item--has-no-image"
     } else {
       "fc-item--has-image"
@@ -749,7 +749,7 @@ object GetClasses {
       if (trail.isLive) Some("fc-item--live") else None,
       if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
       if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
-        Some(s"fc-item--imageadjust-${trail.imageAdjust}")
+        if(trail.isBoosted) Some("item--imageadjust-boost") else if(trail.imageHide) Some("item--imageadjust-hide") else Some("item--imageadjust-default")
       else
         None
     ).flatten ++ makeSnapClasses(trail)
