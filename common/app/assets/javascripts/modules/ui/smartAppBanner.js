@@ -3,12 +3,12 @@ define([
     'common/utils/template',
     'common/modules/userPrefs',
     'common/modules/ui/message'
-], function(
+], function (
     storage,
     template,
     userPrefs,
     Message
-){
+) {
 
     /**
      * Rules:
@@ -20,7 +20,7 @@ define([
 
     var IMPRESSION_KEY = 'gu.ads.appOnboardCount',
         DATA = {
-            IOS : {
+            IOS: {
                 LOGO: 'http://assets.guim.co.uk/images/apps/ios-logo.png',
                 SCREENSHOTS: 'http://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
                 LINK: 'http://ad-x.co.uk/API/click/guardian789057jo/web3537df56ab1f7e',
@@ -54,11 +54,11 @@ define([
             msg = new Message(platform);
 
         msg.show(template(tmp, DATA[platform.toUpperCase()]));
-        storage.local.set(IMPRESSION_KEY, impressions+1);
+        storage.local.set(IMPRESSION_KEY, impressions + 1);
     }
 
     function init() {
-        if(isDevice() && canShow()) {
+        if (isDevice() && canShow()) {
             showMessage();
         }
     }

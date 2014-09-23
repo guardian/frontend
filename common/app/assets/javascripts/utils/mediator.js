@@ -1,3 +1,3 @@
-define(['EventEmitter'], function(EventEmitter) {
+define(['EventEmitter'], function (EventEmitter) {
     return new EventEmitter();
 });

@@ -1,10 +1,28 @@
 .facia-slice--hl4-h {
-    @include flex-direction(row-reverse);
+    @if $browser-supports-flexbox {
+        @include flex-direction(row-reverse);
+
+        .facia-slice__item:first-child {
+            @include vertical-item-separator;
+        }
+
+        .facia-slice__item:last-child:before {
+            display: none;
+        }
+    }
 
     .fc-item--half-tablet {
         .fc-item__standfirst {
             @include mq(tablet, desktop) {
                 display: block;
+            }
+        }
+    }
+
+    .fc-item--list-media-tablet {
+        @include mq(tablet) {
+            .fc-item__title {
+                @include fs-headline(2, true);
             }
         }
     }

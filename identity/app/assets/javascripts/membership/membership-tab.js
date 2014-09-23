@@ -14,7 +14,7 @@ define([
     PaymentForm
 ) {
 
-    function Membership (context, options) {
+    function Membership(context, options) {
 
         this.context = context || document;
 
@@ -67,7 +67,7 @@ define([
     * @type {string}
     * @override
     */
-    Membership.prototype.endpoint = config.page.idUrl+'/membership.json';
+    Membership.prototype.endpoint = config.page.idUrl + '/membership.json';
 
     /**
     * @override
@@ -77,22 +77,23 @@ define([
 
     Membership.prototype.formatDate = function (date) { // eg: 4th Jun 2014
 
-        var months = [  'January',
-                        'Feburary',
-                        'March',
-                        'April',
-                        'May',
-                        'June',
-                        'July',
-                        'August',
-                        'September',
-                        'October',
-                        'November',
-                        'December'];
-
-        var day = date.getDate();
-        var month = months[date.getMonth()];
-        var year = date.getFullYear();
+        var months = [
+                'January',
+                'Feburary',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December'
+            ],
+            day = date.getDate(),
+            month = months[date.getMonth()],
+            year = date.getFullYear();
 
         return day + ' ' + month + ' ' + year;
     };
@@ -173,8 +174,8 @@ define([
                     new Date(resp.subscription.end).getTime() + (24 * 60 * 60 * 1000)
             )
         );
-        $(this.getClass('TAB_DETAILS_LIST_UPPER'),this.context).addClass('is-hidden');
-        $(rootElement,this.context).removeClass('is-hidden');
+        $(this.getClass('TAB_DETAILS_LIST_UPPER'), this.context).addClass('is-hidden');
+        $(rootElement, this.context).removeClass('is-hidden');
         $(this.getClass('NOTIFICATION_TIER_CURRENT'), rootElement).html(resp.tier);
         $(this.getClass('NOTIFICATION_TIER_TARGET'), rootElement).html('Friend');
         $(this.getClass('NOTIFICATION_INTERVAL'), rootElement).html(subscriptionDates.interval);
@@ -224,9 +225,9 @@ define([
      *   Load the css file containing the base64 encoded sprites for the card icons
      */
     Membership.prototype.addSpriteCss = function () {
-        var spriteSheetUrl = $(this.getClass('TAB')).data('sprite-url');
-        var $head  = $('head');
-        var link  = document.createElement('link');
+        var spriteSheetUrl = $(this.getClass('TAB')).data('sprite-url'),
+            $head  = $('head'),
+            link  = document.createElement('link');
         link.id   = 'membership-sprite';
         link.rel  = 'stylesheet';
         link.type = 'text/css';
@@ -284,7 +285,7 @@ define([
                 // update cc last4 with new details
                 $(self.getElem('CC_PAYMENT_LAST4')).text(resp.last4);
                 $(self.getElem('CC_PAYMENT_TYPE')).removeClass(self.currentCardTypeClass);
-                self.currentCardTypeClass = 'i-'+resp.cardType.toLowerCase().replace(' ', '-');
+                self.currentCardTypeClass = 'i-' + resp.cardType.toLowerCase().replace(' ', '-');
                 $(self.getElem('CC_PAYMENT_TYPE')).addClass(self.currentCardTypeClass);
                 // append a success message
                 self.appendSuccessMessage(self.options.messages.CHANGE_CC_SUCCESS);

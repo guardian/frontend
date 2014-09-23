@@ -8,20 +8,20 @@
 
         @fragments.headDefault(interactive)
 
-    <div class="gs-container u-cf">
-        @fragments.contentMeta(interactive)
-    </div>
-
-    <div class="gs-container" data-test-id="interactive-content-body">
-        <div class="content__main-column content__main-column--interactive">
-
-        @interactive.body.map { body =>
-            @HtmlFormat.raw(body)
-        }.getOrElse {
-            <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
-        }
+        <div class="gs-container u-cf">
+            @fragments.contentMeta(interactive)
         </div>
-    </div>
+
+        <div class="gs-container" data-test-id="interactive-content-body">
+            <div class="content__main-column content__main-column--interactive">
+
+            @interactive.body.map { body =>
+                @HtmlFormat.raw(body)
+            }.getOrElse {
+                <figure class="interactive" data-interactive="@{conf.Configuration.interactive.url}@{request.path.drop(1)}/boot.js"></figure>
+            }
+            </div>
+        </div>
     </article>
 
     @fragments.contentFooter(interactive, page.related)

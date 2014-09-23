@@ -31,12 +31,12 @@ define([
                         .join('|');
                 }
             };
-            cookies._setDocument(mockDocument);
+            cookies.setDocument(mockDocument);
         });
 
         afterEach(function () {
             clock.restore();
-            cookies._setDocument(null);
+            cookies.setDocument(null);
         });
 
         it('should be able the clean a list of cookies', function () {

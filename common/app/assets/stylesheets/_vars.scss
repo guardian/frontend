@@ -63,7 +63,7 @@ $mq-breakpoints: (
 // Show the current breakpoint in the top right corner of the viewport:
 // see https://github.com/guardian/sass-mq#seeing-the-currently-active-breakpoint
 // Uncomment to activate during development
-//$mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
+// $mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
 
 
 // Guss defaults overrides
@@ -98,7 +98,7 @@ $c-newsDefault: guss-colour(tone-news-1, $pasteup-palette);
 $c-newsAccent: guss-colour(tone-news-2, $pasteup-palette);
 
 $c-featureDefault: guss-colour(tone-features-1, $pasteup-palette);
-$c-featureAccent: guss-colour(tone-features-2, $pasteup-palette);
+$c-featureAccent: guss-colour(features-support-3, $pasteup-palette);
 $c-featureAccent2: #b62766;
 $c-featuresVariant: guss-colour(tone-features-4, $pasteup-palette);
 $c-featureMute: guss-colour(features-support-3, $pasteup-palette);
@@ -156,7 +156,7 @@ $mpu-ad-label-height: $gs-baseline*2;
 
 $action-icon-width: 23px;
 $action-icon-rightspace: 7px;
-$content-top-padding: $gs-baseline;
+$content-top-padding: $gs-baseline / 2;
 
 
 // Video.JS player

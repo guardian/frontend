@@ -8,21 +8,18 @@
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
         <header class="content__head content__head--tonal">
-
-            <div class="gs-container">
-                <div class="content__main-column content__main-column--wide">
-                    <div class="content__section">
-                        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
-                    </div>
-                </div>
-            </div>
-
             @* UPPER HEADER *@
             <div class="tone-background">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
 
-                        @fragments.meta.metaInline(article)
+                        <div class="content__labels">
+                            <div class="content__section-label">
+                                <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+                            </div>
+
+                            @fragments.meta.metaInline(article)
+                        </div>
 
                         <h1 itemprop="headline" class="content__headline js-score">@Html(article.headline)</h1>
                     </div>
@@ -33,7 +30,7 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
                         <div class="blog__last-updated-container">
-                            @if(article.isLive) {<span class="blog__live">LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                            @if(article.isLive) {<span class="blog__live"><span class="blog__live-icon"></span>LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                         </div>
 
                         <div class="blog__meta-container">
@@ -44,7 +41,6 @@
                     </div>
                 </div>
             </div>
-
         </header>
 
         <div class="gs-container">

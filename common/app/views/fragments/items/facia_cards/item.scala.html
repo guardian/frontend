@@ -10,7 +10,8 @@
 
 @defining((card.item, card.index)) { case (trail, index) =>
 
-<li class="@GetClasses.forCollectionItem(trail) l-row__item--span-@colSpan @if(isList){ l-list__item }">
+<li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
+
 
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
         <div
@@ -81,7 +82,7 @@
 
                 @meta(trail)
             </div>
-            <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
+            <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
         </div>
     }
 </li>

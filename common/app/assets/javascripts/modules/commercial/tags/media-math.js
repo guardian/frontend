@@ -4,7 +4,7 @@ define([
     'common/utils/_',
     'common/utils/config',
     'common/utils/url'
-], function(
+], function (
     contains,
     defaults,
     _,
@@ -15,20 +15,20 @@ define([
     var mediaMathBaseUrl = '//pixel.mathtag.com/event/img?mt_id=328671&mt_adid=114751',
         extractSearchTerm = function (referrer) {
             return _(referrer.split('?').pop().split('&'))
-                .filter(function(query) {
+                .filter(function (query) {
                     return contains(
-                        ['q','p','as_q','as_epq','as_oq','query','search','wd','ix'],
+                        ['q', 'p', 'as_q', 'as_epq', 'as_oq', 'query', 'search', 'wd', 'ix'],
                         query.split('=').shift()
                     );
                 })
-                .map(function(searchQuery) {
+                .map(function (searchQuery) {
                     return decodeURIComponent(searchQuery.split('=').pop().replace(/\\+/g, ' '));
                 })
                 .shift();
         };
 
     return {
-        load: function(config) {
+        load: function (config) {
             config = defaults(
                 config || {},
                 defaultConfig,
@@ -51,9 +51,9 @@ define([
                     v4: config.referrer,
                     v5: page.keywords ? page.keywords.replace(/,/g, '|') : '',
                     v6: page.contentType ? page.contentType.toLowerCase() : ''
-                };
+                },
+                img = new Image();
 
-            var img = new Image();
             img.src = mediaMathBaseUrl + '&' + urlUtils.constructQuery(tags);
             return img;
         }

@@ -426,6 +426,11 @@ define([
                             eval($breakout.html());
                         } else {
                             $iFrameParent.append($breakout.html());
+                            $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
+                                window.setTimeout(function () {
+                                    bonzo(responsiveAd).addClass('ad--responsive--open');
+                                }, 50);
+                            });
                         }
                     }
                 });
