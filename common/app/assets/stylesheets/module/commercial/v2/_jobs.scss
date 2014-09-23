@@ -28,6 +28,13 @@ $c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
     .lineitem__image {
         border: $gs-gutter/4 solid #fff;
     }
+    
+    @include mq($from: tablet, $until:desktop) {
+        .lineitem__image {
+            width: 100%;
+            @include box-sizing(border-box);
+        }
+    }
 
     /* Line items - low relevance */
     .commercial__relevance--low {
