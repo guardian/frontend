@@ -1,184 +1,164 @@
 /* ==========================================================================
    Commercial component tones
    ========================================================================== */
-/* Books */
-.commercial--tone--books {
-    $c-commercial-books-1: guss-colour(features-main-1, $pasteup-palette);
-    $c-commercial-books-2: guss-colour(features-main-2, $pasteup-palette);
+@mixin tone-commercial($tone, $colour, $accentColour, $accentTextColour, $backgroundColour, $titleColor) {
+    .commercial--tone-#{$tone} {
+        background-color: $backgroundColour;
 
-    .commercial--tone__highlight {
-        color: $c-commercial-books-2;
-    }
-
-    .container__title {
-        color: #ffffff;
-    }
-
-    .container__header {
-        background-color: $c-commercial-books-1;
-    }
-
-    .button--primary {
-        @include button-colour(
-            $c-commercial-books-2,
-            #ffffff,
-            darken($c-commercial-books-2, 10%)
-        )
-    }
-
-    .tabs__tab--selected {
-        border-color: $c-commercial-books-2;
-
-        a {
-            color: $c-commercial-books-2;
+        .commercial--tone__highlight {
+            color: $accentColour;
         }
-    }
-}
 
+        .container__header {
+            background-color: $colour;
 
-/* Jobs */
-.commercial--tone--jobs {
-    $c-commercial-jobs-1: guss-colour(news-support-2, $pasteup-palette);
-    $c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
+            .commercial__title {
+                color: $titleColor;
 
-    .commercial--tone__highlight {
-        color: $c-commercial-jobs-1;
-    }
+                a {
+                    color: $titleColor;
+                }
+            }
 
-    .container__title {
-        color: #ffffff;
-    }
+            .commercial__cta.button {
+                border-color: rgba($titleColor, 0.3);
 
-    .container__header {
-        background-color: $c-commercial-jobs-1;
-    }
-
-    .button--primary {
-        @include button-colour(
-            $c-commercial-jobs-2,
-            #ffffff,
-            darken($c-commercial-jobs-2, 10%)
-        )
-    }
-
-    .tabs__tab--selected {
-        border-color: $c-commercial-jobs-2;
-
-        a {
-            color: $c-commercial-jobs-2;
-        }
-    }
-}
-
-
-/* Masterclasses */
-.commercial--tone--masterclasses {
-    $c-commercial-masterclasses-1: guss-colour(multimedia-main-1, $pasteup-palette);
-    $c-commercial-masterclasses-2: guss-colour(multimedia-main-2, $pasteup-palette);
-
-    .commercial--tone__highlight {
-        color: $c-commercial-masterclasses-1;
-    }
-
-    .container__title {
-        color: $c-commercial-masterclasses-2;
-    }
-
-    .container__header {
-        background-color: $c-commercial-masterclasses-1;
-
-        .commercial__cta.button {
-            border-color: rgba($c-commercial-masterclasses-2, 0.3);
-
-            &:hover {
-                border-color: rgba($c-commercial-masterclasses-2, 1);
+                &:hover {
+                    border-color: rgba($titleColor, 1);
+                }
             }
         }
-    }
 
-    .button--primary {
-        @include button-colour(
-            $c-commercial-masterclasses-2,
-            $c-commercial-masterclasses-1,
-            darken($c-commercial-masterclasses-2, 3%)
-        )
-    }
+        .button--primary {
+            @include button-colour(
+                $accentColour,
+                $accentTextColour,
+                darken($accentColour, 5%)
+            )
+        }
 
-    .tabs__tab--selected {
-        border-color: $c-commercial-masterclasses-2;
-
-        a {
-            color: $c-commercial-masterclasses-1;
+        .tabs__tab--selected {
+            border-color: $accentColour;
         }
     }
 }
 
+/* .commercial--tone-brand */
+@include tone-commercial(
+    brand,
+    guss-colour(news-support-2, $pasteup-palette),
+    guss-colour(news-main-2, $pasteup-palette),
+    #ffffff,
+    $c-neutral6,
+    #ffffff
+);
 
-/* Money */
-.commercial--tone--money {
-    $c-commercial-money-1: guss-colour(news-main-2, $pasteup-palette);
-    $c-commercial-money-2: guss-colour(news-support-2, $pasteup-palette);
+/* .commercial--tone-subscriptions */
+@include tone-commercial(
+    subscriptions,
+    guss-colour(news-support-2, $pasteup-palette),
+    guss-colour(news-main-2, $pasteup-palette),
+    #ffffff,
+    lighten(guss-colour(news-support-1, $pasteup-palette), 12%),
+    #ffffff
+);
 
-    .commercial--tone__highlight {
-        color: $c-commercial-money-1;
-    }
+/* .commercial--tone-membership */
+@include tone-commercial(
+    membership,
+    guss-colour(news-main-2, $pasteup-palette),
+    guss-colour(news-main-1, $pasteup-palette),
+    #ffffff,
+    $c-neutral6,
+    $c-neutral1
+);
 
-    .container__title {
-        color: #ffffff;
-    }
+/* .commercial--tone-live */
+@include tone-commercial(
+    live,
+    guss-colour(live-main-1, $pasteup-palette),
+    guss-colour(live-support-1, $pasteup-palette),
+    #ffffff,
+    $c-neutral6,
+    #ffffff
+);
 
-    .container__header {
-        background-color: $c-commercial-money-1;
-    }
+/* .commercial--tone-jobs */
+@include tone-commercial(
+    jobs,
+    guss-colour(news-support-2, $pasteup-palette),
+    guss-colour(news-main-1, $pasteup-palette),
+    #ffffff,
+    $c-neutral6,
+    #ffffff
+);
 
-    .button--primary {
-        @include button-colour(
-            $c-commercial-money-2,
-            #ffffff,
-            darken($c-commercial-money-2, 3%)
-        )
-    }
+/* .commercial--tone-networks */
+@include tone-commercial(
+    networks,
+    guss-colour(news-support-4, $pasteup-palette),
+    guss-colour(news-main-1, $pasteup-palette),
+    #ffffff,
+    $c-neutral6,
+    #ffffff
+);
 
-    .tabs__tab--selected {
-        border-color: $c-commercial-money-2;
+/* .commercial--tone-books */
+@include tone-commercial(
+    books,
+    guss-colour(features-main-1, $pasteup-palette),
+    guss-colour(features-main-2, $pasteup-palette),
+    #ffffff,
+    $c-neutral6,
+    #ffffff
+);
 
-        a {
-            color: $c-commercial-money-2;
-        }
-    }
-}
+/* .commercial--tone-masterclasses */
+@include tone-commercial(
+    masterclasses,
+    guss-colour(multimedia-main-1, $pasteup-palette),
+    guss-colour(multimedia-main-2, $pasteup-palette),
+    $c-neutral1,
+    $c-neutral6,
+    guss-colour(multimedia-main-2, $pasteup-palette)
+);
 
+/* .commercial--tone-travel */
+@include tone-commercial(
+    travel,
+    guss-colour(maps-support-3, $pasteup-palette),
+    #72AF7E, // TODO: Add this unspecified colour to paste-up palette
+    #ffffff,
+    $c-neutral6,
+    #ffffff
+);
 
-/* Travel */
-.commercial--tone--travel {
-    $c-commercial-travel-1: guss-colour(maps-support-3, $pasteup-palette);
-    $c-commercial-travel-2: #72AF7E; // TODO: Add to paste-up palette
+/* .commercial--tone-shop */
+@include tone-commercial(
+    shop,
+    guss-colour(features-main-1, $pasteup-palette),
+    #E02B7F, // TODO: Add this unspecified colour to paste-up palette
+    #ffffff,
+    $c-neutral6,
+    #ffffff
+);
 
-    .commercial--tone__highlight {
-        color: $c-commercial-travel-1;
-    }
+/* .commercial--tone-money */
+@include tone-commercial(
+    money,
+    guss-colour(news-main-2, $pasteup-palette),
+    guss-colour(news-support-2, $pasteup-palette),
+    #ffffff,
+    $c-neutral6,
+    #ffffff
+);
 
-    .container__title {
-        color: #ffffff;
-    }
-
-    .container__header {
-        background-color: $c-commercial-travel-1;
-    }
-
-    .button--primary {
-        @include button-colour(
-            $c-commercial-travel-2,
-            #ffffff,
-            darken($c-commercial-travel-2, 3%)
-        )
-    }
-
-    .tabs__tab--selected {
-        border-color: $c-commercial-travel-2;
-
-        a {
-            color: $c-commercial-travel-2;
-        }
-    }
-}
+/* .commercial--tone-gardening */
+@include tone-commercial(
+    gardening,
+    guss-colour(maps-main-1, $pasteup-palette),
+    guss-colour(maps-support-2, $pasteup-palette),
+    #ffffff,
+    $c-neutral6,
+    #ffffff
+);
