@@ -443,18 +443,18 @@
     }
 }
 
-/**
- * Nissan advert
- */
-.ad--responsive {
-    @include mq(tablet) {
-        height: 108px;
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-        @include transition(height 1s cubic-bezier(0, 0, 0, .985));
+// Allow responsive ads to 'slide'
+@if ($old-ie == false) {
+    .ad--responsive {
+        @include mq(tablet) {
+            height: 108px;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            @include transition(height 1s cubic-bezier(0, 0, 0, .985));
 
-        &.ad--responsive--open {
-            height: 250px;
+            &.ad--responsive--open {
+                height: 250px;
+            }
         }
     }
 }
