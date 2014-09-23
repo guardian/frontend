@@ -274,7 +274,8 @@
             css: {
                 open: state.isOpen,
                 underDrag: state.underDrag,
-                hasMainMediaVideo: mainMediaType
+                hasMainMediaVideo: mainMediaType,
+                isSnap: isSnap
             }">
 
             <a class="thumb" target="article" data-bind="attr: {href: id}">
@@ -350,41 +351,43 @@
                         <i class="icon-trash"></i></a>
                 </div>
 
-                <div class="article__content is-empty" data-bind="if: state.isEmpty">
-                    <span target="article" class="is-empty__url" data-bind="
-                        text: id"></span>
-                    This content is currently unavailable
-                </div>
+                <a class="article__content" data-bind="attr: {href: id}">
 
-                <div class="article__content" data-bind="if: !state.isEmpty()">
-                    <div class="element element__headline">
-                        <a data-bind="
+                    <!-- ko if: state.isEmpty -->
+                        <div class="is-empty">
+                            <span class="is-empty__url" data-bind="text: id"></span>
+                            This content is currently unavailable
+                        </div>
+                    <!-- /ko -->
+
+                    <!-- ko ifnot: state.isEmpty -->
+                        <div class="element element__headline" data-bind="
                             html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
-                            css: {'is-empty': isSnap() && !meta.headline()},
-                            attr: {href: id}"></a>
-                    </div>
+                            css: {'is-empty': isSnap() && !meta.headline()}"></div>
 
-                    <div class="article__ammends">
-                        <!-- ko if: fields.isLive() === 'false' -->
-                            <span data-bind="
-                                css: {
-                                    'takedown': fields.firstPublicationDate(),
-                                    'draft':   !fields.firstPublicationDate()
-                                },
-                                text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
-                        <!-- /ko -->
+                        <div class="article__ammends">
+                            <!-- ko if: fields.isLive() === 'false' -->
+                                <span data-bind="
+                                    css: {
+                                        'takedown': fields.firstPublicationDate(),
+                                        'draft':   !fields.firstPublicationDate()
+                                    },
+                                    text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
+                            <!-- /ko -->
 
-                        <!-- ko if: isSnap -->
-                            <span data-bind="text: meta.snapCss() || 'snap'"></span>
-                        <!-- /ko -->
+                            <!-- ko if: isSnap -->
+                                <span class="snap" data-bind="text: meta.snapCss() || 'snap'"></span>
+                            <!-- /ko -->
 
-                        <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
+                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
 
-                        <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                            <span><span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span></span>
-                        <!-- /ko -->
-                    </div>
-                </div>
+                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
+                                <span><span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span></span>
+                            <!-- /ko -->
+                        </div>
+                    <!-- /ko -->
+                </a>
+
             </div>
         </div>
 

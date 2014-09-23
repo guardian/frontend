@@ -381,7 +381,9 @@ h1 {
 }
 
 .article__content {
+    display: block;
     margin: 0 130px 0 85px;
+    min-height: 50px;
 }
 
 .article__content .icon-pencil {
@@ -433,10 +435,6 @@ h1 {
     color: #666666;
 }
 
-.article__ammends {
-    font-size: 12px;
-}
-
 .article__ammends .draft {
     text-transform: uppercase;
     font-weight: bold;
@@ -447,6 +445,11 @@ h1 {
     text-transform: uppercase;
     font-weight: bold;
     color: #DD4B39;
+}
+
+.article__ammends .snap {
+    text-transform: uppercase;
+    color: #ffc107;
 }
 
 .is-empty {
@@ -608,7 +611,6 @@ select {
 }
 
 .editor--boolean {
-    font-size: 12px;
     display: inline-block;
 }
 
