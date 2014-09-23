@@ -1,4 +1,4 @@
-@(card: layout.Card, modifierClasses: String, containerIndex: Int, isList: Boolean = false, forceTone: Option[String] = None)(implicit request: RequestHeader, config: Config)
+@(card: layout.Card, modifierClasses: String, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: Config)
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
