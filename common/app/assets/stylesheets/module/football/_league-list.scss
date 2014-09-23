@@ -1,5 +1,5 @@
 .football-leagues {
-    @include fs-data(4);
+    @include fs-textSans(4);
     margin: $gs-baseline 0 $gs-baseline*2;
 
     @include mq(tablet) {
