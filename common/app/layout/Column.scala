@@ -6,7 +6,7 @@ case class ItemClasses(mobile: String, desktop: String) {
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column])
 
-sealed trait  Column {
+sealed trait Column {
   def numItems: Int
 }
 
@@ -44,5 +44,14 @@ object SliceWithCards {
   }
 }
 
-case class SliceWithCards(cssClassName: String, columns: Seq[ColumnAndCards])
+case class SliceWithCards(cssClassName: String, columns: Seq[ColumnAndCards]) {
+  def numberOfColumns = (columns map { columnAndCards: ColumnAndCards =>
+    columnAndCards.column match {
+      case Rows(_, cols, _, _) => cols
+      case _ => 1
+    }
+  }).sum
+}
+
+
 case class ColumnAndCards(column: Column, cards: Seq[Card])
