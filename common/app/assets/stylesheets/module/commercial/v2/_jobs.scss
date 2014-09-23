@@ -1,25 +1,10 @@
 /* ==========================================================================
    Jobs component
    ========================================================================== */
-$c-commercial-jobs-1: guss-colour(news-support-2, $pasteup-palette);
-$c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
-
 .commercial--jobs--v2 {
-
-    /* Colours */
-    background-color: $c-neutral6;
-
-    .container__header {
-        background-color: $c-commercial-jobs-1;
-    }
-
-    .lineitem__meta__highlight {
-        color: $c-commercial-jobs-1;
-    }
-
     /* Logo adjustment */
-    @include mq(leftCol) {
-        .i-jobs-logo {
+    .i-jobs-logo {
+        @include mq(leftCol) {
             margin-left: 7px;
         }
     }
@@ -43,6 +28,7 @@ $c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
             .lineitem__image {
                 float: left;
                 width: 120px;
+                width: 100%;
                 position: absolute;
                 left: 0;
                 top: $gs-baseline/2;
@@ -73,7 +59,6 @@ $c-commercial-jobs-2: guss-colour(news-main-1, $pasteup-palette);
         float: left;
 
         &:last-child .commercial--jobs__sector__link {
-            color: $c-commercial-jobs-2;
             font-weight: bold;
         }
 

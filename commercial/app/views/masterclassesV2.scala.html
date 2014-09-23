@@ -3,7 +3,7 @@
 @import conf.Configuration
 
 @defining(("1_0", "2014-05-23", "low")) { case (version, date, relevance) =>
-    <div class="commercial--v2 commercial--masterclasses--v2 commercial--low">
+    <div class="commercial--v2 commercial--masterclasses--v2 commercial--tone--masterclasses commercial--low">
         <div class="facia-container__inner--commercial">
 
             <div class="container__header">
@@ -32,12 +32,12 @@
                                 }
                                 <h4 class="lineitem__title">@event.eventBriteEvent.name</h4>
                                 <p class="lineitem__meta">
-                                    <span class="lineitem__meta__strong">@event.eventBriteEvent.readableDate &#20; <span class="lineitem__meta__highlight">@event.eventBriteEvent.displayPrice</span></span><br/>
+                                    <span class="lineitem__meta__strong">@event.eventBriteEvent.readableDate &#20; <span class="commercial--tone__highlight">@event.eventBriteEvent.displayPrice</span></span><br/>
                                     @event.eventBriteEvent.venue.description
                                 </p>
                             </a>
                             <a class="lineitem__cta button button--primary button--small" href="@AdLink{@event.eventBriteEvent.guardianUrl}" data-link-name="merchandising-masterclasses-s-v@{version}_@{date}-@{relevance}-@event.eventBriteEvent.name">
-                                Book now<i class="i i-arrow-white-right i-right"></i>
+                                Book now<i class="i i-arrow-black-right i-right"></i>
                             </a>
                         </li>
                     }

@@ -1,7 +1,9 @@
 /* ==========================================================================
    Commercial container layout adaptions
    ========================================================================== */
-.facia-container .commercial--v2 {
+.commercial--v2 {
+    background-color: $c-neutral6;
+
     .facia-container__inner--commercial {
         position: relative;
         overflow: hidden;
@@ -65,6 +67,7 @@
     }
 
     .container__header {
+        background-color: $c-neutral2;
         height: 100%;
 
         @include mq(leftCol) {
@@ -269,7 +272,7 @@
    Commercial container layout adaptions for front pages with page skins
    Update once breakpoints synced
    ========================================================================== */
-.facia-container--layout-front .commercial--v2 {
+.commercial--v2 {
     .has-page-skin & {
         @include mq(wide) {
             .container__header__inner,

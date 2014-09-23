@@ -1,22 +1,7 @@
 /* ==========================================================================
    Travel component
    ========================================================================== */
-$c-commercial-travel-1: guss-colour(maps-support-3, $pasteup-palette);
-$c-commercial-travel-2: guss-colour(maps-main-1, $pasteup-palette);
-
 .commercial--travel--v2 {
-
-    /* Colours */
-    background-color: $c-neutral6;
-
-    .container__header {
-        background-color: $c-commercial-travel-1;
-    }
-
-    .lineitem__meta__highlight {
-        color: $c-commercial-travel-1;
-    }
-
     /* Line items */
     .lineitem {
         @include mq($until: tablet) {

@@ -7,7 +7,7 @@
 </style>
 
 @defining(("1_0", "2014-05-23")) { case (version, date) =>
-    <div class="commercial--v2 commercial--books--v2 commercial--medium" role="complementary">
+    <div class="commercial--v2 commercial--books--v2 commercial--tone--books commercial--medium" role="complementary">
         <div class="facia-container__inner--commercial">
 
             <div class="container__header">
@@ -55,7 +55,7 @@
                                 RRP &pound;@("%.2f".format(price))<br/>
                             }
                             @book.offerPrice.map { price =>
-                                <span class="lineitem__meta__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
+                                <strong class="commercial--tone__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></strong>
                                 <meta itemprop="priceCurrency" content="GBP"/>
                             }
                             </p>

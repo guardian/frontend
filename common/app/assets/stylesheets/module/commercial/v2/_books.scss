@@ -1,23 +1,7 @@
 /* ==========================================================================
    Books components
    ========================================================================== */
-$c-commercial-books-1: guss-colour(features-main-2, $pasteup-palette);
-$c-commercial-books-2: guss-colour(features-support-1, $pasteup-palette);
-
 .commercial--books--v2 {
-
-    /* Colours */
-    background-color: $c-neutral6;
-
-    .container__header {
-        background-color: $c-commercial-books-1;
-    }
-
-    .lineitem__meta__highlight {
-        color: $c-commercial-books-2;
-        font-weight: bold;
-    }
-
     /* Line items */
     .lineitem {
         @include mq($until: mobileLandscape) {

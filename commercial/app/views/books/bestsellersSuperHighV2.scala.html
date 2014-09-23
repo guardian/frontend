@@ -6,7 +6,7 @@
 
 @defining(("1_0", "2014-07-10")) { case (version, date) =>
     
-<div class="commercial--v2 commercial--books--v2 commercial--v-high" role="complementary" itemscope itemtype="http://schema.org/Book">
+<div class="commercial--v2 commercial--books--v2 commercial--tone--books commercial--v-high" role="complementary" itemscope itemtype="http://schema.org/Book">
     <h3 class="commercial__title">
         <a href="@AdLink{http://www.guardianbookshop.co.uk/}" data-link-name="merchandising-bookshop-v@{version}_@{date}-superHigh-visit-shop">
             <i class="i i-marque-54"></i><i class="i i-guardian-logo-commercial"></i><span class="u-h">The Guardian</span>
@@ -30,7 +30,7 @@
                 RRP &pound;@("%.2f".format(price))<br/>
             }
             @book.offerPrice.map { price =>
-                <span class="lineitem__meta__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></span>
+                <strong class="commercial--tone__highlight">Our price: <span itemprop="price">&pound;@("%.2f".format(price))</span></strong>
                 <meta itemprop="priceCurrency" content="GBP"/>
             }
             </p>

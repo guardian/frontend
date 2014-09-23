@@ -1,22 +1,7 @@
 /* ==========================================================================
    Masterclass component
    ========================================================================== */
-$c-commercial-masterclasses-1: guss-colour(live-support-3, $pasteup-palette);
-$c-commercial-masterclasses-2: guss-colour(live-support-1, $pasteup-palette);
-
 .commercial--masterclasses--v2 {
-
-    /* Colours */
-    background-color: $c-neutral6;
-
-    .container__header {
-        background-color: $c-commercial-masterclasses-1;
-    }
-
-    .lineitem__meta__highlight {
-        color: $c-commercial-masterclasses-1;
-    }
-
     /* Line items */
     .lineitem {
         @include mq($until: tablet) {

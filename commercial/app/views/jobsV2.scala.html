@@ -1,7 +1,7 @@
 @(jobs: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
 
 @defining("http://jobs.theguardian.com", "0_2", "2014-04-30") { case (jobsHost, version, date) =>
-    <div class="commercial--v2 commercial--jobs--v2 commercial--low">
+    <div class="commercial--v2 commercial--jobs--v2 commercial--tone--jobs commercial--low">
         <div class="facia-container__inner--commercial">
 
             <div class="container__header">
@@ -37,7 +37,7 @@
                             Seq("", "All sectors »")
                         ).map { sector =>
                             <li class="commercial--jobs__sector">
-                                <a class="commercial--jobs__sector__link" href="@AdLink{@jobsHost/@sector(0)}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-sector-@if(sector(0).nonEmpty){sector(0)}else{all}">@sector(1)</a>
+                                <a class="commercial--jobs__sector__link commercial--tone__highlight" href="@AdLink{@jobsHost/@sector(0)}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-sector-@if(sector(0).nonEmpty){sector(0)}else{all}">@sector(1)</a>
                             </li>
                         }
                     </ul>
@@ -51,7 +51,7 @@
                                     <img class="lineitem__image" src="@job.recruiterLogoUrl" alt=""/>
                                     <h4 class="lineitem__title">@job.title</h4>
                                     <p class="lineitem__meta">
-                                        <span class="lineitem__meta__highlight">@job.recruiterName</span><br/>
+                                        <span class="commercial--tone__highlight">@job.recruiterName</span><br/>
                                         @job.locationDescription - @job.shortSalaryDescription
                                     </p>
                                 </a>
