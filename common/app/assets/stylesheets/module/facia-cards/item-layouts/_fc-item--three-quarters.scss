@@ -71,6 +71,10 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
         @include mq(desktop) {
             width: gs-span(3);
+
+            @if(not $browser-supports-flexbox) {
+                width: gs-span(3) - $gs-gutter;
+            }
         }
     }
 
