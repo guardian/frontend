@@ -42,6 +42,7 @@
         @include mq(leftCol) {
             margin-left: -($left-column + $gs-gutter);
         }
+
         @include mq(wide) {
             margin-left: -($left-column-wide + $gs-gutter);
         }

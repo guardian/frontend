@@ -43,7 +43,7 @@
 
     .content__series-label {
         &:before {
-            color: rgba($c-neutral3, .5);
+            color: fade-out($c-neutral3, .5);
         }
 
         .tone-colour {

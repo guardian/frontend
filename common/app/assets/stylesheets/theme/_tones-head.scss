@@ -45,6 +45,7 @@
             display: block;
             padding-top: 0;
             margin-top: -$gs-baseline*2;
+
             @include mq(tablet) {
                 margin-top: -$gs-baseline*3;
             }
@@ -57,6 +58,7 @@
             @include mq($until: mobileLandscape) {
                 margin-left: -(gs-span(1) + $gs-gutter);
             }
+
             @include mq(mobileLandscape) {
                 width: 0;
                 position: absolute;
@@ -65,10 +67,12 @@
                 right: gs-span(3);
                 max-height: gs-height(4) + ($gs-baseline*2);
             }
+
             @include mq(tablet) {
                 height: 95%;
                 min-height: gs-span(2) + ($gs-gutter*2);
             }
+
             @include mq(rightCol) {
                 height: 110%;
                 right: gs-span(1) + $gs-gutter;
@@ -84,9 +88,11 @@
             @include mq(mobileLandscape) {
                 padding-right: gs-span(2) + $gs-gutter;
             }
+
             @include mq(tablet) {
                 min-height: 60px;
             }
+
             @include mq(desktop) {
                 padding-right: $gs-gutter*2;
             }
@@ -132,6 +138,7 @@
             ul > li:before {
                 background-color: $c-commentDark;
             }
+
             .u-underline {
                 border-bottom-color: $c-commentDark;
                 &:hover {
@@ -147,6 +154,7 @@
                 border-bottom: 2px solid;
             }
         }
+
         .drop-cap {
             color: #333333;
         }
