@@ -46,7 +46,7 @@
         }
         .commercial--masterclasses__class__date,
         .commercial--masterclasses__class__meta {
-            @include fs-data(3);
+            @include fs-textSans(2);
             color: $c-neutral2;
         }
         .commercial--masterclasses__class__date {

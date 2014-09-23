@@ -61,6 +61,7 @@ $c-commercial-books-dark: #630d4c;
         padding-top: 0;
     }
     .lineitem__meta {
+        background-color: red !important;
         color: $c-neutral1;
         @include fs-textSans(1);
     }

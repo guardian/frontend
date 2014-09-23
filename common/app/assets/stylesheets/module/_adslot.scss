@@ -228,7 +228,7 @@
     float: left;
     clear: left;
     padding-left: $gs-gutter/2;
-    @include fs-data(3);
+    @include fs-textSans(3);
 }
 .ad-slot--sponsored__label {
     margin-bottom: $gs-baseline/3;
@@ -275,7 +275,7 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help {
-        @include fs-data(3);
+        @include fs-textSans(3);
     }
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
