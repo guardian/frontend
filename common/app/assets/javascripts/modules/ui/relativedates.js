@@ -180,8 +180,6 @@ define([
                                   notAfter: opts.notAfter
                                });
 
-            $el.removeClass('js-timestamp');
-
             if (relativeDate) {
                 // If we find .timestamp__text (facia), use that instead
                 var targetEl = $el[0].querySelector('.timestamp__text') || $el[0];
