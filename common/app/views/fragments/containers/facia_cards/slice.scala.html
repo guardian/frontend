@@ -2,8 +2,8 @@
 
 @import views.support.GetClasses
 @import layout.{ColumnAndCards, SingleItem, Rows}
-@import views.html.fragments.containers.show_more
-@import views.html.fragments.items.facia_cards.standard
+@import views.html.fragments.containers.facia_cards.show_more
+@import views.html.fragments.items.facia_cards.item
 @import model.FaciaComponentName
 @import common.LinkTo
 
@@ -41,7 +41,7 @@
 
                                 case SingleItem(colSpan, itemClasses) => {
                                     @cards.headOption.map { card =>
-                                        @standard(card, itemClasses.classes, containerIndex, false, colSpan)
+                                        @item(card, itemClasses.classes, containerIndex, false, colSpan)
                                     }
                                 }
 
@@ -50,7 +50,7 @@
                                         <ul class="u-unstyled l-list l-list--columns-@columns l-list--rows-@rows">
                                             @if(cards.nonEmpty) {
                                                 @cards.map{ card =>
-                                                    @standard(card, itemClasses.classes, containerIndex, isList = true)
+                                                    @item(card, itemClasses.classes, containerIndex, isList = true)
                                                 }
                                             }
                                         </ul>
