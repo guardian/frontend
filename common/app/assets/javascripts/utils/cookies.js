@@ -34,10 +34,10 @@ define([
 
     function remove(name, currentDomainOnly) {
         // Remove cookie, implicitly using the document's domain.
-        _document().cookie = name + '=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        getDocument().cookie = name + '=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         if (!currentDomainOnly) {
             // also remove from the short domain
-            _document().cookie =
+            getDocument().cookie =
                 name + '=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=' + getShortDomain() + ';';
         }
     }
@@ -53,7 +53,7 @@ define([
             expires.setDate(1);
         }
 
-        _document().cookie =
+        getDocument().cookie =
             name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
     }
 
@@ -61,7 +61,7 @@ define([
         if (minutesToLive) {
             var expires = new Date();
             expires.setMinutes(expires.getMinutes() + minutesToLive);
-            _document().cookie =
+            getDocument().cookie =
                 name + '=' + value + '; path=/; expires=' + expires.toUTCString() + '; domain=' + getShortDomain() + ';';
         } else {
             add(name, value);
@@ -69,13 +69,13 @@ define([
     }
 
     function addSessionCookie(name, value) {
-        _document().cookie = name + '=' + value + '; path=/; domain=' + getShortDomain() + ';';
+        getDocument().cookie = name + '=' + value + '; path=/; domain=' + getShortDomain() + ';';
     }
 
     function getCookieValues(name) {
         var cookieVals = [],
             nameEq = name + '=',
-            cookies = _document().cookie.split(';');
+            cookies = getDocument().cookie.split(';');
 
         forEach(cookies, function (cookie) {
             while (cookie.charAt(0) === ' ') {
@@ -100,11 +100,11 @@ define([
         }
     }
 
-    function _setDocument(d) {
+    function setDocument(d) {
         documentObject = d;
     }
 
-    function _document() {
+    function getDocument() {
         return (documentObject || document);
     }
 
@@ -116,7 +116,7 @@ define([
         addForMinutes: addForMinutes,
         remove: remove,
         get: get,
-        _setDocument: _setDocument
+        setDocument: setDocument
     };
 
 });

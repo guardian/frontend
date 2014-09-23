@@ -31,7 +31,7 @@ define([
     ) {
     var modules = {
 
-            showSnaps: function() {
+            showSnaps: function () {
                 snaps.init();
             },
 
@@ -69,7 +69,7 @@ define([
                 });
             },
 
-            upgradeMostPopularToGeo: function(config) {
+            upgradeMostPopularToGeo: function (config) {
                 if (config.page.contentType === 'Network Front' && config.switches.geoMostPopular) {
                     new GeoMostPopularFront(mediator, config).go();
                 }
