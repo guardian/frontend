@@ -17,7 +17,8 @@ define([
     'common/modules/ui/autoupdate',
     'common/modules/ui/message',
     'common/modules/ui/notification-counter',
-    'common/bootstraps/article'
+    'common/bootstraps/article',
+    'common/modules/ui/relativedates'
 ], function (
     bean,
     bonzo,
@@ -37,7 +38,8 @@ define([
     AutoUpdate,
     Message,
     NotificationCounter,
-    article
+    article,
+    RelativeDates
 ) {
     'use strict';
 
@@ -214,6 +216,17 @@ define([
 
                 releaseMessage.show(msg);
             }
+        },
+
+        keepTimestampsCurrent: function() {
+            var dates = RelativeDates;
+            window.setInterval(
+                function() {
+                    dates.init();
+                },
+                60000
+            );
+
         }
     };
 
@@ -223,6 +236,7 @@ define([
         modules.createTimeline();
         modules.createAutoRefresh();
         modules.showFootballLiveBlogMessage();
+        modules.keepTimestampsCurrent();
 
         // re-use modules from article bootstrap
         article.modules.initOpen(config);
