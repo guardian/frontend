@@ -190,11 +190,6 @@
             border-bottom: 0;
         }
 
-        .social__head {
-            color: $c-neutral3;
-            padding: $gs-baseline/4 0;
-        }
-
         @include mq(tablet, leftCol) {
             .byline,
             .content__dateline {
@@ -230,10 +225,4 @@
         }
     }
 
-}
-
-.container--gallery {
-    .social__head {
-        color: $c-neutral7;
-    }
 }
