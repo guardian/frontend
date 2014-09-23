@@ -1,5 +1,7 @@
 package slices
 
+import play.api.libs.json.Json
+
 object FixedContainers {
   import ContainerDefinition.{ofSlices => slices}
 
@@ -9,6 +11,8 @@ object FixedContainers {
     "fixed/small/fast-VIII" -> slices(QuarterQuarterQlQl),
     "fixed/small/fast-X" -> slices(QuarterQlQlQl)
   )
+
+  val idsJson = Json.stringify(Json.toJson(all.keys.map(id => ContainerJsonConfig(id, None))))
 
   def unapply(collectionType: Option[String]): Option[ContainerDefinition] =
     collectionType.flatMap(all.lift)
