@@ -562,7 +562,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   lazy val lightbox: JsObject = {
     val imageContainers = galleryImages.filter(_.isGallery)
     val imageJson = imageContainers.map{ imgContainer =>
-      imgContainer.largestImage.map { img =>
+      imgContainer.largestEditorialCrop.map { img =>
         JsObject(Seq(
           "caption" -> JsString(img.caption.getOrElse("")),
           "credit" -> JsString(img.credit.getOrElse("")),
