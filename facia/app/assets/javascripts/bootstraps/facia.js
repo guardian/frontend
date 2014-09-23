@@ -28,64 +28,64 @@ define([
     ContainerShowMore,
     ContainerToggle,
     GeoMostPopularFront
-) {
+    ) {
     var modules = {
 
-        showSnaps: function() {
-            snaps.init();
-        },
+            showSnaps: function() {
+                snaps.init();
+            },
 
-        showContainerShowMore: function () {
-            var containerShowMoreAdd = function(config, context) {
-                var c = context || document;
-                $('.js-container--show-more', c).each(function(container) {
-                    new ContainerShowMore(container).addShowMore();
-                });
+            showContainerShowMore: function () {
+                var containerShowMoreAdd = function (config, context) {
+                    var c = context || document;
+                    $('.js-container--show-more', c).each(function (container) {
+                        new ContainerShowMore(container).addShowMore();
+                    });
 
-                $('.js-container--fc-show-more', c).each(function (container) {
-                    containerFcShowMore(container);
+                    $('.js-container--fc-show-more', c).each(function (container) {
+                        containerFcShowMore(container);
+                    });
+                };
+                mediator.addListeners({
+                    'page:front:ready': containerShowMoreAdd
                 });
-            };
-            mediator.addListeners({
-                'page:front:ready': containerShowMoreAdd
-            });
-        },
+            },
 
-        showContainerToggle: function () {
-            var containerToggleAdd = function(config, context) {
-                var c = context || document;
-                $('.js-container--toggle', c).each(function(container) {
-                    new ContainerToggle(container).addToggle();
+            showContainerToggle: function () {
+                var containerToggleAdd = function (config, context) {
+                    var c = context || document;
+                    $('.js-container--toggle', c).each(function (container) {
+                        new ContainerToggle(container).addToggle();
+                    });
+                };
+                mediator.addListeners({
+                    'page:front:ready': containerToggleAdd,
+                    'ui:container-toggle:add':  containerToggleAdd
                 });
-            };
-            mediator.addListeners({
-                'page:front:ready': containerToggleAdd,
-                'ui:container-toggle:add':  containerToggleAdd
-            });
-            mediator.on(/page:front:ready|ui:container-toggle:add/, function(config, context) {
-                $('.js-container--toggle', context).each(function(container) {
-                    new ContainerToggle(container).addToggle();
+                mediator.on(/page:front:ready|ui:container-toggle:add/, function (config, context) {
+                    $('.js-container--toggle', context).each(function (container) {
+                        new ContainerToggle(container).addToggle();
+                    });
                 });
-            });
-        },
+            },
 
-        upgradeMostPopularToGeo: function(config) {
-            if (config.page.contentType === 'Network Front' && config.switches.geoMostPopular) {
-                new GeoMostPopularFront(mediator, config).go();
+            upgradeMostPopularToGeo: function(config) {
+                if (config.page.contentType === 'Network Front' && config.switches.geoMostPopular) {
+                    new GeoMostPopularFront(mediator, config).go();
+                }
             }
-        }
-    };
+        },
 
-    var ready = function (config, context) {
-        if (!this.initialised) {
-            this.initialised = true;
-            modules.showSnaps();
-            modules.showContainerShowMore();
-            modules.showContainerToggle();
-            modules.upgradeMostPopularToGeo(config);
-        }
-        mediator.emit('page:front:ready', config, context);
-    };
+        ready = function (config, context) {
+            if (!this.initialised) {
+                this.initialised = true;
+                modules.showSnaps();
+                modules.showContainerShowMore();
+                modules.showContainerToggle();
+                modules.upgradeMostPopularToGeo(config);
+            }
+            mediator.emit('page:front:ready', config, context);
+        };
 
     return {
         init: ready

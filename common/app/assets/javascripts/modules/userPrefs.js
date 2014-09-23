@@ -53,7 +53,8 @@ define([
             key,
             val,
             v,
-            i;
+            i,
+            j;
         for (i = 0, j = qs.length; i < j; ++i) {
             m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
             if (m) {

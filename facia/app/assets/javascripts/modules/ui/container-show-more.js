@@ -15,7 +15,7 @@ define([
 ) {
     /** TODO: Remove this once the new Facia Cards work is complete. See container-fc-show-more.js for its replacement.
       */
-    return function(container) {
+    return function (container) {
 
         this._$container = bonzo(container);
 

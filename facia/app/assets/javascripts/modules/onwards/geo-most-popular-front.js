@@ -20,8 +20,8 @@ define([
         this.mediator = mediator;
         this.manipulationType = 'html';
 
-        this.go = function() {
-           var parent = qwery('.js-popular-trails')[0];
+        this.go = function () {
+            var parent = qwery('.js-popular-trails')[0];
             if (parent) {
                 this.fetch(parent, 'html');
             }
@@ -33,7 +33,7 @@ define([
     // Geo is only available via the CDN, hence hardcoded url
     GeoMostPopularFront.prototype.endpoint = 'http://api.nextgen.guardianapps.co.uk/most-read-geo.json';
 
-    GeoMostPopularFront.prototype.ready = function() {
+    GeoMostPopularFront.prototype.ready = function () {
         register.end('most-popular');
     };
 
