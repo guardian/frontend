@@ -22,7 +22,7 @@ object Multi extends Controller with ExecutionContexts with implicits.Collection
         case "jobs" => JobsAgent.jobsTargetedAt(segment).headOption
         case "books" => BestsellersAgent.bestsellersTargetedAt(segment).headOption
         case "travel" => TravelOffersAgent.adsTargetedAt(segment).headOption
-        case "masterclasses" => MasterClassAgent.adsTargetedAt(segment).headOption
+        case "masterclasses" => MasterClassAgent.masterclassesTargetedAt(segment).headOption
         case "soulmates" => SoulmatesAggregatingAgent.sampleMembers(segment).headOption
       }
 

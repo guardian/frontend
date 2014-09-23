@@ -1,24 +1,28 @@
 package model.commercial.masterclasses
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
-import model.commercial.{AdAgent, Lookup, Segment}
+import model.commercial.{Lookup, MerchandiseAgent, Segment}
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
 
-object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
+object MasterClassAgent extends ExecutionContexts with Logging {
 
-  override def defaultAds = currentAds take 4
+  private lazy val agent = AkkaAgent[Seq[MasterClass]](Nil)
 
-  override def adsTargetedAt(segment: Segment) = {
-    val targetedAds = currentAds filter (_.isTargetedAt(segment))
-    val adsToShow = (targetedAds ++ defaultAds) take 4
-    adsToShow sortBy(_.eventBriteEvent.startDate.getMillis)
+  def currentMasterclasses: Seq[MasterClass] = agent()
+
+  def masterclassesTargetedAt(segment: Segment) = {
+
+    lazy val defaultClasses = currentMasterclasses take 4
+
+    val targeted = currentMasterclasses filter (_.isTargetedAt(segment))
+    val toShow = (targeted ++ defaultClasses) take 4
+    toShow sortBy (_.eventBriteEvent.startDate.getMillis)
   }
 
   def specificClasses(eventBriteIds: Seq[String]): Seq[MasterClass] = {
     for {
-      masterclass <- currentAds
+      masterclass <- currentMasterclasses
       eventId <- eventBriteIds
       if masterclass.eventBriteEvent.id == eventId
     } yield {
@@ -71,11 +75,15 @@ object MasterClassAgent extends AdAgent[MasterClass] with ExecutionContexts {
       populated
     }
 
+    def updateCurrentMasterclasses(freshData: Seq[MasterClass]): Unit = {
+      MerchandiseAgent.updateAvailableMerchandise(agent, freshData)
+    }
+
     for {
       eventBrite <- EventbriteApi.loadAds()
       masterclasses <- wrapEventbriteWithContentApi(populateKeywordIds(eventBrite.filter(_.isOpen)))
     } {
-      updateCurrentAds(masterclasses)
+      updateCurrentMasterclasses(masterclasses)
     }
   }
 }
@@ -94,12 +102,12 @@ object MasterClassTagsAgent extends ExecutionContexts with Logging {
 
   def refresh(): Future[Seq[Future[Map[String, Seq[String]]]]] = {
     val tags = {
-      val currentAds = MasterClassAgent.currentAds
-      if (currentAds.isEmpty) {
+      val current = MasterClassAgent.currentMasterclasses
+      if (current.isEmpty) {
         defaultTags
       } else {
         // use event title instead of tags because it's more informative
-        currentAds.map(_.eventBriteEvent.name).distinct
+        current.map(_.eventBriteEvent.name).distinct
       }
     }
     Future.sequence {
