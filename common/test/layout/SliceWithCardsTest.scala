@@ -27,7 +27,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
       override def headline: String = ???
 
       override def webUrl: String = ???
-    })
+    }, None)
   }
 
   "a slice" should "consume as many items as the columns it aggregates consume" in {

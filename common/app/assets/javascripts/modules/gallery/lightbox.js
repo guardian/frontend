@@ -123,7 +123,7 @@ define([
         }
 
         bean.on(window, 'popstate', function(event) {
-            if (event.state === null) {
+            if (!event.state) {
                 this.trigger('close');
             }
         }.bind(this));

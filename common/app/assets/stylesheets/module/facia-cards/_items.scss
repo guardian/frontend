@@ -1,9 +1,20 @@
 $fc-item-gutter: $gs-gutter / 3;
 
 @import 'item-layouts/fc-item--standard';
+@import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-media';
 @import 'item-layouts/fc-item--list-media-large';
+
+.fc-show-more--hidden .fc-show-more--hide-on-mobile {
+    @include mq($until: tablet) {
+        display: none !important;
+    }
+}
+
+.fc-show-more--hidden .fc-show-more--hide {
+    display: none !important;
+}
 
 .fc-container {
     .facia-slice__item {
@@ -92,6 +103,7 @@ $fc-item-gutter: $gs-gutter / 3;
 
 .fc-item__standfirst {
     @include fs-bodyCopy(1);
+    padding-top: $gs-baseline;
     display: none;
 }
 
@@ -192,6 +204,18 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
+.fc-item--half {
+    @include mq($until: tablet) {
+        @include fc-item--half;
+    }
+}
+
+.fc-item--half-tablet {
+    @include mq(tablet) {
+        @include fc-item--half;
+    }
+}
+
 
 .l-list {
     width: 100%;
@@ -203,8 +227,6 @@ $fc-item-gutter: $gs-gutter / 3;
 }
 
 .l-list__item {
-    float: left;
-
     &:last-child {
         margin-bottom: 0;
     }
@@ -220,8 +242,10 @@ $fc-item-gutter: $gs-gutter / 3;
     @for $span from 1 through $column {
         .l-row--items-#{$column} {
             .l-row__item--span-#{$span} {
-                @include flex($span);
-                width: (100% / $column) * $span;
+                @include mq(tablet) {
+                    @include flex($span);
+                    width: (100% / $column) * $span;
+                }
             }
         }
     }

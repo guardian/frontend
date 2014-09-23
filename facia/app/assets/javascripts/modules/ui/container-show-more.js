@@ -13,7 +13,8 @@ define([
     detect,
     mediator
 ) {
-
+    /** TODO: Remove this once the new Facia Cards work is complete. See container-fc-show-more.js for its replacement.
+      */
     return function(container) {
 
         this._$container = bonzo(container);
@@ -67,7 +68,5 @@ define([
             this._renderButton();
             this._$container.removeClass('js-container--show-more');
         };
-
     };
-
 });

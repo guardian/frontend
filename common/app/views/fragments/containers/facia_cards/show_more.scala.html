@@ -1,7 +1,7 @@
 @(cards: Seq[layout.Card], containerIndex: Int)(implicit request: RequestHeader, config: Config)
 
 @import model.Config
-@import fragments.items.facia_cards.standard
+@import fragments.items.facia_cards.item
 
 @* Show More for the new style containers should identical, differing only in number of columns (3 or 4).
  *
@@ -11,10 +11,10 @@
  * TODO use the number of columns here
  *@
 @if(cards.nonEmpty) {
-    <div class="linkslist-container js-container--show-more">
+    <div class="linkslist-container">
         <ul class="linkslist u-unstyled l-list facia-slice">
         @cards.map { card =>
-            @standard(card, "l-list__item fc-item--list-mobile fc-item--list-tablet", containerIndex, isList = true)
+            @item(card, "l-list__item fc-item--list-mobile fc-item--list-tablet", containerIndex, isList = true)
         }
         </ul>
     </div>

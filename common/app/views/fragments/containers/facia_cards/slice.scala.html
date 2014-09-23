@@ -1,9 +1,9 @@
 @(collection: model.Collection, sliceWithRemaining: (layout.SliceWithCards, Seq[layout.Card]), containerIndex: Int)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
-@import views.support.{GetClasses, FourColumns}
+@import views.support.GetClasses
 @import layout.{ColumnAndCards, SingleItem, Rows}
-@import views.html.fragments.containers.show_more
-@import views.html.fragments.items.facia_cards.standard
+@import views.html.fragments.containers.facia_cards.show_more
+@import views.html.fragments.items.facia_cards.item
 @import model.FaciaComponentName
 @import common.LinkTo
 
@@ -13,7 +13,7 @@
 
         <section
         id="@FaciaComponentName(config, collection)"
-        class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty) slice slice--@slice.cssClassName"
+        class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
         data-link-name="@FaciaComponentName(config, collection)"
         data-id="@config.id"
         @config.sponsorshipKeyword.map { keyword =>
@@ -32,16 +32,16 @@
                     </h2>
                 }
                 </div>
-                <div class="container__body container--rolled-up-hide">
+                <div class="container__body container--rolled-up-hide js-container--fc-show-more">
                     <div class="facia-slice-wrapper">
-                        <ul class="u-unstyled l-row l-row--items-@slice.numberOfColumns facia-slice">
+                        <ul class="u-unstyled l-row l-row--items-@slice.numberOfColumns facia-slice facia-slice--@slice.cssClassName">
                         @for(ColumnAndCards(column, cards) <- slice.columns) {
 
                             @column match {
 
-                                case SingleItem(width, itemClasses) => {
+                                case SingleItem(colSpan, itemClasses) => {
                                     @cards.headOption.map { card =>
-                                        @standard(card, itemClasses.classes, containerIndex)
+                                        @item(card, itemClasses.classes, containerIndex, false, colSpan)
                                     }
                                 }
 
@@ -50,7 +50,7 @@
                                         <ul class="u-unstyled l-list l-list--columns-@columns l-list--rows-@rows">
                                             @if(cards.nonEmpty) {
                                                 @cards.map{ card =>
-                                                    @standard(card, itemClasses.classes, containerIndex, isList = true)
+                                                    @item(card, itemClasses.classes, containerIndex, isList = true)
                                                 }
                                             }
                                         </ul>

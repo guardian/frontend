@@ -97,10 +97,6 @@
  * @requires {function} str-capitalise
  * @requires {function} str-remove-white-space
  *
- * @example scss
- * src: url('#{compose-webfont-filename('Guardian Text Sans Web', bold, italic)}.woff');
- * -> src: url("GuardianTextSansWeb-BoldItalic.eot");
- *
  * @return {String}
  *
  * @group webfonts

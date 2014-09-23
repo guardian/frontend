@@ -807,7 +807,6 @@ $timeline-width: 14px;
     background-color: $c-neutral8;
 
     .content__headline {
-        padding-bottom: $gs-baseline*3;
         color: $c-neutral1;
         @include fs-headline(5);
 

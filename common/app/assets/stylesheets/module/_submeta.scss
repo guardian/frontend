@@ -33,6 +33,11 @@
     .submeta__head {
         display: none;
     }
+
+    .container--rolled-up-hide & {
+        left: $gs-gutter;
+        margin-bottom: -$gs-baseline/1.5;
+    }
 }
 
 .submeta-container--break-at-leftcol {
@@ -97,6 +102,7 @@
 .submeta {
     border-top: 1px dotted $c-neutral4;
 
+    .container--multimedia &,
     .content--media & {
         border-color: $c-neutral2;
     }
@@ -140,7 +146,9 @@
     @include fs-textSans(1);
     color: $c-neutral2;
     padding: $gs-baseline/3 0 $gs-baseline;
-    .content--media & {
+
+    .content--media &,
+    .container--multimedia & {
         color: $c-neutral7;
     }
 }

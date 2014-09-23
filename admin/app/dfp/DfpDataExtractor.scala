@@ -8,7 +8,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     lineItems.withFilter { lineItem =>
       lineItem.sponsoredTags.nonEmpty && lineItem.isCurrent
     }.map { lineItem =>
-      Sponsorship(lineItem.sponsoredTags, lineItem.sponsor, countryNamesTargeted(lineItem), lineItem.id)
+      Sponsorship(lineItem.sponsoredTags, lineItem.sponsor, locationsTargeted(lineItem), lineItem.id)
     }.distinct
   }
 
@@ -16,7 +16,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     lineItems.withFilter { lineItem =>
       lineItem.advertisementFeatureTags.nonEmpty && lineItem.isCurrent
     }.map { lineItem =>
-      Sponsorship(lineItem.advertisementFeatureTags, lineItem.sponsor, countryNamesTargeted(lineItem), lineItem.id)
+      Sponsorship(lineItem.advertisementFeatureTags, lineItem.sponsor, locationsTargeted(lineItem), lineItem.id)
     }.distinct
   }
 
@@ -43,11 +43,17 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
   }
 
   def countriesTargeted(lineItem: GuLineItem): Seq[Country] = {
-    lineItem.targeting.geoTargets map (geoTarget => Country.fromName(geoTarget.name))
+    lineItem.targeting.geoTargetsIncluded map (geoTarget => Country.fromName(geoTarget.name))
   }
 
-  def countryNamesTargeted(lineItem: GuLineItem): Seq[String] = {
-    countriesTargeted(lineItem).map(_.name).sorted
+  def locationsTargeted(lineItem: GuLineItem): Seq[String] = {
+
+    def descriptions(geoTargets: Seq[GeoTarget])(description: GeoTarget => String): Seq[String] = {
+      geoTargets.sortBy(_.name) map description
+    }
+
+    val targeting = lineItem.targeting
+    descriptions(targeting.geoTargetsIncluded)(_.name) ++ descriptions(targeting.geoTargetsExcluded)(target => s"excluding ${target.name}")
   }
 
 }
