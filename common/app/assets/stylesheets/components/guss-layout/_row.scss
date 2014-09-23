@@ -94,6 +94,11 @@ $guss-row-fallback-width: 940px !default;
                 align-items: stretch;
                 width: 100%; // Prevent consecutive rows from flexing together in FF
             }
+            #{$base-class}--reverse {
+                -webkit-flex-direction: row-reverse;
+                -ms-flex-direction: row-reverse;
+                flex-direction: row-reverse;
+            }
             #{$base-class}__item {
                 -webkit-box-flex: 1;
                 -moz-box-flex: 1;

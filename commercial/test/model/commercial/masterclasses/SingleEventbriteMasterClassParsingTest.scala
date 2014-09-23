@@ -1,11 +1,10 @@
 package model.commercial.masterclasses
 
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import play.api.libs.json._
+import test.ConfiguredTestSuite
 
-
-class SingleEventbriteMasterClassParsingTest extends FlatSpec with Matchers {
+@DoNotDiscover class SingleEventbriteMasterClassParsingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
   "MasterClass companion object" should
     "not create a masterclass object if there isn't at link to the Guardian with the words 'Click here'" in {
     val event: JsValue = Json.parse(jsonWithNoLink)

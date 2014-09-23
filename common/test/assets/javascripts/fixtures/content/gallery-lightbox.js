@@ -31,7 +31,7 @@ define([], function() {
                     {
                         "caption": "Barbie has been through many incarnations, including being a cheerleader.",
                         "credit": "Photograph: Andrew McCloskey/Getty",
-                        "displayCredit": true,
+                        "displayCredit": false,
                         "src": "//i.guimcode.co.uk.global.prod.fastly.net//w-{width}/h--/q-95/sys-images/Guardian/Pix/pictures/2014/9/5/1409907752046/8eb57085-90a2-4dd8-be8d-c3194d875c7c-2060x1236.jpeg",
                         "ratio": 1.6666666269302368
                     },

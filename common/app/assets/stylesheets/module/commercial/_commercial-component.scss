@@ -13,11 +13,6 @@ $commercial-cta-diameter: (
 
     @include mq(leftCol) {
         .container__title {
-            float: none;
-        }
-    }
-    @include mq(faciaLeftCol) {
-        .container__title {
             float: left;
         }
     }
@@ -78,7 +73,7 @@ $commercial-cta-diameter: (
                 position: absolute;
             }
         }
-        @include mq(faciaLeftCol) {
+        @include mq(leftCol) {
             .commercial__head {
                 width: gs-span(2) + $gs-gutter;
             }

@@ -1,6 +1,5 @@
 {
   "name": "frontend-js-tests",
-  "version": "0.1.0 ",
   "devDependencies": {
     "jasmine": "2.0.0",
     "jasmine-sinon": "0.3.1",

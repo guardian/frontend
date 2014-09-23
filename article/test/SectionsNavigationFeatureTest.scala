@@ -1,13 +1,12 @@
 package test
 
-import org.scalatest.Matchers
-import org.scalatest.{ GivenWhenThen, FeatureSpec }
+import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import collection.JavaConversions._
 import org.fluentlenium.core.filter.FilterConstructor._
 
 import conf.Configuration
 
-class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with Matchers {
+@DoNotDiscover class SectionsNavigationFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
   implicit val config = Configuration
 
@@ -16,7 +15,7 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with M
     scenario("Links to sections", ArticleComponents) {
 
       Given("I am on any guardian.co.uk page")
-      HtmlUnit("/world/2012/aug/23/australia-mining-boom-end") { browser =>
+      goTo("/world/2012/aug/23/australia-mining-boom-end") { browser =>
 
         Then("I should see a list of top sections")
 
@@ -31,31 +30,31 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with M
 
     scenario("Link to US edition", ArticleComponents) {
       Given("I am on any guardian.co.uk page")
-      HtmlUnit("/world/2012/aug/23/australia-mining-boom-end") { browser =>
+      goTo("/world/2012/aug/23/australia-mining-boom-end") { browser =>
 
         Then("I should see a link to the US edition")
 
         val editionLink = browser.findFirst("[data-link-name='switch to US edition']")
 
-        editionLink.getAttribute("href") should be(s"http://localhost:${HtmlUnit.port}/preference/edition/us")
+        editionLink.getAttribute("href") should be(s"http://localhost:${port}/preference/edition/us")
       }
     }
 
     scenario("Link to UK edition", ArticleComponents) {
       Given("I am on any guardiannews.com page")
-      HtmlUnit.US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
+      US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
 
         Then("I should see a link to the UK edition")
 
         val editionLink = browser.findFirst("[data-link-name='switch to UK edition']")
 
-        editionLink.getAttribute("href") should be(s"http://localhost:${HtmlUnit.port}/preference/edition/uk")
+        editionLink.getAttribute("href") should be(s"http://localhost:${port}/preference/edition/uk")
       }
     }
 
     scenario("Links to company information", ArticleComponents) {
       Given("I am on any guardian.co.uk page")
-      HtmlUnit.US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
+      US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
 
         Then("I should see a link to the contributors section")
         val contributors = browser.find(".l-footer li a", withText().contains("contributors"))
@@ -77,7 +76,7 @@ class SectionNavigationFeatureTest extends FeatureSpec with GivenWhenThen with M
 
     scenario("Links to legal information", ArticleComponents) {
       Given("I am on any guardian.co.uk page")
-      HtmlUnit.US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
+      US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
 
         Then("I should see a link to the terms & Conditions in the page footer")
 

@@ -36,7 +36,8 @@ object TagJson {
     tag.webTitle,
     tag.webUrl,
     tag.section,
-    tag.contributorImagePath
+    tag.contributorImagePath,
+    tag.contributorLargeImagePath
   )
 }
 
@@ -46,7 +47,8 @@ case class TagJson(
   webTitle: String,
   webUrl: String,
   section: String,
-  bylineImageUrl: Option[String]
+  bylineImageUrl: Option[String],
+  bylineLargeImageUrl: Option[String]
 )
 
 object ItemMeta {

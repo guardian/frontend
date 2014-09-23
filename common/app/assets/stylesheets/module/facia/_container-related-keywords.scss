@@ -8,10 +8,20 @@
             width: 100%;
         }
     }
+
+    @include mq($until: mobileLandscape) {
+        margin-left: $gs-gutter/2;
+    }
+
+    .button--more {
+        @if $old-ie {
+            display: none;
+        }
+    }
 }
 
 .facia-container__related-keywords__body {
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         margin-left: $left-column + $gs-gutter;
     }
 

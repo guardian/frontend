@@ -97,6 +97,12 @@ define([
                     mobile: '300,250|300,600'
                 }
             },
+            'right-small': {
+                name: 'right',
+                sizeMappings: {
+                    mobile: '300,250'
+                }
+            },
             im: {
                 label: false,
                 refresh: false,
@@ -297,9 +303,14 @@ define([
                 tn      : parseTargets(page.tones)
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
-        createAdSlot = function (name, types, keywords) {
-            var definition = adSlotDefinitions[name],
-                dataAttrs = {
+        createAdSlot = function (name, types, keywords, slotTarget) {
+            var definition;
+            if (slotTarget) {
+                definition = adSlotDefinitions[slotTarget];
+            } else {
+                definition = adSlotDefinitions[name];
+            }
+            var dataAttrs = {
                     refresh: definition.refresh !== undefined ? definition.refresh : true,
                     label: definition.label !== undefined ? definition.label : true
                 },
@@ -311,7 +322,7 @@ define([
                         'data-name="{{name}}"' +
                         '{{sizeMappings}}></div>',
                     {
-                        name: name,
+                        name: definition.name || name,
                         types: map((isArray(types) ? types : [types]), function(type) { return 'ad-slot--' + type; }).join(' '),
                         sizeMappings: map(pairs(definition.sizeMappings), function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
                     }));
@@ -319,6 +330,9 @@ define([
                 if (dataAttrs[attrName] === false) {
                     $adSlot.attr('data-' + attrName, 'false');
                 }
+            }
+            if (slotTarget) {
+                $adSlot.attr('data-slot-target', slotTarget);
             }
             if (keywords) {
                 $adSlot.attr('data-keywords', keywords);
@@ -330,6 +344,10 @@ define([
      * Private functions
      */
     var defineSlot = function ($adSlot) {
+            var slotTarget = $adSlot.data('slot-target');
+            if (typeof slotTarget === 'undefined') {
+                slotTarget = $adSlot.data('name');
+            }
             var adUnit = config.page.adUnit,
                 id          = $adSlot.attr('id'),
                 sizeMapping = defineSlotSizes($adSlot),
@@ -349,7 +367,7 @@ define([
                     )
                     .addService(googletag.pubads())
                     .defineSizeMapping(sizeMapping)
-                    .setTargeting('slot', $adSlot.data('name'));
+                    .setTargeting('slot', slotTarget);
 
             if ($adSlot.data('keywords')) {
                 slot.setTargeting('k', parseKeywords($adSlot.data('keywords')));
@@ -426,7 +444,7 @@ define([
                 if (iFrame.readyState && iFrame.readyState !== 'complete') {
                     bean.on(iFrame, 'readystatechange', function (e) {
                         var updatedIFrame = e.srcElement;
-                        if (updatedIFrame.readyState === 'complete') {
+                        if (typeof updatedIFrame.readyState !== 'unknown' && updatedIFrame.readyState === 'complete') {
                             breakoutIFrame(updatedIFrame);
                             bean.off(updatedIFrame, 'readystatechange');
                         }

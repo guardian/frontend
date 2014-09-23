@@ -1,7 +1,11 @@
 package test
 
-import conf.HealthCheck
+import org.scalatest.Suites
 
-object `package` {
-  object HtmlUnit extends EditionalisedHtmlUnit(HealthCheck.testPort.toString)
+class DiagnosticsTestSuite extends Suites (
+  new diagnostics.JavaScriptTest,
+  new services.DiagnosticsHealthcheckTest
+  ) with SingleServerSuite {
+
+  override lazy val port: Int = conf.HealthCheck.testPort
 }

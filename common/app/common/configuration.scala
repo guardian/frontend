@@ -232,8 +232,8 @@ class GuardianConfiguration(val application: String, val webappConfDirectory: St
     lazy val traveloffers_url = configuration.getStringProperty("traveloffers.api.url") map (u => s"$u/consumerfeed")
 
     private lazy val dfpRoot = s"${environment.stage.toUpperCase}/commercial/dfp"
-    lazy val dfpSponsoredTagsDataKey = s"$dfpRoot/sponsored-tags-v2.json"
-    lazy val dfpAdvertisementFeatureTagsDataKey = s"$dfpRoot/advertisement-feature-tags-v2.json"
+    lazy val dfpSponsoredTagsDataKey = s"$dfpRoot/sponsored-tags-v4.json"
+    lazy val dfpAdvertisementFeatureTagsDataKey = s"$dfpRoot/advertisement-feature-tags-v4.json"
     lazy val dfpInlineMerchandisingTagsDataKey = s"$dfpRoot/inline-merchandising-tags-v3.json"
     lazy val dfpPageSkinnedAdUnitsKey = s"$dfpRoot/pageskinned-adunits-v5.json"
     lazy val dfpLineItemsKey = s"$dfpRoot/lineitems.json"

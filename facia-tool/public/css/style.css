@@ -581,12 +581,9 @@ select {
 
 .editor textarea {
     width: 100%;
-    padding: 1px 0 0 3px;
-    position: absolute;
-    top: 0;
-    left: 0;
+    padding: 1px 0 0 2px;
     border: 0;
-    margin: 2px 0 0 -3px;
+    margin: 2px 0 -3px -2px;
     z-index: 10;
 }
 

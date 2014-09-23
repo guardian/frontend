@@ -1,6 +1,6 @@
 package model
 
-import com.gu.openplatform.contentapi.model.{Tag => ApiTag}
+import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Podcast}
 import common.{Pagination, Reference}
 import play.api.libs.json.{JsArray, JsString, JsValue}
 import views.support.{Contributor, ImgSrc, Item140}
@@ -28,7 +28,6 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   lazy val openGraphDescription: Option[String] = if (bio.nonEmpty) Some(bio) else description
 
   lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Item140))
-  lazy val hasLargeContributorImage: Boolean = contributorLargeImagePath.nonEmpty
 
   lazy val isContributor: Boolean = id.startsWith("profile/")
   lazy val bio: String = delegate.bio.getOrElse("")
@@ -70,4 +69,6 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   override def cards: List[(String, String)] = super.cards ++
     List("twitter:card" -> "summary")
+
+  lazy val podcast: Option[Podcast] = delegate.podcast
 }

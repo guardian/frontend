@@ -4,8 +4,9 @@ import org.scalatest._
 import implicits.Football
 import pa.{FootballMatch, Result, MatchDay}
 import model.Competition
+import test.ConfiguredTestSuite
 
-class ResultsListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues {
+@DoNotDiscover class ResultsListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
   "the all results list" - {
     "for today" - {
       val results = new ResultsList(today, competitions)
@@ -35,7 +36,7 @@ class ResultsListTest extends FreeSpec with ShouldMatchers with MatchTestData wi
 
       "should group matches correctly by date and league, with league ordered correctly" in {
         val (_, competitionMatches1) = results.matchesGroupedByDateAndCompetition(2)
-        competitionMatches1.map { case (comp, matches) => comp.id } should equal(List("100", "500"))
+        competitionMatches1.map { case (comp, matches) => comp.id } should equal(List("500", "100"))
       }
 
       "should only show results" in {
