@@ -39,11 +39,7 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 
     .stars {
-        margin-top: $gs-baseline * .25;
-
-        @include mq(tablet) {
-            margin-bottom: $gs-baseline * 1.25;
-        }
+        margin-bottom: 0;
     }
 }
 
