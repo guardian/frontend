@@ -13,7 +13,7 @@ sealed trait Slice {
  * |________|________|________|________|
  * |________|________|________|________|
  */
-case object QlQlQlQl extends Slice {
+case object Ql3Ql3Ql3Ql3 extends Slice {
   val layout = SliceLayout(
     cssClassName = "q-ql-ql-ql",
     columns = Seq(
@@ -501,6 +501,27 @@ case object TlTlMpu extends Slice {
       ),
       MPU(
         colSpan = 1
+      )
+    )
+  )
+}
+
+/* .________.________.________.________.
+ * |________|________|________|________|
+ * |________|________|________|________|
+ */
+case object Ql2Ql2Ql2Ql2 extends Slice {
+  val layout: SliceLayout = SliceLayout(
+    cssClassName = "ql-ql-ql-ql",
+    columns = Seq(
+      Rows(
+        colSpan = 1,
+        columns = 4,
+        rows = 2,
+        ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
       )
     )
   )

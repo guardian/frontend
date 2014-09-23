@@ -9,7 +9,10 @@ object FixedContainers {
     "fixed/small/slow-IV" -> slices(QuarterQuarterQuarterQuarter),
     "fixed/small/slow-V" -> slices(Hl4Half),
     "fixed/small/fast-VIII" -> slices(QuarterQuarterQlQl),
-    "fixed/small/fast-X" -> slices(QuarterQlQlQl)
+    "fixed/small/fast-X" -> slices(QuarterQlQlQl),
+    "fixed/medium/fast-XI" -> slices(HalfQQ, Ql2Ql2Ql2Ql2),
+    "fixed/medium/slow-VII" -> slices(HalfQQ, QuarterQuarterQuarterQuarter),
+    "fixed/large/fast-XV" -> slices(HalfQQ, Ql3Ql3Ql3Ql3)
   )
 
   val idsJson = Json.stringify(Json.toJson(all.keys.map(id => ContainerJsonConfig(id, None))))
