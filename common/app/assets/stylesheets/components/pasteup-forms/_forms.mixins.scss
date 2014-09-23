@@ -95,7 +95,7 @@
     }
 
     .form__error {
-        @include fs-textSans(4);
+        @include fs-data(4);
         background-color: $pasteup-forms-error-background;
         border-bottom: 1px solid $pasteup-forms-error-border-colour;
         border-top: 1px solid $pasteup-forms-error-border-colour;
@@ -105,7 +105,7 @@
     }
 
     .form__success {
-        @include fs-textSans(4);
+        @include fs-data(4);
         background-color: $pasteup-forms-success-background;
         border-bottom: 1px solid $pasteup-forms-success-border-colour;
         border-top: 1px solid $pasteup-forms-success-border-colour;
