@@ -1,16 +1,12 @@
 define([
     'common/utils/$',
     'bonzo',
-    'bean',
-    'qwery',
-    'common/utils/mediator'
+    'bean'
 ], function (
     $,
     bonzo,
-    bean,
-    qwery,
-    mediator
-    ) {
+    bean
+) {
     return function(container) {
         var $container = bonzo(container),
             className ='fc-show-more--hidden',
