@@ -21,7 +21,8 @@
         width: 1.2em;
         @include icon(video-icon-black, $with-width: false);
 
-        .container--dark-background & {
+        .container--dark-background &,
+        .end-slate--video & {
             @extend %svg-i-video-icon-white;
         }
     }
