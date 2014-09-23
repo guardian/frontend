@@ -161,10 +161,6 @@
         @include fs-header(3);
         float: none;
     }
-
-    &:first-letter {
-        text-transform: capitalize;
-    }
 }
 
 .content__series-label {
