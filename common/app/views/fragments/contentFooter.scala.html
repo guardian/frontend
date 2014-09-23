@@ -32,7 +32,7 @@
         </div>
     }
 
-    @if(!content.shouldHideAdverts) {
+    @if(!content.shouldHideAdverts && !content.isAdvertisementFeature) {
         <div class="facia-container facia-container--layout-content facia-container--commercial">
             @fragments.commercial.commercialComponent()
         </div>
