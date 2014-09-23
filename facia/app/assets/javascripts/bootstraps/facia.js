@@ -10,6 +10,7 @@ define([
     'common/utils/storage',
     'common/utils/to-array',
     'modules/ui/snaps',
+    'modules/ui/container-fc-show-more',
     'modules/ui/container-show-more',
     'modules/ui/container-toggle',
     'modules/onwards/geo-most-popular-front'
@@ -23,6 +24,7 @@ define([
     storage,
     toArray,
     snaps,
+    containerFcShowMore,
     ContainerShowMore,
     ContainerToggle,
     GeoMostPopularFront
@@ -38,6 +40,10 @@ define([
                 var c = context || document;
                 $('.js-container--show-more', c).each(function(container) {
                     new ContainerShowMore(container).addShowMore();
+                });
+
+                $('.js-container--fc-show-more', c).each(function (container) {
+                    containerFcShowMore(container);
                 });
             };
             mediator.addListeners({
