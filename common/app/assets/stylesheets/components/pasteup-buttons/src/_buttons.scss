@@ -177,14 +177,14 @@ And with inline icons:
 .button--tone-news {
     @include button-colour(
         guss-colour(neutral-7, $pasteup-palette),
-        guss-colour(tone-news-1, $pasteup-palette),
+        guss-colour(neutral-1, $pasteup-palette),
         darken(guss-colour(neutral-7, $pasteup-palette), 10%)
     );
 }
 .button--tone-news-variant {
     @include button-colour(
         #ffffff,
-        guss-colour(tone-news-1, $pasteup-palette),
+        guss-colour(neutral-1, $pasteup-palette),
         #ffffff,
         darken(guss-colour(neutral-3, $pasteup-palette), 10%),
         guss-colour(neutral-5, $pasteup-palette)
