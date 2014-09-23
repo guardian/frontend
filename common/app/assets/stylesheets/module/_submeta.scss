@@ -36,7 +36,7 @@
 
     .container--rolled-up-hide & {
         left: 20px;
-        padding-bottom: $gs-baseline/1.5;
+        margin-bottom: -$gs-baseline/1.5;
     }
 }
 
