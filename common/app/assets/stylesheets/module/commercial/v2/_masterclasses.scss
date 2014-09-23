@@ -2,6 +2,12 @@
    Masterclass component
    ========================================================================== */
 .commercial--masterclasses--v2 {
+    .commercial__title {
+        .i-commercial-brand {
+            opacity: 1;
+        }
+    }
+
     /* Line items */
     .lineitem {
         @include mq($until: tablet) {
