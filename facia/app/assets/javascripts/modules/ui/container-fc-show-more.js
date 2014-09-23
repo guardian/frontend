@@ -24,17 +24,12 @@ define([
             '</button>'
         ));
 
-        function removeButton() {
-            // listen to the clickstream, as happens later, before removing
-            mediator.on('module:clickstream:click', function(clickSpec) {
-                if (qwery(clickSpec.target)[0] === $button[0]) {
-                    $button.remove();
-                }
-            });
-        }
-
         function showMore() {
-            removeButton();
+            /**
+             * Do not remove: it should retain context for the click stream module, which recurses upwards through
+             * DOM nodes.
+             */
+            $button.hide();
             $container.removeClass(className);
         }
 
