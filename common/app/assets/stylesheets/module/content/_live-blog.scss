@@ -126,17 +126,26 @@ $block-padding-right: $gs-gutter;
     color: inherit;
     @include fs-data(3);
     font-weight: bold;
-    &:before {
-        $size: 12px;
-        display: inline-block;
-        content: '';
-        background-color: #ffffff;
-        width: $size;
-        height: $size;
-        margin-bottom: -1px;
-        margin-right: 3px;
-        @include border-radius(50%);
-    }
+}
+
+@include keyframes(live-pulse) {
+    0% {background-color: #ffffff;}
+    10% {background-color: #df7787;}
+    40% {background-color: #ffffff;}
+    100% {background-color: #ffffff;}
+}
+
+.blog__live-icon {
+    $size: 12px;
+    display: inline-block;
+    content: '';
+    background-color: #ffffff;
+    width: $size;
+    height: $size;
+    margin-bottom: -1px;
+    margin-right: 3px;
+    @include border-radius(50%);
+    @include animation(live-pulse 2s infinite);
 }
 
 /* Timestamps
