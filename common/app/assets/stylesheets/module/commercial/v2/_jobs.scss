@@ -12,6 +12,16 @@
     /* Line items */
     .lineitem__image {
         border: $gs-gutter/4 solid #fff;
+        width: 120px;
+
+        @include mq(tablet) {
+            width: 150px;
+        }
+
+        @include mq(desktop) {
+            width: auto;
+            height: 60px;
+        }
     }
 
     /* Line items - low relevance */
@@ -27,8 +37,6 @@
 
             .lineitem__image {
                 float: left;
-                width: 120px;
-                width: 100%;
                 position: absolute;
                 left: 0;
                 top: $gs-baseline/2;
