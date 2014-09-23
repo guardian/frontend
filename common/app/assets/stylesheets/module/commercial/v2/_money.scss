@@ -4,7 +4,7 @@
 .commercial--money--v2 {
     /* Line items */
     .lineitem__meta {
-        @include fs-data(1);
+        @include fs-textSans(1);
         margin-top: $gs-baseline;
     }
 }
