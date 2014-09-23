@@ -23,7 +23,7 @@
     @include fs-textSans(3);
 
     @include mq(desktop) {
-        @include fs-textSans(5, $size-only: true);
+        @include fs-textSans(4, $size-only: true);
     }
 }
 .loan__logo {

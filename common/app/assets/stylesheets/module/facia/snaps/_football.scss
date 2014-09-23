@@ -115,7 +115,7 @@
     }
 
     .team__scorers {
-        @include fs-data(2, true);
+        @include fs-textSans(4, true);
 
         dd:nth-child(3) {
             &:after {
