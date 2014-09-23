@@ -8,6 +8,10 @@
         }
     }
 
+    .commercial--tone__highlight {
+        color: $c-neutral2;
+    }
+
     /* Line items */
     .lineitem {
         @include mq($until: tablet) {
