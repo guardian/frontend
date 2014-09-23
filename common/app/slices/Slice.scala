@@ -1,33 +1,10 @@
 package slices
 
 import layout._
-import model.{Collection, Trail}
-import views.support.TemplateDeduping
 
-sealed trait Slice extends implicits.Collections {
+sealed trait Slice {
   /** TODO: once we get rid of all the not-implementeds below, turn this into a val */
   def layout: SliceLayout
-
-  def apply(items: Seq[Trail], nToShowOnMobile: Int = 6)
-           (implicit templateDeduping: TemplateDeduping): (SliceWithCards, Seq[Card]) = {
-    val numItems = layout.columns.map(_.numItems).sum
-    val unusedTrailsForThisSlice = templateDeduping(numItems, items).take(numItems)
-    val dedupePrioritisedTrails = (unusedTrailsForThisSlice ++ items).distinctBy(_.url)
-    val cards = dedupePrioritisedTrails.zipWithIndex.map {
-      case (trail, index) => Card(
-        index,
-        trail,
-        if (index >= nToShowOnMobile) Some(Mobile) else None
-      )
-    }
-    val (slice, showMore) = SliceWithCards.fromItems(cards, layout)
-
-    (slice, showMore.map(_.copy(hideUpTo = Some(Desktop))))
-  }
-
-  def apply(collection: Collection)(implicit templateDeduping: TemplateDeduping): (SliceWithCards, Seq[Card]) = {
-    this(collection.items)
-  }
 }
 
 
