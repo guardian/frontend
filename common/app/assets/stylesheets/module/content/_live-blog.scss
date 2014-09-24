@@ -926,7 +926,8 @@ $timeline-width: 14px;
     }
 
     &:hover,
-    &:focus {
+    &:focus,
+    &:active {
         background-color: darken(colour(live-main-2), 7%);
     }
 
