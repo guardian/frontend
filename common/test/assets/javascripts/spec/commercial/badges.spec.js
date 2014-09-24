@@ -27,8 +27,7 @@ define([
             },
             adPreBadgeHtml = function(sponsor) {
                 return '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
-                    '<h3 class="ad-slot--paid-for-badge__header">Advertisement feature</h3>' +
-                    '<p class="ad-slot--paid-for-badge__label">in association with</p>' +
+                    '<h3 class="ad-slot--paid-for-badge__header">Brought to you by:</h3>' +
                     '<p class="ad-slot--paid-for-badge__header">' + sponsor + '</p>' +
                 '</div>';
             },

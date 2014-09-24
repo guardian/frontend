@@ -26,6 +26,10 @@
         }
     }
 
+    .gallery-lightbox__item--endslate & {
+        display: none;
+    }
+
     .submeta {
         border-top: 0;
     }

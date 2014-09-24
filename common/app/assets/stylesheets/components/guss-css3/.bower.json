@@ -10,6 +10,6 @@
     "commit": "07d6c7d2408737f3adbb7a619c72481ad1de8dd4"
   },
   "_source": "git://github.com/guardian/guss-css3.git",
-  "_target": "~2",
+  "_target": "~2.2.1",
   "_originalSource": "guss-css3"
 }
