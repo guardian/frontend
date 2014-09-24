@@ -72,6 +72,7 @@ Three quarter item. Looks like a wide standard, a bit like this:
         @include mq(desktop) {
             width: gs-span(3);
 
+            //Fixes IE9 box-model bug.
             @if(not $browser-supports-flexbox) {
                 width: gs-span(3) - $gs-gutter;
             }
@@ -91,5 +92,9 @@ Three quarter item. Looks like a wide standard, a bit like this:
                 width: gs-span(6) + $gs-gutter;
             }
         }
+    }
+
+    &.fc-item--has-cutout {
+        min-height: gs-height(6);
     }
 }
