@@ -611,7 +611,7 @@ select {
 .editor--boolean.selected,
 .editor--boolean.selected a,
 .editor--boolean a:hover {
-    color: #2ea3eb;
+    color: #DD4B39;
 }
 
 .editor--boolean__state {
