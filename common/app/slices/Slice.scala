@@ -547,3 +547,79 @@ case object TlTlTl extends Slice {
     )
   )
 }
+
+/* .___________.___________.___________.
+ * |_#########_|_#########_|_#########_|
+ * |_#########_|_#########_|_#########_|
+ * |_#########_|_#########_|_#########_|
+ * |           |           |           |
+ * |           |           |           |
+ * `-----------------------------------'
+ */
+case object TTT extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "t-t-t",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "standard",
+          desktop = "standard"
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard"
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard"
+        )
+      )
+    )
+  )
+}
+
+/* .___________.___________.___________.
+ * |_#########_|_#########_|___________|
+ * |_#########_|_#########_|___________|
+ * |_#########_|_#########_|___________|
+ * |           |           |___________|
+ * |           |           |___________|
+ * `-----------------------------------'
+ */
+case object TTTL4 extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "t-t-tl4",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "standard",
+          desktop = "standard"
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "list-media-large",
+          desktop = "standard"
+        )
+      ),
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 4,
+        ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      )
+    )
+  )
+}
