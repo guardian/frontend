@@ -26,14 +26,4 @@ x x x x x x x x
 */
 
 
-@mixin fc-item--standard {
-    .facia-slice--q-qqq,
-    .facia-slice--qqq-q & {
-        .fc-item__title,
-        .fc-item__byline {
-            @include mq(tablet, desktop) {
-                @include fs-headline(1, true);
-            }
-        }
-    }
-}
+@mixin fc-item--standard {}
