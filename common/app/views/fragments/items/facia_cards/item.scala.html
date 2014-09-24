@@ -28,7 +28,7 @@
 
             <div class="fc-item__container">
                 @FaciaDisplayElement.fromTrail(trail) match {
-                    case InlineVideo(videoElement, title, endSlatePath) if trail.imageAdjust == "boost" => {
+                    case InlineVideo(videoElement, title, endSlatePath) => {
                         <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
                             <div class="fc-item__video-container">
                             @video(VideoPlayer(

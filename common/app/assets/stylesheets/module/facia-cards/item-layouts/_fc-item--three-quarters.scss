@@ -97,4 +97,8 @@ Three quarter item. Looks like a wide standard, a bit like this:
     &.fc-item--has-cutout {
         min-height: gs-height(6);
     }
+
+    .vjs-big-play-button > span {
+        @include video-play-button-size($vjs-large-button-size);
+    }
 }
