@@ -441,7 +441,7 @@ case object HalfHalf extends Slice {
  * |         ##########################|
  * `-----------------------------------'
  */
-case object FullThreeQuarterImage extends Slice {
+case object Full extends Slice {
   val layout = SliceLayout(
     cssClassName = "f",
     columns = Seq(
@@ -463,7 +463,7 @@ case object FullThreeQuarterImage extends Slice {
  * |                                   |
  * `-----------------------------------'
  */
-case object Full extends Slice {
+case object MegaFull extends Slice {
   val layout = SliceLayout(
     cssClassName = "mf",
     columns = Seq(
