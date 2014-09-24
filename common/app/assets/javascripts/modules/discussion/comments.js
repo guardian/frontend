@@ -312,7 +312,6 @@ Comments.prototype.changePage = function(e) {
  * }
  */
 Comments.prototype.fetchComments = function(options) {
-
     var url = '/discussion/'+
         (options.comment ? 'comment-context/'+ options.comment : this.options.discussionId)+
         '.json?'+ (options.page ? '&page=' + options.page : '')+
