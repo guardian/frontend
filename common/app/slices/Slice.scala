@@ -546,10 +546,15 @@ case object TTT extends Slice {
           desktop = "standard"
         )
       ),
-      Rows(
-        colSpan = 2,
-        columns = 2,
-        rows = 1,
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard"
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
         ItemClasses(
           mobile = "list-media",
           desktop = "standard"
