@@ -1,7 +1,8 @@
 @(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None)(content: Html)
 
+@import slices.{FixedContainers, DynamicContainers, IdsJson}
+@import IdsJson.{fixed, dynamic}
 @import conf.Configuration
-@import slices.FixedContainers
 
 <!DOCTYPE html>
 
@@ -59,7 +60,11 @@
             });
 
             define('fixed-containers', function () {
-                return @Html(FixedContainers.idsJson);
+                return @Html(fixed(FixedContainers.all.keys.toSeq));
+            });
+
+            define('dynamic-containers', function () {
+                return @Html(dynamic(DynamicContainers.all.keys.toSeq));
             });
         </script>
 
