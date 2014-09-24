@@ -28,6 +28,7 @@ require([
     'common/utils/userTiming',
 
     // shared modules
+    'common/modules/commercial/badges',
     'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/dfp',
     'common/modules/component',
@@ -36,4 +37,4 @@ require([
     'common/modules/ui/images',
     'common/modules/ui/tabs',
     'common/modules/userPrefs'
-], function() {});
+], function () {});

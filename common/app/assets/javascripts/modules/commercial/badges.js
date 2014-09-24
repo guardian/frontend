@@ -18,7 +18,7 @@ define([
     dfp
 ) {
 
-    var addPreBadge = function($adSlot, isSponsored, sponsor) {
+    var addPreBadge = function ($adSlot, isSponsored, sponsor) {
             if (sponsor) {
                 $adSlot.append(template(
                     '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
@@ -32,13 +32,14 @@ define([
                 ));
             }
         },
-        createAdSlot = function(container, isSponsored, opts) {
-            var slotTarget = (isSponsored ? 'sp' : 'ad') + 'badge';
-            var name = slotTarget;
+        createAdSlot = function (container, isSponsored, opts) {
+            var $adSlot,
+                slotTarget = (isSponsored ? 'sp' : 'ad') + 'badge',
+                name       = slotTarget;
             if (opts.containerIndex) {
                 name += opts.containerIndex;
             }
-            var $adSlot = bonzo(dfp.createAdSlot(
+            $adSlot = bonzo(dfp.createAdSlot(
                 name, ['paid-for-badge', 'paid-for-badge--front'], opts.keywords, slotTarget
             ));
             if (isSponsored) {
@@ -49,7 +50,7 @@ define([
             $('.container__header', container)
                 .after($adSlot);
         },
-        init = function(c) {
+        init = function (c) {
 
             var config = defaults(
                 c || {},
@@ -63,7 +64,7 @@ define([
                 return false;
             }
 
-            $('.facia-container--sponsored, .facia-container--advertisement-feature').each(function(faciaContainer) {
+            $('.facia-container--sponsored, .facia-container--advertisement-feature').each(function (faciaContainer) {
                 var $faciaContainer = bonzo(faciaContainer);
                 createAdSlot(
                     qwery('.container', faciaContainer)[0],
@@ -71,12 +72,12 @@ define([
                     { sponsor: $faciaContainer.data('sponsor') }
                 );
             });
-            $('.container--sponsored, .container--advertisement-feature').each(function(container, index) {
+            $('.container--sponsored, .container--advertisement-feature').each(function (container, index) {
                 if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
                     var $container = bonzo(container);
                     createAdSlot(
                         container,
-                        bonzo(container).hasClass('container--sponsored'),
+                        $container.hasClass('container--sponsored'),
                         { containerIndex: index, keywords: $container.data('keywords'), sponsor: $container.data('sponsor') }
                     );
                 }
@@ -86,8 +87,19 @@ define([
 
             init: once(init),
 
+            update: function (container) {
+                var $container = bonzo(container);
+                if ($container.hasClass('container--sponsored') || $container.hasClass('container--advertisement-feature')) {
+                    createAdSlot(
+                        container,
+                        $container.hasClass('container--sponsored'),
+                        { keywords: $container.data('keywords'), sponsor: $container.data('sponsor') }
+                    );
+                }
+            },
+
             // really only useful for testing
-            reset: function() {
+            reset: function () {
                 badges.init = once(init);
             }
 
