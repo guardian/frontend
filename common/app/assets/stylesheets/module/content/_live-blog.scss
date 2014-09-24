@@ -915,7 +915,7 @@ $timeline-width: 14px;
 }
 
 .liveblog__show-more {
-    background-color: colour(live-main-2);
+    background-color: $c-liveAccent;
     border: 0;
     margin-bottom: $gs-baseline;
     padding-left: 36px;
@@ -928,7 +928,7 @@ $timeline-width: 14px;
     &:hover,
     &:focus,
     &:active {
-        background-color: darken(colour(live-main-2), 7%);
+        background-color: darken($c-liveAccent, 7%);
     }
 
     .i {

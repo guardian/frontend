@@ -209,7 +209,3 @@
         }
     }
 }
-
-@function colour($color, $pallet: $pasteup-palette) {
-    @return guss-colour($color, $pallet);
-}
