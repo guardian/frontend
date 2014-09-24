@@ -23,7 +23,7 @@ $inArticleInlineImgWidth: 114px;
 $headerHeight: 36px;
 
 @import 'components/guss-colours/_colours';
-@import 'components/pasteup-palette/_palette';
+@import 'components/pasteup-palette/src/_palette';
 @import 'components/guss-grid-system/_grid-system';
 
 $right-column:     gs-span(4);

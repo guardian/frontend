@@ -19,7 +19,7 @@ module.exports = function(grunt) {
             ],
         },
         scsslint: {
-            buttons: [
+            forms: [
                 'src'
             ],
             options: {
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
             }
         },
         sass: {
-            buttons: {
+            forms: {
                 options: {
                     style: 'compressed',
                     bundleExec: true
@@ -47,7 +47,7 @@ module.exports = function(grunt) {
             }
         },
         hologram: {
-            buttons: {
+            forms: {
                 options: {
                     config: 'hologram-config.yml'
                 }
@@ -57,7 +57,7 @@ module.exports = function(grunt) {
             docs: {
                 options: {
                     base: 'docs',
-                    message: 'Releasing docs to http://guardian.github.io/pasteup-buttons/'
+                    message: 'Releasing docs to http://guardian.github.io/pasteup-forms/'
                 },
                 src: [
                     '*.html',
@@ -74,11 +74,11 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('validate', ['scsslint:buttons']);
-    grunt.registerTask('build', ['validate', 'clean:build', 'sass:buttons']);
-    grunt.registerTask('docs', ['build', 'clean:docs', 'hologram:buttons']);
+    grunt.registerTask('validate', ['scsslint:forms']);
+    grunt.registerTask('build', ['validate', 'clean:build', 'sass:forms']);
+    grunt.registerTask('docs', ['build', 'clean:docs', 'hologram:forms']);
     grunt.registerTask('release', function (type) {
         var releaseTarget = type ? ':' + type : '';
-        grunt.task.run(['build', 'git-release' + releaseTarget, 'clean:docs', 'hologram:buttons', 'gh-pages:docs']);
+        grunt.task.run(['build', 'git-release' + releaseTarget, 'clean:docs', 'hologram:forms', 'gh-pages:docs']);
     });
 };
