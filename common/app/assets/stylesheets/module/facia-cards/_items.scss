@@ -37,6 +37,10 @@ $fc-item-gutter: $gs-gutter / 3;
     .gu-media-wrapper {
         margin-bottom: 0;
     }
+
+    .vjs-big-play-button > span {
+        @include video-play-button-size($vjs-x-small-button-size);
+    }
 }
 
 .fc-item__image-container {
@@ -187,6 +191,16 @@ $fc-item-gutter: $gs-gutter / 3;
 .fc-item--standard-mobile {
     @include mq($until: tablet) {
         @include fc-item--standard;
+
+        .vjs-big-play-button > span {
+            @include video-play-button-size($vjs-small-button-size);
+        }
+
+        @include mq(mobileLandscape) {
+            .vjs-big-play-button > span {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+        }
     }
 }
 
