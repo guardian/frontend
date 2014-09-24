@@ -85,7 +85,7 @@
     .content__head--byline-pic {
         .tone-background .content__main-column {
             @include mq(tablet) {
-                min-height: 220px;
+                min-height: gs-height(5);
             }
         }
         .content__headline {
