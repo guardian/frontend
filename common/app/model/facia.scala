@@ -7,13 +7,14 @@ import play.api.libs.json.Json
 
 case class Config(
                    id: String,
-                   contentApiQuery: Option[String] = None,
-                   displayName: Option[String] = None,
-                   href: Option[String] = None,
+                   contentApiQuery: Option[String],
+                   displayName: Option[String],
+                   href: Option[String],
                    groups: Seq[String],
                    collectionType: Option[String],
-                   showTags: Boolean = false,
-                   showSections: Boolean = false
+                   showTags: Boolean,
+                   showSections: Boolean,
+                   componentName: Option[String] = None
                    ) {
 
   lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
@@ -23,13 +24,18 @@ case class Config(
 }
 
 object Config {
-  def apply(id: String): Config = Config(id, None, None, None, Nil, None)
-  def apply(id: String, contentApiQuery: Option[String], displayName: Option[String], `type`: Option[String]): Config
-    = Config(id, contentApiQuery, displayName, `type`, Nil, None)
-  def apply (id: String, displayName: Option[String]): Config
-    = Config(id, None, displayName, None, Nil, None)
-  def apply (id: String, displayName: Option[String], href: Option[String]): Config
-    = Config(id, None, displayName, href, Nil, None)
+
+  def apply(id: String): Config =
+    Config(id, None, None, None, Nil, None, false, false, None)
+
+  def apply(id: String, displayName: Option[String]): Config =
+    Config(id, None, displayName, None, Nil, None, false, false, None)
+
+  def apply(id: String, displayName: Option[String], href: Option[String]): Config =
+    Config(id, None, displayName, href, Nil, None, false, false, None)
+
+  def apply(id: String, displayName: Option[String], href: Option[String], componentName: Option[String]): Config =
+    Config(id, None, displayName, href, Nil, None, false, false, componentName)
 
   val emptyConfig = Config("")
 }
@@ -115,7 +121,7 @@ object FrontProperties{
 
 object FaciaComponentName {
   def apply(config: Config, collection: Collection): String = {
-    config.displayName.orElse(collection.displayName).map { title =>
+    config.componentName.orElse(config.displayName).orElse(collection.displayName).map { title =>
       title.toLowerCase.replace(" ", "-")
     }.getOrElse("no-name")
   }

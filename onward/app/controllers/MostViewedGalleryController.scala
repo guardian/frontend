@@ -9,7 +9,7 @@ import feed.MostViewedGalleryAgent
 object MostViewedGalleryController extends Controller with Logging with ExecutionContexts {
 
   private val page = Page("More galleries", "inpictures", "More Galleries", "more galleries")
-  private val config = Config("multimedia/gallery", None, Some("more galleries"), None, Nil, Some("multimedia/gallery"))
+  private val config = Config("multimedia/gallery", None, Some("more galleries"), None, Nil, Some("multimedia/gallery"), false, false, None)
 
   val featuredSeries = Seq(
     ("Photographs of the day", "/news/series/ten-best-photographs-of-the-day"),
