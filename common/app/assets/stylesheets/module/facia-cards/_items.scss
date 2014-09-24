@@ -184,7 +184,7 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
-.fc-item--standard {
+.fc-item--standard-mobile {
     @include mq($until: tablet) {
         @include fc-item--standard;
     }
@@ -196,7 +196,7 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
-.fc-item--half {
+.fc-item--half-mobile {
     @include mq($until: tablet) {
         @include fc-item--half;
     }
