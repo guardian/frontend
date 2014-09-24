@@ -57,6 +57,7 @@
 
             @include mq($until: mobileLandscape) {
                 margin-left: -(gs-span(1) + $gs-gutter);
+                margin-right: -($gs-gutter * 2);
             }
 
             @include mq(mobileLandscape) {
