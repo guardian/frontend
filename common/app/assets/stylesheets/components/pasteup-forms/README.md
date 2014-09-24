@@ -1,38 +1,76 @@
-# Pasteup Forms
+Pasteup Forms
+===============
 
-Part of the [Pasteup-forms](https://github.com/guardian/pasteup) collection.
+Part of the [Pasteup](https://github.com/guardian/pasteup) collection.
 
-<http://guardian.github.io/pasteup-forms>
+[View the docs](http://guardian.github.io/pasteup-forms/)
 
 ## Installation
 
+You will need
+
+ * [Node.js](http://nodejs.org/)
+ * [Bower](http://bower.io/)
 ```
-bower install pasteup-forms --save
+$ npm install -g bower
+```
+
+Then install this component with
+
+```
+$ bower install pasteup-forms --save
 ```
 
 ## Usage
 
-```scss
-@import 'path/to/_forms.scss';
-
-@include pasteup-forms-fix-ie8-password-field-webfonts-display;
-@include pasteup-forms-defaults;
+```
+@import 'bower_components/pasteup-forms/src/_forms'
 ```
 
-## Contribute
+Or use the [standalone build](build/forms.min.css)
 
-### Add a new form element
+## Development
 
-- Install Bower dependencies: `bower install --save`
-- Add the element to the `demo/index.html` page
-- Edit `_forms.scss`
-- Compile styles using `sass demo/demo.scss:demo/demo.css`
+On top of the above requirements, you will also need
 
-### Commit and deploy
+ * [Ruby](https://www.ruby-lang.org/en/)
+ * [Bundler](http://bundler.io/)
+```
+$ gem install bundler
+```
+ * [Grunt CLI](http://gruntjs.com/getting-started#installing-the-cli)
+```
+$ npm install -g grunt-cli
+```
 
-```bash
-$ git commit -am "Commit message"
-$ git checkout gh-pages
-$ git merge -s subtree master
-$ git push origin master gh-pages
+Then, in root, install the dependecies
+
+```
+$ bundle install
+$ npm install
+$ bower install
+```
+
+To build the component
+
+```
+$ grunt build
+```
+
+To build the docs (output to the `docs` dir)
+
+```
+$ grunt docs
+```
+
+To release the component
+
+```
+$ grunt release
+```
+
+By default a patch release. Also `major` and `minor` targets available, e.g.
+
+```
+$ grunt release:minor
 ```

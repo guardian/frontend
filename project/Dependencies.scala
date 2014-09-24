@@ -18,6 +18,8 @@ object Dependencies {
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "1.27.0"
   val dnaCommon = "org.jboss.dna" % "dna-common" % "0.6"
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.23"
+  val flexibleContentBlockToText = "com.gu" %% "flexible-content-block-to-text" % "0.1"
+  val flexibleContentBodyParser = "com.gu" %% "flexible-content-body-parser" % "0.3"
   val guardianConfiguration = "com.gu" %% "configuration" % "3.9"
   val guice = "com.google.inject" % "guice" % "3.0"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion

@@ -8,10 +8,10 @@ import test.ConfiguredTestSuite
 @DoNotDiscover class DynamicFastTest extends DynamicContainerTest with ConfiguredTestSuite {
   override val slicesFor: (Seq[Story]) => Option[Seq[Slice]] = DynamicFast.slicesFor
 
-  it should "for n standard (0) items return QlQlQlQl" in {
+  it should "for n standard (0) items return Ql3Ql3Ql3Ql3" in {
     forAll(Gen.choose(1, 20)) { n: Int =>
       slicesFor(Seq.fill(n)(0).map(Story.unboosted)).value shouldEqual Seq(
-        QlQlQlQl
+        Ql3Ql3Ql3Ql3
       )
     }
   }

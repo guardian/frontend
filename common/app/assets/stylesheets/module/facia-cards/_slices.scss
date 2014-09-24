@@ -1,0 +1,67 @@
+/*
+
+This file is to be used only for manual overrides of item defaults at a slice level.
+Hence why a greater depth of selector specificity is needed.
+
+*/
+.facia-slice--hl4-h {
+    @if $browser-supports-flexbox {
+        @include flex-direction(row-reverse);
+
+        .facia-slice__item:first-child {
+            @include vertical-item-separator;
+        }
+
+        .facia-slice__item:last-child:before {
+            display: none;
+        }
+    }
+
+    .fc-item--half-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet, desktop) {
+                display: block;
+            }
+        }
+    }
+
+    .fc-item--list-media-tablet {
+        @include mq(tablet) {
+            .fc-item__title {
+                @include fs-headline(2, true);
+            }
+        }
+    }
+}
+
+.facia-slice--h-ql4-ql4 {
+    .fc-item--half-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet, desktop) {
+                display: block;
+            }
+        }
+    }
+}
+
+.facia-slice--h-q-q {
+    .fc-item--standard-tablet {
+        .fc-item__standfirst {
+            @include mq(tablet) {
+                display: block;
+            }
+        }
+    }
+}
+
+.facia-slice--q-qqq,
+.facia-slice--qqq-q {
+    .fc-item--standard {
+        .fc-item__title,
+        .fc-item__byline {
+            @include mq(tablet, desktop) {
+                @include fs-headline(1, true);
+            }
+        }
+    }
+}

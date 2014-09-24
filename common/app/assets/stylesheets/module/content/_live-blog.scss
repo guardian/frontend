@@ -126,17 +126,26 @@ $block-padding-right: $gs-gutter;
     color: inherit;
     @include fs-data(3);
     font-weight: bold;
-    &:before {
-        $size: 12px;
-        display: inline-block;
-        content: '';
-        background-color: #ffffff;
-        width: $size;
-        height: $size;
-        margin-bottom: -1px;
-        margin-right: 3px;
-        @include border-radius(50%);
-    }
+}
+
+@include keyframes(live-pulse) {
+    0% {background-color: #ffffff;}
+    10% {background-color: #df7787;}
+    40% {background-color: #ffffff;}
+    100% {background-color: #ffffff;}
+}
+
+.blog__live-icon {
+    $size: 12px;
+    display: inline-block;
+    content: '';
+    background-color: #ffffff;
+    width: $size;
+    height: $size;
+    margin-bottom: -1px;
+    margin-right: 3px;
+    @include border-radius(50%);
+    @include animation(live-pulse 2s infinite);
 }
 
 /* Timestamps
@@ -807,28 +816,39 @@ $timeline-width: 14px;
     background-color: $c-neutral8;
 
     .content__headline {
-        padding-bottom: $gs-baseline*3;
         color: $c-neutral1;
         @include fs-headline(5);
 
         @include mq(tablet) {
             @include fs-headline(6, true);
         }
-        @include mq(rightCol) {
+
+        @include mq(desktop) {
             padding-bottom: $gs-row-height + ($gs-baseline * 2);
         }
     }
 
-    &.tone-live .content__head--tonal .content__section {
+    &.tone-live .content__head--tonal {
+        .content__labels {
+            @include mq(desktop) {
+                float: left;
+                width: gs-span(3);
+                margin-left: (gs-span(4) + $gs-gutter) * -1;
+                border-bottom: 0;
+            }
+        }
 
-        @include mq(rightCol) {
-            float: left;
-            width: gs-span(3);
-            padding-top: $content-top-padding;
+        .content__section-label {
+            @include mq(desktop) {
+                @include fs-header(3);
+                float: none;
+            }
+        }
 
-            .tone-colour {
-                // overriding tonal head style here as liveblog section breaks differently
-                color: #ffffff;
+        .content__series-label {
+            @include mq(desktop) {
+                @include fs-headline(3);
+                float: none;
             }
         }
     }
@@ -880,8 +900,14 @@ $timeline-width: 14px;
     .tone-background {
         background-color: #ffffff;
     }
-    .content__section .tone-colour {
-        color: $c-liveDefault !important;
+    .content__labels {
+        border-bottom-color: $c-neutral5;
+    }
+    .content__section-label .tone-colour {
+        color: $c-liveDefault;
+    }
+    .content__series-label .tone-colour {
+        color: $c-neutral2;
     }
     .content__headline {
         color: $c-neutral1;
@@ -889,21 +915,22 @@ $timeline-width: 14px;
 }
 
 .liveblog__show-more {
-    @include fs-textSans(3);
+    background-color: colour(live-main-2);
+    border: 0;
     margin-bottom: $gs-baseline;
-    padding: ($gs-baseline / 3) * 2 0;
-    text-align: center;
 
-    .i-center {
-        @include border-radius($gs-baseline * 3);
-        height: $gs-baseline * 2;
-        margin-right: $gs-gutter / 2;
-        width: $gs-baseline * 2;
-        display: inline-block;
-        vertical-align: middle;
+    @include mq(leftCol) {
+        margin-top: $gs-baseline;
+        margin-bottom: 0;
+    }
 
-        .i {
-            margin-top: $gs-baseline / 4;
-        }
+    &:hover {
+        background-color: darken(colour(live-main-2), 7%);
+    }
+
+    .i {
+        width: 24px;
+        height: 24px;
+        margin: 6px 5px 0 -5px;
     }
 }

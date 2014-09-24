@@ -101,22 +101,21 @@ define([
 
         //https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/NavigationTiming/Overview.html#sec-window.performance-attribute
 
-        var start_time,
-            end_time,
-            total_time;
-
-        var perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+        var startTime,
+            endTime,
+            totalTime,
+            perf = performance || window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
 
         if (perf && perf.timing) {
-            start_time =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart;
-            end_time = perf.timing.responseEnd;
+            startTime =  perf.timing.requestStart || perf.timing.fetchStart || perf.timing.navigationStart;
+            endTime = perf.timing.responseEnd;
 
-            if (start_time && end_time) {
-                total_time = end_time - start_time;
+            if (startTime && endTime) {
+                totalTime = endTime - startTime;
             }
         }
 
-        return total_time;
+        return totalTime;
     }
 
     function getConnectionSpeed(performance, connection, reportUnknown) {
@@ -125,16 +124,18 @@ define([
 
         var isMobileNetwork = connection.type === 3 // connection.CELL_2G
                   || connection.type === 4 // connection.CELL_3G
-                  || /^[23]g$/.test( connection.type ); // string value in new spec
+                  || /^[23]g$/.test(connection.type), // string value in new spec
+            loadTime,
+            speed;
 
         if (isMobileNetwork) {
             return 'low';
         }
 
-        var loadTime = getPageSpeed(performance);
+        loadTime = getPageSpeed(performance);
 
         // Assume high speed for non supporting browsers
-        var speed = 'high';
+        speed = 'high';
         if (reportUnknown) {
             speed = 'unknown';
         }
@@ -154,14 +155,14 @@ define([
 
     function getFontFormatSupport(ua) {
         ua = ua.toLowerCase();
-        var browserSupportsWoff2 = false;
-
-        // for now only Chrome 36+ supports WOFF 2.0.
-        // Opera/Chromium also support it but their share on theguardian.com is around 0.5%
-        var woff2browsers = /Chrome\/([0-9]+)/i;
+        var browserSupportsWoff2 = false,
+            // for now only Chrome 36+ supports WOFF 2.0.
+            // Opera/Chromium also support it but their share on theguardian.com is around 0.5%
+            woff2browsers = /Chrome\/([0-9]+)/i,
+            chromeVersion;
 
         if (woff2browsers.test(ua)) {
-            var chromeVersion = parseInt(woff2browsers.exec(ua)[1], 10);
+            chromeVersion = parseInt(woff2browsers.exec(ua)[1], 10);
 
             if (chromeVersion >= 36) {
                 browserSupportsWoff2 = true;
@@ -184,7 +185,7 @@ define([
     }
 
     function hasPushStateSupport() {
-        if(supportsPushState !== undefined) {
+        if (supportsPushState !== undefined) {
             return supportsPushState;
         }
         if (window.history && history.pushState) {
@@ -199,16 +200,16 @@ define([
 
     function getVideoFormatSupport() {
         //https://github.com/Modernizr/Modernizr/blob/master/feature-detects/video.js
-        var elem = document.createElement('video');
-        var types = {};
+        var elem = document.createElement('video'),
+            types = {};
 
         try {
             if (!!elem.canPlayType) {
-                types.mp4 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/,'');
-                types.ogg = elem.canPlayType('video/ogg; codecs="theora"').replace(/^no$/,'');
-                types.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/,'');
+                types.mp4 = elem.canPlayType('video/mp4; codecs="avc1.42E01E"') .replace(/^no$/, '');
+                types.ogg = elem.canPlayType('video/ogg; codecs="theora"').replace(/^no$/, '');
+                types.webm = elem.canPlayType('video/webm; codecs="vp8, vorbis"').replace(/^no$/, '');
             }
-        } catch(e){}
+        } catch (e) {}
 
         return types;
     }
@@ -223,10 +224,11 @@ define([
                 window.getComputedStyle
                     ? window.getComputedStyle(document.body, ':after').getPropertyValue('content')
                     : document.getElementsByTagName('head')[0].currentStyle.fontFamily
-            ).replace(/['",]/g, '') || 'mobile';
+            ).replace(/['",]/g, '') || 'mobile',
+            index;
 
         if (!includeTweakpoint) {
-            var index = findIndex(breakpoints, function (b) {
+            index = findIndex(breakpoints, function (b) {
                 return b.name === breakpoint;
             });
             breakpoint = _(breakpoints)
@@ -297,13 +299,9 @@ define([
             document.addEventListener('webkitvisibilitychange', onchange);
         } else if ((hidden = 'msHidden') in document) {
             document.addEventListener('msvisibilitychange', onchange);
-        }
-        // IE 9 and lower:
-        else if ('onfocusin' in document) {
+        } else if ('onfocusin' in document) { // IE 9 and lower:
             document.onfocusin = document.onfocusout = onchange;
-        }
-        // All others:
-        else {
+        } else { // All others:
             window.onpageshow = window.onpagehide = window.onfocus = window.onblur = onchange;
         }
     }

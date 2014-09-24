@@ -1,6 +1,6 @@
 define([
     'common/utils/config'
-], function(
+], function (
     config
 ) {
 
@@ -9,7 +9,7 @@ define([
     function load() {
 
         if (config.switches.remarketing) {
-            return require(['js!' + remarketingUrl + '!exports=google_trackConversion'], function() {
+            return require(['js!' + remarketingUrl + '!exports=google_trackConversion'], function () {
                 window.google_trackConversion({
                     google_conversion_id: 971225648,
                     google_custom_params: window.google_tag_params,

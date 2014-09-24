@@ -1,6 +1,9 @@
 $fc-item-gutter: $gs-gutter / 3;
 
 @import 'item-layouts/fc-item--standard';
+@import 'item-layouts/fc-item--half';
+@import 'item-layouts/fc-item--three-quarters';
+@import 'item-layouts/fc-item--three-quarters-right';
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-media';
 @import 'item-layouts/fc-item--list-media-large';
@@ -9,20 +12,18 @@ $fc-item-gutter: $gs-gutter / 3;
     .facia-slice__item {
         @include flex-display;
         padding-bottom: 0;
-
-        @if not $browser-supports-flexbox {
-            width: 25%;
-        }
     }
 }
 
 .fc-item {
     @include flex(1);
+    @include box-sizing(border-box);
+    display: block;
+    @include clearfix;
     padding-bottom: $gs-baseline * 2.5;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
     background-color: #ffffff;
-    display: block;
     position: relative;
 
     a {
@@ -30,11 +31,7 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 
     .stars {
-        margin-top: $gs-baseline * .25;
-
-        @include mq(tablet) {
-            margin-bottom: $gs-baseline * 1.25;
-        }
+        margin-bottom: 0;
     }
 }
 
@@ -94,6 +91,7 @@ $fc-item-gutter: $gs-gutter / 3;
 
 .fc-item__standfirst {
     @include fs-bodyCopy(1);
+    padding-top: $gs-baseline;
     display: none;
 }
 
@@ -194,9 +192,33 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
+.fc-item--half {
+    @include mq($until: tablet) {
+        @include fc-item--half;
+    }
+}
+
+.fc-item--half-tablet {
+    @include mq(tablet) {
+        @include fc-item--half;
+    }
+}
+
+.fc-item--three-quarters-tablet {
+    @include mq(tablet) {
+        @include fc-item--three-quarters;
+    }
+}
+
+.fc-item--three-quarters-right-tablet {
+    @include mq(tablet) {
+        @include fc-item--three-quarters-right;
+    }
+}
+
 
 .l-list {
-    float: left;
+    width: 100%;
 
     .has-flex-wrap & {
         @include flex-display;
@@ -205,8 +227,6 @@ $fc-item-gutter: $gs-gutter / 3;
 }
 
 .l-list__item {
-    float: left;
-
     &:last-child {
         margin-bottom: 0;
     }
@@ -217,10 +237,21 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
-@for $column from 1 through 4 {
-    .l-row__item--span-#{$column} {
-        @include flex(#{$column});
+// We only need this functionality for 2 & 4 column rows.
+@for $column from 2 through 4 {
+    @for $span from 1 through 4 {
+        .l-row--items-#{$column} {
+            .l-row__item--span-#{$span} {
+                @include mq(tablet) {
+                    @include flex($span);
+                    width: (100% / 4) * $span;
+                }
+            }
+        }
     }
+}
+
+@for $column from 1 through 4 {
 
     .l-list--columns-#{$column} {
         .l-list__item {

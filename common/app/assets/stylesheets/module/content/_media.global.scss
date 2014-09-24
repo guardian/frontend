@@ -72,16 +72,9 @@
         margin-right: .3em;
     }
 
-    $audio-most-viewed-container: 358px;
-
     .content__main-column--video {
         @include mq(rightCol) {
             min-height: gs-height(12);
-        }
-    }
-    .content__main-column--audio {
-        @include mq(rightCol) {
-            min-height: $audio-most-viewed-container;
         }
     }
     .content__secondary-column--media {
@@ -100,11 +93,6 @@
     .content__secondary-column--video {
         @include mq(rightCol) {
             height: auto;
-        }
-    }
-    .content__secondary-column--audio {
-        @include mq(rightCol) {
-            height: $audio-most-viewed-container;
         }
     }
 }

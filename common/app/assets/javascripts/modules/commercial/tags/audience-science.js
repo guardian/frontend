@@ -2,13 +2,14 @@ define([
     'common/utils/cookies',
     'common/utils/storage',
     'common/utils/config'
-], function(
+], function (
     cookies,
     storage,
     config
 ) {
 
-    var revenueScienceUrl = '//js.revsci.net/gateway/gw.js?csid=E05516';
+    var csid = 'E05516',
+        revenueScienceUrl = '//js.revsci.net/gateway/gw.js?csid=' + csid;
 
     function getSegments() {
         var segments = storage.local.get('gu.ads.audsci');
@@ -33,7 +34,7 @@ define([
                 cookies.cleanUp(['rsi_segs']);
             };
             // Then load audsci to get latests segments.
-            return require(['js!' + revenueScienceUrl + '!exports=rsi_now'], function () {
+            return require(['js!' + revenueScienceUrl + '!exports=' + csid], function () {
                 window.E05516.DM_tag();
             });
         }
@@ -42,13 +43,14 @@ define([
     // This is replicating what Audience Science do when they set a cookie.
     // For some reason they don't do it to segments passed in the onSegsAvailable callback.
     function processSegments(segments) {
-        var pSegs = [];
-        var pat = /.*_5.*/;
-        var pat2 = /([^_]{2})[^_]*_(.*)/;
-        for (var i = 0, x = segments.length; i < x && i < 100; ++i) {
+        var i, x, f,
+            pSegs = [],
+            pat = /.*_5.*/,
+            pat2 = /([^_]{2})[^_]*_(.*)/;
+        for (i = 0, x = segments.length; i < x && i < 100; ++i) {
             if (!pat.test(segments[i])) {
-                var f = pat2.exec(segments[i]);
-                if (f!==null) {
+                f = pat2.exec(segments[i]);
+                if (f !== null) {
                     pSegs.push(f[1] + f[2]);
                     ++i;
                 }

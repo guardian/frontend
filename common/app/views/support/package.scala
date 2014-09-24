@@ -216,6 +216,11 @@ case class VideoEmbedCleaner(contentVideos: Seq[VideoElement]) extends HtmlClean
 
       })
     }
+
+    document.getElementsByClass("element-witness--main").foreach { element: Element =>
+      element.select("iframe").wrap("<div class=\"u-responsive-ratio u-responsive-ratio--hd\"></div>")
+    }
+
     document
   }
 

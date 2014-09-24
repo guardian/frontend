@@ -31,3 +31,7 @@
     vertical-align: bottom;
     display: inline-block;
 }
+
+.more-tags { //fix for IE8/9 bug
+    display: inline;
+}
