@@ -63,18 +63,16 @@
                 width: 0;
                 position: absolute;
                 bottom: 0;
-                height: 95%;
                 right: gs-span(3);
-                max-height: gs-height(4) + ($gs-baseline*2);
+                height: 80%;
             }
 
-            @include mq(tablet) {
-                height: 95%;
-                min-height: gs-span(2) + ($gs-gutter*2);
+            @include mq(phablet) {
+                height: gs-span(2.5) + ($gs-gutter*2);
             }
 
-            @include mq(rightCol) {
-                height: 110%;
+            @include mq(desktop) {
+                height: gs-span(3) + ($gs-gutter*2);
                 right: gs-span(1) + $gs-gutter;
             }
         }
@@ -84,13 +82,14 @@
     }
 
     .content__head--byline-pic {
+        .tone-background .content__main-column {
+            @include mq(tablet) {
+                min-height: 220px;
+            }
+        }
         .content__headline {
             @include mq(mobileLandscape) {
                 padding-right: gs-span(2) + $gs-gutter;
-            }
-
-            @include mq(tablet) {
-                min-height: 60px;
             }
 
             @include mq(desktop) {
