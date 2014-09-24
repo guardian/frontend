@@ -61,7 +61,8 @@ Component.define(Comments);
 /**
  * @override
  * @type {string}
- */Comments.prototype.componentClass = 'd-discussion';
+ */
+Comments.prototype.componentClass = 'd-discussion';
 
 /**
  * @type {Object.<string.*>}
