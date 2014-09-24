@@ -12,6 +12,11 @@ $fc-item-gutter: $gs-gutter / 3;
     .facia-slice__item {
         @include flex-display;
         padding-bottom: 0;
+
+        &.l-list__item {
+            margin-bottom: 0;
+            padding-bottom: $gs-baseline;
+        }
     }
 }
 
@@ -278,7 +283,7 @@ $fc-item-gutter: $gs-gutter / 3;
             &.l-list--rows-#{$row} {
                 .l-list__item:nth-last-child(-n+#{$column}) {
                     @include mq(tablet) {
-                        margin-bottom: 0;
+                        padding-bottom: 0;
                     }
                 }
             }
