@@ -7,6 +7,8 @@ $fc-item-gutter: $gs-gutter / 3;
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-media';
 @import 'item-layouts/fc-item--list-media-large';
+@import 'item-layouts/fc-item--full';
+@import 'item-layouts/fc-item--mega-full';
 
 .fc-container {
     .facia-slice__item {
@@ -213,6 +215,18 @@ $fc-item-gutter: $gs-gutter / 3;
 .fc-item--three-quarters-right-tablet {
     @include mq(tablet) {
         @include fc-item--three-quarters-right;
+    }
+}
+
+.fc-item--full-tablet {
+    @include mq(tablet) {
+        @include fc-item--full;
+    }
+}
+
+.fc-item--mega-full-tablet {
+    @include mq(tablet) {
+        @include fc-item--mega-full;
     }
 }
 
