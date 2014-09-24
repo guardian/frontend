@@ -276,7 +276,10 @@
 
             <a class="thumb" target="article" data-bind="attr: {href: id}">
                 <img draggable="false" data-bind="
-                    attr: {src: meta.imageSrc() || fields.thumbnail(), title: id}"/>
+                    attr: {
+                        src: meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : fields.thumbnail(),
+                        title: id
+                    }"/>
             </a>
 
             <div data-bind="if: state.isOpen">
