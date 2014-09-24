@@ -10,7 +10,8 @@ define([
     'common/modules/identity/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/recommend-comments',
-    'common/modules/discussion/api'
+    'common/modules/discussion/api',
+    'common/utils/detect'
 ], function(
     $,
     bonzo,
@@ -23,7 +24,8 @@ define([
     Id,
     CommentBox,
     RecommendComments,
-    DiscussionApi
+    DiscussionApi,
+    detect
 ) {
 'use strict';
 /**
@@ -47,7 +49,7 @@ var Comments = function(mediator, options) {
 
     this.fetchData = {
         orderBy: this.options.order,
-        pageSize: 10
+        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10
     };
 
     this.endpoint = this.options.commentId ?
@@ -59,8 +61,7 @@ Component.define(Comments);
 /**
  * @override
  * @type {string}
- */
-Comments.prototype.componentClass = 'd-discussion';
+ */Comments.prototype.componentClass = 'd-discussion';
 
 /**
  * @type {Object.<string.*>}
@@ -310,6 +311,7 @@ Comments.prototype.changePage = function(e) {
  * }
  */
 Comments.prototype.fetchComments = function(options) {
+
     var url = '/discussion/'+
         (options.comment ? 'comment-context/'+ options.comment : this.options.discussionId)+
         '.json?'+ (options.page ? '&page=' + options.page : '')+
