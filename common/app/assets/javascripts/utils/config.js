@@ -49,7 +49,7 @@ define([
         },
 
         // returns 2014/apr/22
-        dateFromSlug: function() {
+        dateFromSlug: function () {
             var s = config.page.pageId.match(/\d{4}\/\w{3}\/\d{2}/);
             return s ? s[0] : null;
         },

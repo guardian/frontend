@@ -1,72 +1,45 @@
-@(collection: model.Collection, sliceWithRemaining: (layout.SliceWithCards, Seq[layout.Card]), containerIndex: Int)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+@(slice: layout.SliceWithCards, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
 
-@import views.support.GetClasses
-@import layout.{ColumnAndCards, SingleItem, Rows}
-@import views.html.fragments.containers.facia_cards.show_more
+@import layout.{ColumnAndCards, SingleItem, Rows, SplitColumn}
 @import views.html.fragments.items.facia_cards.item
-@import model.FaciaComponentName
-@import common.LinkTo
 
-@defining(sliceWithRemaining){ case (slice, remainingCards) =>
-
-    @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
-
-        <section
-        id="@FaciaComponentName(config, collection)"
-        class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
-        data-link-name="@FaciaComponentName(config, collection)"
-        data-id="@config.id"
-        @config.sponsorshipKeyword.map { keyword =>
-            data-keywords="@keyword"
-        }
-        data-component="@FaciaComponentName(config, collection)">
-            <div class="facia-container__inner">
-                <div class="container__header">
-                @title.map { title =>
-                    <h2 class="container__title">
-                        @href.map { href =>
-                        <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                        }.getOrElse{
-                            <span class="container__title__label u-text-hyphenate">@Html(title)</span>
-                        }
-                    </h2>
+<div class="facia-slice-wrapper">
+    <ul class="u-unstyled l-row l-row--items-@slice.numberOfColumns facia-slice facia-slice--@slice.cssClassName">
+    @for(ColumnAndCards(column, cards) <- slice.columns) {
+        @column match {
+            case SingleItem(colSpan, itemClasses) => {
+                @cards.headOption.map { card =>
+                    @item(card, itemClasses.classes, containerIndex, false, colSpan)
                 }
-                </div>
-                <div class="container__body container--rolled-up-hide js-container--fc-show-more">
-                    <div class="facia-slice-wrapper">
-                        <ul class="u-unstyled l-row l-row--items-@slice.numberOfColumns facia-slice facia-slice--@slice.cssClassName">
-                        @for(ColumnAndCards(column, cards) <- slice.columns) {
+            }
 
-                            @column match {
-
-                                case SingleItem(colSpan, itemClasses) => {
-                                    @cards.headOption.map { card =>
-                                        @item(card, itemClasses.classes, containerIndex, false, colSpan)
-                                    }
-                                }
-
-                                case Rows(colSpan, columns, rows, itemClasses) => {
-                                    <li class="facia-slice__item l-row__item l-row__item--span-@colSpan">
-                                        <ul class="u-unstyled l-list l-list--columns-@columns l-list--rows-@rows">
-                                            @if(cards.nonEmpty) {
-                                                @cards.map{ card =>
-                                                    @item(card, itemClasses.classes, containerIndex, isList = true)
-                                                }
-                                            }
-                                        </ul>
-                                    </li>
-                                }
-
-                                case _ => { @* TODO *@ }
+            case Rows(colSpan, columns, rows, itemClasses) => {
+                <li class="facia-slice__item l-row__item l-row__item--span-@colSpan">
+                    <ul class="u-unstyled l-list l-list--columns-@columns l-list--rows-@rows">
+                        @if(cards.nonEmpty) {
+                            @cards.map{ card =>
+                                @item(card, itemClasses.classes, containerIndex, isList = true)
                             }
                         }
-                        </ul>
+                    </ul>
+                </li>
+            }
 
-                        @show_more(remainingCards, containerIndex)
+            case SplitColumn(colSpan, topItemClasses, bottomItemsClasses) => {
+                <li class="facia-slice__item l-row__item l-row__item--span-@colSpan">
+                    <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-3">
+                        @cards.headOption.map { card =>
+                            @item(card, topItemClasses.classes, containerIndex, isList = true)
+                        }
+                        @cards.tail.map { card =>
+                            @item(card, bottomItemsClasses.classes, containerIndex, isList = true)
+                        }
+                    </ul>
+                </li>
+            }
 
-                    </div>
-                </div>
-            </div>
-        </section>
+            case _ => { @* TODO *@ }
+        }
     }
-}
+    </ul>
+</div>

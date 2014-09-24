@@ -17,7 +17,8 @@ define([
     'common/modules/ui/autoupdate',
     'common/modules/ui/message',
     'common/modules/ui/notification-counter',
-    'common/bootstraps/article'
+    'common/bootstraps/article',
+    'common/modules/ui/relativedates'
 ], function (
     bean,
     bonzo,
@@ -37,7 +38,8 @@ define([
     AutoUpdate,
     Message,
     NotificationCounter,
-    article
+    article,
+    RelativeDates
 ) {
     'use strict';
 
@@ -62,6 +64,13 @@ define([
             bean.off(curBinding);
             curBinding = bean.one(document, 'scroll', function() { unselect(); });
         }
+
+        bean.on(document.body, 'click', 'a', function(e) {
+            var id = e.currentTarget.href.match(/.*(#.*)/)[1];
+            if (id && $(id).hasClass('truncated-block')) {
+                mediator.emit('module:liveblog:showkeyevents', true);
+            }
+        });
 
         bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e) {
             mediator.emit('module:liveblog:showkeyevents', true);
@@ -207,6 +216,17 @@ define([
 
                 releaseMessage.show(msg);
             }
+        },
+
+        keepTimestampsCurrent: function() {
+            var dates = RelativeDates;
+            window.setInterval(
+                function() {
+                    dates.init();
+                },
+                60000
+            );
+
         }
     };
 
@@ -216,6 +236,7 @@ define([
         modules.createTimeline();
         modules.createAutoRefresh();
         modules.showFootballLiveBlogMessage();
+        modules.keepTimestampsCurrent();
 
         // re-use modules from article bootstrap
         article.modules.initOpen(config);

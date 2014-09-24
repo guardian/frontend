@@ -31,6 +31,8 @@ object Frontend extends Build with Prototypes {
       snappyJava,
       liftJson,
       playGoogleAuth,
+      flexibleContentBlockToText,
+      flexibleContentBodyParser,
       scalaCheck,
       filters,
       ws,
@@ -138,6 +140,10 @@ object Frontend extends Build with Prototypes {
       commercial,
       onward
     )
+
+  val faciaEndToEnd = application("facia-end-to-end")
+    .dependsOn(commonWithTests)
+    .dependsOn(facia, faciaTool, faciaPress)
 
   // this app has a very limited set.
   // it is designed to get all other services (e.g. onwards) from PROD

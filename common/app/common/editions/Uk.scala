@@ -11,7 +11,7 @@ object Uk extends Edition(
 
   implicit val UK = Uk
 
-  val sportLocalNav: Seq[SectionLink] = Seq(football, rugbyunion, cricket, tennis, cycling, boxing, usSport, formulaOne, racing)
+  val sportLocalNav: Seq[SectionLink] = Seq(football, rugbyunion, cricket, tennis, golf, cycling, boxing, usSport, formulaOne, racing)
   val cultureLocalNav: Seq[SectionLink] = Seq(film, televisionAndRadio, music, books, artanddesign, stage, classicalMusic)
 
   override val navigation: Seq[NavItem] = {

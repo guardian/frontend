@@ -10,6 +10,6 @@
     "commit": "c4103ed00cf595ef3c322b831288c88d60e42ad0"
   },
   "_source": "git://github.com/guardian/guss-grid-system.git",
-  "_target": "~1",
+  "_target": "~1.2.1",
   "_originalSource": "guss-grid-system"
 }
