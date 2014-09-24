@@ -3,7 +3,7 @@
 @import layout.ContainerLayout
 @import views.support._
 @import views.html.fragments.containers
-@import slices.FixedContainers
+@import slices.{FixedContainers, DynamicContainers}
 
 @* This nastiness will go once everything moves to the new Facia Cards pattern *@
 
@@ -26,6 +26,16 @@
         case Some("prototype/raclette")         => { @containers.raclette(collection, RacletteContainer(), index)(request, templateDeduping, config) }
         case Some("comment/comment-and-debate") => { @containers.commentanddebate(collection, CommentAndDebateContainer(), index)(request, templateDeduping, config) }
         case FixedContainers(containerDefinition) => { @containers.facia_cards.container(collection, ContainerLayout(containerDefinition, collection, templateDeduping), index)(request, templateDeduping, config) }
-        case _                                  => { @containers.special(collection, SpecialContainer(), index)(request, templateDeduping, config) }
+        case collectionType => {
+            @DynamicContainers(collectionType, collection.items) match {
+                case Some(containerDefinition) => {
+                    @containers.facia_cards.container(collection, ContainerLayout(containerDefinition, collection, templateDeduping), index)(request, templateDeduping, config)
+                }
+
+                case None => {
+                    @containers.special(collection, SpecialContainer(), index)(request, templateDeduping, config)
+                }
+            }
+        }
     }
 }

@@ -2,11 +2,13 @@
 define([
     'knockout',
     'config',
-    'fixed-containers'
+    'fixed-containers',
+    'dynamic-containers'
 ], function(
     ko,
     pageConfig,
-    fixedContainers
+    fixedContainers,
+    dynamicContainers
 ){
     var CONST = {
         editions: ['uk', 'us', 'au'],
@@ -28,7 +30,7 @@ define([
             {name: 'prototype/cassoulet'},
             {name: 'prototype/quichelorraine'},
             {name: 'prototype/raclette'}
-        ].concat(fixedContainers),
+        ].concat(fixedContainers).concat(dynamicContainers),
 
         headlineLength: 200,
         restrictedHeadlineLength: 90,
