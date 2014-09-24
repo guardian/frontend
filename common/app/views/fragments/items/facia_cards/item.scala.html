@@ -1,7 +1,7 @@
-@(card: layout.Card, modifierClasses: String, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: Config)
+@(card: layout.Card, modifierClasses: String, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: model.Config)
 
 @import common.LinkTo
-@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
+@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer, LiveBlog}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
@@ -11,8 +11,6 @@
 @defining((card.item, card.index)) { case (trail, index) =>
 
 <li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
-
-
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
         <div
             class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses"

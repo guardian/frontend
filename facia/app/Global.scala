@@ -9,7 +9,7 @@ import play.api.libs.json.Json
 import play.api.mvc.WithFilters
 import services.{IndexListingsLifecycle, ConfigAgent, ConfigAgentDefaults, ConfigAgentLifecycle}
 import play.api.Application
-
+import liveblogs.LatestBlocks
 
 object Global extends WithFilters(Filters.common: _*)
   with ConfigAgentLifecycle
@@ -27,7 +27,13 @@ object Global extends WithFilters(Filters.common: _*)
   )
 
   override def onStart(app: Application) {
+    LatestBlocks.start()
     if (Play.isDev) ConfigAgent.refreshWith(Json.parse(ConfigAgentDefaults.contents))
     super.onStart(app)
+  }
+
+  override def onStop(app: Application): Unit = {
+    LatestBlocks.stop()
+    super.onStop(app)
   }
 }
