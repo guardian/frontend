@@ -13,7 +13,8 @@ define([
     'modules/ui/container-fc-show-more',
     'modules/ui/container-show-more',
     'modules/ui/container-toggle',
-    'modules/onwards/geo-most-popular-front'
+    'modules/onwards/geo-most-popular-front',
+    'modules/facia_cards/live-blog-updates'
 ], function (
     $,
     ajax,
@@ -27,10 +28,10 @@ define([
     containerFcShowMore,
     ContainerShowMore,
     ContainerToggle,
-    GeoMostPopularFront
+    GeoMostPopularFront,
+    liveBlogUpdates
     ) {
     var modules = {
-
             showSnaps: function () {
                 snaps.init();
             },
@@ -83,6 +84,7 @@ define([
                 modules.showContainerShowMore();
                 modules.showContainerToggle();
                 modules.upgradeMostPopularToGeo(config);
+                liveBlogUpdates();
             }
             mediator.emit('page:front:ready', config, context);
         };

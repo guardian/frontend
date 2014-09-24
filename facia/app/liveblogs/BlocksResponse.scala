@@ -10,7 +10,8 @@ object Block {
 }
 
 case class Block(
-  id: String,
+  articleId: String,
+  blockId: String,
   body: String,
   posted: DateTime
 )
@@ -26,16 +27,17 @@ object BlocksResponse {
         (latestBlock, latestBlockText) <- Parser.parse(body) collectFirst {
           case block @ ParsedBlock(_, _, _, _, BlockToText(text), _) if text.trim.nonEmpty => (block, text)
         }
-      } yield item.id -> Block(
+      } yield Block(
+        item.id,
         latestBlock.id,
         latestBlockText,
         latestBlock.lastUpdatedDateTime.getOrElse(latestBlock.publishedDateTime)
       )
-    }).flatten.toMap)
+    }).flatten)
   }
 }
 
 case class BlocksResponse(
-  latestBlocks: Map[String, Block]
+  latestBlocks: Seq[Block]
 )
 
