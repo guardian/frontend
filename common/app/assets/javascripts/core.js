@@ -29,8 +29,8 @@ require([
 
     // shared modules
     'common/modules/commercial/badges',
-    'common/modules/commercial/user-ad-targeting',
     'common/modules/commercial/dfp',
+    'common/modules/commercial/user-ad-targeting',
     'common/modules/component',
     'common/modules/experiments/ab',
     'common/modules/lazyload',

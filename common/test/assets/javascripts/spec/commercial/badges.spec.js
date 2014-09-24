@@ -70,11 +70,11 @@ define([
             [
                 {
                     type: 'sponsored',
-                    name: 'spbadge'
+                    name: 'spbadge1'
                 },
                 {
                     type: 'advertisement-feature',
-                    name: 'adbadge'
+                    name: 'adbadge1'
                 }
             ].forEach(function(badge) {
 
@@ -106,11 +106,11 @@ define([
             var configs = [
                 {
                     type: 'sponsored',
-                    name: 'spbadge'
+                    name: 'spbadge1'
                 },
                 {
                     type: 'advertisement-feature',
-                    name: 'adbadge'
+                    name: 'adbadge1'
                 }
             ];
 
