@@ -35,7 +35,7 @@ define([
     }
 
     return {
-        load : load,
+        load: load,
         getSegments: getSegments
     };
 

@@ -7,9 +7,9 @@ define([
     bonzo,
     bean
 ) {
-    return function(container) {
+    return function (container) {
         var $container = bonzo(container),
-            className ='fc-show-more--hidden',
+            className = 'fc-show-more--hidden',
             $button = $.create(
             '<button class="collection__show-more tone-background tone-news" data-link-name="Show more | 1">' +
             '<span class="collection__show-more__icon">' +

@@ -5,14 +5,17 @@
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
+@import views.html.fragments.items.elements.facia_cards._
+@import views.html.fragments.items.elements.starRating
 
 @defining((card.item, card.index)) { case (trail, index) =>
 
-<li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-1 @if(isList){ l-list__item }@card.cssClasses">
+<li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
+
 
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
         <div
-            class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses"
+            class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses u-cf"
             @if(trail.isCommentable) {
                 @trail.discussionId.map{ id =>
                 data-discussion-id="@id"
@@ -25,7 +28,7 @@
 
             <div class="fc-item__container">
                 @FaciaDisplayElement.fromTrail(trail) match {
-                    case InlineVideo(videoElement, title, endSlatePath) if trail.imageAdjust == "boost" => {
+                    case InlineVideo(videoElement, title, endSlatePath) => {
                         <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
                             <div class="fc-item__video-container">
                             @video(VideoPlayer(
@@ -42,7 +45,7 @@
                     }
 
                     case _ => {
-                        @fragments.items.elements.facia_cards.image(trail, inlineImage = containerIndex == 0 && index < 4)
+                        @image(trail, inlineImage = containerIndex == 0 && index < 4)
                     }
                 }
 
@@ -50,8 +53,8 @@
                     ("fc-item__header", true),
                     ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
                 ))">
-                    @fragments.items.elements.facia_cards.title(trail, index, containerIndex)
-                    @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+                    @title(trail, index, containerIndex)
+                    @trail match { case content:model.Content => @starRating(content) }
                     @if(tone == "comment") {
                         @trail.byline.map { byLine =>
                             @trail match { case content:model.Content =>

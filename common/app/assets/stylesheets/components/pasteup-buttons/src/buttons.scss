@@ -1,10 +1,10 @@
-$gs-baseline: 12px;
 $guss-webfonts-base-url: '//pasteup.guim.co.uk/fonts/';
 
 @import 'bower_components/guss-colours/_colours';
+@import 'bower_components/guss-grid-system/_grid-system';
 @import 'bower_components/guss-typography/_typography';
-@import 'bower_components/guss-webfonts/_webfonts';
-@import 'bower_components/pasteup-palette/_palette';
+@import 'bower_components/guss-webfonts/src/_webfonts';
+@import 'bower_components/pasteup-palette/src/_palette';
 
 @include guss-webfonts;
 

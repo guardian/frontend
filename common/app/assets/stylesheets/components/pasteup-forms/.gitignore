@@ -1,2 +1,7 @@
+.DS_Store
+.grunt
 .sass-cache
+
 bower_components
+docs
+node_modules

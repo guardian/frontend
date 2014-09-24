@@ -16,11 +16,7 @@
    ========================================================================== */
 
 @import 'base/_tables';
-@import 'components/pasteup-forms/_forms';
-@if $old-ie {
-    @include pasteup-forms-fix-ie8-password-field-webfonts-display;
-}
-@include pasteup-forms-defaults;
+@import 'components/pasteup-forms/src/_forms';
 @import 'components/pasteup-buttons/src/_buttons';
 
 

@@ -17,6 +17,6 @@
     "commit": "06104ffb922c011528f6aa5119b3e27cc9bb6e4b"
   },
   "_source": "git://github.com/guardian/guss-rem.git",
-  "_target": "~1",
+  "_target": "~1.2.0",
   "_originalSource": "guss-rem"
 }

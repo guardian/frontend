@@ -817,17 +817,38 @@ $timeline-width: 14px;
 
     .content__headline {
         color: $c-neutral1;
+        @include fs-headline(5);
+
+        @include mq(tablet) {
+            @include fs-headline(6, true);
+        }
+
+        @include mq(desktop) {
+            padding-bottom: $gs-row-height + ($gs-baseline * 2);
+        }
     }
 
-    &.tone-live .content__head--tonal .content__section {
-        @include mq(rightCol) {
-            float: left;
-            width: gs-span(3);
-            padding-top: $content-top-padding;
+    &.tone-live .content__head--tonal {
+        .content__labels {
+            @include mq(desktop) {
+                float: left;
+                width: gs-span(3);
+                margin-left: (gs-span(4) + $gs-gutter) * -1;
+                border-bottom: 0;
+            }
+        }
 
-            .tone-colour {
-                // overriding tonal head style here as liveblog section breaks differently
-                color: #ffffff;
+        .content__section-label {
+            @include mq(desktop) {
+                @include fs-header(3);
+                float: none;
+            }
+        }
+
+        .content__series-label {
+            @include mq(desktop) {
+                @include fs-headline(3);
+                float: none;
             }
         }
     }
@@ -879,8 +900,14 @@ $timeline-width: 14px;
     .tone-background {
         background-color: #ffffff;
     }
-    .content__section .tone-colour {
-        color: $c-liveDefault !important;
+    .content__labels {
+        border-bottom-color: $c-neutral5;
+    }
+    .content__section-label .tone-colour {
+        color: $c-liveDefault;
+    }
+    .content__series-label .tone-colour {
+        color: $c-neutral2;
     }
     .content__headline {
         color: $c-neutral1;
@@ -891,19 +918,27 @@ $timeline-width: 14px;
     background-color: colour(live-main-2);
     border: 0;
     margin-bottom: $gs-baseline;
+    padding-left: 36px;
 
     @include mq(leftCol) {
         margin-top: $gs-baseline;
         margin-bottom: 0;
     }
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
         background-color: darken(colour(live-main-2), 7%);
     }
 
     .i {
         width: 24px;
         height: 24px;
-        margin: 6px 5px 0 -5px;
+        vertical-align: middle;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 7px;
     }
 }

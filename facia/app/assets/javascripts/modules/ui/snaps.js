@@ -7,7 +7,7 @@ define([
     'common/utils/to-array',
     'common/modules/ui/relativedates',
     'modules/ui/football-snaps'
-], function(
+], function (
     $,
     bonzo,
     ajax,
@@ -20,21 +20,21 @@ define([
 
     function init() {
         var snaps = toArray($('.facia-snap'))
-                .filter(function(el) { return el.getAttribute('data-snap-uri'); })
-                .filter(function(el) { return el.getAttribute('data-snap-type'); });
+                .filter(function (el) { return el.getAttribute('data-snap-uri'); })
+                .filter(function (el) { return el.getAttribute('data-snap-type'); });
 
         snaps.forEach(fetchSnap);
 
         if (snaps.length) {
-            mediator.on('window:resize', function() {
-                snaps.forEach(function(el) { addCss(el, true); });
+            mediator.on('window:resize', function () {
+                snaps.forEach(function (el) { addCss(el, true); });
             });
         }
     }
 
-    function addCss(el, isResize){
+    function addCss(el, isResize) {
         setSnapPoint(el, isResize);
-        if($(el).hasClass('facia-snap--football')) {
+        if ($(el).hasClass('facia-snap--football')) {
             FootballSnaps.resizeIfPresent(el);
         }
     }
@@ -52,14 +52,14 @@ define([
             { width: 700, name: 'large' },
             { width: 940, name: 'huge' }
         ]
-        .map(function(breakpoint, i, arr) {
-            var isAdd = width >= breakpoint.width && (arr[i+1] ? width < arr[i+1].width : true);
+        .map(function (breakpoint, i, arr) {
+            var isAdd = width >= breakpoint.width && (arr[i + 1] ? width < arr[i + 1].width : true);
 
             breakpoint.action = isAdd ? 'addClass' : isResize ? 'removeClass' : false;
             return breakpoint;
         })
-        .filter(function(breakpoint) { return breakpoint.action; })
-        .forEach(function(breakpoint) {
+        .filter(function (breakpoint) { return breakpoint.action; })
+        .forEach(function (breakpoint) {
             $el[breakpoint.action](prefix + breakpoint.name);
         });
     }
@@ -79,8 +79,8 @@ define([
             url: el.getAttribute('data-snap-uri'),
             type: asJson ? 'json' : 'html',
             crossOrigin: true
-        }).then(function(resp) {
-            $.create(asJson ? resp.html : resp).each(function(html) {
+        }).then(function (resp) {
+            $.create(asJson ? resp.html : resp).each(function (html) {
                 bonzo(el).html(html);
             });
             relativeDates.init(el);
