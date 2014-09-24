@@ -33,10 +33,30 @@
         }
     }
 
-    .content__section {
+    .content__labels {
+        margin-bottom: $gs-baseline/2;
+        border-bottom: 1px dotted $c-neutral5;
+        width: 100%;
+        float: none;
+
         @include mq(leftCol) {
-            width: gs-span(6);
-            padding-bottom: $gs-baseline;
+            margin-left: -($left-column + $gs-gutter);
+        }
+
+        @include mq(wide) {
+            margin-left: -($left-column-wide + $gs-gutter);
+        }
+    }
+
+    .content__section-label {
+        @include mq(desktop) {
+            float: left;
+        }
+    }
+
+    .content__series-label {
+        @include mq(desktop) {
+            float: left;
         }
     }
 
@@ -59,18 +79,9 @@
     }
 
     .content__headline {
-        @include mq(rightCol, leftCol) {
+        @include mq(desktop, leftCol) {
             padding-bottom: $gs-baseline*2;
         }
-    }
-
-    .content-meta {
-        @include mq(tablet) {
-            padding-top: $gs-baseline/2;
-        }
-    }
-    .content__headline,
-    .content-meta {
         @include mq(leftCol) {
             @include box-sizing(border-box);
             float: left;
