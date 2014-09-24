@@ -16,7 +16,7 @@ case class SingleItem(colSpan: Int, itemClasses: ItemClasses) extends Column {
 case class Rows(colSpan: Int, columns: Int, rows: Int, itemClasses: ItemClasses) extends Column {
   val numItems: Int = columns * rows
 }
-case class SplitColumn(colSpan: Int, topItemClasses: ItemClasses, bottomItemClasses: ItemClasses) extends Column {
+case class SplitColumn(colSpan: Int, topItemClasses: ItemClasses, bottomItemsClasses: ItemClasses) extends Column {
   val numItems: Int = 2
 }
 case class MPU(colSpan: Int) extends Column {
