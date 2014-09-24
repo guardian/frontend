@@ -8,16 +8,6 @@ $fc-item-gutter: $gs-gutter / 3;
 @import 'item-layouts/fc-item--list-media';
 @import 'item-layouts/fc-item--list-media-large';
 
-.fc-show-more--hidden .fc-show-more--hide-on-mobile {
-    @include mq($until: tablet) {
-        display: none !important;
-    }
-}
-
-.fc-show-more--hidden .fc-show-more--hide {
-    display: none !important;
-}
-
 .fc-container {
     .facia-slice__item {
         @include flex-display;
