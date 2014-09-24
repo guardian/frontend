@@ -15,7 +15,7 @@
 
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
         <div
-            class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses"
+            class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses u-cf"
             @if(trail.isCommentable) {
                 @trail.discussionId.map{ id =>
                 data-discussion-id="@id"
