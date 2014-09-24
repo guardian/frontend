@@ -1,4 +1,7 @@
 .container__meta {
+    @include mq(tablet) {
+        margin-bottom: $gs-baseline;
+    }
     .container__meta__label {
         @include fs-header(3);
         line-height: get-line-height(header, 2) !important;
@@ -8,18 +11,18 @@
         margin: 0;
     }
     .container__meta__title {
+        padding-bottom: $gs-baseline/3;
+        line-height: get-line-height(header, 2) !important;
+        @include fs-header(3);
+
         @include mq($until: tablet) {
             padding: $gs-baseline/4 0 $gs-baseline/3;
         }
-        @include fs-header(3);
-        line-height: get-line-height(header, 2) !important;
-
         a {
             color: inherit;
         }
     }
     .container__meta__item {
-        padding: $gs-baseline/3 0 $gs-baseline;
         margin: 0;
         @include fs-headline(2);
         color: $c-neutral2;
