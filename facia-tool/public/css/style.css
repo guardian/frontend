@@ -403,7 +403,7 @@ h1 {
 
 .element {
     display: inline-block;
-    margin: 3px 0 0 0;
+    margin: 3px 0;
     width: 100%;
 }
 
@@ -418,11 +418,6 @@ h1 {
     color: #000000;
 }
 
-.element.empty,
-.element.empty a {
-    font-style: italic;
-}
-
 .element__headline a,
 .element__headline {
     color: #000000;
@@ -435,21 +430,26 @@ h1 {
     color: #666666;
 }
 
-.article__ammends .draft {
+.article__ammends {
+    color: #999999;
+    line-height: 8px;
+}
+
+.article__ammends .label {
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.article__ammends .label--draft {
     color: #ffc107;
 }
 
-.article__ammends .takedown {
-    text-transform: uppercase;
-    font-weight: bold;
+.article__ammends .label--takedown {
     color: #DD4B39;
 }
 
-.article__ammends .snap {
-    text-transform: uppercase;
-    color: #ffc107;
+.article__ammends .label--snap {
+    color: #999999;
 }
 
 .is-empty {
@@ -481,6 +481,7 @@ h1 {
 }
 
 .article__time__front {
+    color: #46c430;
     color: #46c430;
 }
 
@@ -583,10 +584,11 @@ select {
 }
 
 .editor textarea {
+    min-height: 18px;
     width: 100%;
-    padding: 1px 0 0 2px;
+    padding: 1px 0 1px 2px;
     border: 0;
-    margin: 2px 0 -3px -2px;
+    margin: 2px 0 -1px -2px;
 }
 
 .editor__revert,
@@ -612,25 +614,23 @@ select {
 
 .editor--boolean {
     display: inline-block;
+    padding: 2px 0;
 }
 
-.editor--boolean__label.selected {
-    color: #DD4B39;
+.editor--boolean,
+.editor--boolean a {
+    color: #999999;
+}
+
+.editor--boolean.selected,
+.editor--boolean.selected a,
+.editor--boolean a:hover {
+    color: #2ea3eb;
 }
 
 .editor--boolean__state {
-    color: #DD4B39;
     display: inline-block;
-    font-weight: bold;
-    width: 11px;
-}
-
-.editor--boolean--showMainVideo {
-    display: none;
-}
-
-.hasMainMediaVideo .editor--boolean--showMainVideo {
-    display: inline-block;
+    width: 15px;
 }
 
 button {

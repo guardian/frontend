@@ -140,7 +140,7 @@
                                 placeholder: field() || label + '...'
                             },
                             autoResize: true,
-                            tabCycleEditors: true,
+                            tabbableFormField: true,
                             valueUpdate: 'afterkeydown',
                             value: overrideOrVal"></textarea>
                         <span class="editor__length" data-bind="
@@ -155,23 +155,21 @@
 
         <!-- ko if: type === 'boolean' -->
             <span data-bind="
+                click: toggle,
                 attr: {class: 'editor--boolean editor--boolean--' + key},
+                css: {selected: meta},
                 visible: visible">
                 <a class="editor--boolean__label" data-bind="
-                    click: toggle,
-                    css: {selected: meta},
                     text: label"></a>
-                <span class="editor--boolean__state">
-                    <span data-bind="visible: meta">&#10004;</span>
-                </span>
+                <span class="editor--boolean__state"><span data-bind="visible: meta">&#10004;</span></span>
             </span>
         <!-- /ko -->
     </script>
 
     <script type="text/html" id="template_editor_boolean_states">
         <!-- ko if: type === 'boolean' && meta() -->
-            <span class="editor--boolean">
-                <span class="editor--boolean__label selected" data-bind="text: label"></span>
+            <span class="editor--boolean  selected">
+                <span class="editor--boolean__label" data-bind="text: label"></span>
                 <span class="editor--boolean__state">&#10004;</span>
             </span>
         <!-- /ko -->
@@ -273,9 +271,7 @@
             clickBubble: false,
             css: {
                 open: state.isOpen,
-                underDrag: state.underDrag,
-                hasMainMediaVideo: mainMediaType,
-                isSnap: isSnap
+                underDrag: state.underDrag
             }">
 
             <a class="thumb" target="article" data-bind="attr: {href: id}">
@@ -284,13 +280,8 @@
             </a>
 
             <div data-bind="if: state.isOpen">
-                <div class="article__overrides">
-                    <div data-bind="template: {name: 'template_editor', foreach: editors}"></div>
-
-                    <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
-                        visible: isSnap,
-                        value: meta.href"/>
-                </div>
+                <div class="article__overrides"
+                    data-bind="template: {name: 'template_editor', foreach: editors}"></div>
 
                 <div data-bind="if: group.parentType === 'Collection' || group.parentType === 'Clipboard'">
                     <div class="supporting" data-bind="with: meta.supporting">
@@ -306,7 +297,7 @@
                     <a class="tool tool--done" data-bind="
                         clickBubble: false,
                         click: closeAndSave">Save edits</a>
-                    <span class="supporting-message">Add supporting content above</span>
+                    <span class="supporting-message">Add sublinks above</span>
                 </div>
             </div>
 
@@ -362,21 +353,21 @@
 
                     <!-- ko ifnot: state.isEmpty -->
                         <div class="element element__headline" data-bind="
-                            html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
-                            css: {'is-empty': isSnap() && !meta.headline()}"></div>
+                            html: meta.headline() || fields.headline() || (meta.isSnap() ? 'Add link text!' : 'Loading...'),
+                            css: {'is-empty': meta.isSnap() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
                             <!-- ko if: fields.isLive() === 'false' -->
-                                <span data-bind="
+                                <span class="label" data-bind="
                                     css: {
-                                        'takedown': fields.firstPublicationDate(),
-                                        'draft':   !fields.firstPublicationDate()
+                                        'label--takedown': fields.firstPublicationDate(),
+                                        'label--draft':   !fields.firstPublicationDate()
                                     },
                                     text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
                             <!-- /ko -->
 
-                            <!-- ko if: isSnap -->
-                                <span class="snap" data-bind="text: meta.snapCss() || 'snap'"></span>
+                            <!-- ko if: meta.isSnap -->
+                                <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
                             <!-- /ko -->
 
                             <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>

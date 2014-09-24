@@ -35,80 +35,126 @@ define([
         contentApi,
         Group
     ) {
-        var rootProps = [
+        var capiProps = [
                 'webUrl',
                 'webPublicationDate'],
 
-            overridableFields = [
+            capiFields = [
                 'headline',
-                'trailText'],
-
-            allFields = [
+                'trailText',
                 'isLive',
                 'firstPublicationDate',
                 'scheduledPublicationDate',
-                'thumbnail'].concat(overridableFields),
+                'thumbnail'],
 
-            allMeta = [
-                'href',
-                'isBreaking',
-                'isBoosted',
-                'imageHide',
-                'imageReplace',
-                'imageSrc',
-                'imageSrcWidth',
-                'imageSrcHeight',
-                'showMainVideo',
-                'group',
-                'snapType',
-                'snapCss',
-                'snapUri'].concat(overridableFields),
-
-            editors = [
+            metaFields = [
+                {
+                    key: 'group',
+                    label: 'importance group',
+                    type: 'text'
+                },
                 {
                     key: 'headline',
-                    label: 'Headline',
+                    editable: true,
+                    label: 'headline',
                     type: 'text',
                     maxLength: 90
                 },
                 {
                     key: 'trailText',
-                    label: 'Trail text',
+                    editable: true,
+                    label: 'trail text',
+                    type: 'text'
+                },
+                {
+                    key: 'href',
+                    editable: true,
+                    requires: 'isSnap',
+                    label: 'snap URL',
+                    type: 'text'
+                },
+                {
+                    key: 'imageSrc',
+                    editable: true,
+                    requires: 'imageReplace',
+                    label: 'replacement image URL',
+                    validator: validateAndProcessImageSrc,
                     type: 'text'
                 },
                 {
                     key: 'isBreaking',
+                    editable: true,
                     label: 'breaking news',
                     type: 'boolean'
                 },
                 {
                     key: 'isBoosted',
+                    editable: true,
                     label: 'boost',
+                    type: 'boolean'
+                },
+
+                {
+                    key: 'hasMainVideo',
+                    label: 'has a video',
                     type: 'boolean'
                 },
                 {
                     key: 'showMainVideo',
+                    editable: true,
+                    requires: 'hasMainVideo',
                     singleton: 'images',
                     label: 'show video',
                     type: 'boolean'
                 },
+
                 {
                     key: 'imageHide',
+                    editable: true,
                     singleton: 'images',
                     label: 'hide image',
                     type: 'boolean'
                 },
                 {
                     key: 'imageReplace',
+                    editable: true,
                     singleton: 'images',
                     label: 'replace image',
                     type: 'boolean'
                 },
                 {
-                    key: 'imageSrc',
-                    label: 'image URL',
+                    key: 'imageSrcWidth',
                     requires: 'imageReplace',
-                    validator: validateAndProcessImageSrc,
+                    label: 'replacement image width',
+                    type: 'text'
+                },
+                {
+                    key: 'imageSrcHeight',
+                    requires: 'imageReplace',
+                    label: 'replacement image height',
+                    type: 'text'
+                },
+                {
+                    key: 'isSnap',
+                    label: 'is a snap',
+                    type: 'boolean'
+                },
+                {
+                    key: 'snapType',
+                    requires: 'isSnap',
+                    label: 'snap type',
+                    type: 'text'
+                },
+                {
+                    key: 'snapCss',
+                    requires: 'isSnap',
+                    label: 'snap CSS class',
+                    type: 'text'
+                },
+                {
+                    key: 'snapUri',
+                    requires: 'isSnap',
+                    label: 'snap source',
                     type: 'text'
                 }
             ];
@@ -118,13 +164,15 @@ define([
 
             opts = opts || {};
 
-            this.props = asObservableProps(rootProps);
+            this.id = ko.observable(opts.id);
 
-            this.fields = asObservableProps(allFields);
+            this.group = opts.group;
 
-            this.meta = asObservableProps(allMeta);
+            this.props = asObservableProps(capiProps);
 
-            this.isOpenMeta = asObservableProps(allMeta);
+            this.fields = asObservableProps(capiFields);
+
+            this.meta = asObservableProps(_.pluck(metaFields, 'key'));
 
             this.state = asObservableProps([
                 'underDrag',
@@ -134,19 +182,13 @@ define([
                 'ophanUrl',
                 'sparkUrl']);
 
-            this.editors = editors.map(this.editor, this);
-
-            this.id = ko.observable(opts.id);
-
-            this.group = opts.group;
-
             this.uneditable = opts.uneditable;
 
             this.frontPublicationDate = opts.frontPublicationDate;
             this.frontPublicationTime = ko.observable();
             this.scheduledPublicationTime = ko.observable();
 
-            this.mainMediaType = ko.observable();
+            this.editors = ko.observableArray();
 
             this.headlineLength = ko.computed(function() {
                 return (this.meta.headline() || this.fields.headline() || '').length;
@@ -156,9 +198,6 @@ define([
                 return (this.meta.headline() || this.fields.headline() || '').length > vars.CONST.restrictedHeadlineLength;
             }, this);
 
-            this.isSnap = ko.computed(function() {
-                return !!snap.validateId(this.id());
-            }, this);
 
             this.webPublicationTime = ko.computed(function(){
                 return humanTime(this.props.webPublicationDate());
@@ -213,11 +252,17 @@ define([
             });
         };
 
-        Article.prototype.editor = function(opts, index, all) {
+        Article.prototype.metaEditor = function(opts, index, all) {
             var self = this,
-                key = opts.key,
-                meta = self.meta[key] || function() {},
-                field = self.fields[key] || function() {};
+                key,
+                meta,
+                field;
+
+            if(!opts.editable) { return; }
+
+            key = opts.key;
+            meta = self.meta[key] || function() {};
+            field = self.fields[key] || function() {};
 
             if (_.isFunction(opts.validator)) {
                 meta.extend({ rateLimit: 100 })
@@ -316,10 +361,6 @@ define([
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
 
-            this.mainMediaType(mainMediaType(opts));
-
-            this.setRelativeTimes();
-
             if (validate || opts.webUrl) {
                  missingProps = [
                     'webUrl',
@@ -335,6 +376,16 @@ define([
                     this.sparkline();
                 }
             }
+
+            this.meta.hasMainVideo(mainMediaType(opts) === 'video');
+
+            this.meta.isSnap(!!snap.validateId(this.id()));
+
+            if(!this.uneditable) {
+                this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
+            }
+
+            this.setRelativeTimes();
         };
 
         Article.prototype.setRelativeTimes = function() {
@@ -460,7 +511,10 @@ define([
         }
 
         function resize(el) {
-            el.style.height = (Math.max(el.scrollHeight, 19)) + 'px';
+            setTimeout(function() {
+                el.style.height = '1px';
+                el.style.height = (el.scrollHeight) + 'px';
+            });
         }
 
         ko.bindingHandlers.autoResize = {
@@ -470,20 +524,20 @@ define([
             }
         };
 
-        ko.bindingHandlers.tabCycleEditors = {
+        ko.bindingHandlers.tabbableFormField = {
             init: function(el, valueAccessor, allBindings, viewModel, bindingContext) {
                 $(el).on('keydown', function(e) {
                     var keyCode = e.keyCode || e.which,
-                        editor,
-                        editors,
+                        formField,
+                        formFields,
                         nextIndex;
 
                     if (keyCode === 9) {
                         e.preventDefault();
-                        editor = bindingContext.$rawData;
-                        editors = _.filter(bindingContext.$parent.editors, function(ed) { return ed.type === "text" && ed.visible(); });
-                        nextIndex = mod(editors.indexOf(editor) + (e.shiftKey ? -1 : 1), editors.length);
-                        mediator.emit('ui:open', editors[nextIndex].meta);
+                        formField = bindingContext.$rawData;
+                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.visible(); });
+                        nextIndex = mod(formFields.indexOf(formField) + (e.shiftKey ? -1 : 1), formFields.length);
+                        mediator.emit('ui:open', formFields[nextIndex].meta);
                     }
                 });
             }

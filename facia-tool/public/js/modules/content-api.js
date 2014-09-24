@@ -123,7 +123,7 @@ function (
             });
 
            _.chain(articles)
-            .filter(function(article) { return !article.isSnap(); })
+            .filter(function(article) { return !article.meta.isSnap(); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
