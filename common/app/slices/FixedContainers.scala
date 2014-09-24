@@ -7,7 +7,8 @@ object FixedContainers {
 
   val all: Map[String, ContainerDefinition] = Map(
     ("fixed/small/slow-IV", slices(QuarterQuarterQuarterQuarter)),
-    ("fixed/small/slow-V", slices(Hl4Half)),
+    ("fixed/small/slow-V-half", slices(Hl4Half)),
+    ("fixed/small/slow-V-third", slices(QuarterQuarterHl3)),
     ("fixed/small/slow-VI", slices(TTTL4)),
     ("fixed/small/fast-VIII", slices(QuarterQuarterQlQl)),
     ("fixed/small/fast-X", slices(QuarterQlQlQl)),
