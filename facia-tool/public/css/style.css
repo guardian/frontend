@@ -258,7 +258,7 @@ h1 {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     background: #f6f6f6;
-    height: 40px;
+    height: 36px;
     border-bottom: 5px solid #dddddd;
     overflow: hidden;
 }
@@ -321,7 +321,6 @@ h1 {
     overflow: hidden;
     padding: 0 2px 3px 4px;
     position: relative;
-    height: 61px;
     color: #999999;
     background: #ffffff;
     border-top: 5px solid #ffffff;
@@ -340,7 +339,6 @@ h1 {
     background-color: #eeeeee;
 }
 
-.article:hover .article__time,
 .article:hover .article__spark {
     display: none;
 }
@@ -382,7 +380,7 @@ h1 {
 
 .article__content {
     display: block;
-    margin: 0 130px 0 85px;
+    margin: 0 110px 0 85px;
     min-height: 50px;
 }
 
@@ -431,8 +429,9 @@ h1 {
 }
 
 .article__ammends {
-    color: #999999;
-    line-height: 8px;
+    color: #666666;
+    font-size: 12px;
+    line-height: 12px;
 }
 
 .article__ammends .label {
@@ -463,26 +462,13 @@ h1 {
     font-size: 12px;
 }
 
-.article__time {
-    position: absolute;
-    right: 3px;
-    top: 7px;
-    font-size: 10px;
-    line-height: 12px;
-    color: #999;
-}
-
-.article__time__scheduled {
+.time__scheduled {
     color: #ffc107;
 }
 
-.article__time__publication {
-    color: #999;
-}
-
-.article__time__front {
-    color: #46c430;
-    color: #46c430;
+.time__publication,
+.time__front {
+    color: #999999;
 }
 
 .article__overrides {
@@ -580,7 +566,7 @@ select {
 
 .editor {
     position: relative;
-    margin: 0 100px 0 0;
+    margin: 0 110px 0 0;
 }
 
 .editor textarea {
@@ -648,7 +634,6 @@ button {
 
 .article__spark {
     position: absolute;
-    top: 18px;
     right: 3px;
 }
 
@@ -836,8 +821,8 @@ button {
 .article__tools {
     display: none;
     position: absolute;
-    top: 2px;
-    right: 4px;
+    top: 0;
+    right: 3px;
     width: 88px;
     height: 51px;
 }
@@ -1156,14 +1141,6 @@ button {
     .left-col .article .article__content {
         margin-right: 50px;
     }
-    .left-col .article__spark,
-    .left-col .article__time__scheduled__launches {
-        display: none;
-    }
-    .left-col .article__time {
-        top: 2px;
-        right: 3px;
-    }
 }
 
 @media (max-width: 875px) {
@@ -1199,7 +1176,6 @@ button {
     .article .thumb,
     .image__overrides,
     .log-in-out,
-    .article__time,
     .article__spark {
         display: none;
     }
