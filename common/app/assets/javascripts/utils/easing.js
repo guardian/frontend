@@ -10,34 +10,34 @@ define(function () {
         // no easing, no acceleration
         linear: function (t) { return t; },
         // accelerating from zero velocity
-        easeInQuad: function (t) { return t*t; },
+        easeInQuad: function (t) { return t * t; },
         // decelerating to zero velocity
-        easeOutQuad: function (t) { return t*(2-t); },
+        easeOutQuad: function (t) { return t * (2 - t); },
         // acceleration until halfway, then deceleration
-        easeInOutQuad: function (t) { return t<0.5 ? 2*t*t : -1+(4-2*t)*t; },
+        easeInOutQuad: function (t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; },
         // accelerating from zero velocity
-        easeInCubic: function (t) { return t*t*t; },
+        easeInCubic: function (t) { return t * t * t; },
         // decelerating to zero velocity
-        easeOutCubic: function (t) { return (--t)*t*t+1; },
+        easeOutCubic: function (t) { return (--t) * t * t + 1; },
         // acceleration until halfway, then deceleration
-        easeInOutCubic: function (t) { return t<0.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1; },
+        easeInOutCubic: function (t) { return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1; },
         // accelerating from zero velocity
-        easeInQuart: function (t) { return t*t*t*t; },
+        easeInQuart: function (t) { return t * t * t * t; },
         // decelerating to zero velocity
-        easeOutQuart: function (t) { return 1-(--t)*t*t*t; },
+        easeOutQuart: function (t) { return 1 - (--t) * t * t * t; },
         // acceleration until halfway, then deceleration
-        easeInOutQuart: function (t) { return t<0.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t; },
+        easeInOutQuart: function (t) { return t < 0.5 ? 8 * t * t * t * t : 1 - 8 * (--t) * t * t * t; },
         // accelerating from zero velocity
-        easeInQuint: function (t) { return t*t*t*t*t; },
+        easeInQuint: function (t) { return t * t * t * t * t; },
         // decelerating to zero velocity
-        easeOutQuint: function (t) { return 1+(--t)*t*t*t*t; },
+        easeOutQuint: function (t) { return 1 + (--t) * t * t * t * t; },
         // acceleration until halfway, then deceleration
-        easeInOutQuint: function (t) { return t<0.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t; }
+        easeInOutQuint: function (t) { return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * (--t) * t * t * t * t; }
     };
 
     function createEasingFn(type, duration) {
-        var startTime = new Date();
-        var ease = easingFunctions[type];
+        var startTime = new Date(),
+            ease = easingFunctions[type];
         return function () {
             var elapsed = (new Date()) - startTime;
             return ease(Math.min(1, elapsed / duration));

@@ -26,14 +26,10 @@ define([
                         '<p class="ad-slot--paid-for-badge__header">{{sponsor}}</p>' +
                     '</div>',
                     {
-                        header: isSponsored ? 'Sponsored by:' : 'Advertisement feature',
+                        header: isSponsored ? 'Sponsored by:' : 'Brought to you by:',
                         sponsor: sponsor
                     }
                 ));
-                if (!isSponsored) {
-                    $('.ad-slot--paid-for-badge__header', $adSlot[0]).first()
-                        .after('<p class="ad-slot--paid-for-badge__label">in association with</p>');
-                }
             }
         },
         createAdSlot = function(container, isSponsored, opts) {

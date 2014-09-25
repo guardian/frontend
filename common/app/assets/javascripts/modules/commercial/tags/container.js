@@ -13,7 +13,7 @@ define([
     'common/modules/commercial/tags/amaa',
     'common/modules/commercial/tags/effective-measure',
     'common/modules/commercial/outbrain'
-], function(
+], function (
     defaults,
     globalConfig,
     audienceScience,

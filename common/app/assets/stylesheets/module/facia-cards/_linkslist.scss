@@ -23,6 +23,16 @@
                         border: 0;
                     }
                 }
+
+                &:nth-child(2n+1):nth-last-child(-n+4),
+                &:nth-child(2n+2):nth-last-child(-n+3) {
+                    padding-bottom: 0;
+                }
+
+                &:nth-child(2n+1):nth-last-child(-n+2),
+                &:nth-child(2n+2):last-child {
+                    padding-top: $gs-baseline;
+                }
             }
 
             @include mq(desktop) {
@@ -35,10 +45,18 @@
                         border: 0;
                     }
                 }
-            }
 
-            &:last-child {
-                margin-bottom: $gs-baseline;
+                &:nth-child(3n+1):nth-last-child(-n+6),
+                &:nth-child(3n+2):nth-last-child(-n+5),
+                &:nth-child(3n+3):nth-last-child(-n+4) {
+                    padding-bottom: 0;
+                }
+
+                &:nth-child(3n+1):nth-last-child(-n+3),
+                &:nth-child(3n+2):nth-last-child(-n+2),
+                &:nth-child(3n+3):last-child {
+                    padding-top: $gs-baseline;
+                }
             }
         }
 

@@ -21,6 +21,5 @@
   },
   "_source": "git://github.com/guardian/guss-webfonts.git",
   "_target": "~3.0.0",
-  "_originalSource": "guss-webfonts",
-  "_direct": true
+  "_originalSource": "guss-webfonts"
 }

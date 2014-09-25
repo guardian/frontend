@@ -7,15 +7,15 @@
 define(function () {
     function maskInput(delim, len) {
 
-        var tokRegex = new RegExp('\\d{1,' + len + '}', 'g');
-        var validRegex = new RegExp('\\d|(' + delim + ')|^', 'g');
-        var delimRegex = new RegExp(delim, 'g');
-        var prevValue = '';
+        var tokRegex = new RegExp('\\d{1,' + len + '}', 'g'),
+            validRegex = new RegExp('\\d|(' + delim + ')|^', 'g'),
+            delimRegex = new RegExp(delim, 'g'),
+            prevValue = '';
 
         return function (event) {
             if (event.keyCode !== 8) {
-                var toks = this.value.replace(delimRegex, '').match(tokRegex);
-                var value = '';
+                var toks = this.value.replace(delimRegex, '').match(tokRegex),
+                    value = '';
 
                 if (toks && this.selectionEnd === this.value.length) {
                     if (this.value.length >= prevValue.length
