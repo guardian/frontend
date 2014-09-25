@@ -11,6 +11,7 @@ define([
     'lodash/functions/once',
     'lodash/objects/defaults',
     'lodash/objects/forOwn',
+    'lodash/objects/keys',
     'lodash/objects/isArray',
     'lodash/objects/pairs',
     'common/utils/$',
@@ -39,6 +40,7 @@ define([
     once,
     defaults,
     forOwn,
+    keys,
     isArray,
     pairs,
     $,
@@ -82,7 +84,6 @@ define([
      * Private variables
      */
     var displayed = false,
-        adSlots = [],
         slots = {},
         slotsToRefresh = [],
         config = {},
@@ -162,7 +163,14 @@ define([
          * attributes on the element.
          */
         defineSlots = function () {
-            slots = _(adSlots)
+            slots = _(qwery(config.adSlotSelector))
+                .map(function (adSlot) {
+                    return bonzo(adSlot);
+                })
+                // filter out hidden ads
+                .filter(function ($adSlot) {
+                    return $css($adSlot, 'display') !== 'none';
+                })
                 .map(function ($adSlot) {
                     return [$adSlot.attr('id'), defineSlot($adSlot)];
                 })
@@ -174,9 +182,8 @@ define([
             googletag.pubads().collapseEmptyDivs();
             googletag.enableServices();
             // as this is an single request call, only need to make a single display call (to the first ad slot)
-            googletag.display(adSlots.shift().attr('id'));
+            googletag.display(keys(slots).shift());
             displayed = true;
-            mediator.emit('modules:commercial:dfp:displayed');
         },
         postDisplay = function () {
             var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
@@ -213,38 +220,37 @@ define([
                 config.adSlotSelector = '.ad-slot--dfp:not(.ad-slot--commercial-component)';
             }
 
-            adSlots = _(qwery(config.adSlotSelector))
-                .map(function (adSlot) {
-                    return bonzo(adSlot);
-                })
-                // filter out hidden ads
-                .filter(function ($adSlot) {
-                    return $css($adSlot, 'display') !== 'none';
-                })
-                .valueOf();
-
-            if (adSlots.length > 0) {
-                // if we don't already have googletag, create command queue and load it async
-                if (!window.googletag) {
-                    window.googletag = { cmd: [] };
-                    // load the library asynchronously
-                    require(['googletag']);
-                }
-
-                window.googletag.cmd.push(getAdSlots);
-                window.googletag.cmd.push(setListeners);
-                window.googletag.cmd.push(setPageTargeting);
-                window.googletag.cmd.push(defineSlots);
-                window.googletag.cmd.push(displayAds);
-                // anything we want to happen after displaying ads
-                window.googletag.cmd.push(postDisplay);
+            // if we don't already have googletag, create command queue and load it async
+            if (!window.googletag) {
+                window.googletag = { cmd: [] };
+                // load the library asynchronously
+                require(['googletag']);
             }
+
+            window.googletag.cmd.push(setListeners);
+            window.googletag.cmd.push(setPageTargeting);
+            window.googletag.cmd.push(defineSlots);
+            window.googletag.cmd.push(displayAds);
+            // anything we want to happen after displaying ads
+            window.googletag.cmd.push(postDisplay);
 
             return dfp;
 
         },
-        getAdSlots = function () {
-            return adSlots;
+        getSlots = function () {
+            return slots;
+        },
+        addSlot = function ($adSlot) {
+            if (displayed) { // dynamically add ad slot
+                var slotId = $adSlot.attr('id');
+                // does this slot already exist
+                if (slots[slotId]) {
+                    return false;
+                }
+                slots[slotId] = defineSlot($adSlot);
+                googletag.display(slotId);
+                refreshSlot($adSlot);
+            }
         },
         refreshSlot = function ($adSlot) {
             var slot = slots[$adSlot.attr('id')];
@@ -252,11 +258,39 @@ define([
                 googletag.pubads().refresh([slot]);
             }
         },
-        addSlot = function ($adSlot) {
-            var slotId = $adSlot.attr('id');
-            slots[slotId] = defineSlot($adSlot);
-            googletag.display(slotId);
-            refreshSlot($adSlot);
+        createAdSlot = function (name, types, keywords, slotTarget) {
+            var attrName,
+                definition = adSlotDefinitions[slotTarget ? slotTarget : name],
+                dataAttrs = {
+                    refresh: definition.refresh !== undefined ? definition.refresh : true,
+                    label: definition.label !== undefined ? definition.label : true
+                },
+                $adSlot = $.create(template(
+                        '<div id="dfp-ad--{{name}}" ' +
+                        'class="ad-slot ad-slot--dfp ad-slot--{{normalisedName}} {{types}}" ' +
+                        'data-link-name="ad slot {{name}}" ' +
+                        'data-test-id="ad-slot-{{name}}" ' +
+                        'data-name="{{name}}"' +
+                        '{{sizeMappings}}></div>',
+                    {
+                        name: definition.name || name,
+                        // badges now append their index to the name
+                        normalisedName: (definition.name || name).replace(/((?:ad|sp)badge).*/, '$1'),
+                        types: map((isArray(types) ? types : [types]), function (type) { return 'ad-slot--' + type; }).join(' '),
+                        sizeMappings: map(pairs(definition.sizeMappings), function (size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
+                    }));
+            for (attrName in dataAttrs) {
+                if (dataAttrs[attrName] === false) {
+                    $adSlot.attr('data-' + attrName, 'false');
+                }
+            }
+            if (slotTarget) {
+                $adSlot.attr('data-slot-target', slotTarget);
+            }
+            if (keywords) {
+                $adSlot.attr('data-keywords', keywords);
+            }
+            return $adSlot[0];
         },
         /**
          * Builds the appropriate page level targeting
@@ -305,47 +339,13 @@ define([
                 tn:      parseTargets(page.tones)
             }, audienceScienceGateway.getSegments(), criteo.getSegments());
         },
-        createAdSlot = function (name, types, keywords, slotTarget) {
-            var attrName,
-                definition = adSlotDefinitions[slotTarget ? slotTarget : name],
-                dataAttrs = {
-                    refresh: definition.refresh !== undefined ? definition.refresh : true,
-                    label: definition.label !== undefined ? definition.label : true
-                },
-                $adSlot = $.create(template(
-                        '<div id="dfp-ad--{{name}}" ' +
-                        'class="ad-slot ad-slot--dfp ad-slot--{{normalisedName}} {{types}}" ' +
-                        'data-link-name="ad slot {{name}}" ' +
-                        'data-test-id="ad-slot-{{name}}" ' +
-                        'data-name="{{name}}"' +
-                        '{{sizeMappings}}></div>',
-                    {
-                        name: definition.name || name,
-                        // badges now append their index to the name
-                        normalisedName: (definition.name || name).replace(/((?:ad|sp)badge).*/, '$1'),
-                        types: map((isArray(types) ? types : [types]), function (type) { return 'ad-slot--' + type; }).join(' '),
-                        sizeMappings: map(pairs(definition.sizeMappings), function (size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
-                    }));
-            for (attrName in dataAttrs) {
-                if (dataAttrs[attrName] === false) {
-                    $adSlot.attr('data-' + attrName, 'false');
-                }
-            }
-            if (slotTarget) {
-                $adSlot.attr('data-slot-target', slotTarget);
-            }
-            if (keywords) {
-                $adSlot.attr('data-keywords', keywords);
-            }
-            return $adSlot[0];
-        },
 
         /**
          * Private functions
          */
         defineSlot = function ($adSlot) {
-            var slotTarget = typeof slotTarget === 'undefined' ? $adSlot.data('name') : $adSlot.data('slot-target'),
-                adUnit = config.page.adUnit,
+            var slotTarget  = $adSlot.data('slot-target') || $adSlot.data('name'),
+                adUnit      = config.page.adUnit,
                 id          = $adSlot.attr('id'),
                 sizeMapping = defineSlotSizes($adSlot),
                 // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
@@ -548,21 +548,17 @@ define([
                 return keywords.format(target);
             });
         },
+
+        /**
+         * Module
+         */
         dfp = {
 
             init: once(init),
 
-            getAdSlots: getAdSlots,
+            getSlots: getSlots,
 
-            addSlot: function ($adSlot) {
-                if (displayed) { // dynamically add the slot if we've already initialised
-                    addSlot($adSlot);
-                } else { // otherwise wait for us to initialise
-                    mediator.on('modules:commercial:dfp:displayed', function () {
-                        addSlot($adSlot);
-                    });
-                }
-            },
+            addSlot: addSlot,
 
             refreshSlot: refreshSlot,
 
@@ -573,7 +569,6 @@ define([
             // really only useful for testing
             reset: function () {
                 displayed = false;
-                adSlots = [];
                 slots = {};
                 slotsToRefresh = [];
                 dfp.init = once(init);
