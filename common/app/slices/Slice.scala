@@ -351,31 +351,31 @@ case object QuarterQuarterHl3 extends Slice {
  * |_________________|        |        |
  * |_________________|________|________|
  */
+
+/*
+* The order of this sequence is important.
+* We use flex-direction(row-reverse) to maintain DOM hierarchy whilst having correct visual ordering.
+* */
 case object Hl4QuarterQuarter extends Slice {
   val layout = SliceLayout(
     cssClassName = "h14-q-q",
     columns = Seq(
       Rows(
         colSpan = 2,
+        columns = 2,
+        rows = 1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard"
+        )
+      ),
+      Rows(
+        colSpan = 2,
         columns = 1,
         rows = 4,
         ItemClasses(
           mobile = "list",
-          desktop = "list"
-        )
-      ),
-      SingleItem(
-        colSpan = 1,
-        ItemClasses(
-          mobile = "list-media",
-          desktop = "standard"
-        )
-      ),
-      SingleItem(
-        colSpan = 1,
-        ItemClasses(
-          mobile = "list-media",
-          desktop = "standard"
+          desktop = "list-media"
         )
       )
     )
@@ -388,6 +388,10 @@ case object Hl4QuarterQuarter extends Slice {
  * |_###_____________|#################|
  * |_###_____________|_________________|
  */
+/*
+* The order of this sequence is important.
+* We use flex-direction(row-reverse) to maintain DOM hierarchy whilst having correct visual ordering.
+* */
 case object Hl4Half extends Slice {
   val layout = SliceLayout(
     cssClassName = "hl4-h",

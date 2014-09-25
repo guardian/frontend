@@ -1,17 +1,19 @@
 define([
     'common/utils/$',
     'bonzo',
-    'bean'
+    'bean',
+    'qwery'
 ], function (
     $,
     bonzo,
-    bean
+    bean,
+    qwery
 ) {
     return function (container) {
         var $container = bonzo(container),
             className = 'fc-show-more--hidden',
             $button = $.create(
-            '<button class="collection__show-more tone-background tone-news" data-link-name="Show more | 1">' +
+            '<button class="collection__show-more tone-background tone-news" data-test-id="show-more" data-link-name="Show more | 1">' +
             '<span class="collection__show-more__icon">' +
             '<span class="i i-plus-white-mask"></span>' +
             '<span class="i i-plus-white"></span>' +
