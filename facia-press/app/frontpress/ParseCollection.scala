@@ -76,13 +76,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     def empty: CollectionMeta = CollectionMeta(None, None, None, None, None)
   }
 
-  def requestCollection(id: String): Future[WSResponse] = {
-    val s3BucketLocation: String = s"${S3FrontsApi.location}/collection/$id/collection.json"
-    log.info(s"loading running order configuration from: ${Configuration.frontend.store}/$s3BucketLocation")
-    val request = SecureS3Request.urlGet(s3BucketLocation)
-    request.withRequestTimeout(2000).get()
-  }
-
   def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
     val collection: Future[Option[com.gu.facia.client.models.Collection]] =
       amazonClient.collection(id)
@@ -113,33 +106,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       updatedBy = collectionOption.map(_.updatedBy),
       updatedEmail = collectionOption.map(_.updatedEmail)
     )
-  }
-
-  private def getCollectionMeta(collectionJson: JsValue): CollectionMeta =
-    CollectionMeta(
-        (collectionJson \ "lastUpdated").asOpt[String],
-        (collectionJson \ "updatedBy").asOpt[String],
-        (collectionJson \ "updatedEmail").asOpt[String],
-        (collectionJson \ "displayName").asOpt[String],
-        (collectionJson \ "href").asOpt[String]
-    )
-
-  private def responseToJson(response: WSResponse): JsValue = {
-    response.status match {
-      case 200 =>
-        Try(parse(response.body)).getOrElse(JsNull)
-      case 403 =>
-        S3AuthorizationError.increment()
-        val errorString: String = s"Request failed to authenticate with S3 ${response.status} ${response.statusText}"
-        log.warn(errorString)
-        throw new Exception(errorString)
-      case httpResponseCode: Int if httpResponseCode >= 500 =>
-        throw new Exception("S3 returned a 5xx")
-      case _ =>
-        log.warn(s"Could not load running order: ${response.status} ${response.statusText}")
-        // NOTE: better way of handling fallback
-        JsNull
-    }
   }
 
   def getArticles(collectionItems: Seq[Trail], edition: Edition): Future[Seq[Content]] = {
@@ -230,27 +196,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       response
     }
   }
-
-  private def makeSupportingMeta(meta: SupportingItemMetaData): TrailMetaData =
-    TrailMetaData(
-      headline = meta.headline,
-      href = meta.href,
-      snapType = meta.snapType,
-      snapCss = meta.snapCss,
-      snapUri = meta.snapUri,
-      trailText = meta.trailText,
-      group = meta.group,
-      imageAdjust = meta.imageAdjust,
-      imageSrc = meta.imageSrc,
-      imageSrcWidth = meta.imageSrcWidth,
-      imageSrcHeight = meta.imageSrcHeight,
-      isBreaking = meta.isBreaking,
-      supporting = None,
-      showMainVideo = None,
-      isBoosted = None,
-      imageHide = None,
-      imageReplace = None
-    )
 
   private def retrieveSupportingLinks(collectionItem: Trail): List[SupportingItem] =
     collectionItem.meta.flatMap(_.supporting).getOrElse(Nil)
