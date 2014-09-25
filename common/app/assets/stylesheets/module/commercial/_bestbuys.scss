@@ -68,7 +68,7 @@ $c-money-high: #63007f;
 
         a {
             background-color: transparent;
-            @include fs-data(4);
+            @include fs-textSans(2);
         }
     }
     .tabs__tab--selected {
@@ -122,7 +122,7 @@ $c-money-high: #63007f;
     }
     .lineitem__meta {
         color: #a3a3a3;
-        @include fs-data(1);
+        @include fs-textSans(1);
     }
     .commercial__home-link {
         color: $c-money-high;

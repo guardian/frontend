@@ -64,7 +64,7 @@ private [slices] trait DynamicContainer {
 
   final def containerDefinitionFor(stories: Seq[Story]): Option[ContainerDefinition] = {
     slicesFor(stories) map { slices =>
-      ContainerDefinition(slices, numberOfCardsForMobile = 12)
+      ContainerDefinition(slices, mobileShowMore = DesktopBehaviour)
     }
   }
 }

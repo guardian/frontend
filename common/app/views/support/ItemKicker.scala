@@ -14,6 +14,8 @@ object ItemKicker {
       Some(LiveKicker)
     } else if (trail.isAnalysis) {
       Some(AnalysisKicker)
+    } else if (trail.isReview) {
+      Some(ReviewKicker)
     } else if (config.showTags && maybeTag.isDefined) {
       maybeTag map { tag =>
         TagKicker(tag.name, tag.webUrl)
@@ -31,5 +33,6 @@ sealed trait ItemKicker
 case object BreakingNewsKicker extends ItemKicker
 case object LiveKicker extends ItemKicker
 case object AnalysisKicker extends ItemKicker
+case object ReviewKicker extends ItemKicker
 case class TagKicker(name: String, url: String) extends ItemKicker
 case class SectionKicker(name: String, url: String) extends ItemKicker

@@ -5,6 +5,7 @@ import controllers.AuthLogging
 import model.NoCache
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
+import services.Omniture.OmnitureReportDescription
 
 object OmnitureReportController extends Controller with AuthLogging with Logging with ExecutionContexts {
 
@@ -18,9 +19,9 @@ object OmnitureReportController extends Controller with AuthLogging with Logging
     }
   }
 
-  def getSegments() = AuthActions.AuthActionTest.async { _ =>
+  def getSegments(rsid: String = OmnitureReportDescription.reportSuiteFrontend) = AuthActions.AuthActionTest.async { _ =>
 
-    services.Omniture.Omniture.getSegmentIds().map { segments =>
+    services.Omniture.Omniture.getSegmentIds(rsid).map { segments =>
       NoCache(Ok(JsArray(segments.map(Json.toJson(_)))))
     }
   }

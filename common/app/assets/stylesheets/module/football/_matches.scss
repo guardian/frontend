@@ -116,7 +116,7 @@
 }
 
 .football-match__comments {
-    @include fs-data(4, true);
+    @include fs-textSans(4, true);
     color: $c-neutral2-contrasted;
     text-align: center;
 }

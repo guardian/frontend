@@ -30,7 +30,7 @@ case class OmnitureReportDescription(
   dateTo: String,
   dateFrom: String,
   metrics: Seq[OmnitureMetric],
-  reportSuiteID: String = OmnitureReportDescription.reportSuiteID,
+  reportSuiteID: String = OmnitureReportDescription.reportSuiteFrontend,
   segment_id: Option[String] = None
 )
 object OmnitureReportDescription {
@@ -38,8 +38,8 @@ object OmnitureReportDescription {
   implicit val writeMetric = Json.writes[OmnitureMetric]
   implicit val writeDescription = Json.writes[OmnitureReportDescription]
 
-  // Friendly name: Next Gen Web
-  val reportSuiteID = "guardiangu-frontend"
+  val reportSuiteFrontend = "guardiangu-frontend" // Friendly name: Next Gen Web
+  val reportSuiteNetwork  = "guardiangu-network"  // Friendly name: Guardian Network
 }
 
 // A metric specifies the type of event data captured in the report,
@@ -196,9 +196,9 @@ object Omniture extends ExecutionContexts with Logging {
     }
   }
 
-  def getSegmentIds(): Future[Seq[OmnitureSegment]] = {
+  def getSegmentIds(rsid : String): Future[Seq[OmnitureSegment]] = {
 
-    val body = Json.parse(s"""{"rsid_list":["${OmnitureReportDescription.reportSuiteID}"]}""").asInstanceOf[JsObject]
+    val body = Json.parse(s"""{"rsid_list":["$rsid"]}""").asInstanceOf[JsObject]
 
     // Only version 1.4 has the latest segments for the report suites.
     postRequest(GET_SEGMENTS, body, "1.4").map { response =>
