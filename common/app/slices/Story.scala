@@ -1,6 +1,9 @@
 package slices
 
 import common.Maps._
+import model.Content
+
+import scala.util.Try
 
 object Story {
   implicit val ordering = Ordering.by[Story, Int](_.group)
@@ -13,6 +16,14 @@ object Story {
         b ++ a
       }
     }
+  }
+
+  def fromContent(content: Content): Story = {
+    Story(
+      /** Stories that are not assigned to a group are treated as standard (0) items */
+      content.group.flatMap(group => Try(group.toInt).toOption).getOrElse(0),
+      content.imageAdjust == "boost"
+    )
   }
 }
 

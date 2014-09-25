@@ -15,7 +15,7 @@ object DynamicFast extends DynamicContainer {
         } else if (isFirstBoosted) {
           bigs.length match {
             case 1 => HalfQl4Ql4
-            case _ => HalfQuarterQl2Ql3
+            case _ => HalfQuarterQl2Ql4
           }
         } else {
           bigs.length match {

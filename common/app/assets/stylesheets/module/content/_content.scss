@@ -133,7 +133,7 @@
     @include box-sizing(border-box);
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
-    padding: $gs-baseline/2 0;
+    padding: $gs-baseline/4 0;
     overflow: hidden;
 
     @include mq($until: leftCol) {

@@ -51,6 +51,12 @@ object Switches extends Collections {
     sellByDate = new LocalDate(2014, 9, 28)
   )
 
+  val ForceHttpResponseCodeSwitch = Switch("Performance", "force-response-codes",
+    "If this switch is switched on and you specify the correct header, then you can force a specific http response code",
+    safeState = Off,
+    sellByDate = new LocalDate(2014, 12, 31)
+  )
+
   val LiveblogCachingSwitch = Switch("Performance", "live-blog-caching",
     "If this switch is switched on live blog cache times will be lowered",
     safeState = Off,
@@ -429,7 +435,8 @@ object Switches extends Collections {
     MetricsSwitch,
     FootballFeedRecorderSwitch,
     LiveblogCachingSwitch,
-    CentreTopBannerAd
+    CentreTopBannerAd,
+    ForceHttpResponseCodeSwitch
   )
 
   val httpSwitches: List[Switch] = List(
