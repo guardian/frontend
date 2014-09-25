@@ -276,7 +276,10 @@
 
             <a class="thumb" target="article" data-bind="attr: {href: id}">
                 <img draggable="false" data-bind="
-                    attr: {src: meta.imageSrc() || fields.thumbnail(), title: id}"/>
+                    attr: {
+                        src: meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : fields.thumbnail(),
+                        title: id
+                    }"/>
             </a>
 
             <div data-bind="if: state.isOpen">
@@ -302,21 +305,6 @@
             </div>
 
             <div class="closed" data-bind="if: !state.isOpen()">
-                <div class="article__time">
-                    <!-- ko if: fields.scheduledPublicationDate -->
-                        <span class="article__time__scheduled article__time__scheduled__launches">launches</span>
-                        <span class="article__time__scheduled" data-bind="
-                            text: scheduledPublicationTime"></span>
-                    <!-- /ko -->
-
-                    <!-- ko if: props.webPublicationDate -->
-                        <span class="article__time__publication" data-bind="
-                            text: webPublicationTime"></span>
-                        <span class="article__time__front" data-bind="
-                            text: frontPublicationTime"></span>
-                    <!-- /ko -->
-                </div>
-
                 <img class="article__spark" data-bind="
                     visible: state.sparkUrl,
                     attr: {src: state.sparkUrl}" />
@@ -343,7 +331,6 @@
                 </div>
 
                 <a class="article__content" data-bind="attr: {href: id}">
-
                     <!-- ko if: state.isEmpty -->
                         <div class="is-empty">
                             <span class="is-empty__url" data-bind="text: id"></span>
@@ -357,6 +344,10 @@
                             css: {'is-empty': meta.isSnap() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
+                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
+                                <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>,
+                            <!-- /ko -->
+
                             <!-- ko if: fields.isLive() === 'false' -->
                                 <span class="label" data-bind="
                                     css: {
@@ -370,11 +361,20 @@
                                 <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
                             <!-- /ko -->
 
+                            <span class="time__scheduled" data-bind="if: fields.scheduledPublicationDate">
+                                launches <span data-bind="text: scheduledPublicationTime"></span>
+                            </span>
+
+                            <span class="time__front" data-bind="if: frontPublicationTime">
+                                on front <span data-bind="text: frontPublicationTime"></span>,
+                            </span>
+
+                            <span span class="time__publication" data-bind="if: webPublicationTime">
+                                published <span data-bind="text: webPublicationTime"></span>
+                            </span>
+
                             <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
 
-                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                                <span><span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span></span>
-                            <!-- /ko -->
                         </div>
                     <!-- /ko -->
                 </a>

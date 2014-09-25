@@ -30,14 +30,12 @@ define([
 
             showTab: function (container, clickedTab, originalEvent) {
 
-                var classes = 'tabs__tab--selected tone-colour tone-accent-border';
-
-                // find the active tab in the set. returns an array of 1 item, hence [0]
-                var currentTab = $('.tabs__tab--selected a', container)[0];
-
-                // trim the leading # and find the matching panel element
-                var paneToShow = container.querySelector('#' + clickedTab.getAttribute('href').substring(1));
-                var paneToHide = container.querySelector('#' + currentTab.getAttribute('href').substring(1));
+                var classes = 'tabs__tab--selected tone-colour tone-accent-border',
+                    // find the active tab in the set. returns an array of 1 item, hence [0]
+                    currentTab = $('.tabs__tab--selected a', container)[0],
+                    // trim the leading # and find the matching panel element
+                    paneToShow = container.querySelector('#' + clickedTab.getAttribute('href').substring(1)),
+                    paneToHide = container.querySelector('#' + currentTab.getAttribute('href').substring(1));
 
                 // show hide stuff
                 bonzo(currentTab.parentNode).removeClass(classes);
@@ -54,7 +52,7 @@ define([
 
         this.init = function () {
 
-            Array.prototype.forEach.call(document.body.querySelectorAll('.tabs'), function(container) {
+            Array.prototype.forEach.call(document.body.querySelectorAll('.tabs'), function (container) {
 
                 var tabSet = $('.js-tabs', container)[0],
                     tabSetHeight = 0,
@@ -62,9 +60,9 @@ define([
                     vHeight = 0,
                     vScroll = 0;
 
-                if(tabSet) {
+                if (tabSet) {
 
-                    if(tabSet.getAttribute('data-is-bound') === true) {
+                    if (tabSet.getAttribute('data-is-bound') === true) {
                         return false;
                     }
 

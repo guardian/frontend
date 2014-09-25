@@ -17,7 +17,7 @@ object ContainerLayout extends implicits.Collections {
     val ContainerLayout(slices, showMore) = sliceDefinitions.foldLeft(ContainerLayout(Seq.empty, cards)) {
       case (s @ ContainerLayout(_, Nil), _) => s
       case (ContainerLayout(slicesSoFar, cardsForUse), sliceDefinition) =>
-        val (slice, remainingCards) = SliceWithCards.fromItems(cards, sliceDefinition.layout)
+        val (slice, remainingCards) = SliceWithCards.fromItems(cardsForUse, sliceDefinition.layout)
         ContainerLayout(slicesSoFar :+ slice, remainingCards)
     }
 

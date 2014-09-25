@@ -30,4 +30,12 @@ x x x x x x x x x x x x x x x x x x
     .fc-item__title {
         @include fs-headline(4, true);
     }
+
+    .vjs-big-play-button > span {
+        @include video-play-button-size($vjs-small-button-size);
+
+        @include mq(desktop) {
+            @include video-play-button-size($vjs-large-button-size);
+        }
+    }
 }

@@ -1,3 +1,9 @@
+/*
+
+This file is to be used only for manual overrides of item defaults at a slice level.
+Hence why a greater depth of selector specificity is needed.
+
+*/
 .facia-slice--hl4-h {
     @if $browser-supports-flexbox {
         @include flex-direction(row-reverse);
@@ -43,6 +49,18 @@
         .fc-item__standfirst {
             @include mq(tablet) {
                 display: block;
+            }
+        }
+    }
+}
+
+.facia-slice--q-qqq,
+.facia-slice--qqq-q {
+    .fc-item--standard {
+        .fc-item__title,
+        .fc-item__byline {
+            @include mq(tablet, desktop) {
+                @include fs-headline(1, true);
             }
         }
     }

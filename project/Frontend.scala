@@ -31,6 +31,8 @@ object Frontend extends Build with Prototypes {
       snappyJava,
       liftJson,
       playGoogleAuth,
+      flexibleContentBlockToText,
+      flexibleContentBodyParser,
       scalaCheck,
       "com.gu" %% "facia-api-client" % "0.6-SNAPSHOT",
       filters,

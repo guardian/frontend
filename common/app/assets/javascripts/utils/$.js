@@ -1,7 +1,7 @@
 define([
     'bonzo',
     'qwery'
-], function(
+], function (
     bonzo,
     qwery
 ) {
@@ -9,7 +9,7 @@ define([
     function $(selector, context) {
         return bonzo(qwery(selector, context));
     }
-    $.create = function(s) {
+    $.create = function (s) {
         return bonzo(bonzo.create(s));
     };
     return $;

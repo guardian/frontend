@@ -1,10 +1,14 @@
 /* global _: true */
 define([
     'knockout',
-    'config'
+    'config',
+    'fixed-containers',
+    'dynamic-containers'
 ], function(
     ko,
-    pageConfig
+    pageConfig,
+    fixedContainers,
+    dynamicContainers
 ){
     var CONST = {
         editions: ['uk', 'us', 'au'],
@@ -25,12 +29,8 @@ define([
             {name: 'comment/comment-and-debate'},
             {name: 'prototype/cassoulet'},
             {name: 'prototype/quichelorraine'},
-            {name: 'prototype/raclette'},
-            {name: 'fixed/small/slow-IV'},
-            {name: 'fixed/small/slow-V'},
-            {name: 'fixed/small/fast-VIII'},
-            {name: 'fixed/small/fast-X'}
-        ],
+            {name: 'prototype/raclette'}
+        ].concat(fixedContainers).concat(dynamicContainers),
 
         headlineLength: 200,
         restrictedHeadlineLength: 90,
@@ -71,7 +71,7 @@ define([
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
-        apiSearchParams:       'show-fields=internalContentCode,isLive,firstPublicationDate,headline,trailText,byline,thumbnail&show-elements=video',
+        apiSearchParams:       'show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail&show-elements=video',
         imageCdnDomain:        'guim.co.uk',
         previewBase:           'http://preview.gutools.co.uk',
         viewer:                'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',

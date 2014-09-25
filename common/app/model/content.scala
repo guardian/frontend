@@ -14,6 +14,7 @@ import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
 import conf.Switches.LiveblogCachingSwitch
+import com.gu.util.liveblogs.{Parser => LiveBlogParser, Block, BlockToText}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -184,14 +185,17 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   // Inherited from FaciaFields
   override lazy val group: Option[String] = apiContent.metaData.flatMap(_.group)
   override lazy val supporting: List[Content] = apiContent.supporting
+
   override lazy val isBoosted: Boolean = apiContent.metaData.flatMap(_.isBoosted).getOrElse(false)
   override lazy val imageHide: Boolean = apiContent.metaData.flatMap(_.imageHide).getOrElse(false)
   override lazy val isBreaking: Boolean = apiContent.metaData.flatMap(_.isBreaking).getOrElse(false)
+  override lazy val imageReplace: Boolean = apiContent.metaData.flatMap(_.imageReplace).getOrElse(false)
   override lazy val imageSrc: Option[String] = apiContent.metaData.flatMap(_.imageSrc)
   override lazy val imageSrcWidth: Option[String] = apiContent.metaData.flatMap(_.imageSrcWidth)
   override lazy val imageSrcHeight: Option[String] = apiContent.metaData.flatMap(_.imageSrcHeight)
   lazy val imageElement: Option[ApiElement] = for {
     src <- imageSrc
+    if imageReplace == true
     width <- imageSrcWidth
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height)
@@ -440,6 +444,10 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   }
 
   override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
+
+  lazy val latestUpdateText = LiveBlogParser.parse(body) collectFirst {
+    case Block(_, _, _, _, BlockToText(text), _) if !text.trim.nonEmpty => text
+  }
 }
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {

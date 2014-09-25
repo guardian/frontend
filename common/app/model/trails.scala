@@ -38,6 +38,7 @@ trait Trail extends Elements with Tags with FaciaFields with Dates {
 trait FaciaFields {
   def group: Option[String] = None
   def supporting: List[Trail] = Nil
+  def imageReplace: Boolean = false
   def imageSrc: Option[String] = None
   def imageSrcWidth: Option[String] = None
   def imageSrcHeight: Option[String] = None

@@ -64,48 +64,48 @@
     }
 }
 
-@mixin article-header-tone($tone, $colour, $accentColour, $textColour, $commentIcon) {
+@mixin article-header-tone($tone, $colour, $accentColour, $textAccentColour, $textColour, $commentIcon) {
     .tone-#{$tone} .content__head--tonal {
-        .content__section {
-            @include mq(leftCol) {
-                padding-top: $content-top-padding;
-            }
-        }
-        .content__section .tone-colour {
-            color: $colour;
-
-            @include mq(leftCol) {
-                color: $textColour;
-            }
-        }
         .content__headline,
         .content__standfirst,
         .content__standfirst a {
             color: $textColour;
         }
+
+        .content__headline {
+            color: $textColour;
+        }
+
         .tone-background {
             background-color: $colour;
         }
+
         .tone-background--accent {
             background-color: $accentColour;
         }
+
         .content__head__comment-count .commentcount {
             color: $textColour;
         }
 
-        .content-meta__item a {
+        .content__labels {
+            border-bottom-color: rgba($textColour, .3);
+        }
+
+        .content__section-label .tone-colour {
             color: $textColour;
         }
 
-        .content-meta__label {
-            color: lighten($accentColour, 25);
+        .content__series-label .tone-colour {
+            color: $textAccentColour;
         }
+
         .content__standfirst .bullet:before {
             background-color: lighten($accentColour, 25);
         }
+
         .u-underline {
             border-bottom-color: lighten($accentColour, 25);
-
             &:focus,
             &:active,
             &:hover {
@@ -113,6 +113,7 @@
             }
         }
     }
+
     .content.tone-#{$tone} .drop-cap {
         color: $colour;
     }

@@ -152,15 +152,15 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             Some(new Snap(
               collectionItem.id,
               Nil,
-              collectionItem.frontPublicationDate.getOrElse(DateTime.now),
-              collectionItem.meta.getOrElse(Map.empty)
+              collectionItem.frontPublicationDate.map(new DateTime(_)).getOrElse(DateTime.now),
+              collectionItem.meta.map(makeSupportingMeta)
             ))
           } else {
-            items.get(collectionItem) map { item =>
+            items.get(collectionItem.id) map { item =>
               Content(
                 item,
                 Nil,
-                collectionItem.metaData
+                collectionItem.meta
               )
             }
           }
@@ -248,7 +248,8 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
       supporting = None,
       showMainVideo = None,
       isBoosted = None,
-      imageHide = None
+      imageHide = None,
+      imageReplace = None
     )
 
   private def retrieveSupportingLinks(collectionItem: Trail): List[SupportingItem] =
