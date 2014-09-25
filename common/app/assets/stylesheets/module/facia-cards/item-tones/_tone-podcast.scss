@@ -3,16 +3,21 @@
 
     &.fc-item {
         background-color: $c-podcastBackground;
-    }
 
-    .fc-item__kicker {
-        color: $c-podcastAccent;
-    }
-
-    .fc-item__standfirst, .fc-item__meta {
         &,
         & a {
             color: $c-podcastAccent2;
+        }
+    }
+
+    .fc-item__title {
+        &,
+        & a {
+            color: $c-neutral1;
+        }
+        
+        a.fc-item__kicker {
+            color: $c-podcastAccent;
         }
     }
 }
