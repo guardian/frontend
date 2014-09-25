@@ -187,7 +187,7 @@ $vjs-progress-inset-bottom: 4px;
     left: 0;
     background-color: $vjs-control-colour;
     color: #ffffff;
-    @include fs-data(2);
+    @include fs-textSans(1);
     font-weight: bold;
     height: $vjs-control-height;
     @include transition(bottom .8s);
