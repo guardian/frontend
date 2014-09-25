@@ -1,0 +1,11 @@
+.tone-podcast {
+    @extend %tone-background;
+
+    &.fc-item {
+        background-color: $c-podcastBackground;
+    }
+
+    .fc-item__kicker {
+        color: $c-podcastAccent;
+    }
+}

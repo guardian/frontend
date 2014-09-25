@@ -234,6 +234,7 @@ trait Tags {
   lazy val isReview = tones.exists(t => Tags.reviewMappings.contains(t.id))
   lazy val isMedia = types.exists(t => Tags.mediaTypes.contains(t.id))
   lazy val isAnalysis = tones.exists(_.id == Tags.Analysis)
+  lazy val isPodcast = types.exists(_.id == Tags.Podcast)
 
   lazy val hasLargeContributorImage: Boolean = tagsOfType("contributor").filter(_.contributorLargeImagePath.nonEmpty).nonEmpty
 
@@ -244,6 +245,7 @@ trait Tags {
 
 object Tags {
   val Analysis = "tone/analysis"
+  val Podcast = "type/podcast"
 
   object VisualTone {
     val Live = "live"
