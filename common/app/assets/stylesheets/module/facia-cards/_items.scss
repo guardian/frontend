@@ -1,4 +1,4 @@
-$fc-item-gutter: $gs-gutter / 3;
+$fc-item-gutter: $gs-baseline / 2;
 
 @import 'item-layouts/fc-item--standard';
 @import 'item-layouts/fc-item--half';
@@ -94,6 +94,7 @@ $fc-item-gutter: $gs-gutter / 3;
     padding-top: $gs-baseline / 3;
     padding-bottom: 0;
     @include fs-headline(2);
+    font-weight: 500;
     word-wrap: break-word;
 }
 
