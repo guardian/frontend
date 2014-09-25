@@ -8,4 +8,11 @@
     .fc-item__kicker {
         color: $c-podcastAccent;
     }
+
+    .fc-item__standfirst, .fc-item__meta {
+        &,
+        & a {
+            color: $c-podcastAccent2;
+        }
+    }
 }

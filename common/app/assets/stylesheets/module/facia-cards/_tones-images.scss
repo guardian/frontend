@@ -26,6 +26,23 @@
     }
 }
 
+.tone-podcast {
+    .fc-item__timestamp:before {
+        @include icon(clock-white, false);
+    }
+
+    .fc-trail__count:before {
+        @include icon(comment-white, false);
+    }
+
+    .fc-item__title:before {
+        @include icon(volume-high-dark-blue, false);
+        content: '';
+        height: .75em;
+        width: 0.95em;
+    }
+}
+
 .tone-media {
     .fc-item__timestamp:before {
         @include icon(clock-grey, false);
