@@ -81,13 +81,6 @@ $fc-item-gutter: $gs-gutter / 3;
     display: none;
 }
 
-.fc-item__header,
-.fc-item__standfirst,
-.fc-item__meta {
-    padding-left: $fc-item-gutter;
-    padding-right: $fc-item-gutter;
-}
-
 .fc-item__live-indicator {
     background-color: #ffffff;
     color: $c-live;
