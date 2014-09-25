@@ -6,6 +6,18 @@
     &.fc-item--has-image:before {
         background-color: $c-neutral5;
     }
+
+    &.fc-item--list-mobile .fc-item__container {
+        @include mq($until: tablet) {
+            border-top: 1px solid $c-newsAccent;
+        }
+    }
+
+    &.fc-item--list-tablet .fc-item__container {
+        @include mq(tablet) {
+            border-top: 1px solid $c-newsAccent;
+        }
+    }
 }
 
 .tone-live {
