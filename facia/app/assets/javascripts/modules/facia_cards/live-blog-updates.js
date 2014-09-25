@@ -21,21 +21,31 @@ define([
 
         function updateLatestBlocks() {
             ajax({
-               url: "/live-blog-updates.json",
-               type: "json",
-               method: "get",
-               crossOrigin: true,
-               success: function (response) {
-                   if (response && response.latestBlocks) {
-                       response.latestBlocks.forEach(function (latestBlock) {
-                           var element = elementByArticleId[latestBlock.articleId];
+                url: "/live-blog-updates.json",
+                type: "json",
+                method: "get",
+                crossOrigin: true,
+                success: function (response) {
+                    if (response && response.latestBlocks) {
+                        response.latestBlocks.forEach(function (latestBlock) {
+                            var element = elementByArticleId[latestBlock.articleId];
 
-                           if (element) {
-                               bonzo(element).html(latestBlock.body);
-                           }
+                            if (element && element.getAttribute('data-blockId') !== latestBlock.blockId) {
+                                var $el = bonzo(element)
+                                    .addClass('fc-item__latest-block--unloading');
+
+                                setTimeout(function() {
+                                    $el.addClass('fc-item__latest-block--loading');
+                                    setTimeout(function() {
+                                        $el.toggleClass('fc-item__latest-block--loading fc-item__latest-block--unloading')
+                                            .html(latestBlock.body);
+                                        element.setAttribute('data-blockId', latestBlock.blockId);
+                                    }, 50);
+                                }, 250); // wait for transform to finis
+                            }
                        });
-                   }
-               }
+                    }
+                }
             });
         }
 
