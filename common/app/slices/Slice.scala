@@ -250,8 +250,39 @@ case object HalfQQ extends Slice {
  * |#################|________|________|
  * |_________________|________|________|
  */
-case object HalfQuarterQl2Ql3 extends Slice {
-  def layout = ???
+case object HalfQuarterQl2Ql4 extends Slice {
+  def layout = SliceLayout(
+    cssClassName = "h-q_ql2-ql4",
+    columns = Seq(
+      SingleItem(
+        colSpan = 2,
+        itemClasses = ItemClasses(
+          mobile = "standard",
+          desktop = "half"
+        )
+      ),
+      SplitColumn(
+        colSpan = 1,
+        topItemClasses = ItemClasses(
+          mobile = "list-media-large",
+          desktop = "standard-quarter"
+        ),
+        bottomItemsClasses = ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      ),
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 4,
+        itemClasses = ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      )
+    )
+  )
 }
 
 /* ._________________._________________.
