@@ -44,10 +44,12 @@
                             @fragments.keywordList(article.keywords, tone = article.visualTone)
                         </div>
                     }
-                    <div class="submeta js-social--bottom" data-component="share">
-                        <h2 class="submeta__head @if(article.hasSupportingAtBottom) { hide-until-leftcol }">Share this article</h2>
-                        @fragments.social(article)
-                    </div>
+                    @if(!article.tooSmallForBottomSocialButtons) {
+                        <div class="submeta js-social--bottom" data-component="share">
+                            <h2 class="submeta__head @if(article.hasSupportingAtBottom) { hide-until-leftcol }">Share this article</h2>
+                            @fragments.social(article)
+                        </div>
+                    }
                 </div>
 
                 <div class="after-article js-after-article"></div>
