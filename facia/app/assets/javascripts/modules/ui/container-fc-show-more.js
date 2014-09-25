@@ -10,8 +10,8 @@ define([
     return function (container) {
         var $container = bonzo(container),
             className = 'fc-show-more--hidden',
-            itemsHiddenOnDesktop = $(".js-hide", $container).length,
-            itemsHiddenOnMobile = $(".js-hide-on-mobile", $container).length,
+            itemsHiddenOnDesktop = $('.js-hide', $container).length,
+            itemsHiddenOnMobile = $('.js-hide-on-mobile', $container).length,
             $button = $.create(
             '<button class="collection__show-more tone-background tone-news" data-link-name="Show more | 1">' +
             '<span class="collection__show-more__icon">' +
@@ -33,7 +33,7 @@ define([
 
         if (itemsHiddenOnMobile || itemsHiddenOnDesktop) {
             if (!itemsHiddenOnDesktop) {
-                $container.addClass("fc-show-more--mobile-only");
+                $container.addClass('fc-show-more--mobile-only');
             }
 
             $container.addClass(className);
