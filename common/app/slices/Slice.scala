@@ -568,7 +568,7 @@ case object TlTlMpu extends Slice {
         rows = 3,
         ItemClasses(
           mobile = "list",
-          desktop = "media-list"
+          desktop = "list-media"
         )
       ),
       MPU(
@@ -691,6 +691,41 @@ case object TTTL4 extends Slice {
           mobile = "list",
           desktop = "list"
         )
+      )
+    )
+  )
+}
+
+/* .___________.___________.___________.
+ * |_#########_|___________|           |
+ * |_#########_|___________|    MPU!   |
+ * |_#########_|___________|           |
+ * |           |___________|           |
+ * |           |___________|           |
+ * `-----------------------------------'
+ */
+case object TTlMpu extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "tl-tl-mpu",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = "list-media-large",
+          desktop = "third"
+        )
+      ),
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 4,
+        ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      ),
+      MPU(
+        colSpan = 1
       )
     )
   )

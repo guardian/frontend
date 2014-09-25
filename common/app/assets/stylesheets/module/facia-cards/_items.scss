@@ -20,6 +20,9 @@ $fc-item-gutter: $gs-gutter / 4;
             padding-bottom: $gs-baseline;
         }
     }
+    .facia-slice__item--no-mpu {
+        flex: 0 !important;
+    }
 }
 
 .fc-item {
