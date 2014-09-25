@@ -1,0 +1,31 @@
+.tone-feature {
+    @extend %tone-background;
+
+    &.fc-item {
+        background-color: $c-featureDefault;
+
+        &,
+        & a,
+        & .fc-item__standfirst {
+            color: #ffffff;
+        }
+    }
+
+    .fc-item__kicker {
+        color: $c-featureMute !important;
+    }
+
+    .fc-item__title .i {
+        display: inline-block;
+        height: .9em;
+        width: 1em;
+        background-position: center;
+    }
+
+    .fc-item__meta {
+        &,
+        & a {
+            color: $c-featureMute;
+        }
+    }
+}
