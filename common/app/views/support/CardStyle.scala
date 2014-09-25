@@ -14,6 +14,8 @@ object CardStyle {
       Analysis
     } else if (trail.isFeature) {
       Feature
+    } else if (trail.isReview) {
+      Review
     } else {
       Default
     }
@@ -27,4 +29,5 @@ case object Feature extends CardStyle
 case object Comment extends CardStyle
 case object Media extends CardStyle
 case object Analysis extends CardStyle
+case object Review extends CardStyle
 case object Default extends CardStyle
