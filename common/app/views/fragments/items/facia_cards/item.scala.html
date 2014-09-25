@@ -76,7 +76,7 @@
 
                 @trail match {
                     case liveBlog: LiveBlog if liveBlog.isLive => {
-                        <div class="fc-item__latest-block js-live-blog-latest-block" data-article-id="@liveBlog.id"></div>
+                        <div class="fc-item__latest-block-wrapper"><div class="fc-item__latest-block js-live-blog-latest-block" data-article-id="@liveBlog.id"></div></div>
                     }
 
                     case _ => {}
