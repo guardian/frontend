@@ -5,13 +5,13 @@ define([
     'bean',
     'common/utils/ajax',
     'common/utils/scroller',
+    'common/utils/detect',
     'common/modules/component',
     'common/modules/userPrefs',
     'common/modules/identity/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/recommend-comments',
     'common/modules/discussion/api',
-    'common/utils/detect'
 ], function(
     $,
     bonzo,
@@ -19,13 +19,13 @@ define([
     bean,
     ajax,
     scroller,
+    detect,
     Component,
     userPrefs,
     Id,
     CommentBox,
     RecommendComments,
-    DiscussionApi,
-    detect
+    DiscussionApi
 ) {
 'use strict';
 /**
