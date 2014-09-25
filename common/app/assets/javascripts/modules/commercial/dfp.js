@@ -84,6 +84,7 @@ define([
      * Private variables
      */
     var displayed = false,
+        rendered = false,
         slots = {},
         slotsToRefresh = [],
         config = {},
@@ -151,7 +152,11 @@ define([
          * Initial commands
          */
         setListeners = function () {
-            googletag.pubads().addEventListener('slotRenderEnded', parseAd);
+            googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+                rendered = true;
+                mediator.emit('modules:commercial:dfp:rendered', event);
+                parseAd(event);
+            });
         },
         setPageTargeting = function () {
             forOwn(buildPageTargeting(config), function (value, key) {
@@ -237,19 +242,22 @@ define([
             return dfp;
 
         },
-        getSlots = function () {
-            return slots;
-        },
         addSlot = function ($adSlot) {
-            if (displayed) { // dynamically add ad slot
-                var slotId = $adSlot.attr('id');
-                // does this slot already exist
-                if (slots[slotId]) {
-                    return false;
+            var slotId = $adSlot.attr('id'),
+                displayAd = function ($adSlot) {
+                    slots[slotId] = defineSlot($adSlot);
+                    googletag.display(slotId);
+                    refreshSlot($adSlot);
+                };
+            if (displayed && !slots[slotId]) { // dynamically add ad slot
+                // this is horrible, but if we do this before the initial ads have loaded things go awry
+                if (rendered) {
+                    displayAd($adSlot);
+                } else {
+                    mediator.once('modules:commercial:dfp:rendered', function () {
+                        displayAd($adSlot);
+                    });
                 }
-                slots[slotId] = defineSlot($adSlot);
-                googletag.display(slotId);
-                refreshSlot($adSlot);
             }
         },
         refreshSlot = function ($adSlot) {
@@ -257,6 +265,9 @@ define([
             if (slot) {
                 googletag.pubads().refresh([slot]);
             }
+        },
+        getSlots = function () {
+            return slots;
         },
         createAdSlot = function (name, types, keywords, slotTarget) {
             var attrName,
@@ -321,7 +332,7 @@ define([
             return defaults({
                 url:     window.location.pathname,
                 edition: edition,
-                ca:      section,
+                cat:     section,
                 se:      series,
                 ct:      contentType,
                 pt:      contentType,
@@ -556,11 +567,11 @@ define([
 
             init: once(init),
 
-            getSlots: getSlots,
-
             addSlot: addSlot,
 
             refreshSlot: refreshSlot,
+
+            getSlots: getSlots,
 
             buildPageTargeting: buildPageTargeting,
 
