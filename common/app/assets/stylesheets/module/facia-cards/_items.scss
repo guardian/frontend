@@ -77,6 +77,10 @@ $fc-item-gutter: $gs-gutter / 3;
     position: relative;
 }
 
+.fc-item__video-fallback {
+    display: none;
+}
+
 .fc-item__header,
 .fc-item__standfirst,
 .fc-item__meta {
