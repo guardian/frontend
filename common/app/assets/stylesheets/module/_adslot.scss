@@ -202,6 +202,7 @@
     padding-top: $gs-baseline/2;
 }
 .ad-slot--sponsored__article {
+    text-align: left;
     display: block;
     position: relative;
     min-height: gs-height(2);
@@ -214,19 +215,23 @@
     top: 0;
     left: $gs-gutter/2;
 }
-.ad-slot--sponsored__text,
+.ad-slot--sponsored__article,
 .ad-slot--sponsored__label {
-    color: $c-neutral2;
+    color: $c-neutral1;
 }
-.ad-slot--sponsored__text {
+.ad-slot--sponsored__article {
     @include f-headlineSans;
-    @include font-size(14, 18);
+    @include font-size(16, 20);
 }
-.ad-slot--sponsored__label {
+.ad-slot--sponsored__label,
+.ad-slot--sponsored__help {
     float: left;
     clear: left;
     padding-left: $gs-gutter/2;
     @include fs-data(3);
+}
+.ad-slot--sponsored__label {
+    margin-bottom: $gs-baseline/3;
 }
 .ad-slot--sponsored__link {
     float: right;
@@ -245,13 +250,6 @@
             margin-right: auto;
             width: gs-span(12) + ($gs-gutter*2);
         }
-    }
-}
-.ad-slot--commercial-component-high {
-    display: none;
-
-    @include mq(desktop) {
-        display: block;
     }
 }
 
@@ -303,18 +301,22 @@
         margin-top: $gs-baseline/3;
     }
 }
+.ad-slot--adbadge,
+.ad-slot--spbadge {
+    @include mq(mobile, $until: leftCol) {
+        &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
+            margin-top: get-line-height(data, 3)*-1;
+        }
+    }
+}
 .ad-slot--adbadge {
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2-contrasted;
     }
     @include mq(mobile, $until: leftCol) {
-        &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
+        .ad-slot--commercial-component &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             margin-top: get-line-height(data, 3)*-2;
-
-            .ad-slot--commercial-component & {
-                margin-top: -(get-line-height(data, 3));
-            }
         }
     }
 }
@@ -322,12 +324,6 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2;
-    }
-
-    @include mq(mobile, $until: leftCol) {
-        &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            margin-top: get-line-height(data, 3)*-1;
-        }
     }
 }
 .ad-slot--paid-for-badge--article {
@@ -442,5 +438,21 @@
 @include mq(mobile, $until: wide) {
     .has-page-skin {
         background-image: none !important;
+    }
+}
+
+// Allow responsive ads to 'slide'
+@if ($old-ie == false) {
+    .ad--responsive {
+        @include mq(tablet) {
+            height: 108px;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            @include transition(height 1s cubic-bezier(0, 0, 0, .985));
+
+            &.ad--responsive--open {
+                height: 250px;
+            }
+        }
     }
 }

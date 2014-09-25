@@ -1,36 +1,52 @@
 $fc-item-gutter: $gs-gutter / 3;
 
 @import 'item-layouts/fc-item--standard';
+@import 'item-layouts/fc-item--half';
+@import 'item-layouts/fc-item--three-quarters';
+@import 'item-layouts/fc-item--three-quarters-right';
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-media';
 @import 'item-layouts/fc-item--list-media-large';
+@import 'item-layouts/fc-item--full';
+@import 'item-layouts/fc-item--mega-full';
 
 .fc-container {
     .facia-slice__item {
         @include flex-display;
         padding-bottom: 0;
 
-        @if not $browser-supports-flexbox {
-            width: 25%;
+        &.l-list__item {
+            margin-bottom: 0;
+            padding-bottom: $gs-baseline;
         }
     }
 }
 
 .fc-item {
     @include flex(1);
+    @include box-sizing(border-box);
+    display: block;
+    @include clearfix;
     padding-bottom: $gs-baseline * 2.5;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
     background-color: #ffffff;
-    display: block;
     position: relative;
 
-    .stars {
-        margin-top: $gs-baseline * .25;
+    a {
+        color: $c-neutral1;
+    }
 
-        @include mq(tablet) {
-            margin-bottom: $gs-baseline * 1.25;
-        }
+    .stars {
+        margin-bottom: 0;
+    }
+
+    .gu-media-wrapper {
+        margin-bottom: 0;
+    }
+
+    .vjs-big-play-button > span {
+        @include video-play-button-size($vjs-x-small-button-size);
     }
 }
 
@@ -38,6 +54,10 @@ $fc-item-gutter: $gs-gutter / 3;
     .js-off & {
         display: none;
     }
+}
+
+.fc-item--has-image:before {
+    background-color: rgba($c-neutral1, .15);
 }
 
 .fc-item__media-wrapper,
@@ -86,6 +106,7 @@ $fc-item-gutter: $gs-gutter / 3;
 
 .fc-item__standfirst {
     @include fs-bodyCopy(1);
+    padding-top: $gs-baseline;
     display: none;
 }
 
@@ -95,6 +116,11 @@ $fc-item-gutter: $gs-gutter / 3;
     padding-top: $gs-baseline / 3;
     padding-bottom: $gs-baseline / 3;
     @include fs-textSans(1);
+
+    &,
+    & a {
+        color: $c-neutral2;
+    }
 }
 
 .fc-item__timestamp,
@@ -169,9 +195,19 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
-.fc-item--standard {
+.fc-item--standard-mobile {
     @include mq($until: tablet) {
         @include fc-item--standard;
+
+        .vjs-big-play-button > span {
+            @include video-play-button-size($vjs-small-button-size);
+        }
+
+        @include mq(mobileLandscape) {
+            .vjs-big-play-button > span {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+        }
     }
 }
 
@@ -181,9 +217,45 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
+.fc-item--half-mobile {
+    @include mq($until: tablet) {
+        @include fc-item--half;
+    }
+}
+
+.fc-item--half-tablet {
+    @include mq(tablet) {
+        @include fc-item--half;
+    }
+}
+
+.fc-item--three-quarters-tablet {
+    @include mq(tablet) {
+        @include fc-item--three-quarters;
+    }
+}
+
+.fc-item--three-quarters-right-tablet {
+    @include mq(tablet) {
+        @include fc-item--three-quarters-right;
+    }
+}
+
+.fc-item--full-tablet {
+    @include mq(tablet) {
+        @include fc-item--full;
+    }
+}
+
+.fc-item--mega-full-tablet {
+    @include mq(tablet) {
+        @include fc-item--mega-full;
+    }
+}
+
 
 .l-list {
-    float: left;
+    width: 100%;
 
     .has-flex-wrap & {
         @include flex-display;
@@ -192,8 +264,6 @@ $fc-item-gutter: $gs-gutter / 3;
 }
 
 .l-list__item {
-    float: left;
-
     &:last-child {
         margin-bottom: 0;
     }
@@ -204,10 +274,21 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
-@for $column from 1 through 4 {
-    .l-row__item--span-#{$column} {
-        @include flex(#{$column});
+// We only need this functionality for 2 & 4 column rows.
+@for $column from 2 through 4 {
+    @for $span from 1 through 4 {
+        .l-row--items-#{$column} {
+            .l-row__item--span-#{$span} {
+                @include mq(tablet) {
+                    @include flex($span);
+                    width: (100% / 4) * $span;
+                }
+            }
+        }
     }
+}
+
+@for $column from 1 through 4 {
 
     .l-list--columns-#{$column} {
         .l-list__item {
@@ -234,7 +315,7 @@ $fc-item-gutter: $gs-gutter / 3;
             &.l-list--rows-#{$row} {
                 .l-list__item:nth-last-child(-n+#{$column}) {
                     @include mq(tablet) {
-                        margin-bottom: 0;
+                        padding-bottom: 0;
                     }
                 }
             }

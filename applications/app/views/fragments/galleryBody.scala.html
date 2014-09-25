@@ -79,13 +79,15 @@
                         }
                     }
                 </ul>
-                <div class="tag-wrapper tag-wrapper--break-at-leftcol" data-link-name="keywords">
+                <div class="submeta-container submeta-container--break-at-leftcol">
                     @if(gallery.keywords.filterNot(_.isSectionTag).nonEmpty) {
-                        <h2 class="social__head">Topics</h2>
-                        @fragments.keywordList(gallery.keywords, tone = "media")
+                        <div class="submeta" data-link-name="keywords">
+                            <h2 class="submeta__head">Topics</h2>
+                            @fragments.keywordList(gallery.keywords, tone = "media")
+                        </div>
                     }
-                    <div class="social-wrapper social-wrapper--aside social-wrapper--tags" data-component="share">
-                        <h2 class="social__head hide-until-leftcol">Share this article</h2>
+                    <div class="submeta" data-component="share">
+                        <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
                         @fragments.social(gallery, iconModifier = "white")
                     </div>
                 </div>
@@ -103,6 +105,5 @@
             </div>
         </div>
     </div>
-
     @fragments.contentFooter(gallery, related, "media")
 </div>

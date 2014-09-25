@@ -4,8 +4,7 @@ define([
 ], function (
     easing,
     bonzo
-    ) {
-    'use strict';
+) {
 
     // utility module for auto scrolling with easing
     // Usage:
@@ -17,14 +16,12 @@ define([
             scrollEnd = offset,
             scrollFrom = $body.scrollTop(),
             scrollDist = scrollEnd - scrollFrom,
-            ease = easing.create(easeFn || 'easeOutQuad', duration);
-
-        var scrollFn = function() {
-            $body.scrollTop(scrollFrom + (ease() * scrollDist));
-        };
-
-        var interval = window.setInterval(scrollFn, 15);
-        window.setTimeout(function() {
+            ease = easing.create(easeFn || 'easeOutQuad', duration),
+            scrollFn = function () {
+                $body.scrollTop(scrollFrom + (ease() * scrollDist));
+            },
+            interval = window.setInterval(scrollFn, 15);
+        window.setTimeout(function () {
             window.clearInterval(interval);
             $body.scrollTop(scrollEnd);
         }, duration);

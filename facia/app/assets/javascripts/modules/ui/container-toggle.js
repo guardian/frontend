@@ -10,7 +10,7 @@ define([
     userPrefs
 ) {
 
-    return function(container) {
+    return function (container) {
 
         var _$container = bonzo(container),
             _$button = bonzo(bonzo.create(

@@ -18,10 +18,6 @@
     background-color: $c-neutral1;
     color: $c-neutral7;
 
-    .content__section .tone-colour {
-        color: $c-commentAccent;
-    }
-
     .byline {
         word-break: break-word;
         color: $c-neutral3;
@@ -31,27 +27,28 @@
         }
     }
 
-    .byline .tone-colour,
-    .social__head {
+    .byline .tone-colour {
         color: $c-neutral7;
     }
 
-    .content-meta--inline {
-        border-top: 0;
+    .content__labels {
+        border-bottom-color: $c-neutral2;
     }
 
-    .content-meta__item .tone-colour {
-        color: $c-commentAccent;
+    .content__section-label {
+        .tone-colour {
+            color: $c-commentAccent;
+        }
     }
 
-    .content-meta__label {
-        color: $c-neutral3;
-    }
+    .content__series-label {
+        &:before {
+            color: fade-out($c-neutral3, .5);
+        }
 
-    .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__label,
-    .ad-slot--paid-for-badge__help {
-        color: $c-neutral7;
+        .tone-colour {
+            color: $c-neutral3;
+        }
     }
 
     .content__standfirst {
@@ -70,6 +67,12 @@
                 border-color: $c-neutral8;
             }
         }
+    }
+
+    .ad-slot--paid-for-badge__header,
+    .ad-slot--paid-for-badge__label,
+    .ad-slot--paid-for-badge__help {
+        color: $c-neutral7;
     }
 }
 

@@ -5,6 +5,7 @@ define([
     'bean',
     'common/utils/ajax',
     'common/utils/scroller',
+    'common/utils/detect',
     'common/modules/component',
     'common/modules/userPrefs',
     'common/modules/identity/api',
@@ -18,6 +19,7 @@ define([
     bean,
     ajax,
     scroller,
+    detect,
     Component,
     userPrefs,
     Id,
@@ -47,7 +49,7 @@ var Comments = function(mediator, options) {
 
     this.fetchData = {
         orderBy: this.options.order,
-        pageSize: 10
+        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10
     };
 
     this.endpoint = this.options.commentId ?

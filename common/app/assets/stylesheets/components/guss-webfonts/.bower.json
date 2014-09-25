@@ -1,26 +1,25 @@
 {
   "name": "guss-webfonts",
   "description": "Guardian web fonts, for your prototyping needs",
+  "version": "3.0.0",
   "main": [
-    "nextgen-webfonts.css",
-    "_webfonts.config.scss",
-    "_webfonts.helpers.scss",
-    "_webfonts.mixins.scss",
-    "_webfonts.scss"
+    "src/_webfonts.scss"
   ],
-  "license": "Apache 2.0",
   "ignore": [
     "webfonts"
   ],
   "homepage": "https://github.com/guardian/guss-webfonts",
-  "version": "2.1.1",
-  "_release": "2.1.1",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/guardian/guss-webfonts.git"
+  },
+  "_release": "3.0.0",
   "_resolution": {
     "type": "version",
-    "tag": "v2.1.1",
-    "commit": "6929b45003963cff2b2990de7382c4be7246c00f"
+    "tag": "3.0.0",
+    "commit": "ce3f71f89ac9a6eeafe160b27d2e31535701fc95"
   },
   "_source": "git://github.com/guardian/guss-webfonts.git",
-  "_target": "~2",
+  "_target": "~3.0.0",
   "_originalSource": "guss-webfonts"
 }

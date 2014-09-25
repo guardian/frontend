@@ -190,35 +190,10 @@
             border-bottom: 0;
         }
 
-        .social__head {
-            color: $c-neutral3;
-            padding: $gs-baseline/4 0;
-        }
-
         @include mq(tablet, leftCol) {
             .byline,
             .content__dateline {
                 padding-right: gs-span(3) + $gs-gutter;
-            }
-
-            .social-wrapper--aside {
-                display: block;
-                position: absolute;
-                top: 0;
-                right: 0;
-                border-top: 0;
-                width: gs-span(3);
-                overflow: visible;
-
-                &:before {
-                    content: '';
-                    position: absolute;
-                    width: $gs-gutter;
-                    height: 1px;
-                    top: -1px;
-                    left: $gs-gutter * -1;
-                    background-color: $c-neutral1;
-                }
             }
         }
 
@@ -248,12 +223,6 @@
         @include mq(rightCol) {
             padding-right: gs-span(3);
         }
-    }
-
-    .social-wrapper--bottom {
-        padding-top: 0;
-        margin-top: $gs-baseline * -.5;
-        display: block;
     }
 
 }

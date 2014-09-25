@@ -46,20 +46,6 @@ They come in different sizes:
 <a href="#" class="button button--small">Link to somewhere</a>
 <a href="#" class="button button--xsmall">Link to somewhere</a>
 ```
-
-And with inline icons:
-
-```html_example
-<a href="#" class="button">
-    Link to somewhere<i class="i i-arrow-white-right i-right"></i>
-</a>
-<a href="#" class="button">
-    <i class="i i-arrow-white-right i-left"></i>Link to somewhere
-</a>
-<a href="#" class="button">
-    <i class="i i-arrow-white-right"></i><span class="u-h">Link to somewhere</span>
-</a>
-```
 */
 
 @mixin button-height($button-size) {

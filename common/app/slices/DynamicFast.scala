@@ -11,11 +11,11 @@ object DynamicFast extends DynamicContainer {
     } else {
       Some(
         if (stories.forall(_.group == 0)) {
-          QlQlQlQl
+          Ql3Ql3Ql3Ql3
         } else if (isFirstBoosted) {
           bigs.length match {
             case 1 => HalfQl4Ql4
-            case _ => HalfQuarterQl2Ql3
+            case _ => HalfQuarterQl2Ql4
           }
         } else {
           bigs.length match {

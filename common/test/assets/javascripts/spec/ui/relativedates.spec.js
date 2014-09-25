@@ -155,12 +155,6 @@ define(['common/modules/ui/relativedates',
             expect(document.getElementById('time-valid').getAttribute('title')).toBe('12th August');
         });
 
-        // each XHR load event fires replaceValidTimestamps(), so we want to avoid replacing date twice
-        it("Once converted remove the need to convert them again", function(){
-            RelativeDates.init();
-            expect(document.getElementById('time-valid').className).not.toContain('js-timestamp');
-        });
-
         it("Ignore invalid timestamps", function(){
             RelativeDates.init();
             expect(document.getElementById('time-invalid').innerHTML).toBe('Last Tuesday');

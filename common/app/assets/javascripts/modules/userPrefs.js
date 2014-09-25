@@ -1,6 +1,6 @@
 define([
     'common/utils/storage'
-], function(
+], function (
     storage
 ) {
 
@@ -39,21 +39,27 @@ define([
         return store.get(storagePrefix + 'switch.' + name) === false;
     }
 
-    function isNumeric(str){
+    function isNumeric(str) {
         return !isNaN(str);
     }
 
-    function isBoolean(str){
+    function isBoolean(str) {
         return (str === 'true' || str === 'false');
     }
 
     function setPrefs(loc) {
-        var qs = loc.hash.substr(1).split('&');
-        for (var i = 0, j = qs.length; i<j; ++i) {
-            var m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
+        var qs = loc.hash.substr(1).split('&'),
+            m,
+            key,
+            val,
+            v,
+            i,
+            j;
+        for (i = 0, j = qs.length; i < j; ++i) {
+            m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
             if (m) {
-                var key = m[1],
-                    val = m[2];
+                key = m[1];
+                val = m[2];
                 switch (key) {
                     case 'switchOn':
                         switchOn(val);
@@ -64,7 +70,7 @@ define([
                     default:
                         // 1. +val casts any number (int, float) from a string
                         // 2. String(val) === "true" converts a string to bool
-                        var v = (isNumeric(val) ? +val : isBoolean(val) ? (String(val).toLowerCase() === 'true') : val);
+                        v = (isNumeric(val) ? +val : isBoolean(val) ? (String(val).toLowerCase() === 'true') : val);
                         set(key, v);
                 }
             }

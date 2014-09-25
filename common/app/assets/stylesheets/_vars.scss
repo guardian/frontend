@@ -23,7 +23,7 @@ $inArticleInlineImgWidth: 114px;
 $headerHeight: 36px;
 
 @import 'components/guss-colours/_colours';
-@import 'components/pasteup-palette/_palette';
+@import 'components/pasteup-palette/src/_palette';
 @import 'components/guss-grid-system/_grid-system';
 
 $right-column:     gs-span(4);
@@ -63,7 +63,7 @@ $mq-breakpoints: (
 // Show the current breakpoint in the top right corner of the viewport:
 // see https://github.com/guardian/sass-mq#seeing-the-currently-active-breakpoint
 // Uncomment to activate during development
-// $mq-show-breakpoints: (mobile, mobileLandscape, phablet, tablet, rightCol, desktop, leftCol, wide);
+// $mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
 
 
 // Guss defaults overrides
@@ -98,7 +98,7 @@ $c-newsDefault: guss-colour(tone-news-1, $pasteup-palette);
 $c-newsAccent: guss-colour(tone-news-2, $pasteup-palette);
 
 $c-featureDefault: guss-colour(tone-features-1, $pasteup-palette);
-$c-featureAccent: guss-colour(tone-features-2, $pasteup-palette);
+$c-featureAccent: guss-colour(features-support-3, $pasteup-palette);
 $c-featureAccent2: #b62766;
 $c-featuresVariant: guss-colour(tone-features-4, $pasteup-palette);
 $c-featureMute: guss-colour(features-support-3, $pasteup-palette);
@@ -107,7 +107,7 @@ $c-analysisAccent: guss-colour(news-support-2, $pasteup-palette);
 $c-analysisMute: guss-colour(comment-support-2, $pasteup-palette);
 $c-analysisBackground: guss-colour(neutral-5, $pasteup-palette);
 
-$c-commentDefault: guss-colour(tone-comment-1, $pasteup-palette);
+$c-commentDefault: #e6711b;
 $c-commentAccent: guss-colour(tone-comment-2, $pasteup-palette);
 $c-commentAccent2: #ffce4b;
 $c-commentDark: #d3a034;
@@ -156,11 +156,12 @@ $mpu-ad-label-height: $gs-baseline*2;
 
 $action-icon-width: 23px;
 $action-icon-rightspace: 7px;
-$content-top-padding: $gs-baseline;
+$content-top-padding: $gs-baseline / 1.5;
 
 
 // Video.JS player
 // =============================================================================
 
+$vjs-x-small-button-size: 40px;
 $vjs-small-button-size: 50px;
 $vjs-large-button-size: 70px;

@@ -8,10 +8,10 @@ import test.ConfiguredTestSuite
 @DoNotDiscover class DynamicFastTest extends DynamicContainerTest with ConfiguredTestSuite {
   override val slicesFor: (Seq[Story]) => Option[Seq[Slice]] = DynamicFast.slicesFor
 
-  it should "for n standard (0) items return QlQlQlQl" in {
+  it should "for n standard (0) items return Ql3Ql3Ql3Ql3" in {
     forAll(Gen.choose(1, 20)) { n: Int =>
       slicesFor(Seq.fill(n)(0).map(Story.unboosted)).value shouldEqual Seq(
-        QlQlQlQl
+        Ql3Ql3Ql3Ql3
       )
     }
   }
@@ -56,12 +56,12 @@ import test.ConfiguredTestSuite
     }
   }
 
-  it should "for one big boosted, n >= 1 big, and m standards, return HalfQuarterQl2Ql3" in {
+  it should "for one big boosted, n >= 1 big, and m standards, return HalfQuarterQl2Ql4" in {
     forAll(Gen.choose(1, 20), Gen.choose(1, 20)) { (m: Int, n: Int) =>
       slicesFor(
         Story(1, isBoosted = true) +:
           (Seq.fill(m)(Story.unboosted(1)) ++
-            Seq.fill(n)(Story.unboosted(0)))).value shouldEqual Seq(HalfQuarterQl2Ql3)
+            Seq.fill(n)(Story.unboosted(0)))).value shouldEqual Seq(HalfQuarterQl2Ql4)
     }
   }
 }

@@ -1,41 +1,91 @@
-define(['common/utils/cookies'], function(cookies) {
+define([
+    'common/utils/_',
+    'common/utils/cookies'
+], function (
+    _,
+    cookies
+) {
    
-    describe("Cookie", function() {
+    describe('Cookies', function () {
 
-        beforeEach(function() {
-            cookies.cleanUp(['testname1', 'testname2', 'testname3', 'COOKIE_NAME', 'COOKIE_NAME2']);
+        var clock,
+            mockDocument;
+
+        beforeEach(function () {
+            // make a mock document cookie object
+            clock = sinon.useFakeTimers();
+            mockDocument = {
+                value: '',
+
+                get cookie() {
+                    return this.value.replace('|', ';').replace(/^[;|]|[;|]$/g, '');
+                },
+
+                set cookie(value) {
+                    var name = value.split('=')[0];
+                    this.value = _(this.value.split('|'))
+                        .remove(function (cookie) {
+                            return cookie.split('=')[0] !== name;
+                        })
+                        .push(value)
+                        .join('|');
+                }
+            };
+            cookies.setDocument(mockDocument);
         });
 
-        it("should let list of cookies be cleared", function() {
+        afterEach(function () {
+            clock.restore();
+            cookies.setDocument(null);
+        });
 
-            document.cookie = 'testname1=testval1; expires=Fri, 3 Aug 2050 20:47:11 UTC; path=/';
-            document.cookie = 'testname2=testval2; expires=Fri, 3 Aug 2050 20:47:11 UTC; path=/';
-            document.cookie = 'testname3=testval3; expires=Fri, 3 Aug 2050 20:47:11 UTC; path=/';
+        it('should be able the clean a list of cookies', function () {
 
-            var c = document.cookie;
+            mockDocument.cookie = 'cookie-1-name=cookie-1-value';
+            mockDocument.cookie = 'cookie-2-name=cookie-2-value';
+            mockDocument.cookie = 'cookie-3-name=cookie-3-value';
 
-            expect(c).toMatch(/testname1/);
-            expect(c).toMatch(/testname2/);
-            expect(c).toMatch(/testname3/);
+            cookies.cleanUp(['cookie-1-name', 'cookie-2-name']);
 
-            cookies.cleanUp(['testname1', 'testname2']);
+            var c = mockDocument.cookie;
 
-            var c = document.cookie;
-            expect(c).not.toMatch(/testname1/);
-            expect(c).not.toMatch(/testname2/);
-            expect(c).toMatch(/testname3/);
+            expect(c).toMatch('cookie-1-name=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=localhost');
+            expect(c).toMatch('cookie-2-name=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=localhost');
 
         });
 
-        it("should set a cookie", function() {
-            cookies.add('COOKIE_NAME', 'cookie_value');
-            expect(document.cookie).toMatch(/COOKIE_NAME=cookie_value/);
+        it('should be able to set a cookie', function () {
+            cookies.add('cookie-1-name', 'cookie-1-value');
+            expect(mockDocument.cookie).toMatch(
+                'cookie-1-name=cookie-1-value; path=/; expires=Sun, 31 May 1970 23:00:00 GMT; domain=localhost'
+            );
+            clock.restore();
         });
 
-        it("should set a cookie for a specific number of days", function() {
-            cookies.add('COOKIE_NAME2', 'cookie_value2', 7);
-            expect(document.cookie).toMatch(/COOKIE_NAME2=cookie_value2/);
-            // you cannot get the expiry date of a cookie with javascript...
+        it('should be able to set a cookie for a specific number of days', function () {
+            cookies.add('cookie-1-name', 'cookie-1-value', 7);
+            expect(mockDocument.cookie).toEqual(
+                'cookie-1-name=cookie-1-value; path=/; expires=Thu, 08 Jan 1970 00:00:00 GMT; domain=localhost'
+            );
+        });
+
+        it('should be able to set a cookie for a specific number of minutes', function () {
+            cookies.addForMinutes('cookie-1-name', 'cookie-1-value', 91);
+            expect(mockDocument.cookie).toEqual(
+                'cookie-1-name=cookie-1-value; path=/; expires=Thu, 01 Jan 1970 01:31:00 GMT; domain=localhost'
+            );
+        });
+
+        it('should be able to set a session cookie', function () {
+            cookies.addSessionCookie('cookie-1-name', 'cookie-1-value');
+            expect(mockDocument.cookie).toEqual('cookie-1-name=cookie-1-value; path=/; domain=localhost');
+        });
+
+        it('should be able remove cookies', function () {
+            cookies.remove('cookie-1-name');
+            expect(mockDocument.cookie).toEqual(
+                'cookie-1-name=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=localhost'
+            );
         });
 
     });

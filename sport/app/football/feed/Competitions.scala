@@ -102,7 +102,7 @@ trait Competitions extends LiveMatches with Logging with implicits.Collections w
     Competition("120", "/football/scottish-premiership", "Scottish Premier League", "Scottish Premier League", "Scottish", showInTeamsList = true, tableDividers = List(1, 3, 6, 11)),
     Competition("320", "/football/scottishcup", "Scottish Cup", "Scottish Cup", "Scottish"),
     Competition("321", "/football/cis-insurance-cup", "Scottish League Cup", "Scottish League Cup", "Scottish"),
-    Competition("751", "/football/euro-2016-qualifying", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals"),
+    Competition("751", "/football/euro-2016-qualifiers", "Euro 2016 qualifying", "Euro 2016 qual.", "Internationals"),
     Competition("700", "/football/world-cup-2014", "World Cup 2014", "World Cup 2014", "Internationals", tableDividers = List(2)),
     Competition("721", "/football/friendlies", "International friendlies", "Friendlies", "Internationals"),
     Competition("650", "/football/laligafootball", "La Liga", "La Liga", "European", showInTeamsList = true, tableDividers = List(4, 6, 17)),

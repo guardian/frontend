@@ -15,6 +15,6 @@
     "commit": "46b89944d8ff8f06c3ba5baf834f34f0b84da058"
   },
   "_source": "git://github.com/guardian/guss-typography.git",
-  "_target": "~3",
+  "_target": "~3.0.0",
   "_originalSource": "guss-typography"
 }

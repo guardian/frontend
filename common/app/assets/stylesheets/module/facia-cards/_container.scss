@@ -14,4 +14,26 @@
     &.container--first .facia-container__inner {
         border: 0;
     }
+
+    .facia-slice-wrapper + .facia-slice-wrapper {
+        margin-top: 0;
+    }
+}
+
+.fc-show-more--mobile-only {
+    @include mq(tablet) {
+        .collection__show-more {
+            display: none;
+        }
+    }
+}
+
+.fc-show-more--hidden .fc-show-more--hide-on-mobile {
+    @include mq($until: tablet) {
+        display: none !important;
+    }
+}
+
+.fc-show-more--hidden .fc-show-more--hide {
+    display: none !important;
 }

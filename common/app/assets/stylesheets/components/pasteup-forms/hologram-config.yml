@@ -1,0 +1,33 @@
+# Hologram will run from same directory where this config file resides
+# All paths should be relative to there
+
+# The directory containing the source files to parse recursively
+source: ./src
+
+# The directory that hologram will build to
+destination: ./docs
+
+# The assets needed to build the docs (includes header.html,
+# footer.html, etc)
+# You may put doc related assets here too: images, css, etc.
+documentation_assets: ./bower_components/Cortana
+custom_markdown: ./bower_components/Cortana/CortanaMarkdownRenderer.rb
+
+# Any other asset folders that need to be copied to the destination
+# folder. Typically this will include the css that you are trying to
+# document. May also include additional folders as needed.
+dependencies:
+ - ./build
+
+# List all css to include for the styleguide render examples (path from
+# styleguide directory)
+css_include:
+ - ./build/forms.min.css
+
+# String who is used to split the category name and create category wrapper
+name_scope: ' - '
+
+# Mark which category should be the index page
+# Alternatively, you may have an index.md in the documentation assets
+# folder instead of specifying this config.
+index: common

@@ -53,10 +53,12 @@ define([
         this.host               = page.ajaxUrl + '/commercial/';
         this.isbn               = page.isbn || '';
         this.oastoken           = options.oastoken || '';
+        this.jobs               = options.jobIds || '';
         this.adType             = options.adType || 'desktop';
         this.multiComponents    = map(options.components || [], function(c) { return 'c=' + c; }).join('&');
         this.capi               = map(options.capi || [], function(t) {return 't=' + t;}).join('&');
         this.components         = {
+<<<<<<< HEAD
             bestbuy:            this.host + 'money/bestbuys.json',
             bestbuyHigh:        this.host + 'money/bestbuys-high.json',
             bestbuyV2:          this.host + 'money/bestbuys-v2.json',
@@ -68,9 +70,9 @@ define([
             booksV2:            this.host + 'books/bestsellers-v2.json?'        + this.getKeywords(),
             booksMediumV2:      this.host + 'books/bestsellers-medium-v2.json?' + this.getKeywords(),
             booksHighV2:        this.host + 'books/bestsellers-high-v2.json?'   + this.getKeywords(),
-            jobs:               this.host + 'jobs.json?'                        + this.getKeywords(),
+            jobs:               this.host + 'jobs.json?'                        + [this.listToParams('t', this.jobs ? this.jobs.split(',') : []), this.getKeywords()].join('&'),
             jobsHigh:           this.host + 'jobs-high.json?'                   + this.getKeywords(),
-            jobsV2:             this.host + 'jobs-v2.json?'                     + this.getKeywords(),
+            jobsV2:             this.host + 'jobs-V2.json?'                     + [this.listToParams('t', this.jobs ? this.jobs.split(',') : []), this.getKeywords()].join('&'),
             jobsHighV2:         this.host + 'jobs-high-v2.json?'                + this.getKeywords(),
             masterclasses:      this.host + 'masterclasses.json?'               + this.getKeywords(),
             masterclassesHigh:  this.host + 'masterclasses-high.json?'          + this.getKeywords(),
@@ -110,15 +112,24 @@ define([
 
     Component.define(Loader);
 
+    Loader.prototype.listToParams = function(param, itemArray) {
+        return map(itemArray, function (item) {
+            return param + '=' + encodeURIComponent(item);
+        }).join('&');
+    };
+
     Loader.prototype.getKeywords = function () {
         if (this.keywordIds) {
-            return map(this.keywordIds.split(','), function (keywordId) {
-                return 'k=' + encodeURIComponent(keywordId.split('/').pop());
-            }).join('&');
+            var keywords = map(this.keywordIds.split(','), function(keywordId) {
+                    return keywordId.split('/').pop();
+                });
+            return this.listToParams('k', keywords);
         } else {
             return 'k=' + this.pageId.split('/').pop();
         }
     };
+
+
 
     /**
      * @param {Element} target
