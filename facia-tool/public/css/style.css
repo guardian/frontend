@@ -439,21 +439,24 @@ h1 {
     word-break: break-all;
     word-wrap: break-word;
     color: #999999;
-
     font-size: 12px;
     line-height: 14px;
     margin: -2px 0;
 }
 
-.article__ammends p {
+.article__ammends p,
+.article__ammends li,
+.article__ammends div {
     display: inline;
+}
+
+.article__ammends br {
+    display: none;
 }
 
 .article__ammends .label {
     text-transform: uppercase;
     font-weight: bold;
-    margin-right: 3px;
-    color: #999999;
 }
 
 .article__ammends .label--draft {
@@ -465,9 +468,13 @@ h1 {
 }
 
 .article__ammends .label--snap {
+    color: #999999;
 }
 
-.article__ammends .label--sublinks {
+.article__ammends .has-sublinks {
+    color: #DD4B39;
+    font-weight: bold;
+    margin-right: 5px;
 }
 
 .is-empty {
