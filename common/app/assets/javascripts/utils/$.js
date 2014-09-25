@@ -12,7 +12,7 @@ define([
     $.create = function (s) {
         return bonzo(bonzo.create(s));
     };
-    $.ancestor = function(el, c) {
+    $.ancestor = function (el, c) {
         if (el.tagName.toLowerCase() === 'html') {
             return false;
         }

@@ -109,7 +109,7 @@ define([
         bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
         this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
-
+        this.resize = this.trigger.bind(this, 'resize');
         this.toggleInfo = function(e) {
             var infoPanelClick =
                 bonzo(e.target).hasClass('js-gallery-lightbox-info') ||
@@ -118,8 +118,6 @@ define([
                 this.trigger('toggle-info');
             }
         }.bind(this);
-
-        this.resize = this.trigger.bind(this, 'resize');
 
         if (detect.hasTouchScreen()) {
             this.disableHover();
