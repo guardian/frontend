@@ -1,13 +1,11 @@
 define([
     'common/utils/$',
     'bonzo',
-    'bean',
-    'qwery'
+    'bean'
 ], function (
     $,
     bonzo,
-    bean,
-    qwery
+    bean
 ) {
     return function (container) {
         var $container = bonzo(container),
