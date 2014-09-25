@@ -110,6 +110,10 @@
     .content--media & {
         border-color: $c-neutral2;
     }
+
+    .social {
+        float: left;
+    }
 }
 
 .content--article,
@@ -156,3 +160,4 @@
         color: $c-neutral7;
     }
 }
+

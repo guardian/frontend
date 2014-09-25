@@ -37,7 +37,7 @@
                 </div>
 
 
-                <div class="submeta-container submeta-container--break-at-leftcol">
+                <div class="submeta-container @if(article.hasSupportingAtBottom) { submeta-container--break-at-leftcol }">
                     @if(article.keywords.filterNot(_.isSectionTag).nonEmpty) {
                         <div class="submeta" data-link-name="keywords">
                             <h2 class="submeta__head">Topics</h2>
@@ -45,7 +45,7 @@
                         </div>
                     }
                     <div class="submeta js-social--bottom" data-component="share">
-                        <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
+                        <h2 class="submeta__head @if(article.hasSupportingAtBottom) { hide-until-leftcol }">Share this article</h2>
                         @fragments.social(article)
                     </div>
                 </div>

@@ -92,8 +92,6 @@ figure.element.element--supporting {
         @include mq(leftCol) {
             background: #ffffff;
             padding-left: 0;
-            position: absolute;
-            top: 100%;
             padding-top: ($gs-baseline/6)*5;
             @include reduce-left;
         }

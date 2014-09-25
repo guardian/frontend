@@ -376,6 +376,9 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
+  lazy val hasSupportingAtBottom: Boolean =
+    Jsoup.parseBodyFragment(body).select("> *:nth-last-child(-n+5)").select(".element--figure").length > 0
+
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def schemaType = Some(ArticleSchemas(this))
 
