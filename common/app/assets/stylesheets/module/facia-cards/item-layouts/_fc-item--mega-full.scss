@@ -25,6 +25,11 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
         padding-bottom: 40%;
     }
 
+    .responsive-img {
+        top: -25%;
+        height: auto;
+    }
+
     .fc-item__title,
     .fc-item__byline {
         @include fs-headline(4, true);

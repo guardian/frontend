@@ -28,20 +28,25 @@
 
             <div class="fc-item__container">
                 @FaciaDisplayElement.fromTrail(trail) match {
-                    case InlineVideo(videoElement, title, endSlatePath) if trail.imageAdjust == "boost" => {
-                        <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
-                            <div class="fc-item__video-container">
-                            @video(VideoPlayer(
-                                videoElement,
-                                Video640,
-                                title,
-                                autoPlay = false,
-                                showControlsAtStart = false,
-                                endSlatePath,
-                                Some(false)
-                            ))
+                    case InlineVideo(videoElement, title, endSlatePath) => {
+                        @defining(VideoPlayer(
+                            videoElement,
+                            Video640,
+                            title,
+                            autoPlay = false,
+                            showControlsAtStart = false,
+                            endSlatePath,
+                            Some(false)
+                        )) { player =>
+                            <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
+                                <div class="fc-item__video-container">
+                                    @video(player)
+                                </div>
                             </div>
-                        </div>
+                            <div class="fc-item__video-fallback">
+                                @image(trail, inlineImage = containerIndex == 0 && index < 4)
+                            </div>
+                        }
                     }
 
                     case _ => {
