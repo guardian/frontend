@@ -20,12 +20,12 @@
     }
 }
 
-.fc-show-more--hidden .fc-show-more--hide-on-mobile {
+.js-on .fc-show-more--hidden .fc-show-more--hide-on-mobile {
     @include mq($until: tablet) {
         display: none !important;
     }
 }
 
-.fc-show-more--hidden .fc-show-more--hide {
+.js-on .fc-show-more--hidden .fc-show-more--hide {
     display: none !important;
 }

@@ -29,7 +29,6 @@ define([
             $container.removeClass(className);
         }
 
-        $container.addClass(className);
         $button.appendTo($container);
         bean.on($button[0], 'click', showMore);
         $container.removeClass('js-container--fc-show-more');
