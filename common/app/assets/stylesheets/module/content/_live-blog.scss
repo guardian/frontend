@@ -129,10 +129,10 @@ $block-padding-right: $gs-gutter;
 }
 
 @include keyframes(live-pulse) {
-    0% {background-color: #ffffff;}
-    10% {background-color: #df7787;}
-    40% {background-color: #ffffff;}
-    100% {background-color: #ffffff;}
+    0% {opacity: 1;}
+    10% {opacity: .25;}
+    40% {opacity: 1;}
+    100% {opacity: 1;}
 }
 
 .blog__live-icon {
@@ -140,6 +140,19 @@ $block-padding-right: $gs-gutter;
     display: inline-block;
     content: '';
     background-color: #ffffff;
+    width: $size;
+    height: $size;
+    margin-bottom: -1px;
+    margin-right: 3px;
+    @include border-radius(50%);
+    @include animation(live-pulse 2s infinite);
+}
+
+.blog__live-icon--red {
+    $size: 12px;
+    display: inline-block;
+    content: '';
+    background-color: $c-live;
     width: $size;
     height: $size;
     margin-bottom: -1px;

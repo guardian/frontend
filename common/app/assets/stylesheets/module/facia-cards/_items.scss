@@ -33,6 +33,11 @@ $fc-item-gutter: $gs-gutter / 3;
     .stars {
         margin-bottom: 0;
     }
+
+    .blog__live-icon--red {
+        position: relative;
+        top: 1px;
+    }
 }
 
 .fc-item__image-container {
