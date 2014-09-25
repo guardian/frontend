@@ -153,7 +153,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
               collectionItem.id,
               Nil,
               collectionItem.frontPublicationDate.map(new DateTime(_)).getOrElse(DateTime.now),
-              collectionItem.meta.map(makeSupportingMeta)
+              collectionItem.meta
             ))
           } else {
             items.get(collectionItem.id) map { item =>

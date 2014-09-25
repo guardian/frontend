@@ -346,7 +346,7 @@ object SnapApiContent {
 class Snap(snapId: String,
            snapSupporting: List[Content],
            snapWebPublicationDate: DateTime,
-           snapMeta: Option[com.gu.facia.client.models.TrailMetaData],
+           snapMeta: Option[com.gu.facia.client.models.MetaDataCommonFields],
            snapElements: List[ApiElement] = Nil
             ) extends Content(new ApiContentWithMeta(SnapApiContent(snapElements), supporting = snapSupporting, metaData = snapMeta)) {
 
