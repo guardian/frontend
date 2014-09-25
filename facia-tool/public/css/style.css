@@ -339,7 +339,8 @@ h1 {
     background-color: #eeeeee;
 }
 
-.article:hover .article__spark {
+.article:hover .article__spark,
+.article:hover .time__front {
     display: none;
 }
 
@@ -466,9 +467,17 @@ h1 {
     color: #ffc107;
 }
 
-.time__publication,
-.time__front {
+.time__publication {
     color: #999999;
+}
+
+.time__front {
+    position: absolute;
+    top: 5px;
+    right: 2px;
+    font-size: 12px;
+    line-height: 12px;
+    color: #46c430;
 }
 
 .article__overrides {
@@ -634,6 +643,7 @@ button {
 
 .article__spark {
     position: absolute;
+    top: 19px;
     right: 3px;
 }
 
@@ -1178,6 +1188,9 @@ button {
     .log-in-out,
     .article__spark {
         display: none;
+    }
+    .time__front {
+        position: inherit;
     }
     .article .article__content {
         margin-right: 5px;
