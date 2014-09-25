@@ -121,12 +121,6 @@ define([
 
         this.resize = this.trigger.bind(this, 'resize');
 
-        this.stopPropagationOnMouseClick = function(e) {
-            if (detect.isBreakpoint({min: 'desktop'})) {
-                e.stop();
-            }
-        }.bind(this);
-
         if (detect.hasTouchScreen()) {
             this.disableHover();
         }
