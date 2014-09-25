@@ -1,7 +1,6 @@
 .fc-container {
     padding-bottom: $gs-baseline;
     margin-bottom: 0;
-    background-color: $c-neutral7;
 
     @include mq(tablet) {
         padding-bottom: $gs-baseline * 2;
@@ -17,6 +16,14 @@
 
     .facia-slice-wrapper + .facia-slice-wrapper {
         margin-top: 0;
+    }
+}
+
+.fc-show-more--mobile-only {
+    @include mq(tablet) {
+        .collection__show-more {
+            display: none;
+        }
     }
 }
 

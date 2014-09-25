@@ -25,11 +25,11 @@
         case Some("prototype/quichelorraine")   => { @containers.quichelorraine(collection, QuicheLorraineContainer(), index)(request, templateDeduping, config) }
         case Some("prototype/raclette")         => { @containers.raclette(collection, RacletteContainer(), index)(request, templateDeduping, config) }
         case Some("comment/comment-and-debate") => { @containers.commentanddebate(collection, CommentAndDebateContainer(), index)(request, templateDeduping, config) }
-        case FixedContainers(containerDefinition) => { @containers.facia_cards.container(collection, ContainerLayout(containerDefinition, collection, templateDeduping), index)(request, templateDeduping, config) }
+        case FixedContainers(containerDefinition) => { @containers.facia_cards.container(collection, ContainerLayout(containerDefinition, collection, Some(templateDeduping)), index)(request, templateDeduping, config) }
         case collectionType => {
             @DynamicContainers(collectionType, collection.items) match {
                 case Some(containerDefinition) => {
-                    @containers.facia_cards.container(collection, ContainerLayout(containerDefinition, collection, templateDeduping), index)(request, templateDeduping, config)
+                    @containers.facia_cards.container(collection, ContainerLayout(containerDefinition, collection, None), index)(request, templateDeduping, config)
                 }
 
                 case None => {
