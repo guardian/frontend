@@ -38,10 +38,10 @@ define([
                 $container.addClass('fc-show-more--mobile-only');
             }
 
-            $container.addClass(className);
-            $button.appendTo($container);
+            $container.addClass(className)
+                .append($button)
+                .removeClass('js-container--fc-show-more');
             bean.on($button[0], 'click', showMore);
-            $container.removeClass('js-container--fc-show-more');
         }
     };
 });
