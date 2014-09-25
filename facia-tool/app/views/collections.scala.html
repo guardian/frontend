@@ -345,10 +345,15 @@
                             css: {'is-empty': meta.isSnap() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
-                            <span class="time__front" data-bind="text: frontPublicationTime"></span>
+                            <span class="article__times">
+                                <span class="time__publication" data-bind="text: webPublicationTime"></span>
+                                <span class="time__front" data-bind="text: frontPublicationTime"></span>
+                            </span>
 
                             <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                                <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>,
+                                <span class="label label--sublinks">
+                                    <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>
+                                </span>
                             <!-- /ko -->
 
                             <!-- ko if: fields.isLive() === 'false' -->
@@ -360,20 +365,18 @@
                                     text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
                             <!-- /ko -->
 
-                            <!-- ko if: meta.isSnap -->
-                                <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
-                            <!-- /ko -->
-
                             <span class="time__scheduled" data-bind="if: fields.scheduledPublicationDate">
                                 scheduled <span data-bind="text: scheduledPublicationTime"></span>
                             </span>
 
-                            <span span class="time__publication" data-bind="if: webPublicationTime">
-                                published <span data-bind="text: webPublicationTime"></span>
-                            </span>
+                            <!-- ko if: meta.isSnap -->
+                                <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
+                            <!-- /ko -->
 
                             <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
 
+                            <span data-bind="
+                                html: meta.trailText() || fields.trailText()"></span>
                         </div>
                     <!-- /ko -->
                 </a>

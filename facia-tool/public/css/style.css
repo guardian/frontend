@@ -340,7 +340,7 @@ h1 {
 }
 
 .article:hover .article__spark,
-.article:hover .time__front {
+.article:hover .article__times {
     display: none;
 }
 
@@ -381,7 +381,7 @@ h1 {
 
 .article__content {
     display: block;
-    margin: 0 110px 0 85px;
+    margin: 0 125px 0 85px;
     min-height: 50px;
 }
 
@@ -429,15 +429,31 @@ h1 {
     color: #666666;
 }
 
+
 .article__ammends {
-    color: #666666;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #999999;
+
     font-size: 12px;
-    line-height: 12px;
+    line-height: 14px;
+    margin: -2px 0;
+}
+
+.article__ammends p {
+    display: inline;
 }
 
 .article__ammends .label {
     text-transform: uppercase;
     font-weight: bold;
+    margin-right: 3px;
+    color: #999999;
 }
 
 .article__ammends .label--draft {
@@ -449,7 +465,9 @@ h1 {
 }
 
 .article__ammends .label--snap {
-    color: #999999;
+}
+
+.article__ammends .label--sublinks {
 }
 
 .is-empty {
@@ -463,6 +481,14 @@ h1 {
     font-size: 12px;
 }
 
+.article__times {
+    position: absolute;
+    top: 4px;
+    right: 2px;
+    font-size: 11px;
+    line-height: 12px;
+}
+
 .time__scheduled {
     color: #ffc107;
 }
@@ -472,11 +498,6 @@ h1 {
 }
 
 .time__front {
-    position: absolute;
-    top: 5px;
-    right: 2px;
-    font-size: 12px;
-    line-height: 12px;
     color: #46c430;
 }
 
@@ -643,7 +664,7 @@ button {
 
 .article__spark {
     position: absolute;
-    top: 19px;
+    top: 18px;
     right: 3px;
 }
 
@@ -1189,7 +1210,7 @@ button {
     .article__spark {
         display: none;
     }
-    .time__front {
+    .article__times {
         position: inherit;
     }
     .article .article__content {
