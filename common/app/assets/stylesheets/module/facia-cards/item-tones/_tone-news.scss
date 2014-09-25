@@ -9,13 +9,13 @@
 
     &.fc-item--list-mobile .fc-item__container {
         @include mq($until: tablet) {
-            border-top: 1px solid $c-newsAccent;
+            @include box-shadow(inset 0 1px $c-newsAccent);
         }
     }
 
     &.fc-item--list-tablet .fc-item__container {
         @include mq(tablet) {
-            border-top: 1px solid $c-newsAccent;
+            @include box-shadow(inset 0 1px $c-newsAccent);
         }
     }
 
