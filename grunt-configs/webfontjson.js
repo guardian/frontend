@@ -36,6 +36,12 @@ module.exports = function(grunt, options) {
                         file: options.webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff2',
                         format: 'woff'
                     },
+                    {
+                        'font-family': '"Guardian Egyptian Web"',
+                        'font-weight': '500',
+                        file: options.webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2',
+                        format: 'woff'
+                    },
                     // This weight contains only a certain set of chars
                     // since it is used only in one place (section names)
                     {
@@ -81,6 +87,12 @@ module.exports = function(grunt, options) {
                         file: options.webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.woff',
                         format: 'woff'
                     },
+                    {
+                        'font-family': '"Guardian Egyptian Web"',
+                        'font-weight': '500',
+                        file: options.webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff',
+                        format: 'woff'
+                    },
                     // This weight contains only a certain set of chars
                     // since it is used only in one place (section names)
                     {
@@ -124,6 +136,12 @@ module.exports = function(grunt, options) {
                         'font-family': '"Guardian Egyptian Web"',
                         'font-weight': '400',
                         file: options.webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Regular.ttf',
+                        format: 'ttf'
+                    },
+                    {
+                        'font-family': '"Guardian Egyptian Web"',
+                        'font-weight': '500',
+                        file: options.webfontsDir + 'hinting-off_kerning-off/latin1/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.ttf',
                         format: 'ttf'
                     },
                     // This weight contains only a certain set of chars
