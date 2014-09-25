@@ -58,4 +58,19 @@ import services.ConfigAgent
     val result = FaciaController.renderFront("technology")(fakeRequest)
     header("X-Accel-Redirect", result) should be (None)
   }
+
+  it should "redirect to applications when 'page' query param" in {
+    val fakeRequest = FakeRequest("GET", "/technology?page=77")
+
+    val result = FaciaController.renderFront("technology")(fakeRequest)
+    status(result) should be(200)
+    header("X-Accel-Redirect", result) should be (Some("/applications/technology?page=77"))
+  }
+
+  it should "not redirect to applications when any other query param" in {
+    val fakeRequest = FakeRequest("GET", "/technology?id=77")
+
+    val result = FaciaController.renderFront("technology")(fakeRequest)
+    header("X-Accel-Redirect", result) should be (None)
+  }
 }
