@@ -1,8 +1,9 @@
 package layout
 
-case class ItemClasses(mobile: String, desktop: String) {
+case class ItemClasses(mobile: String, tablet: String, desktop: Option[String] = None) {
   /** Template helper */
-  def classes = s"fc-item--$mobile-mobile fc-item--$desktop-tablet"
+  def classes =
+    s"fc-item--$mobile-mobile fc-item--$tablet-tablet" + desktop.map(d => s" fc-item--$d-desktop").getOrElse("")
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column])
 

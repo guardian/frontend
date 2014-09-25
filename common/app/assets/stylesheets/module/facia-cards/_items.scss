@@ -172,6 +172,12 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+.fc-item--list-desktop {
+    @include mq(desktop) {
+        @include fc-item--list;
+    }
+}
+
 .fc-item--list-media-mobile {
     @include mq($until: tablet) {
         @include fc-item--list-media;
@@ -180,6 +186,12 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item--list-media-tablet {
     @include mq(tablet) {
+        @include fc-item--list-media;
+    }
+}
+
+.fc-item--list-media-desktop {
+    @include mq(desktop) {
         @include fc-item--list-media;
     }
 }
