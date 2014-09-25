@@ -64,7 +64,7 @@ define([
             books:             this.host + 'books/bestsellers.json?'        + this.getKeywords(),
             booksMedium:       this.host + 'books/bestsellers-medium.json?' + this.getKeywords(),
             booksHigh:         this.host + 'books/bestsellers-high.json?'   + this.getKeywords(),
-            jobs:              this.host + 'jobs.json?'                     + [this.listToParams("t", this.jobs ? this.jobs.split(',') : []), this.getKeywords()].join('&'),
+            jobs:              this.host + 'jobs.json?'                     + [this.listToParams('t', this.jobs ? this.jobs.split(',') : []), this.getKeywords()].join('&'),
             jobsHigh:          this.host + 'jobs-high.json?'                + this.getKeywords(),
             masterclasses:     this.host + 'masterclasses.json?'            + this.getKeywords(),
             masterclassesHigh: this.host + 'masterclasses-high.json?'       + this.getKeywords(),
@@ -110,9 +110,8 @@ define([
         if (this.keywordIds) {
             var keywords = map(this.keywordIds.split(','), function(keywordId) {
                     return keywordId.split('/').pop();
-                }
-            )
-            return this.listToParams("k", keywords);
+                });
+            return this.listToParams('k', keywords);
         } else {
             return 'k=' + this.pageId.split('/').pop();
         }
