@@ -12,10 +12,10 @@ object CardStyle {
       Comment
     } else if (trail.isAnalysis) {
       Analysis
-    } else if (trail.isFeature) {
-      Feature
     } else if (trail.isReview) {
       Review
+    } else if (trail.isFeature) {
+      Feature
     } else {
       Default
     }
