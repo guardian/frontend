@@ -1,0 +1,15 @@
+.tone-review {
+    @extend %tone-background;
+
+    &.fc-item {
+        background-color: $c-commentBackground;
+    }
+
+    .fc-item__kicker {
+        color: $c-featureAccent2;
+    }
+
+    .fc-item__meta {
+        background-color: fade-out($c-commentBackground, .5);
+    }
+}
