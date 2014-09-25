@@ -264,8 +264,8 @@ case object HalfQuarterQl2Ql4 extends Slice {
       SplitColumn(
         colSpan = 1,
         topItemClasses = ItemClasses(
-          mobile = "list-media-large",
-          desktop = "standard-quarter"
+          mobile = "list-media",
+          desktop = "standard"
         ),
         bottomItemsClasses = ItemClasses(
           mobile = "list",
