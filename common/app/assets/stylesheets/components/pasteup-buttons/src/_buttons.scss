@@ -46,20 +46,6 @@ They come in different sizes:
 <a href="#" class="button button--small">Link to somewhere</a>
 <a href="#" class="button button--xsmall">Link to somewhere</a>
 ```
-
-And with inline icons:
-
-```html_example
-<a href="#" class="button">
-    Link to somewhere<i class="i i-arrow-white-right i-right"></i>
-</a>
-<a href="#" class="button">
-    <i class="i i-arrow-white-right i-left"></i>Link to somewhere
-</a>
-<a href="#" class="button">
-    <i class="i i-arrow-white-right"></i><span class="u-h">Link to somewhere</span>
-</a>
-```
 */
 
 @mixin button-height($button-size) {
@@ -203,7 +189,7 @@ And with inline icons:
         guss-colour(tone-features-1, $pasteup-palette),
         #ffffff,
         darken(guss-colour(neutral-3, $pasteup-palette), 10%),
-        guss-colour(neutral-5, $pasteup-palette)
+        guss-colour(neutral-3, $pasteup-palette)
     );
 }
 .button--tone-comment {
@@ -219,7 +205,7 @@ And with inline icons:
         guss-colour(tone-comment-1, $pasteup-palette),
         #ffffff,
         darken(guss-colour(neutral-3, $pasteup-palette), 10%),
-        guss-colour(neutral-5, $pasteup-palette)
+        guss-colour(neutral-3, $pasteup-palette)
     );
 }
 .button--tone-live {

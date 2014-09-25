@@ -29,14 +29,9 @@
                                 Sponsored by:
                             }
                         } else {
-                            Advertisement feature
+                            Brought to you by:
                         }
                     </h3>
-
-                    @if(!content.isSponsored && !content.hasMultipleFeatureAdvertisers) {
-                        <p class="ad-slot--paid-for-badge__label">in association with</p>
-                    }
-
                     @if(!content.hasMultipleSponsors && !content.hasMultipleFeatureAdvertisers) {
                         <p class="ad-slot--paid-for-badge__header">@sponsor</p>
                     }

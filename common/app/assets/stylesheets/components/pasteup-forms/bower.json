@@ -1,14 +1,27 @@
 {
   "name": "pasteup-forms",
+  "description": "Forms component in the Pasteup collection",
+  "version": "5.0.3",
   "main": [
     "_forms.scss",
     "_forms.config.scss",
     "_forms.mixins.scss"
   ],
-  "ignore": [
-    "demo"
-  ],
+  "homepage": "https://github.com/guardian/pasteup-forms",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/guardian/pasteup-forms.git"
+  },
   "dependencies": {
-    "guss": "~3"
+    "pasteup-palette": "~3.0.0",
+    "guss-colours": "~3.0.0",
+    "guss-typography": "~3.0.0",
+    "guss-grid-system": "~1.2.1",
+    "sass-mq": "~2.1.1",
+    "guss-css3": "~2.2.1",
+    "guss-webfonts": "~3.0.0"
+  },
+  "devDependencies": {
+    "Cortana": "~1.2.7"
   }
 }

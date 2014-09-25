@@ -7,11 +7,17 @@ $fc-item-gutter: $gs-gutter / 3;
 @import 'item-layouts/fc-item--list';
 @import 'item-layouts/fc-item--list-media';
 @import 'item-layouts/fc-item--list-media-large';
+@import 'item-layouts/fc-item--full';
+@import 'item-layouts/fc-item--mega-full';
 
 .fc-container {
     .facia-slice__item {
         @include flex-display;
         padding-bottom: 0;
+
+        &.l-list__item {
+            margin-bottom: 0;
+            padding-bottom: $gs-baseline;
     }
 }
 
@@ -37,9 +43,17 @@ $fc-item-gutter: $gs-gutter / 3;
         margin-bottom: 0;
     }
 
+    .gu-media-wrapper {
+        margin-bottom: 0;
+    }
+
     .blog__live-icon--red {
         position: relative;
         top: 1px;
+    }
+
+    .vjs-big-play-button > span {
+        @include video-play-button-size($vjs-x-small-button-size);
     }
 }
 
@@ -70,11 +84,8 @@ $fc-item-gutter: $gs-gutter / 3;
     position: relative;
 }
 
-.fc-item__header,
-.fc-item__standfirst,
-.fc-item__meta {
-    padding-left: $fc-item-gutter;
-    padding-right: $fc-item-gutter;
+.fc-item__video-fallback {
+    display: none;
 }
 
 .fc-item__live-indicator {
@@ -211,9 +222,19 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
-.fc-item--standard {
+.fc-item--standard-mobile {
     @include mq($until: tablet) {
         @include fc-item--standard;
+
+        .vjs-big-play-button > span {
+            @include video-play-button-size($vjs-small-button-size);
+        }
+
+        @include mq(mobileLandscape) {
+            .vjs-big-play-button > span {
+                @include video-play-button-size($vjs-large-button-size);
+            }
+        }
     }
 }
 
@@ -223,7 +244,7 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 }
 
-.fc-item--half {
+.fc-item--half-mobile {
     @include mq($until: tablet) {
         @include fc-item--half;
     }
@@ -244,6 +265,18 @@ $fc-item-gutter: $gs-gutter / 3;
 .fc-item--three-quarters-right-tablet {
     @include mq(tablet) {
         @include fc-item--three-quarters-right;
+    }
+}
+
+.fc-item--full-tablet {
+    @include mq(tablet) {
+        @include fc-item--full;
+    }
+}
+
+.fc-item--mega-full-tablet {
+    @include mq(tablet) {
+        @include fc-item--mega-full;
     }
 }
 
@@ -309,7 +342,7 @@ $fc-item-gutter: $gs-gutter / 3;
             &.l-list--rows-#{$row} {
                 .l-list__item:nth-last-child(-n+#{$column}) {
                     @include mq(tablet) {
-                        margin-bottom: 0;
+                        padding-bottom: 0;
                     }
                 }
             }

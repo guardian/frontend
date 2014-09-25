@@ -19,7 +19,7 @@
     color: $c-neutral2-contrasted;
     text-align: right;
     @include box-sizing(border-box);
-    @include f-data;
+    font-family: $f-sans-serif-text;
     @include font-size(12, 20);
 }
 
@@ -228,7 +228,7 @@
     float: left;
     clear: left;
     padding-left: $gs-gutter/2;
-    @include fs-data(3);
+    @include fs-textSans(3);
 }
 .ad-slot--sponsored__label {
     margin-bottom: $gs-baseline/3;
@@ -275,7 +275,7 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help {
-        @include fs-data(3);
+        @include fs-textSans(3);
     }
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
@@ -301,18 +301,22 @@
         margin-top: $gs-baseline/3;
     }
 }
+.ad-slot--adbadge,
+.ad-slot--spbadge {
+    @include mq(mobile, $until: leftCol) {
+        &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
+            margin-top: get-line-height(data, 3)*-1;
+        }
+    }
+}
 .ad-slot--adbadge {
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2-contrasted;
     }
     @include mq(mobile, $until: leftCol) {
-        &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
+        .ad-slot--commercial-component &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
             margin-top: get-line-height(data, 3)*-2;
-
-            .ad-slot--commercial-component & {
-                margin-top: -(get-line-height(data, 3));
-            }
         }
     }
 }
@@ -320,12 +324,6 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2;
-    }
-
-    @include mq(mobile, $until: leftCol) {
-        &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            margin-top: get-line-height(data, 3)*-1;
-        }
     }
 }
 .ad-slot--paid-for-badge--article {

@@ -23,7 +23,7 @@ $inArticleInlineImgWidth: 114px;
 $headerHeight: 36px;
 
 @import 'components/guss-colours/_colours';
-@import 'components/pasteup-palette/_palette';
+@import 'components/pasteup-palette/src/_palette';
 @import 'components/guss-grid-system/_grid-system';
 
 $right-column:     gs-span(4);
@@ -107,7 +107,7 @@ $c-analysisAccent: guss-colour(news-support-2, $pasteup-palette);
 $c-analysisMute: guss-colour(comment-support-2, $pasteup-palette);
 $c-analysisBackground: guss-colour(neutral-5, $pasteup-palette);
 
-$c-commentDefault: guss-colour(tone-comment-1, $pasteup-palette);
+$c-commentDefault: #e6711b;
 $c-commentAccent: guss-colour(tone-comment-2, $pasteup-palette);
 $c-commentAccent2: #ffce4b;
 $c-commentDark: #d3a034;
@@ -156,11 +156,12 @@ $mpu-ad-label-height: $gs-baseline*2;
 
 $action-icon-width: 23px;
 $action-icon-rightspace: 7px;
-$content-top-padding: $gs-baseline / 2;
+$content-top-padding: $gs-baseline / 1.5;
 
 
 // Video.JS player
 // =============================================================================
 
+$vjs-x-small-button-size: 40px;
 $vjs-small-button-size: 50px;
 $vjs-large-button-size: 70px;

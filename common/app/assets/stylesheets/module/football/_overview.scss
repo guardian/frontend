@@ -186,7 +186,7 @@
     .football-match__kickoff,
     .football-match__date,
     .football-match__comments {
-        @include fs-data(2, true);
+        @include fs-textSans(2, true);
     }
 
     .football-match__comments {
@@ -210,7 +210,7 @@
 }
 
 .football-knockout-chart__timezone {
-    @include fs-data(1);
+    @include fs-textSans(1);
     padding: $gs-baseline 0;
     float: left;
     text-align: center;
@@ -235,7 +235,7 @@
 }
 
 .football-round {
-    @include fs-data(4);
+    @include fs-textSans(2);
     float: left;
 }
 .football-round--active {

@@ -19,6 +19,10 @@
             <span class="fc-item__kicker">Analysis</span>
         }
 
+        case ReviewKicker => {
+            <span class="fc-item__kicker">Review</span>
+        }
+
         case TagKicker(tagName, tagLink) => {
             <a href="@LinkTo(tagLink)" class="fc-item__kicker">@tagName</a>
         }

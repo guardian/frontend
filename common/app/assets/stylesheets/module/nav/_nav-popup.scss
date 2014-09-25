@@ -50,7 +50,7 @@ $control-offset: 36 + $gs-gutter/2;
 }
 
 .nav-popup__group-header {
-    @include fs-data(2);
+    @include fs-textSans(2);
     color: $c-neutral2;
     padding: $gs-baseline/2 $gs-gutter/2;
     border-top: 1px solid $c-neutral4;

@@ -2,7 +2,7 @@
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer, LiveBlog}
-@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, TrailCssClasses}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
@@ -13,7 +13,7 @@
 <li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
         <div
-            class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses"
+            class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses u-cf"
             @if(trail.isCommentable) {
                 @trail.discussionId.map{ id =>
                 data-discussion-id="@id"
@@ -26,10 +26,8 @@
 
             <div class="fc-item__container">
                 @FaciaDisplayElement.fromTrail(trail) match {
-                    case InlineVideo(videoElement, title, endSlatePath) if trail.imageAdjust == "boost" => {
-                        <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
-                            <div class="fc-item__video-container">
-                            @video(VideoPlayer(
+                    case InlineVideo(videoElement, title, endSlatePath) => {
+                        @defining(VideoPlayer(
                                 videoElement,
                                 Video640,
                                 title,
@@ -37,9 +35,16 @@
                                 showControlsAtStart = false,
                                 endSlatePath,
                                 Some(false)
-                            ))
+                        )) { player =>
+                            <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
+                                <div class="fc-item__video-container">
+                                    @video(player)
+                                </div>
                             </div>
+                            <div class="fc-item__video-fallback">
+                                @image(trail, inlineImage = containerIndex == 0 && index < 4)
                         </div>
+                        }
                     }
 
                     case _ => {
