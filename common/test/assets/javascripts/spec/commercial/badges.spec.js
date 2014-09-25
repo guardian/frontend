@@ -167,6 +167,19 @@ define([
                 expect($('.facia-container .ad-slot').data('keywords')).toBe('russia,ukraine');
             });
 
+            it('should increment badge id if multiple badges added', function() {
+                var $containers = $('.container').addClass('container--sponsored');
+                badges.init(config);
+                expect(qwery('#dfp-ad--spbadge1', $containers[0]).length).toBe(1);
+                expect(qwery('#dfp-ad--spbadge2', $containers[1]).length).toBe(1);
+            });
+
+            it('should be able to add badge to a container', function() {
+                var $container = $('.container').first().addClass('container--sponsored');
+                badges.add($container);
+                expect(qwery('#dfp-ad--spbadge1', $container[0]).length).toBe(1);
+            });
+
         });
 
     });
