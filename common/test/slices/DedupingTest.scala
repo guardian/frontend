@@ -7,7 +7,7 @@ import views.support.TemplateDeduping
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 
 class DedupingTest extends FlatSpec with Matchers {
-  val containerFixture = ContainerDefinition(Seq(QuarterQuarterQuarterQuarter), 6)
+  val containerFixture = ContainerDefinition(Seq(QuarterQuarterQuarterQuarter), RestrictTo(6))
 
   "Slices" should "dedupe items" in {
     val rawTrails = stubTrails

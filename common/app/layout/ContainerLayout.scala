@@ -1,16 +1,19 @@
 package layout
 
 import model.{Collection, Trail}
-import slices.{ContainerDefinition, Slice}
+import slices.{RestrictTo, MobileShowMore, ContainerDefinition, Slice}
 import views.support.TemplateDeduping
 
 object ContainerLayout extends implicits.Collections {
-  def apply(sliceDefinitions: Seq[Slice], items: Seq[Trail], nToShowOnMobile: Int): ContainerLayout = {
+  def apply(sliceDefinitions: Seq[Slice], items: Seq[Trail], mobileShowMore: MobileShowMore): ContainerLayout = {
     val cards = items.zipWithIndex map {
       case (trail, index) => Card(
         index,
         trail,
-        if (index >= nToShowOnMobile) Some(Mobile) else None
+        mobileShowMore match {
+          case RestrictTo(nToShowOnMobile) if index >= nToShowOnMobile => Some(Mobile)
+          case _ => None
+        }
       )
     }
 
@@ -33,7 +36,7 @@ object ContainerLayout extends implicits.Collections {
     val unusedTrailsForThisSlice = templateDeduping(numItems, items).take(numItems)
     val dedupedPrioritisedTrails = (unusedTrailsForThisSlice ++ items).distinctBy(_.url)
 
-    apply(containerDefinition.slices, dedupedPrioritisedTrails, containerDefinition.numberOfCardsForMobile)
+    apply(containerDefinition.slices, dedupedPrioritisedTrails, containerDefinition.mobileShowMore)
   }
 }
 
