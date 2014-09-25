@@ -1,6 +1,6 @@
 package frontsapi.model
 
-import com.gu.facia.client.models.{TrailMetaData, Trail}
+import com.gu.facia.client.models.{Config, Collection, TrailMetaData, Trail}
 import com.gu.googleauth.UserIdentity
 import common.Logging
 import conf.Configuration
@@ -10,55 +10,6 @@ import play.api.libs.json.{Format, JsValue, Json}
 import tools.FaciaApi
 
 import scala.util.{Failure, Success, Try}
-
-
-object Front {
-  implicit val jsonFormat = Json.format[Front]
-}
-
-case class Front(
-  collections: List[String],
-  navSection: Option[String],
-  webTitle: Option[String],
-  title: Option[String],
-  description: Option[String],
-  onPageDescription: Option[String],
-  imageUrl: Option[String],
-  imageWidth: Option[Int],
-  imageHeight: Option[Int],
-  isImageDisplayed: Option[Boolean],
-  priority: Option[String]
-)
-
-object Collection {
-  implicit val jsonFormat = Json.format[Collection]
-
-  /** TODO emulate the current IDs as generated in the JavaScript */
-  def nextId = java.util.UUID.randomUUID().toString
-}
-
-case class Collection(
-  displayName: Option[String],
-  apiQuery: Option[String],
-  `type`: Option[String],
-  href: Option[String],
-  groups: Option[List[String]],
-  uneditable: Option[Boolean],
-  showTags: Option[Boolean],
-  showSections: Option[Boolean],
-  showMainVideo: Option[Boolean]
-)
-
-object Config {
-  implicit val jsonFormat = Json.format[Config]
-
-  def empty = Config(Map.empty, Map.empty)
-}
-
-case class Config(
-  fronts: Map[String, Front],
-  collections: Map[String, Collection]
-)
 
 object Block {
   implicit val jsonFormat = Json.format[Block]

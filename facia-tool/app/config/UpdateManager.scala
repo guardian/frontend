@@ -1,8 +1,9 @@
 package config
 
+import com.gu.facia.client.models.{CollectionConfig, Config, Front}
 import controllers.CreateFront
-import frontsapi.model.{UpdateActions, Collection, Config, Front}
-import services.{ConfigAgent, S3FrontsApi}
+import frontsapi.model.UpdateActions
+import services.{IdGeneration, ConfigAgent, S3FrontsApi}
 import play.api.libs.json.Json
 import util.SanitizeInput
 import com.gu.googleauth.UserIdentity
@@ -35,7 +36,7 @@ object UpdateManager {
   }
 
   def createFront(request: CreateFront, identity: UserIdentity): String = {
-    val newCollectionId = Collection.nextId
+    val newCollectionId = IdGeneration.nextId
     transformConfig(Transformations.createFront(request, newCollectionId), identity)
     newCollectionId
   }
@@ -44,13 +45,13 @@ object UpdateManager {
     transformConfig(Transformations.updateFront(id, newVersion), identity)
   }
 
-  def addCollection(frontIds: List[String], collection: Collection, identity: UserIdentity): String = {
-    val newCollectionId = Collection.nextId
+  def addCollection(frontIds: List[String], collection: CollectionConfig, identity: UserIdentity): String = {
+    val newCollectionId = IdGeneration.nextId
     transformConfig(Transformations.updateCollection(frontIds, newCollectionId, collection), identity)
     newCollectionId
   }
 
-  def updateCollection(id: String, frontIds: List[String], collection: Collection, identity: UserIdentity): Unit = {
+  def updateCollection(id: String, frontIds: List[String], collection: CollectionConfig, identity: UserIdentity): Unit = {
     transformConfig(Transformations.updateCollection(frontIds, id, collection), identity)
   }
 }
