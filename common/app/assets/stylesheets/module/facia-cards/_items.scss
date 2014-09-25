@@ -20,11 +20,14 @@ $fc-item-gutter: $gs-gutter / 3;
     @include box-sizing(border-box);
     display: block;
     @include clearfix;
-    padding-bottom: $gs-baseline * 2.5;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
     background-color: #ffffff;
     position: relative;
+
+    &.item--has-discussion {
+        padding-bottom: $gs-baseline * 2;
+    }
 
     a {
         color: $c-neutral1;
@@ -103,7 +106,6 @@ $fc-item-gutter: $gs-gutter / 3;
 .fc-item__latest-block-wrapper {
     margin-left: $fc-item-gutter;
     margin-right: $fc-item-gutter;
-    padding-top: $gs-baseline;
     overflow: hidden;
 }
 

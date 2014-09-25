@@ -51,7 +51,7 @@ Media list item. Looks a bit like this:
     }
 
     .fc-item__media-wrapper {
-        float: left;
+        position: absolute;
         margin-left: 0 - $image-width;
         width: $image-width;
     }
