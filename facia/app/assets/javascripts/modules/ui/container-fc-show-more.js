@@ -10,8 +10,8 @@ define([
     return function (container) {
         var $container = bonzo(container),
             className = 'fc-show-more--hidden',
-            itemsHiddenOnDesktop = $('.js-hide', $container).length,
-            itemsHiddenOnMobile = $('.js-hide-on-mobile', $container).length,
+            itemsHiddenOnDesktop = $('.js-hide', $container).length > 0,
+            itemsHiddenOnMobile = $('.js-hide-on-mobile', $container).length > 0,
             $button = $.create(
             '<button class="collection__show-more tone-background tone-news" data-link-name="Show more | 1">' +
             '<span class="collection__show-more__icon">' +
