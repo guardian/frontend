@@ -11,7 +11,7 @@ define([
     'common/modules/identity/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/recommend-comments',
-    'common/modules/discussion/api',
+    'common/modules/discussion/api'
 ], function(
     $,
     bonzo,
