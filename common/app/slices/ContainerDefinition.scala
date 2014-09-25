@@ -5,11 +5,16 @@ object ContainerDefinition {
 
   def ofSlices(slices: Slice*) = ContainerDefinition(
     slices,
-    DefaultCards
+    RestrictTo(6)
   )
 }
 
+sealed trait MobileShowMore
+
+case object DesktopBehaviour extends MobileShowMore
+case class RestrictTo(items: Int) extends MobileShowMore
+
 case class ContainerDefinition(
   slices: Seq[Slice],
-  numberOfCardsForMobile: Int
+  mobileShowMore: MobileShowMore
 )
