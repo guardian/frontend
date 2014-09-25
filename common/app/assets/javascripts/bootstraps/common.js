@@ -395,6 +395,12 @@ define([
 
         initReleaseMessage: function(config) {
             releaseMessage.init(config);
+        },
+
+        checkChildrensBooksSite: function(config) {
+            if (config.page.section === 'childrens-books-site') {
+                $(document.body).addClass('childrens-books-site');
+            }
         }
     };
 
@@ -432,6 +438,7 @@ define([
         modules.transcludeOnwardContent(config);
         modules.initRightHandComponent(config);
         modules.initReleaseMessage(config);
+        modules.checkChildrensBooksSite(config);
 
         mediator.emit('page:common:ready', config);
     };
