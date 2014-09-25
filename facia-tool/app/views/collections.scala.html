@@ -120,9 +120,8 @@
     <!-- templates -->
 
     <script type="text/html" id="template_editor">
-        <!-- ko if: type === 'text' -->
-            <div class="editor" data-bind="
-                visible: visible">
+        <!-- ko if: type === 'text' && visible() -->
+            <div class="editor">
                 <!-- ko ifnot: meta === $root.uiOpenElement() -->
                     <a data-bind="
                         attr: {
@@ -135,13 +134,14 @@
                 <!-- /ko -->
                 <!-- ko if: meta === $root.uiOpenElement() -->
                         <textarea data-bind="
+                            hasFocus: true,
                             attr: {
                                 class: 'editor__' + key + ' element__' + key,
                                 placeholder: field() || label + '...'
                             },
                             autoResize: true,
+                            tabbableFormField: true,
                             valueUpdate: 'afterkeydown',
-                            hasFocus: true,
                             value: overrideOrVal"></textarea>
                         <span class="editor__length" data-bind="
                             css: {'editor__length--alert': lengthAlert},
@@ -155,23 +155,21 @@
 
         <!-- ko if: type === 'boolean' -->
             <span data-bind="
+                click: toggle,
                 attr: {class: 'editor--boolean editor--boolean--' + key},
+                css: {selected: meta},
                 visible: visible">
                 <a class="editor--boolean__label" data-bind="
-                    click: toggle,
-                    css: {selected: meta},
                     text: label"></a>
-                <span class="editor--boolean__state">
-                    <span data-bind="visible: meta">&#10004;</span>
-                </span>
+                <span class="editor--boolean__state"><span data-bind="visible: meta">&#10004;</span></span>
             </span>
         <!-- /ko -->
     </script>
 
     <script type="text/html" id="template_editor_boolean_states">
         <!-- ko if: type === 'boolean' && meta() -->
-            <span class="editor--boolean">
-                <span class="editor--boolean__label selected" data-bind="text: label"></span>
+            <span class="editor--boolean  selected">
+                <span class="editor--boolean__label" data-bind="text: label"></span>
                 <span class="editor--boolean__state">&#10004;</span>
             </span>
         <!-- /ko -->
@@ -273,8 +271,7 @@
             clickBubble: false,
             css: {
                 open: state.isOpen,
-                underDrag: state.underDrag,
-                hasMainMediaVideo: mainMediaType
+                underDrag: state.underDrag
             }">
 
             <a class="thumb" target="article" data-bind="attr: {href: id}">
@@ -283,13 +280,8 @@
             </a>
 
             <div data-bind="if: state.isOpen">
-                <div class="article__overrides">
-                    <div data-bind="template: {name: 'template_editor', foreach: editors}"></div>
-
-                    <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
-                        visible: isSnap,
-                        value: meta.href"/>
-                </div>
+                <div class="article__overrides"
+                    data-bind="template: {name: 'template_editor', foreach: editors}"></div>
 
                 <div data-bind="if: group.parentType === 'Collection' || group.parentType === 'Clipboard'">
                     <div class="supporting" data-bind="with: meta.supporting">
@@ -305,7 +297,7 @@
                     <a class="tool tool--done" data-bind="
                         clickBubble: false,
                         click: closeAndSave">Save edits</a>
-                    <span class="supporting-message">Add supporting content above</span>
+                    <span class="supporting-message">Add sublinks above</span>
                 </div>
             </div>
 
@@ -325,11 +317,9 @@
                     <!-- /ko -->
                 </div>
 
-                <a class="article__spark" target="ophan" data-bind="
+                <img class="article__spark" data-bind="
                     visible: state.sparkUrl,
-                    attr: {href: state.ophanUrl}">
-                    <img data-bind="attr: {src: state.sparkUrl}" />
-                </a>
+                    attr: {src: state.sparkUrl}" />
 
                 <div class="article__tools">
                     <a class="tool tool--small tool--small--copy" data-bind="
@@ -352,41 +342,43 @@
                         <i class="icon-trash"></i></a>
                 </div>
 
-                <div class="article__content is-empty" data-bind="if: state.isEmpty">
-                    <span target="article" class="is-empty__url" data-bind="
-                        text: id"></span>
-                    This content is currently unavailable
-                </div>
+                <a class="article__content" data-bind="attr: {href: id}">
 
-                <div class="article__content" data-bind="if: !state.isEmpty()">
-                    <div class="element element__headline">
-                        <a data-bind="
-                            html: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
-                            css: {'is-empty': isSnap() && !meta.headline()},
-                            attr: {href: id}"></a>
-                    </div>
+                    <!-- ko if: state.isEmpty -->
+                        <div class="is-empty">
+                            <span class="is-empty__url" data-bind="text: id"></span>
+                            This content is currently unavailable
+                        </div>
+                    <!-- /ko -->
 
-                    <div class="article__ammends">
-                        <!-- ko if: fields.isLive() === 'false' -->
-                            <span data-bind="
-                                css: {
-                                    'takedown': fields.firstPublicationDate(),
-                                    'draft':   !fields.firstPublicationDate()
-                                },
-                                text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
-                        <!-- /ko -->
+                    <!-- ko ifnot: state.isEmpty -->
+                        <div class="element element__headline" data-bind="
+                            html: meta.headline() || fields.headline() || (meta.isSnap() ? 'Add link text!' : 'Loading...'),
+                            css: {'is-empty': meta.isSnap() && !meta.headline()}"></div>
 
-                        <!-- ko if: isSnap -->
-                            <span data-bind="text: meta.snapCss() || 'snap'"></span>
-                        <!-- /ko -->
+                        <div class="article__ammends">
+                            <!-- ko if: fields.isLive() === 'false' -->
+                                <span class="label" data-bind="
+                                    css: {
+                                        'label--takedown': fields.firstPublicationDate(),
+                                        'label--draft':   !fields.firstPublicationDate()
+                                    },
+                                    text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
+                            <!-- /ko -->
 
-                        <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
+                            <!-- ko if: meta.isSnap -->
+                                <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
+                            <!-- /ko -->
 
-                        <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                            <span><span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span></span>
-                        <!-- /ko -->
-                    </div>
-                </div>
+                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
+
+                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
+                                <span><span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span></span>
+                            <!-- /ko -->
+                        </div>
+                    <!-- /ko -->
+                </a>
+
             </div>
         </div>
 
@@ -394,5 +386,5 @@
 
 </div>
 
-<script src="@routes.Assets.at("javascripts/app-collections.js")"></script>
+<script src="@routes.Assets.at("js/app-collections.js")"></script>
 }

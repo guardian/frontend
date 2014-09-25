@@ -1,0 +1,86 @@
+@(card: layout.Card, modifierClasses: String, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: Config)
+
+@import common.LinkTo
+@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640}
+@import views.html.fragments.media.video
+@import views.html.fragments.items.facia_cards.meta
+
+@defining((card.item, card.index)) { case (trail, index) =>
+
+<li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-1 @if(isList){ l-list__item }@card.cssClasses">
+
+    @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
+        <div
+            class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses"
+            @if(trail.isCommentable) {
+                @trail.discussionId.map{ id =>
+                data-discussion-id="@id"
+                }
+                data-discussion-closed="@trail.isClosedForComments"
+                data-discussion-inline-upgrade="true"
+            }
+            data-link-name="trail | @{index + 1}"
+            @SnapData(trail)>
+
+            <div class="fc-item__container">
+                @FaciaDisplayElement.fromTrail(trail) match {
+                    case InlineVideo(videoElement, title, endSlatePath) if trail.isBoosted => {
+                        <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
+                            <div class="fc-item__video-container">
+                            @video(VideoPlayer(
+                                videoElement,
+                                Video640,
+                                title,
+                                autoPlay = false,
+                                showControlsAtStart = false,
+                                endSlatePath,
+                                Some(false)
+                            ))
+                            </div>
+                        </div>
+                    }
+
+                    case _ => {
+                        @fragments.items.elements.facia_cards.image(trail, inlineImage = containerIndex == 0 && index < 4)
+                    }
+                }
+
+                <div class="@RenderClasses(Map(
+                    ("fc-item__header", true),
+                    ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
+                ))">
+                    @fragments.items.elements.facia_cards.title(trail, index, containerIndex)
+                    @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
+                    @if(tone == "comment") {
+                        @trail.byline.map { byLine =>
+                            @trail match { case content:model.Content =>
+                            <p class="fc-item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                            }
+                        }
+                    }
+                </div>
+
+                @if(tone == "comment") {
+                    @if(trail.hasLargeContributorImage) {
+                        @trail.contributors.headOption.map { profile =>
+                            @profile.contributorLargeImagePath.map{ image =>
+                                <div class="fc-item__avatar">
+                                    <img src="@image" alt="@profile.name" class="fc-item__avatar__media" />
+                                </div>
+                            }
+                        }
+                    }
+                }
+
+                @trail.trailText.map { text =>
+                    <div class="fc-item__standfirst">@Html(text)</div>
+                }
+
+                @meta(trail)
+            </div>
+            <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
+        </div>
+    }
+</li>
+}

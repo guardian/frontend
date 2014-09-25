@@ -108,7 +108,9 @@ object ImgSrc {
 
   def apply(url: String, imageType: ElementProfile): String = {
     val uri = new URI(url.trim)
-    val isSupportedImage = !uri.getPath.toLowerCase.endsWith(".gif")
+
+    val supportedImages = Seq(".jpg", ".jpeg")
+    val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
     hostPrefixMapping.get(uri.getHost)
       .filter(_ => isSupportedImage)

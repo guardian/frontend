@@ -316,13 +316,15 @@ define([
                 },
                 $adSlot = $.create(template(
                         '<div id="dfp-ad--{{name}}" ' +
-                        'class="ad-slot ad-slot--dfp ad-slot--{{name}} {{types}}" ' +
+                        'class="ad-slot ad-slot--dfp ad-slot--{{normalisedName}} {{types}}" ' +
                         'data-link-name="ad slot {{name}}" ' +
                         'data-test-id="ad-slot-{{name}}" ' +
                         'data-name="{{name}}"' +
                         '{{sizeMappings}}></div>',
                     {
                         name: definition.name || name,
+                        // badges now append their index to the name
+                        normalisedName: (definition.name || name).replace(/((?:ad|sp)badge).*/, '$1'),
                         types: map((isArray(types) ? types : [types]), function(type) { return 'ad-slot--' + type; }).join(' '),
                         sizeMappings: map(pairs(definition.sizeMappings), function(size) { return ' data-' + size[0] + '="' + size[1] + '"'; }).join('')
                     }));
@@ -424,6 +426,11 @@ define([
                             eval($breakout.html());
                         } else {
                             $iFrameParent.append($breakout.html());
+                            $('.ad--responsive', $iFrameParent[0]).each(function (responsiveAd) {
+                                window.setTimeout(function () {
+                                    bonzo(responsiveAd).addClass('ad--responsive--open');
+                                }, 50);
+                            });
                         }
                     }
                 });

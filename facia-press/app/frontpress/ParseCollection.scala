@@ -148,12 +148,21 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     batchGetContentApiItems(itemIds, edition) map { items =>
       collectionItems flatMap { collectionItem =>
         val supporting: List[Content] = retrieveSupportingLinks(collectionItem).flatMap({ collectionItem =>
-          items.get(collectionItem.id) map { item =>
-            Content(
-              item,
+          if (collectionItem.isSnap) {
+            Some(new Snap(
+              collectionItem.id,
               Nil,
-              collectionItem.meta
-            )
+              collectionItem.frontPublicationDate.getOrElse(DateTime.now),
+              collectionItem.meta.getOrElse(Map.empty)
+            ))
+          } else {
+            items.get(collectionItem) map { item =>
+              Content(
+                item,
+                Nil,
+                collectionItem.metaData
+              )
+            }
           }
         })
 

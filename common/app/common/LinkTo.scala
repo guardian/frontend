@@ -24,21 +24,46 @@ trait LinkTo extends Logging {
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request), Region(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request), Region(request))
 
-  def apply(url: String, edition: Edition, region: Option[Region] = None)(implicit request : RequestHeader): String =
-    HttpSwitch.queryString(url match {
-      case "http://www.theguardian.com" => homeLink(edition, region)
-      case "/" => homeLink(edition, region)
-      case protocolRelative if protocolRelative.startsWith("//") => protocolRelative
-      case AbsoluteGuardianUrl(path) =>  urlFor(path, edition)
-      case "/rss" => urlFor("", edition) + "/rss"
-      case RssPath(path, format) => urlFor(path, edition) + "/rss"
-      case AbsolutePath(path) => urlFor(path, edition)
-      case otherUrl => otherUrl
-    }).trim
+  def apply(url: String, edition: Edition, region: Option[Region] = None)(implicit request : RequestHeader): String = {
+    val processedUrl: String = processUrl(url, edition, region).url
+    handleQueryStrings(processedUrl)
+  }
 
+  def handleQueryStrings(url: String)(implicit request : RequestHeader) = HttpSwitch.queryString(url).trim
+
+  case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
+  
+  def processUrl(url: String, edition: Edition, region: Option[Region] = None) = url match {
+    case "http://www.theguardian.com" => ProcessedUrl(homeLink(edition, region))
+    case "/" => ProcessedUrl(homeLink(edition, region))
+    case protocolRelative if protocolRelative.startsWith("//") => ProcessedUrl(protocolRelative)
+    case AbsoluteGuardianUrl(path) =>  ProcessedUrl(urlFor(path, edition))
+    case "/rss" => ProcessedUrl(urlFor("", edition) + "/rss")
+    case RssPath(path, format) => ProcessedUrl(urlFor(path, edition) + "/rss")
+    case AbsolutePath(path) => ProcessedUrl(urlFor(path, edition))
+    case otherUrl => ProcessedUrl(otherUrl, true)
+  }
+  
   def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = trail match {
-    case snap: Snap => snap.snapUrl.filter(_.nonEmpty)
+    case snap: Snap => snap.snapUrl.filter(_.nonEmpty).map(apply(_))
     case t: Trail => Option(apply(t.url))
+  }
+
+  def getHrefWithRel(trail: Trail)(implicit request: RequestHeader): String = {
+    val urlToProcess = trail match {
+      case snap: Snap => snap.snapUrl.filter(_.nonEmpty)
+      case t: Trail => Option(t.url)
+    }
+
+    val processedUrlMaybe: Option[ProcessedUrl] = urlToProcess map { url =>
+      processUrl(url, Edition(request), Region(request))
+    }
+
+    processedUrlMaybe match {
+      case Some(ProcessedUrl(url, true)) => """href="%s" rel="nofollow"""".format(handleQueryStrings(url))
+      case Some(ProcessedUrl(url, false)) => """href="%s"""".format(handleQueryStrings(url))
+      case None => ""
+    }
   }
 
   private def urlFor(path: String, edition: Edition) = s"$host/${Editionalise(path, edition)}"
