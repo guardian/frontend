@@ -39,7 +39,8 @@
         }
     }
 
-    &.fc-item--list-media-mobile {
+    &.fc-item--list-media-mobile,
+    &.fc-item--list-media-large-mobile {
         .fc-item__header,
         .fc-item__standfirst,
         .fc-item__meta {
