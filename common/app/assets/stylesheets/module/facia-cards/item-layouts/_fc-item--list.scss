@@ -14,7 +14,14 @@ x x x x x x x x x x x x x x x x x x x x x x x x
     $headline-size: 1;
     $item-vertical-padding: $gs-baseline * .25;
 
-    padding-bottom: 0;
+    &.item--has-no-discussion {
+        padding-bottom: $gs-baseline * 1.666;
+    }
+
+    // &.item--has-discussion {
+    //     padding-bottom: $gs-baseline * 1.666 + $gs-baseline * 2.5;
+    // }
+
 
     .fc-item__byline,
     .fc-item__title {
@@ -23,8 +30,6 @@ x x x x x x x x x x x x x x x x x x x x x x x x
 
     .fc-item__header {
         margin-bottom: 0;
-        padding-left: $fc-item-gutter;
-        padding-bottom: $gs-baseline * 1.666;
     }
 
     .fc-item__media-wrapper {
