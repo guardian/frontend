@@ -189,12 +189,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
   override lazy val imageSrcWidth: Option[String] = apiContent.metaData.get("imageSrcWidth").flatMap(_.asOpt[String])
   override lazy val imageSrcHeight: Option[String] = apiContent.metaData.get("imageSrcHeight").flatMap(_.asOpt[String])
-  lazy val imageElement: Option[ApiElement] = for {
+  lazy val imageElement: Option[ApiElement] = if (imageReplace) for {
     src <- imageSrc
-    if imageReplace == true
     width <- imageSrcWidth
     height <- imageSrcHeight
-  } yield ImageOverride.createElementWithOneAsset(src, width, height)
+  } yield ImageOverride.createElementWithOneAsset(src, width, height) else None
 
   override lazy val showMainVideo: Boolean =
     apiContent.metaData.get("showMainVideo").flatMap(_.asOpt[Boolean]).getOrElse(false)
