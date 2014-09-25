@@ -157,8 +157,10 @@ define([
                     label: 'snap source',
                     type: 'text'
                 }
-            ];
+            ],
 
+            rxScriptStriper = new RegExp(/<script.*/gi);
+;
         function Article(opts) {
             var self = this;
 
@@ -315,7 +317,7 @@ define([
                         return meta() || field();
                     },
                     write: function(value) {
-                        meta(value);
+                        meta(value.replace(rxScriptStriper, ''));
                     },
                     owner: self
                 })
@@ -540,12 +542,6 @@ define([
                         mediator.emit('ui:open', formFields[nextIndex].meta);
                     }
                 });
-            }
-        };
-
-        ko.bindingHandlers.saneHtml = {
-            update: function (element, valueAccessor) {
-                ko.utils.setHtml(element, sanitizeHtml(ko.utils.unwrapObservable(valueAccessor())));
             }
         };
 
