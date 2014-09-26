@@ -528,3 +528,7 @@
         @include f-textSans;
     }
 }
+
+.discussion__comments__top {
+  border-top: 1px solid $c-neutral4;
+}

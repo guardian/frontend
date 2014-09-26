@@ -24,7 +24,6 @@ $avatarSize: 44px;
 }
 .discussion__comments__container {
     position: relative;
-    margin-bottom: $gs-baseline*3.5;
 }
 .discussion__comment-count {
     color: $c-neutral3;
@@ -776,7 +775,6 @@ $avatarSize: 44px;
    ========================================================================== */
 
 .discussion__heading {
-    border-top: 1px solid $c-neutral4;
     margin-bottom: 0;
     padding-top: $gs-baseline/3;
 
