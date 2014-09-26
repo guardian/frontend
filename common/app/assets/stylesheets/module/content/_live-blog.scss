@@ -1051,14 +1051,11 @@ $timeline-width: 14px;
     overflow: visible;
     position: relative;
     .i {
-        width: 85% !important;
-        height: 85% !important;
+        width: 18px !important;
+        height: 14px !important;
         display: block;
         opacity: 0.5;
-        position: absolute;
-        left: -5px;
-        right: -5px;
-        margin: -7px auto 0 auto;
+        @extend %absolute-center;
     }
     &:hover {
         border-color: colour(neutral-2);
