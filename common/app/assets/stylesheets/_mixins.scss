@@ -214,8 +214,7 @@
     @return guss-colour($color, $pallet);
 }
 
-
-%absolute-center {
+@mixin absolute-center {
     position: absolute;
     top: -999px;
     bottom: -999px;
@@ -223,6 +222,7 @@
     right: -999px;
     margin: auto;
 }
-@mixin absolute-center {
-    @extend %absolute-center;
+
+%absolute-center {
+    @include absolute-center;
 }

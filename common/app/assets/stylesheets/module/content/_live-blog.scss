@@ -1047,6 +1047,30 @@ $timeline-width: 14px;
     }
 }
 
+.block-share__item--expand {
+    @include fs-bodyCopy(1);
+    font-size: 22px;
+    line-height: 24px;
+    color: colour(neutral-2);
+    overflow: visible;
+    position: relative;
+    span {
+        display: block;
+        opacity: 0.8;
+        position: absolute;
+        left: -10px;
+        right: -10px;
+        margin: -16px auto 0 auto;
+        text-align: center;
+    }
+    &:hover {
+        border-color: colour(neutral-2);
+        span {
+            opacity: 1;
+        }
+    }
+}
+
 .share-modal {
     width: 100%;
     height: 100%;
