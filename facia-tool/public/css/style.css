@@ -1157,6 +1157,8 @@ button {
     opacity: 0.9;
 }
 
+.icon-chevron-down { background-position: -313px -119px; }
+.icon-chevron-up { background-position: -288px -120px; }
 .icon-refresh { background-position: -240px -24px; }
 .icon-remove { background-position: -312px 0; }
 .icon-share-alt { background-position: -336px -96px; }
