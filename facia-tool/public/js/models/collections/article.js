@@ -281,7 +281,7 @@ define([
                 meta:   meta,
                 field:  field,
                 revert: function() { meta(undefined); },
-                open:   function() { mediator.emit('ui:open', meta); return false; },
+                open:   function() { mediator.emit('ui:open', meta); },
 
                 hasFocus: ko.computed(function() {
                     return meta === vars.model.uiOpenElement();
