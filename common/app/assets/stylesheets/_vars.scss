@@ -106,7 +106,7 @@ $c-analysisAccent: guss-colour(news-support-2, $pasteup-palette);
 $c-analysisMute: guss-colour(comment-support-2, $pasteup-palette);
 $c-analysisBackground: guss-colour(neutral-5, $pasteup-palette);
 
-$c-commentDefault: #e6711b;
+$c-commentDefault: guss-colour(comment-support-4, $pasteup-palette);;
 $c-commentAccent: guss-colour(comment-main-2, $pasteup-palette);
 $c-commentBackground: guss-colour(comment-support-2, $pasteup-palette);
 

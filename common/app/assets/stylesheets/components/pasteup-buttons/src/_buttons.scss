@@ -106,9 +106,9 @@ They come in different sizes:
     -webkit-border-radius: 1000px;
     border-radius: 1000px;
     @include button-colour(
-        guss-colour(tone-news-2, $pasteup-palette),
+        guss-colour(news-main-2, $pasteup-palette),
         #ffffff,
-         guss-colour(tone-news-1, $pasteup-palette)
+         guss-colour(news-main-1, $pasteup-palette)
      );
 
     &:hover,
