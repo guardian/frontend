@@ -183,6 +183,7 @@ $fc-item-gutter: $gs-gutter / 4;
     @include mq(tablet) {
         @include fc-item--list-media(4, 1);
     }
+
     @include mq(desktop) {
         @include fc-item--list-media;
     }
