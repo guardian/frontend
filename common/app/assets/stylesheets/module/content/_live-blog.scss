@@ -205,8 +205,10 @@ $block-padding-right: $gs-gutter;
     margin: 0 $gs-gutter/2 $gs-baseline/3;
     padding: $gs-baseline/2 0 0;
     @include mq(tablet) {
-        margin-right: $block-padding-right;
-        margin-left: $block-padding-left;
+        position: absolute;
+        right: $gs-gutter;
+        bottom: $gs-baseline;
+        margin: 0
     }
 }
 
@@ -216,10 +218,11 @@ $block-padding-right: $gs-gutter;
     @include clearfix;
     margin-bottom: $gs-baseline;
     padding-top: $gs-baseline/2;
-    padding-bottom: $gs-baseline*2;
+    padding-bottom: $gs-baseline;
     background-color: #ffffff;
     border-top: 1px solid $c-neutral3;
     border-bottom: 1px solid $c-neutral6;
+    position: relative;
 }
 
 .block.is-key-event {
@@ -945,5 +948,89 @@ $timeline-width: 14px;
         top: 0;
         bottom: 0;
         left: 7px;
+    }
+}
+
+.block-share--liveblog {
+    margin-left: gs-span(1) + $gs-gutter;
+    margin-top: $gs-baseline;
+    @include mq($until: tablet) {
+        display: none;
+    }
+}
+
+.block-share__link {
+    display: block;
+    float: left;
+    cursor: pointer;
+}
+
+.block-share__item {
+    display: block;
+    border: 1px solid colour(neutral-3);
+    margin-right: $gs-gutter / 4;
+    @include border-radius(50%);
+    width: $gs-baseline * 2;
+    height: $gs-baseline * 2;
+    @include box-sizing(border-box);
+    .i {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
+.block-share__item--link {
+    width: gs-span(1) + $gs-gutter * 2;
+    @include fs-textSans(1);
+    font-size: 10px;
+    padding: 0 $gs-gutter / 2;
+    color: colour(neutral-2);
+    outline: none;
+}
+
+.block-share--liveblog .block-share__link {
+    .block-share__item--facebook {
+        border-color: #3B5998;
+        .i { @include icon(share-facebook--blue); }
+    }
+    .block-share__item--twitter {
+        border-color: #55ACEE;
+        .i { @include icon(share-twitter--blue); }
+    }
+    .block-share__item--gplus {
+        border-color: #DD4B39;
+        .i { @include icon(share-gplus--red); }
+    }
+
+    &:hover {
+        .block-share__item--facebook {
+            border-color: darken(#3B5998, 15%);
+            .i { @include icon(share-facebook--blue-dark); }
+        }
+        .block-share__item--twitter {
+            border-color: darken(#55ACEE, 15%);
+            .i { @include icon(share-twitter--blue-dark); }
+        }
+        .block-share__item--gplus {
+            border-color: darken(#DD4B39, 15%);
+            .i { @include icon(share-gplus--red-dark); }
+        }
+    }
+}
+
+.block-share--liveblog-mobile {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: $gs-baseline $gs-gutter / 4;
+    cursor: pointer;
+}
+
+.block-share__item--mobile {
+    @include mq(tablet) {
+        display: none;
+    }
+    .i {
+        @include icon(share-link);
     }
 }

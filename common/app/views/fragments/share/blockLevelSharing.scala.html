@@ -1,0 +1,19 @@
+@(shareItems: Seq[(String,String)], pageUrl: String)
+
+<div class="block-share block-share--liveblog">
+
+    @shareItems.map{ case (name, url) =>
+        <a class="block-share__link" href="@url">
+            <div class="block-share__item block-share__item--@name">
+                <i class="i"></i>
+            </div>
+        </a>
+    }
+
+    <input type="text" class="block-share__item block-share__item--link" onfocus="this.select();" onmouseup="return false;" value="@pageUrl"/>
+
+</div>
+
+<div class="block-share--liveblog-mobile js-blockshare-mobile">
+    <div class="block-share__item block-share__item--mobile"><i class="i"></i></div>
+</div>

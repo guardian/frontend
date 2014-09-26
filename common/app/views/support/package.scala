@@ -324,6 +324,30 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
   }
 }
 
+case class LiveBlogShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+    if (article.isLiveBlog) {
+      body.select(".block").foreach { el =>
+        val blockid = el.id()
+        val url = s"http://${request.domain}${request.path}#$blockid"
+        val shortUrl = s"${article.shortUrl}#$blockid"
+
+        val icons = List(
+          // (cssClassName, Url)
+          ("facebook", s"https://www.facebook.com/sharer/sharer.php?u=${url.urlEncoded}&ref=responsive"),
+          ("twitter", s"https://twitter.com/intent/tweet?text=${article.webTitle.urlEncoded}&url=${shortUrl.urlEncoded}"),
+          ("gplus", s"https://plus.google.com/share?url=${url.urlEncoded}")
+        )
+
+        val html = views.html.fragments.share.blockLevelSharing(icons, shortUrl)
+
+        el.append(html.toString())
+      }
+    }
+    body
+  }
+}
+
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
