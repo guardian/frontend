@@ -95,7 +95,7 @@
         }
     }
     .facia-slice__item {
-        background-color: $c-featuresVariant;
+        background-color: $c-featureDefault;
 
         + .facia-slice__item {
             &:before {
@@ -108,7 +108,7 @@
         &:hover,
         &:active,
         &:focus {
-            color: mix(#ffffff, $c-featuresVariant, 70%);
+            color: mix(#ffffff, $c-featureDefault, 70%);
         }
     }
     .item__link,
@@ -120,11 +120,11 @@
     .item__standfirst,
     .item__link:visited,
     .item__link:visited .item__title {
-        color: mix(#ffffff, $c-featuresVariant, 80%);
+        color: mix(#ffffff, $c-featureDefault, 80%);
     }
     @include item--hide-tone-border;
     .item__title {
-        background-color: $c-featuresVariant;
+        background-color: $c-featureDefault;
     }
 }
 
