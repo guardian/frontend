@@ -191,3 +191,19 @@
 @function colour($color, $pallet: $pasteup-palette) {
     @return guss-colour($color, $pallet);
 }
+
+@mixin absolute-center {
+    // this is a pattern for horizontally and vertically centering an element within its container
+    // the negative values expand the box in which the element is centered, which is required when the element
+    // is bigger than its container (can be increased if required)
+    position: absolute;
+    top: -20px;
+    bottom: -20px;
+    left: -20px;
+    right: -20px;
+    margin: auto;
+}
+
+%absolute-center {
+    @include absolute-center;
+}

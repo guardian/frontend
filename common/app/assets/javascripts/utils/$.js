@@ -1,9 +1,11 @@
 define([
     'bonzo',
-    'qwery'
+    'qwery',
+    'common/utils/_'
 ], function (
     bonzo,
-    qwery
+    qwery,
+    _
 ) {
 
     function $(selector, context) {
@@ -22,7 +24,11 @@ define([
             return $.ancestor(el.parentNode, c);
         }
     };
-
+    $.forEachElement = function (selector, fn) {
+        var els = qwery(selector);
+        _.forEach(els, fn);
+        return els;
+    };
     return $;
 
 }); // define

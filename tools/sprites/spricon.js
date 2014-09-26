@@ -12,6 +12,7 @@
     var crypto = require('crypto');
     var mkdirp = require('../../node_modules/mkdirp/index');
     var SVGO = require('../../node_modules/svgo/lib/svgo');
+    var path = require('path');
     var utils = {};
     var config;
 
@@ -48,7 +49,11 @@
             fs.readFile(files[file], 'utf8', function(err, data) {
                 var inBytes = Buffer.byteLength(data, 'utf8');
                 new SVGO().optimize(data, function(result) {
-                    var outBytes = Buffer.byteLength(result.data, 'utf8');
+                    try {
+                        var outBytes = Buffer.byteLength(result.data, 'utf8');
+                    } catch (e) {
+                        throw "Error parsing " + path.basename(files[file]);
+                    }
 
                     fs.writeFileSync(files[file], result.data);
 
