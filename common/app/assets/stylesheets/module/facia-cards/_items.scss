@@ -92,7 +92,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__title,
 .fc-item__byline {
-    @include fs-headline(2);
+    @include fs-headline(3);
     font-weight: 500;
 }
 
@@ -181,6 +181,9 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item--list-media-tablet {
     @include mq(tablet) {
+        @include fc-item--list-media(4, 1);
+    }
+    @include mq(desktop) {
         @include fc-item--list-media;
     }
 }
@@ -213,7 +216,8 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
-.fc-item--standard-tablet {
+.fc-item--standard-tablet,
+.fc-item--standard-quarter-tablet {
     @include mq(tablet) {
         @include fc-item--standard;
     }
@@ -254,7 +258,6 @@ $fc-item-gutter: $gs-gutter / 4;
         @include fc-item--mega-full;
     }
 }
-
 
 .l-list {
     width: 100%;
