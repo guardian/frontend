@@ -1,11 +1,11 @@
 define([
-    'common/utils/_',
     'bonzo',
-    'qwery'
+    'qwery',
+    'common/utils/_'
 ], function (
-    _,
     bonzo,
-    qwery
+    qwery,
+    _
 ) {
 
     function $(selector, context) {
