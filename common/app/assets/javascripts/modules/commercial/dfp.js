@@ -83,12 +83,12 @@ define([
     /**
      * Private variables
      */
-    var displayed = false,
-        rendered = false,
-        slots = {},
-        slotsToRefresh = [],
-        config = {},
-        breakoutClasses = [
+    var displayed         = false,
+        rendered          = false,
+        slots             = {},
+        slotsToRefresh    = [],
+        config            = {},
+        breakoutClasses   = [
             'breakout__html',
             'breakout__script'
         ],
