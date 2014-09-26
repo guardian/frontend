@@ -482,53 +482,23 @@ $block-padding-right: $gs-gutter;
    ========================================================================== */
 .dropdown--key-events,
 .dropdown--live-feed {
-    position: relative;
-    padding: 0;
-    z-index: 100;
-    border-top: 0;
-    border-bottom: 1px solid $c-neutral4;
-
     @include mq($until: rightCol) {
-        @include full-bleed(transparent);
-    }
-
-    .blog__timeline &,
-    &.dropdown--active,
-    .blog__main-column > & {
-        border-bottom: 0;
-    }
-
-    &:before,
-    &:after {
-        top: auto;
-        bottom: -1px;
-        border-bottom: 1px solid $c-neutral4;
-
-        .blog__timeline & {
-            border-bottom: 0;
-        }
-    }
-
-    &.dropdown--active,
-    .blog__main-column > & {
-        &:before,
-        &:after {
-            border-bottom: 0;
-        }
+        margin-right: $gs-gutter*-1;
+        margin-left: $gs-gutter*-1;
+        padding-right: $gs-gutter;
+        padding-left: $gs-gutter;
+        padding-top: $gs-baseline*4;
     }
 
     .dropdown__button {
-        padding: $gs-baseline/1.5 0;
-        border-top: 1px solid $c-neutral4;
-
-        &:before,
-        &:after {
-            top: -1px;
-            border-top: 1px solid $c-neutral4;
-        }
-
         @include mq($until: rightCol) {
-            @include full-bleed(#ffffff);
+            background-color: #ffffff;
+            padding-right: $gs-gutter;
+            padding-left: $gs-gutter;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
         }
 
         @include mq(rightCol) {
@@ -546,34 +516,17 @@ $block-padding-right: $gs-gutter;
         }
     }
 
-    & + & {
-        .dropdown__button {
-            border-top: 0;
-
-            &:before,
-            &:after {
-                border-top: 0;
-            }
-        }
-    }
-
     .dropdown__label {
-        @include fs-header(2);
-        line-height: 30px;
+        @include fs-header(3);
     }
 
     .dropdown__content {
         position: relative;
         margin: 0;
-        padding: $gs-baseline 0;
-
-        .blog__timeline & {
-            padding: 0 0 $gs-baseline;
-        }
 
         @include mq($until: rightCol) {
             background-color: $c-neutral8;
-            @include full-bleed($c-neutral8);
+            padding: $gs-baseline 0;
         }
 
         @include mq(rightCol) {
@@ -598,7 +551,6 @@ $timeline-width: 14px;
             border-top: 0;
         }
     }
-
 }
 
 .comment-count--timeline {
@@ -809,9 +761,6 @@ $timeline-width: 14px;
         .tabs__container--multiple {
             background-color: $c-neutral8;
         }
-        .after-header {
-            @include full-bleed($c-neutral8);
-        }
 
         .tabs__tab--selected .tab__link {
             background-color: $c-neutral8;
@@ -897,6 +846,10 @@ $timeline-width: 14px;
 }
 
 .content--liveblog {
+    @include mq($until: rightCol) {
+        padding-bottom: 0;
+    }
+    
     .content__standfirst,
     .blog__timeline,
     .content__secondary-column {

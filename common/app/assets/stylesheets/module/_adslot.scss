@@ -157,10 +157,13 @@
 }
 .ad-slot--container-inline {
     @include mq(tablet) {
-        position: absolute;
-        top: 1px;
-        right: 0;
-        margin: 0;
+        margin: 0 $gs-gutter/2 0 auto;
+
+        .linkslist-container & {
+            position: absolute;
+            top: 1px;
+            right: 0;
+        }
     }
 }
 .ad-slot--gallery-inline,
