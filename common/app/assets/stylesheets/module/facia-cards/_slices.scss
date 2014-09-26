@@ -24,14 +24,6 @@ Hence why a greater depth of selector specificity is needed.
             }
         }
     }
-
-    .fc-item--list-media-tablet {
-        @include mq(tablet) {
-            .fc-item__title {
-                @include fs-headline(2, true);
-            }
-        }
-    }
 }
 
 .facia-slice--h-ql4-ql4 {
@@ -47,16 +39,16 @@ Hence why a greater depth of selector specificity is needed.
 .facia-slice--h-q-q {
     .fc-item--standard-tablet {
         .fc-item__standfirst {
-            @include mq(tablet) {
+            @include mq(desktop) {
                 display: block;
             }
         }
     }
 }
 
-.facia-slice--q-qqq,
-.facia-slice--qqq-q {
-    .fc-item--standard {
+.facia-slice--q-q-q-q {
+    .fc-item--standard-tablet,
+    .fc-item--standard-quarter-tablet {
         .fc-item__title,
         .fc-item__byline {
             @include mq(tablet, desktop) {

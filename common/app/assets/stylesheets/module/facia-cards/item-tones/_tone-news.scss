@@ -13,7 +13,8 @@
         }
     }
 
-    &.fc-item--list-tablet .fc-item__container {
+    &.fc-item--list-tablet .fc-item__container,
+    &.fc-item--list-media-tablet .fc-item__container {
         @include mq(tablet) {
             @include box-shadow(inset 0 1px $c-newsAccent);
         }
@@ -40,7 +41,6 @@
         }
     }
 
-    &.fc-item--list-media-tablet,
     &.fc-item--three-quarters-tablet,
     &.fc-item--three-quarters-right-tablet,
     &.fc-item--full-tablet,

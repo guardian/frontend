@@ -27,8 +27,13 @@ x x x x x x x x x x x x x x x x x x
 
 
 @mixin fc-item--half {
-    .fc-item__title {
+    .fc-item__title,
+    .fc-item__byline {
         @include fs-headline(4, true);
+
+        @include mq(tablet, desktop) {
+            @include fs-headline(3, true);
+        }
     }
 
     .vjs-big-play-button > span {
