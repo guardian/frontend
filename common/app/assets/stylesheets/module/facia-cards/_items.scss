@@ -20,6 +20,9 @@ $fc-item-gutter: $gs-gutter / 4;
             padding-bottom: $gs-baseline;
         }
     }
+    .facia-slice__item--no-mpu {
+        flex: 0 !important;
+    }
 }
 
 .fc-item {
@@ -169,6 +172,22 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+.fc-item--list-desktop {
+    @include mq(desktop) {
+        @include fc-item--list;
+    }
+}
+
+.fc-item--list-compact-tablet {
+    @include mq(tablet) {
+        @include fc-item--list;
+    }
+
+    .fc-item__header {
+        padding-bottom: 0;
+    }
+}
+
 .fc-item--list-media-mobile {
     @include mq($until: tablet) {
         @include fc-item--list-media;
@@ -177,6 +196,12 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item--list-media-tablet {
     @include mq(tablet) {
+        @include fc-item--list-media;
+    }
+}
+
+.fc-item--list-media-desktop {
+    @include mq(desktop) {
         @include fc-item--list-media;
     }
 }
@@ -275,11 +300,11 @@ $fc-item-gutter: $gs-gutter / 4;
 // We only need this functionality for 2 & 4 column rows.
 @for $column from 2 through 4 {
     @for $span from 1 through 4 {
-        .l-row--items-#{$column} {
+        .l-row--cols-#{$column} {
             .l-row__item--span-#{$span} {
                 @include mq(tablet) {
                     @include flex($span);
-                    width: (100% / 4) * $span;
+                    width: (100% / $column) * $span;
                 }
             }
         }

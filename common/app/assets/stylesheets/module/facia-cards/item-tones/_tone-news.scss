@@ -19,6 +19,18 @@
         }
     }
 
+    &.fc-item--list-desktop .fc-item__container {
+        @include mq(tablet) {
+            @include box-shadow(inset 0 1px $c-newsAccent);
+        }
+    }
+
+    &.fc-item--list-compact-tablet .fc-item__container {
+        @include mq(tablet) {
+            @include box-shadow(inset 0 1px $c-newsAccent);
+        }
+    }
+
     &.fc-item--list-media-mobile,
     &.fc-item--list-media-large-mobile {
         .fc-item__title {
@@ -57,6 +69,17 @@
         .fc-item__standfirst,
         .fc-item__meta {
             @include mq(tablet) {
+                padding-left: $fc-item-gutter;
+                padding-right: $fc-item-gutter;
+            }
+        }
+    }
+
+    &.fc-item--list-media-desktop {
+        .fc-item__header,
+        .fc-item__standfirst,
+        .fc-item__meta {
+            @include mq(desktop) {
                 padding-left: $fc-item-gutter;
                 padding-right: $fc-item-gutter;
             }
