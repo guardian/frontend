@@ -120,6 +120,7 @@ define([
                     editable: true,
                     singleton: 'images',
                     label: 'replace image',
+                    displayIf: 'imageSrc',
                     type: 'boolean'
                 },
                 {
@@ -275,20 +276,29 @@ define([
 
             return {
                 key:    key,
+
                 label:  opts.label,
+
                 type:   opts.type,
 
                 meta:   meta,
+
                 field:  field,
+
                 revert: function() { meta(undefined); },
+
                 open:   function() { mediator.emit('ui:open', meta); },
 
                 hasFocus: ko.computed(function() {
                     return meta === vars.model.uiOpenElement();
                 }, self),
 
-                visible: ko.computed(function() {
+                displayEditor: ko.computed(function() {
                     return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
+                }, self),
+
+                displayValue: ko.computed(function() {
+                    return opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true;
                 }, self),
 
                 toggle: function() {
@@ -545,7 +555,7 @@ define([
                     if (keyCode === 9) {
                         e.preventDefault();
                         formField = bindingContext.$rawData;
-                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.visible(); });
+                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.displayEditor(); });
                         nextIndex = mod(formFields.indexOf(formField) + (e.shiftKey ? -1 : 1), formFields.length);
                         mediator.emit('ui:open', formFields[nextIndex].meta);
                     }
