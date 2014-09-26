@@ -28,7 +28,7 @@ object FilterExemptions {
 object Global extends WithFilters(
   new GoogleAuthFilters.AuthFilterWithExemptions(
     FilterExemptions.loginExemption,
-    FilterExemptions.exemptions) :: Filters.common: _*) with CommercialLifecycle
+    FilterExemptions.exemptions):: NoCacheFilter :: Filters.common: _*) with CommercialLifecycle
                                                         with OnwardJourneyLifecycle
                                                         with ConfigAgentLifecycle
                                                         with DfpAgentLifecycle
