@@ -107,9 +107,10 @@ define([
             expect(dfp.init(config)).toBe(dfp);
         });
 
-        it('should get the ad slots', function() {
-            var adSlots = dfp.init(config).getAdSlots();
-            expect(adSlots.length).toBe(4);
+        it('should get the slots', function() {
+            var slots = dfp.init(config);
+            window.googletag.cmd.forEach(function(func) { func(); });
+            expect(Object.keys(dfp.getSlots()).length).toBe(4);
         });
 
         it('should not call DFP if standard-adverts and commercial-components switches are off', function() {
@@ -125,12 +126,14 @@ define([
                 standardAdverts: true,
                 commercialComponents: false
             };
-            var commercialComponentSlot = $('.ad-slot--dfp').first().addClass('ad-slot--commercial-component')[0],
-                adSlots = dfp.init(config).getAdSlots();
-            expect(adSlots.length).toBe(3);
-            adSlots.forEach(function($adSlot) {
-                expect($adSlot[0]).not.toBe(commercialComponentSlot);
-            })
+            $('.ad-slot--dfp').first().addClass('ad-slot--commercial-component')[0];
+            dfp.init(config);
+            window.googletag.cmd.forEach(function(func) { func(); });
+            var slots = dfp.getSlots();
+            expect(Object.keys(slots).length).toBe(3);
+            for (var slotId in slots) {
+                expect(slotId).not.toBe('dfp-ad-html-slot');
+            }
         });
 
         it('should not use non-commercial components if standard-adverts switch is off', function() {
@@ -139,21 +142,24 @@ define([
                 commercialComponents: true
             };
             $('.ad-slot--dfp:nth-child(n+2)').addClass('ad-slot--commercial-component');
-            var standardAdvertSlot = $('.ad-slot--dfp').first()[0],
-                adSlots = dfp.init(config).getAdSlots();
-            expect(adSlots.length).toBe(3);
-            adSlots.forEach(function($adSlot) {
-                expect($adSlot[0]).not.toBe(standardAdvertSlot);
-            })
+            dfp.init(config);
+            window.googletag.cmd.forEach(function(func) { func(); });
+            var slots = dfp.getSlots();
+            expect(Object.keys(slots).length).toBe(3);
+            for (var slotId in slots) {
+                expect(slotId).not.toBe('dfp-ad-html-slot');
+            }
         });
 
         it('should not get hidden ad slots', function() {
-            var hiddenSlot = $('.ad-slot--dfp').first().css('display', 'none')[0],
-                adSlots = dfp.init(config).getAdSlots();
-            expect(adSlots.length).toBe(3);
-            adSlots.forEach(function($adSlot) {
-                expect($adSlot[0]).not.toBe(hiddenSlot);
-            })
+            $('.ad-slot--dfp').first().css('display', 'none');
+            dfp.init(config);
+            window.googletag.cmd.forEach(function(func) { func(); });
+            var slots = dfp.getSlots();
+            expect(Object.keys(slots).length).toBe(3);
+            for (var slotId in slots) {
+                expect(slotId).not.toBe('dfp-ad-html-slot');
+            }
         });
 
         it('should set listeners', function() {

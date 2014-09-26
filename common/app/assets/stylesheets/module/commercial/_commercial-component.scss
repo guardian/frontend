@@ -320,7 +320,7 @@ $commercial-cta-diameter: (
 }
 .lineitem__description,
 .lineitem__link {
-    @include fs-data(4);
+    @include fs-textSans(3);
 
     strong {
         color: #000000;

@@ -167,7 +167,7 @@ $c-soulmates-high: $c-neutral1;
         display: block;
         border-top: 1px solid  $c-neutral4;
         overflow: hidden;
-        @include fs-data(3);
+        @include fs-textSans(2);
         padding-top: $gs-baseline/2;
         margin-top: $gs-baseline/2;
 

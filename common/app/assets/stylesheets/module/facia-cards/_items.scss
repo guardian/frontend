@@ -1,4 +1,4 @@
-$fc-item-gutter: $gs-gutter / 3;
+$fc-item-gutter: $gs-gutter / 4;
 
 @import 'item-layouts/fc-item--standard';
 @import 'item-layouts/fc-item--half';
@@ -77,11 +77,8 @@ $fc-item-gutter: $gs-gutter / 3;
     position: relative;
 }
 
-.fc-item__header,
-.fc-item__standfirst,
-.fc-item__meta {
-    padding-left: $fc-item-gutter;
-    padding-right: $fc-item-gutter;
+.fc-item__video-fallback {
+    display: none;
 }
 
 .fc-item__live-indicator {
@@ -97,6 +94,7 @@ $fc-item-gutter: $gs-gutter / 3;
     padding-top: $gs-baseline / 3;
     padding-bottom: 0;
     @include fs-headline(2);
+    font-weight: 500;
     word-wrap: break-word;
 }
 

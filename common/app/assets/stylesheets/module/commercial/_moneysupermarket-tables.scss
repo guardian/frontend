@@ -10,7 +10,7 @@
     width: 50%;
     display: inline-block;
     vertical-align: top;
-    @include fs-data(5);
+    @include fs-textSans(3);
     @include box-sizing(border-box);
 }
 .msm-item--selected {
@@ -20,10 +20,10 @@
     margin-top: $gs-baseline*2;
 }
 .loan__name {
-    @include fs-data(3);
+    @include fs-textSans(3);
 
     @include mq(desktop) {
-        @include fs-data(5, $size-only: true);
+        @include fs-textSans(4, $size-only: true);
     }
 }
 .loan__logo {

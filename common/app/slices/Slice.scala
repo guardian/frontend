@@ -250,8 +250,39 @@ case object HalfQQ extends Slice {
  * |#################|________|________|
  * |_________________|________|________|
  */
-case object HalfQuarterQl2Ql3 extends Slice {
-  def layout = ???
+case object HalfQuarterQl2Ql4 extends Slice {
+  def layout = SliceLayout(
+    cssClassName = "h-q_ql2-ql4",
+    columns = Seq(
+      SingleItem(
+        colSpan = 2,
+        itemClasses = ItemClasses(
+          mobile = "standard",
+          desktop = "half"
+        )
+      ),
+      SplitColumn(
+        colSpan = 1,
+        topItemClasses = ItemClasses(
+          mobile = "list-media",
+          desktop = "standard"
+        ),
+        bottomItemsClasses = ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      ),
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 4,
+        itemClasses = ItemClasses(
+          mobile = "list",
+          desktop = "list"
+        )
+      )
+    )
+  )
 }
 
 /* ._________________._________________.
@@ -320,31 +351,31 @@ case object QuarterQuarterHl3 extends Slice {
  * |_________________|        |        |
  * |_________________|________|________|
  */
+
+/*
+* The order of this sequence is important.
+* We use flex-direction(row-reverse) to maintain DOM hierarchy whilst having correct visual ordering.
+* */
 case object Hl4QuarterQuarter extends Slice {
   val layout = SliceLayout(
     cssClassName = "h14-q-q",
     columns = Seq(
       Rows(
         colSpan = 2,
+        columns = 2,
+        rows = 1,
+        ItemClasses(
+          mobile = "list-media",
+          desktop = "standard"
+        )
+      ),
+      Rows(
+        colSpan = 2,
         columns = 1,
         rows = 4,
         ItemClasses(
           mobile = "list",
-          desktop = "list"
-        )
-      ),
-      SingleItem(
-        colSpan = 1,
-        ItemClasses(
-          mobile = "list-media",
-          desktop = "standard"
-        )
-      ),
-      SingleItem(
-        colSpan = 1,
-        ItemClasses(
-          mobile = "list-media",
-          desktop = "standard"
+          desktop = "list-media"
         )
       )
     )
@@ -357,6 +388,10 @@ case object Hl4QuarterQuarter extends Slice {
  * |_###_____________|#################|
  * |_###_____________|_________________|
  */
+/*
+* The order of this sequence is important.
+* We use flex-direction(row-reverse) to maintain DOM hierarchy whilst having correct visual ordering.
+* */
 case object Hl4Half extends Slice {
   val layout = SliceLayout(
     cssClassName = "hl4-h",

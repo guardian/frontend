@@ -5,8 +5,9 @@ import common.{ExecutionContexts, GuardianConfiguration}
 import contentapi.ElasticSearchLiveContentApiClient
 import play.api.mvc._
 import play.filters.gzip.GzipFilter
+import Switches.ForceHttpResponseCodeSwitch
+
 import scala.concurrent.Future
-import play.api.Play.current
 
 object Configuration extends GuardianConfiguration("frontend", webappConfDirectory = "env")
 
@@ -37,8 +38,30 @@ object JsonVaryHeadersFilter extends Filter with ExecutionContexts with implicit
   }
 }
 
+object ForceHttpResponseFilter extends Filter with ExecutionContexts with Results {
+
+  import scala.concurrent.Future.successful
+
+  private val statuses = Map(
+    "404" -> NotFound("Not found"),
+    "500" -> InternalServerError("Internal server error"),
+    "503" -> ServiceUnavailable("Service unavailable"),
+    "504" -> GatewayTimeout("Gateway timeout")
+  )
+
+  override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
+    if (ForceHttpResponseCodeSwitch.isSwitchedOff) {
+      nextFilter(request)
+    } else {
+      request.headers.get("X-Gu-Force-Status").flatMap(statuses.get).map(successful).getOrElse(
+        nextFilter(request)
+      )
+    }
+  }
+}
+
 object Filters {
                                      // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
                                      // which effectively means "JsonVaryHeaders goes around Gzipper"
-  lazy val common: List[EssentialFilter] =  JsonVaryHeadersFilter :: Gzipper :: Nil
+  lazy val common: List[EssentialFilter] =  ForceHttpResponseFilter :: JsonVaryHeadersFilter :: Gzipper :: Nil
 }
