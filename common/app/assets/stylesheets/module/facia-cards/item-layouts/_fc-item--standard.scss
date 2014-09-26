@@ -27,7 +27,6 @@ x x x x x x x x
 
 
 @mixin fc-item--standard {
-
     .fc-item__title,
     .fc-item__byline {
         @include mq(tablet, desktop) {
