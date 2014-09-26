@@ -21,7 +21,7 @@ define([
             },
             liveblog: {
                 text: 'We’ve redesigned our live blogs to make it easier to get the whole picture. We’d love to hear what you think.',
-                blog: 'http://next.theguardian.com/',
+                blog: 'http://next.theguardian.com/blog/liveblog-redesign/',
                 survey: 'https://www.surveymonkey.com/s/guardianliveblogs'
             }
         },
