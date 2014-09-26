@@ -122,16 +122,15 @@
     <script type="text/html" id="template_editor">
         <!-- ko if: type === 'text' && visible() -->
             <div class="editor">
-                <!-- ko ifnot: meta === $root.uiOpenElement() -->
-                    <a data-bind="
-                        attr: {
-                            class: 'element element__' + key,
-                            title: label
-                        },
-                        click: open,
-                        css: {empty: !overrideOrVal()},
-                        html: overrideOrVal() || label + '...'"></a>
-                <!-- /ko -->
+                <a data-bind="
+                    attr: {
+                        class: 'element element__' + key,
+                        title: label
+                    },
+                    click: open,
+                    css: {empty: !overrideOrVal()},
+                    html: overrideOrVal() || label + '...'"></a>
+
                 <!-- ko if: meta === $root.uiOpenElement() -->
                         <textarea data-bind="
                             hasFocus: true,
