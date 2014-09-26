@@ -18,7 +18,9 @@ define([
     dfp
 ) {
 
-    var addPreBadge = function($adSlot, isSponsored, sponsor) {
+    var adBadgeCount = 0,
+        spBadgeCount = 0,
+        addPreBadge = function ($adSlot, isSponsored, sponsor) {
             if (sponsor) {
                 $adSlot.append(template(
                     '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
@@ -32,24 +34,18 @@ define([
                 ));
             }
         },
-        createAdSlot = function(container, isSponsored, opts) {
-            var slotTarget = (isSponsored ? 'sp' : 'ad') + 'badge';
-            var name = slotTarget;
-            if (opts.containerIndex) {
-                name += opts.containerIndex;
-            }
-            var $adSlot = bonzo(dfp.createAdSlot(
-                name, ['paid-for-badge', 'paid-for-badge--front'], opts.keywords, slotTarget
-            ));
-            if (isSponsored) {
-                addPreBadge($adSlot, true, opts.sponsor);
-            } else {
-                addPreBadge($adSlot, false, opts.sponsor);
-            }
+        createAdSlot = function (container, isSponsored, opts) {
+            var slotTarget = (isSponsored ? 'sp' : 'ad') + 'badge',
+                name       = slotTarget + ((isSponsored) ? ++spBadgeCount : ++adBadgeCount),
+                $adSlot    = bonzo(dfp.createAdSlot(
+                    name, ['paid-for-badge', 'paid-for-badge--front'], opts.keywords, slotTarget
+                ));
+            addPreBadge($adSlot, isSponsored, opts.sponsor);
             $('.container__header', container)
                 .after($adSlot);
+            return $adSlot;
         },
-        init = function(c) {
+        init = function (c) {
 
             var config = defaults(
                 c || {},
@@ -63,7 +59,7 @@ define([
                 return false;
             }
 
-            $('.facia-container--sponsored, .facia-container--advertisement-feature').each(function(faciaContainer) {
+            $('.facia-container--sponsored, .facia-container--advertisement-feature').each(function (faciaContainer) {
                 var $faciaContainer = bonzo(faciaContainer);
                 createAdSlot(
                     qwery('.container', faciaContainer)[0],
@@ -71,13 +67,13 @@ define([
                     { sponsor: $faciaContainer.data('sponsor') }
                 );
             });
-            $('.container--sponsored, .container--advertisement-feature').each(function(container, index) {
+            $('.container--sponsored, .container--advertisement-feature').each(function (container) {
                 if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
                     var $container = bonzo(container);
                     createAdSlot(
                         container,
-                        bonzo(container).hasClass('container--sponsored'),
-                        { containerIndex: index, keywords: $container.data('keywords'), sponsor: $container.data('sponsor') }
+                        $container.hasClass('container--sponsored'),
+                        { keywords: $container.data('keywords'), sponsor: $container.data('sponsor') }
                     );
                 }
             });
@@ -86,9 +82,28 @@ define([
 
             init: once(init),
 
+            // add a badge to a container (if appropriate)
+            add: function (container) {
+                var $adSlot,
+                    $container = bonzo(container);
+                if (
+                    $container.hasClass('container--sponsored') ||
+                    $container.hasClass('container--advertisement-feature')
+                ) {
+                    $adSlot = createAdSlot(
+                        container,
+                        $container.hasClass('container--sponsored'),
+                        { keywords: $container.data('keywords'), sponsor: $container.data('sponsor') }
+                    );
+                    // add slot to dfp
+                    dfp.addSlot($adSlot);
+                }
+            },
+
             // really only useful for testing
-            reset: function() {
+            reset: function () {
                 badges.init = once(init);
+                adBadgeCount = spBadgeCount = 0;
             }
 
         };
