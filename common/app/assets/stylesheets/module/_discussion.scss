@@ -24,6 +24,7 @@ $avatarSize: 44px;
 }
 .discussion__comments__container {
     position: relative;
+    margin-bottom: $gs-baseline*3.5;
 }
 .discussion__comment-count {
     color: $c-neutral3;
@@ -1295,3 +1296,8 @@ $sentiment-width: 56 + $gs-gutter/2;
 .d-discussion__pagination .pagination {
     width: 100%;
 }
+
+.discussion-wrapper {
+    border-top: 1px solid $c-neutral4;
+}
+
