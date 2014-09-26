@@ -38,7 +38,8 @@ define([
                                     $el.addClass('fc-item__latest-block--loading');
                                     setTimeout(function() {
                                         $el.toggleClass('fc-item__latest-block--loading fc-item__latest-block--unloading')
-                                            .html(latestBlock.body);
+                                            .html(latestBlock.body)
+                                            .attr('href', latestBlock.articleId + '#' + latestBlock.blockId);
                                         element.setAttribute('data-blockId', latestBlock.blockId);
                                     }, 50);
                                 }, 250); // wait for transform to finis
