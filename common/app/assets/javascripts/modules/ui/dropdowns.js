@@ -14,7 +14,7 @@ define([
     };
     function init() {
         bean.on(document.body, 'click', s.button, function(e){
-            var $container = bonzo($.ancestor(e.currentTarget, s.container));
+            var $container = bonzo($.ancestor(e.currentTarget, s.container.substring(1)));
             $container.toggleClass('dropdown--active');
             updateAria($container);
         });

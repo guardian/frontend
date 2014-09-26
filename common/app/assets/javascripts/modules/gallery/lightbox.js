@@ -113,7 +113,7 @@ define([
         this.toggleInfo = function(e) {
             var infoPanelClick =
                 bonzo(e.target).hasClass('js-gallery-lightbox-info') ||
-                $.ancestor(e.target, '.js-gallery-lightbox-info');
+                $.ancestor(e.target, 'js-gallery-lightbox-info');
             if (!infoPanelClick){
                 this.trigger('toggle-info');
             }
