@@ -42,7 +42,7 @@ Media list item. Looks a bit like this:
     }
 
     .fc-item__title {
-        @include fs-headline($headline-size);
+        @include fs-headline($headline-size, true);
     }
 
     .fc-item__media-wrapper,
