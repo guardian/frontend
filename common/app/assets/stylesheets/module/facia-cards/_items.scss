@@ -49,8 +49,12 @@ $fc-item-gutter: $gs-gutter / 3;
     }
 
     .blog__live-icon--red {
-        position: relative;
-        top: 1px;
+        display: inline-block;
+        margin: 0;
+        margin-left: .1em;
+        margin-right: .2em;
+        height: .7em;
+        width: .7em;
     }
 
     .vjs-big-play-button > span {
@@ -96,6 +100,7 @@ $fc-item-gutter: $gs-gutter / 3;
     line-height: 1;
     text-transform: capitalize;
     padding: .1em .2em .05em;
+    margin-right: .1em;
 }
 
 .fc-item__title {
@@ -128,6 +133,7 @@ $fc-item-gutter: $gs-gutter / 3;
     text-overflow: ellipsis;
     @include transform(translateX(0));
     @include transition(transform, 250ms, linear);
+    display: block;
 }
 
 .fc-item__latest-block--unloading {
