@@ -2,8 +2,7 @@
 // If you have other styles, but would like to maintain the functionality,
 // just apply .dropdown
 .dropdown-styled {
-    padding: ($gs-baseline/3)*2 0;
-    border-top: 1px solid $c-neutral5;
+    border-top: 1px solid $c-neutral4;
     position: relative;
 
     .dropdown__toggle,
@@ -24,6 +23,7 @@
     }
 
     .dropdown__button {
+        padding: $gs-baseline/2 0 $gs-baseline*1.5;
         color: $c-neutral1;
         text-align: left;
 
@@ -36,7 +36,6 @@
         .i {
             background-color: $c-neutral2;
             right: 0;
-            top: -$gs-baseline/2;
             position: absolute;
         }
     }
@@ -57,6 +56,7 @@
 .dropdown--active .dropdown__content {
     display: block;
 }
+
 .dropdown__content {
     display: none;
 }
