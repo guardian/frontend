@@ -8,22 +8,15 @@
             width: 100%;
             overflow: hidden;
 
-            @include mq(tablet) {
-                min-height: $gs-baseline*12;
-            }
-
-            .lineitem__image-crop {
+            .lineitem__image {
+                margin-right: $gs-gutter/2;
                 max-width: $gs-gutter*11;
-                position: absolute;
-                top: 0;
-                left: $gs-gutter/2;
+                float: left;
             }
 
             .lineitem--dfp-single__offer {
-                @include box-sizing(border-box);
-                width: gs-span(9);
-                padding-left: $gs-gutter*12;
                 float: left;
+                max-width: gs-span(9);
             }
 
             .lineitem--dfp-single__cta {
