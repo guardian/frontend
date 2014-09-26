@@ -9,7 +9,7 @@ object FixedContainers {
     ("fixed/small/slow-IV", slices(QuarterQuarterQuarterQuarter)),
     ("fixed/small/slow-V-half", slices(Hl4Half)),
     ("fixed/small/slow-V-third", slices(QuarterQuarterHl3)),
-    ("fixed/small/slow-V-mpu", slices(TlTlMpu)),
+    ("fixed/small/slow-V-mpu", slices(TTlMpu)),
     ("fixed/small/slow-VI", slices(TTTL4)),
     ("fixed/small/fast-VIII", slices(QuarterQuarterQlQl)),
     ("fixed/small/fast-X", slices(QuarterQlQlQl)),

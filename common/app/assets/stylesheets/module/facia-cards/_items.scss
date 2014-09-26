@@ -178,6 +178,16 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+.fc-item--list-compact-tablet {
+    @include mq(tablet) {
+        @include fc-item--list;
+    }
+
+    .fc-item__header {
+        padding-bottom: 0;
+    }
+}
+
 .fc-item--list-media-mobile {
     @include mq($until: tablet) {
         @include fc-item--list-media;
@@ -294,7 +304,7 @@ $fc-item-gutter: $gs-gutter / 4;
             .l-row__item--span-#{$span} {
                 @include mq(tablet) {
                     @include flex($span);
-                    width: (100% / 4) * $span;
+                    width: (100% / $column) * $span;
                 }
             }
         }
