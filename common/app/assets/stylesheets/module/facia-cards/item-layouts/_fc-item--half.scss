@@ -38,4 +38,12 @@ x x x x x x x x x x x x x x x x x x
             @include video-play-button-size($vjs-large-button-size);
         }
     }
+
+    &.item--has-discussion {
+        padding-bottom: get-line-height(headline, 4) + $gs-baseline / 3;
+    }
+
+    &.item--has-no-discussion {
+        padding-bottom: get-line-height(headline, 4);
+    }
 }

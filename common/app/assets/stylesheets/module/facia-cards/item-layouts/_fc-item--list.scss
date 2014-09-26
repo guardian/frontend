@@ -19,10 +19,6 @@ x x x x x x x x x x x x x x x x x x x x x x x x
         @include fs-headline($headline-size, true);
     }
 
-    .fc-item__header {
-        margin-bottom: get-line-height(headline, $headline-size);
-    }
-
     .fc-item__media-wrapper {
         display: none;
     }
@@ -31,5 +27,13 @@ x x x x x x x x x x x x x x x x x x x x x x x x
         .fc-item__avatar {
             display: none;
         }
+    }
+
+    &.item--has-no-discussion {
+        padding-bottom: get-line-height(headline, $headline-size) + $gs-baseline / 3;
+    }
+
+    &.item--has-discussion {
+        padding-bottom: get-line-height(headline, $headline-size) * 2;
     }
 }

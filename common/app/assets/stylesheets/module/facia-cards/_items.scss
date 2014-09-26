@@ -32,8 +32,12 @@ $fc-item-gutter: $gs-gutter / 4;
     background-color: #ffffff;
     position: relative;
 
+    &.item--has-no-discussion {
+        padding-bottom: $gs-baseline / 3;
+    }
+
     &.item--has-discussion {
-        padding-bottom: $gs-baseline * 2;
+        padding-bottom: get-line-height(headline, 2) + $gs-baseline / 3;
     }
 
     a {
@@ -124,6 +128,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__latest-block-wrapper {
     margin-left: $fc-item-gutter;
     margin-right: $fc-item-gutter;
+    padding-top: $gs-baseline;
     overflow: hidden;
 }
 

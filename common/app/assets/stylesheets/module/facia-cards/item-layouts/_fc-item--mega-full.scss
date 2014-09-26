@@ -46,4 +46,12 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
             max-width: gs-span(8);
         }
     }
+
+    &.item--has-discussion {
+        padding-bottom: get-line-height(headline, 6);
+    }
+
+    &.item--has-no-discussion {
+        padding-bottom: $gs-baseline / 3;
+    }
 }

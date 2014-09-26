@@ -58,4 +58,12 @@ Media list item. Looks a bit like this:
 
     .fc-item__video-container { display: none; }
     .fc-item__video-fallback { display: block; }
+
+    &.item--has-no-discussion {
+        padding-bottom: $gs-baseline / 3;
+    }
+
+    &.item--has-discussion {
+        padding-bottom: get-line-height(headline, $headline-size) * 2;
+    }
 }
