@@ -1,10 +1,10 @@
 @(slice: layout.SliceWithCards, containerIndex: Int)(implicit request: RequestHeader, config: model.Config)
 
-@import layout.{ColumnAndCards, SingleItem, Rows, SplitColumn}
+@import layout.{ColumnAndCards, SingleItem, Rows, SplitColumn, MPU}
 @import views.html.fragments.items.facia_cards.item
 
 <div class="facia-slice-wrapper">
-    <ul class="u-unstyled l-row l-row--items-@slice.numberOfColumns facia-slice facia-slice--@slice.cssClassName">
+    <ul class="u-unstyled l-row l-row--items-@slice.numberOfItems l-row--cols-@slice.numberOfCols facia-slice facia-slice--@slice.cssClassName">
     @for(ColumnAndCards(column, cards) <- slice.columns) {
         @column match {
             case SingleItem(colSpan, itemClasses) => {
@@ -38,7 +38,10 @@
                 </li>
             }
 
-            case _ => { @* TODO *@ }
+            case MPU(colSpan) => {
+                <li class="facia-slice__item l-row__item l-row__item--span-@colSpan js-facia-slice__item--mpu facia-slice__item--no-mpu"></li>
+            }
+
         }
     }
     </ul>
