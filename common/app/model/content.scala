@@ -373,16 +373,6 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   override lazy val contentType = GuardianContentTypes.Article
 
-  lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
-    .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
-
-  lazy val hasSupportingAtBottom: Boolean =
-    Jsoup.parseBodyFragment(body).select("> *:nth-last-child(-n+5)")
-      .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
-
-  lazy val tooSmallForBottomSocialButtons: Boolean =
-    Jsoup.parseBodyFragment(body).select("> *").text().length < 1200
-
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def schemaType = Some(ArticleSchemas(this))
 

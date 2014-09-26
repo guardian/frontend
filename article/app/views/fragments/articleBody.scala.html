@@ -1,5 +1,6 @@
 @(model: ArticlePage)(implicit request: RequestHeader)
 @import conf.Switches._
+@import views.support.ArticleLayout.ArticleLayout
 
 @defining(model.article) { article =>
 <div class="l-side-margins l-side-margins--layout-content">

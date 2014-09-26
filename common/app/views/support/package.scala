@@ -612,6 +612,20 @@ object OmnitureAnalyticsData {
   }
 }
 
+object ArticleLayout {
+  implicit class ArticleLayout(a: Article) {
+    lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(a.body).body().children().headOption
+      .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
+
+    lazy val hasSupportingAtBottom: Boolean =
+      Jsoup.parseBodyFragment(a.body).select("> *:nth-last-child(-n+5)")
+        .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
+
+    lazy val tooSmallForBottomSocialButtons: Boolean =
+      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 1200
+  }
+}
+
 object `package` extends Formats {
 
   private object inflector extends Inflector
