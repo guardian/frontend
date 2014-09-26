@@ -41,7 +41,8 @@ Media list item. Looks a bit like this:
         padding-left: $fc-item-gutter;
     }
 
-    .fc-item__title {
+    .fc-item__title,
+    .fc-item__byline {
         @include fs-headline($headline-size, true);
     }
 
