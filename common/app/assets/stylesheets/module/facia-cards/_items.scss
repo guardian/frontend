@@ -300,11 +300,11 @@ $fc-item-gutter: $gs-gutter / 4;
 // We only need this functionality for 2 & 4 column rows.
 @for $column from 2 through 4 {
     @for $span from 1 through 4 {
-        .l-row--items-#{$column} {
+        .l-row--cols-#{$column} {
             .l-row__item--span-#{$span} {
                 @include mq(tablet) {
                     @include flex($span);
-                    width: (100% / 4) * $span;
+                    width: (100% / $column) * $span;
                 }
             }
         }

@@ -102,7 +102,7 @@ Hence why a greater depth of selector specificity is needed.
         > .facia-slice__item {
             &:last-child {
                 @include flex(2);
-                width: (100/3)*2%;
+                width: (100 / 3) * 2%;
             }
         }
     }
