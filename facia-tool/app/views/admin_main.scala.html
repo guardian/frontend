@@ -1,7 +1,8 @@
 @(title: String, env: String, priority: Option[String] = None, isAuthed: Boolean = false, identity: Option[com.gu.googleauth.UserIdentity] = None)(content: Html)
 
+@import slices.{FixedContainers, DynamicContainers, IdsJson}
+@import IdsJson.{fixed, dynamic}
 @import conf.Configuration
-@import slices.FixedContainers
 
 <!DOCTYPE html>
 
@@ -23,7 +24,6 @@
         <meta name="msapplication-TileColor" content="#005689" />
         <meta name="msapplication-TileImage" content="@routes.Assets.at("images/windows_tile_144_b.png")" />
 
-        <link href="@routes.Assets.at("js/components/bootstrap.css/css/bootstrap.css")" rel="stylesheet">
         <link href="@routes.Assets.at("css/style.css?v2")" rel="stylesheet">
         <script>
             var curl = {
@@ -59,7 +59,11 @@
             });
 
             define('fixed-containers', function () {
-                return @Html(FixedContainers.idsJson);
+                return @Html(fixed(FixedContainers.all.keys.toSeq));
+            });
+
+            define('dynamic-containers', function () {
+                return @Html(dynamic(DynamicContainers.all.keys.toSeq));
             });
         </script>
 

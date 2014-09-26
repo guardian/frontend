@@ -48,7 +48,7 @@ $player-card-avatar: (
     font-weight: normal;
 }
 .player-card__position {
-    @include fs-data(5);
+    @include fs-textSans(4);
     color: $c-sportMid;
 }
 
@@ -62,13 +62,13 @@ $player-card-avatar: (
     padding: $gs-baseline/3 0 ($gs-baseline/3)*2;
 }
 .player-card__stat-name {
-    @include fs-data(4);
+    @include fs-textSans(2);
     display: block;
     float: left;
     font-weight: normal;
 }
 .player-card__stat-value {
-    @include fs-data(4);
+    @include fs-textSans(2);
     border-top: 1px solid $c-neutral3;
     font-weight: bold;
     padding-left: 85%;

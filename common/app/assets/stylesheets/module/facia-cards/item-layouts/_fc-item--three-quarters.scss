@@ -30,10 +30,10 @@ Three quarter item. Looks like a wide standard, a bit like this:
     }
 
     .fc-item__media-wrapper {
-        width: gs-span(4) + $gs-gutter;
+        width: gs-span(4) + $gs-gutter * 2;
 
         @include mq(desktop) {
-            width: gs-span(6) + $gs-gutter;
+            width: gs-span(6);
         }
     }
 
@@ -67,7 +67,8 @@ Three quarter item. Looks like a wide standard, a bit like this:
     .fc-item__standfirst,
     .fc-item__byline {
         @include box-sizing(border-box);
-        width: gs-span(3) - $gs-gutter;
+        width: gs-span(2) + $gs-gutter;
+        padding-right: 0 !important;
 
         @include mq(desktop) {
             width: gs-span(3);
@@ -96,5 +97,9 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
     &.fc-item--has-cutout {
         min-height: gs-height(6);
+    }
+
+    .vjs-big-play-button > span {
+        @include video-play-button-size($vjs-large-button-size);
     }
 }

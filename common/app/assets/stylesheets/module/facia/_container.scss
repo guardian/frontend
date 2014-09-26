@@ -117,21 +117,17 @@
         display: block;
     }
 }
-.container__toggle,
-.item__live-indicator,
-.collection__show-more {
-    @include f-data;
-}
+
 .container__toggle {
     position: absolute;
     min-height: gs-height(1);
     min-width: gs-span(1);
-    top: 0;
+    top: 2px;
     right: 0;
     height: 100%;
     border: 0;
     background-color: transparent;
-    @include fs-data(4, $size-only: true);
+    @include fs-textSans(3);
     color: #ffffff;
 
     i {

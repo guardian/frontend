@@ -15,7 +15,7 @@
 
         .table td,
         .table th {
-            @include fs-data(4, true);
+            @include fs-textSans(2, true);
         }
     }
 

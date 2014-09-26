@@ -109,8 +109,9 @@ $block-padding-right: $gs-gutter;
 
 .blog__last-updated-container {
     @include box-sizing(border-box);
+    padding-top: $gs-baseline/6;
     color: #ffffff;
-    @include fs-data(3);
+    @include fs-textSans(1);
 
     @include mq($until: rightCol) {
         height: $gs-row-height;
@@ -124,7 +125,7 @@ $block-padding-right: $gs-gutter;
 
 .blog__live {
     color: inherit;
-    @include fs-data(3);
+    @include fs-textSans(1);
     font-weight: bold;
 }
 
@@ -155,7 +156,7 @@ $block-padding-right: $gs-gutter;
     display: block;
     padding: $gs-baseline/3 0;
     margin-top: ($gs-baseline/3)*2;
-    @include font($f-data, bold, 13, 20);
+    @include font($f-sans-serif-text, bold, 13, 20);
 
     time {
         display: inline-block;
@@ -169,7 +170,7 @@ $block-padding-right: $gs-gutter;
 
     &.published-time {
         margin: 0;
-        @include fs-data(4);
+        @include fs-textSans(2);
         font-weight: bold;
     }
 
@@ -177,7 +178,7 @@ $block-padding-right: $gs-gutter;
         display: inline-block;
         margin-left: $gs-gutter/4;
         color: $c-neutral2;
-        @include fs-data(2);
+        @include fs-textSans(1);
         font-weight: normal;
     }
 
@@ -199,7 +200,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .updated-time {
-    @include fs-data(1);
+    @include fs-textSans(1);
     color: $c-neutral2;
     margin: 0 $gs-gutter/2 $gs-baseline/3;
     padding: $gs-baseline/2 0 0;
@@ -222,7 +223,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .block.is-key-event {
-    border-top: 2px solid $c-neutral1;
+    border-top: 2px solid $c-liveAccent;
 }
 
 .truncated-block {
@@ -597,6 +598,10 @@ $timeline-width: 14px;
             border-top: 0;
         }
     }
+
+    .meta__comment-count-timeline {
+        margin-top: -21px;
+    }
 }
 
 .blog__timeline-container {
@@ -682,7 +687,7 @@ $timeline-width: 14px;
 .timeline__date {
     display: table-cell;
     width: gs-span(1);
-    @include fs-data(4);
+    @include fs-textSans(2);
     font-weight: bold;
 
     .block-time__absolute,
@@ -784,7 +789,7 @@ $timeline-width: 14px;
             }
         }
         .player-card__position {
-            @include fs-data(4);
+            @include fs-textSans(2);
             color: $c-neutral1;
             font-weight: 700;
         }

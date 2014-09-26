@@ -2,11 +2,13 @@
 define([
     'knockout',
     'config',
-    'fixed-containers'
+    'fixed-containers',
+    'dynamic-containers'
 ], function(
     ko,
     pageConfig,
-    fixedContainers
+    fixedContainers,
+    dynamicContainers
 ){
     var CONST = {
         editions: ['uk', 'us', 'au'],
@@ -28,7 +30,7 @@ define([
             {name: 'prototype/cassoulet'},
             {name: 'prototype/quichelorraine'},
             {name: 'prototype/raclette'}
-        ].concat(fixedContainers),
+        ].concat(fixedContainers).concat(dynamicContainers),
 
         headlineLength: 200,
         restrictedHeadlineLength: 90,
@@ -44,12 +46,6 @@ define([
         detectPressFailureMs: 10000,
 
         maxFronts: 200,
-
-        imageCdnDomain: 'guim.co.uk',
-
-        previewBase: 'http://preview.gutools.co.uk',
-
-        viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
 
         filterTypes: {
             section: { display: 'in section:', param: 'section', path: 'sections', placeholder: 'e.g. news' },
@@ -75,6 +71,10 @@ define([
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
+        apiSearchParams:       'show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail&show-elements=video',
+        imageCdnDomain:        'guim.co.uk',
+        previewBase:           'http://preview.gutools.co.uk',
+        viewer:                'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
 
         ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
 

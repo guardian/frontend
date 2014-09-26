@@ -136,7 +136,7 @@ define([
 
             if (!self.destroyed) {
                 bonzo(parent)[self.manipulationType](self.elem);
-                self._ready();
+                self._ready(self.elem);
             }
         }).fail( function () {
            self.error();
@@ -166,11 +166,11 @@ define([
     /**
      * This is just used to set up the component internally
      */
-    Component.prototype._ready = function() {
+    Component.prototype._ready = function(elem) {
         if (!this.destroyed) {
             this.rendered = true;
             this._autoupdate();
-            this.ready();
+            this.ready(elem);
         }
     };
 

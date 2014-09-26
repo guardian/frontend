@@ -98,7 +98,7 @@
     .social-signin__action {
         color: #ffffff;
         display: block;
-        font-family: $f-data;
+        font-family: $f-sans-serif-text;
         font-size: 14px;
         padding: 8px 0 9px;
         text-indent: 24px;
@@ -210,7 +210,7 @@
 .user-profile__last-seen,
 .user-profile__web-page {
     display: block;
-    @include fs-data(2);
+    @include fs-textSans(1);
     color: $c-neutral2-contrasted;
     font-weight: normal;
 }

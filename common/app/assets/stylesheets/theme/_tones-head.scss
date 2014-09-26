@@ -3,14 +3,14 @@
 @include tone-head(news, $c-newsDefault, $c-newsAccent);
 @include tone-head(comment, $c-commentDefault, $c-commentAccent);
 @include tone-head(feature, $c-featureDefault, $c-featureAccent);
-@include tone-head(live, $c-neutral1, $c-liveAccent);
+@include tone-head(live, $c-live, $c-liveAccent);
 @include tone-head(media, $c-mediaDefault, $c-mediaDefault);
 
 
 @mixin tones-content {
     // Tonal article styles
     @include article-header-tone(feature, $c-featureDefault, $c-featureAccent2, $c-featureAccent, #ffffff, 'white');
-    @include article-header-tone(comment, $c-commentAccent, $c-commentAccent2, $c-neutral1, $c-neutral1, 'black');
+    @include article-header-tone(comment, $c-commentBackground, $c-commentDefault, $c-commentDefault, $c-neutral1, 'black');
     @include article-header-tone(live, $c-liveDefault, $c-liveAccent, #ffffff, #ffffff, 'white');
 
     .content__head--tonal {
@@ -57,24 +57,23 @@
 
             @include mq($until: mobileLandscape) {
                 margin-left: -(gs-span(1) + $gs-gutter);
+                margin-right: -($gs-gutter * 2);
             }
 
             @include mq(mobileLandscape) {
                 width: 0;
                 position: absolute;
                 bottom: 0;
-                height: 95%;
                 right: gs-span(3);
-                max-height: gs-height(4) + ($gs-baseline*2);
+                height: 80%;
             }
 
-            @include mq(tablet) {
-                height: 95%;
-                min-height: gs-span(2) + ($gs-gutter*2);
+            @include mq(phablet) {
+                height: gs-span(2.5) + ($gs-gutter*2);
             }
 
-            @include mq(rightCol) {
-                height: 110%;
+            @include mq(desktop) {
+                height: gs-span(3) + ($gs-gutter*2);
                 right: gs-span(1) + $gs-gutter;
             }
         }
@@ -84,13 +83,14 @@
     }
 
     .content__head--byline-pic {
+        .tone-background .content__main-column {
+            @include mq(tablet) {
+                min-height: gs-height(5);
+            }
+        }
         .content__headline {
             @include mq(mobileLandscape) {
                 padding-right: gs-span(2) + $gs-gutter;
-            }
-
-            @include mq(tablet) {
-                min-height: 60px;
             }
 
             @include mq(desktop) {
@@ -136,22 +136,30 @@
         .content__head--tonal {
             .bullet:before,
             ul > li:before {
-                background-color: fade-out($c-commentDefault, .6);
+                background-color: $c-commentAccent;
+            }
+
+            .tone-background--accent {
+                padding-bottom: $gs-baseline * 2;
+
+                .content__standfirst {
+                    color: #ffffff;
+                }
+            }
+
+            .content__headline--byline .tone-colour:hover {
+                text-decoration: none;
+                border-bottom: 2px solid;
             }
 
             .u-underline {
-                border-bottom-color: fade-out($c-commentDefault, .6);
-                &:hover {
-                    border-bottom-color: $c-neutral1;
-                }
-            }
-        }
+                border-bottom-color: $c-commentBackground;
+                color: $c-commentBackground;
 
-        .content__headline--byline .tone-colour {
-            color: $c-neutral2;
-            &:hover {
-                text-decoration: none;
-                border-bottom: 2px solid;
+                &:hover {
+                    border-bottom-color: $c-commentAccent;
+                    color: $c-commentAccent;
+                }
             }
         }
 

@@ -32,7 +32,7 @@ category: Charts
     position: relative;
 
     .chart__label {
-        @include fs-data(6);
+        @include fs-textSans(4);
         fill: #ffffff;
         text-anchor: middle;
     }

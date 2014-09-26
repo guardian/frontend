@@ -617,7 +617,7 @@ $avatarSize: 44px;
 }
 .d-report-comment__field {
     padding: $gs-baseline/2 $gs-gutter/4;
-    @include fs-data(4);
+    @include fs-textSans(3);
 }
 .d-report-comment__submit {
     margin-top: $gs-baseline;

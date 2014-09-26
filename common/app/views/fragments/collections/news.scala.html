@@ -30,7 +30,7 @@
                             @fragments.items.fromage(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount)
                         }
                     }else{
-                        <ul class="row-of-two @bigItemCssClass(items(0).imageAdjust, items(1).imageAdjust) u-unstyled l-row l-row--items-2 facia-slice">
+                        <ul class="row-of-two @bigItemCssClass(items(0).isBoosted, items(1).isBoosted) u-unstyled l-row l-row--items-2 facia-slice">
                             @items.zipWithIndex.map{ case (trail, index) =>
                                 @fragments.collections.items.standard(trail, index + hugeItemsCount + veryBigItemsCount + bigItemsCount, containerIndex)
                             }

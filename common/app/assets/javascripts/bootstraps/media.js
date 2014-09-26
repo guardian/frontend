@@ -425,19 +425,15 @@ define([
             if (!config.isMedia) {
                 return;
             }
-            if (config.page.section === 'childrens-books-site') {
-                $('.content__secondary-column--media').addClass('u-h');
-            } else {
-                var mediaType = config.page.contentType.toLowerCase(),
-                    attachTo = $(mediaType === 'video' ? '.js-video-components-container' : '.content-footer')[0],
-                    mostViewed = new Component();
-                mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'prepend';
-                mostViewed.endpoint = '/' + mediaType + '/most-viewed.json';
-                mostViewed.fetch(attachTo, 'html')
-                    .then(function () {
-                        images.upgrade(attachTo);
-                    });
-            }
+            var mediaType = config.page.contentType.toLowerCase(),
+                attachTo = $(mediaType === 'video' ? '.js-video-components-container' : '.content-footer')[0],
+                mostViewed = new Component();
+            mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'prepend';
+            mostViewed.endpoint = '/' + mediaType + '/most-viewed.json';
+            mostViewed.fetch(attachTo, 'html')
+                .then(function () {
+                    images.upgrade(attachTo);
+                });
         }
     };
 

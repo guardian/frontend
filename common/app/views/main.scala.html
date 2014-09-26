@@ -19,7 +19,8 @@
         id="top"
         class="@RenderClasses(Map(
             ("has-page-skin", metaData.hasPageSkin(edition)),
-            ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty)))"
+            ("has-localnav", Navigation.topLevelItem(edition.navigation, metaData).filter(_.links.nonEmpty).nonEmpty),
+            ("childrens-books-site", metaData.section == "childrens-books-site")))"
         itemscope itemtype="http://schema.org/WebPage">
 
         @fragments.message(metaData)
