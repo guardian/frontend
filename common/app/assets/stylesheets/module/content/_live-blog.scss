@@ -988,17 +988,24 @@ $timeline-width: 14px;
     outline: none;
 }
 
-.block-share--liveblog .block-share__link {
-    .block-share__item--facebook {
+.block-share--liveblog .block-share__link,
+.share-modal .share-modal__link {
+    .block-share__item--facebook,
+    .share-modal__item--facebook {
         border-color: #3B5998;
+        color: #3B5998;
         .i { @include icon(share-facebook--blue); }
     }
-    .block-share__item--twitter {
+    .block-share__item--twitter,
+    .share-modal__item--twitter {
         border-color: #55ACEE;
+        color: #55ACEE;
         .i { @include icon(share-twitter--blue); }
     }
-    .block-share__item--gplus {
+    .block-share__item--gplus,
+    .share-modal__item--gplus {
         border-color: #DD4B39;
+        color: #DD4B39;
         .i { @include icon(share-gplus--red); }
     }
 
@@ -1031,6 +1038,72 @@ $timeline-width: 14px;
         display: none;
     }
     .i {
-        @include icon(share-link);
+        @include icon(share-android);
+        width: 11px !important;
+        height: 11px !important;
+        padding-right: 6px;
+        opacity: 0.5;
+        @extend %absolute-center;
     }
+}
+
+.share-modal {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: colour(neutral-8);
+}
+
+.share-modal__content {
+    margin-top: 20%;
+}
+
+.share-modal__title {
+    @include fs-data(4);
+    color: colour(neutral-2);
+    text-align: center;
+    margin-bottom: $gs-baseline * 3;
+}
+
+.share-modal__item {
+    width: gs-span(3);
+    margin: auto;
+    display: block;
+    text-align: center;
+    position: relative;
+    .i {
+        float: left;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        left: 5px;
+    }
+}
+
+.share-modal__close {
+    border: 1px solid colour(neutral-2);
+    @include border-radius(50%);
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: gs-height(1) + $gs-baseline auto 0 auto;
+    background: transparent;
+    @include box-sizing(border-box);
+    .i {
+        width: 85%;
+        height: 85%;
+        opacity: 0.6;
+        @extend %absolute-center;
+    }
+}
+
+.share-modal__link + .share-modal__link {
+    display: block;
+    margin-top: $gs-baseline;
 }

@@ -334,12 +334,12 @@ case class LiveBlogShareButtons(article: Article)(implicit val request: RequestH
 
         val icons = List(
           // (cssClassName, Url)
-          ("facebook", s"https://www.facebook.com/sharer/sharer.php?u=${url.urlEncoded}&ref=responsive"),
-          ("twitter", s"https://twitter.com/intent/tweet?text=${article.webTitle.urlEncoded}&url=${shortUrl.urlEncoded}"),
-          ("gplus", s"https://plus.google.com/share?url=${url.urlEncoded}")
+          ("Facebook", "facebook", s"https://www.facebook.com/sharer/sharer.php?u=${url.urlEncoded}&ref=responsive"),
+          ("Twitter", "twitter", s"https://twitter.com/intent/tweet?text=${article.webTitle.urlEncoded}&url=${shortUrl.urlEncoded}"),
+          ("Google plus", "gplus", s"https://plus.google.com/share?url=${url.urlEncoded}")
         )
 
-        val html = views.html.fragments.share.blockLevelSharing(icons, shortUrl)
+        val html = views.html.fragments.share.blockLevelSharing(blockid, icons, url, shortUrl)
 
         el.append(html.toString())
       }

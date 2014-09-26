@@ -1,19 +1,36 @@
-@(shareItems: Seq[(String,String)], pageUrl: String)
+@(id: String, shareItems: Seq[(String, String,String)], longUrl: String, shortUrl: String)
 
 <div class="block-share block-share--liveblog">
 
-    @shareItems.map{ case (name, url) =>
-        <a class="block-share__link" href="@url">
-            <div class="block-share__item block-share__item--@name">
+    @shareItems.map{ case (text, css, url) =>
+        <a class="block-share__link js-blockshare-link" href="@url" target="_blank">
+            <div class="block-share__item block-share__item--@css">
                 <i class="i"></i>
             </div>
         </a>
     }
 
-    <input type="text" class="block-share__item block-share__item--link" onfocus="this.select();" onmouseup="return false;" value="@pageUrl"/>
+    <input type="text" class="block-share__item block-share__item--link" onfocus="this.select();" onmouseup="return false;" value="@shortUrl"/>
 
 </div>
 
-<div class="block-share--liveblog-mobile js-blockshare-mobile">
+
+<div class="block-share--liveblog-mobile" data-open-overlay-on-click="share-modal-@id">
     <div class="block-share__item block-share__item--mobile"><i class="i"></i></div>
+</div>
+
+<div id="share-modal-@id" class="overlay share-modal js-share-modal">
+    <div class="share-modal__content">
+        <h2 class="share-modal__title">Share this post</h2>
+        @shareItems.map { case (text, css, url) =>
+        <a class="share-modal__link" href="@url" target="_blank">
+            <div class="share-modal__item button button--xlarge button--tertiary share-modal__item--@css">
+                <i class="i"></i>
+                @text
+        </div>
+        </a>
+        }
+        <button class="share-modal__close js-overlay-close"><i class="i i-close-icon-dark-small"></i></button>
+    </div>
+
 </div>

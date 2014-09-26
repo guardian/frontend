@@ -213,3 +213,16 @@
 @function colour($color, $pallet: $pasteup-palette) {
     @return guss-colour($color, $pallet);
 }
+
+
+%absolute-center {
+    position: absolute;
+    top: -999px;
+    bottom: -999px;
+    left: -999px;
+    right: -999px;
+    margin: auto;
+}
+@mixin absolute-center {
+    @extend %absolute-center;
+}
