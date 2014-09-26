@@ -35,10 +35,10 @@ Full item. A 100% width version of the Three quarter item.
     }
 
     .fc-item__media-wrapper {
-        width: gs-span(7);
+        width: gs-span(7) - $gs-gutter;
 
         @include mq(desktop) {
-            width: gs-span(9) + $gs-gutter;
+            width: gs-span(9);
 
             @if(not $browser-supports-flexbox) {
                 width: gs-span(9);
