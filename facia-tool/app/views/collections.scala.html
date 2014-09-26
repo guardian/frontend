@@ -346,6 +346,7 @@
 
                         <div class="article__ammends">
                             <span class="article__times">
+                                <span class="time__scheduled" data-bind="text: scheduledPublicationTime"></span>
                                 <span class="time__publication" data-bind="text: webPublicationTime"></span>
                                 <span class="time__front" data-bind="text: frontPublicationTime"></span>
                             </span>
@@ -364,10 +365,6 @@
                                     },
                                     text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
                             <!-- /ko -->
-
-                            <span class="time__scheduled" data-bind="if: fields.scheduledPublicationDate">
-                                scheduled <span data-bind="text: scheduledPublicationTime"></span>
-                            </span>
 
                             <!-- ko if: meta.isSnap -->
                                 <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
