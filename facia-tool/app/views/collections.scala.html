@@ -120,42 +120,44 @@
     <!-- templates -->
 
     <script type="text/html" id="template_editor">
-        <!-- ko if: type === 'text' && displayEditor() -->
-            <div class="editor">
-                <textarea data-bind="
-                    click: open,
+        <!-- ko if: displayEditor -->
+            <!-- ko if: type === 'text' -->
+                <div class="editor">
+                    <textarea data-bind="
+                        click: open,
+                        clickBubble: false,
+                        hasFocus: hasFocus,
+                        attr: {
+                            class: 'element__' + key + (hasFocus() ? ' active' : ''),
+                            placeholder: field() || label + '...'
+                        },
+                        autoResize: true,
+                        tabbableFormField: true,
+                        valueUpdate: 'afterkeydown',
+                        value: overrideOrVal"></textarea>
+
+                    <!-- ko if: hasFocus() -->
+                        <span class="editor__length" data-bind="
+                            css: {'editor__length--alert': lengthAlert},
+                            text: length"></span>
+                        <a class="editor__revert" data-bind="
+                            visible: meta,
+                            click: revert"><i class="icon-fast-backward"></i></a>
+                    <!-- /ko -->
+                </div>
+            <!-- /ko -->
+
+            <!-- ko if: type === 'boolean' -->
+                <span data-bind="
+                    click: toggle,
                     clickBubble: false,
-                    hasFocus: hasFocus,
-                    attr: {
-                        class: 'element__' + key + (hasFocus() ? ' active' : ''),
-                        placeholder: field() || label + '...'
-                    },
-                    autoResize: true,
-                    tabbableFormField: true,
-                    valueUpdate: 'afterkeydown',
-                    value: overrideOrVal"></textarea>
-
-                <!-- ko if: hasFocus() -->
-                    <span class="editor__length" data-bind="
-                        css: {'editor__length--alert': lengthAlert},
-                        text: length"></span>
-                    <a class="editor__revert" data-bind="
-                        visible: meta,
-                        click: revert"><i class="icon-fast-backward"></i></a>
-                <!-- /ko -->
-            </div>
-        <!-- /ko -->
-
-        <!-- ko if: type === 'boolean' && displayEditor() -->
-            <span data-bind="
-                click: toggle,
-                clickBubble: false,
-                attr: {class: 'editor--boolean editor--boolean--' + key},
-                css: {selected: meta}">
-                <a class="editor--boolean__label" data-bind="
-                    text: label"></a>
-                <span class="editor--boolean__state"><span data-bind="visible: meta">&#10004;</span></span>
-            </span>
+                    attr: {class: 'editor--boolean editor--boolean--' + key},
+                    css: {selected: meta}">
+                    <a class="editor--boolean__label" data-bind="
+                        text: label"></a>
+                    <span class="editor--boolean__state"><span data-bind="visible: meta">&#10004;</span></span>
+                </span>
+            <!-- /ko -->
         <!-- /ko -->
     </script>
 
