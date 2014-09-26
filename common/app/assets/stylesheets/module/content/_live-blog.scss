@@ -965,6 +965,10 @@ $timeline-width: 14px;
     cursor: pointer;
 }
 
+.block-share__label{
+    @include u-h;
+}
+
 .block-share__item {
     display: block;
     border: 1px solid colour(neutral-3);

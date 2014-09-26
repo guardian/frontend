@@ -11,7 +11,8 @@
         </a>
     }
 
-    <input type="text" class="block-share__item block-share__item--link" onfocus="this.select();" onmouseup="return false;" value="@shortUrl"/>
+    <label class="block-share__label" for="block-share-link-@id">copy link text</label>
+    <input id="block-share-link-@id" type="text" class="block-share__item block-share__item--link" onfocus="this.select();" onmouseup="return false;" value="@shortUrl" readonly="readonly"/>
 
     <button class="meta-button block-share__item block-share__item--expand js-blockshare-expand u-h"><i class="i i-ellipsis-black"></i><span class="u-h">expand</span></button>
 
