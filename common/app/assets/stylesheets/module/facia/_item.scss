@@ -109,10 +109,6 @@
 
 .item__kicker--live,
 .item__kicker--breaking-news {
-    @include f-data;
-    @include fs-data(2, $size-only: true);
-    text-transform: uppercase;
-    font-weight: bold;
     color: #ffffff;
     background-color: $c-live;
     @include fs-textSans(1);
@@ -120,6 +116,8 @@
     padding: 0 3px;
     position: relative;
     top: -2px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .item--sport-stats .competition-table h3,
