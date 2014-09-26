@@ -42,6 +42,10 @@ $mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-
             width: $container-width;
         }
     }
+    @include mq(tablet) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
 @mixin facia-container--layout-front {
