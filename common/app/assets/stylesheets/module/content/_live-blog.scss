@@ -1048,25 +1048,22 @@ $timeline-width: 14px;
 }
 
 .block-share__item--expand {
-    @include fs-bodyCopy(1);
-    font-size: 22px;
-    line-height: 24px;
-    color: colour(neutral-2);
     overflow: visible;
     position: relative;
-    span {
+    .i {
+        width: 85% !important;
+        height: 85% !important;
         display: block;
-        opacity: 0.8;
+        opacity: 0.5;
         position: absolute;
-        left: -10px;
-        right: -10px;
-        margin: -16px auto 0 auto;
-        text-align: center;
+        left: -5px;
+        right: -5px;
+        margin: -7px auto 0 auto;
     }
     &:hover {
         border-color: colour(neutral-2);
-        span {
-            opacity: 1;
+        .i {
+            opacity: 0.6;
         }
     }
 }
@@ -1081,7 +1078,8 @@ $timeline-width: 14px;
 }
 
 .share-modal__content {
-    margin-top: 20%;
+    @extend %absolute-center;
+    height: gs-height(8);
 }
 
 .share-modal__title {

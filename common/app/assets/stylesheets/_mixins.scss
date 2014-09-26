@@ -216,10 +216,10 @@
 
 @mixin absolute-center {
     position: absolute;
-    top: -999px;
-    bottom: -999px;
-    left: -999px;
-    right: -999px;
+    top: -20px;
+    bottom: -20px;
+    left: -20px;
+    right: -20px;
     margin: auto;
 }
 

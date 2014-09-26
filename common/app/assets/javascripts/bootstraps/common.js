@@ -419,7 +419,7 @@ define([
                         offset = null;
                     }, 1);
                 }
-            })
+            });
         }
     };
 

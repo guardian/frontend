@@ -24,7 +24,7 @@ define([
             return $.ancestor(el.parentNode, c);
         }
     };
-    $.forEachElement = function(selector, fn) {
+    $.forEachElement = function (selector, fn) {
         var els = qwery(selector);
         _.forEach(els, fn);
         return els;
