@@ -14,16 +14,14 @@ define([
         elements.each(function (element) {
             if (element.hasAttribute(articleIdAttribute)) {
                 elementByArticleId[element.getAttribute(articleIdAttribute)] = element;
-            } else {
-                console.error(selector + ' element without ' + articleIdAttribute, element);
             }
         });
 
         function updateLatestBlocks() {
             ajax({
-                url: "/live-blog-updates.json",
-                type: "json",
-                method: "get",
+                url: '/live-blog-updates.json',
+                type: 'json',
+                method: 'get',
                 crossOrigin: true,
                 success: function (response) {
                     if (response && response.latestBlocks) {
@@ -31,20 +29,19 @@ define([
                             var element = elementByArticleId[latestBlock.articleId];
 
                             if (element && element.getAttribute('data-blockId') !== latestBlock.blockId) {
-                                var $el = bonzo(element)
-                                    .addClass('fc-item__latest-block--unloading');
+                                var $el = bonzo(element).addClass('fc-item__latest-block--unloading');
 
-                                setTimeout(function() {
+                                setTimeout(function () {
                                     $el.addClass('fc-item__latest-block--loading');
-                                    setTimeout(function() {
+                                    setTimeout(function () {
                                         $el.toggleClass('fc-item__latest-block--loading fc-item__latest-block--unloading')
-                                            .html(latestBlock.body)
-                                            .attr('href', latestBlock.articleId + '#' + latestBlock.blockId);
+                                        .html(latestBlock.body)
+                                        .attr('href', latestBlock.articleId + '#' + latestBlock.blockId);
                                         element.setAttribute('data-blockId', latestBlock.blockId);
                                     }, 50);
                                 }, 250); // wait for transform to finis
                             }
-                       });
+                        });
                     }
                 }
             });
