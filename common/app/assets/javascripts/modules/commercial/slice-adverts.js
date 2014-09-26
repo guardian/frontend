@@ -39,11 +39,11 @@ define([
                     }
                 ),
                 // get all the containers
-                containers = qwery(config.containerSelector),
-                index = 0,
-                adSlices = [],
+                containers   = qwery(config.containerSelector),
+                index        = 0,
+                adSlices     = [],
                 containerGap = 2,
-                prefs = userPrefs.get('container-states');
+                prefs        = userPrefs.get('container-states');
 
             if (!config.switches.standardAdverts) {
                 return false;
