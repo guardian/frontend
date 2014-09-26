@@ -39,6 +39,7 @@
                             Some(false)
                         )) { player =>
 
+                            @* TODO: This is a temporary HACK until Rob Berry can clean up. *@
                             @if(Seq("half", "three", "full", "mega-full").exists(size => modifierClasses.contains(size))) {
                                 <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
                                     <div class="fc-item__video-container">
