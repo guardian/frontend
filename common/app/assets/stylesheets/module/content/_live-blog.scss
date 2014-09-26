@@ -242,7 +242,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .block--notification {
-    border-top-color: $c-live;
+    border-top-color: $c-liveDefault;
 }
 
 .notify {
@@ -253,7 +253,7 @@ $block-padding-right: $gs-gutter;
     text-align: left;
     @include fs-textSans(3);
     font-weight: bold;
-    color: $c-live;
+    color: $c-liveDefault;
 }
 
 .autoupdate--has-animation {
@@ -870,7 +870,7 @@ $timeline-width: 14px;
 }
 
 .liveblog__show-more {
-    background-color: colour(live-main-2);
+    background-color: $c-liveAccent;
     border: 0;
     margin-bottom: $gs-baseline;
     padding-left: 36px;
@@ -883,7 +883,7 @@ $timeline-width: 14px;
     &:hover,
     &:focus,
     &:active {
-        background-color: darken(colour(live-main-2), 7%);
+        background-color: darken($c-liveAccent, 7%);
     }
 
     .i {

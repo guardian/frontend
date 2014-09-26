@@ -94,13 +94,12 @@ $c-neutral8: guss-colour(neutral-8, $pasteup-palette);
 // Tones
 // =============================================================================
 
-$c-newsDefault: guss-colour(tone-news-1, $pasteup-palette);
-$c-newsAccent: guss-colour(tone-news-2, $pasteup-palette);
+$c-newsDefault: guss-colour(news-main-1, $pasteup-palette);
+$c-newsAccent: guss-colour(news-main-2, $pasteup-palette);
 
-$c-featureDefault: guss-colour(tone-features-1, $pasteup-palette);
+$c-featureDefault: guss-colour(features-support-1, $pasteup-palette);
 $c-featureAccent: guss-colour(features-support-3, $pasteup-palette);
-$c-featureAccent2: #b62766;
-$c-featuresVariant: guss-colour(tone-features-4, $pasteup-palette);
+$c-featureAccent2: guss-colour(features-main-2, $pasteup-palette);
 $c-featureMute: guss-colour(features-support-3, $pasteup-palette);
 
 $c-analysisAccent: guss-colour(news-support-2, $pasteup-palette);
@@ -108,20 +107,17 @@ $c-analysisMute: guss-colour(comment-support-2, $pasteup-palette);
 $c-analysisBackground: guss-colour(neutral-5, $pasteup-palette);
 
 $c-commentDefault: #e6711b;
-$c-commentAccent: guss-colour(tone-comment-2, $pasteup-palette);
-$c-commentAccent2: #ffce4b;
-$c-commentDark: #d3a034;
+$c-commentAccent: guss-colour(comment-main-2, $pasteup-palette);
 $c-commentBackground: guss-colour(comment-support-2, $pasteup-palette);
 
-$c-live: #c0031b;
-$c-liveDefault: guss-colour(tone-live-1, $pasteup-palette);
-$c-liveAccent: guss-colour(tone-live-2, $pasteup-palette);
+$c-liveDefault: guss-colour(live-main-1, $pasteup-palette);
+$c-liveAccent: guss-colour(live-main-2, $pasteup-palette);
 $c-liveMute: guss-colour(features-support-3, $pasteup-palette);
 
-$c-mediaDefault: $c-commentAccent;
-$c-mediaBackground: guss-colour(tone-media-1, $pasteup-palette);
-$c-mediaAccent: guss-colour(tone-media-3, $pasteup-palette);
-$c-mediaAccent2: guss-colour(tone-media-2, $pasteup-palette);
+$c-mediaDefault: guss-colour(multimedia-main-2, $pasteup-palette);
+$c-mediaBackground: guss-colour(multimedia-main-1, $pasteup-palette);
+$c-mediaAccent: guss-colour(multimedia-main-2, $pasteup-palette);
+$c-mediaAccent2: guss-colour(multimedia-support-4, $pasteup-palette);
 
 // Football
 // =============================================================================
