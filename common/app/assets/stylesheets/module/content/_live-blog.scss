@@ -208,7 +208,7 @@ $block-padding-right: $gs-gutter;
         position: absolute;
         right: $gs-gutter;
         bottom: $gs-baseline;
-        margin: 0
+        margin: 0;
     }
 }
 
@@ -992,34 +992,34 @@ $timeline-width: 14px;
 .share-modal .share-modal__link {
     .block-share__item--facebook,
     .share-modal__item--facebook {
-        border-color: #3B5998;
-        color: #3B5998;
+        border-color: #3b5998;
+        color: #3b5998;
         .i { @include icon(share-facebook--blue); }
     }
     .block-share__item--twitter,
     .share-modal__item--twitter {
-        border-color: #55ACEE;
-        color: #55ACEE;
+        border-color: #55acee;
+        color: #55acee;
         .i { @include icon(share-twitter--blue); }
     }
     .block-share__item--gplus,
     .share-modal__item--gplus {
-        border-color: #DD4B39;
-        color: #DD4B39;
+        border-color: #dd4b39;
+        color: #dd4b39;
         .i { @include icon(share-gplus--red); }
     }
 
     &:hover {
         .block-share__item--facebook {
-            border-color: darken(#3B5998, 15%);
+            border-color: darken(#3b5998, 15%);
             .i { @include icon(share-facebook--blue-dark); }
         }
         .block-share__item--twitter {
-            border-color: darken(#55ACEE, 15%);
+            border-color: darken(#55acee, 15%);
             .i { @include icon(share-twitter--blue-dark); }
         }
         .block-share__item--gplus {
-            border-color: darken(#DD4B39, 15%);
+            border-color: darken(#dd4b39, 15%);
             .i { @include icon(share-gplus--red-dark); }
         }
     }
@@ -1038,12 +1038,12 @@ $timeline-width: 14px;
         display: none;
     }
     .i {
+        @extend %absolute-center;
         @include icon(share-android);
         width: 11px !important;
         height: 11px !important;
         padding-right: 6px;
-        opacity: 0.5;
-        @extend %absolute-center;
+        opacity: .5;
     }
 }
 
@@ -1051,16 +1051,16 @@ $timeline-width: 14px;
     overflow: visible;
     position: relative;
     .i {
+        @extend %absolute-center;
         width: 18px !important;
         height: 14px !important;
         display: block;
-        opacity: 0.5;
-        @extend %absolute-center;
+        opacity: .5;
     }
     &:hover {
         border-color: colour(neutral-2);
         .i {
-            opacity: 0.6;
+            opacity: .6;
         }
     }
 }
@@ -1111,14 +1111,14 @@ $timeline-width: 14px;
     position: absolute;
     left: 0;
     right: 0;
-    margin: gs-height(1) + $gs-baseline auto 0 auto;
+    margin: gs-height(1) + $gs-baseline auto 0;
     background: transparent;
     @include box-sizing(border-box);
     .i {
+        @extend %absolute-center;
         width: 85%;
         height: 85%;
-        opacity: 0.6;
-        @extend %absolute-center;
+        opacity: .6;
     }
 }
 
