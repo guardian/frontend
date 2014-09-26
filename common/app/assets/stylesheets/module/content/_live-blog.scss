@@ -553,6 +553,17 @@ $timeline-width: 14px;
     }
 }
 
+.comment-count--timeline {
+    margin-top: -11px;
+    @include mq($until: desktop) {
+        display: none;
+    }
+    .commentcount {
+        z-index: 101;
+        position: static;
+   }
+}
+
 .blog__timeline-container {
     @include mq(rightCol) {
         @include transform(translateZ(0)); //To force on GPU
