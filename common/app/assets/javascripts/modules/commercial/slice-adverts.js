@@ -51,9 +51,9 @@ define([
 
             // pull out ad slices which are have at least x containers between them
             while (index < containers.length) {
-                container = containers[index],
-                containerId = bonzo(container).data('id'),
-                $adSlice = $(config.sliceSelector, container),
+                container    = containers[index],
+                containerId  = bonzo(container).data('id'),
+                $adSlice     = $(config.sliceSelector, container),
                 // don't display ad in the first container on the fronts
                 isFrontFirst = contains(['uk', 'us', 'au'], config.page.pageId) && index === 0;
                 if ($adSlice.length && !isFrontFirst && (!prefs || prefs[containerId] !== 'closed')) {
