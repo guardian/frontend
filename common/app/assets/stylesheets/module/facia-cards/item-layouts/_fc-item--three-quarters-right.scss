@@ -26,7 +26,8 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
     .fc-item__media-wrapper,
     .fc-item__avatar {
-        float: left;
+        right: auto;
+        left: 0;
     }
 
     .fc-item__header,

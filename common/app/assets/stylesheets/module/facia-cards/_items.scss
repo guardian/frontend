@@ -37,7 +37,7 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 
     &.item--has-discussion {
-        padding-bottom: get-line-height(headline, 2) + $gs-baseline / 3;
+        padding-bottom: get-line-height(headline, 2) * 2;
     }
 
     a {

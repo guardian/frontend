@@ -19,11 +19,19 @@ Full item. A 100% width version of the Three quarter item.
 */
 
 @mixin fc-item--full {
-    padding-bottom: 0;
+    $media-width: gs-span(7) - $gs-gutter * .5;
+    $media-width-desktop: gs-span(9) + $gs-gutter * .5;
+
+    min-height: $media-width * .6;
+
+    @include mq(desktop) {
+        min-height: $media-width-desktop * .6;
+    }
 
     .fc-item__media-wrapper,
     .fc-item__avatar {
-        float: right;
+        position: absolute;
+        right: 0;
     }
 
     .fc-item__avatar {
@@ -35,13 +43,13 @@ Full item. A 100% width version of the Three quarter item.
     }
 
     .fc-item__media-wrapper {
-        width: gs-span(7) - $gs-gutter;
+        width: $media-width;
 
         @include mq(desktop) {
-            width: gs-span(9);
+            width: $media-width-desktop;
 
             @if(not $browser-supports-flexbox) {
-                width: gs-span(9);
+                width: $media-width-desktop;
             }
         }
     }
@@ -62,7 +70,7 @@ Full item. A 100% width version of the Three quarter item.
     .fc-item__standfirst,
     .fc-item__byline {
         @include box-sizing(border-box);
-        width: gs-span(3) - $gs-gutter;
+        width: gs-span(2) + $gs-gutter;
 
         @include mq(desktop) {
             width: gs-span(3);
@@ -107,5 +115,16 @@ Full item. A 100% width version of the Three quarter item.
                 width: gs-span(8);
             }
         }
+    }
+
+    &.item--has-discussion {
+        padding-bottom: get-line-height(headline, 3) + $gs-baseline / 3;
+        @include mq(desktop) {
+            padding-bottom: get-line-height(headline, 5) + $gs-baseline / 3;
+        }
+    }
+
+    &.item--has-no-discussion {
+        padding-bottom: $gs-baseline / 3;
     }
 }
