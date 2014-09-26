@@ -35,6 +35,132 @@ define([
         contentApi,
         Group
     ) {
+        var capiProps = [
+                'webUrl',
+                'webPublicationDate'],
+
+            capiFields = [
+                'headline',
+                'trailText',
+                'isLive',
+                'firstPublicationDate',
+                'scheduledPublicationDate',
+                'thumbnail'],
+
+            metaFields = [
+                {
+                    key: 'group',
+                    label: 'importance group',
+                    type: 'text'
+                },
+                {
+                    key: 'headline',
+                    editable: true,
+                    label: 'headline',
+                    type: 'text',
+                    maxLength: 90
+                },
+                {
+                    key: 'trailText',
+                    editable: true,
+                    label: 'trail text',
+                    type: 'text'
+                },
+                {
+                    key: 'href',
+                    editable: true,
+                    requires: 'isSnap',
+                    label: 'snap URL',
+                    type: 'text'
+                },
+                {
+                    key: 'imageSrc',
+                    editable: true,
+                    requires: 'imageReplace',
+                    label: 'replacement image URL',
+                    validator: validateAndProcessImageSrc,
+                    type: 'text'
+                },
+                {
+                    key: 'isBreaking',
+                    editable: true,
+                    label: 'breaking news',
+                    type: 'boolean'
+                },
+                {
+                    key: 'isBoosted',
+                    editable: true,
+                    label: 'boost',
+                    type: 'boolean'
+                },
+
+                {
+                    key: 'hasMainVideo',
+                    label: 'has a video',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showMainVideo',
+                    editable: true,
+                    requires: 'hasMainVideo',
+                    singleton: 'images',
+                    label: 'show video',
+                    type: 'boolean'
+                },
+
+                {
+                    key: 'imageHide',
+                    editable: true,
+                    singleton: 'images',
+                    label: 'hide image',
+                    type: 'boolean'
+                },
+                {
+                    key: 'imageReplace',
+                    editable: true,
+                    singleton: 'images',
+                    label: 'replace image',
+                    type: 'boolean'
+                },
+                {
+                    key: 'imageSrcWidth',
+                    requires: 'imageReplace',
+                    label: 'replacement image width',
+                    type: 'text'
+                },
+                {
+                    key: 'imageSrcHeight',
+                    requires: 'imageReplace',
+                    label: 'replacement image height',
+                    type: 'text'
+                },
+                {
+                    key: 'isSnap',
+                    label: 'is a snap',
+                    type: 'boolean'
+                },
+                {
+                    key: 'snapType',
+                    requires: 'isSnap',
+                    label: 'snap type',
+                    type: 'text'
+                },
+                {
+                    key: 'snapCss',
+                    requires: 'isSnap',
+                    label: 'snap CSS class',
+                    type: 'text'
+                },
+                {
+                    key: 'snapUri',
+                    requires: 'isSnap',
+                    label: 'snap source',
+                    type: 'text'
+                }
+            ],
+
+            rxScriptStriper = new RegExp(/<script.*/gi);
+;
         function Article(opts) {
             var self = this;
 
@@ -44,49 +170,27 @@ define([
 
             this.group = opts.group;
 
+            this.props = asObservableProps(capiProps);
+
+            this.fields = asObservableProps(capiFields);
+
+            this.meta = asObservableProps(_.pluck(metaFields, 'key'));
+
+            this.state = asObservableProps([
+                'underDrag',
+                'isOpen',
+                'isLoaded',
+                'isEmpty',
+                'ophanUrl',
+                'sparkUrl']);
+
             this.uneditable = opts.uneditable;
 
             this.frontPublicationDate = opts.frontPublicationDate;
             this.frontPublicationTime = ko.observable();
             this.scheduledPublicationTime = ko.observable();
 
-            this.mainMediaType = ko.observable();
-
-            this.props = asObservableProps([
-                'webUrl',
-                'webPublicationDate']);
-
-            this.fields = asObservableProps([
-                'isLive',
-                'firstPublicationDate',
-                'scheduledPublicationDate',
-                'headline',
-                'trailText',
-                'thumbnail']);
-
-            this.meta = asObservableProps([
-                'href',
-                'headline',
-                'trailText',
-                'imageAdjust',
-                'imageSrc',
-                'imageSrcWidth',
-                'imageSrcHeight',
-                'showMainVideo',
-                'isBreaking',
-                'group',
-                'snapType',
-                'snapCss',
-                'snapUri']);
-
-            this.state = asObservableProps([
-                'underDrag',
-                'isOpen',
-                'isOpenImage',
-                'isLoaded',
-                'isEmpty',
-                'ophanUrl',
-                'sparkUrl']);
+            this.editors = ko.observableArray();
 
             this.headlineLength = ko.computed(function() {
                 return (this.meta.headline() || this.fields.headline() || '').length;
@@ -96,9 +200,6 @@ define([
                 return (this.meta.headline() || this.fields.headline() || '').length > vars.CONST.restrictedHeadlineLength;
             }, this);
 
-            this.isSnap = ko.computed(function() {
-                return !!snap.validateId(this.id());
-            }, this);
 
             this.webPublicationTime = ko.computed(function(){
                 return humanTime(this.props.webPublicationDate());
@@ -110,36 +211,10 @@ define([
                     this.meta.href() || this.props.webUrl();
             }, this);
 
-            this.headlineInput  = this.overrider('headline');
-            this.headlineRevert = this.reverter('headline');
-
-            this.trailTextInput  = this.overrider('trailText');
-            this.trailTextRevert = this.reverter('trailText');
-
             this.provisionalImageSrc = ko.observable();
 
             this.meta.imageSrc.subscribe(function(src) {
                 this.provisionalImageSrc(src);
-            }, this);
-
-            this.provisionalImageSrc.subscribe(function(src) {
-                var self = this;
-
-                if (src === this.meta.imageSrc()) { return; }
-
-                this.validateImageSrc(src)
-                .done(function(width, height) {
-                    self.meta.imageSrc(src);
-                    self.meta.imageSrcWidth(width);
-                    self.meta.imageSrcHeight(height);
-
-                    self.state.isOpenImage(false);
-                    self.save();
-                })
-                .fail(function(err) {
-                    self.provisionalImageSrc(undefined);
-                    window.alert('Sorry! ' + err);
-                });
             }, this);
 
             this.populate(opts);
@@ -179,24 +254,75 @@ define([
             });
         };
 
-        Article.prototype.overrider = function(key) {
-            return ko.computed({
-                read: function() {
-                    return this.meta[key]() || this.fields[key]();
-                },
-                write: function(value) {
-                    this.meta[key](value);
-                },
-                owner: this
-            });
-        };
+        Article.prototype.metaEditor = function(opts, index, all) {
+            var self = this,
+                key,
+                meta,
+                field;
 
-        Article.prototype.reverter = function(key) {
-            return function() {
-                this.meta[key](undefined);
-                this._save();
-            };
-        };
+            if(!opts.editable) { return; }
+
+            key = opts.key;
+            meta = self.meta[key] || function() {};
+            field = self.fields[key] || function() {};
+
+            if (_.isFunction(opts.validator)) {
+                meta.extend({ rateLimit: 100 })
+                meta.subscribe(function() {
+                    opts.validator(meta, self.meta)
+                }, this);
+            }
+
+            return {
+                key:    key,
+                label:  opts.label,
+                type:   opts.type,
+
+                meta:   meta,
+                field:  field,
+                revert: function() { meta(undefined); },
+                open:   function() { mediator.emit('ui:open', meta); },
+
+                visible: ko.computed(function() {
+                    return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
+                }, self),
+
+                toggle: function() {
+                    if(opts.singleton) {
+                       _.chain(all)
+                        .filter(function(editor) { return editor.singleton === opts.singleton; })
+                        .filter(function(editor) { return editor.key !== key; })
+                        .pluck('key')
+                        .each(function(key) { self.meta[key](undefined) })
+                    }
+
+                    meta(!meta());
+
+                   _.chain(all)
+                    .filter(function(editor) { return editor.requires === key; })
+                    .first(1)
+                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key]); })
+                },
+
+                length: ko.computed(function() {
+                    return opts.maxLength ? (meta() || field() || '').length : undefined;
+                }, self),
+
+                lengthAlert: ko.computed(function() {
+                    return opts.maxLength && (meta() || field() || '').length > opts.maxLength;
+                }, self),
+
+                overrideOrVal: ko.computed({
+                    read: function() {
+                        return meta() || field();
+                    },
+                    write: function(value) {
+                        meta(value.replace(rxScriptStriper, ''));
+                    },
+                    owner: self
+                })
+            }
+        }
 
         function mainMediaType(contentApiArticle) {
             var mainElement = _.findWhere(contentApiArticle.elements || [], {
@@ -205,6 +331,30 @@ define([
             return mainElement && mainElement.type;
         }
 
+        function validateAndProcessImageSrc(imageSrc, meta) {
+            if (imageSrc()) {
+                validateImageSrc(imageSrc(), {
+                    maxWidth: 940,
+                    minWidth: 620,
+                    widthAspectRatio: 3,
+                    heightAspectRatio: 5
+                })
+                .done(function(width, height) {
+                    meta.imageSrcWidth(width);
+                    meta.imageSrcHeight(height);
+                })
+                .fail(clearImageMeta);
+            } else {
+                clearImageMeta();
+            }
+
+            function clearImageMeta() {
+                meta.imageSrc(undefined);
+                meta.imageSrcWidth(undefined);
+                meta.imageSrcHeight(undefined);
+            };
+        };
+
         Article.prototype.populate = function(opts, validate) {
             var missingProps;
 
@@ -212,14 +362,6 @@ define([
             populateObservables(this.meta,   opts.meta);
             populateObservables(this.fields, opts.fields);
             populateObservables(this.state,  opts.state);
-
-            var mainMedia = mainMediaType(opts);
-
-            if (mainMedia) {
-                this.mainMediaType(mainMedia);
-            }
-
-            this.setRelativeTimes();
 
             if (validate || opts.webUrl) {
                  missingProps = [
@@ -236,16 +378,21 @@ define([
                     this.sparkline();
                 }
             }
+
+            this.meta.hasMainVideo(mainMediaType(opts) === 'video');
+
+            this.meta.isSnap(!!snap.validateId(this.id()));
+
+            if(!this.uneditable) {
+                this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
+            }
+
+            this.setRelativeTimes();
         };
 
         Article.prototype.setRelativeTimes = function() {
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
             this.scheduledPublicationTime(humanTime(this.fields.scheduledPublicationDate()));
-        };
-
-        Article.prototype.toggleIsBreaking = function() {
-            this.meta.isBreaking(!this.meta.isBreaking());
-            this._save();
         };
 
         Article.prototype.sparkline = function() {
@@ -265,43 +412,6 @@ define([
             if (vars.model.switches()['facia-tool-sparklines']) {
                 this.state.sparkUrl.valueHasMutated();
             }
-        };
-
-        Article.prototype.toggleImageAdjustHide = function() {
-            this.meta.imageAdjust(this.meta.imageAdjust() === 'hide' ? undefined : 'hide');
-            this._save();
-        };
-
-        Article.prototype.toggleShowMainVideo = function () {
-            this.meta.showMainVideo(!this.meta.showMainVideo());
-            this._save();
-        };
-
-        Article.prototype.toggleImageAdjustBoost = function() {
-            this.meta.imageAdjust(this.meta.imageAdjust() === 'boost' ? undefined : 'boost');
-            this._save();
-        };
-
-        Article.prototype.open = function() {
-            var self = this;
-
-            if (this.uneditable) { return; }
-
-            _.defer(function(){
-                self.state.isOpen(true);
-            });
-        };
-
-        Article.prototype.toggleOpenImage = function() {
-            this.state.isOpenImage(!this.state.isOpenImage());
-        };
-
-        Article.prototype.close = function() {
-            var self = this;
-
-            _.defer(function(){
-                self.state.isOpen(false);
-            });
         };
 
         Article.prototype.get = function() {
@@ -347,13 +457,13 @@ define([
                 .value();
         };
 
-        Article.prototype._save = function() {
+        Article.prototype.save = function() {
             if (!this.group.parent) {
                 return;
             }
 
             if (this.group.parentType === 'Article') {
-                this.group.parent._save();
+                this.group.parent.save();
                 return;
             }
 
@@ -373,27 +483,68 @@ define([
             }
         };
 
-        Article.prototype.validateImageSrc = function(src) {
-            return validateImageSrc(src, {
-                maxWidth: 940,
-                minWidth: 620,
-                widthAspectRatio: 3,
-                heightAspectRatio: 5});
-        };
-
         Article.prototype.convertToSnap = function() {
+            this.meta.isSnap(true);
             this.meta.href(this.id());
             this.id(snap.generateId());
-            this.state.isOpen(!this.meta.headline());
+            this.state.isOpen(true);
+            mediator.emit('ui:open', this.meta.headline);
         };
 
-        Article.prototype.save = function() {
-            var self = this;
+        Article.prototype.open = function() {
+            if (this.uneditable) { return; }
 
-            // defer, to let through UI events before they're blocked by the "isPending" CSS:
+            if (!this.state.isOpen()) {
+                 this.state.isOpen(true);
+                 mediator.emit('ui:open', this.meta.headline);
+            }
+        };
+
+        Article.prototype.close = function() {
+            this.state.isOpen(false);
+        };
+
+        Article.prototype.closeAndSave = function() {
+            this.close();
+            this.save();
+            return false;
+        };
+
+        function mod(n, m) {
+            return ((n % m) + m) % m;
+        }
+
+        function resize(el) {
             setTimeout(function() {
-                self._save();
-            }, 200);
+                el.style.height = '1px';
+                el.style.height = (el.scrollHeight) + 'px';
+            });
+        }
+
+        ko.bindingHandlers.autoResize = {
+            init: function(el) {
+                resize(el);
+                $(el).on('keydown', function() { resize(el); });
+            }
+        };
+
+        ko.bindingHandlers.tabbableFormField = {
+            init: function(el, valueAccessor, allBindings, viewModel, bindingContext) {
+                $(el).on('keydown', function(e) {
+                    var keyCode = e.keyCode || e.which,
+                        formField,
+                        formFields,
+                        nextIndex;
+
+                    if (keyCode === 9) {
+                        e.preventDefault();
+                        formField = bindingContext.$rawData;
+                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.visible(); });
+                        nextIndex = mod(formFields.indexOf(formField) + (e.shiftKey ? -1 : 1), formFields.length);
+                        mediator.emit('ui:open', formFields[nextIndex].meta);
+                    }
+                });
+            }
         };
 
         return Article;

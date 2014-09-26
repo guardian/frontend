@@ -18,7 +18,7 @@ case object Ql3Ql3Ql3Ql3 extends Slice {
     cssClassName = "q-ql-ql-ql",
     columns = Seq(
       Rows(
-        colSpan = 1,
+        colSpan = 4,
         columns = 4,
         rows = 3,
         ItemClasses(
@@ -587,7 +587,7 @@ case object Ql2Ql2Ql2Ql2 extends Slice {
     cssClassName = "ql-ql-ql-ql",
     columns = Seq(
       Rows(
-        colSpan = 1,
+        colSpan = 4,
         columns = 4,
         rows = 2,
         ItemClasses(

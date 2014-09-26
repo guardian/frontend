@@ -236,7 +236,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .block.is-key-event {
-    border-top: 2px solid $c-neutral1;
+    border-top: 2px solid $c-liveAccent;
 }
 
 .truncated-block {
@@ -610,6 +610,10 @@ $timeline-width: 14px;
         .dropdown {
             border-top: 0;
         }
+    }
+
+    .meta__comment-count-timeline {
+        margin-top: -21px;
     }
 }
 

@@ -54,7 +54,7 @@
 
                 <div class="@RenderClasses(Map(
                     ("fc-item__header", true),
-                    ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
+                    ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
                 ))">
                     @title(trail, index, containerIndex)
                     @trail match { case content:model.Content => @starRating(content) }

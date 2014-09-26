@@ -181,16 +181,18 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   // Inherited from FaciaFields
   override lazy val group: Option[String] = apiContent.metaData.get("group").flatMap(_.asOpt[String])
   override lazy val supporting: List[Content] = apiContent.supporting
+  override lazy val isBoosted: Boolean = apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val imageHide: Boolean = apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val imageAdjust: String = apiContent.metaData.get("imageAdjust").flatMap(_.asOpt[String]).getOrElse("default")
+  override lazy val imageReplace: Boolean = apiContent.metaData.get("imageReplace").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
   override lazy val imageSrcWidth: Option[String] = apiContent.metaData.get("imageSrcWidth").flatMap(_.asOpt[String])
   override lazy val imageSrcHeight: Option[String] = apiContent.metaData.get("imageSrcHeight").flatMap(_.asOpt[String])
-  lazy val imageElement: Option[ApiElement] = for {
+  lazy val imageElement: Option[ApiElement] = if (imageReplace) for {
     src <- imageSrc
     width <- imageSrcWidth
     height <- imageSrcHeight
-  } yield ImageOverride.createElementWithOneAsset(src, width, height)
+  } yield ImageOverride.createElementWithOneAsset(src, width, height) else None
 
   override lazy val showMainVideo: Boolean =
     apiContent.metaData.get("showMainVideo").flatMap(_.asOpt[Boolean]).getOrElse(false)

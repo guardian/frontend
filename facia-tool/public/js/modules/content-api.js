@@ -61,16 +61,19 @@ function (
                 } else if (_.some([window.location.hostname, vars.CONST.viewer], function(str) { return item.id().indexOf(str) > -1; })) {
                     err = 'Sorry, that link cannot be added to a front';
 
+                // A snap, but not an absolute url
+                } else if (!item.id().match(/^https?:\/\//) && results.length === 0) {
+                    err = 'Sorry, that\'s not a valid URL';
+
                 // A snap, but a link to unavailable guardian content
                 } else if (urlHost(item.id()) === 'www.theguardian.com' && results.length === 0) {
-                    err = 'Sorry, that content is unavailable';
+                    err = 'Sorry, that Guardian content is unavailable';
 
-                // A snap, but snaps cannot be added to collections in live mode
-                } else if (vars.model.liveMode() &&
-                    item.parentType !== 'Clipboard') {
-                    err = 'Sorry, snaps cannot be added in live mode';
+                // A snap, but snaps can only be created to the Clipboard
+                } else if (item.group.parentType !== 'Clipboard' && results.length === 0) {
+                    err = 'Sorry, snaps can only be created on the Clipboard';
 
-                // A snap that's legitimate
+                // A snap that's legitimate (includes case where results.length > 1, eg. is the target is a Guardian tag page)
                 } else {
                     item.convertToSnap();
                 }
@@ -123,7 +126,7 @@ function (
             });
 
            _.chain(articles)
-            .filter(function(article) { return !article.isSnap(); })
+            .filter(function(article) { return !article.meta.isSnap(); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
