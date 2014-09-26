@@ -58,7 +58,6 @@ define([
         this.multiComponents    = map(options.components || [], function(c) { return 'c=' + c; }).join('&');
         this.capi               = map(options.capi || [], function(t) {return 't=' + t;}).join('&');
         this.components         = {
-<<<<<<< HEAD
             bestbuy:            this.host + 'money/bestbuys.json',
             bestbuyHigh:        this.host + 'money/bestbuys-high.json',
             bestbuyV2:          this.host + 'money/bestbuys-v2.json',
