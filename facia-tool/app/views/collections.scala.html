@@ -122,32 +122,26 @@
     <script type="text/html" id="template_editor">
         <!-- ko if: type === 'text' && visible() -->
             <div class="editor">
-                <a data-bind="
-                    attr: {
-                        class: 'element element__' + key,
-                        title: label
-                    },
+                <textarea data-bind="
                     click: open,
-                    css: {empty: !overrideOrVal()},
-                    html: overrideOrVal() || label + '...'"></a>
+                    clickBubble: false,
+                    hasFocus: hasFocus,
+                    attr: {
+                        class: 'element__' + key + (hasFocus() ? ' active' : ''),
+                        placeholder: field() || label + '...'
+                    },
+                    autoResize: true,
+                    tabbableFormField: true,
+                    valueUpdate: 'afterkeydown',
+                    value: overrideOrVal"></textarea>
 
-                <!-- ko if: meta === $root.uiOpenElement() -->
-                        <textarea data-bind="
-                            hasFocus: true,
-                            attr: {
-                                class: 'editor__' + key + ' element__' + key,
-                                placeholder: field() || label + '...'
-                            },
-                            autoResize: true,
-                            tabbableFormField: true,
-                            valueUpdate: 'afterkeydown',
-                            value: overrideOrVal"></textarea>
-                        <span class="editor__length" data-bind="
-                            css: {'editor__length--alert': lengthAlert},
-                            text: length"></span>
-                        <a class="editor__revert" data-bind="
-                            visible: meta,
-                            click: revert"><i class="icon-fast-backward"></i></a>
+                <!-- ko if: hasFocus() -->
+                    <span class="editor__length" data-bind="
+                        css: {'editor__length--alert': lengthAlert},
+                        text: length"></span>
+                    <a class="editor__revert" data-bind="
+                        visible: meta,
+                        click: revert"><i class="icon-fast-backward"></i></a>
                 <!-- /ko -->
             </div>
         <!-- /ko -->
@@ -155,6 +149,7 @@
         <!-- ko if: type === 'boolean' -->
             <span data-bind="
                 click: toggle,
+                clickBubble: false,
                 attr: {class: 'editor--boolean editor--boolean--' + key},
                 css: {selected: meta},
                 visible: visible">

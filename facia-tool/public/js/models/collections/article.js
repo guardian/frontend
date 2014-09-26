@@ -281,7 +281,11 @@ define([
                 meta:   meta,
                 field:  field,
                 revert: function() { meta(undefined); },
-                open:   function() { mediator.emit('ui:open', meta); },
+                open:   function() { mediator.emit('ui:open', meta); return false; },
+
+                hasFocus: ko.computed(function() {
+                    return meta === vars.model.uiOpenElement();
+                }, self),
 
                 visible: ko.computed(function() {
                     return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
@@ -301,7 +305,7 @@ define([
                    _.chain(all)
                     .filter(function(editor) { return editor.requires === key; })
                     .first(1)
-                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key]); })
+                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key]); });
                 },
 
                 length: ko.computed(function() {
@@ -317,7 +321,7 @@ define([
                         return meta() || field();
                     },
                     write: function(value) {
-                        meta(value.replace(rxScriptStriper, ''));
+                        meta(value === field() ? undefined : value.replace(rxScriptStriper, ''));
                     },
                     owner: self
                 })
@@ -497,6 +501,8 @@ define([
             if (!this.state.isOpen()) {
                  this.state.isOpen(true);
                  mediator.emit('ui:open', this.meta.headline);
+            } else {
+                 mediator.emit('ui:open', undefined);
             }
         };
 
