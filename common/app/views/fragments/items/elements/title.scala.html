@@ -2,11 +2,11 @@
 
 @defining((trail.visualTone, if (containerIndex == 0 && itemIndex == 0) { "1" } else { "2" })) { case (tone, headingLevel) =>
     <h@headingLevel class="item__title">
-        @if(trail.isBreaking){
-            <span class="item__live-indicator">Breaking News</span>
+        @if(trail.isLive){
+            <span class="item__kicker item__kicker--live">Live</span>
         }
-        @if(trail.isLive && !trail.isBreaking){
-            <span class="item__live-indicator">Live</span>
+        @if(trail.isBreaking) {
+            <span class="item__kicker item__kicker--breaking-news">Breaking news</span>
         }
         @if(tone == "comment") {
             <span class="i i-quote-orange"></span>

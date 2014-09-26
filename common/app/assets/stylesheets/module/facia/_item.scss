@@ -101,7 +101,14 @@
     }
 }
 
-.item__live-indicator {
+.item__kicker {
+    @include fs-headline(1);
+    color: $c-newsAccent;
+    margin-right: 3px;
+}
+
+.item__kicker--live,
+.item__kicker--breaking-news {
     color: #ffffff;
     background-color: $c-live;
     @include fs-textSans(1);
@@ -112,6 +119,7 @@
     font-weight: bold;
     text-transform: uppercase;
 }
+
 .item--sport-stats .competition-table h3,
 .item__title,
 .item__standfirst {

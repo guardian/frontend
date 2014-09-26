@@ -47,12 +47,6 @@ define([
 
         maxFronts: 200,
 
-        imageCdnDomain: 'guim.co.uk',
-
-        previewBase: 'http://preview.gutools.co.uk',
-
-        viewer: 'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
-
         filterTypes: {
             section: { display: 'in section:', param: 'section', path: 'sections', placeholder: 'e.g. news' },
             tag:     { display: 'with tag:',   param: 'tag',     path: 'tags',     placeholder: 'e.g. sport/triathlon' }
@@ -77,6 +71,10 @@ define([
 
         apiBase:               '',
         apiSearchBase:         '/api/proxy',
+        apiSearchParams:       'show-fields=internalContentCode,isLive,firstPublicationDate,scheduledPublicationDate,headline,trailText,byline,thumbnail&show-elements=video',
+        imageCdnDomain:        'guim.co.uk',
+        previewBase:           'http://preview.gutools.co.uk',
+        viewer:                'http://s3-eu-west-1.amazonaws.com/facia/responsive-viewer.html',
 
         ophanBase:             'http://dashboard.ophan.co.uk/graph/breakdown',
 

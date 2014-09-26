@@ -119,6 +119,62 @@
 
     <!-- templates -->
 
+    <script type="text/html" id="template_editor">
+        <!-- ko if: type === 'text' && visible() -->
+            <div class="editor">
+                <a data-bind="
+                    attr: {
+                        class: 'element element__' + key,
+                        title: label
+                    },
+                    click: open,
+                    css: {empty: !overrideOrVal()},
+                    html: overrideOrVal() || label + '...'"></a>
+
+                <!-- ko if: meta === $root.uiOpenElement() -->
+                        <textarea data-bind="
+                            hasFocus: true,
+                            attr: {
+                                class: 'editor__' + key + ' element__' + key,
+                                placeholder: field() || label + '...'
+                            },
+                            autoResize: true,
+                            tabbableFormField: true,
+                            valueUpdate: 'afterkeydown',
+                            value: overrideOrVal"></textarea>
+                        <span class="editor__length" data-bind="
+                            css: {'editor__length--alert': lengthAlert},
+                            text: length"></span>
+                        <a class="editor__revert" data-bind="
+                            visible: meta,
+                            click: revert"><i class="icon-fast-backward"></i></a>
+                <!-- /ko -->
+            </div>
+        <!-- /ko -->
+
+        <!-- ko if: type === 'boolean' -->
+            <span data-bind="
+                click: toggle,
+                attr: {class: 'editor--boolean editor--boolean--' + key},
+                css: {selected: meta},
+                visible: visible">
+                <a class="editor--boolean__label" data-bind="
+                    text: label"></a>
+                <span class="editor--boolean__state"><span data-bind="visible: meta">&#10004;</span></span>
+            </span>
+        <!-- /ko -->
+    </script>
+
+    <script type="text/html" id="template_editor_boolean_states">
+        <!-- ko if: type === 'boolean' && meta() -->
+            <span class="editor--boolean  selected">
+                <span class="editor--boolean__label" data-bind="text: label"></span>
+                <span class="editor--boolean__state">&#10004;</span>
+            </span>
+        <!-- /ko -->
+    </script>
+
+
     <script type="text/html" id="template_collection">
         <div class="collection">
             <div class="list-header" data-bind="
@@ -210,100 +266,24 @@
 
     <script type="text/html" id="template_article">
         <div class="article" data-bind="
-            click: function() { return false; },
+            click: open,
             clickBubble: false,
             css: {
                 open: state.isOpen,
                 underDrag: state.underDrag
             }">
 
-            <a class="article__lhs" target="article" data-bind="
-                attr: {href: id},
-                click: open">
-                <img class="thumb" draggable="false" data-bind="
-                    attr: {src: meta.imageSrc() || fields.thumbnail(), title: id}"/>
+            <a class="thumb" target="article" data-bind="attr: {href: id}">
+                <img draggable="false" data-bind="
+                    attr: {
+                        src: meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : fields.thumbnail(),
+                        title: id
+                    }"/>
             </a>
 
             <div data-bind="if: state.isOpen">
-                <div class="article__overrides">
-                    <div class="article__overrides__fields">
-                        <textarea class="headline" data-bind="
-                            valueUpdate:'afterkeydown',
-                            hasFocus: true,
-                            event: {blur: save},
-                            value: headlineInput,
-                            attr: {
-                                maxlength: $root.headlineLength,
-                                placeholder: fields.headline() || 'Link text'
-                            }"></textarea>
-                        <span class="headline-length" data-bind="
-                            css: {'headline-length--alert': headlineLengthAlert},
-                            text: headlineLength"></span>
-                        <a class="revert revert--headline" data-bind="
-                            click: headlineRevert,
-                            attr: {title: 'Revert to: ' + fields.headline()},
-                            visible: meta.headline"><i class="icon-fast-backward"></i></a>
-
-                        <textarea class="trailtext" data-bind="
-                            valueUpdate:'afterkeydown',
-                            event: {blur: save},
-                            value: trailTextInput,
-                            attr: {placeholder: fields.trailText() || 'Trail text'}"></textarea>
-                        <a class="revert revert--trailtext" data-bind="
-                            click: trailTextRevert,
-                            attr: {title: 'Revert to: ' + fields.trailText()},
-                            visible: meta.trailText"><i class="icon-fast-backward"></i></a>
-
-                        <input type="text" placeholder="Link URL, eg. uk/money or http://www.bbc.co.uk/" data-bind="
-                            event: {blur: save},
-                            visible: isSnap,
-                            value: meta.href"/>
-
-                        <div data-bind="
-                            if: state.isOpenImage() || meta.imageSrc()">
-                            <input type="text" placeholder="Image URL, eg. copied from Batch Uploader" data-bind="
-                                hasFocus: state.isOpenImage;
-                                event: {blur: save},
-                                value: provisionalImageSrc"/>
-                        </div>
-                    </div>
-
-                    <div class="tools">
-                        <a class="tool tool--done" data-bind="click: close">Done</a>
-                    </div>
-
-                    <div class="misc__overrides">
-                        Image
-
-                        <a data-bind="
-                            click: toggleOpenImage,
-                            text: meta.imageSrc() ? 'replaced' : 'replace',
-                            css: {selected: meta.imageSrc}"></a>
-                        &middot;
-                        <a data-bind="
-                            click: toggleImageAdjustBoost,
-                            text: meta.imageAdjust() === 'boost' ? 'boosted' : 'boost',
-                            css: {selected: meta.imageAdjust() === 'boost'}"></a>
-                        &middot;
-                        <a data-bind="
-                            click: toggleImageAdjustHide,
-                            text: meta.imageAdjust() === 'hide' ? 'hidden' : 'hide',
-                            css: {selected: meta.imageAdjust() === 'hide'}"></a>
-                        &middot;
-                        <!-- ko if: mainMediaType() === 'video' -->
-                        <a data-bind="
-                            click: toggleShowMainVideo,
-                            css: {selected: meta.showMainVideo}">video</a>
-                        &middot;
-                        <!-- /ko -->
-                        Mark as
-                        <a data-bind="
-                            click: toggleIsBreaking,
-                            css: {selected: meta.isBreaking}">breaking news</a>
-                    </div>
-
-                    <div class="supporting-message">Add supporting content below</div>
-                </div>
+                <div class="article__overrides"
+                    data-bind="template: {name: 'template_editor', foreach: editors}"></div>
 
                 <div data-bind="if: group.parentType === 'Collection' || group.parentType === 'Clipboard'">
                     <div class="supporting" data-bind="with: meta.supporting">
@@ -314,38 +294,20 @@
                             template: {name: 'template_article', foreach: items}"></div>
                     </div>
                 </div>
+
+                <div class="tools">
+                    <a class="tool tool--done" data-bind="
+                        clickBubble: false,
+                        click: closeAndSave">Save edits</a>
+                    <span class="supporting-message">Add sublinks above</span>
+                </div>
             </div>
 
             <div class="closed" data-bind="if: !state.isOpen()">
-                <div class="article__time">
-                    <!-- ko if: fields.scheduledPublicationDate -->
-                        <span class="article__time__scheduled article__time__scheduled__launches">launches</span>
-                        <span class="article__time__scheduled" data-bind="
-                            text: scheduledPublicationTime"></span>
-                    <!-- /ko -->
 
-                    <!-- ko if: props.webPublicationDate -->
-                        <span class="article__time__publication" data-bind="
-                            text: webPublicationTime"></span>
-                        <span class="article__time__front" data-bind="
-                            text: frontPublicationTime"></span>
-                    <!-- /ko -->
-                </div>
-
-                <a class="article__spark" target="ophan" data-bind="
+                <img class="article__spark" data-bind="
                     visible: state.sparkUrl,
-                    attr: {href: state.ophanUrl}">
-                    <img data-bind="attr: {src: state.sparkUrl}" />
-                </a>
-
-                <div class="image__overrides" data-bind="click: open">
-                    <div data-bind="
-                        visible: meta.imageAdjust() === 'boost'">Boosted</div>
-                    <div data-bind="
-                        visible: meta.imageAdjust() === 'hide'">Hidden</div>
-                    <div data-bind="
-                        visible: meta.imageSrc">Replaced</div>
-                </div>
+                    attr: {src: state.sparkUrl}" />
 
                 <div class="article__tools">
                     <a class="tool tool--small tool--small--copy" data-bind="
@@ -368,53 +330,53 @@
                         <i class="icon-trash"></i></a>
                 </div>
 
-                <div class="article_content is-empty" data-bind="if: state.isEmpty">
-                    <span target="article" class="is-empty__url" data-bind="
-                        text: id"></span>
-                    This content is currently unavailable
-                </div>
-
-                <div class="article_content" data-bind="if: !state.isEmpty()">
-                    <a class="headline" target="article" data-bind="
-                        saneHtml: meta.headline() || fields.headline() || (isSnap() ? 'Add link text!' : 'Loading...'),
-                        css: {'is-empty': isSnap() && !meta.headline()},
-                        attr: {href: id},
-                        click: open"></a>
-
-                    <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                        <span class="count">(<span class="non-zero" data-bind="text: meta.supporting.items().length"></span>)</span>
+                <a class="article__content" data-bind="attr: {href: id}">
+                    <!-- ko if: state.isEmpty -->
+                        <div class="is-empty">
+                            <span class="is-empty__url" data-bind="text: id"></span>
+                            This content is currently unavailable
+                        </div>
                     <!-- /ko -->
 
-                    <!-- ko if: meta.headline -->
-                        <i class="icon-pencil"></i>
+                    <!-- ko ifnot: state.isEmpty -->
+                        <div class="element element__headline" data-bind="
+                            html: meta.headline() || fields.headline() || (meta.isSnap() ? 'Add link text!' : 'Loading...'),
+                            css: {'is-empty': meta.isSnap() && !meta.headline()}"></div>
+
+                        <div class="article__ammends">
+                            <span class="article__times">
+                                <span class="time__scheduled" data-bind="text: scheduledPublicationTime"></span>
+                                <span class="time__publication" data-bind="text: webPublicationTime"></span>
+                                <span class="time__front" data-bind="text: frontPublicationTime"></span>
+                            </span>
+
+                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
+                                <span class="has-sublinks">
+                                    <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>
+                                </span>
+                            <!-- /ko -->
+
+                            <!-- ko if: fields.isLive() === 'false' -->
+                                <span class="label" data-bind="
+                                    css: {
+                                        'label--takedown': fields.firstPublicationDate(),
+                                        'label--draft':   !fields.firstPublicationDate()
+                                    },
+                                    text: fields.firstPublicationDate() ? 'Taken down' : 'Draft'"></span>
+                            <!-- /ko -->
+
+                            <!-- ko if: meta.isSnap -->
+                                <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
+                            <!-- /ko -->
+
+                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
+
+                            <span data-bind="
+                                html: meta.trailText() || fields.trailText()"></span>
+                        </div>
                     <!-- /ko -->
+                </a>
 
-                    <div class="secondary">
-                        <span data-bind="
-                            visible: isSnap,
-                            attr: {class: 'is' + (meta.snapCss() ? ' is--' + meta.snapCss() : '')},
-                            click: open,
-                            text: meta.snapCss() || 'snap'"></span>
-
-                        <!-- ko if: fields.isLive() === 'false' -->
-                            <span class="is" data-bind="
-                                css: {
-                                    'is--takedown': fields.firstPublicationDate(),
-                                    'is--draft':   !fields.firstPublicationDate(),
-                                },
-                                text: fields.firstPublicationDate() ? 'Taken down' : 'Draft',
-                                click: open"></span>
-                        <!-- /ko -->
-
-                        <span class="is is--breaking" data-bind="
-                            visible: meta.isBreaking,
-                            click: open">Breaking News</span>
-
-                        <span data-bind="
-                            attr: {href: id},
-                            saneHtml: meta.trailText() || fields.trailText()"></span>
-                    </div>
-                </div>
             </div>
         </div>
 
