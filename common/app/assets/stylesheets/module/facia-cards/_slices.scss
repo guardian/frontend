@@ -100,9 +100,11 @@ Hence why a greater depth of selector specificity is needed.
 .facia-slice--t-tl-mpu {
     @include mq(tablet, $until: desktop) {
         > .facia-slice__item {
+            width: 25% !important;
+
             &:last-child {
                 @include flex(2);
-                width: (100 / 3) * 2%;
+                width: 50%;
             }
         }
     }
