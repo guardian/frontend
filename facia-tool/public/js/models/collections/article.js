@@ -123,6 +123,20 @@ define([
                     type: 'boolean'
                 },
                 {
+                    key: 'showKickerTag',
+                    editable: true,
+                    singleton: 'kicker',
+                    label: 'tag kicker',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showKickerSection',
+                    editable: true,
+                    singleton: 'kicker',
+                    label: 'section kicker',
+                    type: 'boolean'
+                },
+                {
                     key: 'imageSrcWidth',
                     requires: 'imageReplace',
                     label: 'replacement image width',
