@@ -36,3 +36,4 @@ case object AnalysisKicker extends ItemKicker
 case object ReviewKicker extends ItemKicker
 case class TagKicker(name: String, url: String) extends ItemKicker
 case class SectionKicker(name: String, url: String) extends ItemKicker
+case class FreeHtmlKicker(body: String) extends ItemKicker

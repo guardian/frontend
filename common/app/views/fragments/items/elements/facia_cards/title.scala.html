@@ -30,6 +30,10 @@
         case SectionKicker(sectionName, sectionLink) => {
             <a href="@LinkTo(sectionLink)" class="fc-item__kicker">@sectionName</a>
         }
+
+        case FreeHtmlKicker(html) => {
+            <span class="fc-item__kicker">@Html(html)</span>
+        }
     }
 
     @LinkTo(trail).map { url =>
