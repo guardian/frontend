@@ -430,7 +430,8 @@ object Switches extends Collections {
     MetricsSwitch,
     FootballFeedRecorderSwitch,
     CentreTopBannerAd,
-    ForceHttpResponseCodeSwitch
+    ForceHttpResponseCodeSwitch,
+    CircuitBreakerSwitch
   )
 
   val httpSwitches: List[Switch] = List(
