@@ -203,10 +203,10 @@ $avatarSize: 44px;
     padding: 0;
     display: block;
     clear: both;
+    position: relative;
 }
 .d-comment__inner {
     padding-top: $gs-baseline;
-    position: relative;
 }
 .d-comment--top-level {
     border-top: 1px solid $c-neutral4;
@@ -366,7 +366,6 @@ $avatarSize: 44px;
 
 .d-comment__main {
     padding-bottom: $gs-baseline*2;
-    position: relative;
 
     @include mq(rightCol) {
         padding-right: $gs-column-width;
@@ -435,6 +434,7 @@ $avatarSize: 44px;
 }
 .d-comment__recommend-button {
     @include icon-button(recommend, 18px);
+    display: inline-block;
     background-color: $c-neutral4;
     margin-right: 2px;
     margin-bottom: -5px;
@@ -545,14 +545,15 @@ $avatarSize: 44px;
     height: 14px;
     padding-top: ($gs-baseline/3)*2;
     padding-bottom: ($gs-baseline/3)*5;
-    width: 100%;
-    @include fs-textSans(1);
 }
 .d-comment__action {
+    @include fs-textSans(1);
     display: inline-block;
     color: $c-newsDefault;
     font-weight: bold;
     line-height: 20px;
+    width: auto;
+
 }
 .d-comment__action--reply {
     cursor: pointer;
@@ -565,18 +566,19 @@ $avatarSize: 44px;
         display: none;
     }
 }
-.d-comment__reply-button {
+.d-comment__reply-icon {
     @include icon-button(reply-white, 18px);
-    position: absolute; // override relative position of icon-button
+    margin-right: 1px;
+    display: inline-block;
     background-color: $c-newsDefault;
+    vertical-align: top;
 }
-.d-comment__action--reply-text {
-    padding-left: $gs-gutter * 1.25;
-}
+
 .d-comment__action--report {
     font-weight: normal;
     position: absolute;
     right: $gs-baseline/3;
+    bottom: ($gs-baseline/3)*5;
 }
 .d-comment__action-separator {
     display: inline-block;
@@ -585,6 +587,7 @@ $avatarSize: 44px;
     margin: 0 ($gs-gutter/5)*2;
     @include fs-textSans(1);
     color: $c-neutral2;
+    vertical-align: bottom;
 }
 .discussion--open {
     .d-comment__reply-wrapper,
