@@ -136,7 +136,8 @@ object CollectionJson {
       href           = collection.href.orElse(config.href),
       `type`         = config.collectionType,
       showTags       = config.showTags,
-      showSections   = config.showSections
+      showSections   = config.showSections,
+      hideKickers    = config.hideKickers
     )
 }
 
@@ -154,5 +155,6 @@ case class CollectionJson(
   groups:       Option[Seq[String]],
   href:         Option[String],
   showTags:     Boolean,
-  showSections: Boolean
-)
+  showSections: Boolean,
+  hideKickers:  Boolean
+                           )

@@ -63,7 +63,8 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
         (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil,
         (collectionJson \ "type").asOpt[String],
         (collectionJson \ "showTags").asOpt[Boolean] getOrElse false,
-        (collectionJson \ "showSections").asOpt[Boolean] getOrElse false
+        (collectionJson \ "showSections").asOpt[Boolean] getOrElse false,
+        (collectionJson \ "hideKickers").asOpt[Boolean] getOrElse false
       )
     }
   }
