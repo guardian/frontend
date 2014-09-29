@@ -5,7 +5,7 @@ import model.{Trail, Tag}
 object ItemKicker {
   private def firstTag(item: Trail): Option[Tag] = item.tags.headOption
 
-  private def resolve(trail: Trail, config: Option[model.Config]): Option[ItemKicker] = {
+  def fromTrail(trail: Trail, config: Option[model.Config]): Option[ItemKicker] = {
     lazy val maybeTag = firstTag(trail)
 
     if ((trail.showKickerTag || config.exists(_.showTags)) && maybeTag.isDefined) {
@@ -31,10 +31,6 @@ object ItemKicker {
       None
     }
   }
-
-  def fromTrail(trail: Trail, config: model.Config): Option[ItemKicker] = resolve(trail, Some(config))
-
-  def forSubLink(trail: Trail) = resolve(trail, None)
 }
 
 case class Series(name: String, url: String)
