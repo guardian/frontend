@@ -605,6 +605,8 @@ $avatarSize: 44px;
     top: 0;
     right: 0;
     z-index: 3;
+    width: gs-span(4);
+    color: colour(neutral-1);
     padding: $gs-baseline/2 $gs-gutter/2;
     border: 2px solid $c-neutral6;
     background: #ffffff;
