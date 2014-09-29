@@ -61,7 +61,7 @@
                     ("fc-item__header", true),
                     ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
                 ))">
-                    @title(trail, index, containerIndex)
+                    @title(trail, index, containerIndex, false)
                     @trail match { case content:model.Content => @starRating(content) }
                     @if(tone == "comment") {
                         @trail.byline.map { byLine =>
