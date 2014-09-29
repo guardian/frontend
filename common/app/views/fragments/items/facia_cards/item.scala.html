@@ -89,6 +89,8 @@
                 }
 
                 @meta(trail)
+
+                @sublinks(trail.supporting)
             </div>
             <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
         </div>
