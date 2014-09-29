@@ -38,11 +38,14 @@ define([
         var options = assign({
             'activeClass': 'is-active',
             'btnClass' : '.js-auto-update',
-            'manipulationType' : 'html'
+            'manipulationType' : 'html',
+            'backoff': 1, // 1 = no backoff
+            'backoffMax': 1000 * 60 * 20 // 20 mins
         }, config);
 
         this.unreadBlocks = 0;
         this.notification = '<';
+        this.updateDelay = options.delay;
 
         this.template =
             '  <button class="u-button-reset live-toggler live-toggler--autoupdate live-toggler--on js-auto-update js-auto-update--on"' +
@@ -151,16 +154,18 @@ define([
         };
 
         this.on = function() {
-            var that = this;
-
-            this.nextReload = new Date().getTime() + options.delay;
             this.isUpdating = true;
 
-            if(this.interval) { window.clearInterval(this.interval); }
-            this.interval = window.setInterval(function() {
-                that.load.call(that);
-                that.nextReload = new Date().getTime() + options.delay;
-            }, options.delay);
+            if(this.timeout) { window.clearTimeout(this.timeout); }
+
+            var updateLoop = function() {
+                this.load();
+                var newDelay = detect.pageVisible() ? options.delay : this.updateDelay * options.backoff;
+                this.updateDelay = Math.min(newDelay, options.backoffMax);
+                this.timeout = window.setTimeout(updateLoop, this.updateDelay);
+            }.bind(this);
+
+            updateLoop();
         };
 
         this.off = function() {
@@ -181,8 +186,9 @@ define([
             detect.initPageVisibility();
 
             mediator.on('modules:detect:pagevisibility:visible', function() {
+                this.on(); // reset backoff
                 if(this.isUpdating) { that.view.revealNewElements(); }
-            });
+            }.bind(this));
 
             mediator.on('modules:notificationbar:show', this.view.revealNewElements.bind(this));
 
