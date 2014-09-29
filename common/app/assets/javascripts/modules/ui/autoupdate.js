@@ -186,8 +186,10 @@ define([
             detect.initPageVisibility();
 
             mediator.on('modules:detect:pagevisibility:visible', function() {
-                this.on(); // reset backoff
-                if(this.isUpdating) { that.view.revealNewElements(); }
+                if(this.isUpdating) {
+                    this.on(); // reset backoff
+                    that.view.revealNewElements();
+                }
             }.bind(this));
 
             mediator.on('modules:notificationbar:show', this.view.revealNewElements.bind(this));
