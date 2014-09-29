@@ -10,6 +10,9 @@
         }
     }
 }
+.ad-slot--dark {
+    background-color: lighten($c-mediaBackground, 2.5%);
+}
 .ad-slot__label {
     height: $mpu-ad-label-height;
     background-color: $c-neutral8;
@@ -21,6 +24,12 @@
     @include box-sizing(border-box);
     font-family: $f-sans-serif-text;
     @include font-size(12, 20);
+
+    .ad-slot--dark & {
+        color: $c-neutral3;
+        border-top-color: $c-neutral2;
+        background-color: transparent;
+    }
 }
 
 /**
@@ -174,14 +183,6 @@
         padding-bottom: $gs-baseline*2;
     }
 }
-.ad-slot--gallery-inline {
-    background-color: lighten($c-mediaBackground, 2.5%);
-
-    .ad-slot__label {
-        color: $c-neutral3;
-        border-top-color: $c-neutral2;
-    }
-}
 .ad-slot--liveblog-inline {
     background-color: $c-neutral6;
 
@@ -238,17 +239,6 @@
 }
 .ad-slot--sponsored__link {
     float: right;
-}
-
-
-.ad-slot--audio-right {
-    background-color: lighten($c-mediaBackground, 2.5%);
-
-    .ad-slot__label {
-        color: $c-neutral3;
-        border-top-color: $c-neutral2;
-        background-color: transparent;
-    }
 }
 
 /**
