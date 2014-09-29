@@ -1,10 +1,44 @@
 define([
     'common/utils/$',
+    'common/utils/_',
     'react'
 ], function (
     $,
+    _,
     React
 ) {
+    var Clue = React.createClass({
+        render: function () {
+            return React.DOM.li(null, this.props.number + ": " + this.props.clue);
+        }
+    });
+
+    var Clues = React.createClass({
+        render: function () {
+            var that = this;
+
+            function cluesByDirection(direction) {
+                return _.chain(that.props.clues)
+                    .filter(function (clue) {
+                        return clue.direction == direction;
+                    })
+                    .map(function (clue) {
+                        return Clue({
+                            number: clue.number,
+                            clue: clue.clue
+                        });
+                    });
+            }
+
+            return React.DOM.div(null,
+                React.DOM.h3(null, "Across"),
+                React.DOM.ul(null, cluesByDirection("across")),
+                React.DOM.h3(null, "Down"),
+                React.DOM.ul(null, cluesByDirection("down"))
+            )
+        }
+    });
+
     var Crossword = React.createClass({
         getInitialState: function () {
             return {
@@ -13,7 +47,11 @@ define([
         },
 
         render: function () {
-            return React.DOM.p(null, this.state.data.name);
+            return React.DOM.div(null,
+                Clues({
+                    clues: this.state.data.entries
+                })
+            );
         }
     });
 
