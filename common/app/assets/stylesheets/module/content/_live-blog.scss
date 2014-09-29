@@ -561,10 +561,12 @@ $timeline-width: 14px;
     @include mq($until: desktop) {
         display: none;
     }
+
     .commentcount {
         z-index: 101;
-        position: static;
-   }
+        position: relative;
+        padding-left: $timeline-width / 2 + $gs-gutter;
+    }
 }
 
 .blog__timeline-container {
