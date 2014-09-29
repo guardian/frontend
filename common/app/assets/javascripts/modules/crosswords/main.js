@@ -9,7 +9,11 @@ define([
 ) {
     var Clue = React.createClass({
         render: function () {
-            return React.DOM.li(null, this.props.number + ": " + this.props.clue);
+            var text = this.props.number + ": " + this.props.clue;
+
+            return React.DOM.li(null,
+                (this.props.hasAnswered) ? React.DOM.s(null, text) : text
+            );
         }
     });
 
@@ -25,7 +29,8 @@ define([
                     .map(function (clue) {
                         return Clue({
                             number: clue.number,
-                            clue: clue.clue
+                            clue: clue.clue,
+                            hasAnswered: false
                         });
                     });
             }
