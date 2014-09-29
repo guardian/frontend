@@ -1,0 +1,9 @@
+@(crosswordPage: crosswords.CrosswordPage)(implicit request: RequestHeader)
+
+@main(crosswordPage) { } {
+    <div class="l-side-margins l-side-margins--layout-content">
+        <h1>@crosswordPage.crossword.name</h1>
+
+        <div id="crossword-container"></div>
+    </div>
+}

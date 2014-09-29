@@ -21,7 +21,8 @@ define([
     'common/bootstraps/gallery',
     'common/bootstraps/identity',
     'common/bootstraps/profile',
-    'common/bootstraps/sport'
+    'common/bootstraps/sport',
+    'common/bootstraps/crosswords'
 ], function (
     raven,
     qwery,
@@ -44,7 +45,8 @@ define([
     gallery,
     identity,
     profile,
-    sport
+    sport,
+    crosswords
 ) {
 
     var bootstrapContext = function(featureName, boostrap) {
@@ -134,6 +136,10 @@ define([
 
             if (config.page.section === 'identity') {
                 bootstrapContext('profile', profile);
+            }
+
+            if (config.page.section === 'crosswords') {
+                bootstrapContext('crosswords', crosswords);
             }
         };
 
