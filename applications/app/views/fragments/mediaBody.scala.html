@@ -6,7 +6,7 @@
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
 <div class="l-side-margins l-side-margins--layout-content">
     <div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
-        <article class="content content--media content--media--@mediaType tone-@media.visualTone"
+        <article class="content content--media content--media--@mediaType tone-@media.visualTone @if(media.body.nonEmpty) {content--has-body}"
             itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
 
             @fragments.headDefault(media)
@@ -123,7 +123,7 @@
                     case a: Audio if a.body.nonEmpty => {
                         <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
                             aria-hidden="true">
-                            @fragments.commercial.standardAd("right", Nil, Map("desktop" -> Seq("300,250")))
+                            @fragments.commercial.standardAd("right", Seq("audio-right"), Map("desktop" -> Seq("300,250")))
                         </div>
                     }
                     case _ => { }

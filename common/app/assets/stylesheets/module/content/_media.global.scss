@@ -103,6 +103,10 @@
         }
     }
 }
+// if it's audio and there's body text, we display an advert
+.content--has-body .content__main-column--audio {
+    min-height: 274px;
+}
 .content__headline:before {
     .content--media--audio & {
         width: .8em;

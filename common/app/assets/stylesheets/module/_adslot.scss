@@ -240,6 +240,17 @@
     float: right;
 }
 
+
+.ad-slot--audio-right {
+    background-color: lighten($c-mediaBackground, 2.5%);
+
+    .ad-slot__label {
+        color: $c-neutral3;
+        border-top-color: $c-neutral2;
+        background-color: transparent;
+    }
+}
+
 /**
  * Commercial Components
  */
