@@ -100,16 +100,18 @@ object SeoData extends ExecutionContexts with Logging {
 }
 
 case class FrontProperties(
-  onPageDescription: Option[String] = None,
-  imageUrl: Option[String] = None,
-  imageWidth: Option[String] = None,
-  imageHeight: Option[String] = None,
-  isImageDisplayed: Boolean = false,
-  editorialType: Option[String] = None
+  onPageDescription: Option[String],
+  imageUrl: Option[String],
+  imageWidth: Option[String],
+  imageHeight: Option[String],
+  isImageDisplayed: Boolean,
+  editorialType: Option[String]
 )
 
 object FrontProperties{
   implicit val propsFormatter = Json.format[FrontProperties]
+
+  val empty = FrontProperties(None, None, None, None, false, None)
 }
 
 object FaciaComponentName {

@@ -53,5 +53,5 @@ case class FaciaPage(id: String,
 }
 
 object FaciaPage {
-  def defaultFaciaPage: FaciaPage = FaciaPage("", SeoData.empty, FrontProperties(), Nil)
+  def defaultFaciaPage: FaciaPage = FaciaPage("", SeoData.empty, FrontProperties.empty, Nil)
 }
