@@ -95,6 +95,13 @@
             height: auto;
         }
     }
+    .content__secondary-column--audio .ad-slot {
+        display: none;
+
+        @include mq(desktop) {
+            display: block;
+        }
+    }
 }
 .content__headline:before {
     .content--media--audio & {

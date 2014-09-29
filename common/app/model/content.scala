@@ -456,7 +456,7 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 
 class Audio(content: ApiContentWithMeta) extends Media(content) {
 
-  lazy val body: String = delegate.safeFields.getOrElse("body", "")
+  lazy val body: Option[String] = delegate.safeFields.get("body")
 
   override lazy val contentType = GuardianContentTypes.Audio
 
