@@ -171,6 +171,9 @@ $avatarSize: 44px;
     height: 40px;
     line-height: 40px;
 
+    .is-not-modern & {
+        display: block;
+    }
     .i-show-all-comments {
         position: absolute;
         top: 0;
