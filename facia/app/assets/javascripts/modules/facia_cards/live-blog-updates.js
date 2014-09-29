@@ -12,8 +12,12 @@ define([
             elements = $(selector);
 
         elements.each(function (element) {
-            if (element.hasAttribute(articleIdAttribute)) {
-                elementByArticleId[element.getAttribute(articleIdAttribute)] = element;
+            var articleId = element.getAttribute(articleIdAttribute);
+            if (articleId) {
+                if (!elementByArticleId[articleId]) {
+                   elementByArticleId[articleId] = [];
+                }
+                elementByArticleId[articleId].push(element);
             }
         });
 
@@ -26,21 +30,24 @@ define([
                 success: function (response) {
                     if (response && response.latestBlocks) {
                         response.latestBlocks.forEach(function (latestBlock) {
-                            var element = elementByArticleId[latestBlock.articleId];
+                            var elements = elementByArticleId[latestBlock.articleId];
 
-                            if (element && element.getAttribute('data-blockId') !== latestBlock.blockId) {
-                                var $el = bonzo(element).addClass('fc-item__latest-block--unloading');
-
-                                setTimeout(function () {
-                                    $el.addClass('fc-item__latest-block--loading');
+                            elements.forEach(function (element) {
+                                if (element && element.getAttribute('data-blockId') !== latestBlock.blockId) {
+                                    var $el = bonzo(element).addClass('fc-item__latest-block--unloading');
+    
                                     setTimeout(function () {
-                                        $el.toggleClass('fc-item__latest-block--loading fc-item__latest-block--unloading')
-                                        .html(latestBlock.body)
-                                        .attr('href', latestBlock.articleId + '#' + latestBlock.blockId);
-                                        element.setAttribute('data-blockId', latestBlock.blockId);
-                                    }, 50);
-                                }, 250); // wait for transform to finis
-                            }
+                                        $el.addClass('fc-item__latest-block--loading');
+                                        setTimeout(function () {
+                                            $el.toggleClass('fc-item__latest-block--loading fc-item__latest-block--unloading')
+                                            .html(latestBlock.body)
+                                            .attr('href', latestBlock.articleId + '#' + latestBlock.blockId);
+                                            element.setAttribute('data-blockId', latestBlock.blockId);
+                                        }, 50);
+                                    }, 250); // wait for transform to finish
+                                }
+                            });
+
                         });
                     }
                 }
