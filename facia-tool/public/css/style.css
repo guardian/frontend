@@ -400,36 +400,6 @@ h1 {
     font-size: 12px;
 }
 
-.element {
-    display: inline-block;
-    margin: 3px 0;
-    width: 100%;
-}
-
-.element,
-.element a {
-    color: #999999;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.element:hover {
-    color: #000000;
-}
-
-.element__headline a,
-.element__headline {
-    color: #000000;
-    font-size: 16px;
-    line-height: 16px;
-}
-
-.element__trailText a,
-.element__trailText {
-    color: #666666;
-}
-
-
 .article__ammends {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -548,6 +518,7 @@ h1 {
 }
 
 .supporting .editor--boolean,
+.supporting .article__ammends,
 .supporting .element__trailText,
 .supporting .element__byline,
 .supporting .element__imageSrc,
@@ -574,7 +545,7 @@ input[type="text"] {
     line-height: 16px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    border-radius: 4px;
+    border-radius: 2px;
     border: 1px solid #cccccc;
     background-color: #ffffff;
 }
@@ -607,15 +578,18 @@ select {
 }
 
 .editor textarea {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 18px;
     width: 100%;
-    padding: 1px 0 1px 2px;
+    padding: 0 2px;
     border: 0;
-    margin: 2px 0 -1px -2px;
+    margin: 3px 0 -1px -2px;
     z-index: 10;
+    color: #999999;
+    background: #dddddd;
+}
+
+.editor textarea.active {
+    background: #fafafa;
+    color: #000000;
 }
 
 .editor__revert,
@@ -658,6 +632,35 @@ select {
 .editor--boolean__state {
     display: inline-block;
     width: 15px;
+}
+
+.element {
+    display: inline-block;
+    margin: 3px 0;
+    width: 100%;
+}
+
+.element,
+.element a {
+    color: #999999;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.element:hover {
+    color: #000000;
+}
+
+.element__headline a,
+.element__headline {
+    color: #000000 !important;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.element__trailText a,
+.element__trailText {
+    color: #666666 !important;
 }
 
 button {
@@ -1157,6 +1160,8 @@ button {
     opacity: 0.9;
 }
 
+.icon-chevron-down { background-position: -313px -119px; }
+.icon-chevron-up { background-position: -288px -120px; }
 .icon-refresh { background-position: -240px -24px; }
 .icon-remove { background-position: -312px 0; }
 .icon-share-alt { background-position: -336px -96px; }

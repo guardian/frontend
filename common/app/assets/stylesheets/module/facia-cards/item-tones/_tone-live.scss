@@ -2,7 +2,7 @@
     @extend %tone-background;
 
     &.fc-item {
-        background-color: $c-live;
+        background-color: $c-liveDefault;
 
         &,
         & a {

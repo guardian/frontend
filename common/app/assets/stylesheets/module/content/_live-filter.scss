@@ -1,6 +1,5 @@
 .live-toolbar {
     width: 100%;
-    margin-bottom: $gs-baseline;
     height: $gs-row-height + $gs-baseline;
 
     .is-live & {
@@ -9,10 +8,6 @@
 
     @include mq($until: tablet) {
         font-size: .875em;
-    }
-
-    @include mq(rightCol) {
-        border-top: 1px solid $c-neutral3;
     }
 }
 
@@ -103,5 +98,5 @@
 }
 
 .live-toggler--on .live-toggle__value {
-    background-color: $c-live;
+    background-color: $c-liveDefault;
 }

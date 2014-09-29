@@ -13,7 +13,20 @@
         }
     }
 
-    &.fc-item--list-tablet .fc-item__container {
+    &.fc-item--list-tablet .fc-item__container,
+    &.fc-item--list-media-tablet .fc-item__container {
+        @include mq(tablet) {
+            @include box-shadow(inset 0 1px $c-newsAccent);
+        }
+    }
+
+    &.fc-item--list-desktop .fc-item__container {
+        @include mq(tablet) {
+            @include box-shadow(inset 0 1px $c-newsAccent);
+        }
+    }
+
+    &.fc-item--list-compact-tablet .fc-item__container {
         @include mq(tablet) {
             @include box-shadow(inset 0 1px $c-newsAccent);
         }
@@ -28,7 +41,6 @@
         }
     }
 
-    &.fc-item--list-media-tablet,
     &.fc-item--three-quarters-tablet,
     &.fc-item--three-quarters-right-tablet,
     &.fc-item--full-tablet,
@@ -57,6 +69,17 @@
         .fc-item__standfirst,
         .fc-item__meta {
             @include mq(tablet) {
+                padding-left: $fc-item-gutter;
+                padding-right: $fc-item-gutter;
+            }
+        }
+    }
+
+    &.fc-item--list-media-desktop {
+        .fc-item__header,
+        .fc-item__standfirst,
+        .fc-item__meta {
+            @include mq(desktop) {
                 padding-left: $fc-item-gutter;
                 padding-right: $fc-item-gutter;
             }

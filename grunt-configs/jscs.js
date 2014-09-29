@@ -50,7 +50,6 @@ module.exports = function(grunt, options) {
                     '!modules/commercial/liveblog-adverts.js',
                     '!modules/commercial/loader.js',
                     '!modules/commercial/outbrain.js',
-                    '!modules/commercial/slice-adverts.js',
                     '!modules/commercial/tags/amaa.js',
                     '!modules/commercial/tags/audience-science-gateway.js',
                     '!modules/commercial/tags/audience-science.js',
