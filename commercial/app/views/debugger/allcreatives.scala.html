@@ -920,14 +920,15 @@ jQuery(function($) {
     <div class="facia-container facia-container--layout-content">
         <h2 class="facia-container__inner test-page-head">Soulmates</h2>
 
-        <h3 class="facia-container__inner test-page-subhead">Low relevance</h3>
-        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+        <h3 class="facia-container__inner test-page-subhead">Low relevance v2</h3>
+        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low-v2 ad-slot ad-slot--merchandising ad-slot--commercial-component">
             <script>
-                $.getJSON( "/commercial/soulmates/mixed.json", function( json ) {
-                $('.dfp-ad--merchandising-soulmates-low').html(json.html);
+                $.getJSON( "/commercial/soulmates/mixed-v2.json", function( json ) {
+                $('.dfp-ad--merchandising-soulmates-low-v2').html(json.html);
              });
             </script>
         </div>
+
 
         <h3 class="facia-container__inner test-page-subhead">High relevance</h3>
         <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-high ad-slot ad-slot--merchandising ad-slot--commercial-component">
