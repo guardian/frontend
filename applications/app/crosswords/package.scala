@@ -1,0 +1,16 @@
+import com.gu.crosswords.api.client.{Response, Http, ApiClient}
+import conf.Configuration
+import play.api.Play.current
+import play.api.libs.ws.WS
+
+import scala.concurrent.Future
+
+package object crosswords {
+  val maybeApi = Configuration.crosswords.apiKey map { key =>
+    ApiClient(key, new Http {
+      override def get(uri: String): Future[Response] = WS.url(uri).get map { wsResponse =>
+        Response(wsResponse.status, wsResponse.statusText, wsResponse.body)
+      }
+    })
+  }
+}
