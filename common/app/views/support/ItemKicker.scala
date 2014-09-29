@@ -5,14 +5,14 @@ import model.{Trail, Tag}
 object ItemKicker {
   private def firstTag(item: Trail): Option[Tag] = item.tags.headOption
 
-  def fromTrail(trail: Trail, config: model.Config): Option[ItemKicker] = {
+  private def resolve(trail: Trail, config: Option[model.Config]): Option[ItemKicker] = {
     lazy val maybeTag = firstTag(trail)
 
-    if ((trail.showKickerTag || config.showTags) && maybeTag.isDefined) {
+    if ((trail.showKickerTag || config.exists(_.showTags)) && maybeTag.isDefined) {
       maybeTag map { tag =>
         TagKicker(tag.name, tag.webUrl)
       }
-    } else if (config.showSections || trail.showKickerSection) {
+    } else if (config.exists(_.showSections) || trail.showKickerSection) {
       Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
     } else if (trail.isBreaking) {
       Some(BreakingNewsKicker)
@@ -31,6 +31,10 @@ object ItemKicker {
       None
     }
   }
+
+  def fromTrail(trail: Trail, config: model.Config): Option[ItemKicker] = resolve(trail, Some(config))
+
+  def forSubLink(trail: Trail) = resolve(trail, None)
 }
 
 case class Series(name: String, url: String)
