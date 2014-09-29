@@ -1,9 +1,12 @@
 @(crosswordPage: crosswords.CrosswordPage)(implicit request: RequestHeader)
 
+@import play.api.libs.json._
+
 @main(crosswordPage) { } {
     <div class="l-side-margins l-side-margins--layout-content">
         <h1>@crosswordPage.crossword.name</h1>
 
-        <div id="crossword-container"></div>
+        <div class="js-crossword"
+             data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))"></div>
     </div>
 }
