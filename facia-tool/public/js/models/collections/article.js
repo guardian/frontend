@@ -120,6 +120,7 @@ define([
                     editable: true,
                     singleton: 'images',
                     label: 'replace image',
+                    displayIf: 'imageSrc',
                     type: 'boolean'
                 },
                 {
@@ -275,16 +276,29 @@ define([
 
             return {
                 key:    key,
+
                 label:  opts.label,
+
                 type:   opts.type,
 
                 meta:   meta,
+
                 field:  field,
+
                 revert: function() { meta(undefined); },
+
                 open:   function() { mediator.emit('ui:open', meta); },
 
-                visible: ko.computed(function() {
+                hasFocus: ko.computed(function() {
+                    return meta === vars.model.uiOpenElement();
+                }, self),
+
+                displayEditor: ko.computed(function() {
                     return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
+                }, self),
+
+                displayValue: ko.computed(function() {
+                    return opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true;
                 }, self),
 
                 toggle: function() {
@@ -301,7 +315,7 @@ define([
                    _.chain(all)
                     .filter(function(editor) { return editor.requires === key; })
                     .first(1)
-                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key]); })
+                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key]); });
                 },
 
                 length: ko.computed(function() {
@@ -317,7 +331,7 @@ define([
                         return meta() || field();
                     },
                     write: function(value) {
-                        meta(value.replace(rxScriptStriper, ''));
+                        meta(value === field() ? undefined : value.replace(rxScriptStriper, ''));
                     },
                     owner: self
                 })
@@ -497,6 +511,8 @@ define([
             if (!this.state.isOpen()) {
                  this.state.isOpen(true);
                  mediator.emit('ui:open', this.meta.headline);
+            } else {
+                 mediator.emit('ui:open', undefined);
             }
         };
 
@@ -539,7 +555,7 @@ define([
                     if (keyCode === 9) {
                         e.preventDefault();
                         formField = bindingContext.$rawData;
-                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.visible(); });
+                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.displayEditor(); });
                         nextIndex = mod(formFields.indexOf(formField) + (e.shiftKey ? -1 : 1), formFields.length);
                         mediator.emit('ui:open', formFields[nextIndex].meta);
                     }
