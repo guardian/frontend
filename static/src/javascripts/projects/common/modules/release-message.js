@@ -44,7 +44,7 @@ define([
                             '<i class="i i-arrow-white-right"></i>' +
                             '<a href="{{blog}}" target="_blank">Find out more</a>' +
                         '</li>',
-                        msgconfig
+                        msgConfig
                     );
                 }
                 msg += template(
