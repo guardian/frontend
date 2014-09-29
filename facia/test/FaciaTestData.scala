@@ -1,10 +1,10 @@
 package test
 
+import com.gu.facia.client.models.CollectionConfig
 import common.{AkkaAgent, Edition}
 import common.editions.{Au, Us, Uk}
 import controllers.front.Front
 import model._
-import model.Config
 import model.FaciaPage
 import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
@@ -46,7 +46,7 @@ class TestPageFront(val id: String, edition: Edition, faciaPage: FaciaPage) {
 }
 
 trait ModelHelper {
-  def configWithId(id: String) = Config(id, None, None, None)
+  val emptyConfig = CollectionConfig.emptyConfig
 
   def trailWithUrl(url: String): Content = TestTrail(url)
   def trailsWithUrl(url: Seq[String]): Seq[Trail] = url map trailWithUrl
@@ -101,8 +101,8 @@ trait FaciaTestData extends ModelHelper {
     id = "uk",
     SeoData.fromPath("uk"),
     collections = List(
-      (configWithId("uk/news/regular-stories"),
-        Collection(ukFrontTrails)
+      ("uk/news/regular-stories",
+      (emptyConfig, Collection(ukFrontTrails))
       )
     )
   )
@@ -111,18 +111,17 @@ trait FaciaTestData extends ModelHelper {
     id = "us",
     SeoData.fromPath("us"),
     collections = List(
-      (configWithId("us/news/regular-stories"),
-        Collection(usFrontTrails)
-      )
-    )
+      ("us/news/regular-stories",
+      (emptyConfig, Collection(usFrontTrails))
+    ))
   )
 
   val auFaciaPage: FaciaPage = FaciaPage(
     id = "us",
     SeoData.fromPath("us"),
     collections = List(
-      (configWithId("au/news/regular-stories"),
-        Collection(auFrontTrails)
+      ("au/news/regular-stories",
+      (emptyConfig, Collection(auFrontTrails))
       )
     )
   )
@@ -131,27 +130,30 @@ trait FaciaTestData extends ModelHelper {
     id = "uk/culture",
     SeoData.fromPath("uk/culture"),
     collections = List(
-      (configWithId("uk/culture/regular-stories"),
+      ("uk/culture/regular-stories",
+      (emptyConfig,
         Collection(cultureFrontTrails)
-        )
+        ))
     )
   )
   val usCultureFaciaPage: FaciaPage = FaciaPage(
     id = "us/culture",
     SeoData.fromPath("us/culture"),
     collections = List(
-      (configWithId("au/culture/regular-stories"),
+      ("au/culture/regular-stories",
+      (emptyConfig,
         Collection(cultureFrontTrails)
-        )
+        ))
     )
   )
   val auCultureFaciaPage: FaciaPage = FaciaPage(
     id = "au/culture",
     SeoData.fromPath("au/culture"),
     collections = List(
-      (configWithId("au/culture/regular-stories"),
+      ("au/culture/regular-stories",
+      (emptyConfig,
         Collection(cultureFrontTrails)
-        )
+        ))
     )
   )
 

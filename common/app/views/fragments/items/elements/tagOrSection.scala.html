@@ -1,4 +1,4 @@
-@(content: model.Content)(implicit request: RequestHeader, config: model.Config)
+@(content: model.Content)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @if(config.showTags) {
     @content.tags.take(1).map { s =>

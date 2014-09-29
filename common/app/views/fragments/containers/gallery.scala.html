@@ -1,8 +1,9 @@
-@(page: MetaData, collection: Collection, style: MultimediaContainer, containerIndex: Int, layoutType: String = "content", featuredSeries: Seq[(String,String)])(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(page: MetaData, collection: Collection, style: MultimediaContainer, containerIndex: Int, layoutType: String = "content", featuredSeries: Seq[(String,String)], dataId: String)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.Edition
-@import model.{Collection, Config, FaciaComponentName, MetaData}
+@import model.{Collection, FaciaComponentName, MetaData}
 @import views.support.{GetClasses, MultimediaContainer, RenderClasses, TemplateDeduping}
+@import dfp.DfpAgent
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
     @defining(templateDeduping(10, collection.items)) { items =>
@@ -11,9 +12,9 @@
                 <section
                     class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty, if (!isEdition) Seq("container--tag") else Nil) container--gallery"
                     data-link-name="@FaciaComponentName(config, collection)"
-                    data-id="@config.id"
+                    data-id="@dataId"
                     data-type="@style.containerType"
-                    @config.sponsorshipKeyword.map { keyword =>
+                    @DfpAgent.sponsorshipTag(config).map { keyword =>
                         data-keywords="@keyword"
                     }
                     data-component="@FaciaComponentName(config, collection)">

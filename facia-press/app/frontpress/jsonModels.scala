@@ -1,5 +1,6 @@
 package frontpress
 
+import com.gu.facia.client.models.CollectionConfig
 import com.gu.openplatform.contentapi.model.Asset
 import conf.Switches
 import model._
@@ -121,9 +122,9 @@ case class TrailJson(
 object CollectionJson {
   implicit val jsonFormat = Json.format[CollectionJson]
 
-  def fromCollection(config: Config, collection: Collection) =
+  def fromCollection(config: CollectionConfig, collection: Collection) =
     CollectionJson(
-      apiQuery       = config.contentApiQuery,
+      apiQuery       = config.apiQuery,
       displayName    = config.displayName.orElse(collection.displayName),
       curated        = collection.curated.map(TrailJson.fromContent),
       editorsPicks   = collection.editorsPicks.map(TrailJson.fromContent),
@@ -132,11 +133,11 @@ object CollectionJson {
       lastUpdated    = collection.lastUpdated,
       updatedBy      = collection.updatedBy,
       updatedEmail   = collection.updatedEmail,
-      groups         = Option(config.groups).filter(_.nonEmpty),
+      groups         = config.groups.filter(_.nonEmpty),
       href           = collection.href.orElse(config.href),
-      `type`         = config.collectionType,
-      showTags       = config.showTags,
-      showSections   = config.showSections
+      `type`         = config.`type`,
+      showTags       = config.showTags.getOrElse(false),
+      showSections   = config.showSections.getOrElse(false)
     )
 }
 

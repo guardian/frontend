@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.facia.client.models.CollectionConfig
 import play.api.mvc.{ Controller, Action, RequestHeader }
 import common._
 import model._
@@ -65,8 +66,9 @@ object VideoInSectionController extends Controller with Logging with Paging with
       case _ => sectionId
     }
     val tagCombinedHref = s"$sectionTag/$sectionTag+content/video"
-    implicit val config = Config(id = sectionId, href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} videos") )
-    val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1, "content", useInlinePlayer = false)
+    implicit val config = CollectionConfig.withDefaults(href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} videos"))
+    val dataId: String = sectionId
+    val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1, "content", useInlinePlayer = false, dataId)
     renderFormat(response, response, 1)
   }
 }

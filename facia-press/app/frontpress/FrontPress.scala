@@ -1,5 +1,6 @@
 package frontpress
 
+import com.gu.facia.client.models.CollectionConfig
 import com.gu.openplatform.contentapi.model.ItemResponse
 import common.FaciaPressMetrics.{ContentApiSeoRequestFailure, ContentApiSeoRequestSuccess}
 import common.{Edition, Logging}
@@ -31,9 +32,9 @@ trait FrontPress extends Logging {
   def generateJson(id: String,
                    seoData: SeoData,
                    frontProperties: FrontProperties,
-                   collections: Seq[(Config, Collection)]): Try[JsObject] = {
+                   collections: Seq[(CollectionConfig, Collection)]): Try[JsObject] = {
     val collectionsWithBackFills = collections.toList collect {
-      case (config, collection) if config.contentApiQuery.isDefined => collection
+      case (config, collection) if config.apiQuery.isDefined => collection
     }
 
     if (collectionsWithBackFills.nonEmpty && collectionsWithBackFills.forall(_.isBackFillEmpty)) {
@@ -42,7 +43,7 @@ trait FrontPress extends Logging {
       Failure(new RuntimeException(errorMessage))
     } else {
       val collectionsJson = collections.map { case (config, collection) =>
-        Json.obj(config.id -> Json.toJson(CollectionJson.fromCollection(config, collection)))
+        Json.obj(id -> Json.toJson(CollectionJson.fromCollection(config, collection)))
       }.foldLeft(Json.arr()) { case (l, jsObject) => l :+ jsObject}
 
       Success(Json.obj(
@@ -53,9 +54,9 @@ trait FrontPress extends Logging {
     }
   }
 
-  private def retrieveCollectionsById(id: String, parseCollection: ParseCollection): Future[Seq[(Config, Collection)]] = {
-    val collectionIds: List[Config] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
-    val collections = collectionIds.map(config => parseCollection.getCollection(config.id, config, Uk).map((config, _)))
+  private def retrieveCollectionsById(id: String, parseCollection: ParseCollection): Future[Seq[(CollectionConfig, Collection)]] = {
+    val collectionIds: List[(String, CollectionConfig)] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
+    val collections = collectionIds.map(config => parseCollection.getCollection(config._1, config._2, Uk).map((config._2, _)))
     Future.sequence(collections)
   }
 

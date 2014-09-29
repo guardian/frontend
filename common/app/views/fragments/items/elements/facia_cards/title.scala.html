@@ -1,7 +1,7 @@
-@(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader, config: Config)
+@(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
-@import model.{Config, Trail}
+@import model.Trail
 @import views.html.fragments.items.elements.facia_cards.itemHeader
 @import views.support._
 

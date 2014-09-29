@@ -1,10 +1,11 @@
-@(collection: Collection, style: NewsContainer, containerIndex: Int, date: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: Collection, style: NewsContainer, containerIndex: Int, date: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
-@import model.{Collection, Config}
+@import model.Collection
 @import views.html.fragments.keywordList
 @import views.support.MostPopularTags.topTags
 @import views.support.{GetClasses, Format, NewsContainer, PreviousAndNext, TemplateDeduping}
+@import dfp.DfpAgent
 
 @defining(collection.displayName) { title =>
 
@@ -14,7 +15,7 @@
                 class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty)"
                 data-link-name="all index"
                 data-type="@style.containerType"
-                @config.sponsorshipKeyword.map { keyword =>
+                @DfpAgent.sponsorshipTag(config).map { keyword =>
                     data-keywords="@keyword"
                 }
                 data-component="all index">

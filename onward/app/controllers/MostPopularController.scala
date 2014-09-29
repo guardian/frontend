@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf._
 import feed.{MostPopularAgent, GeoMostPopularAgent, DayMostPopularAgent}
@@ -33,7 +34,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular => Cached(900) {
           JsonComponent(
             "html" -> views.html.fragments.collections.popular(popular),
-            "faciaHtml" -> views.html.fragments.containers.popular(Collection(popular.headOption.map(_.trails).getOrElse(Nil), None), PopularContainer(showMore = true), containerIndex = 1)(request, Config(s"$path/most-viewed/regular-stories", displayName = Option("Most popular"))),
+            "faciaHtml" -> views.html.fragments.containers.popular(Collection(popular.headOption.map(_.trails).getOrElse(Nil), None), PopularContainer(showMore = true), containerIndex = 1, s"$path/most-viewed/regular-stories")(request, CollectionConfig(displayName = Option("Most popular"), None, None, None, None, None, None, None)),
             "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular)
           )
         }

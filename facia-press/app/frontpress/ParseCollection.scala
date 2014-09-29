@@ -1,21 +1,17 @@
 package services
 
 import com.amazonaws.services.s3.AmazonS3Client
-import com.gu.facia.client.models.{SupportingItem, Trail, SupportingItemMetaData, TrailMetaData}
+import com.gu.facia.client.models.{Trail, _}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
-import common.S3Metrics.S3AuthorizationError
 import common._
-import conf.{Configuration, LiveContentApi}
 import conf.Switches.FaciaToolCachedContentApiSwitch
+import conf.{Configuration, LiveContentApi}
 import contentapi.{ContentApiClient, QueryDefaults}
-import model._
+import model.{Collection, _}
 import org.apache.commons.codec.digest.DigestUtils._
 import org.joda.time.DateTime
 import performance._
-import play.api.libs.json.Json._
-import play.api.libs.json._
-import play.api.libs.ws.WSResponse
 import services.ParseCollectionJsonImplicits._
 
 import scala.concurrent.Future
@@ -76,7 +72,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     def empty: CollectionMeta = CollectionMeta(None, None, None, None, None)
   }
 
-  def getCollection(id: String, config: Config, edition: Edition): Future[Collection] = {
+  def getCollection(id: String, config: CollectionConfig, edition: Edition): Future[Collection] = {
     val collection: Future[Option[com.gu.facia.client.models.Collection]] =
       amazonClient.collection(id)
         .map(Option.apply)
@@ -89,7 +85,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
 
     val executeDraftContentApiQuery: Future[Result] =
-      config.contentApiQuery.map(executeContentApiQueryViaCache(_, edition)).getOrElse(Future.successful(Result.empty))
+      config.apiQuery.map(executeContentApiQueryViaCache(_, edition)).getOrElse(Future.successful(Result.empty))
 
     for {
       executeRequest <- executeDraftContentApiQuery

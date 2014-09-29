@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import front._
 import model._
@@ -73,7 +74,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     frontJson.get(path).map(_.map{ faciaPage =>
       Cached(faciaPage) {
         if (request.isRss)
-          Ok(TrailsToRss(faciaPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
+          Ok(TrailsToRss(faciaPage, faciaPage.collections.map(_._2._2).flatMap(_.items).toSeq.distinctBy(_.id)))
             .as("text/xml; charset=utf-8")
         else if (request.isJson)
           JsonFront(faciaPage)
@@ -88,8 +89,8 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       getPressedCollection(id).map { collectionOption =>
         collectionOption.map { collection =>
           Cached(60) {
-            val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
-            val html = views.html.fragments.frontCollection(FaciaPage.defaultFaciaPage, (config, collection), 1, 1)
+            val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.emptyConfig)
+            val html = views.html.fragments.frontCollection(FaciaPage.defaultFaciaPage, (config, collection), 1, 1, id)
             if (request.isJson)
               JsonCollection(html, collection)
             else
@@ -115,7 +116,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   private def getPressedCollection(collectionId: String): Future[Option[Collection]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
       frontJson.get(path).map(_.flatMap{ faciaPage =>
-        faciaPage.collections.find{ case (c, col) => c.id == collectionId}.map(_._2)
+        faciaPage.collections.find{ case (c, col) => c == collectionId}.map(_._2._2)
       })
     }.getOrElse(Future.successful(None))
 
@@ -125,7 +126,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       getPressedCollection(id).map { collectionOption =>
           collectionOption.map { collection =>
               Cached(60) {
-                val config: Config = ConfigAgent.getConfig(id).getOrElse(Config(""))
+                val config: CollectionConfig = ConfigAgent.getConfig(id).getOrElse(CollectionConfig.emptyConfig)
                   Ok(TrailsToRss(config.displayName, collection.items)).as("text/xml; charset=utf8")
               }
           }.getOrElse(ServiceUnavailable)

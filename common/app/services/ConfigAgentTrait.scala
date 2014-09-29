@@ -1,8 +1,9 @@
 package services
 
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import play.api.libs.json.{JsNull, Json, JsValue}
-import model.{FrontProperties, Config, SeoDataJson}
+import model.{FrontProperties, SeoDataJson}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import akka.util.Timeout
@@ -41,29 +42,29 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     }).toSeq
   }
 
-  def getConfigForId(id: String): Option[List[Config]] = {
+  def getConfigForId(id: String): Option[List[(String, CollectionConfig)]] = {
     val json = configAgent.get()
     (json \ "fronts" \ id \ "collections").asOpt[List[String]] map { configList =>
-      configList flatMap getConfig
+      configList.flatMap(collectionId => getConfig(collectionId).map(collectionConfig => collectionId -> collectionConfig))
     }
   }
 
-  def getConfig(id: String): Option[Config] = generateConfig(configAgent.get(), id)
+  def getConfig(id: String): Option[CollectionConfig] = generateConfig(configAgent.get(), id)
 
-  def getConfigAfterUpdates(id: String): Future[Option[Config]] =
+  def getConfigAfterUpdates(id: String): Future[Option[CollectionConfig]] =
     configAgent.future().map(configJson => generateConfig(configJson, id))
 
-  private def generateConfig(json: JsValue, id: String): Option[Config] = {
+  private def generateConfig(json: JsValue, id: String): Option[CollectionConfig] = {
     (json \ "collections" \ id).asOpt[JsValue] map { collectionJson =>
-      Config(
-        id,
-        (collectionJson \ "apiQuery").asOpt[String],
-        (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
-        (collectionJson \ "href").asOpt[String],
-        (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil,
-        (collectionJson \ "type").asOpt[String],
-        (collectionJson \ "showTags").asOpt[Boolean] getOrElse false,
-        (collectionJson \ "showSections").asOpt[Boolean] getOrElse false
+      CollectionConfig(
+        apiQuery     = (collectionJson \ "apiQuery").asOpt[String],
+        displayName  = (collectionJson \ "displayName").asOpt[String].filter(_.nonEmpty),
+        href         = (collectionJson \ "href").asOpt[String],
+        groups       = (collectionJson \ "groups").asOpt[List[String]],
+        `type`       = (collectionJson \ "type").asOpt[String],
+        showTags     = (collectionJson \ "showTags").asOpt[Boolean],
+        showSections = (collectionJson \ "showSections").asOpt[Boolean],
+        uneditable   = None
       )
     }
   }

@@ -3,10 +3,11 @@ package dfp
 import java.net.URLDecoder
 
 import akka.agent.Agent
+import com.gu.facia.client.models.CollectionConfig
 import common._
 import conf.Configuration
 import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpInlineMerchandisingTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey}
-import model.{Config, Tag}
+import model.Tag
 import play.api.{Application, GlobalSettings}
 import services.S3
 
@@ -21,15 +22,15 @@ trait DfpAgent {
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
-  private def containerSponsoredTag(config: Config, p: String => Boolean): Option[String] = {
-    config.contentApiQuery.flatMap { encodedQuery =>
+  private def containerSponsoredTag(config: CollectionConfig, p: String => Boolean): Option[String] = {
+    config.apiQuery.flatMap { encodedQuery =>
       val query = URLDecoder.decode(encodedQuery, "utf-8")
       val tokens = query.split( """\?|&|=|\(|\)|\||\,""").map(_.replaceFirst(".*/", ""))
       tokens find p
     }
   }
 
-  private def isSponsoredContainer(config: Config, p: String => Boolean): Boolean = {
+  private def isSponsoredContainer(config: CollectionConfig, p: String => Boolean): Boolean = {
     containerSponsoredTag(config, p).isDefined
   }
 
@@ -38,7 +39,7 @@ trait DfpAgent {
 
   def isSponsored(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isSponsored(tag.id))
   def isSponsored(tagId: String): Boolean = sponsorships exists (_.hasTag(tagId))
-  def isSponsored(config: Config): Boolean = isSponsoredContainer(config, isSponsored)
+  def isSponsored(config: CollectionConfig): Boolean = isSponsoredContainer(config, isSponsored)
 
   def hasMultipleSponsors(tags: Seq[Tag]): Boolean = {
     tags.map { tag =>
@@ -64,7 +65,7 @@ trait DfpAgent {
 
   def isAdvertisementFeature(tags: Seq[Tag]): Boolean = getKeywordTags(tags) exists (tag => isAdvertisementFeature(tag.id))
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
-  def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
+  def isAdvertisementFeature(config: CollectionConfig): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
   def isProd = !Configuration.environment.isNonProd
 
@@ -95,7 +96,7 @@ trait DfpAgent {
     }
   }
 
-  def sponsorshipTag(config: Config): Option[String] = {
+  def sponsorshipTag(config: CollectionConfig): Option[String] = {
     containerSponsoredTag(config, isSponsored) orElse containerSponsoredTag(config, isAdvertisementFeature)
   }
 
@@ -106,7 +107,7 @@ trait DfpAgent {
     sponsorOf(sponsorships) orElse sponsorOf(advertisementFeatureSponsorships)
   }
 
-  def getSponsor(config: Config): Option[String] = {
+  def getSponsor(config: CollectionConfig): Option[String] = {
     for {
       tagId <- sponsorshipTag(config)
       sponsor <- getSponsor(tagId)

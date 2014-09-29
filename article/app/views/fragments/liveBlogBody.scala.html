@@ -1,5 +1,6 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 @import conf.Switches._
+@import com.gu.facia.client.models.CollectionConfig
 
 @defining(model.article) {  article =>
 <div class="l-side-margins l-side-margins--layout-content">
@@ -101,7 +102,7 @@
                         <h3 class="blog__related__head">More on this story</h3>
                         <ul class="u-unstyled">
                             @model.related.storyPackage.take(4).zipWithIndex.map { case (item, index) =>
-                                @fragments.collections.items.standard(item, index, 1, "blog__related__item")(request, Config.emptyConfig)
+                                @fragments.collections.items.standard(item, index, 1, "blog__related__item")(request, CollectionConfig.emptyConfig)
                             }
                         </ul>
                     </aside>
