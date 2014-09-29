@@ -120,6 +120,7 @@ define([
                     editable: true,
                     singleton: 'images',
                     label: 'replace image',
+                    displayIf: 'imageSrc',
                     type: 'boolean'
                 },
                 {
@@ -157,8 +158,10 @@ define([
                     label: 'snap source',
                     type: 'text'
                 }
-            ];
+            ],
 
+            rxScriptStriper = new RegExp(/<script.*/gi);
+;
         function Article(opts) {
             var self = this;
 
@@ -273,16 +276,29 @@ define([
 
             return {
                 key:    key,
+
                 label:  opts.label,
+
                 type:   opts.type,
 
                 meta:   meta,
+
                 field:  field,
+
                 revert: function() { meta(undefined); },
+
                 open:   function() { mediator.emit('ui:open', meta); },
 
-                visible: ko.computed(function() {
+                hasFocus: ko.computed(function() {
+                    return meta === vars.model.uiOpenElement();
+                }, self),
+
+                displayEditor: ko.computed(function() {
                     return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
+                }, self),
+
+                displayValue: ko.computed(function() {
+                    return opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true;
                 }, self),
 
                 toggle: function() {
@@ -299,7 +315,7 @@ define([
                    _.chain(all)
                     .filter(function(editor) { return editor.requires === key; })
                     .first(1)
-                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key]); })
+                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key]); });
                 },
 
                 length: ko.computed(function() {
@@ -315,7 +331,7 @@ define([
                         return meta() || field();
                     },
                     write: function(value) {
-                        meta(value);
+                        meta(value === field() ? undefined : value.replace(rxScriptStriper, ''));
                     },
                     owner: self
                 })
@@ -482,9 +498,11 @@ define([
         };
 
         Article.prototype.convertToSnap = function() {
+            this.meta.isSnap(true);
             this.meta.href(this.id());
             this.id(snap.generateId());
-            this.state.isOpen(!this.meta.headline());
+            this.state.isOpen(true);
+            mediator.emit('ui:open', this.meta.headline);
         };
 
         Article.prototype.open = function() {
@@ -493,6 +511,8 @@ define([
             if (!this.state.isOpen()) {
                  this.state.isOpen(true);
                  mediator.emit('ui:open', this.meta.headline);
+            } else {
+                 mediator.emit('ui:open', undefined);
             }
         };
 
@@ -535,17 +555,11 @@ define([
                     if (keyCode === 9) {
                         e.preventDefault();
                         formField = bindingContext.$rawData;
-                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.visible(); });
+                        formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.displayEditor(); });
                         nextIndex = mod(formFields.indexOf(formField) + (e.shiftKey ? -1 : 1), formFields.length);
                         mediator.emit('ui:open', formFields[nextIndex].meta);
                     }
                 });
-            }
-        };
-
-        ko.bindingHandlers.saneHtml = {
-            update: function (element, valueAccessor) {
-                ko.utils.setHtml(element, sanitizeHtml(ko.utils.unwrapObservable(valueAccessor())));
             }
         };
 

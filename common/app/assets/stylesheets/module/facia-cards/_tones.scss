@@ -1,111 +1,17 @@
-.tone-news {
-    .fc-item__kicker {
-        color: $c-analysisAccent;
-    }
-
-    &.fc-item--has-image:before {
-        background-color: $c-neutral5;
-    }
-}
-
-.tone-live {
-    &.fc-item {
-        background-color: $c-live;
-
-        &,
-        & a {
-            color: #ffffff;
-        }
-    }
-
-    a.fc-item__kicker {
-        color: $c-liveMute;
-    }
-
+%tone-background {
+    .fc-item__header,
+    .fc-item__standfirst,
     .fc-item__meta {
-        &,
-        & a {
-            color: $c-liveMute;
-        }
+        padding-left: $fc-item-gutter;
+        padding-right: $fc-item-gutter;
     }
 }
 
-.tone-comment {
-    &.fc-item {
-        background-color: $c-commentBackground;
-    }
-
-    .fc-item__kicker {
-        color: $c-commentDefault;
-    }
-
-    .fc-item__meta {
-        background-color: fade-out($c-commentBackground, .5);
-    }
-}
-
-.tone-feature {
-    &.fc-item {
-        background-color: $c-featureDefault;
-
-        &,
-        & a,
-        & .fc-item__standfirst {
-            color: #ffffff;
-        }
-    }
-
-    .fc-item__kicker {
-        color: $c-featureMute !important;
-    }
-
-    .fc-item__title .i {
-        display: inline-block;
-        height: .9em;
-        width: 1em;
-        background-position: center;
-    }
-
-    .fc-item__meta {
-        &,
-        & a {
-            color: $c-featureMute;
-        }
-    }
-}
-
-.tone-analysis {
-    &.fc-item {
-        background-color: $c-analysisBackground;
-    }
-
-    .fc-item__kicker {
-        color: $c-analysisAccent;
-    }
-}
-
-.tone-media {
-    &.fc-item {
-        background-color: $c-neutral1;
-
-        &,
-        & a {
-            color: #ffffff;
-        }
-    }
-
-    .fc-item__kicker {
-        color: $c-mediaDefault;
-    }
-
-    &.fc-item--has-image:before {
-        background-color: fade-out(#000000, .75);
-    }
-
-    .fc-item__meta {
-        &,
-        & a {
-            color: $c-neutral2;
-        }
-    }
-}
+@import 'item-tones/tone-news';
+@import 'item-tones/tone-live';
+@import 'item-tones/tone-comment';
+@import 'item-tones/tone-feature';
+@import 'item-tones/tone-analysis';
+@import 'item-tones/tone-media';
+@import 'item-tones/tone-review';
+@import 'item-tones/tone-podcast';

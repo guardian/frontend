@@ -1,13 +1,15 @@
 package layout
 
-case class ItemClasses(mobile: String, desktop: String) {
+case class ItemClasses(mobile: String, tablet: String, desktop: Option[String] = None) {
   /** Template helper */
-  def classes = s"fc-item--$mobile-mobile fc-item--$desktop-tablet"
+  def classes =
+    s"fc-item--$mobile-mobile fc-item--$tablet-tablet" + desktop.map(d => s" fc-item--$d-desktop").getOrElse("")
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column])
 
 sealed trait Column {
   def numItems: Int
+  def colSpan: Int
 }
 
 case class SingleItem(colSpan: Int, itemClasses: ItemClasses) extends Column {
@@ -45,11 +47,15 @@ object SliceWithCards {
 }
 
 case class SliceWithCards(cssClassName: String, columns: Seq[ColumnAndCards]) {
-  def numberOfColumns = (columns map { columnAndCards: ColumnAndCards =>
+  def numberOfItems = (columns map { columnAndCards: ColumnAndCards =>
     columnAndCards.column match {
       case Rows(_, cols, _, _) => cols
       case _ => 1
     }
+  }).sum
+
+  def numberOfCols = (columns map { columnAndCards: ColumnAndCards =>
+    columnAndCards.column.colSpan
   }).sum
 }
 

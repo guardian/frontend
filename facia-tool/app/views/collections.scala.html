@@ -120,61 +120,55 @@
     <!-- templates -->
 
     <script type="text/html" id="template_editor">
-        <!-- ko if: type === 'text' && visible() -->
-            <div class="editor">
-                <!-- ko ifnot: meta === $root.uiOpenElement() -->
-                    <a data-bind="
-                        attr: {
-                            class: 'element element__' + key,
-                            title: label
-                        },
+        <!-- ko if: displayEditor -->
+            <!-- ko if: type === 'text' -->
+                <div class="editor">
+                    <textarea data-bind="
                         click: open,
-                        css: {empty: !overrideOrVal()},
-                        html: overrideOrVal() || label + '...'"></a>
-                <!-- /ko -->
-                <!-- ko if: meta === $root.uiOpenElement() -->
-                        <textarea data-bind="
-                            hasFocus: true,
-                            attr: {
-                                class: 'editor__' + key + ' element__' + key,
-                                placeholder: field() || label + '...'
-                            },
-                            autoResize: true,
-                            tabbableFormField: true,
-                            valueUpdate: 'afterkeydown',
-                            value: overrideOrVal"></textarea>
+                        clickBubble: false,
+                        hasFocus: hasFocus,
+                        attr: {
+                            class: 'element__' + key + (hasFocus() ? ' active' : ''),
+                            placeholder: field() || label + '...'
+                        },
+                        autoResize: true,
+                        tabbableFormField: true,
+                        valueUpdate: 'afterkeydown',
+                        value: overrideOrVal"></textarea>
+
+                    <!-- ko if: hasFocus() -->
                         <span class="editor__length" data-bind="
                             css: {'editor__length--alert': lengthAlert},
                             text: length"></span>
                         <a class="editor__revert" data-bind="
                             visible: meta,
                             click: revert"><i class="icon-fast-backward"></i></a>
-                <!-- /ko -->
-            </div>
-        <!-- /ko -->
+                    <!-- /ko -->
+                </div>
+            <!-- /ko -->
 
-        <!-- ko if: type === 'boolean' -->
-            <span data-bind="
-                click: toggle,
-                attr: {class: 'editor--boolean editor--boolean--' + key},
-                css: {selected: meta},
-                visible: visible">
-                <a class="editor--boolean__label" data-bind="
-                    text: label"></a>
-                <span class="editor--boolean__state"><span data-bind="visible: meta">&#10004;</span></span>
-            </span>
+            <!-- ko if: type === 'boolean' -->
+                <span data-bind="
+                    click: toggle,
+                    clickBubble: false,
+                    attr: {class: 'editor--boolean editor--boolean--' + key},
+                    css: {selected: meta}">
+                    <a class="editor--boolean__label" data-bind="
+                        text: label"></a>
+                    <span class="editor--boolean__state"><span data-bind="visible: meta">&#10004;</span></span>
+                </span>
+            <!-- /ko -->
         <!-- /ko -->
     </script>
 
     <script type="text/html" id="template_editor_boolean_states">
-        <!-- ko if: type === 'boolean' && meta() -->
+        <!-- ko if: type === 'boolean' && meta() && displayValue() -->
             <span class="editor--boolean  selected">
                 <span class="editor--boolean__label" data-bind="text: label"></span>
                 <span class="editor--boolean__state">&#10004;</span>
             </span>
         <!-- /ko -->
     </script>
-
 
     <script type="text/html" id="template_collection">
         <div class="collection">
@@ -305,6 +299,7 @@
             </div>
 
             <div class="closed" data-bind="if: !state.isOpen()">
+
                 <img class="article__spark" data-bind="
                     visible: state.sparkUrl,
                     attr: {src: state.sparkUrl}" />
@@ -344,8 +339,16 @@
                             css: {'is-empty': meta.isSnap() && !meta.headline()}"></div>
 
                         <div class="article__ammends">
+                            <span class="article__times">
+                                <span class="time__scheduled" data-bind="text: scheduledPublicationTime"></span>
+                                <span class="time__publication" data-bind="text: webPublicationTime"></span>
+                                <span class="time__front" data-bind="text: frontPublicationTime"></span>
+                            </span>
+
                             <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                                <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>,
+                                <span class="has-sublinks">
+                                    <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>
+                                </span>
                             <!-- /ko -->
 
                             <!-- ko if: fields.isLive() === 'false' -->
@@ -361,20 +364,10 @@
                                 <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
                             <!-- /ko -->
 
-                            <span class="time__scheduled" data-bind="if: fields.scheduledPublicationDate">
-                                launches <span data-bind="text: scheduledPublicationTime"></span>
-                            </span>
-
-                            <span class="time__front" data-bind="if: frontPublicationTime">
-                                on front <span data-bind="text: frontPublicationTime"></span>,
-                            </span>
-
-                            <span span class="time__publication" data-bind="if: webPublicationTime">
-                                published <span data-bind="text: webPublicationTime"></span>
-                            </span>
-
                             <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
 
+                            <span data-bind="
+                                html: meta.trailText() || fields.trailText()"></span>
                         </div>
                     <!-- /ko -->
                 </a>

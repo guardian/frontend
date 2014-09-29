@@ -15,6 +15,7 @@ define([
     'common/modules/experiments/affix',
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
+    'common/modules/ui/dropdowns',
     'common/modules/ui/message',
     'common/modules/ui/notification-counter',
     'common/bootstraps/article',
@@ -36,6 +37,7 @@ define([
     Affix,
     LiveFilter,
     AutoUpdate,
+    dropdowns,
     Message,
     NotificationCounter,
     article,
@@ -151,6 +153,9 @@ define([
                 var timelineHTML = getTimelineHTML(allEvents);
 
                 $('.js-live-blog__timeline').append(timelineHTML);
+                var dropdown = $('.js-live-blog__timeline-container .dropdown');
+                dropdown.addClass('dropdown--active');
+                dropdowns.updateAria(dropdown);
 
                 if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0) {
                     var topMarker = qwery('.js-top-marker')[0];
@@ -227,6 +232,22 @@ define([
                 60000
             );
 
+        },
+
+        truncateBlockShareIcons: function(blockShareEl) {
+            var truncated = qwery('> *', blockShareEl).slice(2);
+            bonzo(truncated).addClass('u-h');
+            $('.js-blockshare-expand', blockShareEl).removeClass('u-h');
+        },
+
+        initBlockSharing: function() {
+            bean.on(document.body, 'click', '.js-blockshare-expand', function(e) {
+                var expandButton = bonzo(e.currentTarget),
+                    container = expandButton.parent()[0];
+                $('> *', container).removeClass('u-h');
+                expandButton.addClass('u-h');
+            });
+            $.forEachElement('.block-share', modules.truncateBlockShareIcons);
         }
     };
 
@@ -237,6 +258,7 @@ define([
         modules.createAutoRefresh();
         modules.showFootballLiveBlogMessage();
         modules.keepTimestampsCurrent();
+        modules.initBlockSharing();
 
         // re-use modules from article bootstrap
         article.modules.initOpen(config);

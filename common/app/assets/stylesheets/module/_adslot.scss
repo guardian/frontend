@@ -19,7 +19,7 @@
     color: $c-neutral2-contrasted;
     text-align: right;
     @include box-sizing(border-box);
-    @include f-data;
+    font-family: $f-sans-serif-text;
     @include font-size(12, 20);
 }
 
@@ -157,10 +157,13 @@
 }
 .ad-slot--container-inline {
     @include mq(tablet) {
-        position: absolute;
-        top: 1px;
-        right: 0;
-        margin: 0;
+        margin: 0 $gs-gutter/2 0 auto;
+
+        .linkslist-container & {
+            position: absolute;
+            top: 1px;
+            right: 0;
+        }
     }
 }
 .ad-slot--gallery-inline,
@@ -228,7 +231,7 @@
     float: left;
     clear: left;
     padding-left: $gs-gutter/2;
-    @include fs-data(3);
+    @include fs-textSans(3);
 }
 .ad-slot--sponsored__label {
     margin-bottom: $gs-baseline/3;
@@ -275,7 +278,7 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help {
-        @include fs-data(3);
+        @include fs-textSans(3);
     }
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {

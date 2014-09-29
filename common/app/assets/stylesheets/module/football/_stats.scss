@@ -3,8 +3,8 @@
 }
 
 .match-stats__caption {
-    @include fs-data(5);
-    margin-bottom: $gs-baseline/1.5;
+    @include fs-textSans(4);
+    margin-bottom: $gs-baseline/6;
     color: $c-neutral1;
     font-weight: 400;
     text-align: left;
@@ -17,7 +17,7 @@
    ========================================================================== */
 
 .goal-attempts {
-    @include fs-data(5);
+    @include fs-textSans(4);
     color: #ffffff;
     margin: 0 auto;
     max-width: $gs-column-width*5;
@@ -234,8 +234,9 @@
         float: right;
     }
 }
+
 .team-list__item {
-    @include fs-data(3);
+    @include fs-textSans(2);
 }
 
 .m-status {

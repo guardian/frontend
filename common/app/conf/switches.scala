@@ -51,11 +51,12 @@ object Switches extends Collections {
     sellByDate = new LocalDate(2014, 9, 28)
   )
 
-  val LiveblogCachingSwitch = Switch("Performance", "live-blog-caching",
-    "If this switch is switched on live blog cache times will be lowered",
+  val ForceHttpResponseCodeSwitch = Switch("Performance", "force-response-codes",
+    "If this switch is switched on and you specify the correct header, then you can force a specific http response code",
     safeState = Off,
-    sellByDate = new LocalDate(2014, 9, 28)
+    sellByDate = new LocalDate(2014, 12, 31)
   )
+
 
   val MemcachedSwitch = Switch("Performance", "memcached-action",
     "If this switch is switched on then the MemcacheAction will be operational",
@@ -149,7 +150,7 @@ object Switches extends Collections {
 
   val LiveblogAdvertsSwitch = Switch("Commercial", "liveblog-adverts",
     "Show inline adverts on liveblogs",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 27)
+    safeState = Off, sellByDate = new LocalDate(2014, 10, 11)
   )
 
   val AudienceScienceSwitch = Switch("Commercial", "audience-science",
@@ -247,7 +248,7 @@ object Switches extends Collections {
 
   val ReleaseMessageSwitch = Switch("Feature", "release-message",
     "If this is switched on users will be messaged that they are inside the beta release",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 30)
+    safeState = Off, sellByDate = new LocalDate(2014, 12, 5)
   )
 
   val GeoMostPopular = Switch("Feature", "geo-most-popular",
@@ -311,7 +312,7 @@ object Switches extends Collections {
   // actually just here to make us remove this in the future
   val GuShiftCookieSwitch = Switch("Feature", "gu-shift-cookie",
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
-    safeState = On, sellByDate = new LocalDate(2014, 9, 30)
+    safeState = On, sellByDate = new LocalDate(2014, 12, 5)
   )
 
   val CentreTopBannerAd = Switch("Feature", "centre-top-banner-ad",
@@ -364,7 +365,7 @@ object Switches extends Collections {
 
   val FootballFeedRecorderSwitch = Switch("Feature", "football-feed-recorder",
     "If switched on then football matchday feeds will be recorded every minute",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 30))
+    safeState = Off, sellByDate = never)
 
   val all: List[Switch] = List(
     AutoRefreshSwitch,
@@ -428,8 +429,8 @@ object Switches extends Collections {
     BreakingNewsSwitch,
     MetricsSwitch,
     FootballFeedRecorderSwitch,
-    LiveblogCachingSwitch,
-    CentreTopBannerAd
+    CentreTopBannerAd,
+    ForceHttpResponseCodeSwitch
   )
 
   val httpSwitches: List[Switch] = List(

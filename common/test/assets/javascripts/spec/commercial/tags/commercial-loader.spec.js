@@ -87,7 +87,7 @@ define([
 
         // OAS can inject a url in to the advert code to track clicks on the component
         it("Injects an OAS tracker URL in to the response", function() {
-            server.respondWith("/commercial/jobs.json?k=a&k=b&k=c", [200, {}, '{ "html": "<b>%OASToken% - %OASToken%</b>" }']);
+            server.respondWith("/commercial/jobs.json?&k=a&k=b&k=c", [200, {}, '{ "html": "<b>%OASToken% - %OASToken%</b>" }']);
             runs(function() {
                 options.oastoken = '123';
                 new CommercialComponent(options).init('jobs', adSlot);
@@ -98,6 +98,21 @@ define([
             runs(function(){
                 expect(callback).toHaveBeenCalledOnce();
                 expect(adSlot.innerHTML).toBe('<b>123 - 123</b>');
+            });
+        });
+
+        it("Injects jobIds if specified", function() {
+            server.respondWith("/commercial/jobs.json?t=1234&t=5678&k=a&k=b&k=c", [200, {}, '{ "html": "<b>advert</b>" }']);
+            runs(function() {
+                options.jobIds="1234,5678";
+                new CommercialComponent(options).init('jobs', adSlot);
+            });
+            waitsFor(function () {
+                return callback.called === true;
+            }, 'success never called', 500);
+            runs(function(){
+                expect(callback).toHaveBeenCalledOnce();
+                expect(adSlot.innerHTML).toBe('<b>advert</b>');
             });
         });
     });

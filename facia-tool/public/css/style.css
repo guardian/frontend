@@ -339,7 +339,8 @@ h1 {
     background-color: #eeeeee;
 }
 
-.article:hover .article__spark {
+.article:hover .article__spark,
+.article:hover .article__times {
     display: none;
 }
 
@@ -368,7 +369,7 @@ h1 {
 
 .article .thumb {
     position: absolute;
-    top: 4px;
+    top: 3px;
 }
 
 .article .thumb img {
@@ -380,7 +381,7 @@ h1 {
 
 .article__content {
     display: block;
-    margin: 0 110px 0 85px;
+    margin: 0 125px 0 85px;
     min-height: 50px;
 }
 
@@ -399,39 +400,28 @@ h1 {
     font-size: 12px;
 }
 
-.element {
-    display: inline-block;
-    margin: 3px 0;
-    width: 100%;
-}
-
-.element,
-.element a {
-    color: #999999;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.element:hover {
-    color: #000000;
-}
-
-.element__headline a,
-.element__headline {
-    color: #000000;
-    font-size: 16px;
-    line-height: 16px;
-}
-
-.element__trailText a,
-.element__trailText {
-    color: #666666;
-}
-
 .article__ammends {
-    color: #666666;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #999999;
     font-size: 12px;
-    line-height: 12px;
+    line-height: 14px;
+    margin: -2px 0;
+}
+
+.article__ammends p,
+.article__ammends li,
+.article__ammends div {
+    display: inline;
+}
+
+.article__ammends br {
+    display: none;
 }
 
 .article__ammends .label {
@@ -451,6 +441,12 @@ h1 {
     color: #999999;
 }
 
+.article__ammends .has-sublinks {
+    color: #DD4B39;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
 .is-empty {
     font-size: 14px;
     line-height: 16px;
@@ -462,13 +458,24 @@ h1 {
     font-size: 12px;
 }
 
+.article__times {
+    position: absolute;
+    top: 4px;
+    right: 2px;
+    font-size: 11px;
+    line-height: 12px;
+}
+
 .time__scheduled {
     color: #ffc107;
 }
 
-.time__publication,
-.time__front {
+.time__publication {
     color: #999999;
+}
+
+.time__front {
+    color: #46c430;
 }
 
 .article__overrides {
@@ -511,6 +518,7 @@ h1 {
 }
 
 .supporting .editor--boolean,
+.supporting .article__ammends,
 .supporting .element__trailText,
 .supporting .element__byline,
 .supporting .element__imageSrc,
@@ -537,7 +545,7 @@ input[type="text"] {
     line-height: 16px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    border-radius: 4px;
+    border-radius: 2px;
     border: 1px solid #cccccc;
     background-color: #ffffff;
 }
@@ -570,11 +578,18 @@ select {
 }
 
 .editor textarea {
-    min-height: 18px;
     width: 100%;
-    padding: 1px 0 1px 2px;
+    padding: 0 2px;
     border: 0;
-    margin: 2px 0 -1px -2px;
+    margin: 3px 0 -1px -2px;
+    z-index: 10;
+    color: #999999;
+    background: #dddddd;
+}
+
+.editor textarea.active {
+    background: #fafafa;
+    color: #000000;
 }
 
 .editor__revert,
@@ -619,6 +634,35 @@ select {
     width: 15px;
 }
 
+.element {
+    display: inline-block;
+    margin: 3px 0;
+    width: 100%;
+}
+
+.element,
+.element a {
+    color: #999999;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.element:hover {
+    color: #000000;
+}
+
+.element__headline a,
+.element__headline {
+    color: #000000 !important;
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.element__trailText a,
+.element__trailText {
+    color: #666666 !important;
+}
+
 button {
     padding: 0 10px;
 }
@@ -634,6 +678,7 @@ button {
 
 .article__spark {
     position: absolute;
+    top: 18px;
     right: 3px;
 }
 
@@ -1115,6 +1160,8 @@ button {
     opacity: 0.9;
 }
 
+.icon-chevron-down { background-position: -313px -119px; }
+.icon-chevron-up { background-position: -288px -120px; }
 .icon-refresh { background-position: -240px -24px; }
 .icon-remove { background-position: -312px 0; }
 .icon-share-alt { background-position: -336px -96px; }
@@ -1178,6 +1225,9 @@ button {
     .log-in-out,
     .article__spark {
         display: none;
+    }
+    .article__times {
+        position: inherit;
     }
     .article .article__content {
         margin-right: 5px;

@@ -75,7 +75,7 @@ $c-commercial-books-dark: #630d4c;
     .commercial--books__price__our {
         display: block;
         color: $c-neutral1;
-        @include fs-data(3);
+        @include fs-textSans(1);
     }
     .commercial--books__price__our {
         font-weight: bold;

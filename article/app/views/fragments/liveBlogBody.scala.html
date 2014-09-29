@@ -61,9 +61,10 @@
                     @if(article.hasKeyEvents) {
                         <div class="blog__timeline blog__dropdown js-live-blog__key-events">
                             <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
-                                @fragments.dropdown("Key events", Some("key-events"), article.section != "football") {
+                                @fragments.dropdown("Key events", Some("key-events"), false) {
                                     <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
                                 }
+                                <div class="js-comment-count comment-count--timeline tone-colour"></div>
                             </div>
                         </div>
                     }
@@ -95,8 +96,8 @@
                 }
             </div>
 
-
             <div class="content__secondary-column" aria-hidden="true">
+                <div class="mpu-container js-mpu-ad-slot"></div>
                 @if(model.related.hasStoryPackage) {
                     <aside role="complementary" class="blog__related">
                         <h3 class="blog__related__head">More on this story</h3>
@@ -107,7 +108,6 @@
                         </ul>
                     </aside>
                 }
-                <div class="mpu-container js-mpu-ad-slot"></div>
             </div>
 
         </div>

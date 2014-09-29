@@ -10,11 +10,8 @@ Media list item. Looks a bit like this:
 
  */
 
-@mixin fc-item--list-media ($text-lines-per-media-object: 4) {
+@mixin fc-item--list-media ($text-lines-per-media-object: 4, $headline-size: 2) {
     @include fc-item--list;
-
-    // values to set image height
-    $headline-size: 1;
 
     // calculate image width
     $media-ratio: 5 / 3;
@@ -41,8 +38,9 @@ Media list item. Looks a bit like this:
         padding-left: $fc-item-gutter;
     }
 
-    .fc-item__title {
-        @include fs-headline($headline-size);
+    .fc-item__title,
+    .fc-item__byline {
+        @include fs-headline($headline-size, true);
     }
 
     .fc-item__media-wrapper,
@@ -55,4 +53,7 @@ Media list item. Looks a bit like this:
         margin-left: 0 - $image-width;
         width: $image-width;
     }
+
+    .fc-item__video-container { display: none; }
+    .fc-item__video-fallback { display: block; }
 }

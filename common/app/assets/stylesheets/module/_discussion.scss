@@ -617,7 +617,7 @@ $avatarSize: 44px;
 }
 .d-report-comment__field {
     padding: $gs-baseline/2 $gs-gutter/4;
-    @include fs-data(4);
+    @include fs-textSans(3);
 }
 .d-report-comment__submit {
     margin-top: $gs-baseline;
@@ -776,7 +776,6 @@ $avatarSize: 44px;
    ========================================================================== */
 
 .discussion__heading {
-    border-top: 1px solid $c-neutral4;
     margin-bottom: 0;
     padding-top: $gs-baseline/3;
 
@@ -1297,3 +1296,8 @@ $sentiment-width: 56 + $gs-gutter/2;
 .d-discussion__pagination .pagination {
     width: 100%;
 }
+
+.discussion-wrapper {
+    border-top: 1px solid $c-neutral4;
+}
+

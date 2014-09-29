@@ -50,7 +50,7 @@ td {
     th,
     td,
     .table__caption {
-        @include fs-data(3);
+        @include fs-textSans(2);
         padding: $table-baseline $table-gutter;
         vertical-align: top;
     }
@@ -79,8 +79,8 @@ td {
         th,
         td,
         thead td {
-            @include fs-data(5, true);
-            padding: $table-baseline*1.5 $table-gutter*1.5;
+            @include fs-textSans(4, true);
+            padding: $table-baseline*1.5 $table-gutter*1.5 ($table-baseline);
         }
     }
 }

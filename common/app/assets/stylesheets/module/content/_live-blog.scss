@@ -109,8 +109,9 @@ $block-padding-right: $gs-gutter;
 
 .blog__last-updated-container {
     @include box-sizing(border-box);
+    padding-top: $gs-baseline/6;
     color: #ffffff;
-    @include fs-data(3);
+    @include fs-textSans(1);
 
     @include mq($until: rightCol) {
         height: $gs-row-height;
@@ -124,7 +125,7 @@ $block-padding-right: $gs-gutter;
 
 .blog__live {
     color: inherit;
-    @include fs-data(3);
+    @include fs-textSans(1);
     font-weight: bold;
 }
 
@@ -155,7 +156,7 @@ $block-padding-right: $gs-gutter;
     display: block;
     padding: $gs-baseline/3 0;
     margin-top: ($gs-baseline/3)*2;
-    @include font($f-data, bold, 13, 20);
+    @include font($f-sans-serif-text, bold, 13, 20);
 
     time {
         display: inline-block;
@@ -169,7 +170,7 @@ $block-padding-right: $gs-gutter;
 
     &.published-time {
         margin: 0;
-        @include fs-data(4);
+        @include fs-textSans(2);
         font-weight: bold;
     }
 
@@ -177,7 +178,7 @@ $block-padding-right: $gs-gutter;
         display: inline-block;
         margin-left: $gs-gutter/4;
         color: $c-neutral2;
-        @include fs-data(2);
+        @include fs-textSans(1);
         font-weight: normal;
     }
 
@@ -199,13 +200,15 @@ $block-padding-right: $gs-gutter;
 }
 
 .updated-time {
-    @include fs-data(1);
+    @include fs-textSans(1);
     color: $c-neutral2;
     margin: 0 $gs-gutter/2 $gs-baseline/3;
     padding: $gs-baseline/2 0 0;
     @include mq(tablet) {
-        margin-right: $block-padding-right;
-        margin-left: $block-padding-left;
+        position: absolute;
+        right: $gs-gutter;
+        bottom: $gs-baseline;
+        margin: 0;
     }
 }
 
@@ -215,14 +218,15 @@ $block-padding-right: $gs-gutter;
     @include clearfix;
     margin-bottom: $gs-baseline;
     padding-top: $gs-baseline/2;
-    padding-bottom: $gs-baseline*2;
+    padding-bottom: $gs-baseline;
     background-color: #ffffff;
     border-top: 1px solid $c-neutral3;
     border-bottom: 1px solid $c-neutral6;
+    position: relative;
 }
 
 .block.is-key-event {
-    border-top: 2px solid $c-neutral1;
+    border-top: 2px solid $c-liveAccent;
 }
 
 .truncated-block {
@@ -241,7 +245,7 @@ $block-padding-right: $gs-gutter;
 }
 
 .block--notification {
-    border-top-color: $c-live;
+    border-top-color: $c-liveDefault;
 }
 
 .notify {
@@ -252,7 +256,7 @@ $block-padding-right: $gs-gutter;
     text-align: left;
     @include fs-textSans(3);
     font-weight: bold;
-    color: $c-live;
+    color: $c-liveDefault;
 }
 
 .autoupdate--has-animation {
@@ -481,53 +485,23 @@ $block-padding-right: $gs-gutter;
    ========================================================================== */
 .dropdown--key-events,
 .dropdown--live-feed {
-    position: relative;
-    padding: 0;
-    z-index: 100;
-    border-top: 0;
-    border-bottom: 1px solid $c-neutral4;
-
     @include mq($until: rightCol) {
-        @include full-bleed(transparent);
-    }
-
-    .blog__timeline &,
-    &.dropdown--active,
-    .blog__main-column > & {
-        border-bottom: 0;
-    }
-
-    &:before,
-    &:after {
-        top: auto;
-        bottom: -1px;
-        border-bottom: 1px solid $c-neutral4;
-
-        .blog__timeline & {
-            border-bottom: 0;
-        }
-    }
-
-    &.dropdown--active,
-    .blog__main-column > & {
-        &:before,
-        &:after {
-            border-bottom: 0;
-        }
+        margin-right: $gs-gutter*-1;
+        margin-left: $gs-gutter*-1;
+        padding-right: $gs-gutter;
+        padding-left: $gs-gutter;
+        padding-top: $gs-baseline*4;
     }
 
     .dropdown__button {
-        padding: $gs-baseline/1.5 0;
-        border-top: 1px solid $c-neutral4;
-
-        &:before,
-        &:after {
-            top: -1px;
-            border-top: 1px solid $c-neutral4;
-        }
-
         @include mq($until: rightCol) {
-            @include full-bleed(#ffffff);
+            background-color: #ffffff;
+            padding-right: $gs-gutter;
+            padding-left: $gs-gutter;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
         }
 
         @include mq(rightCol) {
@@ -545,34 +519,17 @@ $block-padding-right: $gs-gutter;
         }
     }
 
-    & + & {
-        .dropdown__button {
-            border-top: 0;
-
-            &:before,
-            &:after {
-                border-top: 0;
-            }
-        }
-    }
-
     .dropdown__label {
-        @include fs-header(2);
-        line-height: 30px;
+        @include fs-header(3);
     }
 
     .dropdown__content {
         position: relative;
         margin: 0;
-        padding: $gs-baseline 0;
-
-        .blog__timeline & {
-            padding: 0 0 $gs-baseline;
-        }
 
         @include mq($until: rightCol) {
             background-color: $c-neutral8;
-            @include full-bleed($c-neutral8);
+            padding: $gs-baseline 0;
         }
 
         @include mq(rightCol) {
@@ -596,6 +553,19 @@ $timeline-width: 14px;
         .dropdown {
             border-top: 0;
         }
+    }
+}
+
+.comment-count--timeline {
+    margin-top: -11px;
+    @include mq($until: desktop) {
+        display: none;
+    }
+
+    .commentcount {
+        z-index: 101;
+        position: relative;
+        padding-left: $timeline-width / 2 + $gs-gutter;
     }
 }
 
@@ -682,7 +652,7 @@ $timeline-width: 14px;
 .timeline__date {
     display: table-cell;
     width: gs-span(1);
-    @include fs-data(4);
+    @include fs-textSans(2);
     font-weight: bold;
 
     .block-time__absolute,
@@ -784,7 +754,7 @@ $timeline-width: 14px;
             }
         }
         .player-card__position {
-            @include fs-data(4);
+            @include fs-textSans(2);
             color: $c-neutral1;
             font-weight: 700;
         }
@@ -797,9 +767,6 @@ $timeline-width: 14px;
     @include mq(rightCol) {
         .tabs__container--multiple {
             background-color: $c-neutral8;
-        }
-        .after-header {
-            @include full-bleed($c-neutral8);
         }
 
         .tabs__tab--selected .tab__link {
@@ -886,6 +853,10 @@ $timeline-width: 14px;
 }
 
 .content--liveblog {
+    @include mq($until: rightCol) {
+        padding-bottom: 0;
+    }
+    
     .content__standfirst,
     .blog__timeline,
     .content__secondary-column {
@@ -915,7 +886,7 @@ $timeline-width: 14px;
 }
 
 .liveblog__show-more {
-    background-color: colour(live-main-2);
+    background-color: $c-liveAccent;
     border: 0;
     margin-bottom: $gs-baseline;
     padding-left: 36px;
@@ -928,7 +899,7 @@ $timeline-width: 14px;
     &:hover,
     &:focus,
     &:active {
-        background-color: darken(colour(live-main-2), 7%);
+        background-color: darken($c-liveAccent, 7%);
     }
 
     .i {
@@ -941,4 +912,196 @@ $timeline-width: 14px;
         bottom: 0;
         left: 7px;
     }
+}
+
+.block-share--liveblog {
+    margin-left: gs-span(1) + $gs-gutter;
+    margin-top: $gs-baseline;
+    @include mq($until: tablet) {
+        display: none;
+    }
+}
+
+.block-share__link {
+    display: block;
+    float: left;
+    cursor: pointer;
+}
+
+.block-share__label {
+    @include u-h;
+}
+
+.block-share__item {
+    display: block;
+    border: 1px solid colour(neutral-3);
+    margin-right: $gs-gutter / 4;
+    @include border-radius(50%);
+    width: $gs-baseline * 2;
+    height: $gs-baseline * 2;
+    @include box-sizing(border-box);
+
+    .i {
+        width: 100% !important;
+        height: 100% !important;
+    }
+}
+
+.block-share__item--link {
+    width: gs-span(1) + $gs-gutter * 2;
+    @include fs-textSans(1);
+    font-size: 10px;
+    padding: 0 $gs-gutter / 2;
+    color: colour(neutral-2);
+    outline: none;
+}
+
+.block-share--liveblog .block-share__link,
+.share-modal .share-modal__link {
+
+    .block-share__item--facebook,
+    .share-modal__item--facebook {
+        border-color: #3b5998;
+        color: #3b5998;
+        .i { @include icon(share-facebook--blue); }
+    }
+
+    .block-share__item--twitter,
+    .share-modal__item--twitter {
+        border-color: #55acee;
+        color: #55acee;
+        .i { @include icon(share-twitter--blue); }
+    }
+
+    .block-share__item--gplus,
+    .share-modal__item--gplus {
+        border-color: #dd4b39;
+        color: #dd4b39;
+        .i { @include icon(share-gplus--red); }
+    }
+
+    &:hover {
+
+        .block-share__item--facebook {
+            border-color: darken(#3b5998, 15%);
+            .i { @include icon(share-facebook--blue-dark); }
+        }
+
+        .block-share__item--twitter {
+            border-color: darken(#55acee, 15%);
+            .i { @include icon(share-twitter--blue-dark); }
+        }
+
+        .block-share__item--gplus {
+            border-color: darken(#dd4b39, 15%);
+            .i { @include icon(share-gplus--red-dark); }
+        }
+    }
+}
+
+.block-share--liveblog-mobile {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: $gs-baseline $gs-gutter / 4;
+    cursor: pointer;
+}
+
+.block-share__item--mobile {
+    @include mq(tablet) {
+        display: none;
+    }
+
+    .i {
+        @extend %absolute-center;
+        @include icon(share-android);
+        width: 11px !important;
+        height: 11px !important;
+        padding-right: 6px;
+        opacity: .5;
+    }
+}
+
+.block-share__item--expand {
+    overflow: visible;
+    position: relative;
+
+    .i {
+        @extend %absolute-center;
+        width: 18px !important;
+        height: 14px !important;
+        display: block;
+        opacity: .5;
+    }
+
+    &:hover {
+        border-color: colour(neutral-2);
+        .i {
+            opacity: .6;
+        }
+    }
+}
+
+.share-modal {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: colour(neutral-8);
+}
+
+.share-modal__content {
+    @extend %absolute-center;
+    height: gs-height(8);
+}
+
+.share-modal__title {
+    @include fs-data(4);
+    color: colour(neutral-2);
+    text-align: center;
+    margin-bottom: $gs-baseline * 3;
+}
+
+.share-modal__item {
+    width: gs-span(3);
+    margin: auto;
+    display: block;
+    text-align: center;
+    position: relative;
+
+    .i {
+        float: left;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        left: 5px;
+    }
+}
+
+.share-modal__close {
+    border: 1px solid colour(neutral-2);
+    @include border-radius(50%);
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: gs-height(1) + $gs-baseline auto 0;
+    background: transparent;
+    @include box-sizing(border-box);
+
+    .i {
+        @extend %absolute-center;
+        width: 85%;
+        height: 85%;
+        opacity: .6;
+    }
+}
+
+.share-modal__link + .share-modal__link {
+    display: block;
+    margin-top: $gs-baseline;
 }

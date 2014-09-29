@@ -326,6 +326,30 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
   }
 }
 
+case class LiveBlogShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+    if (article.isLiveBlog) {
+      body.select(".block").foreach { el =>
+        val blockid = el.id()
+        val url = s"http://${request.domain}${request.path}#$blockid"
+        val shortUrl = s"${article.shortUrl}#$blockid"
+
+        val icons = List(
+          // (cssClassName, Url)
+          ("Facebook", "facebook", s"https://www.facebook.com/sharer/sharer.php?u=${url.urlEncoded}&ref=responsive"),
+          ("Twitter", "twitter", s"https://twitter.com/intent/tweet?text=${article.webTitle.urlEncoded}&url=${shortUrl.urlEncoded}"),
+          ("Google plus", "gplus", s"https://plus.google.com/share?url=${url.urlEncoded}")
+        )
+
+        val html = views.html.fragments.share.blockLevelSharing(blockid, icons, url, shortUrl)
+
+        el.append(html.toString())
+      }
+    }
+    body
+  }
+}
+
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
@@ -611,6 +635,20 @@ object OmnitureAnalyticsData {
 
 
     Html(analyticsData map { case (key, value) => s"$key=${encode(value, "UTF-8")}" } mkString "&")
+  }
+}
+
+object ArticleLayout {
+  implicit class ArticleLayout(a: Article) {
+    lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(a.body).body().children().headOption
+      .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
+
+    lazy val hasSupportingAtBottom: Boolean =
+      Jsoup.parseBodyFragment(a.body).select("> *:nth-last-child(-n+5)")
+        .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
+
+    lazy val tooSmallForBottomSocialButtons: Boolean =
+      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 1200
   }
 }
 
