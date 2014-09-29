@@ -545,7 +545,7 @@ input[type="text"] {
     line-height: 16px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    border-radius: 4px;
+    border-radius: 2px;
     border: 1px solid #cccccc;
     background-color: #ffffff;
 }
