@@ -1,19 +1,23 @@
 package test
 
+import play.api.libs.json.{JsNull, Json}
 import play.api.test._
 import play.api.test.Helpers._
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, FlatSpec}
 import common.ExecutionContexts
 import controllers.FaciaController
+import services.ConfigAgent
 
-class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts {
+@DoNotDiscover class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts with ConfiguredTestSuite with BeforeAndAfterAll {
 
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
 
   val responsiveRequest = FakeRequest().withHeaders("host" -> "www.theguardian.com")
 
-  "FaciaController" should "200 when content type is front" in Fake {
+  override def beforeAll() { ConfigAgent.refreshWith(Json.obj("fronts" -> Json.obj("technology" -> JsNull)))}
+
+  "FaciaController" should "200 when content type is front" in {
     val result = FaciaController.renderFront("uk")(TestRequest())
     status(result) should be(200)
   }
@@ -46,5 +50,27 @@ class FaciaControllerTest extends FlatSpec with Matchers with ExecutionContexts 
     val result = FaciaController.renderFrontRss("film")(fakeRequest)
     status(result) should be(200)
     header("X-Accel-Redirect", result) should be (Some("/applications/film/rss?page=77"))
+  }
+
+  it should "not serve X-Accel for a path facia serves" in {
+    val fakeRequest = FakeRequest("GET", "/technology")
+
+    val result = FaciaController.renderFront("technology")(fakeRequest)
+    header("X-Accel-Redirect", result) should be (None)
+  }
+
+  it should "redirect to applications when 'page' query param" in {
+    val fakeRequest = FakeRequest("GET", "/technology?page=77")
+
+    val result = FaciaController.renderFront("technology")(fakeRequest)
+    status(result) should be(200)
+    header("X-Accel-Redirect", result) should be (Some("/applications/technology?page=77"))
+  }
+
+  it should "not redirect to applications when any other query param" in {
+    val fakeRequest = FakeRequest("GET", "/technology?id=77")
+
+    val result = FaciaController.renderFront("technology")(fakeRequest)
+    header("X-Accel-Redirect", result) should be (None)
   }
 }

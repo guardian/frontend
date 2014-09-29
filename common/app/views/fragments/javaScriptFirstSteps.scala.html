@@ -15,12 +15,6 @@
     data-cache-file-woff="@Static("fonts/GuardianEgyptianWeb.woff.json")"
     data-cache-file-ttf="@Static("fonts/GuardianEgyptianWeb.ttf.json")"></style>
 <style class="initial"
-    data-cache-name="GuardianAgateSans1Web"
-    data-min-width="980"
-    data-cache-file-woff2="@Static("fonts/GuardianAgateSans1Web.woff2.json")"
-    data-cache-file-woff="@Static("fonts/GuardianAgateSans1Web.woff.json")"
-    data-cache-file-ttf="@Static("fonts/GuardianAgateSans1Web.ttf.json")"></style>
-<style class="initial"
     data-cache-name="GuardianTextSansWeb"
     data-min-width="980"
     data-cache-file-woff2="@Static("fonts/GuardianTextSansWeb.woff2.json")"
@@ -94,6 +88,37 @@
     };
 
     (function(isModern) {
+        function cssToDOM( name ) {
+            return name.replace(/([a-z])-([a-z])/g, function(str, m1, m2) {
+                return m1 + m2.toUpperCase();
+            }).replace(/^-/, '');
+        }
+
+        function testCssSupport(prop, value) {
+            var valueIsDefined = value !== undefined;
+            if(valueIsDefined && ('CSS' in window && 'supports' in window.CSS)) {
+                return window.CSS.supports(prop, value);
+            } else {
+                var elm = document.createElement('test');
+                prop = cssToDOM(prop);
+                if(elm.style[prop] !== undefined) {
+                    if(valueIsDefined){
+                        var before = elm.style[prop];
+                        try { elm.style[prop] = value; } catch (e) {}
+                        if(elm.style[prop] != before) {
+                            delete elm;
+                            return true;
+                        } else {
+                            delete elm;
+                            return false;
+                        }
+                    }
+                    delete elm;
+                    return true;
+                }
+                return false;
+            }
+         }
 
         // must always be set before the Omniture file is parsed
         window.s_account = guardian.config.page.omnitureAccount;
@@ -107,6 +132,9 @@
             }
             if (hasSvgSupport()) {
                 document.documentElement.className += ' svg';
+            }
+            if(testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
+                document.documentElement.className += ' has-flex-wrap';
             }
             document.documentElement.className = document.documentElement.className.replace(/\bis-not-modern\b/g, 'is-modern');
         }

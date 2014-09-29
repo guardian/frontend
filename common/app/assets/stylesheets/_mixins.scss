@@ -90,33 +90,38 @@
     }
 }
 
-// icon button (circular element containing an offset/centered icon)
-@mixin icon-button($buttonSize, $iconOffsetX, $iconOffsetY: null) {
+@mixin icon($name, $with-width: true) {
+    @if ($svg-support) {
+        .svg & {
+            @extend %svg-i-#{$name};
+            @if ($with-width) {
+                @extend %i-#{$name};
+            }
+            display: inline-block;
+            background-repeat: no-repeat;
+            @include background-size(contain);
+        }
+    }
+}
+
+// icon button (circular element containing a centered icon)
+@mixin icon-button($name, $buttonSize) {
+    cursor: pointer;
     width: $buttonSize;
     height: $buttonSize;
     @include border-radius($buttonSize);
     position: relative;
-    display: inline-block;
+    display: block;
 
+    i,
     .i {
         position: absolute;
-        text-indent: -9999px;
-        top: 50%;
-        left: 50%;
-        margin-top: $iconOffsetX;
-        margin-left: if(not $iconOffsetY, $iconOffsetX, $iconOffsetY);
-    }
-}
-
-@mixin icon($name) {
-    @extend %i;
-    @extend %i-#{$name};
-
-    @if ($svg-support) {
-        .svg & {
-            @include background-size(contain);
-            @extend %svg-i-#{$name};
-        }
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        @include icon($name);
     }
 }
 
@@ -135,28 +140,6 @@
     }
 }
 
-@mixin full-bleed($color) {
-    $bgWidth: 10000px;
-    background-color: $color;
-
-    &:before,
-    &:after {
-        @include box-sizing(border-box);
-        content: ' ';
-        background-color: $color;
-        position: absolute;
-        top: 0;
-        height: 100%;
-        width: $bgWidth;
-    }
-    &:before {
-        right: 100%;
-    }
-    &:after {
-        left: 100%;
-    }
-}
-
 @mixin video-play-button-size($size) {
     width: $size;
     height: $size;
@@ -169,6 +152,12 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+}
+
+@mixin flex-wrap($wrap) {
+    -webkit-flex-wrap: $wrap;
+    -ms-flex-wrap: $wrap;
+    flex-wrap: $wrap;
 }
 
 @mixin flex-direction($direction) {
@@ -197,4 +186,24 @@
             padding-right: $gap * .5;
         }
     }
+}
+
+@function colour($color, $pallet: $pasteup-palette) {
+    @return guss-colour($color, $pallet);
+}
+
+@mixin absolute-center {
+    // this is a pattern for horizontally and vertically centering an element within its container
+    // the negative values expand the box in which the element is centered, which is required when the element
+    // is bigger than its container (can be increased if required)
+    position: absolute;
+    top: -20px;
+    bottom: -20px;
+    left: -20px;
+    right: -20px;
+    margin: auto;
+}
+
+%absolute-center {
+    @include absolute-center;
 }

@@ -41,8 +41,9 @@ POST        /dev/switchboard              controllers.admin.SwitchboardControlle
 # Analytics
 GET         /analytics/abtests                      controllers.admin.AnalyticsController.abtests()
 GET         /analytics/confidence                   controllers.admin.AnalyticsConfidenceController.renderConfidence()
+GET         /analytics/google-referrers             controllers.admin.GoogleReferrerController.renderGoogleReferrerDashboard()
 GET         /analytics/content/gallery              controllers.admin.ContentPerformanceController.renderGalleryDashboard()
-GET         /analytics/omniture/segments            controllers.admin.OmnitureReportController.getSegments()
+GET         /analytics/omniture/segments/:rsid      controllers.admin.OmnitureReportController.getSegments(rsid)
 GET         /analytics/omniture/*reportName         controllers.admin.OmnitureReportController.getReport(reportName)
 
 # Commercial

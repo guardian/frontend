@@ -42,9 +42,6 @@ head {
     @include mq(leftCol) {
         font-family: 'leftCol';
     }
-    @include mq(faciaLeftCol) {
-        font-family: 'faciaLeftCol';
-    }
     @include mq(wide) {
         font-family: 'wide';
     }
@@ -68,9 +65,6 @@ body:after {
     @include mq(leftCol) {
         content: 'leftCol';
     }
-    @include mq(faciaLeftCol) {
-        content: 'faciaLeftCol';
-    }
     @include mq(wide) {
         content: 'wide';
     }
@@ -78,10 +72,10 @@ body:after {
 
 .dateline {
     color: $c-neutral2;
-    @include fs-data(2);
+    @include fs-textSans(2);
 
     @include mq(tablet) {
-        @include fs-data(3, true);
+        @include fs-textSans(3, true);
     }
 
     i {

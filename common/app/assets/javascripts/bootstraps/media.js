@@ -1,44 +1,42 @@
 /* global videojs */
 define([
-    'common/utils/$',
-    'common/utils/ajax',
-    'common/utils/detect',
-    'common/utils/config',
-    'common/utils/deferToAnalytics',
-    'common/utils/mediator',
-    'common/utils/url',
-    'common/modules/ui/images',
-    'common/modules/commercial/dfp',
-    'common/modules/analytics/omnitureMedia',
-    'lodash/functions/throttle',
-    'lodash/objects/isFunction',
     'bean',
     'bonzo',
-    'common/modules/component',
-    'common/modules/analytics/beacon',
-    'common/modules/ui/message',
     'raven',
-    'common/utils/preferences'
+    'lodash/functions/throttle',
+    'lodash/objects/isFunction',
+    'common/utils/$',
+    'common/utils/ajax',
+    'common/utils/config',
+    'common/utils/deferToAnalytics',
+    'common/utils/detect',
+    'common/utils/mediator',
+    'common/utils/preferences',
+    'common/utils/url',
+    'common/modules/analytics/beacon',
+    'common/modules/analytics/omnitureMedia',
+    'common/modules/commercial/dfp',
+    'common/modules/component',
+    'common/modules/ui/images'
 ], function(
-    $,
-    ajax,
-    detect,
-    config,
-    deferToAnalytics,
-    mediator,
-    urlUtils,
-    images,
-    dfp,
-    OmnitureMedia,
-    _throttle,
-    isFunction,
     bean,
     bonzo,
-    Component,
-    beacon,
-    Message,
     raven,
-    preferences
+    throttle,
+    isFunction,
+    $,
+    ajax,
+    config,
+    deferToAnalytics,
+    detect,
+    mediator,
+    preferences,
+    urlUtils,
+    beacon,
+    OmnitureMedia,
+    dfp,
+    Component,
+    images
 ) {
     var isDesktop = detect.isBreakpoint({ min: 'desktop' }),
         QUARTILES = [25, 50, 75],
@@ -177,7 +175,7 @@ define([
                     player.trigger(constructEventName('content:ready', player));
 
                     player.one('play', events.play);
-                    player.on('timeupdate', _throttle(events.timeupdate, 1000));
+                    player.on('timeupdate', throttle(events.timeupdate, 1000));
                     player.one('ended', events.end);
 
                     if (shouldAutoPlay(player)) {
@@ -427,40 +425,15 @@ define([
             if (!config.isMedia) {
                 return;
             }
-            if (config.page.section === 'childrens-books-site') {
-                $('.content__secondary-column--media').addClass('u-h');
-            } else {
-                var mostViewed = new Component();
-                mostViewed.endpoint = '/' + config.page.contentType.toLowerCase() + '/most-viewed.json';
-                mostViewed.fetch($('.js-video-components-container')[0], 'html');
-            }
-        },
-        displayReleaseMessage: function(config) {
-
-            if (config.page.contentType &&
-                config.page.contentType.toLowerCase() === 'video' &&
-                detect.getBreakpoint() !== 'mobile' &&
-                !preferences.hasOptedIntoResponsive()
-            ) {
-
-                var msg = '<p class="site-message__message" id="site-message__message">' +
-                        'We’ve redesigned our video pages to make it easier to find and experience our best video content. We’d love to hear what you think.' +
-                        '</p>' +
-                        '<ul class="site-message__actions u-unstyled">' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="http://next.theguardian.com/blog/video-redesign/" target="_blank">Find out more</a>' +
-                        '</li>' +
-                        '<li class="site-message__actions__item">' +
-                        '<i class="i i-arrow-white-right"></i>' +
-                        '<a href="https://www.surveymonkey.com/s/guardianvideo" target="_blank">Leave feedback</a>' +
-                        '</li>' +
-                        '</ul>';
-
-                var releaseMessage = new Message('video', {pinOnHide: true});
-
-                releaseMessage.show(msg);
-            }
+            var mediaType = config.page.contentType.toLowerCase(),
+                attachTo = $(mediaType === 'video' ? '.js-video-components-container' : '.content-footer')[0],
+                mostViewed = new Component();
+            mostViewed.manipulationType = mediaType === 'video' ? 'append' : 'prepend';
+            mostViewed.endpoint = '/' + mediaType + '/most-viewed.json';
+            mostViewed.fetch(attachTo, 'html')
+                .then(function () {
+                    images.upgrade(attachTo);
+                });
         }
     };
 
@@ -468,7 +441,6 @@ define([
         modules.initPlayer(config);
         modules.initMoreInSection(config);
         modules.initMostViewedMedia(config);
-        modules.displayReleaseMessage(config);
 
         mediator.emit('page:media:ready', config);
     };

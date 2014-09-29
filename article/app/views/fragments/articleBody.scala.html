@@ -1,11 +1,12 @@
 @(model: ArticlePage)(implicit request: RequestHeader)
 @import conf.Switches._
+@import views.support.ArticleLayout.ArticleLayout
 
 @defining(model.article) { article =>
 <div class="l-side-margins l-side-margins--layout-content">
     <article id="article" data-test-id="article-root"
         class="content content--article tone-@article.visualTone tone-@article.visualTone--article section-@article.sectionName.trim.toLowerCase.replaceAll("""[\s-]+""", "-")
-        @if(article.isAdvertisementFeature && !article.isSponsored){article--advertisement-feature}"
+        @if(article.isAdvertisementFeature && !article.isSponsored){content--advertisement-feature}"
 
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
@@ -19,7 +20,7 @@
         }
 
         <div class="gs-container">
-            <div class="content__main-column content__main-column--article">
+            <div class="content__main-column content__main-column--article js-content-main-column">
 
                 <div class="js-football-tabs football-tabs content__mobile-full-width"></div>
 
@@ -36,12 +37,20 @@
                     @BodyCleaner(article, article.body)
                 </div>
 
-                <div class="content__keywords" data-link-name="article keywords">
-                    @fragments.keywordList(article.keywords)
-                </div>
 
-                <div class="social-wrapper" data-component="share">
-                    @fragments.social(article)
+                <div class="submeta-container @if(article.hasSupportingAtBottom) { submeta-container--break-at-leftcol }">
+                    @if(article.keywords.filterNot(_.isSectionTag).nonEmpty) {
+                        <div class="submeta" data-link-name="keywords">
+                            <h2 class="submeta__head">Topics</h2>
+                            @fragments.keywordList(article.keywords, tone = article.visualTone)
+                        </div>
+                    }
+                    @if(!article.tooSmallForBottomSocialButtons) {
+                        <div class="submeta js-social--bottom" data-component="share">
+                            <h2 class="submeta__head @if(article.hasSupportingAtBottom) { hide-until-leftcol }">Share this article</h2>
+                            @fragments.social(article)
+                        </div>
+                    }
                 </div>
 
                 <div class="after-article js-after-article"></div>

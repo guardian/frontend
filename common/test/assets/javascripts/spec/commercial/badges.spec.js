@@ -26,14 +26,13 @@ define([
                 ]
             },
             adPreBadgeHtml = function(sponsor) {
-                return '<div class="ad-slot--paid-for-badge__inner">' +
-                    '<h3 class="ad-slot--paid-for-badge__header">Advertisement feature</h3>' +
-                    '<p class="ad-slot--paid-for-badge__label">in association with</p>' +
+                return '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
+                    '<h3 class="ad-slot--paid-for-badge__header">Brought to you by:</h3>' +
                     '<p class="ad-slot--paid-for-badge__header">' + sponsor + '</p>' +
                 '</div>';
             },
             spPreBadgeHtml = function(sponsor) {
-                return '<div class="ad-slot--paid-for-badge__inner">' +
+                return '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
                     '<h3 class="ad-slot--paid-for-badge__header">Sponsored by:</h3>' +
                     '<p class="ad-slot--paid-for-badge__header">' + sponsor + '</p>' +
                 '</div>';
@@ -71,11 +70,11 @@ define([
             [
                 {
                     type: 'sponsored',
-                    name: 'spbadge'
+                    name: 'spbadge1'
                 },
                 {
                     type: 'advertisement-feature',
-                    name: 'adbadge'
+                    name: 'adbadge1'
                 }
             ].forEach(function(badge) {
 
@@ -107,11 +106,11 @@ define([
             var configs = [
                 {
                     type: 'sponsored',
-                    name: 'spbadge'
+                    name: 'spbadge1'
                 },
                 {
                     type: 'advertisement-feature',
-                    name: 'adbadge'
+                    name: 'adbadge1'
                 }
             ];
 
@@ -129,7 +128,7 @@ define([
                 it('should not add more than one of the same badge', function () {
                     $('.container').addClass('container--' + badge.type);
                     badges.init(config);
-                    expect(qwery('.facia-container .ad-slot').length).toBe(1);
+                    expect(qwery('.facia-container .ad-slot[data-name="' + badge.name + '"]').length).toBe(1);
                 });
             });
 
@@ -166,6 +165,19 @@ define([
                     .attr('data-keywords', 'russia,ukraine');
                 badges.init(config);
                 expect($('.facia-container .ad-slot').data('keywords')).toBe('russia,ukraine');
+            });
+
+            it('should increment badge id if multiple badges added', function() {
+                var $containers = $('.container').addClass('container--sponsored');
+                badges.init(config);
+                expect(qwery('#dfp-ad--spbadge1', $containers[0]).length).toBe(1);
+                expect(qwery('#dfp-ad--spbadge2', $containers[1]).length).toBe(1);
+            });
+
+            it('should be able to add badge to a container', function() {
+                var $container = $('.container').first().addClass('container--sponsored');
+                badges.add($container);
+                expect(qwery('#dfp-ad--spbadge1', $container[0]).length).toBe(1);
             });
 
         });

@@ -53,6 +53,26 @@
     }
 }
 
+/* Override default .gs-container breakpoints */
+.gs-container {
+    @include mq(tablet) {
+        max-width: gs-span(9) + $gs-gutter * 2;
+    }
+
+    @include mq(desktop) {
+        max-width: gs-span(12) + $gs-gutter * 2;
+    }
+
+    @include mq(leftCol) {
+        max-width: gs-span(14) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        max-width: gs-span(16) + $gs-gutter * 2;
+    }
+}
+
+
 
 /* Inline images: included here for faster painting
    ========================================================================== */
@@ -89,7 +109,7 @@
     .loading__link,
     .accessible-link {
         display: inline-block;
-        @include fs-data(2);
+        @include fs-textSans(2);
     }
 }
 .loading .loading__animation,

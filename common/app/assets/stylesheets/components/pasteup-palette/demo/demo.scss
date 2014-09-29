@@ -1,14 +1,13 @@
 
 @import "../bower_components/guss-colours/_colours.scss";
-@import "../_palette";
+@import "../src/_palette";
 
 html {
-    max-width: 60em;
     margin-left: auto;
     margin-right: auto;
     padding: 1em 1em 3em;
     background: #545454;
-    font: 200 1em/1.5 'Helvetica Neue', sans-serif;
+    font: 400 1em/1.5 'Helvetica Neue', sans-serif;
     color: #ffffff;
     text-align: center;
     -moz-osx-font-smoothing: grayscale;
@@ -22,31 +21,32 @@ a {
 }
 .clear {
     margin: 2em;
+    border-top: 1px solid #767676;
 }
 
 @include guss-generate-colour-classes($palette: $pasteup-palette, $property: background-color, $prefix: b-);
 
 [class^=b-] {
     display: inline-block;
-    width: 12em;
-    height: 12em;
+    width: 10em;
+    height: 10em;
     margin: 0 1em 1em 0;
     border-radius: 50%;
     vertical-align: middle;
-    border: 8px solid #fff;
+    border: 4px solid #fff;
     text-align: center;
     text-shadow: #ffffff 0 0 2px;
-    box-shadow: 0 5px 9px rgba(#000000, .3);
+    box-shadow: 0 3px 6px rgba(#000000, .3);
     color: #333333;
 }
 .colour-name,
 .colour-value {
-    font-size: 1.125em;
+    font-size: 1em;
     width: 90%;
     display: inline-block;
 }
 .colour-name {
-    margin-top: calc(50% - 2.75em);
+    margin-top: calc(50% - 3em);
 }
 
 @mixin show-colour-meta($palette: $pasteup-palette, $prefix: "b-") {

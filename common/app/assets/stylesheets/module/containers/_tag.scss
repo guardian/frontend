@@ -6,7 +6,7 @@
             margin-bottom: $gs-baseline;
         }
     }
-    @include mq(faciaLeftCol, wide) {
+    @include mq(leftCol, wide) {
         .container__body {
             margin-left: 160px !important;
         }

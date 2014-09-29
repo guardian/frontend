@@ -15,11 +15,8 @@ object MostViewedGalleryAgent extends Logging with ExecutionContexts {
   def mostViewedGalleries(): Seq[Gallery] = agent()
 
   private def UrlToContentPath(url: String): String = {
-    var contentId = new URL(url).getPath
-    if (contentId.startsWith("/")) {
-      contentId = contentId.substring(1)
-    }
-    contentId
+    val path = new URL(url).getPath
+    if (path.startsWith("/")) path.substring(1) else path
   }
 
   def refresh() = {

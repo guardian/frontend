@@ -10,6 +10,7 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
+import com.gu.util.liveblogs.{Parser => LiveBlogParser, Block, BlockToText}
 
 import scala.collection.JavaConversions._
 import scala.language.postfixOps
@@ -33,7 +34,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isBlog: Boolean = blogs.nonEmpty
   lazy val isSeries: Boolean = series.nonEmpty
-  lazy val hasLargeContributorImage: Boolean = tags.filter(_.hasLargeContributorImage).nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
   lazy val primaryKeyWordTag: Option[Tag] = tags.find(!_.isSectionTag)
   lazy val keywordTags: Seq[Tag] = keywords.filter(tag => !tag.isSectionTag)
@@ -63,6 +63,7 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   }
 
   lazy val shouldHideAdverts: Boolean = fields.get("shouldHideAdverts").exists(_.toBoolean)
+  lazy val isInappropriateForSponsorship: Boolean = fields.get("isInappropriateForSponsorship").exists(_.toBoolean)
 
   lazy val witnessAssignment = delegate.references.find(_.`type` == "witness-assignment")
     .map(_.id).map(Reference(_)).map(_._2)
@@ -155,11 +156,13 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) ++ Map(seriesMeta: _*)
   }
 
+
   override lazy val cacheSeconds = {
-    if (isLive) 30 // live blogs can expect imminent updates
-    else if (lastModified > DateTime.now - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
+    if (isLive) 5 // live blogs can expect imminent updates
+    else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
+
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:title" -> webTitle,
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),
@@ -178,16 +181,18 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   // Inherited from FaciaFields
   override lazy val group: Option[String] = apiContent.metaData.get("group").flatMap(_.asOpt[String])
   override lazy val supporting: List[Content] = apiContent.supporting
+  override lazy val isBoosted: Boolean = apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val imageHide: Boolean = apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val imageAdjust: String = apiContent.metaData.get("imageAdjust").flatMap(_.asOpt[String]).getOrElse("default")
+  override lazy val imageReplace: Boolean = apiContent.metaData.get("imageReplace").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
   override lazy val imageSrcWidth: Option[String] = apiContent.metaData.get("imageSrcWidth").flatMap(_.asOpt[String])
   override lazy val imageSrcHeight: Option[String] = apiContent.metaData.get("imageSrcHeight").flatMap(_.asOpt[String])
-  lazy val imageElement: Option[ApiElement] = for {
+  lazy val imageElement: Option[ApiElement] = if (imageReplace) for {
     src <- imageSrc
     width <- imageSrcWidth
     height <- imageSrcHeight
-  } yield ImageOverride.createElementWithOneAsset(src, width, height)
+  } yield ImageOverride.createElementWithOneAsset(src, width, height) else None
 
   override lazy val showMainVideo: Boolean =
     apiContent.metaData.get("showMainVideo").flatMap(_.asOpt[Boolean]).getOrElse(false)
@@ -204,6 +209,7 @@ object Content {
       case article if apiContent.delegate.isArticle || apiContent.delegate.isSudoku => new Article(apiContent)
       case gallery if apiContent.delegate.isGallery => new Gallery(apiContent)
       case video if apiContent.delegate.isVideo => new Video(apiContent)
+      case audio if apiContent.delegate.isAudio => new Audio(apiContent)
       case picture if apiContent.delegate.isImageContent => new ImageContent(apiContent)
       case _ => new Content(apiContent)
     }
@@ -282,7 +288,8 @@ object Content {
         apiUrl          = "",
         references      = Nil,
         bio             = None,
-        bylineImageUrl  = (tagJson \ "bylineImageUrl").asOpt[String]
+        bylineImageUrl  = (tagJson \ "bylineImageUrl").asOpt[String],
+        bylineLargeImageUrl  = (tagJson \ "bylineLargeImageUrl").asOpt[String]
       )
     }
 
@@ -367,9 +374,6 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   override lazy val contentType = GuardianContentTypes.Article
 
-  lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
-    .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
-
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def schemaType = Some(ArticleSchemas(this))
 
@@ -432,6 +436,10 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
   }
 
   override def metaData: Map[String, JsValue] = super.metaData ++ cricketMetaData
+
+  lazy val latestUpdateText = LiveBlogParser.parse(body) collectFirst {
+    case Block(_, _, _, _, BlockToText(text), _) if !text.trim.nonEmpty => text
+  }
 }
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
@@ -454,6 +462,13 @@ class Audio(content: ApiContentWithMeta) extends Media(content) {
 
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map("contentType" -> JsString(contentType), "blockVideoAds" -> JsBoolean(blockVideoAds))
+
+  lazy val downloadUrl: Option[String] = mainAudio
+    .flatMap(_.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
+
+  private lazy val podcastTag: Option[Tag] = tags.find(_.podcast.nonEmpty)
+  lazy val iTunesSubscriptionUrl: Option[String] = podcastTag.flatMap(_.podcast.flatMap(_.subscriptionUrl))
+  lazy val seriesFeedUrl: Option[String] = podcastTag.map(tag => s"/${tag.id}/podcast.xml")
 }
 
 object Audio {
@@ -515,7 +530,8 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
 
   override lazy val metaData: Map[String, JsValue] = super.metaData ++ Map(
     "contentType" -> JsString(contentType),
-    "gallerySize" -> JsNumber(size)
+    "gallerySize" -> JsNumber(size),
+    "galleryLightbox" -> lightbox
   )
 
   override lazy val openGraphImage: String = galleryImages.headOption.flatMap(_.largestImage.flatMap(_.url)).getOrElse(conf.Configuration.facebook.imageFallback)
@@ -534,7 +550,7 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
     "article:author" -> contributors.map(_.webUrl).mkString(",")
   )
 
-  private lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
+  lazy val galleryImages: Seq[ImageElement] = images.filter(_.isGallery)
   lazy val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.largestImage)
 
   override def cards: List[(String, String)] = super.cards ++ Seq(
@@ -543,6 +559,28 @@ class Gallery(content: ApiContentWithMeta) extends Content(content) {
   ) ++ largestCrops.sortBy(_.index).take(5).zipWithIndex.map { case (image, index) =>
     image.path.map(s"twitter:image$index:src" ->)
   }.flatten
+
+  lazy val lightbox: JsObject = {
+    val imageContainers = galleryImages.filter(_.isGallery)
+    val imageJson = imageContainers.map{ imgContainer =>
+      imgContainer.largestEditorialCrop.map { img =>
+        JsObject(Seq(
+          "caption" -> JsString(img.caption.getOrElse("")),
+          "credit" -> JsString(img.credit.getOrElse("")),
+          "displayCredit" -> JsBoolean(img.displayCredit),
+          "src" -> JsString(ImgSrc(img.url.getOrElse(""), ImgSrc.Imager)),
+          "ratio" -> JsNumber(img.width.toFloat / img.height)
+        ))
+      }
+    }
+    JsObject(Seq(
+      "id" -> JsString(id),
+      "headline" -> JsString(headline),
+      "shouldHideAdverts" -> JsBoolean(shouldHideAdverts),
+      "standfirst" -> JsString(standfirst.getOrElse("")),
+      "images" -> JsArray(imageJson.flatten)
+    ))
+  }
 }
 
 object Gallery {

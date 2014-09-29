@@ -1,22 +1,15 @@
 package model.commercial.travel
 
-import org.joda.time.format.DateTimeFormat
-import scala.xml.{Elem, Node}
-import model.commercial.XmlAdsApi
-import conf.{Switches}
-import scala.concurrent.Future
-import services.S3
+import common.{ExecutionContexts, Logging}
 import conf.Configuration.commercial._
+import conf.Switches._
+import org.joda.time.format.DateTimeFormat
+import services.S3
 
-object TravelOffersApi extends XmlAdsApi[TravelOffer] {
+import scala.concurrent.Future
+import scala.xml.{Elem, Node, XML}
 
-  protected val adTypeName = "Travel Offers"
-
-  protected val switch = Switches.TravelOffersFeedSwitch
-
-  protected val url = Some(travelOffersS3Key)
-
-  override protected val loadTimeout = 30000
+object TravelOffersApi extends ExecutionContexts with Logging {
 
   private val dateFormat = DateTimeFormat.forPattern("dd-MMM-yyyy")
 
@@ -44,16 +37,18 @@ object TravelOffersApi extends XmlAdsApi[TravelOffer] {
 
   def parse(xml: Elem): Seq[TravelOffer] = (xml \\ "offer") map buildOffer
 
-  override def loadAds(): Future[Seq[TravelOffer]] = doIfSwitchedOn {
-    url map  { u=>
-      val reply: Option[String] = S3.get(u)
-      val result: Seq[TravelOffer] = reply.fold(Seq[TravelOffer]()) {r =>
-        val elems = transform(r)
+  def loadAds(): Future[Seq[TravelOffer]] = {
+    if (TravelOffersFeedSwitch.isSwitchedOn) {
+      val reply: Option[String] = S3.get(travelOffersS3Key)
+      val result: Seq[TravelOffer] = reply.fold(Seq[TravelOffer]()) { r =>
+        val elems = XML.loadString(r)
         parse(elems)
       }
-      Future(result)
-    } getOrElse Future(Nil)
+      Future.successful(result)
+    } else {
+      log.warn(s"Reading Travel Offers feed failed: Switch is off")
+      Future.successful(Nil)
+    }
   }
-  
 
 }

@@ -20,7 +20,7 @@
         <div class="item__container">
             <div class="item__tonal-border tone-accent-border"></div>
             @FaciaDisplayElement.fromTrail(trail) match {
-                case InlineVideo(videoElement, title, endSlatePath) if trail.imageAdjust == "boost" => {
+                case InlineVideo(videoElement, title, endSlatePath) if trail.isBoosted => {
                     <div class="item__media-wrapper item__media-wrapper--has-icon u-faux-block-link__promote">
                         <div class="item__video-container">
                         @video(VideoPlayer(
@@ -43,7 +43,7 @@
 
             <div class="@RenderClasses(Map(
                 ("item__header", true),
-                ("item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.imageAdjust == "boost")
+                ("item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
             ))">
                 @fragments.items.elements.title(trail, index, containerIndex, showTag = true)
                 @trail match { case content:model.Content => @fragments.items.elements.starRating(content) }
@@ -63,6 +63,6 @@
 
             @fragments.items.elements.meta(trail)
         </div>
-        <a @LinkTo(trail).map{url=>href="@url"} class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
+        <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
     </@element>
 }

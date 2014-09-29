@@ -14,19 +14,28 @@ $football-crest--large: 60px;
 }
 
 .match-summary__teams {
+    padding-top: $gs-baseline;
     position: relative;
-    padding: $gs-baseline/2 0 0;
-    border-top: 1px dotted $c-neutral2;
+    border-top: 1px dotted $c-neutral5;
     font-size: 0;
+
+    @include mq(tablet) {
+        padding-top: 0;
+    }
 }
+
 .match-summary__team {
-    margin-bottom: $gs-baseline*2;
+    margin-bottom: $gs-baseline;
 }
 
 .team__info {
     position: relative;
     margin-left: $gs-gutter/2 + $football-crest--small;
-    @include fs-headline(6);
+    @include fs-headline(5);
+
+    @include mq(mobileLandscape) {
+        @include fs-headline(7, true);
+    }
 }
 
 .team__heading {
@@ -80,7 +89,8 @@ $football-crest--large: 60px;
 }
 
 .team__scorers {
-    @include fs-data(5);
+    @include fs-textSans(3);
+    color: $c-neutral2;
 }
 
 .match-summary--report .team__scorers dd {
@@ -107,7 +117,7 @@ $football-crest--large: 60px;
     width: $football-crest--small;
     @include border-radius(24px);
     border: 2px dotted $c-neutral2;
-    @include fs-data(2);
+    @include fs-textSans(2);
     line-height: $football-crest--small - 3; // account for the border
     text-align: center;
 }
@@ -151,7 +161,7 @@ $football-crest--large: 60px;
 
 .match-summary__aggregate,
 .match-summary__comment {
-    @include fs-data(3);
+    @include fs-textSans(2);
 }
 
 .match-summary__comment {
@@ -166,7 +176,7 @@ $football-crest--large: 60px;
 }
 
 .match-info {
-    @include fs-data(3);
+    @include fs-textSans(1);
     padding-left: $gs-gutter/2;
     display: inline-block;
     vertical-align: middle;
@@ -297,9 +307,6 @@ $football-crest--large: 60px;
     .match-summary__status {
         display: none;
     }
-    .match-summary__team {
-        margin-bottom: $gs-baseline;
-    }
     .match-info {
         padding: $gs-gutter/2 0;
     }
@@ -308,7 +315,7 @@ $football-crest--large: 60px;
         @include fs-headline(4, true);
     }
     .team__scorers {
-        @include fs-data(3, true);
+        @include fs-textSans(2, true);
     }
     .team__crest {
         margin-right: $gs-gutter;

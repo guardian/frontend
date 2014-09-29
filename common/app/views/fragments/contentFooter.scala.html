@@ -2,7 +2,7 @@
 
 <div class="content-footer @if(cssClass){ content-footer--@cssClass }">
     @if(conf.Switches.DiscussionSwitch.isSwitchedOn && content.isCommentable) {
-        <div class="gs-container js-comments">
+        <div class="gs-container js-comments discussion-wrapper">
             <div class="content__main-column" data-component="discussion">
             @fragments.discussionFooter(content.isClosedForComments, content.shortUrlId)
             </div>
@@ -22,15 +22,17 @@
 
     <div class="js-repositioned-comments content__repositioned-comments"></div>
 
-    <div class="facia-container facia-container--layout-content facia-container--default-heading">
-        @fragments.mostPopularPlaceholder(content.section, content.visualTone)
-    </div>
+    @if(!content.isAdvertisementFeature) {
+        <div class="facia-container facia-container--layout-content facia-container--default-heading">
+            @fragments.mostPopularPlaceholder(content.section, content.visualTone)
+        </div>
 
-    <div class="facia-container facia-container--layout-content facia-container--outbrain">
-        @fragments.outbrainPlaceholder()
-    </div>
+        <div class="facia-container facia-container--layout-content facia-container--outbrain hide-on-childrens-books-site">
+            @fragments.outbrainPlaceholder()
+        </div>
+    }
 
-    @if(!content.shouldHideAdverts) {
+    @if(!content.shouldHideAdverts && !content.isAdvertisementFeature) {
         <div class="facia-container facia-container--layout-content facia-container--commercial">
             @fragments.commercial.commercialComponent()
         </div>

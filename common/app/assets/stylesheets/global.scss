@@ -16,12 +16,8 @@
    ========================================================================== */
 
 @import 'base/_tables';
-@import 'components/pasteup-forms/_forms';
-@if $old-ie {
-    @include pasteup-forms-fix-ie8-password-field-webfonts-display;
-}
-@include pasteup-forms-defaults;
-@import 'base/_buttons';
+@import 'components/pasteup-forms/src/_forms';
+@import 'components/pasteup-buttons/src/_buttons';
 
 
 /* ==========================================================================
@@ -30,7 +26,7 @@
 
 @import 'module/_tabs';
 @import 'module/_headline-list';
-@import 'module/_tag';
+@import 'module/_profile';
 @import 'module/_cta';
 @import 'layout/_footer';
 @import 'module/_stars';
@@ -56,12 +52,13 @@
 
 @import 'module/_overlay';
 @import 'module/content/_gallery';
-@import 'module/_lightbox-gallery';
+@import 'module/content/_gallery-lightbox';
 
 @import 'module/onward/_right-hand-most-popular';
 @import 'module/onward/_popular';
 @import 'module/onward/_breaking-news';
 @import 'module/_clamp';
+@import 'module/_submeta';
 
 
 /* ==========================================================================
@@ -94,11 +91,11 @@
    Facia
    ========================================================================== */
 
-@import 'module/facia/_facia-container';
 @include facia-container--layout-content;
 @include facia-container--layout-discussion;
 @include facia-container--default-heading;
 
+@import 'module/facia/_icons';
 @import 'module/facia/_show-more';
 @import 'module/facia/_pagination';
 @import 'module/facia/_container-related-keywords';
@@ -122,6 +119,9 @@
 
 @import 'module/facia/snaps/_football';
 @import 'module/facia/_tag-meta';
+
+// card additions
+@import 'module/facia-cards/_tones-images';
 
 
 /* ==========================================================================
@@ -152,6 +152,7 @@
 
 @import 'module/_release-message';
 @import 'module/_tag-list';
+@import 'module/_childrens-books-site';
 
 
 /* ==========================================================================

@@ -28,7 +28,9 @@ case class Section(private val delegate: ApiSection, override val pagination: Op
   )
 
   override def isSponsored = DfpAgent.isSponsored(this.id)
+  override def hasMultipleSponsors = DfpAgent.hasMultipleSponsors(this.id)
   override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(this.id)
+  override def hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(this.id)
   override def sponsor = DfpAgent.getSponsor(this.id)
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 }

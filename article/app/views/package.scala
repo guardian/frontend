@@ -19,6 +19,7 @@ object BodyCleaner {
         new TagLinker(article),
         TableEmbedComplimentaryToP,
         LiveBlogDateFormatter(article.isLiveBlog),
+        LiveBlogShareButtons(article),
         DropCaps(article.isComment || article.isFeature),
         FigCaptionCleaner
       )

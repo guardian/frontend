@@ -4,6 +4,7 @@
 @import model.{AudioPlayer, VideoPlayer}
 @import views.support.Video640
 @import views.BodyCleaner
+@import views.support.ArticleLayout.ArticleLayout
 
 @if(article.hasMainEmbed || article.elements("main").isEmpty) {
     <div class="media-primary">
@@ -38,6 +39,7 @@
                     class="media-primary media-content">
                     @article.mainAudio.map { audioElement =>
                         @fragments.media.audio(AudioPlayer(
+                            article,
                             audioElement,
                             article.headline,
                             autoPlay = false

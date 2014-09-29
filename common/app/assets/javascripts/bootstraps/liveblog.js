@@ -15,9 +15,11 @@ define([
     'common/modules/experiments/affix',
     'common/modules/live/filter',
     'common/modules/ui/autoupdate',
+    'common/modules/ui/dropdowns',
     'common/modules/ui/message',
     'common/modules/ui/notification-counter',
-    'common/bootstraps/article'
+    'common/bootstraps/article',
+    'common/modules/ui/relativedates'
 ], function (
     bean,
     bonzo,
@@ -35,9 +37,11 @@ define([
     Affix,
     LiveFilter,
     AutoUpdate,
+    dropdowns,
     Message,
     NotificationCounter,
-    article
+    article,
+    RelativeDates
 ) {
     'use strict';
 
@@ -48,17 +52,6 @@ define([
         return qwery('.is-key-event').slice(0, 7);
     }
 
-    function getBlocks() {
-        return qwery('.block');
-    }
-
-    function getFirstBlock() {
-        return getBlocks().shift();
-    }
-
-    function getLastBlock() {
-        return getBlocks().pop();
-    }
 
     function createScrollTransitions (){
 
@@ -73,6 +66,13 @@ define([
             bean.off(curBinding);
             curBinding = bean.one(document, 'scroll', function() { unselect(); });
         }
+
+        bean.on(document.body, 'click', 'a', function(e) {
+            var id = e.currentTarget.href.match(/.*(#.*)/)[1];
+            if (id && $(id).hasClass('truncated-block')) {
+                mediator.emit('module:liveblog:showkeyevents', true);
+            }
+        });
 
         bean.on(qwery('.timeline')[0], 'click', '.timeline__link', function(e) {
             mediator.emit('module:liveblog:showkeyevents', true);
@@ -121,12 +121,8 @@ define([
         return recursiveRender(events, '');
     }
 
-    function wrapWithFirstAndLast(html) {
-        return createKeyEventHTML(getFirstBlock()) + html + createKeyEventHTML(getLastBlock());
-    }
-
     function getUpdatePath() {
-        var blocks = qwery('.article-body .block'),
+        var blocks = qwery('.js-liveblog-body .block'),
             newestBlock = null;
 
         if (autoUpdate.getManipulationType() === 'append') {
@@ -154,11 +150,12 @@ define([
         createTimeline: function() {
             var allEvents = getKeyEvents();
             if(allEvents.length > 0) {
-                var timelineHTML = wrapWithFirstAndLast(getTimelineHTML(allEvents));
+                var timelineHTML = getTimelineHTML(allEvents);
 
                 $('.js-live-blog__timeline').append(timelineHTML);
-                $('.js-live-blog__timeline li:first-child .timeline__title').text('Latest post');
-                $('.js-live-blog__timeline li:last-child .timeline__title').text('Opening post');
+                var dropdown = $('.js-live-blog__timeline-container .dropdown');
+                dropdown.addClass('dropdown--active');
+                dropdowns.updateAria(dropdown);
 
                 if (detect.isBreakpoint({ min: 'desktop' }) && config.page.keywordIds.indexOf('football/football') < 0) {
                     var topMarker = qwery('.js-top-marker')[0];
@@ -181,7 +178,7 @@ define([
                 autoUpdate = new AutoUpdate({
                     path: getUpdatePath,
                     delay: timerDelay,
-                    attachTo: $('.article-body')[0],
+                    attachTo: $('.js-liveblog-body')[0],
                     switches: config.switches,
                     manipulationType: 'prepend'
                 });
@@ -224,6 +221,33 @@ define([
 
                 releaseMessage.show(msg);
             }
+        },
+
+        keepTimestampsCurrent: function() {
+            var dates = RelativeDates;
+            window.setInterval(
+                function() {
+                    dates.init();
+                },
+                60000
+            );
+
+        },
+
+        truncateBlockShareIcons: function(blockShareEl) {
+            var truncated = qwery('> *', blockShareEl).slice(2);
+            bonzo(truncated).addClass('u-h');
+            $('.js-blockshare-expand', blockShareEl).removeClass('u-h');
+        },
+
+        initBlockSharing: function() {
+            bean.on(document.body, 'click', '.js-blockshare-expand', function(e) {
+                var expandButton = bonzo(e.currentTarget),
+                    container = expandButton.parent()[0];
+                $('> *', container).removeClass('u-h');
+                expandButton.addClass('u-h');
+            });
+            $.forEachElement('.block-share', modules.truncateBlockShareIcons);
         }
     };
 
@@ -233,6 +257,8 @@ define([
         modules.createTimeline();
         modules.createAutoRefresh();
         modules.showFootballLiveBlogMessage();
+        modules.keepTimestampsCurrent();
+        modules.initBlockSharing();
 
         // re-use modules from article bootstrap
         article.modules.initOpen(config);

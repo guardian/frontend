@@ -6,8 +6,26 @@
     @include u-h;
 }
 
-.u-h--up-to-right-col {
+.hide-until-rightcol {
     @include mq($until: rightCol) {
+        @include u-h;
+    }
+}
+
+.hide-until-leftcol {
+    @include mq($until: leftCol) {
+        @include u-h;
+    }
+}
+
+.hide-until-wide {
+    @include mq($until: wide) {
+        @include u-h;
+    }
+}
+
+.hide-from-leftcol {
+    @include mq(leftCol) {
         @include u-h;
     }
 }
@@ -177,4 +195,11 @@
 
 .flushp--top {
     padding-top: 0!important;
+}
+
+.meta-button { // unstyles button elements (so they can be used for semantics)
+    background: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
 }

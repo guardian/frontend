@@ -46,7 +46,7 @@
         }
         .commercial--masterclasses__class__date,
         .commercial--masterclasses__class__meta {
-            @include fs-data(3);
+            @include fs-textSans(2);
             color: $c-neutral2;
         }
         .commercial--masterclasses__class__date {
@@ -165,8 +165,6 @@
         .commercial__title__last-word {
             margin-left: -5px;
         }
-    }
-    @include mq(faciaLeftCol) {
         .commercial__head {
             width: gs-span(2) + $gs-gutter;
         }
@@ -177,7 +175,7 @@
             left: $gs-gutter/2;
         }
     }
-    @include mq(faciaLeftCol, wide) {
+    @include mq(leftCol, wide) {
         .commercial__title__last-word {
             margin-left: 0;
         }
@@ -214,7 +212,7 @@
                 padding-left: $gs-gutter/2;
             }
         }
-        @include mq(faciaLeftCol) {
+        @include mq(leftCol) {
             .commercial__head {
                 padding-left: 0;
             }

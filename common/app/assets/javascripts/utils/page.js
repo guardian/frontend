@@ -4,7 +4,7 @@ define([
     'lodash/objects/assign',
     'lodash/collections/find'
 ],
-function(
+function (
     $,
     config,
     assign,
@@ -13,7 +13,7 @@ function(
 
     function isit(isTrue, yes, no, arg) {
         if (isTrue) {
-            return yes ? yes((arg||isTrue)) : (arg||isTrue);
+            return yes ? yes((arg || isTrue)) : (arg || isTrue);
         } else {
             return no ? no() : false;
         }
@@ -35,7 +35,7 @@ function(
                 ['preview', config.hasSeries('Match previews')],
                 ['stats', match.id],
                 [null, true] // We need a default
-            ], function(type) {
+            ], function (type) {
                 return type[1] === true;
             })[0]
         });
@@ -53,7 +53,7 @@ function(
     }
 
     function isLiveClockwatch(yes, no) {
-        return isClockwatch(function() {
+        return isClockwatch(function () {
             return isit(config.page.isLive, yes, no);
         }, no);
     }

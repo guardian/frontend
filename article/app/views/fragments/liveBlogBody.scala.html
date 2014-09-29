@@ -8,21 +8,18 @@
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
         <header class="content__head content__head--tonal">
-
-            <div class="gs-container">
-                <div class="content__main-column content__main-column--wide">
-                    <div class="content__section">
-                        <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
-                    </div>
-                </div>
-            </div>
-
             @* UPPER HEADER *@
             <div class="tone-background">
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
 
-                        @fragments.meta.metaInline(article)
+                        <div class="content__labels">
+                            <div class="content__section-label">
+                                <a class="tone-colour" data-link-name="article section" href="@LinkTo{/@article.section}">@Html(article.sectionName.toLowerCase)</a>
+                            </div>
+
+                            @fragments.meta.metaInline(article)
+                        </div>
 
                         <h1 itemprop="headline" class="content__headline js-score">@Html(article.headline)</h1>
                     </div>
@@ -33,7 +30,7 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--liveblog">
                         <div class="blog__last-updated-container">
-                            @if(article.isLive) {<span class="blog__live">LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
+                            @if(article.isLive) {<span class="blog__live"><span class="blog__live-icon"></span>LIVE</span> }updated <time class="js-timestamp" datetime="@article.webPublicationDate" data-relativeformat="med"></time>
                         </div>
 
                         <div class="blog__meta-container">
@@ -44,7 +41,6 @@
                     </div>
                 </div>
             </div>
-
         </header>
 
         <div class="gs-container">
@@ -64,9 +60,10 @@
                     @if(article.hasKeyEvents) {
                         <div class="blog__timeline blog__dropdown js-live-blog__key-events">
                             <div class="blog__timeline-container js-live-blog__timeline-container" data-component="timeline">
-                                @fragments.dropdown("Key events", Some("key-events"), article.section != "football") {
+                                @fragments.dropdown("Key events", Some("key-events"), false) {
                                     <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
                                 }
+                                <div class="js-comment-count comment-count--timeline tone-colour"></div>
                             </div>
                         </div>
                     }
@@ -77,18 +74,19 @@
                     <div class="js-article__container" data-component="body">
                         @fragments.liveFilter(article.isLive)
 
-                        <div class="article-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}" data-test-id="live-blog-blocks"
+                        <div class="js-liveblog-body u-cf from-content-api js-blog-blocks @if(article.isLive) {live-blog}" data-test-id="live-blog-blocks"
                             itemprop="@if(article.isReview) {reviewBody} else {articleBody}">
                             @BodyCleaner(article, article.body)
                         </div>
-
-                        <div class="content__keywords" data-link-name="live blog keywords">
-                            @fragments.keywordList(article.keywords)
-                        </div>
                     </div>
 
-                    <div class="social-wrapper" data-component="share">
-                        @fragments.social(article)
+                    <div class="submeta-container">
+                        <div class="submeta" data-link-name="keywords">
+                            @fragments.keywordList(article.keywords, tone = article.visualTone)
+                        </div>
+                        <div class="submeta" data-component="share">
+                            @fragments.social(article)
+                        </div>
                     </div>
 
                     <div class="after-article js-after-article"></div>
@@ -97,8 +95,8 @@
                 }
             </div>
 
-
             <div class="content__secondary-column" aria-hidden="true">
+                <div class="mpu-container js-mpu-ad-slot"></div>
                 @if(model.related.hasStoryPackage) {
                     <aside role="complementary" class="blog__related">
                         <h3 class="blog__related__head">More on this story</h3>
@@ -109,7 +107,6 @@
                         </ul>
                     </aside>
                 }
-                <div class="mpu-container js-mpu-ad-slot"></div>
             </div>
 
         </div>

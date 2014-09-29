@@ -1,7 +1,9 @@
-@(collection: Collection, style: NewsContainer, containerIndex: Int, date: org.joda.time.DateTime, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: Collection, style: NewsContainer, containerIndex: Int, date: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
 @import common.LinkTo
 @import model.{Collection, Config}
+@import views.html.fragments.keywordList
+@import views.support.MostPopularTags.topTags
 @import views.support.{GetClasses, Format, NewsContainer, PreviousAndNext, TemplateDeduping}
 
 @defining(collection.displayName) { title =>
@@ -46,6 +48,13 @@
                             </div>
                         }
                     </div>
+                    @defining(topTags(collection.items).filterNot(_.id == page.id).take(20)) { tags =>
+                        @if(tags.nonEmpty) {
+                            <div class="related-keywords">
+                                @keywordList(tags, 5, "See also")
+                            </div>
+                        }
+                    }
                 </div>
             </section>
         }

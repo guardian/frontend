@@ -2,7 +2,7 @@
     padding-top: 0;
     margin: $gs-baseline 0;
 
-    @include fs-data(4);
+    @include fs-textSans(2);
 
     @include mq(leftCol) {
         float: right;

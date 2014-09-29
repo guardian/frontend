@@ -1,4 +1,37 @@
+.button--tag {
+    margin-right: $gs-gutter / 5;
+    margin-bottom: $gs-row-height / 4.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: gs-span(4);
+
+    @include mq(leftCol) {
+        max-width: $left-column;
+    }
+
+    @include mq(wide) {
+        max-width: $left-column-wide;
+    }
+
+    .related-keywords & {
+        max-width: none;
+    }
+
+    .content__keywords & {
+        max-width: none;
+    }
+
+    .facia-container__related-keywords__body & {
+        max-width: none;
+    }
+}
+
 .show-more-tags {
     vertical-align: bottom;
     display: inline-block;
+}
+
+.more-tags { //fix for IE8/9 bug
+    display: inline;
 }

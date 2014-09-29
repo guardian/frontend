@@ -1,4 +1,4 @@
-@(keywords: Seq[model.Tag], visibleKeywords: Int = 5, title: String = "Tags")(implicit request: RequestHeader)
+@(keywords: Seq[model.Tag], visibleKeywords: Int = 5, title: String = "Tags", tone: String = "news")(implicit request: RequestHeader)
 
 @import common.LinkTo
 @import model.Tag
@@ -6,27 +6,26 @@
 
 @renderItem(keyword: Tag, row: RowInfo, clazz: String = "", trailingComma: Boolean = false) = {
     <li class="inline-list__item @clazz">
-        <a class="@if(keyword.isFootballTeam){js-football-team} @if(keyword.isFootballCompetition){ js-football-competition}"
+        <a class="@if(keyword.isFootballTeam){js-football-team} @if(keyword.isFootballCompetition){ js-football-competition} button button--small button--tag button--tone-@tone"
            href="@LinkTo(keyword.url)"
            data-link-name="keyword: @keyword.id"
-           itemprop="keywords">@keyword.name</a>@if(!row.isLast || trailingComma){, }
+           itemprop="keywords">@keyword.name</a>
     </li>
 }
 
 @defining(keywords.filterNot(_.isSectionTag).take(visibleKeywords)) { shownKeywords =>
     @defining(keywords.filterNot(_.isSectionTag).drop(visibleKeywords)) { hiddenKeywords =>
         @if(shownKeywords.nonEmpty) {
-            <ul class="inline-list">
-                <li class="inline-list__item">@title:</li>
+            <ul class="keyword-list inline-list">
                 @shownKeywords.zipWithRowInfo.map{ case(keyword, row) =>
                     @renderItem(keyword, row, trailingComma = hiddenKeywords.nonEmpty)
                 }
 
                 @if(hiddenKeywords.nonEmpty) {
 
-                    <li class="inline-list__item js-more-tags modern-hidden">
-                        <button class="u-button-reset u-fauxlink show-more-tags js-more-tags__link"
-                           data-link-name="more-tags">more…</button>
+                    <li class="inline-list__item js-more-tags more-tags modern-hidden">
+                        <button class="u-button-reset js-more-tags__link button button--small button--tag button--tone-@tone-variant button--more"
+                           data-link-name="more-tags">More…</button>
                     </li>
 
                     @hiddenKeywords.zipWithRowInfo.map{ case(keyword, row) =>

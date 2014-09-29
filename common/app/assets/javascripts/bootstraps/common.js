@@ -34,7 +34,6 @@ define([
     'common/modules/analytics/livestats',
     'common/modules/experiments/ab',
     'common/modules/discussion/comment-count',
-    'common/modules/gallery/lightbox',
     'common/modules/onward/history',
     'common/modules/onward/breaking-news',
     'common/modules/ui/message',
@@ -47,7 +46,8 @@ define([
     'common/modules/onward/more-tags',
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/faux-block-link',
-    'common/modules/discussion/loader'
+    'common/modules/discussion/loader',
+    'common/modules/release-message'
 ], function (
     $,
     mediator,
@@ -81,7 +81,6 @@ define([
     liveStats,
     ab,
     CommentCount,
-    LightboxGallery,
     history,
     breakingNews,
     Message,
@@ -94,7 +93,8 @@ define([
     MoreTags,
     smartAppBanner,
     fauxBlockLink,
-    DiscussionLoader
+    DiscussionLoader,
+    releaseMessage
 ) {
 
     var modules = {
@@ -182,16 +182,6 @@ define([
             });
         },
 
-        initLightboxGalleries: function () {
-            var thisPageId;
-            mediator.on('page:common:ready', function(config) {
-                var galleries = new LightboxGallery(config);
-                thisPageId = config.page.pageId;
-                galleries.init();
-            });
-
-        },
-
         initRightHandComponent: function(config) {
             if(config.page.contentType === 'Article' &&
                 detect.getBreakpoint() !== 'mobile' &&
@@ -246,29 +236,50 @@ define([
 
             if (
                 config.switches.releaseMessage &&
-                config.page.hasClassicVersion &&
+                config.page.showClassicVersion &&
                 (detect.getBreakpoint() !== 'mobile')
             ) {
                 // force the visitor in to the alpha release for subsequent visits
                 Cookies.add('GU_VIEW', 'responsive', 365);
 
-                var exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic'),
-                    msg = '<p class="site-message__message" id="site-message__message">' +
-                            'You’re viewing a beta release of the Guardian’s responsive website.' +
-                            ' We’d love to hear what you think.' +
-                        '</p>' +
-                        '<ul class="site-message__actions u-unstyled">' +
-                            '<li class="site-message__actions__item">' +
-                               '<i class="i i-back"></i>' +
-                                   '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
-                                       'data-link-name="opt-out">Use current version</a>' +
-                            '</li>' +
-                            '<li class="site-message__actions__item">' +
+                var exitLink = '/preference/platform/classic?page=' + encodeURIComponent(path + '?view=classic');
+
+                var msg = '<p class="site-message__message" id="site-message__message">' +
+                        'You’re viewing a beta release of the Guardian’s responsive website.' +
+                        ' We’d love to hear what you think.' +
+                    '</p>' +
+                    '<ul class="site-message__actions u-unstyled">' +
+                        '<li class="site-message__actions__item">' +
+                           '<i class="i i-back"></i>' +
+                               '<a class="js-main-site-link" rel="nofollow" href="' + exitLink + '"' +
+                                   'data-link-name="opt-out">Use current version</a>' +
+                        '</li>' +
+                        '<li class="site-message__actions__item">' +
+                        '<i class="i i-arrow-white-right"></i>' +
+                        '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
+                        '</li>' +
+                    '</ul>';
+
+                var usMsg = '<p class="site-message__message" id="site-message__message">' +
+                        'You’re viewing a beta release of the Guardian’s responsive website.' +
+                        ' We’d love to hear what you think.' +
+                    '</p>' +
+                    '<ul class="site-message__actions u-unstyled">' +
+                        '<li class="site-message__actions__item">' +
                             '<i class="i i-arrow-white-right"></i>' +
                             '<a href="https://www.surveymonkey.com/s/theguardian-beta-feedback" target="_blank">Leave feedback</a>' +
-                            '</li>' +
-                        '</ul>';
-                releaseMessage.show(msg);
+                        '</li>' +
+                        '<li class="site-message__actions__item">' +
+                            '<i class="i i-arrow-white-right"></i>' +
+                            '<a href="http://next.theguardian.com" target="_blank">Find out more</a>' +
+                        '</li>' +
+                    '</ul>';
+
+                if (config.page.edition === 'US') {
+                    releaseMessage.show(usMsg);
+                } else {
+                    releaseMessage.show(msg);
+                }
             }
         },
 
@@ -380,6 +391,35 @@ define([
             if (queryParams.test) {
                 Cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
             }
+        },
+
+        initReleaseMessage: function(config) {
+            releaseMessage.init(config);
+        },
+
+        initOpenOverlayOnClick: function() {
+            var offset;
+
+            bean.on(document.body, 'click', '[data-open-overlay-on-click]', function(e) {
+                var elId = bonzo(e.currentTarget).data('open-overlay-on-click');
+                offset = document.body.scrollTop;
+                bonzo(document.body).addClass('has-overlay');
+                $('#' + elId).addClass('overlay--open').appendTo(document.body);
+            });
+
+            bean.on(document.body, 'click', '.js-overlay-close', function(e) {
+                var overlay = $.ancestor(e.target, 'overlay');
+                if (overlay) {
+                    bonzo(overlay).removeClass('overlay--open');
+                }
+                bonzo(document.body).removeClass('has-overlay');
+                if (offset) {
+                    window.setTimeout(function() {
+                        document.body.scrollTop = offset;
+                        offset = null;
+                    }, 1);
+                }
+            });
         }
     };
 
@@ -397,7 +437,6 @@ define([
         modules.showRelativeDates();
         modules.initClickstream();
         modules.transcludeCommentCounts();
-        modules.initLightboxGalleries();
         modules.optIn();
         modules.displayReleaseMessage(config);
         modules.logReadingHistory();
@@ -417,6 +456,8 @@ define([
         modules.transcludeRelated(config);
         modules.transcludeOnwardContent(config);
         modules.initRightHandComponent(config);
+        modules.initReleaseMessage(config);
+        modules.initOpenOverlayOnClick();
 
         mediator.emit('page:common:ready', config);
     };

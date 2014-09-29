@@ -2,7 +2,7 @@
 
 @import views.support.{ImgSrc, Item300}
 
-@if(trail.imageAdjust != "hide") {
+@if(!trail.imageHide) {
     @trail.trailPicture(5,3).map{ imageContainer =>
         @ImgSrc.imager(imageContainer, maxWidth).map { imgSrc =>
             <div class="item__media-wrapper">
@@ -11,7 +11,7 @@
                     data-src="@imgSrc">
                     @if(inlineImage){
                         @Item300.bestFor(imageContainer).map{ url =>
-                            <img src="@url" class="responsive-img" alt="" />
+                            <img src="@url" class="responsive-img" alt="" role="presentation" />
                         }
                     }
                 </div>

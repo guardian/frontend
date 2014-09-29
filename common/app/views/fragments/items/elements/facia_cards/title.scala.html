@@ -1,0 +1,40 @@
+@(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader, config: Config)
+
+@import common.LinkTo
+@import model.{Config, Trail}
+@import views.html.fragments.items.elements.facia_cards.itemHeader
+@import views.support._
+
+@itemHeader(containerIndex == 0 && itemIndex == 0) {
+    @ItemKicker.fromTrail(trail, config).map {
+        case BreakingNewsKicker => {
+            <span class="fc-item__live-indicator">Breaking News</span>
+        }
+
+        case LiveKicker => {
+            <span class="fc-item__live-indicator">Live</span>
+        }
+
+        case AnalysisKicker => {
+            <span class="fc-item__kicker">Analysis</span>
+        }
+
+        case ReviewKicker => {
+            <span class="fc-item__kicker">Review</span>
+        }
+
+        case TagKicker(tagName, tagLink) => {
+            <a href="@LinkTo(tagLink)" class="fc-item__kicker">@tagName</a>
+        }
+
+        case SectionKicker(sectionName, sectionLink) => {
+            <a href="@LinkTo(sectionLink)" class="fc-item__kicker">@sectionName</a>
+        }
+    }
+
+    @LinkTo(trail).map { url =>
+        <a href="@url" class="fc-item__link" data-link-name="article">
+            <span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span>
+        </a>
+    }
+}

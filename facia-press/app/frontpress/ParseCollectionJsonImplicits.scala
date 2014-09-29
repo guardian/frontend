@@ -4,6 +4,7 @@ import com.gu.openplatform.contentapi.model._
 import play.api.libs.json.Json
 
 object ParseCollectionJsonImplicits {
+  implicit val podcastFormats = Json.format[Podcast]
   implicit val referenceFormats = Json.format[Reference]
   implicit val tagFormats = Json.format[Tag]
   implicit val factBoxFormats = Json.format[Factbox]

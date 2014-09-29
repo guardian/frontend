@@ -31,7 +31,6 @@
 %icon-holder-circle {
     position: relative;
     display: block;
-    overflow: hidden;
     width: 30px;
     height: 30px;
     border: 1px solid $c-neutral1;
@@ -47,4 +46,8 @@
         text-decoration: none;
         color: $c-neutral1;
     }
+}
+%u-unstyled {
+    margin: 0;
+    list-style: none;
 }

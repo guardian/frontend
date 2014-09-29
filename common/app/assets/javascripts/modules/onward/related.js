@@ -60,7 +60,6 @@ define([
         var container;
 
         var fetchRelated = config.switches.relatedContent && config.switches.ajaxRelatedContent && config.page.showRelatedContent;
-            config.page.section !== 'childrens-books-site';
 
         if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
             new Expandable({
@@ -104,6 +103,8 @@ define([
                     }
                 }).load();
             }
+        } else {
+            $('.js-related').addClass('u-h');
         }
     };
 

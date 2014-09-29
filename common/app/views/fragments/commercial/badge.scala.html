@@ -1,7 +1,11 @@
 @(content: model.Content)
 @import conf.Switches._
 
-@if(SponsoredSwitch.isSwitchedOn && (content.isSponsored || content.isAdvertisementFeature)) {
+@if(
+    SponsoredSwitch.isSwitchedOn &&
+    (content.isSponsored || content.isAdvertisementFeature) &&
+    !content.isInappropriateForSponsorship
+) {
     @defining((
         content match { case c if c.isSponsored => {"spbadge"} case _ => {"adbadge"} },
         content match { case _: LiveBlog => {"live-blog"} case _ => {"article"} },
@@ -12,7 +16,27 @@
             Seq("paid-for-badge", s"paid-for-badge--$badgeType"),
             Map("mobile" -> Seq(s"${adSlotWidth},90")),
             showLabel=false,
-            refresh=false
-        )
+            refresh=false,
+            forceDisplay=content.sponsor.nonEmpty
+        ){
+            @content.sponsor.map { sponsor =>
+                <div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">
+                    <h3 class="ad-slot--paid-for-badge__header">
+                        @if(content.isSponsored) {
+                            @if(content.hasMultipleSponsors) {
+                                This content is sponsored.
+                            } else {
+                                Sponsored by:
+                            }
+                        } else {
+                            Brought to you by:
+                        }
+                    </h3>
+                    @if(!content.hasMultipleSponsors && !content.hasMultipleFeatureAdvertisers) {
+                        <p class="ad-slot--paid-for-badge__header">@sponsor</p>
+                    }
+                </div>
+            }
+        }
     }
 }

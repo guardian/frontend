@@ -29,14 +29,15 @@ case class FaciaPage(id: String,
   override lazy val contentType: String = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
 
   override def isSponsored = DfpAgent.isSponsored(id)
+  override def hasMultipleSponsors = false // Todo: need to think about this
   override def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(id)
+  override def hasMultipleFeatureAdvertisers = false // Todo: need to think about this
   override def sponsor = DfpAgent.getSponsor(id)
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 
   def allItems = collections.map(_._2).flatMap(_.items).distinct
 
   override def openGraph: Map[String, String] = super.openGraph ++Map(
-    "og:title" -> webTitle,
     "og:image" -> "http://static.guim.co.uk/icons/social/og/gu-logo-fallback.png") ++
     optionalMapEntry("og:description", description)  ++
     optionalMapEntry("og:image", frontProperties.imageUrl)

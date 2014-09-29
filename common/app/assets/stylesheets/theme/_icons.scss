@@ -1,3 +1,13 @@
+.i,
+.caption:before,
+figcaption:before,
+blockquote.quoted:before {
+    display: inline-block;
+    background-repeat: no-repeat;
+}
+.svg .i {
+    @include background-size(contain);
+}
 .i-date {
     @if ($svg-support) {
         .svg & {
@@ -9,38 +19,20 @@
 }
 
 .caption--img:before {
-    @include background-size(contain);
-    @extend %i;
-    @extend %i-image;
-    display: inline-block;
     content: '';
     vertical-align: top;
     margin: 1px 4px 0 0;
-
-    @if ($svg-support) {
-        .svg & {
-            @extend %svg-i-image;
-        }
-    }
+    @include icon(image);
 }
 
 // Quotes
 .from-content-api blockquote.quoted:before {
-    @include background-size(contain);
-    @extend %i;
-    @extend %i-quote-marks;
     content: '';
     position: absolute;
     left: 0;
     @include transform(scale(.8));
     @include transform-origin(0);
-
-    @if ($svg-support) {
-        .svg & {
-            @extend %svg-i-quote-marks;
-        }
-    }
-
+    @include icon(quote-marks);
 }
 
 .item--dark .i-comment-light-grey {
@@ -49,6 +41,38 @@
     @if ($svg-support) {
         .svg & {
             @extend %svg-i-comment-grey;
+        }
+    }
+}
+
+@if ($svg-support) {
+    .pseudo-icon {
+        .svg &:before {
+            content: '';
+            height: 1em;
+            padding-right: .3em;
+            vertical-align: -10%;
+            display: inline-block;
+            background-repeat: no-repeat;
+            @include background-size(contain);
+        }
+    }
+    .pseudo-icon--audio--white {
+        &:before {
+            @extend %svg-i-volume-high-white;
+            width: 1.23em;
+        }
+    }
+    .pseudo-icon--download--white {
+        &:before {
+            @extend %svg-i-download-white;
+            width: 1em;
+        }
+    }
+    .pseudo-icon--rss--white {
+        &:before {
+            @extend %svg-i-rss-white;
+            width: 1em;
         }
     }
 }

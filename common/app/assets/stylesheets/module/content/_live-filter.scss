@@ -1,6 +1,5 @@
 .live-toolbar {
     width: 100%;
-    margin-bottom: $gs-baseline;
     height: $gs-row-height + $gs-baseline;
 
     .is-live & {
@@ -9,10 +8,6 @@
 
     @include mq($until: tablet) {
         font-size: .875em;
-    }
-
-    @include mq(rightCol) {
-        border-top: 1px solid $c-neutral3;
     }
 }
 
@@ -79,12 +74,6 @@
 
 /* Auto update toggle
    ========================================================================== */
-@include keyframes(live-pulse) {
-    0% {background-color: $c-live;}
-    10% {background-color: #df7787;}
-    40% {background-color: $c-live;}
-    100% {background-color: $c-live;}
-}
 
 .live-toggler--autoupdate {
     float: right;
@@ -108,9 +97,6 @@
     }
 }
 
-.live-toggler--on {
-    .live-toggle__value {
-        background-color: $c-live;
-        @include animation(live-pulse 2s infinite);
-    }
+.live-toggler--on .live-toggle__value {
+    background-color: $c-liveDefault;
 }

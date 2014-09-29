@@ -1,4 +1,4 @@
-@(page: MetaData, collection: Collection, style: MultimediaContainer, containerIndex: Int, layoutType: String = "content")(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(page: MetaData, collection: Collection, style: MultimediaContainer, containerIndex: Int, layoutType: String = "content", featuredSeries: Seq[(String,String)])(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
 @import common.Edition
 @import model.{Collection, Config, FaciaComponentName, MetaData}
@@ -21,7 +21,7 @@
                     <div class="container__banding">
                         <div class="l-side-margins l-side-margins--media l-side-margins--layout-@layoutType">
                             <div class="facia-container__inner">
-                                <div class="container__border tone-@style.tone tone-accent-border"></div>
+                                <div class="container__border tone-@style.tone"></div>
                                 <div class="@RenderClasses(Map(
                                     ("container__header", true),
                                     ("hide-on-mobile", (FaciaComponentName(config, collection) == "top-stories"))))">
@@ -30,6 +30,18 @@
                                     </h2>
                                 </div>
                                 <div class="container__body container--rolled-up-hide">
+                                    <div class="submeta-container submeta-container--break-at-leftcol hide-until-leftcol">
+                                        <div class="submeta" data-link-name="keywords">
+                                            <h2 class="submeta__head">More photography</h2>
+                                            <ul class="keyword-list inline-list">
+                                                @featuredSeries.map { case (linkText, linkUrl) =>
+                                                    <li class="inline-list__item ">
+                                                        <a class="button button--small button--tag button--tone-media" href="@linkUrl" data-link-name="keyword: world/asia-pacific" itemprop="keywords">@linkText</a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
                                     @fragments.collections.news(items, style, containerIndex)
                                 </div>
                             </div>

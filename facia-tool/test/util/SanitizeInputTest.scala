@@ -1,16 +1,17 @@
 package util
 
 import frontsapi.model.{Front, Config}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
+import test.ConfiguredTestSuite
 
-class SanitizeInputTest extends FlatSpec with Matchers {
+@DoNotDiscover class SanitizeInputTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   private def createConfigWithFront(section: Option[String] = None,
                                     title: Option[String] = None,
                                     webTitle: Option[String] = None,
                                     description: Option[String] = None,
                                     onPageDescription: Option[String] = None) = Config(
-    Map("uk" -> Front(Nil, section, webTitle, title, description, onPageDescription, None, None, None, None, None, None)),
+    Map("uk" -> Front(Nil, section, webTitle, title, description, onPageDescription, None, None, None, None, None)),
     Map.empty)
 
   "StripTags" should "strip tag from title" in {

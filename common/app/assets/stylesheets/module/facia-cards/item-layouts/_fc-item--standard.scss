@@ -1,0 +1,36 @@
+/*
+
+Standard item. Looks a bit like this:
+
+********************
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+
+x x x x x x x x x x
+x x x x x x x x x x x
+x x x x x x x x
+
+
+
+
+
+
+
+*********************
+
+*/
+
+
+@mixin fc-item--standard {
+    .fc-item__title,
+    .fc-item__byline {
+        @include mq(tablet, desktop) {
+            @include fs-headline(2, true);
+        }
+    }
+}

@@ -7,7 +7,7 @@
 
 @defining(Edition(request)) { edition =>
 {
-    "page": @Html(Json.stringify(JavaScriptPage(item, request).get)),
+    "page": @Html(Json.stringify(JavaScriptPage(item).get)),
     "switches" : { @{Html(conf.Switches.all.map{ switch =>
             if(conf.Switches.httpSwitches.contains(switch))
                 s""""${CamelCase.fromHyphenated(switch.name)}":${HttpSwitch(switch).isSwitchedOn}"""

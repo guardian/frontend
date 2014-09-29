@@ -1,6 +1,5 @@
 .overlay {
     display: none;
-    background: #222222;
     position: absolute;
     top: 0;
     left: 0;
@@ -17,14 +16,9 @@
     }
 }
 
-.overlay__header {
-    height: $gs-baseline*4;
+.overlay--open {
+    display: block;
 }
-
-.overlay__toolbar {
-    float: left;
-}
-
 
 /* ==========================================================================
    Hide other page content when overlay is visible
@@ -39,27 +33,8 @@
     .site-message,
     .content,
     .facia-container,
-    .l-side-margins {
+    .l-side-margins,
+    .top-banner-ad-container {
         display: none;
     }
-}
-
-
-/* ==========================================================================
-   CTA styles
-   ========================================================================== */
-
-.overlay__cta {
-    height: $gs-baseline*4;
-    padding: 0 $gs-gutter / 2;
-    color: #ffffff;
-    float: left;
-    border: 0;
-    background: transparent;
-    margin-left: $gs-gutter / 2;
-}
-
-.overlay__cta--close {
-    float: right;
-    margin-right: $gs-gutter / 2;
 }

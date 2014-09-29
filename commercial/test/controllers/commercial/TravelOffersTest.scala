@@ -1,13 +1,12 @@
 package controllers.commercial
 
 import play.api.test.Helpers._
-import org.scalatest.Matchers
-import org.scalatest.FlatSpec
-import test.{Fake, TestRequest}
+import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import test.{ConfiguredTestSuite, TestRequest}
 
-class TravelOffersTest extends FlatSpec with Matchers {
+@DoNotDiscover class TravelOffersTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
-   "Travel Offers Controller" should "404 when an ad is requested where there are no matching offers" in Fake {
+   "Travel Offers Controller" should "404 when an ad is requested where there are no matching offers" in {
      val request = TestRequest().withFormUrlEncodedBody(("k","k1"))
 
      val result = controllers.commercial.TravelOffers.travelOffersLowHtml(request)

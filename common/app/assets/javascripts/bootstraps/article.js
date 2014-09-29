@@ -43,6 +43,7 @@ define([
             truncate();
             twitter.enhanceTweets();
         }
+
     };
 
     var ready = function (config) {

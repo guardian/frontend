@@ -23,7 +23,7 @@ $inArticleInlineImgWidth: 114px;
 $headerHeight: 36px;
 
 @import 'components/guss-colours/_colours';
-@import 'components/pasteup-palette/_palette';
+@import 'components/pasteup-palette/src/_palette';
 @import 'components/guss-grid-system/_grid-system';
 
 $right-column:     gs-span(4);
@@ -55,18 +55,15 @@ $mq-breakpoints: (
     phablet: gs-span(8) + $gs-gutter*2, // 660px
 
     // Content
-    rightCol: gs-span(11) + $gs-gutter*2, // 900px
-    leftCol:  gs-span(13) + $gs-gutter*2, // 1060px
-
-    // Facia
-    faciaLeftCol: gs-span(14) + $gs-gutter*2 // 1140px
+    rightCol: gs-span(12) + $gs-gutter*2, // 980px
+    leftCol:  gs-span(14) + $gs-gutter*2, // 1140px
 );
 
 
 // Show the current breakpoint in the top right corner of the viewport:
 // see https://github.com/guardian/sass-mq#seeing-the-currently-active-breakpoint
 // Uncomment to activate during development
-//$mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
+// $mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
 
 
 // Guss defaults overrides
@@ -97,27 +94,30 @@ $c-neutral8: guss-colour(neutral-8, $pasteup-palette);
 // Tones
 // =============================================================================
 
-$c-newsDefault: guss-colour(tone-news-1, $pasteup-palette);
-$c-newsAccent: guss-colour(tone-news-2, $pasteup-palette);
+$c-newsDefault: guss-colour(news-main-1, $pasteup-palette);
+$c-newsAccent: guss-colour(news-main-2, $pasteup-palette);
 
-$c-featureDefault: guss-colour(tone-features-1, $pasteup-palette);
-$c-featureAccent: guss-colour(tone-features-2, $pasteup-palette);
-$c-featureAccent2: #b62766;
-$c-featuresVariant: guss-colour(tone-features-4, $pasteup-palette);
+$c-featureDefault: guss-colour(features-support-1, $pasteup-palette);
+$c-featureAccent: guss-colour(features-support-3, $pasteup-palette);
+$c-featureAccent2: guss-colour(features-main-2, $pasteup-palette);
+$c-featureMute: guss-colour(features-support-3, $pasteup-palette);
 
-$c-commentDefault: guss-colour(tone-comment-1, $pasteup-palette);
-$c-commentAccent: guss-colour(tone-comment-2, $pasteup-palette);
-$c-commentAccent2: #ffce4b;
-$c-commentDark: #d3a034;
+$c-analysisAccent: guss-colour(news-support-2, $pasteup-palette);
+$c-analysisMute: guss-colour(comment-support-2, $pasteup-palette);
+$c-analysisBackground: guss-colour(neutral-5, $pasteup-palette);
 
-$c-live: #c0031b;
-$c-liveDefault: guss-colour(tone-live-1, $pasteup-palette);
-$c-liveAccent: guss-colour(tone-live-2, $pasteup-palette);
+$c-commentDefault: guss-colour(comment-support-4, $pasteup-palette);;
+$c-commentAccent: guss-colour(comment-main-2, $pasteup-palette);
+$c-commentBackground: guss-colour(comment-support-2, $pasteup-palette);
 
-$c-mediaDefault: $c-commentAccent;
-$c-mediaBackground: guss-colour(tone-media-1, $pasteup-palette);
-$c-mediaAccent: guss-colour(tone-media-3, $pasteup-palette);
-$c-mediaAccent2: guss-colour(tone-media-2, $pasteup-palette);
+$c-liveDefault: guss-colour(live-main-1, $pasteup-palette);
+$c-liveAccent: guss-colour(live-main-2, $pasteup-palette);
+$c-liveMute: guss-colour(features-support-3, $pasteup-palette);
+
+$c-mediaDefault: guss-colour(multimedia-main-2, $pasteup-palette);
+$c-mediaBackground: guss-colour(multimedia-main-1, $pasteup-palette);
+$c-mediaAccent: guss-colour(multimedia-main-2, $pasteup-palette);
+$c-mediaAccent2: guss-colour(multimedia-support-4, $pasteup-palette);
 
 // Football
 // =============================================================================
@@ -152,11 +152,12 @@ $mpu-ad-label-height: $gs-baseline*2;
 
 $action-icon-width: 23px;
 $action-icon-rightspace: 7px;
-$content-top-padding: $gs-baseline;
+$content-top-padding: $gs-baseline / 1.5;
 
 
 // Video.JS player
 // =============================================================================
 
+$vjs-x-small-button-size: 40px;
 $vjs-small-button-size: 50px;
 $vjs-large-button-size: 70px;

@@ -230,7 +230,7 @@
             height: 100%;
             width: gs-span(3) + $gs-gutter/2;
             padding: $gs-baseline 0;
-            left: gs-span(11) + ($gs-gutter/2);
+            left: gs-span(11) + ($gs-gutter*1.5);
         }
         .commercial__footer-inner {
             height: 100%;
@@ -242,11 +242,6 @@
             bottom: auto;
             right: auto;
             top: auto;
-        }
-    }
-    @include mq(faciaLeftCol) {
-        .commercial__footer {
-            left: gs-span(11) + ($gs-gutter*1.5);
         }
     }
     @include mq(wide) {
@@ -267,7 +262,7 @@
             bottom: $gs-baseline/2;
         }
     }
-    @include mq(faciaLeftCol) {
+    @include mq(leftCol) {
         .commercial__head {
             width: gs-span(2) + $gs-gutter;
         }
@@ -283,7 +278,7 @@
             top: 0;
             width: gs-span(3) + $gs-gutter/2;
             padding: $gs-baseline 0;
-            left: gs-span(11) + ($gs-gutter/2);
+            left: gs-span(11) + ($gs-gutter*1.5);
         }
         .commercial__footer-inner {
             height: 100%;
@@ -299,7 +294,7 @@
     }
     @include mq(wide) {
         .commercial__footer {
-            left: gs-span(12) + ($gs-gutter/2);
+            left: gs-span(12) + ($gs-gutter*1.5);
             .has-page-skin & {
                 right: 0;
                 left: auto;
@@ -349,9 +344,8 @@
     @include mq(leftCol) {
         .container__title {
             padding: 0;
+            position: static;
         }
-    }
-    @include mq(faciaLeftCol) {
         .commercial__head {
             width: gs-span(2) + $gs-gutter;
         }
@@ -365,9 +359,6 @@
             width: gs-span(2) - map-get($commercial-cta-diameter, tablet);
             line-height: 18px;
             bottom: $gs-baseline;
-        }
-        .container__title {
-            position: static;
         }
         .facia-container__inner {
             position: relative;

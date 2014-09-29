@@ -18,44 +18,34 @@ define([
     dfp
 ) {
 
-    var hadSponsoredBadge = false,
-        hadAdvertisementFeatureBadge = false,
-        addPreBadge = function($adSlot, isSponsored, sponsor) {
+    var adBadgeCount = 0,
+        spBadgeCount = 0,
+        addPreBadge = function ($adSlot, isSponsored, sponsor) {
             if (sponsor) {
                 $adSlot.append(template(
-                    '<div class="ad-slot--paid-for-badge__inner">' +
+                    '<div class="ad-slot--paid-for-badge__inner ad-slot__content--placeholder">' +
                         '<h3 class="ad-slot--paid-for-badge__header">{{header}}</h3>' +
                         '<p class="ad-slot--paid-for-badge__header">{{sponsor}}</p>' +
                     '</div>',
                     {
-                        header: isSponsored ? 'Sponsored by:' : 'Advertisement feature',
+                        header: isSponsored ? 'Sponsored by:' : 'Brought to you by:',
                         sponsor: sponsor
                     }
                 ));
-                if (!isSponsored) {
-                    $('.ad-slot--paid-for-badge__header', $adSlot[0]).first()
-                        .after('<p class="ad-slot--paid-for-badge__label">in association with</p>');
-                }
             }
         },
-        createAdSlot = function(container, isSponsored, opts) {
-            if ((isSponsored && hadSponsoredBadge) || (!isSponsored && hadAdvertisementFeatureBadge)) {
-                return;
-            }
-            var $adSlot = bonzo(dfp.createAdSlot(
-                (isSponsored ? 'sp' : 'ad') + 'badge', ['paid-for-badge', 'paid-for-badge--front'], opts.keywords
-            ));
-            if (isSponsored) {
-                addPreBadge($adSlot, true, opts.sponsor);
-                hadSponsoredBadge = true;
-            } else {
-                addPreBadge($adSlot, false, opts.sponsor);
-                hadAdvertisementFeatureBadge = true;
-            }
+        createAdSlot = function (container, isSponsored, opts) {
+            var slotTarget = (isSponsored ? 'sp' : 'ad') + 'badge',
+                name       = slotTarget + ((isSponsored) ? ++spBadgeCount : ++adBadgeCount),
+                $adSlot    = bonzo(dfp.createAdSlot(
+                    name, ['paid-for-badge', 'paid-for-badge--front'], opts.keywords, slotTarget
+                ));
+            addPreBadge($adSlot, isSponsored, opts.sponsor);
             $('.container__header', container)
                 .after($adSlot);
+            return $adSlot;
         },
-        init = function(c) {
+        init = function (c) {
 
             var config = defaults(
                 c || {},
@@ -69,7 +59,7 @@ define([
                 return false;
             }
 
-            $('.facia-container--sponsored, .facia-container--advertisement-feature').each(function(faciaContainer) {
+            $('.facia-container--sponsored, .facia-container--advertisement-feature').each(function (faciaContainer) {
                 var $faciaContainer = bonzo(faciaContainer);
                 createAdSlot(
                     qwery('.container', faciaContainer)[0],
@@ -77,12 +67,12 @@ define([
                     { sponsor: $faciaContainer.data('sponsor') }
                 );
             });
-            $('.container--sponsored, .container--advertisement-feature').each(function(container) {
+            $('.container--sponsored, .container--advertisement-feature').each(function (container) {
                 if (qwery('.ad-slot--paid-for-badge', container).length === 0) {
                     var $container = bonzo(container);
                     createAdSlot(
                         container,
-                        bonzo(container).hasClass('container--sponsored'),
+                        $container.hasClass('container--sponsored'),
                         { keywords: $container.data('keywords'), sponsor: $container.data('sponsor') }
                     );
                 }
@@ -92,11 +82,28 @@ define([
 
             init: once(init),
 
+            // add a badge to a container (if appropriate)
+            add: function (container) {
+                var $adSlot,
+                    $container = bonzo(container);
+                if (
+                    $container.hasClass('container--sponsored') ||
+                    $container.hasClass('container--advertisement-feature')
+                ) {
+                    $adSlot = createAdSlot(
+                        container,
+                        $container.hasClass('container--sponsored'),
+                        { keywords: $container.data('keywords'), sponsor: $container.data('sponsor') }
+                    );
+                    // add slot to dfp
+                    dfp.addSlot($adSlot);
+                }
+            },
+
             // really only useful for testing
-            reset: function() {
+            reset: function () {
                 badges.init = once(init);
-                hadSponsoredBadge = false;
-                hadAdvertisementFeatureBadge = false;
+                adBadgeCount = spBadgeCount = 0;
             }
 
         };

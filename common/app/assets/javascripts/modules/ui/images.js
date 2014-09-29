@@ -17,10 +17,12 @@ function (
 
     var images = {
 
+        availableWidths: [ 140, 220, 300, 460, 620, 700, 860, 940, 1430, 1920 ],
+
         upgrade: function(context) {
             context = context || document;
             var options = {
-                    availableWidths: [ 140, 220, 300, 460, 620, 700, 860, 940, 1430, 1920 ],
+                    availableWidths: images.availableWidths,
                     strategy: 'container',
                     replacementDelay: 0
                 },

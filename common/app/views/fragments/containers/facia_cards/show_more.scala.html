@@ -1,0 +1,23 @@
+@(cards: Seq[layout.Card], containerIndex: Int)(implicit request: RequestHeader, config: Config)
+
+@import model.Config
+@import fragments.items.facia_cards.item
+
+@* Show More for the new style containers should identical, differing only in number of columns (3 or 4).
+ *
+ * That's why this exists, but do NOT apply it to old-style containers, as they require tonal information that these
+ * do not have!
+ *
+ * TODO use the number of columns here
+ *@
+@if(cards.nonEmpty) {
+    <div class="facia-slice-wrapper">
+        <div class="linkslist-container">
+            <ul class="linkslist u-unstyled l-list facia-slice">
+            @cards.map { card =>
+                @item(card, "l-list__item fc-item--list-mobile fc-item--list-tablet", containerIndex, isList = true)
+            }
+            </ul>
+        </div>
+    </div>
+}
