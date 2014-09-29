@@ -48,7 +48,7 @@ object Switches extends Collections {
   val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
     safeState = Off,
-    sellByDate = new LocalDate(2014, 9, 28)
+    sellByDate = new LocalDate(2014, 11, 30)
   )
 
   val ForceHttpResponseCodeSwitch = Switch("Performance", "force-response-codes",
