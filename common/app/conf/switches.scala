@@ -121,6 +121,11 @@ object Switches extends Collections {
     safeState = On, sellByDate = never
   )
 
+  val LiveBlogCacheTimeSwitch = Switch("Performance", "live-blog-cache-time",
+    "If this switch is on the live blog cache time will be 60s, otherwise it is 5s.",
+    safeState = On, sellByDate = never
+  )
+
   // Commercial
 
   val CommercialSwitch = Switch("Commercial", "commercial",
@@ -431,7 +436,8 @@ object Switches extends Collections {
     FootballFeedRecorderSwitch,
     CentreTopBannerAd,
     ForceHttpResponseCodeSwitch,
-    CircuitBreakerSwitch
+    CircuitBreakerSwitch,
+    LiveBlogCacheTimeSwitch
   )
 
   val httpSwitches: List[Switch] = List(
