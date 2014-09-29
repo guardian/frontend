@@ -21,6 +21,7 @@ requirejs.config({
         lodash:       '/base/common/app/assets/javascripts/components/lodash-amd',
         qwery:        '/base/common/app/assets/javascripts/components/qwery/qwery',
         raven:        '/base/common/app/assets/javascripts/components/raven-js/raven',
+        react:        '/base/common/app/assets/javascripts/components/react/react',
         reqwest:      '/base/common/app/assets/javascripts/components/reqwest/reqwest',
         analytics:    '/base/common/app/assets/javascripts/modules/analytics',
         stripe:       '/base/common/app/public/javascripts/vendor/stripe/stripe.min',

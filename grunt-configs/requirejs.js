@@ -7,6 +7,7 @@ module.exports = function(grunt, options) {
                 bonzo:        '../../../../common/app/assets/javascripts/components/bonzo/bonzo',
                 EventEmitter: '../../../../common/app/assets/javascripts/components/eventEmitter/EventEmitter',
                 qwery:        '../../../../common/app/assets/javascripts/components/qwery/qwery',
+                react:        '../../../../common/app/assets/javascripts/components/react/react',
                 reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/reqwest',
                 lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd',
                 imager:       '../../../../common/app/assets/javascripts/components/imager.js/container',
