@@ -186,7 +186,7 @@ $avatarSize: 44px;
     }
 }
 .d-discussion--not-staff .d-staff-required {
-    display: none;
+    display: none !important;
 }
 .d-discussion__order-control {
     font-size: 16px;
