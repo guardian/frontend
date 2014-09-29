@@ -38,19 +38,25 @@
 }
 
 figure.element.element--supporting {
-
-    @include mq(leftCol) {
-        @include deport-left;
+    @include mq(desktop) {
         position: relative;
         float: left;
-        width: gs-span(5);
+        width: gs-span(4);
         margin-top: $gs-baseline/2;
         margin-bottom: $gs-baseline;
         margin-right: $gs-gutter;
+
+        &.img--landscape {
+            margin-right: $gs-gutter;
+        }
+    }
+
+    @include mq(leftCol) {
+        @include deport-left;
     }
 
     @include mq(wide) {
-        width: gs-span(6);
+        width: gs-span(5);
     }
 }
 
@@ -77,7 +83,6 @@ figure.element.element--thumbnail {
 }
 
 figure.element.element--showcase {
-
     @include mq(leftCol) {
         @include deport-left;
         position: relative;
@@ -87,7 +92,6 @@ figure.element.element--showcase {
 
 figure.element.element--showcase,
 figure.element.element--supporting {
-
     figcaption {
         @include mq(leftCol) {
             background: #ffffff;
@@ -133,8 +137,17 @@ figure {
     z-index: 2; // Put the image on top of the left and right layout borders
     position: relative;
 
+    @include mq(leftCol) {
+        margin: 0 auto;
+        max-width: gs-span(14) + $gs-gutter * 2;
+    }
+
+    @include mq(wide) {
+        max-width: gs-span(16) + $gs-gutter * 2;
+    }
+
     .responsive-img {
-        @include mq(rightCol) {
+        @include mq(desktop) {
             top: -25%;
         }
         height: auto;
@@ -147,15 +160,8 @@ figure {
     .u-responsive-ratio--letterbox {
         @include transition(padding-bottom 1s);
 
-        @include mq($until: rightCol) {
+        @include mq($until: desktop) {
             padding-bottom: aspect-ratio-height(5, 3);
         }
-    }
-    @include mq(leftCol) {
-        margin: 0 auto;
-        max-width: gs-span(14) + $gs-gutter * 2;
-    }
-    @include mq(wide) {
-        max-width: gs-span(16) + $gs-gutter * 2;
     }
 }
