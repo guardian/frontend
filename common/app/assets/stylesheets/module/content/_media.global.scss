@@ -95,6 +95,17 @@
             height: auto;
         }
     }
+    .content__secondary-column--audio .ad-slot {
+        display: none;
+
+        @include mq(desktop) {
+            display: block;
+        }
+    }
+}
+// if it's audio and there's body text, we display an advert
+.content--has-body .content__main-column--audio {
+    min-height: 274px;
 }
 .content__headline:before {
     .content--media--audio & {
