@@ -8,16 +8,12 @@ object ItemKicker {
   def fromTrail(trail: Trail, config: model.Config): Option[ItemKicker] = {
     lazy val maybeTag = firstTag(trail)
 
-    def tagKicker = maybeTag map { tag =>
-      TagKicker(tag.name, tag.webUrl)
-    }
-
-    def sectionKicker = Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
-
-    if (trail.showKickerTag && maybeTag.isDefined) {
-      tagKicker
-    } else if (trail.showKickerSection) {
-      sectionKicker
+    if ((trail.showKickerTag || config.showTags) && maybeTag.isDefined) {
+      maybeTag map { tag =>
+        TagKicker(tag.name, tag.webUrl)
+      }
+    } else if (config.showSections || trail.showKickerSection) {
+      Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
     } else if (trail.isBreaking) {
       Some(BreakingNewsKicker)
     } else if (trail.isLive) {
@@ -31,10 +27,6 @@ object ItemKicker {
       Some(AnalysisKicker)
     } else if (trail.isReview) {
       Some(ReviewKicker)
-    } else if (config.showTags && maybeTag.isDefined) {
-      tagKicker
-    } else if (config.showSections) {
-      sectionKicker
     } else {
       None
     }
