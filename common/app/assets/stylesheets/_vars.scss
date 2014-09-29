@@ -119,6 +119,14 @@ $c-mediaBackground: guss-colour(multimedia-main-1, $pasteup-palette);
 $c-mediaAccent: guss-colour(multimedia-main-2, $pasteup-palette);
 $c-mediaAccent2: guss-colour(multimedia-support-4, $pasteup-palette);
 
+$c-reviewBackground: $c-commentBackground;
+$c-reviewAccent: $c-featureAccent2;
+
+$c-podcastBackground: guss-colour(news-main-2, $pasteup-palette);
+$c-podcastAccent: guss-colour(guardian-brand-dark, $pasteup-palette);
+$c-podcastAccent2: #ffffff;
+
+
 // Football
 // =============================================================================
 

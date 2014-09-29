@@ -11,6 +11,7 @@ object TrailCssClasses {
       case Feature => "feature"
       case Analysis => "analysis"
       case Review => "review"
+      case Podcast => "podcast"
       case _ => "news"
     }
 

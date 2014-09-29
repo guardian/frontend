@@ -2,14 +2,14 @@
     @extend %tone-background;
 
     &.fc-item {
-        background-color: $c-commentBackground;
+        background-color: $c-reviewBackground;
     }
 
     .fc-item__kicker {
-        color: $c-featureAccent2;
+        color: $c-reviewAccent;
     }
 
     .fc-item__meta {
-        background-color: fade-out($c-commentBackground, .5);
+        background-color: fade-out($c-reviewBackground, .5);
     }
 }
