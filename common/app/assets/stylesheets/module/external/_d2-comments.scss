@@ -63,7 +63,7 @@
 .d2-permalink .d2-datetime {
     color: $c-neutral2;
     font-size: .85714285714em;
-    font-family: $f-data; // Force font when used outside of comment context
+    font-family: $f-sans-serif-text; // Force font when used outside of comment context
 }
 
 .d2-permalink .d2-datetime:hover {

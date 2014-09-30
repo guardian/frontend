@@ -1,0 +1,23 @@
+.tone-live {
+    @extend %tone-background;
+
+    &.fc-item {
+        background-color: $c-liveDefault;
+
+        &,
+        & a {
+            color: #ffffff;
+        }
+    }
+
+    a.fc-item__kicker {
+        color: $c-liveMute;
+    }
+
+    .fc-item__meta {
+        &,
+        & a {
+            color: $c-liveMute;
+        }
+    }
+}

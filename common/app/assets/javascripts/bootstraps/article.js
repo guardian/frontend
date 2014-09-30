@@ -42,14 +42,6 @@ define([
             // Ensure that truncation occurs before the tweet upgrading.
             truncate();
             twitter.enhanceTweets();
-        },
-
-        removeSocialButtonsOnSmallArticles: function() {
-            // remove the bottom social buttons when the body is small enough to fit comfortably in the screen
-            var $articleBody = $('.js-content-main-column');
-            if ($articleBody && $articleBody.dim().height < window.innerHeight * 0.8) {
-                $('.js-social--bottom').remove();
-            }
         }
 
     };
@@ -58,7 +50,6 @@ define([
         modules.initOpen(config);
         modules.initFence();
         modules.initTruncateAndTwitter();
-        modules.removeSocialButtonsOnSmallArticles();
 
         mediator.emit('page:article:ready', config);
     };

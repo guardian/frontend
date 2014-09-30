@@ -29,14 +29,17 @@ object ContainerLayout extends implicits.Collections {
 
   def apply(containerDefinition: ContainerDefinition,
             collection: Collection,
-            templateDeduping: TemplateDeduping): ContainerLayout = {
+            maybeTemplateDeduping: Option[TemplateDeduping]): ContainerLayout = {
     /** TODO move this to earlier in the process, so that we can make the de-duping a functional transformation */
     val items = collection.items
-    val numItems = containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
-    val unusedTrailsForThisSlice = templateDeduping(numItems, items).take(numItems)
-    val dedupedPrioritisedTrails = (unusedTrailsForThisSlice ++ items).distinctBy(_.url)
 
-    apply(containerDefinition.slices, dedupedPrioritisedTrails, containerDefinition.mobileShowMore)
+    val trails = maybeTemplateDeduping map { templateDeduping =>
+      val numItems = containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
+      val unusedTrailsForThisSlice = templateDeduping(numItems, items).take(numItems)
+      (unusedTrailsForThisSlice ++ items).distinctBy(_.url)
+    } getOrElse items
+
+    apply(containerDefinition.slices, trails, containerDefinition.mobileShowMore)
   }
 }
 

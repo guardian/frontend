@@ -63,7 +63,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
 .l-footer__secondary {
     @include box-sizing(border-box);
-    @include font($f-data, normal, 13, 19);
+    @include fs-textSans(1);
     padding-right: $gs-gutter * .5;
     padding-left: $gs-gutter * .5;
 

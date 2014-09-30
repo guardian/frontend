@@ -16,14 +16,13 @@ x x x x x x x x x x x x x x x x x x x x x x x x
 
     padding-bottom: 0;
 
-    .fc-item__byline,
-    .fc-item__title {
-        @include fs-headline($headline-size);
+    .fc-item__title,
+    .fc-item__byline {
+        @include fs-headline($headline-size, true);
     }
 
     .fc-item__header {
         margin-bottom: 0;
-        padding-left: $fc-item-gutter;
         padding-bottom: $gs-baseline * 1.666;
     }
 

@@ -13,7 +13,7 @@ $pasteup-palette: (
     error:                  #d61d00,
     success:                #4a7801,
 
-    // Neutral palette (desaturized)
+    // Neutral palette
     neutral-1:              #333333,
     neutral-2:              #767676,
     neutral-3:              #bdbdbd,
@@ -22,16 +22,6 @@ $pasteup-palette: (
     neutral-6:              #eaeaea,
     neutral-7:              #f1f1f1,
     neutral-8:              #f6f6f6,
-
-    // Neutral palette (warm)
-    neutral-1-warm:         #333333,
-    neutral-2-warm:         #767676,
-    neutral-3-warm:         #bdbdbd,
-    neutral-4-warm:         #dcdcdc,
-    neutral-5-warm:         #e3e3db,
-    neutral-6-warm:         #edede7,
-    neutral-7-warm:         #f4f4ee,
-    neutral-8-warm:         #f6f6f6,
 
     // News palette
     news-main-1:            #005689,
@@ -48,13 +38,15 @@ $pasteup-palette: (
     features-support-1:     #951c55,
     features-support-2:     #4e0375,
     features-support-3:     #fdadba,
+    features-support-4:     #dc2a7d,
 
     // Comment palette
     comment-main-1:         #c05303,
     comment-main-2:         #ff9b0b,
     comment-support-1:      #83705e,
-    comment-support-2:      #e3e3db,
-    comment-support-3:      #ffbb00,
+    comment-support-2:      #efefec,
+    comment-support-3:      #ffce4b,
+    comment-support-4:      #e6711b,
 
     // Multimedia palette
     multimedia-main-1:      #333333,
@@ -62,6 +54,7 @@ $pasteup-palette: (
     multimedia-support-1:   #c5d4ea,
     multimedia-support-2:   #507892,
     multimedia-support-3:   #002c59,
+    multimedia-support-4:   #484848,
 
     // Live palette
     live-main-1:            #b51800,
@@ -76,20 +69,5 @@ $pasteup-palette: (
     maps-support-1:         #ceb41d,
     maps-support-2:         #a9af2b,
     maps-support-3:         #5ebfba,
-
-    // Legacy tones
-    tone-news-1:            #005689,
-    tone-news-2:            #4bc6df,
-    tone-features-1:        #951c55,
-    tone-features-2:        #f66980,
-    tone-features-3:        #b82266,
-    tone-features-4:        #7d0068,
-    tone-comment-1:         #e6711b,
-    tone-comment-2:         #ffbb00,
-    tone-comment-3:         #ffcf4c,
-    tone-media-1:           #333333,
-    tone-media-2:           #484848,
-    tone-media-3:           #ffbb00,
-    tone-live-1:            #b51800,
-    tone-live-2:            #cc2b12,
+    maps-support-4:         #72af7e,
 );

@@ -1,6 +1,5 @@
 .overlay {
     display: none;
-    background: #222222;
     position: absolute;
     top: 0;
     left: 0;
@@ -15,6 +14,10 @@
     .preload-msg {
         color: #aaaaaa;
     }
+}
+
+.overlay--open {
+    display: block;
 }
 
 /* ==========================================================================

@@ -159,11 +159,15 @@ trait UpdateActions extends Logging {
     "trailText",
     "group",
     "supporting",
-    "imageAdjust",
+    "isBoosted",
+    "imageHide",
+    "imageReplace",
     "imageSrc",
     "imageSrcWidth",
     "imageSrcHeight",
     "isBreaking",
+    "showKickerTag",
+    "showKickerSection",
     "showMainVideo"
   )
 

@@ -117,7 +117,7 @@ $football-crest--large: 60px;
     width: $football-crest--small;
     @include border-radius(24px);
     border: 2px dotted $c-neutral2;
-    @include fs-data(2);
+    @include fs-textSans(2);
     line-height: $football-crest--small - 3; // account for the border
     text-align: center;
 }
@@ -161,7 +161,7 @@ $football-crest--large: 60px;
 
 .match-summary__aggregate,
 .match-summary__comment {
-    @include fs-data(3);
+    @include fs-textSans(2);
 }
 
 .match-summary__comment {
@@ -315,7 +315,7 @@ $football-crest--large: 60px;
         @include fs-headline(4, true);
     }
     .team__scorers {
-        @include fs-data(3, true);
+        @include fs-textSans(2, true);
     }
     .team__crest {
         margin-right: $gs-gutter;

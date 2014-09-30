@@ -395,6 +395,31 @@ define([
 
         initReleaseMessage: function(config) {
             releaseMessage.init(config);
+        },
+
+        initOpenOverlayOnClick: function() {
+            var offset;
+
+            bean.on(document.body, 'click', '[data-open-overlay-on-click]', function(e) {
+                var elId = bonzo(e.currentTarget).data('open-overlay-on-click');
+                offset = document.body.scrollTop;
+                bonzo(document.body).addClass('has-overlay');
+                $('#' + elId).addClass('overlay--open').appendTo(document.body);
+            });
+
+            bean.on(document.body, 'click', '.js-overlay-close', function(e) {
+                var overlay = $.ancestor(e.target, 'overlay');
+                if (overlay) {
+                    bonzo(overlay).removeClass('overlay--open');
+                }
+                bonzo(document.body).removeClass('has-overlay');
+                if (offset) {
+                    window.setTimeout(function() {
+                        document.body.scrollTop = offset;
+                        offset = null;
+                    }, 1);
+                }
+            });
         }
     };
 
@@ -432,6 +457,7 @@ define([
         modules.transcludeOnwardContent(config);
         modules.initRightHandComponent(config);
         modules.initReleaseMessage(config);
+        modules.initOpenOverlayOnClick();
 
         mediator.emit('page:common:ready', config);
     };

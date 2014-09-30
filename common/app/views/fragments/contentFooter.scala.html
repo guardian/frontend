@@ -2,7 +2,7 @@
 
 <div class="content-footer @if(cssClass){ content-footer--@cssClass }">
     @if(conf.Switches.DiscussionSwitch.isSwitchedOn && content.isCommentable) {
-        <div class="gs-container js-comments">
+        <div class="gs-container js-comments discussion-wrapper">
             <div class="content__main-column" data-component="discussion">
             @fragments.discussionFooter(content.isClosedForComments, content.shortUrlId)
             </div>
@@ -27,7 +27,7 @@
             @fragments.mostPopularPlaceholder(content.section, content.visualTone)
         </div>
 
-        <div class="facia-container facia-container--layout-content facia-container--outbrain">
+        <div class="facia-container facia-container--layout-content facia-container--outbrain hide-on-childrens-books-site">
             @fragments.outbrainPlaceholder()
         </div>
     }

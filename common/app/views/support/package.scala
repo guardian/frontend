@@ -324,6 +324,30 @@ case class LiveBlogDateFormatter(isLiveBlog: Boolean)(implicit val request: Requ
   }
 }
 
+case class LiveBlogShareButtons(article: Article)(implicit val request: RequestHeader) extends HtmlCleaner  {
+  def clean(body: Document): Document = {
+    if (article.isLiveBlog) {
+      body.select(".block").foreach { el =>
+        val blockid = el.id()
+        val url = s"http://${request.domain}${request.path}#$blockid"
+        val shortUrl = s"${article.shortUrl}#$blockid"
+
+        val icons = List(
+          // (cssClassName, Url)
+          ("Facebook", "facebook", s"https://www.facebook.com/sharer/sharer.php?u=${url.urlEncoded}&ref=responsive"),
+          ("Twitter", "twitter", s"https://twitter.com/intent/tweet?text=${article.webTitle.urlEncoded}&url=${shortUrl.urlEncoded}"),
+          ("Google plus", "gplus", s"https://plus.google.com/share?url=${url.urlEncoded}")
+        )
+
+        val html = views.html.fragments.share.blockLevelSharing(blockid, icons, url, shortUrl)
+
+        el.append(html.toString())
+      }
+    }
+    body
+  }
+}
+
 object BulletCleaner {
   def apply(body: String): String = body.replace("•", """<span class="bullet">•</span>""")
 }
@@ -612,6 +636,20 @@ object OmnitureAnalyticsData {
   }
 }
 
+object ArticleLayout {
+  implicit class ArticleLayout(a: Article) {
+    lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(a.body).body().children().headOption
+      .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
+
+    lazy val hasSupportingAtBottom: Boolean =
+      Jsoup.parseBodyFragment(a.body).select("> *:nth-last-child(-n+5)")
+        .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
+
+    lazy val tooSmallForBottomSocialButtons: Boolean =
+      Jsoup.parseBodyFragment(a.body).select("> *").text().length < 1200
+  }
+}
+
 object `package` extends Formats {
 
   private object inflector extends Inflector
@@ -736,7 +774,7 @@ object GetClasses {
       case _ => None
     }
 
-    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")) {
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
       "fc-item--has-no-image"
     } else {
       "fc-item--has-image"
@@ -754,7 +792,7 @@ object GetClasses {
       if (trail.isLive) Some("fc-item--live") else None,
       if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
       if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
-        Some(s"fc-item--imageadjust-${trail.imageAdjust}")
+        if(trail.isBoosted) Some("item--imageadjust-boost") else if(trail.imageHide) Some("item--imageadjust-hide") else Some("item--imageadjust-default")
       else
         None
     ).flatten ++ makeSnapClasses(trail)
@@ -763,13 +801,13 @@ object GetClasses {
 
   def commonItemClasses(trail: Trail, isFirstContainer: Boolean, forceHasImage: Boolean): Seq[String] = {
     val itemClass = trail match {
-      case _: Gallery => Some("item--gallery")
-      case _: Video => Some("item--video")
-      case _: Audio => Some("item--audio")
-      case _ => None
+      case _: Gallery => "item--gallery"
+      case _: Video => "item--video"
+      case _: Audio => "item--audio"
+      case _ => ""
     }
 
-    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageAdjust == "hide")) {
+    val imageClass = if (!forceHasImage && (trail.trailPicture(5,3).isEmpty || trail.imageHide)) {
       "item--has-no-image"
     } else {
       "item--has-image"
@@ -783,49 +821,81 @@ object GetClasses {
       discussionClass
     ) ++ Seq(
       itemClass,
-      if (isFirstContainer) Some("item--force-image-upgrade") else None,
-      if (trail.isLive) Some("item--live") else None,
-      if (trail.isComment && trail.hasLargeContributorImage) Some("item--has-cutout") else None,
+      if (isFirstContainer) "item--force-image-upgrade" else "",
+      if (trail.isLive) "item--live" else "",
+      if (trail.isComment && trail.hasLargeContributorImage) "item--has-cutout" else "",
       if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
-        Some(s"item--imageadjust-${trail.imageAdjust}")
+        if(trail.isBoosted) "item--imageadjust-boost" else if(trail.imageHide) "item--imageadjust-hide" else "item--imageadjust-default"
       else
-        None
-    ).flatten ++ makeSnapClasses(trail)
+        ""
+    ) ++ makeSnapClasses(trail)
   }
 
-  def forItem(
-    trail: Trail,
-    firstContainer: Boolean,
-    forceHasImage: Boolean = false,
-    forceTone: Option[String] = None
-  ): String = {
-    RenderClasses(
-      s"tone-${forceTone.getOrElse(trail.visualTone)}" +: commonItemClasses(trail, firstContainer, forceHasImage): _*
+  def forItem(trail: Trail,
+              firstContainer: Boolean,
+              forceHasImage: Boolean = false,
+              forceTone: Option[String] = None): String = {
+    val tone = forceTone.getOrElse(trail.visualTone)
+    val baseClasses: Seq[String] = Seq(
+      "item",
+      s"tone-${tone}"
     )
+    val f: Seq[(Trail, Boolean, Boolean, Option[String]) => String] = Seq(
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) => trail match {
+        case _: Gallery => "item--gallery"
+        case _: Video => "item--video"
+        case _: Audio => "item--audio"
+        case _ => ""
+      },
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (firstContainer) "item--force-image-upgrade" else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (trail.isLive) "item--live" else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (forceHasImage == false && (trail.trailPicture(5,3).isEmpty || trail.imageHide)){
+          "item--has-no-image"
+        }else{
+          "item--has-image"
+        },
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (forceHasImage || !trail.trailPicture(5,3).isEmpty){
+          if(trail.isBoosted) "item--imageadjust-boost" else if(trail.imageHide) "item--imageadjust-hide" else "item--imageadjust-default"
+        } else "",
+      (trail: Trail, firstContainer: Boolean, forceHasImage: Boolean, forceTone: Option[String]) =>
+        if (trail.isCommentable) "item--has-discussion" else "item--has-no-discussion"
+    )
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, firstContainer, forceHasImage, forceTone)} ++ makeSnapClasses(trail)
+    RenderClasses(classes:_*)
   }
 
-  def forFromage(trail: Trail, imageAdjust: String): String = {
+  def forFromage(trail: Trail, isBoosted: Boolean, imageHide: Boolean): String = {
     val baseClasses: Seq[String] = Seq(
       "fromage",
       s"tone-${trail.visualTone}",
       "u-faux-block-link",
       "tone-accent-border"
     )
-    val f: Seq[(Trail, String) => String] = Seq(
-      (trail: Trail, imageAdjust: String) =>
+    val f: Seq[(Trail, Boolean, Boolean) => String] = Seq(
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
         if (trail.isLive) "item--live" else "",
-      (trail: Trail, imageAdjust: String) =>
-        if (trail.trailPicture(5,3).isEmpty || imageAdjust == "hide"){
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
+        if (trail.trailPicture(5,3).isEmpty || imageHide){
           "fromage--has-no-image"
         }else{
           "fromage--has-image"
         },
-      (trail: Trail, imageAdjust: String) =>
-        if (!trail.trailPicture(5,3).isEmpty) s"fromage--imageadjust-$imageAdjust" else "",
-      (trail: Trail, imageAdjust: String) =>
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
+        if (!trail.trailPicture(5,3).isEmpty && isBoosted){
+          s"fromage--imageadjust-boost"
+        }
+        else if (!trail.trailPicture(5,3).isEmpty && imageHide){
+          s"fromage--imageadjust-hide"
+        }
+        else "item--imageadjust-default",
+      (trail: Trail, isBoosted: Boolean, imageHide: Boolean) =>
         if (trail.isCommentable) "fromage--has-discussion" else "fromage--has-no-discussion"
     )
-    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, imageAdjust)} ++ makeSnapClasses(trail)
+    val classes = f.foldLeft(baseClasses){case (cl, fun) => cl :+ fun(trail, isBoosted, imageHide)} ++ makeSnapClasses(trail)
     RenderClasses(classes:_*)
   }
 

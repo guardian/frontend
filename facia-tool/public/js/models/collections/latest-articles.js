@@ -99,8 +99,8 @@ define([
 
             clearTimeout(deBounced);
             deBounced = setTimeout(function(){
-
-                var url, propName;
+                var url = vars.CONST.apiSearchBase + '/',
+                    propName;
 
                 if (!opts.noFlushFirst) {
                     self.flush('searching...');
@@ -108,11 +108,12 @@ define([
 
                 // If term contains slashes, assume it's an article id (and first convert it to a path)
                 if (self.isTermAnItem()) {
-                    self.term(urlAbsPath(self.term()));
-                    url = vars.CONST.apiSearchBase + '/' + self.term() + '?show-fields=all&show-elements=video&format=json';
                     propName = 'content';
+                    self.term(urlAbsPath(self.term()));
+                    url += self.term() + '?' + vars.CONST.apiSearchParams;
                 } else {
-                    url  = vars.CONST.apiSearchBase + '/search?show-fields=all&format=json';
+                    propName = 'results';
+                    url += 'search?' + vars.CONST.apiSearchParams;
                     url += self.showingDrafts() ?
                         '&content-set=-web-live&order-by=oldest&use-date=scheduled-publication&from-date=' + dateYyyymmdd() :
                         '&content-set=web-live&order-by=newest';
@@ -120,7 +121,6 @@ define([
                     url += '&page=' + self.page();
                     url += self.term() ? '&q=' + encodeURIComponent(self.term().trim().replace(/ +/g,' AND ')) : '';
                     url += self.filter() ? '&' + self.filterType().param + '=' + encodeURIComponent(self.filter()) : '';
-                    propName = 'results';
                 }
 
                 authedAjax.request({

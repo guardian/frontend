@@ -18,7 +18,7 @@ class DedupingTest extends FlatSpec with Matchers {
     val ContainerLayout(slices, unusedCards) = ContainerLayout(
       containerFixture,
       Collection(rawTrails.toSeq),
-      deduping
+      Some(deduping)
     )
 
     val usedTrails = slices.flatMap(_.columns.flatMap(_.cards.map(_.item)))
@@ -46,7 +46,7 @@ class DedupingTest extends FlatSpec with Matchers {
     val ContainerLayout(slices, unusedCards) = ContainerLayout(
       containerFixture,
       Collection(rawTrails.toSeq),
-      deduping
+      Some(deduping)
     )
 
     val usedTrails = slices.flatMap(_.columns.flatMap(_.cards.map(_.item)))
