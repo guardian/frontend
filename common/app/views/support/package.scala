@@ -791,6 +791,7 @@ object GetClasses {
       if (isFirstContainer) Some("fc-item--force-image-upgrade") else None,
       if (trail.isLive) Some("fc-item--live") else None,
       if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
+      if (trail.supporting.nonEmpty) Some("fc-item--has-sublinks") else None,
       if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
         if(trail.isBoosted) Some("item--imageadjust-boost") else if(trail.imageHide) Some("item--imageadjust-hide") else Some("item--imageadjust-default")
       else

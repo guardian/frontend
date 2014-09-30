@@ -1,0 +1,29 @@
+.fc-sublinks {
+    position: relative;
+    width: 100%;
+    bottom: 0;
+}
+
+.fc-sublinks__item {
+    position: relative;
+    margin: 0 $gs-gutter / 4 $gs-baseline / 2;
+
+    .fc-item__title {
+        @include fs-headline(1);
+        font-weight: 500;
+
+        &:before {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: '';
+            width: 40%;
+            border-top: 1px dotted $c-neutral4;
+
+            @include mq(tablet) {
+                width: 100%;
+            }
+        }
+    }
+}
