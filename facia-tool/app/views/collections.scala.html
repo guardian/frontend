@@ -297,8 +297,7 @@
                 </div>
             </div>
 
-            <div class="closed" data-bind="if: !state.isOpen()">
-
+            <div class="closed" data-bind="ifnot: state.isOpen">
                 <img class="article__spark" data-bind="
                     visible: state.sparkUrl,
                     attr: {src: state.sparkUrl}" />
@@ -365,7 +364,7 @@
 
                             <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
 
-                            <span data-bind="
+                            <span class="trailText" data-bind="
                                 html: meta.trailText() || fields.trailText()"></span>
                         </div>
                     <!-- /ko -->
