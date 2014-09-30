@@ -7,6 +7,10 @@ define([
 ) {
     var classSet = React.addons.classSet,
         Cell = React.createClass({
+            handleChange: function (event) {
+                this.props.handleInput(event.target.value);
+            },
+
             render: function () {
                 var classes = classSet({
                     'crossword__grid__cell': true,
@@ -18,6 +22,7 @@ define([
                 if (this.props.number !== undefined) {
                     innerNodes.push(
                         React.DOM.span({
+                            key: 'number',
                             className: 'crossword__grid__cell__number'
                         }, this.props.number)
                     );
@@ -26,8 +31,12 @@ define([
                 if (this.props.isEditable) {
                     innerNodes.push(
                         React.DOM.input({
+                            key: 'input',
                             type: 'text',
-                            className: 'crossword__grid__cell__input'
+                            maxLength: '1',
+                            className: 'crossword__grid__cell__input',
+                            value: this.props.value,
+                            onChange: this.handleChange
                         })
                     );
                 }
@@ -39,14 +48,26 @@ define([
         });
 
     return React.createClass({
+        handleInput: function (x, y, value) {
+            if (value.length > 1) {
+                value = value[0];
+            }
+
+            this.props.setCellValue(x, y, value.toUpperCase());
+        },
+
         render: function () {
             var that = this,
                 rows = _.map(_.range(this.props.rows), function (y) {
                     var innerNodes = _.map(_.range(that.props.columns), function (x) {
-                        return Cell(that.props.cells[x][y]);
+                        var cellProps = that.props.cells[x][y];
+                        cellProps.handleInput = that.handleInput.bind(that, x, y);
+                        cellProps.key = 'cell_' + x + '_' + y;
+                        return Cell(cellProps);
                     });
 
                     return React.DOM.tr({
+                        key: 'row_' + y,
                         className: 'crossword__grid__row'
                     }, innerNodes);
                 });

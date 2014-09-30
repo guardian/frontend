@@ -1,12 +1,14 @@
 define([
     'common/utils/$',
     'common/utils/_',
+    'bean',
     'react',
     'common/modules/crosswords/clues',
     'common/modules/crosswords/grid'
 ], function (
     $,
     _,
+    bean,
     React,
     Clues,
     Grid
@@ -56,12 +58,18 @@ define([
             };
         },
 
+        setCellValue: function (x, y, value) {
+            this.state.grid[x][y].value = value;
+            this.setState(this.state);
+        },
+
         render: function () {
             return React.DOM.div(null,
                 Grid({
                     rows: this.rows,
                     columns: this.columns,
-                    cells: this.state.grid
+                    cells: this.state.grid,
+                    setCellValue: this.setCellValue
                 }),
                 Clues({
                     clues: this.props.data.entries
