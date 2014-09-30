@@ -274,8 +274,8 @@ define([
         Article.prototype.metaDisplayer = function(opts, index, all) {
             var self = this,
                 key = opts.key,
-                displayIf,
-                isTrue;
+                isTrue,
+                displayIf;
 
             if (opts.type !== 'boolean') { return false; }
 
