@@ -10,7 +10,6 @@ object CardStyle {
       } else {
         DeadBlog
       }
-      LiveBlog
     } else if (trail.isPodcast) {
       Podcast
     } else if (trail.isMedia) {
