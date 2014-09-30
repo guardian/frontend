@@ -1,4 +1,4 @@
-@(trail: Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader, config: Config)
+@(trail: Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean)(implicit request: RequestHeader, config: Config)
 
 @import common.LinkTo
 @import model.{Config, Trail}
@@ -45,7 +45,7 @@
 
   @LinkTo(trail).map { url =>
     <a href="@url" class="fc-item__link" data-link-name="article">
-      <span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span>
+      @RemoveOuterParaHtml(trail.headline)
     </a>
   }
 </h3>

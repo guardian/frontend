@@ -3,7 +3,7 @@
 @import views.html.fragments.items.elements.facia_cards.sublink
 
 @if(sublinks.nonEmpty) {
-    <ul class="fc-sublinks u-unstyled">
+    <ul class="fc-sublinks u-unstyled u-faux-block-link__promote">
         @sublinks.map { link =>
             <li class="fc-sublinks__item">
                 @sublink(link, 0, 0, true)
