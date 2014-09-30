@@ -42,6 +42,7 @@ define([
             capiFields = [
                 'headline',
                 'trailText',
+                'byline',
                 'isLive',
                 'firstPublicationDate',
                 'scheduledPublicationDate',
@@ -64,6 +65,13 @@ define([
                     key: 'trailText',
                     editable: true,
                     label: 'trail text',
+                    type: 'text'
+                },
+                {
+                    key: 'byline',
+                    editable: true,
+                    requires: 'showByline',
+                    label: 'byline',
                     type: 'text'
                 },
                 {
@@ -93,7 +101,12 @@ define([
                     label: 'boost',
                     type: 'boolean'
                 },
-
+                {
+                    key: 'showByline',
+                    editable: true,
+                    label: 'show byline',
+                    type: 'boolean'
+                },
                 {
                     key: 'hasMainVideo',
                     label: 'has a video',
@@ -107,7 +120,6 @@ define([
                     label: 'show video',
                     type: 'boolean'
                 },
-
                 {
                     key: 'imageHide',
                     editable: true,

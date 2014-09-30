@@ -157,6 +157,8 @@ trait UpdateActions extends Logging {
     "snapCss",
     "snapUri",
     "trailText",
+    "byline",
+    "showByline",
     "group",
     "supporting",
     "isBoosted",

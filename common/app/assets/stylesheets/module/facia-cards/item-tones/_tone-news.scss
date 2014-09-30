@@ -1,6 +1,10 @@
 .tone-news {
-    .fc-item__kicker {
-        color: $c-analysisAccent;
+    .fc-item__kicker,
+    .fc-item__byline {
+        &,
+        & a {
+            color: $c-analysisAccent;
+        }
     }
 
     &.fc-item--has-image:before {
