@@ -45,5 +45,7 @@ trait FaciaFields {
   def isBoosted: Boolean = false
   def imageHide: Boolean = false
   def isBreaking: Boolean = false
+  def showKickerTag: Boolean = false
+  def showKickerSection: Boolean = false
   def showMainVideo: Boolean = false
 }

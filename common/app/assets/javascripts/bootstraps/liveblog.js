@@ -178,6 +178,8 @@ define([
                 autoUpdate = new AutoUpdate({
                     path: getUpdatePath,
                     delay: timerDelay,
+                    backoff: 2,
+                    backoffMax: 1000 * 60 * 20,
                     attachTo: $('.js-liveblog-body')[0],
                     switches: config.switches,
                     manipulationType: 'prepend'

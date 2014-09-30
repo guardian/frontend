@@ -301,7 +301,7 @@ case object Hl4Hl4 extends Slice {
         rows = 4,
         ItemClasses(
           mobile = "list",
-          tablet = "list"
+          tablet = "list-media"
         )
       )
     )
