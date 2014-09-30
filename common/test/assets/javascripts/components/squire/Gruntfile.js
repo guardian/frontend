@@ -9,7 +9,6 @@ module.exports = function(grunt) {
         forin: false,
         immed: true,
         latedef: true,
-        newcap: true,
         noarg: true,
         noempty: true,
         nonew: false,
@@ -41,10 +40,10 @@ module.exports = function(grunt) {
       files: ['test/tests.html', 'test/tests-with-main.html']
     }
   });
-  
+
   grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  
+
   /**
    * Register the default task!
    */

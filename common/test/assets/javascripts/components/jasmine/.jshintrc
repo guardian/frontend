@@ -3,7 +3,6 @@
   "curly": true,
   "freeze": true,
   "immed": true,
-  "newcap": true,
   "trailing": true,
   "loopfunc": true
 }

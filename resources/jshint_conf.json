@@ -8,7 +8,6 @@
     "es3"      : true,
     "immed"    : true,
     "latedef"  : true,
-    "newcap"   : true,
     "noarg"    : true,
     "noempty"  : true,
     "nonew"    : true,
