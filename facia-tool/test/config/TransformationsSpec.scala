@@ -15,7 +15,8 @@ import test.ConfiguredTestSuite
     uneditable = Some(false),
     showTags = Some(true),
     showSections = Some(false),
-    showMainVideo = None
+    showMainVideo = None,
+    hideKickers = Some(false)
   )
 
   val createCommandFixture = CreateFront(
@@ -34,6 +35,7 @@ import test.ConfiguredTestSuite
   )
 
   val emptyCollectionFixture = Collection(
+    None,
     None,
     None,
     None,

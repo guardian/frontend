@@ -45,6 +45,7 @@ case class Collection(
   uneditable: Option[Boolean],
   showTags: Option[Boolean],
   showSections: Option[Boolean],
+  hideKickers: Option[Boolean],
   showMainVideo: Option[Boolean]
 )
 
