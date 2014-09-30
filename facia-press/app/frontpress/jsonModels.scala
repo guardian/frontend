@@ -66,6 +66,8 @@ object ItemMeta {
     snapType = content.apiContent.metaData.get("snapType"),
     snapCss = content.apiContent.metaData.get("snapCss"),
     snapUri = content.apiContent.metaData.get("snapUri"),
+    showKickerTag = content.apiContent.metaData.get("showKickerTag"),
+    showKickerSection = content.apiContent.metaData.get("showKickerSection"),
     showMainVideo = content.apiContent.metaData.get("showMainVideo")
   )
 }
@@ -82,6 +84,8 @@ case class ItemMeta(
   snapType:      Option[JsValue],
   snapCss:       Option[JsValue],
   snapUri:       Option[JsValue],
+  showKickerTag: Option[JsValue],
+  showKickerSection: Option[JsValue],
   showMainVideo: Option[JsValue]
 )
 
