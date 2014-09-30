@@ -47,7 +47,7 @@ Full item. A 100% width version of the Three quarter item.
     }
 
     .fc-item__standfirst {
-        @include mq(desktop) {
+        @include mq(tablet) {
             display: block;
         }
     }
@@ -107,5 +107,22 @@ Full item. A 100% width version of the Three quarter item.
                 width: gs-span(8);
             }
         }
+    }
+
+    &.fc-item--has-sublinks-3 {
+        .fc-item__standfirst {
+            display: none;
+        }
+    }
+
+    &.fc-item--has-sublinks-4 {
+        .fc-sublinks {
+            margin-top: $gs-baseline;
+            @include display-flex;
+        }
+    }
+
+    .fc-sublinks__item:nth-child(n+5) {
+        display: none;
     }
 }

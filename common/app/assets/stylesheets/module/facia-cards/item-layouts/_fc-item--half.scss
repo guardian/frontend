@@ -36,6 +36,17 @@ x x x x x x x x x x x x x x x x x x
         }
     }
 
+    &[class*="fc-item--has-sublinks"] {
+        .fc-item__standfirst {
+            display: none;
+        }
+    }
+
+    // max 2 sublinks
+    .fc-sublinks__item:nth-child(n+3) {
+        display: none;
+    }
+
     .vjs-big-play-button > span {
         @include video-play-button-size($vjs-small-button-size);
 

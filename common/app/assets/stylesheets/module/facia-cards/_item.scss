@@ -32,7 +32,7 @@
     }
 }
 
-.fc-item--has-sublinks {
+[class*="fc-item--has-sublinks"] {
     padding-bottom: 0;
     // padding-bottom: $gs-baseline * 3;
 }
@@ -72,7 +72,7 @@
 }
 
 .fc-item__header {
-    .fc-item--has-sublinks & {
+    [class*="fc-item--has-sublinks"] & {
         margin-bottom: $gs-baseline * 2;
     }
 }
@@ -111,7 +111,7 @@
         color: $c-neutral2;
     }
 
-    .fc-item--has-sublinks & {
+    [class*="fc-item--has-sublinks"] & {
         position: relative;
     }
 }
