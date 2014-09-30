@@ -207,6 +207,8 @@ define([
 
             this.editors = ko.observableArray();
 
+            this.editorsDisplay = ko.observableArray();
+
             this.headlineLength = ko.computed(function() {
                 return (this.meta.headline() || this.fields.headline() || '').length;
             }, this);
@@ -269,6 +271,21 @@ define([
             });
         };
 
+        Article.prototype.metaDisplayer = function(opts, index, all) {
+            var self = this,
+                key = opts.key,
+                isTrue,
+                displayIf;
+
+            if (opts.type !== 'boolean') { return false; }
+
+            isTrue = (this.meta[key] || function() {})();
+
+            displayIf = opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true;
+
+            return isTrue && displayIf ? opts.label : false;
+        }
+
         Article.prototype.metaEditor = function(opts, index, all) {
             var self = this,
                 key,
@@ -309,10 +326,6 @@ define([
 
                 displayEditor: ko.computed(function() {
                     return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
-                }, self),
-
-                displayValue: ko.computed(function() {
-                    return opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true;
                 }, self),
 
                 toggle: function() {
@@ -412,7 +425,7 @@ define([
             this.meta.isSnap(!!snap.validateId(this.id()));
 
             if(!this.uneditable) {
-                this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
+                this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
             }
 
             this.setRelativeTimes();
@@ -523,10 +536,15 @@ define([
             if (this.uneditable) { return; }
 
             if (!this.state.isOpen()) {
-                 this.state.isOpen(true);
-                 mediator.emit('ui:open', this.meta.headline);
+
+                if (this.editors().length === 0) {
+                    this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
+                }
+
+                this.state.isOpen(true);
+                mediator.emit('ui:open', this.meta.headline);
             } else {
-                 mediator.emit('ui:open', undefined);
+                mediator.emit('ui:open', undefined);
             }
         };
 
