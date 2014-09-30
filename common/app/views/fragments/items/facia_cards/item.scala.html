@@ -7,6 +7,7 @@
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.items.elements.starRating
+@import Function.const
 
 @defining((card.item, card.index)) { case (trail, index) =>
 
@@ -62,7 +63,17 @@
                     ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
                 ))">
                     @title(trail, index, containerIndex)
-                    @trail match { case content:model.Content => @starRating(content) }
+                    @trail match {
+                        case content: model.Content => {
+                            @content.byline.filter(const(content.showByline)).map { byline =>
+                                <div class="fc-item__byline tone-colour">@byline</div>
+                            }
+
+                            @starRating(content)
+                        }
+
+                        case _ => {}
+                    }
                     @if(tone == "comment") {
                         @trail.byline.map { byLine =>
                             @trail match { case content:model.Content =>
