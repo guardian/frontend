@@ -273,18 +273,17 @@ define([
 
         Article.prototype.metaDisplayer = function(opts, index, all) {
             var self = this,
-                key = opts.key,
-                isTrue,
-                displayIf;
+                show = opts.editable;
 
-            if (opts.type !== 'boolean') { return false; }
+            if (opts.type === 'boolean') {
+                show = show && (this.meta[opts.key] || function() {})();
+                show = show && (opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true);
+                return show ? opts.label : false;
 
-            isTrue = (this.meta[key] || function() {})();
-
-            displayIf = opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true;
-
-            return isTrue && displayIf ? opts.label : false;
-        }
+            } else {
+                return false;
+            }
+        };
 
         Article.prototype.metaEditor = function(opts, index, all) {
             var self = this,
@@ -363,7 +362,7 @@ define([
                     owner: self
                 })
             }
-        }
+        };
 
         function mainMediaType(contentApiArticle) {
             var mainElement = _.findWhere(contentApiArticle.elements || [], {
