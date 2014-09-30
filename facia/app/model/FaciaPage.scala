@@ -7,6 +7,7 @@ import play.api.libs.json.{JsString, JsValue}
 
 case class FaciaPage(id: String,
                      seoData: SeoData,
+                     frontProperties: FrontProperties,
                      collections: List[(String, (CollectionConfig, Collection))]) extends MetaData with AdSuffixHandlingForFronts {
 
   override lazy val description: Option[String] = seoData.description
@@ -40,14 +41,19 @@ case class FaciaPage(id: String,
 
   override def openGraph: Map[String, String] = super.openGraph ++Map(
     "og:image" -> "http://static.guim.co.uk/icons/social/og/gu-logo-fallback.png") ++
-    description.map { s => Map("og:description" -> s)}.getOrElse(Map())
+    optionalMapEntry("og:description", description)  ++
+    optionalMapEntry("og:image", frontProperties.imageUrl)
+
 
   override def cards: List[(String, String)] = super.cards ++
     List("twitter:card" -> "summary")
 
   override def customSignPosting: Option[NavItem] = FaciaSignpostingOverrides(id)
+
+  private def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
+    o.map(value => Map(key -> value)).getOrElse(Map())
 }
 
 object FaciaPage {
-  def defaultFaciaPage: FaciaPage = FaciaPage("", SeoData.empty, Nil)
+  def defaultFaciaPage: FaciaPage = FaciaPage("", SeoData.empty, FrontProperties.empty, Nil)
 }

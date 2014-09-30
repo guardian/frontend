@@ -100,6 +100,7 @@ trait FaciaTestData extends ModelHelper {
   val ukFaciaPage: FaciaPage = FaciaPage(
     id = "uk",
     SeoData.fromPath("uk"),
+    FrontProperties.empty,
     collections = List(
       ("uk/news/regular-stories",
       (emptyConfig, Collection(ukFrontTrails))
@@ -110,6 +111,7 @@ trait FaciaTestData extends ModelHelper {
   val usFaciaPage: FaciaPage = FaciaPage(
     id = "us",
     SeoData.fromPath("us"),
+    FrontProperties.empty,
     collections = List(
       ("us/news/regular-stories",
       (emptyConfig, Collection(usFrontTrails))
@@ -119,6 +121,7 @@ trait FaciaTestData extends ModelHelper {
   val auFaciaPage: FaciaPage = FaciaPage(
     id = "us",
     SeoData.fromPath("us"),
+    FrontProperties.empty,
     collections = List(
       ("au/news/regular-stories",
       (emptyConfig, Collection(auFrontTrails))
@@ -129,6 +132,7 @@ trait FaciaTestData extends ModelHelper {
   val ukCultureFaciaPage: FaciaPage = FaciaPage(
     id = "uk/culture",
     SeoData.fromPath("uk/culture"),
+    FrontProperties.empty,
     collections = List(
       ("uk/culture/regular-stories",
       (emptyConfig,
@@ -139,6 +143,7 @@ trait FaciaTestData extends ModelHelper {
   val usCultureFaciaPage: FaciaPage = FaciaPage(
     id = "us/culture",
     SeoData.fromPath("us/culture"),
+    FrontProperties.empty,
     collections = List(
       ("au/culture/regular-stories",
       (emptyConfig,
@@ -149,6 +154,7 @@ trait FaciaTestData extends ModelHelper {
   val auCultureFaciaPage: FaciaPage = FaciaPage(
     id = "au/culture",
     SeoData.fromPath("au/culture"),
+    FrontProperties.empty,
     collections = List(
       ("au/culture/regular-stories",
       (emptyConfig,
