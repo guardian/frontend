@@ -2,7 +2,7 @@
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
-@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, TrailCssClasses}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, ContributorLinks}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
@@ -66,20 +66,15 @@
                     @trail match {
                         case content: model.Content => {
                             @content.byline.filter(const(content.showByline)).map { byline =>
-                                <div class="fc-item__byline tone-colour">@Html(byline)</div>
+                                <div class="fc-item__byline">
+                                    @ContributorLinks(Html(byline), content.contributors)
+                                </div>
                             }
 
                             @starRating(content)
                         }
 
                         case _ => {}
-                    }
-                    @if(tone == "comment") {
-                        @trail.byline.map { byLine =>
-                            @trail match { case content:model.Content =>
-                            <p class="fc-item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
-                            }
-                        }
                     }
                 </div>
 

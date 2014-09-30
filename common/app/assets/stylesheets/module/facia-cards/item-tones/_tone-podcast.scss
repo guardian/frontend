@@ -16,8 +16,11 @@
             color: $c-neutral1;
         }
 
-        a.fc-item__kicker {
-            color: $c-podcastAccent;
+        a.fc-item__kicker, .fc-item__byline {
+            &,
+            & a {
+                color: $c-podcastAccent;
+            }
         }
     }
 }

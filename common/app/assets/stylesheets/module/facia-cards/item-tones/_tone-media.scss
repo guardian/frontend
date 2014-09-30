@@ -10,8 +10,11 @@
         }
     }
 
-    .fc-item__kicker {
-        color: $c-mediaDefault;
+    .fc-item__kicker, .fc-item__byline {
+        &,
+        & a {
+            color: $c-mediaDefault;
+        }
     }
 
     &.fc-item--has-image:before {
