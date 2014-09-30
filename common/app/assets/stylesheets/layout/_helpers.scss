@@ -109,7 +109,7 @@
     .loading__link,
     .accessible-link {
         display: inline-block;
-        @include fs-data(2);
+        @include fs-textSans(2);
     }
 }
 .loading .loading__animation,

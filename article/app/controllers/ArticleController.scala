@@ -44,7 +44,7 @@ object ArticleController extends Controller with Logging with ExecutionContexts 
             }
           }
         }
-        Cached(model.article)(JsonComponent(html))
+        Cached(30)(JsonComponent(html))
     }
   }
 

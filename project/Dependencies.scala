@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val cucumberVersion = "1.1.5"
   val identityLibVersion = "3.41"
-  val seleniumVersion = "2.42.2"
+  val seleniumVersion = "2.43.1"
   val slf4jVersion = "1.7.5"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
@@ -28,7 +28,7 @@ object Dependencies {
   val jacksonCore = "org.codehaus.jackson" % "jackson-core-asl" % "1.9.6"
   val jacksonMapper = "org.codehaus.jackson" % "jackson-mapper-asl" % "1.9.6"
   val jodaTime = "joda-time" % "joda-time" % "2.2"
-  val jSoup = "org.jsoup" % "jsoup" % "1.6.3"
+  val jSoup = "org.jsoup" % "jsoup" % "1.7.3"
   val liftJson = "net.liftweb" %% "lift-json" % "2.5"
   val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"

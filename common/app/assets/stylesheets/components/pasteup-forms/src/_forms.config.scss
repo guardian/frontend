@@ -150,7 +150,7 @@ $pasteup-forms-success-border-colour: lighten($pasteup-forms-success-colour, 35%
  *
  * @group forms
  */
-$pasteup-forms-submit-background: guss-colour(tone-news-1, $pasteup-palette) !default;
+$pasteup-forms-submit-background: guss-colour(news-main-1, $pasteup-palette) !default;
 
 /**
  * Submit button `background-color` when focused.

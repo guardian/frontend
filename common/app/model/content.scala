@@ -10,7 +10,7 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
-import conf.Switches.LiveblogCachingSwitch
+import conf.Switches.LiveBlogCacheTimeSwitch
 import com.gu.util.liveblogs.{Parser => LiveBlogParser, Block, BlockToText}
 
 import scala.collection.JavaConversions._
@@ -157,13 +157,13 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) ++ Map(seriesMeta: _*)
   }
 
-
-  private lazy val liveCacheTime = if (LiveblogCachingSwitch.isSwitchedOn) 5 else 30
+  private lazy val liveCacheTime = if (LiveBlogCacheTimeSwitch.isSwitchedOn) 60 else 5
   override lazy val cacheSeconds = {
-    if (isLive) liveCacheTime // live blogs can expect imminent updates
+    if (isLive) liveCacheTime
     else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
+
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:title" -> webTitle,
     "og:description" -> trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),
@@ -182,16 +182,21 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   // Inherited from FaciaFields
   override lazy val group: Option[String] = apiContent.metaData.get("group").flatMap(_.asOpt[String])
   override lazy val supporting: List[Content] = apiContent.supporting
+  override lazy val isBoosted: Boolean = apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val imageHide: Boolean = apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val imageAdjust: String = apiContent.metaData.get("imageAdjust").flatMap(_.asOpt[String]).getOrElse("default")
+  override lazy val showKickerTag: Boolean = apiContent.metaData.get("showKickerTag").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val showKickerSection: Boolean = apiContent.metaData.get("showKickerSection").flatMap(_.asOpt[Boolean]).getOrElse(false)
+
+  override lazy val imageReplace: Boolean = apiContent.metaData.get("imageReplace").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
   override lazy val imageSrcWidth: Option[String] = apiContent.metaData.get("imageSrcWidth").flatMap(_.asOpt[String])
   override lazy val imageSrcHeight: Option[String] = apiContent.metaData.get("imageSrcHeight").flatMap(_.asOpt[String])
-  lazy val imageElement: Option[ApiElement] = for {
+  lazy val imageElement: Option[ApiElement] = if (imageReplace) for {
     src <- imageSrc
     width <- imageSrcWidth
     height <- imageSrcHeight
-  } yield ImageOverride.createElementWithOneAsset(src, width, height)
+  } yield ImageOverride.createElementWithOneAsset(src, width, height) else None
 
   override lazy val showMainVideo: Boolean =
     apiContent.metaData.get("showMainVideo").flatMap(_.asOpt[Boolean]).getOrElse(false)
@@ -373,9 +378,6 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
   lazy val body: String = delegate.safeFields.getOrElse("body","")
   override lazy val contentType = GuardianContentTypes.Article
 
-  lazy val hasVideoAtTop: Boolean = Jsoup.parseBodyFragment(body).body().children().headOption
-    .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
-
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def schemaType = Some(ArticleSchemas(this))
 
@@ -446,6 +448,8 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 
+  lazy val body: Option[String] = delegate.safeFields.get("body")
+
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:type" -> "video",
@@ -457,8 +461,6 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 }
 
 class Audio(content: ApiContentWithMeta) extends Media(content) {
-
-  lazy val body: String = delegate.safeFields.getOrElse("body", "")
 
   override lazy val contentType = GuardianContentTypes.Audio
 

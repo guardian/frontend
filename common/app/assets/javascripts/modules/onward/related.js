@@ -59,8 +59,7 @@ define([
     Related.prototype.renderRelatedComponent = function(config) {
         var container;
 
-        var fetchRelated = config.switches.relatedContent && config.switches.ajaxRelatedContent && config.page.showRelatedContent &&
-            config.page.section !== 'childrens-books-site';
+        var fetchRelated = config.switches.relatedContent && config.switches.ajaxRelatedContent && config.page.showRelatedContent;
 
         if (config.page && config.page.hasStoryPackage && !Related.overrideUrl) {
             new Expandable({

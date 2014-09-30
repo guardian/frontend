@@ -22,7 +22,7 @@ object Story {
     Story(
       /** Stories that are not assigned to a group are treated as standard (0) items */
       content.group.flatMap(group => Try(group.toInt).toOption).getOrElse(0),
-      content.imageAdjust == "boost"
+      content.isBoosted
     )
   }
 }

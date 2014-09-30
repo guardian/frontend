@@ -3,7 +3,7 @@
 @include tone-head(news, $c-newsDefault, $c-newsAccent);
 @include tone-head(comment, $c-commentDefault, $c-commentAccent);
 @include tone-head(feature, $c-featureDefault, $c-featureAccent);
-@include tone-head(live, $c-neutral1, $c-liveAccent);
+@include tone-head(live, $c-liveDefault, $c-liveAccent);
 @include tone-head(media, $c-mediaDefault, $c-mediaDefault);
 
 
@@ -117,9 +117,9 @@
             font-weight: 200;
         }
 
-        @include mq(tablet) {
+        @include mq(phablet) {
             .content__main-column--article {
-                margin-top: $gs-baseline*2;
+                margin-top: $gs-baseline;
             }
         }
     }

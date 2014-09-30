@@ -58,13 +58,16 @@ object ItemMeta {
     headline = content.apiContent.metaData.get("headline"),
     trailText = content.apiContent.metaData.get("trailText"),
     group = content.apiContent.metaData.get("group"),
-    imageAdjust = content.apiContent.metaData.get("imageAdjust"),
+    isBoosted = content.apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]),
+    imageHide = content.apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]),
     isBreaking = content.apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]),
     supporting = Option(content.supporting.map(item => Json.toJson(TrailJson.fromContent(item)))).filter(_.nonEmpty),
     href = content.apiContent.metaData.get("href"),
     snapType = content.apiContent.metaData.get("snapType"),
     snapCss = content.apiContent.metaData.get("snapCss"),
     snapUri = content.apiContent.metaData.get("snapUri"),
+    showKickerTag = content.apiContent.metaData.get("showKickerTag"),
+    showKickerSection = content.apiContent.metaData.get("showKickerSection"),
     showMainVideo = content.apiContent.metaData.get("showMainVideo")
   )
 }
@@ -73,13 +76,16 @@ case class ItemMeta(
   headline:      Option[JsValue],
   trailText:     Option[JsValue],
   group:         Option[JsValue],
-  imageAdjust:   Option[JsValue],
+  isBoosted:     Option[Boolean],
+  imageHide:     Option[Boolean],
   isBreaking:    Option[Boolean],
   supporting:    Option[Seq[JsValue]],
   href:          Option[JsValue],
   snapType:      Option[JsValue],
   snapCss:       Option[JsValue],
   snapUri:       Option[JsValue],
+  showKickerTag: Option[JsValue],
+  showKickerSection: Option[JsValue],
   showMainVideo: Option[JsValue]
 )
 

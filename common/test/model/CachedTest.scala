@@ -11,8 +11,9 @@ import org.scala_tools.time.Imports._
 
 class CachedTest extends FlatSpec with Matchers with Results with implicits.Dates {
 
-  "Cached" should "cache live content for 30 seconds" in {
+  "Cached" should "cache live content for 5 seconds" in {
     Switches.DoubleCacheTimesSwitch.switchOff()
+    Switches.LiveBlogCacheTimeSwitch.switchOff()
 
     val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
     val liveContent = content(lastModified = modified, live = true)
@@ -20,7 +21,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val result = Cached(liveContent)(Ok("foo"))
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=30, stale-while-revalidate=3, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=864000")
   }
 
   it should "cache content less than 1 hour old for 1 minute" in {

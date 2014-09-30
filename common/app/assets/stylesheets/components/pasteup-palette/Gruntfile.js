@@ -1,13 +1,15 @@
 module.exports = function(grunt) {
 
-	grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-gh-pages');
+    grunt.loadNpmTasks('grunt-gh-pages');
     grunt.loadNpmTasks('grunt-release');
     grunt.loadNpmTasks('grunt-sassdoc');
     grunt.loadNpmTasks('grunt-scss-lint');
 
-	grunt.initConfig({
+    grunt.task.renameTask('release', 'git-release');
+
+    grunt.initConfig({
         clean: {
             docs: [
                 'docs'
@@ -49,8 +51,8 @@ module.exports = function(grunt) {
                 dest: 'docs'
             }
         },
-		'gh-pages': {
-			docs: {
+        'gh-pages': {
+            docs: {
                 options: {
                     base: './',
                     message: 'Releasing docs and demo to http://guardian.github.io/pasteup-palette/'
@@ -59,19 +61,19 @@ module.exports = function(grunt) {
                     'demo/**/*',
                     'docs/**/*',
                 ]
-			}
-		},
+            }
+        },
         'git-release': {
             options: {
                 file: 'bower.json',
                 npm: false
             }
         }
-	});
+    });
 
     grunt.registerTask('validate', ['scsslint']);
     grunt.registerTask('build:demo', ['sass:demo']);
-	grunt.registerTask('docs', ['clean:docs', 'sassdoc:palette']);
+    grunt.registerTask('docs', ['clean:docs', 'sassdoc:palette']);
     grunt.registerTask('release', function (type) {
         var releaseTarget = type ? ':' + type : '';
         grunt.task.run([
