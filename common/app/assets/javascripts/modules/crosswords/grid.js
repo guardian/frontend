@@ -12,7 +12,8 @@ define([
             var classes = classSet({
                 'crossword__grid__cell': true,
                 'crossword__grid__cell--highlighted': this.props.isHighlighted,
-                'crossword__grid__cell--editable': this.props.isEditable
+                'crossword__grid__cell--editable': this.props.isEditable,
+                'crossword__grid__cell--non-editable': !this.props.isEditable
             });
 
             var innerNodes = [];

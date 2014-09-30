@@ -2,7 +2,39 @@
 
 @import play.api.libs.json._
 
-@main(crosswordPage) { } {
+@main(crosswordPage) {
+
+@* TODO: move this to SASS *@
+<style type="text/css">
+.crossword__grid {
+    width: auto;
+}
+
+.crossword__grid__cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+    position: relative;
+}
+
+.crossword__grid__cell--non-editable {
+    background-color: black;
+}
+
+.crossword__grid__cell__number {
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    font: 8px Verdana, Arial, sans-serif;
+}
+
+.crossword__grid__cell__input {
+    border: 0;
+    width: 20px;
+}
+</style>
+
+} {
     <div class="l-side-margins l-side-margins--layout-content">
         <h1>@crosswordPage.crossword.name</h1>
 
