@@ -9,11 +9,11 @@ object ItemKicker {
   def fromTrail(trail: Trail, config: CollectionConfig): Option[ItemKicker] = {
     lazy val maybeTag = firstTag(trail)
 
-    if ((trail.showKickerTag || config.showTags.exists(_==true)) && maybeTag.isDefined) {
+    if ((trail.showKickerTag || config.showTags.exists(identity)) && maybeTag.isDefined) {
       maybeTag map { tag =>
         TagKicker(tag.name, tag.webUrl)
       }
-    } else if (config.showSections.exists(_==true) || trail.showKickerSection) {
+    } else if (config.showSections.exists(identity) || trail.showKickerSection) {
       Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
     } else if (trail.isBreaking) {
       Some(BreakingNewsKicker)
