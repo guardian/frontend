@@ -12,7 +12,7 @@
         <div class="gs-container">
             <div class="navigation__inner">
                 <div class="navigation__scroll">
-                    <nav class="navigation__container navigation__container--first" role="navigation" aria-label="Current section">
+                    <nav class="navigation__container navigation__container--first" data-component="nav" role="navigation" aria-label="Current section">
                         @if(!Edition.isEditionFront){
                             @fragments.nav.signposting(metaData, navigation)
 
@@ -39,7 +39,7 @@
                     <span class="navigation__toggle-label navigation__toggle-label--close">close</span>
                 </a>
             </div>
-            <div class="navigation__expandable js-mega-nav-placeholder"></div>
+            <div class="navigation__expandable js-mega-nav-placeholder" data-component="all-nav"></div>
         </div>
     </div>
 }
