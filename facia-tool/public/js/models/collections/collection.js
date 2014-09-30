@@ -198,7 +198,7 @@ define([
             if (this.hasOpenArticles()) {
                 this.state.hasConcurrentEdits(raw.updatedEmail !== config.email && self.state.lastUpdated());
 
-            } else {
+            } else if (raw.lastUpdated !== this.state.lastUpdated()) {
                 list = vars.state.liveMode() ? raw.live : raw.draft || raw.live || [];
 
                 _.each(this.groups, function(group) {
