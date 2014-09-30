@@ -32,6 +32,11 @@
     }
 }
 
+.fc-item--has-sublinks {
+    padding-bottom: 0;
+    // padding-bottom: $gs-baseline * 3;
+}
+
 .fc-item--has-image:before {
     background-color: rgba($c-neutral1, .15);
 }
@@ -66,6 +71,12 @@
     padding: .1em .2em .05em;
 }
 
+.fc-item__header {
+    .fc-item--has-sublinks & {
+        margin-bottom: $gs-baseline * 2;
+    }
+}
+
 .fc-item__title,
 .fc-item__byline {
     @include fs-headline(3);
@@ -98,6 +109,10 @@
     &,
     & a {
         color: $c-neutral2;
+    }
+
+    .fc-item--has-sublinks & {
+        position: relative;
     }
 }
 
