@@ -1,31 +1,24 @@
 # Frontend Nginx Dev Config
 
-## Setup Mac
+## Setup
 
-[Install Homebrew:](http://brew.sh/#install)
+__Mac:__ [Install Homebrew:](http://brew.sh/#install)
 
-    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-Install nginx:
+__Nginx:__
 
+    # Mac
     brew install nginx
-
-Add the following to your ```/etc/hosts```:
-
-    127.0.0.1   profile.thegulocal.com
-    127.0.0.1   m.thegulocal.com
-
-## Setup Linux
-
-Install nginx:
-
+    
+    # Linux
     sudo apt-get install nginx
 
-
 Add the following to your ```/etc/hosts```:
 
     127.0.0.1   profile.thegulocal.com
     127.0.0.1   m.thegulocal.com
+
 
 ## Now run the setup script (nginx/setup.sh):
 
