@@ -1,5 +1,6 @@
 .tone-news {
-    .fc-item__kicker, .fc-item__byline {
+    .fc-item__kicker,
+    .fc-item__byline {
         &,
         & a {
             color: $c-analysisAccent;
