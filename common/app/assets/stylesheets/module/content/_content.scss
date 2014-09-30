@@ -524,3 +524,9 @@
         @include f-textSans;
     }
 }
+
+.meta__body {
+    @include mq(leftCol) {
+        clear: left;
+    }
+}
