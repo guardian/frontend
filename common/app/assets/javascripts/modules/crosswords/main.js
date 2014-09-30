@@ -27,7 +27,7 @@ define([
 
             grid[x][y].number = entry.number;
 
-            var isAcross = entry.direction === "across";
+            var isAcross = entry.direction === 'across';
 
             _.forEach(_.range(entry.length), function (delta) {
                 var x1 = x, y1 = y;
@@ -77,7 +77,7 @@ define([
                 var crosswordData = JSON.parse(element.getAttribute('data-crossword-data'));
                 React.renderComponent(new Crossword({data: crosswordData}), element);
             } else {
-                console.warn('JavaScript crossword without associated data', element);
+                throw 'JavaScript crossword without associated data in data-crossword-data';
             }
         });
     };

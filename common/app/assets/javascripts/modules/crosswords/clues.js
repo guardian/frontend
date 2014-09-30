@@ -38,7 +38,7 @@ define([
                 React.DOM.ul(null, cluesByDirection('across')),
                 React.DOM.h3(null, 'Down'),
                 React.DOM.ul(null, cluesByDirection('down'))
-            )
+            );
         }
     });
 });
