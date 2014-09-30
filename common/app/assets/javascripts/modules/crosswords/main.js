@@ -23,11 +23,10 @@ define([
 
         _.forEach(entries, function (entry) {
             var x = entry.position.x,
-                y = entry.position.y;
+                y = entry.position.y,
+                isAcross = entry.direction === 'across';
 
             grid[x][y].number = entry.number;
-
-            var isAcross = entry.direction === 'across';
 
             _.forEach(_.range(entry.length), function (delta) {
                 var x1 = x, y1 = y;
