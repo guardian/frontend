@@ -350,7 +350,6 @@ h1 {
 
 .article.open {
     height: inherit;
-    min-height: 61px;
     background: #dddddd !important;
 }
 

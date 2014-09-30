@@ -329,7 +329,7 @@ define([
 
                 revert: function() { meta(undefined); },
 
-                open:   function() { mediator.emit('ui:open', meta); },
+                open:   function() { mediator.emit('ui:open', meta, self); },
 
                 hasFocus: ko.computed(function() {
                     return meta === vars.model.uiOpenElement();
@@ -353,7 +353,7 @@ define([
                    _.chain(all)
                     .filter(function(editor) { return editor.requires === key; })
                     .first(1)
-                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key]); });
+                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key], self); });
                 },
 
                 length: ko.computed(function() {
@@ -540,22 +540,22 @@ define([
             this.meta.href(this.id());
             this.id(snap.generateId());
             this.state.isOpen(true);
-            mediator.emit('ui:open', this.meta.headline);
+            mediator.emit('ui:open', this.meta.headline, this);
         };
 
         Article.prototype.open = function() {
             if (this.uneditable) { return; }
 
-            if (!this.state.isOpen()) {
+            this.meta.supporting && this.meta.supporting.items().forEach(function(sublink) { sublink.close(); });
 
+            if (!this.state.isOpen()) {
                 if (this.editors().length === 0) {
                     this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
                 }
-
                 this.state.isOpen(true);
-                mediator.emit('ui:open', this.meta.headline);
+                mediator.emit('ui:open', this.meta.headline, this);
             } else {
-                mediator.emit('ui:open', undefined);
+                mediator.emit('ui:open');
             }
         };
 
@@ -589,6 +589,8 @@ define([
 
         ko.bindingHandlers.tabbableFormField = {
             init: function(el, valueAccessor, allBindings, viewModel, bindingContext) {
+                var self = this;
+
                 $(el).on('keydown', function(e) {
                     var keyCode = e.keyCode || e.which,
                         formField,
@@ -600,7 +602,7 @@ define([
                         formField = bindingContext.$rawData;
                         formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.displayEditor(); });
                         nextIndex = mod(formFields.indexOf(formField) + (e.shiftKey ? -1 : 1), formFields.length);
-                        mediator.emit('ui:open', formFields[nextIndex].meta);
+                        mediator.emit('ui:open', formFields[nextIndex].meta, self);
                     }
                 });
             }
