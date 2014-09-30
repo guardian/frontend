@@ -66,7 +66,7 @@
                     @trail match {
                         case content: model.Content => {
                             @content.byline.filter(const(content.showByline)).map { byline =>
-                                <div class="fc-item__byline tone-colour">@byline</div>
+                                <div class="fc-item__byline tone-colour">@Html(byline)</div>
                             }
 
                             @starRating(content)
