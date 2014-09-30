@@ -49,10 +49,10 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item--list-compact-tablet {
     @include mq(tablet) {
         @include fc-item--list;
-    }
 
-    .fc-item__header {
-        padding-bottom: 0;
+        .fc-item__header {
+            padding-bottom: 0;
+        }
     }
 }
 

@@ -203,10 +203,10 @@ $avatarSize: 44px;
     padding: 0;
     display: block;
     clear: both;
-    position: relative;
 }
 .d-comment__inner {
     padding-top: $gs-baseline;
+    position: relative;
 }
 .d-comment--top-level {
     border-top: 1px solid $c-neutral4;
@@ -579,6 +579,9 @@ $avatarSize: 44px;
     position: absolute;
     right: $gs-baseline / 3;
     bottom: ($gs-baseline / 3) * 5;
+    .discussion__comments__top & {
+        right: $gs-gutter;
+    }
 }
 .d-comment__action-separator {
     display: inline-block;
@@ -796,9 +799,6 @@ $avatarSize: 44px;
     .d-comment {
         margin-bottom: ($gs-baseline / 5) * 2;
         overflow: hidden;
-    }
-    .d-comment__main {
-        padding-bottom: 0;
     }
     .d-comment__body {
         min-height: 0;

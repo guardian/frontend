@@ -18,6 +18,7 @@ case class Config(
 
   lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
   lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(this)
+  lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(this)
 
   lazy val sponsorshipKeyword: Option[String] = DfpAgent.sponsorshipTag(this)
 }
