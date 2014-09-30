@@ -14,7 +14,15 @@ object ItemKicker {
       }
     } else if (config.showSections || trail.showKickerSection) {
       Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
-    } else if (trail.isBreaking) {
+    } else if (!config.hideKickers) {
+      tonalKicker(trail)
+    } else {
+      None
+    }
+  }
+
+  private def tonalKicker(trail: Trail): Option[ItemKicker] = {
+    if (trail.isBreaking) {
       Some(BreakingNewsKicker)
     } else if (trail.isLive) {
       Some(LiveKicker)
