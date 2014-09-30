@@ -57,42 +57,44 @@
                     }
                 }
 
-                <div class="@RenderClasses(Map(
-                    ("fc-item__header", true),
-                    ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
-                ))">
-                    @title(trail, index, containerIndex, false)
-                    @trail match { case content:model.Content => @starRating(content) }
+                <div class="fc-item__content">
+                    <div class="@RenderClasses(Map(
+                        ("fc-item__header", true),
+                        ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
+                    ))">
+                        @title(trail, index, containerIndex, false)
+                        @trail match { case content:model.Content => @starRating(content) }
+                        @if(tone == "comment") {
+                            @trail.byline.map { byLine =>
+                                @trail match { case content:model.Content =>
+                                <p class="fc-item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                                }
+                            }
+                        }
+                    </div>
+
                     @if(tone == "comment") {
-                        @trail.byline.map { byLine =>
-                            @trail match { case content:model.Content =>
-                            <p class="fc-item__byline tone-colour">@ContributorLinks(Html(byLine), content.contributors)</p>
+                        @if(trail.hasLargeContributorImage) {
+                            @trail.contributors.headOption.map { profile =>
+                                @profile.contributorLargeImagePath.map{ image =>
+                                    <div class="fc-item__avatar">
+                                        <img src="@image" alt="@profile.name" class="fc-item__avatar__media" />
+                                    </div>
+                                }
                             }
                         }
                     }
+
+                    @trail.trailText.map { text =>
+                        <div class="fc-item__standfirst">@Html(text)</div>
+                    }
+
+                    @meta(trail)
+
+                    @sublinks(trail.supporting)
                 </div>
-
-                @if(tone == "comment") {
-                    @if(trail.hasLargeContributorImage) {
-                        @trail.contributors.headOption.map { profile =>
-                            @profile.contributorLargeImagePath.map{ image =>
-                                <div class="fc-item__avatar">
-                                    <img src="@image" alt="@profile.name" class="fc-item__avatar__media" />
-                                </div>
-                            }
-                        }
-                    }
-                }
-
-                @trail.trailText.map { text =>
-                    <div class="fc-item__standfirst">@Html(text)</div>
-                }
-
-                @meta(trail)
-
-                @sublinks(trail.supporting)
+                <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
             </div>
-            <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
         </div>
     }
 </li>

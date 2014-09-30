@@ -19,31 +19,21 @@ Full item. A 100% width version of the Three quarter item.
 */
 
 @mixin fc-item--full {
-    padding-bottom: 0;
 
-    .fc-item__media-wrapper,
-    .fc-item__avatar {
-        float: right;
+    .fc-item__container {
+        @include flex-direction(row-reverse);
     }
 
-    .fc-item__avatar {
-        width: gs-span(4) + $gs-gutter;
+    .fc-item__content {
+        padding-right: $fc-item-gutter;
+    }
 
-        @include mq(desktop) {
-            width: gs-span(6) + $gs-gutter;
-        }
+    .fc-item__content {
+        @include flex(1, 1, 25%);
     }
 
     .fc-item__media-wrapper {
-        width: gs-span(7) - $gs-gutter;
-
-        @include mq(desktop) {
-            width: gs-span(9);
-
-            @if(not $browser-supports-flexbox) {
-                width: gs-span(9);
-            }
-        }
+        @include flex(3, 3, 75%);
     }
 
     .fc-item__standfirst {
@@ -62,15 +52,12 @@ Full item. A 100% width version of the Three quarter item.
     .fc-item__standfirst,
     .fc-item__byline {
         @include box-sizing(border-box);
-        width: gs-span(3) - $gs-gutter;
 
         @include mq(desktop) {
-            width: gs-span(3);
-
             //Fixes IE9 box-model bug.
             @if(not $browser-supports-flexbox) {
-                float: left;
-                width: gs-span(3) - $gs-gutter;
+                // float: left;
+                // width: gs-span(3) - $gs-gutter;
             }
         }
     }
@@ -84,8 +71,16 @@ Full item. A 100% width version of the Three quarter item.
         }
     }
 
+    .fc-item__header {
+        padding-bottom: get-line-height(headline, 3);
+
+        @include mq(desktop) {
+            padding-bottom: get-line-height(headline, 5);
+        }
+    }
+
     &.fc-item--has-cutout {
-        min-height: gs-height(6);
+        // min-height: gs-height(6);
 
         .fc-item__title,
         .fc-item__byline {
@@ -95,16 +90,16 @@ Full item. A 100% width version of the Three quarter item.
         .fc-item__title,
         .fc-item__standfirst,
         .fc-item__byline {
-            width: gs-span(6);
+            // width: gs-span(6);
         }
 
         @include mq(desktop) {
-            min-height: gs-height(8);
+            // min-height: gs-height(8);
 
             .fc-item__title,
             .fc-item__standfirst,
             .fc-item__byline {
-                width: gs-span(8);
+                // width: gs-span(8);
             }
         }
     }
@@ -117,11 +112,12 @@ Full item. A 100% width version of the Three quarter item.
 
     &.fc-item--has-sublinks-4 {
         .fc-sublinks {
-            margin-top: $gs-baseline;
-            @include display-flex;
+            // margin-top: $gs-baseline;
+            // @include display-flex;
         }
     }
 
+    // hide more than 4 sublinks
     .fc-sublinks__item:nth-child(n+5) {
         display: none;
     }

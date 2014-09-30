@@ -1,16 +1,16 @@
 .fc-sublinks {
-    position: relative;
-    width: 100%;
-    bottom: 0;
+    margin-bottom: 0;
 }
 
 .fc-sublinks__item {
     position: relative;
-    margin: 0 $gs-gutter / 4 $gs-baseline / 2;
+    padding-top: $gs-baseline * .25;
+    margin-top: $gs-baseline * .25;
 
     .fc-item__title {
         @include fs-headline(1);
         font-weight: 500;
+        padding-top: 0;
 
         &:before {
             display: block;
