@@ -73,22 +73,23 @@ $control-offset: 36 + $gs-gutter/2;
     z-index: 11;
 
     // disclosure arrow
-    @include mq(tablet) {
-        &:after {
-            content: '';
-            display: inline-block;
-            pointer-events: none;
-            width: 0;
-            height: 0;
-            border-bottom: 0;
-            margin-top: 2px;
-            margin-bottom: 2px;
-            margin-left: 4px;
-            border-left: $popup-toggle-arrow-size solid transparent;
-            border-right: $popup-toggle-arrow-size solid transparent;
-            border-top: $popup-toggle-arrow-size solid $c-popup-bg;
-        }
-    };
+    &:after {
+        content: '';
+        display: inline-block;
+        pointer-events: none;
+        width: 0;
+        height: 0;
+        border-bottom: 0;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        margin-left: 4px;
+        border-left: $popup-toggle-arrow-size solid transparent;
+        border-right: $popup-toggle-arrow-size solid transparent;
+        border-top: $popup-toggle-arrow-size solid $c-popup-bg;
+        @include mq($until: tablet) {
+            display: none;
+        };
+    }
 
     &.is-active,
     .is-active > & {
