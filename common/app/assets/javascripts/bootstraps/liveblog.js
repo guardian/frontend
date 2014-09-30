@@ -143,7 +143,7 @@ define([
         },
 
         createFilter: function() {
-            new LiveFilter($('.js-blog-blocks')[0]).render($('.js-live-filter')[0]);
+            new LiveFilter($('.js-blog-blocks')[0]).ready();
             new NotificationCounter().init();
         },
 
