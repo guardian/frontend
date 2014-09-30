@@ -1,5 +1,6 @@
 @(crosswordPage: crosswords.CrosswordPage)(implicit request: RequestHeader)
 
+@import common.LinkTo
 @import play.api.libs.json._
 
 @main(crosswordPage) {
@@ -36,9 +37,30 @@
 
 } {
     <div class="l-side-margins l-side-margins--layout-content">
-        <h1>@crosswordPage.crossword.name</h1>
+        <article id="crossword" class="content content--article tone-news tone-news--article" role="main">
+            <header class="content__head u-cf">
+                <div class="gs-container">
+                    <div class="content__main-column">
 
-        <div class="js-crossword"
-             data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))"></div>
+                        <div class="content__labels">
+                            <div class="content__section-label">
+                                <a class="tone-colour" data-link-name="article section" href="@LinkTo("type/crossword")">Crosswords</a>
+                            </div>
+                        </div>
+
+                        <h1 itemprop="headline" class="content__headline js-score">@Html(crosswordPage.crossword.name)</h1>
+
+                    </div>
+                </div>
+            </header>
+
+            <div class="gs-container">
+                <div class="content__main-column content__main-column--article js-content-main-column">
+
+                    <div class="js-crossword"
+                         data-crossword-data="@Json.stringify(Json.toJson(crosswordPage.crossword))"></div>
+                </div>
+            </div>
+        </article>
     </div>
 }

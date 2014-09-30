@@ -59,13 +59,13 @@ define([
 
         render: function () {
             return React.DOM.div(null,
-                Clues({
-                    clues: this.props.data.entries
-                }),
                 Grid({
                     rows: this.rows,
                     columns: this.columns,
                     cells: this.state.grid
+                }),
+                Clues({
+                    clues: this.props.data.entries
                 })
             );
         }
