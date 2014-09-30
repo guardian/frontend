@@ -126,6 +126,8 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
   override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
   override lazy val byline: Option[String] = apiContent.metaData.get("byline").flatMap(_.asOpt[String]).orElse(fields.get("byline"))
+  override val showByline = apiContent.metaData.get("showByline").flatMap(_.asOpt[Boolean]).getOrElse(isComment)
+
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
   // Meta Data used by plugins on the page
