@@ -642,7 +642,7 @@ object ArticleLayout {
       .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
     lazy val hasSupportingAtBottom: Boolean =
-      Jsoup.parseBodyFragment(a.body).select("> *:nth-last-child(-n+5)")
+      Jsoup.parseBodyFragment(a.body).select("body > *:nth-last-child(-n+5)")
         .select(".element--showcase, .element--supporting, .element--thumbnail").length > 0
 
     lazy val tooSmallForBottomSocialButtons: Boolean =
