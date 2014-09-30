@@ -19,24 +19,9 @@
     // which requires the padding to be removed from all child elements
     @include box-sizing(border-box);
     padding: 0 $gs-gutter/2;
+
     @include mq(mobileLandscape) {
         padding: 0 $gs-gutter;
-    }
-}
-
-.content__head {
-    @include mq(tablet) {
-        padding-top: $content-top-padding;
-    }
-
-    &.content__head--tonal {
-        padding-top: 0;
-
-        .tone-background {
-            @include mq(tablet) {
-                padding-top: $content-top-padding;
-            }
-        }
     }
 }
 
@@ -45,7 +30,7 @@
     margin: auto;
     position: relative;
 
-    @include mq(tablet, rightCol) {
+    @include mq(tablet, desktop) {
         max-width: gs-span(9);
 
         // Restrict line-length to 8-cols, but make other content full-width
@@ -71,13 +56,16 @@
             }
         }
     }
-    @include mq(rightCol) {
+
+    @include mq(desktop) {
         margin-left: 0;
         margin-right: $right-column + $gs-gutter;
     }
+
     @include mq(leftCol) {
         margin-left: $left-column + $gs-gutter;
     }
+
     @include mq(wide) {
         margin-left: $left-column-wide + $gs-gutter;
     }
@@ -85,9 +73,10 @@
     &.content__main-column--media,
     &.content__main-column--gallery,
     &.content__main-column--wide {
-        @include mq(rightCol) {
+        @include mq(desktop) {
             max-width: none;
         }
+
         @include mq(wide) {
             margin-right: gs-span(1) + $gs-gutter;
         }
@@ -101,19 +90,20 @@
     height: 100%;
     overflow: hidden; // quick hackfix for overflowing right hand components
     margin-right: $gs-gutter;
+    width: gs-span(4);
 
-    @include mq($until: rightCol) {
+    @include mq($until: desktop) {
         display: none;
     }
-
-    width: gs-span(4);
 }
 
 .content__head__comment-count {
     height: 16px + $gs-baseline; //font-size + $gs-baseline
+
     @include mq(tablet) {
         display: none;
     }
+
     &.content__head__comment-count--headline { // used in tonal templates
         display: none;
     }
@@ -123,7 +113,7 @@
     @include fs-textSans(2);
     padding-top: $gs-baseline;
     padding-bottom: $gs-baseline/3;
-    
+
     .content--media & a {
         color: $c-neutral5;
     }
@@ -131,21 +121,20 @@
 
 .content__labels {
     @include box-sizing(border-box);
+    padding: $gs-baseline/2 0;
+    border-bottom: 1px dotted $c-neutral5;
     position: relative;
     z-index: 1; // bring-to-front fix to make it clickable
-    padding: $gs-baseline/4 0;
     overflow: hidden;
 
-    @include mq($until: leftCol) {
-        margin-bottom: $gs-baseline/2;
-        border-bottom: 1px dotted $c-neutral5;
+    @include mq(leftCol) {
+        border: 0;
+        margin-left: -($left-column + $gs-gutter);
+        margin-bottom: $gs-baseline;
+        width: $left-column;
+        float: left;
     }
 
-    @include mq(leftCol) {
-        float: left;
-        margin-left: -($left-column + $gs-gutter);
-        width: $left-column;
-    }
     @include mq(wide) {
         margin-left: -($left-column-wide + $gs-gutter);
         width: $left-column-wide;
@@ -190,14 +179,17 @@
 
 .content__headline {
     @include fs-headline(5);
+    padding-top: $gs-baseline/2;
     padding-bottom: $gs-baseline*2;
 
     @include mq(mobileLandscape) {
         @include fs-headline(7, true);
     }
+
     @include mq(tablet) {
         padding-bottom: $gs-row-height;
     }
+
     a {
         &,
         &:hover,
@@ -206,9 +198,11 @@
             color: $c-neutral1;
         }
     }
+
     em {
         font-style: normal;
     }
+
     strong {
         font-weight: normal;
     }
@@ -282,6 +276,7 @@
         position: relative;
         top: 1px;
     }
+
     .relative-timestamp__icon {
         vertical-align: top;
         top: 3px;
@@ -383,10 +378,12 @@
 .content__mobile-full-width {
     margin-left: -($gs-gutter/2);
     margin-right: -($gs-gutter/2);
+
     @include mq(mobileLandscape, tablet) {
         margin-left: -$gs-gutter;
         margin-right: -$gs-gutter;
     }
+
     @include mq(tablet) {
         margin-left: 0;
         margin-right: 0;
@@ -508,7 +505,6 @@
         @extend %u-h;
     }
 }
-
 
 .content--advertisement-feature {
     background-color: $c-neutral8;

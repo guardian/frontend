@@ -320,10 +320,6 @@ object Switches extends Collections {
     safeState = On, sellByDate = new LocalDate(2014, 12, 5)
   )
 
-  val CentreTopBannerAd = Switch("Feature", "centre-top-banner-ad",
-    "Center the top banner ad, allows more ad sizes to be used at smaller breakpoints.",
-    safeState = Off, sellByDate = new LocalDate(2014, 10, 4))
-
   // A/B Tests
 
   val ABHighCommercialComponent = Switch("A/B Tests", "ab-high-commercial-component",
@@ -434,7 +430,6 @@ object Switches extends Collections {
     BreakingNewsSwitch,
     MetricsSwitch,
     FootballFeedRecorderSwitch,
-    CentreTopBannerAd,
     ForceHttpResponseCodeSwitch,
     CircuitBreakerSwitch,
     LiveBlogCacheTimeSwitch
