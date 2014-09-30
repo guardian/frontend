@@ -1,3 +1,5 @@
+$fc-item-gutter: $gs-gutter / 4;
+
 .fc-item {
     @include flex(1);
     @include box-sizing(border-box);
