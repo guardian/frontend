@@ -1,7 +1,6 @@
 package model.commercial.books
 
 import common.ExecutionContexts
-import conf.Switches.MagentoServiceSwitch
 import model.commercial.{Ad, AdAgent, Segment, intersects, lastPart}
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -58,21 +57,7 @@ object Book {
 
 object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
 
-  private val bertramFeeds = Seq(
-    GeneralBestsellersFeed,
-    TravelBestsellersFeed,
-    ScienceBestsellersFeed,
-    TechnologyBestsellersFeed,
-    EnvironmentBestsellersFeed,
-    SocietyBestsellersFeed,
-    PoliticsBestsellersFeed,
-    MusicFilmBestsellersFeed,
-    SportBestsellersFeed,
-    HomeGardenBestsellersFeed,
-    FoodDrinkBestsellersFeed
-  )
-
-  private val magentoFeeds = Seq(MagentoBestsellersFeed)
+  private lazy val feeds = Seq(MagentoBestsellersFeed)
 
   def getSpecificBook(isbn: String) = currentAds find(_.isbn == isbn)
   def getSpecificBooks(specifics: Seq[String]) = currentAds.filter(specifics contains _.isbn)
@@ -84,8 +69,6 @@ object BestsellersAgent extends AdAgent[Book] with ExecutionContexts {
   def refresh() {
 
     val bookListsLoading: Future[Seq[Seq[Book]]] = Future.sequence {
-      val feeds = if (MagentoServiceSwitch.isSwitchedOn) magentoFeeds else bertramFeeds
-
       feeds.foldLeft(Seq[Future[Seq[Book]]]()) {
         (soFar, feed) =>
           soFar :+ feed.loadAds().recover {
