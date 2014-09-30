@@ -12,8 +12,8 @@ define([
     Grid
 ) {
     function buildGrid(rows, columns, entries) {
-        var grid = _.map(_.range(columns), function (x) {
-            return _.map(_.range(rows), function (y) {
+        var grid = _.map(_.range(columns), function () {
+            return _.map(_.range(rows), function () {
                 return {
                     isHighlighted: false,
                     isEditable: false
@@ -77,7 +77,7 @@ define([
                 var crosswordData = JSON.parse(element.getAttribute('data-crossword-data'));
                 React.renderComponent(new Crossword({data: crosswordData}), element);
             } else {
-                console.warn("JavaScript crossword without associated data", element);
+                console.warn('JavaScript crossword without associated data', element);
             }
         });
     };
