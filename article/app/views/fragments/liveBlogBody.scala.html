@@ -1,10 +1,11 @@
 @(model: LiveBlogPage)(implicit request: RequestHeader)
 @import conf.Switches._
+@import views.support.TrailCssClasses.articleToneClass
 
 @defining(model.article) {  article =>
 <div class="l-side-margins l-side-margins--layout-content">
     <article id="live-blog" data-test-id="live-blog"
-        class="content content--liveblog tone-@article.visualTone blog @if(article.isLive){is-live} section-@article.sectionName.toLowerCase"
+        class="content content--liveblog @articleToneClass(article) @articleToneClass(article)--article section-@article.sectionName.toLowerCase"
         itemprop="mainContentOfPage" itemscope itemtype="@article.schemaType" role="main">
 
         <header class="content__head content__head--tonal">

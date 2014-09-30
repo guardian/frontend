@@ -30,9 +30,9 @@ object TrailCssClasses {
 
   def articleToneClass(trail: Trail) = {
     if (SupportedArticleTones.contains(CardStyle(trail))) {
-      toneClass(trail) + "--article"
+      toneClass(trail)
     } else {
-      "tone-news--article"
+      "tone-news"
     }
   }
 }

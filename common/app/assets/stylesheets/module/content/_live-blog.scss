@@ -58,8 +58,7 @@ $block-padding-right: $gs-gutter;
 
 .blog__meta-container {
     position: relative;
-    color: #ffffff;
-    border-top: 1px dotted #e6a1ab;
+    border-top: 1px dotted;
     padding-bottom: $gs-baseline;
 
     @include mq(rightCol) {
@@ -83,8 +82,6 @@ $block-padding-right: $gs-gutter;
     }
 
     .byline {
-        @include fs-bodyHeading(1);
-        font-weight: normal;
         padding: 0;
         min-height: initial;
         margin: $gs-baseline/3 0 $gs-baseline/2;
@@ -101,7 +98,6 @@ $block-padding-right: $gs-gutter;
         }
 
         .tone-colour {
-            color: inherit;
             font-weight: bold;
         }
     }
@@ -110,7 +106,6 @@ $block-padding-right: $gs-gutter;
 .blog__last-updated-container {
     @include box-sizing(border-box);
     padding-top: $gs-baseline/6;
-    color: #ffffff;
     @include fs-textSans(1);
 
     @include mq($until: rightCol) {
@@ -233,7 +228,7 @@ $block-padding-right: $gs-gutter;
     display: none;
 }
 
-.blog .ad-slot--mpu-banner-ad {
+.content--liveblog .ad-slot--mpu-banner-ad {
     padding-top: $gs-baseline;
 }
 
@@ -272,7 +267,7 @@ $block-padding-right: $gs-gutter;
 
 /* Above/Below content
    ========================================================= */
-.blog {
+.content--liveblog {
 
     .content__keywords {
         border-top: 1px dotted $c-neutral3;
@@ -282,7 +277,7 @@ $block-padding-right: $gs-gutter;
 
 /* Content styling
    ========================================================================== */
-.blog .from-content-api {
+.content--liveblog .from-content-api {
 
     .block-title {
         margin-top: ($gs-baseline/4)*-1;
@@ -725,7 +720,7 @@ $timeline-width: 14px;
 
 /* Football components
    ========================================================================== */
-.blog {
+.content--liveblog {
 
     .tabs__container--multiple {
         margin-bottom: 0;
@@ -779,7 +774,7 @@ $timeline-width: 14px;
     }
 }
 
-.blog {
+.content--liveblog {
     background-color: $c-neutral8;
 
     .content__headline {
@@ -795,7 +790,7 @@ $timeline-width: 14px;
         }
     }
 
-    &.tone-live .content__head--tonal {
+    .content__head--tonal {
         .content__labels {
             @include mq(desktop) {
                 float: left;
