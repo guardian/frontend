@@ -10,6 +10,7 @@
 }
 
 .content__main-column--audio {
+    // on average, the height of the right-hand col (stops the overflow issue)
     min-height: 185px;
 }
 
