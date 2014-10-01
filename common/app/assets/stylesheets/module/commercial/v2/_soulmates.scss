@@ -28,69 +28,12 @@
         @include fs-header(1);
         margin: $gs-baseline 0 0;
     }
-    .commercial__buy-now-button {
-        display: none;
-        border: 0;
-        color: #ffffff;
-        @include fs-headline(2, $size-only: true);
-
-        .search__submit__cta {
-            background-color: #68b8cb;
-        }
-    }
     .i-soulmates-logo {
         width: 86px;
         height: 18px;
+        
         .svg & {
             background-size: contain;
-        }
-    }    
-    @include mq(leftCol) {
-        .container__body {
-            padding-left: 0;
-        }
-        .container__title {
-            width: gs-span(2) + $gs-gutter*2.5 !important;
-            margin-right: 0;
-            float: left;
-            padding-left: 0;
-        }
-        .container__title__wrapper {
-            width: gs-span(2) + $gs-gutter*1.5;
-            margin-bottom: 0;
-            padding-top: $gs-baseline*3;
-            padding-bottom: 0;
-        }
-        .commercial__explainer {
-            position: static;
-            color: #ffffff;
-            width: gs-span(2)-$gs-gutter;
-            padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5;
-            margin-top: $gs-baseline;
-        }
-        .i-soulmates-logo {
-            .svg & {
-                width: 100px;
-                height: 21px;
-                background-size: contain;
-            }
-        }
-        .commercial__buy-now-button {
-            display: inline-block;
-            padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5;
-            position: relative;
-        }      
-    }
-    @include mq(wide) {
-        .container__title {
-            width: gs-span(3) + $gs-gutter !important;
-        }
-        .container__title__wrapper {
-            width: gs-span(3);
-            
-            .svg & {
-                background-size: cover;
-            }
         }
     }
     .lineitems {
@@ -155,6 +98,7 @@
         width: auto;
         float: none;
         margin-top: $gs-baseline;
+        
         @include mq(tablet) {
             margin-top: 0;
             float: right;
@@ -182,20 +126,66 @@
         margin-top: $gs-baseline;
         margin-right: 0;
     }
-    .commercial__cta {
-        position: static;
-        margin: $gs-baseline $gs-gutter*1.25 $gs-baseline $gs-gutter*1.5;
-        @include button-colour(transparent, #ffffff, transparent, #ffffff, #767676);
-        width: gs-span(2) - $gs-gutter;
-    }
-    @include mq(wide) {
-        .commercial__cta {
-            width: gs-span(2) + $gs-gutter;
-        }
-    }
     @include mq($until: leftCol) {
         .commercial__cta {
             display: none;
+        }
+    }
+    @include mq(leftCol) {
+        .container__body {
+            padding-left: 0;
+        }
+        .container__title {
+            width: gs-span(2) + $gs-gutter*2.5 !important;
+            margin-right: 0;
+            float: left;
+            padding-left: 0;
+        }
+        .container__title__wrapper {
+            width: gs-span(2) + $gs-gutter*1.5;
+            margin-bottom: 0;
+            padding-top: $gs-baseline*3;
+            padding-bottom: 0;
+        }
+        .commercial__explainer {
+            position: static;
+            color: #ffffff;
+            width: gs-span(2)-$gs-gutter;
+            padding: $gs-baseline $gs-gutter $gs-baseline/2 $gs-gutter*1.5;
+            margin-top: $gs-baseline;
+        }
+        .i-soulmates-logo {
+            .svg & {
+                width: 100px;
+                height: 21px;
+                background-size: contain;
+            }
+        }
+        .commercial__buy-now-button {
+            display: inline-block;
+            padding: $gs-baseline 25px $gs-baseline $gs-gutter*1.5;
+            position: relative;
+        }
+        .commercial__cta {
+            position: static;
+            margin: $gs-baseline $gs-gutter*1.25 $gs-baseline $gs-gutter*1.5;
+            @include button-colour(transparent, #ffffff, transparent, #ffffff, #767676);
+            width: gs-span(2) - $gs-gutter;
+        }   
+    }
+    @include mq(wide) {
+        .container__title {
+            width: gs-span(3) + $gs-gutter !important;
+        }
+        .container__title__wrapper {
+            width: gs-span(3);
+            
+            .svg & {
+                background-size: cover;
+            }
+        }
+        .commercial__cta {
+            width: gs-span(2) + $gs-gutter;
         }
     }
 }
