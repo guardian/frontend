@@ -365,8 +365,8 @@ $avatarSize: 44px;
 .d-comment-box__preview-body {
     position: relative;
     z-index: 2;
-    @include fs-textSans(4);
-    line-height: 20px;
+    font-family: $f-sans-serif-text;
+    @include font-size(14, 20);
     margin-bottom: $gs-baseline * 2 / 3;
 
     @include mq($until: $comment-meta-breakpoint) {
@@ -517,7 +517,6 @@ $avatarSize: 44px;
     font-weight: bold;
     line-height: 20px;
     width: auto;
-
 }
 .d-comment__action--reply {
     cursor: pointer;
