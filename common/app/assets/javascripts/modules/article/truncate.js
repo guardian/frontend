@@ -36,7 +36,7 @@ define([
 
     function hashLinkedBlockIsTruncated() {
         var id = window.location.hash.slice(1);
-        return find(truncatedBlocks, function(el) { return el.id === id; })
+        return find(truncatedBlocks, function(el) { return el.id === id; });
     }
 
     function truncate() {
