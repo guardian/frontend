@@ -3,7 +3,7 @@
     Description: Used to load update fragments of the DOM from specfied endpoint
 */
 define([
-    '../../bower_components/bean/bean',
+    'bean',
     'bonzo',
     'lodash/collections/toArray',
     'lodash/objects/assign',

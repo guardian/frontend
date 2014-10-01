@@ -1,6 +1,6 @@
 /* global videojs */
 define([
-    '../bower_components/bean/bean',
+    'bean',
     'bonzo',
     'raven',
     'lodash/functions/throttle',

@@ -50,99 +50,99 @@ module.exports = function(grunt, options) {
                     }
                 ]
             }
-        },
-        facia: {
-            options: {
-                baseUrl: 'facia/app/assets/javascripts',
-                name: 'bootstraps/facia',
-                out: options.staticTargetDir + 'javascripts/bootstraps/facia.js',
-                exclude: [
-                    '../../../static/src/javascripts/core',
-                    '../../../static/src/javascripts/bootstraps/app'
-                ]
-            }
-        },
-        identity: {
-            options: {
-                baseUrl: 'identity/app/assets/javascripts',
-                name: 'bootstraps/membership',
-                out: options.staticTargetDir + 'javascripts/bootstraps/membership.js',
-                exclude: [
-                    '../../../static/src/javascripts/core',
-                    '../../../static/src/javascripts/bootstraps/app',
-                    '../../../common/app/public/javascripts/vendor/stripe/stripe.min'
-                ]
-            }
-        },
-        ophan: {
-            options: {
-                baseUrl: 'static/src/javascripts',
-                name: 'common/bootstraps/ophan',
-                out: options.staticTargetDir + 'javascripts/bootstraps/ophan.js'
-            }
-        },
-        admin: {
-            options: {
-                baseUrl: 'admin/app/assets/javascripts',
-                name: 'bootstraps/admin',
-                out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
-                shim: {
-                    imager: {
-                        deps: ['common/components/imager.js/imager'],
-                        exports: 'Imager'
-                    },
-                    omniture: {
-                        exports: 's'
-                    }
-                }
-            }
-        },
-        video : {
-            options: {
-                baseUrl: 'static/src/javascripts',
-                name: 'bootstraps/video-player',
-                out: options.staticTargetDir + 'javascripts/bootstraps/video-player.js',
-                paths: {
-                    vast: '../../../common/app/public/javascripts/vendor/vast-client',
-                    videojs: 'components/videojs/video',
-                    videojsads: 'components/videojs-contrib-ads/videojs.ads',
-                    videojsvast: 'components/videojs-vast/videojs.vast',
-                    videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
-                    videojsplaylist: 'components/videojs-playlist-audio/videojs.playlist'
-                },
-                shim: {
-                    vast: {
-                        exports: 'DMVAST'
-                    },
-                    videojs: {
-                        exports: 'videojs'
-                    },
-                    videojsads: {
-                        deps: ['videojs']
-                    },
-                    videojsvast: {
-                         deps: ['vast', 'videojs']
-                    },
-                    videojsplaylist: {
-                        deps: ['videojs']
-                    }
-                },
-                wrapShim: true,
-                optimize: 'none',
-                generateSourceMaps: true,
-                preserveLicenseComments: false
-            }
-        },
-        dev: {
-            options: {
-                baseUrl: 'static/src/javascripts',
-                name: 'bootstraps/dev',
-                out: options.staticTargetDir + 'javascripts/bootstraps/dev.js',
-                paths: {
-                    socketio: 'components/socket.io-client/socket.io'
-                }
-            },
-            exclude: ['core','bootstraps/app']
-        }
+        }//,
+//        facia: {
+//            options: {
+//                baseUrl: 'facia/app/assets/javascripts',
+//                name: 'bootstraps/facia',
+//                out: options.staticTargetDir + 'javascripts/bootstraps/facia.js',
+//                exclude: [
+//                    '../../../static/src/javascripts/core',
+//                    '../../../static/src/javascripts/bootstraps/app'
+//                ]
+//            }
+//        },
+//        identity: {
+//            options: {
+//                baseUrl: 'identity/app/assets/javascripts',
+//                name: 'bootstraps/membership',
+//                out: options.staticTargetDir + 'javascripts/bootstraps/membership.js',
+//                exclude: [
+//                    '../../../static/src/javascripts/core',
+//                    '../../../static/src/javascripts/bootstraps/app',
+//                    '../../../common/app/public/javascripts/vendor/stripe/stripe.min'
+//                ]
+//            }
+//        },
+//        ophan: {
+//            options: {
+//                baseUrl: 'static/src/javascripts',
+//                name: 'common/bootstraps/ophan',
+//                out: options.staticTargetDir + 'javascripts/bootstraps/ophan.js'
+//            }
+//        },
+//        admin: {
+//            options: {
+//                baseUrl: 'admin/app/assets/javascripts',
+//                name: 'bootstraps/admin',
+//                out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
+//                shim: {
+//                    imager: {
+//                        deps: ['common/components/imager.js/imager'],
+//                        exports: 'Imager'
+//                    },
+//                    omniture: {
+//                        exports: 's'
+//                    }
+//                }
+//            }
+//        },
+//        video : {
+//            options: {
+//                baseUrl: 'static/src/javascripts',
+//                name: 'bootstraps/video-player',
+//                out: options.staticTargetDir + 'javascripts/bootstraps/video-player.js',
+//                paths: {
+//                    vast: '../../../common/app/public/javascripts/vendor/vast-client',
+//                    videojs: 'components/videojs/video',
+//                    videojsads: 'components/videojs-contrib-ads/videojs.ads',
+//                    videojsvast: 'components/videojs-vast/videojs.vast',
+//                    videojspersistvolume: 'components/videojs-persistvolume/videojs.persistvolume',
+//                    videojsplaylist: 'components/videojs-playlist-audio/videojs.playlist'
+//                },
+//                shim: {
+//                    vast: {
+//                        exports: 'DMVAST'
+//                    },
+//                    videojs: {
+//                        exports: 'videojs'
+//                    },
+//                    videojsads: {
+//                        deps: ['videojs']
+//                    },
+//                    videojsvast: {
+//                         deps: ['vast', 'videojs']
+//                    },
+//                    videojsplaylist: {
+//                        deps: ['videojs']
+//                    }
+//                },
+//                wrapShim: true,
+//                optimize: 'none',
+//                generateSourceMaps: true,
+//                preserveLicenseComments: false
+//            }
+//        },
+//        dev: {
+//            options: {
+//                baseUrl: 'static/src/javascripts',
+//                name: 'bootstraps/dev',
+//                out: options.staticTargetDir + 'javascripts/bootstraps/dev.js',
+//                paths: {
+//                    socketio: 'components/socket.io-client/socket.io'
+//                }
+//            },
+//            exclude: ['core','bootstraps/app']
+//        }
     };
 };

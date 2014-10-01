@@ -1,7 +1,7 @@
 define([
     'common/utils/mediator',
     'common/utils/$',
-    '../bower_components/fence/fence',
+    'fence',
     'common/modules/ui/rhc',
     'common/modules/article/truncate',
     'common/modules/article/twitter',

@@ -1,7 +1,7 @@
 define([
     'common/modules/component',
     'common/utils/$',
-    '../../../bower_components/bonzo/bonzo'
+    '../bonzo'
 ], function(
     component,
     $,

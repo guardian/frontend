@@ -1,6 +1,6 @@
 define([
     'raven',
-    '../../bower_components/bonzo/bonzo',
+    'bonzo',
     'common/utils/$',
     'common/utils/ajax',
     'common/modules/discussion/comment-count',
