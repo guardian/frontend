@@ -3,6 +3,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
+    'lodash/collections/find',
     'common/utils/config',
     'common/utils/detect',
     'common/utils/mediator',
@@ -12,6 +13,7 @@ define([
     bean,
     bonzo,
     qwery,
+    find,
     config,
     detect,
     mediator,
@@ -19,7 +21,9 @@ define([
 ) {
     var truncatedClass = 'truncated-block',
         minVisibleBlocks = detect.getBreakpoint() === 'mobile' ? 5 : 10,
-        $truncatedBlocks = bonzo(qwery('.block').slice(minVisibleBlocks));
+        blocks = qwery('.block'),
+        truncatedBlocks = blocks.slice(minVisibleBlocks),
+        $truncatedBlocks = bonzo(truncatedBlocks);
 
     function removeTruncation() {
         // Reinstate tweets and enhance them.
@@ -30,11 +34,16 @@ define([
         $('.article-elongator').addClass('u-h');
     }
 
+    function hashLinkedBlockIsTruncated() {
+        var id = window.location.hash.slice(1);
+        return find(truncatedBlocks, function(el) { return el.id === id; })
+    }
+
     function truncate() {
 
-        var numBlocks = qwery('.block').length;
+        var numBlocks = blocks.length;
 
-        if (config.page.isLiveBlog && numBlocks > minVisibleBlocks && window.location.hash === '') {
+        if (config.page.isLiveBlog && numBlocks > minVisibleBlocks && !hashLinkedBlockIsTruncated()) {
 
             var remainingBlocks = numBlocks - minVisibleBlocks;
             var viewUpdatesLabel = '';
