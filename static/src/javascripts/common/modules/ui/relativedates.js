@@ -1,7 +1,7 @@
 define([
     'common/utils/$',
     'common/utils/mediator',
-    '../../../bower_components/bonzo/bonzo'
+    'bonzo'
 ], function (
     $,
     mediator,

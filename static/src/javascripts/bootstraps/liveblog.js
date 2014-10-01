@@ -18,7 +18,7 @@ define([
     'common/modules/ui/dropdowns',
     'common/modules/ui/message',
     'common/modules/ui/notification-counter',
-    'common/bootstraps/article',
+    'bootstraps/article',
     'common/modules/ui/relativedates'
 ], function (
     bean,

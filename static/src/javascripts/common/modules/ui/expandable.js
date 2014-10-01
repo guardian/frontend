@@ -4,7 +4,7 @@
 */
 define([
     'common/utils/$',
-    '../../../bower_components/bean/bean',
+    'bean',
     'bonzo'
 ], function (
     $,

@@ -6,6 +6,7 @@ module.exports = function(grunt, options) {
                 common:       'common',
                 facia:        'facia',
                 membership:   'membership',
+                bootsraps:    'bootstraps',
                 bean:         'components/bean/bean',
                 bonzo:        'components/bonzo/bonzo',
                 EventEmitter: 'components/eventEmitter/EventEmitter',
@@ -76,7 +77,7 @@ module.exports = function(grunt, options) {
         },
         ophan: {
             options: {
-                name: 'common/bootstraps/ophan',
+                name: 'bootstraps/ophan',
                 out: options.staticTargetDir + 'javascripts/bootstraps/ophan.js'
             }
         },

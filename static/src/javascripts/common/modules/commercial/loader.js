@@ -3,7 +3,7 @@
     Description: Loads our commercial components
 */
 define([
-    '../../../bower_components/bean/bean',
+    'bean',
     'bonzo',
     'raven',
     'lodash/collections/map',

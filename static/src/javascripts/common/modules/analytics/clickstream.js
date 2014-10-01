@@ -1,5 +1,5 @@
 define([
-    '../../../bower_components/bean/bean',
+    'bean',
     'lodash/collections/map',
     'common/utils/mediator',
     'common/modules/experiments/ab'

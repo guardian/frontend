@@ -1,5 +1,5 @@
 define([
-    '../../../bower_components/bean/bean',
+    'bean',
     'bonzo',
     'common/utils/$'
 ], function(

@@ -1,5 +1,5 @@
 define([
-    '../../../bower_components/bean/bean',
+    'bean',
     'bonzo',
     'common/utils/mediator',
     'common/modules/identity/api'

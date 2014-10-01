@@ -1,7 +1,7 @@
 define([
     'common/utils/$',
     'lodash/functions/throttle',
-    '../../../bower_components/bean/bean'
+    'bean'
 ], function (
     $,
     throttle,

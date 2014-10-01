@@ -1,6 +1,6 @@
 define([
     'common/utils/$',
-    '../../../bower_components/bean/bean',
+    'bean',
     'common/utils/storage',
     'common/modules/userPrefs',
     'lodash/arrays/uniq'

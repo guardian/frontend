@@ -10,17 +10,17 @@ define([
     'common/modules/ui/fonts',
     'common/modules/commercial/user-ad-targeting',
 
-    'common/bootstraps/common',
-    'common/bootstraps/tag',
-    'common/bootstraps/section',
-    'common/bootstraps/football',
-    'common/bootstraps/article',
-    'common/bootstraps/liveblog',
-    'common/bootstraps/media',
-    'common/bootstraps/gallery',
-    'common/bootstraps/identity',
-    'common/bootstraps/profile',
-    'common/bootstraps/sport'
+    'bootstraps/common',
+    'bootstraps/tag',
+    'bootstraps/section',
+    'bootstraps/football',
+    'bootstraps/article',
+    'bootstraps/liveblog',
+    'bootstraps/media',
+    'bootstraps/gallery',
+    'bootstraps/identity',
+    'bootstraps/profile',
+    'bootstraps/sport'
 ], function (
     raven,
     qwery,

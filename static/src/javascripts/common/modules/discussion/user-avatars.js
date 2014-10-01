@@ -1,6 +1,6 @@
 define([
     'common/utils/$',
-    '../../../bower_components/bonzo/bonzo',
+    'bonzo',
     'common/modules/discussion/api'
 ], function($, bonzo, discussionApi){
 

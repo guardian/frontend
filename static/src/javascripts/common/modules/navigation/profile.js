@@ -2,7 +2,7 @@ define([
     'lodash/objects/assign',
     'common/utils/mediator',
     'common/utils/ajax',
-    '../../../bower_components/bonzo/bonzo',
+    'bonzo',
     'bean',
     'common/modules/identity/api'
 ], function(

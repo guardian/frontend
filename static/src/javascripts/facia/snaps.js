@@ -1,12 +1,12 @@
 define([
     'common/utils/$',
-    '../bower_components/bonzo/bonzo',
+    'bonzo',
     'common/utils/ajax',
     'common/utils/mediator',
     'common/utils/template',
     'common/utils/to-array',
     'common/modules/ui/relativedates',
-    'modules/ui/football-snaps'
+    'facia/football-snaps'
 ], function (
     $,
     bonzo,

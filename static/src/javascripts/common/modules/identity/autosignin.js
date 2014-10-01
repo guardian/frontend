@@ -1,6 +1,6 @@
 define([
     'common/utils/ajax',
-    '../../../bower_components/bonzo/bonzo',
+    'bonzo',
     'common/modules/identity/api',
     'common/modules/identity/facebook-authorizer',
     'common/modules/navigation/profile',

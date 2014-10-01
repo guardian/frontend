@@ -1,6 +1,6 @@
 /* global googletag: false */
 define([
-    '../../../bower_components/bean/bean',
+    'bean',
     'bonzo',
     'qwery',
     'lodash/functions/debounce',

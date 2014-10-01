@@ -1,6 +1,6 @@
 /*jshint loopfunc: true */
 define([
-    '../../../bower_components/bonzo/bonzo',
+    'bonzo',
     'qwery',
     'raven',
     'common/utils/ajax',

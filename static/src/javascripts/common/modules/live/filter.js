@@ -3,7 +3,7 @@
     Description: Filter displayed events depending on their type
 */
 define([
-    '../../../bower_components/bonzo/bonzo',
+    'bonzo',
     'bean',
     'qwery',
     'common/utils/$',

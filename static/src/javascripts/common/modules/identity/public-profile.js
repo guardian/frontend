@@ -1,6 +1,6 @@
 define([
     'common/utils/$',
-    '../../../bower_components/bonzo/bonzo',
+    'bonzo',
     'bean',
     'common/utils/config',
     'common/utils/url',

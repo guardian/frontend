@@ -1,6 +1,6 @@
 define([
     'lodash/objects/assign',
-    '../../../bower_components/bonzo/bonzo',
+    'bonzo',
     'bean'
 ], function (
     assign,

@@ -1,5 +1,5 @@
 define([
-    '../../../bower_components/bonzo/bonzo',
+    'bonzo',
     'imager',
     'lodash/collections/forEach',
     'common/utils/$',
