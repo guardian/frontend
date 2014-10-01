@@ -205,7 +205,7 @@ $avatarSize: 44px;
     clear: both;
 }
 .d-comment__inner {
-    padding-top: $gs-baseline;
+    padding-top: $gs-baseline / 2;
     position: relative;
 }
 .d-comment--top-level {
@@ -381,14 +381,19 @@ $avatarSize: 44px;
     position: relative;
     z-index: 2;
     @include fs-textSans(4);
+    line-height: 20px;
 
     @include mq($comment-meta-breakpoint) {
         margin-top: 0;
         min-height: 3.5em;
     }
 
+    br {
+        display: none;
+    }
+
     p {
-        margin-top: $gs-baseline * 1.5;
+        margin-top: $gs-baseline * 2 / 3;
 
         @include mq($comment-meta-breakpoint) {
             &:first-child {
@@ -424,7 +429,7 @@ $avatarSize: 44px;
 .d-comment__recommend {
     position: absolute;
     right: 0;
-    top: $gs-baseline;
+    top: $gs-baseline / 2;
     z-index: 1;
 
     @include mq(rightCol) {
