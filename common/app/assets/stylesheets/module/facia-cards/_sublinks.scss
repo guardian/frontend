@@ -7,6 +7,10 @@
     padding-top: $gs-baseline * .25;
     margin-top: $gs-baseline * .25;
 
+    a {
+        display: block;
+    }
+
     .fc-item__title {
         @include fs-headline(1);
         font-weight: 500;
