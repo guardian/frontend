@@ -23,8 +23,9 @@
     }
     .content__headline,
     .content__standfirst {
+        @include box-sizing(border-box);
+
         @include mq(desktop) {
-            @include box-sizing(border-box);
             float: left;
             width: 50%;
             padding-top: $gs-baseline / 6;
@@ -46,28 +47,29 @@
     &.content--advertisement-feature {
         .content__headline {
             @include mq(desktop) {
-                width: gs-span(5);
+                width: gs-span(5) + ($gs-gutter / 2);
             }
             @include mq(leftCol) {
-                width: gs-span(6);
+                width: gs-span(6) + ($gs-gutter / 2);
             }
             @include mq(wide) {
-                width: gs-span(6);
+                width: gs-span(6) + ($gs-gutter / 2);
             }
         }
         .content__standfirst {
             @include mq(tablet) {
                 float: left;
+                padding-right: $gs-gutter / 2;
                 width: gs-span(7);
             }
             @include mq(desktop) {
-                width: gs-span(5);
+                width: gs-span(5) + ($gs-gutter / 2);
             }
             @include mq(leftCol) {
-                width: gs-span(6);
+                width: gs-span(6) + ($gs-gutter / 2);
             }
             @include mq(wide) {
-                width: gs-span(8);
+                width: gs-span(8) + ($gs-gutter / 2);
             }
         }
     }

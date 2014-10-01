@@ -130,8 +130,9 @@
 
 .content--interactive {
     .submeta--top {
+        overflow: hidden;
         padding-top: $gs-baseline / 2;
-        margin-bottom: $gs-baseline;
+        margin-bottom: $gs-baseline / 2;
 
         .submeta__head {
             display: none;

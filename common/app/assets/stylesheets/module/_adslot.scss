@@ -270,7 +270,8 @@
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label,
     .ad-slot--paid-for-badge__help {
-        @include fs-textSans(3);
+        @include fs-textSans(1);
+        color: $c-neutral2;
     }
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
@@ -292,35 +293,23 @@
         display: block;
     }
     .ad-slot--paid-for-badge__help {
-        @include fs-textSans(1, $size-only: true);
         margin-top: $gs-baseline/3;
     }
 }
 .ad-slot--adbadge {
     .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__label {
+    .ad-slot--paid-for-badge__label,
+    .ad-slot--paid-for-badge__help {
         color: $c-neutral2-contrasted;
-    }
-}
-.ad-slot--spbadge {
-    .ad-slot--paid-for-badge__header,
-    .ad-slot--paid-for-badge__label {
-        color: $c-neutral2;
     }
 }
 .ad-slot--paid-for-badge--article {
     border-bottom: 1px dotted $c-neutral5;
+    min-height: 135px;
 
     @include mq(leftCol) {
         border-bottom-width: 0;
         border-top: 1px dotted $c-neutral5;
-    }
-    // magic numbers, height of the ad badge
-    &.ad-slot--spbadge {
-        min-height: 135px;
-    }
-    &.ad-slot--adbadge {
-        min-height: 155px;
     }
 }
 .ad-slot--paid-for-badge--live-blog {
@@ -329,9 +318,11 @@
     }
 }
 .ad-slot--paid-for-badge--interactive {
+    min-width: 140px;
+    min-height: 135px;
+    border-top: 1px dotted $c-neutral5;
+
     @include mq(tablet) {
-        min-width: 140px;
-        min-height: 153px;
         float: right;
         border-top: 0;
     }
