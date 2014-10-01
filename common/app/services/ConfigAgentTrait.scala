@@ -1,15 +1,16 @@
 package services
 
-import com.gu.facia.client.models.{Front, Config, CollectionConfig}
+import akka.util.Timeout
+import com.gu.facia.client.models.{CollectionConfig, Config, Front}
 import common._
+import conf.Configuration
 import fronts.FrontsApi
-import play.api.libs.json.{JsNull, Json, JsValue}
 import model.{FrontProperties, SeoDataJson}
+import play.api.libs.json.Json
+import play.api.{Application, GlobalSettings}
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import akka.util.Timeout
-import conf.Configuration
-import play.api.{Application, GlobalSettings}
 
 trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
