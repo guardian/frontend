@@ -76,7 +76,10 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     val collection: Future[Option[com.gu.facia.client.models.Collection]] =
       amazonClient.collection(id)
         .map(Option.apply)
-        .recover { case _: Throwable => None }
+        .recover { case t: Throwable =>
+          log.warn(s"Could not get Collection ID $id: $t")
+          None
+        }
 
     val curatedItems: Future[Seq[Content]] = collection.flatMap { collectionOption =>
       val items: Seq[Trail] =
