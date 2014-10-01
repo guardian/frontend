@@ -17,7 +17,9 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isSponsoredSlot = isSlot("spbadge")
 
   val isAdvertisementFeatureSlot = isSlot("adbadge")
-  
+
+  val isFoundationSupportedSlot = isSlot("fobadge")
+
   val isInlineMerchandisingSlot = isSlot("im")
 
   val targetsAdTest = isPositive("at")
@@ -55,6 +57,8 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val sponsoredTags = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag)(_.isSponsoredSlot)
 
   val advertisementFeatureTags = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag)(_.isAdvertisementFeatureSlot)
+
+  val foundationSupportedTags = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag)(_.isFoundationSupportedSlot)
 
   val inlineMerchandisingTargetedKeywords = filterTags(tag => tag.isKeywordTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
@@ -149,6 +153,8 @@ case class GuLineItem(id: Long,
   val sponsoredTags: Seq[String] = targeting.customTargetSets.flatMap(_.sponsoredTags).distinct
 
   val advertisementFeatureTags: Seq[String] = targeting.customTargetSets.flatMap(_.advertisementFeatureTags).distinct
+
+  val foundationSupportedTags: Seq[String] = targeting.customTargetSets.flatMap(_.foundationSupportedTags).distinct
 
   val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
   val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct

@@ -31,7 +31,7 @@ define([
         classes: {
             container: 'js-profile-nav',
             content: 'js-profile-info',
-            popup: 'js-profile-nav-popup'
+            popup: 'js-profile-popup'
         }
     };
 
@@ -63,7 +63,7 @@ define([
             }
 
             $popup.html(
-                '<ul class="nav-popup nav-popup__group nav-popup--profile" data-link-name="Sub Sections" data-test-id="nav-popup-profile">'+
+                '<ul class="popup popup__group popup--profile" data-link-name="Sub Sections" data-test-id="popup-profile">'+
                     this.menuListItem('Comment activity', this.config.url+'/user/id/'+ user.id)+
                     this.menuListItem('Edit profile', this.config.url+'/public/edit')+
                     this.menuListItem('Email preferences', this.config.url+'/email-prefs')+
@@ -79,7 +79,7 @@ define([
     };
 
     Profile.prototype.menuListItem = function(text, url) {
-        return  '<li class="nav-popup__item">'+
+        return  '<li class="popup__item">'+
                     '<a href="' + url + '" class="brand-bar__item--action" data-link-name="' + text + '">' + text + '</a>'+
                 '</li>';
     };

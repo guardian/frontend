@@ -8,6 +8,28 @@ object ItemKicker {
   def fromTrail(trail: Trail, config: model.Config): Option[ItemKicker] = {
     lazy val maybeTag = firstTag(trail)
 
+    def tagKicker = maybeTag map { tag =>
+      TagKicker(tag.name, tag.webUrl)
+    }
+
+    def sectionKicker = Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
+
+    if (trail.showKickerTag && maybeTag.isDefined) {
+      tagKicker
+    } else if (trail.showKickerSection) {
+      sectionKicker
+    } else if (config.showTags && maybeTag.isDefined) {
+      tagKicker
+    } else if (config.showSections) {
+      sectionKicker
+    } else if (!config.hideKickers) {
+      tonalKicker(trail)
+    } else {
+      None
+    }
+  }
+
+  private def tonalKicker(trail: Trail): Option[ItemKicker] = {
     if (trail.isBreaking) {
       Some(BreakingNewsKicker)
     } else if (trail.isLive) {
@@ -21,12 +43,6 @@ object ItemKicker {
       Some(AnalysisKicker)
     } else if (trail.isReview) {
       Some(ReviewKicker)
-    } else if (config.showTags && maybeTag.isDefined) {
-      maybeTag map { tag =>
-        TagKicker(tag.name, tag.webUrl)
-      }
-    } else if (config.showSections) {
-      Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
     } else {
       None
     }
@@ -44,3 +60,4 @@ case object ReviewKicker extends ItemKicker
 case class PodcastKicker(series: Option[Series]) extends ItemKicker
 case class TagKicker(name: String, url: String) extends ItemKicker
 case class SectionKicker(name: String, url: String) extends ItemKicker
+case class FreeHtmlKicker(body: String) extends ItemKicker

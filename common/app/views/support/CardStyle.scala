@@ -5,7 +5,11 @@ import model.Trail
 object CardStyle {
   def apply(trail: Trail): CardStyle = {
     if (trail.isLiveBlog) {
-      LiveBlog
+      if (trail.isLive) {
+        LiveBlog
+      } else {
+        DeadBlog
+      }
     } else if (trail.isPodcast) {
       Podcast
     } else if (trail.isMedia) {
@@ -27,6 +31,7 @@ object CardStyle {
 sealed trait CardStyle
 
 case object LiveBlog extends CardStyle
+case object DeadBlog extends CardStyle
 case object Feature extends CardStyle
 case object Comment extends CardStyle
 case object Podcast extends CardStyle

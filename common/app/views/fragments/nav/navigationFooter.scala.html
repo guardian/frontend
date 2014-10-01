@@ -10,7 +10,7 @@
         <div class="gs-container">
             <div class="navigation__inner" aria-hidden="true">
                 <div class="navigation__scroll">
-                    <div class="navigation__container navigation__container--second">
+                    <div class="navigation__container navigation__container--second" data-component="footer-nav">
                         @fragments.nav.topNavigation(metaData, navigation)
                     </div>
                 </div>
@@ -20,7 +20,7 @@
                     <span class="navigation__toggle-label navigation__toggle-label--close">close</span>
                 </a>
             </div>
-            <div class="js-transfuse navigation__expandable" data-transfuse-target="js-mega-nav-placeholder" data-link-name="global navigation: footer : sections">
+            <div class="js-transfuse navigation__expandable" data-component="all-footer-nav" data-transfuse-target="js-mega-nav-placeholder" data-link-name="global navigation: footer : sections">
                 @fragments.nav.globalNavigation(metaData)
             </div>
         </div>

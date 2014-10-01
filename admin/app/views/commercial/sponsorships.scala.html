@@ -1,4 +1,4 @@
-@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport)
+@(env: String, sponsoredTags: dfp.SponsorshipReport, advertisementTags: dfp.SponsorshipReport, foundationSupportedTags: dfp.SponsorshipReport)
 @import tools.DfpLink
 
 @listItem(sponsorship: dfp.Sponsorship) = {
@@ -23,9 +23,14 @@
 
 <h3>Advertisement Feature Tags</h3>
 <p>Last updated: @advertisementTags.updatedTimeStamp</p>
-
 <ol>
     @for(sponsorship <- advertisementTags.sponsorships) {@listItem(sponsorship)}
+</ol>
+
+<h3>Foundation Supported Tags</h3>
+<p>Last updated: @foundationSupportedTags.updatedTimeStamp</p>
+<ol>
+    @for(sponsorship <- foundationSupportedTags.sponsorships) {@listItem(sponsorship)}
 </ol>
 
 <h3><a name="criteria">Criteria:</a></h3>

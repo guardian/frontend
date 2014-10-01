@@ -1,10 +1,10 @@
 /* ==========================================================================
-   Nav pop-up
+   Pop-up
    ========================================================================== */
-$nav-popup-toggle-arrow-size: 4px;
-$nav-popup-anchor-arrow-size: 6px;
-$nav-popup-top: $headerHeight + $gs-baseline/2 + 3;
-$c-nav-popup-bg: #ffffff;
+$popup-toggle-arrow-size: 4px;
+$popup-anchor-arrow-size: 6px;
+$popup-top: $headerHeight + $gs-baseline/2 + 3;
+$c-popup-bg: #ffffff;
 
 // Popups align with the label, so if there's a control icon, we need to account
 // for it. The number is derived from the icon size on the control.
@@ -12,22 +12,22 @@ $c-nav-popup-bg: #ffffff;
 // use a proper icon size variabe when the icons are redrawn at mulptile sizes
 $control-offset: 36 + $gs-gutter/2;
 
-.nav-popup {
+.popup {
     @include box-sizing(border-box);
     position: absolute;
     left: 0;
-    background: $c-nav-popup-bg;
+    background: $c-popup-bg;
     margin: 0;
     padding: 0;
     list-style: none;
     @include box-shadow(0 rem(1px 1px) 0 rgba(0, 0, 0, .25));
     min-width: gs-span(2) + $gs-gutter * 3;
-    top: $nav-popup-top - 2;
+    top: $popup-top - 2;
 
     @include mq(mobileLandscape) {
         right: auto;
         bottom: auto;
-        top: $nav-popup-top;
+        top: $popup-top;
     }
 
     .brand-bar__item--has-control & {
@@ -44,12 +44,13 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
-.nav-popup__group {
+.popup__group {
+    z-index: 1;
     margin: 0;
     padding: 0 $gs-gutter/2;
 }
 
-.nav-popup__group-header {
+.popup__group-header {
     @include fs-textSans(2);
     color: $c-neutral2;
     padding: $gs-baseline/2 $gs-gutter/2;
@@ -62,39 +63,40 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
-.has-nav-popup {
+.has-popup {
     cursor: default;
     position: relative;
 }
 
-.nav-popup__toggle {
+.popup__toggle {
     position: relative;
     z-index: 11;
 
     // disclosure arrow
-    @include mq(tablet) {
-        &:after {
-            content: '';
-            display: inline-block;
-            pointer-events: none;
-            width: 0;
-            height: 0;
-            border-bottom: 0;
-            margin-top: 2px;
-            margin-bottom: 2px;
-            margin-left: 4px;
-            border-left: $nav-popup-toggle-arrow-size solid transparent;
-            border-right: $nav-popup-toggle-arrow-size solid transparent;
-            border-top: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg;
-        }
-    };
+    &:after {
+        content: '';
+        display: inline-block;
+        pointer-events: none;
+        width: 0;
+        height: 0;
+        border-bottom: 0;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        margin-left: 4px;
+        border-left: $popup-toggle-arrow-size solid transparent;
+        border-right: $popup-toggle-arrow-size solid transparent;
+        border-top: $popup-toggle-arrow-size solid $c-popup-bg;
+        @include mq($until: tablet) {
+            display: none;
+        };
+    }
 
     &.is-active,
     .is-active > & {
         @include mq(tablet) {
             &:after {
                 border-top: 0;
-                border-bottom: $nav-popup-toggle-arrow-size solid $c-nav-popup-bg;
+                border-bottom: $popup-toggle-arrow-size solid $c-popup-bg;
             }
         };
 
@@ -108,27 +110,27 @@ $control-offset: 36 + $gs-gutter/2;
             border-top: 0;
             position: absolute;
             left: 50%;
-            margin-left: 0 - $nav-popup-anchor-arrow-size;
-            border-left: $nav-popup-anchor-arrow-size solid transparent;
-            border-right: $nav-popup-anchor-arrow-size solid transparent;
-            border-bottom: $nav-popup-anchor-arrow-size solid $c-nav-popup-bg;
-            top: $nav-popup-top - $nav-popup-anchor-arrow-size - $gs-baseline/2;
+            margin-left: 0 - $popup-anchor-arrow-size;
+            border-left: $popup-anchor-arrow-size solid transparent;
+            border-right: $popup-anchor-arrow-size solid transparent;
+            border-bottom: $popup-anchor-arrow-size solid $c-popup-bg;
+            top: $popup-top - $popup-anchor-arrow-size - $gs-baseline/2;
 
             .brand-bar__item--has-control & {
                 @include mq(tablet) {
-                    margin-left: $control-offset * .5 - $nav-popup-anchor-arrow-size;
+                    margin-left: $control-offset * .5 - $popup-anchor-arrow-size;
                 };
             }
 
             .brand-bar__item--search & {
                 @include mq($until: tablet) {
-                    margin-left: 0 - $nav-popup-anchor-arrow-size;
+                    margin-left: 0 - $popup-anchor-arrow-size;
                 };
             }
 
             .brand-bar__item--right & {
                 @include mq(tablet) {
-                    margin-left: 0 - $nav-popup-anchor-arrow-size * 2;
+                    margin-left: 0 - $popup-anchor-arrow-size * 2;
                 }
             }
         }
@@ -136,7 +138,7 @@ $control-offset: 36 + $gs-gutter/2;
 }
 
 
-.nav-popup__item {
+.popup__item {
     display: block;
     border-bottom: 1px solid $c-neutral7;
 
@@ -145,7 +147,7 @@ $control-offset: 36 + $gs-gutter/2;
     };
 }
 
-.nav-popup {
+.popup {
     .brand-bar__item--action,
     .brand-bar__item--action:hover {
         display: block;
@@ -166,15 +168,15 @@ $control-offset: 36 + $gs-gutter/2;
 .brand-bar__item--profile {
     // stupid having to reset this, but :not was :not available to all in 2009
     @if ($old-ie == true) {
-        .nav-popup__toggle:before,
-        .nav-popup__toggle:after {
+        .popup__toggle:before,
+        .popup__toggle:after {
             display: none;
         }
-        &.is-signed-in .nav-popup__toggle {
+        &.is-signed-in .popup__toggle {
             display: inline-block;
         }
     } @else {
-        &:not(.is-signed-in) .nav-popup__toggle {
+        &:not(.is-signed-in) .popup__toggle {
             &:before,
             &:after {
                 display: none;
@@ -182,7 +184,7 @@ $control-offset: 36 + $gs-gutter/2;
         }
     }
 
-    .nav-popup {
+    .popup {
         @include mq(mobileLandscape) {
             left: $control-offset;
         };
@@ -190,17 +192,15 @@ $control-offset: 36 + $gs-gutter/2;
 
     .brand-bar__item--action:before {
         @include mq(mobileLandscape) {
-            margin-left: $control-offset * .5 - $nav-popup-anchor-arrow-size;
+            margin-left: $control-offset * .5 - $popup-anchor-arrow-size;
         };
     }
 }
 
-
-
 /* Search Menu
    ========================================================================== */
 
-.nav-popup--search {
+.popup--search {
     z-index: 10;
     padding: 0;
     right: 0;
@@ -209,7 +209,7 @@ $control-offset: 36 + $gs-gutter/2;
     top: $headerHeight -2 + $gs-baseline / 2;
 
     @include mq(mobileLandscape) {
-        top: $nav-popup-top;
+        top: $popup-top;
     }
 
     @include mq(tablet) {

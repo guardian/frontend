@@ -45,6 +45,7 @@ case class Collection(
   uneditable: Option[Boolean],
   showTags: Option[Boolean],
   showSections: Option[Boolean],
+  hideKickers: Option[Boolean],
   showMainVideo: Option[Boolean]
 )
 
@@ -157,6 +158,8 @@ trait UpdateActions extends Logging {
     "snapCss",
     "snapUri",
     "trailText",
+    "byline",
+    "showByline",
     "group",
     "supporting",
     "isBoosted",
@@ -166,6 +169,9 @@ trait UpdateActions extends Logging {
     "imageSrcWidth",
     "imageSrcHeight",
     "isBreaking",
+    "showKickerTag",
+    "showKickerSection",
+    "hideKickers",
     "showMainVideo"
   )
 

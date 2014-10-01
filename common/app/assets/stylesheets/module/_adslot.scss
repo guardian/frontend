@@ -10,6 +10,9 @@
         }
     }
 }
+.ad-slot--dark {
+    background-color: lighten($c-mediaBackground, 2.5%);
+}
 .ad-slot__label {
     height: $mpu-ad-label-height;
     background-color: $c-neutral8;
@@ -21,23 +24,19 @@
     @include box-sizing(border-box);
     font-family: $f-sans-serif-text;
     @include font-size(12, 20);
+
+    .ad-slot--dark & {
+        color: $c-neutral3;
+        border-top-color: $c-neutral2;
+        background-color: transparent;
+    }
 }
 
 /**
  * Banner ads
  */
 .top-banner-ad-container--mobile {
-    text-align: center;
     background-color: #f0f0f0;
-
-    .ad-slot--top-banner-ad {
-        height: 50px;
-        padding: $gs-baseline 0;
-
-        @include mq(tablet) {
-            display: none;
-        }
-    }
 }
 .top-banner-ad-container--desktop {
     background-color: $c-neutral8;
@@ -49,18 +48,6 @@
             display: block;
         }
     }
-    .ad-slot--top-banner-ad {
-        display: none;
-        min-height: 90 + ($gs-row-height/2);
-        padding-bottom: $gs-row-height/2;
-        text-align: center;
-
-        @include mq(tablet) {
-            .js-on & {
-                display: block;
-            }
-        }
-    }
     .ad-slot__label {
         /* this is the minimum width of possible ads sizes */
         width: 728px;
@@ -68,6 +55,10 @@
         border-top: 0;
         padding: 0;
         height: $gs-row-height/2;
+
+        @include mq(wide) {
+            margin: 0;
+        }
     }
     iframe {
         -webkit-transform: translateZ(0);
@@ -75,17 +66,34 @@
         @include transition(height 1s cubic-bezier(0, 0, 0, .985));
     }
 }
-.top-banner-ad-container--non-center .ad-slot--top-banner-ad {
-    @include mq(leftCol) {
-        text-align: left;
-        margin: 0 auto;
+.ad-slot--top-banner-ad {
+    text-align: center;
 
-        .ad-slot__label {
-            margin: 0;
+    .top-banner-ad-container--mobile & {
+        height: 50px;
+        padding: $gs-baseline 0;
+
+        @include mq(tablet) {
+            display: none;
         }
     }
-    @include mq(wide) {
-        .has-page-skin & {
+    .top-banner-ad-container--desktop & {
+        margin: 0 auto;
+        display: none;
+        min-height: 90 + ($gs-row-height / 2);
+        padding-bottom: $gs-row-height / 2;
+
+        @include mq(tablet) {
+            .js-on & {
+                display: block;
+            }
+        }
+        @include mq(wide) {
+            text-align: left;
+        }
+    }
+    .has-page-skin & {
+        @include mq(wide) {
             width: auto !important;
             padding-left: 0 !important;
             text-align: center;
@@ -95,25 +103,17 @@
             }
         }
     }
-}
-.top-banner-ad-container--non-center.top-banner-ad-container--facia-layout .ad-slot--top-banner-ad {
-    @include mq(leftCol) {
-        width: gs-span(14) - ($left-column + $gs-gutter);
-        padding-left: $left-column + $gs-gutter;
+    .top-banner-ad-container--facia-layout & {
+        @include mq(wide) {
+            width: gs-span(16) - ($left-column-wide + $gs-gutter);
+            padding-left: $left-column-wide + $gs-gutter;
+        }
     }
-    @include mq(wide) {
-        width: gs-span(16) - ($left-column-wide + $gs-gutter);
-        padding-left: $left-column-wide + $gs-gutter;
-    }
-}
-.top-banner-ad-container--non-center.top-banner-ad-container--article-layout .ad-slot--top-banner-ad {
-    @include mq(leftCol) {
-        max-width: gs-span(14) + ($gs-gutter*2) - ($left-column + ($gs-gutter*2));
-        padding-left: $left-column + ($gs-gutter*2);
-    }
-    @include mq(wide) {
-        max-width: gs-span(16) + ($gs-gutter*2) - ($left-column-wide + ($gs-gutter*2));
-        padding-left: $left-column-wide + ($gs-gutter*2);
+    .top-banner-ad-container--article-layout & {
+        @include mq(wide) {
+            max-width: gs-span(16) + ($gs-gutter*2) - ($left-column-wide + ($gs-gutter*2));
+            padding-left: $left-column-wide + ($gs-gutter*2);
+        }
     }
 }
 
@@ -172,14 +172,6 @@
         margin-top: $gs-baseline*2;
         margin-bottom: $gs-baseline*2;
         padding-bottom: $gs-baseline*2;
-    }
-}
-.ad-slot--gallery-inline {
-    background-color: lighten($c-mediaBackground, 2.5%);
-
-    .ad-slot__label {
-        color: $c-neutral3;
-        border-top-color: $c-neutral2;
     }
 }
 .ad-slot--liveblog-inline {
