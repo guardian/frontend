@@ -12,6 +12,8 @@ import play.api.{Application, GlobalSettings}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
+case class CollectionConfigWithId(id: String, config: CollectionConfig)
+
 trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private lazy val configAgent = AkkaAgent[Option[Config]](None)
@@ -41,10 +43,10 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     }).toSeq
   }
 
-  def getConfigForId(id: String): Option[List[(String, CollectionConfig)]] = {
+  def getConfigForId(id: String): Option[List[CollectionConfigWithId]] = {
     val config = configAgent.get()
     config.flatMap(_.fronts.get(id).map(_.collections))
-      .map(_.flatMap(collectionId => getConfig(collectionId).map(collectionConfig => collectionId -> collectionConfig)))
+      .map(_.flatMap(collectionId => getConfig(collectionId).map(collectionConfig => CollectionConfigWithId(collectionId, collectionConfig))))
   }
 
   def getConfig(id: String): Option[CollectionConfig] = configAgent.get().flatMap(_.collections.get(id))

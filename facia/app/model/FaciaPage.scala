@@ -1,14 +1,14 @@
 package model
 
-import com.gu.facia.client.models.CollectionConfig
 import common.{NavItem, Edition}
 import dfp.DfpAgent
 import play.api.libs.json.{JsString, JsValue}
+import services.CollectionConfigWithId
 
 case class FaciaPage(id: String,
                      seoData: SeoData,
                      frontProperties: FrontProperties,
-                     collections: List[(String, (CollectionConfig, Collection))]) extends MetaData with AdSuffixHandlingForFronts {
+                     collections: List[(CollectionConfigWithId, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
 
   override lazy val description: Option[String] = seoData.description
   override lazy val section: String = seoData.navSection
@@ -37,8 +37,7 @@ case class FaciaPage(id: String,
   override def sponsor = DfpAgent.getSponsor(id)
   override def hasPageSkin(edition: Edition) = DfpAgent.isPageSkinned(adUnitSuffix, edition)
 
-  //TODO: (2_2) (._.)
-  def allItems = collections.map(_._2._2).flatMap(_.items).distinct
+  def allItems = collections.map(_._2).flatMap(_.items).distinct
 
   override def openGraph: Map[String, String] = super.openGraph ++Map(
     "og:image" -> "http://static.guim.co.uk/icons/social/og/gu-logo-fallback.png") ++

@@ -11,7 +11,7 @@ import model._
 import play.api.Play.current
 import play.api.libs.concurrent.Akka
 import play.api.libs.json._
-import services.{ParseCollection, S3FrontsApi, ConfigAgent, LiveCollections}
+import services._
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
@@ -55,8 +55,8 @@ trait FrontPress extends Logging {
   }
 
   private def retrieveCollectionsById(id: String, parseCollection: ParseCollection): Future[Seq[(CollectionConfig, Collection)]] = {
-    val collectionIds: List[(String, CollectionConfig)] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
-    val collections = collectionIds.map(config => parseCollection.getCollection(config._1, config._2, Uk).map((config._2, _)))
+    val collectionIds: List[CollectionConfigWithId] = ConfigAgent.getConfigForId(id).getOrElse(Nil)
+    val collections = collectionIds.map(config => parseCollection.getCollection(config.id, config.config, Uk).map((config.config, _)))
     Future.sequence(collections)
   }
 

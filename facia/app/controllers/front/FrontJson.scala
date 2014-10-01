@@ -6,7 +6,7 @@ import scala.concurrent.Future
 import play.api.libs.json.{JsObject, JsNull, JsValue, JsString, Json}
 import common.{Logging, S3Metrics, ExecutionContexts}
 import model.FaciaPage
-import services.SecureS3Request
+import services.{CollectionConfigWithId, SecureS3Request}
 import conf.Configuration
 
 
@@ -119,10 +119,10 @@ trait FrontJson extends ExecutionContexts with Logging {
     )
   }
 
-  private def parseOutTuple(json: JsValue): List[(String, (CollectionConfig, Collection))] = {
+  private def parseOutTuple(json: JsValue): List[(CollectionConfigWithId, Collection)] = {
     (json \ "collections").as[List[Map[String, JsValue]]].flatMap { m =>
       m.map { case (id, j) =>
-        (id, (parseConfig(id, j), parseCollection(j)))
+        (CollectionConfigWithId(id, parseConfig(id, j)), parseCollection(j))
       }
     }
   }

@@ -74,7 +74,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
     frontJson.get(path).map(_.map{ faciaPage =>
       Cached(faciaPage) {
         if (request.isRss)
-          Ok(TrailsToRss(faciaPage, faciaPage.collections.map(_._2._2).flatMap(_.items).toSeq.distinctBy(_.id)))
+          Ok(TrailsToRss(faciaPage, faciaPage.collections.map(_._2).flatMap(_.items).toSeq.distinctBy(_.id)))
             .as("text/xml; charset=utf-8")
         else if (request.isJson)
           JsonFront(faciaPage)
@@ -118,7 +118,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   private def getPressedCollection(collectionId: String): Future[Option[Collection]] =
     ConfigAgent.getConfigsUsingCollectionId(collectionId).headOption.map { path =>
       frontJson.get(path).map(_.flatMap{ faciaPage =>
-        faciaPage.collections.find{ case (c, col) => c == collectionId}.map(_._2._2)
+        faciaPage.collections.find{ case (c, col) => c.id == collectionId}.map(_._2)
       })
     }.getOrElse(Future.successful(None))
 
