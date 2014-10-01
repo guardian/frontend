@@ -417,9 +417,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
-  ) ++ Seq(
-    mainPicture.flatMap(_.largestImage.flatMap(_.path.map("twitter:image:src" ->)))
-  ).flatten
+  )
 }
 
 class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
@@ -613,7 +611,7 @@ class ImageContent(content: ApiContentWithMeta) extends Content(content) {
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "photo"
-  ) ++ mainPicture.flatMap(_.largestImage.flatMap(_.path.map("twitter:image:src" ->)))
+  )
 }
 
 case class ApiContentWithMeta(delegate: ApiContent, supporting: List[Content] = Nil, metaData: Map[String, JsValue] = Map.empty)

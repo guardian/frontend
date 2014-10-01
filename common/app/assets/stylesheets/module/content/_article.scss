@@ -38,106 +38,6 @@
     }
 }
 
-
-/* Legacy classes to be refactored out (replaced by .content*)
-   ========================================================================== */
-
-.article {
-    position: relative;
-    margin-bottom: $gs-baseline*3.5;
-    @include fs-bodyCopy(2);
-}
-
-.article__inner,
-.article__main-column {
-    position: relative;
-}
-
-.article__secondary-column,
-.byline--cloned {
-    display: none;
-}
-
-.meta__body {
-    @include mq(leftCol) {
-        clear: left;
-    }
-}
-
-.article__meta-heading {
-    @include fs-header(1);
-    padding-top: ($gs-baseline/3);
-    padding-bottom: ($gs-baseline/3)*4;
-    margin-bottom: 0;
-    border-top: 1px solid $c-neutral4;
-}
-
-@include mq(tablet) {
-    .article__columning-wrapper {
-        padding-right: gs-span(1) + $gs-gutter;
-    }
-    .article__columning-wrapper .media-primary {
-        margin-right: (gs-span(1) + $gs-gutter) * -1 !important;
-    }
-}
-
-@include mq(rightCol) {
-    .article-wrapper {
-        max-width: none;
-    }
-    .article__columning-wrapper {
-        width: 100%;
-        display: table;
-        table-layout: fixed;
-        padding-right: 0;
-        position: relative;
-    }
-    .article__columning-wrapper .media-primary {
-        margin-right: 0 !important;
-    }
-    .article__main-column {
-        display: table-cell;
-        vertical-align: top;
-        max-width: gs-span(8);
-        padding-right: $gs-gutter;
-    }
-    .article__secondary-column {
-        position: relative;
-        display: table-cell;
-        z-index: 1;
-        width: $right-column;
-    }
-}
-
-@include mq(gs-span(12) + $gs-gutter * 2) {
-    .article__main-column {
-        padding-right: gs-span(1) + $gs-gutter * 2;
-    }
-}
-
-@include mq(leftCol) {
-    .article-wrapper {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
-    .article__main-column {
-        padding-left: $left-column + $gs-gutter;
-    }
-
-    .article__main-column {
-        padding-right: $gs-gutter;
-    }
-}
-
-@include mq(wide) {
-    .article__main-column {
-        padding-left: $left-column-wide + $gs-gutter;
-    }
-    .article__main-column {
-        padding-right: gs-span(1) + $gs-gutter*2;
-    }
-}
-
 .article-elongator {
     position: relative;
 
@@ -157,3 +57,4 @@
         display: none;
     }
 }
+
