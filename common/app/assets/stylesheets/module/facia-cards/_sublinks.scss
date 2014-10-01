@@ -31,3 +31,24 @@
         }
     }
 }
+
+.fc-item--has-sublinks-4 {
+    .fc-item__container {
+        @include flex-wrap(wrap);
+    }
+
+    .fc-sublinks {
+        @include flex(4, 4, 100%);
+        @include flex-display;
+        margin-top: $gs-baseline;
+    }
+
+    .fc-sublinks__item {
+        margin-right: $gs-gutter;
+        @include flex(1, 1, 25%);
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
