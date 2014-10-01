@@ -49,7 +49,8 @@ var Comments = function(mediator, options) {
 
     this.fetchData = {
         orderBy: this.options.order,
-        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10
+        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
+        maxResponses: 3
     };
 
     this.endpoint = this.options.commentId ?
@@ -369,10 +370,14 @@ Comments.prototype.showHiddenComments = function(e) {
 Comments.prototype.addMoreRepliesButtons = function (comments) {
     var self = this;
 
+    console.log("++ Add more replies ");
+
     comments = comments || this.topLevelComments;
     comments.forEach(function(elem) {
         var replies = parseInt(elem.getAttribute('data-comment-replies'), 10),
             renderedReplies = qwery(self.getClass('reply'), elem);
+
+        console.log("++ Rendered: " + renderedReplies.length + " replies " + replies );
 
         if (renderedReplies.length < replies) {
             var numHiddenReplies = replies - renderedReplies.length,
