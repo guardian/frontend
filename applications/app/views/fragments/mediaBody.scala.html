@@ -6,7 +6,7 @@
 @defining(page.media, page.media match { case _: Audio => "audio" case _ => "video" }){ case (media, mediaType) =>
 <div class="l-side-margins l-side-margins--layout-content">
     <div class="l-side-margins l-side-margins--media l-side-margins--layout-content">
-        <article class="content content--media content--media--@mediaType tone-@media.visualTone"
+        <article class="content content--media content--media--@mediaType tone-@media.visualTone @if(media.body.nonEmpty) {content--has-body}"
             itemprop="mainContentOfPage" itemscope itemtype="@media.schemaType" role="main">
 
             @fragments.headDefault(media)
@@ -79,16 +79,18 @@
                                     @fragments.standfirst(v)
                                 }
                                 case a: Audio => {
-                                    <div class="from-content-api">
-                                        @Html(a.body)
-                                    </div>
+                                    @a.body.map { b =>
+                                        <div class="from-content-api">
+                                            @Html(b)
+                                        </div>
+                                    }
                                 }
                             }
                             @fragments.contentMeta(media)
 
                             @defining(media match {
                                 case v: Video => v.standfirst.getOrElse("").length > 350
-                                case a: Audio => a.body.length > 800
+                                case a: Audio => a.body.getOrElse("").length > 800
                             }) { breakIntoLeftCol =>
                                 <div class="submeta-container @if(breakIntoLeftCol) { submeta-container--break-at-wide}">
                                     @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
@@ -112,10 +114,16 @@
                 </div>
 
                 @media match {
-                    case video: Video => {
+                    case v: Video => {
                         <div class="content__secondary-column content__secondary-column--media content__secondary-column--video hide-on-childrens-books-site"
                             aria-hidden="true">
                             <div class="js-video-components-container"></div>
+                        </div>
+                    }
+                    case a: Audio if a.body.nonEmpty => {
+                        <div class="content__secondary-column content__secondary-column--media content__secondary-column--audio hide-on-childrens-books-site"
+                            aria-hidden="true">
+                            @fragments.commercial.standardAd("right", Seq("dark"), Map("desktop" -> Seq("300,250")))
                         </div>
                     }
                     case _ => { }

@@ -95,7 +95,6 @@ trait ContentApiWrite extends ExecutionContexts with Logging {
   //TODO: These are in transition and will be removed
   def convertFields: PartialFunction[(String, JsValue), (String, JsValue)] = {
     case ("group", jsValue) => ("group", jsValue.asOpt[BigDecimal].map(JsNumber.apply).getOrElse(jsValue))
-    case ("imageAdjust", jsValue) => ("imageAdjustment", jsValue)
     case ("meta", jsValue)        => ("metadata", convertMeta(jsValue))
     case ("supporting", jsValue)  => ("supportingContent", convertSupporting(jsValue))
     case j  => j

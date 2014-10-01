@@ -143,7 +143,7 @@ define([
         },
 
         createFilter: function() {
-            new LiveFilter($('.js-blog-blocks')[0]).render($('.js-live-filter')[0]);
+            new LiveFilter($('.js-blog-blocks')[0]).ready();
             new NotificationCounter().init();
         },
 
@@ -178,6 +178,8 @@ define([
                 autoUpdate = new AutoUpdate({
                     path: getUpdatePath,
                     delay: timerDelay,
+                    backoff: 2,
+                    backoffMax: 1000 * 60 * 20,
                     attachTo: $('.js-liveblog-body')[0],
                     switches: config.switches,
                     manipulationType: 'prepend'
@@ -232,6 +234,22 @@ define([
                 60000
             );
 
+        },
+
+        truncateBlockShareIcons: function(blockShareEl) {
+            var truncated = qwery('> *', blockShareEl).slice(2);
+            bonzo(truncated).addClass('u-h');
+            $('.js-blockshare-expand', blockShareEl).removeClass('u-h');
+        },
+
+        initBlockSharing: function() {
+            bean.on(document.body, 'click', '.js-blockshare-expand', function(e) {
+                var expandButton = bonzo(e.currentTarget),
+                    container = expandButton.parent()[0];
+                $('> *', container).removeClass('u-h');
+                expandButton.addClass('u-h');
+            });
+            $.forEachElement('.block-share', modules.truncateBlockShareIcons);
         }
     };
 
@@ -242,6 +260,7 @@ define([
         modules.createAutoRefresh();
         modules.showFootballLiveBlogMessage();
         modules.keepTimestampsCurrent();
+        modules.initBlockSharing();
 
         // re-use modules from article bootstrap
         article.modules.initOpen(config);

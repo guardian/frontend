@@ -6,7 +6,7 @@ $avatarSize: 44px;
    ========================================================================== */
 
 .discussion {
-    margin-bottom: $gs-baseline*2;
+    margin-bottom: $gs-baseline * 2;
 
     @include mq(leftCol) {
         margin-left: -($left-column + $gs-gutter);
@@ -24,7 +24,7 @@ $avatarSize: 44px;
 }
 .discussion__comments__container {
     position: relative;
-    margin-bottom: $gs-baseline*3.5;
+    margin-bottom: $gs-baseline * 3.5;
 }
 .discussion__comment-count {
     color: $c-neutral3;
@@ -32,7 +32,7 @@ $avatarSize: 44px;
 .discussion__show-threaded {
     position: absolute;
     right: 0;
-    top: $gs-baseline/2;
+    top: $gs-baseline / 2;
     width: auto;
     @include fs-textSans(2);
 }
@@ -117,7 +117,7 @@ $avatarSize: 44px;
     @include box-sizing(border-box);
     display: inline-block;
     margin-bottom: -1px;
-    padding: $gs-baseline/2 $gs-gutter/2;
+    padding: $gs-baseline / 2 $gs-gutter / 2;
     color: $c-neutral1;
 }
 .d-discussion__sentiment--active {
@@ -132,8 +132,8 @@ $avatarSize: 44px;
 
 .show-more__container {
     display: block;
-    margin-bottom: ($gs-baseline/3)*2;
-    padding-top: ($gs-baseline/3)*2;
+    margin-bottom: ($gs-baseline / 3) * 2;
+    padding-top: ($gs-baseline / 3) * 2;
     text-align: center;
 
     &.show-more__container--older,
@@ -145,8 +145,8 @@ $avatarSize: 44px;
 .d-discussion__show-more {
     @include fs-textSans(4);
     position: relative;
-    padding-top: ($gs-baseline/3)*2;
-    line-height: $gs-baseline*2;
+    padding-top: ($gs-baseline / 3) * 2;
+    line-height: $gs-baseline * 2;
 
     &:hover span {
         text-decoration: underline;
@@ -159,7 +159,7 @@ $avatarSize: 44px;
     background-color: $c-newsDefault;
 }
 .d-discussion__show-more-text {
-    padding-left: $gs-gutter*2 - $gs-gutter/5;
+    padding-left: $gs-gutter * 2 - $gs-gutter / 5;
     display: inline-block;
 }
 .d-discussion__show-all-comments {
@@ -177,7 +177,7 @@ $avatarSize: 44px;
         left: 0;
     }
     .i-arrow-blue-down {
-        margin-left: ($gs-baseline/3)*2;
+        margin-left: ($gs-baseline / 3) * 2;
     }
 
     .d-discussion--partial &,
@@ -186,11 +186,11 @@ $avatarSize: 44px;
     }
 }
 .d-discussion--not-staff .d-staff-required {
-    display: none;
+    display: none !important;
 }
 .d-discussion__order-control {
     font-size: 16px;
-    margin: 2px $gs-gutter/4 0;
+    margin: 2px $gs-gutter / 4 0;
 }
 
 
@@ -216,7 +216,7 @@ $avatarSize: 44px;
 }
 .d-comment__meta,
 .d-comment-box__meta {
-    margin-bottom: ($gs-baseline/3)*2;
+    margin-bottom: ($gs-baseline / 3) * 2;
     white-space: nowrap;
 
     @include mq($comment-meta-breakpoint) {
@@ -231,7 +231,7 @@ $avatarSize: 44px;
 .d-comment-box__meta {
     position: relative;
     display: none;
-    margin-top: $gs-baseline/2;
+    margin-top: $gs-baseline / 2;
 
     @include mq($comment-meta-breakpoint) {
         display: block;
@@ -240,8 +240,8 @@ $avatarSize: 44px;
 .d-comment__avatar-wrapper,
 .d-comment-box__avatar-wrapper {
     float: left;
-    margin-right: ($gs-gutter/5)*2;
-    margin-top: $gs-baseline/3;
+    margin-right: ($gs-gutter / 5) * 2;
+    margin-top: $gs-baseline / 3;
 
     @include mq($comment-meta-breakpoint, wide) {
         float: none;
@@ -255,8 +255,8 @@ $avatarSize: 44px;
     height: $avatarSize;
 
     @include mq($comment-meta-breakpoint, wide) {
-        width: $avatarSize*1.5;
-        height: $avatarSize*1.5;
+        width: $avatarSize * 1.5;
+        height: $avatarSize * 1.5;
 
         .d-comment--response & {
             width: $avatarSize;
@@ -303,7 +303,7 @@ $avatarSize: 44px;
 }
 
 .d-comment__timestamp {
-    margin-bottom: $gs-baseline/3;
+    margin-bottom: $gs-baseline / 3;
     @include fs-textSans(1);
 
     a {
@@ -328,8 +328,8 @@ $avatarSize: 44px;
     @include border-radius(8px);
     height: 8px;
     width: 8px;
-    margin-right: $gs-gutter/4;
-    margin-top: $gs-baseline/2;
+    margin-right: $gs-gutter / 4;
+    margin-top: $gs-baseline / 2;
     background-color: $c-neutral4;
     float: left;
 }
@@ -353,20 +353,19 @@ $avatarSize: 44px;
     }
 }
 .d-comment__pick {
-    margin-bottom: $gs-baseline/6;
+    margin-bottom: $gs-baseline / 6;
     white-space: nowrap;
     @include fs-textSans(4);
     font-weight: bold;
 
     .i-gupickasterisk {
         margin-bottom: -4px;
-        margin-right: $gs-gutter/4;
+        margin-right: $gs-gutter / 4;
     }
 }
 
 .d-comment__main {
-    padding-bottom: $gs-baseline*2;
-    position: relative;
+    padding-bottom: $gs-baseline * 2;
 
     @include mq(rightCol) {
         padding-right: $gs-column-width;
@@ -389,7 +388,7 @@ $avatarSize: 44px;
     }
 
     p {
-        margin-top: $gs-baseline*1.5;
+        margin-top: $gs-baseline * 1.5;
 
         @include mq($comment-meta-breakpoint) {
             &:first-child {
@@ -400,7 +399,7 @@ $avatarSize: 44px;
 
     blockquote {
         margin: $gs-baseline $gs-gutter;
-        padding-left: $gs-gutter/2;
+        padding-left: $gs-gutter / 2;
         border-left: 3px solid transparentize($c-neutral1, .75);
     }
 }
@@ -409,7 +408,7 @@ $avatarSize: 44px;
    ======================================================= */
 
 .d-comment__comment-removed {
-    margin-top: $gs-baseline*2;
+    margin-top: $gs-baseline * 2;
     @include fs-textSans(1);
     color: $c-neutral2;
 
@@ -435,6 +434,7 @@ $avatarSize: 44px;
 }
 .d-comment__recommend-button {
     @include icon-button(recommend, 18px);
+    display: inline-block;
     background-color: $c-neutral4;
     margin-right: 2px;
     margin-bottom: -5px;
@@ -543,16 +543,17 @@ $avatarSize: 44px;
     position: absolute;
     bottom: 0;
     height: 14px;
-    padding-top: ($gs-baseline/3)*2;
-    padding-bottom: ($gs-baseline/3)*5;
-    width: 100%;
-    @include fs-textSans(1);
+    padding-top: ($gs-baseline / 3) * 2;
+    padding-bottom: ($gs-baseline / 3) * 5;
 }
 .d-comment__action {
+    @include fs-textSans(1);
     display: inline-block;
     color: $c-newsDefault;
     font-weight: bold;
     line-height: 20px;
+    width: auto;
+
 }
 .d-comment__action--reply {
     cursor: pointer;
@@ -565,26 +566,31 @@ $avatarSize: 44px;
         display: none;
     }
 }
-.d-comment__reply-button {
+.d-comment__reply-icon {
     @include icon-button(reply-white, 18px);
-    position: absolute; // override relative position of icon-button
+    margin-right: 1px;
+    display: inline-block;
     background-color: $c-newsDefault;
+    vertical-align: top;
 }
-.d-comment__action--reply-text {
-    padding-left: $gs-gutter * 1.25;
-}
+
 .d-comment__action--report {
     font-weight: normal;
     position: absolute;
-    right: $gs-baseline/3;
+    right: $gs-baseline / 3;
+    bottom: ($gs-baseline / 3) * 5;
+    .discussion__comments__top & {
+        right: $gs-gutter;
+    }
 }
 .d-comment__action-separator {
     display: inline-block;
     position: relative;
     bottom: 1px;
-    margin: 0 ($gs-gutter/5)*2;
+    margin: 0 ($gs-gutter / 5) * 2;
     @include fs-textSans(1);
     color: $c-neutral2;
+    vertical-align: bottom;
 }
 .discussion--open {
     .d-comment__reply-wrapper,
@@ -602,7 +608,9 @@ $avatarSize: 44px;
     top: 0;
     right: 0;
     z-index: 3;
-    padding: $gs-baseline/2 $gs-gutter/2;
+    width: gs-span(4);
+    color: colour(neutral-1);
+    padding: $gs-baseline / 2 $gs-gutter / 2;
     border: 2px solid $c-neutral6;
     background: #ffffff;
 }
@@ -616,7 +624,7 @@ $avatarSize: 44px;
     margin-top: $gs-baseline;
 }
 .d-report-comment__field {
-    padding: $gs-baseline/2 $gs-gutter/4;
+    padding: $gs-baseline / 2 $gs-gutter / 4;
     @include fs-textSans(3);
 }
 .d-report-comment__submit {
@@ -624,7 +632,7 @@ $avatarSize: 44px;
 }
 .d-report-comment__close {
     float: right;
-    margin-bottom: $gs-baseline/2;
+    margin-bottom: $gs-baseline / 2;
     width: auto;
 }
 
@@ -634,7 +642,7 @@ $avatarSize: 44px;
         display: block;
     }
     .d-comment__main {
-        padding-bottom: $gs-baseline*4;
+        padding-bottom: $gs-baseline * 4;
 
         &.d-comment__main-removed {
             padding-bottom: $gs-baseline;
@@ -651,28 +659,28 @@ $avatarSize: 44px;
     border-top: 1px dotted $c-neutral3;
 
     .d-comment__pick {
-        margin-bottom: $gs-baseline/2;
+        margin-bottom: $gs-baseline / 2;
     }
     .d-comment__main {
-        margin-top: $gs-baseline/3;
+        margin-top: $gs-baseline / 3;
     }
     .d-comment__content {
         margin-left: 0;
     }
     .d-comment__inner {
-        padding-top: $gs-baseline/2;
+        padding-top: $gs-baseline / 2;
     }
     .d-comment__body {
-        margin-top: $gs-baseline/3;
+        margin-top: $gs-baseline / 3;
         @include mq(tablet) {
-            margin-top: ($gs-baseline/3)*2;
+            margin-top: ($gs-baseline / 3) * 2;
         }
     }
     .d-comment__recommend {
-        top: $gs-baseline/2;
+        top: $gs-baseline / 2;
     }
     .d-comment__timestamp {
-        margin-top: $gs-baseline/3 * -1;
+        margin-top: $gs-baseline / 3 * -1;
     }
     .d-comment__meta,
     .d-comment-box__meta {
@@ -705,7 +713,7 @@ $avatarSize: 44px;
 
     @include mq(tablet) {
         .d-comment__meta {
-            height: $gs-baseline*4;
+            height: $gs-baseline * 4;
         }
         .d-comment__avatar-wrapper,
         .d-comment__timestamp {
@@ -719,7 +727,7 @@ $avatarSize: 44px;
     }
 }
 .d-discussion__error {
-    margin-top: ($gs-baseline/3)*2;
+    margin-top: ($gs-baseline / 3) * 2;
     @include fs-textSans(4);
     color: $c-error;
 
@@ -766,8 +774,8 @@ $avatarSize: 44px;
     span {
         @include icon-button(plus-white-small, 18px);
         background-color: $c-newsDefault;
-        margin-bottom: $gs-baseline/3 * -1;
-        margin-right: ($gs-gutter/5)*2;
+        margin-bottom: $gs-baseline / 3 * -1;
+        margin-right: ($gs-gutter / 5) * 2;
     }
 }
 
@@ -776,12 +784,11 @@ $avatarSize: 44px;
    ========================================================================== */
 
 .discussion__heading {
-    border-top: 1px solid $c-neutral4;
     margin-bottom: 0;
-    padding-top: $gs-baseline/3;
+    padding-top: $gs-baseline / 3;
 
     @include mq(tablet) {
-        padding-top: $gs-baseline/2;
+        padding-top: $gs-baseline / 2;
     }
 }
 .discussion__comments--top-comments {
@@ -790,11 +797,8 @@ $avatarSize: 44px;
         overflow: hidden;
     }
     .d-comment {
-        margin-bottom: ($gs-baseline/5)*2;
+        margin-bottom: ($gs-baseline / 5) * 2;
         overflow: hidden;
-    }
-    .d-comment__main {
-        padding-bottom: 0;
     }
     .d-comment__body {
         min-height: 0;
@@ -804,7 +808,7 @@ $avatarSize: 44px;
     }
     .d-comment__meta {
         position: absolute;
-        bottom: ($gs-baseline/3)*2;
+        bottom: ($gs-baseline / 3) * 2;
         width: 100%;
 
         @include mq($comment-meta-breakpoint) {
@@ -816,14 +820,14 @@ $avatarSize: 44px;
     }
     .d-comment__inner {
         min-height: 0;
-        padding-bottom: $avatarSize + 20px + ($gs-baseline/3)*4;
+        padding-bottom: $avatarSize + 20px + ($gs-baseline / 3) * 4;
 
         @include mq($comment-meta-breakpoint) {
-            padding-bottom: ($gs-baseline/3)*2;
+            padding-bottom: ($gs-baseline / 3) * 2;
         }
     }
     .d-comment__pick {
-        margin-bottom: $gs-baseline/2;
+        margin-bottom: $gs-baseline / 2;
     }
     .show-more__container--newer,
     .show-more__container--older,
@@ -832,7 +836,7 @@ $avatarSize: 44px;
     }
     .d-comment__content {
         background-color: $c-neutral7;
-        padding: $gs-baseline $gs-gutter * .8 ($gs-baseline/6) * 5;
+        padding: $gs-baseline $gs-gutter * .8 ($gs-baseline / 6) * 5;
         margin-bottom: $gs-baseline;
         position: relative;
 
@@ -906,13 +910,13 @@ $avatarSize: 44px;
 }
 .comment--speechy {
     border: 0;
-    padding: 0 0 ($gs-baseline/3)*10;
+    padding: 0 0 ($gs-baseline / 3) * 10;
 
     .comment__inner {
         @include box-sizing(border-box);
         background-color: $c-neutral7;
         display: inline-block;
-        padding: ($gs-baseline/3)*2 $gs-gutter/2 $gs-baseline;
+        padding: ($gs-baseline / 3) * 2 $gs-gutter / 2 $gs-baseline;
         max-width: $right-column;
         position: relative;
         width: 100%;
@@ -949,7 +953,7 @@ $avatarSize: 44px;
 .comments-link {
     display: block;
     float: right;
-    margin-top: -(1 + ($gs-baseline/3)*4);
+    margin-top: -(1 + ($gs-baseline / 3) * 4);
     @include fs-textSans(1, true);
 
     .i {
@@ -1011,7 +1015,7 @@ $avatarSize: 44px;
    ========================================================================== */
 
 .d-bar {
-    margin-bottom: ($gs-baseline/3)*4;
+    margin-bottom: ($gs-baseline / 3) * 4;
     @include fs-textSans(4);
     color: $c-neutral2;
 }
@@ -1019,8 +1023,8 @@ $avatarSize: 44px;
     @include box-sizing(border-box);
     border: 1px solid $c-neutral3;
     height: 50px;
-    margin: ($gs-baseline/3)*2 0;
-    padding: ($gs-baseline/3)*2 $gs-gutter/2;
+    margin: ($gs-baseline / 3) * 2 0;
+    padding: ($gs-baseline / 3) * 2 $gs-gutter / 2;
     width: 100%;
     resize: vertical;
     word-break: break-word;
@@ -1128,7 +1132,7 @@ $avatarSize: 44px;
     display: none;
 }
 .open-cta {
-    margin-top: ($gs-baseline/3)*8;
+    margin-top: ($gs-baseline / 3) * 8;
 
     .clamp-fade {
         @include simple-gradient(transparent, $c-neutral7);
@@ -1146,7 +1150,7 @@ $avatarSize: 44px;
     height: 0;
     border-right: 16px solid transparent;
     border-bottom: 16px solid $c-neutral7;
-    margin-left: $gs-gutter*2;
+    margin-left: $gs-gutter * 2;
     border-right-style: inset;
 }
 .d-comment-box__parent-comment {
@@ -1168,13 +1172,13 @@ $avatarSize: 44px;
 .d-comment-box__parent-comment-author {
     display: inline-block;
     font-weight: bold;
-    margin-bottom: $gs-baseline/2;
+    margin-bottom: $gs-baseline / 2;
 }
 .d-comment-box__parent-comment-body {
     position: relative;
 }
 .d-comment-box__parent-comment-wrapper {
-    margin-top: $gs-baseline/2;
+    margin-top: $gs-baseline / 2;
     display: none;
 }
 .d-comment-box--parent-visible {
@@ -1184,7 +1188,7 @@ $avatarSize: 44px;
 }
 
 .d-comment-box__preview-spout {
-    margin-left: $gs-gutter*10;
+    margin-left: $gs-gutter * 10;
 }
 .d-comment-box__preview-wrapper {
     display: none;
@@ -1242,7 +1246,7 @@ $avatarSize: 44px;
 }
 
 
-$sentiment-width: 56 + $gs-gutter/2;
+$sentiment-width: 56 + $gs-gutter / 2;
 
 .d-comment-box__sentiments {
     display: none;
@@ -1256,15 +1260,15 @@ $sentiment-width: 56 + $gs-gutter/2;
     }
 }
 .d-comment-box__sentiments-head {
-    margin-bottom: $gs-baseline/2;
-    margin-right: $sentiment-width*2;
+    margin-bottom: $gs-baseline / 2;
+    margin-right: $sentiment-width * 2;
     margin-top: $gs-baseline;
     @include fs-header(2);
 }
 .d-comment-box__sentiment {
     @include box-sizing(border-box);
     display: inline-block;
-    padding: $gs-baseline/6 0;
+    padding: $gs-baseline / 6 0;
     width: $sentiment-width;
     background-color: $c-neutral6;
     @include fs-textSans(4);
@@ -1297,3 +1301,8 @@ $sentiment-width: 56 + $gs-gutter/2;
 .d-discussion__pagination .pagination {
     width: 100%;
 }
+
+.discussion-wrapper {
+    border-top: 1px solid $c-neutral4;
+}
+

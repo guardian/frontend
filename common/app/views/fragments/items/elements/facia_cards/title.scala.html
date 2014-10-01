@@ -19,6 +19,14 @@
             <span class="fc-item__kicker">Analysis</span>
         }
 
+        case PodcastKicker(Some(series)) => {
+            <a href="@LinkTo(series.url)" class="fc-item__kicker">@series.name</a>
+        }
+
+        case PodcastKicker(None) => {
+            <span class="fc-item__kicker">Podcast</span>
+        }
+
         case ReviewKicker => {
             <span class="fc-item__kicker">Review</span>
         }
@@ -29,6 +37,10 @@
 
         case SectionKicker(sectionName, sectionLink) => {
             <a href="@LinkTo(sectionLink)" class="fc-item__kicker">@sectionName</a>
+        }
+
+        case FreeHtmlKicker(html) => {
+            <span class="fc-item__kicker">@Html(html)</span>
         }
     }
 

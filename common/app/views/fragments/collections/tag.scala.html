@@ -17,7 +17,7 @@
                     @if(!trail.group.isEmpty){ @* Means this is a curated container *@
                         @fragments.items.fromage(trail, baguetteCount)
                     }else{ @* Not a curated container: we fake hierarchy *@
-                        @fragments.items.fromage(trail, baguetteCount, Some("boost"))
+                        @fragments.items.fromage(trail, baguetteCount, Some(true))
                     }
                 </div>
             }

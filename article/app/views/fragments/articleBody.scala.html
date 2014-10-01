@@ -1,5 +1,6 @@
 @(model: ArticlePage)(implicit request: RequestHeader)
 @import conf.Switches._
+@import views.support.ArticleLayout.ArticleLayout
 
 @defining(model.article) { article =>
 <div class="l-side-margins l-side-margins--layout-content">
@@ -37,17 +38,19 @@
                 </div>
 
 
-                <div class="submeta-container submeta-container--break-at-leftcol">
+                <div class="submeta-container @if(!article.hasSupportingAtBottom) { submeta-container--break-at-leftcol }">
                     @if(article.keywords.filterNot(_.isSectionTag).nonEmpty) {
                         <div class="submeta" data-link-name="keywords">
                             <h2 class="submeta__head">Topics</h2>
                             @fragments.keywordList(article.keywords, tone = article.visualTone)
                         </div>
                     }
-                    <div class="submeta js-social--bottom" data-component="share">
-                        <h2 class="submeta__head hide-until-leftcol">Share this article</h2>
-                        @fragments.social(article)
-                    </div>
+                    @if(!article.tooSmallForBottomSocialButtons) {
+                        <div class="submeta js-social--bottom" data-component="share">
+                            <h2 class="submeta__head @if(!article.hasSupportingAtBottom) { hide-until-leftcol }">Share this article</h2>
+                            @fragments.social(article)
+                        </div>
+                    }
                 </div>
 
                 <div class="after-article js-after-article"></div>

@@ -135,8 +135,9 @@ trait FrontJson extends ExecutionContexts with Logging {
       href            = (json \ "href").asOpt[String],
       groups          = (json \ "groups").asOpt[List[String]].getOrElse(Nil),
       collectionType  = (json \ "type").asOpt[String],
-      showTags = (json \ "showTags").asOpt[Boolean] getOrElse false,
-      showSections = (json \ "showSections").asOpt[Boolean] getOrElse false
+      showTags        = (json \ "showTags").asOpt[Boolean] getOrElse false,
+      showSections    = (json \ "showSections").asOpt[Boolean] getOrElse false,
+      hideKickers     = (json \ "hideKickers").asOpt[Boolean] getOrElse false
     )
   }
 
@@ -147,6 +148,7 @@ trait FrontJson extends ExecutionContexts with Logging {
       FaciaPage(
         id,
         seoData     = parseSeoData(id, (json \ "seoData").asOpt[JsValue].getOrElse(JsNull)),
+        frontProperties = parseFrontProperties((json \ "frontProperties").asOpt[JsValue].getOrElse(JsNull)),
         collections = parseOutTuple(json)
       )
     )
@@ -171,6 +173,15 @@ trait FrontJson extends ExecutionContexts with Logging {
       seoDataJson.description.orElse(seoDataFromPath.description)
       )
   }
+
+  def parseFrontProperties(json: JsValue) = FrontProperties(
+    onPageDescription = (json \ "onPageDescription").asOpt[String].filter(_.nonEmpty),
+    imageUrl = (json \ "imageUrl").asOpt[String].filter(_.nonEmpty),
+    imageWidth = (json \ "imageWidth").asOpt[String].filter(_.nonEmpty),
+    imageHeight = (json \ "imageHeight").asOpt[String].filter(_.nonEmpty),
+    isImageDisplayed = (json \ "isImageDisplayed").asOpt[Boolean].getOrElse(false),
+    editorialType = (json \ "editorialType").asOpt[String].filter(_.nonEmpty)
+  )
 
 }
 

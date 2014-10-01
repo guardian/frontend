@@ -1,25 +1,29 @@
 .live-toolbar {
     width: 100%;
-    margin-bottom: $gs-baseline;
     height: $gs-row-height + $gs-baseline;
-
-    .is-live & {
-        display: table;
-    }
 
     @include mq($until: tablet) {
         font-size: .875em;
     }
-
-    @include mq(rightCol) {
-        border-top: 1px solid $c-neutral3;
-    }
 }
 
 .live-toggler-wrapper {
-    display: table-cell;
-    vertical-align: middle;
-    width: 54%;
+    float: left;
+    padding-top: 8px;
+    position: relative;
+
+    .popup__toggle.is-active:after {
+        border-top: 0;
+        border-bottom: $popup-toggle-arrow-size solid $c-neutral2;
+    }
+    .popup__toggle:after {
+        border-top: $popup-toggle-arrow-size solid $c-neutral2;
+        border-bottom: 0;
+        display: inline-block;
+    }
+    .popup {
+        top: 47px;  // Override the default top because wrapper's padding is larger than default.
+    }
 }
 .live-toggler {
     display: none;
@@ -41,41 +45,24 @@
 }
 .live-toggler__label {
     padding-left: 0;
-    padding-right: $gs-gutter/5;
     color: $c-neutral2;
-    @include fs-textSans(2);
+    display: inline-block;
+    @include font-size(get-font-size(textSans, 2));
+    @include f-textSans;
+    line-height: $gs-row-height; // this line height is compatible with the popup classes
 }
-.live-toggler__value {
-    display: block;
-    min-width: $gs-gutter*2.5;
-    padding-bottom: 2px;
-    border-right: 1px solid $c-neutral5;
-    color: $c-neutral2;
-    font-weight: bold;
-    white-space: nowrap;
-}
+.popup--live-blog {
+    @include fs-bodyHeading(1);
+    line-height: $gs-row-height;
 
-/*  Ordered results
-   ========================================================================== */
-
-.live-toggler--oldest {
-    display: none;
-
-    i {
-        @include rotate(180deg);
+    .popup__action {
+        color: $c-neutral1;
+        text-align: left;
+    }
+    .popup__action:hover {
+        text-decoration: underline;
     }
 }
-.live-toggler--latest { display: inline; }
-
-.live-filter--order-by-oldest {
-    .live-toggler--oldest {
-        display: inline;
-    }
-    .live-toggler--latest {
-        display: none;
-    }
-}
-
 
 /* Auto update toggle
    ========================================================================== */
@@ -103,5 +90,5 @@
 }
 
 .live-toggler--on .live-toggle__value {
-    background-color: $c-live;
+    background-color: $c-liveDefault;
 }

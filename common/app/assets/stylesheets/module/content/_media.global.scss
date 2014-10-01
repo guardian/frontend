@@ -13,10 +13,10 @@
     }
 
     .commentcount.tone-colour {
-        color: $c-commentAccent2;
+        color: $c-mediaDefault;
 
         &:hover {
-            color: $c-commentAccent2;
+            color: $c-mediaDefault;
         }
 
         i {
@@ -95,6 +95,17 @@
             height: auto;
         }
     }
+    .content__secondary-column--audio .ad-slot {
+        display: none;
+
+        @include mq(desktop) {
+            display: block;
+        }
+    }
+}
+// if it's audio and there's body text, we display an advert
+.content--has-body .content__main-column--audio {
+    min-height: 274px;
 }
 .content__headline:before {
     .content--media--audio & {
@@ -167,10 +178,12 @@
    ========================================================================== */
 
 .most-viewed-container--media {
-    padding-top: $gs-baseline*2;
+
+    @include mq($until: desktop) {
+        margin-top: $gs-baseline*2;
+    }
 
     @include mq(tablet) {
-        padding-top: 0;
         border-top: 1px solid $c-mediaDefault;
     }
     .most-viewed-container__header {

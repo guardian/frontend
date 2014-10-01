@@ -63,7 +63,7 @@
                                 @fragments.dropdown("Key events", Some("key-events"), false) {
                                     <ul class="timeline js-live-blog__timeline u-unstyled"></ul>
                                 }
-                                <div class="js-comment-count meta__comment-count--bottom meta__comment-count-timeline tone-colour"></div>
+                                <div class="js-comment-count comment-count--timeline tone-colour"></div>
                             </div>
                         </div>
                     }
@@ -95,8 +95,8 @@
                 }
             </div>
 
-
             <div class="content__secondary-column" aria-hidden="true">
+                <div class="mpu-container js-mpu-ad-slot"></div>
                 @if(model.related.hasStoryPackage) {
                     <aside role="complementary" class="blog__related">
                         <h3 class="blog__related__head">More on this story</h3>
@@ -107,7 +107,6 @@
                         </ul>
                     </aside>
                 }
-                <div class="mpu-container js-mpu-ad-slot"></div>
             </div>
 
         </div>

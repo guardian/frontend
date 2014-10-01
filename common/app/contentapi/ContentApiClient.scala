@@ -2,6 +2,7 @@ package contentapi
 
 import akka.actor.ActorSystem
 import com.gu.openplatform.contentapi.Api
+import common.ContentApiMetrics.ContentApiCircuitBreakerOnOpen
 import conf.Switches
 import scala.concurrent.Future
 import common._
@@ -138,6 +139,7 @@ trait CircuitBreakingContentApiClient extends ContentApiClient {
 
   circuitBreaker.onOpen({
     log.error("Reached error threshold for Content API Client circuit breaker - breaker is OPEN!")
+    ContentApiCircuitBreakerOnOpen.increment()
   })
 
   circuitBreaker.onHalfOpen({

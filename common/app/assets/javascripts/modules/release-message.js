@@ -18,6 +18,11 @@ define([
                 text: 'We’ve redesigned our gallery pages to make it easier to find and experience our best gallery content. We’d love to hear what you think.',
                 blog: 'http://next.theguardian.com/blog/gallery-redesign/',
                 survey: 'https://www.surveymonkey.com/s/guardian_galleries'
+            },
+            liveblog: {
+                text: 'We’ve redesigned our live blogs to make it easier to get the whole picture. We’d love to hear what you think.',
+                blog: 'http://next.theguardian.com/blog/liveblog-redesign/',
+                survey: 'https://www.surveymonkey.com/s/guardianliveblogs'
             }
         },
         releaseMessage = {
@@ -40,7 +45,6 @@ define([
                 new Message('video', {pinOnHide: true}).show(msg);
             },
             init: function (config) {
-
                 if (detect.getBreakpoint() !== 'mobile' &&
                         !preferences.hasOptedIntoResponsive() && config.page.contentType) {
 

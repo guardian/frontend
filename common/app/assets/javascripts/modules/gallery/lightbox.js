@@ -109,12 +109,13 @@ define([
         bean.on(this.closeBtn, 'click', this.close.bind(this));
         bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
         this.handleKeyEvents = this._handleKeyEvents.bind(this); // bound for event handler
-        this.toggleInfo = this.trigger.bind(this, 'toggle-info');
         this.resize = this.trigger.bind(this, 'resize');
-
-        this.stopPropagationOnMouseClick = function(e) {
-            if (detect.isBreakpoint({min: 'desktop'})) {
-                e.stop();
+        this.toggleInfo = function(e) {
+            var infoPanelClick =
+                bonzo(e.target).hasClass('js-gallery-lightbox-info') ||
+                $.ancestor(e.target, 'js-gallery-lightbox-info');
+            if (!infoPanelClick){
+                this.trigger('toggle-info');
             }
         }.bind(this);
 
@@ -313,7 +314,6 @@ define([
 
                 // event bindings
                 bean.on(this.$swipeContainer[0], 'click', '.js-gallery-content', this.toggleInfo);
-                bean.on(this.$contentEl[0], 'click', '.js-gallery-lightbox-info', this.stopPropagationOnMouseClick);
                 bean.on(window, 'resize', this.resize);
 
                 // meta
@@ -321,7 +321,6 @@ define([
             },
             leave: function() {
                 bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
-                bean.off(this.$contentEl[0], 'click', this.stopPropagationOnMouseClick);
                 bean.off(window, 'resize', this.resize);
             },
             events: {

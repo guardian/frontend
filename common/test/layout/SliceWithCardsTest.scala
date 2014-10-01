@@ -33,7 +33,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
   "a slice" should "consume as many items as the columns it aggregates consume" in {
     forAll { (layout: SliceLayout) =>
       SliceWithCards.fromItems(cardFixtures, layout)._2.length shouldEqual
-        NumberOfFixtures - layout.columns.map(SliceWithCards.itemsToConsume).sum
+        (0 max (NumberOfFixtures - layout.columns.map(SliceWithCards.itemsToConsume).sum))
     }
   }
 

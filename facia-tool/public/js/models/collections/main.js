@@ -3,13 +3,13 @@ define([
     'config',
     'knockout',
     'modules/vars',
+    'utils/mediator',
     'utils/fetch-settings',
     'utils/query-params',
     'utils/ammended-query-str',
     'utils/update-scrollables',
     'utils/terminate',
     'utils/human-time',
-    'utils/sanitize-html',
     'modules/list-manager',
     'modules/droppable',
     'modules/authed-ajax',
@@ -23,13 +23,13 @@ define([
     pageConfig,
     ko,
     vars,
+    mediator,
     fetchSettings,
     queryParams,
     ammendedQueryStr,
     updateScrollables,
     terminate,
     humanTime,
-    sanitizeHtml,
     listManager,
     droppable,
     authedAjax,
@@ -40,11 +40,6 @@ define([
     LatestArticles,
     newItems
 ) {
-    ko.bindingHandlers.saneHtml = {
-        update: function (element, valueAccessor) {
-            ko.utils.setHtml(element, sanitizeHtml(ko.utils.unwrapObservable(valueAccessor())));
-        }
-    };
 
     return function() {
 
@@ -168,6 +163,10 @@ define([
                 });
             }
         };
+
+        model.uiOpenElement = ko.observable();
+
+        model.uiOpenArticle = ko.observable();
 
         function getFront() {
             return queryParams().front;
@@ -331,11 +330,23 @@ define([
 
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
+
+                mediator.on('ui:open', function(element, article) {
+                    if (model.uiOpenArticle() &&
+                        model.uiOpenArticle().group &&
+                        model.uiOpenArticle().group.parentType === 'Article' &&
+                        model.uiOpenArticle() !== article) {
+                        model.uiOpenArticle().close();
+                    }
+                    model.uiOpenArticle(article);
+                    model.uiOpenElement(element);
+                });
             });
 
             listManager.init(newItems);
             droppable.init();
             copiedArticle.flush();
         };
+
     };
 });

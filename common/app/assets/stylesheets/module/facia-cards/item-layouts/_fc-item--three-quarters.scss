@@ -30,10 +30,10 @@ Three quarter item. Looks like a wide standard, a bit like this:
     }
 
     .fc-item__media-wrapper {
-        width: gs-span(4) + $gs-gutter;
+        width: gs-span(4) + $gs-gutter * 2;
 
         @include mq(desktop) {
-            width: gs-span(6) + $gs-gutter;
+            width: gs-span(6);
         }
     }
 
@@ -45,7 +45,8 @@ Three quarter item. Looks like a wide standard, a bit like this:
         }
     }
 
-    .fc-item__title {
+    .fc-item__title,
+    .fc-item__byline {
         @include mq(desktop) {
             @include fs-headline(4, true);
         }
@@ -67,7 +68,8 @@ Three quarter item. Looks like a wide standard, a bit like this:
     .fc-item__standfirst,
     .fc-item__byline {
         @include box-sizing(border-box);
-        width: gs-span(3) - $gs-gutter;
+        width: gs-span(2) + $gs-gutter;
+        padding-right: 0 !important;
 
         @include mq(desktop) {
             width: gs-span(3);
@@ -86,16 +88,24 @@ Three quarter item. Looks like a wide standard, a bit like this:
         .fc-item__header,
         .fc-item__standfirst,
         .fc-item__byline {
-            width: 100%;
+            width: gs-span(4) + $gs-gutter * 2;
 
             @include mq(desktop) {
                 width: gs-span(6) + $gs-gutter;
             }
         }
+
+        .fc-item__standfirst {
+            display: block;
+            
+            @include mq(desktop) {
+                width: gs-span(5);
+            }
+        }
     }
 
     &.fc-item--has-cutout {
-        min-height: gs-height(6);
+        min-height: gs-height(4) + $gs-baseline * 3;
     }
 
     .vjs-big-play-button > span {

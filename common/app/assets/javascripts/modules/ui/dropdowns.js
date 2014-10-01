@@ -14,17 +14,10 @@ define([
     };
     function init() {
         bean.on(document.body, 'click', s.button, function(e){
-            var $container = bonzo(ancestor(e.currentTarget, s.container));
+            var $container = bonzo($.ancestor(e.currentTarget, s.container.substring(1)));
             $container.toggleClass('dropdown--active');
             updateAria($container);
         });
-    }
-    function ancestor(el, c) {
-        if (!el.parentNode || bonzo(el.parentNode).hasClass(c.substring(1))) {
-            return el.parentNode;
-        } else {
-            ancestor(el.parentNode, c);
-        }
     }
 
     function updateAria($container) {

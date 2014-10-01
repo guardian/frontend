@@ -48,7 +48,7 @@ object Switches extends Collections {
   val CircuitBreakerSwitch = Switch("Performance", "circuit-breaker",
     "If this switch is switched on then the Content API circuit breaker will be operational",
     safeState = Off,
-    sellByDate = new LocalDate(2014, 9, 28)
+    sellByDate = new LocalDate(2014, 11, 30)
   )
 
   val ForceHttpResponseCodeSwitch = Switch("Performance", "force-response-codes",
@@ -118,6 +118,11 @@ object Switches extends Collections {
 
   val ImageServerSwitch = Switch("Performance", "image-server",
     "If this switch is on images will be served off i.guim.co.uk (dynamic image host).",
+    safeState = On, sellByDate = never
+  )
+
+  val LiveBlogCacheTimeSwitch = Switch("Performance", "live-blog-cache-time",
+    "If this switch is on the live blog cache time will be 60s, otherwise it is 5s.",
     safeState = On, sellByDate = never
   )
 
@@ -208,11 +213,6 @@ object Switches extends Collections {
   val GuBookshopFeedsSwitch = Switch("Commercial", "gu-bookshop",
     "If this switch is on, commercial components will be fed by the Guardian Bookshop feed.",
     safeState = Off, sellByDate = never)
-
-  val MagentoServiceSwitch = Switch("Commercial", "magento",
-    "If this switch is on, Guardian Bookshop components will be fed by Magento instead of Bertrams.",
-    safeState = Off, sellByDate = new LocalDate(2014, 10, 1))
-
 
   // Monitoring
 
@@ -306,7 +306,7 @@ object Switches extends Collections {
 
   val BreakingNewsSwitch = Switch("Feature", "breaking-news",
     "If this is switched on then the breaking news feed is requested and articles are displayed",
-    safeState = Off, sellByDate = new LocalDate(2014, 9, 30)
+    safeState = Off, sellByDate = new LocalDate(2014, 11, 30)
   )
 
   // actually just here to make us remove this in the future
@@ -314,10 +314,6 @@ object Switches extends Collections {
     "If switched on, the GU_SHIFT cookie will be updated when users opt into or out of Next Gen",
     safeState = On, sellByDate = new LocalDate(2014, 12, 5)
   )
-
-  val CentreTopBannerAd = Switch("Feature", "centre-top-banner-ad",
-    "Center the top banner ad, allows more ad sizes to be used at smaller breakpoints.",
-    safeState = Off, sellByDate = new LocalDate(2014, 10, 4))
 
   // A/B Tests
 
@@ -410,7 +406,6 @@ object Switches extends Collections {
     MoneysupermarketFeedsSwitch,
     LCMortgageFeedSwitch,
     GuBookshopFeedsSwitch,
-    MagentoServiceSwitch,
     ImageServerSwitch,
     FaciaToolPressSwitch,
     ShowAllArticleEmbedsSwitch,
@@ -429,8 +424,9 @@ object Switches extends Collections {
     BreakingNewsSwitch,
     MetricsSwitch,
     FootballFeedRecorderSwitch,
-    CentreTopBannerAd,
-    ForceHttpResponseCodeSwitch
+    ForceHttpResponseCodeSwitch,
+    CircuitBreakerSwitch,
+    LiveBlogCacheTimeSwitch
   )
 
   val httpSwitches: List[Switch] = List(
@@ -438,7 +434,7 @@ object Switches extends Collections {
 
   val grouped: List[(String, Seq[Switch])] = all.toList stableGroupBy { _.group }
 
-  def byName(name: String): Option[Switch] = all.find(_.name.equals(name))
+  def byName(name: String): Option[Switch] = all.find(_.name == name)
 }
 
 class SwitchBoardPlugin(app: Application) extends SwitchBoardAgent(Configuration)
