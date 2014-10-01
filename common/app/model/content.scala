@@ -204,11 +204,11 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
 
   override lazy val imageCutoutReplace: Boolean = getMeta("imageCutoutReplace")(_.asOpt[Boolean]).getOrElse(false)
 
-  override lazy val customImageCutout: Option[ImageElement] = for {
+  override lazy val customImageCutout: Option[FaciaImageElement] = for {
     src <- getMeta("imageCutoutSrc")(_.asOpt[String])
     width <- getMeta("imageCutoutSrcWidth")(_.asOpt[Int])
     height <- getMeta("imageCutoutSrcHeight")(_.asOpt[Int])
-  } yield ImageElement(src, width, height)
+  } yield FaciaImageElement(src, width, height)
 
   override lazy val showMainVideo: Boolean = getMeta("showMainVideo")(_.asOpt[Boolean]).getOrElse(false)
 
