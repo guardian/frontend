@@ -267,13 +267,9 @@
                 underDrag: state.underDrag
             }">
 
-            <a class="thumb" target="article" data-bind="attr: {href: id}">
-                <img draggable="false" data-bind="
-                    attr: {
-                        src: meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : fields.thumbnail(),
-                        title: id
-                    }"/>
-            </a>
+            <a class="thumb" target="article" data-bind="
+                style: { 'background-image': 'url(' + (meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : meta.imageCutoutReplace() && meta.imageCutoutSrc() ? meta.imageCutoutSrc() : fields.thumbnail()) +')' },
+                attr: {href: id}"></a>
 
             <div data-bind="if: state.isOpen">
                 <div class="article__overrides"

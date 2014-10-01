@@ -371,12 +371,9 @@ h1 {
     height: 45px;
     border-radius: 2px;
     background-color: #dddddd;
-}
-
-.article .thumb img {
-    width: 75px;
-    height: 45px;
-    border-radius: 2px;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    background-position-x: center;
 }
 
 .article__content {
