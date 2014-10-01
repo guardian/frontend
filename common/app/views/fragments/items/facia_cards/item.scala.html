@@ -91,14 +91,8 @@
 
                     @meta(trail)
 
-                    @if(trail.supporting.length < 4) {
-                        @sublinks(trail.supporting)
-                    }
-                </div>
-
-                @if(trail.supporting.length >= 4) {
                     @sublinks(trail.supporting)
-                }
+                </div>
                 <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
             </div>
         </div>

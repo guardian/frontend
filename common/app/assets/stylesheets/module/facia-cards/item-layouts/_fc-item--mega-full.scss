@@ -40,18 +40,16 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
     }
 
     &.fc-item--has-cutout {
-        min-height: gs-height(8);
+        // min-height: gs-height(8);
 
         .fc-item__title {
-            max-width: gs-span(8);
-        }
-    }
-
-    &.fc-item--has-sublinks-1 {
-        .fc-sublinks {
-            display: none;
+            // max-width: gs-span(8);
         }
     }
 
     @include fc-sublinks-horizontal;
+
+    &.fc-item--has-sublinks-1 .fc-sublinks {
+        display: none;
+    }
 }

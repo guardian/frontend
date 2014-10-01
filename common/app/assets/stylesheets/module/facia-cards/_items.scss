@@ -138,6 +138,10 @@
 .fc-item--full-tablet {
     @include mq(tablet) {
         @include fc-item--full;
+
+        .fc-sublinks__item:nth-child(n+5) {
+            display: none;
+        }
     }
 }
 

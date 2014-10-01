@@ -1,5 +1,6 @@
 .fc-sublinks {
-    margin-bottom: 0;
+    clear: both;
+    padding-top: $gs-baseline * .25;
 }
 
 .fc-sublinks__item {
@@ -16,6 +17,11 @@
     @include fs-headline(1);
     font-weight: 500;
     padding-top: 0;
+    margin: 0;
+
+    a {
+        color: red !important;
+    }
 
     &:before {
         display: block;
@@ -34,17 +40,38 @@
 
 @mixin fc-sublinks-horizontal {
     .fc-sublinks {
-        @include flex(4, 4, 100%);
-        @include flex-display;
-        margin-top: $gs-baseline;
+        clear: both;
+        width: 100%;
+        padding-top: $gs-baseline;
     }
 
-    .fc-sublinks__item {
-        margin-right: $gs-gutter;
-        @include flex(1, 1, 25%);
+    @if $browser-supports-flexbox {
+        .fc-sublinks {
+            @include flex-display;
+        }
 
-        &:last-child {
-            margin-right: 0;
+        .fc-sublinks__item {
+            margin-right: $gs-gutter;
+            @include flex(1, 1, 100%);
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    } @else {
+        .fc-sublinks {
+            display: table;
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .fc-sublinks__item {
+            padding-right: $gs-gutter;
+            display: table-cell;
+
+            &:last-child {
+                padding-right: 0;
+            }
         }
     }
 }

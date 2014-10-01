@@ -20,46 +20,20 @@ Full item. A 100% width version of the Three quarter item.
 
 @mixin fc-item--full {
 
-    .fc-item__container {
-        @include flex-direction(row-reverse);
-    }
-
-    .fc-item__content {
-        padding-right: $fc-item-gutter;
-    }
-
-    .fc-item__content {
-        @include flex(1, 1, 25%);
-    }
-
     .fc-item__media-wrapper {
-        @include flex(3, 3, 75%);
-    }
-
-    .fc-item__standfirst {
-        @include mq(tablet) {
-            display: block;
-        }
-    }
-
-    &.fc-item--has-no-image {
-        .fc-item__standfirst {
-            display: block;
-        }
+        @include box-sizing(border-box);
+        width: 75%;
+        float: right;
+        padding-left: $gs-gutter * .25;
     }
 
     .fc-item__header,
     .fc-item__standfirst,
-    .fc-item__byline {
+    .fc-item__byline,
+    .fc-sublinks {
         @include box-sizing(border-box);
-
-        @include mq(desktop) {
-            //Fixes IE9 box-model bug.
-            @if(not $browser-supports-flexbox) {
-                // float: left;
-                // width: gs-span(3) - $gs-gutter;
-            }
-        }
+        width: 25%;
+        padding-right: $gs-gutter * .5;
     }
 
     .fc-item__title,
@@ -76,6 +50,36 @@ Full item. A 100% width version of the Three quarter item.
 
         @include mq(desktop) {
             padding-bottom: get-line-height(headline, 5);
+        }
+    }
+
+    .fc-item__standfirst {
+        @include mq(tablet) {
+            display: block;
+        }
+    }
+
+    &.fc-item--has-no-image {
+        .fc-item__standfirst {
+            display: block;
+        }
+    }
+
+    .fc-sublinks {
+        clear: left;
+    }
+
+    &.fc-item--has-sublinks-3 {
+        .fc-item__standfirst {
+            display: none;
+        }
+    }
+
+    &.fc-item--has-sublinks-4 {
+        @include fc-sublinks-horizontal;
+
+        .fc-sublinks {
+            padding-right: 0;
         }
     }
 
@@ -102,24 +106,5 @@ Full item. A 100% width version of the Three quarter item.
                 // width: gs-span(8);
             }
         }
-    }
-
-    &.fc-item--has-sublinks-3 {
-        .fc-item__standfirst {
-            display: none;
-        }
-    }
-
-    &.fc-item--has-sublinks-4 {
-        @include fc-sublinks-horizontal;
-
-        .fc-item__container {
-            @include flex-wrap(wrap);
-        }
-    }
-
-    // hide more than 4 sublinks
-    .fc-sublinks__item:nth-child(n+5) {
-        display: none;
     }
 }
