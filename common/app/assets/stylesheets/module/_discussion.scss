@@ -255,8 +255,6 @@ $avatarSize: 44px;
     height: $avatarSize;
 
     @include mq($comment-meta-breakpoint, wide) {
-        width: $avatarSize * 1.5;
-        height: $avatarSize * 1.5;
 
         .d-comment--response & {
             width: $avatarSize;
