@@ -696,7 +696,7 @@ $avatarSize: 44px;
             display: block;
         }
         .d-comment__content {
-            margin-left: $avatarSize + $gs-baseline * 2 / 3;
+            margin-left: $avatarSize + ($gs-baseline * 2 / 3);
         }
     }
     @include mq(tablet) {
