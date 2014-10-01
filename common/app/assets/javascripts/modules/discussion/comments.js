@@ -118,9 +118,6 @@ Comments.prototype.defaultOptions = {
  */
 Comments.prototype.endpoint = '/discussion:discussionId.json';
 
-/** @type {Boolean} */
-Comments.prototype.hasHiddenComments = false;
-
 /** @type {NodeList=} */
 Comments.prototype.comments = null;
 

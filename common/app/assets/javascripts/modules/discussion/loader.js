@@ -43,16 +43,11 @@ define([
  * @param {Object} mediator
  * @param {Object=} options
  */
-var Loader = function(mediator, options) {
+var Loader = function(mediator) {
     this.mediator = mediator;
-    this.setOptions(options);
     register.begin('discussion');
 };
 Component.define(Loader);
-
-Loader.prototype.defaultOptions = {
-    switches: {}
-};
 
 /**
  * @type {Object.<string.string>}
@@ -83,9 +78,6 @@ Loader.prototype.bottomCommentBox = null;
 
 /** @type {Object.<string.*>} */
 Loader.prototype.user = null;
-
-/** @type {boolean} */
-Loader.prototype.canComment = false;
 
 /**
  * @override
@@ -329,13 +321,11 @@ Loader.prototype.renderCommentBox = function() {
     } else {
         this.commentBox = new CommentBox({
             discussionId: this.getDiscussionId(),
-            premod: this.user.privateFields.isPremoderated,
-            switches: this.options.switches
+            premod: this.user.privateFields.isPremoderated
         });
         this.commentBox.render(this.getElem('commentBox'));
 
         this.commentBox.on('post:success', this.commentPosted.bind(this));
-        this.canComment = true;
     }
 };
 

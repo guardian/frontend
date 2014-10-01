@@ -76,9 +76,6 @@ TopComments.prototype.defaultOptions = {
     sectionHeading: 'Featured Comments '
 };
 
-/** @type {Boolean} */
-TopComments.prototype.hasHiddenComments = false;
-
 /** @type {number} */
 TopComments.prototype.currentPage = 1;
 
@@ -171,13 +168,12 @@ TopComments.prototype.ready = function() {
 TopComments.prototype.bindCommentEvents = function() {
     RecommendComments.init();
 
-    if (this.user && this.user.privateFields.canPostComment) {
-        this.on('click', this.getClass('commentReply'), this.replyToComment);
-    }
+    //if (this.user && this.user.privateFields.canPostComment) {
+        //this.on('click', this.getClass('commentReply'), this.replyToComment);
+    //}
 };
 
 TopComments.prototype.truncateFeatured = function(maxHeight){
-    this.hasHiddenComments = true;
     $('.d-image-fade', this.parent).removeClass('u-h');
     $(this.getClass('showMoreFeatured'), this.elem).removeClass('u-h');
     $(this.commentsContainer).css('max-height', maxHeight + 'px');
@@ -185,7 +181,6 @@ TopComments.prototype.truncateFeatured = function(maxHeight){
 
 TopComments.prototype.showAllFeatured = function(e) {
     if (e) { e.preventDefault(); }
-    this.hasHiddenComments = false;
     $('.d-image-fade', this.parent).addClass('u-h');
     $(this.getClass('showMoreFeatured'), this.elem).addClass('u-h');
     $(this.commentsContainer).css('max-height', 'none');
