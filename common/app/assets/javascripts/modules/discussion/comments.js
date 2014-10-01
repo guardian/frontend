@@ -49,7 +49,8 @@ var Comments = function(mediator, options) {
 
     this.fetchData = {
         orderBy: this.options.order,
-        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10
+        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
+        maxResponses: 3
     };
 
     this.endpoint = this.options.commentId ?
