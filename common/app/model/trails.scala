@@ -48,4 +48,6 @@ trait FaciaFields {
   def showKickerTag: Boolean = false
   def showKickerSection: Boolean = false
   def showMainVideo: Boolean = false
+  def showBoostedHeadline: Boolean = false
+  def showQuotedHeadline: Boolean = false
 }
