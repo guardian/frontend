@@ -1,7 +1,6 @@
 package model
 
-import play.api.libs.json
-import play.api.libs.json.{JsBoolean, JsValue}
+import play.api.libs.json.JsValue
 import tracking.Omniture
 
 class IdentityPage(id: String, webTitle: String, analyticsName: String, overridenMetadata: Option[Map[String, JsValue]] = None)
@@ -10,7 +9,7 @@ class IdentityPage(id: String, webTitle: String, analyticsName: String, override
   override val hasClassicVersion: Boolean = false
 
   override def metaData: Map[String, JsValue] =
-    overridenMetadata.getOrElse(super.metaData + ("blockVideoAds" -> JsBoolean(true)))
+    overridenMetadata.getOrElse(super.metaData)
 }
 
 object IdentityPage {
