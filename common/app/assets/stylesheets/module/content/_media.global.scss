@@ -178,10 +178,12 @@
    ========================================================================== */
 
 .most-viewed-container--media {
-    padding-top: $gs-baseline*2;
+
+    @include mq($until: desktop) {
+        margin-top: $gs-baseline*2;
+    }
 
     @include mq(tablet) {
-        padding-top: 0;
         border-top: 1px solid $c-mediaDefault;
     }
     .most-viewed-container__header {
