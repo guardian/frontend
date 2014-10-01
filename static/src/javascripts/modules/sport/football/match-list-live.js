@@ -1,7 +1,7 @@
 define([
     'common/modules/component',
     'common/utils/$',
-    '../bonzo'
+    'bonzo'
 ], function(
     component,
     $,
