@@ -2,20 +2,20 @@ module.exports = function(grunt, options) {
     return {
         options: {
             paths: {
-                common:       '../../../../common/app/assets/javascripts',
-                bean:         '../../../../common/app/assets/javascripts/components/bean/bean',
-                bonzo:        '../../../../common/app/assets/javascripts/components/bonzo/bonzo',
-                EventEmitter: '../../../../common/app/assets/javascripts/components/eventEmitter/EventEmitter',
-                qwery:        '../../../../common/app/assets/javascripts/components/qwery/qwery',
-                reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/reqwest',
-                lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd',
-                imager:       '../../../../common/app/assets/javascripts/components/imager.js/container',
-                fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
-                enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
-                stripe:       '../../../../common/app/public/javascripts/vendor/stripe/stripe.min',
-                raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven',
-                fastclick:    '../../../../common/app/assets/javascripts/components/fastclick/fastclick',
-                omniture:     '../../../../common/app/public/javascripts/vendor/omniture'
+                common:       '../../../static/src/javascripts',
+                bean:         '../../../static/src/javascripts/components/bean/bean',
+                bonzo:        '../../../static/src/javascripts/components/bonzo/bonzo',
+                EventEmitter: '../../../static/src/javascripts/components/eventEmitter/EventEmitter',
+                qwery:        '../../../static/src/javascripts/components/qwery/qwery',
+                reqwest:      '../../../static/src/javascripts/components/reqwest/reqwest',
+                lodash:       '../../../static/src/javascripts/components/lodash-amd',
+                imager:       '../../../static/src/javascripts/components/imager.js/container',
+                fence:        '../../../static/src/javascripts/components/fence/fence',
+                enhancer:     '../../../static/src/javascripts/components/enhancer/enhancer',
+                stripe:       '../../../common/app/public/javascripts/vendor/stripe/stripe.min',
+                raven:        '../../../static/src/javascripts/components/raven-js/raven',
+                fastclick:    '../../../static/src/javascripts/components/fastclick/fastclick',
+                omniture:     '../../../common/app/public/javascripts/vendor/omniture'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
@@ -24,7 +24,7 @@ module.exports = function(grunt, options) {
         },
         common: {
             options: {
-                baseUrl: 'common/app/assets/javascripts',
+                baseUrl: 'static/src/javascripts',
                 dir: options.requirejsDir,
                 keepBuildDir: false,
                 shim: {
@@ -57,8 +57,8 @@ module.exports = function(grunt, options) {
                 name: 'bootstraps/facia',
                 out: options.staticTargetDir + 'javascripts/bootstraps/facia.js',
                 exclude: [
-                    '../../../../common/app/assets/javascripts/core',
-                    '../../../../common/app/assets/javascripts/bootstraps/app'
+                    '../../../../static/src/javascripts/core',
+                    '../../../../static/src/javascripts/bootstraps/app'
                 ]
             }
         },
@@ -68,15 +68,15 @@ module.exports = function(grunt, options) {
                 name: 'bootstraps/membership',
                 out: options.staticTargetDir + 'javascripts/bootstraps/membership.js',
                 exclude: [
-                    '../../../../common/app/assets/javascripts/core',
-                    '../../../../common/app/assets/javascripts/bootstraps/app',
+                    '../../../../static/src/javascripts/core',
+                    '../../../../static/src/javascripts/bootstraps/app',
                     '../../../../common/app/public/javascripts/vendor/stripe/stripe.min'
                 ]
             }
         },
         ophan: {
             options: {
-                baseUrl: 'common/app/assets/javascripts',
+                baseUrl: 'static/src/javascripts',
                 name: 'common/bootstraps/ophan',
                 out: options.staticTargetDir + 'javascripts/bootstraps/ophan.js'
             }
@@ -99,7 +99,7 @@ module.exports = function(grunt, options) {
         },
         video : {
             options: {
-                baseUrl: 'common/app/assets/javascripts',
+                baseUrl: 'static/src/javascripts',
                 name: 'bootstraps/video-player',
                 out: options.staticTargetDir + 'javascripts/bootstraps/video-player.js',
                 paths: {
@@ -135,7 +135,7 @@ module.exports = function(grunt, options) {
         },
         dev: {
             options: {
-                baseUrl: 'common/app/assets/javascripts',
+                baseUrl: 'static/src/javascripts',
                 name: 'bootstraps/dev',
                 out: options.staticTargetDir + 'javascripts/bootstraps/dev.js',
                 paths: {

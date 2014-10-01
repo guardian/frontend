@@ -203,6 +203,10 @@
     .svg .i-recommend { @extend %svg-i-recommend !optional; }
 
 
+    %svg-i-reply-blue, .svg-i-reply-blue { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+PHBhdGggZmlsbD0iIzAwNTY4OSIgZD0iTTEwLjEgNWwuOS0xIDQgNC41djFsLTQgNC41LS45LTEgMi41LTNoLTguNmwtMS0xdi0yLjVoMnYxLjVoNy42bC0yLjUtM3oiLz48L3N2Zz4=); background-position: 0 0; }
+    .svg .i-reply-blue { @extend %svg-i-reply-blue !optional; }
+
+
     %svg-i-reply-grey, .svg-i-reply-grey { background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCI+PHBhdGggZmlsbD0iI0JEQkRCRCIgZD0iTTEwLjEgNWwuOS0xIDQgNC41djFsLTQgNC41LS45LTEgMi41LTNoLTguNmwtMS0xdi0yLjVoMnYxLjVoNy42bC0yLjUtM3oiLz48L3N2Zz4=); background-position: 0 0; }
     .svg .i-reply-grey { @extend %svg-i-reply-grey !optional; }
 

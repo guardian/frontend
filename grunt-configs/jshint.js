@@ -9,7 +9,7 @@ module.exports = function(grunt, options) {
         common: {
             files: [{
                 expand: true,
-                cwd: 'common/app/assets/javascripts/',
+                cwd: 'static/src/javascripts/',
                 src: ['**/*.js', '!components/**', '!bower_components/**', '!utils/atob.js']
             }]
         },

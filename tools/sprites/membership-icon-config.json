@@ -1,7 +1,7 @@
 {
-    "src": "../../common/app/assets/images/membership/",
+    "src": "../../static/src/images/membership/",
     "imgDest": "../../static/target/images/membership",
-    "cssDest": "../../common/app/assets/stylesheets/icons/",
+    "cssDest": "../../static/src/stylesheets/icons/",
     "datasvgcss" : "_membership-icons-svg.scss",
     "urlpngcss" : "_membership-icons-sprite.scss",
     "spritepath" : "../images/membership/",
