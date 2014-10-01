@@ -92,30 +92,6 @@ object StreamUpdate {
 trait UpdateActions extends Logging {
 
   val collectionCap: Int = Configuration.facia.collectionCap
-  val itemMetaWhitelistFields: Seq[String] = Seq(
-    "headline",
-    "href",
-    "snapType",
-    "snapCss",
-    "snapUri",
-    "trailText",
-    "byline",
-    "showByline",
-    "group",
-    "supporting",
-    "isBoosted",
-    "imageHide",
-    "imageReplace",
-    "imageSrc",
-    "imageSrcWidth",
-    "imageSrcHeight",
-    "isBreaking",
-    "showKickerTag",
-    "showKickerSection",
-    "hideKickers",
-    "showMainVideo"
-  )
-
   implicit val updateListWrite = Json.writes[UpdateList]
 
   def getBlock(id: String): Option[Block] = FaciaApi.getBlock(id)
@@ -234,9 +210,6 @@ trait UpdateActions extends Logging {
 
     splitList._1 ::: (trail +: splitList._2)
   }
-
-  //TODO: Remove Whitelist
-  def itemMetaWhiteList(itemMeta: Map[String, JsValue]): Map[String, JsValue] = itemMeta.filter{case (k, v) => itemMetaWhitelistFields.contains(k)}
 
   def createBlock(id: String, identity: UserIdentity, update: UpdateList): Option[Block] = {
     if (update.live)
