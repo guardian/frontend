@@ -928,6 +928,15 @@ jQuery(function($) {
              });
             </script>
         </div>
+        
+        <h3 class="facia-container__inner test-page-subhead">Low relevance</h3>
+        <div id="dfp-ad--merchandising" class="dfp-ad--merchandising-soulmates-low ad-slot ad-slot--merchandising ad-slot--commercial-component">
+            <script>
+                $.getJSON( "/commercial/soulmates/mixed.json", function( json ) {
+                $('.dfp-ad--merchandising-soulmates-low').html(json.html);
+             });
+            </script>
+        </div>
 
 
         <h3 class="facia-container__inner test-page-subhead">High relevance</h3>
