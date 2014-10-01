@@ -48,7 +48,6 @@ trait MetaData extends Tags {
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision.take(7))),
     ("analyticsName", JsString(analyticsName)),
-    ("blockVideoAds", JsBoolean(false)),
     ("isFront", JsBoolean(isFront)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
     ("isSurging", JsString(isSurging.mkString(","))),
