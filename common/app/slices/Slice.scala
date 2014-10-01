@@ -568,8 +568,7 @@ case object TlTlMpu extends Slice {
         rows = 3,
         ItemClasses(
           mobile = "list",
-          tablet = "list-compact",
-          desktop = Some("list-media")
+          tablet = "list-compact"
         )
       ),
       MPU(
@@ -722,8 +721,7 @@ case object TTlMpu extends Slice {
         rows = 3,
         ItemClasses(
           mobile = "list",
-          tablet = "list",
-          desktop = Some("list-media")
+          tablet = "list"
         )
       ),
       MPU(
