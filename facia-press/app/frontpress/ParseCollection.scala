@@ -43,7 +43,7 @@ object Result {
   val empty: Result = Result(Nil, Nil, Nil, Nil)
 }
 
-case class TrailId(id: String) extends AnyVal
+case class TrailId(get: String) extends AnyVal
 
 trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging {
   implicit def apiContentCodec = JsonCodecs.snappyCodec[Option[ApiContent]]
@@ -105,8 +105,11 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
   }
 
   def getArticles(collectionItems: Seq[Trail], edition: Edition): Future[Seq[Content]] = {
-    val itemIds: Seq[String]  =
-      (collectionItems.map(_.id) ++ collectionItems.flatMap(retrieveSupportingLinks).map(_.id)).filterNot(Snap.isSnap)
+    val itemIds: Seq[TrailId]  =
+      (collectionItems.map(_.id) ++ collectionItems.flatMap(retrieveSupportingLinks).map(_.id))
+        .map(TrailId)
+        .filterNot(t => Snap.isSnap(t.get))
+
     batchGetContentApiItems(itemIds, edition) map { items =>
       collectionItems flatMap { collectionItem =>
         val supporting: List[Content] = retrieveSupportingLinks(collectionItem).flatMap({ collectionItem =>
@@ -118,7 +121,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
               collectionItem.meta
             ))
           } else {
-            items.get(collectionItem.id) map { item =>
+            items.get(TrailId(collectionItem.id)) map { item =>
               Content(
                 item,
                 Nil,
@@ -136,7 +139,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
             collectionItem.meta
           ))
         } else {
-          items.get(collectionItem.id) map { item =>
+          items.get(TrailId(collectionItem.id)) map { item =>
             validateContent(Content(
               item,
               supporting,
@@ -148,8 +151,8 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }
   }
 
-  private def batchGetContentApiItems(collectionItems: Seq[String],
-                                      edition: Edition): Future[Map[String, ApiContent]] = {
+  private def batchGetContentApiItems(collectionItems: Seq[TrailId],
+                                      edition: Edition): Future[Map[TrailId, ApiContent]] = {
     Futures.batchedTraverse(collectionItems, Configuration.faciatool.frontPressItemBatchSize)({ collectionItem =>
       getContentApiItemFromCollectionItem(collectionItem, edition) map { maybeItem =>
         maybeItem.map(collectionItem -> _)
@@ -157,9 +160,9 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }).map(_.flatten.toMap)
   }
 
-  private def getContentApiItemFromCollectionItem(collectionItem: String,
+  private def getContentApiItemFromCollectionItem(collectionItem: TrailId,
                                                   edition: Edition): Future[Option[ApiContent]] = {
-    lazy val response = client.item(collectionItem, edition).showFields(showFieldsWithBodyQuery)
+    lazy val response = client.item(collectionItem.get, edition).showFields(showFieldsWithBodyQuery)
       .response
       .map(Option.apply)
       .recover {
@@ -186,7 +189,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
     }.map(_.flatMap(_.content))
 
     if (FaciaToolCachedContentApiSwitch.isSwitchedOn) {
-      MemcachedFallback.withMemcachedFallBack(collectionItem, cacheDuration)(response)
+      MemcachedFallback.withMemcachedFallBack(collectionItem.get, cacheDuration)(response)
     }
     else {
       response
