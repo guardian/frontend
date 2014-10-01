@@ -171,10 +171,16 @@ define([
                     type: 'boolean'
                 },
                 {
+                    key: 'imageCutoutAvailable',
+                    label: 'has a contributor image',
+                    type: 'boolean'
+                },
+                {
                     key: 'imageCutoutReplace',
                     editable: true,
                     singleton: 'images',
                     label: 'cutout image',
+                    displayIf: 'imageCutoutSrc',
                     type: 'boolean'
                 },
                 {
@@ -430,7 +436,8 @@ define([
         };
 
         Article.prototype.populate = function(opts, validate) {
-            var missingProps;
+            var missingProps,
+                imageCutoutFromCapi;
 
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
@@ -453,11 +460,18 @@ define([
                 }
             }
 
+            imageCutoutFromCapi = contributorImage(opts);
+
+            if (imageCutoutFromCapi) {
+                this.meta.imageCutoutAvailable(true);
+                this.meta.imageCutoutSrc(this.meta.imageCutoutSrc() || imageCutoutFromCapi);
+            }
+
             this.meta.hasMainVideo(mainMediaType(opts) === 'video');
 
             this.meta.isSnap(!!snap.validateId(this.id()));
 
-            if(!this.uneditable) {
+            if (!this.uneditable) {
                 this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
             }
 
@@ -590,8 +604,6 @@ define([
         };
 
         function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
-            var self = this;
-
             if (imageSrc()) {
                 validateImageSrc(imageSrc(), opts)
                     .done(function(width, height) {
@@ -612,10 +624,17 @@ define([
         };
 
         function mainMediaType(contentApiArticle) {
-            var mainElement = _.findWhere(contentApiArticle.elements || [], {
+            var mainElement = _.findWhere(contentApiArticle.elements, {
                 relation: 'main'
             });
             return mainElement && mainElement.type;
+        }
+
+        function contributorImage(contentApiArticle) {
+            var contributor = _.findWhere(contentApiArticle.tags, {
+                type: 'contributor'
+            });
+            return contributor && contributor.bylineLargeImageUrl;
         }
 
         function mod(n, m) {
