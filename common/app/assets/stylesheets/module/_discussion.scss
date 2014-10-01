@@ -134,28 +134,9 @@ $avatarSize: 44px;
     display: inline-block;
 }
 .d-discussion__show-all-comments {
-    display: none;
-    position: relative;
-    padding-left: 55px;
-    @include fs-textSans(4);
-    font-weight: bold;
-    height: 40px;
-    line-height: 40px;
-
-    .i-show-all-comments {
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-    .i-arrow-blue-down {
-        margin-left: ($gs-baseline / 3) * 2;
-    }
-
-    .d-discussion--partial &,
-    .d-discussion--shut & {
-        display: inline-block;
-    }
+    margin-top: $gs-baseline;
 }
+
 .d-discussion--not-staff .d-staff-required {
     display: none !important;
 }
