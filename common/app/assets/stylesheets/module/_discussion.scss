@@ -199,7 +199,7 @@ $avatarSize: 44px;
    ========================================================================== */
 
 .d-comment {
-    margin: 1px 0 0;
+    margin: 0;
     padding: 0;
     display: block;
     clear: both;
@@ -216,7 +216,6 @@ $avatarSize: 44px;
 }
 .d-comment__meta,
 .d-comment-box__meta {
-    margin-bottom: ($gs-baseline / 3) * 2;
     white-space: nowrap;
 
     @include mq($comment-meta-breakpoint) {
@@ -253,15 +252,8 @@ $avatarSize: 44px;
     overflow: hidden;
     width: $avatarSize;
     height: $avatarSize;
-
-    @include mq($comment-meta-breakpoint, wide) {
-
-        .d-comment--response & {
-            width: $avatarSize;
-            height: $avatarSize;
-        }
-    }
 }
+
 .d-comment__meta-text,
 .d-comment-box__meta-text {
     padding-right: 50px;
@@ -363,7 +355,7 @@ $avatarSize: 44px;
 }
 
 .d-comment__main {
-    padding-bottom: $gs-baseline * 2;
+    padding-bottom: $gs-baseline * 3;
 
     @include mq(rightCol) {
         padding-right: $gs-column-width;
@@ -375,15 +367,14 @@ $avatarSize: 44px;
 }
 .d-comment__body,
 .d-comment-box__preview-body {
-    min-height: 2.5em;
     position: relative;
     z-index: 2;
     @include fs-textSans(4);
     line-height: 20px;
+    margin-bottom: $gs-baseline * 2 / 3;
 
-    @include mq($comment-meta-breakpoint) {
-        margin-top: 0;
-        min-height: 3.5em;
+    @include mq($until: $comment-meta-breakpoint) {
+        clear: both;
     }
 
     br {
@@ -536,10 +527,7 @@ $avatarSize: 44px;
 
 .d-comment__actions {
     position: absolute;
-    bottom: 0;
-    height: 14px;
-    padding-top: ($gs-baseline / 3) * 2;
-    padding-bottom: ($gs-baseline / 3) * 5;
+    bottom: $gs-baseline;
 }
 .d-comment__action {
     @include fs-textSans(1);
@@ -573,7 +561,7 @@ $avatarSize: 44px;
     font-weight: normal;
     position: absolute;
     right: $gs-baseline / 3;
-    bottom: ($gs-baseline / 3) * 5;
+    bottom: $gs-baseline;
 
     a {
         color: colour(neutral-2);
@@ -647,7 +635,7 @@ $avatarSize: 44px;
         display: block;
     }
     .d-comment__main {
-        padding-bottom: $gs-baseline * 4;
+        padding-bottom: $gs-baseline * 3;
 
         &.d-comment__main-removed {
             padding-bottom: $gs-baseline;
@@ -668,9 +656,6 @@ $avatarSize: 44px;
     }
     .d-comment__main {
         margin-top: $gs-baseline / 3;
-    }
-    .d-comment__content {
-        margin-left: 0;
     }
     .d-comment__inner {
         padding-top: $gs-baseline / 2;
@@ -723,6 +708,9 @@ $avatarSize: 44px;
         .d-comment__avatar-wrapper,
         .d-comment__timestamp {
             display: block;
+        }
+        .d-comment__content {
+            margin-left: $avatarSize + $gs-baseline * 2 / 3;
         }
     }
     @include mq(tablet) {
