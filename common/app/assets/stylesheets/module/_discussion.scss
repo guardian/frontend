@@ -529,6 +529,12 @@ $avatarSize: 44px;
     .d-discussion--sentimental & {
         display: none;
     }
+
+    .i {
+        margin-top: -1px;
+        vertical-align: middle;
+        margin-right: 2px;
+    }
 }
 .d-comment__reply-icon {
     @include icon-button(reply-white, 18px);
