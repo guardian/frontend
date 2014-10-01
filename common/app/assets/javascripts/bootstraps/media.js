@@ -308,6 +308,8 @@ define([
 
                     var mediaId = $el.attr('data-media-id'),
                         blockVideoAds = $el.attr('data-block-video-ads') === 'true',
+                        showEndSlate = $el.attr('data-show-end-slate') === 'true',
+                        endSlateUri = $el.attr('data-end-slate'),
                         vjs = modules.createVideoObject(el, {
                             controls: true,
                             autoplay: false,
@@ -358,11 +360,8 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if (
-                                    $el.attr('data-show-end-slate') === 'true' &&
-                                    detect.isBreakpoint({ min: 'desktop' })
-                                ) {
-                                    modules.initEndSlate(player, $el.attr('data-end-slate'));
+                                if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
+                                    modules.initEndSlate(player, endSlateUri);
                                 }
                             } else {
                                 vjs.playlist({
