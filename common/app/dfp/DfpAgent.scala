@@ -63,11 +63,11 @@ trait DfpAgent {
       (tagToAdvertisementFeatureSponsorsMap(tagId).size > 1)
   }
 
-  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = getKeywordTags(tags) exists (tag => isAdvertisementFeature(tag.id))
+  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isAdvertisementFeature(tag.id))
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
 
-  def isFoundationSupported(tags: Seq[Tag]): Boolean = getKeywordTags(tags) exists (tag => isFoundationSupported(tag.id))
+  def isFoundationSupported(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isFoundationSupported(tag.id))
   def isFoundationSupported(tagId: String): Boolean = foundationSupported exists (_.hasTag(tagId))
   def isFoundationSupported(config: Config): Boolean = isSponsoredContainer(config, isFoundationSupported)
 
