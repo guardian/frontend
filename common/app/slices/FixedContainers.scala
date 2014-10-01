@@ -5,7 +5,7 @@ import model.Content
 object TagContainers {
   import ContainerDefinition.{ofSlices => slices}
 
-  val contributorTagPage = slices(
+  val allTagPage = slices(
     TTT,
     TlTlTl
   )
