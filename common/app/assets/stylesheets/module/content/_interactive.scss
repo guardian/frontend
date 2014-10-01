@@ -23,7 +23,7 @@
     }
     .content__headline,
     .content__standfirst {
-        @include mq(leftCol) {
+        @include mq(desktop) {
             @include box-sizing(border-box);
             float: left;
             width: 50%;
@@ -34,16 +34,41 @@
     }
     .content__headline {
         @include mq(desktop) {
-            padding-bottom: $gs-baseline * 2;
-        }
-        @include mq(leftCol) {
             padding-right: $gs-gutter / 2;
-            padding-bottom: 0;
         }
     }
     .content__standfirst {
-        @include mq(leftCol) {
+        @include mq(desktop) {
             padding-left: $gs-gutter / 2;
+        }
+    }
+    &.content--sponsored,
+    &.content--advertisement-feature {
+        .content__headline {
+            @include mq(desktop) {
+                width: gs-span(5);
+            }
+            @include mq(leftCol) {
+                width: gs-span(6);
+            }
+            @include mq(wide) {
+                width: gs-span(6);
+            }
+        }
+        .content__standfirst {
+            @include mq(tablet) {
+                float: left;
+                width: gs-span(7);
+            }
+            @include mq(desktop) {
+                width: gs-span(5);
+            }
+            @include mq(leftCol) {
+                width: gs-span(6);
+            }
+            @include mq(wide) {
+                width: gs-span(8);
+            }
         }
     }
     .content__meta-container {

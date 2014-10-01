@@ -296,23 +296,10 @@
         margin-top: $gs-baseline/3;
     }
 }
-.ad-slot--adbadge,
-.ad-slot--spbadge {
-    @include mq(mobile, $until: leftCol) {
-        &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            margin-top: get-line-height(data, 3)*-1;
-        }
-    }
-}
 .ad-slot--adbadge {
     .ad-slot--paid-for-badge__header,
     .ad-slot--paid-for-badge__label {
         color: $c-neutral2-contrasted;
-    }
-    @include mq(mobile, $until: leftCol) {
-        .ad-slot--commercial-component &.ad-slot--paid-for-badge--front .ad-slot--paid-for-badge__link {
-            margin-top: get-line-height(data, 3)*-2;
-        }
     }
 }
 .ad-slot--spbadge {
@@ -341,16 +328,20 @@
         padding-top: $gs-baseline*2;
     }
 }
+.ad-slot--paid-for-badge--interactive {
+    @include mq(tablet) {
+        min-width: 140px;
+        min-height: 153px;
+        float: right;
+        border-top: 0;
+    }
+}
 .ad-slot--paid-for-badge--front {
     @include clearfix;
     position: relative;
     min-height: 90px;
     z-index: auto;
 
-    .ad-slot--paid-for-badge__link {
-        position: relative;
-        float: right;
-    }
     @include mq(tablet) {
         margin-left: 50%;
         padding-top: 0;
@@ -359,9 +350,21 @@
     @include mq(desktop) {
         margin-left: 62%;
     }
-    @include mq(tablet, $until: leftCol) {
-        .container--has-toggle & {
+    .container--has-toggle & {
+        @include mq(tablet, $until: leftCol) {
             margin-right: gs-span(1);
+        }
+    }
+    .ad-slot--paid-for-badge__link {
+        position: relative;
+        float: right;
+
+        @include mq(mobile, $until: leftCol) {
+            margin-top: get-line-height(data, 3)*-1;
+
+            .ad-slot--commercial-component & {
+                margin-top: get-line-height(data, 3)*-2;
+            }
         }
     }
 
