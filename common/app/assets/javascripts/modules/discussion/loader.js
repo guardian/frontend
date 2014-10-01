@@ -2,6 +2,7 @@ define([
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/_',
     'bonzo',
     'qwery',
     'bean',
@@ -18,6 +19,7 @@ define([
     $,
     ajax,
     config,
+    _,
     bonzo,
     qwery,
     bean,
@@ -90,28 +92,51 @@ Loader.prototype.user = null;
  */
 Loader.prototype.ready = function() {
     var self = this,
-        topCommentsElem = this.getElem('topComments');
+        topCommentsElem = this.getElem('topComments'),
+        commentsContainer = this.getElem('commentsContainer'),
+        commentsElem = this.getElem('comments'),
+        commentId = this.getCommentIdFromHash();
 
-    this.topLoadingElem = bonzo.create('<div class="preload-msg">Loading comments… <a href="/discussion'+ this.getDiscussionId() +'" class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>')[0];
-    bonzo(this.topLoadingElem).insertAfter(topCommentsElem);
+    if (commentId) {
+        this.mediator.emit('discussion:seen:comment-permalink');
+    }
 
-    this.on('user:loaded', function() {
-        this.topComments = new TopComments(self.mediator, {
-            discussionId: this.getDiscussionId(),
-            user: self.user
-        });
-
-        this.topComments
-            .fetch(topCommentsElem)
-            .then(function appendTopComments() {
-                bonzo(self.topLoadingElem).addClass('u-h');
-            });
-
-        this.mediator.on('module:topcomments:loadcomments', self.loadComments.bind(self));
+    this.topComments = new TopComments(this.mediator, {
+        discussionId: this.getDiscussionId()
     });
 
-    this.getUser();
+    this.comments = new Comments(this.mediator, {
+        discussionId: this.getDiscussionId(),
+        commentId: commentId ? commentId : null,
+        order: this.getDiscussionClosed() ? 'oldest' : 'newest',
+        state: 'partial'
+    });
+
+    this.topComments.fetch(topCommentsElem);
+
+    this.comments.fetch(commentsElem).then(function() {
+        $('.discussion .preload-msg').addClass('u-h');
+
+        if (commentId || window.location.hash === '#comments') {
+            self.comments.removeState('shut');
+        }
+
+        bonzo(commentsContainer).removeClass('modern-hidden');
+        self.initUnthreaded();
+
+        self.on('user:loaded', function() {
+            self.renderCommentBar();
+            if (self.user) {
+                self.comments.addUser(self.user);
+            }
+        });
+        self.getUser();
+    });
+
+    this.checkCommentsLoaded();
+
     this.renderCommentCount();
+
     DiscussionAnalytics.init();
 
     bean.on(window, 'hashchange', function() {
@@ -126,69 +151,7 @@ Loader.prototype.ready = function() {
         this.mediator.emit('discussion:seen:comments-anchor');
     }
 
-    // The check on this should be done through the discussion API
-    // for now though this is a good (enough) check
-    if (config.switches.sentimentalComments) {
-        setTimeout(function() {
-            $('.open a[href="#comments"]').each(function () {
-                $('.d-discussion').addClass('d-discussion--sentimental');
-                $('.discussion__show-threaded').remove();
-            }.bind(this));
-        }.bind(this), 800); // used as we don't know when the open module loads.
-    }
-
     register.end('discussion');
-};
-
-Loader.prototype.loadComments = function(args) {
-    args = args || {};
-    var self = this,
-        commentsContainer = this.getElem('commentsContainer'),
-        commentsElem = this.getElem('comments'),
-        loadingElem = bonzo.create(
-            '<div class="preload-msg d-discussion__loader--comments">'+
-                'Loading comments…'+
-                '<div class="is-updating"></div>'+
-            '</div>')[0],
-        commentId = this.getCommentIdFromHash(),
-        showComments = args.showLoader || commentId || window.location.hash === '#comments';
-
-    if (args.showLoader) {
-        // Comments are being loaded in the no-top-comments-available context
-        bonzo(commentsContainer).removeClass('u-h');
-    }
-
-    bonzo(self.topLoadingElem).addClass('u-h');
-    bonzo(loadingElem).insertAfter(commentsContainer);
-
-    if (commentId) {
-        this.mediator.emit('discussion:seen:comment-permalink');
-    }
-
-    this.comments = new Comments(this.mediator, {
-        discussionId: this.getDiscussionId(),
-        user: this.user,
-        commentId: commentId ? commentId : null,
-        order: this.getDiscussionClosed() ? 'oldest' : 'newest',
-        state: this.topComments.topCommentsAmount > 0 ? 'shut' : 'partial'
-    });
-
-    // Doing this makes sure there is only one redraw
-    // Within comments there is adding of reply buttons etc
-    this.comments.fetch(commentsElem)
-        .then(function killLoadingMessage() {
-            bonzo(loadingElem).addClass('u-h');
-            self.renderCommentBar(self.user);
-
-            if (showComments) {
-                // Comments are being loaded in the no-top-comments-available context
-                bonzo(self.comments.getElem('header')).removeClass('u-h');
-                self.comments.removeState('shut');
-            }
-
-            bonzo(commentsContainer).removeClass('modern-hidden');
-            self.initUnthreaded();
-        }).fail(self.loadingError.bind(self));
 };
 
 Loader.prototype.initUnthreaded = function() {
@@ -244,24 +207,13 @@ Loader.prototype.getUser = function() {
     var self = this;
 
     if (Id.getUserFromCookie()) {
-        return DiscussionApi
-            .getUser()
-            .then(function(resp) {
-                self.user = resp.userProfile;
-                self.emit('user:loaded', resp.userProfile);
-            });
+        DiscussionApi.getUser().then(function(resp) {
+            self.user = resp.userProfile;
+            self.emit('user:loaded');
+        });
     } else {
         self.emit('user:loaded');
     }
-};
-
-/**
- * Just removes the comments module
- * This state should never really be reached but
- * often is on code due to syncing problems
- */
-Loader.prototype.loadingError = function() {
-    bonzo(this.getElem('commentsContainer')).remove();
 };
 
 Loader.prototype.renderReadOnly = function() {
@@ -417,6 +369,25 @@ Loader.prototype.getCommentIdFromHash = function() {
     var reg = (/#comment-(\d+)/);
     return reg.exec(window.location.hash) ? parseInt(reg.exec(window.location.hash)[1], 10) : null;
 };
+
+Loader.prototype.checkCount = 0;
+
+Loader.prototype.checkCommentsLoaded = function() {
+
+    // Limit the number of tries.
+    if (++this.checkCount > 10 ) {
+        return;
+    }
+
+    if (this.topComments.rendered && this.comments.rendered) {
+        if (this.topComments.topCommentsAmount > 0) {
+            this.comments.removeState('partial');
+            this.comments.setState('shut');
+        }
+    } else {
+        _.delay(this.checkCommentsLoaded.bind(this), 1000);
+    }
+}
 
 return Loader;
 
