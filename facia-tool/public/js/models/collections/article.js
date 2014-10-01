@@ -42,6 +42,7 @@ define([
             capiFields = [
                 'headline',
                 'trailText',
+                'byline',
                 'isLive',
                 'firstPublicationDate',
                 'scheduledPublicationDate',
@@ -64,6 +65,13 @@ define([
                     key: 'trailText',
                     editable: true,
                     label: 'trail text',
+                    type: 'text'
+                },
+                {
+                    key: 'byline',
+                    editable: true,
+                    requires: 'showByline',
+                    label: 'byline',
                     type: 'text'
                 },
                 {
@@ -93,7 +101,12 @@ define([
                     label: 'boost',
                     type: 'boolean'
                 },
-
+                {
+                    key: 'showByline',
+                    editable: true,
+                    label: 'show byline',
+                    type: 'boolean'
+                },
                 {
                     key: 'hasMainVideo',
                     label: 'has a video',
@@ -107,7 +120,6 @@ define([
                     label: 'show video',
                     type: 'boolean'
                 },
-
                 {
                     key: 'imageHide',
                     editable: true,
@@ -273,18 +285,17 @@ define([
 
         Article.prototype.metaDisplayer = function(opts, index, all) {
             var self = this,
-                key = opts.key,
-                isTrue,
-                displayIf;
+                show = opts.editable;
 
-            if (opts.type !== 'boolean') { return false; }
+            if (opts.type === 'boolean') {
+                show = show && (this.meta[opts.key] || function() {})();
+                show = show && (opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true);
+                return show ? opts.label : false;
 
-            isTrue = (this.meta[key] || function() {})();
-
-            displayIf = opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true;
-
-            return isTrue && displayIf ? opts.label : false;
-        }
+            } else {
+                return false;
+            }
+        };
 
         Article.prototype.metaEditor = function(opts, index, all) {
             var self = this,
@@ -363,7 +374,7 @@ define([
                     owner: self
                 })
             }
-        }
+        };
 
         function mainMediaType(contentApiArticle) {
             var mainElement = _.findWhere(contentApiArticle.elements || [], {

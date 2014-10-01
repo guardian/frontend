@@ -58,6 +58,8 @@ object ItemMeta {
   def fromContent(content: Content): ItemMeta = ItemMeta(
     headline = content.apiContent.metaData.flatMap(_.headline).map(JsString),
     trailText = content.apiContent.metaData.flatMap(_.trailText).map(JsString),
+    byline = content.apiContent.metaData.flatMap(_.byline).map(JsString),
+    showByline = content.apiContent.metaData.flatMap(_.showByline),
     group = content.apiContent.metaData.flatMap(_.group).map(JsString),
     isBoosted = content.apiContent.metaData.flatMap(_.isBoosted),
     imageHide = content.apiContent.metaData.flatMap(_.imageHide),
@@ -76,6 +78,8 @@ object ItemMeta {
 case class ItemMeta(
   headline:      Option[JsValue],
   trailText:     Option[JsValue],
+  byline:        Option[JsValue],
+  showByline:    Option[Boolean],
   group:         Option[JsValue],
   isBoosted:     Option[Boolean],
   imageHide:     Option[Boolean],
@@ -103,6 +107,7 @@ object TrailJson {
       content.webUrl,
       content.tags.map(TagJson.fromTag),
       content.trailText,
+      content.byline,
       content.delegate.safeFields,
       content.elements.map(ElementJson.fromElement),
       ItemMeta.fromContent(content)
@@ -118,6 +123,7 @@ case class TrailJson(
   webUrl: String,
   tags: Seq[TagJson],
   trailText: Option[String],
+  byline: Option[String],
   safeFields: Map[String, String],
   elements: Seq[ElementJson],
   meta: ItemMeta
@@ -141,7 +147,8 @@ object CollectionJson {
       href           = collection.href.orElse(config.href),
       `type`         = config.`type`,
       showTags       = config.showTags.getOrElse(false),
-      showSections   = config.showSections.getOrElse(false)
+      showSections   = config.showSections.getOrElse(false),
+      hideKickers    = config.hideKickers.getOrElse(false)
     )
 }
 
@@ -159,5 +166,6 @@ case class CollectionJson(
   groups:       Option[Seq[String]],
   href:         Option[String],
   showTags:     Boolean,
-  showSections: Boolean
-)
+  showSections: Boolean,
+  hideKickers:  Boolean
+                           )

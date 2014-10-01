@@ -15,7 +15,8 @@ import test.ConfiguredTestSuite
     groups = Some(List("1", "2")),
     uneditable = Some(false),
     showTags = Some(true),
-    showSections = Some(false)
+    showSections = Some(false),
+    hideKickers = Some(false)
   )
 
   val createCommandFixture = CreateFront(
@@ -34,6 +35,7 @@ import test.ConfiguredTestSuite
   )
 
   val emptyCollectionFixture = CollectionConfig(
+    None,
     None,
     None,
     None,

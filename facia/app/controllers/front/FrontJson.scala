@@ -127,7 +127,7 @@ trait FrontJson extends ExecutionContexts with Logging {
     }
   }
 
-  def parseConfig(id: String, json: JsValue): CollectionConfig = {
+  def parseConfig(id: String, json: JsValue): CollectionConfig =
     CollectionConfig(
       apiQuery        = (json \ "apiQuery").asOpt[String],
       displayName     = (json \ "displayName").asOpt[String],
@@ -136,9 +136,9 @@ trait FrontJson extends ExecutionContexts with Logging {
       `type`          = (json \ "type").asOpt[String],
       showTags        = (json \ "showTags").asOpt[Boolean],
       showSections    = (json \ "showSections").asOpt[Boolean],
-      uneditable      = None
+      uneditable      = None,
+      hideKickers     = (json \ "hideKickers").asOpt[Boolean]
     )
-  }
 
   private def parsePressedJson(j: String): Option[FaciaPage] = {
     val json = Json.parse(j)

@@ -48,6 +48,11 @@ class DfpAgentTest extends FlatSpec with Matchers {
       Sponsorship(Seq("film"), None, Nil, 5)
     )
 
+    override protected def foundationSupported: Seq[Sponsorship] = Seq(
+      Sponsorship(Seq("music"), Some("Music Foundation"), Nil, 6),
+      Sponsorship(Seq("chuckle"), None, Nil, 7)
+    )
+
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
 
     override protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet =
@@ -66,6 +71,8 @@ class DfpAgentTest extends FlatSpec with Matchers {
     override protected def sponsorships: Seq[Sponsorship] = Nil
 
     override protected def advertisementFeatureSponsorships: Seq[Sponsorship] = Nil
+
+    override protected def foundationSupported: Seq[Sponsorship] = Nil
 
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
 
@@ -287,6 +294,14 @@ class DfpAgentTest extends FlatSpec with Matchers {
     forEvery(apiQueries) { q =>
       testDfpAgent.isSponsored(apiQuery(q)) should be(false)
     }
+  }
+
+  "isFoundationSupported" should "be true for a foundation-supported page" in {
+    testDfpAgent.isFoundationSupported("chuckle") should be(true)
+  }
+
+  "isFoundationSupported" should "be false for a non foundation-supported page" in {
+    testDfpAgent.isFoundationSupported("guffaw") should be(false)
   }
 
   "getSponsor" should "have some value for a sponsored tag with a specified sponsor" in {

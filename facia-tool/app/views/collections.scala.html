@@ -129,7 +129,8 @@
                         hasFocus: hasFocus,
                         attr: {
                             class: 'element__' + key + (hasFocus() ? ' active' : ''),
-                            placeholder: field() || label + '...'
+                            placeholder: field() || label + '...',
+                            title: label
                         },
                         autoResize: true,
                         tabbableFormField: true,

@@ -99,6 +99,8 @@ trait UpdateActions extends Logging {
     "snapCss",
     "snapUri",
     "trailText",
+    "byline",
+    "showByline",
     "group",
     "supporting",
     "isBoosted",
@@ -110,6 +112,7 @@ trait UpdateActions extends Logging {
     "isBreaking",
     "showKickerTag",
     "showKickerSection",
+    "hideKickers",
     "showMainVideo"
   )
 
