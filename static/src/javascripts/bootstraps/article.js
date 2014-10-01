@@ -15,7 +15,7 @@ define([
     truncate,
     twitter,
     OpenCta
-) {
+    ) {
 
     var modules = {
 

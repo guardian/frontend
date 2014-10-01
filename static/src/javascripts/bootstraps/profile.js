@@ -1,10 +1,10 @@
 define([
     'common/modules/identity/public-profile'
-], function(
+], function (
     PublicProfile
 ) {
-   function init() {
-       PublicProfile.init();
-   }
-   return { init: init };
+    function init() {
+        PublicProfile.init();
+    }
+    return { init: init };
 });
