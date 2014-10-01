@@ -4,10 +4,8 @@
     @commentsList(page, blankComment, isTopComments)
 
     @if(page.comments.length > 2 && !isTopComments){
-        <a class="d-discussion__show-all-comments js-show-discussion" href="@LinkTo{/discussion@page.discussion.key}"
-            data-link-name="View all comments" rel="nofollow" data-test-id="view-all-comments">
-            Show comments…
-            <i class="i i-show-all-comments"></i>
-        </a>
+        <button class="u-button-reset button button--show-more button--primary button--large js-show-discussion" data-link-name="View all comments" rel="nofollow">
+            <i class="i i-plus-white-small"></i>View more comments
+        </button>
     }
 </div>
