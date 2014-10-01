@@ -454,7 +454,7 @@ $avatarSize: 44px;
     width: 18px;
     height: 18px;
     @include border-radius(18px);
-    background-color: $c-neutral4;
+    background-color: colour(neutral-3);
 }
 .d-comment__recommend-count {
     display: inline-block;
@@ -463,7 +463,7 @@ $avatarSize: 44px;
     min-width: 12px;
     margin-bottom: -4px;
     @include fs-textSans(1);
-    color: $c-neutral2;
+    color: colour(neutral-2);
     font-weight: bold;
     text-align: right;
 
@@ -481,14 +481,6 @@ $avatarSize: 44px;
 }
 .d-comment__recommend--active {
     cursor: pointer;
-
-    .d-comment__recommend-button,
-    .d-comment__recommend-pulse {
-        background-color: $c-newsDefault;
-    }
-    .d-comment__recommend-count {
-        color: $c-newsDefault;
-    }
 }
 
 @-webkit-keyframes pulse {
@@ -579,10 +571,20 @@ $avatarSize: 44px;
     position: absolute;
     right: $gs-baseline / 3;
     bottom: ($gs-baseline / 3) * 5;
+
+    a {
+        color: colour(neutral-2);
+    }
+
     .discussion__comments__top & {
         right: $gs-gutter;
     }
 }
+
+.d-comment__action--pick {
+    color: colour(neutral-2);
+}
+
 .d-comment__action-separator {
     display: inline-block;
     position: relative;
