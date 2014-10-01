@@ -1,5 +1,5 @@
 define([
-    '../bower_components/bonzo/bonzo',
+    'bonzo',
     'bean'
 ], function (
     bonzo,

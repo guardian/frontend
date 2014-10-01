@@ -1,5 +1,5 @@
 define([
-    '../../bower_components/qwery/qwery',
+    'qwery',
     'bonzo',
     'lodash/objects/defaults',
     'lodash/functions/once',

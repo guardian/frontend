@@ -57,8 +57,8 @@ module.exports = function(grunt, options) {
                 name: 'bootstraps/facia',
                 out: options.staticTargetDir + 'javascripts/bootstraps/facia.js',
                 exclude: [
-                    '../../../../static/src/javascripts/core',
-                    '../../../../static/src/javascripts/bootstraps/app'
+                    '../../../static/src/javascripts/core',
+                    '../../../static/src/javascripts/bootstraps/app'
                 ]
             }
         },
@@ -68,9 +68,9 @@ module.exports = function(grunt, options) {
                 name: 'bootstraps/membership',
                 out: options.staticTargetDir + 'javascripts/bootstraps/membership.js',
                 exclude: [
-                    '../../../../static/src/javascripts/core',
-                    '../../../../static/src/javascripts/bootstraps/app',
-                    '../../../../common/app/public/javascripts/vendor/stripe/stripe.min'
+                    '../../../static/src/javascripts/core',
+                    '../../../static/src/javascripts/bootstraps/app',
+                    '../../../common/app/public/javascripts/vendor/stripe/stripe.min'
                 ]
             }
         },
@@ -103,7 +103,7 @@ module.exports = function(grunt, options) {
                 name: 'bootstraps/video-player',
                 out: options.staticTargetDir + 'javascripts/bootstraps/video-player.js',
                 paths: {
-                    vast: '../../../../common/app/public/javascripts/vendor/vast-client',
+                    vast: '../../../common/app/public/javascripts/vendor/vast-client',
                     videojs: 'components/videojs/video',
                     videojsads: 'components/videojs-contrib-ads/videojs.ads',
                     videojsvast: 'components/videojs-vast/videojs.vast',
