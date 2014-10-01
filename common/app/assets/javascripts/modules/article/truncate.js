@@ -23,7 +23,8 @@ define([
 
     function removeTruncation() {
         // Reinstate tweets and enhance them.
-        $('.truncated-block blockquote.tweet-truncated').removeClass('tweet-truncated').addClass('tweet');
+        $('.truncated-block blockquote.tweet-truncated').removeClass('tweet-truncated').addClass('js-tweet');
+        twitter.enhanceTweets();
 
         $truncatedBlocks.removeClass(truncatedClass);
         $('.article-elongator').addClass('u-h');
@@ -59,7 +60,7 @@ define([
 
             $truncatedBlocks.addClass(truncatedClass);
             // Avoid running the twitter widget on truncated tweets.
-            $('.truncated-block blockquote.tweet').removeClass('tweet').addClass('tweet-truncated');
+            $('.truncated-block blockquote.tweet').removeClass('js-tweet').addClass('tweet-truncated');
         }
     }
 
