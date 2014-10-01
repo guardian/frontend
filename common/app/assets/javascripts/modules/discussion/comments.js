@@ -370,14 +370,10 @@ Comments.prototype.showHiddenComments = function(e) {
 Comments.prototype.addMoreRepliesButtons = function (comments) {
     var self = this;
 
-    console.log("++ Add more replies ");
-
     comments = comments || this.topLevelComments;
     comments.forEach(function(elem) {
         var replies = parseInt(elem.getAttribute('data-comment-replies'), 10),
             renderedReplies = qwery(self.getClass('reply'), elem);
-
-        console.log("++ Rendered: " + renderedReplies.length + " replies " + replies );
 
         if (renderedReplies.length < replies) {
             var numHiddenReplies = replies - renderedReplies.length,
