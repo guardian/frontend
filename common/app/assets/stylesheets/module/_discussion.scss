@@ -241,10 +241,6 @@ $avatarSize: 44px;
     float: left;
     margin-right: ($gs-gutter / 5) * 2;
     margin-top: $gs-baseline / 3;
-
-    @include mq($comment-meta-breakpoint, wide) {
-        float: none;
-    }
 }
 .d-comment__avatar,
 .user-avatar__image {
@@ -402,7 +398,6 @@ $avatarSize: 44px;
    ======================================================= */
 
 .d-comment__comment-removed {
-    margin-top: $gs-baseline * 2;
     @include fs-textSans(1);
     color: $c-neutral2;
 
@@ -432,14 +427,6 @@ $avatarSize: 44px;
     background-color: $c-neutral4;
     margin-right: 2px;
     margin-bottom: -5px;
-
-    @include mq(rightCol) {
-        position: absolute;
-        top: 1.4em;
-        left: 50%;
-        margin: 0;
-        margin-left: -9px;
-    }
 }
 .d-comment__recommend-pulse {
     position: absolute;
@@ -460,14 +447,8 @@ $avatarSize: 44px;
     color: colour(neutral-2);
     font-weight: bold;
     text-align: right;
-
-    @include mq(rightCol) {
-        display: block;
-        margin-bottom: 0;
-        min-width: 0;
-        text-align: center;
-    }
 }
+
 .d-comment__recommend-count--new,
 .d-comment__recommend-count--old {
     display: block;
