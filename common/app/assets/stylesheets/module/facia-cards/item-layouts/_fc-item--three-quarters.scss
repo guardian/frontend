@@ -59,7 +59,7 @@ Three quarter item. Looks like a wide standard, a bit like this:
     .fc-item__header,
     .fc-item__standfirst,
     .fc-item__byline,
-    .fc-sublinks  {
+    .fc-sublinks {
         @include box-sizing(border-box);
         width: (100% / 3);
         padding-right: $gs-gutter * .5;
