@@ -613,7 +613,7 @@ case object TlTlTl extends Slice {
         rows = 2,
         ItemClasses(
           mobile = "list",
-          tablet = "list"
+          tablet = "list-compact"
         )
       )
     )
