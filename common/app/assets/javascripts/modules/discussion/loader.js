@@ -387,7 +387,7 @@ Loader.prototype.checkCommentsLoaded = function() {
     } else {
         _.delay(this.checkCommentsLoaded.bind(this), 1000);
     }
-}
+};
 
 return Loader;
 

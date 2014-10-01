@@ -631,7 +631,7 @@ Comments.prototype.addUser = function(user) {
             this.on('click', this.getClass('commentPick'), this.handlePickClick);
         }
     }
-}
+};
 
 return Comments;
 });
