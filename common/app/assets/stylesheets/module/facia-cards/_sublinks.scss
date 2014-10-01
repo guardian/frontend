@@ -10,33 +10,29 @@
     a {
         display: block;
     }
+}
 
-    .fc-item__title {
-        @include fs-headline(1);
-        font-weight: 500;
-        padding-top: 0;
+.fc-sublinks__item-title {
+    @include fs-headline(1);
+    font-weight: 500;
+    padding-top: 0;
 
-        &:before {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            content: '';
-            width: 40%;
-            border-top: 1px dotted $c-neutral4;
+    &:before {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+        width: 40%;
+        border-top: 1px dotted $c-neutral4;
 
-            @include mq(tablet) {
-                width: 100%;
-            }
+        @include mq(tablet) {
+            width: 100%;
         }
     }
 }
 
-.fc-item--has-sublinks-4 {
-    .fc-item__container {
-        @include flex-wrap(wrap);
-    }
-
+@mixin fc-sublinks-horizontal {
     .fc-sublinks {
         @include flex(4, 4, 100%);
         @include flex-display;

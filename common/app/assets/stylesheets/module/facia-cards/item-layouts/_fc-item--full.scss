@@ -110,6 +110,14 @@ Full item. A 100% width version of the Three quarter item.
         }
     }
 
+    &.fc-item--has-sublinks-4 {
+        @include fc-sublinks-horizontal;
+
+        .fc-item__container {
+            @include flex-wrap(wrap);
+        }
+    }
+
     // hide more than 4 sublinks
     .fc-sublinks__item:nth-child(n+5) {
         display: none;

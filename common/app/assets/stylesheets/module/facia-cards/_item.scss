@@ -40,6 +40,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__container {
     @include display-flex;
+    @include flex-direction(column);
 }
 
 // Wraps all non-media content
@@ -47,11 +48,13 @@ $fc-item-gutter: $gs-gutter / 4;
     @include display-flex;
     @include flex-direction(column);
     @include box-sizing(border-box);
+    @include flex(1, 1, 100%);
 }
 
 // Wraps all media elements
 .fc-item__media-wrapper {
     position: relative;
+    @include flex(1, 1, 100%);
 }
 
 .fc-item__image-container {
