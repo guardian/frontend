@@ -210,6 +210,7 @@ trait Tags {
   def hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
   def hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags)
+  def isFoundationSupported = DfpAgent.isFoundationSupported(tags)
   def hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags)
   def sponsor = DfpAgent.getSponsor(tags)
 

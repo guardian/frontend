@@ -129,7 +129,8 @@
                         hasFocus: hasFocus,
                         attr: {
                             class: 'element__' + key + (hasFocus() ? ' active' : ''),
-                            placeholder: field() || label + '...'
+                            placeholder: field() || label + '...',
+                            title: label
                         },
                         autoResize: true,
                         tabbableFormField: true,
@@ -162,12 +163,10 @@
     </script>
 
     <script type="text/html" id="template_editor_boolean_states">
-        <!-- ko if: type === 'boolean' && meta() && displayValue() -->
-            <span class="editor--boolean  selected">
-                <span class="editor--boolean__label" data-bind="text: label"></span>
-                <span class="editor--boolean__state">&#10004;</span>
-            </span>
-        <!-- /ko -->
+        <span class="editor--boolean  selected">
+            <span class="editor--boolean__label" data-bind="text: $data"></span>
+            <span class="editor--boolean__state">✔</span>
+        </span>
     </script>
 
     <script type="text/html" id="template_collection">
@@ -364,7 +363,7 @@
                                 <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
                             <!-- /ko -->
 
-                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
+                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
 
                             <span data-bind="
                                 html: meta.trailText() || fields.trailText()"></span>

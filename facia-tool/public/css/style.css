@@ -651,15 +651,14 @@ select {
     color: #000000;
 }
 
-.element__headline a,
 .element__headline {
     color: #000000 !important;
     font-size: 16px;
     line-height: 16px;
 }
 
-.element__trailText a,
-.element__trailText {
+.element__trailText,
+.element__byline {
     color: #666666 !important;
 }
 
@@ -1055,7 +1054,7 @@ button {
 .cnf-form label {
     font-size: 12px;
     color: #666666;
-    width: 85px;
+    width: 120px;
     float: left;
     clear: left;
     margin: 1px 0 0 0;

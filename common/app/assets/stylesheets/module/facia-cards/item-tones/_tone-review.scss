@@ -5,8 +5,12 @@
         background-color: $c-reviewBackground;
     }
 
-    .fc-item__kicker {
-        color: $c-reviewAccent;
+    .fc-item__kicker,
+    .fc-item__byline {
+        &,
+        & a {
+            color: $c-reviewAccent;
+        }
     }
 
     .fc-item__meta {

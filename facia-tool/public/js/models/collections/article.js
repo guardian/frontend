@@ -42,6 +42,7 @@ define([
             capiFields = [
                 'headline',
                 'trailText',
+                'byline',
                 'isLive',
                 'firstPublicationDate',
                 'scheduledPublicationDate',
@@ -64,6 +65,13 @@ define([
                     key: 'trailText',
                     editable: true,
                     label: 'trail text',
+                    type: 'text'
+                },
+                {
+                    key: 'byline',
+                    editable: true,
+                    requires: 'showByline',
+                    label: 'byline',
                     type: 'text'
                 },
                 {
@@ -93,7 +101,12 @@ define([
                     label: 'boost',
                     type: 'boolean'
                 },
-
+                {
+                    key: 'showByline',
+                    editable: true,
+                    label: 'show byline',
+                    type: 'boolean'
+                },
                 {
                     key: 'hasMainVideo',
                     label: 'has a video',
@@ -107,7 +120,6 @@ define([
                     label: 'show video',
                     type: 'boolean'
                 },
-
                 {
                     key: 'imageHide',
                     editable: true,
@@ -207,6 +219,8 @@ define([
 
             this.editors = ko.observableArray();
 
+            this.editorsDisplay = ko.observableArray();
+
             this.headlineLength = ko.computed(function() {
                 return (this.meta.headline() || this.fields.headline() || '').length;
             }, this);
@@ -269,6 +283,20 @@ define([
             });
         };
 
+        Article.prototype.metaDisplayer = function(opts, index, all) {
+            var self = this,
+                show = opts.editable;
+
+            if (opts.type === 'boolean') {
+                show = show && (this.meta[opts.key] || function() {})();
+                show = show && (opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true);
+                return show ? opts.label : false;
+
+            } else {
+                return false;
+            }
+        };
+
         Article.prototype.metaEditor = function(opts, index, all) {
             var self = this,
                 key,
@@ -311,10 +339,6 @@ define([
                     return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
                 }, self),
 
-                displayValue: ko.computed(function() {
-                    return opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true;
-                }, self),
-
                 toggle: function() {
                     if(opts.singleton) {
                        _.chain(all)
@@ -350,7 +374,7 @@ define([
                     owner: self
                 })
             }
-        }
+        };
 
         function mainMediaType(contentApiArticle) {
             var mainElement = _.findWhere(contentApiArticle.elements || [], {
@@ -412,7 +436,7 @@ define([
             this.meta.isSnap(!!snap.validateId(this.id()));
 
             if(!this.uneditable) {
-                this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
+                this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
             }
 
             this.setRelativeTimes();
@@ -523,10 +547,15 @@ define([
             if (this.uneditable) { return; }
 
             if (!this.state.isOpen()) {
-                 this.state.isOpen(true);
-                 mediator.emit('ui:open', this.meta.headline);
+
+                if (this.editors().length === 0) {
+                    this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
+                }
+
+                this.state.isOpen(true);
+                mediator.emit('ui:open', this.meta.headline);
             } else {
-                 mediator.emit('ui:open', undefined);
+                mediator.emit('ui:open', undefined);
             }
         };
 

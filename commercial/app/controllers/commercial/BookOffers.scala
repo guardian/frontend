@@ -1,7 +1,6 @@
 package controllers.commercial
 
 import common.ExecutionContexts
-import conf.Switches.MagentoServiceSwitch
 import model.commercial.books.{BestsellersAgent, Book, BookFinder}
 import model.{Cached, NoCache}
 import performance.MemcachedAction
@@ -53,34 +52,6 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
     }
 
   private def renderSingleBook(format: Format) = MemcachedAction { implicit request =>
-    Future.successful {
-      specificId.flatMap { isbn =>
-        BestsellersAgent.getSpecificBook(isbn) map { book =>
-          Cached(componentMaxAge) {
-            format.result(views.html.books.bestsellersSuperHigh(book))
-          }
-        }
-      }.getOrElse {
-        NoCache(format.nilResult)
-      }
-    }
-  }
-
-  private def renderSingleBookV2(format: Format) = MemcachedAction { implicit request =>
-    Future.successful {
-      specificId.flatMap { isbn =>
-        BestsellersAgent.getSpecificBook(isbn) map { book =>
-          Cached(componentMaxAge) {
-            format.result(views.html.books.bestsellersSuperHighV2(book))
-          }
-        }
-      }.getOrElse {
-        NoCache(format.nilResult)
-      }
-    }
-  }
-
-  private def renderSingleBookUsingMagentoService(format: Format) = MemcachedAction { implicit request =>
     specificId map { isbn =>
       BookFinder.findByIsbn(isbn) map { optBook =>
         val result = optBook map { book =>
@@ -95,7 +66,7 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
     }
   }
 
-  private def renderSingleBookUsingMagentoServiceV2(format: Format) = MemcachedAction { implicit request =>
+  private def renderSingleBookV2(format: Format) = MemcachedAction { implicit request =>
     specificId map { isbn =>
       BookFinder.findByIsbn(isbn) map { optBook =>
         val result = optBook map { book =>
@@ -122,7 +93,7 @@ object BookOffers extends Controller with ExecutionContexts with implicits.Colle
   def bestsellersHighJson = renderBestsellers(highRelevance, jsonFormat)
   def bestsellersHighJsonV2 = renderBestsellers(highRelevanceV2, jsonFormat)
 
-  def bestsellersSuperHighJson = if (MagentoServiceSwitch.isSwitchedOn) renderSingleBookUsingMagentoService(jsonFormat) else renderSingleBook(jsonFormat)
-  def bestsellersSuperHighHtml = if (MagentoServiceSwitch.isSwitchedOn) renderSingleBookUsingMagentoService(htmlFormat) else renderSingleBook(htmlFormat)
-  def bestsellersSuperHighJsonV2 = if (MagentoServiceSwitch.isSwitchedOn) renderSingleBookUsingMagentoServiceV2(htmlFormat) else renderSingleBookV2(htmlFormat)
+  def bestsellersSuperHighJson = renderSingleBook(jsonFormat)
+  def bestsellersSuperHighHtml = renderSingleBook(htmlFormat)
+  def bestsellersSuperHighJsonV2 = renderSingleBookV2(jsonFormat)
 }

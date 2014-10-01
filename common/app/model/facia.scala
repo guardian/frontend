@@ -13,11 +13,13 @@ case class Config(
                    groups: Seq[String],
                    collectionType: Option[String],
                    showTags: Boolean = false,
-                   showSections: Boolean = false
+                   showSections: Boolean = false,
+                   hideKickers: Boolean = false
                    ) {
 
   lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
   lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(this)
+  lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(this)
 
   lazy val sponsorshipKeyword: Option[String] = DfpAgent.sponsorshipTag(this)
 }
