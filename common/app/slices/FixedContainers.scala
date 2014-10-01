@@ -6,8 +6,10 @@ object TagContainers {
   import ContainerDefinition.{ofSlices => slices}
 
   val allTagPage = slices(
-    TTT,
-    TlTlTl
+    QuarterQuarterQuarterQuarter,
+    TlTlTl,
+    TlTlTl,
+    TlTlMpu
   )
 }
 
