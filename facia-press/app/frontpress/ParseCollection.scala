@@ -8,6 +8,7 @@ import common._
 import conf.Switches.FaciaToolCachedContentApiSwitch
 import conf.{Configuration, LiveContentApi}
 import contentapi.{ContentApiClient, QueryDefaults}
+import fronts.FrontsApi
 import model.{Collection, _}
 import org.apache.commons.codec.digest.DigestUtils._
 import org.joda.time.DateTime
@@ -52,9 +53,6 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
   val cacheDuration: FiniteDuration = 5.minutes
 
-  val amazonClient: ApiClient =
-    ApiClient("aws-frontend-store", Configuration.facia.stage, AmazonSdkS3Client(new AmazonS3Client(Configuration.aws.credentials.get)))
-
   val client: ContentApiClient
   def retrieveItemsFromCollectionJson(collection: com.gu.facia.client.models.Collection): Seq[Trail]
 
@@ -74,7 +72,7 @@ trait ParseCollection extends ExecutionContexts with QueryDefaults with Logging 
 
   def getCollection(id: String, config: CollectionConfig, edition: Edition): Future[Collection] = {
     val collection: Future[Option[com.gu.facia.client.models.Collection]] =
-      amazonClient.collection(id)
+      FrontsApi.amazonClient.collection(id)
         .map(Option.apply)
         .recover { case t: Throwable =>
           log.warn(s"Could not get Collection ID $id: $t")
