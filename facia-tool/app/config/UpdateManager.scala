@@ -31,7 +31,7 @@ object UpdateManager {
       val transformedConfig: Config = transform(config)
       val newConfig = SanitizeInput.fromConfigSeo(Transformations.prune(transformedConfig))
       UpdateActions.putMasterConfig(newConfig, identity)
-      ConfigAgent.refreshWith(Json.toJson(transformedConfig))
+      ConfigAgent.refreshWith(transformedConfig)
     }
   }
 
