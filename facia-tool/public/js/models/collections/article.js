@@ -539,8 +539,6 @@ define([
             this.meta.isSnap(true);
             this.meta.href(this.id());
             this.id(snap.generateId());
-            this.state.isOpen(true);
-            mediator.emit('ui:open', this.meta.headline, this);
         };
 
         Article.prototype.open = function() {

@@ -162,7 +162,6 @@ h1 {
 
 .supporting .droppable {
     padding: 0 0 15px 0;
-    border-bottom: 1px solid #2ea3eb;
     margin: 0 0 0 -4px;
 }
 
@@ -368,13 +367,16 @@ h1 {
 .article .thumb {
     position: absolute;
     top: 3px;
+    width: 75px;
+    height: 45px;
+    border-radius: 2px;
+    background-color: #dddddd;
 }
 
 .article .thumb img {
     width: 75px;
     height: 45px;
     border-radius: 2px;
-    background-color: #eeeeee;
 }
 
 .article__content {
@@ -864,7 +866,7 @@ button {
     display: none;
     position: absolute;
     top: 2px;
-    right: 2px;
+    right: 3px;
     width: 126px;
     height: 50px;
     background: #eeeeee;
