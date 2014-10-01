@@ -5,39 +5,36 @@ for (var file in window.__karma__.files) {
     }
 }
 
-// figure the app from the tests location
-var app = /^\/base\/([^/]*)/.exec(tests[0])[1];
-
 requirejs.config({
     // Karma serves files from '/base'
-    baseUrl: '/base/' + app + '/app/assets/javascripts',
+    baseUrl: '/base/static/src/javascripts',
     paths: {
-        common:       '/base/common/app/assets/javascripts',
-        bean:         '/base/common/app/assets/javascripts/components/bean/bean',
-        bonzo:        '/base/common/app/assets/javascripts/components/bonzo/bonzo',
-        enhancer:     '/base/common/app/assets/javascripts/components/enhancer/enhancer',
-        EventEmitter: '/base/common/app/assets/javascripts/components/eventEmitter/EventEmitter',
-        imager:       '/base/common/app/assets/javascripts/components/imager.js/container',
-        lodash:       '/base/common/app/assets/javascripts/components/lodash-amd',
-        qwery:        '/base/common/app/assets/javascripts/components/qwery/qwery',
-        raven:        '/base/common/app/assets/javascripts/components/raven-js/raven',
-        reqwest:      '/base/common/app/assets/javascripts/components/reqwest/reqwest',
-        analytics:    '/base/common/app/assets/javascripts/modules/analytics',
-        stripe:       '/base/common/app/public/javascripts/vendor/stripe/stripe.min',
-        Squire:       '/base/common/test/assets/javascripts/components/squire/src/Squire',
-        fixtures:     '/base/common/test/assets/javascripts/fixtures',
-        helpers:      '/base/common/test/assets/javascripts/helpers'
+        common:       '/base/static/src/javascripts',
+        bean:         '/base/static/src/javascripts/components/bean/bean',
+        bonzo:        '/base/static/src/javascripts/components/bonzo/bonzo',
+        enhancer:     '/base/static/src/javascripts/components/enhancer/enhancer',
+        EventEmitter: '/base/static/src/javascripts/components/eventEmitter/EventEmitter',
+        imager:       '/base/static/src/javascripts/components/imager.js/container',
+        lodash:       '/base/static/src/javascripts/components/lodash-amd',
+        qwery:        '/base/static/src/javascripts/components/qwery/qwery',
+        raven:        '/base/static/src/javascripts/components/raven-js/raven',
+        reqwest:      '/base/static/src/javascripts/components/reqwest/reqwest',
+        analytics:    '/base/static/src/javascripts/modules/analytics',
+        stripe:       '/base/static/src/javascripts/vendor/stripe/stripe.min',
+        Squire:       '/base/static/test/javascripts/components/squire/src/Squire',
+        fixtures:     '/base/static/test/javascripts/fixtures',
+        helpers:      '/base/static/test/javascripts/helpers'
     },
     map: {
         '*': {
             // mock out omniture script
             // TODO - better way of mocking dependencies?
-            omniture: '/base/common/test/assets/javascripts/spies/omniture.js'
+            omniture: '/base/static/test/javascripts/spies/omniture.js'
         }
     },
     shim: {
         imager: {
-            deps: ['/base/common/app/assets/javascripts/components/imager.js/imager.js'],
+            deps: ['/base/static/src/javascripts/components/imager.js/imager.js'],
             exports: 'Imager'
         },
         googletag: {

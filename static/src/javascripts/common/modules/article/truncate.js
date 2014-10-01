@@ -1,0 +1,77 @@
+define([
+    'common/utils/$',
+    '../../../bower_components/bean/bean',
+    'bonzo',
+    'qwery',
+    'lodash/collections/find',
+    'common/utils/config',
+    'common/utils/detect',
+    'common/utils/mediator',
+    'common/modules/article/twitter'
+], function(
+    $,
+    bean,
+    bonzo,
+    qwery,
+    find,
+    config,
+    detect,
+    mediator,
+    twitter
+) {
+    var truncatedClass = 'truncated-block',
+        minVisibleBlocks = detect.getBreakpoint() === 'mobile' ? 5 : 10,
+        blocks = qwery('.block'),
+        truncatedBlocks = blocks.slice(minVisibleBlocks),
+        $truncatedBlocks = bonzo(truncatedBlocks);
+
+    function removeTruncation() {
+        // Reinstate tweets and enhance them.
+        $('.truncated-block blockquote.tweet-truncated').removeClass('tweet-truncated').addClass('js-tweet');
+        $truncatedBlocks.removeClass(truncatedClass);
+        $('.article-elongator').addClass('u-h');
+        twitter.enhanceTweets();
+    }
+
+    function hashLinkedBlockIsTruncated() {
+        var id = window.location.hash.slice(1);
+        return find(truncatedBlocks, function(el) { return el.id === id; });
+    }
+
+    function truncate() {
+
+        var numBlocks = blocks.length;
+
+        if (config.page.isLiveBlog && numBlocks > minVisibleBlocks && !hashLinkedBlockIsTruncated()) {
+
+            var remainingBlocks = numBlocks - minVisibleBlocks;
+            var viewUpdatesLabel = '';
+
+            if (remainingBlocks === 1 ) {
+                viewUpdatesLabel = 'View 1 more update';
+            } else {
+                viewUpdatesLabel = 'View ' + remainingBlocks + ' more updates';
+            }
+
+            $.create(
+                '<button class="u-button-reset button button--large liveblog__show-more article-elongator" data-link-name="continue reading" data-test-id="article-expand">'+
+                    '<i class="i i-plus-white-small"></i>'+
+                    viewUpdatesLabel+
+                '</button>'
+            ).each(function(el) {
+                $('.js-liveblog-body').append(el);
+            });
+
+            bean.on(document.body, 'click', '.article-elongator', removeTruncation.bind(this));
+            mediator.on('module:liveblog:showkeyevents', removeTruncation.bind(this));
+            mediator.on('module:filter:toggle', removeTruncation.bind(this));
+
+            $truncatedBlocks.addClass(truncatedClass);
+            // Avoid running the twitter widget on truncated tweets.
+            $('.truncated-block blockquote.tweet').removeClass('js-tweet').addClass('tweet-truncated');
+        }
+    }
+
+    return truncate;
+
+}); // define

@@ -1,20 +1,20 @@
 module.exports = function(config) {
     return {
         // root of project
-        basePath: './../../../../../',
+        basePath: './../../../../',
         frameworks: ['jasmine', 'requirejs'],
 
         files: [
-            { pattern: 'common/test/assets/javascripts/components/sinonjs/sinon.js', included: true },
-            { pattern: 'common/test/assets/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js', included: true },
-            { pattern: 'common/test/assets/javascripts/components/seedrandom/index.js', included: true },
-            { pattern: 'common/test/assets/javascripts/setup.js', included: true },
-            { pattern: 'common/test/assets/javascripts/main.js', included: true },
-            { pattern: 'common/test/assets/javascripts/components/**/!(*.spec.js)', included: false },
-            { pattern: 'common/test/assets/javascripts/fixtures/**/*', included: false },
-            { pattern: 'common/test/assets/javascripts/helpers/**/*.js', included: false },
-            { pattern: 'common/test/assets/javascripts/spies/**/*.js', included: false },
-            { pattern: 'common/app/assets/javascripts/**/*.js', included: false }
+            { pattern: 'static/test/javascripts/components/sinonjs/sinon.js', included: true },
+            { pattern: 'static/test/javascripts/components/jasmine-sinon/lib/jasmine-sinon.js', included: true },
+            { pattern: 'static/test/javascripts/components/seedrandom/index.js', included: true },
+            { pattern: 'static/test/javascripts/setup.js', included: true },
+            { pattern: 'static/test/javascripts/main.js', included: true },
+            { pattern: 'static/test/javascripts/components/**/!(*.spec.js)', included: false },
+            { pattern: 'static/test/javascripts/fixtures/**/*', included: false },
+            { pattern: 'static/test/javascripts/helpers/**/*.js', included: false },
+            { pattern: 'static/test/javascripts/spies/**/*.js', included: false },
+            { pattern: 'static/src/javascripts/**/*.js', included: false }
         ],
 
         exclude: [],
