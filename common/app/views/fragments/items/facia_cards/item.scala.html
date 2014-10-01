@@ -89,9 +89,10 @@
                         <div class="fc-item__standfirst">@Html(text)</div>
                     }
 
-                    @meta(trail)
-
-                    @sublinks(trail.supporting)
+                    <footer class="fc-item__footer">
+                        @meta(trail)
+                        @sublinks(trail.supporting)
+                    </footer>
                 </div>
                 <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
             </div>

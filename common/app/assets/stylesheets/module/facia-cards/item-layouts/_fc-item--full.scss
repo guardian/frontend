@@ -20,19 +20,22 @@ Full item. A 100% width version of the Three quarter item.
 
 @mixin fc-item--full {
 
+    .fc-item__container {
+        @include flex-direction(row-reverse);
+    }
+
     .fc-item__media-wrapper {
         @include box-sizing(border-box);
+        @include flex-basis(75%);
         width: 75%;
         float: right;
         padding-left: $gs-gutter * .25;
     }
 
-    .fc-item__header,
-    .fc-item__standfirst,
-    .fc-item__byline,
-    .fc-sublinks {
-        @include box-sizing(border-box);
+    .fc-item__content {
+        @include flex-basis(25%);
         width: 25%;
+        @include box-sizing(border-box);
         padding-right: $gs-gutter * .5;
     }
 
@@ -65,7 +68,7 @@ Full item. A 100% width version of the Three quarter item.
         }
     }
 
-    .fc-sublinks {
+    .fc-item__footer {
         clear: left;
     }
 
