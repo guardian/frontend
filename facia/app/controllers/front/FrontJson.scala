@@ -136,7 +136,7 @@ trait FrontJson extends ExecutionContexts with Logging {
       `type`          = (json \ "type").asOpt[String],
       showTags        = (json \ "showTags").asOpt[Boolean],
       showSections    = (json \ "showSections").asOpt[Boolean],
-      uneditable      = None,
+      uneditable      = (json \ "uneditable").asOpt[Boolean],
       hideKickers     = (json \ "hideKickers").asOpt[Boolean]
     )
 

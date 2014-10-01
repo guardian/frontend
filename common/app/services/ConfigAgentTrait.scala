@@ -64,7 +64,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
         `type`       = (collectionJson \ "type").asOpt[String],
         showTags     = (collectionJson \ "showTags").asOpt[Boolean],
         showSections = (collectionJson \ "showSections").asOpt[Boolean],
-        uneditable   = None,
+        uneditable   = (collectionJson \ "uneditable").asOpt[Boolean],
         hideKickers  = (collectionJson \ "hideKickers").asOpt[Boolean]
       )
     }
