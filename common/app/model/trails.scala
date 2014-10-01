@@ -48,4 +48,6 @@ trait FaciaFields {
   def showKickerTag: Boolean = false
   def showKickerSection: Boolean = false
   def showMainVideo: Boolean = false
+  def imageCutoutReplace: Boolean = false
+  def customImageCutout: Option[ImageElement]
 }
