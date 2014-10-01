@@ -14,18 +14,21 @@ object ItemKicker {
 
     def sectionKicker = Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
 
-    if (trail.showKickerTag && maybeTag.isDefined) {
-      tagKicker
-    } else if (trail.showKickerSection) {
-      sectionKicker
-    } else if (config.showTags && maybeTag.isDefined) {
-      tagKicker
-    } else if (config.showSections) {
-      sectionKicker
-    } else if (!config.hideKickers) {
-      tonalKicker(trail)
-    } else {
-      None
+    trail.customKicker match {
+      case Some(kicker) => Some(FreeHtmlKicker(kicker))
+      case None => if (trail.showKickerTag && maybeTag.isDefined) {
+        tagKicker
+      } else if (trail.showKickerSection) {
+        sectionKicker
+      } else if (config.showTags && maybeTag.isDefined) {
+        tagKicker
+      } else if (config.showSections) {
+        sectionKicker
+      } else if (!config.hideKickers) {
+        tonalKicker(trail)
+      } else {
+        None
+      }
     }
   }
 

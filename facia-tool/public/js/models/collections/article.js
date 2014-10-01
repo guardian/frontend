@@ -75,6 +75,12 @@ define([
                     type: 'text'
                 },
                 {
+                    key: 'customKicker',
+                    editable: true,
+                    label: 'custom kicker',
+                    type: 'text'
+                },
+                {
                     key: 'href',
                     editable: true,
                     requires: 'isSnap',
