@@ -92,11 +92,9 @@
     }
 }
 
-.tone-comment {
-    .fc-item__title:before {
-        @include icon(quote-grey, false);
-        content: '';
-        height: .8em;
-        width: 1em;
-    }
+.fc-item__title--quoted:before {
+    @include icon(quote-grey, false);
+    content: '';
+    height: .8em;
+    width: 1em;
 }
