@@ -34,7 +34,7 @@ object MostPopularController extends Controller with Logging with ExecutionConte
         case popular => Cached(900) {
           JsonComponent(
             "html" -> views.html.fragments.collections.popular(popular),
-            "faciaHtml" -> views.html.fragments.containers.popular(Collection(popular.headOption.map(_.trails).getOrElse(Nil), None), PopularContainer(showMore = true), containerIndex = 1, s"$path/most-viewed/regular-stories")(request, CollectionConfig(displayName = Option("Most popular"), None, None, None, None, None, None, None)),
+            "faciaHtml" -> views.html.fragments.containers.popular(Collection(popular.headOption.map(_.trails).getOrElse(Nil), None), PopularContainer(showMore = true), containerIndex = 1, s"$path/most-viewed/regular-stories")(request, CollectionConfig.withDefaults(displayName = Option("Most popular"))),
             "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular)
           )
         }

@@ -1,6 +1,7 @@
 package views.support
 
-import model.{Tag, Config, Trail}
+import com.gu.facia.client.models.CollectionConfig
+import model.{Tag, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports
 import org.scalatest.{OptionValues, FlatSpec, Matchers}
@@ -49,14 +50,14 @@ class ItemKickerTest extends FlatSpec with Matchers with OptionValues {
   "ItemKicker" should "prefer item level tag kicker to collection level section kicker" in {
     ItemKicker.fromTrail(
       createTrailFixture(showTag = true, showSection = false),
-      Config("").copy(showSections = true)
+      CollectionConfig.withDefaults(showSections = Option(true))
     ).value shouldEqual TagKicker("Test Tag", "testtag")
   }
 
   it should "prefer item level section kicker to collection level tag kicker" in {
     ItemKicker.fromTrail(
       createTrailFixture(showTag = false, showSection = true),
-      Config("").copy(showTags = true)
+      CollectionConfig.withDefaults(showTags = Option(true))
     ).value shouldEqual SectionKicker("Test Section", "/testsection")
   }
 }
