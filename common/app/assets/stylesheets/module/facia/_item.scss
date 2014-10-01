@@ -288,6 +288,10 @@
             padding-left: 18px;
             line-height: inherit;
             color: inherit;
+
+            .container--dark-background & {
+                color: $c-neutral4;
+            }
         }
         i {
             top: 3px; // Aligns well with system sans-serif font
