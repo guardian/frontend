@@ -41,7 +41,8 @@ define([
         initTruncateAndTwitter: function() {
             // Ensure that truncation occurs before the tweet upgrading.
             truncate();
-            twitter.init().enhanceTweets();
+            twitter.init();
+            twitter.enhanceTweets();
         }
 
     };
