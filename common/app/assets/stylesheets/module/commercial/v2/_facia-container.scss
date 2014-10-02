@@ -140,6 +140,7 @@
 
         &:focus {
             background-color: #ffffff;
+            @include box-shadow(0 0 0 1px rgba(#000000, 0.3), inset 0 1px 2px 0 rgba(#000000, 0.3))
         }
     }
 
@@ -251,7 +252,7 @@
         @include fs-header(2);
         margin-bottom: $gs-baseline;
     }
-    
+
     .button--tertiary {
         .i-arrow-black-right {
             opacity: .3;
@@ -289,7 +290,11 @@
                 position: relative;
 
                 .commercial__search {
-                    right: $gs-gutter;
+                    position: absolute;
+                    width: gs-span(3);
+                    top: 0;
+                    right: gs-span(3) + $gs-gutter*2;
+                    left: auto;
                 }
 
                 .commercial__cta {

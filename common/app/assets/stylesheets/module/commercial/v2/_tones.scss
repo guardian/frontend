@@ -120,7 +120,7 @@
 @include tone-commercial(
     travel,
     guss-colour(maps-support-3, $pasteup-palette),
-    #72af7e, // TODO: Add this unspecified colour to paste-up palette
+    guss-colour(maps-support-4, $pasteup-palette),
     #ffffff,
     $c-neutral6,
     #ffffff
@@ -130,7 +130,7 @@
 @include tone-commercial(
     shop,
     guss-colour(features-main-1, $pasteup-palette),
-    #e02b7f, // TODO: Add this unspecified colour to paste-up palette
+    guss-colour(features-support-4, $pasteup-palette),
     #ffffff,
     $c-neutral6,
     #ffffff

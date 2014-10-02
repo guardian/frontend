@@ -23,7 +23,7 @@
             height: 60px;
         }
     }
-    
+
     @include mq($from: tablet, $until:desktop) {
         .lineitem__image {
             width: 100%;

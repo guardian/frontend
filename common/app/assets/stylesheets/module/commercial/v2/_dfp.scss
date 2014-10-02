@@ -49,7 +49,7 @@
             }
             @include mq(tablet) {
                 width: percentage(1/3);
-                
+
                 &:nth-child(n+3) {
                     display: block;
                 }

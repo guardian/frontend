@@ -2,7 +2,6 @@
    Line items
    ========================================================================== */
 .commercial--v2 {
-    
     .lineitems {
         padding: 0;
         margin: 0 $gs-gutter*-.5;
@@ -64,6 +63,7 @@
         color: $c-neutral1;
         font-weight: bold;
     }
+
     /* Line items - high relevance */
     .lineitem.lineitem--high {
         width: 100%;
