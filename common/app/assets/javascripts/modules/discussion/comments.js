@@ -133,8 +133,6 @@ Comments.prototype.prerender = function() {
     var heading = qwery(this.getClass('heading'), this.getClass('container'))[0],
         commentCount = this.elem.getAttribute('data-comment-count');
 
-    heading.innerHTML += ' <span class="discussion__comment-count">('+ commentCount +')</span>';
-
     // Ease of use
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
     this.comments = qwery(this.getClass('comment'), this.elem);
@@ -465,6 +463,8 @@ Comments.prototype.addComment = function(comment, focus, parent) {
 
 /** @param {Event} e */
 Comments.prototype.replyToComment = function(e) {
+    e.preventDefault(); // stop the anchor link firing
+
     var parentCommentEl, showRepliesElem,
         replyLink = e.currentTarget,
         replyToId = replyLink.getAttribute('data-comment-id'),
@@ -475,6 +475,8 @@ Comments.prototype.replyToComment = function(e) {
         document.getElementById('reply-to-'+ replyToId).focus();
         return;
     }
+
+    $('.d-comment-box--response').remove();
 
     var replyToComment = qwery('#comment-'+ replyToId)[0],
         replyToAuthor = replyToComment.getAttribute('data-comment-author'),
@@ -615,6 +617,8 @@ Comments.prototype.addUser = function(user) {
         RecommendComments.init();
 
         if (this.user && this.user.privateFields.canPostComment) {
+
+            $(this.getClass('commentReply')).attr('href', '#'); // remove sign-in link
 
             this.on('click', this.getClass('commentReply'), this.replyToComment);
             this.on('click', this.getClass('commentPick'), this.handlePickClick);
