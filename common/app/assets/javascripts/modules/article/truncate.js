@@ -24,10 +24,9 @@ define([
     function removeTruncation() {
         // Reinstate tweets and enhance them.
         $('.truncated-block blockquote.tweet-truncated').removeClass('tweet-truncated').addClass('js-tweet');
-        twitter.enhanceTweets();
-
         $truncatedBlocks.removeClass(truncatedClass);
         $('.article-elongator').addClass('u-h');
+        twitter.enhanceTweets();
     }
 
     function truncate() {

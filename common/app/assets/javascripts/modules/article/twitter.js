@@ -36,7 +36,8 @@ define([
 
         tweetElements.forEach( function(element) {
             var $el = bonzo(element);
-            if((bonzo(document.body).scrollTop() + (viewportHeight*2.5)) > $el.offset().top) {
+            if((bonzo(document.body).scrollTop() + (viewportHeight * 2.5)) > $el.offset().top) {
+                console.log("upgrade" + $el.offset().top);
                 $(element).removeClass('js-tweet').addClass('twitter-tweet');
             }
         });
