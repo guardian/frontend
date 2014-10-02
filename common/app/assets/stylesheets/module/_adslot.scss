@@ -69,6 +69,11 @@
 .ad-slot--top-banner-ad {
     text-align: center;
 
+    @include mq(wide) {
+        width: gs-span(16) - ($left-column-wide + $gs-gutter);
+        padding-left: $left-column-wide + $gs-gutter;
+    }
+
     .top-banner-ad-container--mobile & {
         height: 50px;
         padding: $gs-baseline 0;
@@ -101,18 +106,6 @@
             .ad-slot__label {
                 margin: 0 auto;
             }
-        }
-    }
-    .top-banner-ad-container--facia-layout & {
-        @include mq(wide) {
-            width: gs-span(16) - ($left-column-wide + $gs-gutter);
-            padding-left: $left-column-wide + $gs-gutter;
-        }
-    }
-    .top-banner-ad-container--article-layout & {
-        @include mq(wide) {
-            max-width: gs-span(16) + ($gs-gutter*2) - ($left-column-wide + ($gs-gutter*2));
-            padding-left: $left-column-wide + ($gs-gutter*2);
         }
     }
 }
