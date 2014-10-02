@@ -3,10 +3,11 @@ module.exports = function(grunt, options) {
         options: {
             baseUrl: 'static/src/javascripts',
             paths: {
-                common:       'common',
-                facia:        'facia',
-                membership:   'membership',
                 bootsraps:    'bootstraps',
+                admin:        'projects/admin',
+                common:       'projects/common',
+                facia:        'projects/facia',
+                membership:   'projects/membership',
                 bean:         'components/bean/bean',
                 bonzo:        'components/bonzo/bonzo',
                 EventEmitter: 'components/eventEmitter/EventEmitter',
@@ -16,9 +17,9 @@ module.exports = function(grunt, options) {
                 imager:       'components/imager.js/container',
                 fence:        'components/fence/fence',
                 enhancer:     'components/enhancer/enhancer',
-                stripe:       '../../../common/app/public/javascripts/vendor/stripe/stripe.min',
                 raven:        'components/raven-js/raven',
                 fastclick:    'components/fastclick/fastclick',
+                stripe:       '../../../common/app/public/javascripts/vendor/stripe/stripe.min',
                 omniture:     '../../../common/app/public/javascripts/vendor/omniture'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
@@ -81,22 +82,21 @@ module.exports = function(grunt, options) {
                 out: options.staticTargetDir + 'javascripts/bootstraps/ophan.js'
             }
         },
-//        admin: {
-//            options: {
-//                baseUrl: 'admin/app/assets/javascripts',
-//                name: 'bootstraps/admin',
-//                out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
-//                shim: {
-//                    imager: {
-//                        deps: ['common/components/imager.js/imager'],
-//                        exports: 'Imager'
-//                    },
-//                    omniture: {
-//                        exports: 's'
-//                    }
-//                }
-//            }
-//        },
+        admin: {
+            options: {
+                name: 'bootstraps/admin',
+                out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
+                shim: {
+                    imager: {
+                        deps: ['common/components/imager.js/imager'],
+                        exports: 'Imager'
+                    },
+                    omniture: {
+                        exports: 's'
+                    }
+                }
+            }
+        },
         video : {
             options: {
                 name: 'bootstraps/video-player',

@@ -1,4 +1,4 @@
-define(['analytics/omniture', 'common/utils/mediator'], function(Omniture, mediator) {
+define(['common/modules/analytics/omniture', 'common/utils/mediator'], function(Omniture, mediator) {
 
     describe("Omniture", function() {
 

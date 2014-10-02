@@ -5,7 +5,7 @@
 define([
     'lodash/objects/assign',
     'common/modules/component',
-    'modules/abtests/participation-item'
+    'admin/modules/abtests/participation-item'
 ], function (
     extend,
     Component,

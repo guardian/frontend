@@ -1,5 +1,5 @@
 define([
-    'modules/ui/container-toggle',
+    'facia/modules/ui/container-toggle',
     'common/utils/$',
     'bonzo',
     'bean',

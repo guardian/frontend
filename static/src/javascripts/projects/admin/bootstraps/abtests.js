@@ -1,9 +1,9 @@
 define([
     'common/modules/experiments/ab',
-    'qwery',
+    '../../../bower_components/qwery/qwery',
     'bean',
-    'modules/abtests/abtest-item',
-    'modules/abtests/audience'
+    'admin/modules/abtests/abtest-item',
+    'admin/modules/abtests/audience'
 ], function(
     abTests,
     qwery,

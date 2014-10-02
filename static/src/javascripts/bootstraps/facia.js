@@ -9,11 +9,11 @@ define([
     'common/utils/detect',
     'common/utils/storage',
     'common/utils/to-array',
-    'facia/snaps',
-    'facia/container-fc-show-more',
-    'facia/container-show-more',
-    'facia/container-toggle',
-    'facia/geo-most-popular-front'
+    'facia/modules/ui/snaps',
+    'facia/modules/ui/container-fc-show-more',
+    'facia/modules/ui/container-show-more',
+    'facia/modules/ui/container-toggle',
+    'facia/modules/onwards/geo-most-popular-front'
 ], function (
     $,
     ajax,

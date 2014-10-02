@@ -5,7 +5,7 @@
 define([
     'lodash/main',
     'common/modules/component',
-    'modules/abtests/audience-item'
+    'admin/modules/abtests/audience-item'
 ], function (
     _,
     Component,

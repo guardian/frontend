@@ -1,10 +1,10 @@
 require([
     'common/utils/ajax',
-    'bootstraps/abtests',
-    'bootstraps/adunitapproval',
-    'bootstraps/browserstats',
-    'bootstraps/radiator',
-    'bootstraps/commercial'
+    'admin/bootstraps/abtests',
+    'admin/bootstraps/adunitapproval',
+    'admin/bootstraps/browserstats',
+    'admin/bootstraps/radiator',
+    'admin/bootstraps/commercial'
 ], function(
     ajax,
     abTests,

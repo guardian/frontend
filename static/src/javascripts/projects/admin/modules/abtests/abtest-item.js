@@ -5,7 +5,7 @@
 define([
     'lodash/main',
     'common/modules/component',
-    'modules/abtests/participation',
+    'admin/modules/abtests/participation',
     'bonzo',
     'qwery',
     'bean'

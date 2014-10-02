@@ -6,7 +6,7 @@ define([
     'common/utils/template',
     'common/utils/to-array',
     'common/modules/ui/relativedates',
-    'facia/football-snaps'
+    'facia/modules/ui/football-snaps'
 ], function (
     $,
     bonzo,
