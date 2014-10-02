@@ -27,11 +27,10 @@ define([
 
     function removeTruncation() {
         // Reinstate tweets and enhance them.
-        $('.truncated-block blockquote.tweet-truncated').removeClass('tweet-truncated').addClass('tweet');
-        twitter.enhanceTweets();
-
+        $('.truncated-block blockquote.tweet-truncated').removeClass('tweet-truncated').addClass('js-tweet');
         $truncatedBlocks.removeClass(truncatedClass);
         $('.article-elongator').addClass('u-h');
+        twitter.enhanceTweets();
     }
 
     function hashLinkedBlockIsTruncated() {
@@ -69,7 +68,7 @@ define([
 
             $truncatedBlocks.addClass(truncatedClass);
             // Avoid running the twitter widget on truncated tweets.
-            $('.truncated-block blockquote.tweet').removeClass('tweet').addClass('tweet-truncated');
+            $('.truncated-block blockquote.tweet').removeClass('js-tweet').addClass('tweet-truncated');
         }
     }
 
