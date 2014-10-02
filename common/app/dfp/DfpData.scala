@@ -29,6 +29,8 @@ case class CustomTarget(name: String, op: String, values: Seq[String]) {
   val isContributorTag = isPositive("co")
 
   val targetsR2Only: Boolean = isPlatform("r2") || isNotPlatform("ng")
+
+  val isSection = isPositive("s")
 }
 
 object CustomTarget {
@@ -67,6 +69,8 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val targetsAdTest = targets.exists(_.targetsAdTest)
 
   val targetsR2Only: Boolean = targets exists (_.targetsR2Only)
+
+  val section: Option[String] = targets find (_.isSection) flatMap (_.values.headOption)
 }
 
 object CustomTargetSet {
@@ -159,6 +163,8 @@ case class GuLineItem(id: Long,
   val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
   val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
   val inlineMerchandisingTargetedContributors: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
+
+  val section: Option[String] = targeting.customTargetSets.map(_.section).headOption.flatten
 }
 
 object GuLineItem {

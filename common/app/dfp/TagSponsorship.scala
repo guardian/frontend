@@ -11,6 +11,7 @@ object Sponsorship {
     def writes(sponsorship: Sponsorship): JsValue = {
       Json.obj(
         "tags" -> sponsorship.tags,
+        "section" -> sponsorship.section,
         "sponsor" -> sponsorship.sponsor,
         "countries" -> sponsorship.countries,
         "lineItemId" -> sponsorship.lineItemId
@@ -23,6 +24,7 @@ object Sponsorship {
 }
 
 case class Sponsorship(tags: Seq[String],
+                       section: Option[String],
                        sponsor: Option[String],
                        countries: Seq[String],
                        lineItemId: Long) {

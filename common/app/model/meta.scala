@@ -72,6 +72,10 @@ trait MetaData extends Tags {
   def cacheSeconds = 60
 
   def customSignPosting: Option[NavItem] = None
+
+  override lazy val isSponsored: Boolean = DfpAgent.isSponsored(tags, Some(section))
+  override lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(tags, Some(section))
+  override lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(tags, Some(section))
 }
 
 class Page(
@@ -205,13 +209,13 @@ trait Tags {
   lazy val tones: Seq[Tag] = tagsOfType("tone")
   lazy val types: Seq[Tag] = tagsOfType("type")
 
-  def isSponsored = DfpAgent.isSponsored(tags)
-  def hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags)
-  def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
-  def hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags)
-  def isFoundationSupported = DfpAgent.isFoundationSupported(tags)
-  def hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags)
-  def sponsor = DfpAgent.getSponsor(tags)
+  def isSponsored: Boolean = false
+  def hasMultipleSponsors: Boolean = DfpAgent.hasMultipleSponsors(tags)
+  def isAdvertisementFeature: Boolean = false
+  def hasMultipleFeatureAdvertisers: Boolean = DfpAgent.hasMultipleFeatureAdvertisers(tags)
+  def isFoundationSupported: Boolean = false
+  def hasInlineMerchandise: Boolean = DfpAgent.hasInlineMerchandise(tags)
+  def sponsor: Option[String] = DfpAgent.getSponsor(tags)
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   /**

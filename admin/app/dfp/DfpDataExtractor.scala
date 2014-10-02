@@ -8,7 +8,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     lineItems.withFilter { lineItem =>
       lineItem.sponsoredTags.nonEmpty && lineItem.isCurrent
     }.map { lineItem =>
-      Sponsorship(lineItem.sponsoredTags, lineItem.sponsor, locationsTargeted(lineItem), lineItem.id)
+      Sponsorship(lineItem.sponsoredTags, lineItem.section, lineItem.sponsor, locationsTargeted(lineItem), lineItem.id)
     }.distinct
   }
 
@@ -16,7 +16,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     lineItems.withFilter { lineItem =>
       lineItem.advertisementFeatureTags.nonEmpty && lineItem.isCurrent
     }.map { lineItem =>
-      Sponsorship(lineItem.advertisementFeatureTags, lineItem.sponsor, locationsTargeted(lineItem), lineItem.id)
+      Sponsorship(lineItem.advertisementFeatureTags, lineItem.section, lineItem.sponsor, locationsTargeted(lineItem), lineItem.id)
     }.distinct
   }
 
@@ -32,7 +32,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     lineItems.withFilter { lineItem =>
       lineItem.foundationSupportedTags.nonEmpty && lineItem.isCurrent
     }.map { lineItem =>
-      Sponsorship(lineItem.foundationSupportedTags, lineItem.sponsor, locationsTargeted(lineItem), lineItem.id)
+      Sponsorship(lineItem.foundationSupportedTags, lineItem.section, lineItem.sponsor, locationsTargeted(lineItem), lineItem.id)
     }.distinct
   }
 
