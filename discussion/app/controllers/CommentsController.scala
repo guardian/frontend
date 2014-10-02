@@ -57,8 +57,7 @@ trait CommentsController extends DiscussionController {
 }
 
 case class DiscussionParams(orderBy: String, page: String, pageSize: String, maxResponses: Option[String] = None, sentiment: Option[String] = None, topComments: Boolean)
-object
-DiscussionParams extends {
+object DiscussionParams extends {
   def apply(request: RequestHeader): DiscussionParams = {
     DiscussionParams(
       orderBy = request.getQueryString("orderBy").getOrElse("newest"),
