@@ -554,9 +554,9 @@ case object MegaFull extends Slice {
 /*** LIST SLICES ***/
 
 /* .___________.___________.___________.
- * |_##________|_##________|           |
- * |_##________|_##________|   MPU!    |
- * |_##________|_##________|___________|
+ * |___________|___________|           |
+ * |___________|___________|   MPU!    |
+ * |___________|___________|___________|
  */
 case object TlTlMpu extends Slice {
   val layout = SliceLayout(
@@ -600,8 +600,8 @@ case object Ql2Ql2Ql2Ql2 extends Slice {
 }
 
 /* .___________.___________.___________.
- * |_##________|_##________|_##________|
- * |_##________|_##________|_##________|
+ * |___________|___________|___________|
+ * |___________|___________|___________|
  */
 case object TlTlTl extends Slice {
   val layout = SliceLayout(
@@ -613,7 +613,7 @@ case object TlTlTl extends Slice {
         rows = 2,
         ItemClasses(
           mobile = "list",
-          tablet = "list-media"
+          tablet = "list-compact"
         )
       )
     )
