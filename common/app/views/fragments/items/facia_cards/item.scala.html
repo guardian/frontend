@@ -1,4 +1,4 @@
-@(card: layout.Card, modifierClasses: String, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: model.Config)
+@(card: layout.Card, modifierClasses: layout.ItemClasses, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: model.Config)
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
@@ -12,11 +12,8 @@
 @defining((card.item, card.index)) { case (trail, index) =>
 
 <li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
-
-
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
-        <div
-            class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses u-cf"
+        <div class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses.classes u-cf"
             @if(trail.isCommentable) {
                 @trail.discussionId.map{ id =>
                 data-discussion-id="@id"
@@ -29,7 +26,7 @@
 
             <div class="fc-item__container">
                 @FaciaDisplayElement.fromTrail(trail) match {
-                    case InlineVideo(videoElement, title, endSlatePath) => {
+                    case InlineVideo(videoElement, title, endSlatePath) if modifierClasses.showVideoPlayer => {
                         @defining(VideoPlayer(
                             videoElement,
                             Video640,
@@ -39,17 +36,11 @@
                             endSlatePath,
                             Some(false)
                         )) { player =>
-
-                            @* TODO: This is a temporary HACK until Rob Berry can clean up. *@
-                            @if(Seq("half", "three", "full", "mega-full").exists(size => modifierClasses.contains(size))) {
-                                <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
-                                    <div class="fc-item__video-container">
-                                    @video(player)
-                                    </div>
+                            <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
+                                <div class="fc-item__video-container">
+                                @video(player)
                                 </div>
-                            } else {
-                                @image(trail, inlineImage = containerIndex == 0 && index < 4)
-                            }
+                            </div>
                         }
                     }
 
