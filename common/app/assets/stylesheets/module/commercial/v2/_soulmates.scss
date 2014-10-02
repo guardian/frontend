@@ -8,12 +8,14 @@
         margin: 0 0 $gs-baseline*2.5;
         background-repeat: no-repeat;
         width: gs-span(2);
+        
         .svg & {
             background-size: cover;
         }
     }
     .container__title {
         padding-bottom: 0;
+        padding-left: 0;
     }
     .commercial__title {
         text-align: center;
