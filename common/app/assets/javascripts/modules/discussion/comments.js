@@ -49,7 +49,8 @@ var Comments = function(mediator, options) {
 
     this.fetchData = {
         orderBy: this.options.order,
-        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10
+        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
+        maxResponses: 3
     };
 
     this.endpoint = this.options.commentId ?
@@ -149,6 +150,8 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('sentimentControl'), this.setSentiment);
 
     this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
+
+    this.addMoreRepliesButtons();
 
     if (this.options.commentId) {
         var comment = $('#comment-'+ this.options.commentId);
@@ -305,6 +308,9 @@ Comments.prototype.renderComments = function(resp) {
     });
 
     $(this.getClass('jsContent'), this.elem).replaceWith(content);
+    this.addMoreRepliesButtons(qwery(
+        this.getClass('comment'), content
+    ));
 
     if (!this.isReadOnly()) {
         RecommendComments.init();
@@ -334,6 +340,9 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
         var replies = parseInt(elem.getAttribute('data-comment-replies'), 10),
             renderedReplies = qwery(self.getClass('reply'), elem);
 
+
+        console.log("Replies: " + replies + " Rendered replies: " + renderedReplies.length)
+
         if (renderedReplies.length < replies) {
             var numHiddenReplies = replies - renderedReplies.length,
                 showButtonHtml = '<li>'+
@@ -360,6 +369,8 @@ Comments.prototype.getMoreReplies = function(event) {
     event.preventDefault();
     var self = this,
         source = bonzo(event.target).data('source-comment');
+
+    console.log("+++  Get More comments");
 
     ajax({
         url: '/discussion/comment/'+ event.target.getAttribute('data-comment-id') +'.json',

@@ -18,6 +18,9 @@ trait CommentsController extends DiscussionController {
   def commentJson(id: Int) = comment(id)
   def comment(id: Int) = Action.async { implicit request =>
     val comment = discussionApi.commentFor(id)
+
+    print("Get comment")
+
     comment map {
       comment =>
         Cached(60) {
@@ -56,7 +59,8 @@ trait CommentsController extends DiscussionController {
 }
 
 case class DiscussionParams(orderBy: String, page: String, pageSize: String, maxResponses: Option[String] = None, sentiment: Option[String] = None, topComments: Boolean)
-object DiscussionParams extends {
+object
+DiscussionParams extends {
   def apply(request: RequestHeader): DiscussionParams = {
     DiscussionParams(
       orderBy = request.getQueryString("orderBy").getOrElse("newest"),
