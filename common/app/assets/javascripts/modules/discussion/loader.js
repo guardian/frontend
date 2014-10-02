@@ -103,11 +103,11 @@ Loader.prototype.ready = function() {
         this.mediator.emit('discussion:seen:comment-permalink');
     }
 
-    this.topComments = new TopComments(this.mediator, {
+    this.topComments = new TopComments({
         discussionId: this.getDiscussionId()
     });
 
-    this.comments = new Comments(this.mediator, {
+    this.comments = new Comments({
         discussionId: this.getDiscussionId(),
         commentId: commentId ? commentId : null,
         order: this.getDiscussionClosed() ? 'oldest' : 'newest',

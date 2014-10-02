@@ -14,18 +14,7 @@ define([
     $
 ) {
 
-/* =================================================================
-
-This module requires refactoring pending an architecture change for the
-discussion system based on designs for the Top Comments functionality
-being signed off.
-
- - chrisfinch
-
-================================================================= */
-
-var TopComments = function(mediator, options) {
-    this.mediator = mediator;
+var TopComments = function(options) {
     this.setOptions(options);
 
     this.fetchData = {
