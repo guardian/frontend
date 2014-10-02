@@ -18,10 +18,6 @@
             }
             role="main">
 
-            @if(faciaPage.hasPageSkin(Edition(request))) {
-                @fragments.commercial.pageSkin()
-            }
-
             @defining(faciaPage.collections.filter(_._2.items.nonEmpty)) { collections =>
                 @collections.zipWithIndex.map{ case(block, index) =>
                     @fragments.frontCollection(faciaPage, block, collections.size, index)
