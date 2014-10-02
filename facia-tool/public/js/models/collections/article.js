@@ -160,10 +160,10 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'imageHide',
+                    key: 'imageCutoutReplace',
                     editable: true,
                     singleton: 'images',
-                    label: 'hide image',
+                    label: 'cutout image',
                     type: 'boolean'
                 },
                 {
@@ -175,10 +175,10 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'imageCutoutReplace',
+                    key: 'imageHide',
                     editable: true,
                     singleton: 'images',
-                    label: 'cutout image',
+                    label: 'hide image',
                     type: 'boolean'
                 },
                 {
