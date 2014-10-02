@@ -67,7 +67,7 @@ TopComments.prototype.endpoint = '/discussion/:discussionId.json';
 /** @type {Object.<string.*>} */
 TopComments.prototype.defaultOptions = {
     discussionId: null,
-    showRepliesCount: 2,
+    showRepliesCount: 3,
     sectionHeading: 'Featured Comments '
 };
 

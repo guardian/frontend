@@ -344,9 +344,6 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
         var replies = parseInt(elem.getAttribute('data-comment-replies'), 10),
             renderedReplies = qwery(self.getClass('reply'), elem);
 
-
-        console.log("Replies: " + replies + " Rendered replies: " + renderedReplies.length)
-
         if (renderedReplies.length < replies) {
             var numHiddenReplies = replies - renderedReplies.length,
                 showButtonHtml = '<li>'+
@@ -373,8 +370,6 @@ Comments.prototype.getMoreReplies = function(event) {
     event.preventDefault();
     var self = this,
         source = bonzo(event.target).data('source-comment');
-
-    console.log("+++  Get More comments");
 
     ajax({
         url: '/discussion/comment/'+ event.target.getAttribute('data-comment-id') +'.json',
