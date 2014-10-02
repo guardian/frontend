@@ -376,7 +376,7 @@ define([
             discussionApi.init(config);
             mediator.on('page:common:ready', function() {
                 if (config.page.commentable && config.switches.discussion) {
-                    var discussionLoader = new DiscussionLoader(mediator);
+                    var discussionLoader = new DiscussionLoader();
                     discussionLoader.attachTo($('.discussion')[0]);
                 }
                 CommentCount.init();
