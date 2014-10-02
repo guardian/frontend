@@ -35,9 +35,11 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
     }
   }
 
-  def commentFor(id: Int): Future[Comment] = {
-    print("API: " + apiRoot)
-    getCommentJsonForId(id, s"$apiRoot/comment/$id?displayResponses=true&displayThreaded=true")
+  def commentFor(id: Int, displayThreaded: Option[String]  = None): Future[Comment] = {
+
+    val url = s"$apiRoot/comment/$id?displayResponses=true" +
+      displayThreaded.map{ dt => "&displayThreaded=" + dt  }.getOrElse("")
+    getCommentJsonForId(id, url)
   }
 
   def commentsFor(key: DiscussionKey, params: DiscussionParams): Future[CommentPage] = {
@@ -49,7 +51,6 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
                     params.sentiment.map{ s: String => "&sentiment="+s }.getOrElse("")+
                     params.maxResponses.map{i => "&maxResponses="+ i}.getOrElse("")
 
-    print("URL: " + url)
 
     getJsonForUri(key, url)
   }

@@ -53,6 +53,10 @@ var Comments = function(mediator, options) {
         maxResponses: 3
     };
 
+    this.fetchCommentData = {
+        displayThreaded: true
+    };
+
     this.endpoint = this.options.commentId ?
         '/discussion/comment-context/'+ this.options.commentId + '.json' :
         '/discussion/'+ this.options.discussionId + '.json';
@@ -376,6 +380,7 @@ Comments.prototype.getMoreReplies = function(event) {
         url: '/discussion/comment/'+ event.target.getAttribute('data-comment-id') +'.json',
         type: 'json',
         method: 'get',
+        data: this.fetchCommentData,
         crossOrigin: true
     }).then(function (resp) {
         var comment = bonzo.create(resp.html),

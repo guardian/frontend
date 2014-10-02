@@ -17,9 +17,7 @@ trait CommentsController extends DiscussionController {
 
   def commentJson(id: Int) = comment(id)
   def comment(id: Int) = Action.async { implicit request =>
-    val comment = discussionApi.commentFor(id)
-
-    print("Get comment")
+    val comment = discussionApi.commentFor(id, request.getQueryString("displayThreaded"))
 
     comment map {
       comment =>
