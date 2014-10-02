@@ -30,14 +30,6 @@
         </div>
     </div>
 
-    @if(!isTopComments){
-        <div class="d-discussion__sentiments">
-            <a class="js-discussion-sentiment-changer d-discussion__sentiment d-discussion__sentiment--active">All</a>
-            <a class="js-discussion-sentiment-changer d-discussion__sentiment" href="?index=0" data-sentiment="0">Yes</a>
-            <a class="js-discussion-sentiment-changer d-discussion__sentiment" href="?index=1" data-sentiment="1">No</a>
-        </div>
-    }
-
     <div class="preload-msg d-discussion__loader u-h">Loading comments…<div class="is-updating"></div></div>
     <div class="discussion-content js-discussion-content">
         @if(!isTopComments){
