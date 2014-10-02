@@ -96,7 +96,7 @@ Hence why a greater depth of selector specificity is needed.
 
             &:last-child {
                 @include flex(2);
-                width: 50%;
+                width: 50% !important;
             }
         }
     }

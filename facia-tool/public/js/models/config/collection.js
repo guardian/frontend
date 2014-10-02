@@ -39,6 +39,7 @@ define([
             'uneditable',
             'showTags',
             'showSections',
+            'hideKickers',
             'apiQuery']);
 
         populateObservables(this.meta, opts);

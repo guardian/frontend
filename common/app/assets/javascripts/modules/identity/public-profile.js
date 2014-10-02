@@ -5,7 +5,6 @@ define([
     'common/utils/config',
     'common/utils/url',
     'common/modules/component',
-    'common/modules/discussion/api',
     'common/modules/discussion/activity-stream',
     'lodash/objects/mapValues'
 ],
@@ -16,7 +15,6 @@ function(
     config,
     url,
     component,
-    discussionApi,
     ActivityStream,
     mapValues
 ) {

@@ -42,6 +42,7 @@ define([
             capiFields = [
                 'headline',
                 'trailText',
+                'byline',
                 'isLive',
                 'firstPublicationDate',
                 'scheduledPublicationDate',
@@ -67,6 +68,13 @@ define([
                     type: 'text'
                 },
                 {
+                    key: 'byline',
+                    editable: true,
+                    requires: 'showByline',
+                    label: 'byline',
+                    type: 'text'
+                },
+                {
                     key: 'href',
                     editable: true,
                     requires: 'isSnap',
@@ -84,6 +92,7 @@ define([
                 {
                     key: 'isBreaking',
                     editable: true,
+                    singleton: 'kicker',
                     label: 'breaking news',
                     type: 'boolean'
                 },
@@ -93,7 +102,12 @@ define([
                     label: 'boost',
                     type: 'boolean'
                 },
-
+                {
+                    key: 'showByline',
+                    editable: true,
+                    label: 'show byline',
+                    type: 'boolean'
+                },
                 {
                     key: 'hasMainVideo',
                     label: 'has a video',
@@ -107,7 +121,6 @@ define([
                     label: 'show video',
                     type: 'boolean'
                 },
-
                 {
                     key: 'imageHide',
                     editable: true,
@@ -207,6 +220,8 @@ define([
 
             this.editors = ko.observableArray();
 
+            this.editorsDisplay = ko.observableArray();
+
             this.headlineLength = ko.computed(function() {
                 return (this.meta.headline() || this.fields.headline() || '').length;
             }, this);
@@ -269,6 +284,20 @@ define([
             });
         };
 
+        Article.prototype.metaDisplayer = function(opts, index, all) {
+            var self = this,
+                show = opts.editable;
+
+            if (opts.type === 'boolean') {
+                show = show && (this.meta[opts.key] || function() {})();
+                show = show && (opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true);
+                return show ? opts.label : false;
+
+            } else {
+                return false;
+            }
+        };
+
         Article.prototype.metaEditor = function(opts, index, all) {
             var self = this,
                 key,
@@ -301,7 +330,7 @@ define([
 
                 revert: function() { meta(undefined); },
 
-                open:   function() { mediator.emit('ui:open', meta); },
+                open:   function() { mediator.emit('ui:open', meta, self); },
 
                 hasFocus: ko.computed(function() {
                     return meta === vars.model.uiOpenElement();
@@ -309,10 +338,6 @@ define([
 
                 displayEditor: ko.computed(function() {
                     return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
-                }, self),
-
-                displayValue: ko.computed(function() {
-                    return opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true;
                 }, self),
 
                 toggle: function() {
@@ -329,7 +354,7 @@ define([
                    _.chain(all)
                     .filter(function(editor) { return editor.requires === key; })
                     .first(1)
-                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key]); });
+                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key], self); });
                 },
 
                 length: ko.computed(function() {
@@ -350,7 +375,7 @@ define([
                     owner: self
                 })
             }
-        }
+        };
 
         function mainMediaType(contentApiArticle) {
             var mainElement = _.findWhere(contentApiArticle.elements || [], {
@@ -412,7 +437,7 @@ define([
             this.meta.isSnap(!!snap.validateId(this.id()));
 
             if(!this.uneditable) {
-                this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
+                this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
             }
 
             this.setRelativeTimes();
@@ -515,18 +540,21 @@ define([
             this.meta.isSnap(true);
             this.meta.href(this.id());
             this.id(snap.generateId());
-            this.state.isOpen(true);
-            mediator.emit('ui:open', this.meta.headline);
         };
 
         Article.prototype.open = function() {
             if (this.uneditable) { return; }
 
+            this.meta.supporting && this.meta.supporting.items().forEach(function(sublink) { sublink.close(); });
+
             if (!this.state.isOpen()) {
-                 this.state.isOpen(true);
-                 mediator.emit('ui:open', this.meta.headline);
+                if (this.editors().length === 0) {
+                    this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
+                }
+                this.state.isOpen(true);
+                mediator.emit('ui:open', this.meta.headline, this);
             } else {
-                 mediator.emit('ui:open', undefined);
+                mediator.emit('ui:open');
             }
         };
 
@@ -560,6 +588,8 @@ define([
 
         ko.bindingHandlers.tabbableFormField = {
             init: function(el, valueAccessor, allBindings, viewModel, bindingContext) {
+                var self = this;
+
                 $(el).on('keydown', function(e) {
                     var keyCode = e.keyCode || e.which,
                         formField,
@@ -571,7 +601,7 @@ define([
                         formField = bindingContext.$rawData;
                         formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.displayEditor(); });
                         nextIndex = mod(formFields.indexOf(formField) + (e.shiftKey ? -1 : 1), formFields.length);
-                        mediator.emit('ui:open', formFields[nextIndex].meta);
+                        mediator.emit('ui:open', formFields[nextIndex].meta, self);
                     }
                 });
             }

@@ -1,6 +1,10 @@
 .tone-news {
-    .fc-item__kicker {
-        color: $c-analysisAccent;
+    .fc-item__kicker,
+    .fc-item__byline {
+        &,
+        & a {
+            color: $c-newsDefault;
+        }
     }
 
     &.fc-item--has-image:before {
@@ -13,24 +17,16 @@
         }
     }
 
-    &.fc-item--list-tablet .fc-item__container,
-    &.fc-item--list-media-tablet .fc-item__container {
-        @include mq(tablet) {
-            @include box-shadow(inset 0 1px $c-newsAccent);
-        }
-    }
-
-    &.fc-item--list-desktop .fc-item__container {
-        @include mq(tablet) {
-            @include box-shadow(inset 0 1px $c-newsAccent);
-        }
-    }
-
-    &.fc-item--list-compact-tablet .fc-item__container {
-        @include mq(tablet) {
-            @include box-shadow(inset 0 1px $c-newsAccent);
-        }
-    }
+    &.fc-item--list-tablet,
+    &.fc-item--list-media-tablet,
+    &.fc-item--list-desktop,
+    &.fc-item--list-compact-tablet {
+        .fc-item__container {
+            @include mq(tablet) {
+                @include box-shadow(inset 0 1px $c-newsAccent);
+            }
+         }
+     }
 
     &.fc-item--list-media-mobile,
     &.fc-item--list-media-large-mobile {

@@ -5,7 +5,7 @@ import java.net.URLDecoder
 import akka.agent.Agent
 import common._
 import conf.Configuration
-import conf.Configuration.commercial.{dfpAdUnitRoot, dfpAdvertisementFeatureTagsDataKey, dfpInlineMerchandisingTagsDataKey, dfpPageSkinnedAdUnitsKey, dfpSponsoredTagsDataKey}
+import conf.Configuration.commercial._
 import model.{Config, Tag}
 import play.api.{Application, GlobalSettings}
 import services.S3
@@ -18,6 +18,7 @@ trait DfpAgent {
   protected def tagToSponsorsMap: Map[String, Set[String]]
   protected def advertisementFeatureSponsorships: Seq[Sponsorship]
   protected def tagToAdvertisementFeatureSponsorsMap: Map[String, Set[String]]
+  protected def foundationSupported: Seq[Sponsorship]
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship]
 
@@ -62,9 +63,13 @@ trait DfpAgent {
       (tagToAdvertisementFeatureSponsorsMap(tagId).size > 1)
   }
 
-  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = getKeywordTags(tags) exists (tag => isAdvertisementFeature(tag.id))
+  def isAdvertisementFeature(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isAdvertisementFeature(tag.id))
   def isAdvertisementFeature(tagId: String): Boolean = advertisementFeatureSponsorships exists (_.hasTag(tagId))
   def isAdvertisementFeature(config: Config): Boolean = isSponsoredContainer(config, isAdvertisementFeature)
+
+  def isFoundationSupported(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isFoundationSupported(tag.id))
+  def isFoundationSupported(tagId: String): Boolean = foundationSupported exists (_.hasTag(tagId))
+  def isFoundationSupported(config: Config): Boolean = isSponsoredContainer(config, isFoundationSupported)
 
   def isProd = !Configuration.environment.isNonProd
 
@@ -103,7 +108,7 @@ trait DfpAgent {
 
   def getSponsor(tagId: String): Option[String] = {
     def sponsorOf(sponsorships: Seq[Sponsorship]) = sponsorships.find(_.hasTag(tagId)).flatMap(_.sponsor)
-    sponsorOf(sponsorships) orElse sponsorOf(advertisementFeatureSponsorships)
+    sponsorOf(sponsorships) orElse sponsorOf(advertisementFeatureSponsorships) orElse sponsorOf(foundationSupported)
   }
 
   def getSponsor(config: Config): Option[String] = {
@@ -121,6 +126,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
   private lazy val tagToSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
   private lazy val advertisementFeatureTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
   private lazy val tagToAdvertisementFeatureSponsorsMapAgent = AkkaAgent[Map[String, Set[String]]](Map[String, Set[String]]())
+  private lazy val foundationSupportedTagsAgent = AkkaAgent[Seq[Sponsorship]](Nil)
   private lazy val inlineMerchandisingTagsAgent = AkkaAgent[InlineMerchandisingTagSet](InlineMerchandisingTagSet())
   private lazy val pageskinnedAdUnitAgent = AkkaAgent[Seq[PageSkinSponsorship]](Nil)
 
@@ -128,6 +134,7 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
   protected def tagToSponsorsMap = tagToSponsorsMapAgent get()
   protected def advertisementFeatureSponsorships: Seq[Sponsorship] = advertisementFeatureTagsAgent get()
   protected def tagToAdvertisementFeatureSponsorsMap = tagToAdvertisementFeatureSponsorsMapAgent get()
+  protected def foundationSupported: Seq[Sponsorship] = foundationSupportedTagsAgent get()
   protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
   protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
 
@@ -200,6 +207,8 @@ object DfpAgent extends DfpAgent with ExecutionContexts {
     update(advertisementFeatureTagsAgent, advertisementFeatures)
     updateMap(tagToAdvertisementFeatureSponsorsMapAgent, generateTagToSponsorsMap(advertisementFeatures))
 
+    val foundationSupportedTags: Seq[Sponsorship] = grabSponsorshipsFromStore(dfpFoundationSupportedTagsDataKey)
+    update(foundationSupportedTagsAgent, foundationSupported)
 
     update(pageskinnedAdUnitAgent, grabPageSkinSponsorshipsFromStore(dfpPageSkinnedAdUnitsKey))
     updateInlineMerchandisingTargetedTags(grabInlineMerchandisingTargetedTagsFromStore())
