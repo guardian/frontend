@@ -702,6 +702,7 @@ $avatarSize: 44px;
 
     span {
         @include icon-button(plus-white-small, 18px);
+        display: inline-block;
         background-color: $c-newsDefault;
         margin-bottom: $gs-baseline / 3 * -1;
         margin-right: ($gs-gutter / 5) * 2;

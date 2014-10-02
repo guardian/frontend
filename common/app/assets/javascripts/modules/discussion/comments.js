@@ -50,7 +50,12 @@ var Comments = function(options) {
 
     this.fetchData = {
         orderBy: this.options.order,
-        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10
+        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
+        maxResponses: 3
+    };
+
+    this.fetchCommentData = {
+        displayThreaded: true
     };
 
     this.endpoint = this.options.commentId ?
@@ -146,6 +151,8 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     this.on('click', this.getClass('commentReport'), this.reportComment);
     this.on('change', this.getClass('orderControl'), this.setOrder);
+
+    this.addMoreRepliesButtons();
 
     if (this.options.commentId) {
         var comment = $('#comment-'+ this.options.commentId);
@@ -308,6 +315,9 @@ Comments.prototype.renderComments = function(resp) {
     });
 
     $(this.getClass('jsContent'), this.elem).replaceWith(content);
+    this.addMoreRepliesButtons(qwery(
+        this.getClass('comment'), content
+    ));
 
     if (!this.isReadOnly()) {
         RecommendComments.init();
@@ -368,6 +378,7 @@ Comments.prototype.getMoreReplies = function(event) {
         url: '/discussion/comment/'+ event.target.getAttribute('data-comment-id') +'.json',
         type: 'json',
         method: 'get',
+        data: this.fetchCommentData,
         crossOrigin: true
     }).then(function (resp) {
         var comment = bonzo.create(resp.html),
