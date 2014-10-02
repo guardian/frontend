@@ -12,9 +12,6 @@
                     "fc-container__header__title" -> true,
                     "tone-comment" -> isContributor,
                     "tone-colour" -> isContributor))">
-                @if(config.showDateHeader) {
-                    @dateAndLatestUpdate(LatestUpdate(collection, collection.items))
-                } else {
                     @href.map { href =>
                         <a class="u-text-hyphenate" data-link-name="section heading" href="@LinkTo {/@href}">
                           @Html(title)
@@ -22,7 +19,10 @@
                     }.getOrElse {
                         <span class="u-text-hyphenate">@Html(title)</span>
                     }
-                }
+
+                    @if(config.showDateHeader) {
+                        @dateAndLatestUpdate(LatestUpdate(collection, collection.items))
+                    }
                 </div>
             }
         }

@@ -3,15 +3,16 @@
 @import org.joda.time.DateTime
 @import views.support.Format
 
-<span class="container__title__label today">
-    <b class="today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</b>
+<div class="fc-today">
+    <span class="fc-today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</span>
     <span class="u-nobr today__sub">
-        <span class="today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
-        <span class="today__month">@Format(DateTime.now(), "MMMM")</span>
-        <span class="today__year">@Format(DateTime.now(), "yyyy")</span>
+        <span class="fc-today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
+        <span class="fc-today__month">@Format(DateTime.now(), "MMMM")</span>
+        <span class="fc-today__year">@Format(DateTime.now(), "yyyy")</span>
     </span>
-</span>
+</div>
 
+@*
 @maybeLatestUpdate.map { latestUpdate =>
     <span class="container__updated">
         <span class="i--circle i--clock">
@@ -26,3 +27,4 @@
         </time>
     </span>
 }
+*@
