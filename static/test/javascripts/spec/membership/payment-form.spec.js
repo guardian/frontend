@@ -66,7 +66,7 @@ define([
 
             runs(function () {
                 ajax({
-                    url: '/base/common/test/assets/javascripts/fixtures/membership/paymentForm.fixture.html',
+                    url: '/base/static/test/javascripts/fixtures/membership/paymentForm.fixture.html',
                     method: 'get',
                     success: function (resp) {
                         paymentFormFixtureElement = $.create(resp)[0];

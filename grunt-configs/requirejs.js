@@ -19,8 +19,8 @@ module.exports = function(grunt, options) {
                 enhancer:     'components/enhancer/enhancer',
                 raven:        'components/raven-js/raven',
                 fastclick:    'components/fastclick/fastclick',
-                stripe:       '../../../common/app/public/javascripts/vendor/stripe/stripe.min',
-                omniture:     '../../../common/app/public/javascripts/vendor/omniture'
+                stripe:       '../../public/javascripts/vendor/stripe/stripe.min',
+                omniture:     '../../public/javascripts/vendor/omniture'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
@@ -72,7 +72,7 @@ module.exports = function(grunt, options) {
                 exclude: [
                     'core',
                     'bootstraps/app',
-                    '../../../common/app/public/javascripts/vendor/stripe/stripe.min'
+                    '../../public/javascripts/vendor/stripe/stripe.min'
                 ]
             }
         },
@@ -102,7 +102,7 @@ module.exports = function(grunt, options) {
                 name: 'bootstraps/video-player',
                 out: options.staticTargetDir + 'javascripts/bootstraps/video-player.js',
                 paths: {
-                    vast: '../../../common/app/public/javascripts/vendor/vast-client',
+                    vast: '../../public/javascripts/vendor/vast-client',
                     videojs: 'components/videojs/video',
                     videojsads: 'components/videojs-contrib-ads/videojs.ads',
                     videojsvast: 'components/videojs-vast/videojs.vast',
