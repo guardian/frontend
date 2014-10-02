@@ -6,27 +6,9 @@ module.exports = function(grunt, options) {
         common: {
             files: [{
                 expand: true,
-                cwd: 'static/src/javascripts/',
+                cwd: 'static/src/javascripts/projects/common',
                 src: [
                     '**/*.js',
-                    '!components/**',
-                    '!bower_components/**',
-                    '!bootstraps/app.js',
-                    '!bootstraps/article.js',
-                    '!bootstraps/commercial.js',
-                    '!bootstraps/common.js',
-                    '!bootstraps/dev.js',
-                    '!bootstraps/football.js',
-                    '!bootstraps/gallery.js',
-                    '!bootstraps/identity.js',
-                    '!bootstraps/liveblog.js',
-                    '!bootstraps/media.js',
-                    '!bootstraps/ophan.js',
-                    '!bootstraps/profile.js',
-                    '!bootstraps/section.js',
-                    '!bootstraps/sport.js',
-                    '!bootstraps/tag.js',
-                    '!bootstraps/video-player.js',
                     '!modules/analytics/beacon.js',
                     '!modules/analytics/clickstream.js',
                     '!modules/analytics/discussion.js',
@@ -118,7 +100,7 @@ module.exports = function(grunt, options) {
         facia: {
             files: [{
                 expand: true,
-                cwd: 'facia/app/assets/javascripts/',
+                cwd: 'static/src/javascripts/projects/facia',
                 src: [
                     '**/*.js',
                     '!modules/ui/container-show-more.js',
@@ -133,18 +115,43 @@ module.exports = function(grunt, options) {
                 src: [
                     '**/*.js',
                     '!components/**',
-                    '!**/*.js',
+                    '!**/*.js'
                 ]
             }]
         },
         membership: {
             files: [{
                 expand: true,
-                cwd: 'identity/app/assets/javascripts/',
+                cwd: 'static/src/javascripts/projects/membership',
                 src: [
                     '**/*.js',
-                    '!membership/payment-form.js',
-                    '!membership/stripe-error-messages.js'
+                    '!payment-form.js',
+                    '!stripe-error-messages.js'
+                ]
+            }]
+        },
+        bootstraps: {
+            files: [{
+                expand: true,
+                cwd: 'static/src/javascripts/bootstraps',
+                src: [
+                    '**/*.js',
+                    '!app.js',
+                    '!article.js',
+                    '!commercial.js',
+                    '!common.js',
+                    '!dev.js',
+                    '!football.js',
+                    '!gallery.js',
+                    '!identity.js',
+                    '!liveblog.js',
+                    '!media.js',
+                    '!ophan.js',
+                    '!profile.js',
+                    '!section.js',
+                    '!sport.js',
+                    '!tag.js',
+                    '!video-player.js',
                 ]
             }]
         }

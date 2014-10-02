@@ -5,7 +5,7 @@ require([
     'admin/bootstraps/browserstats',
     'admin/bootstraps/radiator',
     'admin/bootstraps/commercial'
-], function(
+], function (
     ajax,
     abTests,
     adunitapproval,
@@ -13,12 +13,12 @@ require([
     radiator,
     commercial
 ) {
-    require(['domReady!'], function() {
+    require(['domReady!'], function () {
 
         var config = {
             page: {
-                edition: "",
-                ajaxUrl: ""
+                edition: '',
+                ajaxUrl: ''
             }
         };
 
