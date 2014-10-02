@@ -301,11 +301,15 @@ define([
                 videojs.plugin('fullscreener', modules.fullscreener);
 
                 $('.js-gu-media').each(function (el) {
-                    var mediaType = el.tagName.toLowerCase();
+                    var mediaType = el.tagName.toLowerCase(),
+                        $el = bonzo(el);
 
-                    bonzo(el).addClass('vjs');
+                    $el.addClass('vjs');
 
-                    var mediaId = bonzo(el).attr('data-media-id'),
+                    var mediaId = $el.attr('data-media-id'),
+                        blockVideoAds = $el.attr('data-block-video-ads') === 'true',
+                        showEndSlate = $el.attr('data-show-end-slate') === 'true',
+                        endSlateUri = $el.attr('data-end-slate'),
                         vjs = modules.createVideoObject(el, {
                             controls: true,
                             autoplay: false,
@@ -342,7 +346,7 @@ define([
                                 player.fullscreener();
 
                                 // Init plugins
-                                if (config.switches.videoAdverts && !config.page.blockVideoAds && !config.page.isPreview) {
+                                if (config.switches.videoAdverts && !blockVideoAds && !config.page.isPreview) {
                                     modules.bindPrerollEvents(player);
                                     player.adCountDown();
                                     player.trigger(constructEventName('preroll:request', player));
@@ -356,11 +360,8 @@ define([
                                     modules.bindContentEvents(player);
                                 }
 
-                                if (
-                                    bonzo(el).attr('data-show-end-slate') === 'true' &&
-                                    detect.isBreakpoint({ min: 'desktop' })
-                                ) {
-                                    modules.initEndSlate(player, bonzo(el).attr('data-end-slate'));
+                                if (showEndSlate && detect.isBreakpoint({ min: 'desktop' })) {
+                                    modules.initEndSlate(player, endSlateUri);
                                 }
                             } else {
                                 vjs.playlist({

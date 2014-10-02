@@ -324,7 +324,7 @@ define([
 
             var page        = config.page,
                 section     = encodeTargetValue(page.section),
-                series      = encodeTargetValue(page.series),
+                series      = parseSeries(page.seriesId),
                 contentType = encodeTargetValue(page.contentType),
                 edition     = encodeTargetValue(page.edition),
                 mediaSource = encodeTargetValue(page.source);
@@ -552,6 +552,9 @@ define([
             return map((keywords || '') .split(','), function (keyword) {
                 return keyword.split('/').pop();
             });
+        },
+        parseSeries = function (seriesId) {
+            return (seriesId || '').split('/').pop();
         },
         parseTargets = function (targets) {
             var targetArray = parseKeywords(targets);

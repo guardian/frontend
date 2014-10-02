@@ -9,7 +9,6 @@ define([
 
     'common/modules/ui/fonts',
     'common/modules/commercial/user-ad-targeting',
-    'common/modules/discussion/api',
 
     'common/bootstraps/common',
     'common/bootstraps/tag',
@@ -32,7 +31,6 @@ define([
 
     Fonts,
     userAdTargeting,
-    discussionApi,
 
     bootstrapCommon,
     tag,
@@ -60,9 +58,6 @@ define([
             );
         },
         modules = {
-            initialiseDiscussionApi: function() {
-                discussionApi.init(config);
-            },
 
             loadFonts: function(ua) {
                 if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
@@ -85,60 +80,54 @@ define([
     var routes = function() {
         userTiming.mark('App Begin');
 
-        modules.initialiseDiscussionApi();
         modules.loadFonts(navigator.userAgent);
         modules.initId();
         modules.initUserAdTargeting();
 
-        var pageRoute = function() {
-            bootstrapContext('common', bootstrapCommon);
+        bootstrapContext('common', bootstrapCommon);
 
-            // Front
-            if (config.page.isFront) {
-                require('bootstraps/facia', function(facia) {
-                    bootstrapContext('facia', facia);
-                });
-            }
+        // Front
+        if (config.page.isFront) {
+            require('bootstraps/facia', function(facia) {
+                bootstrapContext('facia', facia);
+            });
+        }
 
-            if(config.page.contentType === 'Article') {
-                bootstrapContext('article', article);
-            }
+        if(config.page.contentType === 'Article') {
+            bootstrapContext('article', article);
+        }
 
-            if(config.page.contentType === 'LiveBlog') {
-                bootstrapContext('liveBlog', liveBlog);
-            }
+        if(config.page.contentType === 'LiveBlog') {
+            bootstrapContext('liveBlog', liveBlog);
+        }
 
-            if (config.isMedia || qwery('video, audio').length) {
-                bootstrapContext('media', media);
-            }
+        if (config.isMedia || qwery('video, audio').length) {
+            bootstrapContext('media', media);
+        }
 
-            if (config.page.contentType === 'Gallery') {
-                bootstrapContext('gallery', gallery);
-            }
+        if (config.page.contentType === 'Gallery') {
+            bootstrapContext('gallery', gallery);
+        }
 
-            if (config.page.contentType === 'Tag') {
-                bootstrapContext('tag', tag);
-            }
+        if (config.page.contentType === 'Tag') {
+            bootstrapContext('tag', tag);
+        }
 
-            if (config.page.contentType === 'Section' && !config.page.isFront) {
-                bootstrapContext('section', section);
-            }
+        if (config.page.contentType === 'Section' && !config.page.isFront) {
+            bootstrapContext('section', section);
+        }
 
-            if (config.page.section === 'football') {
-                bootstrapContext('footbal', football);
-            }
+        if (config.page.section === 'football') {
+            bootstrapContext('footbal', football);
+        }
 
-            if (config.page.section === 'sport') {
-                bootstrapContext('sport', sport);
-            }
+        if (config.page.section === 'sport') {
+            bootstrapContext('sport', sport);
+        }
 
-            if (config.page.section === 'identity') {
-                bootstrapContext('profile', profile);
-            }
-        };
-
-        mediator.on('page:ready', pageRoute);
-        mediator.emit('page:ready', config);
+        if (config.page.section === 'identity') {
+            bootstrapContext('profile', profile);
+        }
 
         // Mark the end of synchronous execution.
         userTiming.mark('App End');

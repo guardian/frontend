@@ -9,9 +9,9 @@
     }
 }
 
-.content__main-column--audio .content__main-column__body {
-    margin-top: $gs-baseline;
-    max-width: gs-span(8);
+.content__main-column--audio {
+    // on average, the height of the right-hand col (stops the overflow issue)
+    min-height: 185px;
 }
 
 .content--media {

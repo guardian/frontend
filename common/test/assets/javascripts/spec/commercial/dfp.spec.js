@@ -171,7 +171,7 @@ define([
         it('should build correct page targeting', function() {
             config.page = {
                 section: 'news',
-                series: 'happy times',
+                seriesId: 'learning/series/happy-times',
                 contentType: 'Article',
                 edition: 'us'
             };
