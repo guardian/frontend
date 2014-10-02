@@ -3,7 +3,7 @@
    ========================================================================== */
 .commercial--soulmates-v2 {
     .container__title__wrapper {
-        height: auto;
+        height: 100%;
         padding: $gs-baseline*2 0 $gs-baseline/2;
         margin: 0 0 $gs-baseline*2.5;
         background-repeat: no-repeat;
@@ -56,13 +56,6 @@
             display: none;
         }
         @include mq(mobileLandscape) {
-            width: 25%;
-
-            &:nth-child(-n+4) {
-                display: block;
-            }
-        }
-        @include mq(tablet) {
             width: 25%;
 
             &:nth-child(-n+4) {
@@ -128,10 +121,8 @@
         margin-top: $gs-baseline;
         margin-right: 0;
     }
-    @include mq($until: leftCol) {
-        .commercial__cta {
-            display: none;
-        }
+    .commercial__cta {
+        display: none;
     }
     @include mq(leftCol) {
         .container__body {
@@ -173,6 +164,7 @@
             margin: $gs-baseline $gs-gutter*1.25 $gs-baseline $gs-gutter*1.5;
             @include button-colour(transparent, #ffffff, transparent, #ffffff, #767676);
             width: gs-span(2) - $gs-gutter;
+            display: block;
         }   
     }
     @include mq(wide) {

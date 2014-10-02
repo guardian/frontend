@@ -8,18 +8,13 @@
         .commercial--tone__highlight {
             color: $accentColour;
         }
-
         .container__header {
             background-color: $colour;
 
-            .commercial__title {
+            .commercial__title,
+            a {
                 color: $titleColor;
-
-                a {
-                    color: $titleColor;
-                }
             }
-
             .commercial__cta.button {
                 border-color: rgba($titleColor, .3);
 
@@ -28,7 +23,6 @@
                 }
             }
         }
-
         .button--primary {
             @include button-colour(
                 $accentColour,
@@ -36,7 +30,6 @@
                 darken($accentColour, 5%)
             )
         }
-
         .tabs__tab--selected {
             border-color: $accentColour;
         }

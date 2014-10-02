@@ -10,10 +10,6 @@
         margin-left: auto;
         margin-right: auto;
 
-        @include mq(tablet, rightCol) {
-            max-width: none;
-        }
-
         @include mq(leftCol) {
             padding-left: 0;
             padding-right: 0;
@@ -21,7 +17,6 @@
         }
 
         @include mq(wide) {
-            padding-right: 0;
             width: gs-span(16) + $gs-gutter*2;
             max-width: none;
         }
@@ -37,7 +32,7 @@
             margin-right: auto;
         }
 
-        @include mq(mobileLandscape, tablet) {
+        @include mq(mobileLandscape) {
             max-width: gs-span(8);
         }
 
@@ -53,7 +48,7 @@
     .container__header__inner {
         padding: $gs-baseline/2 $gs-gutter/2;
 
-        @include mq(mobileLandscape, leftCol) {
+        @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
         }
