@@ -373,13 +373,17 @@ h1 {
     background-color: #dddddd;
     background-size: auto 100%;
     background-repeat: no-repeat;
-    background-position-x: center;
+    background-position-x: right;
+}
+
+.article.imageHidden .thumb {
+    opacity: 0.15
 }
 
 .article .thumb--cutout {
     position: absolute;
     top: 23px;
-    left: 62px;
+    left: 60px;
     height: 28px;
     width: 25px;
     border-radius: 2px;
