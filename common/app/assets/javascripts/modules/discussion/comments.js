@@ -173,7 +173,7 @@ Comments.prototype.handleBodyClick = function(clickspec) {
     if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
         this.showHiddenComments();
     }
-}
+};
 
 /**
  * @param {Event} e
