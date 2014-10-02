@@ -1,6 +1,5 @@
 .fc-sublinks {
     clear: left;
-    padding-top: $gs-baseline * .25;
 }
 
 .fc-sublinks__item {
@@ -36,10 +35,8 @@
 
 @mixin fc-sublinks-horizontal {
 
-    .fc-item__container,
-    .fc-item__content,
-    .fc-item__footer {
-        display: block;
+    .fc-sublinks {
+        padding-top: $gs-baseline * .25;
     }
 
     .fc-item__footer {

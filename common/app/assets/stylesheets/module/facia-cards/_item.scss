@@ -6,7 +6,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item {
     display: block;
-    @include display-flex;
+    // @include display-flex;
     @include flex(1);
     @include clearfix;
     background-color: #ffffff;
@@ -29,6 +29,20 @@ $fc-item-gutter: $gs-gutter / 4;
     .vjs-big-play-button > span {
         @include video-play-button-size($vjs-x-small-button-size);
     }
+
+    &.item--has-discussion {
+        padding-bottom:  $gs-baseline * 2;
+
+        // fake some comments
+        .fc-trail__count--inline-template,
+        .js-item__comment-count {
+            display: inline-block;
+        }
+
+        .js-item__comment-count:before {
+            content: "235";
+        }
+    }
 }
 
 .fc-item--has-image:before {
@@ -40,9 +54,9 @@ $fc-item-gutter: $gs-gutter / 4;
 */
 
 .fc-item__container {
-    @include display-flex;
-    @include flex-direction(column);
-    @include flex(1);
+    // @include display-flex;
+    // @include flex-direction(column);
+    // @include flex(1);
 }
 
 // Wraps all media elements
@@ -52,20 +66,8 @@ $fc-item-gutter: $gs-gutter / 4;
 
 // Wraps all non-media content
 .fc-item__content {
-    @include display-flex;
-    @include flex-direction(column);
-    @include flex(1, 1, 100%);
+    // @include flex(1, 1, auto);
     @include box-sizing(border-box);
-}
-
-.fc-item__footer {
-    @include display-flex;
-    @include flex-direction(column);
-    @include flex(1, 1, 100%);
-    -webkit-box-pack: end;
-    -webkit-justify-content: flex-end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
 }
 
 .fc-item__image-container {
@@ -128,6 +130,8 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__meta {
     @include fs-textSans(1);
     padding-bottom: $gs-baseline / 3;
+    position: absolute;
+    bottom: 0;
 
     &,
     & a {
@@ -142,7 +146,8 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__timestamp {
-    // display: none;
+    display: none;
+    margin-right: 1em;
 }
 
 .fc-trail__count--inline-template {
@@ -168,11 +173,5 @@ $fc-item-gutter: $gs-gutter / 4;
         position: relative;
         width: 100%;
         right: 0 - $gs-gutter * 2;
-    }
-
-    &[class*="fc-item--has-sublinks"] {
-        .fc-item__avatar {
-            display: none !important;
-        }
     }
 }

@@ -14,11 +14,13 @@ x x x x x x x x x x x x x x x x x x x x x x x x
     $headline-size: 1;
     $item-vertical-padding: $gs-baseline * .25;
 
-    padding-bottom: 0;
-
     .fc-item__title,
     .fc-item__byline {
         @include fs-headline($headline-size, true);
+    }
+
+    .fc-item__header {
+        padding-bottom: get-line-height(headline, $headline-size);
     }
 
     .fc-item__header {

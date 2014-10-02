@@ -21,22 +21,22 @@ Full item. A 100% width version of the Three quarter item.
 @mixin fc-item--full {
 
     .fc-item__container {
-        @include flex-direction(row-reverse);
+        // @include flex-direction(row-reverse);
     }
 
     .fc-item__media-wrapper {
         @include box-sizing(border-box);
-        @include flex-basis(75%);
+        // @include flex-basis(75%);
         width: 75%;
         float: right;
         padding-left: $gs-gutter * .25;
     }
 
     .fc-item__content {
-        @include flex-basis(25%);
+        // @include flex-basis(25%);
         width: 25%;
         @include box-sizing(border-box);
-        padding-right: $gs-gutter * .5;
+        // padding-right: $gs-gutter * .5;
     }
 
     .fc-item__title,
