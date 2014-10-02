@@ -32,6 +32,10 @@
 }
 
 .tone-podcast {
+    .fc-item__title--quoted .fc-item__link:before {
+        @include icon(quote-black, false);
+    }
+
     .fc-item__timestamp:before {
         @include icon(clock-white, false);
     }
@@ -49,6 +53,10 @@
 }
 
 .tone-media {
+    .fc-item__title--quoted .fc-item__link:before {
+        @include icon(quote-white, false);
+    }
+
     .fc-item__timestamp:before {
         @include icon(clock-grey, false);
     }
@@ -78,6 +86,10 @@
 }
 
 .tone-live {
+    .fc-item__title--quoted .fc-item__link:before {
+        @include icon(quote-white, false);
+    }
+
     .fc-item__timestamp:before {
         @include icon(clock-light-pink, false);
     }
@@ -93,7 +105,7 @@
 
 .tone-feature {
     .fc-item__title--quoted .fc-item__link:before {
-        @include icon(quote-orange, false);
+        @include icon(quote-light-pink, false);
     }
 
     .fc-item__timestamp:before {
