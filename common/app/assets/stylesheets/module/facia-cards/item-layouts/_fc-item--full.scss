@@ -86,8 +86,16 @@ Full item. A 100% width version of the Three quarter item.
         }
     }
 
+    .fc-item__avatar {
+        width: gs-span(4) + $gs-gutter;
+
+        @include mq(desktop) {
+            width: gs-span(6) + $gs-gutter;
+        }
+    }
+
     &.fc-item--has-cutout {
-        // min-height: gs-height(6);
+        min-height: gs-height(6);
 
         .fc-item__title,
         .fc-item__byline {
@@ -97,16 +105,16 @@ Full item. A 100% width version of the Three quarter item.
         .fc-item__title,
         .fc-item__standfirst,
         .fc-item__byline {
-            // width: gs-span(6);
+            width: gs-span(6);
         }
 
         @include mq(desktop) {
-            // min-height: gs-height(8);
+            min-height: gs-height(8);
 
             .fc-item__title,
             .fc-item__standfirst,
             .fc-item__byline {
-                // width: gs-span(8);
+                width: gs-span(8);
             }
         }
     }

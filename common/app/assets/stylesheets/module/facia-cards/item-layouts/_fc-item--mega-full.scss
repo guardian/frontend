@@ -40,10 +40,10 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
     }
 
     &.fc-item--has-cutout {
-        // min-height: gs-height(8);
+        min-height: gs-height(8);
 
         .fc-item__title {
-            // max-width: gs-span(8);
+            max-width: gs-span(8);
         }
     }
 
