@@ -92,7 +92,6 @@ CommentBox.prototype.defaultOptions = {
     focus: false,
     state: 'top-level',
     replyTo: null,
-    switches: {},
     priorToVerificationDate: new Date(1392719401337) // Tue Feb 18 2014 10:30:01 GMT
 };
 
