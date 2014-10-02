@@ -1,31 +1,35 @@
 define([
-    'common/utils/$',
+    'bean',
     'bonzo',
     'qwery',
-    'bean',
+
+    'common/utils/$',
     'common/utils/ajax',
-    'common/utils/scroller',
     'common/utils/detect',
+    'common/utils/mediator',
+    'common/utils/scroller',
+
     'common/modules/component',
-    'common/modules/userPrefs',
-    'common/modules/identity/api',
+    'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/recommend-comments',
-    'common/modules/discussion/api'
+    'common/modules/identity/api',
+    'common/modules/userPrefs'
 ], function(
-    $,
+    bean,
     bonzo,
     qwery,
-    bean,
+    $,
     ajax,
-    scroller,
     detect,
+    mediator,
+    scroller,
     Component,
-    userPrefs,
-    Id,
+    DiscussionApi,
     CommentBox,
     RecommendComments,
-    DiscussionApi
+    Id,
+    userPrefs
 ) {
 'use strict';
 /**
@@ -35,12 +39,9 @@ define([
  * * Move over to $ instead of qwery & bonzo
  * @constructor
  * @extends Component
- * @param {Element=} context
- * @param {Object} mediator
  * @param {Object=} options
  */
-var Comments = function(mediator, options) {
-    this.mediator = mediator;
+var Comments = function(options) {
     this.setOptions(options);
 
     if (userPrefs.get('discussion.order')) {
@@ -146,8 +147,6 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('commentReport'), this.reportComment);
     this.on('change', this.getClass('orderControl'), this.setOrder);
 
-    this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
-
     if (this.options.commentId) {
         var comment = $('#comment-'+ this.options.commentId);
         this.showHiddenComments();
@@ -166,6 +165,14 @@ Comments.prototype.ready = function() {
             $('.js-report-comment-form').addClass('u-h');
         });
     });
+
+    mediator.on('module:clickstream:click', this.handleBodyClick.bind(this));
+};
+
+Comments.prototype.handleBodyClick = function(clickspec) {
+    if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
+        this.showHiddenComments();
+    }
 };
 
 /**
@@ -499,11 +506,6 @@ Comments.prototype.replyToComment = function(e) {
         self.addComment(comment, false, responses);
     });
 };
-
-/**
- * @param {Object.<string.*>} comment
- */
-Comments.prototype.recommendFail = function() {};
 
 Comments.prototype.showDiscussion = function() {
     var showDiscussionElem = $('.d-discussion__show-all-comments');
