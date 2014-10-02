@@ -1,33 +1,35 @@
 define([
-    'common/utils/$',
+    'bean',
     'bonzo',
     'qwery',
-    'bean',
+
+    'common/utils/$',
     'common/utils/ajax',
-    'common/utils/scroller',
     'common/utils/detect',
     'common/utils/mediator',
+    'common/utils/scroller',
+
     'common/modules/component',
-    'common/modules/userPrefs',
-    'common/modules/identity/api',
+    'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/recommend-comments',
-    'common/modules/discussion/api'
+    'common/modules/identity/api',
+    'common/modules/userPrefs'
 ], function(
-    $,
+    bean,
     bonzo,
     qwery,
-    bean,
+    $,
     ajax,
-    scroller,
     detect,
     mediator,
+    scroller,
     Component,
-    userPrefs,
-    Id,
+    DiscussionApi,
     CommentBox,
     RecommendComments,
-    DiscussionApi
+    Id,
+    userPrefs
 ) {
 'use strict';
 /**

@@ -1,17 +1,17 @@
 define([
-    'common/utils/ajax',
     'bonzo',
     'qwery',
-    'common/modules/component',
-    'common/modules/identity/api',
-    'common/utils/$'
+
+    'common/utils/$',
+    'common/utils/ajax',
+    
+    'common/modules/component'
 ], function(
-    ajax,
     bonzo,
     qwery,
-    Component,
-    Id,
-    $
+    $,
+    ajax,
+    Component
 ) {
 
 var TopComments = function(options) {
