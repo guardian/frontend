@@ -1,31 +1,20 @@
 define([
-    'common/utils/ajax',
     'bonzo',
     'qwery',
-    'common/modules/component',
-    'common/modules/identity/api',
-    'common/utils/$'
+
+    'common/utils/$',
+    'common/utils/ajax',
+    
+    'common/modules/component'
 ], function(
-    ajax,
     bonzo,
     qwery,
-    Component,
-    Id,
-    $
+    $,
+    ajax,
+    Component
 ) {
 
-/* =================================================================
-
-This module requires refactoring pending an architecture change for the
-discussion system based on designs for the Top Comments functionality
-being signed off.
-
- - chrisfinch
-
-================================================================= */
-
-var TopComments = function(mediator, options) {
-    this.mediator = mediator;
+var TopComments = function(options) {
     this.setOptions(options);
 
     this.fetchData = {

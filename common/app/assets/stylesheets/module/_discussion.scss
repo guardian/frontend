@@ -96,35 +96,6 @@ $avatarSize: 44px;
         float: right;
     }
 }
-.d-discussion__sentiments {
-    display: none;
-    position: relative;
-    clear: both;
-    margin-top: $gs-baseline;
-    margin-bottom: -1px;
-    background-color: $c-neutral7;
-    @include fs-textSans(4);
-    color: $c-neutral1;
-
-    .d-discussion--sentimental & {
-        display: block;
-    }
-    .d-discussion--shut & {
-        display: none;
-    }
-}
-.d-discussion__sentiment {
-    @include box-sizing(border-box);
-    display: inline-block;
-    margin-bottom: -1px;
-    padding: $gs-baseline / 2 $gs-gutter / 2;
-    color: $c-neutral1;
-}
-.d-discussion__sentiment--active {
-    background-color: #ffffff;
-    border-top: 3px solid $c-commentDefault;
-}
-
 .d-thread {
     list-style: none;
     margin: 0;
@@ -309,23 +280,6 @@ $avatarSize: 44px;
         display: none;
     }
 }
-
-.d-comment__sentiment {
-    @include border-radius(8px);
-    height: 8px;
-    width: 8px;
-    margin-right: $gs-gutter / 4;
-    margin-top: $gs-baseline / 2;
-    background-color: $c-neutral4;
-    float: left;
-}
-.d-comment__sentiment--for {
-    background-color: $c-statusPositive;
-}
-.d-comment__sentiment--against {
-    background-color: $c-statusNegative;
-}
-
 
 /* Comment body
    ======================================================= */
@@ -523,10 +477,6 @@ $avatarSize: 44px;
 
     &:hover {
         text-decoration: underline;
-    }
-
-    .d-discussion--sentimental & {
-        display: none;
     }
 
     .i {
@@ -1221,52 +1171,6 @@ $avatarSize: 44px;
 
     &:hover {
         border-color: $c-brandBlue;
-    }
-}
-
-
-$sentiment-width: 56 + $gs-gutter / 2;
-
-.d-comment-box__sentiments {
-    display: none;
-    float: right;
-    font-size: 0;
-    font-weight: bold;
-    text-align: center;
-
-    .d-comment-box--sentimental & {
-        display: block;
-    }
-}
-.d-comment-box__sentiments-head {
-    margin-bottom: $gs-baseline / 2;
-    margin-right: $sentiment-width * 2;
-    margin-top: $gs-baseline;
-    @include fs-header(2);
-}
-.d-comment-box__sentiment {
-    @include box-sizing(border-box);
-    display: inline-block;
-    padding: $gs-baseline / 6 0;
-    width: $sentiment-width;
-    background-color: $c-neutral6;
-    @include fs-textSans(4);
-    text-align: center;
-    cursor: pointer;
-}
-.d-comment-box__sentiment--active {
-    color: #ffffff;
-}
-.d-comment-box__sentiment--for {
-    border-right: 1px solid #ffffff;
-
-    &.d-comment-box__sentiment--active {
-        background-color: $c-statusPositive;
-    }
-}
-.d-comment-box__sentiment--against {
-    &.d-comment-box__sentiment--active {
-        background-color: $c-statusNegative;
     }
 }
 

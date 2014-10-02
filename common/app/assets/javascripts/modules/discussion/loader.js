@@ -1,37 +1,41 @@
 define([
-    'common/utils/$',
-    'common/utils/ajax',
-    'common/utils/config',
-    'common/utils/_',
+    'bean',
     'bonzo',
     'qwery',
-    'bean',
-    'common/modules/component',
-    'common/modules/analytics/register',
+
+    'common/utils/$',
+    'common/utils/_',
+    'common/utils/ajax',
+    'common/utils/config',
+    'common/utils/mediator',
+
     'common/modules/analytics/discussion',
-    'common/modules/identity/api',
+    'common/modules/analytics/register',
+    'common/modules/component',
+    'common/modules/discussion/activity-stream',
     'common/modules/discussion/api',
+    'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
     'common/modules/discussion/top-comments',
-    'common/modules/discussion/comment-box',
-    'common/modules/discussion/activity-stream'
+    'common/modules/identity/api'
 ], function(
-    $,
-    ajax,
-    config,
-    _,
+    bean,
     bonzo,
     qwery,
-    bean,
-    Component,
-    register,
+    $,
+    _,
+    ajax,
+    config,
+    mediator,
     DiscussionAnalytics,
-    Id,
+    register,
+    Component,
+    ActivityStream,
     DiscussionApi,
+    CommentBox,
     Comments,
     TopComments,
-    CommentBox,
-    ActivityStream
+    Id
 ) {
 
 /**
@@ -42,11 +46,8 @@ define([
  * And also the premod / banned state of the user
  * @constructor
  * @extends Component
- * @param {Object} mediator
- * @param {Object=} options
  */
-var Loader = function(mediator) {
-    this.mediator = mediator;
+var Loader = function() {
     register.begin('discussion');
 };
 Component.define(Loader);
@@ -98,14 +99,14 @@ Loader.prototype.ready = function() {
         commentId = this.getCommentIdFromHash();
 
     if (commentId) {
-        this.mediator.emit('discussion:seen:comment-permalink');
+        mediator.emit('discussion:seen:comment-permalink');
     }
 
-    this.topComments = new TopComments(this.mediator, {
+    this.topComments = new TopComments({
         discussionId: this.getDiscussionId()
     });
 
-    this.comments = new Comments(this.mediator, {
+    this.comments = new Comments({
         discussionId: this.getDiscussionId(),
         commentId: commentId ? commentId : null,
         order: this.getDiscussionClosed() ? 'oldest' : 'newest',
@@ -148,7 +149,7 @@ Loader.prototype.ready = function() {
 
     // More for analytics than anything
     if (window.location.hash === '#comments') {
-        this.mediator.emit('discussion:seen:comments-anchor');
+        mediator.emit('discussion:seen:comments-anchor');
     }
 
     register.end('discussion');
