@@ -40,6 +40,7 @@ define([
             'showTags',
             'showSections',
             'hideKickers',
+            'showDateHeader',
             'apiQuery']);
 
         populateObservables(this.meta, opts);

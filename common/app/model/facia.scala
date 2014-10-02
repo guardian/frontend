@@ -14,9 +14,9 @@ case class Config(
                    collectionType: Option[String],
                    showTags: Boolean = false,
                    showSections: Boolean = false,
-                   hideKickers: Boolean = false
+                   hideKickers: Boolean = false,
+                   showDateHeader: Boolean = false
                    ) {
-
   lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
   lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(this)
   lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(this)
