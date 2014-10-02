@@ -93,10 +93,6 @@
                     </div>
                 }
 
-                @comment.sentiment.map{ s =>
-                    <div class="d-comment__sentiment d-comment__sentiment--@if(s == 0){for}else{against}"></div>
-                }
-
                 <div class="d-comment__body" itemprop="text">
                     @if(comment.isBlocked){
                         <div class="d-comment__comment-removed">This comment was removed by a moderator because it didn't abide by our <a href="http://www.theguardian.com/community-standards" data-link-name="community standards">community standards</a>.

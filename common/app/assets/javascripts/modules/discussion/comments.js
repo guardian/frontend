@@ -1,31 +1,35 @@
 define([
-    'common/utils/$',
+    'bean',
     'bonzo',
     'qwery',
-    'bean',
+
+    'common/utils/$',
     'common/utils/ajax',
-    'common/utils/scroller',
     'common/utils/detect',
+    'common/utils/mediator',
+    'common/utils/scroller',
+
     'common/modules/component',
-    'common/modules/userPrefs',
-    'common/modules/identity/api',
+    'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/recommend-comments',
-    'common/modules/discussion/api'
+    'common/modules/identity/api',
+    'common/modules/userPrefs'
 ], function(
-    $,
+    bean,
     bonzo,
     qwery,
-    bean,
+    $,
     ajax,
-    scroller,
     detect,
+    mediator,
+    scroller,
     Component,
-    userPrefs,
-    Id,
+    DiscussionApi,
     CommentBox,
     RecommendComments,
-    DiscussionApi
+    Id,
+    userPrefs
 ) {
 'use strict';
 /**
@@ -35,12 +39,9 @@ define([
  * * Move over to $ instead of qwery & bonzo
  * @constructor
  * @extends Component
- * @param {Element=} context
- * @param {Object} mediator
  * @param {Object=} options
  */
-var Comments = function(mediator, options) {
-    this.mediator = mediator;
+var Comments = function(options) {
     this.setOptions(options);
 
     if (userPrefs.get('discussion.order')) {
@@ -89,7 +90,6 @@ Comments.prototype.classes = {
     heading: 'discussion__heading',
     newComments: 'js-new-comments',
     orderControl: 'd-discussion__order-control',
-    sentimentControl: 'js-discussion-sentiment-changer',
     loader: 'd-discussion__loader',
 
     comment: 'd-comment',
@@ -151,9 +151,6 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     this.on('click', this.getClass('commentReport'), this.reportComment);
     this.on('change', this.getClass('orderControl'), this.setOrder);
-    this.on('click', this.getClass('sentimentControl'), this.setSentiment);
-
-    this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
 
     this.addMoreRepliesButtons();
 
@@ -175,6 +172,14 @@ Comments.prototype.ready = function() {
             $('.js-report-comment-form').addClass('u-h');
         });
     });
+
+    mediator.on('module:clickstream:click', this.handleBodyClick.bind(this));
+};
+
+Comments.prototype.handleBodyClick = function(clickspec) {
+    if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
+        this.showHiddenComments();
+    }
 };
 
 /**
@@ -258,8 +263,7 @@ Comments.prototype.gotoPage = function(page) {
     scroller.scrollToElement(qwery('.discussion__comments__container .discussion__heading'), 100);
 
     return this.fetchComments({
-        page: page,
-        sentimentId: this.options.sentiment
+        page: page
     }).then(function() {
         this.loaded();
     }.bind(this));
@@ -284,8 +288,7 @@ Comments.prototype.changePage = function(e) {
 Comments.prototype.fetchComments = function(options) {
     var url = '/discussion/'+
         (options.comment ? 'comment-context/'+ options.comment : this.options.discussionId)+
-        '.json?'+ (options.page ? '&page=' + options.page : '')+
-        (options.sentimentId ? '&sentiment='+ options.sentimentId : '');
+        '.json?'+ (options.page ? '&page=' + options.page : '');
 
     return ajax({
         url: url,
@@ -515,11 +518,6 @@ Comments.prototype.replyToComment = function(e) {
     });
 };
 
-/**
- * @param {Object.<string.*>} comment
- */
-Comments.prototype.recommendFail = function() {};
-
 Comments.prototype.showDiscussion = function() {
     var showDiscussionElem = $('.d-discussion__show-all-comments');
     if (!showDiscussionElem.hasClass('u-h')) {
@@ -566,19 +564,6 @@ Comments.prototype.setOrder = function(e) {
         this.showHiddenComments();
         this.loaded();
     }.bind(this));
-};
-
-/**
- * @param {Event} e
- * return {Reqwest}
- */
-Comments.prototype.setSentiment = function(e) {
-    var el = e.currentTarget;
-    e.preventDefault();
-    $('.d-discussion__sentiment--active', this.elem).removeClass('d-discussion__sentiment--active');
-    $(el).addClass('d-discussion__sentiment--active');
-    this.options.sentiment = el.getAttribute('data-sentiment');
-    return this.gotoPage(1);
 };
 
 /**

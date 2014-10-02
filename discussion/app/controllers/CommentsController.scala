@@ -56,7 +56,7 @@ trait CommentsController extends DiscussionController {
   }
 }
 
-case class DiscussionParams(orderBy: String, page: String, pageSize: String, maxResponses: Option[String] = None, sentiment: Option[String] = None, topComments: Boolean)
+case class DiscussionParams(orderBy: String, page: String, pageSize: String, maxResponses: Option[String] = None, topComments: Boolean)
 object DiscussionParams extends {
   def apply(request: RequestHeader): DiscussionParams = {
     DiscussionParams(
@@ -64,7 +64,6 @@ object DiscussionParams extends {
       page = request.getQueryString("page").getOrElse("1"),
       pageSize = request.getQueryString("pageSize").getOrElse("50"),
       maxResponses = request.getQueryString("maxResponses"),
-      sentiment = request.getQueryString("sentiment"),
       topComments = request.getQueryString("topComments").map(_ == "true").getOrElse(false)
     )
   }

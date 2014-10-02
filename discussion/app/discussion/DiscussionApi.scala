@@ -48,7 +48,6 @@ trait DiscussionApi extends Http with ExecutionContexts with Logging {
                     |&page=${params.page}
                     |&orderBy=${params.orderBy}
                     |&showSwitches=true""".stripMargin.replace("\n", "")+
-                    params.sentiment.map{ s: String => "&sentiment="+s }.getOrElse("")+
                     params.maxResponses.map{i => "&maxResponses="+ i}.getOrElse("")
 
     getJsonForUri(key, url)
