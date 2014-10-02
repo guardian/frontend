@@ -44,6 +44,12 @@ x x x x x x x x x x x x x x x x x x
 
     @include fc-sublinks-horizontal;
 
+    .fc-item__container,
+    .fc-item__content,
+    .fc-item__footer {
+        @include flex-display;
+    }
+
     .fc-sublinks__item:nth-child(n+3) {
         display: none;
     }
