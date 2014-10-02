@@ -12,7 +12,7 @@
                     "fc-container__header__title" -> true,
                     "tone-comment" -> isContributor,
                     "tone-colour" -> isContributor))">
-                @if(config.showDate) {
+                @if(config.showDateHeader) {
                     @dateAndLatestUpdate(LatestUpdate(collection, collection.items))
                 } else {
                     @href.map { href =>
