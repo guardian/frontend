@@ -25,7 +25,7 @@ requirejs.config({
         enhancer:     'components/enhancer/enhancer',
         raven:        'components/raven-js/raven',
         fastclick:    'components/fastclick/fastclick',
-        stripe:       '/base/common/app/public/javascripts/vendor/stripe/stripe.min',
+        stripe:       '/base/static/public/javascripts/vendor/stripe/stripe.min',
         Squire:       '/base/static/test/javascripts/components/squire/src/Squire',
         fixtures:     '/base/static/test/javascripts/fixtures',
         helpers:      '/base/static/test/javascripts/helpers'
