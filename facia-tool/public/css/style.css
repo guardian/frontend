@@ -376,6 +376,17 @@ h1 {
     background-position-x: center;
 }
 
+.article .thumb--cutout {
+    position: absolute;
+    top: 23px;
+    left: 62px;
+    height: 28px;
+    width: 25px;
+    border-radius: 2px;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+}
+
 .article__content {
     display: block;
     margin: 0 125px 0 85px;

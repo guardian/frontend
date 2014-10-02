@@ -101,7 +101,11 @@ define([
                     label: 'replacement image height',
                     type: 'text'
                 },
-
+                {
+                    key: 'imageCutoutSrcFromCapi',
+                    label: 'contributor image from CAPI',
+                    type: 'text'
+                },
                 {
                     key: 'imageCutoutSrc',
                     editable: true,
@@ -171,16 +175,10 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'imageCutoutAvailable',
-                    label: 'has a contributor image',
-                    type: 'boolean'
-                },
-                {
                     key: 'imageCutoutReplace',
                     editable: true,
                     singleton: 'images',
                     label: 'cutout image',
-                    displayIf: 'imageCutoutSrc',
                     type: 'boolean'
                 },
                 {
@@ -436,8 +434,7 @@ define([
         };
 
         Article.prototype.populate = function(opts, validate) {
-            var missingProps,
-                imageCutoutFromCapi;
+            var missingProps;
 
             populateObservables(this.props,  opts);
             populateObservables(this.meta,   opts.meta);
@@ -458,14 +455,10 @@ define([
                     this.state.isLoaded(true);
                     this.sparkline();
                 }
+
             }
 
-            imageCutoutFromCapi = contributorImage(opts);
-
-            if (imageCutoutFromCapi) {
-                this.meta.imageCutoutAvailable(true);
-                this.meta.imageCutoutSrc(this.meta.imageCutoutSrc() || imageCutoutFromCapi);
-            }
+            this.meta.imageCutoutSrcFromCapi(contributorImage(opts));
 
             this.meta.hasMainVideo(mainMediaType(opts) === 'video');
 
@@ -476,6 +469,9 @@ define([
             }
 
             this.setRelativeTimes();
+
+
+
         };
 
         Article.prototype.setRelativeTimes = function() {
