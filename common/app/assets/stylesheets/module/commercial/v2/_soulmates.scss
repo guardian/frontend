@@ -11,7 +11,6 @@ $c-soulmatesBorder: #e6e1c3;
         .container__title__wrapper {
             height: 100%;
             padding: $gs-baseline*2 0 $gs-baseline/2;
-            margin: 0 0 $gs-baseline*2.5;
             background-repeat: no-repeat;
             width: gs-span(2);
 
@@ -35,6 +34,11 @@ $c-soulmatesBorder: #e6e1c3;
             padding: 0;
             @include fs-header(1);
             margin: $gs-baseline 0 0;
+
+            @include mq($until: leftCol) {
+                top: 20px;
+                left: $gs-gutter * 7.5;
+            }
         }
         .i-soulmates-logo {
             width: 86px;
