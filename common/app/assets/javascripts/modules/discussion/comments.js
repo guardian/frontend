@@ -170,8 +170,6 @@ Comments.prototype.ready = function() {
 
     this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
 
-    this.addMoreRepliesButtons();
-
     if (!this.isReadOnly()) {
         this.bindCommentEvents();
     }
@@ -343,9 +341,6 @@ Comments.prototype.renderComments = function(resp) {
     });
 
     $(this.getClass('jsContent'), this.elem).replaceWith(content);
-    this.addMoreRepliesButtons(qwery(
-        this.getClass('comment'), content
-    ));
 
     if (!this.isReadOnly()) {
         RecommendComments.init();
