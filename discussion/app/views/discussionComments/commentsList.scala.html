@@ -4,7 +4,7 @@
     @page.switches.map{ switch =>
         data-@switch.name="@switch.state"
     }>
-    <div class="d-discussion__header d-discussion__comment-count">
+    <div class="d-discussion__comment-count">
         <div class="d-discussion__meta d-dicussion__meta--counts d-meta-item">
             @if(page.commentCount > 0){
                 @page.commentCount comment@if(page.commentCount != 1){s} in @page.topLevelCommentCount thread@if(page.topLevelCommentCount != 1){s}.

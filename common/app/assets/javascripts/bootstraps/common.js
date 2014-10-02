@@ -47,7 +47,8 @@ define([
     'common/modules/ui/smartAppBanner',
     'common/modules/ui/faux-block-link',
     'common/modules/discussion/loader',
-    'common/modules/release-message'
+    'common/modules/release-message',
+    'common/modules/discussion/api'
 ], function (
     $,
     mediator,
@@ -94,7 +95,8 @@ define([
     smartAppBanner,
     fauxBlockLink,
     DiscussionLoader,
-    releaseMessage
+    releaseMessage,
+    discussionApi
 ) {
 
     var modules = {
@@ -174,12 +176,6 @@ define([
 
         initClickstream: function () {
             new Clickstream({filter: ['a', 'button']});
-        },
-
-        transcludeCommentCounts: function () {
-            mediator.on('page:common:ready', function() {
-                CommentCount.init();
-            });
         },
 
         initRightHandComponent: function(config) {
@@ -377,12 +373,14 @@ define([
             smartAppBanner.init();
         },
 
-        initDiscussion: function() {
-            mediator.on('page:common:ready', function(config) {
+        initDiscussion: function(config) {
+            discussionApi.init(config);
+            mediator.on('page:common:ready', function() {
                 if (config.page.commentable && config.switches.discussion) {
                     var discussionLoader = new DiscussionLoader(mediator, { 'switches': config.switches });
                     discussionLoader.attachTo($('.discussion')[0]);
                 }
+                CommentCount.init();
             });
         },
 
@@ -436,7 +434,6 @@ define([
         modules.showToggles();
         modules.showRelativeDates();
         modules.initClickstream();
-        modules.transcludeCommentCounts();
         modules.optIn();
         modules.displayReleaseMessage(config);
         modules.logReadingHistory();
@@ -448,7 +445,7 @@ define([
         modules.repositionComments();
         modules.showMoreTagsLink();
         modules.showSmartBanner(config);
-        modules.initDiscussion();
+        modules.initDiscussion(config);
         modules.logLiveStats(config);
         modules.loadAnalytics(config);
         modules.cleanupCookies();

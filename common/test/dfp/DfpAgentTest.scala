@@ -103,12 +103,12 @@ class DfpAgentTest extends FlatSpec with Matchers {
     testDfpAgent.isAdvertisementFeature("culture/article") should be(false)
   }
 
-  it should "be false if keyword tag doesn't exists" in {
+  it should "be true if series tag exists" in {
     val tags = Seq(
       new Tag(new ApiTag("culture/article", "keyword", webTitle="", webUrl="", apiUrl="")),
       new Tag(new ApiTag("advert/ad-feature", "series", webTitle="", webUrl="", apiUrl=""))
     )
-    testDfpAgent.isAdvertisementFeature(tags) should be(false)
+    testDfpAgent.isAdvertisementFeature(tags) should be(true)
   }
 
   it should "be true for an advertisement feature container" in {

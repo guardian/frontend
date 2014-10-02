@@ -1,23 +1,9 @@
 .tone-dead {
-    &.fc-item {
-        &,
-        & a {
-            color: $c-neutral1;
-        }
-    }
-
     .fc-item__kicker,
     .fc-item__byline {
         &,
         & a {
-            color: $c-liveDefault;
-        }
-    }
-
-    .fc-item__meta {
-        &,
-        & a {
-            color: $c-liveMute;
+            color: $c-liveAccent;
         }
     }
 
