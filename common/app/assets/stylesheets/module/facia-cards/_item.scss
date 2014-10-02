@@ -6,7 +6,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item {
     display: block;
-    // @include display-flex;
     @include flex(1);
     @include clearfix;
     background-color: #ffffff;
@@ -29,20 +28,6 @@ $fc-item-gutter: $gs-gutter / 4;
     .vjs-big-play-button > span {
         @include video-play-button-size($vjs-x-small-button-size);
     }
-
-    &.item--has-discussion {
-        padding-bottom:  $gs-baseline * 2;
-
-        // fake some comments
-        .fc-trail__count--inline-template,
-        .js-item__comment-count {
-            display: inline-block;
-        }
-
-        .js-item__comment-count:before {
-            content: "235";
-        }
-    }
 }
 
 .fc-item--has-image:before {
@@ -53,12 +38,6 @@ $fc-item-gutter: $gs-gutter / 4;
    ==========================================================================
 */
 
-.fc-item__container {
-    // @include display-flex;
-    // @include flex-direction(column);
-    // @include flex(1);
-}
-
 // Wraps all media elements
 .fc-item__media-wrapper {
     position: relative;
@@ -66,7 +45,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 // Wraps all non-media content
 .fc-item__content {
-    // @include flex(1, 1, auto);
     @include box-sizing(border-box);
 }
 
@@ -129,9 +107,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__meta {
     @include fs-textSans(1);
-    padding-bottom: $gs-baseline / 3;
-    position: absolute;
-    bottom: 0;
+    padding-bottom: $gs-baseline;
 
     &,
     & a {
@@ -155,10 +131,9 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item--has-cutout {
-    // padding-bottom: 60%;
 
     .fc-item__media-wrapper {
-        display: none !important;
+        display: none;
     }
 
     .fc-item__avatar {

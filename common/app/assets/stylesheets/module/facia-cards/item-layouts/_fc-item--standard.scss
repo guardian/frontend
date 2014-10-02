@@ -34,6 +34,10 @@ x x x x x x x x
         }
     }
 
+    &.fc-item--has-cutout {
+        padding-bottom: 60%;
+    }
+
     &[class*="fc-item--has-sublinks"] {
         .fc-item__standfirst,
         .fc-item__media-wrapper {
