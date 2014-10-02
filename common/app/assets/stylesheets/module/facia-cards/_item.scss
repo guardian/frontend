@@ -169,4 +169,10 @@ $fc-item-gutter: $gs-gutter / 4;
         width: 100%;
         right: 0 - $gs-gutter * 2;
     }
+
+    &[class*="fc-item--has-sublinks"] {
+        .fc-item__avatar {
+            display: none !important;
+        }
+    }
 }
