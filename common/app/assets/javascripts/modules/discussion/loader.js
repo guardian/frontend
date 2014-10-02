@@ -1,37 +1,39 @@
 define([
-    'common/utils/$',
-    'common/utils/ajax',
-    'common/utils/config',
-    'common/utils/_',
+    'bean',
     'bonzo',
     'qwery',
-    'bean',
-    'common/modules/component',
-    'common/modules/analytics/register',
+
+    'common/utils/$',
+    'common/utils/_',
+    'common/utils/ajax',
+    'common/utils/config',
+
     'common/modules/analytics/discussion',
-    'common/modules/identity/api',
+    'common/modules/analytics/register',
+    'common/modules/component',
+    'common/modules/discussion/activity-stream',
     'common/modules/discussion/api',
+    'common/modules/discussion/comment-box',
     'common/modules/discussion/comments',
     'common/modules/discussion/top-comments',
-    'common/modules/discussion/comment-box',
-    'common/modules/discussion/activity-stream'
+    'common/modules/identity/api'
 ], function(
-    $,
-    ajax,
-    config,
-    _,
+    bean,
     bonzo,
     qwery,
-    bean,
-    Component,
-    register,
+    $,
+    _,
+    ajax,
+    config,
     DiscussionAnalytics,
-    Id,
+    register,
+    Component,
+    ActivityStream,
     DiscussionApi,
+    CommentBox,
     Comments,
     TopComments,
-    CommentBox,
-    ActivityStream
+    Id
 ) {
 
 /**
