@@ -7,15 +7,18 @@
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
     <div class="fc-container__header">
         @title.map { title =>
-            <div class="@RenderClasses(Map(
-                "fc-container__header__title" -> true,
-                "tone-comment tone-colour" -> frontProperties.editorialType.exists(_ == "contributor")))">
+            @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
+                <div class="@RenderClasses(Map(
+                    "fc-container__header__title" -> true,
+                    "tone-comment" -> isContributor,
+                    "tone-colour" -> isContributor))">
                 @href.map { href =>
-                    <a class="u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                }.getOrElse{
+                   <a class="u-text-hyphenate" data-link-name="section heading" href="@LinkTo {/@href}">@Html(title)</a>
+                }.getOrElse {
                     <span class="u-text-hyphenate">@Html(title)</span>
                 }
-            </div>
+                </div>
+            }
         }
         @if(containerIndex == 0){
             @frontProperties.imageUrl.filter(_ => frontProperties.isImageDisplayed).map(ImgSrc(_, Item140)).map { url =>

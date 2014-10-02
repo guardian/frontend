@@ -10,6 +10,8 @@ $header-image-size-desktop: 120px;
     }
 
     .fc-container__header {
+        padding-top: $gs-baseline / 2;
+
         @include mq(leftCol) {
             width: $left-column;
             clear: left;
