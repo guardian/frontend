@@ -1,3 +1,10 @@
+.fc-item__title--quoted .fc-item__link:before {
+    @include icon(quote-grey, false);
+    content: '';
+    height: .8em;
+    width: 1em;
+}
+
 .fc-item__timestamp {
     padding-left: 0;
 
@@ -13,17 +20,15 @@
     }
 }
 
-.fc-trail__count {
-    &:before {
-        @include icon(comment-light-grey, false);
-        width: 16px;
-        height: 16px;
-        content: '';
-        position: relative;
-        top: 3px;
-        float: left;
-        margin-right: 1px;
-    }
+.fc-trail__count:before {
+    @include icon(comment-light-grey, false);
+    width: 16px;
+    height: 16px;
+    content: '';
+    position: relative;
+    top: 3px;
+    float: left;
+    margin-right: 1px;
 }
 
 .tone-podcast {
@@ -80,21 +85,18 @@
     .fc-trail__count:before {
         @include icon(comment-light-pink, false);
     }
+
+    .fc-trail__count:before {
+        @include icon(comment-white, false);
+    }
 }
 
 .tone-feature {
+    .fc-item__title--quoted .fc-item__link:before {
+        @include icon(quote-orange, false);
+    }
+
     .fc-item__timestamp:before {
         @include icon(clock-light-pink, false);
     }
-
-    .fc-trail__count:before {
-        @include icon(comment-light-pink, false);
-    }
-}
-
-.fc-item__title--quoted:before {
-    @include icon(quote-grey, false);
-    content: '';
-    height: .8em;
-    width: 1em;
 }
