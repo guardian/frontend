@@ -76,14 +76,9 @@
             top: 0;
             bottom: 0;
         }
-
         @include mq(wide) {
             width: $left-column-wide + $gs-gutter;
-            position: absolute;
-            top: 0;
-            bottom: 0;
         }
-
         .commercial__cta.button {
             @include button-colour(transparent, #ffffff, transparent, #ffffff);
             border-color: rgba(#ffffff, .3);
@@ -93,19 +88,13 @@
     .container__body {
         padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
 
-        @include mq(leftCol) {
-            margin-left: $left-column + $gs-gutter;
-        }
-
-        @include mq(wide) {
-            margin-left: $left-column-wide + $gs-gutter;
-        }
-
         @include mq(mobileLandscape) {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
         }
-
+        @include mq(leftCol) {
+            margin-left: $left-column + $gs-gutter;
+        }
         @include mq(wide) {
             margin-left: $left-column-wide + $gs-gutter;
             margin-right: 0;
@@ -113,17 +102,17 @@
     }
 
     .commercial__search {
-        @include mq(mobileLandscape, tablet) {
+        @include mq(mobileLandscape) {
             right: $gs-gutter;
         }
-        @include mq(tablet, leftCol) {
+        @include mq(tablet) {
             position: absolute;
             width: gs-span(3);
             top: 0;
             right: gs-span(3) + $gs-gutter*2;
         }
         @include mq(leftCol) {
-            position: absolute;
+            width: auto;
             top: auto;
             right: $gs-gutter/2;
             bottom: $gs-baseline*4.5;
@@ -190,7 +179,6 @@
 
         @include mq(leftCol) {
             top: auto;
-            right: $gs-gutter/2;
             bottom: $gs-baseline;
             left: $gs-gutter/2;
         }
@@ -219,25 +207,20 @@
         a {
             color: #ffffff;
         }
-
         .i-guardian-logo-commercial {
-            @include mq($until: leftCol) {
-                display: inline-block;
-            }
-            @include mq($from: leftCol) {
+            display: inline-block;
+
+            @include mq(leftCol) {
                 display: none;
             }
         }
-
         .i-marque-54 {
-            @include mq($until: leftCol) {
-                display: none;
-            }
-            @include mq($from: leftCol) {
+            display: none;
+
+            @include mq(leftCol) {
                 display: block;
             }
         }
-
         .i-commercial-brand {
             @include mq($until: leftCol) {
                 opacity: .8;
