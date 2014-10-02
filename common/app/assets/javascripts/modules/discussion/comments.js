@@ -617,8 +617,9 @@ Comments.prototype.addUser = function(user) {
         });
 
         if (this.user.isStaff) {
-            $('.d-discussion', this.elem).removeClass('d-discussion--not-staff');
-            $('.d-discussion', this.elem).addClass('d-discussion--is-staff');
+            $('.d-discussion', this.elem)
+                .removeClass('d-discussion--not-staff')
+                .addClass('d-discussion--is-staff');
         }
     }
 
