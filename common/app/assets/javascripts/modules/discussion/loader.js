@@ -7,6 +7,7 @@ define([
     'common/utils/_',
     'common/utils/ajax',
     'common/utils/config',
+    'common/utils/mediator',
 
     'common/modules/analytics/discussion',
     'common/modules/analytics/register',
@@ -25,6 +26,7 @@ define([
     _,
     ajax,
     config,
+    mediator,
     DiscussionAnalytics,
     register,
     Component,
@@ -44,11 +46,8 @@ define([
  * And also the premod / banned state of the user
  * @constructor
  * @extends Component
- * @param {Object} mediator
- * @param {Object=} options
  */
-var Loader = function(mediator) {
-    this.mediator = mediator;
+var Loader = function() {
     register.begin('discussion');
 };
 Component.define(Loader);
@@ -100,7 +99,7 @@ Loader.prototype.ready = function() {
         commentId = this.getCommentIdFromHash();
 
     if (commentId) {
-        this.mediator.emit('discussion:seen:comment-permalink');
+        mediator.emit('discussion:seen:comment-permalink');
     }
 
     this.topComments = new TopComments({
@@ -150,7 +149,7 @@ Loader.prototype.ready = function() {
 
     // More for analytics than anything
     if (window.location.hash === '#comments') {
-        this.mediator.emit('discussion:seen:comments-anchor');
+        mediator.emit('discussion:seen:comments-anchor');
     }
 
     register.end('discussion');
