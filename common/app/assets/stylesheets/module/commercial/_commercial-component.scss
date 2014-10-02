@@ -587,25 +587,5 @@ $commercial-cta-diameter: (
                 }
             }
         }
-        .commercial__home-link__pill {
-            padding: 4px 25px 4px 12px;
-            background-position: right;
-            background-color: $c-newsDefault;
-            @include border-radius(50%);
-            white-space: nowrap;
-        
-            .i {
-                left: auto;
-                right: 10px;
-                margin-top: -6px;
-                margin-right: auto;
-            
-                .svg & {
-                    width: 12px;
-                    height: 12px;
-                    background-size: contain;
-                }
-            }
-        }
     }
 }

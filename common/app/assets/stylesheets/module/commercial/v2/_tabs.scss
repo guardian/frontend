@@ -4,7 +4,7 @@
 .commercial--v2 {
     .tabs__container {
         background-color: $c-neutral5;
-        margin: $gs-baseline*-.5 $gs-gutter*-0.5 $gs-baseline;
+        margin: $gs-baseline*-.5 $gs-gutter*-.5 $gs-baseline;
 
         @include mq(mobileLandscape) {
             margin: $gs-baseline*-.5 $gs-gutter*-1 $gs-baseline;

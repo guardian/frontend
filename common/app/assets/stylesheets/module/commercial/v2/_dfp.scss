@@ -84,7 +84,7 @@
             }
         }
 
-        &.commercial--items-dfp-3  {
+        &.commercial--items-dfp-3 {
             @include mq(rightCol) {
                 .lineitem {
                     width: percentage(1/3);

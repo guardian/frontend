@@ -21,7 +21,7 @@
             }
 
             .commercial__cta.button {
-                border-color: rgba($titleColor, 0.3);
+                border-color: rgba($titleColor, .3);
 
                 &:hover {
                     border-color: rgba($titleColor, 1);
@@ -127,7 +127,7 @@
 @include tone-commercial(
     travel,
     guss-colour(maps-support-3, $pasteup-palette),
-    #72AF7E, // TODO: Add this unspecified colour to paste-up palette
+    #72af7e, // TODO: Add this unspecified colour to paste-up palette
     #ffffff,
     $c-neutral6,
     #ffffff
@@ -137,7 +137,7 @@
 @include tone-commercial(
     shop,
     guss-colour(features-main-1, $pasteup-palette),
-    #E02B7F, // TODO: Add this unspecified colour to paste-up palette
+    #e02b7f, // TODO: Add this unspecified colour to paste-up palette
     #ffffff,
     $c-neutral6,
     #ffffff
