@@ -29,11 +29,6 @@ import test.ConfiguredTestSuite
     SanitizeInput.fromConfigSeo(config).fronts("uk").description.get should be("")
   }
 
-  it should "strip tag from on-page description" in {
-    val config = createConfigWithFront(onPageDescription = Option("<strip><me>"))
-    SanitizeInput.fromConfigSeo(config).fronts("uk").onPageDescription.get should be("")
-  }
-
   it should "strip tag from section" in {
     val config = createConfigWithFront(section = Option("<strip>hello<me>"))
     SanitizeInput.fromConfigSeo(config).fronts("uk").navSection.get should be("hello")

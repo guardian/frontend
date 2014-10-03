@@ -9,7 +9,6 @@ define([
 
     'common/modules/ui/fonts',
     'common/modules/commercial/user-ad-targeting',
-    'common/modules/discussion/api',
 
     'common/bootstraps/common',
     'common/bootstraps/tag',
@@ -32,7 +31,6 @@ define([
 
     Fonts,
     userAdTargeting,
-    discussionApi,
 
     bootstrapCommon,
     tag,
@@ -60,9 +58,6 @@ define([
             );
         },
         modules = {
-            initialiseDiscussionApi: function() {
-                discussionApi.init(config);
-            },
 
             loadFonts: function(ua) {
                 if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
@@ -85,7 +80,6 @@ define([
     var routes = function() {
         userTiming.mark('App Begin');
 
-        modules.initialiseDiscussionApi();
         modules.loadFonts(navigator.userAgent);
         modules.initId();
         modules.initUserAdTargeting();

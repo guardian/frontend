@@ -1,9 +1,22 @@
 package layout
 
+object ItemClasses {
+  val showMore = ItemClasses(mobile = "list", tablet = "list")
+}
+
 case class ItemClasses(mobile: String, tablet: String, desktop: Option[String] = None) {
   /** Template helper */
-  def classes =
-    s"fc-item--$mobile-mobile fc-item--$tablet-tablet" + desktop.map(d => s" fc-item--$d-desktop").getOrElse("")
+  def classes: String = s"fc-item--$mobile-mobile fc-item--$tablet-tablet" +
+    desktop.map(d => s" fc-item--$d-desktop").getOrElse("")
+
+  /** Video.JS has issues if we render too many videos on a front (even if those videos are never displayed
+    * or loaded).
+    *
+    * As such we only render the video player if there is a breakpoint on which it will be shown. This is
+    * currently determined in quite a hacky way based on the item classes.
+    */
+  def showVideoPlayer =
+    Seq("half", "three", "full", "mega-full").exists(size => classes.contains(size))
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column])
 
