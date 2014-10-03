@@ -1,6 +1,6 @@
 {
-    "src": "../../static/src/images/commercial/",
-    "imgDest": "../../static/src/images/commercial",
+    "src": "../../common/app/assets/images/commercial/",
+    "imgDest": "../../static/target/images/commercial",
     "cssDest": "../../common/app/assets/stylesheets/icons/",
     "datasvgcss" : "_commercial-icons-svg.scss",
     "urlpngcss" : "_commercial-icons-sprite.scss",

@@ -9,49 +9,29 @@ module.exports = function(grunt, options) {
         common: {
             files: [{
                 expand: true,
-                cwd: 'static/src/javascripts/projects/common',
-                src: [
-                    '**/*.js',
-                    '!utils/atob.js'
-                ]
+                cwd: 'common/app/assets/javascripts/',
+                src: ['**/*.js', '!components/**', '!bower_components/**', '!utils/atob.js']
             }]
         },
         facia: {
             files: [{
                 expand: true,
-                cwd: 'static/src/javascripts/projects/facia',
-                src: [
-                    '**/*.js'
-                ]
+                cwd: 'facia/app/assets/javascripts/',
+                src: ['**/*.js']
             }]
         },
         faciaTool: {
             files: [{
                 expand: true,
                 cwd: 'facia-tool/public/javascripts/',
-                src: [
-                    '**/*.js',
-                    '!components/**',
-                    '!omniture.js'
-                ]
+                src: ['**/*.js', '!components/**', '!omniture.js']
             }]
         },
         membership: {
             files: [{
                 expand: true,
-                cwd: 'static/src/javascripts/projects/membership',
-                src: [
-                    '**/*.js'
-                ]
-            }]
-        },
-        bootstraps: {
-            files: [{
-                expand: true,
-                cwd: 'static/src/javascripts/bootstraps',
-                src: [
-                    '**/*.js'
-                ]
+                cwd: 'identity/app/assets/javascripts/',
+                src: ['**/*.js']
             }]
         }
     };
