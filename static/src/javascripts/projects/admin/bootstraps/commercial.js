@@ -1,5 +1,5 @@
 define([
-    '../../../bower_components/qwery/qwery',
+    'qwery',
     'bean',
     'bonzo',
     'lodash/collections/where',
