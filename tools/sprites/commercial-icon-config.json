@@ -1,7 +1,7 @@
 {
     "src": "../../static/src/images/commercial/",
-    "imgDest": "../../static/src/images/commercial",
-    "cssDest": "../../common/app/assets/stylesheets/icons/",
+    "imgDest": "../../static/target/images/commercial",
+    "cssDest": "../../static/src/stylesheets/icons/",
     "datasvgcss" : "_commercial-icons-svg.scss",
     "urlpngcss" : "_commercial-icons-sprite.scss",
     "spritepath" : "../images/commercial/",

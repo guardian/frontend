@@ -131,7 +131,7 @@
             mkdirp.sync( config.imgDest );
         }
 
-        console.info( "Ouput css file created." );
+        console.info( "Output css file created." );
 
         console.info( "Cleaning SVG" );
         cleanSVG(config.src, function(){
