@@ -106,7 +106,8 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   def isFrontHidden(id: String): Boolean =
     (configAgent.get() \ "fronts" \ id \ "isHidden").asOpt[Boolean].exists(identity)
 
-  def shouldServeFront(id: String) = getPathIds.contains(id) && !isFrontHidden(id)
+  def shouldServeFront(id: String) = getPathIds.contains(id) &&
+    (Configuration.environment.isPreview || !isFrontHidden(id))
 }
 
 object ConfigAgent extends ConfigAgentTrait
