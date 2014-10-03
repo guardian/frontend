@@ -9,81 +9,6 @@ $header-image-size-desktop: 120px;
         padding-bottom: $gs-baseline * 2;
     }
 
-    .fc-container__header {
-        padding-top: $gs-baseline / 2;
-
-        @include mq(leftCol) {
-            width: $left-column;
-            clear: left;
-            float: left;
-            margin-top: 0;
-        }
-
-        @include mq(wide) {
-            width: $left-column-wide;
-        }
-    }
-    .fc-container__header__title {
-        padding-bottom: $gs-baseline/3;
-        line-height: get-line-height(header, 2) !important;
-        @include fs-header(3);
-
-        @include mq($until: tablet) {
-            padding: $gs-baseline/4 0 $gs-baseline/3;
-        }
-        a {
-            color: inherit;
-        }
-    }
-    .fc-container__header__image {
-        display: inline-block;
-        margin: 0 $gs-gutter 0 0;
-        overflow: hidden;
-
-        @include mq(leftCol) {
-            margin: $gs-baseline * 2 0 $gs-baseline;
-            float: none;
-        }
-
-        img {
-            width: $header-image-size-mobile;
-            height: $header-image-size-mobile;
-
-            @include mq(desktop) {
-                width: $header-image-size-desktop;
-                height: $header-image-size-desktop;
-            }
-        }
-    }
-    .fc-container__header__description,
-    .fc-container__header__description--image {
-        padding-bottom: $gs-baseline/2;
-        @include fs-bodyCopy(1);
-
-        @include mq(tablet) {
-            padding-bottom: $gs-baseline;
-            @include fs-bodyCopy(2, true);
-        }
-    }
-    .fc-container__header__description--image {
-        @include mq($from: mobile) {
-            height: $header-image-size-mobile;
-            vertical-align: middle;
-            display: table-cell;
-        }
-
-        @include mq(desktop) {
-            max-width: gs-span(7);
-            height: $header-image-size-desktop;
-        }
-
-        @include mq(leftCol) {
-            display: block;
-            height: auto;
-            clear: both;
-        }
-    }
-
     .facia-container__inner {
         border-top: 1px solid $c-newsAccent;
     }
@@ -96,6 +21,80 @@ $header-image-size-desktop: 120px;
         margin-top: 0;
     }
 }
+.fc-container__header {
+    padding-top: $gs-baseline / 2;
+
+    @include mq(leftCol) {
+        width: $left-column;
+        clear: left;
+        float: left;
+        margin-top: 0;
+    }
+
+    @include mq(wide) {
+        width: $left-column-wide;
+    }
+}
+.fc-container__header__title {
+    padding-bottom: $gs-baseline/3;
+    line-height: get-line-height(header, 2) !important;
+    @include fs-header(3);
+
+    @include mq($until: tablet) {
+        padding: $gs-baseline/4 0 $gs-baseline/3;
+    }
+    a {
+        color: inherit;
+    }
+}
+.fc-container__header__image {
+    display: inline-block;
+    margin: 0 $gs-gutter 0 0;
+    overflow: hidden;
+
+    @include mq(leftCol) {
+        margin: $gs-baseline * 2 0 $gs-baseline;
+        float: none;
+    }
+
+    img {
+        width: $header-image-size-mobile;
+        height: $header-image-size-mobile;
+
+        @include mq(desktop) {
+            width: $header-image-size-desktop;
+            height: $header-image-size-desktop;
+        }
+    }
+}
+.fc-container__header__description,
+.fc-container__header__description--image {
+    padding-bottom: $gs-baseline/2;
+    @include fs-bodyCopy(1);
+
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline;
+        @include fs-bodyCopy(2, true);
+    }
+}
+.fc-container__header__description--image {
+    @include mq($from: mobile) {
+        height: $header-image-size-mobile;
+        vertical-align: middle;
+        display: table-cell;
+    }
+
+    @include mq(desktop) {
+        max-width: gs-span(7);
+        height: $header-image-size-desktop;
+    }
+
+    @include mq(leftCol) {
+        display: block;
+        height: auto;
+        clear: both;
+    }
+}a
 
 .js-on .fc-show-more--hidden .fc-show-more--hide-on-mobile {
     @include mq($until: tablet) {
