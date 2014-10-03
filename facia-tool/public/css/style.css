@@ -955,6 +955,13 @@ button {
     padding-top: 2px;
 }
 
+.cfn-front__hidden-text {
+    font-size: 60%;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #767676;
+}
+
 .cnf-front.open {
     background: #eeeeee;
     padding: 5px 0;

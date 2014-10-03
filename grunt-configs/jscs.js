@@ -136,22 +136,6 @@ module.exports = function(grunt, options) {
                 cwd: 'static/src/javascripts/bootstraps',
                 src: [
                     '**/*.js',
-                    '!app.js',
-                    '!article.js',
-                    '!commercial.js',
-                    '!common.js',
-                    '!dev.js',
-                    '!football.js',
-                    '!gallery.js',
-                    '!identity.js',
-                    '!liveblog.js',
-                    '!media.js',
-                    '!ophan.js',
-                    '!profile.js',
-                    '!section.js',
-                    '!sport.js',
-                    '!tag.js',
-                    '!video-player.js',
                 ]
             }]
         }

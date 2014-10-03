@@ -39,14 +39,15 @@ define([
                         ['commercial-component', 'merchandising'],
                         ['commercial-component-high', 'merchandising-high']
                     ],
-                    function(data) {
-                        var commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
+                    function (data) {
+                        var loader, postLoadEvents,
+                            commercialComponent = new RegExp('^#' + data[0] + '=(.*)$').exec(window.location.hash),
                             slot = qwery('[data-name="' + data[1] + '"]').shift();
                         if (commercialComponent && slot) {
                             bonzo(slot).removeClass('ad-slot--dfp');
-                            var loader = new CommercialLoader({ config: config }),
-                                postLoadEvents = {};
-                            postLoadEvents[commercialComponent[1]] = function() {
+                            loader = new CommercialLoader({ config: config });
+                            postLoadEvents = {};
+                            postLoadEvents[commercialComponent[1]] = function () {
                                 slot.style.display = 'block';
                             };
                             loader.postLoadEvents = postLoadEvents;
