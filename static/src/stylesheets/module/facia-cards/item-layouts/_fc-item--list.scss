@@ -14,18 +14,9 @@ x x x x x x x x x x x x x x x x x x x x x x x x
     $headline-size: 1;
     $item-vertical-padding: $gs-baseline * .25;
 
-    .fc-item__title,
-    .fc-item__byline {
+    .fc-item__header {
         @include fs-headline($headline-size, true);
-    }
-
-    .fc-item__header {
-        padding-bottom: get-line-height(headline, $headline-size);
-    }
-
-    .fc-item__header {
         margin-bottom: 0;
-        padding-bottom: $gs-baseline * 1.666;
     }
 
     .fc-item__media-wrapper {

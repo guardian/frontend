@@ -38,16 +38,9 @@ Three quarter item. Looks like a wide standard, a bit like this:
         }
     }
 
-    .fc-item__title,
-    .fc-item__byline {
-        @include mq(desktop) {
-            @include fs-headline(4, true);
-        }
-    }
-
     .fc-item__header {
         @include mq(desktop) {
-            padding-bottom: get-line-height(headline, 4);
+            @include fs-headline(4, true);
         }
     }
 
