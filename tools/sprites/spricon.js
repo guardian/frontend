@@ -5,25 +5,26 @@
  *
  */
 
-var fs      = require('fs'),
-    Q       = require('q'),
-    phantom = require('phantom'),
-    btoa    = require('btoa');
-    jf      = require('jsonfile'),
-    SVGO    = require('svgo'),
-    svgo    = new SVGO(),
-    target  = './',
-    svgCss  = [],
-    pngCss  = [],
-    jfDefer = Q.defer();
+var fs         = require('fs'),
+    Q          = require('q'),
+    phantom    = require('phantom'),
+    btoa       = require('btoa');
+    jf         = require('jsonfile'),
+    handlebars = require('handlebars'),
+    SVGO       = require('svgo'),
+    svgo       = new SVGO(),
+    svgCss     = [],
+    pngCss     = [],
+    jfDefer    = Q.defer(),
+    configFile = process.argv[2];
 
-jf.readFile(process.argv[2], function (err, json) {
+console.info('Running Spricon with ' + configFile);
+
+jf.readFile(configFile, function (err, json) {
     jfDefer.resolve(json);
 })
 
 jfDefer.promise.then(function (config) {
-
-    console.log(config)
 
     phantom.create(function (ph) {
         ph.createPage(function (sprite) {
@@ -44,14 +45,16 @@ jfDefer.promise.then(function (config) {
                                         iconDataBase64 = btoa(iconData);
                                     // create svg css rule
                                     svgCss.push(
-                                        '\t%svg-i-' + iconName + ',\n' +
-                                        '\t.svg-i-' + iconName + ' {\n' +
-                                        '\t\tbackground-image: url(data:image/svg+xml;base64,' + iconDataBase64 + ');\n' +
-                                        '\t\tbackground-position: 0 0;\n' +
-                                        '\t}\n' +
-                                        '\t.svg .i-' + iconName + '{\n' +
-                                        '\t\t@extend %svg-i-' + iconName + ' !optional;\n' +
-                                        '\t}'
+                                        handlebars.compile(
+                                            '   %svg-i-{{name}},\n' +
+                                            '   .svg-i-{{name}} {\n' +
+                                            '       background-image: url(data:image/svg+xml;base64,{{data}});\n' +
+                                            '       background-position: 0 0;\n' +
+                                            '   }\n' +
+                                            '   .svg .i-{{name}} {\n' +
+                                            '       @extend %svg-i-{{name}} !optional;\n' +
+                                            '   }'
+                                        )({ name: iconName, data: iconDataBase64})
                                       );
                                     sprite.evaluate(
                                         function (iconData) {
@@ -73,12 +76,20 @@ jfDefer.promise.then(function (config) {
                                         function (iconProps) {
                                             // create png css rule
                                             pngCss.push(
-                                                '%i-' + iconName + ',\n' +
-                                                '.i-' + iconName + ' {\n' +
-                                                '\tbackground-position: -' + iconProps.x + 'px -' + iconProps.y + 'px;\n' +
-                                                '\twidth: ' + iconProps.w + 'px;\n' +
-                                                '\theight: ' + iconProps.h + 'px;\n' +
-                                                '}'
+                                                handlebars.compile(
+                                                    '%i-{{name}},\n' +
+                                                    '.i-{{name}} {\n' +
+                                                    '   background-position: -{{x}}px -{{y}}px;\n' +
+                                                    '   width: {{width}}px;\n' +
+                                                    '   height: {{height}}px;\n' +
+                                                    '}'
+                                                )({
+                                                    name:  iconName,
+                                                    x:      iconProps.x,
+                                                    y:      iconProps.y,
+                                                    width:  iconProps.w,
+                                                    height: iconProps.h
+                                                })
                                             );
                                             deferred.resolve();
                                         },
