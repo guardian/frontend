@@ -82,7 +82,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__header {
     @include fs-headline(3);
     font-weight: 500;
-    padding-bottom: 0.75em;
+    padding-bottom: .75em;
 }
 
 .fc-item__title,
