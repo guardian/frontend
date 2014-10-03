@@ -92,6 +92,7 @@ define([
                 {
                     key: 'isBreaking',
                     editable: true,
+                    singleton: 'kicker',
                     label: 'breaking news',
                     type: 'boolean'
                 },

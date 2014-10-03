@@ -5,6 +5,11 @@
         background-color: $c-commentBackground;
     }
 
+    .fc-item__title,
+    .fc-item__byline {
+        font-weight: 400;
+    }
+
     .fc-item__kicker,
     .fc-item__byline {
         &,

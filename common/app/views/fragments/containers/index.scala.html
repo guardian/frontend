@@ -1,25 +1,26 @@
-@(collection: Collection, style: NewsContainer, containerIndex: Int, date: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, date: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
-@import common.LinkTo
 @import model.{Collection, Config}
+@import views.html.fragments.containers.facia_cards.slice
 @import views.html.fragments.keywordList
 @import views.support.MostPopularTags.topTags
 @import views.support.{GetClasses, Format, NewsContainer, PreviousAndNext, TemplateDeduping}
+@import common.LinkTo
 
 @defining(collection.displayName) { title =>
 
     @defining(templateDeduping(15, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
-                class="@GetClasses.forContainer(style, config, containerIndex, title.nonEmpty)"
+                class="@GetClasses.forContainer(NewsContainer(showMore = false), config, containerIndex, title.nonEmpty)"
                 data-link-name="all index"
-                data-type="@style.containerType"
+                data-type="@NewsContainer(showMore = false).containerType"
                 @config.sponsorshipKeyword.map { keyword =>
-                    data-keywords="@keyword"
+                data-keywords="@keyword"
                 }
                 data-component="all index">
                 <div class="facia-container__inner">
-                    <div class="tone-@style.tone tone-accent-border"></div>
+                    <div class="tone-accent-border"></div>
                     <div class="container__header">
                         <h2 class="container__title">
                             <span class="container__title__label today">
@@ -33,7 +34,10 @@
                         </h2>
                     </div>
                     <div class="container__body container--rolled-up-hide">
-                        @fragments.collections.index(items, style, containerIndex)
+                        @for(sliceWithCards <- containerLayout.slices) {
+                            @slice(sliceWithCards, containerIndex)
+                        }
+
                         @if(nav.isDefined) {
                             <div class="pagination u-cf">
                                 <ol class="u-unstyled pagination__links">

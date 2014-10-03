@@ -1,31 +1,35 @@
 define([
-    'common/utils/$',
+    'bean',
     'bonzo',
     'qwery',
-    'bean',
+
+    'common/utils/$',
     'common/utils/ajax',
-    'common/utils/scroller',
     'common/utils/detect',
+    'common/utils/mediator',
+    'common/utils/scroller',
+
     'common/modules/component',
-    'common/modules/userPrefs',
-    'common/modules/identity/api',
+    'common/modules/discussion/api',
     'common/modules/discussion/comment-box',
     'common/modules/discussion/recommend-comments',
-    'common/modules/discussion/api'
+    'common/modules/identity/api',
+    'common/modules/userPrefs'
 ], function(
-    $,
+    bean,
     bonzo,
     qwery,
-    bean,
+    $,
     ajax,
-    scroller,
     detect,
+    mediator,
+    scroller,
     Component,
-    userPrefs,
-    Id,
+    DiscussionApi,
     CommentBox,
     RecommendComments,
-    DiscussionApi
+    Id,
+    userPrefs
 ) {
 'use strict';
 /**
@@ -35,12 +39,9 @@ define([
  * * Move over to $ instead of qwery & bonzo
  * @constructor
  * @extends Component
- * @param {Element=} context
- * @param {Object} mediator
  * @param {Object=} options
  */
-var Comments = function(mediator, options) {
-    this.mediator = mediator;
+var Comments = function(options) {
     this.setOptions(options);
 
     if (userPrefs.get('discussion.order')) {
@@ -49,7 +50,12 @@ var Comments = function(mediator, options) {
 
     this.fetchData = {
         orderBy: this.options.order,
-        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10
+        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
+        maxResponses: 3
+    };
+
+    this.fetchCommentData = {
+        displayThreaded: true
     };
 
     this.endpoint = this.options.commentId ?
@@ -78,15 +84,12 @@ Comments.prototype.classes = {
     showMoreNewer: 'd-discussion__show-more--newer',
     showMoreOlder: 'd-discussion__show-more--older',
     showMoreLoading: 'd-discussion__show-more-loading',
-    showHidden: 'd-discussion__show-all-comments',
-    showAllComments: 'd-discussion__show-all-comments',
+    showHidden:      'd-discussion__show-all-comments',
     reply: 'd-comment--response',
     showReplies: 'd-show-more-replies',
-    header: 'd-discussion__header',
     heading: 'discussion__heading',
     newComments: 'js-new-comments',
     orderControl: 'd-discussion__order-control',
-    sentimentControl: 'js-discussion-sentiment-changer',
     loader: 'd-discussion__loader',
 
     comment: 'd-comment',
@@ -105,7 +108,6 @@ Comments.prototype.classes = {
 Comments.prototype.defaultOptions = {
     discussionId: null,
     showRepliesCount: 3,
-    user: null,
     commentId: null,
     order: 'newest',
     state: null
@@ -116,9 +118,6 @@ Comments.prototype.defaultOptions = {
  * @override
  */
 Comments.prototype.endpoint = '/discussion:discussionId.json';
-
-/** @type {Boolean} */
-Comments.prototype.hasHiddenComments = false;
 
 /** @type {NodeList=} */
 Comments.prototype.comments = null;
@@ -137,21 +136,8 @@ Comments.prototype.prerender = function() {
     heading.innerHTML += ' <span class="discussion__comment-count">('+ commentCount +')</span>';
 
     // Ease of use
-    this.user = this.options.user;
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
     this.comments = qwery(this.getClass('comment'), this.elem);
-
-    // Determine user staff status
-    if (this.user && this.user.badge) {
-        this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
-            return e.name === 'Staff';
-        });
-
-        if (this.user.isStaff) {
-            $('.d-discussion', this.elem).removeClass('d-discussion--not-staff');
-            $('.d-discussion', this.elem).addClass('d-discussion--is-staff');
-        }
-    }
 
     if (this.options.state) {
         this.setState(this.options.state);
@@ -165,15 +151,8 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     this.on('click', this.getClass('commentReport'), this.reportComment);
     this.on('change', this.getClass('orderControl'), this.setOrder);
-    this.on('click', this.getClass('sentimentControl'), this.setSentiment);
-
-    this.mediator.on('discussion:comment:recommend:fail', this.recommendFail.bind(this));
 
     this.addMoreRepliesButtons();
-
-    if (!this.isReadOnly()) {
-        this.bindCommentEvents();
-    }
 
     if (this.options.commentId) {
         var comment = $('#comment-'+ this.options.commentId);
@@ -193,17 +172,13 @@ Comments.prototype.ready = function() {
             $('.js-report-comment-form').addClass('u-h');
         });
     });
+
+    mediator.on('module:clickstream:click', this.handleBodyClick.bind(this));
 };
 
-/**
- * This is here as we don't want to create a comment Component
- */
-Comments.prototype.bindCommentEvents = function() {
-    RecommendComments.init();
-
-    if (this.user && this.user.privateFields.canPostComment) {
-        this.on('click', this.getClass('commentReply'), this.replyToComment);
-        this.on('click', this.getClass('commentPick'), this.handlePickClick);
+Comments.prototype.handleBodyClick = function(clickspec) {
+    if ('hash' in clickspec.target && clickspec.target.hash === '#comments') {
+        this.showHiddenComments();
     }
 };
 
@@ -288,8 +263,7 @@ Comments.prototype.gotoPage = function(page) {
     scroller.scrollToElement(qwery('.discussion__comments__container .discussion__heading'), 100);
 
     return this.fetchComments({
-        page: page,
-        sentimentId: this.options.sentiment
+        page: page
     }).then(function() {
         this.loaded();
     }.bind(this));
@@ -314,8 +288,7 @@ Comments.prototype.changePage = function(e) {
 Comments.prototype.fetchComments = function(options) {
     var url = '/discussion/'+
         (options.comment ? 'comment-context/'+ options.comment : this.options.discussionId)+
-        '.json?'+ (options.page ? '&page=' + options.page : '')+
-        (options.sentimentId ? '&sentiment='+ options.sentimentId : '');
+        '.json?'+ (options.page ? '&page=' + options.page : '');
 
     return ajax({
         url: url,
@@ -405,6 +378,7 @@ Comments.prototype.getMoreReplies = function(event) {
         url: '/discussion/comment/'+ event.target.getAttribute('data-comment-id') +'.json',
         type: 'json',
         method: 'get',
+        data: this.fetchCommentData,
         crossOrigin: true
     }).then(function (resp) {
         var comment = bonzo.create(resp.html),
@@ -544,11 +518,6 @@ Comments.prototype.replyToComment = function(e) {
     });
 };
 
-/**
- * @param {Object.<string.*>} comment
- */
-Comments.prototype.recommendFail = function() {};
-
 Comments.prototype.showDiscussion = function() {
     var showDiscussionElem = $('.d-discussion__show-all-comments');
     if (!showDiscussionElem.hasClass('u-h')) {
@@ -599,19 +568,6 @@ Comments.prototype.setOrder = function(e) {
 
 /**
  * @param {Event} e
- * return {Reqwest}
- */
-Comments.prototype.setSentiment = function(e) {
-    var el = e.currentTarget;
-    e.preventDefault();
-    $('.d-discussion__sentiment--active', this.elem).removeClass('d-discussion__sentiment--active');
-    $(el).addClass('d-discussion__sentiment--active');
-    this.options.sentiment = el.getAttribute('data-sentiment');
-    return this.gotoPage(1);
-};
-
-/**
- * @param {Event} e
  */
 Comments.prototype.reportComment = function(e) {
     e.preventDefault();
@@ -637,6 +593,33 @@ Comments.prototype.reportComment = function(e) {
     }).appendTo(
         $('#comment-'+ commentId +' .js-report-comment-container').first()
     ).removeClass('u-h');
+};
+
+Comments.prototype.addUser = function(user) {
+    this.user = user;
+
+    // Determine user staff status
+    if (this.user && this.user.badge) {
+        this.user.isStaff = this.user.badge.some(function (e) { // Returns true if any element in array satisfies function
+            return e.name === 'Staff';
+        });
+
+        if (this.user.isStaff) {
+            $('.d-discussion', this.elem)
+                .removeClass('d-discussion--not-staff')
+                .addClass('d-discussion--is-staff');
+        }
+    }
+
+    if (!this.isReadOnly()) {
+        RecommendComments.init();
+
+        if (this.user && this.user.privateFields.canPostComment) {
+
+            this.on('click', this.getClass('commentReply'), this.replyToComment);
+            this.on('click', this.getClass('commentPick'), this.handlePickClick);
+        }
+    }
 };
 
 return Comments;

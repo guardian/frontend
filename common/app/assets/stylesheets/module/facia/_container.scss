@@ -9,6 +9,8 @@
 }
 .container--dark-background {
     background-color: $c-neutral1;
+    margin-bottom: 0;
+    padding-bottom: $gs-baseline * 2;
 }
 .container--rolled-up .container--rolled-up-hide {
     display: none;

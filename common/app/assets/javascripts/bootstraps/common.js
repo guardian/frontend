@@ -1,101 +1,102 @@
 /* jshint nonew: false */
 /* TODO - fix module constructors so we can remove the above jshint override */
 define([
-    //Commmon libraries
-    'common/utils/$',
-    'common/utils/mediator',
-    'common/utils/ajax',
-    'common/modules/userPrefs',
-    'common/utils/url',
-    //Vendor libraries
-    'bonzo',
     'bean',
-    'qwery',
+    'bonzo',
     'enhancer',
-    'lodash/functions/debounce',
     'fastclick',
-    //Modules
-    'common/utils/storage',
+    'lodash/functions/debounce',
+    'qwery',
+
+    'common/utils/$',
+    'common/utils/ajax',
+    'common/utils/config',
+    'common/utils/cookies',
     'common/utils/detect',
-    'common/modules/onward/most-popular-factory',
-    'common/modules/onward/related',
-    'common/modules/onward/onward-content',
+    'common/utils/mediator',
+    'common/utils/url',
+
+    'common/modules/analytics/clickstream',
+    'common/modules/analytics/foresee-survey',
+    'common/modules/analytics/livestats',
+    'common/modules/analytics/omniture',
+    'common/modules/analytics/register',
+    'common/modules/analytics/scrollDepth',
+    'common/modules/discussion/api',
+    'common/modules/discussion/comment-count',
+    'common/modules/discussion/loader',
+    'common/modules/experiments/ab',
+    'common/modules/identity/api',
+    'common/modules/identity/autosignin',
+    'common/modules/navigation/navigation',
     'common/modules/navigation/profile',
     'common/modules/navigation/search',
-    'common/modules/navigation/navigation',
+    'common/modules/onward/breaking-news',
+    'common/modules/onward/geo-most-popular',
+    'common/modules/onward/history',
+    'common/modules/onward/more-tags',
+    'common/modules/onward/most-popular-factory',
+    'common/modules/onward/onward-content',
+    'common/modules/onward/related',
+    'common/modules/onward/tonal',
+    'common/modules/release-message',
+    'common/modules/ui/dropdowns',
+    'common/modules/ui/faux-block-link',
+    'common/modules/ui/message',
+    'common/modules/ui/relativedates',
+    'common/modules/ui/smartAppBanner',
     'common/modules/ui/tabs',
     'common/modules/ui/toggles',
-    'common/modules/ui/dropdowns',
-    'common/modules/ui/relativedates',
-    'common/modules/analytics/clickstream',
-    'common/modules/analytics/omniture',
-    'common/modules/analytics/scrollDepth',
-    'common/utils/cookies',
-    'common/modules/analytics/livestats',
-    'common/modules/experiments/ab',
-    'common/modules/discussion/comment-count',
-    'common/modules/onward/history',
-    'common/modules/onward/breaking-news',
-    'common/modules/ui/message',
-    'common/modules/identity/autosignin',
-    'common/modules/analytics/foresee-survey',
-    'common/modules/onward/geo-most-popular',
-    'common/modules/analytics/register',
-    'common/modules/onward/tonal',
-    'common/modules/identity/api',
-    'common/modules/onward/more-tags',
-    'common/modules/ui/smartAppBanner',
-    'common/modules/ui/faux-block-link',
-    'common/modules/discussion/loader',
-    'common/modules/release-message'
-], function (
+    'common/modules/userPrefs'
+], function(
+    bean,
+    bonzo,
+    enhancer,
+    FastClick,
+    debounce,
+    qwery,
+
     $,
-    mediator,
     ajax,
-    userPrefs,
+    config,
+    Cookies,
+    detect,
+    mediator,
     Url,
 
-    bonzo,
-    bean,
-    qwery,
-    enhancer,
-    debounce,
-    FastClick,
-
-    storage,
-    detect,
-    MostPopularFactory,
-    Related,
-    Onward,
+    Clickstream,
+    Foresee,
+    liveStats,
+    Omniture,
+    register,
+    ScrollDepth,
+    discussionApi,
+    CommentCount,
+    DiscussionLoader,
+    ab,
+    id,
+    AutoSignin,
+    Navigation,
     Profile,
     Search,
-    Navigation,
+    breakingNews,
+    GeoMostPopular,
+    history,
+    MoreTags,
+    MostPopularFactory,
+    Onward,
+    Related,
+    TonalComponent,
+    releaseMessage,
+    Dropdowns,
+    fauxBlockLink,
+    Message,
+    RelativeDates,
+    smartAppBanner,
     Tabs,
     Toggles,
-    Dropdowns,
-    RelativeDates,
-    Clickstream,
-    Omniture,
-    ScrollDepth,
-    Cookies,
-    liveStats,
-    ab,
-    CommentCount,
-    history,
-    breakingNews,
-    Message,
-    AutoSignin,
-    Foresee,
-    GeoMostPopular,
-    register,
-    TonalComponent,
-    id,
-    MoreTags,
-    smartAppBanner,
-    fauxBlockLink,
-    DiscussionLoader,
-    releaseMessage
-) {
+    userPrefs
+    ) {
 
     var modules = {
 
@@ -107,7 +108,7 @@ define([
             fauxBlockLink().init();
         },
 
-        initialiseTopNavItems: function(config){
+        initialiseTopNavItems: function(){
             var search = new Search(config),
                 header = document.getElementById('header');
 
@@ -123,20 +124,20 @@ define([
             search.init(header);
         },
 
-        initialiseNavigation: function (config) {
+        initialiseNavigation: function() {
             Navigation.init(config);
         },
 
-        transcludeRelated: function (config) {
+        transcludeRelated: function() {
             var r = new Related();
             r.renderRelatedComponent(config);
         },
 
-        transcludePopular: function (config) {
+        transcludePopular: function() {
             new MostPopularFactory(config);
         },
 
-        transcludeOnwardContent: function(config){
+        transcludeOnwardContent: function(){
             if ('seriesId' in config.page) {
                 new Onward(config, qwery('.js-onward'));
             } else if (config.page.tones !== '') {
@@ -162,7 +163,7 @@ define([
             });
         },
 
-        showRelativeDates: function () {
+        showRelativeDates: function() {
             var dates = RelativeDates;
             mediator.on('page:common:ready', function() {
                 dates.init();
@@ -172,17 +173,11 @@ define([
             });
         },
 
-        initClickstream: function () {
+        initClickstream: function() {
             new Clickstream({filter: ['a', 'button']});
         },
 
-        transcludeCommentCounts: function () {
-            mediator.on('page:common:ready', function() {
-                CommentCount.init();
-            });
-        },
-
-        initRightHandComponent: function(config) {
+        initRightHandComponent: function() {
             if(config.page.contentType === 'Article' &&
                 detect.getBreakpoint() !== 'mobile' &&
                 parseInt(config.page.wordCount, 10) > 500) {
@@ -190,17 +185,17 @@ define([
             }
         },
 
-        logLiveStats: function (config) {
+        logLiveStats: function() {
             liveStats.log(config);
         },
 
-        loadAnalytics: function (config) {
+        loadAnalytics: function() {
             var omniture = new Omniture();
 
             omniture.go(config);
 
             if (config.switches.ophan && !config.page.isSSL) {
-                require('ophan/ng', function (ophan) {
+                require('ophan/ng', function(ophan) {
                     ophan.record({'ab': ab.getParticipations()});
 
                     if(config.switches.scrollDepth) {
@@ -220,7 +215,7 @@ define([
         },
 
         // opt-in to the responsive alpha
-        optIn: function () {
+        optIn: function() {
             var countMeIn = /#countmein/.test(window.location.hash);
             if (countMeIn) {
                 Cookies.add('GU_VIEW', 'responsive', 365);
@@ -228,7 +223,7 @@ define([
         },
 
         // display a flash message to devices over 600px who don't have the mobile cookie
-        displayReleaseMessage: function (config) {
+        displayReleaseMessage: function() {
 
             var path = (document.location.pathname) ? document.location.pathname : '/';
 
@@ -283,20 +278,20 @@ define([
             }
         },
 
-        displayBreakingNews: function (config) {
+        displayBreakingNews: function() {
             if (config.switches.breakingNews) {
                 breakingNews(config);
             }
         },
 
-        unshackleParagraphs: function () {
+        unshackleParagraphs: function() {
             if (userPrefs.isOff('para-indents')) {
                 $('.paragraph-spacing--indents').removeClass('paragraph-spacing--indents');
             }
         },
 
         logReadingHistory : function() {
-            mediator.on('page:common:ready', function(config) {
+            mediator.on('page:common:ready', function() {
                 if(config.page.contentType !== 'Network Front') {
                     history.log({
                         id: '/' + config.page.pageId,
@@ -310,7 +305,7 @@ define([
         },
 
         initAutoSignin : function() {
-           mediator.on('page:common:ready', function(config) {
+            mediator.on('page:common:ready', function() {
                 if (config.switches && config.switches.facebookAutosignin && detect.getBreakpoint() !== 'mobile') {
                     new AutoSignin(config).init();
                 }
@@ -339,23 +334,23 @@ define([
             }
         },
 
-        runForseeSurvey: function(config) {
+        runForseeSurvey: function() {
             if(config.switches.foresee) {
                 Foresee.load();
             }
         },
 
         augmentInteractive: function() {
-            mediator.on('page:common:ready', function(config) {
+            mediator.on('page:common:ready', function() {
                 if (/Article|Interactive|LiveBlog/.test(config.page.contentType)) {
-                    $('figure.interactive').each(function (el) {
+                    $('figure.interactive').each(function(el) {
                         enhancer.render(el, config, mediator);
                     });
                 }
             });
         },
 
-        startRegister: function(config) {
+        startRegister: function() {
             if (!config.page.isSSL) {
                 register.initialise(config);
             }
@@ -378,11 +373,13 @@ define([
         },
 
         initDiscussion: function() {
-            mediator.on('page:common:ready', function(config) {
+            discussionApi.init(config);
+            mediator.on('page:common:ready', function() {
                 if (config.page.commentable && config.switches.discussion) {
-                    var discussionLoader = new DiscussionLoader(mediator, { 'switches': config.switches });
+                    var discussionLoader = new DiscussionLoader();
                     discussionLoader.attachTo($('.discussion')[0]);
                 }
+                CommentCount.init();
             });
         },
 
@@ -393,7 +390,7 @@ define([
             }
         },
 
-        initReleaseMessage: function(config) {
+        initReleaseMessage: function() {
             releaseMessage.init(config);
         },
 
@@ -423,47 +420,45 @@ define([
         }
     };
 
-    var ready = function (config) {
+    var ready = function() {
         modules.initFastClick();
         modules.testCookie();
         modules.windowEventListeners();
         modules.initialiseFauxBlockLink();
         modules.checkIframe();
         modules.showTabs();
-        modules.initialiseTopNavItems(config);
-        modules.initialiseNavigation(config);
-        modules.displayBreakingNews(config);
+        modules.initialiseTopNavItems();
+        modules.initialiseNavigation();
+        modules.displayBreakingNews();
         modules.showToggles();
         modules.showRelativeDates();
         modules.initClickstream();
-        modules.transcludeCommentCounts();
         modules.optIn();
-        modules.displayReleaseMessage(config);
+        modules.displayReleaseMessage();
         modules.logReadingHistory();
-        modules.unshackleParagraphs(config);
-        modules.initAutoSignin(config);
+        modules.unshackleParagraphs();
+        modules.initAutoSignin();
         modules.augmentInteractive();
-        modules.runForseeSurvey(config);
-        modules.startRegister(config);
+        modules.runForseeSurvey();
+        modules.startRegister();
         modules.repositionComments();
         modules.showMoreTagsLink();
-        modules.showSmartBanner(config);
+        modules.showSmartBanner();
         modules.initDiscussion();
-        modules.logLiveStats(config);
-        modules.loadAnalytics(config);
+        modules.logLiveStats();
+        modules.loadAnalytics();
         modules.cleanupCookies();
-        modules.transcludePopular(config);
-        modules.transcludeRelated(config);
-        modules.transcludeOnwardContent(config);
-        modules.initRightHandComponent(config);
-        modules.initReleaseMessage(config);
+        modules.transcludePopular();
+        modules.transcludeRelated();
+        modules.transcludeOnwardContent();
+        modules.initRightHandComponent();
+        modules.initReleaseMessage();
         modules.initOpenOverlayOnClick();
 
-        mediator.emit('page:common:ready', config);
+        mediator.emit('page:common:ready');
     };
 
     return {
         init: ready
     };
 });
-
