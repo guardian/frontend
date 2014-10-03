@@ -14,6 +14,25 @@ $avatarPadding: $gs-gutter / 2;
         display: none !important; // overriding .hide-on-mobile-inline
     }
 }
+
+.id--signed-in .content--liveblog + .content-footer .discussion .content__main-column {
+    @include mq(desktop) {
+        margin-left: gs-span(2) + $gs-gutter;
+        margin-right: 0;
+        max-width: gs-span(8);
+        .discussion__heading {
+            margin-left: -1 * (gs-span(2)  + $gs-gutter);
+        }
+    }
+    @include mq(leftCol) {
+        margin-left: gs-span(4) + $gs-gutter;
+        margin-right: 0;
+        .discussion__heading {
+            margin-left: -1 * (gs-span(4) + $gs-gutter);
+        }
+    }
+}
+
 .discussion .container__border:nth-child(2) {
     margin-top: -1px;
 }
@@ -768,6 +787,7 @@ $avatarPadding: $gs-gutter / 2;
     }
     .d-comment__body {
         min-height: 0;
+        padding-right: $gs-gutter;
     }
     .d-comment--top-level {
         border: 0;
