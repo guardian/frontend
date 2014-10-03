@@ -20,10 +20,18 @@ $avatarPadding: $gs-gutter / 2;
 
 .discussion__top-border {
     border-top: 1px solid colour(neutral-4);
+    margin-top: -1px;
 }
 
 .discussion__non-threaded {
     margin-top: $gs-baseline;
+    clear: both;
+    @include mq(desktop) {
+        .activity-item__content-body {
+            clear: both;
+            margin-left: $avatarSize-small + ($gs-gutter / 2);
+        }
+    }
 }
 .discussion__comments__container {
     position: relative;
@@ -31,11 +39,12 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .discussion__show-threaded {
-    position: absolute;
-    right: 0;
-    top: $gs-baseline / 2;
     width: auto;
     @include fs-textSans(2);
+    z-index: 1;
+    padding: $gs-baseline / 2 0;
+    position: relative;
+    float: right;
 }
 
 .discussion--lowered {
