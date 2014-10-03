@@ -1,5 +1,5 @@
 {
-	"src":        "../../static/src/images/global/",
+    "src":        "../../static/src/images/global/",
     "imgDest":    "../../static/target/images/global/",
     "cssDest":    "../../static/src/stylesheets/icons/",
     "cssSvgName": "_global-icons-svg.scss",
