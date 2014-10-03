@@ -26,6 +26,7 @@ case class Front(
   imageWidth: Option[Int],
   imageHeight: Option[Int],
   isImageDisplayed: Option[Boolean],
+  isHidden: Option[Boolean],
   priority: Option[String]
 )
 
