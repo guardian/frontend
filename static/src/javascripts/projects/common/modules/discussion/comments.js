@@ -2,7 +2,6 @@ define([
     'bean',
     'bonzo',
     'qwery',
-
     'lodash/collections/map',
 
     'common/utils/$',
@@ -22,11 +21,13 @@ define([
     bonzo,
     qwery,
     _map,
+
     $,
     ajax,
     detect,
     mediator,
     scroller,
+
     Component,
     DiscussionApi,
     CommentBox,
