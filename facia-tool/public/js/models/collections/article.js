@@ -105,7 +105,7 @@ define([
                 {
                     key: 'showBoostedHeadline',
                     editable: true,
-                    label: 'boost headline',
+                    label: 'large headline',
                     type: 'boolean'
                 },
                 {
