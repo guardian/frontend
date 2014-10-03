@@ -57,7 +57,7 @@ define([
 
         if (newestSummary) {
             bonzo(newestSummary).addClass('js-timeline-event');
-            keyEvents = keyEvents.slice(0, 6);
+            keyEvents.pop();
         }
 
         bonzo(keyEvents).addClass('js-timeline-event');
