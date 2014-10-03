@@ -30,8 +30,7 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
         height: auto;
     }
 
-    .fc-item__title,
-    .fc-item__byline {
+    .fc-item__header {
         @include fs-headline(4, true);
 
         @include mq(desktop) {

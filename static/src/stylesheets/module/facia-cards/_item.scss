@@ -79,10 +79,16 @@ $fc-item-gutter: $gs-gutter / 4;
     padding: .1em .2em .05em;
 }
 
-.fc-item__title,
-.fc-item__byline {
+.fc-item__header {
     @include fs-headline(3);
     font-weight: 500;
+    padding-bottom: .75em;
+}
+
+.fc-item__title,
+.fc-item__byline {
+    font: inherit;
+    line-height: inherit;
 }
 
 .fc-item__title {
@@ -95,12 +101,8 @@ $fc-item-gutter: $gs-gutter / 4;
     margin-bottom: 0;
 }
 
-.fc-item__header {
-    padding-bottom: get-line-height(headline, 3);
-}
-
 .fc-item__standfirst {
-    @include fs-bodyCopy(1);
+    @include fs-headline(1);
     padding-bottom: get-line-height(bodyCopy, 1);
     display: none;
 }
