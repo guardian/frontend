@@ -15,7 +15,7 @@ object ItemKicker {
     def sectionKicker = Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
 
     trail.customKicker match {
-      case Some(kicker) => Some(FreeHtmlKicker(kicker))
+      case Some(kicker) if trail.showKickerCustom => Some(FreeHtmlKicker(kicker))
       case None => if (trail.showKickerTag && maybeTag.isDefined) {
         tagKicker
       } else if (trail.showKickerSection) {

@@ -70,6 +70,7 @@ object ItemMeta {
     snapUri = content.apiContent.metaData.get("snapUri"),
     showKickerTag = content.apiContent.metaData.get("showKickerTag"),
     showKickerSection = content.apiContent.metaData.get("showKickerSection"),
+    showKickerCustom = content.apiContent.metaData.get("showKickerCustom"),
     customKicker = content.apiContent.metaData.get("customKicker"),
     showMainVideo = content.apiContent.metaData.get("showMainVideo")
   )
@@ -91,6 +92,7 @@ case class ItemMeta(
   snapUri:       Option[JsValue],
   showKickerTag: Option[JsValue],
   showKickerSection: Option[JsValue],
+  showKickerCustom: Option[JsValue],
   customKicker: Option[JsValue],
   showMainVideo: Option[JsValue]
 )
