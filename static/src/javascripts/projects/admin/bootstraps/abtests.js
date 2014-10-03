@@ -1,6 +1,6 @@
 define([
     'common/modules/experiments/ab',
-    '../../../bower_components/qwery/qwery',
+    'qwery',
     'bean',
     'admin/modules/abtests/abtest-item',
     'admin/modules/abtests/audience'
