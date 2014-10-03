@@ -49,8 +49,20 @@ define([
         affix = null,
         autoUpdate = null;
 
-    function getKeyEvents() {
-        return qwery('.is-key-event').slice(0, 7);
+    function getTimelineEvents() {
+        var keyEvents = qwery('.is-key-event').slice(0, 7),
+            newestSummary = qwery('.is-summary')[0];
+
+        $('.js-timeline-event').removeClass('js-timeline-event');
+
+        if (newestSummary) {
+            bonzo(newestSummary).addClass('js-timeline-event');
+            keyEvents.pop();
+        }
+
+        bonzo(keyEvents).addClass('js-timeline-event');
+
+        return qwery('.js-timeline-event');
     }
 
     function createScrollTransitions() {
@@ -149,11 +161,13 @@ define([
 
         createTimeline: function () {
             var timelineHTML, dropdown, topMarker,
-                allEvents = getKeyEvents();
+                allEvents = getTimelineEvents();
             if (allEvents.length > 0) {
                 timelineHTML = getTimelineHTML(allEvents);
 
-                $('.js-live-blog__timeline').append(timelineHTML);
+                $('.js-live-blog__timeline')
+                    .empty()
+                    .append(timelineHTML);
                 dropdown = $('.js-live-blog__timeline-container .dropdown');
                 dropdown.addClass('dropdown--active');
                 dropdowns.updateAria(dropdown);
@@ -171,11 +185,17 @@ define([
             }
         },
 
-        createAutoRefresh: function () {
+        handleUpdates: function () {
+            mediator.on('modules:autoupdate:updates', function () {
+                modules.createTimeline();
+            });
+        },
+
+        createAutoUpdate: function () {
 
             if (config.page.isLive) {
 
-                var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 30000 : 60000;
+                var timerDelay = detect.isBreakpoint({ min: 'desktop' }) ? 5000 : 60000;
                 autoUpdate = new AutoUpdate({
                     path: getUpdatePath,
                     delay: timerDelay,
@@ -258,10 +278,11 @@ define([
         modules.initAdverts();
         modules.createFilter();
         modules.createTimeline();
-        modules.createAutoRefresh();
+        modules.createAutoUpdate();
         modules.showFootballLiveBlogMessage();
         modules.keepTimestampsCurrent();
         modules.initBlockSharing();
+        modules.handleUpdates();
 
         // re-use modules from article bootstrap
         article.modules.initOpen(config);
