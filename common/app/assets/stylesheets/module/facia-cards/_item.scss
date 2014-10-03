@@ -100,7 +100,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__standfirst {
-    @include fs-bodyCopy(1);
+    @include fs-headline(1);
     padding-bottom: get-line-height(bodyCopy, 1);
     display: none;
 }
