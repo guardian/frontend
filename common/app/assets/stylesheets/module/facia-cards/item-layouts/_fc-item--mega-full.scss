@@ -46,4 +46,10 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
             max-width: gs-span(8);
         }
     }
+
+    @include fc-sublinks-horizontal;
+
+    &.fc-item--has-sublinks-1 .fc-sublinks {
+        display: none;
+    }
 }
