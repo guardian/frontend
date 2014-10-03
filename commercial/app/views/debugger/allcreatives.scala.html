@@ -39,7 +39,7 @@ jQuery(function($) {
     });
 
     $("#dfp-palette").on('change', function() {
-        $('.commercial--dfp-single--v2').removeClass("commercial--tone--brand commercial--tone--subscriptions commercial--tone--membership commercial--tone--live commercial--tone--jobs commercial--tone--networks commercial--tone--books commercial--tone--masterclasses commercial--tone--travel commercial--tone--shop commercial--tone--money commercial--tone--gardening").addClass("commercial--tone-" + this.value);
+        $('.commercial--dfp-single--v2, .commercial--dfp-multiple--v2').removeClass("commercial--tone-brand commercial--tone-subscriptions commercial--tone-membership commercial--tone-live commercial--tone-jobs commercial--tone-networks commercial--tone-books commercial--tone--masterclasses commercial--tone--travel commercial--tone--shop commercial--tone--money commercial--tone-gardening").addClass("commercial--tone-" + this.value);
         return false;
     });
 });
@@ -626,7 +626,7 @@ jQuery(function($) {
 &lt;/div&gt;
             </code></pre>
         </div>
-        <div class="commercial--v2 commercial--dfp--v2 commercial--dfp-multiple--v2 commercial--dfp-1234567890 commercial--items-dfp-4" role="complementary">
+        <div class="commercial--v2 commercial--dfp--v2 commercial--dfp-multiple--v2 commercial--tone-brand commercial--dfp-1234567890 commercial--items-dfp-4" role="complementary">
             <div class="facia-container__inner--commercial">
                 <div class="container__header">
                     <div class="container__header__inner">
