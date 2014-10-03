@@ -134,8 +134,6 @@ Comments.prototype.user = null;
 
 /** @override */
 Comments.prototype.prerender = function() {
-    var heading = qwery(this.getClass('heading'), this.getClass('container'))[0],
-        commentCount = this.elem.getAttribute('data-comment-count');
 
     // Ease of use
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
@@ -375,7 +373,7 @@ Comments.prototype.getMoreReplies = function(event) {
     event.preventDefault();
 
     var li = $.ancestor(event.currentTarget, this.getClass('showReplies').slice(1));
-    li.innerHTML = "Loading…";
+    li.innerHTML = 'Loading…';
 
     var self = this,
         source = bonzo(event.target).data('source-comment');
