@@ -24,8 +24,7 @@ trait MerchandiseAgent[T] extends Logging {
 
   def getTargetedMerchandise(segment: Segment, default: Seq[T])(targeting: T => Boolean): Seq[T] = {
     val targeted = Random.shuffle(available filter targeting)
-    if (targeted.isEmpty) default
-    else targeted
+    if (targeted.isEmpty) default else targeted
   }
 
 }

@@ -1,12 +1,12 @@
 package model.commercial.travel
 
+import akka.util.Timeout
+import common.{AkkaAgent, ExecutionContexts, Logging}
+import model.commercial.{Segment, _}
 import org.joda.time.DateTime
-import model.commercial._
-import common.{Logging, ExecutionContexts, AkkaAgent}
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import akka.util.Timeout
-import model.commercial.Segment
 
 case class TravelOffer(id: Int, title: String, offerUrl: String, imageUrl: String, fromPrice: String,
                  earliestDeparture: DateTime, keywordIds: List[String], countries: List[String], category: String,
@@ -100,9 +100,9 @@ object Countries extends ExecutionContexts with Logging {
 
   private implicit val timeout: Timeout = 10.seconds
 
-  def refresh() = {
+  def refresh(): Future[Seq[Map[String, Seq[String]]]] = {
     val countries = {
-      val currentAds = TravelOffersAgent.currentAds
+      val currentAds = TravelOffersAgent.available
       if (currentAds.isEmpty) defaultCountries
       else currentAds.flatMap(_.countries).distinct
     }
@@ -116,5 +116,5 @@ object Countries extends ExecutionContexts with Logging {
     }
   }
 
-  def forCountry(name: String) = countryKeywordIds().get(name).getOrElse(Nil)
+  def forCountry(name: String) = countryKeywordIds().getOrElse(name, Nil)
 }
