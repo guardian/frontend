@@ -50,8 +50,8 @@ Hence why a greater depth of selector specificity is needed.
     .fc-item--standard-tablet,
     .fc-item--standard-quarter-tablet {
         .fc-item__header {
-            @include mq(tablet, desktop) {
-                @include fs-headline(1, true);
+            @include mq(tablet) {
+                @include fs-headline(2, true);
             }
         }
     }

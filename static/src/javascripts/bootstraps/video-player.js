@@ -6,7 +6,7 @@ define([
     'videojsvast',
     'videojspersistvolume',
     'videojsplaylist'
-], function(
+], function (
     vast,
     videojs,
     videojsads,
@@ -14,6 +14,5 @@ define([
     videojspersistvolume,
     videojsplaylist
 ) {
-
     return;
 });

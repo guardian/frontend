@@ -5,7 +5,7 @@ define([
     var options = {
             reconnection: false
         },
-        log = function(msg) { window.console.log(msg); };
+        log = function (msg) { window.console.log(msg); };
 
     function removeElement(id) {
         var oldStyle = document.querySelector('*[data-reload="' + id + '"]');
@@ -23,7 +23,6 @@ define([
             head = document.head || document.getElementsByTagName('head')[0],
             body = document.body || document.getElementsByTagName('body')[0];
 
-
         socket.on('connect', function () {
             log('connected to devmode');
             log('dropping weinre...', weinreUrl);
@@ -38,13 +37,14 @@ define([
         });
 
         socket.on('css', function (data) {
-            var asset = JSON.parse(data);
+            var css, style,
+                asset = JSON.parse(data);
 
             log('received', asset.id, data.length);
             removeElement(asset.id);
 
-            var css = asset.data,
-                style = document.createElement('style');
+            css = asset.data;
+            style = document.createElement('style');
 
             style.type = 'text/css';
             style.setAttribute('data-reload', asset.id);

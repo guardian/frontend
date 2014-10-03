@@ -11,12 +11,14 @@ x x x x x x x x x x x x x x x x x x x x x x x x
  */
 
 @mixin fc-item--list {
-    $headline-size: 1;
     $item-vertical-padding: $gs-baseline * .25;
 
     .fc-item__header {
-        @include fs-headline($headline-size, true);
-        margin-bottom: 0;
+        @include fs-headline(1, true);
+
+        @include mq(desktop) {
+            @include fs-headline(2, true);
+        }
     }
 
     .fc-item__media-wrapper {
