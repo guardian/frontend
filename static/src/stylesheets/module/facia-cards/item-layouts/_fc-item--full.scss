@@ -32,20 +32,11 @@ Full item. A 100% width version of the Three quarter item.
         @include box-sizing(border-box);
     }
 
-    .fc-item__title,
-    .fc-item__byline {
+    .fc-item__header {
         @include fs-headline(3, true);
 
         @include mq(desktop) {
             @include fs-headline(5, true);
-        }
-    }
-
-    .fc-item__header {
-        padding-bottom: get-line-height(headline, 3);
-
-        @include mq(desktop) {
-            padding-bottom: get-line-height(headline, 5);
         }
     }
 

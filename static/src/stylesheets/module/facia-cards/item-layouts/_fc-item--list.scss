@@ -13,22 +13,12 @@ x x x x x x x x x x x x x x x x x x x x x x x x
 @mixin fc-item--list {
     $item-vertical-padding: $gs-baseline * .25;
 
-    .fc-item__title,
-    .fc-item__byline {
+    .fc-item__header {
         @include fs-headline(1, true);
 
         @include mq(desktop) {
             @include fs-headline(2, true);
         }
-    }
-
-    .fc-item__header {
-        padding-bottom: get-line-height(headline, 1);
-    }
-
-    .fc-item__header {
-        margin-bottom: 0;
-        padding-bottom: $gs-baseline * 2;
     }
 
     .fc-item__media-wrapper {
