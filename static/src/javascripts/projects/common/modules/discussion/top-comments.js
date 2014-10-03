@@ -43,7 +43,6 @@ TopComments.prototype.classes = {
     showMoreFeaturedButton: 'js-show-more-top-comments',
 
     topCommentsContainer: 'discussion__comments__top',
-    titleCounter: 'discussion__comment-count',
     fadeOut: 'd-image-fade'
 };
 

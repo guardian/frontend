@@ -2,10 +2,8 @@
 
 <div class="content-footer @if(cssClass){ content-footer--@cssClass }">
     @if(conf.Switches.DiscussionSwitch.isSwitchedOn && content.isCommentable) {
-        <div class="gs-container js-comments discussion-wrapper">
-            <div class="content__main-column" data-component="discussion">
+        <div class="js-comments" data-component="discussion">
             @fragments.discussionFooter(content.isClosedForComments, content.shortUrlId)
-            </div>
         </div>
     }
 

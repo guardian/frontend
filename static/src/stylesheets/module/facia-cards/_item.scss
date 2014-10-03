@@ -1,13 +1,17 @@
+$fc-item-gutter: $gs-gutter / 4;
+
+/* Items
+   ==========================================================================
+*/
+
 .fc-item {
-    @include flex(1);
-    @include box-sizing(border-box);
     display: block;
+    @include flex(1);
     @include clearfix;
-    padding-bottom: $gs-baseline * 2.5;
-    margin-left: $gs-gutter * .5;
-    margin-right: $gs-gutter * .5;
     background-color: #ffffff;
     position: relative;
+    margin-left: $gs-gutter * .5;
+    margin-right: $gs-gutter * .5;
 
     a {
         color: $c-neutral1;
@@ -26,17 +30,30 @@
     }
 }
 
+.fc-item--has-image:before {
+    background-color: rgba($c-neutral1, .15);
+}
+
+/* Item elements
+   ==========================================================================
+*/
+
+// Wraps all media elements
+.fc-item__media-wrapper {
+    position: relative;
+}
+
+// Wraps all non-media content
+.fc-item__content {
+    @include box-sizing(border-box);
+}
+
 .fc-item__image-container {
     .js-off & {
         display: none;
     }
 }
 
-.fc-item--has-image:before {
-    background-color: rgba($c-neutral1, .15);
-}
-
-.fc-item__media-wrapper,
 .fc-item__image-container {
     display: none;
 
@@ -47,10 +64,6 @@
             display: none !important;
         }
     }
-}
-
-.fc-item__media-wrapper {
-    position: relative;
 }
 
 .fc-item__video-fallback {
@@ -82,18 +95,19 @@
     margin-bottom: 0;
 }
 
+.fc-item__header {
+    padding-bottom: get-line-height(headline, 3);
+}
+
 .fc-item__standfirst {
     @include fs-bodyCopy(1);
-    padding-top: $gs-baseline;
+    padding-bottom: get-line-height(bodyCopy, 1);
     display: none;
 }
 
 .fc-item__meta {
-    position: absolute;
-    bottom: 0;
-    padding-top: $gs-baseline / 3;
-    padding-bottom: $gs-baseline / 3;
     @include fs-textSans(1);
+    padding-bottom: $gs-baseline;
 
     &,
     & a {
@@ -109,6 +123,7 @@
 
 .fc-item__timestamp {
     display: none;
+    margin-right: 1em;
 }
 
 .fc-trail__count--inline-template {
@@ -116,7 +131,6 @@
 }
 
 .fc-item--has-cutout {
-    padding-bottom: 60%;
 
     .fc-item__media-wrapper {
         display: none;
@@ -127,7 +141,7 @@
         overflow: hidden;
         width: 80%;
         bottom: 0 - $gs-baseline / 2;
-        right: $gs-gutter / 2;
+        right: 0;
     }
 
     .fc-item__avatar__media {

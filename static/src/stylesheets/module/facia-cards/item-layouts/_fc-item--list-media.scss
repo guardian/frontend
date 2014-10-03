@@ -21,6 +21,12 @@ Media list item. Looks a bit like this:
 
     min-height: $item-min-height;
 
+    .fc-item__container,
+    .fc-item__content,
+    .fc-item__footer {
+        display: block;
+    }
+
     &.fc-item--has-image {
         // Override .svg .action--has-icon
         padding-left: $image-width !important;

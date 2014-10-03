@@ -22,19 +22,12 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
 
 @mixin fc-item--three-quarters {
-    padding-bottom: 0;
-
-    .fc-item__media-wrapper,
-    .fc-item__avatar {
-        float: right;
-    }
 
     .fc-item__media-wrapper {
-        width: gs-span(4) + $gs-gutter * 2;
-
-        @include mq(desktop) {
-            width: gs-span(6);
-        }
+        @include box-sizing(border-box);
+        width: (100% / 3 * 2);
+        float: right;
+        padding-left: $gs-gutter * .25;
     }
 
     .fc-item__avatar {
@@ -52,6 +45,12 @@ Three quarter item. Looks like a wide standard, a bit like this:
         }
     }
 
+    .fc-item__header {
+        @include mq(desktop) {
+            padding-bottom: get-line-height(headline, 4);
+        }
+    }
+
     .fc-item__standfirst {
         @include mq(desktop) {
             display: block;
@@ -64,30 +63,17 @@ Three quarter item. Looks like a wide standard, a bit like this:
         }
     }
 
-    .fc-item__header,
-    .fc-item__standfirst,
-    .fc-item__byline {
+    .fc-item__content {
         @include box-sizing(border-box);
-        width: gs-span(2) + $gs-gutter;
-        padding-right: 0 !important;
-
-        @include mq(desktop) {
-            width: gs-span(3);
-
-            //Fixes IE9 box-model bug.
-            @if(not $browser-supports-flexbox) {
-                width: gs-span(3) - $gs-gutter;
-            }
-        }
+        width: (100% / 3);
+        padding-right: $gs-gutter * .5;
     }
 
     &.fc-item--has-cutout,
     &.fc-item--has-no-image {
         min-height: gs-height(4);
 
-        .fc-item__header,
-        .fc-item__standfirst,
-        .fc-item__byline {
+        .fc-item__content {
             width: gs-span(4) + $gs-gutter * 2;
 
             @include mq(desktop) {
@@ -97,7 +83,7 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
         .fc-item__standfirst {
             display: block;
-            
+
             @include mq(desktop) {
                 width: gs-span(5);
             }
@@ -110,5 +96,9 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
     .vjs-big-play-button > span {
         @include video-play-button-size($vjs-large-button-size);
+    }
+
+    .fc-sublinks__item:nth-child(n+3) {
+        display: none;
     }
 }
