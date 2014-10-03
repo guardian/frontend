@@ -43,9 +43,13 @@
     "load-grunt-config": "0.13.2",
     "mkdirp": "0.5.0",
     "moment": "2.8.3",
+    "phantom": "0.6.5",
     "phantomjs": "1.9.10",
     "svgo": "0.4.4",
-    "time-grunt": "1.0.0"
+    "time-grunt": "1.0.0",
+    "q": "1.0.1",
+    "btoa": "1.1.2",
+    "jsonfile": "2.0.0"
   },
   "scripts": {
     "postinstall": "grunt hookmeup"
