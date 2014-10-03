@@ -2,6 +2,7 @@ define([
     'bean',
     'bonzo',
     'qwery',
+
     'lodash/collections/map',
 
     'common/utils/$',
@@ -20,6 +21,7 @@ define([
     bean,
     bonzo,
     qwery,
+    
     _map,
 
     $,
