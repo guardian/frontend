@@ -147,10 +147,17 @@
         <div class="cnf-front" data-bind="
             css: {open: state.isOpen}">
 
-            <div class="title" data-bind="
-                text: id,
-                visible: id,
-                click: toggleOpen"></div>
+            <div class="title">
+                <span data-bind="
+                    text: id,
+                    visible: id,
+                    click: toggleOpen
+                "></span>
+
+                <!-- ko if: props.isHidden -->
+                <span class="cfn-front__hidden-text">hidden</span>
+                <!-- /ko -->
+                </div>
 
             <!-- ko if: !id() -->
                 <div class="cnf-front__inner cnf-form">
@@ -201,6 +208,10 @@
                         <input type="checkbox" data-bind="
                             checked: props.isImageDisplayed,
                             enable: props.imageUrl" />
+
+                        <label>Hidden</label>
+                        <input type="checkbox" data-bind="
+                            checked: props.isHidden" />
 
                         <label>Type</label>
                         <input type="radio" name="group02" data-bind="checkedValue: undefined, checked: props.priority" />

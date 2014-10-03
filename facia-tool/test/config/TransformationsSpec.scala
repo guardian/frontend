@@ -30,6 +30,7 @@ import test.ConfiguredTestSuite
     imageWidth = None,
     imageHeight = None,
     isImageDisplayed = None,
+    isHidden = None,
     priority = Some("high"),
     initialCollection = collectionFixture
   )
