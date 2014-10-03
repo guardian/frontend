@@ -54,19 +54,17 @@
                         ("fc-item__header", true),
                         ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
                     ))">
-                    @title(trail, index, containerIndex, false)
-                    @trail match {
-                        case content: model.Content => {
-                            @content.byline.filter(const(content.showByline)).map { byline =>
-                                <div class="fc-item__byline">
-                                    @ContributorLinks(Html(byline), content.contributors)
-                                </div>
+                        @title(trail, index, containerIndex, false)
+                        @trail match {
+                            case content: model.Content => {
+                                @content.byline.filter(const(content.showByline)).map { byline =>
+                                    <div class="fc-item__byline">
+                                        @ContributorLinks(Html(byline), content.contributors)
+                                    </div>
                                 }
-
-                            @starRating(content)
+                                @starRating(content)
                             }
-
-                        case _ => {}
+                            case _ => {}
                         }
                     </div>
 
