@@ -51,7 +51,9 @@ developer.properties
 
 *-spec-runner.html
 
-static
+static/hash
+static/requirejs
+static/target
 
 common/app/assets/stylesheets/icons/*
 

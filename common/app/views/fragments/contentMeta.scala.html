@@ -1,4 +1,4 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(content: model.Content, showBadge: Boolean = true)(implicit request: RequestHeader)
 @import conf.Switches._
 
 @byline(content: model.Content) = {
@@ -30,7 +30,9 @@
     @if(content.hasShowcaseMainPicture){ content__meta-container--showcase}
     @if(!content.hasMainPicture && !content.hasMainVideo && !content.hasMainAudio && !content.hasMainEmbed){ content__meta-container--float}">
 
-    @fragments.commercial.badge(content)
+    @if(showBadge) {
+        @fragments.commercial.badge(content)
+    }
 
     @if(content.showBylinePic) {
         <div class="media__img meta__image">

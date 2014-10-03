@@ -25,7 +25,7 @@ module.exports = function(grunt, options) {
 
         abTestInfo: {
             command: 'node tools/ab-test-info/ab-test-info.js ' +
-                     'common/app/assets/javascripts/modules/experiments/tests ' +
+                     'static/src/javascripts/modules/experiments/tests ' +
                      'static/abtests.json',
             options: {
                 stdout: true,

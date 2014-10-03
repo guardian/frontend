@@ -93,10 +93,6 @@
                     </div>
                 }
 
-                @comment.sentiment.map{ s =>
-                    <div class="d-comment__sentiment d-comment__sentiment--@if(s == 0){for}else{against}"></div>
-                }
-
                 <div class="d-comment__body" itemprop="text">
                     @if(comment.isBlocked){
                         <div class="d-comment__comment-removed">This comment was removed by a moderator because it didn't abide by our <a href="http://www.theguardian.com/community-standards" data-link-name="community standards">community standards</a>.
@@ -114,8 +110,7 @@
 
                         <button class="u-button-reset d-comment__action d-comment__action--reply js-comment-reploy"
                                 data-link-name="reply to comment" data-comment-id="@comment.id" role="button">
-                            <span class="d-comment__reply-icon"><i class="i"></i></span>
-                            Reply
+                            <i class="i i-reply-blue"></i>Reply
                         </button>
 
                         <span class="d-comment__action-separator d-staff-required">|</span>

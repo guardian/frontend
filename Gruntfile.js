@@ -11,7 +11,7 @@ module.exports = function (grunt) {
         singleRun: grunt.option('single-run') !== false,
         staticTargetDir: './static/target/',
         staticHashDir: './static/hash/',
-        testConfDir: './common/test/assets/javascripts/conf/',
+        testConfDir: './static/test/javascripts/conf/',
         requirejsDir: './static/requirejs',
         webfontsDir: './resources/fonts/'
     };

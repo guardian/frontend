@@ -77,6 +77,7 @@ define([
                 {
                     key: 'customKicker',
                     editable: true,
+                    requires: 'showKickerCustom',
                     label: 'custom kicker',
                     type: 'text'
                 },
@@ -154,6 +155,13 @@ define([
                     editable: true,
                     singleton: 'kicker',
                     label: 'section kicker',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showKickerCustom',
+                    editable: true,
+                    singleton: 'kicker',
+                    label: 'custom kicker',
                     type: 'boolean'
                 },
                 {
