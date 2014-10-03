@@ -97,6 +97,24 @@ $header-image-size-desktop: 120px;
     }
 }
 
+/**
+ * This for adding padding-top. On old layout container--first is taking care of this.
+ * When we move to new layout container--news should be deprecated and this class should be
+ * reviewed.
+ */
+.fc-container--first {
+    margin-top: 0;
+    padding-top: 0;
+
+    .facia-container__inner {
+        border: 0;
+    }
+
+    @include mq(tablet) {
+        padding-top: $gs-baseline / 2;
+    }
+}
+
 .js-on .fc-show-more--hidden .fc-show-more--hide-on-mobile {
     @include mq($until: tablet) {
         display: none !important;
