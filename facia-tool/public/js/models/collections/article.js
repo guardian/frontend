@@ -107,6 +107,26 @@ define([
                     type: 'text'
                 },
                 {
+                    key: 'imageCutoutSrc',
+                    editable: true,
+                    requires: 'imageCutoutReplace',
+                    label: 'replacement cutout image URL',
+                    validator: 'validateImageCutout',
+                    type: 'text'
+                },
+                {
+                    key: 'imageCutoutSrcWidth',
+                    requires: 'imageCutoutReplace',
+                    label: 'replacement cutout image width',
+                    type: 'text'
+                },
+                {
+                    key: 'imageCutoutSrcHeight',
+                    requires: 'imageCutoutReplace',
+                    label: 'replacement cutout image height',
+                    type: 'text'
+                },
+                {
                     key: 'isBreaking',
                     editable: true,
                     singleton: 'kicker',
@@ -396,6 +416,18 @@ define([
                     minWidth: 620,
                     widthAspectRatio: 3,
                     heightAspectRatio: 5
+                }
+            )
+        };
+
+        Article.prototype.validateImageCutout = function() {
+            validateImage(
+                this.meta.imageCutoutSrc,
+                this.meta.imageCutoutSrcWidth,
+                this.meta.imageCutoutSrcHeight,
+                    {
+                        maxWidth: 940,
+                        minWidth: 400
                 }
             )
         };
