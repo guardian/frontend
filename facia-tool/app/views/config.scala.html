@@ -173,6 +173,10 @@
             <div class="cnf-front__inner" data-bind="if: state.isOpen">
                 <!-- ko if: state.isOpenProps() -->
                     <div class="cnf-form">
+                        <label>Hidden</label>
+                        <input type="checkbox" data-bind="
+                            checked: props.isHidden" />
+
                         <label>Nav section</label>
                         <select data-bind="
                             css: {
@@ -208,10 +212,6 @@
                         <input type="checkbox" data-bind="
                             checked: props.isImageDisplayed,
                             enable: props.imageUrl" />
-
-                        <label>Hidden</label>
-                        <input type="checkbox" data-bind="
-                            checked: props.isHidden" />
 
                         <label>Type</label>
                         <input type="radio" name="group02" data-bind="checkedValue: undefined, checked: props.priority" />
