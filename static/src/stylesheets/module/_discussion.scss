@@ -14,6 +14,17 @@ $avatarPadding: $gs-gutter / 2;
         display: none !important; // overriding .hide-on-mobile-inline
     }
 }
+
+.content--liveblog + .content-footer .discussion .content__main-column {
+    @include mq(desktop) {
+        margin: auto;
+    }
+    @include mq(leftCol) {
+        margin-left: $right-column + $gs-gutter;
+        margin-right: 0;
+    }
+}
+
 .discussion .container__border:nth-child(2) {
     margin-top: -1px;
 }
