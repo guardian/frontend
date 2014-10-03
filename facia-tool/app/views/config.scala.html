@@ -154,7 +154,7 @@
                     click: toggleOpen
                 "></span>
 
-                <!-- ko if: props.isHidden -->
+                <!-- ko if: props.isHidden() && collections.items().length > 0 -->
                 <span class="cfn-front__hidden-text">hidden</span>
                 <!-- /ko -->
                 </div>
