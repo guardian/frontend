@@ -55,7 +55,7 @@ static/hash
 static/requirejs
 static/target
 
-common/app/assets/stylesheets/icons/*
+static/src/stylesheets/icons/*
 
 ivy-sbt
 
