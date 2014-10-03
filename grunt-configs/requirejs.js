@@ -1,26 +1,21 @@
 module.exports = function(grunt, options) {
     return {
         options: {
-            baseUrl: 'static/src/javascripts',
             paths: {
-                bootsraps:    'bootstraps',
-                admin:        'projects/admin',
-                common:       'projects/common',
-                facia:        'projects/facia',
-                membership:   'projects/membership',
-                bean:         'components/bean/bean',
-                bonzo:        'components/bonzo/bonzo',
-                EventEmitter: 'components/eventEmitter/EventEmitter',
-                qwery:        'components/qwery/qwery',
-                reqwest:      'components/reqwest/reqwest',
-                lodash:       'components/lodash-amd',
-                imager:       'components/imager.js/container',
-                fence:        'components/fence/fence',
-                enhancer:     'components/enhancer/enhancer',
-                raven:        'components/raven-js/raven',
-                fastclick:    'components/fastclick/fastclick',
-                stripe:       '../../public/javascripts/vendor/stripe/stripe.min',
-                omniture:     '../../public/javascripts/vendor/omniture'
+                common:       '../../../../common/app/assets/javascripts',
+                bean:         '../../../../common/app/assets/javascripts/components/bean/bean',
+                bonzo:        '../../../../common/app/assets/javascripts/components/bonzo/bonzo',
+                EventEmitter: '../../../../common/app/assets/javascripts/components/eventEmitter/EventEmitter',
+                qwery:        '../../../../common/app/assets/javascripts/components/qwery/qwery',
+                reqwest:      '../../../../common/app/assets/javascripts/components/reqwest/reqwest',
+                lodash:       '../../../../common/app/assets/javascripts/components/lodash-amd',
+                imager:       '../../../../common/app/assets/javascripts/components/imager.js/container',
+                fence:        '../../../../common/app/assets/javascripts/components/fence/fence',
+                enhancer:     '../../../../common/app/assets/javascripts/components/enhancer/enhancer',
+                stripe:       '../../../../common/app/public/javascripts/vendor/stripe/stripe.min',
+                raven:        '../../../../common/app/assets/javascripts/components/raven-js/raven',
+                fastclick:    '../../../../common/app/assets/javascripts/components/fastclick/fastclick',
+                omniture:     '../../../../common/app/public/javascripts/vendor/omniture'
             },
             optimize: options.isDev ? 'none' : 'uglify2',
             generateSourceMaps: true,
@@ -29,6 +24,7 @@ module.exports = function(grunt, options) {
         },
         common: {
             options: {
+                baseUrl: 'common/app/assets/javascripts',
                 dir: options.requirejsDir,
                 keepBuildDir: false,
                 shim: {
@@ -57,33 +53,37 @@ module.exports = function(grunt, options) {
         },
         facia: {
             options: {
+                baseUrl: 'facia/app/assets/javascripts',
                 name: 'bootstraps/facia',
                 out: options.staticTargetDir + 'javascripts/bootstraps/facia.js',
                 exclude: [
-                    'core',
-                    'bootstraps/app'
+                    '../../../../common/app/assets/javascripts/core',
+                    '../../../../common/app/assets/javascripts/bootstraps/app'
                 ]
             }
         },
         identity: {
             options: {
+                baseUrl: 'identity/app/assets/javascripts',
                 name: 'bootstraps/membership',
                 out: options.staticTargetDir + 'javascripts/bootstraps/membership.js',
                 exclude: [
-                    'core',
-                    'bootstraps/app',
-                    '../../public/javascripts/vendor/stripe/stripe.min'
+                    '../../../../common/app/assets/javascripts/core',
+                    '../../../../common/app/assets/javascripts/bootstraps/app',
+                    '../../../../common/app/public/javascripts/vendor/stripe/stripe.min'
                 ]
             }
         },
         ophan: {
             options: {
-                name: 'bootstraps/ophan',
+                baseUrl: 'common/app/assets/javascripts',
+                name: 'common/bootstraps/ophan',
                 out: options.staticTargetDir + 'javascripts/bootstraps/ophan.js'
             }
         },
         admin: {
             options: {
+                baseUrl: 'admin/app/assets/javascripts',
                 name: 'bootstraps/admin',
                 out: options.staticTargetDir + 'javascripts/bootstraps/admin.js',
                 shim: {
@@ -99,10 +99,11 @@ module.exports = function(grunt, options) {
         },
         video : {
             options: {
+                baseUrl: 'common/app/assets/javascripts',
                 name: 'bootstraps/video-player',
                 out: options.staticTargetDir + 'javascripts/bootstraps/video-player.js',
                 paths: {
-                    vast: '../../public/javascripts/vendor/vast-client',
+                    vast: '../../../../common/app/public/javascripts/vendor/vast-client',
                     videojs: 'components/videojs/video',
                     videojsads: 'components/videojs-contrib-ads/videojs.ads',
                     videojsvast: 'components/videojs-vast/videojs.vast',
@@ -134,16 +135,14 @@ module.exports = function(grunt, options) {
         },
         dev: {
             options: {
+                baseUrl: 'common/app/assets/javascripts',
                 name: 'bootstraps/dev',
                 out: options.staticTargetDir + 'javascripts/bootstraps/dev.js',
                 paths: {
                     socketio: 'components/socket.io-client/socket.io'
                 }
             },
-            exclude: [
-                'core',
-                'bootstraps/app'
-            ]
+            exclude: ['core','bootstraps/app']
         }
     };
 };

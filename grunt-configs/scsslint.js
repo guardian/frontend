@@ -1,7 +1,7 @@
 module.exports = function(grunt, options) {
     return {
         allFiles: [
-            'static/src/stylesheets'
+            'common/app/assets/stylesheets'
         ],
         options: {
             bundleExec: true,

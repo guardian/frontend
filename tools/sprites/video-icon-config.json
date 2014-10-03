@@ -1,7 +1,7 @@
 {
-    "src": "../../static/src/images/video/",
+    "src": "../../common/app/assets/images/video/",
     "imgDest": "../../static/target/images/video",
-    "cssDest": "../../static/src/stylesheets/icons/",
+    "cssDest": "../../common/app/assets/stylesheets/icons/",
     "datasvgcss" : "_video-icons-svg.scss",
     "urlpngcss" : "_video-icons-sprite.scss",
     "spritepath" : "../images/video/",

@@ -45,7 +45,7 @@ module.exports = function(grunt, options) {
         css: {
             files: [{
                 expand: true,
-                cwd: 'static/src/stylesheets',
+                cwd: 'common/app/assets/stylesheets',
                 src: ['**/*.scss'],
                 dest: options.staticTargetDir + 'stylesheets'
             }]
@@ -77,7 +77,7 @@ module.exports = function(grunt, options) {
         headJs: {
             files: [{
                 expand: true,
-                cwd: 'static/src/javascripts/components/curl',
+                cwd: 'common/app/assets/javascripts/components/curl',
                 src: ['curl-domReady.js'],
                 dest: 'common/conf/assets'
             }]
