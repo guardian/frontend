@@ -72,6 +72,15 @@
 @import 'module/facia/_linkslist';
 @include facia-container-head-common;
 
+// new FACIA CARDS code
+@import 'module/facia-cards/_l-list';
+@import 'module/facia-cards/_container';
+@import 'module/facia-cards/_slices';
+@import 'module/facia-cards/_item';
+@import 'module/facia-cards/_items';
+@import 'module/facia-cards/_linkslist';
+@import 'module/facia-cards/_tones';
+
 
 /* ==========================================================================
    States
