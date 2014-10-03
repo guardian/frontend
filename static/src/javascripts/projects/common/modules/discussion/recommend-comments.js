@@ -67,7 +67,7 @@ RecommendComments.initButtons = function(buttons) {
 
         if (!userId || !isSameUser) {
             bonzo(button).addClass(RecommendComments.CONFIG.classes.active);
-            button.title = button.title += ' - recommend this comment';
+            button.title += ' - recommend this comment';
         }
     });
 };
