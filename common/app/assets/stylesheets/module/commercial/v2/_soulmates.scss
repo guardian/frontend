@@ -20,24 +20,40 @@ $c-soulmatesBorder: #e6e1c3;
         }
         .container__title {
             padding-bottom: 0;
-            padding-left: 0;
+            padding-left: $gs-gutter/2;
+            padding-right: $gs-gutter/2;
+
+            @include mq(mobileLandscape) {
+                padding-left: $gs-gutter;
+                padding-right: $gs-gutter;
+            }
+
+            @include mq(phablet) {
+                padding-left: 0;
+                padding-right: 0;
+            }
         }
         .commercial__title {
             text-align: center;
             min-height: 0;
         }
         .commercial__explainer {
+            @include fs-header(1);
             color: $c-soulmates-high;
             position: absolute;
+            top: 20px;
             bottom: 0;
+            left: $gs-gutter * 8;
             width: auto;
             padding: 0;
-            @include fs-header(1);
             margin: $gs-baseline 0 0;
 
-            @include mq($until: leftCol) {
-                top: 20px;
-                left: $gs-gutter * 7.5;
+            @include mq(phablet) {
+                left: $gs-gutter * 7;
+            }
+
+            @include mq(leftCol) {
+                left: 0;
             }
         }
         .i-soulmates-logo {
@@ -147,7 +163,6 @@ $c-soulmatesBorder: #e6e1c3;
             width: gs-span(2) + $gs-gutter*2.5 !important;
             margin-right: 0;
             float: left;
-            padding-left: 0;
         }
         .container__title__wrapper {
             width: gs-span(2) + $gs-gutter*1.5;
@@ -188,7 +203,7 @@ $c-soulmatesBorder: #e6e1c3;
         }
         .container__title__wrapper {
             width: gs-span(3);
-            
+
             .svg & {
                 background-size: cover;
             }
@@ -199,7 +214,11 @@ $c-soulmatesBorder: #e6e1c3;
         .has-page-skin & {
             padding-left: $gs-gutter;
             @include c-soulmates-branding-small;
-            
+
+            .commercial__explainer {
+                left: $gs-gutter * 7.5;
+            }
+
             .commercial__head {
                 position: relative;
                 width: auto;
