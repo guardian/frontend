@@ -6,7 +6,7 @@
 @import views.support._
 
 @itemHeader(containerIndex == 0 && itemIndex == 0, trail.showQuotedHeadline, trail.showBoostedHeadline) {
-    @ItemKicker.fromTrail(trail, config).map {
+    @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {
         case BreakingNewsKicker => {
             <span class="fc-item__live-indicator">Breaking News</span>
         }
