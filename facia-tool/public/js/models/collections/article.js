@@ -425,9 +425,9 @@ define([
                 this.meta.imageCutoutSrc,
                 this.meta.imageCutoutSrcWidth,
                 this.meta.imageCutoutSrcHeight,
-                    {
-                        maxWidth: 940,
-                        minWidth: 400
+                {
+                    maxWidth: 940,
+                    minWidth: 400
                 }
             )
         };
