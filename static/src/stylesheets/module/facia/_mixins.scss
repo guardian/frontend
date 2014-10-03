@@ -1,0 +1,231 @@
+$item-top-border-height: 1px;
+$mobile-max-container-width: gs-span(8);
+$mq-breakpoints: mq-add-breakpoint(containerWidestMobile, $mobile-max-container-width + $gs-gutter * 2);
+$breakpoints: (
+    tablet:  gs-span(9),
+    desktop: gs-span(12),
+    leftCol: gs-span(14),
+    wide:    gs-span(16)
+);
+
+@mixin facia-container-head-common {
+    .facia-container__inner {
+        overflow: hidden;
+        position: relative;
+        margin-left: $gs-gutter / 2;
+        margin-right: $gs-gutter / 2;
+
+        @include mq(mobileLandscape) {
+            margin-left: $gs-gutter;
+            margin-right: $gs-gutter;
+        }
+        @include mq(containerWidestMobile) {
+            margin-left: auto;
+            margin-right: auto;
+            width: $mobile-max-container-width;
+        }
+        @include mq(tablet) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+        @each $breakpoint, $container-width in $breakpoints {
+            @include mq($breakpoint) {
+                width: $container-width;
+            }
+        }
+    }
+    .facia-container__inner--full-span {
+        @each $breakpoint, $container-width in $breakpoints {
+            @include mq($breakpoint) {
+                width: $container-width + ($gs-gutter * 2);
+            }
+        }
+        @include mq(tablet) {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+}
+
+@mixin facia-container--layout-front {
+    .facia-container--layout-front {
+        @include mq(leftCol) {
+            .container__title {
+                margin-bottom: 0;
+            }
+            .container__body {
+                overflow: hidden;
+                margin-left: $left-column + $gs-gutter;
+            }
+            .container--news {
+                .container__title {
+                    display: block;
+                    float: left;
+                    width: $left-column;
+                    margin-right: $gs-gutter;
+                }
+                .container__body {
+                    margin-left: 0;
+                    width: gs-span(12);
+                }
+            }
+        }
+
+        @include mq(wide) {
+            .container__title {
+                float: left;
+                width: $left-column-wide !important;
+                margin-right: $gs-gutter;
+            }
+            .container__body {
+                margin-left: $left-column-wide + $gs-gutter;
+                width: gs-span(12);
+            }
+            .has-page-skin & {
+                overflow: hidden;
+                margin-left: auto;
+                margin-right: auto;
+                width: gs-span(12) + ($gs-gutter*2);
+
+                .facia-container__inner {
+                    width: gs-span(12);
+                }
+                .container__body {
+                    margin-left: 0;
+                }
+                .container__title {
+                    width: auto !important;
+                    margin-right: 0;
+                    float: none;
+                    margin-bottom: $gs-baseline;
+                }
+                .container--news .container__title {
+                    display: none;
+                }
+                .container--tag .container__title {
+                    display: block;
+                }
+                .container__toggle {
+                    left: auto;
+                }
+            }
+        }
+        @include container__meta(leftCol, desktop);
+    }
+}
+
+@mixin facia-container--layout-content {
+    .facia-container--layout-content {
+        .container--dark-background .container__border {
+            border-color: $c-neutral2;
+        }
+        @include mq(leftCol) {
+            .container__title {
+                margin-bottom: 0;
+                float: left;
+                width: $left-column !important;
+                margin-right: $gs-gutter;
+            }
+            .container__body {
+                overflow: hidden;
+                margin-left: $left-column + $gs-gutter;
+            }
+        }
+
+        @include mq(wide) {
+            .container__title {
+                float: left;
+                width: $left-column-wide !important;
+                margin-right: $gs-gutter;
+            }
+            .container__body {
+                margin-left: $left-column-wide + $gs-gutter;
+                width: gs-span(12);
+            }
+            .container__border {
+                margin-right: -(gs-span(1) + $gs-gutter*2);
+            }
+        }
+        @include container__meta(leftCol, rightCol);
+    }
+}
+
+@mixin facia-container--layout-discussion {
+    .facia-container--layout-discussion {
+        .container__title {
+            font-weight: normal;
+        }
+    }
+}
+
+@mixin facia-container--default-heading {
+    .facia-container--default-heading {
+        .container__border,
+        .container__border.tone-accent-border {
+            border-top: 1px solid $c-neutral4;
+        }
+    }
+}
+
+@mixin container__meta($leftColumn, $halfWidthBreakpoint) {
+    .container__meta {
+        padding-top: $gs-baseline/2;
+        @include mq($halfWidthBreakpoint) {
+            padding-top: $gs-baseline/1.5;
+        }
+        @include mq($halfWidthBreakpoint, $leftColumn) {
+            max-width: 50%;
+        }
+        @include mq($leftColumn) {
+            margin-bottom: 0;
+            float: left;
+            clear: left;
+            width: $left-column !important;
+            margin-right: $gs-gutter;
+        }
+        @include mq(wide) {
+            width: $left-column-wide !important;
+        }
+    }
+}
+
+@mixin vertical-item-separator {
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 1px;
+        height: 100%;
+        border-left: 1px solid $c-neutral5;
+
+        .container--dark-background & {
+            border-left-color: lighten($c-neutral1, 16%);
+        }
+    }
+}
+
+@mixin item--hide-tone-border {
+    .item__tonal-border {
+        border-top-width: 0 !important;
+    }
+    .item__image-container {
+        margin-top: 0 !important;
+    }
+}
+
+@mixin show-only-if-svg-is-supported {
+    display: none;
+    .svg & { display: block; }
+}
+
+@mixin hide-icon-in-title {
+    .item--video .item__title--has-icon-mobile,
+    .item--gallery .item__title--has-icon-mobile {
+        padding-left: 0;
+
+        .i { display: none; }
+    }
+}
