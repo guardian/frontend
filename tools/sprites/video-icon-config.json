@@ -1,6 +1,6 @@
 {
     "src":        "../../static/src/images/video/",
-    "imgDest":    "../../static/target/images/video",
+    "imgDest":    "../../static/target/images/video/",
     "cssDest":    "../../static/src/stylesheets/icons/",
     "cssSvgName": "_video-icons-svg.scss",
     "cssPngName": "_video-icons-sprite.scss"

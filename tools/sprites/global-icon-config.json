@@ -1,6 +1,6 @@
 {
 	"src":        "../../static/src/images/global/",
-    "imgDest":    "../../static/target/images/global",
+    "imgDest":    "../../static/target/images/global/",
     "cssDest":    "../../static/src/stylesheets/icons/",
     "cssSvgName": "_global-icons-svg.scss",
     "cssPngName": "_global-icons-sprite.scss"

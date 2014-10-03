@@ -29,7 +29,7 @@ jfDefer.promise.then(function (config) {
     phantom.create(function (ph) {
         ph.createPage(function (sprite) {
             sprite.set('viewportSize', { width: 600, height: 1 });
-            sprite.set('content', '<html><body><div id="sprite" style="overflow:auto;"></div></body></html>');
+            sprite.set('content', '<html><body><div id="sprite" style="display: inline-block;"></div></body></html>');
 
             fs.readdir(config.src, function (err, files) {
                 Q.all(

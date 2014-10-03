@@ -1,6 +1,6 @@
 {
     "src":        "../../static/src/images/commercial/",
-    "imgDest":    "../../static/target/images/commercial",
+    "imgDest":    "../../static/target/images/commercial/",
     "cssDest":    "../../static/src/stylesheets/icons/",
     "cssSvgName": "_commercial-icons-svg.scss",
     "cssPngName": "_commercial-icons-sprite.scss"
