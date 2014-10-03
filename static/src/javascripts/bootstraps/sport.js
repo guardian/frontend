@@ -9,11 +9,12 @@ define([
 ) {
     function init() {
 
-        var matchIdentifier = config.page.cricketMatch;
+        var cricketScore, parentEl,
+            matchIdentifier = config.page.cricketMatch;
 
         if (matchIdentifier) {
-            var cricketScore = new Component(),
-                parentEl = $('.js-cricket-score')[0];
+            cricketScore = new Component();
+            parentEl = $('.js-cricket-score')[0];
 
             cricketScore.endpoint = '/sport/cricket/match/' + matchIdentifier + '.json';
             cricketScore.fetch(parentEl, 'summary');

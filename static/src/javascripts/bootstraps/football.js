@@ -33,7 +33,7 @@ define([
     function renderNav(match, callback) {
         var matchInfo;
 
-        return (matchInfo = new MatchInfo(match, config.page.pageId)).fetch().then(function(resp) {
+        return (matchInfo = new MatchInfo(match, config.page.pageId)).fetch().then(function (resp) {
             var $nav;
             if (resp.nav && resp.nav.trim().length > 0) {
                 $nav = $.create(resp.nav).first().each(function (nav) {
@@ -46,7 +46,7 @@ define([
             if (callback) {
                 callback(resp, $nav, matchInfo.endpoint);
             } // The promise chain is broken as Reqwest doesn't allow for creating more than 1 argument.
-        }, function() {
+        }, function () {
             $('.score-container').remove();
             $('.js-score').removeClass('u-h');
         });
@@ -54,25 +54,27 @@ define([
 
     function renderExtras(extras, dropdownTemplate) {
         // clean
-        extras = extras.filter(function(extra) { return extra; });
-        var ready = extras.filter(function(extra) {
+        extras = extras.filter(function (extra) {
+            return extra;
+        });
+        var ready = extras.filter(function (extra) {
             return extra.ready === false;
         }).length === 0;
 
         if (ready) {
-            page.belowArticleVisible(function() {
+            page.belowArticleVisible(function () {
                 var b;
                 $('.js-after-article').append(
-                    $.create('<div class="football-extras"></div>').each(function(extrasContainer) {
-                        extras.forEach(function(extra, i) {
+                    $.create('<div class="football-extras"></div>').each(function (extrasContainer) {
+                        extras.forEach(function (extra, i) {
                             if (dropdownTemplate) {
                                 $.create(dropdownTemplate).each(function (dropdown) {
-                                    if(config.page.isLiveBlog) { $(dropdown).addClass('dropdown--key-events'); }
+                                    if (config.page.isLiveBlog) { $(dropdown).addClass('dropdown--key-events'); }
                                     $('.dropdown__label', dropdown).append(extra.name);
                                     $('.dropdown__content', dropdown).append(extra.content);
                                     $('.dropdown__button', dropdown)
-                                        .attr('data-link-name', 'Show dropdown: '+ extra.name)
-                                        .each(function(el) {
+                                        .attr('data-link-name', 'Show dropdown: ' + extra.name)
+                                        .each(function (el) {
                                             if (i === 0) { b = el; }
                                         });
                                 }).appendTo(extrasContainer);
@@ -86,8 +88,8 @@ define([
                 // unfortunately this is here as the buttons event is delegated
                 // so it needs to be in the dom
                 if (b) { bean.fire(b, 'click'); }
-            }, function() {
-                extras.forEach(function(extra) {
+            }, function () {
+                extras.forEach(function (extra) {
                     rhc.addComponent(extra.content, extra.importance);
                 });
             });
@@ -96,8 +98,8 @@ define([
 
     function renderTable(competition, extras, template) {
         extras[2] = { ready: false };
-        $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>').each(function(container) {
-            football.tableFor(competition).fetch(container).then(function() {
+        $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>').each(function (container) {
+            football.tableFor(competition).fetch(container).then(function () {
                 extras[2] = $('.table__container', container).length > 0 ? {
                     name: 'Table',
                     importance: 3,
@@ -105,7 +107,7 @@ define([
                     ready: true
                 } : undefined;
                 renderExtras(extras, template);
-            }, function() {
+            }, function () {
                 delete extras[2];
                 renderExtras(extras, template);
             });
@@ -114,10 +116,10 @@ define([
 
     function loading(elem, message, link) {
         bonzo(elem).append(bonzo.create(
-            '<div class="loading">'+
-                '<div class="loading__message">'+ (message||'Loading…') +'</div>'+
-                (link ? '<a href="'+ link.href +'" class="loading__link">'+ link.text +'</a>' : '') +
-                '<div class="loading__animation"></div>'+
+            '<div class="loading">' +
+                '<div class="loading__message">' + (message || 'Loading…') + '</div>' +
+                (link ? '<a href="' + link.href + '" class="loading__link">' + link.text + '</a>' : '') +
+                '<div class="loading__animation"></div>' +
             '</div>'
         ));
     }
@@ -131,7 +133,7 @@ define([
         var extras = [],
             dropdownTemplate;
 
-        page.isMatch(function(match) {
+        page.isMatch(function (match) {
             extras[0] = { ready: false };
             if (match.pageType === 'stats') {
                 renderNav(match);
@@ -139,11 +141,11 @@ define([
                 var $h = $('.js-score'),
                     scoreBoard = new ScoreBoard(),
                     scoreContainer = bonzo.create(
-                        '<div class="score-container">'+
-                            '<div class="score__loading'+ (match.pageType !== 'report' ? ' score__loading--live':'') +'">'+
-                                '<div class="loading__text">Fetching the scores…</div>'+
-                                '<div class="is-updating"></div>'+
-                            '</div>'+
+                        '<div class="score-container">' +
+                            '<div class="score__loading' + (match.pageType !== 'report' ? ' score__loading--live' : '') + '">' +
+                                '<div class="loading__text">Fetching the scores…</div>' +
+                                '<div class="is-updating"></div>' +
+                            '</div>' +
                         '</div>'
                     )[0];
 
@@ -153,12 +155,12 @@ define([
                     $h.addClass('u-h').before(scoreContainer);
                 }
 
-                renderNav(match, function(resp, $nav, endpoint) {
+                renderNav(match, function (resp, $nav, endpoint) {
                     dropdownTemplate = resp.dropdown;
                     scoreContainer.innerHTML = '';
                     scoreBoard.template = resp.matchSummary;
 
-                    if(!/^\s+$/.test(scoreBoard.template)) {
+                    if (!/^\s+$/.test(scoreBoard.template)) {
                         scoreBoard.endpoint = endpoint;
                         scoreBoard.updateEvery = detect.isBreakpoint({ min: 'desktop' }) ? 30 : 60;
                         scoreBoard.autoupdated = match.isLive;
@@ -173,9 +175,9 @@ define([
                     if (resp.hasStarted && $nav) {
                         var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, '');
 
-                        $.create('<div class="match-stats__container"></div>').each(function(container) {
-                            football.statsFor(statsUrl).fetch(container).then(function() {
-                                $('.js-chart', container).each(function(el) {
+                        $.create('<div class="match-stats__container"></div>').each(function (container) {
+                            football.statsFor(statsUrl).fetch(container).then(function () {
+                                $('.js-chart', container).each(function (el) {
                                     new Doughnut().render(el);
                                 });
                                 extras[0] = {
@@ -193,15 +195,15 @@ define([
                     }
 
                     // Group table & Match day
-                    page.isCompetition(function(competition) {
+                    page.isCompetition(function (competition) {
                         extras[1] = { ready: false };
                         // Group table
                         if (resp.group !== '') {
-                            renderTable(competition +'/'+ resp.group, extras, dropdownTemplate);
+                            renderTable(competition + '/' + resp.group, extras, dropdownTemplate);
                         }
 
                         $.create('<div class="js-football-match-day" data-link-name="football-match-day-embed"></div>').each(function (container) {
-                            football.matchDayFor(competition, resp.matchDate).fetch(container).then(function() {
+                            football.matchDayFor(competition, resp.matchDate).fetch(container).then(function () {
                                 extras[1] = {
                                     name: 'Today’s matches',
                                     importance: 2,
@@ -209,7 +211,7 @@ define([
                                     ready: true
                                 };
                                 renderExtras(extras, dropdownTemplate);
-                            }, function() {
+                            }, function () {
                                 delete extras[1];
                                 renderExtras(extras, dropdownTemplate);
                             });
@@ -219,11 +221,11 @@ define([
             }
         });
 
-        page.isCompetition(function(competition) {
+        page.isCompetition(function (competition) {
             renderTable(competition, extras, dropdownTemplate);
         });
 
-        page.isLiveClockwatch(function() {
+        page.isLiveClockwatch(function () {
             var ml = new MatchListLive('match-day', page.isCompetition() || 'premierleague', config.dateFromSlug()),
                 $img = $('.media-primary'),
                 $matchListContainer = $.create('<div class="football-matches__container" data-link-name="football-matches-clockwatch"></div>')
@@ -233,11 +235,11 @@ define([
             loading($matchListContainer[0], 'Fetching today’s matches…', { text: 'Impatient?', href: '/football/live' });
 
             $('.js-football-meta').append($matchListContainer);
-            ml.fetch($matchListContainer[0]).fail(function() {
+            ml.fetch($matchListContainer[0]).fail(function () {
                 ml.destroy();
                 $matchListContainer.remove();
                 $img.removeClass('u-h');
-            }).always(function() {
+            }).always(function () {
                 if ($('.football-match', $matchListContainer[0]).length === 0) {
                     ml.destroy();
                     $matchListContainer.remove();
@@ -248,21 +250,21 @@ define([
             });
         });
 
-        page.isFootballStatsPage(function() {
-            $('.js-chart').each(function(el) {
+        page.isFootballStatsPage(function () {
+            $('.js-chart').each(function (el) {
                 new Doughnut().render(el);
             });
         });
 
         // Binding
-        bean.on(document.body, 'click', '.js-show-more', function(e) {
+        bean.on(document.body, 'click', '.js-show-more', function (e) {
             e.preventDefault();
             var el = e.currentTarget;
             ajax({
-                url: el.getAttribute('href') +'.json'
-            }).then(function(resp) {
-                $.create(resp.html).each(function(html) {
-                    $('[data-show-more-contains="'+ el.getAttribute('data-puts-more-into') +'"]')
+                url: el.getAttribute('href') + '.json'
+            }).then(function (resp) {
+                $.create(resp.html).each(function (html) {
+                    $('[data-show-more-contains="' + el.getAttribute('data-puts-more-into') + '"]')
                         .append($(el.getAttribute('data-shows-more'), html));
 
                     var nurl = resp[el.getAttribute('data-new-url')];
@@ -275,11 +277,11 @@ define([
             });
         });
 
-        bean.on(document.body, 'change', $('form.football-leagues')[0], function() {
+        bean.on(document.body, 'change', $('form.football-leagues')[0], function () {
             window.location = this.value;
         });
 
-        if(!config.page.isFootballWorldCup2014) {
+        if (!config.page.isFootballWorldCup2014) {
             bean.on(document.body, 'click', '.table tr[data-link-to]', function (e) {
                 if (!e.target.getAttribute('href')) {
                     window.location = this.getAttribute('data-link-to');
@@ -293,21 +295,23 @@ define([
         if (config.page.isFootballWorldCup2014) {
             $('a').attr('target', '_top');
 
-            (function() {
+            (function () {
                 var t, h, i, resize;
 
                 // This stops the SecurityError from halting the execution any further.
                 try {
                     i = $('.interactive iframe', window.parent.document).get(0);
-                } catch(e) {}
+                } catch (e) {}
 
                 resize = (function r() {
                     if (!t) {
                         // if this isn't timed out, it triggers another resize
-                        h = $('#js-context').offset().height+50;
+                        h = $('#js-context').offset().height + 50;
 
                         if (i) { i.height = h; }
-                        t = setTimeout(function() { clearTimeout(t); t = null; }, 200);
+                        t = setTimeout(function () {
+                            clearTimeout(t); t = null;
+                        }, 200);
                     }
                     return r;
                 })();
