@@ -3,6 +3,8 @@ define([
     'bonzo',
     'qwery',
 
+    'lodash/collections/map',
+
     'common/utils/$',
     'common/utils/ajax',
     'common/utils/detect',
@@ -19,11 +21,15 @@ define([
     bean,
     bonzo,
     qwery,
+    
+    _map,
+
     $,
     ajax,
     detect,
     mediator,
     scroller,
+
     Component,
     DiscussionApi,
     CommentBox,
@@ -87,6 +93,7 @@ Comments.prototype.classes = {
     showHidden:      'd-discussion__show-all-comments',
     reply: 'd-comment--response',
     showReplies: 'd-show-more-replies',
+    showRepliesButton: 'd-show-more-replies__button',
     heading: 'discussion__heading',
     newComments: 'js-new-comments',
     orderControl: 'd-discussion__order-control',
@@ -130,10 +137,6 @@ Comments.prototype.user = null;
 
 /** @override */
 Comments.prototype.prerender = function() {
-    var heading = qwery(this.getClass('heading'), this.getClass('container'))[0],
-        commentCount = this.elem.getAttribute('data-comment-count');
-
-    heading.innerHTML += ' <span class="discussion__comment-count">('+ commentCount +')</span>';
 
     // Ease of use
     this.topLevelComments = qwery(this.getClass('topLevelComment'), this.elem);
@@ -146,7 +149,7 @@ Comments.prototype.prerender = function() {
 
 /** @override */
 Comments.prototype.ready = function() {
-    this.on('click', this.getClass('showReplies'), this.getMoreReplies);
+    this.on('click', this.getClass('showRepliesButton'), this.getMoreReplies);
     this.on('click', this.getClass('changePage'), this.changePage);
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     this.on('click', this.getClass('commentReport'), this.reportComment);
@@ -320,7 +323,7 @@ Comments.prototype.renderComments = function(resp) {
     ));
 
     if (!this.isReadOnly()) {
-        RecommendComments.init();
+        RecommendComments.initButtons($(this.getClass('commentRecommend'), this.elem));
     }
 
     this.emit('loaded');
@@ -340,30 +343,30 @@ Comments.prototype.showHiddenComments = function(e) {
  * @param {NodeList} comments
  */
 Comments.prototype.addMoreRepliesButtons = function (comments) {
-    var self = this;
 
     comments = comments || this.topLevelComments;
     comments.forEach(function(elem) {
         var replies = parseInt(elem.getAttribute('data-comment-replies'), 10),
-            renderedReplies = qwery(self.getClass('reply'), elem);
+            renderedReplies = qwery(this.getClass('reply'), elem);
 
         if (renderedReplies.length < replies) {
             var numHiddenReplies = replies - renderedReplies.length,
-                showButtonHtml = '<li>'+
-                    '<span><i class="i i-plus-white-small"></i></span>'+
-                    'Show '+ numHiddenReplies +' more '+ (numHiddenReplies === 1 ? 'reply' : 'replies')+
-                '</li>';
 
-            $.create(showButtonHtml)
-                .addClass(self.getClass('showReplies', true))
-                .data('source-comment', elem)
-                .attr({
-                    'data-link-name': 'Show more replies',
-                    'data-is-ajax': '',
-                    'data-comment-id': elem.getAttribute('data-comment-id')
-                }).appendTo($('.d-thread--responses', elem));
+                $btn = $.create(
+                    '<button class="u-button-reset button button--show-more button--small button--tone-news d-show-more-replies__button">' +
+                        '<i class="i i-plus-blue"></i>' +
+                        'Show '+ numHiddenReplies +' more '+ (numHiddenReplies === 1 ? 'reply' : 'replies')+
+                    '</button>').attr({
+                        'data-link-name': 'Show more replies',
+                        'data-is-ajax': '',
+                        'data-comment-id': elem.getAttribute('data-comment-id')
+                    }).data('source-comment', elem);
+
+                $.create('<li class="' + this.getClass('showReplies', true) + '"></li>')
+                       .append($btn).appendTo($('.d-thread--responses', elem));
+
         }
-    });
+    }.bind(this));
 };
 
 /**
@@ -371,11 +374,15 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
  */
 Comments.prototype.getMoreReplies = function(event) {
     event.preventDefault();
+
+    var li = $.ancestor(event.currentTarget, this.getClass('showReplies').slice(1));
+    li.innerHTML = 'Loading…';
+
     var self = this,
         source = bonzo(event.target).data('source-comment');
 
     ajax({
-        url: '/discussion/comment/'+ event.target.getAttribute('data-comment-id') +'.json',
+        url: '/discussion/comment/'+ event.currentTarget.getAttribute('data-comment-id') +'.json',
         type: 'json',
         method: 'get',
         data: this.fetchCommentData,
@@ -384,11 +391,15 @@ Comments.prototype.getMoreReplies = function(event) {
         var comment = bonzo.create(resp.html),
             replies = qwery(self.getClass('reply'), comment);
 
-        replies = replies.slice(self.options.showRepliesCount, replies.length);
+        replies = replies.slice(self.options.showRepliesCount);
         bonzo(qwery('.d-thread--responses', source)).append(replies);
-        bonzo(event.currentTarget).addClass('u-h');
+        bonzo(li).addClass('u-h');
+
         if (!self.isReadOnly()) {
-            RecommendComments.init(source);
+            var btns = _map(replies, function(reply) {
+                return qwery(self.getClass('commentRecommend'), reply)[0];
+            });
+            RecommendComments.initButtons(btns);
         }
     });
 };
@@ -465,6 +476,8 @@ Comments.prototype.addComment = function(comment, focus, parent) {
 
 /** @param {Event} e */
 Comments.prototype.replyToComment = function(e) {
+    e.preventDefault(); // stop the anchor link firing
+
     var parentCommentEl, showRepliesElem,
         replyLink = e.currentTarget,
         replyToId = replyLink.getAttribute('data-comment-id'),
@@ -475,6 +488,8 @@ Comments.prototype.replyToComment = function(e) {
         document.getElementById('reply-to-'+ replyToId).focus();
         return;
     }
+
+    $('.d-comment-box--response').remove();
 
     var replyToComment = qwery('#comment-'+ replyToId)[0],
         replyToAuthor = replyToComment.getAttribute('data-comment-author'),
@@ -615,6 +630,8 @@ Comments.prototype.addUser = function(user) {
         RecommendComments.init();
 
         if (this.user && this.user.privateFields.canPostComment) {
+
+            $(this.getClass('commentReply')).attr('href', '#'); // remove sign-in link
 
             this.on('click', this.getClass('commentReply'), this.replyToComment);
             this.on('click', this.getClass('commentPick'), this.handlePickClick);

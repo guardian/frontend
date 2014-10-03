@@ -538,3 +538,19 @@
     margin-bottom: 0;
     border-top: 1px solid $c-neutral4;
 }
+
+.button.button--show-more { // used for liveblog and discussion untruncate button
+    position: relative;
+    padding-left: 36px;
+
+    .i {
+        width: 24px;
+        height: 24px;
+        vertical-align: middle;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 7px;
+    }
+}

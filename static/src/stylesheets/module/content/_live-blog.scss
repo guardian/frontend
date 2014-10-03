@@ -889,7 +889,6 @@ $timeline-width: 14px;
     background-color: $c-liveAccent;
     border: 0;
     margin-bottom: $gs-baseline;
-    padding-left: 36px;
 
     @include mq(leftCol) {
         margin-top: $gs-baseline;
@@ -900,17 +899,6 @@ $timeline-width: 14px;
     &:focus,
     &:active {
         background-color: darken($c-liveAccent, 7%);
-    }
-
-    .i {
-        width: 24px;
-        height: 24px;
-        vertical-align: middle;
-        margin: auto;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 7px;
     }
 }
 
