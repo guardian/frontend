@@ -1,11 +1,13 @@
 define([
     'bean',
+    'bonzo',
     'qwery',
     'common/utils/mediator',
     'common/modules/discussion/api',
     'common/modules/identity/api'
 ], function(
     bean,
+    bonzo,
     qwery,
     mediator,
     DiscussionApi,
@@ -51,19 +53,23 @@ RecommendComments.init = function(options) {
     }
 
     if (buttons) {
-        Array.prototype.forEach.call(buttons, function(button) {
-            var user = IdApi.getUserFromCookie(),
-                userId = user ? user.id : null,
-                isSameUser = button.getAttribute('data-user-id') === userId;
-
-            if (!userId || !isSameUser) {
-                button.className = button.className + ' ' + RecommendComments.CONFIG.classes.active;
-                button.title = button.title += ' - recommend this comment';
-            }
-        });
+        RecommendComments.initButtons(buttons);
         RecommendComments.bindEvents();
         mediator.emit(RecommendComments.getEvent('init'));
     }
+};
+
+RecommendComments.initButtons = function(buttons) {
+    bonzo(buttons).each(function(button) {
+        var user = IdApi.getUserFromCookie(),
+            userId = user ? user.id : null,
+            isSameUser = button.getAttribute('data-user-id') === userId;
+
+        if (!userId || !isSameUser) {
+            bonzo(button).addClass(RecommendComments.CONFIG.classes.active);
+            button.title = button.title += ' - recommend this comment';
+        }
+    });
 };
 
 RecommendComments.bindEvents = function() {
@@ -145,12 +151,14 @@ RecommendComments.renderRecommendation = function(elem, unrecommend) {
 
     if (!unrecommend) {
         // remove active and add recommended
-        elem.className = (elem.className + ' ' + RecommendComments.CONFIG.classes.userRecommended)
-                            .replace(RecommendComments.CONFIG.classes.active, '');
+        bonzo(elem)
+            .addClass(RecommendComments.CONFIG.classes.userRecommended)
+            .removeClass(RecommendComments.CONFIG.classes.active);
     } else {
         // add active and remove recommended
-        elem.className = (elem.className + ' ' + RecommendComments.CONFIG.classes.active)
-                            .replace(RecommendComments.CONFIG.classes.userRecommended, '');
+        bonzo(elem)
+            .addClass(RecommendComments.CONFIG.classes.active)
+            .removeClass(RecommendComments.CONFIG.classes.userRecommended);
     }
 
     elem.setAttribute('data-recommend-count', newCount);
