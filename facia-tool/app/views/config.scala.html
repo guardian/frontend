@@ -153,10 +153,17 @@
         <div class="cnf-front" data-bind="
             css: {open: state.isOpen}">
 
-            <div class="title" data-bind="
-                text: id,
-                visible: id,
-                click: toggleOpen"></div>
+            <div class="title">
+                <span data-bind="
+                    text: id,
+                    visible: id,
+                    click: toggleOpen
+                "></span>
+
+                <!-- ko if: props.isHidden() && collections.items().length > 0 -->
+                <span class="cfn-front__hidden-text">hidden</span>
+                <!-- /ko -->
+                </div>
 
             <!-- ko if: !id() -->
                 <div class="cnf-front__inner cnf-form">
@@ -172,6 +179,10 @@
             <div class="cnf-front__inner" data-bind="if: state.isOpen">
                 <!-- ko if: state.isOpenProps() -->
                     <div class="cnf-form">
+                        <label>Hidden</label>
+                        <input type="checkbox" data-bind="
+                            checked: props.isHidden" />
+
                         <label>Nav section</label>
                         <select data-bind="
                             css: {

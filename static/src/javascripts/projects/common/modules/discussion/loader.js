@@ -267,11 +267,11 @@ Loader.prototype.renderCommentBox = function() {
     // If this privateFields aren't there,
     // they're not the right person
     // More a sanity check than anything
-    if (!this.user.privateFields) {
+    if (!this.user.privateFields) { // not signed in
         this.renderSignin();
-    } else if (!this.user.privateFields.canPostComment) {
+    } else if (!this.user.privateFields.canPostComment) { // signed in but can't post
         this.renderUserBanned();
-    } else {
+    } else { // signed in and can post
         this.commentBox = new CommentBox({
             discussionId: this.getDiscussionId(),
             premod: this.user.privateFields.isPremoderated
