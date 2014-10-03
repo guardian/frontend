@@ -1,23 +1,22 @@
 package model.commercial.jobs
 
-import common.{ExecutionContexts, AkkaAgent}
+import common.ExecutionContexts
 import model.commercial.{MerchandiseAgent, Segment}
 
-object JobsAgent extends ExecutionContexts {
-
-  private lazy val agent = AkkaAgent[Seq[Job]](Nil)
-
-  private def defaultJobs = agent() filter (_.industries.contains("Media"))
+object JobsAgent extends MerchandiseAgent[Job] with ExecutionContexts {
 
   def jobsTargetedAt(segment: Segment): Seq[Job] = {
-    MerchandiseAgent.getTargetedMerchandise(segment, agent(), defaultJobs) {
+
+    def defaultJobs = available filter (_.industries.contains("Media"))
+
+    getTargetedMerchandise(segment, defaultJobs) {
       _.isTargetedAt(segment)
     }
   }
   
   def specificJobs(jobIdStrings: Seq[String]): Seq[Job] = {
     val jobIds = jobIdStrings map (_.toInt)
-    agent() filter (job => jobIds contains job.id)
+    available filter (job => jobIds contains job.id)
   }
 
   def refresh() {
@@ -27,9 +26,7 @@ object JobsAgent extends ExecutionContexts {
       job.copy(keywordIds = jobKeywordIds)
     }
 
-    for {freshJobs <- JobsApi.loadAds()} {
-      MerchandiseAgent.updateAvailableMerchandise(agent, populateKeywords(freshJobs))
-    }
+    for {freshJobs <- JobsApi.loadAds()} updateAvailableMerchandise(populateKeywords(freshJobs))
   }
 
 }

@@ -1,6 +1,6 @@
 package model.commercial.books
 
-import common.{ExecutionContexts, AkkaAgent}
+import common.ExecutionContexts
 import conf.Switches.MagentoServiceSwitch
 import model.commercial._
 import play.api.libs.functional.syntax._
@@ -56,9 +56,7 @@ object Book {
 }
 
 
-object BestsellersAgent extends ExecutionContexts {
-
-  private lazy val agent = AkkaAgent[Seq[Book]](Nil)
+object BestsellersAgent extends MerchandiseAgent[Book] with ExecutionContexts {
 
   private val bertramFeeds = Seq(
     GeneralBestsellersFeed,
@@ -76,12 +74,12 @@ object BestsellersAgent extends ExecutionContexts {
 
   private val magentoFeeds = Seq(MagentoBestsellersFeed)
 
-  def getSpecificBook(isbn: String) = agent() find (_.isbn == isbn)
-  def getSpecificBooks(specifics: Seq[String]) = agent() filter (specifics contains _.isbn)
+  def getSpecificBook(isbn: String) = available find (_.isbn == isbn)
+  def getSpecificBooks(specifics: Seq[String]) = available filter (specifics contains _.isbn)
 
   def bestsellersTargetedAt(segment: Segment): Seq[Book] = {
-    val targetedBestsellers = agent() filter (_.isTargetedAt(segment))
-    lazy val defaultBestsellers = agent() filter (_.category.exists(_ == "General"))
+    val targetedBestsellers = available filter (_.isTargetedAt(segment))
+    lazy val defaultBestsellers = available filter (_.category.exists(_ == "General"))
     val bestsellers = if (targetedBestsellers.isEmpty) defaultBestsellers else targetedBestsellers
     bestsellers.sortBy(_.position).take(10)
   }
@@ -100,7 +98,7 @@ object BestsellersAgent extends ExecutionContexts {
     }
 
     for (books <- bookListsLoading) {
-      MerchandiseAgent.updateAvailableMerchandise(agent, books.flatten.distinct)
+      updateAvailableMerchandise(books.flatten.distinct)
     }
   }
 

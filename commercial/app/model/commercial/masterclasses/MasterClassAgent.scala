@@ -5,24 +5,20 @@ import model.commercial.{Lookup, MerchandiseAgent, Segment}
 
 import scala.concurrent.Future
 
-object MasterClassAgent extends ExecutionContexts with Logging {
-
-  private lazy val agent = AkkaAgent[Seq[MasterClass]](Nil)
-
-  def currentMasterclasses: Seq[MasterClass] = agent()
+object MasterClassAgent extends MerchandiseAgent[MasterClass] with ExecutionContexts with Logging {
 
   def masterclassesTargetedAt(segment: Segment) = {
 
-    lazy val defaultClasses = currentMasterclasses take 4
+    lazy val defaultClasses = available take 4
 
-    val targeted = currentMasterclasses filter (_.isTargetedAt(segment))
+    val targeted = available filter (_.isTargetedAt(segment))
     val toShow = (targeted ++ defaultClasses) take 4
     toShow sortBy (_.eventBriteEvent.startDate.getMillis)
   }
 
   def specificClasses(eventBriteIds: Seq[String]): Seq[MasterClass] = {
     for {
-      masterclass <- currentMasterclasses
+      masterclass <- available
       eventId <- eventBriteIds
       if masterclass.eventBriteEvent.id == eventId
     } yield {
@@ -76,7 +72,7 @@ object MasterClassAgent extends ExecutionContexts with Logging {
     }
 
     def updateCurrentMasterclasses(freshData: Seq[MasterClass]): Unit = {
-      MerchandiseAgent.updateAvailableMerchandise(agent, freshData)
+      updateAvailableMerchandise(freshData)
     }
 
     for {
@@ -102,7 +98,7 @@ object MasterClassTagsAgent extends ExecutionContexts with Logging {
 
   def refresh(): Future[Seq[Future[Map[String, Seq[String]]]]] = {
     val tags = {
-      val current = MasterClassAgent.currentMasterclasses
+      val current = MasterClassAgent.available
       if (current.isEmpty) {
         defaultTags
       } else {

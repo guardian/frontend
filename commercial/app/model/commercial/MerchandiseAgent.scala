@@ -1,14 +1,17 @@
 package model.commercial
 
-import akka.agent.Agent
-import common.Logging
+import common.{AkkaAgent, Logging}
 
 import scala.concurrent.Future
 import scala.util.Random
 
-object MerchandiseAgent extends Logging {
+trait MerchandiseAgent[T] extends Logging {
 
-  def updateAvailableMerchandise[T](agent: Agent[Seq[T]], freshMerchandise: Seq[T]): Future[Seq[T]] = {
+  private lazy val agent = AkkaAgent[Seq[T]](Nil)
+
+  def available: Seq[T] = agent()
+
+  def updateAvailableMerchandise(freshMerchandise: Seq[T]): Future[Seq[T]] = {
     agent.alter { oldMerchandise =>
       if (freshMerchandise.nonEmpty) {
         freshMerchandise
@@ -19,7 +22,7 @@ object MerchandiseAgent extends Logging {
     }
   }
 
-  def getTargetedMerchandise[T](segment: Segment, available: Seq[T], default: Seq[T])(targeting: T => Boolean): Seq[T] = {
+  def getTargetedMerchandise(segment: Segment, default: Seq[T])(targeting: T => Boolean): Seq[T] = {
     val targeted = Random.shuffle(available filter targeting)
     if (targeted.isEmpty) default
     else targeted

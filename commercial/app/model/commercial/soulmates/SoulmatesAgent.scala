@@ -1,6 +1,6 @@
 package model.commercial.soulmates
 
-import common.AkkaAgent
+import common.ExecutionContexts
 import model.commercial.{MerchandiseAgent, Segment}
 
 import scala.concurrent.Future
@@ -29,18 +29,16 @@ object SoulmatesAggregatingAgent {
   }
 }
 
-trait SoulmatesAgent {
-
-  private lazy val agent = AkkaAgent[Seq[Member]](Nil)
+trait SoulmatesAgent extends MerchandiseAgent[Member] with ExecutionContexts {
 
   def matchingMembers(segment: Segment): Seq[Member] = {
-    MerchandiseAgent.getTargetedMerchandise(segment, agent(), Nil)(_.isTargetedAt(segment))
+    getTargetedMerchandise(segment, default = Nil)(_.isTargetedAt(segment))
   }
     
   protected def membersLoaded: Future[Seq[Member]]
 
   def refresh() {
-    for (members <- membersLoaded) MerchandiseAgent.updateAvailableMerchandise(agent, members)
+    for (members <- membersLoaded) updateAvailableMerchandise(members)
   }
 }
 
