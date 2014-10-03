@@ -364,6 +364,10 @@
 
                             <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
 
+                            <span data-bind="
+                                attr: {class: 'label label--' + meta.tone()},
+                                text: meta.tone"></span> &middot;
+
                             <span class="trailText" data-bind="
                                 html: meta.trailText() || fields.trailText()"></span>
                         </div>

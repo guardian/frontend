@@ -50,6 +50,11 @@ define([
 
             metaFields = [
                 {
+                    key: 'tone',
+                    label: 'tone',
+                    type: 'text'
+                },
+                {
                     key: 'group',
                     label: 'importance group',
                     type: 'text'
@@ -70,7 +75,6 @@ define([
                 {
                     key: 'byline',
                     editable: true,
-                    requires: 'showByline',
                     label: 'byline',
                     type: 'text'
                 },
@@ -106,6 +110,7 @@ define([
                     key: 'showByline',
                     editable: true,
                     label: 'show byline',
+                    irreleventForTones: ['comment'],
                     type: 'boolean'
                 },
                 {
@@ -133,7 +138,7 @@ define([
                     editable: true,
                     singleton: 'images',
                     label: 'replace image',
-                    displayIf: 'imageSrc',
+                    irreleventIfNo: 'imageSrc',
                     type: 'boolean'
                 },
                 {
@@ -286,12 +291,14 @@ define([
 
         Article.prototype.metaDisplayer = function(opts, index, all) {
             var self = this,
-                show = opts.editable;
+                display;
 
             if (opts.type === 'boolean') {
-                show = show && (this.meta[opts.key] || function() {})();
-                show = show && (opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true);
-                return show ? opts.label : false;
+                display = opts.editable;
+                display = display && (this.meta[opts.key] || function() {})();
+                display = display && (opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.meta.tone()) === -1 : true);
+                display = display && (opts.irreleventIfNo ? _.some(all, function(editor) { return editor.key === opts.irreleventIfNo && self.meta[editor.key](); }) : true);
+                return display ? opts.label : false;
 
             } else {
                 return false;
@@ -337,7 +344,10 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
+                    var display = opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.meta.tone()) === -1 : true;
+
+                    display = display && (opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true);
+                    return display;
                 }, self),
 
                 toggle: function() {
@@ -376,6 +386,13 @@ define([
                 })
             }
         };
+
+        function getTone(contentApiArticle) {
+            var tone = _.findWhere(contentApiArticle.tags, {
+                type: 'tone'
+            });
+            return tone && tone.id && tone.id.replace(/^tone\//, '');
+        }
 
         function mainMediaType(contentApiArticle) {
             var mainElement = _.findWhere(contentApiArticle.elements || [], {
@@ -431,6 +448,8 @@ define([
                     this.sparkline();
                 }
             }
+
+            this.meta.tone(getTone(opts));
 
             this.meta.hasMainVideo(mainMediaType(opts) === 'video');
 

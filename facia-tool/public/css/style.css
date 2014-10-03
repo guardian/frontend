@@ -426,18 +426,20 @@ h1 {
 
 .article__ammends .label {
     text-transform: uppercase;
-    font-weight: bold;
 }
 
 .article__ammends .label--draft {
+    font-weight: bold;
     color: #ffc107;
 }
 
 .article__ammends .label--takedown {
+    font-weight: bold;
     color: #DD4B39;
 }
 
 .article__ammends .label--snap {
+    font-weight: bold;
     color: #999999;
 }
 
