@@ -2,6 +2,81 @@
 
 module.exports = function(grunt, options) {
     return {
+        GuardianTextEgyptianWebWoff2: {
+            options: {
+                filename: options.staticTargetDir + 'fonts/GuardianTextEgyptianWeb.woff2.json',
+                callback: 'guFont',
+                fonts: [
+                    {
+                        'font-family': '"Guardian Text Egyptian Web"',
+                        file: options.webfontsDir + 'hinting-off/kerning-off/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff2',
+                        format: 'woff'
+                    },
+                    {
+                        'font-family': '"Guardian Text Egyptian Web"',
+                        'font-style': 'italic',
+                        file: options.webfontsDir + 'hinting-off/kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff2',
+                        format: 'woff'
+                    },
+                    {
+                        'font-family': '"Guardian Text Egyptian Web"',
+                        'font-weight': '700',
+                        file: options.webfontsDir + 'hinting-off/kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
+                        format: 'woff'
+                    }
+                ]
+            }
+        },
+        GuardianTextEgyptianWebWoff: {
+            options: {
+                filename: options.staticTargetDir + 'fonts/GuardianTextEgyptianWeb.woff.json',
+                callback: 'guFont',
+                fonts: [
+                    {
+                        'font-family': '"Guardian Text Egyptian Web"',
+                        file: options.webfontsDir + 'hinting-off/kerning-off/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff',
+                        format: 'woff'
+                    },
+                    {
+                        'font-family': '"Guardian Text Egyptian Web"',
+                        'font-style': 'italic',
+                        file: options.webfontsDir + 'hinting-off/kerning-off/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff',
+                        format: 'woff'
+                    },
+                    {
+                        'font-family': '"Guardian Text Egyptian Web"',
+                        'font-weight': '700',
+                        file: options.webfontsDir + 'hinting-off/kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
+                        format: 'woff'
+                    }
+                ]
+            }
+        },
+        GuardianTextEgyptianWebTtf: {
+            options: {
+                filename: options.staticTargetDir + 'fonts/GuardianTextEgyptianWeb.ttf.json',
+                callback: 'guFont',
+                fonts: [
+                    {
+                        'font-family': '"Guardian Text Egyptian Web"',
+                        file: options.webfontsDir + 'hinting-off/kerning-off/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.ttf',
+                        format: 'ttf'
+                    },
+                    {
+                        'font-family': '"Guardian Text Egyptian Web"',
+                        'font-style': 'italic',
+                        file: options.webfontsDir + 'hinting-off/kerning-off/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.ttf',
+                        format: 'ttf'
+                    },
+                    {
+                        'font-family': '"Guardian Text Egyptian Web"',
+                        'font-weight': '700',
+                        file: options.webfontsDir + 'hinting-off/kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
+                        format: 'ttf'
+                    }
+                ]
+            }
+        },
         GuardianEgyptianWebWoff2: {
             options: {
                 filename: options.staticTargetDir + 'fonts/GuardianEgyptianWeb.woff2.json',
@@ -99,81 +174,6 @@ module.exports = function(grunt, options) {
                         'font-family': '"Guardian Egyptian Web"',
                         'font-weight': '900',
                         file: options.webfontsDir + 'hinting-off/kerning-off/ascii/GuardianEgyptianWeb/GuardianEgyptianWeb-Semibold.ttf',
-                        format: 'ttf'
-                    }
-                ]
-            }
-        },
-        GuardianTextEgyptianWebWoff2: {
-            options: {
-                filename: options.staticTargetDir + 'fonts/GuardianTextEgyptianWeb.woff2.json',
-                callback: 'guFont',
-                fonts: [
-                    {
-                        'font-family': '"Guardian Text Egyptian Web"',
-                        file: options.webfontsDir + 'hinting-off/kerning-off/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff2',
-                        format: 'woff'
-                    },
-                    {
-                        'font-family': '"Guardian Text Egyptian Web"',
-                        'font-style': 'italic',
-                        file: options.webfontsDir + 'hinting-off/kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff2',
-                        format: 'woff'
-                    },
-                    {
-                        'font-family': '"Guardian Text Egyptian Web"',
-                        'font-weight': '700',
-                        file: options.webfontsDir + 'hinting-off/kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff2',
-                        format: 'woff'
-                    }
-                ]
-            }
-        },
-        GuardianTextEgyptianWebWoff: {
-            options: {
-                filename: options.staticTargetDir + 'fonts/GuardianTextEgyptianWeb.woff.json',
-                callback: 'guFont',
-                fonts: [
-                    {
-                        'font-family': '"Guardian Text Egyptian Web"',
-                        file: options.webfontsDir + 'hinting-off/kerning-off/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.woff',
-                        format: 'woff'
-                    },
-                    {
-                        'font-family': '"Guardian Text Egyptian Web"',
-                        'font-style': 'italic',
-                        file: options.webfontsDir + 'hinting-off/kerning-off/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.woff',
-                        format: 'woff'
-                    },
-                    {
-                        'font-family': '"Guardian Text Egyptian Web"',
-                        'font-weight': '700',
-                        file: options.webfontsDir + 'hinting-off/kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.woff',
-                        format: 'woff'
-                    }
-                ]
-            }
-        },
-        GuardianTextEgyptianWebTtf: {
-            options: {
-                filename: options.staticTargetDir + 'fonts/GuardianTextEgyptianWeb.ttf.json',
-                callback: 'guFont',
-                fonts: [
-                    {
-                        'font-family': '"Guardian Text Egyptian Web"',
-                        file: options.webfontsDir + 'hinting-off/kerning-off/original/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Regular.ttf',
-                        format: 'ttf'
-                    },
-                    {
-                        'font-family': '"Guardian Text Egyptian Web"',
-                        'font-style': 'italic',
-                        file: options.webfontsDir + 'hinting-off/kerning-off/ascii/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-RegularItalic.ttf',
-                        format: 'ttf'
-                    },
-                    {
-                        'font-family': '"Guardian Text Egyptian Web"',
-                        'font-weight': '700',
-                        file: options.webfontsDir + 'hinting-off/kerning-off/latin1/GuardianTextEgyptianWeb/GuardianTextEgyptianWeb-Medium.ttf',
                         format: 'ttf'
                     }
                 ]
