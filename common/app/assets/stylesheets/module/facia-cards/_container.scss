@@ -122,3 +122,20 @@ $header-image-size-desktop: 120px;
 .js-on .fc-show-more--hidden .fc-show-more--hide {
     display: none !important;
 }
+
+.fc-container__updated {
+    color: $c-neutral2;
+    display: block;
+    @include fs-headline(1);
+    margin-top: ($gs-baseline/3)*5;
+    padding-bottom: $gs-baseline/3;
+    border-bottom: 1px dotted $c-neutral5;
+
+    @include mq($until: leftCol) {
+        display: none;
+    }
+}
+
+.fc-timestamp {
+    display: inline-block;
+}
