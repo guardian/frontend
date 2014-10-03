@@ -15,7 +15,8 @@ case class Config(
                    showTags: Boolean = false,
                    showSections: Boolean = false,
                    hideKickers: Boolean = false,
-                   showDateHeader: Boolean = false
+                   showDateHeader: Boolean = false,
+                   showLatestUpdate: Boolean = false
                    ) {
   lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
   lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(this)

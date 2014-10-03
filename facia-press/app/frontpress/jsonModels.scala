@@ -148,7 +148,8 @@ object CollectionJson {
       showTags       = config.showTags,
       showSections   = config.showSections,
       hideKickers    = config.hideKickers,
-      showDateHeader = config.showDateHeader
+      showDateHeader = config.showDateHeader,
+      showLatestUpdate = config.showLatestUpdate
     )
 }
 
@@ -168,5 +169,6 @@ case class CollectionJson(
   showTags:     Boolean,
   showSections: Boolean,
   hideKickers:  Boolean,
-  showDateHeader: Boolean
+  showDateHeader: Boolean,
+  showLatestUpdate: Boolean
                            )
