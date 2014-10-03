@@ -853,9 +853,6 @@ $timeline-width: 14px;
 }
 
 .content--liveblog {
-    @include mq($until: rightCol) {
-        padding-bottom: 0;
-    }
     
     .content__standfirst,
     .blog__timeline,
