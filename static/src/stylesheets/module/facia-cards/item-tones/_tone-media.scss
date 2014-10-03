@@ -14,7 +14,7 @@
     .fc-item__byline {
         &,
         & a {
-            color: $c-mediaDefault;
+            color: $c-mediaDefault !important;
         }
     }
 
