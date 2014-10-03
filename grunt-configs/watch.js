@@ -8,7 +8,7 @@ module.exports = function(grunt, options) {
             }
         },
         css: {
-            files: ['common/app/assets/stylesheets/**/*.scss'],
+            files: ['static/src/stylesheets/**/*.scss'],
             tasks: ['sass:compile', 'asset_hash'],
             options: {
                 spawn: false
@@ -27,7 +27,7 @@ module.exports = function(grunt, options) {
             tasks: ['compile:fonts']
         },
         styleguide: {
-            files: ['common/app/assets/stylesheets/**/*.scss', 'docs/styleguide/**/*.scss', 'docs/styleguide_templates/**/*.html'],
+            files: ['static/src/stylesheets/**/*.scss', 'docs/styleguide/**/*.scss', 'docs/styleguide_templates/**/*.html'],
             tasks: ['compile:css', 'hologram'],
             options: {
                 spawn: false

@@ -1,7 +1,7 @@
 {
-	"src": "../../common/app/assets/images/global/",
+	"src": "../../static/src/images/global/",
     "imgDest": "../../static/target/images/global",
-    "cssDest": "../../common/app/assets/stylesheets/icons/",
+    "cssDest": "../../static/src/stylesheets/icons/",
     "datasvgcss" : "_global-icons-svg.scss",
     "urlpngcss" : "_global-icons-sprite.scss",
     "spritepath" : "../images/global/",

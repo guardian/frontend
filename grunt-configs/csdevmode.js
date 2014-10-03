@@ -1,7 +1,7 @@
 module.exports = function(grunt, options) {
     return {
         options: {
-            srcBasePath: 'common/app/assets/stylesheets/',
+            srcBasePath: 'static/src/stylesheets/',
             destBasePath: options.staticHashDir + '/stylesheets'
         },
         main: {
