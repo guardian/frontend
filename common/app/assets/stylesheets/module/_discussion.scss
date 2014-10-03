@@ -139,6 +139,7 @@ $avatarPadding: $gs-gutter / 2;
     padding-left: $gs-gutter * 2 - $gs-gutter / 5;
     display: inline-block;
 }
+
 .d-discussion__show-all-comments {
     margin-top: $gs-baseline;
     display: none;
@@ -706,26 +707,24 @@ $avatarPadding: $gs-gutter / 2;
 }
 
 .d-show-more-replies {
-    background-color: transparent;
     border-top: 1px dotted $c-neutral5;
-    color: $c-newsDefault;
-    cursor: pointer;
-    font-weight: bold;
-    @include fs-textSans(1);
-    line-height: 40px;
+    padding: $gs-baseline 0;
+    @include fs-textSans(2);
 
-    &:hover {
-        text-decoration: underline;
-    }
-
-    span {
-        @include icon-button(plus-white-small, 18px);
-        display: inline-block;
-        background-color: $c-newsDefault;
-        margin-bottom: $gs-baseline / 3 * -1;
-        margin-right: ($gs-gutter / 5) * 2;
+    @include mq(tablet) {
+        margin-left: $avatarSize-big + $avatarPadding;
     }
 }
+
+.d-show-more-replies__button.button--show-more {
+    padding-left: $gs-baseline * 2;
+    .i {
+        height: $gs-baseline * 1.5;
+        width: $gs-baseline * 1.5;
+        left: 4px;
+    }
+}
+
 
 
 /* Top Comments
@@ -771,7 +770,7 @@ $avatarPadding: $gs-gutter / 2;
     }
     .d-comment__inner {
         min-height: 0;
-        padding-bottom: $avatarSize-small + $avatarPadding + ($gs-baseline * 2) ;
+        padding-bottom: $avatarSize-small + $avatarPadding + ($gs-baseline * 2);
 
         @include mq(tablet) {
             padding-bottom: $avatarSize-big + $avatarPadding + ($gs-baseline * 2);
