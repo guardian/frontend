@@ -69,6 +69,7 @@ $header-image-size-desktop: 120px;
 .fc-container__header__description,
 .fc-container__header__description--image {
     padding-bottom: $gs-baseline/2;
+
     @include fs-bodyCopy(1);
 
     @include mq(tablet) {
@@ -89,7 +90,7 @@ $header-image-size-desktop: 120px;
         height: auto;
         clear: both;
     }
-}a
+}
 
 .js-on .fc-show-more--hidden .fc-show-more--hide-on-mobile {
     @include mq($until: tablet) {
