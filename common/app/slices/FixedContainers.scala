@@ -9,6 +9,10 @@ object TagContainers {
     QuarterQuarterQuarterQuarter,
     TlTlTl,
     TlTlTl,
+    TlTlTl,
+    TlTlTl,
+    TlTlTl,
+    TlTlTl,
     TlTlMpu
   )
 }
