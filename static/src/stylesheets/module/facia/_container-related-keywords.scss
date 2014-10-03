@@ -1,0 +1,34 @@
+.facia-container__related-keywords {
+    margin: $gs-baseline 0;
+    @include fs-textSans(2);
+
+    @include mq(wide) {
+        .has-page-skin & {
+            width: 100%;
+        }
+    }
+
+    @include mq($until: mobileLandscape) {
+        margin-left: $gs-gutter/2;
+    }
+
+    .button--more {
+        @if $old-ie {
+            display: none;
+        }
+    }
+}
+
+.facia-container__related-keywords__body {
+    @include mq(leftCol) {
+        margin-left: $left-column + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        margin-left: $left-column-wide + $gs-gutter;
+
+        .has-page-skin & {
+            margin-left: $gs-gutter;
+        }
+    }
+}

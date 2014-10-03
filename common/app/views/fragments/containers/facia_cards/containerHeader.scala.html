@@ -2,26 +2,35 @@
 
 @import views.support.RenderClasses
 @import common.LinkTo
+@import views.support.{ImgSrc, Item140}
 
 @defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
-    <div class="container__meta">
-        <dl class="container__meta__description">
-            @title.map { title =>
-                <dt class="@RenderClasses(Map(
-                    "container__meta__title" -> true,
-                    "tone-comment tone-colour" -> frontProperties.editorialType.exists(_ == "contributor")))">
-                    @href.map { href =>
-                        <a class="u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                    }.getOrElse{
-                        <span class="u-text-hyphenate">@Html(title)</span>
-                    }
-                </dt>
-            }
-            @if(containerIndex == 0){
-                @frontProperties.onPageDescription.map { desc =>
-                    <dd class="container__meta__item hide-on-mobile">@Html(desc)</dd>
+    <div class="fc-container__header">
+        @title.map { title =>
+            @defining(frontProperties.editorialType.exists(_ == "contributor")) { isContributor =>
+                <div class="@RenderClasses(Map(
+                    "fc-container__header__title" -> true,
+                    "tone-comment" -> isContributor,
+                    "tone-colour" -> isContributor))">
+                @href.map { href =>
+                   <a class="u-text-hyphenate" data-link-name="section heading" href="@LinkTo {/@href}">@Html(title)</a>
+                }.getOrElse {
+                    <span class="u-text-hyphenate">@Html(title)</span>
                 }
+                </div>
             }
-        </dl>
+        }
+        @if(containerIndex == 0){
+            @frontProperties.imageUrl.filter(_ => frontProperties.isImageDisplayed).map(ImgSrc(_, Item140)).map { url =>
+                <div class="fc-container__header__image media__img">
+                    <img src="@url" alt="@title" />
+                </div>
+            }
+            @frontProperties.onPageDescription.map { desc =>
+                <div class="@RenderClasses(Map(
+                    "fc-container__header__description" -> !frontProperties.isImageDisplayed,
+                    "fc-container__header__description--image" -> frontProperties.isImageDisplayed))">@Html(desc)</div>
+            }
+        }
     </div>
 }

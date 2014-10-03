@@ -14,7 +14,8 @@
             ("gu-media--show-controls-at-start", player.showControlsAtStart),
             ("js-gu-media", true)
         ))" data-title="@player.title" data-auto-play="@player.autoPlay" data-show-end-slate="@player.showEndSlate"
-            poster="@player.poster" data-duration="@player.video.duration.toString()" data-media-id="@player.video.id" data-end-slate="@player.endSlatePath">
+            poster="@player.poster" data-duration="@player.video.duration.toString()" data-media-id="@player.video.id"
+            data-end-slate="@player.endSlatePath" data-block-video-ads="@player.blockVideoAds">
 
             @player.video.encodings.map { encoding =>
                 <source src="@encoding.url" type="@encoding.format" />

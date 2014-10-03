@@ -1,0 +1,84 @@
+.tone-news {
+    .fc-item__kicker,
+    .fc-item__byline {
+        &,
+        & a {
+            color: $c-newsDefault;
+        }
+    }
+
+    &.fc-item--has-image:before {
+        background-color: $c-neutral5;
+    }
+
+    &.fc-item--list-mobile .fc-item__container {
+        @include mq($until: tablet) {
+            @include box-shadow(inset 0 1px $c-newsAccent);
+        }
+    }
+
+    &.fc-item--list-tablet,
+    &.fc-item--list-media-tablet,
+    &.fc-item--list-desktop,
+    &.fc-item--list-compact-tablet {
+        .fc-item__container {
+            @include mq(tablet) {
+                @include box-shadow(inset 0 1px $c-newsAccent);
+            }
+         }
+     }
+
+    &.fc-item--list-media-mobile,
+    &.fc-item--list-media-large-mobile {
+        .fc-item__title {
+            @include mq($until: tablet) {
+                padding-top: 0;
+            }
+        }
+    }
+
+    &.fc-item--three-quarters-tablet,
+    &.fc-item--three-quarters-right-tablet,
+    &.fc-item--full-tablet,
+    &.fc-item--mega-full-tablet {
+        .fc-item__title {
+            @include mq(tablet) {
+                padding-top: 0;
+            }
+        }
+    }
+
+    &.fc-item--list-media-mobile,
+    &.fc-item--list-media-large-mobile {
+        .fc-item__header,
+        .fc-item__standfirst,
+        .fc-item__meta {
+            @include mq($until: tablet) {
+                padding-left: $fc-item-gutter;
+                padding-right: $fc-item-gutter;
+            }
+        }
+    }
+
+    &.fc-item--list-media-tablet {
+        .fc-item__header,
+        .fc-item__standfirst,
+        .fc-item__meta {
+            @include mq(tablet) {
+                padding-left: $fc-item-gutter;
+                padding-right: $fc-item-gutter;
+            }
+        }
+    }
+
+    &.fc-item--list-media-desktop {
+        .fc-item__header,
+        .fc-item__standfirst,
+        .fc-item__meta {
+            @include mq(desktop) {
+                padding-left: $fc-item-gutter;
+                padding-right: $fc-item-gutter;
+            }
+        }
+    }
+}

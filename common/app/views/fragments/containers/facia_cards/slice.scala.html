@@ -9,7 +9,7 @@
         @column match {
             case SingleItem(colSpan, itemClasses) => {
                 @cards.headOption.map { card =>
-                    @item(card, itemClasses.classes, containerIndex, false, colSpan)
+                    @item(card, itemClasses, containerIndex, false, colSpan)
                 }
             }
 
@@ -18,7 +18,7 @@
                     <ul class="u-unstyled l-list l-list--columns-@columns l-list--rows-@rows">
                         @if(cards.nonEmpty) {
                             @cards.map{ card =>
-                                @item(card, itemClasses.classes, containerIndex, isList = true)
+                                @item(card, itemClasses, containerIndex, isList = true)
                             }
                         }
                     </ul>
@@ -29,10 +29,10 @@
                 <li class="facia-slice__item l-row__item l-row__item--span-@colSpan">
                     <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-3">
                         @cards.headOption.map { card =>
-                            @item(card, topItemClasses.classes, containerIndex, isList = true)
+                            @item(card, topItemClasses, containerIndex, isList = true)
                         }
                         @cards.tail.map { card =>
-                            @item(card, bottomItemsClasses.classes, containerIndex, isList = true)
+                            @item(card, bottomItemsClasses, containerIndex, isList = true)
                         }
                     </ul>
                 </li>
@@ -41,7 +41,6 @@
             case MPU(colSpan) => {
                 <li class="facia-slice__item l-row__item l-row__item--span-@colSpan js-facia-slice__item--mpu facia-slice__item--no-mpu"></li>
             }
-
         }
     }
     </ul>

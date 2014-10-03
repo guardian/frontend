@@ -1,4 +1,4 @@
-@(content: model.Content)(implicit request: RequestHeader)
+@(content: model.Content, showBadge: Boolean = false)(implicit request: RequestHeader)
 
 <header class="content__head u-cf">
     <div class="gs-container">
@@ -16,6 +16,10 @@
 
             @if(!content.delegate.isVideo && !content.delegate.isGallery) {
                 @fragments.standfirst(content)
+            }
+
+            @if(showBadge) {
+                @fragments.commercial.badge(content)
             }
 
             @if(content.isCommentable) {
