@@ -21,7 +21,7 @@ define([
     'bootstraps/identity',
     'bootstraps/profile',
     'bootstraps/sport',
-    'bootstraps/crossword',
+    'bootstraps/crosswords'
 ], function (
     raven,
     qwery,
