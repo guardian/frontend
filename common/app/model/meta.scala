@@ -48,7 +48,6 @@ trait MetaData extends Tags {
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision.take(7))),
     ("analyticsName", JsString(analyticsName)),
-    ("blockVideoAds", JsBoolean(false)),
     ("isFront", JsBoolean(isFront)),
     ("adUnit", JsString(s"/${Configuration.commercial.dfpAccountId}/${Configuration.commercial.dfpAdUnitRoot}/$adUnitSuffix/ng")),
     ("isSurging", JsString(isSurging.mkString(","))),
@@ -210,6 +209,7 @@ trait Tags {
   def hasMultipleSponsors = DfpAgent.hasMultipleSponsors(tags)
   def isAdvertisementFeature = DfpAgent.isAdvertisementFeature(tags)
   def hasMultipleFeatureAdvertisers = DfpAgent.hasMultipleFeatureAdvertisers(tags)
+  def isFoundationSupported = DfpAgent.isFoundationSupported(tags)
   def hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags)
   def sponsor = DfpAgent.getSponsor(tags)
 

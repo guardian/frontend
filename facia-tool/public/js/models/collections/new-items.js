@@ -70,28 +70,23 @@ define([
         var id = newItems[0].id(),
             itemMeta,
             supporting,
+            update,
             remove;
 
-        if (!targetGroup || !targetGroup.parent) { return; }
+        if (!targetGroup || !targetGroup.parent) {
+            return;
 
-        if (targetGroup.parentType === 'Article') {
+        } else if (targetGroup.parentType === 'Article') {
             supporting = targetGroup.parent.meta.supporting.items;
             _.each(newItems.slice(1), function(item) {
                 supporting.remove(function (supp) { return supp.id() === item.id(); });
                 supporting.push(item);
             });
             contentApi.decorateItems(supporting());
-            targetGroup.parent.save();
 
             remove = remover(sourceGroup, id);
-            if (remove) {
-                authedAjax.updateCollections({remove: remove});
-                removeById(sourceGroup.items, id);
-            }
-        }
 
-        if (targetGroup.parentType === 'Collection') {
-            targetGroup.parent.closeAllArticles();
+        } else if (targetGroup.parentType === 'Collection') {
             itemMeta = newItems[0].getMeta() || {};
 
             if (deepGet(targetGroup, '.parent.groups.length') > 1) {
@@ -100,30 +95,34 @@ define([
                 delete itemMeta.group;
             }
 
-            remove = (deepGet(sourceGroup, '.parent.id') && deepGet(sourceGroup, '.parent.id') !== targetGroup.parent.id);
-            remove = remove ? remover(sourceGroup, id) : undefined;
+            update = {
+                collection: targetGroup.parent,
+                item:     id,
+                position: position,
+                after:    isAfter,
+                live:     vars.state.liveMode(),
+                draft:   !vars.state.liveMode(),
+                itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
+            }
 
+            remove = sourceGroup && sourceGroup.parentType === 'Collection' && (deepGet(sourceGroup, '.parent.id') && deepGet(sourceGroup, '.parent.id') !== targetGroup.parent.id);
+            remove = remove ? remover(sourceGroup, id) : undefined;
+        }
+
+        if (update || remove) {
             authedAjax.updateCollections({
-                update: {
-                    collection: targetGroup.parent,
-                    item:     id,
-                    position: position,
-                    after:    isAfter,
-                    live:     vars.state.liveMode(),
-                    draft:   !vars.state.liveMode(),
-                    itemMeta: _.isEmpty(itemMeta) ? undefined : itemMeta
-                },
+                update: update,
                 remove: remove
             })
-            .then(function() {
-                if(vars.state.liveMode()) {
+            .then(function () {
+                if (vars.state.liveMode()) {
                     vars.model.deferredDetectPressFailure();
                 }
             });
+        }
 
-            if (sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup) {
-                removeById(sourceGroup.items, id); // for immediate UI effect
-            }
+        if (remove && sourceGroup && !sourceGroup.keepCopy && sourceGroup !== targetGroup) {
+            removeById(sourceGroup.items, id); // for immediate UI effect
         }
     }
 

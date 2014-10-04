@@ -56,7 +56,6 @@ trait VideoContainer extends Element {
   protected implicit val ordering = EncodingOrdering
 
   lazy val videoAssets: List[VideoAsset] = {
-
     val images = delegate.assets.filter(_.assetType == "image").zipWithIndex.map{ case (asset, index) =>
       ImageAsset(asset, index)
     }
@@ -65,6 +64,8 @@ trait VideoContainer extends Element {
 
     delegate.assets.filter(_.assetType == "video").map( v => VideoAsset(v, container)).sortBy(-_.width)
   }
+
+  lazy val blockVideoAds = videoAssets.exists(_.blockVideoAds)
 
   lazy val encodings: Seq[Encoding] = {
     videoAssets.toList.collect {

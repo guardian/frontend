@@ -129,7 +129,8 @@
                         hasFocus: hasFocus,
                         attr: {
                             class: 'element__' + key + (hasFocus() ? ' active' : ''),
-                            placeholder: field() || label + '...'
+                            placeholder: field() || label + '...',
+                            title: label
                         },
                         autoResize: true,
                         tabbableFormField: true,
@@ -162,12 +163,10 @@
     </script>
 
     <script type="text/html" id="template_editor_boolean_states">
-        <!-- ko if: type === 'boolean' && meta() && displayValue() -->
-            <span class="editor--boolean  selected">
-                <span class="editor--boolean__label" data-bind="text: label"></span>
-                <span class="editor--boolean__state">&#10004;</span>
-            </span>
-        <!-- /ko -->
+        <span class="editor--boolean  selected">
+            <span class="editor--boolean__label" data-bind="text: $data"></span>
+            <span class="editor--boolean__state">✔</span>
+        </span>
     </script>
 
     <script type="text/html" id="template_collection">
@@ -298,31 +297,30 @@
                 </div>
             </div>
 
-            <div class="closed" data-bind="if: !state.isOpen()">
-
+            <div class="closed" data-bind="ifnot: state.isOpen">
                 <img class="article__spark" data-bind="
                     visible: state.sparkUrl,
                     attr: {src: state.sparkUrl}" />
 
                 <div class="article__tools">
+                    <a class="tool tool--small tool--small--paste" data-bind="
+                        clickBubble: false,
+                        click: paste">paste</a>
+
                     <a class="tool tool--small tool--small--copy" data-bind="
                         clickBubble: false,
                         click: copy">copy</a>
 
-                    <a class="tool tool--small tool--small--paste" data-bind="
+                    <a class="tool tool--small tool--small--remove" data-bind="
                         clickBubble: false,
-                        click: paste">paste</a>
+                        click: $parent.omitItem">
+                        <i class="icon-trash"></i></a>
 
                     <a class="tool tool--small tool--small--href" target="_blank" data-bind="
                         click: function() { return true; },
                         clickBubble: false,
                         attr: {href: viewUrl}">
                         <i class="icon-share-alt"></i></a>
-
-                    <a class="tool tool--small tool--small--remove" data-bind="
-                        clickBubble: false,
-                        click: $parent.omitItem">
-                        <i class="icon-trash"></i></a>
                 </div>
 
                 <a class="article__content" data-bind="attr: {href: id}">
@@ -364,9 +362,9 @@
                                 <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
                             <!-- /ko -->
 
-                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editors}"></span>
+                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
 
-                            <span data-bind="
+                            <span class="trailText" data-bind="
                                 html: meta.trailText() || fields.trailText()"></span>
                         </div>
                     <!-- /ko -->

@@ -1,30 +1,46 @@
 @(discussionClosed: Boolean, discussionId: String)(implicit request: RequestHeader)
+
 <div id="comments" class="discussion discussion--@if(discussionClosed){closed} else {open} u-cf"
     data-discussion-key="@discussionId"
     data-discussion-closed="@discussionClosed">
 
-    <a class="modern-hidden d-discussion__show-all-comments js-show-discussion" href="@LinkTo{/discussion@discussionId}"
-       data-link-name="View all comments" rel="nofollow" data-test-id="view-all-comments">
-        Show comments…
-        <i class="i i-show-all-comments"></i>
-    </a>
 
-    <div class="discussion__comments--top-comments">
-        <h2 id="top-comments" class="js-top-comments container__title discussion__heading">Comments <span class="u-h discussion__comment-count"></span></h2>
-        <div class="discussion__comments__top"></div>
+    <div class="discussion__top-border gs-container ">
+        <div class="content__main-column">
+
+            <h2 class="container__title modern-hidden">
+                <a href="@LinkTo{/discussion@discussionId}" class="tone-news tone-colour"
+                    data-link-name="View all comments">View all comments</a>
+            </h2>
+
+            <div class="discussion__comments--top-comments modern-visible">
+                <h2 id="top-comments" class="js-top-comments container__title container__title discussion__heading">Comments</h2>
+                <div class="discussion__comments__top"></div>
+            </div>
+
+        </div>
     </div>
 
-    <div class="discussion__comments__container modern-hidden" data-test-id="comments-container">
-        <h2 class="page-sub-header discussion__heading modern-visible">All Comments</h2>
-        <button class="u-button-reset u-fauxlink modern-visible discussion__show-threaded js-show-threaded" data-test-id="comment-view-type">
-            View <span class="discussion__show-threaded-state">un</span>threaded
-        </button>
 
-        <div class="discussion-container js-discussion-container">
-            <div class="discussion__comment-box discussion__comment-box--top u-cf"></div>
-            <div class="discussion__comments"></div>
-            <div class="discussion__comment-box discussion__comment-box--bottom u-cf"></div>
+    <div class="discussion__top-border gs-container ">
+        <div class="content__main-column">
+
+            <div class="preload-msg">Loading comments… <a href=@{s"/discussion/$discussionId"} class="accessible-link">Trouble loading?</a><div class="is-updating"></div></div>
+
+            <div class="discussion__comments__container modern-hidden" data-test-id="comments-container">
+                <h2 class="page-sub-header discussion__heading container__title modern-visible">Comments</h2>
+                <button class="u-button-reset u-fauxlink modern-visible discussion__show-threaded js-show-threaded" data-test-id="comment-view-type">
+                    View <span class="discussion__show-threaded-state">un</span>threaded
+                </button>
+
+                <div class="discussion-container js-discussion-container">
+                    <div class="discussion__comment-box discussion__comment-box--top u-cf"></div>
+                    <div class="discussion__comments"></div>
+                    <div class="discussion__comment-box discussion__comment-box--bottom u-cf"></div>
+                </div>
+                <div class="discussion__non-threaded js-discussion__non-threaded u-h"></div>
+            </div>
+
         </div>
-        <div class="discussion__non-threaded js-discussion__non-threaded u-h"></div>
     </div>
 </div>

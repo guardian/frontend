@@ -49,7 +49,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderFrontRss(path: String) = MemcachedAction { implicit  request =>
   log.info(s"Serving RSS Path: $path")
-    if (!ConfigAgent.getPathIds.contains(path))
+    if (!ConfigAgent.shouldServeFront(path))
       applicationsRedirect(s"$path/rss")
     else
       renderFrontPressResult(path)
@@ -57,7 +57,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
 
   def renderFront(path: String) = MemcachedAction { implicit request =>
     log.info(s"Serving Path: $path")
-    if (!ConfigAgent.getPathIds.contains(path) || request.getQueryString("page").isDefined)
+    if (!ConfigAgent.shouldServeFront(path) || request.getQueryString("page").isDefined)
       applicationsRedirect(path)
     else
       renderFrontPressResult(path)

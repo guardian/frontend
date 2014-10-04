@@ -1,0 +1,171 @@
+// =============================================================================
+// Global variables
+// =============================================================================
+
+// Be careful of Sass variable scope
+// Note: Sass 3.3.0 adds Local and local vars
+// http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#variables
+
+
+// Browser support
+// =============================================================================
+
+$old-ie:      false !default;
+$svg-support: true !default;
+$browser-supports-columns: not $old-ie !default;
+$browser-supports-flexbox: true !default;
+
+
+// Layout dimensions
+// =============================================================================
+
+$inArticleInlineImgWidth: 114px;
+$headerHeight: 36px;
+
+@import 'components/guss-colours/_colours';
+@import 'components/pasteup-palette/src/_palette';
+@import 'components/guss-grid-system/_grid-system';
+
+$right-column:     gs-span(4);
+$left-column:      gs-span(2); // Grows to 3 columns on wide viewports
+$left-column-wide: gs-span(3);
+
+
+// Breakpoints
+// =============================================================================
+
+// Add breakpoints and tweakpoints here
+// To add custom breakpoints directly inside of a component,
+// see https://github.com/guardian/sass-mq#adding-custom-breakpoints
+
+// Name your breakpoints in a way that creates a ubiquitous language
+// across team members. It will improve communication between
+// stakeholders, designers, developers, and testers.
+
+// NB. If these change, please update javascripts/utils/detect.js to match
+
+$mq-breakpoints: (
+    mobile:  gs-span(4)  + $gs-gutter,   // 320px
+    tablet:  gs-span(9)  + $gs-gutter*2, // 740px
+    desktop: gs-span(12) + $gs-gutter*2, // 980px
+    wide:    gs-span(16) + $gs-gutter*2, // 1300px
+
+    // Tweakpoints
+    mobileLandscape: gs-span(6) + $gs-gutter, // 480px
+    phablet: gs-span(8) + $gs-gutter*2, // 660px
+
+    // Content
+    rightCol: gs-span(12) + $gs-gutter*2, // 980px
+    leftCol:  gs-span(14) + $gs-gutter*2, // 1140px
+);
+
+
+// Show the current breakpoint in the top right corner of the viewport:
+// see https://github.com/guardian/sass-mq#seeing-the-currently-active-breakpoint
+// Uncomment to activate during development
+// $mq-show-breakpoints: (mobile, mobileLandscape, tablet, rightCol, desktop, leftCol, wide);
+
+
+// Guss defaults overrides
+// =============================================================================
+
+$guss-column-rule: none;
+$f-serif-headline: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+
+
+// Colours
+// =============================================================================
+
+$c-brandBlue: guss-colour(guardian-brand, $pasteup-palette);
+$c-brandLightBlue: guss-colour(guardian-brand-light, $pasteup-palette);
+$c-error: guss-colour(error, $pasteup-palette);
+
+$c-neutral1: guss-colour(neutral-1, $pasteup-palette);
+$c-neutral2: guss-colour(neutral-2, $pasteup-palette);
+// Enhance contrast of grey text on light grey background
+$c-neutral2-contrasted: darken($c-neutral2, 3%);
+$c-neutral3: guss-colour(neutral-3, $pasteup-palette);
+$c-neutral4: guss-colour(neutral-4, $pasteup-palette);
+$c-neutral5: guss-colour(neutral-5, $pasteup-palette);
+$c-neutral6: guss-colour(neutral-6, $pasteup-palette);
+$c-neutral7: guss-colour(neutral-7, $pasteup-palette);
+$c-neutral8: guss-colour(neutral-8, $pasteup-palette);
+
+// Tones
+// =============================================================================
+
+$c-newsDefault: guss-colour(news-main-1, $pasteup-palette);
+$c-newsAccent: guss-colour(news-main-2, $pasteup-palette);
+
+$c-featureDefault: guss-colour(features-support-1, $pasteup-palette);
+$c-featureAccent: guss-colour(features-support-3, $pasteup-palette);
+$c-featureAccent2: guss-colour(features-main-2, $pasteup-palette);
+$c-featureMute: guss-colour(features-support-3, $pasteup-palette);
+
+$c-analysisAccent: guss-colour(news-main-2, $pasteup-palette);
+$c-analysisMute: guss-colour(comment-support-2, $pasteup-palette);
+$c-analysisBackground: guss-colour(neutral-7, $pasteup-palette);
+
+$c-commentDefault: guss-colour(comment-support-4, $pasteup-palette);;
+$c-commentAccent: guss-colour(comment-main-2, $pasteup-palette);
+$c-commentBackground: guss-colour(comment-support-2, $pasteup-palette);
+
+$c-liveDefault: guss-colour(live-main-1, $pasteup-palette);
+$c-liveAccent: guss-colour(live-main-2, $pasteup-palette);
+$c-liveMute: guss-colour(features-support-3, $pasteup-palette);
+
+$c-mediaDefault: guss-colour(multimedia-main-2, $pasteup-palette);
+$c-mediaBackground: guss-colour(multimedia-main-1, $pasteup-palette);
+$c-mediaAccent: guss-colour(multimedia-main-2, $pasteup-palette);
+$c-mediaAccent2: guss-colour(multimedia-support-4, $pasteup-palette);
+
+$c-reviewBackground: $c-commentBackground;
+$c-reviewAccent: $c-featureAccent2;
+
+$c-podcastBackground: guss-colour(news-main-2, $pasteup-palette);
+$c-podcastAccent: guss-colour(guardian-brand-dark, $pasteup-palette);
+$c-podcastAccent2: #ffffff;
+
+
+// Football
+// =============================================================================
+
+$c-sportBright: #70d2e6;
+$c-sportMid: guss-colour(guardian-brand, $pasteup-palette);
+$c-sportDark: #003f64;
+
+$c-sportHome: $c-sportBright;
+$c-sportAway: $c-sportDark;
+
+
+// Stati
+// =============================================================================
+
+$c-statusPositive: #6ca843;
+$c-statusNeutral: $c-neutral2;
+$c-statusNegative: #da1d1d;
+
+
+// MPU
+// =============================================================================
+
+$mpu-original-width: 300px;
+$mpu-original-height: 250px;
+$mpu-align-offset: 20px; // Align bottom of ad with text on desktop
+$mpu-ad-label-height: $gs-baseline*2;
+
+
+// Dimensions
+// =============================================================================
+
+$action-icon-width: 23px;
+$action-icon-rightspace: 7px;
+$content-top-padding: $gs-baseline / 1.5;
+
+
+// Video.JS player
+// =============================================================================
+
+$vjs-x-small-button-size: 40px;
+$vjs-small-button-size: 50px;
+$vjs-large-button-size: 70px;

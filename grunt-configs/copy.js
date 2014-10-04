@@ -4,13 +4,13 @@ module.exports = function(grunt, options) {
             files: [
                 {
                     expand: true,
-                    cwd: 'common/app/public/javascripts/components',
+                    cwd: 'static/public/javascripts/components',
                     src: ['**/*.js'],
                     dest: options.staticTargetDir + 'javascripts/components'
                 },
                 {
                     expand: true,
-                    cwd: 'common/app/public/javascripts/vendor',
+                    cwd: 'static/public/javascripts/vendor',
                     src: [
                         'formstack-interactive/0.1/boot.js',
                         'vast-client.js',
@@ -20,7 +20,7 @@ module.exports = function(grunt, options) {
                 },
                 {
                     expand: true,
-                    cwd: 'common/app/public/javascripts/vendor',
+                    cwd: 'static/public/javascripts/vendor',
                     src: [
                         'foresee*/**'
                     ],
@@ -45,7 +45,7 @@ module.exports = function(grunt, options) {
         css: {
             files: [{
                 expand: true,
-                cwd: 'common/app/assets/stylesheets',
+                cwd: 'static/src/stylesheets',
                 src: ['**/*.scss'],
                 dest: options.staticTargetDir + 'stylesheets'
             }]
@@ -53,7 +53,7 @@ module.exports = function(grunt, options) {
         images: {
             files: [{
                 expand: true,
-                cwd: 'common/app/public/images',
+                cwd: 'static/public/images',
                 src: ['**/*'],
                 dest: options.staticTargetDir + 'images'
             }]
@@ -61,7 +61,7 @@ module.exports = function(grunt, options) {
         flash: {
             files: [{
                 expand: true,
-                cwd: 'common/app/public/flash',
+                cwd: 'static/public/flash',
                 src: ['**/*.swf'],
                 dest: options.staticTargetDir + 'flash'
             }]
@@ -77,7 +77,7 @@ module.exports = function(grunt, options) {
         headJs: {
             files: [{
                 expand: true,
-                cwd: 'common/app/assets/javascripts/components/curl',
+                cwd: 'static/src/javascripts/components/curl',
                 src: ['curl-domReady.js'],
                 dest: 'common/conf/assets'
             }]

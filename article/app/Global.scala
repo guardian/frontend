@@ -17,6 +17,7 @@ object Global
   override def applicationMetrics: List[FrontendMetric] = super.applicationMetrics ::: List(
     ContentApiMetrics.ElasticHttpTimingMetric,
     ContentApiMetrics.ElasticHttpTimeoutCountMetric,
-    ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric
+    ContentApiMetrics.ContentApiCircuitBreakerRequestsMetric,
+    ContentApiMetrics.ContentApiCircuitBreakerOnOpen
   )
 }

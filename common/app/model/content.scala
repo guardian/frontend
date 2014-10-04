@@ -10,6 +10,7 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support.{ImgSrc, Naked, StripHtmlTagsAndUnescapeEntities}
+import conf.Switches.LiveBlogCacheTimeSwitch
 import com.gu.util.liveblogs.{Parser => LiveBlogParser, Block, BlockToText}
 
 import scala.collection.JavaConversions._
@@ -31,7 +32,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)
   lazy val isExpired = delegate.isExpired.getOrElse(false)
-  lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isBlog: Boolean = blogs.nonEmpty
   lazy val isSeries: Boolean = series.nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
@@ -104,7 +104,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     Jsoup.clean(delegate.safeFields.getOrElse("body",""), Whitelist.none()).split("\\s+").size
   }
 
-  override lazy val byline: Option[String] = fields.get("byline")
   override lazy val trailType: Option[String] = {
     if (tags.exists(_.id == "tone/comment")) {
       Option("comment")
@@ -125,6 +124,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val description: Option[String] = trailText
   override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
   override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
+  override lazy val byline: Option[String] = apiContent.metaData.get("byline").flatMap(_.asOpt[String]).orElse(fields.get("byline"))
+  override val showByline = apiContent.metaData.get("showByline").flatMap(_.asOpt[Boolean]).getOrElse(isComment)
+
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
   // Meta Data used by plugins on the page
@@ -156,9 +158,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     ) ++ Map(seriesMeta: _*)
   }
 
-
+  private lazy val liveCacheTime = if (LiveBlogCacheTimeSwitch.isSwitchedOn) 60 else 5
   override lazy val cacheSeconds = {
-    if (isLive) 5 // live blogs can expect imminent updates
+    if (isLive) liveCacheTime
     else if (lastModified > DateTime.now(lastModified.getZone) - 1.hour) 60 // an hour gives you time to fix obvious typos and stuff
     else 900
   }
@@ -184,6 +186,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val isBoosted: Boolean = apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val imageHide: Boolean = apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val showKickerTag: Boolean = apiContent.metaData.get("showKickerTag").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val showKickerSection: Boolean = apiContent.metaData.get("showKickerSection").flatMap(_.asOpt[Boolean]).getOrElse(false)
+
   override lazy val imageReplace: Boolean = apiContent.metaData.get("imageReplace").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
   override lazy val imageSrcWidth: Option[String] = apiContent.metaData.get("imageSrcWidth").flatMap(_.asOpt[String])
@@ -412,9 +417,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
-  ) ++ Seq(
-    mainPicture.flatMap(_.largestImage.flatMap(_.path.map("twitter:image:src" ->)))
-  ).flatten
+  )
 }
 
 class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
@@ -444,6 +447,8 @@ class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
 
 abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 
+  lazy val body: Option[String] = delegate.safeFields.get("body")
+
   override lazy val analyticsName = s"GFE:$section:$contentType:${id.substring(id.lastIndexOf("/") + 1)}"
   override def openGraph: Map[String, String] = super.openGraph ++ Map(
     "og:type" -> "video",
@@ -456,12 +461,10 @@ abstract class Media(content: ApiContentWithMeta) extends Content(content) {
 
 class Audio(content: ApiContentWithMeta) extends Media(content) {
 
-  lazy val body: String = delegate.safeFields.getOrElse("body", "")
-
   override lazy val contentType = GuardianContentTypes.Audio
 
   override lazy val metaData: Map[String, JsValue] =
-    super.metaData ++ Map("contentType" -> JsString(contentType), "blockVideoAds" -> JsBoolean(blockVideoAds))
+    super.metaData ++ Map("contentType" -> JsString(contentType))
 
   lazy val downloadUrl: Option[String] = mainAudio
     .flatMap(_.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
@@ -486,7 +489,6 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map(
       "contentType" -> JsString(contentType),
-      "blockVideoAds" -> JsBoolean(blockVideoAds),
       "source" -> JsString(source.getOrElse(""))
     )
 
@@ -609,7 +611,7 @@ class ImageContent(content: ApiContentWithMeta) extends Content(content) {
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "photo"
-  ) ++ mainPicture.flatMap(_.largestImage.flatMap(_.path.map("twitter:image:src" ->)))
+  )
 }
 
 case class ApiContentWithMeta(delegate: ApiContent, supporting: List[Content] = Nil, metaData: Map[String, JsValue] = Map.empty)

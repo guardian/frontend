@@ -3,13 +3,24 @@
 
 @if(
     SponsoredSwitch.isSwitchedOn &&
-    (content.isSponsored || content.isAdvertisementFeature) &&
+    (content.isSponsored || content.isAdvertisementFeature || content.isFoundationSupported) &&
     !content.isInappropriateForSponsorship
 ) {
     @defining((
-        content match { case c if c.isSponsored => {"spbadge"} case _ => {"adbadge"} },
-        content match { case _: LiveBlog => {"live-blog"} case _ => {"article"} },
-        content match { case _: Media | _: Gallery => "141" case _ => "140" }
+        content match {
+            case c if c.isSponsored => {"spbadge"}
+            case c if c.isAdvertisementFeature => {"adbadge"}
+            case _ => {"fobadge"}
+        },
+        content match {
+            case _: LiveBlog => {"live-blog"}
+            case _: Interactive => {"interactive"}
+            case _ => {"article"}
+        },
+        content match {
+            case _: Media | _: Gallery => "141"
+            case _ => "140"
+        }
     )) { case (name, badgeType, adSlotWidth) =>
         @fragments.commercial.adSlot(
             name,

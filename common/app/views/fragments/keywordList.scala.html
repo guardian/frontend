@@ -9,7 +9,10 @@
         <a class="@if(keyword.isFootballTeam){js-football-team} @if(keyword.isFootballCompetition){ js-football-competition} button button--small button--tag button--tone-@tone"
            href="@LinkTo(keyword.url)"
            data-link-name="keyword: @keyword.id"
-           itemprop="keywords">@keyword.name</a>
+           itemprop="keywords">
+               @keyword.name
+               @if(keywords.filter(_ != keyword).find(_.name == keyword.name)){ (@keyword.section.capitalize) }
+        </a>
     </li>
 }
 

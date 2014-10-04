@@ -13,11 +13,13 @@ case class Config(
                    groups: Seq[String],
                    collectionType: Option[String],
                    showTags: Boolean = false,
-                   showSections: Boolean = false
+                   showSections: Boolean = false,
+                   hideKickers: Boolean = false
                    ) {
 
   lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
   lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(this)
+  lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(this)
 
   lazy val sponsorshipKeyword: Option[String] = DfpAgent.sponsorshipTag(this)
 }
@@ -72,7 +74,6 @@ case class SeoData(
   description: Option[String])
 
 object SeoData extends ExecutionContexts with Logging {
-
   implicit val seoFormatter = Json.format[SeoData]
 
   val editions = Edition.all.map(_.id.toLowerCase)
@@ -111,6 +112,8 @@ case class FrontProperties(
 
 object FrontProperties{
   implicit val propsFormatter = Json.format[FrontProperties]
+
+  val empty = FrontProperties(None, None, None, None, false, None)
 }
 
 object FaciaComponentName {
