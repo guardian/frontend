@@ -23,17 +23,13 @@
 
 .crossword__grid__cell__input {
     font-size: 14px;
-    font-family: $f-sans-serif-text;
+    font-family: $f-serif-text;
+    font-weight: 800;
     background-color: transparent;
     text-align: center;
-    position: absolute;
-    left: 50%;
     border: 0;
-    width: 20px;
-    height: 20px;
-    margin-left: -10px;
-    margin-top: -10px;
-    top: 50%;
+    width: 100%;
+    height: 100%;
 }
 
 .crossword__grid__cell__input:focus {
