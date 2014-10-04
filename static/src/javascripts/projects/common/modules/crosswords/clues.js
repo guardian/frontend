@@ -5,15 +5,18 @@ define([
     _,
     React
 ) {
-    var Clue = React.createClass({
-        render: function () {
-            var text = this.props.number + ': ' + this.props.clue;
-
-            return React.DOM.li(null,
-                (this.props.hasAnswered) ? React.DOM.s(null, text) : text
-            );
-        }
-    });
+    var classSet = React.addons.classSet,
+        Clue = React.createClass({
+            render: function () {
+                return React.DOM.li({className: classSet({
+                        'crossword__clue': true,
+                        'crossword__clue--answered': this.props.hasAnswered
+                    })},
+                    React.DOM.span({className: 'crossword__clue__number'}, this.props.number),
+                    React.DOM.span({className: 'crossword__clue__text'}, this.props.clue)
+                );
+            }
+        });
 
     return React.createClass({
         render: function () {

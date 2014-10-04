@@ -35,3 +35,17 @@
 .crossword__grid__cell__input:focus {
     outline-width: 0;
 }
+
+.crossword__clue {
+    list-style: none;
+}
+
+.crossword__clue__number {
+    display: inline-block;
+    min-width: 20px;
+    margin-right: $gs-baseline;
+}
+
+.crossword__clue--answered .crossword__clue__text {
+    text-decoration: line-through;
+}
