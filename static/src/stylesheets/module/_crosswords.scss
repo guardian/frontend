@@ -5,12 +5,12 @@
 .crossword__grid__cell {
     width: 30px;
     height: 30px;
-    border: 1px solid black;
+    border: 1px solid #000000;
     position: relative;
 }
 
 .crossword__grid__cell--non-editable {
-    background-color: black;
+    background-color: #000000;
 }
 
 .crossword__grid__cell__number {
