@@ -49,15 +49,14 @@ define([
         var x = entry.position.x,
             y = entry.position.y,
             xDelta = 0,
-            yDelta = 0;
+            yDelta = 0,
+            cells = [];
 
         if (isAcross(entry)) {
             xDelta = 1;
         } else {
             yDelta = 1;
         }
-
-        var cells = [];
 
         _.forEach(_.range(entry.length), function (n) {
             var x1 = x, y1 = y;
@@ -123,10 +122,11 @@ define([
 
         onSelect: function (x, y) {
             var cellInFocus = this.state.cellInFocus,
-                clue = this.cluesFor(x, y);
+                clue = this.cluesFor(x, y),
+                newDirection;
 
             if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
-                var newDirection = otherDirection(this.state.directionOfEntry);
+                newDirection = otherDirection(this.state.directionOfEntry);
 
                 if (clue[newDirection]) {
                     this.state.directionOfEntry = newDirection;

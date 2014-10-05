@@ -9,11 +9,11 @@ define([
         Clue = React.createClass({
             render: function () {
                 return React.DOM.li({
-                        className: classSet({
-                            'crossword__clue': true,
-                            'crossword__clue--answered': this.props.hasAnswered
-                        })
-                    },
+                    className: classSet({
+                        'crossword__clue': true,
+                        'crossword__clue--answered': this.props.hasAnswered
+                    })
+                },
                     React.DOM.span({className: 'crossword__clue__number'}, this.props.number),
                     React.DOM.span({className: 'crossword__clue__text'}, this.props.clue)
                 );
