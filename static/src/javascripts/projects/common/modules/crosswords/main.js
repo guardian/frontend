@@ -75,7 +75,7 @@ define([
     }
 
     function clueMapKey(x, y) {
-        return x + "_" + y;
+        return x + '_' + y;
     }
 
     /** A map for looking up clues that a given cell relates to */
@@ -122,14 +122,17 @@ define([
         },
 
         onSelect: function (x, y) {
-            var cellInFocus = this.state.cellInFocus;
+            var cellInFocus = this.state.cellInFocus,
+                clue = this.cluesFor(x, y);
 
             if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
-                this.state.directionOfEntry = otherDirection(this.state.directionOfEntry);
+                var newDirection = otherDirection(this.state.directionOfEntry);
+
+                if (clue[newDirection]) {
+                    this.state.directionOfEntry = newDirection;
+                }
             } else {
                 this.state.cellInFocus = {x: x, y: y};
-
-                var clue = this.cluesFor(x, y);
 
                 /** If an across clue exists, default to that on initial focus; otherwise, down */
                 if (clue.across) {
