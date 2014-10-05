@@ -36,7 +36,8 @@ define([
                             maxLength: '1',
                             className: 'crossword__grid__cell__input',
                             value: this.props.value,
-                            onChange: this.handleChange
+                            onChange: this.handleChange,
+                            onClick: this.props.handleSelect
                         })
                     );
                 }
@@ -56,13 +57,19 @@ define([
             this.props.setCellValue(x, y, value.toUpperCase());
         },
 
+        handleSelect: function (x, y) {
+            this.props.onSelect(x, y);
+        },
+
         render: function () {
             var that = this,
                 rows = _.map(_.range(this.props.rows), function (y) {
                     var innerNodes = _.map(_.range(that.props.columns), function (x) {
                         var cellProps = that.props.cells[x][y];
                         cellProps.handleInput = that.handleInput.bind(that, x, y);
+                        cellProps.handleSelect = that.handleSelect.bind(that, x, y);
                         cellProps.key = 'cell_' + x + '_' + y;
+                        cellProps.isHighlighted = that.props.isHighlighted(x, y);
                         return Cell(cellProps);
                     });
 

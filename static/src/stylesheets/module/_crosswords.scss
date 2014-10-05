@@ -9,6 +9,10 @@
     position: relative;
 }
 
+.crossword__grid__cell--highlighted {
+    background-color: $c-crosswordAccent1;
+}
+
 .crossword__grid__cell--non-editable {
     background-color: #000000;
 }
