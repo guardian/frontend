@@ -4,11 +4,18 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 
   val isValid = lineItems.nonEmpty
 
+  def sectionsFromAdUnits(adUnits: Seq[GuAdUnit]): Seq[String] = adUnits map (_.path.drop(1).head)
+
   val sponsorships: Seq[Sponsorship] = {
     lineItems.withFilter { lineItem =>
       lineItem.sponsoredTags.nonEmpty && lineItem.isCurrent
     }.map { lineItem =>
-      Sponsorship(lineItem.sponsoredTags, lineItem.section, lineItem.sponsor, locationsTargeted(lineItem), lineItem.id)
+      Sponsorship(
+        tags = lineItem.sponsoredTags,
+        sections = sectionsFromAdUnits(lineItem.targeting.adUnits),
+        sponsor = lineItem.sponsor,
+        countries = locationsTargeted(lineItem),
+        lineItemId = lineItem.id)
     }.distinct
   }
 
@@ -16,7 +23,12 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     lineItems.withFilter { lineItem =>
       lineItem.advertisementFeatureTags.nonEmpty && lineItem.isCurrent
     }.map { lineItem =>
-      Sponsorship(lineItem.advertisementFeatureTags, lineItem.section, lineItem.sponsor, locationsTargeted(lineItem), lineItem.id)
+      Sponsorship(
+        tags = lineItem.advertisementFeatureTags,
+        sections = sectionsFromAdUnits(lineItem.targeting.adUnits),
+        sponsor = lineItem.sponsor,
+        countries = locationsTargeted(lineItem),
+        lineItemId = lineItem.id)
     }.distinct
   }
 
@@ -32,7 +44,12 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
     lineItems.withFilter { lineItem =>
       lineItem.foundationSupportedTags.nonEmpty && lineItem.isCurrent
     }.map { lineItem =>
-      Sponsorship(lineItem.foundationSupportedTags, lineItem.section, lineItem.sponsor, locationsTargeted(lineItem), lineItem.id)
+      Sponsorship(
+        tags = lineItem.foundationSupportedTags,
+        sections = sectionsFromAdUnits(lineItem.targeting.adUnits),
+        sponsor = lineItem.sponsor,
+        countries = locationsTargeted(lineItem),
+        lineItemId = lineItem.id)
     }.distinct
   }
 

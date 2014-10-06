@@ -37,19 +37,19 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
   private object testDfpAgent extends DfpAgent {
     override protected def sponsorships: Seq[Sponsorship] = Seq(
-      Sponsorship(Seq("spon-page"), section = None, Some("spon"), Nil, 1),
-      Sponsorship(Seq("media"), None, section = None, Nil, 2),
-      Sponsorship(Seq("healthyliving"), section = Some("spinach"), Some("Squeegee"), Nil, 3)
+      Sponsorship(Seq("spon-page"), sections = Nil, Some("spon"), Nil, 1),
+      Sponsorship(Seq("media"), sections = Nil, None, Nil, 2),
+      Sponsorship(Seq("healthyliving"), sections = Seq("spinach"), Some("Squeegee"), Nil, 3)
     )
 
     override protected def advertisementFeatureSponsorships: Seq[Sponsorship] = Seq(
-      Sponsorship(Seq("ad-feature"), section = None, Some("spon2"), Nil, 4),
-      Sponsorship(Seq("film"), section = None, None, Nil, 5)
+      Sponsorship(Seq("ad-feature"), sections = Nil, Some("spon2"), Nil, 4),
+      Sponsorship(Seq("film"), sections = Nil, None, Nil, 5)
     )
 
     override protected def foundationSupported: Seq[Sponsorship] = Seq(
-      Sponsorship(Seq("music"), section = None, Some("Music Foundation"), Nil, 6),
-      Sponsorship(Seq("chuckle"), section = None, None, Nil, 7)
+      Sponsorship(Seq("music"), sections = Nil, Some("Music Foundation"), Nil, 6),
+      Sponsorship(Seq("chuckle"), sections = Nil, None, Nil, 7)
     )
 
     override protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = examplePageSponsorships
@@ -380,8 +380,8 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
   "generate tag to sponsors map" should "glom sponsorships together" in {
     val universitySponsorships =
-      Sponsorship(List("universityguide", "university A"), section = None, Some("University Sponsor A"), Nil, 1) ::
-        Sponsorship(List("universityguide"), section = None, Some("University Sponsor B"), Nil, 2) ::
+      Sponsorship(List("universityguide", "university A"), sections = Nil, Some("University Sponsor A"), Nil, 1) ::
+        Sponsorship(List("universityguide"), sections = Nil, Some("University Sponsor B"), Nil, 2) ::
         Nil
 
     val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(universitySponsorships)
@@ -393,8 +393,8 @@ class DfpAgentTest extends FlatSpec with Matchers {
 
   it should "not bother with tag with no detected sponsors" in {
     val sponsorshipsWithANone =
-      Sponsorship(List("universityguide", "university A"), section = None, Some("University Sponsor A"), Nil, 3) ::
-        Sponsorship(List("videogames"), section = None, None, Nil, 4) ::
+      Sponsorship(List("universityguide", "university A"), sections = Nil, Some("University Sponsor A"), Nil, 3) ::
+        Sponsorship(List("videogames"), sections = Nil, None, Nil, 4) ::
         Nil
 
     val sponsorsMap: Map[String, Set[String]] = DfpAgent.generateTagToSponsorsMap(sponsorshipsWithANone)
