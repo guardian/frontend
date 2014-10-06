@@ -43,27 +43,27 @@ define([
     identity,
     profile,
     sport
-) {
+    ) {
 
-    var bootstrapContext = function(featureName, boostrap) {
+    var bootstrapContext = function (featureName, boostrap) {
             raven.context(
                 {
                     tags: {
                         feature: featureName
                     }
                 },
-                function() {
+                function () {
                     boostrap.init(config);
                 }
             );
         },
         modules = {
 
-            loadFonts: function(ua) {
+            loadFonts: function (ua) {
                 if (config.switches.webFonts && !guardian.shouldLoadFontsAsynchronously) {
                     var fileFormat = detect.getFontFormatSupport(ua),
-                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial');
-                    var f = new Fonts(fontStyleNodes, fileFormat);
+                        fontStyleNodes = document.querySelectorAll('[data-cache-name].initial'),
+                        f = new Fonts(fontStyleNodes, fileFormat);
                     f.loadFromServerAndApply();
                 }
             },
@@ -72,66 +72,66 @@ define([
                 identity.init(config);
             },
 
-            initUserAdTargeting : function () {
+            initUserAdTargeting: function () {
                 userAdTargeting.requestUserSegmentsFromId();
             }
+        },
+
+        routes = function () {
+            userTiming.mark('App Begin');
+
+            modules.loadFonts(navigator.userAgent);
+            modules.initId();
+            modules.initUserAdTargeting();
+
+            bootstrapContext('common', bootstrapCommon);
+
+            // Front
+            if (config.page.isFront) {
+                require('bootstraps/facia', function (facia) {
+                    bootstrapContext('facia', facia);
+                });
+            }
+
+            if (config.page.contentType === 'Article') {
+                bootstrapContext('article', article);
+            }
+
+            if (config.page.contentType === 'LiveBlog') {
+                bootstrapContext('liveBlog', liveBlog);
+            }
+
+            if (config.isMedia || qwery('video, audio').length) {
+                bootstrapContext('media', media);
+            }
+
+            if (config.page.contentType === 'Gallery') {
+                bootstrapContext('gallery', gallery);
+            }
+
+            if (config.page.contentType === 'Tag') {
+                bootstrapContext('tag', tag);
+            }
+
+            if (config.page.contentType === 'Section' && !config.page.isFront) {
+                bootstrapContext('section', section);
+            }
+
+            if (config.page.section === 'football') {
+                bootstrapContext('footbal', football);
+            }
+
+            if (config.page.section === 'sport') {
+                bootstrapContext('sport', sport);
+            }
+
+            if (config.page.section === 'identity') {
+                bootstrapContext('profile', profile);
+            }
+
+            // Mark the end of synchronous execution.
+            userTiming.mark('App End');
         };
-
-    var routes = function() {
-        userTiming.mark('App Begin');
-
-        modules.loadFonts(navigator.userAgent);
-        modules.initId();
-        modules.initUserAdTargeting();
-
-        bootstrapContext('common', bootstrapCommon);
-
-        // Front
-        if (config.page.isFront) {
-            require('bootstraps/facia', function(facia) {
-                bootstrapContext('facia', facia);
-            });
-        }
-
-        if(config.page.contentType === 'Article') {
-            bootstrapContext('article', article);
-        }
-
-        if(config.page.contentType === 'LiveBlog') {
-            bootstrapContext('liveBlog', liveBlog);
-        }
-
-        if (config.isMedia || qwery('video, audio').length) {
-            bootstrapContext('media', media);
-        }
-
-        if (config.page.contentType === 'Gallery') {
-            bootstrapContext('gallery', gallery);
-        }
-
-        if (config.page.contentType === 'Tag') {
-            bootstrapContext('tag', tag);
-        }
-
-        if (config.page.contentType === 'Section' && !config.page.isFront) {
-            bootstrapContext('section', section);
-        }
-
-        if (config.page.section === 'football') {
-            bootstrapContext('footbal', football);
-        }
-
-        if (config.page.section === 'sport') {
-            bootstrapContext('sport', sport);
-        }
-
-        if (config.page.section === 'identity') {
-            bootstrapContext('profile', profile);
-        }
-
-        // Mark the end of synchronous execution.
-        userTiming.mark('App End');
-    };
 
     return {
         go: routes

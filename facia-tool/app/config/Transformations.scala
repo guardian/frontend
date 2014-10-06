@@ -28,6 +28,7 @@ object Transformations {
       imageWidth =        createCommand.imageWidth,
       imageHeight =       createCommand.imageHeight,
       isImageDisplayed =  createCommand.isImageDisplayed,
+      isHidden =          createCommand.isHidden,
       priority =          createCommand.priority
     )
 

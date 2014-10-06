@@ -11,7 +11,7 @@ The font files are for internal use exclusively. You may use them for
 prototyping purposes but not serve them publicly on your own domain
 unless you have a license for it.
 
-For more information, read the Commercial Type End User License Agreement.
+For more information, read the [Commercial Type End User License Agreement](./Commercial Type EULA Web-general.pdf).
 
 [Read the docs](http://guardian.github.io/guss-webfonts/docs/) or
 [view the demo](http://guardian.github.io/guss-webfonts/demo/)
@@ -28,20 +28,9 @@ $ bower install guss-webfonts --save
 
 1. [Manually download the repository](https://github.com/guardian/guss-webfonts/archive/master.zip)
 2. Decompress the archive
-3. Copy all or part of the `webfonts` directory to `bower_components/guss-webfonts/webfonts`
-   depending on what fonts your project needs
+3. Copy all or part of the `webfonts` directory
 
-### Point directly to the css
-
-This will load all the Guardian Next Gen webfonts, hinted, with the largest
-character set available:
-
-```html
-<link rel="stylesheet" href="bower_components/guss-webfonts/nextgen-webfonts.css" type="text/css" />
-```
-
-
-### …or import the file in Sass
+### Import the file in Sass
 
 #### 1. Configure and import guss-webfonts
 
@@ -81,8 +70,15 @@ $guss-webfonts-hinting: 'on';
  */
 $guss-webfonts-kerning: 'on';
 
+/**
+ * Version
+ *
+ * Version of the fonts to use
+ */
+$guss-webfonts-version: '0.1.0';
 
-@import 'path/to/guss-webfonts/_webfonts';
+
+@import 'bower_components/guss-webfonts/src/_webfonts';
 ```
 
 #### 2. Output @font-face rules
@@ -95,23 +91,18 @@ $guss-webfonts-kerning: 'on';
 
 ## Curating a selection of web fonts
 
-Font properties are stored in the `$guss-webfonts` map, in `_webfonts.config.scss`.
+Font properties are stored in the `$guss-webfonts` map, in `src/_webfonts.config.scss`.
 
 You can curate your own list of @font-face rules like so:
 
 ```scss
 // Only Guardian Agate Sans 1 Web
-
 @include guss-webfonts('Guardian Agate Sans 1 Web');
 
-
 // Guardian Agate Sans 1 Web and Guardian Sans Web
-
 @include guss-webfonts('Guardian Agate Sans 1 Web' 'Guardian Sans Web');
 
-
 // For Guardian Next Gen products, we use this configuration:
-
 @include guss-webfonts(
     (
         'Guardian Agate Sans 1 Web': (
@@ -144,7 +135,7 @@ You can curate your own list of @font-face rules like so:
 
 ## Uploading fonts
 
-Update the version number in the [Gruntfile](Gruntfile.js). Then
+Update the version number in the [Gruntfile](Gruntfile.js#L13). Then
 
 ```
 $ grunt release:fonts --id=AWS_ACCESS_KEY --secret=AWS_SECRET_KEY
