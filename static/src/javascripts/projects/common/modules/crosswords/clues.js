@@ -31,7 +31,7 @@ define([
                     })
                     .map(function (clue) {
                         return Clue({
-                            number: clue.number,
+                            number: clue.number + '.',
                             clue: clue.clue,
                             hasAnswered: false
                         });
