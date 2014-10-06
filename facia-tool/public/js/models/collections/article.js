@@ -74,6 +74,13 @@ define([
                     type: 'text'
                 },
                 {
+                    key: 'customKicker',
+                    editable: true,
+                    requires: 'showKickerCustom',
+                    label: 'custom kicker',
+                    type: 'text'
+                },
+                {
                     key: 'href',
                     editable: true,
                     requiresState: 'isSnap',
@@ -182,6 +189,18 @@ define([
                     editable: true,
                     singleton: 'kicker',
                     label: 'section kicker',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showKickerCustom',
+                    editable: true,
+                    singleton: 'kicker',
+                    label: 'custom kicker',
+                    type: 'boolean'
+                },
+                {
+                    key: 'isSnap',
+                    label: 'is a snap',
                     type: 'boolean'
                 },
                 {
@@ -458,7 +477,6 @@ define([
                     this.state.isLoaded(true);
                     this.sparkline();
                 }
-
             }
 
             this.state.imageCutoutSrcFromCapi(contributorImage(opts));
@@ -474,9 +492,6 @@ define([
             }
 
             this.setRelativeTimes();
-
-
-
         };
 
         Article.prototype.setRelativeTimes = function() {
