@@ -62,6 +62,10 @@ object ItemMeta {
     group = content.apiContent.metaData.get("group"),
     isBoosted = content.apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]),
     imageHide = content.apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]),
+    imageCutoutReplace = content.apiContent.metaData.get("imageCutoutReplace").flatMap(_.asOpt[Boolean]),
+    imageCutoutSrc = content.apiContent.metaData.get("imageCutoutSrc"),
+    imageCutoutSrcWidth = content.apiContent.metaData.get("imageCutoutSrcWidth"),
+    imageCutoutSrcHeight = content.apiContent.metaData.get("imageCutoutSrcHeight"),
     isBreaking = content.apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]),
     supporting = Option(content.supporting.map(item => Json.toJson(TrailJson.fromContent(item)))).filter(_.nonEmpty),
     href = content.apiContent.metaData.get("href"),
@@ -82,6 +86,10 @@ case class ItemMeta(
   group:         Option[JsValue],
   isBoosted:     Option[Boolean],
   imageHide:     Option[Boolean],
+  imageCutoutReplace:   Option[Boolean],
+  imageCutoutSrc:       Option[JsValue],
+  imageCutoutSrcWidth:  Option[JsValue],
+  imageCutoutSrcHeight: Option[JsValue],
   isBreaking:    Option[Boolean],
   supporting:    Option[Seq[JsValue]],
   href:          Option[JsValue],
@@ -147,7 +155,9 @@ object CollectionJson {
       `type`         = config.collectionType,
       showTags       = config.showTags,
       showSections   = config.showSections,
-      hideKickers    = config.hideKickers
+      hideKickers    = config.hideKickers,
+      showDateHeader = config.showDateHeader,
+      showLatestUpdate = config.showLatestUpdate
     )
 }
 
@@ -166,5 +176,7 @@ case class CollectionJson(
   href:         Option[String],
   showTags:     Boolean,
   showSections: Boolean,
-  hideKickers:  Boolean
+  hideKickers:  Boolean,
+  showDateHeader: Boolean,
+  showLatestUpdate: Boolean
                            )
