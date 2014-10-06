@@ -250,7 +250,7 @@ define([
                 'hasMainVideo',
                 'imageCutoutSrcFromCapi',
                 'ophanUrl',
-                'sparkUrl']);   
+                'sparkUrl']);
 
             this.uneditable = opts.uneditable;
 
@@ -415,20 +415,6 @@ define([
             }
         };
 
-        function getTone(contentApiArticle) {
-            var tone = _.findWhere(contentApiArticle.tags, {
-                type: 'tone'
-            });
-            return tone && tone.id && tone.id.replace(/^tone\//, '');
-        }
-
-        function mainMediaType(contentApiArticle) {
-            var mainElement = _.findWhere(contentApiArticle.elements || [], {
-                relation: 'main'
-            });
-            return mainElement && mainElement.type;
-        }
-
         Article.prototype.validateImageMain = function() {
             validateImage(
                 this.meta.imageSrc,
@@ -479,11 +465,11 @@ define([
                 }
             }
 
-            this.state.imageCutoutSrcFromCapi(contributorImage(opts));
+            this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
 
             this.state.isSnap(!!snap.validateId(this.id()));
 
-            this.state.hasMainVideo(mainMediaType(opts) === 'video');
+            this.state.hasMainVideo(getMainMediaType(opts) === 'video');
 
             this.state.tone(getTone(opts));
 
@@ -619,6 +605,27 @@ define([
             return false;
         };
 
+        function getTone(contentApiArticle) {
+            var tone = _.findWhere(contentApiArticle.tags, {
+                type: 'tone'
+            });
+            return tone && tone.id && tone.id.replace(/^tone\//, '');
+        }
+
+        function getMainMediaType(contentApiArticle) {
+            var mainElement = _.findWhere(contentApiArticle.elements || [], {
+                relation: 'main'
+            });
+            return mainElement && mainElement.type;
+        }
+
+        function getContributorImage(contentApiArticle) {
+            var contributor = _.findWhere(contentApiArticle.tags, {
+                type: 'contributor'
+            });
+            return contributor && contributor.bylineLargeImageUrl;
+        }
+
         function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
             if (imageSrc()) {
                 validateImageSrc(imageSrc(), opts)
@@ -627,31 +634,17 @@ define([
                         imageSrcHeight(height);
                     })
                     .fail(function(err) {
-                        undefine(imageSrc, imageSrcWidth, imageSrcHeight);
+                        undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
                         window.alert(err);
                     });
             } else {
-                undefine(imageSrc, imageSrcWidth, imageSrcHeight);
+                undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
             }
         };
 
-        function undefine() {
+        function undefineObservables() {
             Array.prototype.slice.call(arguments).forEach(function(fn) { fn(undefined); })
         };
-
-        function mainMediaType(contentApiArticle) {
-            var mainElement = _.findWhere(contentApiArticle.elements, {
-                relation: 'main'
-            });
-            return mainElement && mainElement.type;
-        }
-
-        function contributorImage(contentApiArticle) {
-            var contributor = _.findWhere(contentApiArticle.tags, {
-                type: 'contributor'
-            });
-            return contributor && contributor.bylineLargeImageUrl;
-        }
 
         function mod(n, m) {
             return ((n % m) + m) % m;
