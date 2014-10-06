@@ -13,8 +13,8 @@ define([
     'facia/modules/ui/container-fc-show-more',
     'facia/modules/ui/container-show-more',
     'facia/modules/ui/container-toggle',
-    'facia/modules/onwards/geo-most-popular-front',
-    'facia/modules/facia_cards/live-blog-updates'
+    'facia/modules/ui/live-blog-updates',
+    'facia/modules/onwards/geo-most-popular-front'
 ], function (
     $,
     ajax,

@@ -55,7 +55,7 @@ define([
             });
         }
 
-        if (elements && elements.length > 0) {
+        if (elements) {
             setInterval(updateLatestBlocks, updateIntervalInMillis);
             updateLatestBlocks();
         }

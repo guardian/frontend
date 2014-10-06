@@ -78,17 +78,13 @@
                         <div class="fc-item__standfirst">@Html(text)</div>
                     }
 
-                @trail match {
-                    case liveBlog: LiveBlog if liveBlog.isLive => {
-                        <div class="fc-item__latest-block-wrapper"><a @Html(LinkTo.getHrefWithRel(trail)) class="fc-item__latest-block js-live-blog-latest-block" data-article-id="@liveBlog.id"></a></div>
+                    @trail match {
+                        case liveBlog: LiveBlog if liveBlog.isLive => {
+                            <div class="fc-item__latest-block-wrapper"><a @Html(LinkTo.getHrefWithRel(trail)) class="fc-item__latest-block js-live-blog-latest-block" data-article-id="@liveBlog.id"></a></div>
+                        }
+    
+                        case _ => {}
                     }
-
-                    case _ => {}
-                }
-
-                @trail.trailText.map { text =>
-                    <div class="fc-item__standfirst">@Html(text)</div>
-                }
 
                     <footer class="fc-item__footer">
                         @sublinks(trail.supporting)
