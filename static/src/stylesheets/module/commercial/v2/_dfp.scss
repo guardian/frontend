@@ -36,6 +36,10 @@
                     left: $gs-gutter/2;
                     top: 0;
                 }
+                
+                &.hide-cta-link {
+                    display: none;
+                }
             }
         }
     }
