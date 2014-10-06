@@ -50,11 +50,6 @@ define([
 
             metaFields = [
                 {
-                    key: 'tone',
-                    label: 'tone',
-                    type: 'text'
-                },
-                {
                     key: 'group',
                     label: 'importance group',
                     type: 'text'
@@ -81,7 +76,7 @@ define([
                 {
                     key: 'href',
                     editable: true,
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap URL',
                     type: 'text'
                 },
@@ -103,11 +98,6 @@ define([
                     key: 'imageSrcHeight',
                     requires: 'imageReplace',
                     label: 'replacement image height',
-                    type: 'text'
-                },
-                {
-                    key: 'imageCutoutSrcFromCapi',
-                    label: 'contributor image from CAPI',
                     type: 'text'
                 },
                 {
@@ -151,14 +141,9 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'hasMainVideo',
-                    label: 'has a video',
-                    type: 'boolean'
-                },
-                {
                     key: 'showMainVideo',
                     editable: true,
-                    requires: 'hasMainVideo',
+                    requiresState: 'hasMainVideo',
                     singleton: 'images',
                     label: 'show video',
                     type: 'boolean'
@@ -200,25 +185,20 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'isSnap',
-                    label: 'is a snap',
-                    type: 'boolean'
-                },
-                {
                     key: 'snapType',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap type',
                     type: 'text'
                 },
                 {
                     key: 'snapCss',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap CSS class',
                     type: 'text'
                 },
                 {
                     key: 'snapUri',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap source',
                     type: 'text'
                 }
@@ -246,8 +226,12 @@ define([
                 'isOpen',
                 'isLoaded',
                 'isEmpty',
+                'isSnap',
+                'tone',
+                'hasMainVideo',
+                'imageCutoutSrcFromCapi',
                 'ophanUrl',
-                'sparkUrl']);
+                'sparkUrl']);   
 
             this.uneditable = opts.uneditable;
 
@@ -276,12 +260,6 @@ define([
                 return this.fields.isLive() === 'false' ?
                     vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl()) :
                     this.meta.href() || this.props.webUrl();
-            }, this);
-
-            this.provisionalImageSrc = ko.observable();
-
-            this.meta.imageSrc.subscribe(function(src) {
-                this.provisionalImageSrc(src);
             }, this);
 
             this.populate(opts);
@@ -328,7 +306,7 @@ define([
             if (opts.type === 'boolean') {
                 display = opts.editable;
                 display = display && (this.meta[opts.key] || function() {})();
-                display = display && (opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.meta.tone()) === -1 : true);
+                display = display && (opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.state.tone()) === -1 : true);
                 display = display && (opts.irreleventIfNo ? _.some(all, function(editor) { return editor.key === opts.irreleventIfNo && self.meta[editor.key](); }) : true);
                 return display ? opts.label : false;
 
@@ -373,9 +351,11 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    var display = opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.meta.tone()) === -1 : true;
+                    var display = opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.state.tone()) === -1 : true;
 
                     display = display && (opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true);
+                    display = display && (opts.requiresState ? self.state[opts.requiresState]() : true);
+
                     return display;
                 }, self),
 
@@ -481,13 +461,13 @@ define([
 
             }
 
-            this.meta.tone(getTone(opts));
+            this.state.imageCutoutSrcFromCapi(contributorImage(opts));
 
-            this.meta.imageCutoutSrcFromCapi(contributorImage(opts));
+            this.state.isSnap(!!snap.validateId(this.id()));
 
-            this.meta.hasMainVideo(mainMediaType(opts) === 'video');
+            this.state.hasMainVideo(mainMediaType(opts) === 'video');
 
-            this.meta.isSnap(!!snap.validateId(this.id()));
+            this.state.tone(getTone(opts));
 
             if (!this.uneditable) {
                 this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
@@ -593,7 +573,7 @@ define([
         };
 
         Article.prototype.convertToSnap = function() {
-            this.meta.isSnap(true);
+            this.state.isSnap(true);
             this.meta.href(this.id());
             this.id(snap.generateId());
         };
