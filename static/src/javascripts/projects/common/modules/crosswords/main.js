@@ -134,8 +134,18 @@ define([
             } else {
                 this.state.cellInFocus = {x: x, y: y};
 
-                /** If an across clue exists, default to that on initial focus; otherwise, down */
-                if (clue.across) {
+                function isStartOfClue(clue) {
+                    return clue && clue.position.x === x && clue.position.y === y;
+                }
+
+                /**
+                 * If the user clicks on the start of a down clue midway through an across clue, we should
+                 * prefer to highlight the down clue.
+                 */
+                if (!isStartOfClue(clue.across) && isStartOfClue(clue.down)) {
+                    this.state.directionOfEntry = 'down';
+                } else if (clue.across) {
+                    /** Across is the default focus otherwise */
                     this.state.directionOfEntry = 'across';
                 } else {
                     this.state.directionOfEntry = 'down';
