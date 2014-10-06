@@ -1,0 +1,67 @@
+@(jobs: Seq[model.commercial.jobs.Job])(implicit request: RequestHeader)
+
+@defining("http://jobs.theguardian.com", "0_2", "2014-04-30") { case (jobsHost, version, date) =>
+    <div class="commercial--v2 commercial--jobs--v2 commercial--tone-jobs commercial--low">
+        <div class="facia-container__inner--commercial">
+
+            <div class="container__header">
+                <div class="container__header__inner">
+                    <h3 class="commercial__title">
+                        <a href="@AdLink{@jobsHost/}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">
+                            <i class="i i-marque-54"></i><i class="i i-guardian-logo-commercial"></i><i class="i i-jobs-logo i-commercial-brand"></i>
+                            <span class="u-h">The Guardian</span> <span class="u-h">Jobs</span>
+                        </a>
+                    </h3>
+                    <a class="commercial__cta button button--tertiary button--large" href="@AdLink{@jobsHost/}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-browse-all-jobs">
+                        <i class="i i-arrow-white-right i-right"></i>
+                        <span class="commercial__cta__label">Browse <span class="hide-on-mobile-inline">all</span> jobs</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="container__body">
+                <div class="commercial__relevance commercial__relevance--high">
+                    <ul class="commercial--jobs__sectors">
+                        @Seq(
+                            Seq("arts", "Arts"),
+                            Seq("graduate", "Graduate"),
+                            Seq("social-care", "Social care"),
+                            Seq("charity", "Charity"),
+                            Seq("health", "Health"),
+                            Seq("higher-education", "Higher education"),
+                            Seq("environment", "Environment"),
+                            Seq("housing", "Housing"),
+                            Seq("schools", "Schools"),
+                            Seq("government", "Government"),
+                            Seq("media", "Media"),
+                            Seq("", "All sectors »")
+                        ).map { sector =>
+                            <li class="commercial--jobs__sector">
+                                <a class="commercial--jobs__sector__link commercial--tone__highlight" href="@AdLink{@jobsHost/@sector(0)}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-sector-@if(sector(0).nonEmpty){sector(0)}else{all}">@sector(1)</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                @if(jobs.nonEmpty) {
+                <div class="commercial__relevance commercial__relevance--low">
+                    <ul class="lineitems">
+                        @jobs.map { job =>
+                            <li class="lineitem lineitem--low">
+                                <a class="lineitem__link" href="@AdLink{@job.listingUrl}" data-link-name="merchandising-jobs-v@{version}_@{date}-low-job-@{job.id}">
+                                    <img class="lineitem__image" src="@job.recruiterLogoUrl" alt=""/>
+                                    <h4 class="lineitem__title">@job.title</h4>
+                                    <p class="lineitem__meta">
+                                        <span class="commercial--tone__highlight">@job.recruiterName</span><br/>
+                                        @job.locationDescription - @job.shortSalaryDescription
+                                    </p>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                }
+            </div>
+
+        </div>
+    </div>
+}
