@@ -69,11 +69,12 @@ Full item. A 100% width version of the Three quarter item.
     }
 
     .fc-item__avatar {
-        width: gs-span(3) + $gs-gutter * 2;
+        top: 0;
+        width: gs-span(4) + $gs-gutter * 2;
+    }
 
-        @include mq(desktop) {
-            width: gs-span(4) + $gs-gutter * 2;
-        }
+    .fc-item__avatar__media {
+        left: 0;
     }
 
     &.fc-item--has-cutout {

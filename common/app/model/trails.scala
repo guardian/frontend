@@ -47,5 +47,9 @@ trait FaciaFields {
   def isBreaking: Boolean = false
   def showKickerTag: Boolean = false
   def showKickerSection: Boolean = false
+  def showKickerCustom: Boolean = false
+  def customKicker: Option[String] = None
   def showMainVideo: Boolean = false
+  def imageCutoutReplace: Boolean = false
+  def customImageCutout: Option[FaciaImageElement]
 }

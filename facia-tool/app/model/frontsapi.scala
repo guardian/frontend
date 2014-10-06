@@ -47,6 +47,8 @@ case class Collection(
   showTags: Option[Boolean],
   showSections: Option[Boolean],
   hideKickers: Option[Boolean],
+  showDateHeader: Option[Boolean],
+  showLatestUpdate: Option[Boolean],
   showMainVideo: Option[Boolean]
 )
 
@@ -169,9 +171,15 @@ trait UpdateActions extends Logging {
     "imageSrc",
     "imageSrcWidth",
     "imageSrcHeight",
+    "imageCutoutReplace",
+    "imageCutoutSrc",
+    "imageCutoutSrcWidth",
+    "imageCutoutSrcHeight",
     "isBreaking",
     "showKickerTag",
     "showKickerSection",
+    "showKickerCustom",
+    "customKicker",
     "hideKickers",
     "showMainVideo"
   )

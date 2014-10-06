@@ -34,6 +34,6 @@
     "commit": "454e5e7e0cb53661240d5546a8a701cf6415a7f8"
   },
   "_source": "git://github.com/guardian/sass-mq.git",
-  "_target": "~2.1.1",
+  "_target": "~2",
   "_originalSource": "sass-mq"
 }

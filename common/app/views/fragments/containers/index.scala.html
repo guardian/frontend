@@ -4,7 +4,7 @@
 @import views.html.fragments.containers.facia_cards.slice
 @import views.html.fragments.keywordList
 @import views.support.MostPopularTags.topTags
-@import views.support.{GetClasses, Format, NewsContainer, PreviousAndNext, TemplateDeduping}
+@import views.support.{GetClasses, Format, PreviousAndNext, TemplateDeduping}
 @import common.LinkTo
 
 @defining(collection.displayName) { title =>
@@ -12,9 +12,8 @@
     @defining(templateDeduping(15, collection.items)) { items =>
         @if(items.nonEmpty) {
             <section
-                class="@GetClasses.forContainer(NewsContainer(showMore = false), config, containerIndex, title.nonEmpty)"
+                class="@GetClasses.forNewStyleContainer(config, false, title.nonEmpty, Seq("fc-container--first","container--news"))"
                 data-link-name="all index"
-                data-type="@NewsContainer(showMore = false).containerType"
                 @config.sponsorshipKeyword.map { keyword =>
                 data-keywords="@keyword"
                 }
