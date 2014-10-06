@@ -34,7 +34,7 @@
     <div class="discussion-content js-discussion-content">
         @if(!isTopComments){
             <div class="d-discussion__pagination">
-                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true) }
+                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true, false) }
             </div>
         }
 
@@ -49,7 +49,7 @@
 
         @if(!isTopComments){
             <div class="d-discussion__pagination u-cf">
-                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true) }
+                @page.pagination.map{ paginate => @fragments.pagination(page, paginate, Some("js-discussion-change-page"), true, false) }
             </div>
         }
     </div>

@@ -5,7 +5,7 @@ import org.scalatest.Matchers
 import play.api.test.FakeRequest
 import org.joda.time.DateTime
 import scala.xml._
-import model.Trail
+import model.{FaciaImageElement, Trail}
 
 class TrailsToRssTest extends FlatSpec with Matchers {
 
@@ -35,6 +35,9 @@ class TrailsToRssTest extends FlatSpec with Matchers {
 
 
 case class TestTrail(url: String) extends Trail {
+
+  override def customImageCutout: Option[FaciaImageElement] = None
+
   def webPublicationDate: DateTime = DateTime.now
   def shortUrl: String = ""
   def linkText: String = "hello …"

@@ -11,7 +11,7 @@ module.exports = function (grunt) {
         singleRun: grunt.option('single-run') !== false,
         staticTargetDir: './static/target/',
         staticHashDir: './static/hash/',
-        testConfDir: './common/test/assets/javascripts/conf/',
+        testConfDir: './static/test/javascripts/conf/',
         requirejsDir: './static/requirejs',
         webfontsDir: './resources/fonts/'
     };
@@ -25,11 +25,13 @@ module.exports = function (grunt) {
         configPath: require('path').join(process.cwd(), 'grunt-configs'),
         data: options,
         jitGrunt: {
-            replace: 'grunt-text-replace',
-            scsslint: 'grunt-scss-lint',
-            cssmetrics: 'grunt-css-metrics',
-            assetmonitor: 'grunt-asset-monitor',
-            px_to_rem: 'grunt-px-to-rem'
+            staticMappings: {
+                replace: 'grunt-text-replace',
+                scsslint: 'grunt-scss-lint',
+                cssmetrics: 'grunt-css-metrics',
+                assetmonitor: 'grunt-asset-monitor',
+                px_to_rem: 'grunt-px-to-rem'
+            }
         }
     });
 

@@ -16,7 +16,9 @@ import test.ConfiguredTestSuite
     showTags = Some(true),
     showSections = Some(false),
     showMainVideo = None,
-    hideKickers = Some(false)
+    hideKickers = Some(false),
+    showLatestUpdate = Some(false),
+    showDateHeader = Some(false)
   )
 
   val createCommandFixture = CreateFront(
@@ -30,6 +32,7 @@ import test.ConfiguredTestSuite
     imageWidth = None,
     imageHeight = None,
     isImageDisplayed = None,
+    isHidden = None,
     priority = Some("high"),
     initialCollection = collectionFixture
   )
@@ -44,10 +47,12 @@ import test.ConfiguredTestSuite
     None,
     None,
     None,
+    None,
+    None,
     None
   )
 
-  val emptyFrontFixture = Front(Nil, None, None, None, None, None, None, None, None, None, None)
+  val emptyFrontFixture = Front(Nil, None, None, None, None, None, None, None, None, None, None, None)
 
   val validConfigFixture = Config.empty.copy(
     fronts = Map("foo" -> emptyFrontFixture.copy(collections = List("bar"))),
@@ -72,6 +77,7 @@ import test.ConfiguredTestSuite
         imageWidth = None,
         imageHeight = None,
         isImageDisplayed = None,
+        isHidden = None,
         priority = Some("high")
       ))
   }
