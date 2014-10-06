@@ -181,7 +181,6 @@ define([
             // expected targetting
             [
                 ['edition', 'us'],
-                ['cat', 'news'],
                 ['se', 'happy-times'],
                 ['ct', 'article'],
                 ['pt', 'article'],
