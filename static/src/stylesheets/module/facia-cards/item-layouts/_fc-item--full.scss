@@ -52,10 +52,6 @@ Full item. A 100% width version of the Three quarter item.
 
     &.fc-item--has-sublinks-4 {
         @include fc-sublinks--horizontal;
-
-        .fc-sublinks {
-            // padding-right: 0;
-        }
     }
 
     .fc-item__avatar {
