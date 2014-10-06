@@ -92,8 +92,7 @@
     }
 }
 
-.fc-item--standard-tablet,
-.fc-item--standard-quarter-tablet {
+.fc-item--standard-tablet {
     @include mq(tablet) {
         @include fc-item--standard;
     }

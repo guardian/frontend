@@ -1,0 +1,330 @@
+/* ==========================================================================
+   Commercial container layout adaptions
+   ========================================================================== */
+.commercial--v2 {
+    background-color: $c-neutral6;
+
+    .facia-container__inner--commercial {
+        position: relative;
+        overflow: hidden;
+        margin-left: auto;
+        margin-right: auto;
+
+        @include mq(leftCol) {
+            padding-left: 0;
+            padding-right: 0;
+            max-width: gs-span(14) + $gs-gutter*2;
+        }
+
+        @include mq(wide) {
+            width: gs-span(16) + $gs-gutter*2;
+            max-width: none;
+        }
+    }
+
+    .container__header__inner,
+    .container__body {
+        position: relative;
+        overflow: hidden;
+
+        @include mq($until: leftCol) {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @include mq(mobileLandscape) {
+            max-width: gs-span(8);
+        }
+
+        @include mq(tablet) {
+            max-width: gs-span(9);
+        }
+
+        @include mq(desktop) {
+            max-width: gs-span(12);
+        }
+    }
+
+    .container__header__inner {
+        padding: $gs-baseline/2 $gs-gutter/2;
+
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+
+        @include mq(leftCol) {
+            @include box-sizing(border-box);
+            padding-left: $gs-gutter/2;
+            padding-right: $gs-gutter/2;
+            height: 100%;
+        }
+    }
+
+    .container__header {
+        background-color: $c-neutral2;
+        height: 100%;
+
+        @include mq(leftCol) {
+            width: $left-column + $gs-gutter;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+        }
+        @include mq(wide) {
+            width: $left-column-wide + $gs-gutter;
+        }
+        .commercial__cta.button {
+            @include button-colour(transparent, #ffffff, transparent, #ffffff);
+            border-color: rgba(#ffffff, .3);
+        }
+    }
+
+    .container__body {
+        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline;
+
+        @include mq(mobileLandscape) {
+            padding-left: $gs-gutter;
+            padding-right: $gs-gutter;
+        }
+        @include mq(leftCol) {
+            margin-left: $left-column + $gs-gutter;
+        }
+        @include mq(wide) {
+            margin-left: $left-column-wide + $gs-gutter;
+            margin-right: 0;
+        }
+    }
+
+    .commercial__search {
+        @include mq(mobileLandscape) {
+            right: $gs-gutter;
+        }
+        @include mq(tablet) {
+            position: absolute;
+            width: gs-span(3);
+            top: 0;
+            right: gs-span(3) + $gs-gutter*2;
+        }
+        @include mq(leftCol) {
+            width: auto;
+            top: auto;
+            right: $gs-gutter/2;
+            bottom: $gs-baseline*4.5;
+            left: $gs-gutter/2;
+        }
+    }
+
+    .commercial__search__inner {
+        width: 100%;
+        position: relative;
+        padding-top: $gs-baseline/2;
+    }
+
+    .commercial__search__input {
+        @include box-sizing(border-box);
+        @include border-radius(18px);
+        @include fs-textSans(2);
+        background-color: rgba(#ffffff, .9);
+        border: 0;
+        width: 100%;
+        height: $gs-row-height;
+        padding: $gs-baseline/2 $gs-gutter/2 $gs-baseline/4 $gs-baseline*3;
+        float: left;
+        overflow: hidden;
+
+        &:hover,
+        &:focus {
+            outline: none;
+        }
+
+        &:focus {
+            background-color: #ffffff;
+            @include box-shadow(0 0 0 2px rgba(#000000, .3), inset 0 1px 2px 0 rgba(#000000, .3))
+        }
+    }
+
+    .commercial__search__submit {
+        position: absolute;
+        left: 0;
+        width: $gs-baseline*3;
+        height: $gs-baseline*3;
+        padding: $gs-baseline*.75;
+
+        &:hover,
+        &:focus,
+        &:active {
+            outline: none;
+        }
+    }
+
+    .commercial__cta {
+        width: auto;
+        margin-right: 0;
+        position: absolute;
+        top: $gs-baseline/2;
+        right: $gs-gutter/2;
+
+        @include mq(mobileLandscape, leftCol) {
+            right: $gs-gutter;
+        }
+
+        @include mq(tablet, leftCol) {
+            width: gs-span(3);
+        }
+
+        @include mq(leftCol) {
+            top: auto;
+            bottom: $gs-baseline;
+            left: $gs-gutter/2;
+        }
+        
+        .hide-on-mobile-inline {
+            @include mq(leftCol, wide) {
+                display: none !important;
+            }
+        }
+
+        .i-right {
+            @include mq($until: mobile) {
+                margin: -1px -13px 0;
+                float: none;
+            }
+        }
+    }
+
+    .commercial__title {
+        @include fs-header(3);
+        line-height: 1;
+        min-height: $gs-baseline*3;
+        color: #ffffff;
+        margin: 0;
+
+        a {
+            color: #ffffff;
+        }
+        .i-guardian-logo-commercial {
+            display: inline-block;
+
+            @include mq(leftCol) {
+                display: none;
+            }
+        }
+        .i-marque-54 {
+            display: none;
+
+            @include mq(leftCol) {
+                display: block;
+            }
+        }
+        .i-commercial-brand {
+            @include mq($until: leftCol) {
+                opacity: .8;
+            }
+        }
+    }
+
+    .commercial__title__logo {
+        @include fs-header(2);
+        display: inline-block;
+        position: relative;
+        top: -5px;
+    }
+
+    .commercial__headline {
+        @include fs-headline(2);
+        margin-bottom: $gs-gutter;
+    }
+
+    .commercial__desc {
+        color: #ffffff;
+        @include fs-headline(1);
+        margin-top: $gs-baseline*-1.5;
+        margin-bottom: 0;
+
+        @include mq(leftCol) {
+            @include fs-headline(2);
+            margin-top: 0;
+        }
+    }
+
+    .commercial__header {
+        @include fs-header(2);
+        margin-bottom: $gs-baseline;
+    }
+
+    .button--tertiary {
+        .i-arrow-black-right {
+            opacity: .3;
+        }
+        &:hover .i-arrow-black-right {
+            opacity: 1;
+        }
+    }
+}
+
+
+/* ==========================================================================
+   Commercial container layout adaptions for front pages with page skins
+   Update once breakpoints synced
+   ========================================================================== */
+.commercial--v2 {
+    .has-page-skin & {
+        @include mq(wide) {
+            .container__header__inner,
+            .container__body {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .container__header__inner {
+                @include box-sizing(content-box);
+                margin: 0;
+                padding-left: $gs-gutter;
+                padding-right: $gs-gutter;
+                height: auto;
+            }
+
+            .container__header {
+                width: 100%;
+                position: relative;
+
+                .commercial__search {
+                    position: absolute;
+                    width: gs-span(3);
+                    top: 0;
+                    right: gs-span(3) + $gs-gutter*2;
+                    left: auto;
+                }
+
+                .commercial__cta {
+                    top: $gs-baseline/2;
+                    right: $gs-gutter;
+                    bottom: auto;
+                    left: auto;
+                    width: gs-span(3);
+                }
+            }
+
+            .commercial__title {
+                .i-guardian-logo-commercial {
+                    display: inline-block;
+                }
+                .i-marque-54 {
+                    display: none;
+                }
+                .i-commercial-brand {
+                    opacity: .8;
+                }
+            }
+
+            .commercial__desc {
+                margin-top: $gs-baseline*-1.333;
+            }
+
+            .container__body {
+                margin-left: 0;
+            }
+        }
+    }
+}

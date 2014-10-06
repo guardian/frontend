@@ -1,9 +1,7 @@
 {
-    "src": "../../static/src/images/commercial/",
-    "imgDest": "../../static/target/images/commercial",
-    "cssDest": "../../static/src/stylesheets/icons/",
-    "datasvgcss" : "_commercial-icons-svg.scss",
-    "urlpngcss" : "_commercial-icons-sprite.scss",
-    "spritepath" : "../images/commercial/",
-    "svg" : true
+    "src":        "../../static/src/images/commercial/",
+    "imgDest":    "../../static/target/images/commercial/",
+    "cssDest":    "../../static/src/stylesheets/icons/",
+    "cssSvgName": "_commercial-icons-svg.scss",
+    "cssPngName": "_commercial-icons-sprite.scss"
 }

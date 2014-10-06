@@ -120,6 +120,7 @@ Loader.prototype.ready = function() {
 
         if (commentId || window.location.hash === '#comments') {
             self.comments.removeState('shut');
+            self.comments.removeState('partial');
         }
 
         bonzo(commentsContainer).removeClass('modern-hidden');
