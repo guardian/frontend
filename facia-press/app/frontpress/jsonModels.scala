@@ -78,11 +78,37 @@ object ItemMeta {
     ("snapUri", content.apiContent.metaData.get("snapUri")),
     ("showKickerTag", content.apiContent.metaData.get("showKickerTag")),
     ("showKickerSection", content.apiContent.metaData.get("showKickerSection")),
+    ("showKickerCustom", content.apiContent.metaData.get("showKickerCustom")),
+    ("customKicker", content.apiContent.metaData.get("customKicker")),
     ("showBoostedHeadline", content.apiContent.metaData.get("showBoostedHeadline")),
     ("showQuotedHeadline", content.apiContent.metaData.get("showQuotedHeadline")),
     ("showMainVideo", content.apiContent.metaData.get("showMainVideo"))
   )
 }
+
+case class ItemMeta(
+  headline:      Option[JsValue],
+  trailText:     Option[JsValue],
+  byline:        Option[JsValue],
+  showByline:    Option[Boolean],
+  group:         Option[JsValue],
+  isBoosted:     Option[Boolean],
+  imageHide:     Option[Boolean],
+  imageCutoutReplace:   Option[Boolean],
+  imageCutoutSrc:       Option[JsValue],
+  imageCutoutSrcWidth:  Option[JsValue],
+  imageCutoutSrcHeight: Option[JsValue],
+  isBreaking:    Option[Boolean],
+  supporting:    Option[Seq[JsValue]],
+  href:          Option[JsValue],
+  snapType:      Option[JsValue],
+  snapCss:       Option[JsValue],
+  snapUri:       Option[JsValue],
+  showKickerTag: Option[JsValue],
+  showKickerSection: Option[JsValue],
+  showMainVideo: Option[JsValue]
+)
+
 
 object TrailJson {
   implicit val jsonFormat = Json.format[TrailJson]

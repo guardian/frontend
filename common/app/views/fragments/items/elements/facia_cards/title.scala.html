@@ -43,10 +43,8 @@
             <span class="fc-item__kicker">@Html(html)</span>
         }
     }
-
+} {
     @LinkTo(trail).map { url =>
-        <a href="@url" class="fc-item__link" data-link-name="article">
-            <span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span>
-        </a>
+        <a href="@url" class="fc-item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span></a>
     }
 }

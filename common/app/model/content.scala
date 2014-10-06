@@ -191,9 +191,10 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val isBreaking: Boolean = getMeta("isBreaking")(_.asOpt[Boolean]).getOrElse(false)
   override lazy val showKickerTag: Boolean = getMeta("showKickerTag")(_.asOpt[Boolean]).getOrElse(false)
   override lazy val showKickerSection: Boolean = getMeta("showKickerSection")(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val showBoostedHeadline: Boolean = apiContent.metaData.get("showBoostedHeadline").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val showQuotedHeadline: Boolean = apiContent.metaData.get("showQuotedHeadline").flatMap(_.asOpt[Boolean]).getOrElse(isComment)
-
+  override lazy val showKickerCustom: Boolean = getMeta("showKickerCustom")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val customKicker: Option[String] = getMeta("customKicker")(_.asOpt[String])
+  override lazy val showBoostedHeadline: Boolean = getMeta("showBoostedHeadline")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val showQuotedHeadline: Boolean = getMeta("showQuotedHeadline")(_.asOpt[Boolean]).getOrElse(false)
   override lazy val imageReplace: Boolean = getMeta("imageReplace")(_.asOpt[Boolean]).getOrElse(false)
   override lazy val imageSrc: Option[String] = getMeta("imageSrc")(_.asOpt[String])
   override lazy val imageSrcWidth: Option[String] = getMeta("imageSrcWidth")(_.asOpt[String])

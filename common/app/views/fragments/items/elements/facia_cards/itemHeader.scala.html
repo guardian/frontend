@@ -1,15 +1,16 @@
-@(isFirstItemOnPage: Boolean, showQuote: Boolean, boostHeadline: Boolean)(html: Html)
+@(isFirstItemOnPage: Boolean, showQuote: Boolean, boostHeadline: Boolean)(kickerHtml: Html)(linkHtml: Html)
 
 @import views.support.RenderClasses
+@import views.support.KickerHtml.trimAndAppend
 
-@defining(RenderClasses(Map(
+@defining(trimAndAppend(kickerHtml, linkHtml), RenderClasses(Map(
     "fc-item__title" -> true,
     "fc-item__title--quoted" -> showQuote,
     "fc-item__title--boosted" -> boostHeadline
-))) { classes =>
+))) { case (innerHtml, classes) =>
     @if(isFirstItemOnPage) {
-        <h1 class="@classes">@html</h1>
+        <h1 class="@classes">@innerHtml</h1>
     } else {
-        <h2 class="@classes">@html</h2>
+        <h2 class="@classes">@innerHtml</h2>
     }
 }
