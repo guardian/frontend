@@ -46,14 +46,14 @@ jfDefer.promise.then(function (config) {
                                     // create svg css rule
                                     svgCss.push(
                                         handlebars.compile(
-                                            '   %svg-i-{{name}},\n' +
-                                            '   .svg-i-{{name}} {\n' +
-                                            '       background-image: url(data:image/svg+xml;base64,{{data}});\n' +
-                                            '       background-position: 0 0;\n' +
-                                            '   }\n' +
-                                            '   .svg .i-{{name}} {\n' +
-                                            '       @extend %svg-i-{{name}} !optional;\n' +
-                                            '   }'
+                                            '    %svg-i-{{name}},\n' +
+                                            '    .svg-i-{{name}} {\n' +
+                                            '        background-image: url(data:image/svg+xml;base64,{{data}});\n' +
+                                            '        background-position: 0 0;\n' +
+                                            '    }\n' +
+                                            '    .svg .i-{{name}} {\n' +
+                                            '        @extend %svg-i-{{name}} !optional;\n' +
+                                            '    }'
                                         )({ name: iconName, data: iconDataBase64})
                                       );
                                     sprite.evaluate(
@@ -79,9 +79,9 @@ jfDefer.promise.then(function (config) {
                                                 handlebars.compile(
                                                     '%i-{{name}},\n' +
                                                     '.i-{{name}} {\n' +
-                                                    '   background-position: -{{x}}px -{{y}}px;\n' +
-                                                    '   width: {{width}}px;\n' +
-                                                    '   height: {{height}}px;\n' +
+                                                    '    background-position: -{{x}}px -{{y}}px;\n' +
+                                                    '    width: {{width}}px;\n' +
+                                                    '    height: {{height}}px;\n' +
                                                     '}'
                                                 )({
                                                     name:  iconName,
