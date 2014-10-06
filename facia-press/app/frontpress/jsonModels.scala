@@ -147,7 +147,9 @@ object CollectionJson {
       `type`         = config.collectionType,
       showTags       = config.showTags,
       showSections   = config.showSections,
-      hideKickers    = config.hideKickers
+      hideKickers    = config.hideKickers,
+      showDateHeader = config.showDateHeader,
+      showLatestUpdate = config.showLatestUpdate
     )
 }
 
@@ -166,5 +168,7 @@ case class CollectionJson(
   href:         Option[String],
   showTags:     Boolean,
   showSections: Boolean,
-  hideKickers:  Boolean
+  hideKickers:  Boolean,
+  showDateHeader: Boolean,
+  showLatestUpdate: Boolean
                            )
