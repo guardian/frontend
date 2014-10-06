@@ -66,7 +66,11 @@ object MediaInSectionController extends Controller with Logging with Paging with
       case _ => sectionId
     }
     val tagCombinedHref = s"$sectionTag/$sectionTag+content/$mediaType"
-    implicit val config = Config(id = sectionId, href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} $mediaType") )
+    val pluralMediaType = mediaType match {
+      case "audio" => "audio"
+      case m => s"${m}s"
+    }
+    implicit val config = Config(id = sectionId, href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} $pluralMediaType") )
     val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1, "content", useInlinePlayer = false)
     renderFormat(response, response, 1)
   }
