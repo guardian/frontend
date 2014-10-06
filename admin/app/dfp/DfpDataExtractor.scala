@@ -4,7 +4,7 @@ case class DfpDataExtractor(lineItems: Seq[GuLineItem]) {
 
   val isValid = lineItems.nonEmpty
 
-  def sectionsFromAdUnits(adUnits: Seq[GuAdUnit]): Seq[String] = adUnits map (_.path.drop(1).head)
+  def sectionsFromAdUnits(adUnits: Seq[GuAdUnit]): Seq[String] = adUnits flatMap (_.path.drop(1).headOption)
 
   val sponsorships: Seq[Sponsorship] = {
     lineItems.withFilter { lineItem =>
