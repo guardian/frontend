@@ -1,11 +1,10 @@
-@(collection: model.Collection, containerLayout: layout.ContainerLayout, containerIndex: Int)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
+@(collection: model.Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, frontProperties: model.FrontProperties = model.FrontProperties.empty)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
 @import views.support.GetClasses
-@import views.html.fragments.containers.facia_cards.{show_more, slice}
+@import views.html.fragments.containers.facia_cards.{show_more, slice, containerHeader}
 @import model.FaciaComponentName
-@import common.LinkTo
 
-@defining((config.displayName.orElse(collection.displayName), config.href.orElse(collection.href))) { case (title, href) =>
+@defining(config.displayName.orElse(collection.displayName)) { case (title) =>
     <section id="@FaciaComponentName(config, collection)"
              class="@GetClasses.forNewStyleContainer(config, containerIndex == 0, title.nonEmpty)"
              data-link-name="@FaciaComponentName(config, collection)"
@@ -15,17 +14,7 @@
              }
              data-component="@FaciaComponentName(config, collection)">
         <div class="facia-container__inner">
-            <div class="container__header">
-            @title.map { title =>
-                <h2 class="container__title">
-                    @href.map { href =>
-                    <a class="container__title__label u-text-hyphenate" data-link-name="section heading" href="@LinkTo{/@href}">@Html(title)</a>
-                    }.getOrElse{
-                        <span class="container__title__label u-text-hyphenate">@Html(title)</span>
-                    }
-                </h2>
-            }
-            </div>
+            @containerHeader(collection, frontProperties, containerIndex)
             <div class="container__body container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more">
                 @for(sliceWithCards <- containerLayout.slices) {
                     @slice(sliceWithCards, containerIndex)

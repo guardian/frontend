@@ -13,9 +13,11 @@ case class Config(
                    groups: Seq[String],
                    collectionType: Option[String],
                    showTags: Boolean = false,
-                   showSections: Boolean = false
+                   showSections: Boolean = false,
+                   hideKickers: Boolean = false,
+                   showDateHeader: Boolean = false,
+                   showLatestUpdate: Boolean = false
                    ) {
-
   lazy val isSponsored: Boolean = DfpAgent.isSponsored(this)
   lazy val isAdvertisementFeature: Boolean = DfpAgent.isAdvertisementFeature(this)
   lazy val isFoundationSupported: Boolean = DfpAgent.isFoundationSupported(this)

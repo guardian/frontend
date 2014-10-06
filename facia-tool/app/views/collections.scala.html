@@ -129,7 +129,8 @@
                         hasFocus: hasFocus,
                         attr: {
                             class: 'element__' + key + (hasFocus() ? ' active' : ''),
-                            placeholder: field() || label + '...'
+                            placeholder: field() || label + '...',
+                            title: label
                         },
                         autoResize: true,
                         tabbableFormField: true,
@@ -263,16 +264,18 @@
             clickBubble: false,
             css: {
                 open: state.isOpen,
-                underDrag: state.underDrag
+                underDrag: state.underDrag,
+                imageHidden: meta.imageHide
             }">
 
-            <a class="thumb" target="article" data-bind="attr: {href: id}">
-                <img draggable="false" data-bind="
-                    attr: {
-                        src: meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : fields.thumbnail(),
-                        title: id
-                    }"/>
-            </a>
+            <a class="thumb" data-bind="
+                style: { 'background-image': 'url(' + (meta.imageReplace() && meta.imageSrc() ? meta.imageSrc() : meta.imageCutoutReplace() ? meta.imageCutoutSrc() || meta.imageCutoutSrcFromCapi() || fields.thumbnail() : fields.thumbnail() ) + ')' },
+                attr: {href: id}"></a>
+
+            <!-- ko if: meta.imageCutoutSrcFromCapi() && !meta.imageCutoutReplace() -->
+                <a class="thumb--cutout" data-bind="
+                    style: { 'background-image': 'url(' + meta.imageCutoutSrcFromCapi() + ')' }"></a>
+            <!-- /ko -->
 
             <div data-bind="if: state.isOpen">
                 <div class="article__overrides"
@@ -296,31 +299,30 @@
                 </div>
             </div>
 
-            <div class="closed" data-bind="if: !state.isOpen()">
-
+            <div class="closed" data-bind="ifnot: state.isOpen">
                 <img class="article__spark" data-bind="
                     visible: state.sparkUrl,
                     attr: {src: state.sparkUrl}" />
 
                 <div class="article__tools">
+                    <a class="tool tool--small tool--small--paste" data-bind="
+                        clickBubble: false,
+                        click: paste">paste</a>
+
                     <a class="tool tool--small tool--small--copy" data-bind="
                         clickBubble: false,
                         click: copy">copy</a>
 
-                    <a class="tool tool--small tool--small--paste" data-bind="
+                    <a class="tool tool--small tool--small--remove" data-bind="
                         clickBubble: false,
-                        click: paste">paste</a>
+                        click: $parent.omitItem">
+                        <i class="icon-trash"></i></a>
 
                     <a class="tool tool--small tool--small--href" target="_blank" data-bind="
                         click: function() { return true; },
                         clickBubble: false,
                         attr: {href: viewUrl}">
                         <i class="icon-share-alt"></i></a>
-
-                    <a class="tool tool--small tool--small--remove" data-bind="
-                        clickBubble: false,
-                        click: $parent.omitItem">
-                        <i class="icon-trash"></i></a>
                 </div>
 
                 <a class="article__content" data-bind="attr: {href: id}">
@@ -364,7 +366,7 @@
 
                             <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
 
-                            <span data-bind="
+                            <span class="trailText" data-bind="
                                 html: meta.trailText() || fields.trailText()"></span>
                         </div>
                     <!-- /ko -->

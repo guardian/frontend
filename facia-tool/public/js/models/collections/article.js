@@ -42,6 +42,7 @@ define([
             capiFields = [
                 'headline',
                 'trailText',
+                'byline',
                 'isLive',
                 'firstPublicationDate',
                 'scheduledPublicationDate',
@@ -67,6 +68,13 @@ define([
                     type: 'text'
                 },
                 {
+                    key: 'byline',
+                    editable: true,
+                    requires: 'showByline',
+                    label: 'byline',
+                    type: 'text'
+                },
+                {
                     key: 'href',
                     editable: true,
                     requires: 'isSnap',
@@ -78,12 +86,50 @@ define([
                     editable: true,
                     requires: 'imageReplace',
                     label: 'replacement image URL',
-                    validator: validateAndProcessImageSrc,
+                    validator: 'validateImageMain',
+                    type: 'text'
+                },
+                {
+                    key: 'imageSrcWidth',
+                    requires: 'imageReplace',
+                    label: 'replacement image width',
+                    type: 'text'
+                },
+                {
+                    key: 'imageSrcHeight',
+                    requires: 'imageReplace',
+                    label: 'replacement image height',
+                    type: 'text'
+                },
+                {
+                    key: 'imageCutoutSrcFromCapi',
+                    label: 'contributor image from CAPI',
+                    type: 'text'
+                },
+                {
+                    key: 'imageCutoutSrc',
+                    editable: true,
+                    requires: 'imageCutoutReplace',
+                    label: 'replacement cutout image URL',
+                    validator: 'validateImageCutout',
+                    type: 'text'
+                },
+                {
+                    key: 'imageCutoutSrcWidth',
+                    requires: 'imageCutoutReplace',
+                    label: 'replacement cutout image width',
+                    type: 'text'
+                },
+                {
+                    key: 'imageCutoutSrcHeight',
+                    requires: 'imageCutoutReplace',
+                    label: 'replacement cutout image height',
                     type: 'text'
                 },
                 {
                     key: 'isBreaking',
                     editable: true,
+                    singleton: 'kicker',
                     label: 'breaking news',
                     type: 'boolean'
                 },
@@ -93,7 +139,12 @@ define([
                     label: 'boost',
                     type: 'boolean'
                 },
-
+                {
+                    key: 'showByline',
+                    editable: true,
+                    label: 'show byline',
+                    type: 'boolean'
+                },
                 {
                     key: 'hasMainVideo',
                     label: 'has a video',
@@ -107,12 +158,11 @@ define([
                     label: 'show video',
                     type: 'boolean'
                 },
-
                 {
-                    key: 'imageHide',
+                    key: 'imageCutoutReplace',
                     editable: true,
                     singleton: 'images',
-                    label: 'hide image',
+                    label: 'cutout image',
                     type: 'boolean'
                 },
                 {
@@ -121,6 +171,13 @@ define([
                     singleton: 'images',
                     label: 'replace image',
                     displayIf: 'imageSrc',
+                    type: 'boolean'
+                },
+                {
+                    key: 'imageHide',
+                    editable: true,
+                    singleton: 'images',
+                    label: 'hide image',
                     type: 'boolean'
                 },
                 {
@@ -136,18 +193,6 @@ define([
                     singleton: 'kicker',
                     label: 'section kicker',
                     type: 'boolean'
-                },
-                {
-                    key: 'imageSrcWidth',
-                    requires: 'imageReplace',
-                    label: 'replacement image width',
-                    type: 'text'
-                },
-                {
-                    key: 'imageSrcHeight',
-                    requires: 'imageReplace',
-                    label: 'replacement image height',
-                    type: 'text'
                 },
                 {
                     key: 'isSnap',
@@ -297,11 +342,8 @@ define([
             meta = self.meta[key] || function() {};
             field = self.fields[key] || function() {};
 
-            if (_.isFunction(opts.validator)) {
-                meta.extend({ rateLimit: 100 })
-                meta.subscribe(function() {
-                    opts.validator(meta, self.meta)
-                }, this);
+            if (opts.validator && _.isFunction(self[opts.validator])) {
+                meta.subscribe(function() { self[opts.validator](); });
             }
 
             return {
@@ -317,7 +359,7 @@ define([
 
                 revert: function() { meta(undefined); },
 
-                open:   function() { mediator.emit('ui:open', meta); },
+                open:   function() { mediator.emit('ui:open', meta, self); },
 
                 hasFocus: ko.computed(function() {
                     return meta === vars.model.uiOpenElement();
@@ -341,7 +383,7 @@ define([
                    _.chain(all)
                     .filter(function(editor) { return editor.requires === key; })
                     .first(1)
-                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key]); });
+                    .each(function(editor) { mediator.emit('ui:open', self.meta[editor.key], self); });
                 },
 
                 length: ko.computed(function() {
@@ -364,35 +406,30 @@ define([
             }
         };
 
-        function mainMediaType(contentApiArticle) {
-            var mainElement = _.findWhere(contentApiArticle.elements || [], {
-                relation: 'main'
-            });
-            return mainElement && mainElement.type;
-        }
-
-        function validateAndProcessImageSrc(imageSrc, meta) {
-            if (imageSrc()) {
-                validateImageSrc(imageSrc(), {
+        Article.prototype.validateImageMain = function() {
+            validateImage(
+                this.meta.imageSrc,
+                this.meta.imageSrcWidth,
+                this.meta.imageSrcHeight,
+                {
                     maxWidth: 940,
                     minWidth: 620,
                     widthAspectRatio: 3,
                     heightAspectRatio: 5
-                })
-                .done(function(width, height) {
-                    meta.imageSrcWidth(width);
-                    meta.imageSrcHeight(height);
-                })
-                .fail(clearImageMeta);
-            } else {
-                clearImageMeta();
-            }
+                }
+            )
+        };
 
-            function clearImageMeta() {
-                meta.imageSrc(undefined);
-                meta.imageSrcWidth(undefined);
-                meta.imageSrcHeight(undefined);
-            };
+        Article.prototype.validateImageCutout = function() {
+            validateImage(
+                this.meta.imageCutoutSrc,
+                this.meta.imageCutoutSrcWidth,
+                this.meta.imageCutoutSrcHeight,
+                {
+                    maxWidth: 940,
+                    minWidth: 400
+                }
+            )
         };
 
         Article.prototype.populate = function(opts, validate) {
@@ -417,17 +454,23 @@ define([
                     this.state.isLoaded(true);
                     this.sparkline();
                 }
+
             }
+
+            this.meta.imageCutoutSrcFromCapi(contributorImage(opts));
 
             this.meta.hasMainVideo(mainMediaType(opts) === 'video');
 
             this.meta.isSnap(!!snap.validateId(this.id()));
 
-            if(!this.uneditable) {
+            if (!this.uneditable) {
                 this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
             }
 
             this.setRelativeTimes();
+
+
+
         };
 
         Article.prototype.setRelativeTimes = function() {
@@ -527,23 +570,21 @@ define([
             this.meta.isSnap(true);
             this.meta.href(this.id());
             this.id(snap.generateId());
-            this.state.isOpen(true);
-            mediator.emit('ui:open', this.meta.headline);
         };
 
         Article.prototype.open = function() {
             if (this.uneditable) { return; }
 
-            if (!this.state.isOpen()) {
+            this.meta.supporting && this.meta.supporting.items().forEach(function(sublink) { sublink.close(); });
 
+            if (!this.state.isOpen()) {
                 if (this.editors().length === 0) {
                     this.editors(metaFields.map(this.metaEditor, this).filter(function (editor) { return editor; }));
                 }
-
                 this.state.isOpen(true);
-                mediator.emit('ui:open', this.meta.headline);
+                mediator.emit('ui:open', this.meta.headline, this);
             } else {
-                mediator.emit('ui:open', undefined);
+                mediator.emit('ui:open');
             }
         };
 
@@ -556,6 +597,40 @@ define([
             this.save();
             return false;
         };
+
+        function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
+            if (imageSrc()) {
+                validateImageSrc(imageSrc(), opts)
+                    .done(function(width, height) {
+                        imageSrcWidth(width);
+                        imageSrcHeight(height);
+                    })
+                    .fail(function(err) {
+                        undefine(imageSrc, imageSrcWidth, imageSrcHeight);
+                        window.alert(err);
+                    });
+            } else {
+                undefine(imageSrc, imageSrcWidth, imageSrcHeight);
+            }
+        };
+
+        function undefine() {
+            Array.prototype.slice.call(arguments).forEach(function(fn) { fn(undefined); })
+        };
+
+        function mainMediaType(contentApiArticle) {
+            var mainElement = _.findWhere(contentApiArticle.elements, {
+                relation: 'main'
+            });
+            return mainElement && mainElement.type;
+        }
+
+        function contributorImage(contentApiArticle) {
+            var contributor = _.findWhere(contentApiArticle.tags, {
+                type: 'contributor'
+            });
+            return contributor && contributor.bylineLargeImageUrl;
+        }
 
         function mod(n, m) {
             return ((n % m) + m) % m;
@@ -577,6 +652,8 @@ define([
 
         ko.bindingHandlers.tabbableFormField = {
             init: function(el, valueAccessor, allBindings, viewModel, bindingContext) {
+                var self = this;
+
                 $(el).on('keydown', function(e) {
                     var keyCode = e.keyCode || e.which,
                         formField,
@@ -588,7 +665,7 @@ define([
                         formField = bindingContext.$rawData;
                         formFields = _.filter(bindingContext.$parent.editors(), function(ed) { return ed.type === "text" && ed.displayEditor(); });
                         nextIndex = mod(formFields.indexOf(formField) + (e.shiftKey ? -1 : 1), formFields.length);
-                        mediator.emit('ui:open', formFields[nextIndex].meta);
+                        mediator.emit('ui:open', formFields[nextIndex].meta, self);
                     }
                 });
             }

@@ -21,4 +21,6 @@ case class VideoPlayer(
   def showEndSlate = width >= Video640.width.get
 
   def isRatioHd = overrideIsRatioHd getOrElse profile.isRatioHD
+
+  def blockVideoAds = video.blockVideoAds
 }

@@ -2,6 +2,21 @@ package slices
 
 import model.Content
 
+object TagContainers {
+  import ContainerDefinition.{ofSlices => slices}
+
+  val allTagPage = slices(
+    QuarterQuarterQuarterQuarter,
+    TlTlTl,
+    TlTlTl,
+    TlTlTl,
+    TlTlTl,
+    TlTlTl,
+    TlTlTl,
+    TlTlMpu
+  )
+}
+
 object FixedContainers {
   import ContainerDefinition.{ofSlices => slices}
 

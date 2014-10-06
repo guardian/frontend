@@ -63,7 +63,10 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
         (collectionJson \ "groups").asOpt[Seq[String]] getOrElse Nil,
         (collectionJson \ "type").asOpt[String],
         (collectionJson \ "showTags").asOpt[Boolean] getOrElse false,
-        (collectionJson \ "showSections").asOpt[Boolean] getOrElse false
+        (collectionJson \ "showSections").asOpt[Boolean] getOrElse false,
+        (collectionJson \ "hideKickers").asOpt[Boolean] getOrElse false,
+        (collectionJson \ "showDateHeader").asOpt[Boolean] getOrElse false,
+        (collectionJson \ "showLatestUpdate").asOpt[Boolean] getOrElse false
       )
     }
   }
@@ -101,6 +104,12 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
       editorialType = None // value found in Content API
     )
   }
+
+  def isFrontHidden(id: String): Boolean =
+    (configAgent.get() \ "fronts" \ id \ "isHidden").asOpt[Boolean].exists(identity)
+
+  def shouldServeFront(id: String) = getPathIds.contains(id) &&
+    (Configuration.environment.isPreview || !isFrontHidden(id))
 }
 
 object ConfigAgent extends ConfigAgentTrait

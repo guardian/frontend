@@ -1,0 +1,31 @@
+.tone-live {
+    @extend %tone-background;
+
+    &.fc-item {
+        background-color: $c-liveDefault;
+
+        &,
+        & a {
+            color: #ffffff;
+        }
+    }
+
+    .fc-item__kicker,
+    .fc-item__byline {
+        &,
+        & a {
+            color: $c-liveMute;
+        }
+    }
+
+    .fc-item__standfirst {
+        display: none !important;
+    }
+
+    .fc-item__meta {
+        &,
+        & a {
+            color: $c-liveMute;
+        }
+    }
+}

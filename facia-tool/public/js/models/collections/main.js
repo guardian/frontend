@@ -166,6 +166,8 @@ define([
 
         model.uiOpenElement = ko.observable();
 
+        model.uiOpenArticle = ko.observable();
+
         function getFront() {
             return queryParams().front;
         }
@@ -329,8 +331,15 @@ define([
                 model.latestArticles.search();
                 model.latestArticles.startPoller();
 
-                mediator.on('ui:open', function(e) {
-                    model.uiOpenElement(e)
+                mediator.on('ui:open', function(element, article) {
+                    if (model.uiOpenArticle() &&
+                        model.uiOpenArticle().group &&
+                        model.uiOpenArticle().group.parentType === 'Article' &&
+                        model.uiOpenArticle() !== article) {
+                        model.uiOpenArticle().close();
+                    }
+                    model.uiOpenArticle(article);
+                    model.uiOpenElement(element);
                 });
             });
 

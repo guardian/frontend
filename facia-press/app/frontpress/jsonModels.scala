@@ -57,9 +57,15 @@ object ItemMeta {
   def fromContent(content: Content): ItemMeta = ItemMeta(
     headline = content.apiContent.metaData.get("headline"),
     trailText = content.apiContent.metaData.get("trailText"),
+    byline = content.apiContent.metaData.get("byline"),
+    showByline = content.apiContent.metaData.get("showByline").flatMap(_.asOpt[Boolean]),
     group = content.apiContent.metaData.get("group"),
     isBoosted = content.apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]),
     imageHide = content.apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]),
+    imageCutoutReplace = content.apiContent.metaData.get("imageCutoutReplace").flatMap(_.asOpt[Boolean]),
+    imageCutoutSrc = content.apiContent.metaData.get("imageCutoutSrc"),
+    imageCutoutSrcWidth = content.apiContent.metaData.get("imageCutoutSrcWidth"),
+    imageCutoutSrcHeight = content.apiContent.metaData.get("imageCutoutSrcHeight"),
     isBreaking = content.apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]),
     supporting = Option(content.supporting.map(item => Json.toJson(TrailJson.fromContent(item)))).filter(_.nonEmpty),
     href = content.apiContent.metaData.get("href"),
@@ -75,9 +81,15 @@ object ItemMeta {
 case class ItemMeta(
   headline:      Option[JsValue],
   trailText:     Option[JsValue],
+  byline:        Option[JsValue],
+  showByline:    Option[Boolean],
   group:         Option[JsValue],
   isBoosted:     Option[Boolean],
   imageHide:     Option[Boolean],
+  imageCutoutReplace:   Option[Boolean],
+  imageCutoutSrc:       Option[JsValue],
+  imageCutoutSrcWidth:  Option[JsValue],
+  imageCutoutSrcHeight: Option[JsValue],
   isBreaking:    Option[Boolean],
   supporting:    Option[Seq[JsValue]],
   href:          Option[JsValue],
@@ -102,6 +114,7 @@ object TrailJson {
       content.webUrl,
       content.tags.map(TagJson.fromTag),
       content.trailText,
+      content.byline,
       content.delegate.safeFields,
       content.elements.map(ElementJson.fromElement),
       ItemMeta.fromContent(content)
@@ -117,6 +130,7 @@ case class TrailJson(
   webUrl: String,
   tags: Seq[TagJson],
   trailText: Option[String],
+  byline: Option[String],
   safeFields: Map[String, String],
   elements: Seq[ElementJson],
   meta: ItemMeta
@@ -140,7 +154,10 @@ object CollectionJson {
       href           = collection.href.orElse(config.href),
       `type`         = config.collectionType,
       showTags       = config.showTags,
-      showSections   = config.showSections
+      showSections   = config.showSections,
+      hideKickers    = config.hideKickers,
+      showDateHeader = config.showDateHeader,
+      showLatestUpdate = config.showLatestUpdate
     )
 }
 
@@ -158,5 +175,8 @@ case class CollectionJson(
   groups:       Option[Seq[String]],
   href:         Option[String],
   showTags:     Boolean,
-  showSections: Boolean
-)
+  showSections: Boolean,
+  hideKickers:  Boolean,
+  showDateHeader: Boolean,
+  showLatestUpdate: Boolean
+                           )

@@ -32,7 +32,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   lazy val shortUrlPath: String = shortUrl.replace("http://gu.com", "")
   lazy val allowUserGeneratedContent: Boolean = fields.get("allowUgc").exists(_.toBoolean)
   lazy val isExpired = delegate.isExpired.getOrElse(false)
-  lazy val blockVideoAds: Boolean = videoAssets.exists(_.blockVideoAds)
   lazy val isBlog: Boolean = blogs.nonEmpty
   lazy val isSeries: Boolean = series.nonEmpty
   lazy val isFromTheObserver: Boolean = publication == "The Observer"
@@ -105,7 +104,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
     Jsoup.clean(delegate.safeFields.getOrElse("body",""), Whitelist.none()).split("\\s+").size
   }
 
-  override lazy val byline: Option[String] = fields.get("byline")
   override lazy val trailType: Option[String] = {
     if (tags.exists(_.id == "tone/comment")) {
       Option("comment")
@@ -126,6 +124,9 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   override lazy val description: Option[String] = trailText
   override lazy val headline: String = apiContent.metaData.get("headline").flatMap(_.asOpt[String]).getOrElse(fields("headline"))
   override lazy val trailText: Option[String] = apiContent.metaData.get("trailText").flatMap(_.asOpt[String]).orElse(fields.get("trailText"))
+  override lazy val byline: Option[String] = apiContent.metaData.get("byline").flatMap(_.asOpt[String]).orElse(fields.get("byline"))
+  override val showByline = apiContent.metaData.get("showByline").flatMap(_.asOpt[Boolean]).getOrElse(isComment)
+
   override def isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
   // Meta Data used by plugins on the page
@@ -179,27 +180,37 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
       .getOrElse(Nil)
 
-  // Inherited from FaciaFields
-  override lazy val group: Option[String] = apiContent.metaData.get("group").flatMap(_.asOpt[String])
-  override lazy val supporting: List[Content] = apiContent.supporting
-  override lazy val isBoosted: Boolean = apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val imageHide: Boolean = apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val showKickerTag: Boolean = apiContent.metaData.get("showKickerTag").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val showKickerSection: Boolean = apiContent.metaData.get("showKickerSection").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  private def getMeta[A](fieldName: String)(f: JsValue => Option[A]) =
+    apiContent.metaData.get(fieldName).flatMap(f)
 
-  override lazy val imageReplace: Boolean = apiContent.metaData.get("imageReplace").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
-  override lazy val imageSrcWidth: Option[String] = apiContent.metaData.get("imageSrcWidth").flatMap(_.asOpt[String])
-  override lazy val imageSrcHeight: Option[String] = apiContent.metaData.get("imageSrcHeight").flatMap(_.asOpt[String])
+  // Inherited from FaciaFields
+  override lazy val group: Option[String] = getMeta("group")(_.asOpt[String])
+  override lazy val supporting: List[Content] = apiContent.supporting
+  override lazy val isBoosted: Boolean = getMeta("isBoosted")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val imageHide: Boolean = getMeta("imageHide")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val isBreaking: Boolean = getMeta("isBreaking")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val showKickerTag: Boolean = getMeta("showKickerTag")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val showKickerSection: Boolean = getMeta("showKickerSection")(_.asOpt[Boolean]).getOrElse(false)
+
+  override lazy val imageReplace: Boolean = getMeta("imageReplace")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val imageSrc: Option[String] = getMeta("imageSrc")(_.asOpt[String])
+  override lazy val imageSrcWidth: Option[String] = getMeta("imageSrcWidth")(_.asOpt[String])
+  override lazy val imageSrcHeight: Option[String] = getMeta("imageSrcHeight")(_.asOpt[String])
   lazy val imageElement: Option[ApiElement] = if (imageReplace) for {
     src <- imageSrc
     width <- imageSrcWidth
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height) else None
 
-  override lazy val showMainVideo: Boolean =
-    apiContent.metaData.get("showMainVideo").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val imageCutoutReplace: Boolean = getMeta("imageCutoutReplace")(_.asOpt[Boolean]).getOrElse(false)
+
+  override lazy val customImageCutout: Option[FaciaImageElement] = for {
+    src <- getMeta("imageCutoutSrc")(_.asOpt[String])
+    width <- getMeta("imageCutoutSrcWidth")(_.asOpt[String]).flatMap(s => Try(s.toInt).toOption)
+    height <- getMeta("imageCutoutSrcHeight")(_.asOpt[String]).flatMap(s => Try(s.toInt).toOption)
+  } yield FaciaImageElement(src, width, height)
+
+  override lazy val showMainVideo: Boolean = getMeta("showMainVideo")(_.asOpt[Boolean]).getOrElse(false)
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 }
@@ -416,9 +427,7 @@ class Article(content: ApiContentWithMeta) extends Content(content) {
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "summary_large_image"
-  ) ++ Seq(
-    mainPicture.flatMap(_.largestImage.flatMap(_.path.map("twitter:image:src" ->)))
-  ).flatten
+  )
 }
 
 class LiveBlog(content: ApiContentWithMeta) extends Article(content) {
@@ -461,7 +470,7 @@ class Audio(content: ApiContentWithMeta) extends Media(content) {
   override lazy val contentType = GuardianContentTypes.Audio
 
   override lazy val metaData: Map[String, JsValue] =
-    super.metaData ++ Map("contentType" -> JsString(contentType), "blockVideoAds" -> JsBoolean(blockVideoAds))
+    super.metaData ++ Map("contentType" -> JsString(contentType))
 
   lazy val downloadUrl: Option[String] = mainAudio
     .flatMap(_.encodings.find(_.format == "audio/mpeg").map(_.url.replace("static.guim", "download.guardian")))
@@ -486,7 +495,6 @@ class Video(content: ApiContentWithMeta) extends Media(content) {
   override lazy val metaData: Map[String, JsValue] =
     super.metaData ++ Map(
       "contentType" -> JsString(contentType),
-      "blockVideoAds" -> JsBoolean(blockVideoAds),
       "source" -> JsString(source.getOrElse(""))
     )
 
@@ -609,7 +617,7 @@ class ImageContent(content: ApiContentWithMeta) extends Content(content) {
 
   override def cards: List[(String, String)] = super.cards ++ List(
     "twitter:card" -> "photo"
-  ) ++ mainPicture.flatMap(_.largestImage.flatMap(_.path.map("twitter:image:src" ->)))
+  )
 }
 
 case class ApiContentWithMeta(delegate: ApiContent, supporting: List[Content] = Nil, metaData: Map[String, JsValue] = Map.empty)
