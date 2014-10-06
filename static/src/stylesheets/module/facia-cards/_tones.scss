@@ -1,11 +1,11 @@
-%tone-background {
+%tone-has-background {
     .fc-item__content {
         padding-left: $fc-item-gutter;
         padding-right: $fc-item-gutter;
     }
 }
 
-%tone-without-background {
+%tone-not-background {
     &.fc-item--list-media-mobile,
     &.fc-item--list-media-large-mobile {
         .fc-item__title {
