@@ -161,7 +161,6 @@ Loader.prototype.initUnthreaded = function() {
     // Non threaded view
     var $discussionContainer = $('.js-discussion-container', this.elem),
         $nonThreadedContainer = $('.js-discussion__non-threaded', this.elem),
-        $loader = $('.d-discussion__loader--comments', this.elem),
         $state = $('.discussion__show-threaded-state', this.elem);
 
     this.on('click', '.js-show-threaded', function(e) {
@@ -175,13 +174,8 @@ Loader.prototype.initUnthreaded = function() {
             var activityStream = new ActivityStream();
 
             $el.data('loaded', true);
-            $loader.removeClass('u-h');
             activityStream.endpoint = '/discussion/non-threaded'+ this.getDiscussionId() + '.json?page=:page';
-            activityStream
-                .fetch($nonThreadedContainer[0])
-                .then(function() {
-                    $loader.addClass('u-h');
-                });
+            activityStream.fetch($nonThreadedContainer[0])
         }
     });
 
