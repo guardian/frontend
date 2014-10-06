@@ -106,12 +106,12 @@ $header-image-size-desktop: 120px;
     margin-top: 0;
     padding-top: 0;
 
-    .facia-container__inner {
-        border: 0;
-    }
-
     @include mq(tablet) {
         padding-top: $gs-baseline / 2;
+    }
+
+    .facia-container__inner {
+        border: 0;
     }
 }
 
