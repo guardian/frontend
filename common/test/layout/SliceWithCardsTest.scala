@@ -1,6 +1,6 @@
 package layout
 
-import model.Trail
+import model.{FaciaImageElement, Trail}
 import org.scala_tools.time.Imports
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{Matchers, FlatSpec}
@@ -9,7 +9,10 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
   val NumberOfFixtures = 40
 
   val cardFixtures = (1 to NumberOfFixtures) map { n => Card(n, new Trail {
-      override def webPublicationDate: Imports.DateTime = ???
+
+    override def customImageCutout: Option[FaciaImageElement] = None
+
+    override def webPublicationDate: Imports.DateTime = ???
 
       override def url: String = ???
 

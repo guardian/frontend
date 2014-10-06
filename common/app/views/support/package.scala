@@ -731,11 +731,9 @@ object RenderOtherStatus {
 }
 
 object RenderClasses {
-
   def apply(classes: Map[String, Boolean]): String = apply(classes.filter(_._2).keys.toSeq:_*)
 
-  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.mkString(" ")
-
+  def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.distinct.mkString(" ")
 }
 
 object GetClasses {
@@ -762,8 +760,16 @@ object GetClasses {
   }
 
   def forNewStyleItem(trail: Trail, isFirstContainer: Boolean): String = {
+    val cutOutClass = if (CutOut.fromTrail(trail).isDefined) {
+      Seq("fc-item--has-cutout")
+    } else {
+      Seq.empty
+    }
+
     RenderClasses(
-      TrailCssClasses.toneClass(trail) +: commonFcItemClasses(trail, isFirstContainer, forceHasImage = false): _*
+      TrailCssClasses.toneClass(trail) +:
+        (commonFcItemClasses(trail, isFirstContainer, forceHasImage = false) ++
+        cutOutClass): _*
     )
   }
 

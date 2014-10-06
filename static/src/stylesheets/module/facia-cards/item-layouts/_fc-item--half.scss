@@ -35,6 +35,14 @@ x x x x x x x x x x x x x x x x x x
         }
     }
 
+    &.fc-item--has-cutout {
+        padding-bottom: 60%;
+    }
+
+    .fc-item__avatar {
+        top: 30%;
+    }
+
     &[class*="fc-item--has-sublinks"] {
         .fc-item__standfirst {
             display: none;
