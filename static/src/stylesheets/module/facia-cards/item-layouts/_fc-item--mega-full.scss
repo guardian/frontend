@@ -1,0 +1,54 @@
+/*
+
+Mega full item, only used in nuclear situations.
+
+***********************************************************************************************
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+
+************************************************************************************************
+
+*/
+
+@mixin fc-item--mega-full {
+
+    .fc-item__image-container {
+        padding-bottom: 40%;
+    }
+
+    .responsive-img {
+        top: -25%;
+        height: auto;
+    }
+
+    .fc-item__header {
+        @include fs-headline(4, true);
+
+        @include mq(desktop) {
+            @include fs-headline(6, true);
+        }
+    }
+
+    &.fc-item--has-cutout {
+        min-height: gs-height(8);
+
+        .fc-item__title {
+            max-width: gs-span(8);
+        }
+    }
+
+    @include fc-sublinks-horizontal;
+
+    &.fc-item--has-sublinks-1 .fc-sublinks {
+        display: none;
+    }
+}

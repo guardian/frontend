@@ -25,6 +25,7 @@ case class CreateFront(
   description: Option[String],
   onPageDescription: Option[String],
   priority: Option[String],
+  isHidden: Option[Boolean],
   initialCollection: CollectionConfig
 )
 

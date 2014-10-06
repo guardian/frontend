@@ -1,0 +1,57 @@
+/*
+
+Standard item. Looks a bit like this:
+
+********************
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+
+x x x x x x x x x x
+x x x x x x x x x x x
+x x x x x x x x
+
+
+
+
+
+
+
+*********************
+
+*/
+
+
+@mixin fc-item--standard {
+    .fc-item__header {
+        @include mq(tablet, desktop) {
+            @include fs-headline(2, true);
+        }
+    }
+
+    &.fc-item--has-cutout {
+        padding-bottom: 60%;
+    }
+
+    &[class*="fc-item--has-sublinks"] {
+        padding-bottom: 0;
+
+        .fc-item__standfirst,
+        .fc-item__media-wrapper,
+        .fc-item__avatar {
+            display: none;
+        }
+    }
+
+    &.fc-item--has-sublinks-1 .fc-item__media-wrapper {
+        display: block;
+    }
+
+    .fc-sublinks__item:nth-child(n+3) {
+        display: none;
+    }
+}

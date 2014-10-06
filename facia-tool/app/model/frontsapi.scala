@@ -1,6 +1,6 @@
 package frontsapi.model
 
-import com.gu.facia.client.models.{Config, Collection, TrailMetaData, Trail}
+import com.gu.facia.client.models.{Config, Trail, TrailMetaData}
 import com.gu.googleauth.UserIdentity
 import common.Logging
 import conf.Configuration

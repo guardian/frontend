@@ -36,7 +36,6 @@ trait DfpAgent {
     containerSponsoredTag(config, p).isDefined
   }
 
-  private def getKeywordTags(tags: Seq[Tag]): Seq[Tag] = tags filter(_.isKeyword)
   private def getKeywordOrSeriesTags(tags: Seq[Tag]): Seq[Tag] = tags.filter(t => t.isSeries || t.isKeyword)
 
   def isSponsored(tags: Seq[Tag]): Boolean = getKeywordOrSeriesTags(tags) exists (tag => isSponsored(tag.id))

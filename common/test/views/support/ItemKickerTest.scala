@@ -50,14 +50,14 @@ class ItemKickerTest extends FlatSpec with Matchers with OptionValues {
   "ItemKicker" should "prefer item level tag kicker to collection level section kicker" in {
     ItemKicker.fromTrail(
       createTrailFixture(showTag = true, showSection = false),
-      CollectionConfig.withDefaults(showSections = Option(true))
+      Option(CollectionConfig.withDefaults(showSections = Option(true)))
     ).value shouldEqual TagKicker("Test Tag", "testtag")
   }
 
   it should "prefer item level section kicker to collection level tag kicker" in {
     ItemKicker.fromTrail(
       createTrailFixture(showTag = false, showSection = true),
-      CollectionConfig.withDefaults(showTags = Option(true))
+      Option(CollectionConfig.withDefaults(showTags = Option(true)))
     ).value shouldEqual SectionKicker("Test Section", "/testsection")
   }
 }

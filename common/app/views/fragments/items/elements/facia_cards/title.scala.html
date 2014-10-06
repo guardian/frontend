@@ -1,4 +1,4 @@
-@(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+@(trail: Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
 @import model.Trail
@@ -6,7 +6,7 @@
 @import views.support._
 
 @itemHeader(containerIndex == 0 && itemIndex == 0) {
-    @ItemKicker.fromTrail(trail, config).map {
+    @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {
         case BreakingNewsKicker => {
             <span class="fc-item__live-indicator">Breaking News</span>
         }
