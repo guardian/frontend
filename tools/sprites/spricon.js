@@ -96,7 +96,7 @@ jfDefer.promise.then(function (config) {
                                         iconData
                                     );
                                 });
-                            })
+                            });
                             return deferred.promise;
                         })
                 ).then(function () {
@@ -141,6 +141,6 @@ jfDefer.promise.then(function (config) {
             });
 
         });
-    });
+    }, { binary: '../../node_modules/phantomjs/bin/phantomjs' });
 
 });
