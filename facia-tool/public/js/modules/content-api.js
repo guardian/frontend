@@ -124,7 +124,7 @@ function (
             });
 
            _.chain(articles)
-            .filter(function(article) { return !article.meta.isSnap(); })
+            .filter(function(article) { return !article.state.isSnap(); })
             .each(function(article) {
                 article.state.isEmpty(!article.state.isLoaded());
             });
