@@ -440,6 +440,7 @@ h1 {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     text-transform: uppercase;
+    color: #cccccc;
     padding-right: 3px;
 }
 
