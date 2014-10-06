@@ -3,8 +3,8 @@
 @import common.LinkTo
 @import views.support.{Format, TrailCssClasses}
 
-<aside class="fc-item__meta">
 @if(!trail.shouldHidePublicationDate) {
+<aside class="fc-item__meta u-h">
     <time class="fc-item__timestamp js-item__timestamp"
           datetime="@trail.webPublicationDate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
           data-timestamp="@trail.webPublicationDate.getMillis"
@@ -19,5 +19,5 @@
             <span class="js-item__comment-count"></span> <span class="u-h js-item__comment-or-comments"></span>
         </a>
     </span>
-}
 </aside>
+}
