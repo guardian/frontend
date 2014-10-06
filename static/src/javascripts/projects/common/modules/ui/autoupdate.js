@@ -98,7 +98,6 @@ define([
                     this.notificationBar.notify(this.unreadBlocks);
                     mediator.emit('modules:autoupdate:unread', this.unreadBlocks);
                 }
-                mediator.emit('modules:autoupdate:render');
             },
 
             toggle: function(btn) {

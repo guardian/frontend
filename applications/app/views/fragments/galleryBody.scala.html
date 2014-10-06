@@ -83,7 +83,7 @@
                     @if(gallery.keywords.filterNot(_.isSectionTag).nonEmpty) {
                         <div class="submeta" data-link-name="keywords">
                             <h2 class="submeta__head">Topics</h2>
-                            @fragments.keywordList(gallery.keywords, tone = "media")
+                            @fragments.keywordList(gallery.keywords, tone = Some("media"))
                         </div>
                     }
                     <div class="submeta" data-component="share">
