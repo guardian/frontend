@@ -10,27 +10,28 @@ import com.gu.openplatform.contentapi.ApiError
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 import views.support.{MultimediaContainer, TemplateDeduping}
 
-object AudioInSectionController extends Controller with Logging with Paging with ExecutionContexts with Requests {
+object MediaInSectionController extends Controller with Logging with Paging with ExecutionContexts with Requests {
 
   implicit def getTemplateDedupingInstance: TemplateDeduping = TemplateDeduping()
 
   // These exist to work around the absence of default values in Play routing.
-  def renderSectionAudioWithSeries(sectionId: String, seriesId: String) = renderAudio(sectionId, Some(seriesId))
-  def renderSectionAudio(sectionId: String) = renderAudio(sectionId, None)
+  def renderSectionMediaWithSeries(mediaType: String, sectionId: String, seriesId: String) =
+    renderMedia(mediaType, sectionId, Some(seriesId))
+  def renderSectionMedia(mediaType: String, sectionId: String) = renderMedia(mediaType, sectionId, None)
 
-  private def renderAudio(sectionId: String, seriesId: Option[String]) = Action.async { implicit request =>
-    val response = lookup(Edition(request), sectionId, seriesId) map { seriesItems =>
-      seriesItems map { trail => renderSectionTrails(trail, sectionId) }
+  private def renderMedia(mediaType: String, sectionId: String, seriesId: Option[String]) = Action.async { implicit request =>
+    val response = lookup(Edition(request), mediaType, sectionId, seriesId) map { seriesItems =>
+      seriesItems map { trail => renderSectionTrails(mediaType, trail, sectionId) }
     }
     response map { _ getOrElse NotFound }
   }
 
-  private def lookup(edition: Edition, sectionId: String, seriesId: Option[String])(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
+  private def lookup(edition: Edition, mediaType: String, sectionId: String, seriesId: Option[String])(implicit request: RequestHeader): Future[Option[Seq[Content]]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
-    log.info(s"Fetching audio content in section: ${sectionId}")
+    log.info(s"Fetching $mediaType content in section: ${sectionId}")
 
     // Subtract the series id from the content type.
-    val tags = List(Some("type/audio"), seriesId).flatten.mkString(",-")
+    val tags = List(Some(s"type/$mediaType"), seriesId).flatten.mkString(",-")
 
     def isCurrentStory(content: ApiContent) = content.safeFields.get("shortUrl").map{ shortUrl => !shortUrl.equals(currentShortUrl) }.getOrElse(false)
 
@@ -56,7 +57,7 @@ object AudioInSectionController extends Controller with Logging with Paging with
     }
   }
 
-  private def renderSectionTrails(trails: Seq[Content], sectionId: String)(implicit request: RequestHeader) = {
+  private def renderSectionTrails(mediaType: String, trails: Seq[Content], sectionId: String)(implicit request: RequestHeader) = {
     val sectionName = trails.headOption.map(t => t.sectionName).getOrElse("")
 
     // Content API doesn't understand the alias 'uk-news'.
@@ -64,8 +65,8 @@ object AudioInSectionController extends Controller with Logging with Paging with
       case "uk-news" => "uk"
       case _ => sectionId
     }
-    val tagCombinedHref = s"$sectionTag/$sectionTag+content/audio"
-    implicit val config = Config(id = sectionId, href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} audio") )
+    val tagCombinedHref = s"$sectionTag/$sectionTag+content/$mediaType"
+    implicit val config = Config(id = sectionId, href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} $mediaType") )
     val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1, "content", useInlinePlayer = false)
     renderFormat(response, response, 1)
   }

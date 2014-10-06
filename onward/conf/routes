@@ -26,10 +26,8 @@ GET        /preference/platform/:platform             controllers.ChangeViewCont
 GET        /preference/edition/:edition               controllers.ChangeEditionController.render(edition)
 GET        /preference/front-alphas/:optAction        controllers.ChangeAlphaController.render(optAction, page)
 
-GET        /video/section/:sectionId/*seriesId.json   controllers.VideoInSectionController.renderSectionVideosWithSeries(sectionId, seriesId)
-GET        /audio/section/:sectionId/*seriesId.json   controllers.AudioInSectionController.renderSectionAudioWithSeries(sectionId, seriesId)
-GET        /video/section/:sectionId.json             controllers.VideoInSectionController.renderSectionVideos(sectionId)
-GET        /audio/section/:sectionId.json             controllers.AudioInSectionController.renderSectionAudio(sectionId)
+GET        /:mediaType/section/:sectionId/*seriesId.json   controllers.MediaInSectionController.renderSectionMediaWithSeries(mediaType, sectionId, seriesId)
+GET        /:mediaType/section/:sectionId.json             controllers.MediaInSectionController.renderSectionMedia(mediaType, sectionId)
 GET        /video/most-viewed.json                    controllers.MostViewedVideoController.renderMostViewed()
 GET        /audio/most-viewed.json                    controllers.MostViewedAudioController.renderMostViewed()
 GET        /gallery/most-viewed.json                  controllers.MostViewedGalleryController.renderMostViewed()
