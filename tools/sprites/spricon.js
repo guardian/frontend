@@ -27,28 +27,22 @@ jf.readFile(configFile, function (err, json) {
 
 jfDefer.promise.then(function (config) {
 
-    var cssSvgOutput = config.cssDest + config.cssSvgName,
-        cssPngOutput = config.cssDest + config.cssPngName,
-        cssSvgDefer  = Q.defer(),
-        cssPngDefer  = Q.defer();
+    var cssDestDefer = Q.defer();
 
-    // create output folders
-    mkdirp(cssSvgOutput, function (error) {
-        if (error) {
-            console.error( "Error creating directories: " + cssSvgOutput);
-            console.error( "Error: " + error);
-        }
-        cssSvgDefer.resolve();
-    });
-    mkdirp(cssPngOutput, function (error) {
-        if (error) {
-            console.error( "Error creating directories: " + cssPngOutput);
-            console.error( "Error: " + error);
-        }
-        cssPngDefer.resolve();
-    });
+    // create output folder
+    if (!fs.existsSync(config.cssDest)) {
+        mkdirp(config.cssDest, function (error) {
+            if (error) {
+                console.error("Error creating directories: " + cssSvgOutput);
+                console.error("Error: " + error);
+            }
+            cssDestDefer.resolve();
+        });
+    } else {
+        cssDestDefer.resolve();
+    }
 
-    Q.all([cssSvgDefer.promise, cssPngDefer.promise]).then(function () {
+    cssDestDefer.promise.then(function () {
         phantom.create(function (ph) {
             ph.createPage(function (sprite) {
                 sprite.set('viewportSize', { width: 600, height: 1 });
@@ -128,14 +122,14 @@ jfDefer.promise.then(function (config) {
                                 spriteDefer = Q.defer();
                             // create svg css file
                             fs.writeFile(
-                                cssSvgOutput, '@if ($svg-support) {\n' + svgCss.join('\n\n') + '\n}\n',
+                                config.cssDest + config.cssSvgName, '@if ($svg-support) {\n' + svgCss.join('\n\n') + '\n}\n',
                                 function () {
                                     svgCssDefer.resolve();
                                 }
                             );
                             // create png css file
                             fs.writeFile(
-                                cssPngOutput, pngCss.join('\n\n') + '\n',
+                                config.cssDest + config.cssPngName, pngCss.join('\n\n') + '\n',
                                 function () {
                                     pngCssDefer.resolve();
                                 }
