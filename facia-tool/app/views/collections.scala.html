@@ -364,11 +364,11 @@
                                 <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
                             <!-- /ko -->
 
-                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
+                            <!-- ko if: state.tone -->
+                                <span class="label" data-bind="text: state.tone"></span>
+                            <!-- /ko -->
 
-                            <span data-bind="
-                                attr: {class: 'label label--' + state.tone()},
-                                text: state.tone"></span> ·
+                            <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
 
                             <span class="trailText" data-bind="
                                 html: meta.trailText() || fields.trailText()"></span>

@@ -437,7 +437,10 @@ h1 {
 }
 
 .article__ammends .label {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     text-transform: uppercase;
+    padding-right: 3px;
 }
 
 .article__ammends .label--draft {
