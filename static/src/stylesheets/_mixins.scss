@@ -180,11 +180,11 @@
     align-items: flex-end;
 }
 
-@mixin align-items--stretch{
+@mixin align-items--stretch {
     -webkit-box-align: stretch;
     -webkit-align-items: stretch;
     -ms-flex-align: stretch;
-    align-items: stretch
+    align-items: stretch;
 }
 
 @mixin columns($cols: 1, $gap: 0) {
