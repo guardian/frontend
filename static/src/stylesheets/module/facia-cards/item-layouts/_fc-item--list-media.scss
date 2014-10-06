@@ -1,0 +1,64 @@
+/*
+
+Media list item. Looks a bit like this:
+
+***********************************************
+0000000  x x x x x x x x x x x x x x x x x x x
+0000000  x x x x x x x x x x x x x x x x x x x x
+0000000
+***********************************************
+
+ */
+
+@mixin fc-item--list-media ($text-lines-per-media-object: 4, $headline-size: 2) {
+    @include fc-item--list;
+
+    // calculate image width
+    $media-ratio: 5 / 3;
+    $item-vertical-padding: $gs-baseline * .25;
+    $item-min-height: (($item-vertical-padding * 2) + get-line-height(headline, $headline-size) * $text-lines-per-media-object);
+    $image-width: $item-min-height * $media-ratio;
+
+    min-height: $item-min-height;
+
+    .fc-item__container,
+    .fc-item__content,
+    .fc-item__footer {
+        display: block;
+    }
+
+    &.fc-item--has-image {
+        // Override .svg .action--has-icon
+        padding-left: $image-width !important;
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: $image-width;
+        }
+    }
+
+    &.fc-item--has-no-image {
+        padding-left: $fc-item-gutter;
+    }
+
+    .fc-item__header {
+        @include fs-headline($headline-size, true);
+    }
+
+    .fc-item__media-wrapper,
+    .fc-item__image-container {
+        display: block;
+    }
+
+    .fc-item__media-wrapper {
+        float: left;
+        margin-left: 0 - $image-width;
+        width: $image-width;
+    }
+
+    .fc-item__video-container { display: none; }
+    .fc-item__video-fallback { display: block; }
+}

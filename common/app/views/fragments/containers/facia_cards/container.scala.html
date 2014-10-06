@@ -1,7 +1,7 @@
 @(collection: model.Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, frontProperties: model.FrontProperties = model.FrontProperties.empty)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
 @import views.support.GetClasses
-@import views.html.fragments.containers.facia_cards.{show_more, slice}
+@import views.html.fragments.containers.facia_cards.{show_more, slice, containerHeader}
 @import model.FaciaComponentName
 
 @defining(config.displayName.orElse(collection.displayName)) { case (title) =>
@@ -14,9 +14,7 @@
              }
              data-component="@FaciaComponentName(config, collection)">
         <div class="facia-container__inner">
-            <div class="container__header">
-                @containerHeader(collection, frontProperties, containerIndex)
-            </div>
+            @containerHeader(collection, frontProperties, containerIndex)
             <div class="container__body container--rolled-up-hide fc-show-more--hidden js-container--fc-show-more">
                 @for(sliceWithCards <- containerLayout.slices) {
                     @slice(sliceWithCards, containerIndex)
