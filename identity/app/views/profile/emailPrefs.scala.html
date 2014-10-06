@@ -16,6 +16,7 @@
                 <div class="email-subscription__description">@subscription.description</div>
                 <div class="email-subscription__meta u-cf">
                     <button class="email-subscription__button"
+                            data-link-name="@if(subscription.subscribedTo){Unsubscribe}else{Subscribe} to @subscription.name"
                             name="addEmailSubscription"
                             type="submit"
                             value="@if(subscription.subscribedTo){unsubscribe-}@subscription.listId">

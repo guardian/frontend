@@ -1,9 +1,7 @@
 {
-    "src": "../../static/src/images/membership/",
-    "imgDest": "../../static/target/images/membership",
-    "cssDest": "../../static/src/stylesheets/icons/",
-    "datasvgcss" : "_membership-icons-svg.scss",
-    "urlpngcss" : "_membership-icons-sprite.scss",
-    "spritepath" : "../images/membership/",
-    "svg" : true
+    "src":        "../../static/src/images/membership/",
+    "imgDest":    "../../static/target/images/membership/",
+    "cssDest":    "../../static/src/stylesheets/icons/",
+    "cssSvgName": "_membership-icons-svg.scss",
+    "cssPngName": "_membership-icons-sprite.scss"
 }

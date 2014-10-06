@@ -180,29 +180,39 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
       .getOrElse(Nil)
 
+  private def getMeta[A](fieldName: String)(f: JsValue => Option[A]) =
+    apiContent.metaData.get(fieldName).flatMap(f)
+
   // Inherited from FaciaFields
-  override lazy val group: Option[String] = apiContent.metaData.get("group").flatMap(_.asOpt[String])
+  override lazy val group: Option[String] = getMeta("group")(_.asOpt[String])
   override lazy val supporting: List[Content] = apiContent.supporting
-  override lazy val isBoosted: Boolean = apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val imageHide: Boolean = apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val isBreaking: Boolean = apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val showKickerTag: Boolean = apiContent.metaData.get("showKickerTag").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val showKickerSection: Boolean = apiContent.metaData.get("showKickerSection").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val isBoosted: Boolean = getMeta("isBoosted")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val imageHide: Boolean = getMeta("imageHide")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val isBreaking: Boolean = getMeta("isBreaking")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val showKickerTag: Boolean = getMeta("showKickerTag")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val showKickerSection: Boolean = getMeta("showKickerSection")(_.asOpt[Boolean]).getOrElse(false)
   override lazy val showBoostedHeadline: Boolean = apiContent.metaData.get("showBoostedHeadline").flatMap(_.asOpt[Boolean]).getOrElse(false)
   override lazy val showQuotedHeadline: Boolean = apiContent.metaData.get("showQuotedHeadline").flatMap(_.asOpt[Boolean]).getOrElse(isComment)
 
-  override lazy val imageReplace: Boolean = apiContent.metaData.get("imageReplace").flatMap(_.asOpt[Boolean]).getOrElse(false)
-  override lazy val imageSrc: Option[String] = apiContent.metaData.get("imageSrc").flatMap(_.asOpt[String])
-  override lazy val imageSrcWidth: Option[String] = apiContent.metaData.get("imageSrcWidth").flatMap(_.asOpt[String])
-  override lazy val imageSrcHeight: Option[String] = apiContent.metaData.get("imageSrcHeight").flatMap(_.asOpt[String])
+  override lazy val imageReplace: Boolean = getMeta("imageReplace")(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val imageSrc: Option[String] = getMeta("imageSrc")(_.asOpt[String])
+  override lazy val imageSrcWidth: Option[String] = getMeta("imageSrcWidth")(_.asOpt[String])
+  override lazy val imageSrcHeight: Option[String] = getMeta("imageSrcHeight")(_.asOpt[String])
   lazy val imageElement: Option[ApiElement] = if (imageReplace) for {
     src <- imageSrc
     width <- imageSrcWidth
     height <- imageSrcHeight
   } yield ImageOverride.createElementWithOneAsset(src, width, height) else None
 
-  override lazy val showMainVideo: Boolean =
-    apiContent.metaData.get("showMainVideo").flatMap(_.asOpt[Boolean]).getOrElse(false)
+  override lazy val imageCutoutReplace: Boolean = getMeta("imageCutoutReplace")(_.asOpt[Boolean]).getOrElse(false)
+
+  override lazy val customImageCutout: Option[FaciaImageElement] = for {
+    src <- getMeta("imageCutoutSrc")(_.asOpt[String])
+    width <- getMeta("imageCutoutSrcWidth")(_.asOpt[String]).flatMap(s => Try(s.toInt).toOption)
+    height <- getMeta("imageCutoutSrcHeight")(_.asOpt[String]).flatMap(s => Try(s.toInt).toOption)
+  } yield FaciaImageElement(src, width, height)
+
+  override lazy val showMainVideo: Boolean = getMeta("showMainVideo")(_.asOpt[Boolean]).getOrElse(false)
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 }
