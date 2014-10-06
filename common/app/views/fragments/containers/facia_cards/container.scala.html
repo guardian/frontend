@@ -1,7 +1,7 @@
 @(collection: model.Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, frontProperties: model.FrontProperties = model.FrontProperties.empty)(implicit request: RequestHeader, templateDeduping: views.support.TemplateDeduping, config: model.Config)
 
 @import views.support.GetClasses
-@import views.html.fragments.containers.facia_cards.{show_more, slice}
+@import views.html.fragments.containers.facia_cards.{show_more, slice, containerHeader}
 @import model.FaciaComponentName
 
 @defining(config.displayName.orElse(collection.displayName)) { case (title) =>

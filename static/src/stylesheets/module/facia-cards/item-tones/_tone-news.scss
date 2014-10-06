@@ -25,8 +25,8 @@
             @include mq(tablet) {
                 @include box-shadow(inset 0 1px $c-newsAccent);
             }
-         }
-     }
+        }
+    }
 
     &.fc-item--list-media-mobile,
     &.fc-item--list-media-large-mobile {

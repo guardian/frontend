@@ -11,21 +11,14 @@ x x x x x x x x x x x x x x x x x x x x x x x x
  */
 
 @mixin fc-item--list {
-    $headline-size: 1;
     $item-vertical-padding: $gs-baseline * .25;
 
-    .fc-item__title,
-    .fc-item__byline {
-        @include fs-headline($headline-size, true);
-    }
-
     .fc-item__header {
-        padding-bottom: get-line-height(headline, $headline-size);
-    }
+        @include fs-headline(1, true);
 
-    .fc-item__header {
-        margin-bottom: 0;
-        padding-bottom: $gs-baseline * 1.666;
+        @include mq(desktop) {
+            @include fs-headline(2, true);
+        }
     }
 
     .fc-item__media-wrapper {
@@ -34,7 +27,7 @@ x x x x x x x x x x x x x x x x x x x x x x x x
 
     &.fc-item--has-cutout {
         .fc-item__avatar {
-            display: none;
+            display: none !important;
         }
     }
 
