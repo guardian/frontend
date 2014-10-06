@@ -19,7 +19,7 @@ define([
             };
 
             if (!this.props.isVisible) {
-                inlineStyle['display'] = 'none';
+                inlineStyle.display = 'none';
             }
 
             return React.DOM.input({

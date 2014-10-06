@@ -17,8 +17,6 @@ define([
     Grid,
     helpers
 ) {
-    var cellSize = 30;
-
     var Crossword = React.createClass({
         getInitialState: function () {
             var dimensions = this.props.data.dimensions;
@@ -43,7 +41,8 @@ define([
         onSelect: function (x, y) {
             var cellInFocus = this.state.cellInFocus,
                 clue = this.cluesFor(x, y),
-                newDirection;
+                newDirection,
+                isStartOfClue;
 
             if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
                 newDirection = helpers.otherDirection(this.state.directionOfEntry);
@@ -54,9 +53,9 @@ define([
             } else {
                 this.state.cellInFocus = {x: x, y: y};
 
-                function isStartOfClue(clue) {
+                isStartOfClue = function (clue) {
                     return clue && clue.position.x === x && clue.position.y === y;
-                }
+                };
 
                 /**
                  * If the user clicks on the start of a down clue midway through an across clue, we should

@@ -40,8 +40,8 @@ define([
             }
 
             return React.DOM.div({
-                    className: 'crossword__clues'
-                },
+                className: 'crossword__clues'
+            },
                 React.DOM.h3({
                     className: headerClass
                 }, 'Across'),
