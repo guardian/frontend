@@ -33,29 +33,29 @@ define([
         },
         releaseMessage = {
             show: function (type, msgConfig) {
-                var msg = template(
-                    '<p class="site-message__message" id="site-message__message">{{text}}</p>' +
-                    '<ul class="site-message__actions u-unstyled">',
-                    msgConfig
-                );
-                if (msgConfig.blog) {
-                    msg += template(
-                        '<li class="site-message__actions__item">' +
-                            '<i class="i i-arrow-white-right"></i>' +
-                            '<a href="{{blog}}" target="_blank">Find out more</a>' +
-                        '</li>',
-                        msgConfig
+                var blogItem = msgConfig.blog ?
+                        template(
+                            '<li class="site-message__actions__item">' +
+                                '<i class="i i-arrow-white-right"></i>' +
+                                '<a href="{{blog}}" target="_blank">Find out more</a>' +
+                            '</li>', msgConfig
+                        ) : '',
+                    msg = template(
+                        '<p class="site-message__message" id="site-message__message">{{text}}</p>' +
+                        '<ul class="site-message__actions u-unstyled">' +
+                            '{{blogItem}}' +
+                            '<li class="site-message__actions__item">' +
+                                '<i class="i i-arrow-white-right"></i>' +
+                                '<a href="{{survey}}" target="_blank">Leave feedback</a>' +
+                            '</li>' +
+                        '</ul>',
+                        {
+                            text:     msgConfig.text,
+                            blogItem: blogItem,
+                            survey:   msgConfig.survey
+                        }
                     );
-                }
-                msg += template(
-                        '<li class="site-message__actions__item">' +
-                            '<i class="i i-arrow-white-right"></i>' +
-                            '<a href="{{survey}}" target="_blank">Leave feedback</a>' +
-                        '</li>' +
-                    '</ul>',
-                    msgConfig
-                );
-                new Message(type + '-release', {pinOnHide: true}).show(msg);
+                new Message(type + '-release', { pinOnHide: true }).show(msg);
             },
             init: function (config) {
                 if (
