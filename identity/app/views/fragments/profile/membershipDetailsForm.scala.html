@@ -91,7 +91,7 @@
             <div class="fieldset__fields u-cf">
                 <div class="form-field">
                     <span class="js-membership-tier"></span>
-                    <a href="@(conf.Configuration.id.membershipUrl)/tier/change" class="submit-input membership-tab__update-button">Change tier</a>
+                    <a href="@(conf.Configuration.id.membershipUrl)/tier/change" class="submit-input membership-tab__update-button" data-link-name="Change tier">Change tier</a>
                 </div>
             </div>
         </li>
@@ -149,7 +149,7 @@
                     <span class="membership-tab__card-details">
                         •••• •••• •••• <span class="js-membership-payment-card-lastfour"></span>
                     </span>
-                    <button class="submit-input js-membership-change-cc-open membership-tab__update-button">Change card</button>
+                    <button class="submit-input js-membership-change-cc-open membership-tab__update-button" data-link-name="Change card">Change card</button>
                 </div>
             </div>
         </li>
@@ -199,7 +199,7 @@
                         </p>
                     </div>
                     <div class="form-field">
-                        <button class="submit-input js-membership-change-cc-submit" type="submit">Update</button><div class="is-updating js-updating"></div>
+                        <button class="submit-input js-membership-change-cc-submit" type="submit" data-link-name="Update card details">Update</button><div class="is-updating js-updating"></div>
                     </div>
                 </div>
             </form>

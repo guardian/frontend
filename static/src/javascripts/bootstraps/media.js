@@ -409,14 +409,18 @@ define([
             if (!config.isMedia || !config.page.showRelatedContent) {
                 return;
             }
-            var section = new Component(),
+            var mediaType = config.page.contentType.toLowerCase(),
+                section = new Component(),
                 parentEl = $('.js-onward')[0];
 
+            section.endpoint = '/' + mediaType + '/section/' + config.page.section;
+
             if ('seriesId' in config.page) {
-                section.endpoint = '/video/section/' + config.page.section + '/' + config.page.seriesId + '.json?shortUrl=' + config.page.shortUrl;
-            } else {
-                section.endpoint = '/video/section/' + config.page.section + '.json?shortUrl=' + config.page.shortUrl;
+                section.endpoint += '/' + config.page.seriesId;
             }
+
+            section.endpoint += '.json?shortUrl=' + config.page.shortUrl;
+
             section.fetch(parentEl).then(function () {
                 images.upgrade(parentEl);
             });
