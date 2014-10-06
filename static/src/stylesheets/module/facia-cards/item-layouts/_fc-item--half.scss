@@ -49,7 +49,11 @@ x x x x x x x x x x x x x x x x x x
         }
     }
 
-    @include fc-sublinks-horizontal;
+    @include fc-sublinks--horizontal;
+
+    .fc-item__footer--horizontal {
+        @include flex-basis(auto);
+    }
 
     .fc-sublinks__item:nth-child(n+3) {
         display: none;

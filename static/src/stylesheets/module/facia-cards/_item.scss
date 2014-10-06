@@ -4,12 +4,82 @@ $fc-item-gutter: $gs-gutter / 4;
    ==========================================================================
 */
 
+@mixin fc-item--horizontal($media-width, $media-align: right) {
+    .fc-item__image-container {
+        @include box-sizing(border-box);
+        padding-left: $gs-gutter * .25;
+    }
+
+    // IE10/11 ignore boxsizing on flex-basis'd element.
+    // Option is extra wrapping div or this slightly overblow selector.
+    .fc-item__content > * {
+        @include box-sizing(border-box);
+        padding-right: $gs-gutter * .75;
+    }
+
+    .has-flex-wrap & {
+        .fc-item__container {
+            @include flex-wrap(wrap);
+            @if $media-align == right {
+                @include flex-direction(row-reverse);
+            } @else {
+                @include flex-direction(row);
+            }
+        }
+
+        .fc-item__media-wrapper {
+            @include flex-basis($media-width);
+        }
+
+        .fc-item__content {
+            @include flex-basis(100% - $media-width);
+        }
+    }
+
+    .has-no-flex-wrap & {
+        .fc-item__media-wrapper {
+            width: $media-width;
+            float: $media-align;
+        }
+
+        .fc-item__content {
+            width: 100% - $media-width;
+        }
+    }
+}
+
+.has-flex-wrap {
+    .fc-item {
+        @include flex-display;
+    }
+    .fc-item__container {
+        @include flex-direction(column);
+        @include flex-display;
+        @include flex(1);
+        width: 100%;
+    }
+    .fc-item__content {
+        @include flex-display;
+        @include flex-direction(column);
+        @include flex-grow(1);
+    }
+    .fc-item__meta {
+        @include flex-grow(1);
+        @include flex-display;
+        @include align-items--end;
+    }
+}
+
+.has-no-flex-wrap  {
+    .fc-item {
+        display: block;
+        @include clearfix;
+    }
+}
+
 .fc-item {
-    display: block;
     @include flex(1);
-    @include clearfix;
     background-color: #ffffff;
-    position: relative;
     margin-left: $gs-gutter * .5;
     margin-right: $gs-gutter * .5;
 
@@ -38,20 +108,17 @@ $fc-item-gutter: $gs-gutter / 4;
    ==========================================================================
 */
 
+
+
 // Wraps all media elements
 .fc-item__media-wrapper {
+    @include box-sizing(border-box);
     position: relative;
 }
 
 // Wraps all non-media content
 .fc-item__content {
     @include box-sizing(border-box);
-}
-
-.fc-item__image-container {
-    .js-off & {
-        display: none;
-    }
 }
 
 .fc-item__image-container {
@@ -108,7 +175,11 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__meta {
     @include fs-textSans(1);
-    padding-bottom: $gs-baseline;
+    &:after {
+        clear: left;
+        content: '';
+        display: table;
+    }
 
     &,
     & a {
@@ -133,6 +204,15 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item--has-cutout .fc-item__media-wrapper {
     display: none;
+}
+
+.fc-item__footer--vertical {
+    clear: left;
+}
+
+.fc-item__footer--horizontal {
+    display: none;
+    @include clearfix;
 }
 
 .fc-item__avatar {
