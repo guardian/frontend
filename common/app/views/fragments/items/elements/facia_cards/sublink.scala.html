@@ -1,7 +1,7 @@
-@(trail: Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean)(implicit request: RequestHeader, config: Config)
+@(trail: Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
-@import model.{Config, Trail}
+@import model.Trail
 @import views.support._
 
 <h3 class="fc-sublinks__item-title">

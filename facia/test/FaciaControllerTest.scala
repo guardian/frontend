@@ -19,7 +19,7 @@ import services.ConfigAgent
   override def beforeAll() {
     ConfigAgent.refreshWith(
       Config(
-        fronts = Map("technology" -> Front(Nil, None, None, None, None, None, None, None, None, None, None)),
+        fronts = Map("technology" -> Front(Nil, None, None, None, None, None, None, None, None, None, None, None)),
         collections = Map.empty)
     )
   }
