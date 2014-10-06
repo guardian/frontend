@@ -137,7 +137,9 @@ trait FrontJson extends ExecutionContexts with Logging {
       collectionType  = (json \ "type").asOpt[String],
       showTags        = (json \ "showTags").asOpt[Boolean] getOrElse false,
       showSections    = (json \ "showSections").asOpt[Boolean] getOrElse false,
-      hideKickers     = (json \ "hideKickers").asOpt[Boolean] getOrElse false
+      hideKickers     = (json \ "hideKickers").asOpt[Boolean] getOrElse false,
+      showDateHeader = (json \ "showDateHeader").asOpt[Boolean] getOrElse false,
+      showLatestUpdate = (json \ "showLatestUpdate").asOpt[Boolean] getOrElse false
     )
   }
 

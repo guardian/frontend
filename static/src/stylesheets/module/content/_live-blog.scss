@@ -167,6 +167,7 @@ $block-padding-right: $gs-gutter;
 .block-time {
     line-height: 15px;
     padding: $gs-baseline/4 0 $gs-baseline $gs-gutter/2;
+    position: relative;
 
     &.published-time {
         margin: 0;
@@ -187,7 +188,7 @@ $block-padding-right: $gs-gutter;
     }
 
     @include mq(tablet) {
-        float: left;
+        position: absolute;
         .block-time__absolute {
             display: block;
             margin-left: 0;
@@ -292,7 +293,8 @@ $block-padding-right: $gs-gutter;
     .block-title,
     .block-elements > *,
     .block-elements > .element.element-tweet,
-    .block-elements > .element.element-witness {
+    .block-elements > .element.element-witness,
+    .block-elements > .element.element--thumbnail {
         margin-left: $gs-gutter/2;
         margin-right: $gs-gutter/2;
         @include mq(tablet) {
@@ -409,6 +411,17 @@ $block-padding-right: $gs-gutter;
             @include mq(mobileLandscape) {
                 margin-left: $block-padding-left;
                 margin-right: $block-padding-right;
+            }
+        }
+
+        > .element.element--thumbnail {
+            margin-top: $gs-baseline / 3;
+            border-bottom: 0;
+
+            figcaption {
+                margin-left: 0;
+                margin-right: 0;
+                padding-bottom: $gs-baseline / 2;
             }
         }
     }
@@ -853,10 +866,7 @@ $timeline-width: 14px;
 }
 
 .content--liveblog {
-    @include mq($until: rightCol) {
-        padding-bottom: 0;
-    }
-    
+
     .content__standfirst,
     .blog__timeline,
     .content__secondary-column {
@@ -889,7 +899,6 @@ $timeline-width: 14px;
     background-color: $c-liveAccent;
     border: 0;
     margin-bottom: $gs-baseline;
-    padding-left: 36px;
 
     @include mq(leftCol) {
         margin-top: $gs-baseline;
@@ -901,22 +910,12 @@ $timeline-width: 14px;
     &:active {
         background-color: darken($c-liveAccent, 7%);
     }
-
-    .i {
-        width: 24px;
-        height: 24px;
-        vertical-align: middle;
-        margin: auto;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 7px;
-    }
 }
 
 .block-share--liveblog {
     margin-left: gs-span(1) + $gs-gutter;
     margin-top: $gs-baseline;
+    clear: both;
     @include mq($until: tablet) {
         display: none;
     }
