@@ -135,7 +135,7 @@ module.exports = function(grunt, options) {
                 expand: true,
                 cwd: 'static/src/javascripts/bootstraps',
                 src: [
-                    '**/*.js',
+                    '**/*.js'
                 ]
             }]
         }
