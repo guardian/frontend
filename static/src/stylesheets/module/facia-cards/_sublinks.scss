@@ -25,11 +25,7 @@
         left: 0;
         content: '';
         width: 40%;
-        border-top: 1px dotted $c-neutral4;
-
-        @include mq(tablet) {
-            width: 100%;
-        }
+        border-top: 1px dotted $c-neutral3;
     }
 }
 
