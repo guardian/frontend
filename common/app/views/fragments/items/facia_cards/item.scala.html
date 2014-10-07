@@ -80,10 +80,15 @@
 
                     @meta(trail)
 
-                    <footer class="fc-item__footer">
+                    <div class="fc-item__footer--vertical" aria-hidden="true">
                         @sublinks(trail.supporting)
-                    </footer>
+                    </div>
                 </div>
+
+                <footer class="fc-item__footer--horizontal">
+                    @sublinks(trail.supporting)
+                </footer>
+
                 <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
             </div>
         </div>

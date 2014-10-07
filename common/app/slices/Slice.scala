@@ -43,7 +43,7 @@ case object QuarterQlQlQl extends Slice {
         1,
         ItemClasses(
           mobile = "list-media-large",
-          tablet = "standard-quarter"
+          tablet = "standard"
         )
       ),
       Rows(
@@ -72,14 +72,14 @@ case object QuarterQuarterQlQl extends Slice {
         1,
         ItemClasses(
           mobile = "list-media-large",
-          tablet = "standard-quarter"
+          tablet = "standard"
         )
       ),
       SingleItem(
         1,
         ItemClasses(
           mobile = "list-media-large",
-          tablet = "standard-quarter"
+          tablet = "standard"
         )
       ),
       Rows(
@@ -108,21 +108,21 @@ case object QuarterQuarterQuarterQl extends Slice {
         1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard-quarter"
+          tablet = "standard"
         )
       ),
       SingleItem(
         1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard-quarter"
+          tablet = "standard"
         )
       ),
       SingleItem(
         1,
         ItemClasses(
           mobile = "list-media",
-          tablet = "standard-quarter"
+          tablet = "standard"
         )
       ),
       Rows(
@@ -151,28 +151,28 @@ case object QuarterQuarterQuarterQuarter extends Slice {
           1,
           ItemClasses(
             mobile = "list-media-large",
-            tablet = "standard-quarter"
+            tablet = "standard"
           )
         ),
         SingleItem(
           1,
           ItemClasses(
             mobile = "list-media-large",
-            tablet = "standard-quarter"
+            tablet = "standard"
           )
         ),
         SingleItem(
           1,
           ItemClasses(
             mobile = "list-media-large",
-            tablet = "standard-quarter"
+            tablet = "standard"
           )
         ),
         SingleItem(
           1,
           ItemClasses(
             mobile = "list-media-large",
-            tablet = "standard-quarter"
+            tablet = "standard"
           )
         )
       )

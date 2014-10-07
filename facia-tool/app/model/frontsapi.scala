@@ -178,7 +178,11 @@ trait UpdateActions extends Logging {
     "isBreaking",
     "showKickerTag",
     "showKickerSection",
+    "showKickerCustom",
+    "customKicker",
     "hideKickers",
+    "showBoostedHeadline",
+    "showQuotedHeadline",
     "showMainVideo"
   )
 

@@ -1,3 +1,9 @@
+@mixin headline-boost($size) {
+    .fc-item--has-boosted-title & {
+        @include fs-headline($size, true);
+    }
+}
+
 @import 'item-layouts/fc-item--standard';
 @import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--three-quarters';
@@ -92,8 +98,7 @@
     }
 }
 
-.fc-item--standard-tablet,
-.fc-item--standard-quarter-tablet {
+.fc-item--standard-tablet {
     @include mq(tablet) {
         @include fc-item--standard;
     }
