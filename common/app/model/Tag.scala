@@ -52,9 +52,8 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val isFootballCompetition = delegate.references.exists(_.`type` == "pa-football-competition")
 
-  lazy val getFootballBadgeUrl: Option[String] = metaData.get("references")
-    .map(_(0) \ "pa-football-team")
-    .flatMap(_.asOpt[String])
+  lazy val getFootballBadgeUrl: Option[String] = delegate.references.find(_.`type` == "pa-football-team")
+    .map(_.id.split("/").drop(1).mkString("/"))
     .map(teamId => s"${Configuration.staticSport.path}/football/crests/120/$teamId.png")
 
   lazy val tagWithoutSection = id.split("/")(1) // used for football nav
