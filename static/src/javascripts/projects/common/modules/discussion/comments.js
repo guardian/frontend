@@ -159,8 +159,8 @@ Comments.prototype.ready = function() {
 
     window.setInterval(
         function () {
-            relativedates.init();
-        },
+            this.relativeDates();
+        }.bind(this),
         60000
     );
 
@@ -414,7 +414,7 @@ Comments.prototype.getMoreReplies = function(event) {
             });
             RecommendComments.initButtons(btns);
         }
-        Comments.prototype.relativeDates();
+        self.relativeDates();
     });
 };
 
