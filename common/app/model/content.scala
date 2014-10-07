@@ -183,9 +183,6 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
       .getOrElse(Nil)
 
-  private def getMeta[A](fieldName: String)(f: JsValue => Option[A]) =
-    apiContent.metaData.get(fieldName).flatMap(f)
-
   // Inherited from FaciaFields
   override lazy val group: Option[String] = apiContent.metaData.flatMap(_.group)
   override lazy val supporting: List[Content] = apiContent.supporting
