@@ -114,7 +114,7 @@ define([
                     return element;
                 };
 
-                if (newCountOnMobile != newCountOnDesktop) {
+                if (newCountOnMobile !== newCountOnDesktop) {
                     /**
                      * As the number of counts are different on mobile and desktop, insert two calls to action,
                      * with one hidden at each breakpoint.
