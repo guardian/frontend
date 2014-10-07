@@ -338,7 +338,6 @@ Comments.prototype.renderComments = function(resp) {
     }
 
     this.emit('loaded');
-
     this.relativeDates();
 };
 
@@ -350,7 +349,6 @@ Comments.prototype.showHiddenComments = function(e) {
     this.removeState('shut');
     this.removeState('partial');
     this.emit('first-load');
-
     this.relativeDates();
 };
 
@@ -555,7 +553,6 @@ Comments.prototype.showDiscussion = function() {
         bean.fire(showDiscussionElem, 'click');
         showDiscussionElem.addClass('u-h');
     }
-
     this.relativeDates();
 };
 
