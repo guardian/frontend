@@ -5,6 +5,7 @@ import front._
 import model._
 import play.api.mvc._
 import play.api.libs.json.{JsObject, JsValue, Json}
+import updates.FrontIndex
 import views.support.{TemplateDeduping, NewsContainer}
 import scala.concurrent.Future
 import play.twirl.api.Html
@@ -61,6 +62,21 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
       applicationsRedirect(path)
     else
       renderFrontPressResult(path)
+  }
+
+  def renderFrontIndex(path: String) = MemcachedAction { implicit request =>
+    log.info(s"Serving front index: $path")
+
+    if (ConfigAgent.shouldServeFront(path)) {
+      for {
+        maybeFront <- frontJson.get(path)
+      } yield maybeFront match {
+        case Some(front) => Cached(60)(Ok(Json.toJson(FrontIndex.fromFaciaPage(front))))
+        case None => Cached(60)(NotFound)
+      }
+    } else {
+      Future.successful(Cached(60)(NotFound))
+    }
   }
 
   def renderFrontJsonLite(path: String) = MemcachedAction{ implicit request =>
