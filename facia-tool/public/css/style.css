@@ -459,7 +459,7 @@ h1 {
 }
 
 .article__ammends .has-sublinks {
-    color: #DD4B39;
+    color: #72b9e4;
     font-weight: bold;
     margin-right: 5px;
 }
@@ -631,6 +631,7 @@ select {
 .editor--boolean {
     display: inline-block;
     padding: 2px 0;
+    min-width: 100px;
 }
 
 .editor--boolean,
@@ -641,7 +642,11 @@ select {
 .editor--boolean.selected,
 .editor--boolean.selected a,
 .editor--boolean a:hover {
-    color: #DD4B39;
+    color: #148ad2;
+}
+
+.editor--boolean--display {
+    color: #72b9e4;
 }
 
 .editor--boolean__state {
