@@ -5,7 +5,7 @@ import common.JsonComponent
 import play.api.mvc.Action
 import discussion.model.DiscussionKey
 
-trait NonThreadedController extends DiscussionController {
+object NonThreadedController extends DiscussionController {
   def unthreadedPage(key: String, title: String) = Page(
     id = s"discussion/non-threaded/$key",
     section = "Discussion",

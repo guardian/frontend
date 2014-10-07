@@ -16,6 +16,7 @@ define([
     'common/modules/discussion/comment-box',
     'common/modules/discussion/recommend-comments',
     'common/modules/identity/api',
+    'common/modules/ui/relativedates',
     'common/modules/userPrefs'
 ], function(
     bean,
@@ -35,6 +36,7 @@ define([
     CommentBox,
     RecommendComments,
     Id,
+    relativedates,
     userPrefs
 ) {
 'use strict';
@@ -155,6 +157,13 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('commentReport'), this.reportComment);
     this.on('change', this.getClass('orderControl'), this.setOrder);
 
+    window.setInterval(
+        function () {
+            this.relativeDates();
+        }.bind(this),
+        60000
+    );
+
     this.addMoreRepliesButtons();
 
     if (this.options.commentId) {
@@ -169,6 +178,7 @@ Comments.prototype.ready = function() {
     }
 
     this.emit('ready');
+    this.relativeDates();
 
     $('.js-report-comment-close', this.elem).each(function(close) {
         bean.on(close, 'click', function() {
@@ -264,7 +274,7 @@ Comments.prototype.gotoComment = function(id) {
 Comments.prototype.gotoPage = function(page) {
     this.loading();
     scroller.scrollToElement(qwery('.discussion__comments__container .discussion__heading'), 100);
-
+    this.relativeDates();
     return this.fetchComments({
         page: page
     }).then(function() {
@@ -278,6 +288,7 @@ Comments.prototype.gotoPage = function(page) {
 Comments.prototype.changePage = function(e) {
     e.preventDefault();
     var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
+    this.relativeDates();
     return this.gotoPage(page);
 };
 
@@ -327,6 +338,7 @@ Comments.prototype.renderComments = function(resp) {
     }
 
     this.emit('loaded');
+    this.relativeDates();
 };
 
 /**
@@ -337,6 +349,7 @@ Comments.prototype.showHiddenComments = function(e) {
     this.removeState('shut');
     this.removeState('partial');
     this.emit('first-load');
+    this.relativeDates();
 };
 
 /**
@@ -401,6 +414,7 @@ Comments.prototype.getMoreReplies = function(event) {
             });
             RecommendComments.initButtons(btns);
         }
+        self.relativeDates();
     });
 };
 
@@ -539,6 +553,7 @@ Comments.prototype.showDiscussion = function() {
         bean.fire(showDiscussionElem, 'click');
         showDiscussionElem.addClass('u-h');
     }
+    this.relativeDates();
 };
 
 Comments.prototype.loading = function() {
@@ -578,6 +593,7 @@ Comments.prototype.setOrder = function(e) {
     }).then(function() {
         this.showHiddenComments();
         this.loaded();
+        this.relativeDates();
     }.bind(this));
 };
 
@@ -637,6 +653,10 @@ Comments.prototype.addUser = function(user) {
             this.on('click', this.getClass('commentPick'), this.handlePickClick);
         }
     }
+};
+
+Comments.prototype.relativeDates = function() {
+    relativedates.init();
 };
 
 return Comments;

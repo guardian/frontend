@@ -181,6 +181,16 @@ $avatarPadding: $gs-gutter / 2;
     margin: 2px $gs-gutter / 4 0;
 }
 
+.discussion__meta {
+    display: none;
+
+    .id--signed-out .discussion--open &.discussion__meta--open-signed-out,
+    .discussion--closed &.discussion__meta--closed,
+    .discussion--banned &.discussion__meta--banned,
+    .discussion--readonly &.discussion__meta--readonly {
+        display: block;
+    }
+}
 
 /* All comments (top level and reply)
    ========================================================================== */
@@ -766,11 +776,13 @@ $avatarPadding: $gs-gutter / 2;
         padding-top: $gs-baseline / 2;
     }
     @include mq(leftCol) {
-        float: left;
+        position: absolute;
         margin-left: -1 * ($left-column + $gs-gutter);
+        width: gs-span(2);
     }
     @include mq(wide) {
         margin-left: -1 * ($left-column-wide + $gs-gutter);
+        width: gs-span(3);
     }
 }
 .discussion__comments--top-comments {

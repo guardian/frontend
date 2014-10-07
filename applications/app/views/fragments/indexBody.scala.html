@@ -18,11 +18,7 @@
         }
         role="main">
 
-        @if(index.page.hasPageSkin(Edition(request))) {
-            @fragments.commercial.pageSkin()
-        }
-
-        @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination, dataId = s"${index.page.id}/news/regular-stories")(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some(index.page.webTitle)))
+        @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination, dataId = index.page.id)(request, templateDeduping, CollectionConfig.withDefaults(displayName = Some(index.page.webTitle)))
 
         @fragments.footballNav(index.page)
 

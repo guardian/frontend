@@ -15,9 +15,11 @@ x x x x x x x x x x x x x x x x x x x x x x x x
 
     .fc-item__header {
         @include fs-headline(1, true);
+        @include headline-boost(2);
 
         @include mq(desktop) {
             @include fs-headline(2, true);
+            @include headline-boost(3);
         }
     }
 

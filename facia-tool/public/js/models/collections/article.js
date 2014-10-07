@@ -64,13 +64,14 @@ define([
                 {
                     key: 'trailText',
                     editable: true,
+                    omitForSupporting: true,
                     label: 'trail text',
                     type: 'text'
                 },
                 {
                     key: 'byline',
                     editable: true,
-                    requires: 'showByline',
+                    omitForSupporting: true,
                     label: 'byline',
                     type: 'text'
                 },
@@ -84,13 +85,15 @@ define([
                 {
                     key: 'href',
                     editable: true,
-                    requires: 'isSnap',
+                    omitForSupporting: true,
+                    requiresState: 'isSnap',
                     label: 'snap URL',
                     type: 'text'
                 },
                 {
                     key: 'imageSrc',
                     editable: true,
+                    omitForSupporting: true,
                     requires: 'imageReplace',
                     label: 'replacement image URL',
                     validator: 'validateImageMain',
@@ -109,13 +112,9 @@ define([
                     type: 'text'
                 },
                 {
-                    key: 'imageCutoutSrcFromCapi',
-                    label: 'contributor image from CAPI',
-                    type: 'text'
-                },
-                {
                     key: 'imageCutoutSrc',
                     editable: true,
+                    omitForSupporting: true,
                     requires: 'imageCutoutReplace',
                     label: 'replacement cutout image URL',
                     validator: 'validateImageCutout',
@@ -143,24 +142,37 @@ define([
                 {
                     key: 'isBoosted',
                     editable: true,
+                    omitForSupporting: true,
                     label: 'boost',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showBoostedHeadline',
+                    editable: true,
+                    omitForSupporting: true,
+                    label: 'large headline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showQuotedHeadline',
+                    editable: true,
+                    omitForSupporting: true,
+                    label: 'quote headline',
                     type: 'boolean'
                 },
                 {
                     key: 'showByline',
                     editable: true,
+                    omitForSupporting: true,
                     label: 'show byline',
-                    type: 'boolean'
-                },
-                {
-                    key: 'hasMainVideo',
-                    label: 'has a video',
+                    omitForTones: ['comment'],
                     type: 'boolean'
                 },
                 {
                     key: 'showMainVideo',
                     editable: true,
-                    requires: 'hasMainVideo',
+                    omitForSupporting: true,
+                    requiresState: 'hasMainVideo',
                     singleton: 'images',
                     label: 'show video',
                     type: 'boolean'
@@ -168,6 +180,7 @@ define([
                 {
                     key: 'imageCutoutReplace',
                     editable: true,
+                    omitForSupporting: true,
                     singleton: 'images',
                     label: 'cutout image',
                     type: 'boolean'
@@ -175,14 +188,16 @@ define([
                 {
                     key: 'imageReplace',
                     editable: true,
+                    omitForSupporting: true,
                     singleton: 'images',
                     label: 'replace image',
-                    displayIf: 'imageSrc',
+                    omitIfNo: 'imageSrc',
                     type: 'boolean'
                 },
                 {
                     key: 'imageHide',
                     editable: true,
+                    omitForSupporting: true,
                     singleton: 'images',
                     label: 'hide image',
                     type: 'boolean'
@@ -215,19 +230,19 @@ define([
                 },
                 {
                     key: 'snapType',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap type',
                     type: 'text'
                 },
                 {
                     key: 'snapCss',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap CSS class',
                     type: 'text'
                 },
                 {
                     key: 'snapUri',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap source',
                     type: 'text'
                 }
@@ -255,6 +270,10 @@ define([
                 'isOpen',
                 'isLoaded',
                 'isEmpty',
+                'isSnap',
+                'tone',
+                'hasMainVideo',
+                'imageCutoutSrcFromCapi',
                 'ophanUrl',
                 'sparkUrl']);
 
@@ -285,12 +304,6 @@ define([
                 return this.fields.isLive() === 'false' ?
                     vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl()) :
                     this.meta.href() || this.props.webUrl();
-            }, this);
-
-            this.provisionalImageSrc = ko.observable();
-
-            this.meta.imageSrc.subscribe(function(src) {
-                this.provisionalImageSrc(src);
             }, this);
 
             this.populate(opts);
@@ -332,13 +345,16 @@ define([
 
         Article.prototype.metaDisplayer = function(opts, index, all) {
             var self = this,
-                show = opts.editable;
+                display;
 
             if (opts.type === 'boolean') {
-                show = show && (this.meta[opts.key] || function() {})();
-                show = show && (opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true);
-                return show ? opts.label : false;
+                display = opts.editable;
+                display = display && (this.meta[opts.key] || function() {})();
+                display = display && (opts.omitForTones ? opts.omitForTones.indexOf(self.state.tone()) === -1 : true);
+                display = display && (opts.omitIfNo ? _.some(all, function(editor) { return editor.key === opts.omitIfNo && self.meta[editor.key](); }) : true);
+                display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
 
+                return display ? opts.label : false;
             } else {
                 return false;
             }
@@ -380,7 +396,13 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
+                    var display = opts.omitForTones ? opts.omitForTones.indexOf(self.state.tone()) === -1 : true;
+
+                    display = display && (opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true);
+                    display = display && (opts.requiresState ? self.state[opts.requiresState]() : true);
+                    display = display && (opts.omitForSupporting ? this.group.parentType !== 'Article' : true);
+
+                    return display;
                 }, self),
 
                 toggle: function() {
@@ -470,18 +492,24 @@ define([
                 }
             }
 
-            this.meta.imageCutoutSrcFromCapi(contributorImage(opts));
+            this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
 
-            this.meta.hasMainVideo(mainMediaType(opts) === 'video');
+            this.state.isSnap(!!snap.validateId(this.id()));
 
-            this.meta.isSnap(!!snap.validateId(this.id()));
+            this.state.hasMainVideo(getMainMediaType(opts) === 'video');
 
-            if (!this.uneditable) {
-                this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
-            }
+            this.state.tone(getTone(opts));
+
+            this.updateEditorsDisplay();
 
             this.setRelativeTimes();
         };
+
+        Article.prototype.updateEditorsDisplay = function() {
+            if (!this.uneditable) {
+                this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
+            }
+        }
 
         Article.prototype.setRelativeTimes = function() {
             this.frontPublicationTime(humanTime(this.frontPublicationDate));
@@ -577,7 +605,7 @@ define([
         };
 
         Article.prototype.convertToSnap = function() {
-            this.meta.isSnap(true);
+            this.state.isSnap(true);
             this.meta.href(this.id());
             this.id(snap.generateId());
         };
@@ -599,7 +627,10 @@ define([
         };
 
         Article.prototype.close = function() {
-            this.state.isOpen(false);
+            if (this.state.isOpen()) {
+                this.state.isOpen(false);
+                this.updateEditorsDisplay();
+            }
         };
 
         Article.prototype.closeAndSave = function() {
@@ -607,6 +638,27 @@ define([
             this.save();
             return false;
         };
+
+        function getTone(contentApiArticle) {
+            var tone = _.findWhere(contentApiArticle.tags, {
+                type: 'tone'
+            });
+            return tone && tone.id && tone.id.replace(/^tone\//, '');
+        }
+
+        function getMainMediaType(contentApiArticle) {
+            var mainElement = _.findWhere(contentApiArticle.elements || [], {
+                relation: 'main'
+            });
+            return mainElement && mainElement.type;
+        }
+
+        function getContributorImage(contentApiArticle) {
+            var contributor = _.findWhere(contentApiArticle.tags, {
+                type: 'contributor'
+            });
+            return contributor && contributor.bylineLargeImageUrl;
+        }
 
         function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
             if (imageSrc()) {
@@ -616,31 +668,17 @@ define([
                         imageSrcHeight(height);
                     })
                     .fail(function(err) {
-                        undefine(imageSrc, imageSrcWidth, imageSrcHeight);
+                        undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
                         window.alert(err);
                     });
             } else {
-                undefine(imageSrc, imageSrcWidth, imageSrcHeight);
+                undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
             }
         };
 
-        function undefine() {
+        function undefineObservables() {
             Array.prototype.slice.call(arguments).forEach(function(fn) { fn(undefined); })
         };
-
-        function mainMediaType(contentApiArticle) {
-            var mainElement = _.findWhere(contentApiArticle.elements, {
-                relation: 'main'
-            });
-            return mainElement && mainElement.type;
-        }
-
-        function contributorImage(contentApiArticle) {
-            var contributor = _.findWhere(contentApiArticle.tags, {
-                type: 'contributor'
-            });
-            return contributor && contributor.bylineLargeImageUrl;
-        }
 
         function mod(n, m) {
             return ((n % m) + m) % m;

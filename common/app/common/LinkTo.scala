@@ -32,7 +32,7 @@ trait LinkTo extends Logging {
   def handleQueryStrings(url: String)(implicit request : RequestHeader) = HttpSwitch.queryString(url).trim
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
-  
+
   def processUrl(url: String, edition: Edition, region: Option[Region] = None) = url match {
     case "http://www.theguardian.com" => ProcessedUrl(homeLink(edition, region))
     case "/" => ProcessedUrl(homeLink(edition, region))
@@ -43,7 +43,7 @@ trait LinkTo extends Logging {
     case AbsolutePath(path) => ProcessedUrl(urlFor(path, edition))
     case otherUrl => ProcessedUrl(otherUrl, true)
   }
-  
+
   def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = trail match {
     case snap: Snap => snap.snapUrl.filter(_.nonEmpty).map(apply(_))
     case t: Trail => Option(apply(t.url))

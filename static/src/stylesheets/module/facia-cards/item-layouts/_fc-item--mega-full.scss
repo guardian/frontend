@@ -32,9 +32,11 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
 
     .fc-item__header {
         @include fs-headline(4, true);
+        @include headline-boost(5);
 
         @include mq(desktop) {
             @include fs-headline(6, true);
+            @include headline-boost(7);
         }
     }
 
@@ -58,7 +60,11 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
         left: 40%;
     }
 
-    @include fc-sublinks-horizontal;
+    @include fc-sublinks--horizontal;
+
+    .fc-item__footer--horizontal {
+        @include flex-basis(auto);
+    }
 
     &.fc-item--has-sublinks-1 .fc-sublinks {
         display: none;

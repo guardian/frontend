@@ -31,25 +31,24 @@ GET         /analytics/commercial/im-sponsorships                               
 GET         /analytics/commercial/templates                                                                          controllers.admin.CommercialController.renderCreativeTemplates()
 
 # Discussion
-GET         /discussion/comment-box.json                                                                             controllers.DiscussionApp.commentBox()
+GET         /discussion/comment-box.json                                                                             controllers.CommentBoxController.commentBox()
 
-GET         /discussion/comment-counts                                                                               controllers.DiscussionApp.commentCount(shortUrls: String)
-GET         /discussion/comment-counts.json                                                                          controllers.DiscussionApp.commentCountJson(shortUrls: String)
+GET         /discussion/comment-counts                                                                               controllers.CommentCountController.commentCount(shortUrls: String)
+GET         /discussion/comment-counts.json                                                                          controllers.CommentCountController.commentCountJson(shortUrls: String)
 
-GET         /discussion/comment/*id.json                                                                             controllers.DiscussionApp.commentJson(id: Int)
-GET         /discussion/comment/*id                                                                                  controllers.DiscussionApp.comment(id: Int)
+GET         /discussion/comment/*id.json                                                                             controllers.CommentsController.commentJson(id: Int)
+GET         /discussion/comment/*id                                                                                  controllers.CommentsController.comment(id: Int)
+GET         /discussion/comment-context/*commentId.json                                                              controllers.CommentsController.commentContextJson(commentId: Int)
+GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.CommentsController.commentsJson(discussionKey: discussion.model.DiscussionKey)
+GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.CommentsController.comments(discussionKey: discussion.model.DiscussionKey)
 
-GET         /discussion/comment-context/*commentId.json                                                              controllers.DiscussionApp.commentContextJson(commentId: Int)
+GET         /discussion/non-threaded/$discussionKey</?p/\w+>.json                                                    controllers.NonThreadedController.commentsListJson(discussionKey: discussion.model.DiscussionKey)
+GET         /discussion/non-threaded/$discussionKey</?p/\w+>                                                         controllers.NonThreadedController.commentsList(discussionKey: discussion.model.DiscussionKey)
 
-GET         /discussion/non-threaded/$discussionKey</?p/\w+>.json                                                    controllers.DiscussionApp.commentsListJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/non-threaded/$discussionKey</?p/\w+>                                                         controllers.DiscussionApp.commentsList(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/$discussionKey</?p/\w+>.json                                                                 controllers.DiscussionApp.commentsJson(discussionKey: discussion.model.DiscussionKey)
-GET         /discussion/$discussionKey</?p/\w+>                                                                      controllers.DiscussionApp.comments(discussionKey: discussion.model.DiscussionKey)
-
-GET         /discussion/profile/:id/search/:q.json                                                                   controllers.DiscussionApp.profileSearch(id: String, q: String)
-GET         /discussion/profile/:id/discussions.json                                                                 controllers.DiscussionApp.profileDiscussions(id: String)
-GET         /discussion/profile/:id/replies.json                                                                     controllers.DiscussionApp.profileReplies(id: String)
-GET         /discussion/profile/:id/picks.json                                                                       controllers.DiscussionApp.profilePicks(id: String)
+GET         /discussion/profile/:id/search/:q.json                                                                   controllers.ProfileActivityController.profileSearch(id: String, q: String)
+GET         /discussion/profile/:id/discussions.json                                                                 controllers.ProfileActivityController.profileDiscussions(id: String)
+GET         /discussion/profile/:id/replies.json                                                                     controllers.ProfileActivityController.profileReplies(id: String)
+GET         /discussion/profile/:id/picks.json                                                                       controllers.ProfileActivityController.profilePicks(id: String)
 GET         /discussion/profile/:id/witness.json                                                                     controllers.WitnessActivityController.witnessActivity(id: String)
 
 GET         /open/cta/article/*discussionKey.json                                                                    controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
