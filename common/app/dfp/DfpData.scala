@@ -179,3 +179,13 @@ object GuLineItem {
   }
 
 }
+
+
+case class CreativeTemplateParameter(parameterType: String, label: String, isRequired: Boolean, description: String)
+
+case class GuCreativeTemplate(id: Long,
+                              name: String,
+                              description: String,
+                              parameters: Seq[CreativeTemplateParameter],
+                              snippet: String,
+                              creativeIds: Seq[Long])

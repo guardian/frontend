@@ -6,6 +6,7 @@ import com.google.api.ads.dfp.axis.utils.v201403.StatementBuilder
 import com.google.api.ads.dfp.axis.v201403._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
+import conf.Configuration.commercial.guMerchandisingAdvertiserId
 import conf.{AdminConfiguration, Configuration}
 import dfp.DfpApiWrapper.DfpSessionException
 import org.joda.time.{DateTimeZone, DateTime => JodaDateTime}
@@ -205,15 +206,39 @@ object DfpDataHydrator extends Logging {
     }.toMap
   }
 
-  def loadActiveUserDefinedCreativeTemplates(): Seq[CreativeTemplate] = dfpSession.fold(Seq.empty[CreativeTemplate]) { session =>
-    val statementBuilder = new StatementBuilder()
+  def loadActiveUserDefinedCreativeTemplates(): Seq[GuCreativeTemplate] = dfpSession.fold(Seq.empty[GuCreativeTemplate]) { session =>
+    val templatesQuery = new StatementBuilder()
       .where("status = :active and type = :type")
       .withBindVariableValue("active", CreativeTemplateStatus.ACTIVE.getValue)
       .withBindVariableValue("type", CreativeTemplateType.USER_DEFINED.getValue)
       .orderBy("name ASC")
-    DfpApiWrapper.fetchCreativeTemplates(session, statementBuilder) filterNot { template =>
+
+    val dfpCreativeTemplates = DfpApiWrapper.fetchCreativeTemplates(session, templatesQuery) filterNot { template =>
       val name = template.getName.toUpperCase
       name.startsWith("APPS - ") || name.startsWith("AS ") || name.startsWith("QC ")
+    }
+
+    val creativesQuery = new StatementBuilder()
+      .where("advertiserId = :advertiserId")
+      .withBindVariableValue("advertiserId", guMerchandisingAdvertiserId)
+
+    val creatives = DfpApiWrapper.fetchTemplateCreatives(session, creativesQuery)
+
+    dfpCreativeTemplates map { template =>
+      GuCreativeTemplate(
+        id = template.getId,
+        name = template.getName,
+        description = template.getDescription,
+        parameters = template.getVariables map { param =>
+          CreativeTemplateParameter(
+            param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable"),
+            param.getLabel,
+            param.getIsRequired,
+            param.getDescription)
+        },
+        snippet = template.getSnippet,
+        creativeIds = creatives.get(template.getId).map(_.map(_.getId.longValue())).getOrElse(Nil)
+      )
     }
   }
 

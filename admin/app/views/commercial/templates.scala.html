@@ -1,4 +1,4 @@
-@(env: String, templates: Seq[com.google.api.ads.dfp.axis.v201403.CreativeTemplate])
+@(env: String, templates: Seq[dfp.GuCreativeTemplate])
 @import tools.DfpLink
 
 @admin_main("Commercial Templates", env, isAuthed = true) {
@@ -10,23 +10,29 @@
     <ol>
     @for(template <- templates) {
         <li style="margin-top:60px;margin-bottom:60px">
-            <p style="font-size:large;font-weight:bold">@template.getName (<a href="@DfpLink.creativeTemplate(template.getId)">@template.getId</a>)</p>
-            <p>@{template.getDescription}</p>
+            <p style="font-size:large;font-weight:bold">@template.name (<a href="@DfpLink.creativeTemplate(template.id)">@template.id</a>)</p>
+            <p>@{template.description}</p>
+            @if(template.creativeIds.isEmpty){<p><b>This template is not in use.</b></p>}
+            @if(template.creativeIds.nonEmpty){
+                <p>Creatives built from this template:<ul>@for(creativeId <- template.creativeIds){
+                    <li><a href="@DfpLink.creative(creativeId)">@creativeId</a></li>
+                }</ul></p>
+            }
             <div>
                 <p style="font-weight:bold">Parameters:</p>
                 <table style="margin-bottom:20px">
-                    @for(param <- template.getVariables) {
+                    @for(param <- template.parameters) {
                         <tr>
-                            <td style="padding-right:10px;word-break:normal">@{param.getLabel}</td>
-                            <td style="padding-right:10px">@{param.getCreativeTemplateVariableType.stripSuffix("CreativeTemplateVariable")}</td>
-                            <td style="padding-right:10px"><span style="font-size:small">@if(param.getIsRequired){Required}else{Optional}</span></td>
-                            <td style="padding-right:10px">@{param.getDescription}</td>
+                            <td style="padding-right:10px;word-break:normal">@{param.label}</td>
+                            <td style="padding-right:10px">@{param.parameterType}</td>
+                            <td style="padding-right:10px"><span style="font-size:small">@if(param.isRequired){Required}else{Optional}</span></td>
+                            <td style="padding-right:10px">@{param.description}</td>
                         </tr>
                     }
                 </table>
             </div>
             <p style="font-weight:bold">Snippet</p>
-            <p>@{template.getSnippet}</p>
+            <p>@{template.snippet}</p>
         </li>
     }
     </ol>
