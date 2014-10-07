@@ -1,5 +1,5 @@
 .tone-live {
-    @extend %tone-background;
+    @extend %tone-has-background;
 
     &.fc-item {
         background-color: $c-liveDefault;
@@ -23,5 +23,11 @@
         & a {
             color: $c-liveMute;
         }
+    }
+
+    .fc-item__live-indicator,
+    .fc-item__breaking-indicator {
+        background-color: #ffffff;
+        padding: .1em .2em .05em;
     }
 }

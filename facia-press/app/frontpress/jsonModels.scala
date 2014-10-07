@@ -80,6 +80,8 @@ object ItemMeta {
     ("showKickerSection", content.apiContent.metaData.get("showKickerSection")),
     ("showKickerCustom", content.apiContent.metaData.get("showKickerCustom")),
     ("customKicker", content.apiContent.metaData.get("customKicker")),
+    ("showBoostedHeadline", content.apiContent.metaData.get("showBoostedHeadline")),
+    ("showQuotedHeadline", content.apiContent.metaData.get("showQuotedHeadline")),
     ("showMainVideo", content.apiContent.metaData.get("showMainVideo"))
   )
 }

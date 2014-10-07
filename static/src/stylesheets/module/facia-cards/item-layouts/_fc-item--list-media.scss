@@ -29,6 +29,7 @@ Media list item. Looks a bit like this:
 
     &.fc-item--has-image {
         // Override .svg .action--has-icon
+        position: relative;
         padding-left: $image-width !important;
         &:before {
             content: '';
@@ -46,6 +47,7 @@ Media list item. Looks a bit like this:
 
     .fc-item__header {
         @include fs-headline($headline-size, true);
+        @include headline-boost($headline-size + 1);
     }
 
     .fc-item__media-wrapper,

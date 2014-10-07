@@ -309,7 +309,6 @@ define([
          * a      = audience science
          * at     = adtest cookie
          * bp     = current breakpoint
-         * cat    = section
          * ct     = content type
          * k      = keywords
          * p      = platform
@@ -323,7 +322,6 @@ define([
             }
 
             var page        = config.page,
-                section     = encodeTargetValue(page.section),
                 series      = parseSeries(page),
                 contentType = encodeTargetValue(page.contentType),
                 edition     = encodeTargetValue(page.edition),
@@ -332,7 +330,6 @@ define([
             return defaults({
                 url:     window.location.pathname,
                 edition: edition,
-                cat:     section,
                 se:      series,
                 ct:      contentType,
                 pt:      contentType,
