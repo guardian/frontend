@@ -1,13 +1,12 @@
-@()(implicit requestHeader: RequestHeader)
+@(date: org.joda.time.DateTime)(implicit requestHeader: RequestHeader)
 
-@import org.joda.time.DateTime
 @import views.support.Format
 
 <div class="fc-today">
-    <span class="fc-today__dayofweek js-dayofweek">@Format(DateTime.now(), "EEEE")</span>
+    <span class="fc-today__dayofweek js-dayofweek">@Format(date, "EEEE")</span>
     <span class="u-nobr today__sub">
-        <span class="fc-today__dayofmonth js-dayofmonth">@Format(DateTime.now(), "d")</span>
-        <span class="fc-today__month">@Format(DateTime.now(), "MMMM")</span>
-        <span class="fc-today__year">@Format(DateTime.now(), "yyyy")</span>
+        <span class="fc-today__dayofmonth js-dayofmonth">@Format(date, "d")</span>
+        <span class="fc-today__month">@Format(date, "MMMM")</span>
+        <span class="fc-today__year">@Format(date, "yyyy")</span>
     </span>
 </div>

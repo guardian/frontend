@@ -1,4 +1,4 @@
-@(collection: Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
 
 @import model.{Collection, Config}
 @import views.html.fragments.containers.facia_cards.{slice, date}
@@ -19,7 +19,7 @@
             <div class="fc-container__header">
                 <div class="fc-container__header__title">
                     <span class="u-text-hyphenate">@Html(webTitle)</span>
-                    @date()
+                    @date(actualDate)
                 </div>
             </div>
             <div class="container__body container--rolled-up-hide">
