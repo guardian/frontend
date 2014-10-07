@@ -29,6 +29,7 @@ Media list item. Looks a bit like this:
 
     &.fc-item--has-image {
         // Override .svg .action--has-icon
+        position: relative;
         padding-left: $image-width !important;
         &:before {
             content: '';
