@@ -14,7 +14,7 @@ object ContainerIndexItem {
     card.item match {
       case content: Content => content.id
     },
-    card.hideUpTo.exists(_ == Mobile)
+    !card.hideUpTo.exists(_ == Mobile)
   )
 }
 
