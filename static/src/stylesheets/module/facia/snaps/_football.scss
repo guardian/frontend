@@ -231,7 +231,7 @@
     $footballBadgeSizeDesktop: 120px;
 
     .football-badge {
-        background-size: 100%;
+        background-size: contain;
         background-repeat: no-repeat;
 
         width: $footballBadgeSizeMobile;
