@@ -163,7 +163,7 @@
     </script>
 
     <script type="text/html" id="template_editor_boolean_states">
-        <span class="editor--boolean  selected">
+        <span class="editor--boolean--display">
             <span class="editor--boolean__label" data-bind="text: $data"></span>
             <span class="editor--boolean__state">✔</span>
         </span>
@@ -345,12 +345,6 @@
                                 <span class="time__front" data-bind="text: frontPublicationTime"></span>
                             </span>
 
-                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
-                                <span class="has-sublinks">
-                                    <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>
-                                </span>
-                            <!-- /ko -->
-
                             <!-- ko if: fields.isLive() === 'false' -->
                                 <span class="label" data-bind="
                                     css: {
@@ -364,11 +358,17 @@
                                 <span class="label label--snap" data-bind="text: meta.snapCss() || 'snap'"></span>
                             <!-- /ko -->
 
-                            <!-- ko if: state.tone -->
-                                <span class="label" data-bind="text: state.tone"></span>
+                            <!-- ko if: meta.supporting && meta.supporting.items().length -->
+                                <span class="has-sublinks">
+                                    <span data-bind="text: meta.supporting.items().length"></span> sublink<span data-bind="visible: meta.supporting.items().length > 1">s</span>
+                                </span>
                             <!-- /ko -->
 
                             <span data-bind="template: {name: 'template_editor_boolean_states', foreach: editorsDisplay}"></span>
+
+                            <!-- ko if: state.tone -->
+                                <span class="label" data-bind="text: state.tone"></span>
+                            <!-- /ko -->
 
                             <span class="trailText" data-bind="
                                 html: meta.trailText() || fields.trailText()"></span>
