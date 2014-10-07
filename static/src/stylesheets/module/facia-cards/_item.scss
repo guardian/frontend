@@ -148,6 +148,11 @@ $fc-item-gutter: $gs-gutter / 4;
     padding: .1em .2em .05em;
 }
 
+.fc-item__breaking-indicator {
+    background-color: #ffffff;
+    color: $c-liveDefault;
+}
+
 .fc-item__header {
     @include fs-headline(3);
     font-weight: 500;
@@ -205,7 +210,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__timestamp {
-    // display: none;
+    display: none;
     margin-right: 1em;
 }
 
