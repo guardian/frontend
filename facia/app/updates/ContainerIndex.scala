@@ -10,16 +10,17 @@ import views.support.{LatestUpdate, TemplateDeduping}
 object ContainerIndexItem {
   implicit val jsonWrites = Json.writes[ContainerIndexItem]
 
-  def fromCard(card: Card) = ContainerIndexItem(
-    card.item match {
-      case content: Content => content.id
-    },
-    !card.hideUpTo.exists(_ == Mobile)
-  )
+  def fromCard(card: Card) = card.item match {
+    case content: Content => ContainerIndexItem(
+      content.id,
+      content.lastModified,
+      !card.hideUpTo.exists(_ == Mobile))
+  }
 }
 
 case class ContainerIndexItem(
   id: String,
+  lastUpdated: DateTime,
   visibleOnMobile: Boolean
 )
 

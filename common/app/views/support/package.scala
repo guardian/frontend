@@ -791,6 +791,7 @@ object GetClasses {
 
     Seq(
       "fc-item",
+      "js-fc-item",
       imageClass,
       discussionClass
     ) ++ Seq(
@@ -943,9 +944,10 @@ object GetClasses {
 
   def forNewStyleContainer(config: Config, isFirst: Boolean, hasTitle: Boolean, extraClasses: Seq[String] = Nil) = {
     RenderClasses(
-      "fc-container" +:
-        (commonContainerStyles(config, isFirst, hasTitle) ++
-        extraClasses): _*
+      Seq(
+        "js-container--fetch-updates",
+        "fc-container"
+      ) ++ commonContainerStyles(config, isFirst, hasTitle) ++ extraClasses: _*
     )
   }
 

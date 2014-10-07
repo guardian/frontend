@@ -17,4 +17,10 @@ case class Card(
     case Some(Desktop) => "fc-show-more--hide js-hide"
     case _ => ""
   }
+
+  def visibilityDataAttribute = hideUpTo match {
+    case Some(Mobile) => "desktop"
+    case Some(Desktop) => "hidden"
+    case _ => "all"
+  }
 }

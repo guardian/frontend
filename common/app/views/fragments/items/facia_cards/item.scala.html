@@ -1,7 +1,7 @@
 @(card: layout.Card, modifierClasses: layout.ItemClasses, containerIndex: Int, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader, config: model.Config)
 
 @import common.LinkTo
-@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
+@import model.{FaciaDisplayElement, InlineVideo, VideoPlayer, Content}
 @import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, ContributorLinks, CutOut}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
@@ -11,7 +11,7 @@
 
 @defining((card.item, card.index)) { case (trail, index) =>
 
-<li class="facia-slice__item u-faux-block-link l-row__item  l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
+<li class="facia-slice__item u-faux-block-link l-row__item l-row__item--span-@colSpan @if(isList){ l-list__item }@card.cssClasses">
     @defining((trail.visualTone, containerIndex == 0)) { case (tone, isFirstContainer) =>
         <div class="@GetClasses.forNewStyleItem(trail, isFirstContainer) @modifierClasses.classes u-cf"
             @if(trail.isCommentable) {
@@ -22,6 +22,14 @@
                 data-discussion-inline-upgrade="true"
             }
             data-link-name="trail | @{index + 1}"
+            @trail match {
+                case content: Content => {
+                    data-id="@content.id"
+                    data-updated="@content.lastModified.getMillis"
+                }
+                case _ => {}
+            }
+            data-item-visibility="@card.visibilityDataAttribute"
             @SnapData(trail)>
 
             <div class="fc-item__container">
