@@ -141,6 +141,18 @@ define([
                     type: 'boolean'
                 },
                 {
+                    key: 'showBoostedHeadline',
+                    editable: true,
+                    label: 'large headline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showQuotedHeadline',
+                    editable: true,
+                    label: 'quote headline',
+                    type: 'boolean'
+                },
+                {
                     key: 'showByline',
                     editable: true,
                     label: 'show byline',
