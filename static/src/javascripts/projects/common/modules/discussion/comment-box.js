@@ -169,6 +169,16 @@ CommentBox.prototype.ready = function() {
     }
 };
 
+CommentBox.prototype.urlify = function(str) {
+    var reOutsideTags = '(?![^<]*>|[^<>]*</)',
+        reUrl = '\\b((https?://|www.)\\S+)\\b',
+        regexp = new RegExp(reUrl + reOutsideTags, 'g');
+    return str.replace(regexp, function(match, url, protocol) {
+        var fullUrl = protocol === 'www.' ? 'http://' + url : url;
+        return '<a href="' + fullUrl +'">' + url + '</a>';
+    });
+};
+
 /**
  * @param {Event}
  */
@@ -180,16 +190,6 @@ CommentBox.prototype.postComment = function(e) {
 
     e.preventDefault();
     self.clearErrors();
-
-    var urlify = function(str) {
-        var reOutsideTags = '(?![^<]*>|[^<>]*</)',
-            reUrl = '\\b((https?://|www.)\\S+)\\b',
-            regexp = new RegExp(reUrl + reOutsideTags, 'g');
-        return str.replace(regexp, function(match, url, protocol) {
-            var fullUrl = protocol === 'www.' ? 'http://' + url : url;
-            return '<a href="' + fullUrl +'">' + url + '</a>';
-        });
-    };
 
     var validEmailCommentSubmission = function () {
         if (comment.body === '') {
@@ -206,7 +206,7 @@ CommentBox.prototype.postComment = function(e) {
         }
 
         if (self.errors.length === 0) {
-            comment.body = urlify(comment.body);
+            comment.body = self.urlify(comment.body);
             self.setFormState(true);
             DiscussionApi
                 .postComment(self.getDiscussionId(), comment)
