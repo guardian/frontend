@@ -275,14 +275,12 @@ Comments.prototype.gotoComment = function(id) {
 Comments.prototype.gotoPage = function(page) {
     this.loading();
     scroller.scrollToElement(qwery('.discussion__comments__container .discussion__heading'), 100);
-
+    mediator.emit('discussion:timestamps');
     return this.fetchComments({
         page: page
     }).then(function() {
         this.loaded();
     }.bind(this));
-
-    mediator.emit('discussion:timestamps');
 };
 
 /**
@@ -291,9 +289,8 @@ Comments.prototype.gotoPage = function(page) {
 Comments.prototype.changePage = function(e) {
     e.preventDefault();
     var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
-    return this.gotoPage(page);
-
     mediator.emit('discussion:timestamps');
+    return this.gotoPage(page);
 };
 
 /**
@@ -600,6 +597,7 @@ Comments.prototype.setOrder = function(e) {
     }).then(function() {
         this.showHiddenComments();
         this.loaded();
+        mediator.emit('discussion:timestamps');
     }.bind(this));
 };
 
