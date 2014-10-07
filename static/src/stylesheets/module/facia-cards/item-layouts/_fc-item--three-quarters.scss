@@ -41,6 +41,7 @@ Three quarter item. Looks like a wide standard, a bit like this:
     .fc-item__header {
         @include mq(desktop) {
             @include fs-headline(4, true);
+            @include headline-boost(5);
         }
     }
 

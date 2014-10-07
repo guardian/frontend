@@ -82,6 +82,10 @@ $fc-item-gutter: $gs-gutter / 4;
     @include fs-headline(3);
     font-weight: 500;
     padding-bottom: .75em;
+
+    .fc-item--has-boosted-title & {
+        @include fs-headline(4, true);
+    }
 }
 
 .fc-item__title,
@@ -104,6 +108,10 @@ $fc-item-gutter: $gs-gutter / 4;
     @include fs-headline(1);
     padding-bottom: get-line-height(bodyCopy, 1);
     display: none;
+
+    .fc-item--has-boosted-title & {
+        display: none !important;
+    }
 }
 
 .fc-item__meta {
@@ -150,9 +158,4 @@ $fc-item-gutter: $gs-gutter / 4;
         width: 100%;
         right: 0 - $gs-gutter * 2;
     }
-}
-
-.fc-item__title--boosted {
-    font-size: 120%;
-    line-height: 120%;
 }

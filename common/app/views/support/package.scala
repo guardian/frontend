@@ -793,6 +793,7 @@ object GetClasses {
       if (trail.isLive) Some("fc-item--live") else None,
       if (trail.isComment && trail.hasLargeContributorImage) Some("fc-item--has-cutout") else None,
       if (trail.supporting.nonEmpty) Some(s"fc-item--has-sublinks-${trail.supporting.length}") else None,
+      if (trail.showBoostedHeadline) Some("fc-item--has-boosted-title") else None,
 
       if (forceHasImage || trail.trailPicture(5,3).nonEmpty)
         if(trail.isBoosted) Some("item--imageadjust-boost") else if(trail.imageHide) Some("item--imageadjust-hide") else Some("item--imageadjust-default")

@@ -1,11 +1,10 @@
-@(isFirstItemOnPage: Boolean, showQuote: Boolean, boostHeadline: Boolean)(html: Html)
+@(isFirstItemOnPage: Boolean, showQuote: Boolean)(html: Html)
 
 @import views.support.RenderClasses
 
 @defining(RenderClasses(Map(
     "fc-item__title" -> true,
-    "fc-item__title--quoted" -> showQuote,
-    "fc-item__title--boosted" -> boostHeadline
+    "fc-item__title--quoted" -> showQuote
 ))) { classes =>
     @if(isFirstItemOnPage) {
         <h1 class="@classes">@html</h1>
