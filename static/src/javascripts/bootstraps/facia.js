@@ -28,8 +28,8 @@ define([
     containerFcShowMore,
     ContainerShowMore,
     ContainerToggle,
-    GeoMostPopularFront,
-    liveBlogUpdates
+    liveBlogUpdates,
+    GeoMostPopularFront
     ) {
     var modules = {
             showSnaps: function () {
