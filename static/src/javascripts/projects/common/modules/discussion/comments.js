@@ -156,7 +156,6 @@ Comments.prototype.ready = function() {
     this.on('click', this.getClass('showHidden'), this.showHiddenComments);
     this.on('click', this.getClass('commentReport'), this.reportComment);
     this.on('change', this.getClass('orderControl'), this.setOrder);
-    mediator.on('discussion:timestamps', relativedates.init);
 
     window.setInterval(
         function () {
@@ -179,7 +178,7 @@ Comments.prototype.ready = function() {
     }
 
     this.emit('ready');
-    mediator.emit('discussion:timestamps');
+    this.relativeDates();
 
     $('.js-report-comment-close', this.elem).each(function(close) {
         bean.on(close, 'click', function() {
@@ -275,7 +274,7 @@ Comments.prototype.gotoComment = function(id) {
 Comments.prototype.gotoPage = function(page) {
     this.loading();
     scroller.scrollToElement(qwery('.discussion__comments__container .discussion__heading'), 100);
-    mediator.emit('discussion:timestamps');
+    this.relativeDates();
     return this.fetchComments({
         page: page
     }).then(function() {
@@ -289,7 +288,7 @@ Comments.prototype.gotoPage = function(page) {
 Comments.prototype.changePage = function(e) {
     e.preventDefault();
     var page = parseInt(e.currentTarget.getAttribute('data-page'), 10);
-    mediator.emit('discussion:timestamps');
+    this.relativeDates();
     return this.gotoPage(page);
 };
 
@@ -340,7 +339,7 @@ Comments.prototype.renderComments = function(resp) {
 
     this.emit('loaded');
 
-    mediator.emit('discussion:timestamps');
+    this.relativeDates();
 };
 
 /**
@@ -352,7 +351,7 @@ Comments.prototype.showHiddenComments = function(e) {
     this.removeState('partial');
     this.emit('first-load');
 
-    mediator.emit('discussion:timestamps');
+    this.relativeDates();
 };
 
 /**
@@ -417,7 +416,7 @@ Comments.prototype.getMoreReplies = function(event) {
             });
             RecommendComments.initButtons(btns);
         }
-        mediator.emit('discussion:timestamps');
+        Comments.prototype.relativeDates();
     });
 };
 
@@ -557,7 +556,7 @@ Comments.prototype.showDiscussion = function() {
         showDiscussionElem.addClass('u-h');
     }
 
-    mediator.emit('discussion:timestamps');
+    this.relativeDates();
 };
 
 Comments.prototype.loading = function() {
@@ -597,7 +596,7 @@ Comments.prototype.setOrder = function(e) {
     }).then(function() {
         this.showHiddenComments();
         this.loaded();
-        mediator.emit('discussion:timestamps');
+        this.relativeDates();
     }.bind(this));
 };
 
@@ -657,6 +656,10 @@ Comments.prototype.addUser = function(user) {
             this.on('click', this.getClass('commentPick'), this.handlePickClick);
         }
     }
+};
+
+Comments.prototype.relativeDates = function() {
+    relativedates.init();
 };
 
 return Comments;
