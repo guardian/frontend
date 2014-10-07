@@ -1,6 +1,7 @@
 define([
     'common/utils/$',
     'common/utils/ajax',
+    'bean',
     'bonzo',
     'lodash/collections/contains',
     'lodash/collections/filter',
@@ -10,6 +11,7 @@ define([
 ], function (
     $,
     ajax,
+    bean,
     bonzo,
     contains,
     filter,
@@ -76,8 +78,7 @@ define([
                 currentItemsInfo = currentItems($container),
                 newCountOnMobile,
                 newCountOnDesktop,
-                mobile,
-                desktop;
+                createElement;
 
             if (element && element.length > 0) {
                 newCountOnMobile = newCountFor(currentItemsInfo.mobile, filter(containerIndex.items, function (item) {
@@ -87,12 +88,42 @@ define([
 
                 /** TODO add if statements here that only append the elements if there is at least 1 update */
 
-                mobile = createUpdateCountElement(newCountOnMobile)
-                    .addClass('fc-container__updates--mobile');
-                desktop = createUpdateCountElement(newCountOnDesktop)
-                    .addClass('fc-container__updates--desktop');
+                element.html('');
 
-                element.html('').append(mobile).append(desktop);
+                createElement = function (count, breakpoint) {
+                    var element = createUpdateCountElement(count);
+
+                    if (breakpoint) {
+                        element.addClass('fc-container__updates--' + breakpoint);
+                    }
+
+                    bean.on(element[0], 'click', function (event) {
+                        event.preventDefault();
+
+                        ajax({
+                            url: '/collections/' + containerId,
+                            type: 'html',
+                            method: 'get',
+                            crossOrigin: 'true',
+                            success: function (response) {
+                                $container.replaceWith(response);
+                            }
+                        });
+                    });
+
+                    return element;
+                };
+
+                if (newCountOnMobile != newCountOnDesktop) {
+                    /**
+                     * As the number of counts are different on mobile and desktop, insert two calls to action,
+                     * with one hidden at each breakpoint.
+                     */
+                    element.append(createElement(newCountOnMobile, 'mobile'));
+                    element.append(createElement(newCountOnDesktop, 'desktop'));
+                } else {
+                    element.append(createElement(newCountOnDesktop));
+                }
             }
         });
     }
