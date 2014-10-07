@@ -97,7 +97,7 @@ import play.api.libs.ws.WSResponse
   }
 
   val controller = new CommentBoxController{
-    protected val discussionApi = FakeApi
+    protected override lazy val discussionApi = FakeApi
   }
 
   val bannedBob = profile("Banned Bob", canPost = false, isPremod = false)
