@@ -52,17 +52,20 @@ $fc-item-gutter: $gs-gutter / 4;
     .fc-item {
         @include flex-display;
     }
+
     .fc-item__container {
         @include flex-direction(column);
         @include flex-display;
         @include flex(1);
         width: 100%;
     }
+
     .fc-item__content {
         @include flex-display;
         @include flex-direction(column);
         @include flex-grow(1);
     }
+
     .fc-item__meta {
         @include flex-grow(1);
         @include flex-display;
@@ -194,7 +197,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__timestamp {
-    display: none;
+    // display: none;
     margin-right: 1em;
 }
 
