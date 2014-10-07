@@ -5,20 +5,17 @@ module.exports = function (grunt) {
     require('time-grunt')(grunt);
 
     var options = {
-        isDev: (grunt.option('dev') !== undefined) ?
-            Boolean(grunt.option('dev')) :
-            process.env.GRUNT_ISDEV === '1',
-        singleRun: grunt.option('single-run') !== false,
+        isDev: (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
+        singleRun:       grunt.option('single-run') !== false,
         staticTargetDir: './static/target/',
-        staticHashDir: './static/hash/',
-        testConfDir: './static/test/javascripts/conf/',
-        requirejsDir: './static/requirejs',
-        webfontsDir: './resources/fonts/'
+        staticHashDir:   './static/hash/',
+        testConfDir:     './static/test/javascripts/conf/',
+        requirejsDir:    './static/requirejs',
+        webfontsDir:     './static/src/stylesheets/components/guss-webfonts/webfonts/'
     };
 
     options.propertiesFile = options.isDev ?
-        process.env.HOME + '/.gu/frontend.properties' :
-        '/etc/gu/frontend.properties';
+        process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
 
     // Load config and plugins (using jit-grunt)
     require('load-grunt-config')(grunt, {
