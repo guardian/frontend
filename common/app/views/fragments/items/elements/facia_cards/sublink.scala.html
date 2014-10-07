@@ -6,11 +6,11 @@
 <h3 class="fc-sublinks__item-title">
   @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {
     case BreakingNewsKicker => {
-      <span class="fc-item__live-indicator">Breaking News</span>
+      <span class="fc-item__kicker fc-item__live-indicator">Breaking News</span>
     }
 
     case LiveKicker => {
-      <span class="fc-item__live-indicator">Live</span>
+      <span class="fc-item__kicker fc-item__live-indicator">Live</span>
     }
 
     case AnalysisKicker => {
