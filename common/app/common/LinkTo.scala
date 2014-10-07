@@ -21,6 +21,14 @@ trait LinkTo extends Logging {
   private val AbsolutePath = "^/(.+)".r
   private val RssPath = "^/(.+)(/rss)".r
 
+  def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request), Region(request))
+  def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request), Region(request))
+
+  def apply(url: String, edition: Edition, region: Option[Region] = None)(implicit request : RequestHeader): String = {
+    val processedUrl: String = processUrl(url, edition, region).url
+    handleQueryStrings(processedUrl)
+  }
+
   def handleQueryStrings(url: String)(implicit request : RequestHeader) = HttpSwitch.queryString(url).trim
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
@@ -34,6 +42,11 @@ trait LinkTo extends Logging {
     case RssPath(path, format) => ProcessedUrl(urlFor(path, edition) + "/rss")
     case AbsolutePath(path) => ProcessedUrl(urlFor(path, edition))
     case otherUrl => ProcessedUrl(otherUrl, true)
+  }
+
+  def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = trail match {
+    case snap: Snap => snap.snapUrl.filter(_.nonEmpty).map(apply(_))
+    case t: Trail => Option(apply(t.url))
   }
 
   def getHrefWithRel(trail: Trail)(implicit request: RequestHeader): String = {
@@ -78,20 +91,6 @@ object LinkCounts {
 }
 
 object LinkTo extends LinkTo {
-
-  def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request), Region(request))
-
-  def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request), Region(request))
-
-  def apply(url: String, edition: Edition, region: Option[Region] = None)(implicit request : RequestHeader): String = {
-    val processedUrl: String = processUrl(url, edition, region).url
-    handleQueryStrings(processedUrl)
-  }
-
-  def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = trail match {
-    case snap: Snap => snap.snapUrl.filter(_.nonEmpty).map(apply(_))
-    case t: Trail => Option(apply(t.url))
-  }
 
   // we can assume www.theguardian.com here as this happens before any cleaning
   def countLinks(html: String): LinkCounts = {
