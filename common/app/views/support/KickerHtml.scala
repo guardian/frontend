@@ -7,4 +7,8 @@ object KickerHtml {
   def trimAndAppend(left: Html, right: Html): Html = {
     HtmlFormat.raw(left.body.trim + right.body.trim)
   }
+
+  def trimAndAppendWithSpace(left: Html, right: Html): Html = {
+    HtmlFormat.raw(List(left.body.trim, right.body.trim).filter(_.nonEmpty).mkString(" "))
+  }
 }
