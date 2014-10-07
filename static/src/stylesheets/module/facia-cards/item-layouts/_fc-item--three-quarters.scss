@@ -31,11 +31,16 @@ Three quarter item. Looks like a wide standard, a bit like this:
     }
 
     .fc-item__avatar {
+        top: 0;
         width: gs-span(3) + $gs-gutter;
 
         @include mq(desktop) {
             width: gs-span(4) + $gs-gutter;
         }
+    }
+
+    .fc-item__avatar__media {
+        left: 10%;
     }
 
     .fc-item__header {
@@ -54,12 +59,6 @@ Three quarter item. Looks like a wide standard, a bit like this:
         .fc-item__standfirst {
             display: block;
         }
-    }
-
-    .fc-item__content {
-        @include box-sizing(border-box);
-        width: (100% / 3);
-        padding-right: $gs-gutter * .5;
     }
 
     &.fc-item--has-cutout,

@@ -2,7 +2,7 @@
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
-@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, ContributorLinks}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, ContributorLinks, CutOut}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
@@ -68,16 +68,10 @@
                         }
                     </div>
 
-                    @if(tone == "comment") {
-                        @if(trail.hasLargeContributorImage) {
-                            @trail.contributors.headOption.map { profile =>
-                                @profile.contributorLargeImagePath.map{ image =>
-                                    <div class="fc-item__avatar">
-                                        <img src="@image" alt="@profile.name" class="fc-item__avatar__media" />
-                                    </div>
-                                }
-                            }
-                        }
+                    @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
+                        <div class="fc-item__avatar">
+                            <img src="@imageUrl" alt="@altText" class="fc-item__avatar__media @cutOut.cssClass" />
+                        </div>
                     }
 
                     @trail.trailText.map { text =>

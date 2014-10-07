@@ -7,7 +7,7 @@ import controllers.CreateFront
 import test.ConfiguredTestSuite
 
 @DoNotDiscover class TransformationsSpec extends FlatSpec with ShouldMatchers with ConfiguredTestSuite {
-  val collectionFixture = CollectionConfig(
+  val collectionFixture = CollectionConfig.withDefaults(
     displayName = Some("New collection"),
     apiQuery = Some("backfill"),
     `type` = Some("???"),
@@ -16,7 +16,9 @@ import test.ConfiguredTestSuite
     uneditable = Some(false),
     showTags = Some(true),
     showSections = Some(false),
-    hideKickers = Some(false)
+    hideKickers = Some(false),
+    showLatestUpdate = Some(false),
+    showDateHeader = Some(false)
   )
 
   val createCommandFixture = CreateFront(
@@ -36,6 +38,8 @@ import test.ConfiguredTestSuite
   )
 
   val emptyCollectionFixture = CollectionConfig(
+    None,
+    None,
     None,
     None,
     None,

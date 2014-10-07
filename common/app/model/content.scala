@@ -183,12 +183,18 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
       .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
       .getOrElse(Nil)
 
+  private def getMeta[A](fieldName: String)(f: JsValue => Option[A]) =
+    apiContent.metaData.get(fieldName).flatMap(f)
+
   // Inherited from FaciaFields
   override lazy val group: Option[String] = apiContent.metaData.flatMap(_.group)
   override lazy val supporting: List[Content] = apiContent.supporting
   override lazy val isBoosted: Boolean = apiContent.metaData.flatMap(_.isBoosted).getOrElse(false)
   override lazy val imageHide: Boolean = apiContent.metaData.flatMap(_.imageHide).getOrElse(false)
   override lazy val isBreaking: Boolean = apiContent.metaData.flatMap(_.isBreaking).getOrElse(false)
+  override lazy val showKickerCustom: Boolean = apiContent.metaData.flatMap(_.showCustomKicker).getOrElse(false)
+  override lazy val customKicker: Option[String] = apiContent.metaData.flatMap(_.customKicker).filter(_.nonEmpty)
+
   override lazy val imageReplace: Boolean = apiContent.metaData.flatMap(_.imageReplace).getOrElse(false)
   override lazy val showKickerTag: Boolean = apiContent.metaData.flatMap(_.showKickerTag).getOrElse(false)
   override lazy val showKickerSection: Boolean = apiContent.metaData.flatMap(_.showKickerSection).getOrElse(false)
@@ -202,6 +208,14 @@ class Content protected (val apiContent: ApiContentWithMeta) extends Trail with 
   } yield ImageOverride.createElementWithOneAsset(src, width, height)
 
   override lazy val showMainVideo: Boolean = apiContent.metaData.flatMap(_.showMainVideo).getOrElse(false)
+
+  override lazy val imageCutoutReplace: Boolean = apiContent.metaData.flatMap(_.imageCutoutReplace).getOrElse(false)
+
+  override lazy val customImageCutout: Option[FaciaImageElement] = for {
+    src <- apiContent.metaData.flatMap(_.imageCutoutSrc)
+    width <- apiContent.metaData.flatMap(_.imageCutoutSrcWidth).flatMap(s => Try(s.toInt).toOption)
+    height <- apiContent.metaData.flatMap(_.imageCutoutSrcHeight).flatMap(s => Try(s.toInt).toOption)
+  } yield FaciaImageElement(src, width, height)
 
   override lazy val adUnitSuffix: String = super.adUnitSuffix + "/" + contentType.toLowerCase
 }

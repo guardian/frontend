@@ -1,8 +1,6 @@
-@(trail: Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
+@(trail: model.Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean)(implicit request: RequestHeader, config: com.gu.facia.client.models.CollectionConfig)
 
 @import common.LinkTo
-@import model.Trail
-@import views.support._
 
 <h3 class="fc-sublinks__item-title">
   @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {
@@ -19,7 +17,7 @@
     }
 
     case PodcastKicker(Some(series)) => {
-      <a href="@LinkTo(series.url)" class="fc-item__kicker">@series.name</a>
+      <a href="@LinkTo(series.url)" class="fc-item__kicker">@Html(series.name)</a>
     }
 
     case PodcastKicker(None) => {
@@ -31,11 +29,11 @@
     }
 
     case TagKicker(tagName, tagLink) => {
-      <a href="@LinkTo(tagLink)" class="fc-item__kicker">@tagName</a>
+      <a href="@LinkTo(tagLink)" class="fc-item__kicker">@Html(tagName)</a>
     }
 
     case SectionKicker(sectionName, sectionLink) => {
-      <a href="@LinkTo(sectionLink)" class="fc-item__kicker">@sectionName</a>
+      <a href="@LinkTo(sectionLink)" class="fc-item__kicker">@Html(sectionName)</a>
     }
 
     case FreeHtmlKicker(html) => {

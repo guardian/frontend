@@ -96,7 +96,7 @@
                                     @if(media.keywords.filterNot(_.isSectionTag).nonEmpty) {
                                         <div class="submeta" data-link-name="keywords">
                                             <h2 class="submeta__head">Topics</h2>
-                                            @fragments.keywordList(media.keywords, tone = "media")
+                                            @fragments.keywordList(media.keywords, tone = Some("media"))
                                         </div>
                                     }
                                     <div class="submeta hide-from-leftcol" data-component="share">

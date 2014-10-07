@@ -1,7 +1,7 @@
 package views.support
 
 import com.gu.facia.client.models.CollectionConfig
-import model.{Tag, Trail}
+import model.{FaciaImageElement, Tag, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports
 import org.scalatest.{OptionValues, FlatSpec, Matchers}
@@ -9,6 +9,9 @@ import com.gu.openplatform.contentapi.model.{Tag => ApiTag}
 
 class ItemKickerTest extends FlatSpec with Matchers with OptionValues {
   def createTrailFixture(showTag: Boolean, showSection: Boolean) = new Trail {
+
+    override def customImageCutout: Option[FaciaImageElement] = None
+
     override def webPublicationDate: Imports.DateTime = DateTime.now()
 
     override def url: String = ""

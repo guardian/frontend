@@ -2,7 +2,6 @@ package model
 
 import com.gu.facia.client.models.CollectionConfig
 import common.{Edition, ExecutionContexts, Logging}
-import dfp.DfpAgent
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 
