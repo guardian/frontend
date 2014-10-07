@@ -1,34 +1,63 @@
 module.exports = function(grunt, options) {
     return {
         js: {
-            // using watch event to just compile changed project
-            files: ['*/app/{assets, public}/javascripts/**/*.js', '!**/components/**'],
+            files: [
+                'static/{src,public}/javascripts/**/*.js'
+            ],
+            tasks: [
+                'compile:js',
+                'asset_hash'
+            ],
             options: {
                 spawn: false
             }
         },
         css: {
-            files: ['common/app/assets/stylesheets/**/*.scss'],
-            tasks: ['sass:compile', 'asset_hash'],
+            files: [
+                'static/src/stylesheets/**/*.scss'
+            ],
+            tasks: [
+                'sass:compile',
+                'asset_hash'
+            ],
             options: {
                 spawn: false
             }
         },
         images: {
-            files: ['common/app/{assets, public}/images/**/*'],
-            tasks: ['compile:images']
+            files: [
+                'static/{src,public}/images/**/*'
+            ],
+            tasks: [
+                'compile:images'
+            ]
         },
         flash: {
-            files: ['common/app/public/flash/**/*'],
-            tasks: ['compile:flash']
+            files: [
+                'static/public/flash/**/*'
+            ],
+            tasks: [
+                'compile:flash'
+            ]
         },
         fonts: {
-            files: ['resources/fonts/**/*'],
-            tasks: ['compile:fonts']
+            files: [
+                'static/src/stylesheets/components/guss-webfonts/webfonts/**/*'
+            ],
+            tasks: [
+                'compile:fonts'
+            ]
         },
         styleguide: {
-            files: ['common/app/assets/stylesheets/**/*.scss', 'docs/styleguide/**/*.scss', 'docs/styleguide_templates/**/*.html'],
-            tasks: ['compile:css', 'hologram'],
+            files: [
+                'static/src/stylesheets/**/*.scss',
+                'docs/styleguide/**/*.scss',
+                'docs/styleguide_templates/**/*.html'
+            ],
+            tasks: [
+                'compile:css',
+                'hologram'
+            ],
             options: {
                 spawn: false
             }

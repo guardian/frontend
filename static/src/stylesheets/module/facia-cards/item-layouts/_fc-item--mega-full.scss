@@ -1,0 +1,72 @@
+/*
+
+Mega full item, only used in nuclear situations.
+
+***********************************************************************************************
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+
+************************************************************************************************
+
+*/
+
+@mixin fc-item--mega-full {
+
+    .fc-item__image-container {
+        padding-bottom: 40%;
+    }
+
+    .responsive-img {
+        top: -25%;
+        height: auto;
+    }
+
+    .fc-item__header {
+        @include fs-headline(4, true);
+        @include headline-boost(5);
+
+        @include mq(desktop) {
+            @include fs-headline(6, true);
+            @include headline-boost(7);
+        }
+    }
+
+    &.fc-item--has-cutout {
+        padding-bottom: 40%;
+
+        .fc-item__content {
+            max-width: gs-span(6);
+
+            @include mq(desktop) {
+                max-width: gs-span(8);
+            }
+        }
+    }
+
+    .fc-item__avatar {
+        top: 0%;
+    }
+
+    .fc-item__avatar__media {
+        left: 40%;
+    }
+
+    @include fc-sublinks--horizontal;
+
+    .fc-item__footer--horizontal {
+        @include flex-basis(auto);
+    }
+
+    &.fc-item--has-sublinks-1 .fc-sublinks {
+        display: none;
+    }
+}

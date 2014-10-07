@@ -1,0 +1,27 @@
+.tone-podcast {
+    @extend %tone-has-background;
+
+    &.fc-item {
+        background-color: $c-podcastBackground;
+
+        &,
+        & a {
+            color: $c-podcastAccent2;
+        }
+    }
+
+    .fc-item__title {
+        &,
+        & a {
+            color: $c-neutral1;
+        }
+
+        .fc-item__kicker,
+        .fc-item__byline {
+            &,
+            & a {
+                color: $c-podcastAccent;
+            }
+        }
+    }
+}

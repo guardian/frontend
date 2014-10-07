@@ -1,14 +1,14 @@
-@(trail: Trail, itemIndex: Int, containerIndex: Int, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader, config: Config)
+@(trail: Trail, itemIndex: Int, containerIndex: Int, isSubLink: Boolean, labelCssClasses: String = "u-faux-block-link__cta")(implicit request: RequestHeader, config: Config)
 
 @import common.LinkTo
 @import model.{Config, Trail}
 @import views.html.fragments.items.elements.facia_cards.itemHeader
 @import views.support._
 
-@itemHeader(containerIndex == 0 && itemIndex == 0) {
-    @ItemKicker.fromTrail(trail, config).map {
+@itemHeader(containerIndex == 0 && itemIndex == 0, trail.showQuotedHeadline) {
+    @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {
         case BreakingNewsKicker => {
-            <span class="fc-item__live-indicator">Breaking News</span>
+            <span class="fc-item__breaking-indicator">Breaking news</span>
         }
 
         case LiveKicker => {
@@ -20,7 +20,7 @@
         }
 
         case PodcastKicker(Some(series)) => {
-            <a href="@LinkTo(series.url)" class="fc-item__kicker">@series.name</a>
+            <a href="@LinkTo(series.url)" class="fc-item__kicker">@Html(series.name)</a>
         }
 
         case PodcastKicker(None) => {
@@ -32,21 +32,19 @@
         }
 
         case TagKicker(tagName, tagLink) => {
-            <a href="@LinkTo(tagLink)" class="fc-item__kicker">@tagName</a>
+            <a href="@LinkTo(tagLink)" class="fc-item__kicker">@Html(tagName)</a>
         }
 
         case SectionKicker(sectionName, sectionLink) => {
-            <a href="@LinkTo(sectionLink)" class="fc-item__kicker">@sectionName</a>
+            <a href="@LinkTo(sectionLink)" class="fc-item__kicker">@Html(sectionName)</a>
         }
 
         case FreeHtmlKicker(html) => {
             <span class="fc-item__kicker">@Html(html)</span>
         }
     }
-
+} {
     @LinkTo(trail).map { url =>
-        <a href="@url" class="fc-item__link" data-link-name="article">
-            <span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span>
-        </a>
+        <a href="@url" class="fc-item__link" data-link-name="article"><span class="@labelCssClasses">@RemoveOuterParaHtml(trail.headline)</span></a>
     }
 }

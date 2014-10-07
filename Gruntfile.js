@@ -5,31 +5,30 @@ module.exports = function (grunt) {
     require('time-grunt')(grunt);
 
     var options = {
-        isDev: (grunt.option('dev') !== undefined) ?
-            Boolean(grunt.option('dev')) :
-            process.env.GRUNT_ISDEV === '1',
-        singleRun: grunt.option('single-run') !== false,
+        isDev: (grunt.option('dev') !== undefined) ? Boolean(grunt.option('dev')) : process.env.GRUNT_ISDEV === '1',
+        singleRun:       grunt.option('single-run') !== false,
         staticTargetDir: './static/target/',
-        staticHashDir: './static/hash/',
-        testConfDir: './common/test/assets/javascripts/conf/',
-        requirejsDir: './static/requirejs',
-        webfontsDir: './resources/fonts/'
+        staticHashDir:   './static/hash/',
+        testConfDir:     './static/test/javascripts/conf/',
+        requirejsDir:    './static/requirejs',
+        webfontsDir:     './static/src/stylesheets/components/guss-webfonts/webfonts/'
     };
 
     options.propertiesFile = options.isDev ?
-        process.env.HOME + '/.gu/frontend.properties' :
-        '/etc/gu/frontend.properties';
+        process.env.HOME + '/.gu/frontend.properties' : '/etc/gu/frontend.properties';
 
     // Load config and plugins (using jit-grunt)
     require('load-grunt-config')(grunt, {
         configPath: require('path').join(process.cwd(), 'grunt-configs'),
         data: options,
         jitGrunt: {
-            replace: 'grunt-text-replace',
-            scsslint: 'grunt-scss-lint',
-            cssmetrics: 'grunt-css-metrics',
-            assetmonitor: 'grunt-asset-monitor',
-            px_to_rem: 'grunt-px-to-rem'
+            staticMappings: {
+                replace: 'grunt-text-replace',
+                scsslint: 'grunt-scss-lint',
+                cssmetrics: 'grunt-css-metrics',
+                assetmonitor: 'grunt-asset-monitor',
+                px_to_rem: 'grunt-px-to-rem'
+            }
         }
     });
 
@@ -144,11 +143,4 @@ module.exports = function (grunt) {
     grunt.registerTask('hookmeup', ['clean:hooks', 'shell:copyHooks']);
     grunt.registerTask('emitAbTestInfo', 'shell:abTestInfo');
 
-    grunt.event.on('watch', function(action, filepath, target) {
-        if (target === 'js') {
-            // compile just the project
-            var project = filepath.split('/').shift();
-            grunt.task.run(['requirejs:' + project, 'copy:javascript', 'asset_hash']);
-        }
-    });
 };

@@ -24,15 +24,18 @@
                 }
             }
 
-            @defining(topTags(faciaPage.allItems).take(20)) { tags =>
-                @if(tags.nonEmpty) {
-                    <div class="facia-container__related-keywords">
-                        <div class="facia-container__related-keywords__body">
-                            @keywordList(tags, 5, "See also")
+
+            <section class="facia-container__inner">
+                @defining(topTags(faciaPage.allItems).take(20)) { tags =>
+                    @if(tags.nonEmpty) {
+                        <div class="facia-container__related-keywords">
+                            <div class="facia-container__related-keywords__body">
+                                @keywordList(tags, 5, "See also")
+                            </div>
                         </div>
-                    </div>
+                    }
                 }
-            }
+            </section>
 
             @fragments.commercial.commercialComponent()
         </div>

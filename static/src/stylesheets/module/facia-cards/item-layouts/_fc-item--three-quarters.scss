@@ -1,0 +1,102 @@
+/*
+
+Three quarter item. Looks like a wide standard, a bit like this:
+
+************************************************************************************************
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+                        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+************************************************************************************************
+
+*/
+
+
+@mixin fc-item--three-quarters {
+
+    @include fc-item--horizontal(100% / 3 * 2);
+
+    .fc-item__avatar {
+        top: 0;
+        width: gs-span(3) + $gs-gutter;
+
+        @include mq(desktop) {
+            width: gs-span(4) + $gs-gutter;
+        }
+    }
+
+    .fc-item__avatar__media {
+        left: 10%;
+    }
+
+    .fc-item__header {
+        @include mq(desktop) {
+            @include fs-headline(4, true);
+            @include headline-boost(5);
+        }
+    }
+
+    .fc-item__standfirst {
+        @include mq(desktop) {
+            display: block;
+        }
+    }
+
+    &.fc-item--has-no-image {
+        .fc-item__standfirst {
+            display: block;
+        }
+    }
+
+    &.fc-item--has-cutout,
+    &.fc-item--has-no-image {
+        min-height: gs-height(4);
+
+        .fc-item__content {
+            width: gs-span(5) + $gs-gutter * 2;
+
+            @include mq(desktop) {
+                width: gs-span(6) + $gs-gutter;
+            }
+        }
+
+        .fc-item__header {
+            @include fs-headline(5, true);
+        }
+
+        .fc-item__standfirst {
+            display: block;
+            width: gs-span(4);
+
+            @include mq(desktop) {
+                width: gs-span(5);
+                @include fs-headline(2, true);
+            }
+        }
+    }
+
+    &.fc-item--has-cutout {
+        min-height: gs-height(4) + $gs-baseline * 3;
+
+        @include mq(desktop) {
+            min-height: gs-height(5) + $gs-baseline * 3;
+        }
+    }
+
+    .vjs-big-play-button > span {
+        @include video-play-button-size($vjs-large-button-size);
+    }
+
+    .fc-sublinks__item:nth-child(n+3) {
+        display: none;
+    }
+}

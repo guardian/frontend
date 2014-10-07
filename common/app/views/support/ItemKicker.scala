@@ -5,7 +5,7 @@ import model.{Trail, Tag}
 object ItemKicker {
   private def firstTag(item: Trail): Option[Tag] = item.tags.headOption
 
-  def fromTrail(trail: Trail, config: model.Config): Option[ItemKicker] = {
+  def fromTrail(trail: Trail, config: Option[model.Config]): Option[ItemKicker] = {
     lazy val maybeTag = firstTag(trail)
 
     def tagKicker = maybeTag map { tag =>
@@ -14,18 +14,21 @@ object ItemKicker {
 
     def sectionKicker = Some(SectionKicker(trail.sectionName.capitalize, "/" + trail.section))
 
-    if (trail.showKickerTag && maybeTag.isDefined) {
-      tagKicker
-    } else if (trail.showKickerSection) {
-      sectionKicker
-    } else if (config.showTags && maybeTag.isDefined) {
-      tagKicker
-    } else if (config.showSections) {
-      sectionKicker
-    } else if (!config.hideKickers) {
-      tonalKicker(trail)
-    } else {
-      None
+    trail.customKicker match {
+      case Some(kicker) if trail.showKickerCustom => Some(FreeHtmlKicker(kicker))
+      case _ => if (trail.showKickerTag && maybeTag.isDefined) {
+        tagKicker
+      } else if (trail.showKickerSection) {
+        sectionKicker
+      } else if (config.exists(_.showTags) && maybeTag.isDefined) {
+        tagKicker
+      } else if (config.exists(_.showSections)) {
+        sectionKicker
+      } else if (!config.exists(_.hideKickers)) {
+        tonalKicker(trail)
+      } else {
+        None
+      }
     }
   }
 

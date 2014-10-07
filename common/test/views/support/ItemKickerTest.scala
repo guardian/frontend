@@ -1,6 +1,6 @@
 package views.support
 
-import model.{Tag, Config, Trail}
+import model.{FaciaImageElement, Tag, Config, Trail}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports
 import org.scalatest.{OptionValues, FlatSpec, Matchers}
@@ -8,6 +8,9 @@ import com.gu.openplatform.contentapi.model.{Tag => ApiTag}
 
 class ItemKickerTest extends FlatSpec with Matchers with OptionValues {
   def createTrailFixture(showTag: Boolean, showSection: Boolean) = new Trail {
+
+    override def customImageCutout: Option[FaciaImageElement] = None
+
     override def webPublicationDate: Imports.DateTime = DateTime.now()
 
     override def url: String = ""
@@ -49,14 +52,14 @@ class ItemKickerTest extends FlatSpec with Matchers with OptionValues {
   "ItemKicker" should "prefer item level tag kicker to collection level section kicker" in {
     ItemKicker.fromTrail(
       createTrailFixture(showTag = true, showSection = false),
-      Config("").copy(showSections = true)
+      Some(Config("").copy(showSections = true))
     ).value shouldEqual TagKicker("Test Tag", "testtag")
   }
 
   it should "prefer item level section kicker to collection level tag kicker" in {
     ItemKicker.fromTrail(
       createTrailFixture(showTag = false, showSection = true),
-      Config("").copy(showTags = true)
+      Some(Config("").copy(showTags = true))
     ).value shouldEqual SectionKicker("Test Section", "/testsection")
   }
 }
