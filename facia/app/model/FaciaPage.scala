@@ -1,6 +1,7 @@
 package model
 
 import common.{NavItem, Edition}
+import conf.Configuration
 import dfp.DfpAgent
 import play.api.libs.json.{JsString, JsValue}
 
@@ -38,8 +39,8 @@ case class FaciaPage(id: String,
 
   def allItems = collections.map(_._2).flatMap(_.items).distinct
 
-  override def openGraph: Map[String, String] = super.openGraph ++Map(
-    "og:image" -> "http://static.guim.co.uk/icons/social/og/gu-logo-fallback.png") ++
+  override def openGraph: Map[String, String] = super.openGraph ++ Map(
+    "og:image" -> Configuration.facebook.imageFallback) ++
     optionalMapEntry("og:description", description)  ++
     optionalMapEntry("og:image", frontProperties.imageUrl)
 

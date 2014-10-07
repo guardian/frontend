@@ -2,6 +2,7 @@ package model
 
 import com.gu.openplatform.contentapi.model.{Tag => ApiTag, Podcast}
 import common.{Pagination, Reference}
+import conf.Configuration
 import play.api.libs.json.{JsArray, JsString, JsValue}
 import views.support.{Contributor, ImgSrc, Item140}
 
@@ -22,9 +23,10 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val contributorImagePath: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Contributor))
 
-  lazy val openGraphImage: Option[String] = delegate.bylineImageUrl.map(ImgSrc(_, Item140)).map { s: String =>
-    if (s.startsWith("//")) s"http:$s" else s
-  }
+  lazy val openGraphImage: Option[String] =
+    delegate.bylineImageUrl.map(ImgSrc(_, Item140)).map { s: String => if (s.startsWith("//")) s"http:$s" else s}
+      .orElse(getFootballBadgeUrl)
+
   lazy val openGraphDescription: Option[String] = if (bio.nonEmpty) Some(bio) else description
 
   lazy val contributorLargeImagePath: Option[String] = delegate.bylineLargeImageUrl.map(ImgSrc(_, Item140))
@@ -50,6 +52,9 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
 
   lazy val isFootballCompetition = delegate.references.exists(_.`type` == "pa-football-competition")
 
+  lazy val getFootballBadgeUrl: Option[String] = delegate.references.find(_.`type` == "pa-football-team")
+    .map(ref => s"${Configuration.staticSport.path}/football/crests/120/${ref.id}.png")
+
   lazy val tagWithoutSection = id.split("/")(1) // used for football nav
 
   override lazy val analyticsName = s"GFE:$section:$name"
@@ -64,11 +69,14 @@ case class Tag(private val delegate: ApiTag, override val pagination: Option[Pag
   )
 
   override def openGraph: Map[String, String] = super.openGraph ++
-    openGraphDescription.map { s => Map("og:description" -> s) }.getOrElse(Map()) ++
-    openGraphImage.map { s => Map("og:image" -> s)}.getOrElse(Map())
+    optionalMapEntry("og:description", openGraphDescription) ++
+    optionalMapEntry("og:image", openGraphImage)
 
   override def cards: List[(String, String)] = super.cards ++
     List("twitter:card" -> "summary")
 
   lazy val podcast: Option[Podcast] = delegate.podcast
+
+  private def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
+    o.map(value => Map(key -> value)).getOrElse(Map())
 }
