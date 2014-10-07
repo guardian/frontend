@@ -58,30 +58,31 @@ object ItemMeta {
   })
 
   def fromContent(content: Content): JsObject = flattenedJsObject(
-    ("headline", content.apiContent.metaData.get("headline")),
-    ("trailText", content.apiContent.metaData.get("trailText")),
-    ("byline", content.apiContent.metaData.get("byline")),
-    ("showByline", content.apiContent.metaData.get("showByline")),
-    ("group", content.apiContent.metaData.get("group")),
-    ("isBoosted", content.apiContent.metaData.get("isBoosted")),
-    ("imageHide", content.apiContent.metaData.get("imageHide")),
-    ("imageCutoutReplace", content.apiContent.metaData.get("imageCutoutReplace")),
-    ("imageCutoutSrc", content.apiContent.metaData.get("imageCutoutSrc")),
-    ("imageCutoutSrcWidth", content.apiContent.metaData.get("imageCutoutSrcWidth")),
-    ("imageCutoutSrcHeight", content.apiContent.metaData.get("imageCutoutSrcHeight")),
-    ("isBreaking", content.apiContent.metaData.get("isBreaking")),
+    ("headline", content.apiContent.metaData.flatMap(_.headline).map(JsString)),
+    ("trailText", content.apiContent.metaData.flatMap(_.trailText).map(JsString)),
+    ("byline", content.apiContent.metaData.flatMap(_.byline).map(JsString)),
+    ("showByline", content.apiContent.metaData.flatMap(_.showByline).map(JsBoolean)),
+    ("group", content.apiContent.metaData.flatMap(_.group).map(JsString)),
+    ("isBoosted", content.apiContent.metaData.flatMap(_.isBoosted).map(JsBoolean)),
+    ("imageHide", content.apiContent.metaData.flatMap(_.imageHide).map(JsBoolean)),
+    ("imageCutoutReplace", content.apiContent.metaData.flatMap(_.imageCutoutReplace).map(JsBoolean)),
+    ("imageCutoutSrc", content.apiContent.metaData.flatMap(_.imageCutoutSrc).map(JsString)),
+    ("imageCutoutSrcWidth", content.apiContent.metaData.flatMap(_.imageCutoutSrcWidth).map(JsString)),
+    ("imageCutoutSrcHeight", content.apiContent.metaData.flatMap(_.imageCutoutSrcHeight).map(JsString)),
+    ("isBreaking", content.apiContent.metaData.flatMap(_.isBreaking).map(JsBoolean)),
     ("supporting", Option(content.supporting.map(item => Json.toJson(TrailJson.fromContent(item))))
       .filter(_.nonEmpty)
       .map(JsArray.apply)),
-    ("href", content.apiContent.metaData.get("href")),
-    ("snapType", content.apiContent.metaData.get("snapType")),
-    ("snapCss", content.apiContent.metaData.get("snapCss")),
-    ("snapUri", content.apiContent.metaData.get("snapUri")),
-    ("showKickerTag", content.apiContent.metaData.get("showKickerTag")),
-    ("showKickerSection", content.apiContent.metaData.get("showKickerSection")),
-    ("showKickerCustom", content.apiContent.metaData.get("showKickerCustom")),
-    ("customKicker", content.apiContent.metaData.get("customKicker")),
-    ("showMainVideo", content.apiContent.metaData.get("showMainVideo"))
+    ("href", content.apiContent.metaData.flatMap(_.href).map(JsString)),
+    ("snapType", content.apiContent.metaData.flatMap(_.snapType).map(JsString)),
+    ("snapCss", content.apiContent.metaData.flatMap(_.snapCss).map(JsString)),
+    ("snapUri", content.apiContent.metaData.flatMap(_.snapUri).map(JsString)),
+    ("showKickerTag", content.apiContent.metaData.flatMap(_.showKickerTag).map(JsBoolean)),
+    ("showKickerSection", content.apiContent.metaData.flatMap(_.showKickerSection).map(JsBoolean)),
+    //TODO: showKickerCustom/showCustomKicker?
+    ("showKickerCustom", content.apiContent.metaData.flatMap(_.showCustomKicker).map(JsBoolean)),
+    ("customKicker", content.apiContent.metaData.flatMap(_.customKicker).map(JsString)),
+    ("showMainVideo", content.apiContent.metaData.flatMap(_.showMainVideo).map(JsBoolean))
   )
 }
 
