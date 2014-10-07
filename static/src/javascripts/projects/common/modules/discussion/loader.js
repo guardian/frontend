@@ -175,7 +175,7 @@ Loader.prototype.initUnthreaded = function() {
 
             $el.data('loaded', true);
             activityStream.endpoint = '/discussion/non-threaded'+ this.getDiscussionId() + '.json?page=:page';
-            activityStream.fetch($nonThreadedContainer[0])
+            activityStream.fetch($nonThreadedContainer[0]);
         }
     });
 
@@ -187,9 +187,7 @@ Loader.prototype.initUnthreaded = function() {
         self.comments.showHiddenComments();
 
         if (promise) {
-            $loader.removeClass('u-h');
             promise.then(function() {
-                $loader.addClass('u-h');
                 $discussionContainer.removeClass('u-h');
             });
         } else {
