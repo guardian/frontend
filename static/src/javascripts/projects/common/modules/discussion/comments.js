@@ -4,7 +4,6 @@ define([
     'qwery',
 
     'lodash/collections/map',
-    'lodash/functions/throttle',
 
     'common/utils/$',
     'common/utils/ajax',
@@ -25,7 +24,6 @@ define([
     qwery,
     
     _map,
-    throttle,
 
     $,
     ajax,
