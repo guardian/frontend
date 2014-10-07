@@ -59,8 +59,11 @@ define([
     }
 
     function createUpdateCountElement(numberOfUpdates) {
+        var currentPath = window.location.pathname;
         return $.create('<div class="fc-container__updates">' +
-            '<span class="fc-container__updates__number">' + numberOfUpdates + '</span>' + ' updates' +
+            '<a href="' + currentPath + '">' +
+            '<span class="fc-container__updates__number">' + numberOfUpdates + '</span>' + ' updates ...' +
+            '</a>' +
             '</div>');
     }
 
@@ -84,7 +87,7 @@ define([
                 var desktop = createUpdateCountElement(newCountOnDesktop)
                     .addClass('fc-container__updates--desktop');
 
-                element.html('').append(mobile, desktop);
+                element.html('').append(mobile).append(desktop);
             }
         });
     }

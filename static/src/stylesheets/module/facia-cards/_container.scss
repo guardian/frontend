@@ -161,3 +161,40 @@ $header-image-size-desktop: 120px;
 .fc-timestamp {
     display: inline-block;
 }
+
+.fc-container__updates {
+    @include fs-headline(2);
+    display: inline-block;
+    background-color: $c-commentBackground;
+    border-radius: 16px;
+    padding-right: $gs-gutter / 3;
+    line-height: 24px;
+    font-size: 14px;
+    font-family: $f-sans-serif-text;
+    margin-top: $gs-baseline/2;
+
+    a:hover {
+        text-decoration: none;
+    }
+}
+
+.fc-container__updates__number {
+    display: inline-block;
+    width: 24px;
+    border-radius: 16px;
+    background-color: $c-liveDefault;
+    color: #ffffff;
+    text-align: center;
+}
+
+.fc-container__updates--mobile {
+    @include mq(tablet) {
+        display: none;
+    }
+}
+
+.fc-container__updates--desktop {
+    @include mq($until: mobile) {
+        display: none;
+    }
+}
