@@ -45,7 +45,7 @@ class FormstackControllerTest extends path.FreeSpec with ShouldMatchers with Moc
 
   val controller = new FormstackController(returnUrlVerifier, requestParser, idUrlBuilder, authAction, formstackApi)
 
-  "when sitched off" - {
+  "when switched off" - {
     Switches.IdentityFormstackSwitch.switchOff()
 
     "the formstack page will not be displayed" in Fake {

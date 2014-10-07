@@ -88,17 +88,6 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
       }
 
     }
-
-    "when the form submission does not pass its CSRF check" - {
-      val fakeRequest = FakeRequest(POST, "/email-prefs")
-      val authRequest = AuthRequest(fakeRequest, user, testAuth)
-
-      "should throw a CSRF error" in {
-        intercept[RuntimeException] {
-          controller.submitPublicProfileForm().apply(authRequest)
-        }
-      }
-    }
   }
 
   "Given the submitAccountForm method is called" - {
@@ -167,17 +156,6 @@ class EditProfileControllerTest extends path.FreeSpec with ShouldMatchers with M
 
       "then a status 200 should be returned" in {
         status(result) should be(200)
-      }
-    }
-
-    "when the form submission does not pass its CSRF check" - {
-      val fakeRequest = FakeRequest(POST, "/email-prefs")
-      val authRequest = AuthRequest(fakeRequest, user, testAuth)
-
-      "should throw a CSRF error" in {
-        intercept[RuntimeException] {
-          controller.submitAccountForm().apply(authRequest)
-        }
       }
     }
   }
