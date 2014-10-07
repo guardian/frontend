@@ -5,8 +5,8 @@
 @import views.html.fragments.items.elements.facia_cards.itemHeader
 @import views.support._
 
-@itemHeader(containerIndex == 0 && itemIndex == 0) {
-    @ItemKicker.fromTrail(trail, if(isSubLink) None else Some(config)).map {
+@itemHeader(containerIndex == 0 && itemIndex == 0, trail.showQuotedHeadline) {
+    @ItemKicker.fromTrail(trail, if (isSubLink) None else Some(config)).map {
         case BreakingNewsKicker => {
             <span class="fc-item__live-indicator">Breaking news</span>
         }

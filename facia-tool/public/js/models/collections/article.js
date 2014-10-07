@@ -70,7 +70,6 @@ define([
                 {
                     key: 'byline',
                     editable: true,
-                    requires: 'showByline',
                     label: 'byline',
                     type: 'text'
                 },
@@ -84,7 +83,7 @@ define([
                 {
                     key: 'href',
                     editable: true,
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap URL',
                     type: 'text'
                 },
@@ -106,11 +105,6 @@ define([
                     key: 'imageSrcHeight',
                     requires: 'imageReplace',
                     label: 'replacement image height',
-                    type: 'text'
-                },
-                {
-                    key: 'imageCutoutSrcFromCapi',
-                    label: 'contributor image from CAPI',
                     type: 'text'
                 },
                 {
@@ -147,20 +141,28 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'showByline',
+                    key: 'showBoostedHeadline',
                     editable: true,
-                    label: 'show byline',
+                    label: 'large headline',
                     type: 'boolean'
                 },
                 {
-                    key: 'hasMainVideo',
-                    label: 'has a video',
+                    key: 'showQuotedHeadline',
+                    editable: true,
+                    label: 'quote headline',
+                    type: 'boolean'
+                },
+                {
+                    key: 'showByline',
+                    editable: true,
+                    label: 'show byline',
+                    irreleventForTones: ['comment'],
                     type: 'boolean'
                 },
                 {
                     key: 'showMainVideo',
                     editable: true,
-                    requires: 'hasMainVideo',
+                    requiresState: 'hasMainVideo',
                     singleton: 'images',
                     label: 'show video',
                     type: 'boolean'
@@ -177,7 +179,7 @@ define([
                     editable: true,
                     singleton: 'images',
                     label: 'replace image',
-                    displayIf: 'imageSrc',
+                    irreleventIfNo: 'imageSrc',
                     type: 'boolean'
                 },
                 {
@@ -215,19 +217,19 @@ define([
                 },
                 {
                     key: 'snapType',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap type',
                     type: 'text'
                 },
                 {
                     key: 'snapCss',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap CSS class',
                     type: 'text'
                 },
                 {
                     key: 'snapUri',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap source',
                     type: 'text'
                 }
@@ -255,6 +257,10 @@ define([
                 'isOpen',
                 'isLoaded',
                 'isEmpty',
+                'isSnap',
+                'tone',
+                'hasMainVideo',
+                'imageCutoutSrcFromCapi',
                 'ophanUrl',
                 'sparkUrl']);
 
@@ -285,12 +291,6 @@ define([
                 return this.fields.isLive() === 'false' ?
                     vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl()) :
                     this.meta.href() || this.props.webUrl();
-            }, this);
-
-            this.provisionalImageSrc = ko.observable();
-
-            this.meta.imageSrc.subscribe(function(src) {
-                this.provisionalImageSrc(src);
             }, this);
 
             this.populate(opts);
@@ -332,12 +332,14 @@ define([
 
         Article.prototype.metaDisplayer = function(opts, index, all) {
             var self = this,
-                show = opts.editable;
+                display;
 
             if (opts.type === 'boolean') {
-                show = show && (this.meta[opts.key] || function() {})();
-                show = show && (opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true);
-                return show ? opts.label : false;
+                display = opts.editable;
+                display = display && (this.meta[opts.key] || function() {})();
+                display = display && (opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.state.tone()) === -1 : true);
+                display = display && (opts.irreleventIfNo ? _.some(all, function(editor) { return editor.key === opts.irreleventIfNo && self.meta[editor.key](); }) : true);
+                return display ? opts.label : false;
 
             } else {
                 return false;
@@ -380,7 +382,12 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
+                    var display = opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.state.tone()) === -1 : true;
+
+                    display = display && (opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true);
+                    display = display && (opts.requiresState ? self.state[opts.requiresState]() : true);
+
+                    return display;
                 }, self),
 
                 toggle: function() {
@@ -470,11 +477,13 @@ define([
                 }
             }
 
-            this.meta.imageCutoutSrcFromCapi(contributorImage(opts));
+            this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
 
-            this.meta.hasMainVideo(mainMediaType(opts) === 'video');
+            this.state.isSnap(!!snap.validateId(this.id()));
 
-            this.meta.isSnap(!!snap.validateId(this.id()));
+            this.state.hasMainVideo(getMainMediaType(opts) === 'video');
+
+            this.state.tone(getTone(opts));
 
             if (!this.uneditable) {
                 this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
@@ -577,7 +586,7 @@ define([
         };
 
         Article.prototype.convertToSnap = function() {
-            this.meta.isSnap(true);
+            this.state.isSnap(true);
             this.meta.href(this.id());
             this.id(snap.generateId());
         };
@@ -608,6 +617,27 @@ define([
             return false;
         };
 
+        function getTone(contentApiArticle) {
+            var tone = _.findWhere(contentApiArticle.tags, {
+                type: 'tone'
+            });
+            return tone && tone.id && tone.id.replace(/^tone\//, '');
+        }
+
+        function getMainMediaType(contentApiArticle) {
+            var mainElement = _.findWhere(contentApiArticle.elements || [], {
+                relation: 'main'
+            });
+            return mainElement && mainElement.type;
+        }
+
+        function getContributorImage(contentApiArticle) {
+            var contributor = _.findWhere(contentApiArticle.tags, {
+                type: 'contributor'
+            });
+            return contributor && contributor.bylineLargeImageUrl;
+        }
+
         function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
             if (imageSrc()) {
                 validateImageSrc(imageSrc(), opts)
@@ -616,31 +646,17 @@ define([
                         imageSrcHeight(height);
                     })
                     .fail(function(err) {
-                        undefine(imageSrc, imageSrcWidth, imageSrcHeight);
+                        undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
                         window.alert(err);
                     });
             } else {
-                undefine(imageSrc, imageSrcWidth, imageSrcHeight);
+                undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
             }
         };
 
-        function undefine() {
+        function undefineObservables() {
             Array.prototype.slice.call(arguments).forEach(function(fn) { fn(undefined); })
         };
-
-        function mainMediaType(contentApiArticle) {
-            var mainElement = _.findWhere(contentApiArticle.elements, {
-                relation: 'main'
-            });
-            return mainElement && mainElement.type;
-        }
-
-        function contributorImage(contentApiArticle) {
-            var contributor = _.findWhere(contentApiArticle.tags, {
-                type: 'contributor'
-            });
-            return contributor && contributor.bylineLargeImageUrl;
-        }
 
         function mod(n, m) {
             return ((n % m) + m) % m;
