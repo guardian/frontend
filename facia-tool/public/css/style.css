@@ -440,7 +440,6 @@ h1 {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     text-transform: uppercase;
-    color: #cccccc;
     padding-right: 3px;
 }
 
@@ -498,6 +497,8 @@ h1 {
 
 .article__overrides {
     margin: 0 0 10px 85px;
+    font-size: 12px;
+    line-height: 12px;
 }
 
 .article__overrides .tools {
@@ -536,10 +537,6 @@ h1 {
 }
 
 .supporting .trailText,
-.supporting .editor--boolean,
-.supporting .element__trailText,
-.supporting .element__byline,
-.supporting .element__imageSrc,
 .supporting .tool--done,
 .supporting .image__overrides,
 .supporting .supporting-message {
