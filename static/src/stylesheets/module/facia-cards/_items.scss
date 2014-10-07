@@ -1,3 +1,9 @@
+@mixin headline-boost($size) {
+    .fc-item--has-boosted-title & {
+        @include fs-headline($size, true);
+    }
+}
+
 @import 'item-layouts/fc-item--standard';
 @import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--three-quarters';

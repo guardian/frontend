@@ -27,6 +27,7 @@ Full item. A 100% width version of the Three quarter item.
 
         @include mq(desktop) {
             @include fs-headline(5, true);
+            @include headline-boost(6);
         }
     }
 

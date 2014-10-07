@@ -46,6 +46,7 @@ Media list item. Looks a bit like this:
 
     .fc-item__header {
         @include fs-headline($headline-size, true);
+        @include headline-boost($headline-size + 1);
     }
 
     .fc-item__media-wrapper,
