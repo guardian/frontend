@@ -52,25 +52,35 @@ case class TagJson(
 )
 
 object ItemMeta {
-  implicit lazy val jsonFormat = Json.format[ItemMeta]
+  private def flattenedJsObject(xs: (String, Option[JsValue])*) = JsObject(xs collect {
+    case (k, Some(v)) => k -> v
+  })
 
-  def fromContent(content: Content): ItemMeta = ItemMeta(
-    headline = content.apiContent.metaData.get("headline"),
-    trailText = content.apiContent.metaData.get("trailText"),
-    byline = content.apiContent.metaData.get("byline"),
-    showByline = content.apiContent.metaData.get("showByline").flatMap(_.asOpt[Boolean]),
-    group = content.apiContent.metaData.get("group"),
-    isBoosted = content.apiContent.metaData.get("isBoosted").flatMap(_.asOpt[Boolean]),
-    imageHide = content.apiContent.metaData.get("imageHide").flatMap(_.asOpt[Boolean]),
-    isBreaking = content.apiContent.metaData.get("isBreaking").flatMap(_.asOpt[Boolean]),
-    supporting = Option(content.supporting.map(item => Json.toJson(TrailJson.fromContent(item)))).filter(_.nonEmpty),
-    href = content.apiContent.metaData.get("href"),
-    snapType = content.apiContent.metaData.get("snapType"),
-    snapCss = content.apiContent.metaData.get("snapCss"),
-    snapUri = content.apiContent.metaData.get("snapUri"),
-    showKickerTag = content.apiContent.metaData.get("showKickerTag"),
-    showKickerSection = content.apiContent.metaData.get("showKickerSection"),
-    showMainVideo = content.apiContent.metaData.get("showMainVideo")
+  def fromContent(content: Content): JsObject = flattenedJsObject(
+    ("headline", content.apiContent.metaData.get("headline")),
+    ("trailText", content.apiContent.metaData.get("trailText")),
+    ("byline", content.apiContent.metaData.get("byline")),
+    ("showByline", content.apiContent.metaData.get("showByline")),
+    ("group", content.apiContent.metaData.get("group")),
+    ("isBoosted", content.apiContent.metaData.get("isBoosted")),
+    ("imageHide", content.apiContent.metaData.get("imageHide")),
+    ("imageCutoutReplace", content.apiContent.metaData.get("imageCutoutReplace")),
+    ("imageCutoutSrc", content.apiContent.metaData.get("imageCutoutSrc")),
+    ("imageCutoutSrcWidth", content.apiContent.metaData.get("imageCutoutSrcWidth")),
+    ("imageCutoutSrcHeight", content.apiContent.metaData.get("imageCutoutSrcHeight")),
+    ("isBreaking", content.apiContent.metaData.get("isBreaking")),
+    ("supporting", Option(content.supporting.map(item => Json.toJson(TrailJson.fromContent(item))))
+      .filter(_.nonEmpty)
+      .map(JsArray.apply)),
+    ("href", content.apiContent.metaData.get("href")),
+    ("snapType", content.apiContent.metaData.get("snapType")),
+    ("snapCss", content.apiContent.metaData.get("snapCss")),
+    ("snapUri", content.apiContent.metaData.get("snapUri")),
+    ("showKickerTag", content.apiContent.metaData.get("showKickerTag")),
+    ("showKickerSection", content.apiContent.metaData.get("showKickerSection")),
+    ("showKickerCustom", content.apiContent.metaData.get("showKickerCustom")),
+    ("customKicker", content.apiContent.metaData.get("customKicker")),
+    ("showMainVideo", content.apiContent.metaData.get("showMainVideo"))
   )
 }
 
@@ -82,6 +92,10 @@ case class ItemMeta(
   group:         Option[JsValue],
   isBoosted:     Option[Boolean],
   imageHide:     Option[Boolean],
+  imageCutoutReplace:   Option[Boolean],
+  imageCutoutSrc:       Option[JsValue],
+  imageCutoutSrcWidth:  Option[JsValue],
+  imageCutoutSrcHeight: Option[JsValue],
   isBreaking:    Option[Boolean],
   supporting:    Option[Seq[JsValue]],
   href:          Option[JsValue],
@@ -125,7 +139,7 @@ case class TrailJson(
   byline: Option[String],
   safeFields: Map[String, String],
   elements: Seq[ElementJson],
-  meta: ItemMeta
+  meta: JsObject
 )
 
 object CollectionJson {
@@ -147,7 +161,9 @@ object CollectionJson {
       `type`         = config.collectionType,
       showTags       = config.showTags,
       showSections   = config.showSections,
-      hideKickers    = config.hideKickers
+      hideKickers    = config.hideKickers,
+      showDateHeader = config.showDateHeader,
+      showLatestUpdate = config.showLatestUpdate
     )
 }
 
@@ -166,5 +182,7 @@ case class CollectionJson(
   href:         Option[String],
   showTags:     Boolean,
   showSections: Boolean,
-  hideKickers:  Boolean
-                           )
+  hideKickers:  Boolean,
+  showDateHeader: Boolean,
+  showLatestUpdate: Boolean
+)

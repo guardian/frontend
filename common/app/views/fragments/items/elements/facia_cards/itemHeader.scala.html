@@ -1,7 +1,12 @@
-@(isFirstItemOnPage: Boolean)(html: Html)
+@(isFirstItemOnPage: Boolean)(kickerHtml: Html)(linkHtml: Html)
 
-@if(isFirstItemOnPage) {
-    <h1 class="fc-item__title">@html</h1>
-} else {
-    <h2 class="fc-item__title">@html</h2>
+@import views.support.KickerHtml.trimAndAppend
+
+@defining(trimAndAppend(kickerHtml, linkHtml)) { innerHtml =>
+    @if(isFirstItemOnPage) {
+        <h1 class="fc-item__title">@innerHtml</h1>
+    } else {
+        <h2 class="fc-item__title">@innerHtml</h2>
+    }
 }
+

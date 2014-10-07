@@ -15,4 +15,4 @@ Installation
 Usage
 -----
 
-    grunt compile:icons
+    grunt compile:images

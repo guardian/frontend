@@ -1,5 +1,5 @@
 module.exports = function(grunt, options) {
-    var sassDir = 'common/app/assets/stylesheets';
+    var sassDir = 'static/src/stylesheets';
 
     return {
         options: {

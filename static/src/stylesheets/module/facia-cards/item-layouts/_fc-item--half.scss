@@ -1,0 +1,65 @@
+/*
+
+Half item. Looks like a wide standard, a bit like this:
+
+****************************************
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x
+
+
+
+
+
+
+
+*****************************************
+
+*/
+
+
+@mixin fc-item--half {
+    .fc-item__header {
+        @include fs-headline(4, true);
+
+        @include mq(tablet, desktop) {
+            @include fs-headline(3, true);
+        }
+    }
+
+    &.fc-item--has-cutout {
+        padding-bottom: 60%;
+    }
+
+    .fc-item__avatar {
+        top: 30%;
+    }
+
+    &[class*="fc-item--has-sublinks"] {
+        .fc-item__standfirst {
+            display: none;
+        }
+    }
+
+    @include fc-sublinks-horizontal;
+
+    .fc-sublinks__item:nth-child(n+3) {
+        display: none;
+    }
+
+    .vjs-big-play-button > span {
+        @include video-play-button-size($vjs-small-button-size);
+
+        @include mq(desktop) {
+            @include video-play-button-size($vjs-large-button-size);
+        }
+    }
+}

@@ -1,7 +1,7 @@
 package views.support
 
 import org.scalatest.{Ignore, BeforeAndAfter, FlatSpec, Matchers}
-import model.{Collection, Trail}
+import model.{FaciaImageElement, Collection, Trail}
 import org.joda.time.DateTime
 import com.gu.openplatform.contentapi.model.{Content => ApiContent}
 
@@ -107,6 +107,9 @@ class TemplateDedupingTest extends FlatSpec with Matchers with BeforeAndAfter {
 }
 
 case class TestTrail(url: String) extends Trail {
+
+  override def customImageCutout: Option[FaciaImageElement] = None
+
   def webPublicationDate: DateTime = DateTime.now
   def shortUrl: String = ""
   def linkText: String = ""

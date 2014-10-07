@@ -2,7 +2,7 @@
 
 @import common.LinkTo
 @import model.{FaciaDisplayElement, InlineVideo, VideoPlayer}
-@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, ContributorLinks}
+@import views.support.{GetClasses, RemoveOuterParaHtml, RenderClasses, SnapData, Video640, ContributorLinks, CutOut}
 @import views.html.fragments.media.video
 @import views.html.fragments.items.facia_cards.meta
 @import views.html.fragments.items.elements.facia_cards._
@@ -36,58 +36,56 @@
                             endSlatePath,
                             Some(false)
                         )) { player =>
-                            <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
-                                <div class="fc-item__video-container">
-                                @video(player)
+                                <div class="fc-item__media-wrapper fc-item__media-wrapper--has-icon u-faux-block-link__promote">
+                                    <div class="fc-item__video-container">
+                                    @video(player)
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         }
-                    }
 
                     case _ => {
                         @image(trail, inlineImage = containerIndex == 0 && index < 4)
                     }
                 }
 
-                <div class="@RenderClasses(Map(
-                    ("fc-item__header", true),
-                    ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
-                ))">
-                    @title(trail, index, containerIndex)
-                    @trail match {
-                        case content: model.Content => {
-                            @content.byline.filter(const(content.showByline)).map { byline =>
-                                <div class="fc-item__byline">
-                                    @ContributorLinks(Html(byline), content.contributors)
-                                </div>
+                <div class="fc-item__content">
+                    <div class="@RenderClasses(Map(
+                        ("fc-item__header", true),
+                        ("fc-item__header--inline-video", FaciaDisplayElement.isVideo(trail) && trail.isBoosted)
+                    ))">
+                        @title(trail, index, containerIndex, false)
+                        @trail match {
+                            case content: model.Content => {
+                                @content.byline.filter(const(content.showByline)).map { byline =>
+                                    <div class="fc-item__byline">
+                                        @ContributorLinks(Html(byline), content.contributors)
+                                    </div>
+                                }
+                                @starRating(content)
                             }
-
-                            @starRating(content)
+                            case _ => {}
                         }
+                    </div>
 
-                        case _ => {}
+                    @CutOut.fromTrail(trail).map { case cutOut @ CutOut(altText, imageUrl, _) =>
+                        <div class="fc-item__avatar">
+                            <img src="@imageUrl" alt="@altText" class="fc-item__avatar__media @cutOut.cssClass" />
+                        </div>
                     }
+
+                    @trail.trailText.map { text =>
+                        <div class="fc-item__standfirst">@Html(text)</div>
+                    }
+
+                    @meta(trail)
+
+                    <footer class="fc-item__footer">
+                        @sublinks(trail.supporting)
+                    </footer>
                 </div>
-
-                @if(tone == "comment") {
-                    @if(trail.hasLargeContributorImage) {
-                        @trail.contributors.headOption.map { profile =>
-                            @profile.contributorLargeImagePath.map{ image =>
-                                <div class="fc-item__avatar">
-                                    <img src="@image" alt="@profile.name" class="fc-item__avatar__media" />
-                                </div>
-                            }
-                        }
-                    }
-                }
-
-                @trail.trailText.map { text =>
-                    <div class="fc-item__standfirst">@Html(text)</div>
-                }
-
-                @meta(trail)
+                <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
             </div>
-            <a @Html(LinkTo.getHrefWithRel(trail)) class="u-faux-block-link__overlay" data-link-name="article" tabindex="-1">@RemoveOuterParaHtml(trail.headline)</a>
         </div>
     }
 </li>

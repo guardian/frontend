@@ -74,6 +74,7 @@ trait Football extends Collections {
   }
 
   implicit class Match2Trail(m: FootballMatch) extends Trail {
+    override def customImageCutout: Option[FaciaImageElement] = None
 
     private def text = if (m.isFixture) {
       s"${m.homeTeam.name} v ${m.awayTeam.name}"
