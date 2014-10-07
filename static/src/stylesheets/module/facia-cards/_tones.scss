@@ -3,7 +3,8 @@
         padding-bottom: $gs-baseline * .25;
     }
 
-    .fc-item__content {
+    .fc-item__content,
+    .fc-item__footer--horizontal {
         padding-left: $fc-item-gutter;
         padding-right: $fc-item-gutter;
     }
