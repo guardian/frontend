@@ -73,18 +73,23 @@ define([
                 element = $('.js-container--insert-updates', container),
                 containerId = $container.attr('data-id'),
                 containerIndex = index.containers[containerId],
-                currentItemsInfo = currentItems($container);
+                currentItemsInfo = currentItems($container),
+                newCountOnMobile,
+                newCountOnDesktop,
+                mobile,
+                desktop;
 
             if (element && element.length > 0) {
-                var newCountOnMobile = newCountFor(currentItemsInfo.mobile, filter(containerIndex.items, function (item) {
+                newCountOnMobile = newCountFor(currentItemsInfo.mobile, filter(containerIndex.items, function (item) {
                     return item.visibleOnMobile;
                 }));
+                newCountOnDesktop = newCountFor(currentItemsInfo.desktop, containerIndex.items);
 
-                var newCountOnDesktop = newCountFor(currentItemsInfo.desktop, containerIndex.items);
+                /** TODO add if statements here that only append the elements if there is at least 1 update */
 
-                var mobile = createUpdateCountElement(newCountOnMobile)
+                mobile = createUpdateCountElement(newCountOnMobile)
                     .addClass('fc-container__updates--mobile');
-                var desktop = createUpdateCountElement(newCountOnDesktop)
+                desktop = createUpdateCountElement(newCountOnDesktop)
                     .addClass('fc-container__updates--desktop');
 
                 element.html('').append(mobile).append(desktop);
@@ -92,7 +97,7 @@ define([
         });
     }
 
-    function triggerUpdate () {
+    function triggerUpdate() {
         ajax({
             url: window.location.pathname + '/front-index.json',
             type: 'json',
