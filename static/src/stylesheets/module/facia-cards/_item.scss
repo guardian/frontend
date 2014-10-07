@@ -141,15 +141,12 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__live-indicator {
-    background-color: #ffffff;
     color: $c-liveDefault;
     font: inherit;
     line-height: 1;
-    padding: .1em .2em .05em;
 }
 
 .fc-item__breaking-indicator {
-    background-color: #ffffff;
     color: $c-liveDefault;
 }
 
@@ -179,6 +176,7 @@ $fc-item-gutter: $gs-gutter / 4;
     float: left;
     margin-right: .2em;
     text-transform: lowercase;
+    line-height: inherit;
 }
 
 .fc-item__byline {
