@@ -50,6 +50,8 @@ trait FaciaFields {
   def showKickerCustom: Boolean = false
   def customKicker: Option[String] = None
   def showMainVideo: Boolean = false
+  def showBoostedHeadline: Boolean = false
+  def showQuotedHeadline: Boolean = false
   def imageCutoutReplace: Boolean = false
   def customImageCutout: Option[FaciaImageElement]
 }

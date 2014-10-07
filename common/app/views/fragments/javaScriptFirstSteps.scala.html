@@ -135,6 +135,8 @@
             }
             if(testCssSupport('flex-wrap') || testCssSupport('-ms-flex-wrap') || testCssSupport('-webkit-flex-wrap')) {
                 document.documentElement.className += ' has-flex-wrap';
+            } else {
+                document.documentElement.className += ' has-no-flex-wrap';
             }
             document.documentElement.className = document.documentElement.className.replace(/\bis-not-modern\b/g, 'is-modern');
         }
