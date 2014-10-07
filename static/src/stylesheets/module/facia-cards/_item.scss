@@ -175,6 +175,12 @@ $fc-item-gutter: $gs-gutter / 4;
     word-wrap: break-word;
 }
 
+.fc-item__kicker {
+    float: left;
+    margin-right: .2em;
+    text-transform: lowercase;
+}
+
 .fc-item__byline {
     margin-bottom: 0;
 }
