@@ -41,8 +41,8 @@ define([
                             'Images cannot be less than ' + criteria.minWidth + ' pixels wide' :
                         (criteria.widthAspectRatio !== undefined && criteria.heightAspectRatio !== undefined
                           && Math.abs((width * criteria.widthAspectRatio) / (height * criteria.heightAspectRatio) - 1) > 0.01) ?
-                              'Images must have a ' + criteria.widthAspectRatio + 'x' + criteria.heightAspectRatio + ' aspect ratio'
-                              : false;
+                            'Images must have a ' + criteria.widthAspectRatio + 'x' + criteria.heightAspectRatio + ' aspect ratio'
+                            : false;
 
                 if (err) {
                     defer.reject(err);

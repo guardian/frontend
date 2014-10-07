@@ -70,14 +70,20 @@ define([
                 {
                     key: 'byline',
                     editable: true,
-                    requires: 'showByline',
                     label: 'byline',
+                    type: 'text'
+                },
+                {
+                    key: 'customKicker',
+                    editable: true,
+                    requires: 'showKickerCustom',
+                    label: 'custom kicker',
                     type: 'text'
                 },
                 {
                     key: 'href',
                     editable: true,
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap URL',
                     type: 'text'
                 },
@@ -86,7 +92,39 @@ define([
                     editable: true,
                     requires: 'imageReplace',
                     label: 'replacement image URL',
-                    validator: validateAndProcessImageSrc,
+                    validator: 'validateImageMain',
+                    type: 'text'
+                },
+                {
+                    key: 'imageSrcWidth',
+                    requires: 'imageReplace',
+                    label: 'replacement image width',
+                    type: 'text'
+                },
+                {
+                    key: 'imageSrcHeight',
+                    requires: 'imageReplace',
+                    label: 'replacement image height',
+                    type: 'text'
+                },
+                {
+                    key: 'imageCutoutSrc',
+                    editable: true,
+                    requires: 'imageCutoutReplace',
+                    label: 'replacement cutout image URL',
+                    validator: 'validateImageCutout',
+                    type: 'text'
+                },
+                {
+                    key: 'imageCutoutSrcWidth',
+                    requires: 'imageCutoutReplace',
+                    label: 'replacement cutout image width',
+                    type: 'text'
+                },
+                {
+                    key: 'imageCutoutSrcHeight',
+                    requires: 'imageCutoutReplace',
+                    label: 'replacement cutout image height',
                     type: 'text'
                 },
                 {
@@ -118,26 +156,22 @@ define([
                     key: 'showByline',
                     editable: true,
                     label: 'show byline',
-                    type: 'boolean'
-                },
-                {
-                    key: 'hasMainVideo',
-                    label: 'has a video',
+                    irreleventForTones: ['comment'],
                     type: 'boolean'
                 },
                 {
                     key: 'showMainVideo',
                     editable: true,
-                    requires: 'hasMainVideo',
+                    requiresState: 'hasMainVideo',
                     singleton: 'images',
                     label: 'show video',
                     type: 'boolean'
                 },
                 {
-                    key: 'imageHide',
+                    key: 'imageCutoutReplace',
                     editable: true,
                     singleton: 'images',
-                    label: 'hide image',
+                    label: 'cutout image',
                     type: 'boolean'
                 },
                 {
@@ -145,7 +179,14 @@ define([
                     editable: true,
                     singleton: 'images',
                     label: 'replace image',
-                    displayIf: 'imageSrc',
+                    irreleventIfNo: 'imageSrc',
+                    type: 'boolean'
+                },
+                {
+                    key: 'imageHide',
+                    editable: true,
+                    singleton: 'images',
+                    label: 'hide image',
                     type: 'boolean'
                 },
                 {
@@ -163,16 +204,11 @@ define([
                     type: 'boolean'
                 },
                 {
-                    key: 'imageSrcWidth',
-                    requires: 'imageReplace',
-                    label: 'replacement image width',
-                    type: 'text'
-                },
-                {
-                    key: 'imageSrcHeight',
-                    requires: 'imageReplace',
-                    label: 'replacement image height',
-                    type: 'text'
+                    key: 'showKickerCustom',
+                    editable: true,
+                    singleton: 'kicker',
+                    label: 'custom kicker',
+                    type: 'boolean'
                 },
                 {
                     key: 'isSnap',
@@ -181,19 +217,19 @@ define([
                 },
                 {
                     key: 'snapType',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap type',
                     type: 'text'
                 },
                 {
                     key: 'snapCss',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap CSS class',
                     type: 'text'
                 },
                 {
                     key: 'snapUri',
-                    requires: 'isSnap',
+                    requiresState: 'isSnap',
                     label: 'snap source',
                     type: 'text'
                 }
@@ -221,6 +257,10 @@ define([
                 'isOpen',
                 'isLoaded',
                 'isEmpty',
+                'isSnap',
+                'tone',
+                'hasMainVideo',
+                'imageCutoutSrcFromCapi',
                 'ophanUrl',
                 'sparkUrl']);
 
@@ -251,12 +291,6 @@ define([
                 return this.fields.isLive() === 'false' ?
                     vars.CONST.previewBase + '/' + urlAbsPath(this.props.webUrl()) :
                     this.meta.href() || this.props.webUrl();
-            }, this);
-
-            this.provisionalImageSrc = ko.observable();
-
-            this.meta.imageSrc.subscribe(function(src) {
-                this.provisionalImageSrc(src);
             }, this);
 
             this.populate(opts);
@@ -298,12 +332,14 @@ define([
 
         Article.prototype.metaDisplayer = function(opts, index, all) {
             var self = this,
-                show = opts.editable;
+                display;
 
             if (opts.type === 'boolean') {
-                show = show && (this.meta[opts.key] || function() {})();
-                show = show && (opts.displayIf ? _.some(all, function(editor) { return editor.key === opts.displayIf && self.meta[editor.key](); }) : true);
-                return show ? opts.label : false;
+                display = opts.editable;
+                display = display && (this.meta[opts.key] || function() {})();
+                display = display && (opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.state.tone()) === -1 : true);
+                display = display && (opts.irreleventIfNo ? _.some(all, function(editor) { return editor.key === opts.irreleventIfNo && self.meta[editor.key](); }) : true);
+                return display ? opts.label : false;
 
             } else {
                 return false;
@@ -322,11 +358,8 @@ define([
             meta = self.meta[key] || function() {};
             field = self.fields[key] || function() {};
 
-            if (_.isFunction(opts.validator)) {
-                meta.extend({ rateLimit: 100 })
-                meta.subscribe(function() {
-                    opts.validator(meta, self.meta)
-                }, this);
+            if (opts.validator && _.isFunction(self[opts.validator])) {
+                meta.subscribe(function() { self[opts.validator](); });
             }
 
             return {
@@ -349,7 +382,12 @@ define([
                 }, self),
 
                 displayEditor: ko.computed(function() {
-                    return opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true;
+                    var display = opts.irreleventForTones ? opts.irreleventForTones.indexOf(self.state.tone()) === -1 : true;
+
+                    display = display && (opts.requires ? _.some(all, function(editor) { return editor.key === opts.requires && self.meta[editor.key](); }) : true);
+                    display = display && (opts.requiresState ? self.state[opts.requiresState]() : true);
+
+                    return display;
                 }, self),
 
                 toggle: function() {
@@ -389,35 +427,30 @@ define([
             }
         };
 
-        function mainMediaType(contentApiArticle) {
-            var mainElement = _.findWhere(contentApiArticle.elements || [], {
-                relation: 'main'
-            });
-            return mainElement && mainElement.type;
-        }
-
-        function validateAndProcessImageSrc(imageSrc, meta) {
-            if (imageSrc()) {
-                validateImageSrc(imageSrc(), {
+        Article.prototype.validateImageMain = function() {
+            validateImage(
+                this.meta.imageSrc,
+                this.meta.imageSrcWidth,
+                this.meta.imageSrcHeight,
+                {
                     maxWidth: 940,
                     minWidth: 620,
                     widthAspectRatio: 3,
                     heightAspectRatio: 5
-                })
-                .done(function(width, height) {
-                    meta.imageSrcWidth(width);
-                    meta.imageSrcHeight(height);
-                })
-                .fail(clearImageMeta);
-            } else {
-                clearImageMeta();
-            }
+                }
+            )
+        };
 
-            function clearImageMeta() {
-                meta.imageSrc(undefined);
-                meta.imageSrcWidth(undefined);
-                meta.imageSrcHeight(undefined);
-            };
+        Article.prototype.validateImageCutout = function() {
+            validateImage(
+                this.meta.imageCutoutSrc,
+                this.meta.imageCutoutSrcWidth,
+                this.meta.imageCutoutSrcHeight,
+                {
+                    maxWidth: 940,
+                    minWidth: 400
+                }
+            )
         };
 
         Article.prototype.populate = function(opts, validate) {
@@ -444,11 +477,15 @@ define([
                 }
             }
 
-            this.meta.hasMainVideo(mainMediaType(opts) === 'video');
+            this.state.imageCutoutSrcFromCapi(getContributorImage(opts));
 
-            this.meta.isSnap(!!snap.validateId(this.id()));
+            this.state.isSnap(!!snap.validateId(this.id()));
 
-            if(!this.uneditable) {
+            this.state.hasMainVideo(getMainMediaType(opts) === 'video');
+
+            this.state.tone(getTone(opts));
+
+            if (!this.uneditable) {
                 this.editorsDisplay(metaFields.map(this.metaDisplayer, this).filter(function (editor) { return editor; }));
             }
 
@@ -549,7 +586,7 @@ define([
         };
 
         Article.prototype.convertToSnap = function() {
-            this.meta.isSnap(true);
+            this.state.isSnap(true);
             this.meta.href(this.id());
             this.id(snap.generateId());
         };
@@ -578,6 +615,47 @@ define([
             this.close();
             this.save();
             return false;
+        };
+
+        function getTone(contentApiArticle) {
+            var tone = _.findWhere(contentApiArticle.tags, {
+                type: 'tone'
+            });
+            return tone && tone.id && tone.id.replace(/^tone\//, '');
+        }
+
+        function getMainMediaType(contentApiArticle) {
+            var mainElement = _.findWhere(contentApiArticle.elements || [], {
+                relation: 'main'
+            });
+            return mainElement && mainElement.type;
+        }
+
+        function getContributorImage(contentApiArticle) {
+            var contributor = _.findWhere(contentApiArticle.tags, {
+                type: 'contributor'
+            });
+            return contributor && contributor.bylineLargeImageUrl;
+        }
+
+        function validateImage (imageSrc, imageSrcWidth, imageSrcHeight, opts) {
+            if (imageSrc()) {
+                validateImageSrc(imageSrc(), opts)
+                    .done(function(width, height) {
+                        imageSrcWidth(width);
+                        imageSrcHeight(height);
+                    })
+                    .fail(function(err) {
+                        undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
+                        window.alert(err);
+                    });
+            } else {
+                undefineObservables(imageSrc, imageSrcWidth, imageSrcHeight);
+            }
+        };
+
+        function undefineObservables() {
+            Array.prototype.slice.call(arguments).forEach(function(fn) { fn(undefined); })
         };
 
         function mod(n, m) {
