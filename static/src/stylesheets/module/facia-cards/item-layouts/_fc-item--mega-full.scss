@@ -58,7 +58,11 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
         left: 40%;
     }
 
-    @include fc-sublinks-horizontal;
+    @include fc-sublinks--horizontal;
+
+    .fc-item__footer--horizontal {
+        @include flex-basis(auto);
+    }
 
     &.fc-item--has-sublinks-1 .fc-sublinks {
         display: none;

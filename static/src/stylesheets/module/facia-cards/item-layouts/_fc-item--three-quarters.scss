@@ -23,12 +23,7 @@ Three quarter item. Looks like a wide standard, a bit like this:
 
 @mixin fc-item--three-quarters {
 
-    .fc-item__media-wrapper {
-        @include box-sizing(border-box);
-        width: (100% / 3 * 2);
-        float: right;
-        padding-left: $gs-gutter * .25;
-    }
+    @include fc-item--horizontal(100% / 3 * 2);
 
     .fc-item__avatar {
         top: 0;
