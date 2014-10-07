@@ -2,7 +2,6 @@
 
 @import common.Edition
 @import model.{Collection, Config}
-@import views.support.NewsContainer
 @import views.support.RenderClasses
 
 <div class="l-side-margins l-side-margins--layout-front">
@@ -21,7 +20,7 @@
             @fragments.commercial.pageSkin()
         }
 
-        @fragments.containers.tag(index.page, Collection(index.trails), NewsContainer(showMore = false), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
+        @fragments.containers.tag(index.page, Collection(index.trails), layout.ContainerLayout(slices.TagContainers.keywordPage, model.Collection(index.trails), Some(templateDeduping)), containerIndex = 0, pagination = index.page.pagination)(request, templateDeduping, Config(s"${index.page.id}/news/regular-stories", displayName = Some(index.page.webTitle)))
 
         @fragments.footballNav(index.page)
 
