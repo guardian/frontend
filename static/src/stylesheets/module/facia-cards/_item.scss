@@ -158,7 +158,7 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__header {
     @include fs-headline(3);
     font-weight: 500;
-    padding-bottom: .75em;
+    padding-bottom: .5em;
 
     .fc-item--has-boosted-title & {
         @include fs-headline(4, true);
