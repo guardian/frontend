@@ -52,7 +52,6 @@ Component.define(Comments);
 Comments.prototype.componentClass = 'd-discussion';
 
 Comments.prototype.classes = {
-
     jsContent: 'js-discussion-content',
     container: 'discussion__comments__container',
     comments: 'd-thread--top-level',
