@@ -134,6 +134,10 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
           }.getOrElse(ServiceUnavailable)
       }
   }
+
+  def renderAgentContents = Action {
+    Ok(ConfigAgent.contentsAsJsonString)
+  }
 }
 
 object FaciaController extends FaciaController {
