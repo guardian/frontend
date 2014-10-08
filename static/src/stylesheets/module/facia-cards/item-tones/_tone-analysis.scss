@@ -2,8 +2,14 @@
     @extend %tone-has-background;
 
     &.fc-item {
-        background-color: $c-analysisBackground;
+       background-color: $c-analysisBackground;
+
+        &,
+        & a {
+            color: $c-newsDefault;
+        }
     }
+
 
     .fc-item__content {
         @include box-shadow(inset 0 1px $c-analysisAccent);
