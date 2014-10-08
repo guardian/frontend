@@ -72,6 +72,9 @@ $avatarPadding: $gs-gutter / 2;
     @include mq($until: mobileLandscape) {
         display: none;
     }
+    .discussion--threaded & {
+        display: none;
+    }
 }
 
 .discussion__show-all__off-text {

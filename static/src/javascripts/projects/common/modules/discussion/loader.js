@@ -193,6 +193,8 @@ Loader.prototype.initUnthreaded = function() {
         $nonThreadedContainer.toggleClass('u-h');
         $discussionContainer.toggleClass('u-h');
 
+        this.toggleState('threaded');
+
         if (!$el.data('loaded')) {
             var activityStream = new ActivityStream();
 
