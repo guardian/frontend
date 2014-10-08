@@ -106,7 +106,7 @@
                 </div>
                 @if(!comment.isBlocked){
                     <div class="d-comment__actions d-comment__actions--left">
-                        <a class="d-comment__action d-comment__action--reply" href="https://profile.theguardian.com/signin?returnUrl=@Configuration.discussion.url/comment-permalink/@comment.id"
+                        <a class="d-comment__action d-comment__ac#tion--reply" href="https://profile.theguardian.com/signin?returnUrl=@Configuration.discussion.url/comment-permalink/@comment.id"
                                 data-link-name="reply to comment" data-comment-id="@comment.id" role="button">
                             <i class="i i-reply-blue"></i>Reply
                         </a>
@@ -128,11 +128,24 @@
 
     </div>
 
-    @if(comment.responses.nonEmpty){
-        <ul class="d-thread d-thread--responses" data-responses="@comment.responses.length">
-            @comment.responses.map{ response =>
-                @fragments.comment(response, isClosedForRecommendation, true)
+    @if(comment.responses.nonEmpty) {
+        @defining(comment.responses) { responses =>
+            @defining(responses.splitAt(3)) {
+                case (visible, hidden) => {
+                    <ul class="d-thread d-thread--responses" data-responses="@comment.responses.length">
+                    @visible.map { response =>
+                        @fragments.comment(response, isClosedForRecommendation, true)
+                    }
+                    </ul>
+                @if(hidden.nonEmpty) {
+                    <ul class="d-thread d-thread--responses d-thread--responses-more d-thread--responses-invisible" data-responses="@comment.responses.length">
+                    @hidden.map { response =>
+                        @fragments.comment(response, isClosedForRecommendation, true)
+                    }
+                    </ul>
+                }
+                }
             }
-        </ul>
+        }
     }
 </li>

@@ -135,6 +135,10 @@ $avatarPadding: $gs-gutter / 2;
     clear: both;
 }
 
+.d-thread--responses-invisible {
+    display: none;
+}
+
 .show-more__container {
     display: block;
     margin-bottom: ($gs-baseline / 3) * 2;

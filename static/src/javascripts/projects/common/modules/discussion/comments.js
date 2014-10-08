@@ -56,8 +56,7 @@ var Comments = function(options) {
 
     this.fetchData = {
         orderBy: this.options.order,
-        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10,
-        maxResponses: 3
+        pageSize: detect.isBreakpoint({min: 'desktop'}) ? 25 : 10
     };
 
     this.fetchCommentData = {
@@ -158,12 +157,25 @@ Comments.prototype.ready = function() {
     this.addMoreRepliesButtons();
 
     if (this.options.commentId) {
+        console.log("++ PERMALINK!!!!")
         var comment = $('#comment-'+ this.options.commentId);
         this.showHiddenComments();
         $('.d-discussion__show-all-comments').addClass('u-h');
+
+        var o = bonzo(comment).parent();
+        if (o.hasClass('d-thread--responses-invisible')) {
+            console.log("Nevers gonna fuck you down");
+            var $visableComments = bonzo(o).previous();
+            console.info("V: ", $visableComments);
+            bonzo(qwery("d-show-more-replies", $visableComments[0])).remove();
+            o.removeClass('d-thread--responses-invisible');
+        }
+
         if (comment.attr('hidden')) {
+            console.log("++++ It is it's hidden it is aint it");
             bean.fire($(this.getClass('showReplies'), comment.parent())[0], 'click');
         }
+        console.info("++ would you like to oil them up ad slide in between", comment, " Parent ", o);
 
         window.location.replace('#comment-'+ this.options.commentId);
     }
@@ -347,11 +359,10 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
     comments = comments || this.topLevelComments;
     comments.forEach(function(elem) {
         var replies = parseInt(elem.getAttribute('data-comment-replies'), 10),
-            renderedReplies = qwery(this.getClass('reply'), elem);
+            hiddenReplies = qwery('.d-thread--responses-invisible', elem)[0];
 
-        if (renderedReplies.length < replies) {
-            var numHiddenReplies = replies - renderedReplies.length,
-
+        if (hiddenReplies) {
+            var numHiddenReplies =  (qwery(this.getClass('reply'), hiddenReplies)).length,
                 $btn = $.create(
                     '<button class="u-button-reset button button--show-more button--small button--tone-news d-show-more-replies__button">' +
                         '<i class="i i-plus-blue"></i>' +
@@ -375,33 +386,10 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
 Comments.prototype.getMoreReplies = function(event) {
     event.preventDefault();
 
-    var li = $.ancestor(event.currentTarget, this.getClass('showReplies').slice(1));
-    li.innerHTML = 'Loading…';
-
-    var self = this,
-        source = bonzo(event.target).data('source-comment');
-
-    ajax({
-        url: '/discussion/comment/'+ event.currentTarget.getAttribute('data-comment-id') +'.json',
-        type: 'json',
-        method: 'get',
-        data: this.fetchCommentData,
-        crossOrigin: true
-    }).then(function (resp) {
-        var comment = bonzo.create(resp.html),
-            replies = qwery(self.getClass('reply'), comment);
-
-        replies = replies.slice(self.options.showRepliesCount);
-        bonzo(qwery('.d-thread--responses', source)).append(replies);
-        bonzo(li).addClass('u-h');
-
-        if (!self.isReadOnly()) {
-            var btns = _map(replies, function(reply) {
-                return qwery(self.getClass('commentRecommend'), reply)[0];
-            });
-            RecommendComments.initButtons(btns);
-        }
-    });
+    var source = bonzo(event.target).data('source-comment'),
+        li = $.ancestor(event.currentTarget, this.getClass('showReplies').slice(1));
+    bonzo(qwery(this.getClass('showReplies'), source)).remove();
+    bonzo(qwery('.d-thread--responses', source)).removeClass('d-thread--responses-invisible')
 };
 
 /**
@@ -473,6 +461,7 @@ Comments.prototype.addComment = function(comment, focus, parent) {
 
     window.location.replace('#comment-'+ comment.id);
 };
+
 
 /** @param {Event} e */
 Comments.prototype.replyToComment = function(e) {
