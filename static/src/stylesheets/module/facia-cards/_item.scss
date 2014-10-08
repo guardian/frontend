@@ -80,6 +80,10 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+.fc-item__container {
+    position: relative;
+}
+
 .fc-item {
     @include flex(1);
     background-color: #ffffff;
@@ -161,7 +165,8 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-item__title,
-.fc-item__byline {
+.fc-item__byline,
+.fc-item__kicker {
     font: inherit;
     line-height: inherit;
 }
@@ -175,7 +180,6 @@ $fc-item-gutter: $gs-gutter / 4;
 .fc-item__kicker {
     float: left;
     margin-right: .2em;
-    line-height: inherit;
 }
 
 .fc-item__byline {
@@ -232,7 +236,12 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__footer--horizontal {
     display: none;
-    @include clearfix;
+    .has-flex-wrap & {
+        @include align-items--end;
+    }
+    .has-no-flex-wrap & {
+        @include clearfix;
+    }
 }
 
 .fc-item__avatar {
@@ -247,11 +256,7 @@ $fc-item-gutter: $gs-gutter / 4;
     position: absolute;
     height: 100%;
     bottom: 0;
-    left: 20%;
-
-    @include mq(desktop) {
-        left: 30%;
-    }
+    right: 0;
 
     &.image--portrait {
         bottom: auto;
