@@ -4,11 +4,12 @@ import common.{NavItem, Edition}
 import conf.Configuration
 import dfp.DfpAgent
 import play.api.libs.json.{JsString, JsValue}
+import services.CollectionConfigWithId
 
 case class FaciaPage(id: String,
                      seoData: SeoData,
                      frontProperties: FrontProperties,
-                     collections: List[(Config, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
+                     collections: List[(CollectionConfigWithId, Collection)]) extends MetaData with AdSuffixHandlingForFronts {
 
   override lazy val description: Option[String] = seoData.description
   override lazy val section: String = seoData.navSection

@@ -1,17 +1,18 @@
-@(collection: Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: Config)
+@(collection: Collection, containerLayout: layout.ContainerLayout, containerIndex: Int, actualDate: org.joda.time.DateTime, page: model.MetaData, nav: PreviousAndNext)(implicit request: RequestHeader, templateDeduping: TemplateDeduping, config: com.gu.facia.client.models.CollectionConfig)
 
-@import model.{Collection, Config}
+@import model.Collection
 @import views.html.fragments.containers.facia_cards.{slice, date}
 @import views.html.fragments.keywordList
 @import views.support.MostPopularTags.topTags
 @import views.support.{GetClasses, PreviousAndNext, TemplateDeduping}
 @import common.LinkTo
+@import dfp.DfpAgent
 
 @defining(page.webTitle) { case (webTitle) =>
     <section
         class="@GetClasses.forNewStyleContainer(config, false, webTitle.nonEmpty, Seq("fc-container--first"))"
         data-link-name="all index"
-        @config.sponsorshipKeyword.map { keyword =>
+        @DfpAgent.sponsorshipTag(config).map { keyword =>
         data-keywords="@keyword"
         }
         data-component="all index">

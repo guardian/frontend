@@ -1,3 +1,4 @@
+import com.gu.facia.client.models.Config
 import common._
 import conf.Filters
 import dev.DevParametersLifecycle
@@ -27,7 +28,7 @@ object Global extends WithFilters(Filters.common: _*)
   )
 
   override def onStart(app: Application) {
-    if (Play.isDev) ConfigAgent.refreshWith(Json.parse(ConfigAgentDefaults.contents))
+    if (Play.isDev) ConfigAgent.refreshWith(Json.parse(ConfigAgentDefaults.contents).as[Config])
     super.onStart(app)
   }
 }

@@ -1,5 +1,6 @@
 package controllers
 
+import com.gu.facia.client.models.CollectionConfig
 import play.api.mvc.{ Controller, Action, RequestHeader }
 import common._
 import model._
@@ -70,8 +71,8 @@ object MediaInSectionController extends Controller with Logging with Paging with
       case "audio" => "audio"
       case m => s"${m}s"
     }
-    implicit val config = Config(id = sectionId, href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} $pluralMediaType") )
-    val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1, "content", useInlinePlayer = false)
+    implicit val config = CollectionConfig.withDefaults(href = Some(tagCombinedHref), displayName = Some(s"More ${sectionName} $pluralMediaType"))
+    val response = () => views.html.fragments.containers.multimedia(Collection(trails.take(3)), MultimediaContainer(), 1, "content", useInlinePlayer = false, dataId = sectionId)
     renderFormat(response, response, 1)
   }
 }

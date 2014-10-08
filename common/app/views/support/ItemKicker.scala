@@ -1,11 +1,12 @@
 package views.support
 
+import com.gu.facia.client.models.CollectionConfig
 import model.{Trail, Tag}
 
 object ItemKicker {
   private def firstTag(item: Trail): Option[Tag] = item.tags.headOption
 
-  def fromTrail(trail: Trail, config: Option[model.Config]): Option[ItemKicker] = {
+  def fromTrail(trail: Trail, config: Option[CollectionConfig]): Option[ItemKicker] = {
     lazy val maybeTag = firstTag(trail)
 
     def tagKicker = maybeTag map { tag =>
@@ -20,11 +21,11 @@ object ItemKicker {
         tagKicker
       } else if (trail.showKickerSection) {
         sectionKicker
-      } else if (config.exists(_.showTags) && maybeTag.isDefined) {
+      } else if (config.exists(_.showTags.exists(identity)) && maybeTag.isDefined) {
         tagKicker
-      } else if (config.exists(_.showSections)) {
+      } else if (config.exists(_.showSections.exists(identity))) {
         sectionKicker
-      } else if (!config.exists(_.hideKickers)) {
+      } else if (!config.exists(_.hideKickers.exists(identity))) {
         tonalKicker(trail)
       } else {
         None
