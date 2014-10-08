@@ -15,6 +15,20 @@ object TagContainers {
     TlTlTl,
     TlTlMpu
   )
+
+  val tagPage = slices(
+    HalfQQ,
+    QuarterQuarterQuarterQuarter,
+    TlTlTl,
+    TlTlMpu
+  )
+
+  val contributorTagPage =  slices(
+    HalfQl4Ql4,
+    TlTlTl,
+    TlTlTl,
+    TlTlMpu
+  )
 }
 
 object FixedContainers {

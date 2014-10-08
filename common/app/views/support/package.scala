@@ -664,6 +664,14 @@ object `package` extends Formats {
     Html(cleanedHtml.body.html)
   }
 
+  def getTagType(page: MetaData) = {
+    if (page.isContributorPage) {
+      slices.TagContainers.contributorTagPage
+    } else {
+      slices.TagContainers.tagPage
+    }
+  }
+
   implicit class Tags2tagUtils(t: Tags) {
     def typeOrTone: Option[Tag] = t.types.find(_.id != "type/article").orElse(t.tones.headOption)
   }
