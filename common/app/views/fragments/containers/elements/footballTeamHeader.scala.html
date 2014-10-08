@@ -4,8 +4,8 @@
 @import views.support.RenderClasses
 
 @defining(config.displayName.orElse(collection.displayName)) { title =>
-    <div class="fc-container__header">
-        <div class="fc-container__header__title">
+    <div class="fc-container__header js-container-header">
+        <div class="fc-container__header js-container-header__title">
             @collection.href.map { href =>
                 <a class="u-text-hyphenate" href="@LinkTo {/@href}" data-link-name="tag heading">@title</a>
             }.getOrElse {
@@ -14,10 +14,10 @@
         </div>
 
         <div class="@RenderClasses(Map(
-            "fc-container__header__description" -> footballTagPage.getFootballBadgeUrl.isEmpty,
-            "fc-container__header__description--image" -> footballTagPage.getFootballBadgeUrl.isDefined))">
+            "fc-container__header js-container-header__description" -> footballTagPage.getFootballBadgeUrl.isEmpty,
+            "fc-container__header js-container-header__description--image" -> footballTagPage.getFootballBadgeUrl.isDefined))">
             @footballTagPage.getFootballBadgeUrl.map { url =>
-                <div class="fc-container__header__image">
+                <div class="fc-container__header js-container-header__image">
                     <div class="football-badge" style="background-image : url(@url)" title="@title;"></div>
                 </div>
             }
