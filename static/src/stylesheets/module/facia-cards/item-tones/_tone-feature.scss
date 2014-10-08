@@ -5,10 +5,13 @@
         background-color: $c-featureDefault;
 
         &,
-        & a,
-        & .fc-item__standfirst {
+        & a {
             color: #ffffff;
         }
+    }
+
+    .fc-item__standfirst {
+        color: fade_out(#ffffff, 0.2);
     }
 
     .fc-item__content {
