@@ -10,6 +10,10 @@
         }
     }
 
+    .fc-item__standfirst {
+        color: $c-neutral3;
+    }
+
     .fc-item__content {
         @include box-shadow(inset 0 1px $c-mediaDefault);
     }
