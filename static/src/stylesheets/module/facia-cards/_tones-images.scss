@@ -97,10 +97,6 @@
     .fc-trail__count:before {
         @include icon(comment-light-pink, false);
     }
-
-    .fc-trail__count:before {
-        @include icon(comment-white, false);
-    }
 }
 
 .tone-feature {
